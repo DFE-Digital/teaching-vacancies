@@ -15,7 +15,11 @@ module VacancyHelpers
   end
 
   def fill_in_job_role_form_fields(vacancy)
-    choose I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{vacancy.main_job_role}")
+    choose I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_role}")
+  end
+
+  def fill_in_ect_status_form_fields(vacancy)
+    choose I18n.t("helpers.label.publishers_job_listing_job_role_details_form.ect_status_options.#{vacancy.ect_status}")
   end
 
   def fill_in_education_phases_form_fields(vacancy)
@@ -23,14 +27,7 @@ module VacancyHelpers
   end
 
   def fill_in_job_role_details_form_fields(vacancy)
-    if vacancy.main_job_role == "teacher"
-      vacancy.additional_job_roles&.each do |job_role|
-        check I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{job_role}")
-      end
-    elsif vacancy.main_job_role.in?(%w[senior_leader middle_leader education_support])
-      value = vacancy.job_roles.include?("send_responsible") ? "yes" : "no"
-      find("label[for='publishers-job-listing-job-role-details-form-send-responsible-#{value}-field']").click
-    end
+    choose I18n.t("helpers.label.publishers_job_listing_job_role_details_form.ect_status_options.#{vacancy.ect_status}")
   end
 
   def fill_in_job_details_form_fields(vacancy, include_key_stages: true)
@@ -151,8 +148,8 @@ module VacancyHelpers
       expect(page).to have_content(full_address(vacancy.organisations.first))
     end
 
-    expect(page).to have_content(vacancy.readable_main_job_role)
-    expect(page).to have_content(strip_tags(vacancy.readable_additional_job_roles)) if vacancy.additional_job_roles.any?
+    expect(page).to have_content(vacancy.readable_job_role)
+    expect(page).to have_content(strip_tags(vacancy.readable_ect_status)) if vacancy.ect_status.present?
 
     expect(page).to have_content(vacancy.phase&.humanize) if vacancy.phase.present?
     expect(page).to have_content(vacancy.contract_type_with_duration)
@@ -194,7 +191,7 @@ module VacancyHelpers
   def verify_vacancy_show_page_details(vacancy)
     vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.readable_main_job_role)
+    expect(page).to have_content(vacancy.readable_job_role)
     vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
     expect(page).to have_content(vacancy.readable_working_patterns)
@@ -237,7 +234,7 @@ module VacancyHelpers
       jobBenefits: vacancy.benefits,
       datePosted: vacancy.publish_on.to_time.iso8601,
       description: vacancy.job_advert,
-      occupationalCategory: vacancy.job_roles&.join(", "),
+      occupationalCategory: vacancy.job_role,
       directApply: vacancy.enable_job_applications,
       employmentType: vacancy.working_patterns_for_job_schema,
       industry: "Education",

@@ -111,7 +111,7 @@ module VacanciesHelper
                           { landing_page.name => organisation_landing_page_path(organisation_slug) }
                         elsif referred_from_jobs_path
                           { t("breadcrumbs.jobs") => request.referrer }
-                        elsif (lp = LandingPage.matching(job_roles: [vacancy.main_job_role]))
+                        elsif (lp = LandingPage.matching(job_roles: [vacancy.job_role]))
                           { lp.title => landing_page_path(lp.slug) }
                         else
                           { t("breadcrumbs.jobs") => jobs_path }

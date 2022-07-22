@@ -1,8 +1,8 @@
 class Jobseekers::SubscriptionForm < BaseForm
   attr_accessor :email, :frequency,
                 :keyword, :location, :radius,
-                :job_roles, :subjects, :phases, :working_patterns,
-                :job_role_options, :ect_suitable_options, :send_responsible_options,
+                :job_roles, :ect_statuses, :subjects, :phases, :working_patterns,
+                :job_role_options, :ect_status_options,
                 :phase_options, :working_pattern_options,
                 :organisation_slug
 
@@ -20,6 +20,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @keyword = params[:keyword] || search_criteria[:keyword]
     @location = params[:location] || search_criteria[:location]
     @job_roles = params[:job_roles]&.reject(&:blank?) || search_criteria[:job_roles] || []
+    @ect_statuses = params[:ect_statuses]&.reject(&:blank?) || search_criteria[:ect_statuses] || []
     @subjects = params[:subjects]&.reject(&:blank?) || search_criteria[:subjects]
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
     @working_patterns = params[:working_patterns]&.reject(&:blank?) || search_criteria[:working_patterns]
@@ -43,6 +44,7 @@ class Jobseekers::SubscriptionForm < BaseForm
       location: location,
       radius: (@location.present? ? radius : nil),
       job_roles: job_roles,
+      ect_statuses: ect_statuses,
       subjects: subjects,
       phases: phases,
       working_patterns: working_patterns,
@@ -53,10 +55,9 @@ class Jobseekers::SubscriptionForm < BaseForm
   private
 
   def set_facet_options
-    @job_role_options = Vacancy.main_job_role_options.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{option}")] }
+    @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{option}")] }
     @phase_options = [%w[primary Primary], %w[middle Middle], %w[secondary Secondary], %w[16-19 16-19]]
-    @ect_suitable_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
-    @send_responsible_options = [["send_responsible", I18n.t("jobs.filters.send_responsible_option")]]
+    @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{option}")]
     end

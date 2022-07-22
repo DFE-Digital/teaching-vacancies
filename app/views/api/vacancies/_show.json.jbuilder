@@ -5,7 +5,7 @@ json.title vacancy.job_title
 json.jobBenefits vacancy.benefits
 json.datePosted vacancy.publish_on.to_time.iso8601
 json.description vacancy.job_advert
-json.occupationalCategory vacancy.job_roles&.join(", ")
+json.occupationalCategory vacancy.job_role
 json.directApply vacancy.enable_job_applications
 
 json.employmentType vacancy.working_patterns_for_job_schema

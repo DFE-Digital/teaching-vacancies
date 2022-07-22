@@ -34,7 +34,6 @@ en:
       job_filters: Job Filters
       job_roles: Job role
       ect_suitable: Suitable for early career teachers
-      ect_suitable_only: Suitable for early career teachers
       send_responsible: SEND responsibilities
       send_responsible_option: Has SEND responsibilities (special educational needs and disabilities)
       send_responsible_only: With SEND responsibilities
@@ -185,8 +184,6 @@ en:
     key_stage:
       one: Key stage
       other: Key stages
-    main_job_role: Job role
-    additional_job_roles: Job role details
     suitable_for_ect: Is this job suitable for ECTs?
     subjects: Subject(s)
     subject:

@@ -21,7 +21,7 @@ shared:
     job_roles:
       - send_responsible
   ect-suitable-jobs:
-    job_roles:
+    ect_statuses:
       - ect_suitable
   education-support-jobs:
     job_roles:

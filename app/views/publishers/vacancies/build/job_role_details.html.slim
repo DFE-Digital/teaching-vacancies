@@ -9,10 +9,9 @@
 
       h2.govuk-heading-l = t("publishers.vacancies.steps.job_role")
 
-      - if vacancy.main_job_role == "teacher"
-        = f.govuk_collection_check_boxes :additional_job_roles, form.teacher_additional_job_roles_options, :to_s, :to_s
-      - else
-        = f.govuk_collection_radio_buttons :send_responsible, %w[yes no], :to_s, :capitalize, form_group: { classes: "govuk-!-width-two-thirds" }
+      = f.govuk_collection_radio_buttons :ect_status,
+        Vacancy.ect_statuses.keys,
+        :to_s
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 

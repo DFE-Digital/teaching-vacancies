@@ -62,7 +62,8 @@ class UnitedLearningVacancySource
       external_advert_url: item["link", root: true],
 
       # New structured fields
-      job_roles: job_roles_for(item),
+      job_role: item["Job_roles"].presence&.gsub("leadership", "senior_leader")&.gsub(/\s+/, ""),
+      ect_status: ect_status_for(item),
       subjects: item["Subjects"].presence&.split(","),
       working_patterns: item["Working_patterns"].presence&.split(","),
       contract_type: item["Contract_type"].presence,
@@ -78,11 +79,10 @@ class UnitedLearningVacancySource
     }
   end
 
-  def job_roles_for(item)
-    roles = item["Job_roles"].presence&.gsub("leadership", "senior_leader")&.gsub(/\s+/, "")&.split(",")
-    roles.push("ect_suitable") if item["ect_suitable"] == "yes"
-    roles.push("send_responsible") if item["send_responsible"] == "yes"
-    roles
+  def ect_status_for(item)
+    return unless item["ect_suitable"].presence
+
+    item["ect_suitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
   end
 
   def organisations_for(item)

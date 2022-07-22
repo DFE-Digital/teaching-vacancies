@@ -12,7 +12,8 @@ class Search::CriteriaInventor
       radius: (location.present? ? DEFAULT_RADIUS_IN_MILES.to_s : nil),
       working_patterns: [],
       phases: @vacancy.readable_phases,
-      job_roles: job_roles,
+      job_roles: [@vacancy.job_role],
+      ect_statuses: [@vacancy.ect_status],
       subjects: subjects,
     }.delete_if { |_k, v| v.blank? }
   end
@@ -26,15 +27,7 @@ class Search::CriteriaInventor
     @vacancy.organisation.postcode
   end
 
-  def job_roles
-    if @vacancy.main_job_role.in?(%w[teaching_assistant middle_leader])
-      @vacancy.job_roles.excluding("ect_suitable")
-    else
-      @vacancy.job_roles.excluding("ect_suitable", "send_responsible")
-    end
-  end
-
   def subjects
-    @vacancy.subjects if @vacancy.main_job_role.in?(%w[teacher middle_leader])
+    @vacancy.subjects if @vacancy.job_role.in?(%w[teacher middle_leader])
   end
 end

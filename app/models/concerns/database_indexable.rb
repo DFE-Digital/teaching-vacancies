@@ -25,7 +25,7 @@ module DatabaseIndexable
       a: [unique_words(job_title), subjects],
       d: [
         readable_phases,
-        VacancyPresenter.new(self).readable_job_roles,
+        VacancyPresenter.new(self).readable_job_role,
         VacancyPresenter.new(self).readable_key_stages,
         organisation_name,
         VacancyPresenter.new(self).school_group_names,

@@ -60,7 +60,7 @@ class JobApplication < ApplicationRecord
   end
 
   def ask_professional_status?
-    vacancy.main_job_role.in? %w[teacher senior_leader middle_leader]
+    vacancy.job_role.in? %w[teacher senior_leader middle_leader]
   end
 
   def deadline_passed?

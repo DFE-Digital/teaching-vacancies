@@ -21,6 +21,7 @@ en:
       expires_at: Application deadline changed to %{new_value}
       how_to_apply: How to apply changed to %{new_value}
       job_advert: There were changes to the job advert
+      job_role: Job role changed to %{new_value}
       job_roles:
         one: Job role changed to %{new_value}
         other: Job roles changed to %{new_value}

@@ -29,10 +29,10 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   private
 
   def job_role_steps
-    if vacancy.main_job_role == "sendco"
-      %i[job_role]
-    else
+    if vacancy.teacher?
       %i[job_role job_role_details]
+    else
+      %i[job_role]
     end
   end
 

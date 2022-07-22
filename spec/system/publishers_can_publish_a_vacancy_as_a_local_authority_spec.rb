@@ -36,6 +36,8 @@ RSpec.describe "Creating a vacancy" do
 
         fill_in_job_role_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
+
+        fill_in_ect_status_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 10))
@@ -82,6 +84,8 @@ RSpec.describe "Creating a vacancy" do
 
         fill_in_job_role_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
+
+        fill_in_ect_status_form_fields(vacancy)
         click_on I18n.t("buttons.continue")
 
         expect(page).to have_content(I18n.t("jobs.current_step", step: 2, total: 10))
@@ -132,6 +136,7 @@ RSpec.describe "Creating a vacancy" do
     click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role_details))
 
+    fill_in_ect_status_form_fields(vacancy)
     click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_location))
 

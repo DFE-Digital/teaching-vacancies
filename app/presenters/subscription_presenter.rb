@@ -6,6 +6,7 @@ class SubscriptionPresenter < BasePresenter
                                   keyword
                                   location
                                   job_roles
+                                  ect_statuses
                                   subjects
                                   phases
                                   working_patterns].freeze
@@ -29,6 +30,8 @@ class SubscriptionPresenter < BasePresenter
       render_location_filter(value, search_criteria["radius"])
     when "job_roles"
       render_job_roles_filter(value)
+    when "ect_statuses"
+      render_ect_statuses_filter(value)
     when "subjects"
       render_subjects_filter(value)
     when "working_patterns"
@@ -53,7 +56,11 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def render_job_roles_filter(value)
-    { job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ") }
+    { job_role: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ") }
+  end
+
+  def render_ect_statuses_filter(value)
+    { suitable_for_early_career_teachers: value.map { |option| I18n.t("helpers.label.publishers_job_listing_job_role_details_form.ect_status_options.#{option}") }.join(", ") }
   end
 
   def render_subjects_filter(value)

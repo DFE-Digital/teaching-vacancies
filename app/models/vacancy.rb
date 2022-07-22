@@ -1,6 +1,6 @@
 require "geocoding"
 
-class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
+class Vacancy < ApplicationRecord
   extend FriendlyId
   extend ArrayEnum
 
@@ -10,28 +10,24 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
-  # Each vacancy must have *exactly* one main job role. It may have zero or multiple additional job roles. Legacy
-  # vacancies *may* have more than one main job role as we used to allow multiple.
-  # TODO: This is a compromise to keep changes to the data model minimal for now. Once the legacy vacancies are gone,
-  #       we should refactor the data model.
-  MAIN_JOB_ROLES = { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5 }.freeze
-  ADDITIONAL_JOB_ROLES = { send_responsible: 2, ect_suitable: 3 }.freeze
-
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
     about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
-    job_roles job_role_details job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
+    job_role job_roles job_role_details job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
     working_patterns
   ].freeze
 
   # When removing a job_role or working_pattern, remember to update *subscriptions* that have the old values.
-  array_enum job_roles: MAIN_JOB_ROLES.merge(ADDITIONAL_JOB_ROLES)
+  # TODO: remove job_roles when we are confident about the migration
+  # array_enum job_roles: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5, send_responsible: 2, ect_suitable: 3 }
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2 }
   array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
 
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
+  enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum job_location: { at_one_school: 0, at_multiple_schools: 1, central_office: 2 }
+  enum job_role: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum phase: { primary: 0, secondary: 1, "16-19": 2, multiple_phases: 3 }
   enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
@@ -97,14 +93,6 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
     }
   end
 
-  def self.main_job_role_options
-    MAIN_JOB_ROLES.keys.map(&:to_s)
-  end
-
-  def self.additional_job_role_options
-    ADDITIONAL_JOB_ROLES.keys.map(&:to_s)
-  end
-
   def external?
     external_source.present?
   end
@@ -168,32 +156,7 @@ class Vacancy < ApplicationRecord # rubocop:disable Metrics/ClassLength
   end
 
   def attributes
-    super().merge(
-      "working_patterns" => working_patterns,
-      "job_roles" => job_roles,
-      "main_job_role" => main_job_role,
-      "additional_job_roles" => additional_job_roles,
-    )
-  end
-
-  def main_job_role
-    # Legacy vacancies may have more than one main job role defined, but we still only care about the first
-    job_roles.find { |role| role.in?(self.class.main_job_role_options) }
-  end
-
-  def main_job_role=(role)
-    # Do nothing if main job role is unchanged. Else completely reset job_roles as additional roles may no longer be valid
-    return if role == main_job_role
-
-    self.job_roles = [role]
-  end
-
-  def additional_job_roles
-    job_roles.select { |role| role.in?(self.class.additional_job_role_options) }
-  end
-
-  def additional_job_roles=(roles)
-    self.job_roles = [main_job_role] + roles
+    super().merge("working_patterns" => working_patterns)
   end
 
   def publish_equal_opportunities_report?

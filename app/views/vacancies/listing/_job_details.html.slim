@@ -2,11 +2,10 @@ section#job-details class="govuk-!-margin-bottom-5"
   h2.govuk-heading-l.heading--border-bottom = t("publishers.vacancies.steps.job_details")
 
   = govuk_summary_list actions: false do |summary_list|
-    - if vacancy.job_roles.any?
-      - summary_list.row do |row|
-        - row.key do
-          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.job_role")
-        - row.value text: linked_job_roles(vacancy)
+    - summary_list.row do |row|
+      - row.key do
+        h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.job_role")
+      - row.value text: linked_job_role_and_ect_status(vacancy)
 
     - if vacancy.key_stages.any?
       - summary_list.row do |row|

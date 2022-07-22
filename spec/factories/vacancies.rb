@@ -32,17 +32,8 @@ FactoryBot.define do
     job_location { "at_one_school" }
     job_title { factory_sample(JOB_TITLES) }
     listed_elsewhere { nil }
-    main_job_role { factory_sample(Vacancy.main_job_role_options) }
-    additional_job_roles do
-      case main_job_role
-      when "teacher"
-        factory_rand_sample(Vacancy.additional_job_role_options, 0..2)
-      when "sendco"
-        []
-      else
-        factory_rand_sample(["send_responsible"], 0..1)
-      end
-    end
+    job_role { factory_sample(Vacancy.job_roles.keys) }
+    ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_role == "teacher" }
     personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
     publish_on { Date.current }
     salary { factory_sample(SALARIES) }

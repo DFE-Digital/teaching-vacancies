@@ -302,7 +302,9 @@ shared:
     - how_to_apply
     - job_location
     - readable_job_location
+    - job_role
     - job_roles
+    - ect_status
     - contact_number
     - publisher_organisation_id
     - starts_asap

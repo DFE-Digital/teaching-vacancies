@@ -40,6 +40,7 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role_details))
 
+      fill_in_ect_status_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
 
@@ -122,6 +123,8 @@ RSpec.describe "Creating a vacancy" do
 
       fill_in_job_role_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
+
+      fill_in_ect_status_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
 
       fill_in_education_phases_form_fields(vacancy)
@@ -207,9 +210,13 @@ RSpec.describe "Creating a vacancy" do
 
         choose "Teacher"
         click_on "Continue"
+
+        fill_in_ect_status_form_fields(vacancy)
         click_on "Continue"
+
         choose "Secondary"
         click_on "Continue"
+
         fill_in "Job title", with: "test vacancy"
         choose "Permanent"
         click_on "Continue"

@@ -97,12 +97,12 @@ en:
     vacancy_id:
       blank: Select a job to copy
   job_role_errors: &job_role_errors
-    main_job_role:
+    job_role:
       inclusion: Select a job role
       blank: Select a job role
   job_role_details_errors: &job_role_details_errors
-    send_responsible:
-      inclusion: Select whether the role has SEND responsibilities
+    ect_status:
+      inclusion: Select yes if this role is suitable for an early career teacher
   job_location_errors: &job_location_errors
     job_location:
       inclusion: Select the location where the job will be based
