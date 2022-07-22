@@ -53,7 +53,9 @@ const Map = class {
   markerCustomUIEvents(marker, { target }) {
     marker.getElement().addEventListener('focus', async () => {
       const markerData = await target.data();
-      target.eventHandlers.open(markerData);
+      if (markerData) {
+        target.eventHandlers.open(markerData);
+      }
       this.activeMarker(marker);
     });
 
@@ -72,15 +74,18 @@ const Map = class {
   }
 
   static createMarkerPopup(marker, { open, target }) {
-    if (target) {
-      marker.bindPopup('', { className: 'map-component__map__popup' });
-      marker.on('keydown', (e) => e.target.closePopup());
-      marker.on('popupopen', async () => {
-        const markerData = await target.data();
-        marker.setPopupContent(target.eventHandlers.open(markerData));
-      });
-      if (open) marker.on('add', () => marker.openPopup());
-    }
+    (async () => {
+      const markerData = await target.data();
+      if (markerData) {
+        marker.bindPopup('', { className: 'map-component__map__popup' });
+        marker.on('keydown', (e) => e.target.closePopup());
+        marker.on('popupopen', () => {
+          marker.setPopupContent(target.eventHandlers.open(markerData));
+        });
+        marker.openPopup();
+        if (open) marker.on('add', () => marker.openPopup());
+      }
+    })();
   }
 
   activeMarker(marker) {
@@ -97,7 +102,11 @@ const Map = class {
 
   focusMarker(id, offset) {
     this.markerOffset = offset;
-    document.getElementById(id).focus();
+    const marker = document.getElementById(id);
+
+    if (marker) {
+      marker.focus();
+    }
   }
 
   /* eslint-disable class-methods-use-this */
