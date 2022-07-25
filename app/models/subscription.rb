@@ -59,6 +59,6 @@ class Subscription < ApplicationRecord
   end
 
   def organisation
-    Organisation.find_by(slug: search_criteria["organisation_slug"])
+    Organisation.find_by(slug: search_criteria["organisation_slug"]) if search_criteria["organisation_slug"]
   end
 end
