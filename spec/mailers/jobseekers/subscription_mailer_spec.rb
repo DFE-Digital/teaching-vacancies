@@ -33,7 +33,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
 
   describe "#confirmation" do
     let(:mail) { described_class.confirmation(subscription.id) }
-    let(:notify_template) { NOTIFY_SUBSCRIPTION_CONFIRMATION_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
     let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "jobseeker_subscription_confirmation" } }
 
     it "sends a confirmation email" do
@@ -84,7 +84,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
 
   describe "#update" do
     let(:mail) { described_class.update(subscription.id) }
-    let(:notify_template) { NOTIFY_SUBSCRIPTION_UPDATE_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
     let(:campaign_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "jobseeker_subscription_update" } }
 
     it "sends a confirmation email" do
@@ -112,6 +112,20 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       let(:user_anonymised_jobseeker_id) { nil }
 
       it "triggers a `jobseeker_subscription_update` email event without the anonymised jobseeker id" do
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_update).with_data(expected_data)
+      end
+    end
+
+    context "from Sandbox environment" do
+      let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
+      let(:jobseeker) { create(:jobseeker, email: email) }
+      let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
+
+      before do
+        allow(Rails.env).to receive(:sandbox?).and_return(true)
+      end
+
+      it "triggers a `publisher_sign_in_fallback` email event" do
         expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_update).with_data(expected_data)
       end
     end

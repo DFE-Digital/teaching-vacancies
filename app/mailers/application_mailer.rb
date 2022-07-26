@@ -30,7 +30,7 @@ class ApplicationMailer < Mail::Notify::Mailer
     email_event_type
   end
 
-  def template
+  def general_template
     Rails.env.sandbox? ? NOTIFY_SANDBOX_TEMPLATE : NOTIFY_PRODUCTION_TEMPLATE
   end
 end

@@ -15,7 +15,7 @@ module Jobseekers::DeviseEmails
     send_email(
       jobseeker: record,
       subject: subject,
-      template: NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE,
+      template: general_template,
       to: to,
       token: token,
     )
@@ -24,14 +24,14 @@ module Jobseekers::DeviseEmails
   def email_changed(record, _opts = {})
     send_email(
       jobseeker: record,
-      template: NOTIFY_JOBSEEKER_EMAIL_CHANGED_TEMPLATE,
+      template: general_template,
     )
   end
 
   def reset_password_instructions(record, token, _opts = {})
     send_email(
       jobseeker: record,
-      template: NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE,
+      template: general_template,
       token: token,
     )
   end
@@ -39,7 +39,7 @@ module Jobseekers::DeviseEmails
   def unlock_instructions(record, token, _opts = {})
     send_email(
       jobseeker: record,
-      template: NOTIFY_JOBSEEKER_LOCKED_ACCOUNT_TEMPLATE,
+      template: general_template,
       token: token,
     )
   end

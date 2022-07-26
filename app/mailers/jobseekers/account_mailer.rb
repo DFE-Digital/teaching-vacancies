@@ -4,14 +4,14 @@ class Jobseekers::AccountMailer < Jobseekers::BaseMailer
   def account_closed(record, _opts = {})
     send_email(
       jobseeker: record,
-      template: NOTIFY_JOBSEEKER_ACCOUNT_CLOSED_TEMPLATE,
+      template: general_template,
     )
   end
 
   def inactive_account(record, _opts = {})
     send_email(
       jobseeker: record,
-      template: NOTIFY_JOBSEEKER_INACTIVE_ACCOUNT_TEMPLATE,
+      template: general_template,
     )
   end
 end

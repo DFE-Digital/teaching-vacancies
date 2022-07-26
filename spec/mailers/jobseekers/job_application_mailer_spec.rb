@@ -19,7 +19,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   describe "#application_shortlisted" do
     let(:job_application) { build(:job_application, :status_shortlisted, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.application_shortlisted(job_application) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_APPLICATION_SHORTLISTED_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `jobseeker_application_shortlisted` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_shortlisted.subject"))
@@ -37,7 +37,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   describe "#application_submitted" do
     let(:job_application) { build(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.application_submitted(job_application) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_APPLICATION_SUBMITTED_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `jobseeker_application_submitted` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_submitted.subject"))
@@ -56,7 +56,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   describe "#application_unsuccessful" do
     let(:job_application) { build(:job_application, :status_unsuccessful, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.application_unsuccessful(job_application) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_APPLICATION_UNSUCCESSFUL_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `jobseeker_application_unsuccessful` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_unsuccessful.subject"))
@@ -74,7 +74,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
   describe "#job_listing_ended_early" do
     let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.job_listing_ended_early(job_application, vacancy) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_JOB_LISTING_ENDED_EARLY_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `jobseeker_job_listing_ended_early` email" do
       expect(mail.subject).to eq("Update on #{vacancy.job_title} at #{vacancy.organisation_name}")
@@ -86,6 +86,18 @@ RSpec.describe Jobseekers::JobApplicationMailer do
 
     it "triggers a `jobseeker_job_listing_ended_early` email event" do
       expect { mail.deliver_now }.to have_triggered_event(:jobseeker_job_listing_ended_early).with_data(expected_data)
+    end
+
+    context "from Sandbox environment" do
+      let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
+
+      before do
+        allow(Rails.env).to receive(:sandbox?).and_return(true)
+      end
+
+      it "triggers a `publisher_sign_in_fallback` email event" do
+        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_job_listing_ended_early).with_data(expected_data)
+      end
     end
   end
 end

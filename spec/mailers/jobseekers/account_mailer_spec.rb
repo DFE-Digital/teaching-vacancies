@@ -16,7 +16,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
   describe "#account_closed" do
     let(:mail) { described_class.account_closed(jobseeker) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_ACCOUNT_CLOSED_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends an `account_closed` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.account_closed.subject"))
@@ -27,7 +27,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
   describe "#confirmation_instructions" do
     let(:mail) { described_class.confirmation_instructions(jobseeker, token) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_CONFIRMATION_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     context "when the jobseeker is pending reconfirmation" do
       let(:email) { "unconfirmed@example.net" }
@@ -79,7 +79,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
   describe "#email_changed" do
     let(:mail) { described_class.email_changed(jobseeker) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_EMAIL_CHANGED_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `jobseeker_email_changed` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.email_changed.subject"))
@@ -94,7 +94,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
   describe "#inactive_account" do
     let(:mail) { described_class.inactive_account(jobseeker) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_INACTIVE_ACCOUNT_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends an `inactive_account` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.inactive_account.subject"))
@@ -109,7 +109,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
   describe "#reset_password_instructions" do
     let(:mail) { described_class.reset_password_instructions(jobseeker, token) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `jobseeker_reset_password_instructions` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.reset_password_instructions.subject"))
@@ -125,7 +125,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
   describe "#unlock_instructions" do
     let(:mail) { described_class.unlock_instructions(jobseeker, token) }
-    let(:notify_template) { NOTIFY_JOBSEEKER_LOCKED_ACCOUNT_TEMPLATE }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     it "sends a `jobseeker_unlock_instructions` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.unlock_instructions.subject"))
