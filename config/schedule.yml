@@ -63,11 +63,6 @@ remove_stale_vacancies:
   class: 'RemoveStaleVacanciesJob'
   queue: low
 
-remove_expired_vacancies_from_google_index:
-  cron: '0 07 * * *'
-  class: 'RemoveExpiredVacanciesFromGoogleIndexJob'
-  queue: low
-
 remove_vacancies_that_expired_yesterday_from_google_index:
   cron: '0 04 * * *'
   class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
