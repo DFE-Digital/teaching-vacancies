@@ -32,7 +32,7 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
 
       page.visit "https://#{smoke_test_domain}/jobs?keyword=Maths"
 
-      if page.has_css?(".search-results-sorting__stats")
+      if page.has_css?(".search-results")
         expect(page).to have_content(I18n.t("subscriptions.link.text"))
       else
         expect(page).to have_content(I18n.t("subscriptions.link.no_search_results.link"))

@@ -35,7 +35,7 @@
 
       #search-results
         - if @vacancies.any?
-          = render "vacancies/search/sort_and_stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
+          = render "vacancies/search/sort", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
           = render "vacancies/search/results", vacancies: @vacancies
         - elsif @vacancies_search.organisation_slug
           = render "vacancies/search/no_results_organisation", organisation_name: @vacancies_search.organisation.name
@@ -44,3 +44,5 @@
         - else
           = render "vacancies/search/no_results"
       = govuk_pagination(pagy: @pagy)
+      - if @vacancies.any?
+        = render "vacancies/search/stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
