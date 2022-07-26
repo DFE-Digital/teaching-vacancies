@@ -5,7 +5,7 @@ RSpec.describe Publishers::AuthenticationFallbackMailer do
     let(:publisher) { create(:publisher) }
     let(:login_key) { publisher.emergency_login_keys.create(not_valid_after: Time.current + 10.minutes) }
     let(:mail) { described_class.sign_in_fallback(login_key_id: login_key.id, publisher: publisher) }
-    let(:notify_template) { "2f37ec1d-58ef-4cd9-9d0a-4272723dda3d" }
+    let(:notify_template) { "262f8230-87cc-4f6a-b982-6dba390d3c6c" }
     let(:expected_data) do
       {
         notify_template: notify_template,
@@ -18,6 +18,9 @@ RSpec.describe Publishers::AuthenticationFallbackMailer do
 
     it "sends an email with the correct subject, heading, and login link" do
       expect(mail.subject.downcase).to include("sign in to teaching vacancies")
+    end
+
+    it "sends an email with the correct heading, and login link" do
       expect(body).to include("sign in to teaching vacancies")
                   .and include("click the link")
                   .and include("/login_keys/#{login_key.id}")
@@ -25,6 +28,18 @@ RSpec.describe Publishers::AuthenticationFallbackMailer do
 
     it "triggers a `publisher_sign_in_fallback` email event" do
       expect { mail.deliver_now }.to have_triggered_event(:publisher_sign_in_fallback).with_data(expected_data)
+    end
+
+    context "from Sandbox environment" do
+      let(:notify_template) { "964aed53-9fe0-42d7-bc4e-af0e57e83227" }
+
+      before do
+        allow(Rails.env).to receive(:sandbox?).and_return(true)
+      end
+
+      it "triggers a `publisher_sign_in_fallback` email event" do
+        expect { mail.deliver_now }.to have_triggered_event(:publisher_sign_in_fallback).with_data(expected_data)
+      end
     end
   end
 end

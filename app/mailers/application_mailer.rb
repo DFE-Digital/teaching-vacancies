@@ -29,4 +29,8 @@ class ApplicationMailer < Mail::Notify::Mailer
   def utm_campaign
     email_event_type
   end
+
+  def template
+    Rails.env.sandbox? ? NOTIFY_SANDBOX_TEMPLATE : NOTIFY_PRODUCTION_TEMPLATE
+  end
 end

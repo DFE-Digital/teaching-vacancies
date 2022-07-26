@@ -1,6 +1,6 @@
 class Publishers::AuthenticationFallbackMailer < Publishers::BaseMailer
   def sign_in_fallback(login_key_id:, publisher:)
-    @template = NOTIFY_PUBLISHER_AUTHENTICATION_FALLBACK_TEMPLATE
+    @template = template
     @publisher = publisher
     @to = publisher.email
 
