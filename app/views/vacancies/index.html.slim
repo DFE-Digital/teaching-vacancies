@@ -9,6 +9,9 @@
 
 = search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page)
 
+- if @vacancies_search.active_criteria? && @vacancies.count.positive?
+  p = t("subscriptions.link.help_text_html", link: govuk_link_to(t("subscriptions.link.text"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, coordinates_present: @vacancies_search.point_coordinates.present?)))
+
 = form_for @form, as: "", url: jobs_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
   .govuk-grid-row
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
@@ -41,4 +44,3 @@
         - else
           = render "vacancies/search/no_results"
       = govuk_pagination(pagy: @pagy)
-      = job_alert_link(vacancies_search: @vacancies_search, count: @vacancies.count)
