@@ -59,7 +59,7 @@ FactoryBot.define do
 
     trait :all_through do
       phase { :all_through }
-      readable_phases { %w[primary middle secondary 16-19] }
+      readable_phases { ["primary", "middle", "secondary", "16 to 19"] }
     end
 
     trait :in_london do
