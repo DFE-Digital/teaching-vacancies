@@ -10,7 +10,7 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   def alert(subscription_id, vacancy_ids)
     @subscription_id = subscription_id
 
-    @template = general_template
+    @template = template
     @to = subscription.email
 
     @vacancies = Vacancy.where(id: vacancy_ids)

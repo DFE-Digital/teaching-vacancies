@@ -4,7 +4,7 @@ class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
   def confirmation(subscription_id)
     @subscription_id = subscription_id
 
-    @template = general_template
+    @template = template
     @to = subscription.email
 
     view_mail(@template, to: @to, subject: I18n.t("jobseekers.subscription_mailer.confirmation.subject"))
@@ -13,7 +13,7 @@ class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
   def update(subscription_id)
     @subscription_id = subscription_id
 
-    @template = general_template
+    @template = template
     @to = subscription.email
 
     view_mail(@template, to: @to, subject: I18n.t("jobseekers.subscription_mailer.update.subject"))

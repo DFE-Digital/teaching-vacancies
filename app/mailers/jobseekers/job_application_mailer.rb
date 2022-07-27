@@ -6,7 +6,7 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
     @contact_email = @vacancy.contact_email
     @jobseeker = @job_application.jobseeker
 
-    @template = general_template
+    @template = template
     @to = @jobseeker.email
 
     view_mail(@template, to: @to, subject: I18n.t("jobseekers.job_application_mailer.application_shortlisted.subject"))
@@ -18,7 +18,7 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
     @contact_email = @vacancy.contact_email
     @jobseeker = job_application.jobseeker
 
-    @template = general_template
+    @template = template
     @to = @jobseeker.email
 
     view_mail(@template, to: @to, subject: I18n.t("jobseekers.job_application_mailer.application_submitted.subject"))
@@ -31,7 +31,7 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
     @contact_email = @vacancy.contact_email
     @jobseeker = @job_application.jobseeker
 
-    @template = general_template
+    @template = template
     @to = @jobseeker.email
 
     view_mail(@template, to: @to, subject: I18n.t("jobseekers.job_application_mailer.application_unsuccessful.subject"))
@@ -42,7 +42,7 @@ class Jobseekers::JobApplicationMailer < Jobseekers::BaseMailer
     @jobseeker = job_application.jobseeker
     @vacancy = vacancy
 
-    @template = general_template
+    @template = template
     @to = job_application.jobseeker.email
 
     view_mail(@template, to: @to, subject: t(".subject", job_title: @vacancy.job_title, organisation_name: @vacancy.organisation_name))

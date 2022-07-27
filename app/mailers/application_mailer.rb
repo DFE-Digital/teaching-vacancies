@@ -8,7 +8,7 @@ class ApplicationMailer < Mail::Notify::Mailer
 
   private
 
-  attr_reader :template, :to
+  attr_reader :to
 
   def trigger_email_event
     email_event.trigger(email_event_type, email_event_data)
@@ -30,7 +30,7 @@ class ApplicationMailer < Mail::Notify::Mailer
     email_event_type
   end
 
-  def general_template
+  def template
     Rails.env.sandbox? ? NOTIFY_SANDBOX_TEMPLATE : NOTIFY_PRODUCTION_TEMPLATE
   end
 end

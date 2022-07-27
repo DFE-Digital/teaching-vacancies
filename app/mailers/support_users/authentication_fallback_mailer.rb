@@ -1,6 +1,6 @@
 class SupportUsers::AuthenticationFallbackMailer < SupportUsers::BaseMailer
   def sign_in_fallback(support_user:, signed_id:)
-    @template = general_template
+    @template = template
     @support_user = support_user
     @to = support_user.email
 
