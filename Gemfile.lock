@@ -352,7 +352,7 @@ GEM
       net-protocol
       timeout
     nio4r (2.5.8)
-    nokogiri (1.13.7)
+    nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     noticed (1.5.9)
@@ -562,7 +562,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-cron (1.6.0)
+    sidekiq-cron (1.7.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     signet (0.17.0)
@@ -596,7 +596,7 @@ GEM
     tilt (2.0.10)
     timeout (0.3.0)
     trailblazer-option (0.1.2)
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
     unf (0.1.4)
