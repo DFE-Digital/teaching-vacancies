@@ -171,9 +171,7 @@ RSpec.describe Jobseekers::AlertMailer do
       let(:jobseeker) { create(:jobseeker, email: email) }
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
-      before do
-        allow(Rails.env).to receive(:sandbox?).and_return(true)
-      end
+      before { allow(Rails.env).to receive(:sandbox?).and_return(true) }
 
       it "triggers a `publisher_sign_in_fallback` email event" do
         expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)

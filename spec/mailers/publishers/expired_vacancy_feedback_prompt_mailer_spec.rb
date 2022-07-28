@@ -40,9 +40,7 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
     context "from Sandbox environment" do
       let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
 
-      before do
-        allow(Rails.env).to receive(:sandbox?).and_return(true)
-      end
+      before { allow(Rails.env).to receive(:sandbox?).and_return(true) }
 
       it "triggers a `publisher_sign_in_fallback` email event" do
         expect { mail.deliver_now }.to have_triggered_event(:publisher_prompt_for_feedback).with_data(expected_data)

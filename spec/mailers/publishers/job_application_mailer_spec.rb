@@ -41,9 +41,7 @@ RSpec.describe Publishers::JobApplicationMailer do
     context "from Sandbox environment" do
       let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
 
-      before do
-        allow(Rails.env).to receive(:sandbox?).and_return(true)
-      end
+      before { allow(Rails.env).to receive(:sandbox?).and_return(true) }
 
       it "triggers an email event" do
         expect { mail.deliver_now }
