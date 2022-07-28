@@ -1,4 +1,13 @@
-namespace :db do
+namespace :db do # rubocop:disable Metrics/BlockLength
+  desc "Set job role and ect_status from old job_roles field"
+  task set_new_job_role_and_ect_status: :environment do
+    main_job_roles = [0, 1, 4, 5, 6, 7]
+    Vacancy.published.find_each do |v|
+      v.update_columns job_role: (v.job_roles&.find { |r| r.in? main_job_roles } || 0),
+                       ect_status: v.job_roles&.include?(3) ? :ect_suitable : :ect_unsuitable
+    end
+  end
+
   desc "Asynchronously import organisations from GIAS and seed the database"
   task async_seed: :environment do
     SeedDatabaseJob.perform_later

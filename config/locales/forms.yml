@@ -233,17 +233,17 @@ en:
         subjects: What subjects will the teacher focus on?
         subjects_placeholder: Search
       publishers_job_listing_job_role_form:
-        main_job_role:  >-
+        job_role:  >-
           You can list all the roles below on Teaching Vacancies. You cannot list other roles such as
           finance manager, administrative assistant, cleaner or chef.
-        main_job_role_options:
+        job_role_options:
           education_support: Includes learning support and tutors
           middle_leader: Includes Heads of Year or Department
           sendco: Special educational needs and disabilities coordinator
           senior_leader: Includes Deputy/Assistant Head, Headteacher, and trust-level roles
           teaching_assistant: Includes Higher Level Teaching Assistants (HLTAs) and SEND teaching assistants
       publishers_job_listing_job_role_details_form:
-        additional_job_roles: Select all that apply
+        ect_status: Early career teachers were previously called newly qualified teachers(NQT)
       publishers_job_listing_job_summary_form:
         about_organisation: >-
           This will appear next to the job details under ‘%{organisation_type} overview’. Feel free to adapt this text
@@ -607,7 +607,7 @@ en:
           ks1: KS1
           ks2: KS2
       publishers_job_listing_job_role_form:
-        main_job_role_options:
+        job_role_options:
           education_support: Education support
           middle_leader: Middle leader
           sendco: SENDCo
@@ -615,9 +615,9 @@ en:
           teacher: Teacher
           teaching_assistant: Teaching assistant
       publishers_job_listing_job_role_details_form:
-        additional_job_roles_options:
-          ect_suitable: Suitable for early career teachers
-          send_responsible: SEND responsibilities (special educational needs and disabilities)
+        ect_status_options:
+          ect_suitable: "Yes"
+          ect_unsuitable: "No"
       publishers_job_listing_job_summary_form:
         about_organisation: About %{organisation}
         job_advert: Job advert
@@ -756,10 +756,9 @@ en:
         key_stages_html: Key stage (optional<span class='govuk-visually-hidden'> field</span>)</span>
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_role_form:
-        main_job_role: What is the job role?
+        job_role: What is the job role?
       publishers_job_listing_job_role_details_form:
-        additional_job_roles_html: Tell us more about the role (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        send_responsible: Does the role have SEND responsibilities (special educational needs and disabilities)?
+        ect_status: Is this role suitable for an early career teacher (ECT)?
       publishers_job_listing_job_location_form:
         job_location: Where will the job be based?
       publishers_job_listing_schools_form:

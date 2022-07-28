@@ -52,7 +52,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
   def publisher_has_used_feature?
     current_publisher.vacancies.where(enable_job_applications: true).any? do |vacancy|
-      vacancy.main_job_role == "education_support"
+      vacancy.job_role == "education_support"
     end
   end
 

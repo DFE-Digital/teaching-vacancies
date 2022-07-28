@@ -38,22 +38,14 @@ class VacancyPresenter < BasePresenter
     ].compact
   end
 
-  def readable_main_job_role
-    I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{main_job_role}")
+  def readable_job_role
+    I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_role}") if job_role
   end
 
-  def readable_additional_job_roles
-    return unless model.additional_job_roles.any?
+  def readable_ect_status
+    return unless model.ect_status.present?
 
-    roles = model.additional_job_roles.map do |role|
-      tag.li I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{role}")
-    end
-    tag.ul safe_join(roles), class: "govuk-list"
-  end
-
-  def readable_job_roles(exclude_ect_suitable: false)
-    roles = exclude_ect_suitable ? model.job_roles.excluding("ect_suitable") : model.job_roles
-    roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{role}") }.join(", ")
+    I18n.t("helpers.label.publishers_job_listing_job_role_details_form.ect_status_options.#{model.ect_status}")
   end
 
   def readable_key_stages

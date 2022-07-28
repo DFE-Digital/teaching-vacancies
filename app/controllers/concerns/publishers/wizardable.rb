@@ -1,6 +1,5 @@
 module Publishers::Wizardable
   STRIP_CHECKBOXES = {
-    job_role_details: %i[additional_job_roles],
     schools: %i[organisation_ids],
     job_details: %i[subjects],
     working_patterns: %i[working_patterns],
@@ -9,12 +8,12 @@ module Publishers::Wizardable
   private
 
   def job_role_params(params)
-    params.require(:publishers_job_listing_job_role_form).permit(:main_job_role).merge(completed_steps: completed_steps)
+    params.require(:publishers_job_listing_job_role_form).permit(:job_role).merge(completed_steps: completed_steps)
   end
 
   def job_role_details_params(params)
     params.require(:publishers_job_listing_job_role_details_form)
-          .permit(:send_responsible, additional_job_roles: [])
+          .permit(:ect_status)
           .merge(completed_steps: completed_steps)
   end
 

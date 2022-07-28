@@ -18,10 +18,10 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = built_scope.where("vacancies.subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
 
     # General filters
-    main_job_roles = extract_main_job_roles(filters[:job_roles])
-    additional_job_roles = extract_additional_job_roles(filters[:job_roles])
-    built_scope = built_scope.with_any_of_job_roles(main_job_roles) if main_job_roles.present?
-    built_scope = built_scope.with_job_roles(additional_job_roles) if additional_job_roles.present?
+    built_scope = built_scope.where(job_role: job_roles(filters[:job_roles])) if job_roles(filters[:job_roles]).present?
+    built_scope = built_scope.ect_suitable if filters[:ect_statuses]&.include?("ect_suitable") || filters[:job_roles]&.include?("ect_suitable")
+    # TODO: Remove this scope when we do not have any more live SEND responsible jobs
+    built_scope = built_scope.where(":job_roles = ANY (job_roles)", job_roles: 2) if filters[:job_roles]&.include?("send_responsible")
 
     working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
     built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
@@ -33,21 +33,9 @@ class VacancyFilterQuery < ApplicationQuery
 
   private
 
-  def extract_main_job_roles(job_roles)
-    return nil unless job_roles&.any?
-
-    job_roles.map(&:to_sym) & Vacancy::MAIN_JOB_ROLES.keys
-  end
-
-  def extract_additional_job_roles(job_roles)
-    return nil unless job_roles&.any?
-
-    additional_job_roles = job_roles.map(&:to_sym)
-    # Replace renamed job roles with their new equivalent
-    additional_job_roles.push(:ect_suitable) if additional_job_roles.delete(:nqt_suitable)
-    additional_job_roles.push(:send_responsible) if additional_job_roles.delete(:sen_specialist)
-
-    additional_job_roles & Vacancy::ADDITIONAL_JOB_ROLES.keys
+  def job_roles(filter)
+    filter&.map { |job_role| job_role == "sen_specialist" ? "sendco" : job_role }
+          &.reject { |job_role| job_role.in? %w[ect_suitable send_responsible] }
   end
 
   def fix_legacy_working_patterns(working_patterns)

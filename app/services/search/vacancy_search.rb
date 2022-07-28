@@ -20,7 +20,7 @@ class Search::VacancySearch
   end
 
   def clear_filters_params
-    active_criteria.merge(job_roles: [], phases: [], working_patterns: [], subjects: [], previous_keyword: keyword, skip_strip_checkboxes: true)
+    active_criteria.merge(job_roles: [], ect_statuses: [], phases: [], working_patterns: [], subjects: [], previous_keyword: keyword, skip_strip_checkboxes: true)
   end
 
   def remove_filter_params

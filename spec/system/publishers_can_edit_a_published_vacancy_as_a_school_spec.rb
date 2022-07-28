@@ -10,7 +10,8 @@ RSpec.describe "Publishers can edit a vacancy" do
       VacancyPresenter.new(
         create(:vacancy, organisations: [school],
                          job_location: "at_one_school",
-                         job_roles: %i[teacher send_responsible], working_patterns: %w[full_time part_time],
+                         job_roles: %i[teacher], ect_status: "ect_suitable",
+                         working_patterns: %w[full_time part_time],
                          publish_on: Date.current, expires_at: 1.day.from_now.change(hour: 9, minute: 0)),
       )
     end

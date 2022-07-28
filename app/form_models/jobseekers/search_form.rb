@@ -4,8 +4,8 @@ class Jobseekers::SearchForm
   attr_reader :keyword, :previous_keyword,
               :location, :radius,
               :organisation_slug,
-              :job_roles, :subjects, :phases, :working_patterns,
-              :job_role_options, :ect_suitable_options, :send_responsible_options,
+              :job_roles, :ect_statuses, :subjects, :phases, :working_patterns,
+              :job_role_options, :ect_status_options,
               :phase_options, :working_pattern_options,
               :filters_from_keyword, :total_filters, :sort
 
@@ -15,7 +15,8 @@ class Jobseekers::SearchForm
     @previous_keyword = params[:previous_keyword]
     @landing_page = params[:landing_page]
     @location = params[:location]
-    @job_roles = params[:job_roles] || params[:job_role] || []
+    @job_roles = params[:job_roles] || []
+    @ect_statuses = params[:ect_statuses] || []
     @subjects = params[:subjects] || []
     @phases = params[:phases] || []
     @working_patterns = params[:working_patterns] || []
@@ -38,6 +39,7 @@ class Jobseekers::SearchForm
       radius: @radius,
       organisation_slug: @organisation_slug,
       job_roles: @job_roles,
+      ect_statuses: @ect_statuses,
       subjects: @subjects,
       phases: @phases,
       working_patterns: @working_patterns,
@@ -63,6 +65,7 @@ class Jobseekers::SearchForm
 
     @subjects += filters_from_keyword["subjects"]
     @job_roles += filters_from_keyword["job_roles"]
+    @ect_statuses += filters_from_keyword["ect_statuses"]
     @phases += filters_from_keyword["phases"]
     @working_patterns += filters_from_keyword["working_patterns"]
   end
@@ -75,22 +78,22 @@ class Jobseekers::SearchForm
 
     @subjects -= previous_filters["subjects"]
     @job_roles -= previous_filters["job_roles"]
+    @ect_statuses -= previous_filters["ect_statuses"]
     @phases -= previous_filters["phases"]
     @working_patterns -= previous_filters["working_patterns"]
   end
 
   def set_facet_options
-    @job_role_options = Vacancy.main_job_role_options.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.main_job_role_options.#{option}")] }
+    @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{option}")] }
     @phase_options = [%w[primary Primary], %w[middle Middle], %w[secondary Secondary], %w[16-19 16-19]]
-    @ect_suitable_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable"), I18n.t("jobs.filters.ect_suitable_only")]]
-    @send_responsible_options = [["send_responsible", I18n.t("jobs.filters.send_responsible"), I18n.t("jobs.filters.send_responsible_only")]]
+    @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{option}")]
     end
   end
 
   def set_total_filters
-    @total_filters = [@job_roles&.count, @subjects&.count, @phases&.count, @working_patterns&.count].compact.sum
+    @total_filters = [@job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @working_patterns&.count].compact.sum
   end
 
   def set_radius(radius_param)

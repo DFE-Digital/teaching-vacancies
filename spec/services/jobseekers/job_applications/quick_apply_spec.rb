@@ -48,8 +48,8 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
     context "when there are steps in the most recent application that are not relevant to the new application" do
       subject { described_class.new(jobseeker, vacancy_for_teaching_assistant).job_application }
-      let(:vacancy_for_teacher) { create(:vacancy, main_job_role: "teacher") }
-      let(:vacancy_for_teaching_assistant) { create(:vacancy, main_job_role: "teaching_assistant") }
+      let(:vacancy_for_teacher) { create(:vacancy, :teacher) }
+      let(:vacancy_for_teaching_assistant) { create(:vacancy, :teaching_assistant) }
       let!(:most_recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.hour.ago, jobseeker: jobseeker, vacancy: vacancy_for_teacher) }
       let(:attributes_to_not_copy) { %i[qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details statutory_induction_complete] }
       let(:completed_step_to_not_copy) { %i[professional_status] }

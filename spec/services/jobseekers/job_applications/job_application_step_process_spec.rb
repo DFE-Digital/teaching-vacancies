@@ -24,7 +24,7 @@ RSpec.describe Jobseekers::JobApplications::JobApplicationStepProcess do
     end
 
     context "when vacancy job role is education_support" do
-      let(:vacancy) { build_stubbed(:vacancy, job_roles: %w[education_support]) }
+      let(:vacancy) { build_stubbed(:vacancy, :education_support) }
 
       it "has the expected step groups" do
         expect(subject.steps).to eq(all_possible_step_groups - %i[professional_status])

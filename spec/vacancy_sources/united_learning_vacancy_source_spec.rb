@@ -24,7 +24,8 @@ RSpec.describe UnitedLearningVacancySource do
       expect(vacancy.job_advert).to eq("Lorem ipsum dolor sit amet")
       expect(vacancy.salary).to eq("PT/EPT + TLR 2B")
 
-      expect(vacancy.job_roles).to eq(%w[teacher ect_suitable send_responsible])
+      expect(vacancy.job_role).to eq("teacher")
+      expect(vacancy.ect_status).to eq("ect_suitable")
       expect(vacancy.subjects).to eq(%w[Geography])
       expect(vacancy.working_patterns).to eq(%w[full_time])
       expect(vacancy.contract_type).to eq("permanent")

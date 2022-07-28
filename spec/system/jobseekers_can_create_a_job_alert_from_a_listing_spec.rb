@@ -5,6 +5,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   let(:vacancy) do
     create(:vacancy,
            job_roles: ["teacher"],
+           ect_status: "ect_suitable",
            job_title: "Teacher",
            subjects: ["English"],
            working_patterns: ["full_time"],
@@ -45,7 +46,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
     expect(page.find_field("jobseekers-subscription-form-location-field").value).to eq(school.postcode)
     expect(page.find_field("jobseekers-subscription-form-radius-field").value).to eq(Search::CriteriaInventor::DEFAULT_RADIUS_IN_MILES.to_s)
     expect(page.find_field("jobseekers-subscription-form-job-roles-teacher-field")).to be_checked
-    expect(page.find_field("jobseekers-subscription-form-job-roles-ect-suitable-field")).not_to be_checked
+    expect(page.find_field("jobseekers-subscription-form-ect-statuses-ect-suitable-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-phases-secondary-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-working-patterns-full-time-field")).not_to be_checked
   end

@@ -1,7 +1,7 @@
 - r.section :job_role do |s|
-  - s.row :readable_main_job_role, label: t("jobs.main_job_role"), optional: true
-  - unless vacancy.main_job_role == "sendco"
-    - s.row :readable_additional_job_roles, label: t("jobs.additional_job_roles"), optional: true
+  - s.row :readable_job_role, label: t("jobs.job_role"), optional: true
+  - if vacancy.teacher?
+    - s.row :readable_ect_status, label: t("helpers.legend.publishers_job_listing_job_role_details_form.ect_status"), optional: true
 
 - unless current_organisation.school?
   - r.section :job_location, forms: %w[JobLocationForm SchoolsForm] do

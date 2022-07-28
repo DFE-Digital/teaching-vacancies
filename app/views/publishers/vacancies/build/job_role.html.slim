@@ -9,7 +9,7 @@
 
       h2.govuk-heading-l = t("publishers.vacancies.steps.job_role")
 
-      = f.govuk_collection_radio_buttons :main_job_role, Vacancy.main_job_role_options, :to_s, bold_labels: true
+      = f.govuk_collection_radio_buttons :job_role, Vacancy.job_roles.keys, :to_s, bold_labels: true
 
       .govuk-button-group
         = f.govuk_submit t("buttons.continue")

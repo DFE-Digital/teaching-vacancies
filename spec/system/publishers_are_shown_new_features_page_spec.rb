@@ -35,7 +35,7 @@ RSpec.xdescribe "Publishers are shown the new features page" do
     end
 
     context "when they have already used the new feature (published jobs that enable applications for education support roles)" do
-      let!(:vacancy) { create(:vacancy, enable_job_applications: true, main_job_role: "education_support", publisher: publisher, organisations: [organisation]) }
+      let!(:vacancy) { create(:vacancy, :education_support, enable_job_applications: true, publisher: publisher, organisations: [organisation]) }
 
       before { visit organisation_path }
 
