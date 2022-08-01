@@ -10,7 +10,7 @@ RSpec.shared_examples "a successful search" do
 
     it "displays page 1 jobs" do
       within("ul.search-results") { expect(page).to have_css("li", count: 2) }
-      expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 6, type: "results")))
+      expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 6, type: "results"))
     end
 
     context "when navigating between pages" do
@@ -20,7 +20,7 @@ RSpec.shared_examples "a successful search" do
         end
 
         within("ul.search-results") { expect(page).to have_css("li", count: 2) }
-        expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("app.pagy_stats_html", from: 5, to: 6, total: 6, type: "results")))
+        expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 5, to: 6, total: 6, type: "results"))
       end
     end
   end
@@ -35,7 +35,7 @@ RSpec.shared_examples "a successful search" do
     end
 
     it "displays only the Maths jobs" do
-      expect(page).to have_css(".search-results-sorting__stats", text: strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 2, type: "results")))
+      expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 2, type: "results"))
     end
 
     context "when sorting the jobs by most recently published" do

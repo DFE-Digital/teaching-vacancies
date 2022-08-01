@@ -1,9 +1,13 @@
 @import 'base';
 
 .sort-component {
+  nav span {
+    margin-right: govuk-spacing(1);
+  }
+
   &__list {
     list-style: none;
-    margin: 0 0 0 0.3125em;
+    margin: 0;
     padding-left: govuk-spacing(0);
 
     @include govuk-media-query($from: tablet) {
