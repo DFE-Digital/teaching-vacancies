@@ -510,12 +510,12 @@ RSpec.describe Vacancy do
 
     context "when the organisation changes" do
       let(:phase) { :multiple_phases }
-      let(:other_organisation) { create(:school, readable_phases: ["16-19"]) }
+      let(:other_organisation) { create(:school, readable_phases: ["16 to 19"]) }
 
       it "updates the phases on save" do
         expect(subject.readable_phases).to contain_exactly("primary", "middle")
         subject.update(organisations: [other_organisation])
-        expect(subject.readable_phases).to contain_exactly("16-19")
+        expect(subject.readable_phases).to contain_exactly("16 to 19")
       end
     end
   end

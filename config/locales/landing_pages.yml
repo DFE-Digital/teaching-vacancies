@@ -95,8 +95,8 @@ en:
       meta_description: "Discover the latest jobs for maths teachers, science teachers, English teachers and more. Find your next secondary school job on Teaching Vacancies."
     16-19-education-provider-jobs:
       name: "16-19"
-      title: "16-19 Education Provider Jobs"
-      heading: "%{count} jobs with 16-19 education providers"
+      title: "16 to 19 Education Provider Jobs"
+      heading: "%{count} jobs with 16 to 19 education providers"
       meta_description: "Use Teaching Vacancies to find FE college teacher jobs and more roles near you at sixth-form colleges and other providers of 16 to 19 education."
 
     ### Subjects

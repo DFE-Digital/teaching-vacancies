@@ -24,8 +24,8 @@ class School < Organisation
     middle_deemed_primary: %w[middle],
     middle_deemed_secondary: %w[middle],
     secondary: %w[secondary],
-    "16-19": %w[16-19],
-    all_through: %w[primary middle secondary 16-19],
+    "16-19": ["16 to 19"],
+    all_through: ["primary", "middle", "secondary", "16 to 19"],
   }.freeze
 
   def religious_character

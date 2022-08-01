@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe VacancyFilterQuery do
   let(:organisation1) { create(:school, readable_phases: %w[primary middle]) }
-  let(:organisation2) { create(:school, readable_phases: %w[secondary 16-19]) }
+  let(:organisation2) { create(:school, readable_phases: ["secondary", "16 to 19"]) }
 
   let!(:vacancy1) { create(:vacancy, job_title: "Vacancy 1", subjects: %w[German French], working_patterns: %w[full_time], job_role: "senior_leader", ect_status: "ect_suitable", organisations: [organisation1]) }
   let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], working_patterns: %w[full_time], phase: :primary, job_role: "teacher", ect_status: "ect_suitable") }
