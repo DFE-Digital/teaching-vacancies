@@ -2,4 +2,4 @@
   - content_for :page_title_prefix, landing_page.title
   - content_for :page_description, landing_page.meta_description
 - else
-  - content_for :page_title_prefix, t(".title", count: params[:page].to_i)
+  - content_for :page_title_prefix, t(".title", count: params[:page].to_i, heading: search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page, strip_special_characters: true))

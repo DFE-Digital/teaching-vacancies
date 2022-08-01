@@ -85,8 +85,8 @@ en:
 
     search_result_heading:
       count_html:
-        one: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> job
-        other: <span class='govuk-!-font-weight-bold'>%{jobs_count}</span> jobs
+        one: "%{jobs_count} job"
+        other: "%{jobs_count} jobs"
       keyword_html:
         one: matches <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
         other: match <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
@@ -94,10 +94,10 @@ en:
       radius_html:
         zero: in
         one: >-
-          within <span class='govuk-!-font-weight-bold'>%{count} %{units}</span> of
+          within %{count} %{units} of
         other: >-
-          within <span class='govuk-!-font-weight-bold'>%{count} %{units}</span> of
-      location_html: <span class='govuk-!-font-weight-bold text-capitalize'>&lsquo;%{location}&rsquo;</span>
+          within %{count} %{units} of
+      location_html: "&lsquo;%{location}&rsquo;"
       organisation_html: at <span class='govuk-!-font-weight-bold'>%{organisation}</span>
       unit_of_length: mile
       without_search:

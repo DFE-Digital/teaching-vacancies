@@ -540,9 +540,9 @@ en:
             other: (%{count} results)
       page_title_and_description:
         title:
-          zero: Find a job in teaching - Search results
-          one: Find a job in teaching - Search results
-          other: Find a job in teaching - Search results page %{count}
+          zero: "%{heading} - Find a job in teaching"
+          one: "%{heading} - Find a job in teaching"
+          other: "%{heading} page %{count} - Find a job in teaching"
     show:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
 

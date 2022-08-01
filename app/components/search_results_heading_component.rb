@@ -1,5 +1,5 @@
 class SearchResultsHeadingComponent < ViewComponent::Base
-  def initialize(vacancies_search:, landing_page:)
+  def initialize(vacancies_search:, landing_page:, strip_special_characters: false)
     @vacancies_search = vacancies_search
     @landing_page = landing_page
     @keyword = @vacancies_search.keyword
@@ -8,6 +8,7 @@ class SearchResultsHeadingComponent < ViewComponent::Base
     @total_count = @vacancies_search.total_count
     @readable_count = number_with_delimiter(@total_count)
     @organisation_slug = @vacancies_search.organisation_slug
+    @strip_special_characters = strip_special_characters
   end
 
   def heading
@@ -17,7 +18,9 @@ class SearchResultsHeadingComponent < ViewComponent::Base
       return t("jobs.search_result_heading.without_search", jobs_count: @readable_count, count: @total_count)
     end
 
-    [count_phrase, keyword_phrase, radius_phrase, location_phrase, organisation_phrase].compact.join(" ")
+    heading_text = [count_phrase, keyword_phrase, radius_phrase, location_phrase, organisation_phrase].compact.join(" ")
+
+    @strip_special_characters ? heading_text.gsub("&lsquo;", "").gsub("&rsquo;", "") : heading_text
   end
 
   private
