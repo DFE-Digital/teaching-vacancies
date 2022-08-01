@@ -45,4 +45,4 @@
           = render "vacancies/search/no_results"
       = govuk_pagination(pagy: @pagy)
       - if @vacancies.any?
-        = render "vacancies/search/stats", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
+        = render "vacancies/search/stats"
