@@ -2,7 +2,7 @@ class Publishers::JobApplicationMailer < Publishers::BaseMailer
   helper VacanciesHelper
 
   def applications_received(publisher:)
-    @template = NOTIFY_PUBLISHER_JOB_APPLICATIONS_RECEIVED_TEMPLATE
+    @template = template
     @publisher = publisher
     @vacancies = publisher.vacancies_with_job_applications_submitted_yesterday
     @to = publisher.email

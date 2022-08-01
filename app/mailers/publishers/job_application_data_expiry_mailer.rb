@@ -4,7 +4,7 @@ class Publishers::JobApplicationDataExpiryMailer < Publishers::BaseMailer
   helper_method :data_expiration_date
 
   def job_application_data_expiry
-    @template = NOTIFY_PUBLISHER_JOB_APPLICATION_DATA_EXPIRY_TEMPLATE
+    @template = template
     @publisher = params[:publisher]
     @vacancy = params[:vacancy]
     @to = @publisher.email

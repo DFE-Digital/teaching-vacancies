@@ -1,6 +1,6 @@
 class Publishers::ExpiredVacancyFeedbackPromptMailer < Publishers::BaseMailer
   def prompt_for_feedback(publisher, vacancies)
-    @template = NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES
+    @template = template
     @publisher = publisher
     @to = publisher.email
 

@@ -10,7 +10,7 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
     let(:email) { "test@example.com" }
     let(:publisher) { create(:publisher, email: email) }
     let(:mail) { described_class.prompt_for_feedback(publisher, vacancies) }
-    let(:notify_template) { NOTIFY_PROMPT_FEEDBACK_FOR_EXPIRED_VACANCIES }
+    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
     let(:vacancies) { create_list(:vacancy, 5, :expired) }
     let(:expected_data) do
       {
@@ -35,6 +35,16 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
 
     it "triggers a `publisher_prompt_for_feedback` email event" do
       expect { mail.deliver_now }.to have_triggered_event(:publisher_prompt_for_feedback).with_data(expected_data)
+    end
+
+    context "from Sandbox environment" do
+      let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
+
+      before { allow(Rails.env).to receive(:sandbox?).and_return(true) }
+
+      it "triggers a `publisher_sign_in_fallback` email event" do
+        expect { mail.deliver_now }.to have_triggered_event(:publisher_prompt_for_feedback).with_data(expected_data)
+      end
     end
   end
 end
