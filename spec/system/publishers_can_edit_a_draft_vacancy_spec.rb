@@ -34,6 +34,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       expect(Vacancy.find(vacancy.id).readable_job_location).to eq(
         I18n.t("publishers.organisations.readable_job_location.central_office"),
       )
+      expect(page).to_not have_css(".tabs-component")
 
       change_job_location(vacancy, "at_one_school", "Multi-academy trust")
 

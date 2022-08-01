@@ -28,6 +28,8 @@ RSpec.describe "Publishers can edit a vacancy" do
       within("h1.govuk-heading-l") do
         expect(page).to have_content(I18n.t("buttons.manage_listing"))
       end
+
+      expect(page).to have_css(".tabs-component", count: 1)
     end
 
     scenario "create a job sidebar is not present" do
