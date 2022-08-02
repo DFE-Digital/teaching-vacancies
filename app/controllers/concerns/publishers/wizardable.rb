@@ -68,7 +68,7 @@ module Publishers::Wizardable
       job_location: job_location,
       organisation_ids: vacancy.organisation_ids.blank? ? current_organisation.id : nil,
       readable_job_location: readable_job_location,
-      status: vacancy.status.blank? ? "draft" : nil,
+      status: vacancy.status || "draft",
     }
     params.require(:publishers_job_listing_job_details_form)
           .permit(:job_title, :contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration, key_stages: [], subjects: [])
