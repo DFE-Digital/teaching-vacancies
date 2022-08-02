@@ -6,8 +6,8 @@ RSpec.describe VacancyFilterQuery do
 
   let!(:vacancy1) { create(:vacancy, job_title: "Vacancy 1", subjects: %w[German French], working_patterns: %w[full_time], job_role: "senior_leader", ect_status: "ect_suitable", organisations: [organisation1]) }
   let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], working_patterns: %w[full_time], phase: :primary, job_role: "teacher", ect_status: "ect_suitable") }
-  let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", subjects: %w[German Spanish], working_patterns: %w[part_time], job_roles: "senior_leader", ect_status: "ect_unsuitable", organisations: [organisation1]) }
-  let!(:vacancy5) { create(:vacancy, job_title: "Vacancy 5", subjects: %w[German Spanish], working_patterns: %w[term_time], job_roles: "senior_leader", ect_status: "ect_suitable", organisations: [organisation2]) }
+  let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", subjects: %w[German Spanish], working_patterns: %w[part_time], job_role: "senior_leader", ect_status: "ect_unsuitable", organisations: [organisation1]) }
+  let!(:vacancy5) { create(:vacancy, job_title: "Vacancy 5", subjects: %w[German Spanish], working_patterns: %w[term_time], job_role: "senior_leader", ect_status: "ect_suitable", organisations: [organisation2]) }
   let!(:vacancy6) { create(:vacancy, job_title: "Vacancy 6", subjects: %w[English Spanish], working_patterns: %w[full_time], phase: :primary, job_role: "teacher", ect_status: "ect_unsuitable") }
   let!(:vacancy7) { create(:vacancy, job_title: "Vacancy 7", subjects: %w[English Spanish], working_patterns: %w[full_time], phase: :primary, job_role: "sendco", ect_status: "ect_suitable") }
 

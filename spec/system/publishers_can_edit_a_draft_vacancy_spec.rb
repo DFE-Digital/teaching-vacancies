@@ -4,11 +4,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   let(:publisher) { create(:publisher) }
 
   let!(:vacancy) do
-    create(
-      :vacancy, :central_office, :draft,
-      organisations: [organisation],
-      job_roles: %w[teacher]
-    )
+    create(:vacancy, :central_office, :draft, :teacher, :ect_suitable, organisations: [organisation])
   end
 
   before { login_publisher(publisher: publisher, organisation: organisation) }

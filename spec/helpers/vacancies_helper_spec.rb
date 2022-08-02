@@ -26,7 +26,7 @@ RSpec.describe VacanciesHelper do
 
   describe "#vacancy_breadcrumbs" do
     subject { vacancy_breadcrumbs(vacancy).to_a }
-    let(:vacancy) { build_stubbed(:vacancy, job_title: "A Job", job_roles: %w[teacher]) }
+    let(:vacancy) { build_stubbed(:vacancy, :teacher, job_title: "A Job") }
     let(:request) { double("request", host: "example.com", referrer: referrer) }
     let(:referrer) { "http://www.example.com/foo" }
     let(:landing_page) { instance_double(LandingPage, title: "Landing Page", slug: "landing") }

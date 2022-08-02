@@ -5,7 +5,7 @@ RSpec.describe "Editing a published vacancy" do
   let(:school_group) { create(:trust, schools: [school1, school2]) }
   let(:school1) { create(:school, name: "First school") }
   let(:school2) { create(:school, name: "Second school") }
-  let(:vacancy) { create(:vacancy, :central_office, :published, organisations: [school_group], job_roles: %w[teacher]) }
+  let(:vacancy) { create(:vacancy, :central_office, :published, :teacher, :ect_suitable, organisations: [school_group]) }
 
   before { login_publisher(publisher: publisher, organisation: school_group) }
 

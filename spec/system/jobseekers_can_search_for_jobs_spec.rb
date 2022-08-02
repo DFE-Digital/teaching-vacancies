@@ -74,13 +74,13 @@ end
 
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:school) { create(:school) }
-  let!(:maths_job1) { create(:vacancy, :past_publish, publish_on: Date.current - 1, job_title: "Maths 1", job_roles: %i[teacher], subjects: %w[Mathematics], organisations: [school]) }
-  let!(:maths_job2) { create(:vacancy, :past_publish, publish_on: Date.current - 2, job_title: "Maths Teacher 2", job_roles: %i[teacher], subjects: %w[Mathematics], organisations: [school]) }
-  let!(:job1) { create(:vacancy, :past_publish, job_title: "Physics Teacher", job_roles: %i[teacher], subjects: [], organisations: [school]) }
-  let!(:job2) { create(:vacancy, :past_publish, job_title: "PE Teacher", job_roles: %i[teacher], subjects: [], organisations: [school]) }
-  let!(:job3) { create(:vacancy, :past_publish, job_title: "Chemistry Teacher", job_roles: %i[teacher], subjects: [], organisations: [school]) }
-  let!(:job4) { create(:vacancy, :past_publish, job_title: "Geography Teacher", job_roles: %i[teacher], subjects: [], organisations: [school]) }
-  let!(:expired_job) { create(:vacancy, :expired, job_title: "Maths Teacher", job_roles: %i[teacher], subjects: [], organisations: [school]) }
+  let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school]) }
+  let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school]) }
+  let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: [], organisations: [school]) }
+  let!(:job2) { create(:vacancy, :past_publish, :teacher, job_title: "PE Teacher", subjects: [], organisations: [school]) }
+  let!(:job3) { create(:vacancy, :past_publish, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [school]) }
+  let!(:job4) { create(:vacancy, :past_publish, :teacher, job_title: "Geography Teacher", subjects: [], organisations: [school]) }
+  let!(:expired_job) { create(:vacancy, :expired, :teacher, job_title: "Maths Teacher", subjects: [], organisations: [school]) }
   let(:per_page) { 2 }
 
   context "when searching using the mobile search fields" do
