@@ -6,7 +6,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school_group) { create(:local_authority, schools: [school1, school2]) }
   let(:school1) { create(:school, name: "First school") }
   let(:school2) { create(:school, name: "Second school") }
-  let(:vacancy) { build(:vacancy, :at_one_school, :no_tv_applications, job_roles: %w[teacher]) }
+  let(:vacancy) { build(:vacancy, :at_one_school, :no_tv_applications, :teacher, :ect_suitable) }
   let(:created_vacancy) { Vacancy.last }
 
   before do
@@ -27,7 +27,7 @@ RSpec.describe "Creating a vacancy" do
   end
 
   context "when job is located at a single school in the local authority" do
-    let(:vacancy) { build(:vacancy, :at_one_school, job_roles: %w[teacher]) }
+    let(:vacancy) { build(:vacancy, :at_one_school, :teacher, :ect_suitable) }
 
     describe "#job_location" do
       scenario "displays error message unless a school is selected" do
@@ -75,7 +75,7 @@ RSpec.describe "Creating a vacancy" do
   end
 
   context "when job is located at multiple schools in the local authority" do
-    let(:vacancy) { build(:vacancy, :at_multiple_schools, job_roles: %w[teacher]) }
+    let(:vacancy) { build(:vacancy, :at_multiple_schools, :teacher, :ect_suitable) }
 
     describe "#job_location" do
       scenario "displays error message unless at least 2 schools are selected" do

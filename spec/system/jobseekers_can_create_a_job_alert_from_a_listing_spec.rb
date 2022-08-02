@@ -4,8 +4,8 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   let(:school) { create(:school, :secondary) }
   let(:vacancy) do
     create(:vacancy,
-           job_roles: ["teacher"],
-           ect_status: "ect_suitable",
+           :teacher,
+           :ect_suitable,
            job_title: "Teacher",
            subjects: ["English"],
            working_patterns: ["full_time"],
