@@ -1,6 +1,8 @@
+import * as Sentry from '@sentry/browser';
+
 const environment = process.env.NODE_ENV;
 const noop = () => true;
-const silentMock = {
+const silentLogger = {
   log: noop,
   warn: noop,
   error: noop,
@@ -8,7 +10,7 @@ const silentMock = {
 };
 
 /* eslint-disable no-console */
-const consoleMock = {
+const consoleLogger = {
   log: console.log,
   warn: console.warn,
   error: console.error,
@@ -16,10 +18,13 @@ const consoleMock = {
 };
 /* eslint-enable no-console */
 
-const mockLogger = environment === 'test' ? silentMock : consoleMock;
+const sentryLogger = {
+  log: Sentry.captureMessage,
+  error: Sentry.captureException,
+};
 
-// TODO: window.Rollbar will always be undefined as we have migrated away from Rollbar.
-//   We will re-implement logging with Sentry in the future.
-const Logger = window.Rollbar || mockLogger;
+const mockLogger = environment === 'test' ? silentLogger : consoleLogger;
+
+const Logger = sentryLogger || mockLogger;
 
 export default Logger;
