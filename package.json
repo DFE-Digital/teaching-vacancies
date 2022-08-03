@@ -17,7 +17,7 @@
     "accessible-autocomplete": "^2.0.4",
     "axios": "^0.27.2",
     "classlist-polyfill": "^1.2.0",
-    "core-js": "^3.24.0",
+    "core-js": "^3.24.1",
     "dompurify": "^2.3.10",
     "govuk-frontend": "^4.2.0",
     "leaflet": "^1.8.0",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.10",
-    "@babel/preset-env": "^7.18.9",
+    "@babel/preset-env": "^7.18.10",
     "concurrently": "^7.3.0",
     "dotenv": "^16.0.1",
     "esbuild": "^0.14.50",
