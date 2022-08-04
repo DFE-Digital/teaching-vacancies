@@ -2,7 +2,6 @@ import { Controller } from '@hotwired/stimulus';
 
 import loader from '../loadingIndicator/loadingIndicator';
 import api from './api';
-import logger from '../../lib/logging';
 
 export const ERROR_MESSAGE = 'Unable to find your location';
 export const LOGGING_MESSAGE = '[component: locationFinder]: Unable to find user location';
@@ -43,13 +42,11 @@ const LocationFinder = class extends Controller {
   onFailure() {
     this.showErrorMessage();
     this.stopLoading();
-    logger.log(LOGGING_MESSAGE);
   }
 
   onSuccess(postcode) {
     this.input.value = postcode;
     this.stopLoading();
-    logger.log('location finder usage: success');
   }
 
   removeErrorMessage() {
