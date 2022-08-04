@@ -3,6 +3,7 @@ json.set! "@type", "JobPosting"
 
 json.title vacancy.job_title
 json.jobBenefits vacancy.benefits
+json.jobBenefitsDetails vacancy.benefits_details
 json.datePosted vacancy.publish_on.to_time.iso8601
 json.description vacancy.job_advert
 json.occupationalCategory vacancy.job_role

@@ -5,9 +5,18 @@ ul.search-results role="list"
         = results_link(vacancy, class: "view-vacancy-link")
       p.govuk-body
         = vacancy_full_job_location(vacancy)
-      dl
-        dt class="govuk-!-font-weight-bold" = salary_label(vacancy)
-        dd = salary_value(vacancy)
+      - if vacancy.salary?
+        dl
+          dt class="govuk-!-font-weight-bold" = t("jobs.annual_salary")
+          dd = vacancy.salary
+      - if vacancy.actual_salary?
+        dl
+          dt class="govuk-!-font-weight-bold" = t("jobs.actual_salary")
+          dd = vacancy.actual_salary
+      - if vacancy.pay_scale?
+        dl
+          dt class="govuk-!-font-weight-bold" = t("jobs.pay_scale")
+          dd = vacancy.pay_scale
       dl
         dt class="govuk-!-font-weight-bold" = organisation_type_label(vacancy)
         dd = organisation_type_value(vacancy)

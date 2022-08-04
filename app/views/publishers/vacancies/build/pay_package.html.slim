@@ -9,11 +9,21 @@
 
       h2.govuk-heading-l = t("publishers.vacancies.steps.pay_package")
 
-      = f.govuk_text_field :salary, label: { size: "s" }, required: true
-      - unless vacancy.working_patterns == ["full_time"]
-        = f.govuk_text_field :actual_salary, label: { size: "s" }
+      = f.govuk_check_boxes_fieldset :salary_types, legend: { size: "m" } do
+        = f.govuk_check_box :salary_types, "full_time", link_errors: true do
+          = f.govuk_text_field :salary, label: { size: "s" }
 
-      = f.govuk_text_area :benefits, label: { size: "s", id: "benefits-label" }
+        - if vacancy.working_patterns.include? "part_time"
+          = f.govuk_check_box :salary_types, "part_time" do
+            = f.govuk_text_field :actual_salary, label: { size: "s" }
+
+        = f.govuk_check_box :salary_types, "pay_scale" do
+          = f.govuk_text_field :pay_scale, label: { size: "s" }
+
+      = f.govuk_radio_buttons_fieldset :benefits, legend: { size: "m" } do
+        = f.govuk_radio_button :benefits, "true" do
+          = f.govuk_text_field :benefits_details, label: { size: "s" }
+        = f.govuk_radio_button :benefits, "false", link_errors: true
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 

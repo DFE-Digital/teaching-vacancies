@@ -19,8 +19,8 @@ class VacancyPresenter < BasePresenter
     simple_format(fix_bullet_points(model.how_to_apply)) if model.how_to_apply.present?
   end
 
-  def benefits
-    simple_format(fix_bullet_points(model.benefits)) if model.benefits.present?
+  def benefits_details
+    simple_format(fix_bullet_points(model.benefits_details)) if model.benefits_details.present?
   end
 
   # TODO: Working Patterns: Remove this once all vacancies with legacy working patterns & working_pattern_details have expired

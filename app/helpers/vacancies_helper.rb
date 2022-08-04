@@ -17,20 +17,21 @@ module VacanciesHelper
     "#{'Error: ' if vacancy.errors.present? && show_errors}#{page_title}"
   end
 
-  def salary_label(vacancy)
-    vacancy.actual_salary? ? t("jobs.annual_salary") : t("jobs.salary")
-  end
-
-  def salary_value(vacancy)
-    safe_join [vacancy.salary, actual_salary(vacancy)]
-  end
-
   def actual_salary(vacancy)
     return unless vacancy.actual_salary?
 
     [
       tag.div(t("jobs.actual_salary"), class: "govuk-hint govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16"),
       vacancy.actual_salary,
+    ]
+  end
+
+  def pay_scale(vacancy)
+    return unless vacancy.pay_scale?
+
+    [
+      tag.div(t("jobs.pay_scale"), class: "govuk-hint govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16"),
+      vacancy.pay_scale,
     ]
   end
 

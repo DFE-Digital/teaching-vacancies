@@ -17,7 +17,8 @@ FactoryBot.define do
     about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
     actual_salary { factory_rand(20_000..100_000) }
     enable_job_applications { true }
-    benefits { Faker::Lorem.paragraph(sentence_count: factory_rand(1..3)) }
+    benefits { true }
+    benefits_details { Faker::Lorem.paragraph(sentence_count: factory_rand(1..3)) }
     completed_steps do
       %w[job_role job_role_details job_location job_details working_patterns pay_package important_dates documents applying_for_the_job job_summary]
     end
@@ -33,6 +34,7 @@ FactoryBot.define do
     listed_elsewhere { nil }
     job_role { factory_sample(Vacancy.job_roles.keys) }
     ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_role == "teacher" }
+    pay_scale { factory_sample(SALARIES) }
     personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
     publish_on { Date.current }
     salary { factory_sample(SALARIES) }

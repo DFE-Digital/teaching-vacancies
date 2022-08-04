@@ -56,9 +56,19 @@ module VacancyHelpers
   end
 
   def fill_in_pay_package_form_fields(vacancy)
+    check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.full_time")
     fill_in "publishers_job_listing_pay_package_form[salary]", with: vacancy.salary
-    fill_in "publishers_job_listing_pay_package_form[actual_salary]", with: vacancy.actual_salary unless vacancy.working_patterns == ["full_time"]
-    fill_in "publishers_job_listing_pay_package_form[benefits]", with: vacancy.benefits
+
+    if vacancy.working_patterns.include? "part_time"
+      check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.part_time")
+      fill_in "publishers_job_listing_pay_package_form[actual_salary]", with: vacancy.actual_salary
+    end
+
+    check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.pay_scale")
+    fill_in "publishers_job_listing_pay_package_form[pay_scale]", with: vacancy.pay_scale
+
+    choose I18n.t("helpers.label.publishers_job_listing_pay_package_form.benefits_options.true")
+    fill_in "publishers_job_listing_pay_package_form[benefits_details]", with: vacancy.benefits_details
   end
 
   def fill_in_important_dates_fields(vacancy)
@@ -163,7 +173,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.part_time_details) if vacancy.working_patterns.include?("part_time")
 
     expect(page).to have_content(vacancy.salary)
-    expect(page.html).to include(vacancy.benefits)
+    expect(page.html).to include(vacancy.benefits_details)
 
     expect(page).to have_content(vacancy.publish_on.to_formatted_s.strip)
     expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
@@ -199,7 +209,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.readable_working_patterns)
 
     expect(page).to have_content(vacancy.salary)
-    expect(page.html).to include(vacancy.benefits)
+    expect(page.html).to include(vacancy.benefits_details)
 
     expect(page).to have_content(vacancy.publish_on.to_formatted_s.strip)
     expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
@@ -234,6 +244,7 @@ module VacancyHelpers
       "@type": "JobPosting",
       title: vacancy.job_title,
       jobBenefits: vacancy.benefits,
+      jobBenefitsDetails: vacancy.benefits_details,
       datePosted: vacancy.publish_on.to_time.iso8601,
       description: vacancy.job_advert,
       occupationalCategory: vacancy.job_role,

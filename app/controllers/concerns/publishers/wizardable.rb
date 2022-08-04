@@ -4,6 +4,7 @@ module Publishers::Wizardable
     education_phases: %i[phases],
     job_details: %i[subjects key_stages],
     working_patterns: %i[working_patterns],
+    pay_package: %i[salary_types],
   }.freeze
 
   private
@@ -48,7 +49,7 @@ module Publishers::Wizardable
 
   def pay_package_params(params)
     params.require(:publishers_job_listing_pay_package_form)
-          .permit(:actual_salary, :salary, :benefits)
+          .permit(:actual_salary, :benefits, :benefits_details, :salary, :pay_scale, salary_types: [])
           .merge(completed_steps: completed_steps)
   end
 
