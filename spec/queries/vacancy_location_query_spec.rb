@@ -27,10 +27,10 @@ RSpec.describe VacancyLocationQuery do
     end
 
     context "when given a location that resolves to a LocationPolygon" do
-      let(:location) { "Lincolnshire" }
+      let(:location) { "Leeds" }
       let(:radius) { 42 }
 
-      let!(:location_polygon) { create(:location_polygon, name: "lincolnshire") }
+      let!(:location_polygon) { create(:location_polygon, name: "leeds") }
 
       let(:join_scope) { double("join scope") }
       let(:where_scope) { double("where scope") }
