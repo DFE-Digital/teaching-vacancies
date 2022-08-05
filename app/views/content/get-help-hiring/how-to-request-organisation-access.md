@@ -46,6 +46,21 @@ You’ll be asked which organisation you’re requesting a service for (if you h
 
 Your request will go back to the approver, and you will be able to see the status on your [My Services](https://services.signin.education.gov.uk/my-services) page.
 
+
+### Accessing Teaching Vacancies as a new free school
+
+A few months before your free school is due to open, your delivery officer will be in touch to get the details of the person you want to be given the initial access to [DfE Sign-in](https://services.signin.education.gov.uk/). They will receive their DfE Sign-in details once you have successfully completed an Ofsted pre-registration inspection, have a signed funding agreement, and your free school’s status has been changed to ‘proposed to open’ on GIAS. After a request is made, users are granted access to Teaching Vacancies by an approver. 
+If you need to add users, [guidance can be found here]( https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-approve-access-for-hiring-staff). 
+
+
+New free schools that are part of a multi-academy trust can access Teaching Vacancies earlier to recruit staff for free through MAT Level Access. 
+
+### Accessing Teaching Vacancies as an academy converter 
+If you have used Teaching Vacancies before and are converting to an academy, you will need to re-register through your [DfE Sign-in](https://services.signin.education.gov.uk/) to regain access. You can re-register after receiving your first payment from ESFA. Academies should activate their new DfE Sign-in account and add users to their academy within 28 days of opening. 
+
+
+Academy converters that are part of a multi-academy trust can access Teaching Vacancies earlier to recruit staff for free through MAT Level Access. 
+
 ## Being granted access by an approver
 
 It’s possible for organisation administrators to grant users access to services directly, rather than requiring individuals to make a request.
