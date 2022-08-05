@@ -759,11 +759,8 @@ en:
         job_role: What is the job role?
       publishers_job_listing_job_role_details_form:
         ect_status: Is this role suitable for an early career teacher (ECT)?
-      publishers_job_listing_job_location_form:
-        job_location: Where will the job be based?
       publishers_job_listing_schools_form:
-        organisation_ids: In which schools will the job be based?
-        organisation_id: In which school will the job be based?
+        organisations: Locations where the job is based
       publishers_job_listing_working_patterns_form:
         working_patterns: Working patterns
       subscription:
@@ -815,14 +812,5 @@ en:
           "16:00": 4pm
           "17:00": 5pm
           "23:59": 11:59pm
-      publishers_job_listing_job_location_form:
-        job_location:
-          local_authority:
-            at_one_school: At one school
-            at_multiple_schools: At more than one school
-          "Multi-academy trust":
-            at_one_school: At one school in the trust
-            central_office: At the trust's head office
-            at_multiple_schools: At more than one school in the trust
 
     placeholder:

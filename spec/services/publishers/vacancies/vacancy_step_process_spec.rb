@@ -10,31 +10,40 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
   let(:session) { {} }
 
   describe "#step_groups" do
-    let(:all_possible_step_groups) do
-      %i[
-        job_role job_location job_details working_patterns pay_package important_dates
-        applying_for_the_job documents job_summary review
-      ]
-    end
-
     context "when signed in as a school" do
-      let(:organisation) { build_stubbed(:school) }
+      let(:all_possible_step_groups) do
+        %i[
+          job_role job_location job_details working_patterns pay_package important_dates
+          applying_for_the_job documents job_summary review
+        ]
+      end
+      let(:organisation) { create(:school) }
+      let(:vacancy) do
+        create(:vacancy,
+               :draft,
+               :teacher,
+               organisations: [organisation])
+      end
 
       it "has the expected step groups" do
-        expect(subject.step_groups.keys).to eq(all_possible_step_groups - %i[job_location])
+        expect(subject.step_groups.keys).to eq(all_possible_step_groups.excluding(:job_location))
       end
     end
 
-    context "when signed in as a MAT" do
-      let(:organisation) { build_stubbed(:trust) }
-
-      it "has the expected step groups" do
-        expect(subject.step_groups.keys).to eq(all_possible_step_groups)
+    context "when not signed in as a school" do
+      let(:all_possible_step_groups) do
+        %i[
+          job_role job_location job_details working_patterns pay_package important_dates
+          applying_for_the_job documents job_summary review
+        ]
       end
-    end
-
-    context "when signed in as an LA" do
-      let(:organisation) { build_stubbed(:local_authority) }
+      let(:organisation) { create(:trust) }
+      let(:vacancy) do
+        create(:vacancy,
+               :draft,
+               :teacher,
+               organisations: [organisation])
+      end
 
       it "has the expected step groups" do
         expect(subject.step_groups.keys).to eq(all_possible_step_groups)
@@ -45,12 +54,12 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
   describe "#steps" do
     let(:all_possible_steps) do
       %i[
-        job_role job_role_details job_location schools education_phases job_details working_patterns
+        job_role job_role_details job_location education_phases job_details working_patterns
         pay_package important_dates applying_for_the_job applying_for_the_job_details documents job_summary review
       ]
     end
 
-    context "with teacher vacancies" do
+    context "when the job is for a teaching role" do
       let(:vacancy) { build_stubbed(:vacancy, :teacher) }
 
       it "does not skip the `job_roles_details` step" do
@@ -58,7 +67,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
     end
 
-    context "with any other job role" do
+    context "when the job is for any other role" do
       Vacancy.job_roles.each_key do |job_role|
         let(:vacancy) { build_stubbed(:vacancy, job_role: job_role) }
 
@@ -78,7 +87,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       it "returns the expected steps" do
-        expect(subject.steps).to eq(all_possible_steps - %i[job_location schools education_phases])
+        expect(subject.steps).to eq(all_possible_steps.excluding(:job_location, :education_phases))
       end
     end
 
@@ -108,32 +117,11 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       context "when the vacancy is at the central office" do
-        let(:vacancy) { build_stubbed(:vacancy, :teacher, job_location: "central_office") }
-
-        it "skips the `schools` step" do
-          expect(subject.steps).not_to include(:schools)
-        end
+        let(:trust) { create(:trust) }
+        let(:vacancy) { build_stubbed(:vacancy, :teacher, organisations: [trust]) }
 
         it "includes the `education_phases` step" do
           expect(subject.steps).to include(:education_phases)
-        end
-      end
-
-      context "when the job location has changed from central_office in the session" do
-        let(:vacancy) { build_stubbed(:vacancy, :teacher, job_location: "central_office") }
-        let(:session) { { job_location: "at_multiple_schools" } }
-
-        it "includes the `schools` step" do
-          expect(subject.steps).to include(:schools)
-        end
-      end
-
-      context "when the job location has changed to central_office in the session" do
-        let(:vacancy) { build_stubbed(:vacancy, :draft, :teacher, job_location: "at_multiple_schools") }
-        let(:session) { { job_location: "central_office" } }
-
-        it "skips the `schools` step" do
-          expect(subject.steps).to eq(all_possible_steps - %i[schools])
         end
       end
     end
@@ -179,7 +167,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       let(:vacancy) { build_stubbed(:vacancy, :published, :teacher) }
 
       it "returns the expected steps" do
-        expect(subject.steps).to eq(all_possible_steps - %i[job_location schools applying_for_the_job])
+        expect(subject.steps).to eq(all_possible_steps.excluding(:job_location, :applying_for_the_job))
       end
     end
   end

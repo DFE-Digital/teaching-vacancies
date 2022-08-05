@@ -69,19 +69,27 @@ class VacancyPresenter < BasePresenter
   end
 
   def school_group_names
-    return organisations.map(&:name) if organisations.none?(&:school?)
-
-    organisations.map(&:school_groups).flatten.map(&:name).uniq
+    organisations.map { |organisation|
+      if organisation.is_a?(SchoolGroup)
+        organisation.name
+      else
+        organisation.school_groups.map(&:name).reject(&:blank?)
+      end
+    }.flatten.uniq
   end
 
   def school_group_types
-    return organisations.map(&:group_type) if organisations.none?(&:school?)
-
-    organisations.map(&:school_groups).flatten.map(&:group_type).reject(&:blank?).uniq
+    organisations.map { |organisation|
+      if organisation.is_a?(SchoolGroup)
+        organisation.group_type
+      else
+        organisation.school_groups.map(&:group_type).reject(&:blank?)
+      end
+    }.flatten.uniq
   end
 
   def religious_character
-    organisations.map(&:religious_character).reject(&:blank?).uniq unless organisations.none?(&:school?)
+    organisations.filter_map { |organisation| organisation.religious_character if organisation.is_a?(School) }
   end
 
   private

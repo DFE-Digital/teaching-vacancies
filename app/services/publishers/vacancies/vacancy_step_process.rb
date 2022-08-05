@@ -37,14 +37,9 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def job_location_steps
-    return nil if organisation.school?
+    return [] if organisation.school?
 
-    most_up_to_date_job_location = session[:job_location].presence || vacancy.job_location
-    if most_up_to_date_job_location == "central_office"
-      %i[job_location]
-    else
-      %i[job_location schools]
-    end
+    %i[job_location]
   end
 
   def job_details_steps

@@ -1,7 +1,7 @@
 module Publishers::Wizardable
   STRIP_CHECKBOXES = {
-    schools: %i[organisation_ids],
-    job_details: %i[subjects],
+    job_location: %i[organisation_ids],
+    job_details: %i[subjects key_stages],
     working_patterns: %i[working_patterns],
   }.freeze
 
@@ -18,37 +18,9 @@ module Publishers::Wizardable
   end
 
   def job_location_params(params)
-    job_location = params[:publishers_job_listing_job_location_form][:job_location]
-    readable_job_location = readable_job_location(
-      job_location, school_name: current_organisation.name, schools_count: vacancy.organisation_ids.count
-    )
-    attributes_to_merge = {
-      completed_steps: completed_steps,
-      readable_job_location: job_location == "central_office" ? readable_job_location : nil,
-      organisation_ids: job_location == "central_office" ? current_organisation.id : nil,
-    }
-    session[:job_location] = job_location
-    params.require(:publishers_job_listing_job_location_form).permit(:job_location).merge(attributes_to_merge.compact)
-  end
-
-  def schools_params(params)
-    job_location = session[:job_location].presence || vacancy.job_location
-    organisation_ids = params[:publishers_job_listing_schools_form][:organisation_ids]
-    school_name = if organisation_ids.is_a?(String) && organisation_ids.present?
-                    School.find(params[:publishers_job_listing_schools_form][:organisation_ids]).name
-                  end
-    schools_count = if organisation_ids.is_a?(Array)
-                      params[:publishers_job_listing_schools_form][:organisation_ids].count
-                    end
-    readable_job_location = readable_job_location(job_location, school_name: school_name, schools_count: schools_count)
-    attributes_to_merge = {
-      completed_steps: completed_steps,
-      job_location: job_location,
-      readable_job_location: readable_job_location,
-    }
-    params.require(:publishers_job_listing_schools_form)
-          .permit(:organisation_ids, organisation_ids: [])
-          .merge(attributes_to_merge.compact)
+    params.require(:publishers_job_listing_job_location_form)
+          .permit(organisation_ids: [])
+          .merge(completed_steps: completed_steps)
   end
 
   def education_phases_params(params)
@@ -61,19 +33,9 @@ module Publishers::Wizardable
   end
 
   def job_details_params(params)
-    job_location = vacancy.job_location.presence || "at_one_school"
-    readable_job_location = vacancy.readable_job_location.presence || readable_job_location(job_location, school_name: current_organisation.name)
-    attributes_to_merge = {
-      completed_steps: completed_steps,
-      job_location: job_location,
-      organisation_ids: vacancy.organisation_ids.blank? ? current_organisation.id : nil,
-      readable_job_location: readable_job_location,
-      status: vacancy.status || "draft",
-    }
     params.require(:publishers_job_listing_job_details_form)
           .permit(:job_title, :contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration, key_stages: [], subjects: [])
-          .merge(attributes_to_merge.compact)
-          .merge(key_stages: params[:publishers_job_listing_job_details_form][:key_stages]&.reject(&:blank?))
+          .merge(completed_steps: completed_steps, status: vacancy.status || "draft")
   end
 
   def working_patterns_params(params)

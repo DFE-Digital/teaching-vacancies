@@ -29,7 +29,9 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     redirect_to select_a_job_for_copying_organisation_jobs_path and return if params[:create_or_copy] == "copy-existing"
 
     reset_session_vacancy!
-    vacancy = Vacancy.create(organisations: [current_organisation])
+
+    vacancy = Vacancy.create
+    vacancy.update(organisations: [current_organisation]) if current_organisation.school?
     vacancy.update(enable_job_applications: false) if current_organisation.local_authority?
     redirect_to organisation_job_build_path(vacancy.id, :job_role)
   end

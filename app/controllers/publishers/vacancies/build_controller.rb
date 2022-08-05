@@ -2,13 +2,12 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   include Wicked::Wizard
   include OrganisationsHelper
 
-  steps :job_role, :job_role_details, :job_location, :schools, :education_phases, :job_details, :working_patterns,
+  steps :job_role, :job_role_details, :job_location, :education_phases, :job_details, :working_patterns,
         :pay_package, :important_dates, :applying_for_the_job, :applying_for_the_job_details, :documents, :job_summary
 
   helper_method :back_path, :form
 
   before_action :strip_checkbox_params, only: %i[update]
-  before_action :set_multiple_schools
   before_action :set_school_options
 
   helper_method :current_publisher_preference
@@ -57,27 +56,23 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     send("#{step}_params", params)
   end
 
-  def job_location
-    @job_location ||= session[:job_location].presence || vacancy.job_location
-  end
-
   def finish_wizard_path
     organisation_job_review_path(vacancy.id)
   end
 
-  def set_multiple_schools
-    return unless step == :schools && current_organisation.school_group?
-
-    @multiple_schools = job_location == "at_multiple_schools"
-  end
-
   def set_school_options
-    return unless step == :schools && current_organisation.school_group?
+    return unless step == :job_location && current_organisation.school_group?
 
     schools = current_organisation.local_authority? ? current_publisher_preference.schools : current_organisation.schools
     @school_options = schools.not_closed.order(:name).map do |school|
       Option.new(id: school.id, name: school.name, address: full_address(school))
     end
+
+    return if current_organisation.local_authority?
+
+    @school_options.unshift(
+      Option.new(id: current_organisation.id, name: t("organisations.job_location_heading.central_office"), address: full_address(current_organisation)),
+    )
   end
 
   def current_publisher_preference

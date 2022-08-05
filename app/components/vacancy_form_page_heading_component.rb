@@ -17,11 +17,13 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
   def page_title
     return t("jobs.edit_job_title", job_title: vacancy.job_title) if vacancy.published?
 
-    t("jobs.create_a_job_title", organisation: organisation_from_job_location)
+    t("jobs.create_a_job_title", organisation: page_title_from_vacancy_organisations)
   end
 
-  def organisation_from_job_location
-    vacancy.at_multiple_schools? ? "multiple schools" : vacancy.organisation_name
+  def page_title_from_vacancy_organisations
+    return current_organisation.name if vacancy.organisations.none?
+
+    vacancy.organisations.many? ? "multiple schools" : vacancy.organisation_name
   end
 
   def back_path

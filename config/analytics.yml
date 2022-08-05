@@ -300,8 +300,6 @@ shared:
     - subjects
     - school_visits
     - how_to_apply
-    - job_location
-    - readable_job_location
     - job_role
     - ect_status
     - contact_number

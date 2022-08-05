@@ -22,7 +22,10 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
   def vacancy
     # Scope to internal vacancies to disallow editing of external ones
-    @vacancy ||= vacancies.internal.find(params[:job_id].presence || params[:id])
+
+    # As the vacancy is not associated with an organisation upon creation, calling the vacancies method will return an empty array as an organisation is not associated
+    # with it. To fix this, before the vacancy's status is set (and therefore before an organisation is associated), we find the job from the vacancies where status is nil.
+    @vacancy ||= (vacancies.internal.find_by(id: params[:job_id].presence || params[:id]) || Vacancy.where(status: nil).find(params[:job_id].presence || params[:id]))
   end
 
   def form_sequence
@@ -42,17 +45,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
       anchor: "errors",
       **extras,
     )
-  end
-
-  def readable_job_location(job_location, school_name: nil, schools_count: nil)
-    case job_location
-    when "at_one_school"
-      school_name
-    when "at_multiple_schools"
-      t("publishers.organisations.readable_job_location.at_multiple_schools_with_count", count: schools_count)
-    when "central_office"
-      t("publishers.organisations.readable_job_location.central_office")
-    end
   end
 
   def redirect_updated_job_with_message
@@ -78,7 +70,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def reset_session_vacancy!
-    session[:job_location] = nil
     session[:current_step] = nil
   end
 

@@ -21,14 +21,6 @@ RSpec.describe Publishers::VacancySort do
         expect(subject.map(&:by)).to eq %w[expires_at job_title]
       end
     end
-
-    context "for a SchoolGroup" do
-      let(:organisation) { build_stubbed(:school_group) }
-
-      it "appends readable_job_location to sort options" do
-        expect(subject.map(&:by)).to eq %w[expires_at job_title readable_job_location]
-      end
-    end
   end
 
   describe "#update" do

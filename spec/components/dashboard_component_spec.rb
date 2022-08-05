@@ -79,7 +79,7 @@ RSpec.describe DashboardComponent, type: :component do
         let(:organisation) { create(:trust, schools: [open_school, closed_school]) }
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
-        let!(:vacancy) { create(:vacancy, :published, :central_office, organisations: [organisation]) }
+        let!(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
         let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
         let!(:inline_component) { render_inline(subject) }
@@ -92,10 +92,10 @@ RSpec.describe DashboardComponent, type: :component do
           expect(inline_component.css(".govuk-summary-list").to_html).to include(vacancy.job_title)
         end
 
-        it "renders the vacancy readable job location in the table" do
+        it "renders the trust's name in the table" do
           expect(
             inline_component.css(".govuk-summary-list__key").to_html,
-          ).to include(vacancy.readable_job_location)
+          ).to include(I18n.t("organisations.job_location_summary.central_office"))
         end
 
         it "renders the link to view applicants" do
@@ -127,7 +127,7 @@ RSpec.describe DashboardComponent, type: :component do
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation, schools: [open_school]) }
-        let!(:vacancy) { create(:vacancy, :published, :at_one_school, organisations: [open_school]) }
+        let!(:vacancy) { create(:vacancy, :published, organisations: [open_school]) }
         let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
         let!(:inline_component) { render_inline(subject) }
@@ -144,10 +144,10 @@ RSpec.describe DashboardComponent, type: :component do
           expect(page).not_to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
         end
 
-        it "renders the vacancy readable job location in the table" do
+        it "renders the local authority's name in the table" do
           expect(
             inline_component.css(".govuk-summary-list__key").to_html,
-          ).to include(vacancy.readable_job_location)
+          ).to include(vacancy.organisation_name)
         end
 
         it "renders the filters sidebar" do
@@ -195,12 +195,12 @@ RSpec.describe DashboardComponent, type: :component do
     let(:organisation) { create(:trust, schools: [school_oxford, school_cambridge]) }
     let(:school_oxford) { create(:school, name: "Oxford") }
     let(:school_cambridge) { create(:school, name: "Cambridge") }
-    let!(:vacancy_cambridge) { create(:vacancy, :published, :at_one_school, organisations: [school_cambridge], job_title: "Scientist") }
+    let!(:vacancy_cambridge) { create(:vacancy, :published, organisations: [school_cambridge], job_title: "Scientist") }
 
     before { publisher_preference.update organisations: [school_oxford] }
 
     context "when a relevant job exists" do
-      let!(:vacancy_oxford) { create(:vacancy, :published, :at_one_school, organisations: [school_oxford], job_title: "Mathematician") }
+      let!(:vacancy_oxford) { create(:vacancy, :published, organisations: [school_oxford], job_title: "Mathematician") }
 
       let!(:inline_component) { render_inline(subject) }
 

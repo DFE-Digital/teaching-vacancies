@@ -103,8 +103,8 @@ module NotifyViewsHelper
     organisation = vacancy.organisation
     url = organisation_landing_page_url(organisation, **utm_params)
 
-    if vacancy.at_multiple_schools?
-      "#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{notify_link(url, organisation.name)}".html_safe
+    if vacancy.organisations.many?
+      "#{t('organisations.job_location_summary.at_multiple_locations')}, #{notify_link(url, organisation.name)}".html_safe
     else
       address_join([notify_link(url, organisation.name), organisation.town, organisation.county, organisation.postcode]).html_safe
     end

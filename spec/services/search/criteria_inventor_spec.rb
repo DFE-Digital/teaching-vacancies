@@ -10,14 +10,13 @@ RSpec.describe Search::CriteriaInventor do
   let(:subjects) { %w[English Maths] }
   let(:job_title) { "A wonderful job" }
   let(:job_role) { "teacher" }
-  let(:location_trait) { :at_one_school }
   let(:associated_orgs) { [school] }
   let(:vacancy) do
-    create(:vacancy, location_trait, organisations: associated_orgs,
-                                     working_patterns: working_patterns,
-                                     subjects: subjects,
-                                     job_title: job_title,
-                                     job_role: job_role)
+    create(:vacancy, organisations: associated_orgs,
+                     working_patterns: working_patterns,
+                     subjects: subjects,
+                     job_title: job_title,
+                     job_role: job_role)
   end
 
   describe "#criteria" do
@@ -36,7 +35,6 @@ RSpec.describe Search::CriteriaInventor do
         let(:school1) { create(:school, school_groups: [local_authority]) }
         let(:school2) { create(:school, school_groups: [local_authority]) }
         let(:associated_orgs) { [school1, school2] }
-        let(:location_trait) { :at_multiple_schools }
         let(:local_authority) { create(:local_authority) }
 
         it "sets the location to the local authority of the first school" do
@@ -49,7 +47,6 @@ RSpec.describe Search::CriteriaInventor do
       end
 
       context "when the vacancy is at the central office of a trust" do
-        let(:location_trait) { :central_office }
         let(:associated_orgs) { [trust] }
         let(:trust) { create(:trust) }
 

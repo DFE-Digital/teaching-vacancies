@@ -26,7 +26,6 @@ class Vacancy < ApplicationRecord
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
   enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
-  enum job_location: { at_one_school: 0, at_multiple_schools: 1, central_office: 2 }
   enum job_role: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum phase: { primary: 0, secondary: 1, "16-19": 2, multiple_phases: 3 }
@@ -77,7 +76,6 @@ class Vacancy < ApplicationRecord
                   if: proc { |vacancy| vacancy.listed? }
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
-  before_save :refresh_geolocation, if: -> { job_location_changed? }
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -98,11 +96,17 @@ class Vacancy < ApplicationRecord
   end
 
   def organisation
-    @organisation ||= organisations.one? ? organisations.first : organisations.first&.school_groups&.first
+    return organisations.first if organisations.one?
+
+    organisations.find(&:trust?) || organisations.first&.school_groups&.first
   end
 
   def location
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
+  end
+
+  def central_office?
+    organisations.one? && organisations.first.trust?
   end
 
   def listed?
@@ -193,7 +197,7 @@ class Vacancy < ApplicationRecord
   #   * the job location was changed to "central office"
   # In the former case, it gets an argument, which we don't need and thus ignore
   def refresh_geolocation(_school_added_or_removed = nil)
-    self.geolocation = if central_office? || at_one_school?
+    self.geolocation = if organisations.one?
                          organisation&.geopoint
                        else
                          points = organisations.filter_map(&:geopoint)
