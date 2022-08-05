@@ -1,17 +1,14 @@
 module VacancyHelpers
-  def fill_in_job_location_form_field(vacancy, group_type)
-    choose I18n.t("helpers.options.publishers_job_listing_job_location_form.job_location.#{group_type}.#{vacancy.job_location}")
-  end
-
-  def change_job_location(vacancy, location, group_type)
-    vacancy.job_location = location
+  def change_job_locations(vacancy, organisations)
+    vacancy.organisations = organisations
     click_header_link(I18n.t("publishers.vacancies.steps.job_location"))
-    fill_in_job_location_form_field(vacancy, group_type)
-    click_on I18n.t("buttons.continue")
+    fill_in_job_location_form_field(vacancy)
   end
 
-  def fill_in_school_form_field(school)
-    choose school.name
+  def fill_in_job_location_form_field(vacancy)
+    vacancy.organisations.each do |organisation|
+      check(organisation.school? ? organisation.name : I18n.t("organisations.job_location_heading.central_office"))
+    end
   end
 
   def fill_in_job_role_form_fields(vacancy)
@@ -139,10 +136,10 @@ module VacancyHelpers
     vacancy = VacancyPresenter.new(vacancy) unless vacancy.is_a?(VacancyPresenter)
 
     unless vacancy.organisation.school?
-      if vacancy.at_multiple_schools?
-        expect(page).to have_content(t("organisations.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.organisation)))
+      if vacancy.organisations.many?
+        expect(page).to have_content(I18n.t("organisations.job_location_heading.at_multiple_locations", organisation_type: organisation_type_basic(vacancy.organisation)))
       else
-        expect(page).to have_content(I18n.t("organisations.job_location_heading.#{vacancy.job_location}"))
+        expect(page).to have_content(I18n.t("organisations.job_location_heading.central_office"))
       end
       expect(page).to have_content(vacancy.organisations.first.name)
       expect(page).to have_content(full_address(vacancy.organisations.first))

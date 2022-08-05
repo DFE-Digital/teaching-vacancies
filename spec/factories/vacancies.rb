@@ -19,7 +19,7 @@ FactoryBot.define do
     enable_job_applications { true }
     benefits { Faker::Lorem.paragraph(sentence_count: factory_rand(1..3)) }
     completed_steps do
-      %w[job_role job_role_details job_location schools job_details working_patterns pay_package important_dates documents applying_for_the_job job_summary]
+      %w[job_role job_role_details job_location job_details working_patterns pay_package important_dates documents applying_for_the_job job_summary]
     end
     contact_email { Faker::Internet.email(domain: "example.com") }
     contact_number { "01234 123456" }
@@ -29,7 +29,6 @@ FactoryBot.define do
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
-    job_location { "at_one_school" }
     job_title { factory_sample(JOB_TITLES) }
     listed_elsewhere { nil }
     job_role { factory_sample(Vacancy.job_roles.keys) }
@@ -44,10 +43,6 @@ FactoryBot.define do
     working_patterns { factory_rand_sample(Vacancy.working_patterns.keys, 1..3) }
     working_patterns_details { Faker::Lorem.paragraph(sentence_count: 1) }
 
-    trait :with_organisation do
-      organisations { build_list(:school, 1) }
-    end
-
     trait :no_tv_applications do
       application_link { Faker::Internet.url(host: "example.com") }
       enable_job_applications { false }
@@ -57,18 +52,15 @@ FactoryBot.define do
 
     trait :central_office do
       phase { "multiple_phases" }
-      job_location { "central_office" }
-      readable_job_location { I18n.t("publishers.organisations.readable_job_location.central_office") }
+      organisations { build_list(:trust, 1) }
     end
 
     trait :at_one_school do
-      job_location { "at_one_school" }
-      readable_job_location { Faker::Educator.secondary_school.strip.delete("'") }
+      organisations { build_list(:school, 1) }
     end
 
     trait :at_multiple_schools do
-      job_location { "at_multiple_schools" }
-      readable_job_location { "More than one school (2)" }
+      organisations { build_list(:school, 3) }
     end
 
     trait :fail_minimum_validation do

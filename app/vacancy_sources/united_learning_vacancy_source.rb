@@ -70,10 +70,6 @@ class UnitedLearningVacancySource
       # TODO: This is coming through unexpectedly in the feed - the parameterize call can be removed
       #       when the correct values are coming through
       phase: item["Phase"].presence&.parameterize(separator: "_"),
-
-      # TODO: What about central office/multiple school vacancies?
-      job_location: :at_one_school,
-      readable_job_location: organisations_for(item).first&.name,
       organisations: organisations_for(item),
       about_school: organisations_for(item).first&.description,
     }
@@ -86,6 +82,7 @@ class UnitedLearningVacancySource
   end
 
   def organisations_for(item)
+    # TODO: What about central office/multiple school vacancies?
     [school_group.schools.find_by(urn: item["URN"])]
   end
 

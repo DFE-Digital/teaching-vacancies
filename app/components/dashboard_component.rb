@@ -1,5 +1,6 @@
 class DashboardComponent < ApplicationComponent
   include DatesHelper
+  include VacanciesHelper
 
   def initialize(organisation:, sort:, selected_type:, publisher_preference:, classes: [], html_attributes: {})
     super(classes: classes, html_attributes: html_attributes)

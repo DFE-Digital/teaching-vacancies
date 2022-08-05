@@ -1,11 +1,16 @@
 section#school-overview
-  h2.govuk-heading-l.heading--border-bottom = t("organisations.about.#{vacancy.job_location}", organisation: vacancy.organisation_name)
+  h2.govuk-heading-l.heading--border-bottom
+    - if vacancy.organisations.any?(&:school_group?)
+      = t("organisations.about.central_office", organisation: vacancy.organisation_name)
+    - elsif vacancy.organisations.many? && vacancy.organisations.all?(&:school?)
+      = t("organisations.about.at_multiple_schools")
+    - else
+      = t("organisations.about.at_one_school", organisation: vacancy.organisation_name)
 
-  - case vacancy.job_location
-  - when "at_one_school"
-    = render "vacancies/listing/school", organisation: vacancy.organisation, vacancy: vacancy, contact_details: true
-  - when "central_office", "at_multiple_schools"
+  - if vacancy.central_office? || vacancy.organisations.many?
     = render "vacancies/listing/school_group", organisation: vacancy.organisation, vacancy: vacancy
+  - else
+    = render "vacancies/listing/school", organisation: vacancy.organisation, vacancy: vacancy, contact_details: true
 
   - if vacancy_or_organisation_description(vacancy).present?
     p.govuk-body = vacancy_or_organisation_description(vacancy)
@@ -13,14 +18,28 @@ section#school-overview
   - if vacancy.organisations.many?
     h4.govuk-heading-m = t("schools.school_details")
     = govuk_accordion do |accordion|
-      - vacancy.organisations.each do |organisation|
+      - vacancy.organisations.select(&:school?).each do |organisation|
         - accordion.section heading_text: organisation.name do
           = render "vacancies/listing/school", organisation: organisation, vacancy: vacancy, contact_details: false
 
   - if vacancy.school_visits?
-    h4.govuk-heading-m = t("organisations.visits.#{vacancy.job_location}", organisation: vacancy.organisation_name)
+    h4.govuk-heading-m
+      - if vacancy.central_office?
+        = t("organisations.about.central_office", organisation: vacancy.organisation_name)
+      - elsif vacancy.organisations.many?
+        = t("organisations.visits.at_multiple_schools")
+      - else
+        = t("organisations.visits.at_one_school", organisation: vacancy.organisation_name)
+
     p.govuk-body = vacancy.school_visits
 
   section#school-location
-    h3.govuk-heading-l.heading--border-bottom = t("organisations.locations.#{vacancy.job_location}")
+    h3.govuk-heading-l.heading--border-bottom
+      - if vacancy.central_office?
+        = t("organisations.about.central_office", organisation: vacancy.organisation_name)
+      - elsif vacancy.organisations.many?
+        = t("organisations.locations.at_multiple_schools")
+      - else
+        = t("organisations.locations.at_one_school", organisation: vacancy.organisation_name)
+
     = map(markers: organisation_map_markers(vacancy), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })

@@ -273,7 +273,7 @@ RSpec.describe VacancyPresenter do
 
     context "when the vacancy isn't associated with any schools" do
       let(:vacancy) do
-        build_stubbed(:vacancy, :central_office,
+        build_stubbed(:vacancy,
                       organisations: organisations,
                       publisher_organisation: publisher_organisation,
                       publisher: publisher)
@@ -288,7 +288,7 @@ RSpec.describe VacancyPresenter do
 
     context "when the vacancy is at one school" do
       let(:vacancy) do
-        build_stubbed(:vacancy, :at_one_school,
+        build_stubbed(:vacancy,
                       organisations: organisations,
                       publisher_organisation: publisher_organisation,
                       publisher: publisher)
@@ -304,7 +304,7 @@ RSpec.describe VacancyPresenter do
 
     context "when the vacancy is at multiple schools" do
       let(:vacancy) do
-        build_stubbed(:vacancy, :at_multiple_schools,
+        build_stubbed(:vacancy,
                       organisations: organisations,
                       publisher_organisation: publisher_organisation,
                       publisher: publisher)
@@ -327,7 +327,7 @@ RSpec.describe VacancyPresenter do
 
     context "when the vacancy isn't associated with any schools" do
       let(:vacancy) do
-        build_stubbed(:vacancy, :central_office,
+        build_stubbed(:vacancy,
                       organisations: organisations,
                       publisher_organisation: publisher_organisation,
                       publisher: publisher)
@@ -342,7 +342,7 @@ RSpec.describe VacancyPresenter do
 
     context "when the vacancy is at one school" do
       let(:vacancy) do
-        build_stubbed(:vacancy, :at_one_school,
+        build_stubbed(:vacancy,
                       organisations: organisations,
                       publisher_organisation: publisher_organisation,
                       publisher: publisher)
@@ -358,7 +358,7 @@ RSpec.describe VacancyPresenter do
 
     context "when the vacancy is at multiple schools" do
       let(:vacancy) do
-        build_stubbed(:vacancy, :at_multiple_schools,
+        build_stubbed(:vacancy,
                       organisations: organisations,
                       publisher_organisation: publisher_organisation,
                       publisher: publisher)
@@ -375,7 +375,7 @@ RSpec.describe VacancyPresenter do
 
     context "when the school group does not have a group type" do
       let(:vacancy) do
-        build_stubbed(:vacancy, :at_one_school,
+        build_stubbed(:vacancy,
                       organisations: organisations,
                       publisher_organisation: publisher_organisation,
                       publisher: publisher)
@@ -393,12 +393,11 @@ RSpec.describe VacancyPresenter do
 
   describe "#religious_character" do
     let(:vacancy) do
-      build_stubbed(:vacancy, location,
+      build_stubbed(:vacancy,
                     organisations: organisations,
                     publisher_organisation: publisher_organisation,
                     publisher: publisher)
     end
-    let(:location) { :at_one_school }
     let(:school) { build(:school) }
     let(:organisations) { [school] }
     let(:publisher_organisation) { school }
@@ -409,13 +408,12 @@ RSpec.describe VacancyPresenter do
     end
 
     context "when the vacancy isn't associated with any schools" do
-      let(:location) { :central_office }
       let(:trust) { build_stubbed(:trust) }
       let(:organisations) { [trust] }
       let(:publisher_organisation) { trust }
 
       it "returns an empty array" do
-        expect(subject.religious_character).to eq(nil)
+        expect(subject.religious_character).to eq([])
       end
     end
   end

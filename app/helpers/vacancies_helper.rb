@@ -39,7 +39,7 @@ module VacanciesHelper
   end
 
   def organisation_type_value(vacancy)
-    return organisation_type(vacancy.organisation) unless vacancy.at_multiple_schools?
+    return organisation_type(vacancy.organisation) unless vacancy.organisations.many?
 
     safe_join(organisation_types(vacancy.organisations).map do |organisation_type|
       tag.div(organisation_type, class: "govuk-body-s govuk-!-margin-bottom-0")
@@ -66,28 +66,42 @@ module VacanciesHelper
     vacancy_or_organisation_description(vacancy)
   end
 
+  def vacancy_job_location_summary(vacancy)
+    return vacancy.organisation_name if vacancy.organisation.is_a?(School)
+
+    if vacancy.organisations.many?
+      t("organisations.job_location_summary.at_multiple_locations_with_count", count: vacancy.organisations.count)
+    else
+      t("organisations.job_location_summary.central_office")
+    end
+  end
+
+  def vacancy_job_location_heading(vacancy)
+    if vacancy.central_office?
+      t("organisations.job_location_heading.central_office")
+    elsif vacancy.organisations.many?
+      t("organisations.job_location_heading.at_multiple_locations", organisation_type: organisation_type_basic(vacancy.organisation))
+    else
+      t("organisations.job_location_heading.at_one_location")
+    end
+  end
+
   def vacancy_job_location(vacancy)
     organisation = vacancy.organisation
-    return "#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{organisation.name}" if vacancy.at_multiple_schools?
+    return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}" if vacancy.organisations.many?
 
     address_join([organisation.name, organisation.town, organisation.county])
   end
 
   def vacancy_full_job_location(vacancy)
     organisation = vacancy.organisation
-    return "#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{govuk_link_to(organisation.name, organisation_landing_page_path(organisation))}".html_safe if vacancy.at_multiple_schools?
+    return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{govuk_link_to(organisation.name, organisation_landing_page_path(organisation))}".html_safe if vacancy.organisations.many?
 
     address_join([govuk_link_to(organisation.name, organisation_landing_page_path(organisation)), organisation.town, organisation.county, organisation.postcode]).html_safe
   end
 
-  def vacancy_job_location_heading(vacancy)
-    return t("organisations.job_location_heading.#{vacancy.job_location}") unless vacancy.at_multiple_schools?
-
-    t("organisations.job_location_heading.at_multiple_schools", organisation_type: organisation_type_basic(vacancy.organisation))
-  end
-
   def vacancy_listing_page_title_prefix(vacancy)
-    "#{vacancy.job_title} - #{vacancy.at_one_school? ? vacancy.organisation.town : vacancy.organisation_name}"
+    "#{vacancy.job_title} - #{vacancy.organisation_name}"
   end
 
   def vacancy_school_visits_hint(vacancy)

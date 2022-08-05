@@ -299,7 +299,7 @@ RSpec.describe Vacancy do
 
     context "when vacancy has a school_group" do
       let(:trust) { create(:trust) }
-      let(:vacancy) { create(:vacancy, :central_office, organisations: [trust]) }
+      let(:vacancy) { create(:vacancy, organisations: [trust]) }
 
       it "returns the school_group name for the vacancy" do
         expect(vacancy.organisation_name).to eq(trust.name)
@@ -646,10 +646,9 @@ RSpec.describe Vacancy do
   end
 
   describe "#geolocation" do
-    subject { create(:vacancy, job_location: job_location, organisations: organisations) }
+    subject { create(:vacancy, organisations: organisations) }
 
     context "for single school vacancies" do
-      let(:job_location) { :at_one_school }
       let(:organisations) { [create(:school, geopoint: "POINT(1 2)")] }
 
       it "is set to a point" do
@@ -659,7 +658,6 @@ RSpec.describe Vacancy do
     end
 
     context "for trust central office vacancies" do
-      let(:job_location) { :central_office }
       let(:organisations) { [create(:trust, geopoint: "POINT(1 2)")] }
 
       it "is set to a point" do
@@ -668,8 +666,7 @@ RSpec.describe Vacancy do
       end
     end
 
-    context "for multi school vacancies" do
-      let(:job_location) { :at_multiple_schools }
+    context "for multi-school vacancies" do
       let(:organisations) { [create(:school, geopoint: "POINT(1 2)"), create(:school, geopoint: "POINT(3 4)")] }
 
       it "is set to a multipoint" do
@@ -679,7 +676,6 @@ RSpec.describe Vacancy do
     end
 
     context "if there is no organisation" do
-      let(:job_location) { :at_one_school }
       let(:organisations) { [] }
 
       it "is set to nil" do
@@ -688,8 +684,7 @@ RSpec.describe Vacancy do
     end
 
     context "if all organisations have no geopoint" do
-      let(:job_location) { :at_multiple_schools }
-      let(:organisations) { [create(:school, geopoint: nil)] }
+      let(:organisations) { [create(:school, geopoint: nil), create(:school, geopoint: nil)] }
 
       it "is set to nil" do
         expect(subject.geolocation).to be_nil

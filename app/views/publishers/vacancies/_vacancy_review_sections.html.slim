@@ -4,7 +4,7 @@
     - s.row :readable_ect_status, label: t("helpers.legend.publishers_job_listing_job_role_details_form.ect_status"), optional: true
 
 - unless current_organisation.school?
-  - r.section :job_location, forms: %w[JobLocationForm SchoolsForm] do
+  - r.section :job_location, forms: %w[JobLocationForm] do
     = govuk_summary_list do |summary_list|
       - summary_list.row do |row|
         - row.key
@@ -13,7 +13,10 @@
           ul.govuk-list
             - vacancy.organisations.each do |organisation|
               li class="govuk-!-font-weight-bold govuk-!-margin-bottom-4"
-                => organisation.name
+                - if organisation.school?
+                  => organisation.name
+                - else
+                  => t("organisations.job_location_heading.central_office")
                 span class="govuk-!-font-weight-regular" = full_address(organisation)
 
 - r.section :job_details, forms: %w[EducationPhasesForm JobDetailsForm] do |s|

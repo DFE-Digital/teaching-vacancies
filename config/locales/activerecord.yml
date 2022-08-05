@@ -104,13 +104,8 @@ en:
     ect_status:
       inclusion: Select yes if this role is suitable for an early career teacher
   job_location_errors: &job_location_errors
-    job_location:
-      inclusion: Select the location where the job will be based
-      blank: Select the location where the job will be based
-  schools_errors: &schools_errors
     organisation_ids:
-      blank: Select the schools where the job will be based
-      invalid: Select more than one school
+      blank: Select the locations where the job will be based
   education_phases_errors: &education_phases_errors
     phase:
       blank: Select an education phase
@@ -229,12 +224,10 @@ en:
         publishers/job_listing/job_role_details_form:
           attributes:
             <<: *job_role_details_errors
+
         publishers/job_listing/job_location_form:
           attributes:
             <<: *job_location_errors
-        publishers/job_listing/schools_form:
-          attributes:
-            <<: *schools_errors
         publishers/job_listing/education_phases_form:
           attributes:
             <<: *education_phases_errors
@@ -522,7 +515,6 @@ en:
             <<: *job_role_errors
             <<: *job_role_details_errors
             <<: *job_location_errors
-            <<: *schools_errors
             <<: *job_details_errors
             <<: *working_patterns_errors
             <<: *pay_package_errors

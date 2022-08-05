@@ -71,7 +71,7 @@
                 - else
                   = govuk_link_to(vacancy.job_title, organisation_job_path(vacancy.id))
                 - if organisation.school_group?
-                  p.govuk-body-s = vacancy.readable_job_location
+                  p.govuk-body-s = vacancy_job_location_summary(vacancy)
 
               - row.value do
                 - case @selected_type

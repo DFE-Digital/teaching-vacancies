@@ -2,17 +2,18 @@ require "rails_helper"
 
 RSpec.describe NotifyViewsHelper do
   describe "#vacancy_location_with_organisation_link" do
-    subject do
-      helper.vacancy_location_with_organisation_link(vacancy)
-    end
+    subject { helper.vacancy_location_with_organisation_link(vacancy) }
 
-    let(:organisation) { create(:school) }
-    let(:organisation2) { create(:school) }
-    let(:vacancy) { create(:vacancy, organisations: [organisation], job_location: :at_one_school) }
+    let(:school) { create(:school, school_groups: [school_group]) }
+    let(:school2) { create(:school, school_groups: [school_group]) }
+    let(:school_group) { create(:school_group) }
     let(:utm_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "daily_alert" } }
     let(:url) { helper.organisation_landing_page_url(organisation.slug, utm_params) }
 
     context "when the vacancy is at a single school" do
+      let(:organisation) { school }
+      let(:vacancy) { create(:vacancy, organisations: [organisation]) }
+
       before { allow(helper).to receive(:utm_params).and_return(utm_params) }
 
       it "generates the correct text with a link with the URL included in the link text" do
@@ -21,25 +22,24 @@ RSpec.describe NotifyViewsHelper do
     end
 
     context "when the vacancy is at the central office" do
-      before do
-        allow(helper).to receive(:utm_params).and_return(utm_params)
-        vacancy.job_location = :central_office
-      end
+      let(:organisation) { school_group }
+      let(:vacancy) { create(:vacancy, organisations: [school_group]) }
+
+      before { allow(helper).to receive(:utm_params).and_return(utm_params) }
 
       it "generates the correct text with a link with the URL included in the link text" do
-        expect(subject).to include("#{helper.notify_link(url, organisation.name)}, #{organisation.town}, #{organisation.county}, #{organisation.postcode}".html_safe)
+        expect(subject).to include(helper.notify_link(url, school_group.name).to_s.html_safe)
       end
     end
 
     context "when the vacancy is at multiple schools" do
-      before do
-        allow(helper).to receive(:utm_params).and_return(utm_params)
-        vacancy.organisations.push(organisation2)
-        vacancy.job_location = :at_multiple_schools
-      end
+      let(:organisation) { school_group }
+      let(:vacancy) { create(:vacancy, organisations: [school, school2]) }
+
+      before { allow(helper).to receive(:utm_params).and_return(utm_params) }
 
       it "generates the correct text with a link with the URL included in the link text" do
-        expect(subject).to include("#{t('publishers.organisations.readable_job_location.at_multiple_schools')}, #{helper.notify_link(url, organisation.name)}".html_safe)
+        expect(subject).to include("#{t('organisations.job_location_summary.at_multiple_locations')}, #{helper.notify_link(url, organisation.name)}".html_safe)
       end
     end
   end

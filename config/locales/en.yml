@@ -204,17 +204,6 @@ en:
       new:
         page_description: Sign in to Teaching Vacancies
 
-  organisation:
-    location_link_text:
-      at_multiple_schools: School locations
-      at_one_school: School location
-      central_office: Head office location
-    overview_link_text:
-      at_multiple_schools: Schools overview
-      at_one_school: School overview
-      central_office: Trust overview
-    view_more_or_change: View more or change
-
   omniauth_callbacks:
     failure:
       message: Your session has expired so you have been logged out. Please sign in again to your account below.
@@ -331,9 +320,13 @@ en:
       at_multiple_schools: About the schools
       central_office: About %{organisation}
     job_location_heading:
+      at_multiple_locations: At more than one location in the %{organisation_type}
+      at_one_location: Single location
       central_office: Trust head office
-      at_one_school: Single school
-      at_multiple_schools: At more than one school in the %{organisation_type}
+    job_location_summary:
+      at_multiple_locations: More than one location
+      at_multiple_locations_with_count: More than one location (%{count})
+      central_office: Trust head office
     locations:
       at_one_school: School location
       at_multiple_schools: School locations

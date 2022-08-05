@@ -10,14 +10,14 @@ class Publishers::JobListing::JobSummaryForm < Publishers::JobListing::VacancyFo
   def about_school_must_not_be_blank
     return if about_school.present?
 
-    case vacancy&.job_location
-    when "central_office"
-      organisation = "trust"
-    when "at_one_school"
-      organisation = "school"
-    when "at_multiple_schools"
-      organisation = "schools"
-    end
+    organisation = if vacancy&.central_office?
+                     "trust"
+                   elsif vacancy&.organisations&.many?
+                     "schools"
+                   else
+                     "school"
+                   end
+
     errors.add(:about_school, I18n.t("job_summary_errors.about_school.blank", organisation: organisation))
   end
 end

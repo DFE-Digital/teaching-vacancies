@@ -8,14 +8,6 @@ class Publishers::VacancySort < RecordSort
   end
 
   def options
-    base_options.tap do |options|
-      options << readable_job_location_option if @organisation.school_group?
-    end
-  end
-
-  private
-
-  def base_options
     case @vacancy_type
     when "published"
       [soonest_closing_date_option, job_title_option]
@@ -27,6 +19,8 @@ class Publishers::VacancySort < RecordSort
       [most_recent_end_date_option, job_title_option]
     end
   end
+
+  private
 
   def job_title_option
     SortOption.new("job_title", I18n.t("jobs.sort_by.job_title.ascending"), "asc")
@@ -42,10 +36,6 @@ class Publishers::VacancySort < RecordSort
 
   def most_recent_update_option
     SortOption.new("updated_at", I18n.t("jobs.sort_by.updated_at.descending"), "desc")
-  end
-
-  def readable_job_location_option
-    SortOption.new("readable_job_location", I18n.t("jobs.sort_by.location.ascending"), "asc")
   end
 
   def soonest_closing_date_option

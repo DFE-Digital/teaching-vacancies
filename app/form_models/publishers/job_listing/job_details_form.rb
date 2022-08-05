@@ -1,7 +1,7 @@
 class Publishers::JobListing::JobDetailsForm < Publishers::JobListing::VacancyForm
   include ActionView::Helpers::SanitizeHelper
 
-  attr_accessor :job_title, :contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration, :key_stages, :subjects, :job_location, :readable_job_location, :status
+  attr_accessor :job_title, :contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration, :key_stages, :subjects, :status
 
   validates :job_title, presence: true
   validates :job_title, length: { minimum: 4, maximum: 100 }, if: -> { job_title.present? }

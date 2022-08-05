@@ -12,7 +12,6 @@ RSpec.describe "Publishers can edit a vacancy" do
                :teacher,
                :ect_suitable,
                organisations: [school],
-               job_location: "at_one_school",
                working_patterns: %w[full_time part_time],
                publish_on: Date.current, expires_at: 1.day.from_now.change(hour: 9, minute: 0)),
       )
@@ -337,7 +336,7 @@ RSpec.describe "Publishers can edit a vacancy" do
   context "when a vacancy is external" do
     let!(:vacancy) do
       create(
-        :vacancy, :external, :at_one_school, :published, :expires_tomorrow,
+        :vacancy, :external, :published, :expires_tomorrow,
         phase: "secondary",
         job_title: "Imported vacancy",
         organisations: [school]

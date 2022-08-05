@@ -70,7 +70,7 @@ RSpec.describe "Copying a vacancy" do
 
   context "when the original job is now invalid" do
     let!(:original_vacancy) do
-      create_published_vacancy(about_school: nil, job_location: "at_one_school", organisations: [school]) do |vacancy|
+      create_published_vacancy(about_school: nil, organisations: [school]) do |vacancy|
         vacancy.send(:set_slug)
       end
     end

@@ -4,7 +4,7 @@ RSpec.describe "Deadline-passed job applications for jobseekers" do
   context "when an application is in 'draft' status and the deadline for application has passed" do
     let(:deadline) { 1.week.ago }
 
-    let(:vacancy) { create(:vacancy, :with_organisation, :published, expires_at: deadline) }
+    let(:vacancy) { create(:vacancy, :at_one_school, :published, expires_at: deadline) }
 
     let(:jobseeker) { create(:jobseeker) }
     let!(:job_application) do
