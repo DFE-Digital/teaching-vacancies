@@ -1,5 +1,4 @@
 import axios from 'axios';
-import logger from './logging';
 
 const EVENTS_ENDPOINT = '/api/events';
 
@@ -15,9 +14,7 @@ export const triggerEvent = (type, data) => {
   return new Promise((resolve) => {
     axios.post(EVENTS_ENDPOINT, { type, data }, { headers })
       .then(resolve)
-      .catch((error) => {
-        logger.log(`Event trigger request: ${error}`);
-
+      .catch(() => {
         // Events are not mission-critical: always resolve regardless of outcome
         resolve();
       });
