@@ -50,7 +50,7 @@ Your request will go back to the approver, and you will be able to see the statu
 ### Accessing Teaching Vacancies as a new free school
 
 A few months before your free school is due to open, your delivery officer will be in touch to get the details of the person you want to be given the initial access to [DfE Sign-in](https://services.signin.education.gov.uk/). They will receive their DfE Sign-in details once you have successfully completed an Ofsted pre-registration inspection, have a signed funding agreement, and your free school’s status has been changed to ‘proposed to open’ on GIAS. After a request is made, users are granted access to Teaching Vacancies by an approver. 
-If you need to add users, [guidance can be found here]( https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-approve-access-for-hiring-staff). 
+If you need to add users, [guidance can be found here](https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-approve-access-for-hiring-staff). 
 
 
 New free schools that are part of a multi-academy trust can access Teaching Vacancies earlier to recruit staff for free through MAT Level Access. 
