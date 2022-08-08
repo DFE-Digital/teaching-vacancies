@@ -23,15 +23,45 @@ Berkshire:
   - West Berkshire
   - Windsor and Maidenhead
   - Wokingham
+Buckinghamshire and Milton Keynes:
+  - Buckinghamshire
+  - Milton Keynes
+Cambridgeshire and Peterborough:
+  - Cambridgeshire
+  - Peterborough
 Cheshire:
   - Cheshire East
   - Cheshire West and Chester
   - Halton
   - Warrington
+"County Durham, Darlington, Hartlepool and Stockton":
+  - County Durham
+  - Darlington
+  - Hartlepool
+  - Stockton-on-Tees
+Derbyshire and Derby:
+  - Derbyshire
+  - Derby
 "Devon, Plymouth and Torbay":
   - Devon
   - Plymouth
   - Torbay
+"Dorset, Bournemouth, Christchurch and Poole":
+  - Dorset
+  - Bournemouth, Christchurch and Poole
+East Yorkshire:
+  - East Riding of Yorkshire
+  - Kingston upon Hull
+"East Sussex, Brighton and Hove":
+  - East Sussex
+  - Brighton and Hove
+"Essex, Southend and Thurrock":
+  - Essex
+  - Southend-on-Sea
+  - Thurrock
+Gloucestershire and Gloucester:
+  - Gloucestershire
+  - South Gloucestershire
 Greater Manchester:
   - Bolton
   - Bury
@@ -43,12 +73,55 @@ Greater Manchester:
   - Tameside
   - Trafford
   - Wigan
+"Hampshire, Portsmouth and Southampton":
+  - Hampshire
+  - Portsmouth
+  - Southampton
+Kent and Medway:
+  - Kent
+  - Medway
+"Lancashire, Blackburn and Blackpool":
+  - Lancashire
+  - Blackburn with Darwen
+  - Blackpool
+Leicestershire and Rutland:
+  - Leicestershire
+  - Leicester
+  - Rutland
+Lincolnshire and Lincoln:
+  - Lincolnshire
+  - North East Lincolnshire
+  - North Lincolnshire
 Merseyside:
   - Knowsley
   - St. Helens
   - Sefton
   - Wirral
   - Liverpool
+North Riding of Yorkshire:
+  - North Yorkshire
+  - Middlesbrough
+  - Redcar and Cleveland
+  - Stockton-on-Tees
+  - York
+Northamptonshire and Northampton:
+  - Northamptonshire
+  - North Northamptonshire
+  - West Northamptonshire
+Nottinghamshire and Nottingham:
+  - Nottinghamshire
+  - Nottingham
+Shropshire and Telford and Wrekin:
+  - Shropshire
+  - Telford and Wrekin
+"Somerset, Bath and Bristol":
+  - Somerset
+  - Bath and North East Somerset
+  - Bristol
+  - North Somerset
+Staffordshire and Stoke:
+  - Staffordshire
+  - Stoke-on-Trent
 Tyne and Wear:
   - Newcastle upon Tyne
   - Gateshead
@@ -61,6 +134,9 @@ West Yorkshire:
   - Kirklees
   - Leeds
   - Wakefield
+Wiltshire and Swindon:
+  - Wiltshire
+  - Swindon
 Yorkshire:
   - Barnsley
   - Bradford
@@ -70,8 +146,11 @@ Yorkshire:
   - Kingston upon Hull, City of
   - Kirklees
   - Leeds
+  - Middlesbrough
   - North Yorkshire
+  - Redcar and Cleveland
   - Rotherham
   - Sheffield
+  - Stockton-on-Tees
   - Wakefield
   - York
