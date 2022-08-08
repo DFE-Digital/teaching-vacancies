@@ -106,7 +106,7 @@ en:
 
     legacy_job_alert:
       link: Receive a job alert
-      link_html: "%{link_to} whenever a job matching this search is published"
+      link_html: "%{link_to} whenever a job matching this search is published."
 
     sort_by:
       created_at:

@@ -440,7 +440,7 @@ en:
         sign_in: Sign in
         sign_up: Create an account
     link:
-      help_text_html: "%{link} whenever a job matching this search is listed"
+      help_text_html: "%{link} whenever a job matching this search is listed."
       home_page: Visit %{home_page_link}
       no_search_results:
         link: get notified
