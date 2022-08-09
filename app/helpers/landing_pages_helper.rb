@@ -48,7 +48,7 @@ module LandingPagesHelper
       safe_join [
         tag.li do
           vacancy.working_patterns.map { |working_pattern|
-            landing_page_link_or_text({ working_patterns: [working_pattern] }, working_pattern.capitalize)
+            landing_page_link_or_text({ working_patterns: [working_pattern] }, working_pattern&.capitalize)
           }.join(", ").html_safe
         end,
         tag.li { tag.span(vacancy.working_patterns_details) },
