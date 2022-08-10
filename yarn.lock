@@ -2885,10 +2885,10 @@ globjoin@^0.1.4:
   resolved "https://registry.yarnpkg.com/globjoin/-/globjoin-0.1.4.tgz#2f4494ac8919e3767c5cbb691e9f463324285d43"
   integrity sha512-xYfnw62CKG8nLkZBfWbhWwDw02CHty86jfPcc2cr3ZfeuK9ysoVPPEUxf21bAD/rWAgk52SuBrLJlefNy8mvFg==
 
-govuk-frontend@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.2.0.tgz#1248eb8025c5f8aa6a80282e92da4c81263caf0c"
-  integrity sha512-IHbnz5DbnPjuCv4lQvtJGoCNAKAN6byKqmaej8hjd6Y/KTaAuw10npijeqfRJNO4WdDX9a34+n+SC/UmWdjfGQ==
+govuk-frontend@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.3.0.tgz#83cd9fdf5df73ebfa2d974fc91f926e19015bc6e"
+  integrity sha512-U8IyhayW5tpEktTU1Ea2wYyUsmS6UQWkuec/ebB51keSCUfZtrLsj5u9oa6GtwzTatk+3NYMOEEclGNTz4/FKQ==
 
 graceful-fs@^4.2.9:
   version "4.2.10"
@@ -4547,10 +4547,10 @@ safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@^1.54.1:
-  version "1.54.1"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.54.1.tgz#4f72ef57ce2a6c3251f4e2c75eee9a0c19e09eb5"
-  integrity sha512-GHJJr31Me32RjjUBagyzx8tzjKBUcDwo5239XANIRBq0adDu5iIG0aFO0i/TBb/4I9oyxkEv44nq/kL1DxdDhA==
+sass@^1.54.4:
+  version "1.54.4"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.54.4.tgz#803ff2fef5525f1dd01670c3915b4b68b6cba72d"
+  integrity sha512-3tmF16yvnBwtlPrNBHw/H907j8MlOX8aTBnlNX1yrKx24RKcJGPyLhFUwkoKBKesR3unP93/2z14Ll8NicwQUA==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
