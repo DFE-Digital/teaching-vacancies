@@ -7,4 +7,12 @@
       }
     }
   }
+
+  &.subscriptions_new,
+  &.subscriptions_create,
+  &.subscriptions_edit {
+    .location-search__radius {
+      margin-top: govuk-spacing(6);
+    }
+  }
 }

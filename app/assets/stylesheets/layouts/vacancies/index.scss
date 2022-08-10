@@ -88,10 +88,15 @@
     }
 
     .location-search__radius {
+      margin-top: govuk-spacing(6);
       flex-basis: 200px;
 
       .govuk-select[name='radius'] {
         width: 100%;
+      }
+
+      @include govuk-media-query($from: tablet) {
+        margin-top: 0;
       }
     }
   }
