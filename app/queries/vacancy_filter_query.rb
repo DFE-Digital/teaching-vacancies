@@ -35,6 +35,7 @@ class VacancyFilterQuery < ApplicationQuery
 
   def job_roles(filter)
     filter&.map { |job_role| job_role == "sen_specialist" ? "sendco" : job_role }
+          &.map { |job_role| job_role == "leadership" ? "senior_leader" : job_role }
           &.reject { |job_role| job_role.in? %w[ect_suitable send_responsible] }
   end
 
