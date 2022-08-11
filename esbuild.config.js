@@ -13,11 +13,10 @@ const watch = process.argv[process.argv.length - 1] == '--watch';
 
 esbuild
     .build({
-        entryPoints: ['app/assets/javascript/application.js'],
         bundle: true,
+        entryPoints: ['app/assets/javascript/application.js'],
+        minify: true,
         outdir: 'app/assets/builds',
-        publicPath: 'assets',
-        watch: watch,
         plugins: [
           babel({
             config: {
@@ -26,6 +25,8 @@ esbuild
             }
           })
         ],
-        target: ['ie11']
+        publicPath: 'assets',
+        target: ['ie11'],
+        watch: watch
     })
     .catch(() => process.exit(1));
