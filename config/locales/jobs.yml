@@ -88,8 +88,8 @@ en:
         one: "%{jobs_count} job"
         other: "%{jobs_count} jobs"
       keyword_html:
-        one: matches <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
-        other: match <span class='govuk-!-font-weight-bold'>&lsquo;%{keyword}&rsquo;</span>
+        one: matches &lsquo;%{keyword}&rsquo;
+        other: match &lsquo;%{keyword}&rsquo;
       no_keyword: found
       radius_html:
         zero: in
