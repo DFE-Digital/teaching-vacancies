@@ -48,6 +48,11 @@ queue_weekly_alerts:
   class: 'SendWeeklyAlertEmailJob'
   queue: default
 
+refresh_markers:
+  cron: '0 6 * * *'
+  class: 'RefreshMarkersJob'
+  queue: low
+
 refresh_organisations_gias_data_hash:
   cron: '0 23 * * *'
   class: 'RefreshOrganisationsGiasDataHashJob'
