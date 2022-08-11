@@ -10,6 +10,7 @@ class AlertEmail::Base < ApplicationJob
 
       Jobseekers::AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later
     end
+    Sentry.capture_message("#{self.class.name} run successfully", level: :info)
   end
 
   def vacancies_for_subscription(subscription)
