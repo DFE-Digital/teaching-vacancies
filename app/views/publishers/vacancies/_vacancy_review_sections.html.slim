@@ -21,11 +21,11 @@
 
 - r.section :job_details, forms: %w[EducationPhasesForm JobDetailsForm] do |s|
   - if vacancy.allow_phase_to_be_set?
-    - s.row :phase, text: vacancy.phase&.humanize, label: t("jobs.filters.phases"), optional: true
+    - s.row :phase, text: vacancy.phases.map(&:humanize).join(", "), label: t("jobs.filters.phases"), optional: true
   - s.row :job_title
   - s.row :contract_type, text: vacancy.contract_type_with_duration
   - if vacancy.allow_key_stages?
-    - s.row :readable_key_stages, label: t("jobs.key_stage", count: vacancy.key_stages.count), optional: true
+    - s.row :readable_key_stages, label: t("jobs.key_stage", count: vacancy.key_stages.count)
   - if vacancy.allow_subjects?
     - s.row :readable_subjects, label: t("jobs.subject", count: vacancy.subjects.count), optional: true
 

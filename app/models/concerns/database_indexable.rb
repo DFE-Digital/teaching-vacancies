@@ -24,7 +24,7 @@ module DatabaseIndexable
     Search::Postgres::TsvectorGenerator.new(
       a: [unique_words(job_title), subjects],
       d: [
-        readable_phases,
+        phases.map(&:humanize),
         VacancyPresenter.new(self).readable_job_role,
         VacancyPresenter.new(self).readable_key_stages,
         organisation_name,

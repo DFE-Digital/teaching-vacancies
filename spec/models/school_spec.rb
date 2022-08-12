@@ -4,12 +4,6 @@ RSpec.describe School do
   it { is_expected.to have_many(:school_group_memberships) }
   it { is_expected.to have_many(:school_groups) }
 
-  describe ".available_readable_phases" do
-    it "lists all the phases that can be used as human-readable versions of the underlying phase categories, in chronological order" do
-      expect(described_class.available_readable_phases).to eq(["primary", "middle", "secondary", "16 to 19"])
-    end
-  end
-
   describe "#school_type" do
     subject { build(:school, school_type: "Academies") }
 

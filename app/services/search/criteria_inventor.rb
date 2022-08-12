@@ -11,7 +11,7 @@ class Search::CriteriaInventor
       location: location,
       radius: (location.present? ? DEFAULT_RADIUS_IN_MILES.to_s : nil),
       working_patterns: [],
-      phases: @vacancy.readable_phases,
+      phases: @vacancy.phases,
       job_roles: [@vacancy.job_role],
       ect_statuses: [@vacancy.ect_status],
       subjects: subjects,

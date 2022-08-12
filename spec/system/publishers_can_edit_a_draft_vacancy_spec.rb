@@ -10,13 +10,13 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
   context "when a single school" do
-    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school]) }
+    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], phases: %w[primary], key_stages: %w[ks1]) }
 
     include_examples "provides an overview of the draft vacancy form"
   end
 
   context "when a school group" do
-    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, :central_office, organisations: [trust]) }
+    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, :central_office, organisations: [trust], phases: %w[primary], key_stages: %w[ks1]) }
 
     include_examples "provides an overview of the draft vacancy form"
 

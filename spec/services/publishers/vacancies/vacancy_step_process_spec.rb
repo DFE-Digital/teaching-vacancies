@@ -83,7 +83,8 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         create(:vacancy,
                :draft,
                :teacher,
-               organisations: [organisation])
+               organisations: [organisation],
+               phases: %w[primary])
       end
 
       it "returns the expected steps" do
@@ -100,19 +101,12 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           create(:vacancy,
                  :draft,
                  :teacher,
-                 organisations: [school])
+                 organisations: [school],
+                 phases: %w[primary])
         end
 
         it "returns the expected steps" do
           expect(subject.steps).to eq(all_possible_steps.excluding(:education_phases))
-        end
-
-        context "when the school is all-through" do
-          let(:school) { create(:school, :all_through) }
-
-          it "includes the `education_phases` step" do
-            expect(subject.steps).to include(:education_phases)
-          end
         end
       end
 
@@ -134,30 +128,23 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       context "when the vacancy is at multiple schools" do
-        let(:school) { create(:school, :secondary) }
-        let(:vacancy) { create(:vacancy, organisations: [school, school2]) }
+        let(:vacancy) { create(:vacancy, phases: %w[primary], organisations: [school, school2]) }
 
-        context "when the schools have the same phase" do
-          let(:school2) { create(:school, :secondary) }
+        context "when the schools have a phase" do
+          let(:school) { create(:school, :secondary) }
+          let(:school2) { create(:school, phase: :not_applicable) }
 
           it "skips the `education_phases` step" do
             expect(subject.steps).not_to include(:education_phases)
           end
         end
 
-        context "when the schools have different phases" do
-          let(:school2) { create(:school, :primary) }
+        context "when the schools have no phase" do
+          let(:school) { create(:school, phase: :not_applicable) }
+          let(:school2) { create(:school, phase: :not_applicable) }
 
           it "includes the `education_phases` step" do
             expect(subject.steps).to include(:education_phases)
-          end
-
-          context "when the vacancy has a phase already" do
-            let(:vacancy) { create(:vacancy, phase: "secondary", organisations: [school, school2]) }
-
-            it "still includes the `education_phases` step" do
-              expect(subject.steps).to include(:education_phases)
-            end
           end
         end
       end

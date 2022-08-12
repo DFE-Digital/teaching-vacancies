@@ -11,10 +11,12 @@
         - group.landing_page "send-responsible-jobs"
         - group.landing_page "education-support-jobs"
       = landing_page_link_group title: t(".education_phases"), classes: "govuk-grid-column-one-third" do |group|
+        = group.landing_page "nursery-jobs"
         = group.landing_page "primary-school-jobs"
         = group.landing_page "middle-school-jobs"
         = group.landing_page "secondary-school-jobs"
-        = group.landing_page "16-19-education-provider-jobs"
+        = group.landing_page "sixth-form-or-college-jobs"
+        = group.landing_page "through-school-jobs"
       = landing_page_link_group title: t(".working_patterns"), classes: "govuk-grid-column-one-third" do |group|
         = group.landing_page "full-time-school-jobs"
         = group.landing_page "part-time-school-jobs"

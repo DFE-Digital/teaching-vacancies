@@ -43,6 +43,9 @@ shared:
       - teaching_assistant
 
   ### Phases
+  nursery-jobs:
+    phases:
+      - nursery
   primary-school-jobs:
     phases:
       - primary
@@ -52,9 +55,12 @@ shared:
   secondary-school-jobs:
     phases:
       - secondary
-  16-19-education-provider-jobs:
+  sixth-form-or-college-jobs:
     phases:
-      - "16 to 19"
+      - sixth_form_or_college
+  through-school-jobs:
+    phases:
+      - through
 
   ### Subjects
   art-design-technology-teacher-jobs:

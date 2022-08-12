@@ -24,6 +24,4 @@ RSpec.describe Publishers::JobListing::JobDetailsForm, type: :model do
   context "when key stages is not present" do
     it { is_expected.to allow_value([]).for(:key_stages) }
   end
-
-  it { is_expected.to validate_inclusion_of(:key_stages).in_array(Vacancy.key_stages.keys) }
 end

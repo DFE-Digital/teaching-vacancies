@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can view a vacancy's activity log", versioning: true do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :published, contract_type: "permanent", subjects: old_subjects, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, :published, contract_type: "permanent", subjects: old_subjects, phases: %w[secondary], organisations: [organisation], key_stages: %w[ks3]) }
   let(:new_job_title) { "Demon headmaster wanted" }
   let(:new_contract_type) { "fixed_term" }
   let(:old_subjects) { %w[Mathematics Science] }

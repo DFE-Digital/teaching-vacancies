@@ -56,11 +56,7 @@ module LandingPagesHelper
     end
   end
 
-  def linked_school_phases(school)
-    safe_join(
-      (school.readable_phases || []).map do |phase|
-        landing_page_link_or_text({ phases: [phase] }, phase.capitalize)
-      end, ", "
-    )
+  def linked_school_phase(school)
+    landing_page_link_or_text({ phases: [school.readable_phase] }, school.readable_phase&.capitalize)
   end
 end

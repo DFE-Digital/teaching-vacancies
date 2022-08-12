@@ -11,12 +11,7 @@
 
       h2.govuk-heading-l = t("publishers.vacancies.steps.education_phases")
 
-      = f.govuk_radio_buttons_fieldset(:phase, legend: { size: "m" }) do
-        = f.govuk_radio_button :phase, :primary, link_errors: true
-        = f.govuk_radio_button :phase, :secondary
-        = f.govuk_radio_button :phase, :"16-19"
-        = f.govuk_radio_divider
-        = f.govuk_radio_button :phase, :multiple_phases
+      = f.govuk_collection_check_boxes :phases, Vacancy.phases.keys, :to_s, :to_s
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 

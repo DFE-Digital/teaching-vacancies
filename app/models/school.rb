@@ -13,20 +13,24 @@ class School < Organisation
     middle_deemed_primary: 3,
     secondary: 4,
     middle_deemed_secondary: 5,
-    "16-19": 6,
-    all_through: 7,
+    sixth_form_or_college: 6,
+    through: 7,
   }
 
   READABLE_PHASE_MAPPINGS = {
-    not_applicable: [],
-    nursery: %w[primary],
-    primary: %w[primary],
-    middle_deemed_primary: %w[middle],
-    middle_deemed_secondary: %w[middle],
-    secondary: %w[secondary],
-    "16-19": ["16 to 19"],
-    all_through: ["primary", "middle", "secondary", "16 to 19"],
+    not_applicable: nil,
+    nursery: "nursery",
+    primary: "primary",
+    middle_deemed_primary: "middle",
+    middle_deemed_secondary: "middle",
+    secondary: "secondary",
+    sixth_form_or_college: "sixth_form_or_college",
+    through: "through",
   }.freeze
+
+  def readable_phase
+    READABLE_PHASE_MAPPINGS[phase.to_sym]
+  end
 
   def religious_character
     return if !respond_to?(:gias_data) || gias_data.nil?
@@ -37,9 +41,5 @@ class School < Organisation
 
   def school_type
     read_attribute(:school_type).singularize
-  end
-
-  def self.available_readable_phases
-    READABLE_PHASE_MAPPINGS.values.flatten.uniq
   end
 end

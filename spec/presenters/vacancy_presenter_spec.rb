@@ -248,7 +248,7 @@ RSpec.describe VacancyPresenter do
     let(:vacancy) { build_stubbed(:vacancy, key_stages: %w[ks1 early_years]) }
 
     it "joins them correctly" do
-      expect(subject.readable_key_stages).to eq("KS1, Early years")
+      expect(subject.readable_key_stages).to eq("Key stage 1, Early years")
     end
 
     context "when there are no subjects" do

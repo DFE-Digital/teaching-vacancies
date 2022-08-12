@@ -32,7 +32,8 @@ get "teaching-jobs-for-ect-suitable", to: redirect("ect-suitable-jobs")
 get "teaching-jobs-for-primary", to: redirect("primary-school-jobs")
 get "teaching-jobs-for-middle", to: redirect("middle-school-jobs")
 get "teaching-jobs-for-secondary", to: redirect("secondary-school-jobs")
-get "teaching-jobs-for-16-19", to: redirect("16-19-education-provider-jobs")
+get "teaching-jobs-for-16-19", to: redirect("sixth-form-or-college-jobs")
+get "16-19-education-provider-jobs", to: redirect("sixth-form-or-college-jobs")
 
 ## Subjects
 get "teaching-jobs-for-accounting", to: redirect("economics-business-studies-teacher-jobs")

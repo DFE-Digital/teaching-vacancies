@@ -41,7 +41,7 @@ users.each do |user|
 end
 
 # Vacancies at Bexleyheath school
-attrs = { organisations: [bexleyheath_school], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
+attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.readable_phase], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
 6.times { FactoryBot.create(:vacancy, :published, **attrs) }
 2.times { FactoryBot.create(:vacancy, :published, :no_tv_applications, **attrs) }
 4.times { FactoryBot.create(:vacancy, :future_publish, **attrs) }
@@ -49,7 +49,8 @@ attrs = { organisations: [bexleyheath_school], publisher_organisation: bexleyhea
 4.times { FactoryBot.build(:vacancy, :expired, **attrs).save(validate: false) }
 
 # Vacancies at a school that belongs to Weydon Multi Academy Trust
-attrs = { organisations: [weydon_trust.schools.first], publisher_organisation: weydon_trust.schools.first, publisher: Publisher.all.sample }
+school = weydon_trust.schools.first
+attrs = { organisations: [school], phases: [school.readable_phase], publisher_organisation: school, publisher: Publisher.all.sample }
 6.times { FactoryBot.create(:vacancy, :published, **attrs) }
 2.times { FactoryBot.create(:vacancy, :published, :no_tv_applications, **attrs) }
 4.times { FactoryBot.create(:vacancy, :future_publish, **attrs) }
@@ -57,7 +58,8 @@ attrs = { organisations: [weydon_trust.schools.first], publisher_organisation: w
 4.times { FactoryBot.build(:vacancy, :expired, **attrs).save(validate: false) }
 
 # Vacancies at a school that belongs to Southampton local authority
-attrs = { organisations: [southampton_la.schools.first], publisher_organisation: southampton_la.schools.first, publisher: Publisher.all.sample }
+school = southampton_la.schools.first
+attrs = { organisations: [school], phases: [school.readable_phase], publisher_organisation: school, publisher: Publisher.all.sample }
 6.times { FactoryBot.create(:vacancy, :published, **attrs) }
 2.times { FactoryBot.create(:vacancy, :published, :no_tv_applications, **attrs) }
 4.times { FactoryBot.create(:vacancy, :future_publish, **attrs) }
@@ -65,15 +67,15 @@ attrs = { organisations: [southampton_la.schools.first], publisher_organisation:
 4.times { FactoryBot.build(:vacancy, :expired, **attrs).save(validate: false) }
 
 # Vacancies at Weydon trust central office
-attrs = { organisations: [weydon_trust], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
+attrs = { organisations: [weydon_trust], phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
 3.times { FactoryBot.create(:vacancy, :published, **attrs) }
 
 # Vacancies at multiple schools in Weydon trust
-attrs = { organisations: weydon_trust.schools, publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
+attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
 3.times { FactoryBot.create(:vacancy, :published, **attrs) }
 
 # Vacancies at multiple schools in Southampton local authority
-attrs = { organisations: southampton_la.schools.first(5), publisher_organisation: southampton_la, publisher: Publisher.all.sample }
+attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], publisher_organisation: southampton_la, publisher: Publisher.all.sample }
 3.times { FactoryBot.create(:vacancy, :published, **attrs) }
 
 # Jobseekers

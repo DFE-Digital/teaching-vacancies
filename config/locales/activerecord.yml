@@ -104,14 +104,17 @@ en:
     organisation_ids:
       blank: Select the locations where the job will be based
   education_phases_errors: &education_phases_errors
-    phase:
-      blank: Select an education phase
-      inclusion: Select an education phase
+    phases:
+      blank: Select education phase
+      inclusion: Select education phase
   job_details_errors: &job_details_errors
     contract_type:
       inclusion: Select if the contract type is permanent, fixed term or parental leave cover
     fixed_term_contract_duration:
       blank: Enter the duration of the fixed term contract
+    key_stages:
+      blank: Select key stage
+      inclusion: Select key stage
     parental_leave_cover_contract_duration:
       blank: Enter the duration of the maternity or parental leave cover contract
     job_title:

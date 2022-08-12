@@ -9,6 +9,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
            job_title: "Teacher",
            subjects: ["English"],
            working_patterns: ["full_time"],
+           phases: %w[secondary],
            organisations: [school])
   end
 

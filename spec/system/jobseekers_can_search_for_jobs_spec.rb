@@ -74,8 +74,8 @@ end
 
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:school) { create(:school) }
-  let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school]) }
-  let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school]) }
+  let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
+  let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: [], organisations: [school]) }
   let!(:job2) { create(:vacancy, :past_publish, :teacher, job_title: "PE Teacher", subjects: [], organisations: [school]) }
   let!(:job3) { create(:vacancy, :past_publish, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [school]) }

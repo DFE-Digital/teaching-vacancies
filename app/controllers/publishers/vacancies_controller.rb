@@ -13,8 +13,12 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     reset_session_vacancy!
 
     vacancy = Vacancy.create
-    vacancy.update(organisations: [current_organisation]) if current_organisation.school?
-    vacancy.update(enable_job_applications: false) if current_organisation.local_authority?
+    if current_organisation.school?
+      vacancy.update(organisations: [current_organisation])
+      vacancy.update(phases: [current_organisation.readable_phase]) if current_organisation.readable_phase
+    elsif current_organisation.local_authority?
+      vacancy.update(enable_job_applications: false)
+    end
     redirect_to organisation_job_build_path(vacancy.id, :job_role)
   end
 

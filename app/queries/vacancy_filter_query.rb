@@ -26,7 +26,7 @@ class VacancyFilterQuery < ApplicationQuery
     working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
     built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
 
-    built_scope = built_scope.where("vacancies.readable_phases && ARRAY[?]::varchar[]", filters[:phases]) if filters[:phases].present?
+    built_scope = built_scope.with_any_of_phases(phases(filters[:phases])) if phases(filters[:phases]).present?
 
     built_scope
   end
@@ -37,6 +37,13 @@ class VacancyFilterQuery < ApplicationQuery
     filter&.map { |job_role| job_role == "sen_specialist" ? "sendco" : job_role }
           &.map { |job_role| job_role == "leadership" ? "senior_leader" : job_role }
           &.reject { |job_role| job_role.in? %w[ect_suitable send_responsible] }
+  end
+
+  def phases(filter)
+    filter&.map { |phase| phase.in?(%w[middle_deemed_secondary middle_deemed_primary]) ? "middle" : phase }
+          &.map { |phase| phase == "all_through" ? "through" : phase }
+          &.map { |phase| phase.in?(%w[sixteen_plus 16-19]) ? "sixth_form_or_college" : phase }
+          &.reject { |phase| phase.in? %w[not_applicable] }
   end
 
   def fix_legacy_working_patterns(working_patterns)
