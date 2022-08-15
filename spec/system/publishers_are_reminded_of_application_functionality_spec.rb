@@ -13,7 +13,7 @@ RSpec.describe "Application feature reminder" do
     it "does not show reminder page when creating a job" do
       visit organisation_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(create_or_copy_organisation_jobs_path)
+      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_role))
     end
   end
 
@@ -25,7 +25,6 @@ RSpec.describe "Application feature reminder" do
     it "shows reminder page before first step of create job and does not show it twice in the same session" do
       visit organisation_path
       click_on I18n.t("buttons.create_job")
-      click_on "Continue"
 
       expect(page).to have_content(I18n.t("publishers.new_features.reminder.page_title"))
       expect(page).to have_link(I18n.t("publishers.new_features.reminder.how_applications_work_link"), href: post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"))
@@ -34,14 +33,11 @@ RSpec.describe "Application feature reminder" do
 
       expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_role))
 
-      choose find(:css, ".govuk-radios .govuk-radios__item label", match: :first).text
-      click_on I18n.t("buttons.continue")
-
       expect(page).not_to have_content(I18n.t("publishers.new_features.reminder.page_title"))
 
       visit organisation_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(create_or_copy_organisation_jobs_path)
+      expect(current_path).to eq(organisation_job_build_path(Vacancy.order("created_at").last.id, :job_role))
     end
 
     it "does not show reminder page when editing a job" do
@@ -63,7 +59,7 @@ RSpec.describe "Application feature reminder" do
         click_on I18n.t("buttons.continue_to_account")
         visit organisation_path
         click_on I18n.t("buttons.create_job")
-        expect(current_path).to eq(create_or_copy_organisation_jobs_path)
+        expect(current_path).to eq(organisation_jobs_path)
       end
     end
   end

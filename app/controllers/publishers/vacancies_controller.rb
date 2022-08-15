@@ -9,25 +9,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
-  def create_or_copy; end
-
-  def select_a_job_for_copying
-    @form = Publishers::JobListing::SelectAJobForCopyingForm.new
-  end
-
-  def redirect_to_copy_job
-    @form = Publishers::JobListing::SelectAJobForCopyingForm.new(select_a_job_for_copying_form_params)
-
-    if @form.valid?
-      redirect_to new_organisation_job_copy_path(job_id: @form.vacancy_id)
-    else
-      render :select_a_job_for_copying
-    end
-  end
-
   def create
-    redirect_to select_a_job_for_copying_organisation_jobs_path and return if params[:create_or_copy] == "copy-existing"
-
     reset_session_vacancy!
 
     vacancy = Vacancy.create
@@ -87,9 +69,5 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
       enable_job_applications: true,
       created_at: Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT..,
     ).none?
-  end
-
-  def select_a_job_for_copying_form_params
-    params.require(:publishers_job_listing_select_a_job_for_copying_form).permit(:vacancy_id)
   end
 end

@@ -32,8 +32,8 @@ RSpec.describe DashboardComponent, type: :component do
 
         let!(:inline_component) { render_inline(subject) }
 
-        it "renders the Create a job listing button that does not skip the copy existing page" do
-          expect(page).to have_link(href: Rails.application.routes.url_helpers.create_or_copy_organisation_jobs_path)
+        it "renders the Create a job listing button" do
+          expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_jobs_path)
         end
 
         it "renders the number of jobs in the heading" do
