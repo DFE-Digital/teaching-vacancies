@@ -22,7 +22,8 @@ RSpec.describe "Creating a vacancy" do
                                  :teacher,
                                  :ect_suitable,
                                  phase: "multiple_phases",
-                                 working_patterns: Vacancy.working_patterns.keys,
+                                 # TODO: Working Patterns: Remove call to #reject once all vacancies with legacy working patterns have expired
+                                 working_patterns: Vacancy.working_patterns.keys.reject { |working_pattern| working_pattern.in?(%w[flexible job_share term_time]) },
                                  publish_on: Date.current))
     end
     let(:created_vacancy) { Vacancy.last }

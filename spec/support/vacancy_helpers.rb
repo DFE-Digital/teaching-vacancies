@@ -48,10 +48,11 @@ module VacancyHelpers
 
   def fill_in_working_patterns_form_fields(vacancy)
     vacancy.working_patterns.each do |working_pattern|
-      check Vacancy.human_attribute_name(working_pattern.to_s), name: "publishers_job_listing_working_patterns_form[working_patterns][]", visible: false
+      check Vacancy.human_attribute_name(working_pattern.to_s), name: "publishers_job_listing_working_patterns_form[working_patterns][]"
     end
 
-    fill_in "publishers_job_listing_working_patterns_form[working_patterns_details]", with: vacancy.working_patterns_details
+    fill_in "publishers_job_listing_working_patterns_form[full_time_details]", with: vacancy.full_time_details if vacancy.working_patterns.include?("full_time")
+    fill_in "publishers_job_listing_working_patterns_form[part_time_details]", with: vacancy.part_time_details if vacancy.working_patterns.include?("part_time")
   end
 
   def fill_in_pay_package_form_fields(vacancy)
@@ -154,8 +155,12 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.readable_key_stages) if vacancy.key_stages.present?
     expect(page).to have_content(vacancy.readable_subjects)
 
-    expect(page).to have_content(vacancy.readable_working_patterns)
-    expect(page).to have_content(vacancy.working_patterns_details)
+    vacancy.working_patterns.each do |working_pattern|
+      expect(page).to have_content(working_pattern.humanize)
+    end
+
+    expect(page).to have_content(vacancy.full_time_details) if vacancy.working_patterns.include?("full_time")
+    expect(page).to have_content(vacancy.part_time_details) if vacancy.working_patterns.include?("part_time")
 
     expect(page).to have_content(vacancy.salary)
     expect(page.html).to include(vacancy.benefits)

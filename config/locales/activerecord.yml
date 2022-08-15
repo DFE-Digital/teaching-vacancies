@@ -123,6 +123,12 @@ en:
       too_long: Job title must not be more than %{count} characters
       invalid_characters: Job title must not contain any HTML tags
   working_patterns_errors: &working_patterns_errors
+    full_time_details:
+      blank: Enter full time details
+      maximum_words: Full time details must be 50 words or less
+    part_time_details:
+      blank: Enter part time details
+      maximum_words: Part time details must be 50 words or less
     working_patterns:
       blank: Select a working pattern
       inclusion: Select a working pattern

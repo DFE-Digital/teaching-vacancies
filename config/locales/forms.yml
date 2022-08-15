@@ -627,7 +627,8 @@ en:
         benefits_html: Additional allowances (optional<span class='govuk-visually-hidden'> field</span>)</span>
         salary: Annual or full time equivalent (FTE) salary
       publishers_job_listing_working_patterns_form:
-        working_patterns_details_html: What are the specifics of the working pattern? (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        full_time_details: Details
+        part_time_details: Details
         working_patterns_options:
           flexible: Flexible
           full_time: Full time

@@ -40,8 +40,13 @@ FactoryBot.define do
     starts_on { 1.year.from_now.to_date }
     status { :published }
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
-    working_patterns { factory_rand_sample(Vacancy.working_patterns.keys, 1..3) }
-    working_patterns_details { Faker::Lorem.paragraph(sentence_count: 1) }
+    # TODO: Working Patterns: Remove call to #reject once all vacancies with legacy working patterns have expired
+    working_patterns { factory_rand_sample(Vacancy.working_patterns.keys.reject { |working_pattern| working_pattern.in?(%w[flexible job_share term_time]) }, 1..2) }
+
+    after(:build) do |v|
+      v.full_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("full_time")
+      v.part_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("part_time")
+    end
 
     trait :no_tv_applications do
       application_link { Faker::Internet.url(host: "example.com") }

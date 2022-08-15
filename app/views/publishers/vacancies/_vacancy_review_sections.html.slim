@@ -30,8 +30,17 @@
     - s.row :readable_subjects, label: t("jobs.subject", count: vacancy.subjects.count), optional: true
 
 - r.section :working_patterns do |s|
-  - s.row :readable_working_patterns, label: t("jobs.working_patterns")
-  - s.row :working_patterns_details
+  / TODO Working Patterns: Remove this once all vacancies with legacy working patterns & working_pattern_details have expired
+  - if vacancy.full_time_details.nil? && vacancy.part_time_details.nil?
+    - s.row :readable_working_patterns, label: t("jobs.working_patterns")
+    - s.row :working_patterns_details
+  - else
+    = govuk_summary_list do |summary_list|
+        - summary_list.row do |row|
+          - row.key
+            h4.govuk-heading-s = t("jobs.working_patterns")
+          - row.value
+            ul.govuk-list = vacancy_working_patterns(vacancy)
 
 - r.section :pay_package do |s|
   - s.row :salary

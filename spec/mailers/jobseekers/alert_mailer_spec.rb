@@ -78,7 +78,7 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include(job_url(vacancies.first, **utm_params))
                   .and include(organisation_landing_page_url(vacancies.first.organisation.slug, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancies.first.readable_working_patterns))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancies.first.readable_working_patterns_with_details))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.closing_date", closing_date: format_time_to_datetime_at(vacancies.first.expires_at)))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
                   .and include(I18n.t("subscriptions.intro"))
@@ -131,7 +131,7 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include(organisation_landing_page_url(vacancies.first.organisation.slug, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern",
-                                      working_pattern: vacancies.first.readable_working_patterns))
+                                      working_pattern: vacancies.first.readable_working_patterns_with_details))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.closing_date",
                                       closing_date: format_time_to_datetime_at(vacancies.first.expires_at)))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
