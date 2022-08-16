@@ -21,7 +21,6 @@ RSpec.describe "Creating a vacancy" do
       VacancyPresenter.new(build(:vacancy,
                                  :teacher,
                                  :ect_suitable,
-                                 working_patterns: Vacancy.working_patterns.keys,
                                  phases: %w[secondary],
                                  key_stages: %w[ks3],
                                  publish_on: Date.current))

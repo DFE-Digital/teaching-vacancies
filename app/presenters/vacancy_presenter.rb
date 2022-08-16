@@ -23,10 +23,23 @@ class VacancyPresenter < BasePresenter
     simple_format(fix_bullet_points(model.benefits)) if model.benefits.present?
   end
 
+  # TODO: Working Patterns: Remove this once all vacancies with legacy working patterns & working_pattern_details have expired
   def readable_working_patterns
     model.working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ").capitalize
+  end
+
+  def readable_working_patterns_with_details
+    return readable_working_patterns unless model.full_time_details? || model.part_time_details?
+
+    model.working_patterns.map { |working_pattern|
+      if working_pattern == "full_time"
+        I18n.t("jobs.full_time_details", details: model.full_time_details)
+      else
+        I18n.t("jobs.part_time_details", details: model.part_time_details)
+      end
+    }.join("\n")
   end
 
   def working_patterns_for_job_schema

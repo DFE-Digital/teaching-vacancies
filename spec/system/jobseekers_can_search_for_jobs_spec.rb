@@ -9,7 +9,7 @@ RSpec.shared_examples "a successful search" do
     end
 
     it "displays page 1 jobs" do
-      within("ul.search-results") { expect(page).to have_css("li", count: 2) }
+      expect(page).to have_css("ul.search-results > li", count: 2)
       expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 6, type: "results"))
     end
 
@@ -19,7 +19,7 @@ RSpec.shared_examples "a successful search" do
           click_on "3"
         end
 
-        within("ul.search-results") { expect(page).to have_css("li", count: 2) }
+        expect(page).to have_css("ul.search-results > li", count: 2)
         expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 5, to: 6, total: 6, type: "results"))
       end
     end

@@ -174,7 +174,19 @@ module VacanciesHelper
     safe_join [tag.div(t(".closing_date", date: vacancy.expires_at)), tag.div(vacancy.organisation_name, class: "govuk-!-margin-top-1")]
   end
 
-  def working_patterns(vacancy)
+  def vacancy_working_patterns(vacancy)
+    # TODO: Working Patterns: Remove call to vacancy_working_patterns_summary once all vacancies with legacy working patterns & working_pattern_details have expired
+    return vacancy_working_patterns_summary(vacancy) unless vacancy.full_time_details? || vacancy.part_time_details?
+
+    safe_join [
+      (tag.li { t("jobs.full_time_details", details: vacancy.full_time_details) } if vacancy.full_time_details?),
+      (tag.li { t("jobs.part_time_details", details: vacancy.part_time_details) } if vacancy.part_time_details?),
+    ]
+  end
+
+  private
+
+  def vacancy_working_patterns_summary(vacancy)
     vacancy.working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ").capitalize

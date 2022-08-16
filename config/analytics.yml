@@ -312,6 +312,8 @@ shared:
     - personal_statement_guidance
     - completed_steps
     - working_patterns_details
+    - full_time_details
+    - part_time_details
     - phases
     - key_stages
     - geolocation
