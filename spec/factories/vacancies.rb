@@ -1,7 +1,7 @@
-JOB_TITLES = ["Tutor of Science (opportunity exists for the right candidate for Head of Physics and/or KS4 Lead)",
-              "PROGRESS LEADER (HEAD OF DEPARTMENT) FOR RS, PSHE, RSE AND CITIZENSHIP EDUCATION WITH TLR 2 £6698",
-              "Tutor of Music (Part time, permanent) to include Music Performance Enhancement project for 1 year",
-              "Tutor of Maths MPS (A recruitment and retention point will be offered to the successful candidate)",
+JOB_TITLES = ["Tutor of Science",
+              "PROGRESS LEADER (HEAD OF DEPARTMENT)",
+              "Tutor of Music (Part time, permanent)",
+              "Tutor of Maths MPS",
               "Tutor of PE (male)", "Games Design Tutor", "Team Leader of Maths", "KEY STAGE 2 Tutor",
               "Lead in Health and Social Care", "Director of Learning - Science"].freeze
 
@@ -20,25 +20,33 @@ FactoryBot.define do
     benefits { true }
     benefits_details { Faker::Lorem.paragraph(sentence_count: factory_rand(1..3)) }
     completed_steps do
-      %w[job_role job_role_details job_location job_details working_patterns pay_package important_dates applying_for_the_job applying_for_the_job_details documents job_summary]
+      %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package important_dates start_date
+         applying_for_the_job school_visits contact_details about_the_role include_additional_documents]
     end
     contact_email { Faker::Internet.email(domain: "example.com") }
+    contact_number_provided { true }
     contact_number { "01234 123456" }
     contract_type { factory_sample(Vacancy.contract_types.keys) }
     fixed_term_contract_duration { "6 months" }
+    further_details_provided { true }
+    further_details { Faker::Lorem.paragraph(sentence_count: factory_rand(50..100)) }
     parental_leave_cover_contract_duration { "6 months" }
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
+    include_additional_documents { false }
     job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
     job_title { factory_sample(JOB_TITLES) }
     listed_elsewhere { nil }
     job_role { factory_sample(Vacancy.job_roles.keys) }
     ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_role == "teacher" }
     pay_scale { factory_sample(SALARIES) }
-    personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
     publish_on { Date.current }
     salary { factory_sample(SALARIES) }
-    school_visits { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+    safeguarding_information_provided { true }
+    safeguarding_information { Faker::Lorem.paragraph(sentence_count: factory_rand(50..100)) }
+    school_offer { Faker::Lorem.paragraph(sentence_count: factory_rand(50..150)) }
+    school_visits { true }
+    skills_and_experience { Faker::Lorem.paragraph(sentence_count: factory_rand(50..150)) }
     start_date_type { "specific_date" }
     starts_on { 1.year.from_now.to_date }
     status { :published }
@@ -52,6 +60,7 @@ FactoryBot.define do
     end
 
     trait :no_tv_applications do
+      receive_applications { "website" }
       application_link { Faker::Internet.url(host: "example.com") }
       enable_job_applications { false }
       how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
@@ -140,6 +149,7 @@ FactoryBot.define do
     end
 
     trait :with_supporting_documents do
+      include_additional_documents { true }
       supporting_documents do
         [
           Rack::Test::UploadedFile.new(
@@ -151,6 +161,8 @@ FactoryBot.define do
     end
 
     trait :with_application_form do
+      enable_job_applications { false }
+      receive_applications { "email" }
       application_form do
         Rack::Test::UploadedFile.new(
           Rails.root.join("spec", "fixtures", "files", "blank_job_spec.pdf"),

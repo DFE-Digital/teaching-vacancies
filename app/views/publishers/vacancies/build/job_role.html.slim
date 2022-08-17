@@ -7,13 +7,6 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      h2.govuk-heading-l class="govuk-!-margin-bottom-3"
-        = t("publishers.vacancies.steps.job_role")
-
       = f.govuk_collection_radio_buttons :job_role, Vacancy.job_roles.keys, :to_s, legend: nil
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"

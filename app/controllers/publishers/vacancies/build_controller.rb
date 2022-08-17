@@ -2,8 +2,9 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   include Wicked::Wizard
   include OrganisationsHelper
 
-  steps :job_role, :job_role_details, :job_location, :education_phases, :job_details, :working_patterns,
-        :pay_package, :important_dates, :applying_for_the_job, :applying_for_the_job_details, :documents, :job_summary
+  steps :job_location, :job_role, :education_phases, :job_title, :key_stages, :subjects, :contract_type, :working_patterns,
+        :pay_package, :important_dates, :start_date, :applying_for_the_job, :how_to_receive_applications, :application_link,
+        :application_form, :school_visits, :contact_details, :about_the_role, :include_additional_documents, :documents
 
   helper_method :form
 
@@ -36,7 +37,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   private
 
   def form
-    @form ||= form_class.new(form_attributes, vacancy)
+    @form ||= form_class.new(form_attributes, vacancy, current_publisher)
   end
 
   def form_class
@@ -93,6 +94,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     # Calling step_process will initialize a StepProcess, which will raise if the current step is missing.
     step_process
   rescue StepProcess::MissingStepError
+    @step = "wicked_finish" if step == :documents
     skip_step unless step == "wicked_finish"
   end
 end

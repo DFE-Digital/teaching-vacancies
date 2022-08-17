@@ -3,157 +3,193 @@ require "rails_helper"
 RSpec.describe Publishers::Vacancies::VacancyStepProcess do
   subject { described_class.new(current_step, vacancy: vacancy, organisation: organisation) }
 
-  let(:current_step) { :job_details }
+  let(:current_step) { :job_role }
 
   let(:vacancy) { build_stubbed(:vacancy, :draft, :teacher) }
   let(:organisation) { build_stubbed(:school) }
 
   describe "#step_groups" do
-    context "when signed in as a school" do
-      let(:all_possible_step_groups) do
-        %i[
-          job_role job_location job_details working_patterns pay_package important_dates
-          applying_for_the_job documents job_summary review
-        ]
-      end
-      let(:organisation) { create(:school) }
-      let(:vacancy) do
-        create(:vacancy,
-               :draft,
-               :teacher,
-               organisations: [organisation])
-      end
+    let(:all_possible_step_groups) { %i[job_details important_dates application_process about_the_role review] }
+    let(:vacancy) { create(:vacancy, :draft, :teacher, organisations: [organisation]) }
 
-      it "has the expected step groups" do
-        expect(subject.step_groups.keys).to eq(all_possible_step_groups.excluding(:job_location))
-      end
-    end
-
-    context "when not signed in as a school" do
-      let(:all_possible_step_groups) do
-        %i[
-          job_role job_location job_details working_patterns pay_package important_dates
-          applying_for_the_job documents job_summary review
-        ]
-      end
-      let(:organisation) { create(:trust) }
-      let(:vacancy) do
-        create(:vacancy,
-               :draft,
-               :teacher,
-               organisations: [organisation])
-      end
-
-      it "has the expected step groups" do
-        expect(subject.step_groups.keys).to eq(all_possible_step_groups)
-      end
+    it "has the expected step groups" do
+      expect(subject.step_groups.keys).to eq(all_possible_step_groups)
     end
   end
 
   describe "#steps" do
-    let(:all_possible_steps) do
-      %i[
-        job_role job_role_details job_location education_phases job_details working_patterns
-        pay_package important_dates applying_for_the_job applying_for_the_job_details documents job_summary review
-      ]
-    end
-
-    context "when the job is for a teaching role" do
-      let(:vacancy) { build_stubbed(:vacancy, :teacher) }
-
-      it "does not skip the `job_roles_details` step" do
-        expect(subject.steps).to include(:job_role_details)
-      end
-    end
-
-    context "when the job is for any other role" do
-      Vacancy.job_roles.each_key do |job_role|
-        let(:vacancy) { build_stubbed(:vacancy, job_role: job_role) }
-
-        it "skips the `job_roles_details` step" do
-          expect(subject.steps).to_not include(:job_role_details)
-        end
-      end
-    end
-
-    context "when signed in as a school" do
-      let(:organisation) { create(:school) }
-      let(:vacancy) do
-        create(:vacancy,
-               :draft,
-               :teacher,
-               organisations: [organisation],
-               phases: %w[primary])
+    context "job_details steps" do
+      it "has the required steps" do
+        expect(subject.steps).to include(:job_role, :job_title, :contract_type, :working_patterns, :pay_package)
       end
 
-      it "returns the expected steps" do
-        expect(subject.steps).to eq(all_possible_steps.excluding(:job_location, :education_phases))
-      end
-    end
-
-    context "when signed in as a MAT" do
-      let(:organisation) { build_stubbed(:trust) }
-
-      context "when the vacancy is at a single school" do
-        let(:school) { create(:school) }
-        let(:vacancy) do
-          create(:vacancy,
-                 :draft,
-                 :teacher,
-                 organisations: [school],
-                 phases: %w[primary])
-        end
-
-        it "returns the expected steps" do
-          expect(subject.steps).to eq(all_possible_steps.excluding(:education_phases))
+      context "when the organisation is a school" do
+        it "has the expected steps" do
+          expect(subject.steps).to_not include(:job_location)
         end
       end
 
-      context "when the vacancy is at the central office" do
-        let(:trust) { create(:trust) }
-        let(:vacancy) { build_stubbed(:vacancy, :teacher, organisations: [trust]) }
+      context "when the organisation is a school group" do
+        let(:organisation) { build_stubbed(:school_group) }
 
-        it "includes the `education_phases` step" do
+        it "has the expected steps" do
+          expect(subject.steps).to include(:job_location)
+        end
+      end
+
+      context "when the vacancy allows phases to be set" do
+        it "has the expected steps" do
           expect(subject.steps).to include(:education_phases)
         end
       end
-    end
 
-    context "when signed in as an LA" do
-      let(:organisation) { build_stubbed(:local_authority) }
+      context "when the vacancy does not allow phases to be set" do
+        before { allow(vacancy).to receive(:allow_phase_to_be_set?).and_return(false) }
 
-      it "returns the expected steps" do
-        expect(subject.steps).to eq(all_possible_steps.excluding(:applying_for_the_job))
+        it "has the expected steps" do
+          expect(subject.steps).not_to include(:education_phases)
+        end
       end
 
-      context "when the vacancy is at multiple schools" do
-        let(:vacancy) { create(:vacancy, phases: %w[primary], organisations: [school, school2]) }
+      context "when the vacancy allows key stages" do
+        before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
-        context "when the schools have a phase" do
-          let(:school) { create(:school, :secondary) }
-          let(:school2) { create(:school, phase: :not_applicable) }
+        it "has the expected steps" do
+          expect(subject.steps).to include(:key_stages)
+        end
+      end
 
-          it "skips the `education_phases` step" do
-            expect(subject.steps).not_to include(:education_phases)
+      context "when the vacancy does not allow key stages" do
+        it "has the expected steps" do
+          expect(subject.steps).not_to include(:key_stages)
+        end
+      end
+
+      context "when the vacancy allows subjects" do
+        before { allow(vacancy).to receive(:allow_subjects?).and_return(true) }
+
+        it "has the expected steps" do
+          expect(subject.steps).to include(:subjects)
+        end
+      end
+
+      context "when the vacancy does not allow subjects" do
+        it "has the expected steps" do
+          expect(subject.steps).not_to include(:subjects)
+        end
+      end
+    end
+
+    context "important_dates_steps" do
+      it "has the required steps" do
+        expect(subject.steps).to include(:important_dates, :start_date)
+      end
+    end
+
+    context "application_process_steps" do
+      it "has the required steps" do
+        expect(subject.steps).to include(:school_visits, :contact_details)
+      end
+
+      context "when the organisation is a school" do
+        it "has the expected steps" do
+          expect(subject.steps).to include(:applying_for_the_job)
+        end
+      end
+
+      context "when the organisation is a trust" do
+        let(:organisation) { build_stubbed(:trust) }
+
+        it "has the expected steps" do
+          expect(subject.steps).to include(:applying_for_the_job)
+        end
+      end
+
+      context "when the organisation is a local authority" do
+        before { allow(vacancy).to receive(:enable_job_applications).and_return(false) }
+
+        let(:organisation) { build_stubbed(:local_authority) }
+
+        it "has the expected steps" do
+          expect(subject.steps).not_to include(:applying_for_the_job)
+          expect(subject.steps).to include(:how_to_receive_applications)
+        end
+      end
+
+      context "when the vacancy is published" do
+        let(:vacancy) { build_stubbed(:vacancy, :published, :teacher) }
+
+        context "when the vacancy allows job applications" do
+          before { allow(vacancy).to receive(:enable_job_applications).and_return(true) }
+
+          it "has the expected steps" do
+            expect(subject.steps).not_to include(:applying_for_the_job, :how_to_receive_applications)
           end
         end
 
-        context "when the schools have no phase" do
-          let(:school) { create(:school, phase: :not_applicable) }
-          let(:school2) { create(:school, phase: :not_applicable) }
+        context "when the vacancy does not allow job applications" do
+          before { allow(vacancy).to receive(:enable_job_applications).and_return(false) }
 
-          it "includes the `education_phases` step" do
-            expect(subject.steps).to include(:education_phases)
+          it "has the expected steps" do
+            expect(subject.steps).not_to include(:applying_for_the_job)
+            expect(subject.steps).to include(:how_to_receive_applications)
+          end
+        end
+      end
+
+      context "when the vacancy allows job applications" do
+        before { allow(vacancy).to receive(:enable_job_applications).and_return(true) }
+
+        it "has the expected steps" do
+          expect(subject.steps).not_to include(:how_to_receive_applications)
+          expect(subject.steps).not_to include(:application_link, :application_form)
+        end
+      end
+
+      context "when the vacancy does not allow job applications" do
+        before { allow(vacancy).to receive(:enable_job_applications).and_return(false) }
+
+        it "has the expected steps" do
+          expect(subject.steps).to include(:how_to_receive_applications)
+        end
+
+        context "when applications are received by email" do
+          before { allow(vacancy).to receive(:receive_applications).and_return("email") }
+
+          it "has the expected steps" do
+            expect(subject.steps).to include(:application_form)
+          end
+        end
+
+        context "when applications are received on a website" do
+          before { allow(vacancy).to receive(:receive_applications).and_return("website") }
+
+          it "has the expected steps" do
+            expect(subject.steps).to include(:application_link)
           end
         end
       end
     end
 
-    context "when vacancy is published" do
-      let(:vacancy) { build_stubbed(:vacancy, :published, :teacher) }
+    context "about_the_role_steps" do
+      it "has the required steps" do
+        expect(subject.steps).to include(:about_the_role, :include_additional_documents)
+      end
 
-      it "returns the expected steps" do
-        expect(subject.steps).to eq(all_possible_steps.excluding(:job_location, :applying_for_the_job))
+      context "when include_additional_documents is true" do
+        before { allow(vacancy).to receive(:include_additional_documents).and_return(true) }
+
+        it "has the expected steps" do
+          expect(subject.steps).to include(:documents)
+        end
+      end
+
+      context "when include_additional_documents is false" do
+        before { allow(vacancy).to receive(:include_additional_documents).and_return(false) }
+
+        it "has the expected steps" do
+          expect(subject.steps).not_to include(:documents)
+        end
       end
     end
   end

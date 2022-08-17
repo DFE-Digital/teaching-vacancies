@@ -1,5 +1,5 @@
 .govuk-button-group
-  - if vacancy.status.nil? && current_step != :job_details
+  - if vacancy.status.nil? && current_step != :job_title
     = f.govuk_submit t("buttons.continue"), classes: "govuk-!-margin-bottom-5"
   - else
     = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5", "data-upload-documents-target": "saveListingButton"

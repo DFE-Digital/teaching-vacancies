@@ -9,9 +9,10 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
+  # TODO: Update with job listing updates
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
     about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
-    job_role job_roles job_role_details job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
+    job_role job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
     working_patterns
   ].freeze
 
@@ -39,6 +40,7 @@ class Vacancy < ApplicationRecord
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum start_date_type: { specific_date: 0, date_range: 1, other: 2, undefined: 3 }
   enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
+  enum receive_applications: { email: 0, website: 1 }
 
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
@@ -207,6 +209,10 @@ class Vacancy < ApplicationRecord
       actual_salary.present? ? "part_time" : nil,
       pay_scale.present? ? "pay_scale" : nil,
     ]
+  end
+
+  def other_contact_email(current_publisher)
+    contact_email? && contact_email != current_publisher.email
   end
 
   private

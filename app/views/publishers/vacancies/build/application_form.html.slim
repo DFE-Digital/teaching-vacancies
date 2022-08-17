@@ -1,0 +1,34 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.application_form"))
+
+= vacancy_form_page_heading(vacancy, step_process, params: params)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds data-controller="upload-documents" data-upload-documents-inactive-value=vacancy.enable_job_applications?
+    = form_for form, url: organisation_job_application_forms_path(vacancy.id) do |f|
+      = f.govuk_error_summary
+
+      - if params[:back_to_review]
+        = f.hidden_field :back_to_review, value: "true"
+
+      = f.govuk_file_field :application_form,
+        label: { size: "m" },
+        accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
+        enctype: "multipart/form-data",
+        "data-upload-documents-target": "inputFileUpload",
+        "data-action": "change->upload-documents#uploadFiles"
+
+      button.govuk-file-upload class="govuk-!-display-none govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#triggerUpload"
+        = t("buttons.choose_file")
+
+      = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
+
+      .js-documents class=("js-documents--empty" unless vacancy.application_form.present?)
+        = render "publishers/vacancies/build/application_form"
+        p.js-documents__no-files = t("jobs.no_files_message")
+
+      = f.govuk_radio_buttons_fieldset :application_email, legend: { size: "m" } do
+        = f.govuk_radio_button :application_email, current_publisher.email, label: { text: current_publisher.email }, link_errors: true
+        = f.govuk_radio_button :application_email, "other" do
+          = f.govuk_text_field :other_application_email
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

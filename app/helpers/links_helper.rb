@@ -111,6 +111,19 @@ module LinksHelper
     )
   end
 
+  def application_email_link(vacancy, **kwargs)
+    tracked_mail_to(
+      vacancy.application_email,
+      vacancy.application_email,
+      subject: t("jobs.contact_email_subject", job: vacancy.job_title),
+      body: t("jobs.contact_email_body", url: job_url(vacancy)),
+      link_type: :application_email,
+      link_subject: anon(vacancy.id),
+      tracked_link_text: anon(vacancy.application_email),
+      **kwargs,
+    )
+  end
+
   def map_link(text, url, vacancy_id: nil, **kwargs)
     tracked_link_to(
       text,

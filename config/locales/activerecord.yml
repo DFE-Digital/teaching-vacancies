@@ -97,9 +97,6 @@ en:
     job_role:
       inclusion: Select a job role
       blank: Select a job role
-  job_role_details_errors: &job_role_details_errors
-    ect_status:
-      inclusion: Select yes if this role is suitable for an early career teacher
   job_location_errors: &job_location_errors
     organisation_ids:
       blank: Select the locations where the job will be based
@@ -107,21 +104,23 @@ en:
     phases:
       blank: Select education phase
       inclusion: Select education phase
-  job_details_errors: &job_details_errors
-    contract_type:
-      inclusion: Select if the contract type is permanent, fixed term, or maternity or parental leave cover
-    fixed_term_contract_duration:
-      blank: Enter the duration of the fixed term contract
-    key_stages:
-      blank: Select key stage
-      inclusion: Select key stage
-    parental_leave_cover_contract_duration:
-      blank: Enter the duration of the maternity or parental leave cover contract
+  job_title_errors: &job_title_errors
     job_title:
       blank: Enter a job title
       too_short: Job title must be at least %{count} characters
       too_long: Job title must not be more than %{count} characters
       invalid_characters: Job title must not contain any HTML tags
+  key_stages_errors: &key_stages_errors
+    key_stages:
+      blank: Select at least one key stage
+      inclusion: Select at least one key stage
+  contract_type_errors: &contract_type_errors
+    contract_type:
+      inclusion: Select if the contract type is permanent, fixed term, or maternity or parental leave cover
+    fixed_term_contract_duration:
+      blank: Enter the length of the fixed term contract
+    parental_leave_cover_contract_duration:
+      blank: Enter the length of the maternity or parental leave cover contract
   working_patterns_errors: &working_patterns_errors
     full_time_details:
       blank: Enter full time details
@@ -152,13 +151,6 @@ en:
     salary_types:
       invalid: Select salary details
   important_dates_errors: &important_dates_errors
-    earliest_start_date:
-      after: The date the job starts must be after the closing date
-      before: The date the job starts must before the latest start date
-      blank: Enter the earliest start date
-      invalid: Enter a date in the correct format
-      on_or_after: The date the job starts must be in the future
-      on_or_before: The date the job starts must be less than two years in the future
     expires_at:
       after: The closing date must be after the date the job will be listed
       blank: Enter a closing date
@@ -167,6 +159,21 @@ en:
       on_or_before: The closing date must be less than two years in the future
     expiry_time:
       inclusion: Choose the time the application is due from the options provided
+    publish_on_day:
+      inclusion: Enter the date the job will be listed
+    publish_on:
+      blank: Enter the date the job will be listed
+      invalid: Enter a date in the correct format
+      on_or_after: The date the job will be listed must be either today or in the future
+      on_or_before: The date the job will be listed must be less than two years in the future
+  start_date_errors: &start_date_errors
+    earliest_start_date:
+      after: The date the job starts must be after the closing date
+      before: The date the job starts must before the latest start date
+      blank: Enter the earliest start date
+      invalid: Enter a date in the correct format
+      on_or_after: The date the job starts must be in the future
+      on_or_before: The date the job starts must be less than two years in the future
     latest_start_date:
       after: The latest date the job starts must be after the earliest start date
       blank: Enter the latest start date
@@ -175,13 +182,6 @@ en:
       on_or_before: The date the job starts must be less than two years in the future
     other_start_date_details:
       blank: Enter the start date details
-    publish_on_day:
-      inclusion: Enter the date the job will be listed
-    publish_on:
-      blank: Enter the date the job will be listed
-      invalid: Enter a date in the correct format
-      on_or_after: The date the job will be listed must be either today or in the future
-      on_or_before: The date the job will be listed must be less than two years in the future
     start_date_type:
       inclusion: Select a start date
     starts_on:
@@ -194,21 +194,57 @@ en:
     enable_job_applications:
       cannot_be_changed_once_listed: >-
         You cannot change how you would like candidates to apply now that your listing is published
-      inclusion: Select how you would like candidates to apply
-  applying_for_the_job_details_errors: &applying_for_the_job_details_errors
+      inclusion: Select yes if you would like candidates to use the application form
+  how_to_receive_applications_errors: &how_to_receive_applications_errors
+    receive_applications:
+      inclusion: Select how applications can be received
+  application_form_errors: &application_form_errors
+    application_email:
+      blank: Select the email address to receive applications
+    application_form:
+      blank: Upload a valid application form
+    other_application_email:
+      blank: Enter an email address
+  application_link_errors: &application_link_errors
     application_link:
+      blank: Enter the link to the application website
       url: Enter a link in the correct format, like www.school.ac.uk
+  school_visits_errors: &school_visits_errors
+    school_visits:
+      inclusion: Select yes if school visits are offered
+  contact_details_errors: &contact_details_errors
     contact_email:
       blank: Enter an email address
+      invalid: Enter a valid email address
     contact_number:
-      invalid: Contact number must be a valid phone number
-    how_to_apply:
-      blank: Please provide details about how candidates should apply
-  job_summary_errors: &job_summary_errors
-    job_advert:
-      blank: Enter a job advert
-    about_school:
-      blank: Enter a description of the %{organisation}
+      blank: Enter a phone number
+      invalid: Enter a valid phone number
+    contact_number_provided:
+      inclusion: Select yes if you would like to add a contact phone number
+    other_contact_email:
+      blank: Enter an email address
+      invalid: Enter a valid email address
+  about_the_role_errors: &about_the_role_errors
+    ect_status:
+      inclusion: Select yes if this role is suitable for an early career teacher
+    skills_and_experience:
+      blank: Enter the skills and experience required for the role
+    school_offer:
+      blank: Enter the information about what your %{organisation} offers
+    safeguarding_information_provided:
+      inclusion: Select yes if you would like to add information about your commitment to safeguarding
+    safeguarding_information:
+      blank: Enter the information about your commitment to safeguarding
+    further_details_provided:
+      inclusion: Select yes if you would like to add further details about the role
+    further_details:
+      blank: Enter the further details about the role
+  include_additional_documents_errors: &include_additional_documents_errors
+    include_additional_documents:
+      inclusion: Select yes if you would like to upload additional documents
+  documents_errors: &documents_errors
+    documents:
+      blank: Upload at least one document
 
   # External vacancies errors
   external_errors: &external_errors
@@ -255,19 +291,21 @@ en:
         publishers/job_listing/job_role_form:
           attributes:
             <<: *job_role_errors
-        publishers/job_listing/job_role_details_form:
-          attributes:
-            <<: *job_role_details_errors
-
         publishers/job_listing/job_location_form:
           attributes:
             <<: *job_location_errors
         publishers/job_listing/education_phases_form:
           attributes:
             <<: *education_phases_errors
-        publishers/job_listing/job_details_form:
+        publishers/job_listing/job_title_form:
           attributes:
-            <<: *job_details_errors
+            <<: *job_title_errors
+        publishers/job_listing/key_stages_form:
+          attributes:
+            <<: *key_stages_errors
+        publishers/job_listing/contract_type_form:
+          attributes:
+            <<: *contract_type_errors
         publishers/job_listing/working_patterns_form:
           attributes:
             <<: *working_patterns_errors
@@ -277,19 +315,40 @@ en:
         publishers/job_listing/important_dates_form:
           attributes:
             <<: *important_dates_errors
+        publishers/job_listing/start_date_form:
+          attributes:
+            <<: *start_date_errors
         publishers/job_listing/applying_for_the_job_form:
           attributes:
             <<: *applying_for_the_job_errors
-        publishers/job_listing/applying_for_the_job_details_form:
+        publishers/job_listing/how_to_receive_applications_form:
           attributes:
-            <<: *applying_for_the_job_details_errors
-        publishers/job_listing/job_summary_form:
+            <<: *how_to_receive_applications_errors
+        publishers/job_listing/application_form_form:
           attributes:
-            <<: *job_summary_errors
+            <<: *application_form_errors
+        publishers/job_listing/application_link_form:
+          attributes:
+            <<: *application_link_errors
+        publishers/job_listing/school_visits_form:
+          attributes:
+            <<: *school_visits_errors
+        publishers/job_listing/contact_details_form:
+          attributes:
+            <<: *contact_details_errors
+        publishers/job_listing/about_the_role_form:
+          attributes:
+            <<: *about_the_role_errors
+        publishers/job_listing/include_additional_documents_form:
+          attributes:
+            <<: *include_additional_documents_errors
+        publishers/job_listing/documents_form:
+          attributes:
+            <<: *documents_errors
         publishers/job_listing/copy_vacancy_form:
           attributes:
-            <<: *job_details_errors
             <<: *important_dates_errors
+            <<: *start_date_errors
         publishers/job_listing/feedback_form:
           attributes:
             <<: *publisher_job_listing_feedback_form_errors
@@ -302,6 +361,7 @@ en:
         publishers/job_listing/extend_deadline_form:
           attributes:
             <<: *important_dates_errors
+            <<: *start_date_errors
             expires_at:
               after: To extend the closing date enter a date that is after the current deadline
               blank: Enter a closing date
@@ -547,12 +607,18 @@ en:
         vacancy:
           attributes:
             <<: *job_role_errors
-            <<: *job_role_details_errors
             <<: *job_location_errors
-            <<: *job_details_errors
             <<: *working_patterns_errors
             <<: *pay_package_errors
             <<: *important_dates_errors
+            <<: *start_date_errors
             <<: *applying_for_the_job_errors
-            <<: *job_summary_errors
+            <<: *how_to_receive_applications_errors
+            <<: *application_form_errors
+            <<: *application_link_errors
+            <<: *school_visits_errors
+            <<: *contact_details_errors
+            <<: *about_the_role_errors
+            <<: *include_additional_documents_errors
+            <<: *documents_errors
             <<: *external_errors

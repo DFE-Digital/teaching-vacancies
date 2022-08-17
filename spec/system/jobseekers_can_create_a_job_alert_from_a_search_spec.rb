@@ -165,7 +165,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     if search_with_polygons?
       select "25 miles", from: "radius"
     end
-    check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.teacher")
+    check I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.teacher")
     check I18n.t("jobs.filters.ect_suitable")
     check I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.primary")
     check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.full_time")

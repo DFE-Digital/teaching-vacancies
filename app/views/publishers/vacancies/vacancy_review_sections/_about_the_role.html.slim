@@ -1,0 +1,105 @@
+h2 class="govuk-heading-m govuk-!-margin-bottom-4"
+  = t("publishers.vacancies.build.about_the_role.step_title")
+
+= govuk_summary_list(html_attributes: { id: "about_the_role" }) do |summary_list|
+  - if vacancy.job_role == "teacher" && vacancy.ect_status.present?
+    - summary_list.row(html_attributes: { id: "ect_status" }) do |row|
+      - row.key
+        = t("jobs.ect_status")
+      - row.value
+        = vacancy.ect_status == "ect_suitable" ? "Yes" : "No"
+      - row.action text: t("buttons.change"),
+                   href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                   visually_hidden_text: t("jobs.ect_status")
+
+  - if vacancy.skills_and_experience.present?
+    - summary_list.row(html_attributes: { id: "skills_and_experience" }) do |row|
+      - row.key
+        = t("jobs.skills_and_experience")
+      - row.value
+        = vacancy.skills_and_experience
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.skills_and_experience")
+
+  - if vacancy.school_offer.present?
+    - summary_list.row(html_attributes: { id: "school_offer" }) do |row|
+      - row.key
+        = t("jobs.school_offer")
+      - row.value
+        = vacancy.school_offer
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.school_offer")
+
+  - unless vacancy.safeguarding_information_provided.nil?
+    - summary_list.row(html_attributes: { id: "safeguarding_information_provided" }) do |row|
+      - row.key
+        = t("jobs.safeguarding_information_provided")
+      - row.value
+        = vacancy.safeguarding_information_provided ? "Yes" : "No"
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.safeguarding_information_provided")
+
+    - if vacancy.safeguarding_information.present?
+      - summary_list.row(html_attributes: { id: "safeguarding_information" }) do |row|
+        - row.key
+          = t("jobs.safeguarding_information")
+        - row.value
+          = vacancy.safeguarding_information
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                    visually_hidden_text: t("jobs.safeguarding_information")
+
+  - unless vacancy.further_details_provided.nil?
+    - summary_list.row(html_attributes: { id: "further_details_provided" }) do |row|
+      - row.key
+        = t("jobs.further_details_provided")
+      - row.value
+        = vacancy.further_details_provided ? "Yes" : "No"
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.further_details_provided")
+
+    - if vacancy.further_details.present?
+      - summary_list.row(html_attributes: { id: "further_details" }) do |row|
+        - row.key
+          = t("jobs.further_details")
+        - row.value
+          = vacancy.further_details
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                    visually_hidden_text: t("jobs.further_details")
+
+    - unless vacancy.include_additional_documents.nil?
+      - summary_list.row(html_attributes: { id: "include_additional_documents" }) do |row|
+        - row.key
+          = t("jobs.include_additional_documents")
+        - row.value
+          = vacancy.include_additional_documents ? "Yes" : "No"
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :include_additional_documents, back_to_review: "true"),
+                    visually_hidden_text: t("jobs.include_additional_documents")
+
+      - if vacancy.include_additional_documents
+        - if vacancy.supporting_documents.none?
+          - summary_list.row(html_attributes: { id: "supporting_documents" }) do |row|
+            - row.key
+              = t("jobs.additional_documents")
+            - row.value
+              = t("jobs.no_supporting_documents")
+            - row.action text: t("buttons.change"),
+                          href: organisation_job_build_path(vacancy.id, :documents, back_to_review: "true"),
+                          visually_hidden_text: t("jobs.additional_documents")
+        - else
+          - summary_list.row(html_attributes: { id: "supporting_documents" }) do |row|
+            - row.key
+              = t("jobs.additional_documents")
+            - row.value
+              ul.govuk-list
+                - vacancy.supporting_documents.each do |document|
+                  li = govuk_link_to "#{document.filename}, #{number_to_human_size(document.byte_size)}", job_document_path(vacancy, document.id)
+            - row.action text: t("buttons.change"),
+                        href: organisation_job_build_path(vacancy.id, :documents, back_to_review: "true"),
+                        visually_hidden_text: t("jobs.additional_documents")

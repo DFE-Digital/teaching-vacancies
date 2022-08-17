@@ -1,0 +1,14 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.school_visits"))
+
+= vacancy_form_page_heading(vacancy, step_process, params: params)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_radio_buttons_fieldset :school_visits, legend: nil do
+        = f.govuk_radio_button :school_visits, "true", link_errors: true
+        = f.govuk_radio_button :school_visits, "false"
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

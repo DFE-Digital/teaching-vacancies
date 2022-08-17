@@ -47,8 +47,8 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def next_invalid_step
-    # Due to documents being an optional step (no validations) it needs to be handled differently
-    return :documents if next_incomplete_step_documents?
+    # Due to subjects being an optional step (no validations) it needs to be handled differently
+    return :subjects if next_incomplete_step_subjects?
 
     form_sequence.validate_all_steps.filter_map { |step, form| step unless form.valid? }.first
   end
@@ -67,8 +67,14 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     UpdateGoogleIndexQueueJob.perform_later(url)
   end
 
-  def next_incomplete_step_documents?
-    vacancy.completed_steps.last == "applying_for_the_job_details" && vacancy.completed_steps.exclude?("documents")
+  def next_incomplete_step_subjects?
+    return unless vacancy.completed_steps.exclude?("subjects")
+
+    vacancy.completed_steps.last == if vacancy.allow_key_stages?
+                                      "key_stages"
+                                    else
+                                      "job_title"
+                                    end
   end
 
   def save_and_finish_later?

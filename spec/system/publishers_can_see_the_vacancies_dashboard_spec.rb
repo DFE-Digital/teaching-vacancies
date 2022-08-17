@@ -13,7 +13,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     click_on(vacancy.job_title)
 
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.job_advert)
+    expect(page).to have_content(vacancy.skills_and_experience)
   end
 
   context "viewing the lists of jobs on the school page" do

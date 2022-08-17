@@ -7,9 +7,7 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("publishers.vacancies.steps.job_location")
-
-      = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisations") } do
+      = f.govuk_fieldset legend: nil do
         - if current_organisation.local_authority?
           span.govuk-hint
             = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
@@ -30,7 +28,3 @@
 
       div class="govuk-!-margin-top-6"
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"

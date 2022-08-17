@@ -11,10 +11,6 @@ class VacancyPresenter < BasePresenter
     simple_format(fix_bullet_points(model.about_school))
   end
 
-  def school_visits
-    simple_format(fix_bullet_points(model.school_visits)) if model.school_visits.present?
-  end
-
   def how_to_apply
     simple_format(fix_bullet_points(model.how_to_apply)) if model.how_to_apply.present?
   end
@@ -58,12 +54,12 @@ class VacancyPresenter < BasePresenter
   def readable_ect_status
     return unless model.ect_status.present?
 
-    I18n.t("helpers.label.publishers_job_listing_job_role_details_form.ect_status_options.#{model.ect_status}")
+    I18n.t("helpers.label.publishers_job_listing_about_the_role_form.ect_status_options.#{model.ect_status}")
   end
 
   def readable_key_stages
     model.key_stages&.map { |key_stage|
-      I18n.t("helpers.label.publishers_job_listing_job_details_form.key_stages_options.#{key_stage}")
+      I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{key_stage}")
     }&.join(", ")
   end
 
@@ -72,7 +68,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def contract_type_with_duration
-    type = model.contract_type ? I18n.t("helpers.label.publishers_job_listing_job_details_form.contract_type_options.#{model.contract_type}") : nil
+    type = model.contract_type ? I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{model.contract_type}") : nil
     duration = if model.fixed_term?
                  "(#{model.fixed_term_contract_duration})"
                elsif model.parental_leave_cover?

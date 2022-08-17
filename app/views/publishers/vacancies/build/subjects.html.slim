@@ -1,0 +1,28 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.subjects"))
+
+= vacancy_form_page_heading(vacancy, step_process, params: params)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_fieldset legend: nil do
+
+        label for="publishers-job-listing-job-details-form-subject-search"
+          span.govuk-visually-hidden | Subject filter
+
+        div class="govuk-!-margin-bottom-6"
+          = searchable_collection(collection: f.govuk_collection_check_boxes(:subjects,
+            SUBJECT_OPTIONS,
+            :first,
+            :first,
+            :last,
+            legend: nil,
+            hint: nil,
+            classes: "checkbox-label__bold"),
+            collection_count: SUBJECT_OPTIONS.count,
+            options: { border: true },
+            text: { aria_label: "search subjects" })
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

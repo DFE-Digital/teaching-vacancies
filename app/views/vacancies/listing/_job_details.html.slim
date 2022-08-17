@@ -1,5 +1,5 @@
 section#job-details class="govuk-!-margin-bottom-5"
-  h2.govuk-heading-l.heading--border-bottom = t("publishers.vacancies.steps.job_details")
+  h2.govuk-heading-l.heading--border-bottom = t("vacancies.show.job_details")
 
   = govuk_summary_list actions: false do |summary_list|
     - summary_list.row do |row|
@@ -54,18 +54,41 @@ section#job-details class="govuk-!-margin-bottom-5"
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.benefits_details")
         - row.value text: vacancy.benefits_details
 
-  h2.govuk-heading-m = t("jobs.job_summary", job_title: vacancy.job_title)
-  == vacancy.job_advert
+  - if vacancy.skills_and_experience.present?
+    h2.govuk-heading-m = t("jobs.skills_and_experience")
+    p.govuk-body = vacancy.skills_and_experience
+  - elsif vacancy.job_advert.present?
+    h2.govuk-heading-m = t("jobs.job_summary", job_title: vacancy.job_title)
+    p.govuk-body == vacancy.job_advert
+
+  - if vacancy.school_offer.present?
+    h2.govuk-heading-m = t("jobs.school_offer")
+    p.govuk-body = vacancy.school_offer
+
+  - if vacancy.further_details_provided?
+    h2.govuk-heading-m = t("jobs.further_details")
+    p.govuk-body = vacancy.further_details
+
+  - if vacancy.safeguarding_information_provided?
+    h2.govuk-heading-m = t("jobs.safeguarding_information")
+    p.govuk-body = vacancy.safeguarding_information
 
   - if vacancy.expires_at.future?
+    h3.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")
     - if vacancy.enable_job_applications?
-      h3.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")
       p.govuk-body = t("jobseekers.job_applications.applying_for_the_job_paragraph")
       = govuk_button_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(vacancy.id)
 
+    - elsif vacancy.receive_applications == "website"
+      p.govuk-body = t("jobs.apply_via_website")
+      = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
+
+    - elsif vacancy.receive_applications == "email"
+      p.govuk-body = t("jobs.apply_via_email_html", email: application_email_link(vacancy))
+      = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
+
     - else
       - if vacancy.how_to_apply.present?
-        h3.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
         p.govuk-body = vacancy.how_to_apply
 
       - if vacancy.external?
@@ -84,7 +107,7 @@ section#job-details class="govuk-!-margin-bottom-5"
   - else
     = govuk_inset_text text: t("jobs.expired_listing.notification"), classes: "govuk-!-font-weight-bold"
 
-  - if vacancy.supporting_documents.any?
+  - if vacancy.include_additional_documents && vacancy.supporting_documents.any?
     section#supporting-documents
       h3.govuk-heading-l.heading--border-bottom = t("publishers.vacancies.steps.documents")
       p.govuk-body = t("jobs.supporting_documents_accessibility")

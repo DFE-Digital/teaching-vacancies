@@ -40,7 +40,7 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
 
       if page.has_css?(".view-vacancy-link")
         page.first(".view-vacancy-link").click
-        expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_details"))
+        expect(page).to have_content(I18n.t("vacancies.show.job_details"))
         expect(page.current_url).to include("https://#{smoke_test_domain}/jobs/")
       end
     end

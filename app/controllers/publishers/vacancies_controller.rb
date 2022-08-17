@@ -14,7 +14,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     elsif current_organisation.local_authority?
       vacancy.update(enable_job_applications: false)
     end
-    redirect_to organisation_job_build_path(vacancy.id, :job_role)
+    redirect_to organisation_job_build_path(vacancy.id, :job_location)
   end
 
   def destroy

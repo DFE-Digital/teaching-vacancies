@@ -7,17 +7,15 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("publishers.vacancies.steps.important_dates")
-
       - if form.disable_editing_publish_on?
         #publish_on
-          legend.govuk-fieldset__legend.govuk-fieldset__legend--s
+          legend.govuk-fieldset__legend.govuk-fieldset__legend--m
             .govuk-fieldset__heading = t("helpers.legend.publishers_job_listing_important_dates_form.publish_on")
           p = format_date vacancy.publish_on
         br
         = f.govuk_date_field :publish_on, class: "govuk-!-display-none"
       - else
-        = f.govuk_radio_buttons_fieldset :publish_on_day do
+        = f.govuk_radio_buttons_fieldset :publish_on_day, legend: { size: "m" } do
           = f.govuk_radio_button :publish_on_day, :today, link_errors: true, label: { text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: Time.now.strftime("%-e %-B %Y")) }
           = f.govuk_radio_button :publish_on_day, :tomorrow, label: { text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.tomorrow", date: 1.day.from_now.strftime("%-e %-B %Y")) }
           = f.govuk_radio_button :publish_on_day, :another_day do
@@ -25,36 +23,13 @@
               hint: -> { t("helpers.hint.date", date: 1.week.from_now.strftime("%d %m %Y")) }
 
       = f.govuk_date_field :expires_at,
-        hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%-d %-m %Y")) }
+                           hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%-d %-m %Y")) },
+                           legend: { size: "m" }
 
       = f.govuk_collection_radio_buttons :expiry_time,
         Vacancy::EXPIRY_TIME_OPTIONS,
         ->(option) { option },
-        ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
-
-      = f.govuk_radio_buttons_fieldset :start_date_type, legend: { text: t("helpers.legend.publishers_job_listing_important_dates_form.starts_on") }, form_group: { data: { controller: "form" } } do
-        = f.govuk_radio_button :start_date_type, :specific_date, link_errors: true, label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_date_specific") }, data: { action: "click->form#clearListener" } do
-          = f.govuk_date_field :starts_on,
-            legend: { text: "Date" },
-            hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
-            data: { "form-target": "inputText" }
-        = f.govuk_radio_button :start_date_type, :date_range, label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_date_range") }, data: { action: "click->form#clearListener" } do
-          = f.govuk_date_field :earliest_start_date,
-            legend: { text: "Earliest start date" },
-            hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
-            data: { "form-target": "inputText" }
-          = f.govuk_date_field :latest_start_date,
-            legend: { text: "Latest start date" },
-            hint: -> { t("helpers.hint.date", date: 3.months.from_now.strftime("%d %m %Y")) },
-            data: { "form-target": "inputText" }
-        = f.govuk_radio_button :start_date_type, :other, label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_date_other") }, data: { action: "click->form#clearListener" } do
-          = f.govuk_text_field :other_start_date_details,
-            label: { text: "Details" },
-            hint: -> { "For example 'Easter term'" },
-            data: { "form-target": "inputText" }
+        ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") },
+        legend: { size: "m" }
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"

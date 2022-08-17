@@ -8,18 +8,18 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
   end
 
   def heading
-    page_title
+    t("publishers.vacancies.steps.#{step_process.current_step}")
+  end
+
+  def caption
+    return t("jobs.edit_job_caption", step: step_process.current_step_group_number, total: step_process.total_step_groups - 1) if vacancy.published?
+
+    t("jobs.create_job_caption", step: step_process.current_step_group_number, total: step_process.total_step_groups - 1)
   end
 
   private
 
   attr_reader :vacancy, :copy, :step_process
-
-  def page_title
-    return t("jobs.edit_job_title", job_title: vacancy.job_title) if vacancy.published?
-
-    t("jobs.create_a_job_title", organisation: page_title_from_vacancy_organisations)
-  end
 
   def page_title_from_vacancy_organisations
     return current_organisation.name if vacancy.organisations.none?
@@ -34,7 +34,7 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
   end
 
   def render_back_link?
-    steps_to_include_back_link = params[:back_to_review].present? ? step_process.steps : step_process.steps.excluding(:job_role)
+    steps_to_include_back_link = params[:back_to_review].present? ? step_process.steps : step_process.steps[1..]
 
     step_process.current_step.in?(steps_to_include_back_link)
   end

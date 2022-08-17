@@ -44,8 +44,8 @@ RSpec.describe StatusTagHelper do
     end
 
     context "when it is passed a vacancy" do
-      let(:record) { build_stubbed(:vacancy, :draft, completed_steps: %w[job_role job_details]) }
-      let(:form_classes) { [Publishers::JobListing::JobDetailsForm] }
+      let(:record) { build_stubbed(:vacancy, :draft, completed_steps: %w[job_role job_title]) }
+      let(:form_classes) { [Publishers::JobListing::JobTitleForm] }
 
       context "when is published" do
         let(:record) { build_stubbed(:vacancy) }
@@ -57,7 +57,7 @@ RSpec.describe StatusTagHelper do
       end
 
       context "when there is an error on the step's form object" do
-        let(:steps) { %i[job_details] }
+        let(:steps) { %i[job_title] }
 
         before { record.errors.add(:job_title) }
 
@@ -67,7 +67,7 @@ RSpec.describe StatusTagHelper do
       end
 
       context "when the step has been completed" do
-        let(:steps) { %i[job_details] }
+        let(:steps) { %i[job_title] }
 
         it "returns 'complete' tag" do
           expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.complete")))
@@ -85,8 +85,8 @@ RSpec.describe StatusTagHelper do
 
     context "when the whole section is optional" do
       let(:record) { build_stubbed(:vacancy, :draft, completed_steps: completed_steps) }
-      let(:form_classes) { [Publishers::JobListing::DocumentsForm] }
-      let(:steps) { %w[documents] }
+      let(:form_classes) { [Publishers::JobListing::SubjectsForm] }
+      let(:steps) { %w[subjects] }
 
       context "and it is not started" do
         let(:completed_steps) { [] }

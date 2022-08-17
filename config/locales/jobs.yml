@@ -173,9 +173,13 @@ en:
     new_job_listing_details: New job listing details
     review_page_title: Review the job listing — Create a job listing for %{organisation}
     edit_job_title: Edit %{job_title}
+    edit_job_caption: Edit a job listing - section %{step} of %{total}
+    create_job_caption: Create a job listing - section %{step} of %{total}
     current_step: Step %{step} of %{total}
 
+    ect_status: Is this role suitable for an early career teacher (ECT)?
     full_time_details: Full time - %{details}
+    further_details: Further information about the role
     location: Location
     location_find_more_html:
       one: Find more school jobs in %{location_link}
@@ -188,6 +192,9 @@ en:
       one: Key stage
       other: Key stages
     part_time_details: Part time - %{details}
+    safeguarding_information: Our commitment to safeguarding
+    school_offer: What the school offers its staff
+    skills_and_experience: What skills and experience we're looking for
     suitable_for_ect: Is this job suitable for ECTs?
     subjects: Subject(s)
     subject:
@@ -208,6 +215,9 @@ en:
     salary: Salary
     salary_details: Salary details
 
+    arranging_a_visit:
+      description_html: To arrange a visit and increase the chance of a successful application email %{email}.
+      heading: Arranging a visit to %{organisation}
     school_visits_html: School visits
     trust_visits_html: Trust visits
 
@@ -251,15 +261,27 @@ en:
         remove: Remove
         removing: Removing...
 
+    additional_documents: Additional documents
     apply: More on how to apply
     application_link: Link to online application
+    application_email: Email address to receive applications	
+    application_email_subject: '%{job} job application'
+    application_email_body: Regarding the job at %{url}
     application_form: Application form
-    contact_email: Contact email
+    apply_via_email_html: Please download the application form using the link below, and once completed send to %{email}
+    apply_via_website: Apply for the job by following the link below
+    contact_email: Email address
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: Regarding the job at %{url}
-    contact_number: Contact phone number
+    contact_number: Phone number
+    contact_number_provided: Do you want to give a contact phone number?
     enable_job_applications: Apply through Teaching Vacancies
+    further_details_provided: Do you want to add further details about the role?
+    how_to_receive_applications: How do you want to receive applications?
+    include_additional_documents: Do you want to upload any additional documents?
     personal_statement_guidance: Personal statement instructions
+    safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
+    school_visits: Do you want to offer school visits?
     school_visits_heading: Arranging a visit to %{school}
     how_to_apply: Application instructions
 

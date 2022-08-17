@@ -9,7 +9,7 @@ RSpec.describe Publishers::VacancyFormSequence do
   end
 
   let(:vacancy) do
-    create(:vacancy, job_title: nil, phases: %w[secondary], key_stages: %w[ks3])
+    create(:vacancy, :no_tv_applications, job_role: nil, key_stages: %w[ks3], phases: %w[secondary])
   end
 
   let(:organisation) { create(:school) }
@@ -17,21 +17,31 @@ RSpec.describe Publishers::VacancyFormSequence do
   describe "#validate_all_steps" do
     it "uses forms to validate each validatable step" do
       all_steps = %i[
-        applying_for_the_job
-        documents
-        education_phases
-        important_dates
-        job_details
+        job_location
         job_role
-        job_role_details
-        job_summary
-        pay_package
-        review
+        education_phases
+        job_title
+        key_stages
+        subjects
+        contract_type
         working_patterns
+        pay_package
+        important_dates
+        start_date
+        applying_for_the_job
+        how_to_receive_applications
+        application_link
+        application_form
+        school_visits
+        contact_details
+        about_the_role
+        include_additional_documents
+        documents
+        review
       ]
 
-      validatable_steps = all_steps - %i[documents review]
-      valid_steps = validatable_steps - [:job_details]
+      validatable_steps = all_steps - %i[subjects documents review]
+      valid_steps = validatable_steps - [:job_role]
 
       validated_forms = sequence.validate_all_steps
 
@@ -43,19 +53,19 @@ RSpec.describe Publishers::VacancyFormSequence do
         expect(form).to be_valid
       end
 
-      invalid_form = validated_forms[:job_details]
-      expect(invalid_form.errors).to have_key(:job_title)
+      invalid_form = validated_forms[:job_role]
+      expect(invalid_form.errors).to have_key(:job_role)
       expect(invalid_form).not_to be_valid
 
-      expect(vacancy.errors).to have_key(:job_title)
-      expect(vacancy.errors.where(:job_title).first.options[:step]).to eq(:job_details)
+      expect(vacancy.errors).to have_key(:job_role)
+      expect(vacancy.errors.where(:job_role).first.options[:step]).to eq(:job_role)
     end
   end
 
   describe "#all_steps_valid?" do
     it "is true if all steps are valid" do
       expect(sequence).not_to be_all_steps_valid
-      vacancy.update(job_title: "Job title")
+      vacancy.update(job_role: :teacher, ect_status: "ect_suitable")
       expect(sequence).to be_all_steps_valid
     end
   end

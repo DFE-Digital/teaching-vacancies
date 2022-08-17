@@ -56,12 +56,6 @@ module VacanciesHelper
     vacancy.organisations.many? ? "the schools" : vacancy.organisation_name
   end
 
-  def vacancy_about_school_hint_text(vacancy)
-    return t("helpers.hint.publishers_job_listing_job_summary_form.about_schools", organisation_type: organisation_type_basic(vacancy.organisation)) if vacancy.organisations.many?
-
-    t("helpers.hint.publishers_job_listing_job_summary_form.about_organisation", organisation_type: organisation_type_basic(vacancy.organisation).capitalize)
-  end
-
   def vacancy_about_school_value(vacancy)
     return "" if vacancy.organisations.many?
 
@@ -102,11 +96,6 @@ module VacanciesHelper
 
   def vacancy_listing_page_title_prefix(vacancy)
     "#{vacancy.job_title} - #{vacancy.organisation_name}"
-  end
-
-  def vacancy_school_visits_hint(vacancy)
-    organisation = organisation_type_basic(vacancy.organisation).tr(" ", "_")
-    t("helpers.hint.publishers_job_listing_applying_for_the_job_details_form.#{organisation}_visits")
   end
 
   def vacancy_step_completed?(vacancy, step)

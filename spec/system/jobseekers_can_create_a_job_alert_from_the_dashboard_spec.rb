@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
       check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{working_pattern}")
     end
     search_criteria["job_roles"].each do |job_role|
-      check I18n.t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{job_role}")
+      check I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_role}")
     end
     search_criteria["phases"].each do |phase|
       check I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{phase}")

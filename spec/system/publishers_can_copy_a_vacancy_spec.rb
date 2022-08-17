@@ -21,9 +21,13 @@ RSpec.describe "Copying a vacancy" do
 
       new_vacancy.publish_on = Date.current
       new_vacancy.expires_at = 30.days.from_now
-      new_vacancy.starts_on = 35.days.from_now
 
-      fill_in_important_dates_fields(new_vacancy)
+      fill_in_important_dates_form_fields(new_vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
+      new_vacancy.start_date_type = "specific_date"
+      new_vacancy.starts_on = 35.days.from_now
+      fill_in_start_date_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       has_complete_draft_vacancy_review_heading?(new_vacancy)
@@ -47,7 +51,7 @@ RSpec.describe "Copying a vacancy" do
 
   context "when the original job is now invalid" do
     let!(:original_vacancy) do
-      create_published_vacancy(about_school: nil, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) do |vacancy|
+      create_published_vacancy(school_offer: nil, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) do |vacancy|
         vacancy.send(:set_slug)
       end
     end
@@ -63,13 +67,17 @@ RSpec.describe "Copying a vacancy" do
 
       new_vacancy.publish_on = Date.current
       new_vacancy.expires_at = 30.days.from_now
-      new_vacancy.starts_on = 35.days.from_now
 
-      fill_in_important_dates_fields(new_vacancy)
+      fill_in_important_dates_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      new_vacancy.about_school = "It's a nice place to work"
-      fill_in_job_summary_form_fields(new_vacancy)
+      new_vacancy.start_date_type = "specific_date"
+      new_vacancy.starts_on = 35.days.from_now
+      fill_in_start_date_form_fields(new_vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
+      new_vacancy.school_offer = "It's a nice place to work"
+      fill_in_about_the_role_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       has_complete_draft_vacancy_review_heading?(new_vacancy)

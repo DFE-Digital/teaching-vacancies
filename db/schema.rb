@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_30_142129) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_08_153545) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -492,7 +492,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_142129) do
     t.string "salary"
     t.text "about_school"
     t.string "subjects", array: true
-    t.text "school_visits"
+    t.text "school_visits_details"
     t.text "how_to_apply"
     t.integer "job_location"
     t.string "readable_job_location"
@@ -529,6 +529,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_30_142129) do
     t.date "earliest_start_date"
     t.date "latest_start_date"
     t.text "other_start_date_details"
+    t.integer "receive_applications"
+    t.string "application_email"
+    t.boolean "school_visits"
+    t.boolean "contact_number_provided"
+    t.string "skills_and_experience"
+    t.string "school_offer"
+    t.boolean "safeguarding_information_provided"
+    t.string "safeguarding_information"
+    t.boolean "further_details_provided"
+    t.string "further_details"
+    t.boolean "include_additional_documents"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["publish_on"], name: "index_vacancies_on_publish_on"

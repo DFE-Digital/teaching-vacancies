@@ -21,7 +21,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     end
 
     scenario "can edit a draft" do
-      click_review_page_change_link(section: "job_role")
+      click_review_page_change_link(section: "job_details", row: "job_role")
 
       vacancy.job_role = "teaching_assistant"
       fill_in_job_role_form_fields(vacancy)
@@ -34,7 +34,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     end
 
     scenario "going back to the review page after clicking change link" do
-      click_review_page_change_link(section: "job_role")
+      click_review_page_change_link(section: "job_details", row: "job_role")
 
       click_on I18n.t("buttons.back")
 
@@ -44,14 +44,14 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
   context "when a school group" do
     let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
-    let(:another_primary_school) { create(:school, name: "Another rimary school", phase: "primary") }
+    let(:another_primary_school) { create(:school, name: "Another primary school", phase: "primary") }
     let(:trust) { create(:trust, schools: [primary_school, another_primary_school]) }
     let(:organisation) { trust }
 
     before { visit organisation_job_path(vacancy.id) }
 
     context "when editing the job location" do
-      scenario "sucessfully updating the job location" do
+      scenario "successfully updating the job location" do
         expect(page).to have_content(full_address(primary_school))
         displays_all_vacancy_organisations?(vacancy)
 
@@ -105,8 +105,8 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
           click_on I18n.t("buttons.save_and_continue")
 
-          expect(current_path).to eq(organisation_job_build_path(vacancy.id, :job_details))
-          expect(page).to have_content(I18n.t("job_details_errors.key_stages.inclusion"))
+          expect(current_path).to eq(organisation_job_build_path(vacancy.id, :key_stages))
+          expect(page).to have_content(I18n.t("key_stages_errors.key_stages.inclusion"))
         end
       end
     end

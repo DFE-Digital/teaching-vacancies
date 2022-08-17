@@ -4,7 +4,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   helper_method :form
 
   def create
-    if applying_for_the_job_details_form_params[:application_form]
+    if application_form_params[:application_form]
       create_application_form
     else
       update_vacancy
@@ -18,7 +18,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     filename = vacancy.application_form.filename
     vacancy.application_form.purge_later
 
-    redirect_to organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to_review: params[:back_to_review]), flash: {
+    redirect_to organisation_job_build_path(vacancy.id, :application_form, back_to_review: params[:back_to_review]), flash: {
       success: t("jobs.file_delete_success_message", filename: filename),
     }
   end
@@ -26,16 +26,16 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   private
 
   def current_step
-    :applying_for_the_job_details
+    :application_form
   end
 
   def form
-    @form ||= Publishers::JobListing::ApplyingForTheJobDetailsForm.new(applying_for_the_job_details_form_params, vacancy)
+    @form ||= Publishers::JobListing::ApplicationFormForm.new(application_form_params, vacancy, current_publisher)
   end
 
-  def applying_for_the_job_details_form_params
-    params.require(:publishers_job_listing_applying_for_the_job_details_form)
-          .permit(:application_form, :application_link, :contact_email, :contact_number, :personal_statement_guidance, :school_visits, :how_to_apply)
+  def application_form_params
+    params.require(:publishers_job_listing_application_form_form)
+          .permit(:application_form, :application_email, :other_application_email)
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 
@@ -47,9 +47,9 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     end
 
     # So they are taken back to the review page upon clicking the back link, even after creating a document
-    params[:back_to_review] = params[:publishers_job_listing_applying_for_the_job_details_form][:back_to_review]
+    params[:back_to_review] = params[:publishers_job_listing_application_form_form][:back_to_review]
 
-    render "publishers/vacancies/build/applying_for_the_job_details"
+    render "publishers/vacancies/build/application_form"
   end
 
   def update_vacancy
@@ -58,10 +58,10 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
       update_google_index(vacancy) if vacancy.listed?
       redirect_to_next_step
     else
-      # So they are taken back to the review page upon clicking the back link, even after uploading a document
-      params[:back_to_review] = params[:publishers_job_listing_applying_for_the_job_details_form][:back_to_review]
+      # So they are taken back to the review page upon clicking the back link, even after uploading a school_visit
+      params[:back_to_review] = params[:publishers_job_listing_application_form_form][:back_to_review]
 
-      render "publishers/vacancies/build/applying_for_the_job_details"
+      render "publishers/vacancies/build/application_form"
     end
   end
 

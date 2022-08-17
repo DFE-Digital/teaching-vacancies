@@ -9,12 +9,6 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("publishers.vacancies.steps.education_phases")
-
-      = f.govuk_collection_check_boxes :phases, Vacancy.phases.keys, :to_s, :to_s
+      = f.govuk_collection_check_boxes :phases, Vacancy.phases.keys, :to_s, :to_s, legend: nil
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"

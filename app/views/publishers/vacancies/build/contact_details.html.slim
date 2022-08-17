@@ -1,0 +1,22 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.contact_details"))
+
+= vacancy_form_page_heading(vacancy, step_process, params: params)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step), method: :patch do |f|
+      = f.govuk_error_summary
+
+      p.govuk-body-m = t("publishers.vacancies.build.contact_details.description")
+
+      = f.govuk_radio_buttons_fieldset :contact_email, legend: { size: "m" } do
+        = f.govuk_radio_button :contact_email, current_publisher.email, label: { text: current_publisher.email }, link_errors: true
+        = f.govuk_radio_button :contact_email, "other" do
+          = f.govuk_text_field :other_contact_email
+
+      = f.govuk_radio_buttons_fieldset :contact_number_provided, legend: { size: "m" } do
+        = f.govuk_radio_button :contact_number_provided, "true", link_errors: true do
+          = f.govuk_text_field :contact_number
+        = f.govuk_radio_button :contact_number_provided, "false"
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

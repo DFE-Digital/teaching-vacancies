@@ -17,6 +17,6 @@ class Publishers::VacancyFormSequence < FormSequence
   private
 
   def not_validatable_steps
-    %i[documents review].freeze
+    %i[subjects review].freeze
   end
 end

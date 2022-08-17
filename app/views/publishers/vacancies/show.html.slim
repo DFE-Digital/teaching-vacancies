@@ -4,4 +4,14 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = render "vacancy_review_sections"
+    - if (vacancy.completed_steps & %w[job_location job_role]).any?
+      = render "publishers/vacancies/vacancy_review_sections/job_details"
+
+    - if vacancy.completed_steps.include?("important_dates")
+      = render "publishers/vacancies/vacancy_review_sections/important_dates"
+
+    - if (vacancy.completed_steps & %w[applying_for_the_job how_to_receive_applications]).any?
+      = render "publishers/vacancies/vacancy_review_sections/application_process"
+
+    - if vacancy.completed_steps.include?("about_the_role") || vacancy.publication_status.in?(%w[published pending])
+      = render "publishers/vacancies/vacancy_review_sections/about_the_role"

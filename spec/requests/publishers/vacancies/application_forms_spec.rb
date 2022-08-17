@@ -12,7 +12,7 @@ RSpec.describe "Documents" do
   end
 
   describe "POST #create" do
-    let(:vacancy) { create(:vacancy, organisations: [organisation]) }
+    let(:vacancy) { create(:vacancy, :with_application_form, organisations: [organisation]) }
 
     context "create_application_form" do
       before do
@@ -22,7 +22,7 @@ RSpec.describe "Documents" do
       it "triggers an event" do
         expect {
           post organisation_job_application_forms_path(vacancy.id), params: {
-            publishers_job_listing_applying_for_the_job_details_form: { application_form: fixture_file_upload("blank_job_spec.pdf", "application/pdf") },
+            publishers_job_listing_application_form_form: { application_form: fixture_file_upload("blank_job_spec.pdf", "application/pdf") },
           }
         }.to have_triggered_event(:supporting_document_created)
           .with_data(
@@ -37,7 +37,7 @@ RSpec.describe "Documents" do
       context "MIME type inspection" do
         before do
           post organisation_job_application_forms_path(vacancy.id), params: {
-            publishers_job_listing_applying_for_the_job_details_form: { application_form: file },
+            publishers_job_listing_application_form_form: { application_form: file },
           }
         end
 
@@ -80,17 +80,17 @@ RSpec.describe "Documents" do
     context "update_vacancy" do
       subject do
         post organisation_job_application_forms_path(vacancy.id), params: {
-          publishers_job_listing_applying_for_the_job_details_form: { how_to_apply: "Apply here", contact_email: contact_email },
+          publishers_job_listing_application_form_form: { application_email: application_email },
         }
       end
 
-      let(:contact_email) { "new_contact_email@example.com" }
+      let(:application_email) { "new_application_email@example.com" }
 
       context "when all steps are valid and complete" do
         before { subject }
 
         it "updates the vacancy" do
-          expect(vacancy.reload.contact_email).to eq contact_email
+          expect(vacancy.reload.application_email).to eq application_email
         end
 
         it "redirects to the review page" do
@@ -99,53 +99,36 @@ RSpec.describe "Documents" do
       end
 
       context "when there is an invalid step" do
-        let(:completed_steps_wihout_job_summary) { vacancy.completed_steps.excluding("job_summary") }
+        let(:completed_steps_without_school_visits) { vacancy.completed_steps.excluding("school_visits") }
 
         before do
-          vacancy.update(completed_steps: completed_steps_wihout_job_summary, job_advert: nil, about_school: nil)
+          vacancy.update(completed_steps: completed_steps_without_school_visits, school_visits: nil)
           subject
         end
 
         it "updates the vacancy" do
-          expect(vacancy.reload.contact_email).to eq contact_email
+          expect(vacancy.reload.application_email).to eq application_email
         end
 
         it "redirects to the next invalid step" do
-          expect(response).to redirect_to(organisation_job_build_path(vacancy.id, :job_summary))
+          expect(response).to redirect_to(organisation_job_build_path(vacancy.id, :school_visits))
         end
       end
 
       context "when save and finish later has been clicked" do
         before do
           post organisation_job_application_forms_path(vacancy.id), params: {
-            publishers_job_listing_applying_for_the_job_details_form: { how_to_apply: "Apply here", contact_email: contact_email },
+            publishers_job_listing_application_form_form: { application_email: application_email },
             save_and_finish_later: "true",
           }
         end
 
         it "updates the vacancy" do
-          expect(vacancy.reload.contact_email).to eq contact_email
+          expect(vacancy.reload.application_email).to eq application_email
         end
 
         it "redirects to the review page" do
           expect(response).to redirect_to(organisation_job_path(vacancy.id))
-        end
-      end
-
-      context "when the user has not already been through the documents step" do
-        let(:completed_steps_without_documents) { vacancy.completed_steps.excluding("documents", "job_summary") }
-
-        before do
-          vacancy.update(completed_steps: completed_steps_without_documents, job_advert: nil, about_school: nil)
-          subject
-        end
-
-        it "updates the vacancy" do
-          expect(vacancy.reload.contact_email).to eq contact_email
-        end
-
-        it "redirects to documents step" do
-          expect(response).to redirect_to(organisation_job_build_path(vacancy.id, :documents))
         end
       end
     end

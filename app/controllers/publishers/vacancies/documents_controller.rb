@@ -12,7 +12,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     end
 
     # So they are taken back to the review page upon clicking the back link, even after creating or deleting a document
-    params[:back_to_review] = params[:publishers_job_listing_documents_form][:back_to_review]
+    params[:back_to_review] = params[:publishers_job_listing_documents_form][:back_to_review] if params[:publishers_job_listing_documents_form]
 
     render :show
   end
@@ -42,6 +42,8 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def complete_step
+    return if form.invalid?
+
     vacancy.update(completed_steps: completed_steps)
 
     redirect_to_next_step
