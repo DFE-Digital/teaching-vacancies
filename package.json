@@ -40,7 +40,7 @@
     "jsdom": "^20.0.0",
     "postcss": "^8.4.16",
     "sass": "^1.54.4",
-    "stylelint": "^14.9.1",
+    "stylelint": "^14.10.0",
     "stylelint-config-sass-guidelines": "^9.0.1",
     "stylelint-config-standard": "^26.0.0",
     "yaml": "^2.1.1"
