@@ -1,8 +1,8 @@
 = tag.div(**html_attributes) do
   = govuk_cookie_banner do |cookie_banner|
     - cookie_banner.message(heading_text: t("cookies_preferences.banner.heading"), text: t("cookies_preferences.banner.body").join(" ")) do |message|
-      - message.action { govuk_button_to t("cookies_preferences.banner.buttons.accept"), create_path, id: "cookie-consent" }
-      - message.action { govuk_button_to t("cookies_preferences.banner.buttons.reject"), reject_path }
+      - message.action { govuk_button_to t("cookies_preferences.banner.buttons.accept"), create_path, id: "cookie-consent", data: { action: "click->cookies-banner#submit" } }
+      - message.action { govuk_button_to t("cookies_preferences.banner.buttons.reject"), reject_path, data: { action: "click->cookies-banner#submit" } }
       - message.action { govuk_link_to t("cookies_preferences.banner.buttons.view"), preferences_path }
   end
 end

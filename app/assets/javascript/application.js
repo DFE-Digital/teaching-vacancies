@@ -8,6 +8,7 @@ import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 
 // view components
+import CookiesBannerController from './components/cookiesBanner/enhance';
 import EditorController from './components/editor/editor';
 import EditorPreviewController from './components/editor/preview';
 import FiltersController from './components/filters/filters';
@@ -44,6 +45,7 @@ window.Stimulus = application;
 
 application.register('autocomplete', AutocompleteController);
 application.register('clipboard', ClipboardController);
+application.register('cookies-banner', CookiesBannerController);
 application.register('filters', FiltersController);
 application.register('form', FormController);
 application.register('location-finder', LocationFinderController);

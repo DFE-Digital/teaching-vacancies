@@ -5,7 +5,7 @@ class CookiesBannerComponent < ApplicationComponent
   renders_one :actions
 
   def initialize(create_path:, reject_path:, preferences_path:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super(classes: classes, html_attributes: html_attributes.merge({ data: { controller: "cookies-banner" } }))
 
     @create_path = create_path
     @reject_path = reject_path
