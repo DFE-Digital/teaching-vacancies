@@ -10,7 +10,8 @@ class CookiesPreferencesController < ApplicationController
 
     if @cookies_preferences_form.valid?
       cookies["consented-to-cookies"] = { value: @cookies_preferences_form.cookies_consent, expires: 6.months.from_now }
-      redirect_to session[:previous_url]
+
+      redirect_to session[:previous_url] unless params[:no_redirect]
     else
       render :new
     end
