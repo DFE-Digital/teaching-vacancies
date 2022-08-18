@@ -28,7 +28,7 @@ const MapController = class extends Controller {
 
   static SHAPE_STYLES = {
     color: '#0b0c0c',
-    fillOpacity: '0.6',
+    fillOpacity: '0.4',
     fillColor: '#b1b4b6',
     weight: 1,
     opacity: 1,
@@ -142,7 +142,7 @@ const MapController = class extends Controller {
   addLayer(layer) {
     this.map.container.addLayer(layer);
 
-    if (this.markerTargets.length > 1) this.map.container.fitBounds(layer.getBounds());
+    this.map.container.fitBounds(layer.getBounds(), { maxZoom: 12 });
   }
 };
 
