@@ -19,6 +19,7 @@ json.jobLocation do
     json.addressRegion vacancy.organisation&.region
     json.streetAddress vacancy.organisation&.address
     json.postalCode vacancy.organisation&.postcode
+    json.addressCountry "GB"
   end
 end
 

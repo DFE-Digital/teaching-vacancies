@@ -243,6 +243,7 @@ module VacancyHelpers
           addressRegion: vacancy.organisation.region,
           streetAddress: vacancy.organisation.address,
           postalCode: vacancy.organisation.postcode,
+          addressCountry: "GB",
         },
       },
       url: job_url(vacancy),
