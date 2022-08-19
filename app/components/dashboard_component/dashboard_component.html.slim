@@ -111,7 +111,7 @@
                 - if vacancy.external?
                   p.govuk-body-xs.external-notice
                     = t("jobs.manage.external_notice")
-              - unless vacancy.external?
+              - unless vacancy.external? || vacancy.draft?
                 - row.action(text: t("buttons.copy_listing"), href: new_organisation_job_copy_path(job_id: vacancy.id), visually_hidden_text: "#{t('buttons.copy_listing')} #{vacancy.job_title}")
 
     - unless @organisation.school_group?
