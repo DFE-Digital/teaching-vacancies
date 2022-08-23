@@ -96,3 +96,6 @@ dump.rdb
 # Propshaft asset pipeline folders
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+# Visual Studio Code
+.vscode
