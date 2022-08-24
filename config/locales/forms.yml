@@ -238,10 +238,11 @@ en:
           finance manager, administrative assistant, cleaner or chef.
         job_role_options:
           education_support: Includes learning support and tutors
+          higher_level_teaching_assistant: Higher level teaching assistant
           middle_leader: Includes Heads of Year or Department
           sendco: Special educational needs and disabilities coordinator
           senior_leader: Includes Deputy/Assistant Head, Headteacher, and trust-level roles
-          teaching_assistant: Includes Higher Level Teaching Assistants (HLTAs) and SEND teaching assistants
+          teaching_assistant: Includes SEND teaching assistants
       publishers_job_listing_job_role_details_form:
         ect_status: Early career teachers were previously called newly qualified teachers(NQT)
       publishers_job_listing_job_summary_form:
@@ -610,6 +611,7 @@ en:
       publishers_job_listing_job_role_form:
         job_role_options:
           education_support: Education support
+          higher_level_teaching_assistant: HLTA
           middle_leader: Middle leader
           sendco: SENDCo
           senior_leader: Senior leader
