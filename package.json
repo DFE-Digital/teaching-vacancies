@@ -18,7 +18,7 @@
     "axios": "^0.27.2",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.24.1",
-    "dompurify": "^2.3.10",
+    "dompurify": "^2.3.12",
     "govuk-frontend": "^4.3.0",
     "leaflet": "^1.8.0",
     "leaflet-gesture-handling": "^1.2.2",
@@ -40,7 +40,7 @@
     "jsdom": "^20.0.0",
     "postcss": "^8.4.16",
     "sass": "^1.54.4",
-    "stylelint": "^14.10.0",
+    "stylelint": "^14.11.0",
     "stylelint-config-sass-guidelines": "^9.0.1",
     "stylelint-config-standard": "^27.0.0",
     "yaml": "^2.1.1"
