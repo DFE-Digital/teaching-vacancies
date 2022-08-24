@@ -39,7 +39,7 @@
     "jest-environment-jsdom": "^28.1.3",
     "jsdom": "^20.0.0",
     "postcss": "^8.4.16",
-    "sass": "^1.54.4",
+    "sass": "^1.54.5",
     "stylelint": "^14.11.0",
     "stylelint-config-sass-guidelines": "^9.0.1",
     "stylelint-config-standard": "^27.0.0",
