@@ -3,9 +3,10 @@
     - row.key text: t("schools.type")
     - row.value text: organisation_type(organisation)
 
-  - summary_list.row do |row|
-    - row.key text: t("schools.phase")
-    - row.value text: linked_school_phases(organisation)
+  - if organisation.phase? && !organisation.not_applicable?
+    - summary_list.row do |row|
+      - row.key text: t("schools.phase")
+      - row.value text: linked_school_phase(organisation)
 
   - summary_list.row do |row|
     - row.key text: t("schools.school_size")

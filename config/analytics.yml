@@ -312,7 +312,7 @@ shared:
     - personal_statement_guidance
     - completed_steps
     - working_patterns_details
-    - phase
+    - phases
     - key_stages
     - geolocation
     - external_source

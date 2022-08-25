@@ -24,7 +24,7 @@ RSpec.describe ImportFromVacancySourcesJob do
   describe "#perform" do
     context "when a new valid vacancy comes through" do
       let(:vacancies_from_source) { [vacancy] }
-      let(:vacancy) { build(:vacancy, :published, :external, phase: "secondary", organisations: [school]) }
+      let(:vacancy) { build(:vacancy, :published, :external, phases: %w[secondary], organisations: [school]) }
 
       it "saves the vacancy" do
         expect { described_class.perform_now }.to change { Vacancy.count }.by(1)
@@ -33,7 +33,7 @@ RSpec.describe ImportFromVacancySourcesJob do
 
     context "when a new vacancy comes through but isn't valid" do
       let(:vacancies_from_source) { [vacancy] }
-      let(:vacancy) { build(:vacancy, :published, :external, phase: "secondary", organisations: [school], job_title: "") }
+      let(:vacancy) { build(:vacancy, :published, :external, phases: %w[secondary], organisations: [school], job_title: "") }
 
       it "does not save the vacancy" do
         expect { described_class.perform_now }.to change { Vacancy.count }.by(0)
@@ -41,7 +41,7 @@ RSpec.describe ImportFromVacancySourcesJob do
     end
 
     context "when a live vacancy no longer comes through" do
-      let!(:vacancy) { create(:vacancy, :published, :external, phase: "secondary", organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
+      let!(:vacancy) { create(:vacancy, :published, :external, phases: %w[secondary], organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
       let(:vacancies_from_source) { [] }
 
       it "sets the vacancy to have the correct status" do
@@ -52,7 +52,7 @@ RSpec.describe ImportFromVacancySourcesJob do
     end
 
     context "when an expired vacancy no longer comes through" do
-      let!(:vacancy) { create(:vacancy, :expired_yesterday, :external, phase: "secondary", organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
+      let!(:vacancy) { create(:vacancy, :expired_yesterday, :external, phases: %w[secondary], organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
       let(:vacancies_from_source) { [] }
 
       it "does not change the vacancy's status" do

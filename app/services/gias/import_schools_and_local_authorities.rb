@@ -96,9 +96,6 @@ class Gias::ImportSchoolsAndLocalAuthorities
   end
 
   def school_data(row) # rubocop:disable Metrics/MethodLength
-    phase_number = row["PhaseOfEducation (code)"].to_i
-    phase_symbol = School.phases.key(phase_number).to_sym
-
     {
       urn: row["URN"],
       address: row["Street"],
@@ -115,8 +112,7 @@ class Gias::ImportSchoolsAndLocalAuthorities
       region: row["GOR (name)"],
       school_type: row["EstablishmentTypeGroup (name)"],
       town: row["Town"],
-      phase: phase_number,
-      readable_phases: School::READABLE_PHASE_MAPPINGS[phase_symbol],
+      phase: row["PhaseOfEducation (code)"].to_i,
       url: Addressable::URI.heuristic_parse(row["SchoolWebsite"]).to_s,
       gias_data: row.to_h,
     }.merge(school_location_data(row)).transform_values(&:presence)

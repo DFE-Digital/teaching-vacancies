@@ -224,12 +224,6 @@ en:
         parental_leave_cover_contract_duration: >-
           Contract length should be more than 12 weeks. Short term cover should not be advertised on Teaching Vacancies
         job_title: Jobseekers respond better to short, simple job titles. You should include seniority level, subject or key stage, if relevant. Avoid start date, salary and responsibilities which will be covered in the job description.
-        key_stages:
-          middle: Only complete this field if it’s relevant to the role.
-          multiple_phases: What key stages will the role focus on?
-          primary: What key stages will the role focus on?
-          secondary: What key stages will the role focus on?
-          16-19: What key stages will the role focus on?
         subjects: What subjects will the teacher focus on?
         subjects_placeholder: Search
       publishers_job_listing_job_role_form:
@@ -569,11 +563,13 @@ en:
           uninterested: 'No'
 
       publishers_job_listing_education_phases_form:
-        phase_options:
-          primary: Primary
-          secondary: Secondary
-          "16-19": 16 to 19
-          multiple_phases: More than one phase
+        phases_options:
+          middle: Middle school
+          nursery: Nursery
+          primary: Primary school
+          secondary: Secondary school
+          sixth_form_or_college: Sixth form or college
+          through: Through school
       publishers_job_listing_important_dates_form:
         publish_on_day_options:
           another_day: On another day
@@ -605,8 +601,11 @@ en:
           teaching_assistant: Teaching assistant
         key_stages_options:
           early_years: Early years
-          ks1: KS1
-          ks2: KS2
+          ks1: Key stage 1
+          ks2: Key stage 2
+          ks3: Key stage 3
+          ks4: Key stage 4
+          ks5: Key stage 5
       publishers_job_listing_job_role_form:
         job_role_options:
           education_support: Education support
@@ -728,7 +727,7 @@ en:
         publish_on_day: Date job will be listed
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_education_phases_form:
-        phase:  What education phase will the role be covering?
+        phases:  Education phase
       publishers_job_listing_expired_feedback_form: &expired_vacancy_feedback_shared_legends
         hired_status: Was the job filled on Teaching Vacancies?
         listed_elsewhere: Was the job listed elsewhere?
@@ -754,7 +753,7 @@ en:
       publishers_job_listing_job_details_form:
         contract_type: Contract type
         suitable_for_ect: Is this job suitable for ECTs?
-        key_stages_html: Key stage (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        key_stages_html: Key stage
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_role_form:
         job_role: What is the job role?

@@ -69,7 +69,7 @@ class UnitedLearningVacancySource
       contract_type: item["Contract_type"].presence,
       # TODO: This is coming through unexpectedly in the feed - the parameterize call can be removed
       #       when the correct values are coming through
-      phase: item["Phase"].presence&.parameterize(separator: "_"),
+      phases: [organisations_for(item).first&.readable_phase],
       organisations: organisations_for(item),
       about_school: organisations_for(item).first&.description,
     }

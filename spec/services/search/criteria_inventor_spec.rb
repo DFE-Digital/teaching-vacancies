@@ -4,8 +4,8 @@ RSpec.describe Search::CriteriaInventor do
   subject { described_class.new(vacancy) }
 
   let(:postcode) { "ab12 3cd" }
-  let(:readable_phases) { %w[secondary primary] }
-  let(:school) { create(:school, postcode: postcode, readable_phases: readable_phases) }
+  let(:phases) { %w[secondary] }
+  let(:school) { create(:school, postcode: postcode) }
   let(:working_patterns) { %w[full_time part_time] }
   let(:subjects) { %w[English Maths] }
   let(:job_title) { "A wonderful job" }
@@ -16,7 +16,8 @@ RSpec.describe Search::CriteriaInventor do
                      working_patterns: working_patterns,
                      subjects: subjects,
                      job_title: job_title,
-                     job_role: job_role)
+                     job_role: job_role,
+                     phases: phases)
   end
 
   describe "#criteria" do
@@ -68,7 +69,7 @@ RSpec.describe Search::CriteriaInventor do
 
     describe "phases" do
       it "sets the phases to the same as the vacancy" do
-        expect(subject.criteria[:phases]).to eq(readable_phases)
+        expect(subject.criteria[:phases]).to eq(phases)
       end
     end
 

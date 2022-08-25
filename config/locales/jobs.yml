@@ -42,10 +42,12 @@ en:
       working_patterns: Working pattern
 
     education_phase_options:
-      primary: Primary
       middle: Middle
+      nursery: Nursery
+      primary: Primary
       secondary: Secondary
-      16-19: 16 to 19
+      sixth_form_or_college: Sixth form or college
+      through: Through
 
     no_jobs:
       heading: Try another search

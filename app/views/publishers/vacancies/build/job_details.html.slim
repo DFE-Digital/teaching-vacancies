@@ -6,15 +6,12 @@
   .govuk-grid-column-two-thirds
     = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
       = f.govuk_error_summary
+      = f.hidden_field :validate_key_stages, value: vacancy.allow_key_stages?
 
       h2.govuk-heading-l = t("publishers.vacancies.steps.job_details")
 
       = govuk_inset_text do
-        - link = vacancy.allow_phase_to_be_set? ? govuk_link_to(t("publishers.vacancies.build.job_details.phase_inset_text.link_text"), organisation_job_build_path(vacancy.id, :education_phases)) : ""
-        - if vacancy.one_phase?
-          = t("publishers.vacancies.build.job_details.phase_inset_text.one_phase_html", phase: vacancy.readable_phases.first.humanize, link: link)
-        - else
-          = t("publishers.vacancies.build.job_details.phase_inset_text.multiple_phases_html", link: link)
+        = t("publishers.vacancies.build.job_details.phase_inset_text.phase", phase: vacancy.phases.first&.humanize&.downcase)
 
       .govuk-character-count data-module="govuk-character-count" data-maxlength=100
         = f.govuk_text_field :job_title,
@@ -34,8 +31,7 @@
           = f.govuk_text_field :parental_leave_cover_contract_duration, label: { size: "s" }
 
       - if vacancy.allow_key_stages?
-        = f.govuk_collection_check_boxes :key_stages, Vacancy.key_stages.keys, :to_s, :to_s,
-          hint: { text: t("helpers.hint.publishers_job_listing_job_details_form.key_stages.#{vacancy.one_phase? ? vacancy.readable_phases.first : 'multiple_phases'}") }
+        = f.govuk_collection_check_boxes :key_stages, vacancy.key_stages_for_phases, :to_s, :to_s
 
       - if vacancy.allow_subjects?
         = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_job_details_form.subjects_html") } do

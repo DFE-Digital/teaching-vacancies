@@ -26,9 +26,9 @@ en:
         one: Job role changed to %{new_value}
         other: Job roles changed to %{new_value}
       job_title: Job title changed to %{new_value}
-      key_stage:
-        one: Key stage changed to {new_value}
-        other: Key stages changed to {new_value}
+      key_stages:
+        one: Key stage changed to %{new_value}
+        other: Key stages changed to %{new_value}
       no_changes: Changes to the job listing will be listed here.
       personal_statement_guidance: Personal statement guidance changed to %{new_value}
       salary: Salary changed to %{new_value}
@@ -183,9 +183,7 @@ en:
         job_details:
           step_title: Job details
           phase_inset_text:
-            link_text: Change the education phase.
-            one_phase_html: You are listing a %{phase} phase role. %{link}
-            multiple_phases_html: You are listing a role covering more than one phase. %{link}
+            phase: The job listing will say it’s a %{phase} role.
         job_location:
           step_title: Job location
         job_role:

@@ -6,7 +6,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school1) { create(:school, name: "First school") }
   let(:school2) { create(:school, name: "Second school") }
   let(:school3) { create(:school, :closed, name: "Closed school") }
-  let(:vacancy) { build(:vacancy, :central_office, :teacher, :ect_suitable, organisations: [school_group]) }
+  let(:vacancy) { build(:vacancy, :central_office, :teacher, :ect_suitable, organisations: [school_group], phases: %w[secondary], key_stages: %w[ks3]) }
   let(:created_vacancy) { Vacancy.last }
 
   before do

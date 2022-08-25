@@ -6,7 +6,6 @@ class Vacancy < ApplicationRecord
 
   include DatabaseIndexable
   include Resettable
-  include Phaseable
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
@@ -16,19 +15,28 @@ class Vacancy < ApplicationRecord
     working_patterns
   ].freeze
 
+  PHASES_TO_KEY_STAGES_MAPPINGS = {
+    nursery: %i[early_years],
+    primary: %i[early_years ks1 ks2],
+    middle: %i[ks1 ks2 ks3 ks4],
+    secondary: %i[ks3 ks4],
+    sixth_form_or_college: %i[ks5],
+    through: %i[early_years ks1 ks2 ks3 ks4 ks5],
+  }.freeze
+
   # When removing a job_role or working_pattern, remember to update *subscriptions* that have the old values.
   # TODO: remove job_roles when we are confident about the migration
   # array_enum job_roles: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5, send_responsible: 2, ect_suitable: 3 }
-  array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2 }
-  array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }
+  array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
+  array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }
+  array_enum phases: { nursery: 0, primary: 1, middle: 2, secondary: 3, sixth_form_or_college: 4, through: 5 }
 
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
   enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum job_role: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
-  enum phase: { primary: 0, secondary: 1, "16-19": 2, multiple_phases: 3 }
   enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
 
   belongs_to :publisher, optional: true
@@ -105,6 +113,10 @@ class Vacancy < ApplicationRecord
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
   end
 
+  def school_phases
+    organisations.schools.filter_map(&:readable_phase).uniq
+  end
+
   def central_office?
     organisations.one? && organisations.first.trust?
   end
@@ -133,11 +145,20 @@ class Vacancy < ApplicationRecord
   end
 
   def allow_key_stages?
-    !one_phase? || readable_phases == %w[primary] || readable_phases == %w[middle]
+    phases.any? { |phase| phase.in? %w[primary middle secondary through] } &&
+      job_role.in?(%w[teacher senior_leader middle_leader teaching_assistant])
+  end
+
+  def allow_phase_to_be_set?
+    school_phases.none?
   end
 
   def allow_subjects?
-    readable_phases != ["primary"]
+    phases.any? { |phase| phase.in? %w[middle secondary through] }
+  end
+
+  def key_stages_for_phases
+    phases.map { |phase| PHASES_TO_KEY_STAGES_MAPPINGS[phase.to_sym] }.flatten.uniq.sort
   end
 
   def within_data_access_period?

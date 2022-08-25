@@ -72,7 +72,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def render_phases_filter(value)
-    { education_phases: value.map { |role| I18n.t("jobs.education_phase_options.#{role}") }.join(", ") }
+    { education_phases: value.map { |phase| I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{phase}") }.join(", ") }
   end
 
   def render_organisation_filter

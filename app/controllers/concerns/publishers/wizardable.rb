@@ -1,6 +1,7 @@
 module Publishers::Wizardable
   STRIP_CHECKBOXES = {
     job_location: %i[organisation_ids],
+    education_phases: %i[phases],
     job_details: %i[subjects key_stages],
     working_patterns: %i[working_patterns],
   }.freeze
@@ -18,23 +19,24 @@ module Publishers::Wizardable
   end
 
   def job_location_params(params)
+    organisation_ids = params[:publishers_job_listing_job_location_form][:organisation_ids]
+    organisations = Organisation.where(id: organisation_ids)
+
     params.require(:publishers_job_listing_job_location_form)
           .permit(organisation_ids: [])
+          .merge(phases: organisations.schools.filter_map(&:readable_phase).uniq)
           .merge(completed_steps: completed_steps)
   end
 
   def education_phases_params(params)
-    # Forms containing only radio buttons do not send the form key param when they're submitted and no radio is selected
-    if params["publishers_job_listing_education_phases_form"]
-      params.require(:publishers_job_listing_education_phases_form).permit(:phase).merge(completed_steps: completed_steps)
-    else
-      {}
-    end
+    params.require(:publishers_job_listing_education_phases_form)
+          .permit(phases: [])
+          .merge(completed_steps: completed_steps)
   end
 
   def job_details_params(params)
     params.require(:publishers_job_listing_job_details_form)
-          .permit(:job_title, :contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration, key_stages: [], subjects: [])
+          .permit(:job_title, :contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration, :validate_key_stages, key_stages: [], subjects: [])
           .merge(completed_steps: completed_steps, status: vacancy.status || "draft")
   end
 

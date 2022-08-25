@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe UnitedLearningVacancySource do
-  let!(:school) { create(:school, name: "Test School", urn: "136636") }
+  let!(:school) { create(:school, name: "Test School", urn: "136636", phase: :secondary) }
   let!(:school_group) { create(:school_group, name: "United Learning", uid: "5143", schools: [school]) }
 
   before do
@@ -29,7 +29,7 @@ RSpec.describe UnitedLearningVacancySource do
       expect(vacancy.subjects).to eq(%w[Geography])
       expect(vacancy.working_patterns).to eq(%w[full_time])
       expect(vacancy.contract_type).to eq("permanent")
-      expect(vacancy.phase).to eq("multiple_phases")
+      expect(vacancy.phases).to eq(%w[secondary])
 
       expect(vacancy.organisations.first).to eq(school)
 
@@ -48,7 +48,7 @@ RSpec.describe UnitedLearningVacancySource do
         create(
           :vacancy,
           :external,
-          phase: "secondary",
+          phases: %w[secondary],
           external_source: "united_learning",
           external_reference: "751190",
           organisations: [school],

@@ -20,7 +20,7 @@ module VacancyHelpers
   end
 
   def fill_in_education_phases_form_fields(vacancy)
-    choose I18n.t("helpers.label.publishers_job_listing_education_phases_form.phase_options.#{vacancy.phase}")
+    check I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{vacancy.phases.first}")
   end
 
   def fill_in_job_role_details_form_fields(vacancy)
@@ -39,7 +39,7 @@ module VacancyHelpers
     choose I18n.t("helpers.label.publishers_job_listing_job_details_form.contract_type_options.#{vacancy.contract_type}")
     if include_key_stages
       vacancy.key_stages.each do |key_stage|
-        check I18n.t("helpers.label.publishers_job_listing_job_role_details_form.additional_job_roles_options.#{key_stage}")
+        check I18n.t("helpers.label.publishers_job_listing_job_details_form.key_stages_options.#{key_stage}")
       end
     end
     fill_in "publishers_job_listing_job_details_form[fixed_term_contract_duration]", with: vacancy.fixed_term_contract_duration

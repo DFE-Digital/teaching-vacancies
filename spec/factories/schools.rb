@@ -42,26 +42,6 @@ FactoryBot.define do
       establishment_status { "Closed" }
     end
 
-    trait :primary do
-      phase { :primary }
-      readable_phases { %w[primary] }
-    end
-
-    trait :middle do
-      phase { factory_sample(%i[middle_deemed_primary middle_deemed_secondary]) }
-      readable_phases { %w[middle] }
-    end
-
-    trait :secondary do
-      phase { :secondary }
-      readable_phases { %w[secondary] }
-    end
-
-    trait :all_through do
-      phase { :all_through }
-      readable_phases { ["primary", "middle", "secondary", "16 to 19"] }
-    end
-
     trait :in_london do
       association :region, name: "London"
     end

@@ -8,6 +8,20 @@ namespace :db do # rubocop:disable Metrics/BlockLength
     end
   end
 
+  # TODO: remove phase field from vacancies table once this is done
+  desc "Set phases from schools or old readable_phases field"
+  task set_new_phases: :environment do
+    Vacancy.find_each do |v|
+      phases =
+        if v.school_phases.any?
+          v.school_phases.map { |p| Vacancy.phases[p] }
+        else
+          v.readable_phases.map { |p| p.in?(["16-19", "16 to 19"]) ? 4 : Vacancy.phases[p] }
+        end
+      v.update_column :phases, phases
+    end
+  end
+
   desc "Asynchronously import organisations from GIAS and seed the database"
   task async_seed: :environment do
     SeedDatabaseJob.perform_later

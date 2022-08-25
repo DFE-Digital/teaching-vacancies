@@ -1,11 +1,11 @@
 # Map keyword "trigger" terms to search filters
 "16-19":
   phases:
-    - 16-19
+    - sixth_form_or_college
 "accounting teacher":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Accounting
 "art":
@@ -17,13 +17,13 @@
 "biology":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Biology
 "business studies":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Business studies
 "ceo":
@@ -32,13 +32,13 @@
 "chemistry":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Chemistry
 "citizenship":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Citizenship
 "classics":
@@ -55,7 +55,7 @@
 "control":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Design and technology
 "dance":
@@ -67,7 +67,7 @@
 "design":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Art and design
     - Design and technology
@@ -100,14 +100,14 @@
     - primary
 "fe":
   phases:
-    - 16-19
+    - sixth_form_or_college
 "film":
   subjects:
     - Media studies
 "finance teacher":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Accounting
 "flexible":
@@ -119,7 +119,7 @@
 "food technology":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Food technology
 "french":
@@ -130,7 +130,7 @@
     - full_time
 "further education":
   phases:
-    - 16-19
+    - sixth_form_or_college
 "geography":
   subjects:
     - Geography
@@ -182,7 +182,7 @@
 "hospitality":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Food technology
 "humanities":
@@ -226,7 +226,7 @@
 "key stage 5":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
 "ks1":
   phases:
     - primary
@@ -244,7 +244,7 @@
 "ks5":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
 "languages":
   subjects:
     - Languages
@@ -258,7 +258,7 @@
 "law":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Law
 "leader":
@@ -281,7 +281,7 @@
 "literature":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - English
 "lsa":
@@ -306,7 +306,7 @@
 "media":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Media studies
 "mfl":
@@ -367,7 +367,7 @@
 "philosophy":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Philosophy
 "phonics":
@@ -385,13 +385,13 @@
 "physics":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Physics
 "politics":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Politics
 "primary":
@@ -409,7 +409,7 @@
 "product":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Design and technology
 "pshe":
@@ -418,7 +418,7 @@
 "psychology":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Psychology
 "re":
@@ -489,7 +489,7 @@
     - Relationships and sex education
 "sixth form":
   phases:
-    - 16-19
+    - sixth_form_or_college
     - secondary
 "slt":
   job_roles:
@@ -497,27 +497,27 @@
 "social care":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Health and social care
 "social science":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Social sciences
     - Sociology
 "social sciences":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Social sciences
     - Sociology
 "sociology":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Social sciences
     - Sociology
@@ -542,7 +542,7 @@
 "statistics":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Statistics
 "suitable for ect":
@@ -563,7 +563,7 @@
 "systems":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Design and technology
 "ta":
@@ -580,13 +580,13 @@
 "teacher of accounting":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Accounting
 "teacher of finance":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Accounting
 "teachers":
@@ -609,7 +609,7 @@
 "textiles":
   phases:
     - secondary
-    - 16-19
+    - sixth_form_or_college
   subjects:
     - Design and technology
 "theatre":

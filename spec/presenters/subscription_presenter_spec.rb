@@ -58,10 +58,10 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context "with the phases filter" do
-      let(:search_criteria) { { phases: %w[secondary 16-19] } }
+      let(:search_criteria) { { phases: %w[secondary middle] } }
 
       it "formats and returns the phases" do
-        expect(presenter.filtered_search_criteria["education_phases"]).to eq("Secondary, 16 to 19")
+        expect(presenter.filtered_search_criteria["education_phases"]).to eq("Secondary school, Middle school")
       end
     end
 
@@ -97,7 +97,7 @@ RSpec.describe SubscriptionPresenter do
       let(:organisation) { create(:school) }
       let(:search_criteria) do
         {
-          phases: %w[secondary 16-19],
+          phases: %w[secondary sixth_form_or_college],
           organisation_slug: organisation.slug,
           radius: "10",
           job_roles: %w[leadership middle_leader],
@@ -130,7 +130,7 @@ RSpec.describe SubscriptionPresenter do
           radius: "10",
           something: "test",
           something_else: "testing",
-          phases: %w[secondary 16-19],
+          phases: %w[secondary sixth_form_or_college],
           organisation_slug: organisation.slug,
           job_roles: %w[leadership middle_leader],
           location: "EC2 9AN",

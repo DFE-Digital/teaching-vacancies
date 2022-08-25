@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
-  let(:school) { create(:school, :all_through, name: "Salisbury School") }
+  let(:school) { create(:school, :not_applicable, name: "Salisbury School") }
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
@@ -21,8 +21,9 @@ RSpec.describe "Creating a vacancy" do
       VacancyPresenter.new(build(:vacancy,
                                  :teacher,
                                  :ect_suitable,
-                                 phase: "multiple_phases",
                                  working_patterns: Vacancy.working_patterns.keys,
+                                 phases: %w[secondary],
+                                 key_stages: %w[ks3],
                                  publish_on: Date.current))
     end
     let(:created_vacancy) { Vacancy.last }
@@ -163,7 +164,7 @@ RSpec.describe "Creating a vacancy" do
     describe "#publish" do
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
-        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phase: "multiple_phases")
+        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary])
         vacancy.assign_attributes expires_at: yesterday_date
         vacancy.save(validate: false)
 
@@ -214,11 +215,12 @@ RSpec.describe "Creating a vacancy" do
         fill_in_ect_status_form_fields(vacancy)
         click_on "Continue"
 
-        choose "Secondary"
+        fill_in_education_phases_form_fields(vacancy)
         click_on "Continue"
 
         fill_in "Job title", with: "test vacancy"
         choose "Permanent"
+        check "Key stage 3"
         click_on "Continue"
 
         click_on "Cancel and return to manage jobs"
@@ -235,7 +237,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "can be published at a later date" do
-        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phase: "multiple_phases")
+        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary])
 
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
@@ -246,7 +248,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "displays the expiration date and time on the confirmation page" do
-        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], expires_at: 5.days.from_now.change(hour: 9, minute: 0), phase: "multiple_phases")
+        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], expires_at: 5.days.from_now.change(hour: 9, minute: 0), phases: %w[secondary])
         visit organisation_job_review_path(vacancy.id)
         click_on I18n.t("buttons.submit_job_listing")
 
@@ -254,7 +256,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "a published vacancy cannot be republished" do
-        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phase: "multiple_phases")
+        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary])
 
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
@@ -275,7 +277,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "adds a job to update the Google index in the queue" do
         scenario "if the vacancy is published immediately" do
-          vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Date.current, phase: "multiple_phases")
+          vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Date.current, phases: %w[secondary])
 
           expect_any_instance_of(Publishers::Vacancies::BaseController)
             .to receive(:update_google_index).with(vacancy)

@@ -78,6 +78,11 @@ en:
       meta_description: "Find full and part time teaching assistant jobs and classroom assistant vacancies. See which schools near you are currently hiring TAs and LSAs."
 
     ### Education phases
+    nursery-jobs:
+      name: "Nursery"
+      title: "Nursery, early years teacher and support jobs"
+      heading: "%{count} nursery and early years school jobs"
+      meta_description: "Find nursery, reception and early years teaching and leadership jobs near you."
     primary-school-jobs:
       name: "Primary"
       title: "Primary School Teacher and Support Jobs"
@@ -93,11 +98,16 @@ en:
       title: "Secondary School Teacher and Support Jobs"
       heading: "%{count} secondary school jobs"
       meta_description: "Discover the latest jobs for maths teachers, science teachers, English teachers and more. Find your next secondary school job on Teaching Vacancies."
-    16-19-education-provider-jobs:
-      name: "16-19"
-      title: "16 to 19 Education Provider Jobs"
-      heading: "%{count} jobs with 16 to 19 education providers"
-      meta_description: "Use Teaching Vacancies to find FE college teacher jobs and more roles near you at sixth-form colleges and other providers of 16 to 19 education."
+    sixth-form-or-college-jobs:
+      name: "Sixth form and college"
+      title: "Sixth form and college teaching jobs"
+      heading: "%{count} sixth form or college jobs"
+      meta_description: "Use Teaching Vacancies to find sixth form, college and 16-19 education provider teaching jobs near you."
+    through-school-jobs:
+      name: "Through school"
+      title: "Through School Jobs"
+      heading: "%{count} through school jobs"
+      meta_description: "Use Teaching Vacancies to find through school jobs for head teachers, teachers, teaching assistants and education support jobs."
 
     ### Subjects
     art-design-technology-teacher-jobs:

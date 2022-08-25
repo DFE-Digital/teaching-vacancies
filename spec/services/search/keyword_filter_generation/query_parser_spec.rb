@@ -7,7 +7,7 @@ RSpec.describe Search::KeywordFilterGeneration::QueryParser do
 
     allow(Rails.application.config.x.search).to receive(:keyword_filter_mappings)
       .and_return({
-        "foo" => { phases: ["16-19"] },
+        "foo" => { phases: ["sixth_form_or_college"] },
         "bar" => { subjects: ["French"] },
         "baz" => { job_roles: %w[senior_leader sendco] },
       })
