@@ -8,7 +8,7 @@
       = f.govuk_error_summary
 
       = f.govuk_check_boxes_fieldset :working_patterns,
-                                     legend: -> { tag.legend(class: ["govuk-fieldset__legend", "govuk-fieldset__legend--l"]) { tag.h2("publishers.vacancies.steps.working_patterns", class: ["govuk-fieldset__heading"]) } } do
+                                     legend: -> { tag.legend(class: ["govuk-fieldset__legend", "govuk-fieldset__legend--l"]) { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: ["govuk-fieldset__heading"]) } } do
         = f.govuk_check_box :working_patterns,
                             "full_time",
                             link_errors: true,
