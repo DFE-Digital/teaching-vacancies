@@ -175,6 +175,7 @@ en:
     edit_job_title: Edit %{job_title}
     current_step: Step %{step} of %{total}
 
+    full_time_details: Full time - %{details}
     location: Location
     location_find_more_html:
       one: Find more school jobs in %{location_link}
@@ -186,6 +187,7 @@ en:
     key_stage:
       one: Key stage
       other: Key stages
+    part_time_details: Part time - %{details}
     suitable_for_ect: Is this job suitable for ECTs?
     subjects: Subject(s)
     subject:

@@ -110,12 +110,6 @@
     - sixth_form_or_college
   subjects:
     - Accounting
-"flexible":
-  working_patterns:
-    - flexible
-"flexible working":
-  working_patterns:
-    - flexible
 "food technology":
   phases:
     - secondary
@@ -206,9 +200,6 @@
   subjects:
     - Computing
     - ICT
-"job share":
-  working_patterns:
-    - job_share
 "key stage 1":
   phases:
     - primary
@@ -354,7 +345,6 @@
 "part time":
   working_patterns:
     - part_time
-    - job_share
 "pe":
   subjects:
     - Physical education
@@ -603,9 +593,6 @@
 "teaching assistants":
   job_roles:
     - teaching_assistant
-"term time":
-  working_patterns:
-    - term_time
 "textiles":
   phases:
     - secondary

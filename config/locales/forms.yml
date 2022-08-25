@@ -257,8 +257,13 @@ en:
         add_school: Add a school to your account
         edit_schools: "Can't see the school you are looking for?"
       publishers_job_listing_working_patterns_form:
-        working_patterns: Select all working patterns you will consider for the role.
-        working_patterns_details: Include the number of hours or days (for example "20 hours per week" or "Monday to Wednesday") and information on any flexible working policies (for example staggered or compressed hours).
+        working_patterns_options:
+          full_time_education_support: Usually at least 27.5 hours a week
+          full_time_middle_leader: Usually at least 36.5 hours a week
+          full_time_sendco: ""
+          full_time_senior_leader: Usually at least 36.5 hours a week
+          full_time_teaching_assistant: Usually at least 27.5 hours a week
+          full_time_teacher: Usually at least 36.5 hours a week
 
     label:
       publishers_new_features_form:
@@ -626,7 +631,8 @@ en:
         benefits_html: Additional allowances (optional<span class='govuk-visually-hidden'> field</span>)</span>
         salary: Annual or full time equivalent (FTE) salary
       publishers_job_listing_working_patterns_form:
-        working_patterns_details_html: What are the specifics of the working pattern? (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        full_time_details: Details
+        part_time_details: Details
         working_patterns_options:
           flexible: Flexible
           full_time: Full time

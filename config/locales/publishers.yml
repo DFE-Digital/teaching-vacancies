@@ -195,7 +195,7 @@ en:
         review:
           step_title: Review the job listing
         working_patterns:
-          step_title: Working patterns
+          step_title: Working pattern
       confirm_destroy:
         are_you_sure: Are you sure you want to delete the draft listing?
         page_title: Delete draft listing
@@ -309,7 +309,7 @@ en:
         job_location: Job location
         education_phases: Job details
         job_details: Job details
-        working_patterns: Working patterns
+        working_patterns: Working pattern
         pay_package: Pay package
         important_dates: Important dates and deadlines
         documents: Supporting documents

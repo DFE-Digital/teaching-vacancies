@@ -42,7 +42,7 @@ module Publishers::Wizardable
 
   def working_patterns_params(params)
     params.require(:publishers_job_listing_working_patterns_form)
-          .permit(:working_patterns_details, working_patterns: [])
+          .permit(:full_time_details, :part_time_details, working_patterns: [])
           .merge(completed_steps: completed_steps)
   end
 

@@ -7,10 +7,20 @@
     = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_collection_check_boxes :working_patterns, Vacancy.working_patterns.keys, :to_s, :to_s,
-        legend: -> { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: "govuk-heading-l") }
+      = f.govuk_check_boxes_fieldset :working_patterns,
+                                     legend: -> { tag.legend(class: ["govuk-fieldset__legend", "govuk-fieldset__legend--l"]) { tag.h2("publishers.vacancies.steps.working_patterns", class: ["govuk-fieldset__heading"]) } } do
+        = f.govuk_check_box :working_patterns,
+                            "full_time",
+                            link_errors: true,
+                            hint: { text: t("helpers.hint.publishers_job_listing_working_patterns_form.working_patterns_options.full_time_#{vacancy.job_role}") } do
+          = f.govuk_text_area :full_time_details,
+                              label: -> { tag.label(t("helpers.label.publishers_job_listing_working_patterns_form.full_time_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
+                              max_words: 50
 
-      = f.govuk_text_area :working_patterns_details, label: { size: "s", id: "working-pattern-details-label" }
+        = f.govuk_check_box :working_patterns, "part_time" do
+          = f.govuk_text_area :part_time_details,
+                              label: -> { tag.label(t("helpers.label.publishers_job_listing_working_patterns_form.part_time_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
+                              max_words: 50
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 

@@ -142,11 +142,25 @@ RSpec.describe VacancyPresenter do
     it_behaves_like "a fields that outputs the correct HTML", :benefits
   end
 
+  # TODO: Working Patterns: Remove this test once all vacancies with legacy working patterns & working_pattern_details have expired
   describe "#readable_working_patterns" do
     let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
 
     it "returns working patterns" do
       expect(subject.readable_working_patterns).to eq("Full time, part time")
+    end
+  end
+
+  describe "#readable_working_patterns_with_details" do
+    let(:working_patterns) { %w[full_time part_time] }
+    let(:full_time_details) { "Some details" }
+    let(:part_time_details) { "Some other details" }
+    let(:vacancy) do
+      build_stubbed(:vacancy, working_patterns: working_patterns, full_time_details: full_time_details, part_time_details: part_time_details)
+    end
+
+    it "returns the working with details for each working pattern" do
+      expect(subject.readable_working_patterns_with_details).to eq("Full time - Some details\nPart time - Some other details")
     end
   end
 
@@ -164,22 +178,6 @@ RSpec.describe VacancyPresenter do
 
       it "returns an array containing PART_TIME" do
         expect(subject.working_patterns_for_job_schema).to eq %w[PART_TIME]
-      end
-    end
-
-    context "when TEMPORARY" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[term_time], fixed_term_contract_duration: "2 months") }
-
-      it "returns an array containing TEMPORARY" do
-        expect(subject.working_patterns_for_job_schema).to eq %w[TEMPORARY]
-      end
-    end
-
-    context "when OTHER" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[term_time], fixed_term_contract_duration: nil) }
-
-      it "returns an array containing OTHER" do
-        expect(subject.working_patterns_for_job_schema).to eq %w[OTHER]
       end
     end
   end

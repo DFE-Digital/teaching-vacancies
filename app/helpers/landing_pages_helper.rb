@@ -44,6 +44,21 @@ module LandingPagesHelper
   end
 
   def linked_working_patterns(vacancy)
+    # TODO: Working Patterns: Remove the call to linked_working_patterns_legacy_vacancy once all vacancies with legacy working patterns & working_pattern_details have expired
+    return linked_working_patterns_legacy_vacancy(vacancy) unless vacancy.full_time_details? || vacancy.part_time_details?
+
+    full_time_landing_page_link = landing_page_link_or_text({ working_patterns: ["full_time"] }, "Full time")
+    part_time_landing_page_link = landing_page_link_or_text({ working_patterns: ["part_time"] }, "Part time")
+
+    tag.ul class: "govuk-list" do
+      safe_join [
+        (tag.li { [full_time_landing_page_link, vacancy.full_time_details].join(" - ").html_safe } if vacancy.full_time_details?),
+        (tag.li { [part_time_landing_page_link, vacancy.part_time_details].join(" - ").html_safe } if vacancy.part_time_details?),
+      ]
+    end
+  end
+
+  def linked_working_patterns_legacy_vacancy(vacancy)
     tag.ul class: "govuk-list" do
       safe_join [
         tag.li do

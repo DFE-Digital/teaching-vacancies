@@ -7,7 +7,7 @@
   <%= vacancy_location_with_organisation_link(vacancy) %>
 
   <%= t(".salary", salary: vacancy.salary) %>
-  <%= t(".working_pattern", working_pattern: vacancy.readable_working_patterns) %>
+  <%= t(".working_pattern", working_pattern: VacancyPresenter.new(vacancy).readable_working_patterns_with_details) %>
   <%= t(".closing_date", closing_date: format_time_to_datetime_at(vacancy.expires_at)) %>
 
   ---
