@@ -36,28 +36,33 @@ en:
     #      - meta_description: The HTML <meta> and Open Graph description
 
     ### Job roles
+    higher-level-teaching-assistant-jobs:
+      name: "HLTA (higher level teaching assistant)"
+      title: "HLTA (higher level teaching assistant) Jobs"
+      heading: "%{count} higher level teaching assistant (HLTA) jobs"
+      meta_description: "Find higher level teaching assistant jobs in local primary and secondary schools. Get your teaching career off to a great start."
     ect-suitable-jobs:
       name: "Suitable for early career teachers"
       title: "Early Career Teacher (ECT) & NQT Jobs"
       heading: "%{count} early career teacher (ECT) jobs"
       meta_description: "Find early career teacher (ECT, formerly known as NQT) jobs in local primary and secondary schools. Get your teaching career off to a great start."
     education-support-jobs:
-      name: "Education support"
+      name: "Learning support, cover supervisor or tutor"
       title: "Education & School Support Jobs"
       heading: "%{count} education and school support jobs"
       meta_description: "Find jobs for LSAs, HR managers, finance officers, admin assistants, cover supervisors and other non-teaching vacancies in schools near you."
     senior-leader-jobs:
-      name: "Senior leader"
+      name: "Headteacher, deputy or assistant headteacher"
       title: "Headteacher & School Leadership Jobs"
       heading: "%{count} headteacher and school leadership jobs"
       meta_description: "Discover headteacher jobs, assistant and deputy head vacancies, and senior school leadership roles in primary and secondary schools near you."
     middle-leader-jobs:
-      name: "Middle leader"
-      title: "Middle Leader & Department Head Jobs"
+      name: "Head of year, department, curriculum or phase"
+      title: "Head of year & Department Head Jobs"
       heading: "%{count} middle leader and department head jobs"
       meta_description: "Search for middle leader and department head jobs in schools near you. Set up email alerts so you don't miss out on the latest vacancies for subject leads."
     sendco-jobs:
-      name: "SENDCo"
+      name: "SENDCo (special educational needs and disabilities coordinator)"
       title: "SEND Coordinator (SENDCo) Jobs"
       heading: "%{count} SENDCo jobs"
       meta_description: "Find the latest special educational needs co-ordinator (SENDCo) jobs in schools near you. Apply for full time and part time vacancies."

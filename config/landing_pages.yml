@@ -26,6 +26,9 @@ shared:
   education-support-jobs:
     job_roles:
       - education_support
+  higher-level-teaching-assistant-jobs:
+    job_roles:
+      - higher-level-teaching-assistant-jobs
   senior-leader-jobs:
     job_roles:
       - senior_leader
