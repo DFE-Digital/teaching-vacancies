@@ -31,6 +31,8 @@ RSpec.describe "Api::Markers" do
 
     context "when marker_type is vacancy" do
       it "returns the JSON marker" do
+        number_of_salary_fields_set = number_of_salary_fields_set(vacancy)
+
         subject
         expect(json).to include(heading_text: vacancy.job_title)
         expect(json).to include(heading_url: job_path(vacancy))
@@ -38,7 +40,15 @@ RSpec.describe "Api::Markers" do
         expect(json).to include(anonymised_id: StringAnonymiser.new(vacancy.id).to_s)
         expect(json).to include(address: full_address(organisation))
         expect(json).to include(description: nil)
-        expect(json[:details].size).to be 4
+
+        case number_of_salary_fields_set
+        when 6
+          expect(json[:details].size).to be 6
+        when 5
+          expect(json[:details].size).to be 5
+        when 4
+          expect(json[:details].size).to be 4
+        end
       end
     end
 
@@ -63,6 +73,10 @@ RSpec.describe "Api::Markers" do
         expect(response).to have_http_status(:bad_request)
         expect(json[:error]).to eq("Missing params")
       end
+    end
+
+    def number_of_salary_fields_set(vacancy)
+      [vacancy.salary, vacancy.actual_salary, vacancy.pay_scale].compact_blank.count
     end
   end
 end

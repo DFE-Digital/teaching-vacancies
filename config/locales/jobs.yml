@@ -201,9 +201,12 @@ en:
     contract_type: Contract type
 
     actual_salary: Actual salary
-    annual_salary: Annual or full time equivalent salary
+    annual_salary: Full-time equivalent salary
+    benefits: Do you want to include additional allowances?
+    benefits_details: Additional allowances
+    pay_scale: Pay scale
     salary: Salary
-    benefits: Additional allowances
+    salary_details: Salary details
 
     school_visits_html: School visits
     trust_visits_html: Trust visits

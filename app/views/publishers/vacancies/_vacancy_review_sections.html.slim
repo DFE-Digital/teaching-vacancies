@@ -36,16 +36,46 @@
     - s.row :working_patterns_details
   - else
     = govuk_summary_list do |summary_list|
-        - summary_list.row do |row|
-          - row.key
-            h4.govuk-heading-s = t("jobs.working_patterns")
-          - row.value
-            ul.govuk-list = vacancy_working_patterns(vacancy)
+      - summary_list.row do |row|
+        - row.key
+          h4.govuk-heading-s = t("jobs.working_patterns")
+        - row.value
+          ul.govuk-list = vacancy_working_patterns(vacancy)
 
-- r.section :pay_package do |s|
-  - s.row :salary
-  - s.row :actual_salary, optional: true unless vacancy.working_patterns == ["full_time"]
-  - s.row :benefits, optional: true
+- r.section :pay_package do
+  = govuk_summary_list do |summary_list|
+    - summary_list.row do |row|
+      - row.key
+        h4.govuk-heading-s = t("jobs.salary_details")
+      - row.value
+        ul.govuk-list
+          - if vacancy.salary?
+            li class="govuk-!-margin-bottom-4"
+              div => "#{t('jobs.annual_salary')}:"
+              = vacancy.salary
+          - if vacancy.actual_salary?
+            li class="govuk-!-margin-bottom-4"
+              div => "#{t('jobs.actual_salary')}:"
+              = vacancy.actual_salary
+          - if vacancy.pay_scale?
+            li class="govuk-!-margin-bottom-4"
+              div => "#{t('jobs.pay_scale')}:"
+              = vacancy.pay_scale
+
+    - summary_list.row do |row|
+      - row.key
+        h4.govuk-heading-s class="govuk-!-margin-bottom-0"
+          = t("jobs.benefits")
+      - row.value
+        = vacancy.benefits? ? "Yes" : "No"
+
+    - if vacancy.benefits?
+      - summary_list.row do |row|
+        - row.key
+          h4.govuk-heading-s class="govuk-!-margin-bottom-0"
+            = t("jobs.benefits_details")
+        - row.value
+          = vacancy.benefits_details
 
 - r.section :important_dates do |s|
   - s.row :publish_on,

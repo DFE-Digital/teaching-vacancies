@@ -138,8 +138,8 @@ RSpec.describe VacancyPresenter do
     it_behaves_like "a fields that outputs the correct HTML", :how_to_apply
   end
 
-  describe "#benefits" do
-    it_behaves_like "a fields that outputs the correct HTML", :benefits
+  describe "#benefits_details" do
+    it_behaves_like "a fields that outputs the correct HTML", :benefits_details
   end
 
   # TODO: Working Patterns: Remove this test once all vacancies with legacy working patterns & working_pattern_details have expired

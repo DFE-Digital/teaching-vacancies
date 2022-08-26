@@ -195,6 +195,14 @@ class Vacancy < ApplicationRecord
     end
   end
 
+  def salary_types
+    [
+      salary.present? ? "full_time" : nil,
+      actual_salary.present? ? "part_time" : nil,
+      pay_scale.present? ? "pay_scale" : nil,
+    ]
+  end
+
   private
 
   def slug_candidates

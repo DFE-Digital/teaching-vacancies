@@ -474,7 +474,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_123147) do
     t.string "job_title"
     t.string "slug", null: false
     t.text "job_advert"
-    t.text "benefits"
+    t.text "benefits_details"
     t.date "starts_on"
     t.string "contact_email"
     t.integer "status"
@@ -522,6 +522,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_123147) do
     t.integer "phases", array: true
     t.text "full_time_details"
     t.text "part_time_details"
+    t.string "pay_scale"
+    t.boolean "benefits"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["publish_on"], name: "index_vacancies_on_publish_on"

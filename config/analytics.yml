@@ -281,6 +281,7 @@ shared:
     - slug
     - job_advert
     - benefits
+    - benefits_details
     - starts_on
     - contact_email
     - status

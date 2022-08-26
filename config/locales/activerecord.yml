@@ -133,10 +133,24 @@ en:
       blank: Select a working pattern
       inclusion: Select a working pattern
   pay_package_errors: &pay_package_errors
+    actual_salary:
+      blank: Enter actual salary
+      too_long: Actual salary must not be more than %{count} characters
+      invalid_characters: Actual salary must not contain any HTML tags
+    benefits:
+      inclusion: Select yes if you want to include additional allowances
+    benefits_details:
+      blank: Enter additional allowances
+    pay_scale:
+      blank: Enter pay scale
+      too_long: Pay scale must not be more than %{count} characters
+      invalid_characters: Pay scale must not contain any HTML tags
     salary:
-      blank: Enter a salary
+      blank: Enter full-time salary
       too_long: Salary must not be more than %{count} characters
       invalid_characters: Salary must not contain any HTML tags
+    salary_types:
+      invalid: Select salary details
   important_dates_errors: &important_dates_errors
     expires_at:
       after: The closing date must be after the date the job will be listed

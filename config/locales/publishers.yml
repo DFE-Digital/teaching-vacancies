@@ -191,7 +191,7 @@ en:
         job_summary:
           step_title: Job summary
         pay_package:
-          step_title: Pay package
+          step_title: Salary and allowances
         review:
           step_title: Review the job listing
         working_patterns:
@@ -310,7 +310,7 @@ en:
         education_phases: Job details
         job_details: Job details
         working_patterns: Working pattern
-        pay_package: Pay package
+        pay_package: Salary and allowances
         important_dates: Important dates and deadlines
         documents: Supporting documents
         applying_for_the_job: Applying for the job

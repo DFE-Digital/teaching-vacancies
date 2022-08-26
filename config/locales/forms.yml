@@ -249,10 +249,11 @@ en:
           You should cover what the role is and who you're looking to recruit.
           The first 20 to 40 words will be shown in search results, so make them stand out.
       publishers_job_listing_pay_package_form:
-        actual_salary: For part time or term time roles this is what the candidate will actually be paid
-        benefits: >-
-          Include special educational needs (SEN) allowances and teaching and learning responsibility (TLR) payments,
-          for example
+        benefits: For example, special educational needs (SEN) or teaching and learning responsibility (TLR) payments
+        salary_types: Select all that apply
+        salary_types_options:
+          full_time: This is what the annual salary would be for someone working full time
+          part_time: This is the annual amount someone will take home
       publishers_job_listing_schools_form:
         add_school: Add a school to your account
         edit_schools: "Can't see the school you are looking for?"
@@ -627,9 +628,17 @@ en:
         about_organisation: About %{organisation}
         job_advert: Job advert
       publishers_job_listing_pay_package_form:
-        actual_salary_html: Actual salary (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        benefits_html: Additional allowances (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        salary: Annual or full time equivalent (FTE) salary
+        actual_salary: Actual salary
+        benefits_details: Additional allowances
+        benefits_options:
+          false: "No"
+          true: "Yes"
+        pay_scale: Pay scale
+        salary: Full-time equivalent salary
+        salary_types_options:
+          full_time: Full-time equivalent salary
+          part_time: Actual salary
+          pay_scale: Pay scale
       publishers_job_listing_working_patterns_form:
         full_time_details: Details
         part_time_details: Details
@@ -767,6 +776,9 @@ en:
         ect_status: Is this role suitable for an early career teacher (ECT)?
       publishers_job_listing_schools_form:
         organisations: Locations where the job is based
+      publishers_job_listing_pay_package_form:
+        salary_types: Salary details
+        benefits: Do you want to include additional allowances?
       publishers_job_listing_working_patterns_form:
         working_patterns: Working patterns
       subscription:

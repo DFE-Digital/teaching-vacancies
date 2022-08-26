@@ -30,29 +30,32 @@ section#job-details class="govuk-!-margin-bottom-5"
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.contract_type")
         - row.value text: vacancy.contract_type_with_duration
 
-    - if vacancy.actual_salary?
+    - if vacancy.salary?
       - summary_list.row do |row|
         - row.key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.annual_salary")
         - row.value text: vacancy.salary
 
+    - if vacancy.actual_salary?
       - summary_list.row do |row|
         - row.key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.actual_salary")
         - row.value text: vacancy.actual_salary
 
-    - else
+    - if vacancy.pay_scale?
       - summary_list.row do |row|
         - row.key do
-          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.salary")
-        - row.value text: vacancy.salary
+          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.pay_scale")
+        - row.value text: vacancy.pay_scale
+
+    - if vacancy.benefits_details.present?
+      - summary_list.row do |row|
+        - row.key do
+          h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.benefits_details")
+        - row.value text: vacancy.benefits_details
 
   h2.govuk-heading-m = t("jobs.job_summary", job_title: vacancy.job_title)
   == vacancy.job_advert
-
-  - if vacancy.benefits.present?
-    h4.govuk-heading-m = t("jobs.benefits")
-    p.govuk-body = vacancy.benefits
 
   - if vacancy.expires_at.future?
     - if vacancy.enable_job_applications?
