@@ -524,7 +524,7 @@ en:
       publishers_job_listing_copy_vacancy_form:
         job_title: Job title
         publish_on_day_options:
-          another_day: On another day
+          another_day: Another date
           today: Today
           tomorrow: Tomorrow
         starts_asap_options:
@@ -577,9 +577,9 @@ en:
           through: Through school
       publishers_job_listing_important_dates_form:
         publish_on_day_options:
-          another_day: On another day
-          today: Today
-          tomorrow: Tomorrow
+          another_day: Another date
+          today: Today (%{date})
+          tomorrow: Tomorrow (%{date})
         starts_asap_options:
           "true": As soon as possible
       publishers_job_listing_job_details_form:
@@ -749,11 +749,11 @@ en:
         user_participation_response: Would you like to participate in our research?
       publishers_job_listing_important_dates_form:
         expires_at: Closing date
-        expiry_time: Time application is due
-        publish_on: What date will the job be listed?
-        publish_on_day: Date job will be listed
+        expiry_time: Closing time
+        publish_on: Another date
+        publish_on_day: Publish date
         start_asap: As soon as possible
-        start_date_specific: On a specific day
+        start_date_specific: Specific date
         starts_on: Date job starts (optional)
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_details_form:
@@ -778,44 +778,20 @@ en:
     options:
       publishers_job_listing_copy_vacancy_form:
         expiry_time:
-          "7:00": 7am
-          "8:00": 8am
           "9:00": 9am
-          "10:00": 10am
-          "11:00": 11am
-          "12:00": Midday
-          "13:00": 1pm
-          "14:00": 2pm
-          "15:00": 3pm
-          "16:00": 4pm
+          "12:00": 12pm (midday)
           "17:00": 5pm
           "23:59": 11:59pm
       publishers_job_listing_extend_deadline_form:
         expiry_time:
-          "7:00": 7am
-          "8:00": 8am
           "9:00": 9am
-          "10:00": 10am
-          "11:00": 11am
-          "12:00": Midday
-          "13:00": 1pm
-          "14:00": 2pm
-          "15:00": 3pm
-          "16:00": 4pm
+          "12:00": 12pm (midday)
           "17:00": 5pm
           "23:59": 11:59pm
       publishers_job_listing_important_dates_form:
         expiry_time:
-          "7:00": 7am
-          "8:00": 8am
           "9:00": 9am
-          "10:00": 10am
-          "11:00": 11am
-          "12:00": Midday
-          "13:00": 1pm
-          "14:00": 2pm
-          "15:00": 3pm
-          "16:00": 4pm
+          "12:00": 12pm (midday)
           "17:00": 5pm
           "23:59": 11:59pm
 
