@@ -35,7 +35,7 @@ class Vacancy < ApplicationRecord
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
   enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
-  enum job_role: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5 }
+  enum job_role: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, higher_level_teaching_assistant: 8, education_support: 4, sendco: 5 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
 

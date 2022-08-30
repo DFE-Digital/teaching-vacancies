@@ -226,16 +226,6 @@ en:
         job_title: Jobseekers respond better to short, simple job titles. You should include seniority level, subject or key stage, if relevant. Avoid start date, salary and responsibilities which will be covered in the job description.
         subjects: What subjects will the teacher focus on?
         subjects_placeholder: Search
-      publishers_job_listing_job_role_form:
-        job_role:  >-
-          You can list all the roles below on Teaching Vacancies. You cannot list other roles such as
-          finance manager, administrative assistant, cleaner or chef.
-        job_role_options:
-          education_support: Includes learning support and tutors
-          middle_leader: Includes Heads of Year or Department
-          sendco: Special educational needs and disabilities coordinator
-          senior_leader: Includes Deputy/Assistant Head, Headteacher, and trust-level roles
-          teaching_assistant: Includes Higher Level Teaching Assistants (HLTAs) and SEND teaching assistants
       publishers_job_listing_job_role_details_form:
         ect_status: Early career teachers were previously called newly qualified teachers(NQT)
       publishers_job_listing_job_summary_form:
@@ -614,10 +604,11 @@ en:
           ks5: Key stage 5
       publishers_job_listing_job_role_form:
         job_role_options:
-          education_support: Education support
-          middle_leader: Middle leader
-          sendco: SENDCo
-          senior_leader: Senior leader
+          education_support: Learning support, cover supervisor or tutor
+          higher_level_teaching_assistant: HLTA (higher level teaching assistant)
+          middle_leader: Head of year, department, curriculum or phase
+          sendco: SENDCo (special educational needs and disabilities coordinator)
+          senior_leader: Headteacher, deputy or assistant headteacher
           teacher: Teacher
           teaching_assistant: Teaching assistant
       publishers_job_listing_job_role_details_form:
@@ -770,8 +761,6 @@ en:
         suitable_for_ect: Is this job suitable for ECTs?
         key_stages_html: Key stage
         subjects_html: Subject(s) (optional<span class='govuk-visually-hidden'> field</span>)</span>
-      publishers_job_listing_job_role_form:
-        job_role: What is the job role?
       publishers_job_listing_job_role_details_form:
         ect_status: Is this role suitable for an early career teacher (ECT)?
       publishers_job_listing_schools_form:

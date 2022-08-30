@@ -2,14 +2,15 @@
   = govuk_accordion do |accordion|
     - accordion.section(heading_text: t(".jobs_by_school_type_and_role"))
       = landing_page_link_group title: t(".job_roles"), classes: "govuk-grid-column-one-third" do |group|
+        - group.landing_page "teacher-jobs"
         - group.landing_page "senior-leader-jobs"
         - group.landing_page "middle-leader-jobs"
-        - group.landing_page "teacher-jobs"
+        - group.landing_page "higher-level-teaching-assistant-jobs"
         - group.landing_page "teaching-assistant-jobs"
-        - group.landing_page "ect-suitable-jobs"
         - group.landing_page "sendco-jobs"
-        - group.landing_page "send-responsible-jobs"
         - group.landing_page "education-support-jobs"
+        - group.landing_page "send-responsible-jobs"
+        - group.landing_page "ect-suitable-jobs"
       = landing_page_link_group title: t(".education_phases"), classes: "govuk-grid-column-one-third" do |group|
         = group.landing_page "nursery-jobs"
         = group.landing_page "primary-school-jobs"
