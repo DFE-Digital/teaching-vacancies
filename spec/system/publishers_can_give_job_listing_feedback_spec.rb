@@ -22,6 +22,7 @@ RSpec.describe "Publishers can give job listing feedback" do
     let(:vacancy) { create(:vacancy, :published, organisations: [organisation], publisher: publisher) }
 
     it "submits blank feedback, renders error and then submits feedback successfully" do
+      visit new_organisation_job_feedback_path(vacancy.id)
       click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("There is a problem")
@@ -37,7 +38,7 @@ RSpec.describe "Publishers can give job listing feedback" do
 
       expect(current_path).to eq(jobs_with_type_organisation_path(:published))
 
-      expect(page).to have_content(I18n.t("messages.jobs.feedback.success"))
+      expect(page).to have_content(strip_tags(I18n.t("messages.jobs.feedback.success_html")))
     end
   end
 end

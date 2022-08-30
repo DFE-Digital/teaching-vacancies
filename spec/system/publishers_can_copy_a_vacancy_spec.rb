@@ -65,7 +65,7 @@ RSpec.describe "Copying a vacancy" do
     end
     click_on I18n.t("buttons.submit_job_listing")
 
-    expect(page).to have_content(I18n.t("publishers.vacancies.summary.success"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.summary.heading.published"))
   end
 
   scenario "a job can be copied from the dashboard" do
@@ -114,7 +114,7 @@ RSpec.describe "Copying a vacancy" do
 
       click_on I18n.t("buttons.submit_job_listing")
 
-      expect(page).to have_content(I18n.t("publishers.vacancies.summary.success"))
+      expect(page).to have_content(I18n.t("publishers.vacancies.summary.heading.published"))
     end
   end
 

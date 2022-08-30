@@ -207,7 +207,7 @@ Rails.application.routes.draw do
       get :review
       get :summary
       resource :activity_log, only: %i[show], controller: "publishers/vacancies/activity_log"
-      resource :feedback, only: %i[create], controller: "publishers/vacancies/feedbacks"
+      resource :feedback, only: %i[new create], controller: "publishers/vacancies/feedbacks"
       resource :expired_feedback, only: %i[new create], controller: "publishers/vacancies/expired_feedbacks", path: "expired-feedback" do
         get :submitted
       end
