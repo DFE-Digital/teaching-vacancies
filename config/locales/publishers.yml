@@ -319,20 +319,26 @@ en:
       submit:
         cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft jobs.
       summary:
-        create_another_job_listing: Create another job listing
-        date_expires: >-
-          The job listing will appear on the service until %{application_deadline}, after which it will no longer be
-          visible to jobseekers.
-        date_posted: Your job listing will be posted on %{date}.
-        date_posted_now: Your job listing has been posted.
-        feedback:
+        date_posted: Your job listing will be published on %{date}.
+        feedback_link_html: <a href="%{url}" class="govuk-link">Give feedback about this service</a> (takes 30 seconds).
+        give_feedback: Give feedback
+        heading:
+          published: Job listing published
+          scheduled: Job listing scheduled
+        make_changes: make changes to the job listing
+        manage_jobs: manage jobs
+        next_steps: Next steps
+        page_title: The job listing for %{organisation} has been completed
+        view_listing: view the job listing
+        you_can: "You can:"
+      feedbacks:
+        new:
           description: >-
             Your feedback can help us improve the service to better support you as well as schools around England.
-          heading: Have time to share some feedback?
-        page_title: The job listing for %{organisation} has been completed
-        success: The job listing has been completed
-        view_jobs: View your job listings
-        what_happens_next: What happens next
+          heading: Give feedback
+          page_title: Feedback
+          success: The job listing has been completed
+          view_jobs: View your job listings
       statistics:
         show:
           application_data: Application data

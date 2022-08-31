@@ -241,17 +241,9 @@ RSpec.describe "Creating a vacancy" do
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
 
-        expect(page).to have_content("Your job listing will be posted on #{format_date(vacancy.publish_on)}.")
+        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: vacancy.publish_on.to_formatted_s.strip!))
         visit organisation_job_path(vacancy.id)
         expect(page).to have_content(format_date(vacancy.publish_on).to_s)
-      end
-
-      scenario "displays the expiration date and time on the confirmation page" do
-        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], expires_at: 5.days.from_now.change(hour: 9, minute: 0), phases: %w[secondary])
-        visit organisation_job_review_path(vacancy.id)
-        click_on I18n.t("buttons.submit_job_listing")
-
-        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_expires", application_deadline: format_time_to_datetime_at(vacancy.expires_at)))
       end
 
       scenario "a published vacancy cannot be republished" do
@@ -259,7 +251,7 @@ RSpec.describe "Creating a vacancy" do
 
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
-        expect(page).to have_content("The job listing has been completed")
+        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: vacancy.publish_on.to_formatted_s.strip!))
 
         visit organisation_job_publish_path(vacancy.id)
 

@@ -27,7 +27,7 @@ RSpec.describe "Publishers can preview a vacancy" do
     scenario "users can submit the listing" do
       click_on I18n.t("buttons.submit_job_listing")
       expect(page).to have_current_path(organisation_job_summary_path(vacancy.id))
-      expect(page).to have_content(I18n.t("publishers.vacancies.summary.success"))
+      expect(page).to have_content(I18n.t("publishers.vacancies.summary.heading.published"))
     end
 
     scenario "users can navigate back to manage jobs page" do

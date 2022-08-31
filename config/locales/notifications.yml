@@ -12,7 +12,7 @@ en:
       already_published: This job has already been published
       draft_saved_html: <span class="govuk-!-font-weight-bold">Draft saved</span> for %{job_title}
       feedback:
-        success: Thank you for your feedback
+        success_html: <h2 class="govuk-heading-m">Feedback sent</h2>
       listing_updated_html: >-
         <span class="govuk-!-font-weight-bold">Listing updated</span> for %{job_title}. Back to %{link_to}.
       listing_updated_link_text: manage jobs

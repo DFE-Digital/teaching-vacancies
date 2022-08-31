@@ -11,13 +11,13 @@ en:
       add_or_remove_schools: Add or remove schools
       awaiting_feedback:
         tab_heading: Jobs awaiting feedback
-        with_count_html: Awaiting feedback <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+        with_count: Awaiting feedback (%{count})
       draft:
         tab_heading: Draft jobs
-        with_count_html: Draft jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+        with_count: Draft jobs (%{count})
       expired:
         tab_heading: Closed jobs
-        with_count_html: Closed jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+        with_count: Closed jobs (%{count})
       how_to_accept_job_applications_guide:
         description_desktop: Find out the simplest way to get candidates to apply for your jobs.
         description_mobile: Get guidance around how to accept vacancies
@@ -25,10 +25,10 @@ en:
         title: How to accept job applications on Teaching Vacancies
       pending:
         tab_heading: Scheduled jobs
-        with_count_html: Scheduled jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+        with_count: Scheduled jobs (%{count})
       published:
         tab_heading: Active jobs
-        with_count_html: Active jobs <span class='govuk-body-l govuk-!-font-size-36'>(%{count})</span>
+        with_count: Active jobs (%{count})
 
     filters:
       job_filters: Job Filters

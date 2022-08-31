@@ -8,7 +8,7 @@
                         post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
                         class: "govuk-link--no-visited-state")
       span.govuk-caption-l = @organisation.name
-      h1.govuk-heading-l = t("jobs.dashboard.#{@selected_type}.with_count_html", count: @vacancies.count)
+      h1.govuk-heading-l = t("jobs.dashboard.#{@selected_type}.with_count", count: @vacancies.count)
     .govuk-grid-column-one-quarter
       = govuk_button_to t("buttons.create_job"), organisation_jobs_path, class: "float-right"
 
