@@ -88,7 +88,7 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
       let(:record) { VacancyPresenter.new(build(:vacancy)) }
 
       context "when the attribute is a boolean" do
-        let(:attribute) { :starts_asap }
+        let(:attribute) { :benefits }
 
         it "detects as boolean" do
           expect(row).to be_boolean
@@ -108,7 +108,7 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
       let(:record) { build(:vacancy) }
 
       context "when the attribute is a boolean" do
-        let(:attribute) { :starts_asap }
+        let(:attribute) { :benefits }
 
         it "detects as boolean" do
           expect(row).to be_boolean
@@ -127,10 +127,10 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
 
   describe "#build_text" do
     context "when the attribute is a boolean" do
-      let(:attribute) { :starts_asap }
+      let(:attribute) { :benefits }
 
       it "uses 'Yes' and 'No' as values" do
-        expect(row.build_text).to eq("No")
+        expect(row.build_text).to eq("Yes")
       end
     end
 

@@ -152,6 +152,13 @@ en:
     salary_types:
       invalid: Select salary details
   important_dates_errors: &important_dates_errors
+    earliest_start_date:
+      after: The date the job starts must be after the closing date
+      before: The date the job starts must before the latest start date
+      blank: Enter the earliest start date
+      invalid: Enter a date in the correct format
+      on_or_after: The date the job starts must be in the future
+      on_or_before: The date the job starts must be less than two years in the future
     expires_at:
       after: The closing date must be after the date the job will be listed
       blank: Enter a closing date
@@ -160,6 +167,14 @@ en:
       on_or_before: The closing date must be less than two years in the future
     expiry_time:
       inclusion: Choose the time the application is due from the options provided
+    latest_start_date:
+      after: The latest date the job starts must be after the earliest start date
+      blank: Enter the latest start date
+      invalid: Enter a date in the correct format
+      on_or_after: The date the job starts must be in the future
+      on_or_before: The date the job starts must be less than two years in the future
+    other_start_date_details:
+      blank: Enter the start date details
     publish_on_day:
       inclusion: Enter the date the job will be listed
     publish_on:
@@ -167,9 +182,11 @@ en:
       invalid: Enter a date in the correct format
       on_or_after: The date the job will be listed must be either today or in the future
       on_or_before: The date the job will be listed must be less than two years in the future
+    start_date_type:
+      inclusion: Select a start date
     starts_on:
       after: The date the job starts must be after the closing date
-      date_and_asap: Select either a start date or 'As soon as possible'
+      blank: Enter the start date
       invalid: Enter a date in the correct format
       on_or_after: The date the job starts must be in the future
       on_or_before: The date the job starts must be less than two years in the future

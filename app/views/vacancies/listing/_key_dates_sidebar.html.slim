@@ -7,9 +7,13 @@
     - timeline.heading(title: t("jobs.expired_listing.timeline_heading_html", date: format_date(vacancy.expires_at, :date_only)))
   - else
     - timeline.heading(title: days_to_apply(vacancy.expires_at.to_date))
-  - if vacancy.starts_on.present?
-    - timeline.item(key: t("jobs.starts_on"), value: format_date(vacancy.starts_on))
-  - elsif vacancy.starts_asap?
-    - timeline.item(key: t("jobs.starts_on"), value: t("jobs.starts_asap"))
+  - case vacancy.start_date_type
+    - when "specific_date"
+      - timeline.item(key: t("jobs.starts_on"), value: format_date(vacancy.starts_on))
+    - when "date_range"
+      - timeline.item(key: t("jobs.earliest_start_date"), value: format_date(vacancy.earliest_start_date))
+      - timeline.item(key: t("jobs.latest_start_date"), value: format_date(vacancy.latest_start_date))
+    - when "other"
+      - timeline.item(key: t("jobs.other_start_date_details"), value: vacancy.other_start_date_details)
   - timeline.item(key: t("jobs.application_deadline"), value: format_time_to_datetime_at(vacancy.expires_at))
   - timeline.item(key: t("jobs.date_listed"), value: format_date(vacancy.publish_on))

@@ -20,7 +20,13 @@ class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::B
   def form_attributes
     case action_name
     when "show"
-      { starts_on: vacancy.starts_on, starts_asap: vacancy.starts_asap }
+      {
+        start_date_type: vacancy.start_date_type,
+        starts_on: vacancy.starts_on,
+        earliest_start_date: vacancy.earliest_start_date,
+        latest_start_date: vacancy.latest_start_date,
+        other_start_date_details: vacancy.other_start_date_details,
+      }
     when "update"
       form_params
     end
@@ -28,7 +34,7 @@ class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::B
 
   def form_params
     params.require(:publishers_job_listing_extend_deadline_form)
-          .permit(:expires_at, :expiry_time, :starts_on, :starts_asap)
+          .permit(:expires_at, :expiry_time, :start_date_type, :starts_on, :earliest_start_date, :latest_start_date, :other_start_date_details)
           .merge(previous_deadline: vacancy.expires_at)
   end
 

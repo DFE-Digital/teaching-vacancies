@@ -4,7 +4,14 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseControl
   def new
     vacancy.status = :draft
     reset_date_fields if vacancy.publish_on&.past?
-    attributes = vacancy.slice(:job_title, :expires_at, :publish_on, :starts_on, :starts_asap)
+    attributes = vacancy.slice(:job_title,
+                               :expires_at,
+                               :publish_on,
+                               :start_date_type,
+                               :starts_on,
+                               :earliest_start_date,
+                               :latest_start_date,
+                               :other_start_date_details)
     @copy_form = Publishers::JobListing::CopyVacancyForm.new(attributes, vacancy)
   end
 
@@ -25,7 +32,16 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseControl
 
   def copy_form_params
     params.require(:publishers_job_listing_copy_vacancy_form)
-          .permit(:job_title, :publish_on, :publish_on_day, :expires_at, :expiry_time, :starts_on, :starts_asap)
+          .permit(:job_title,
+                  :publish_on,
+                  :publish_on_day,
+                  :expires_at,
+                  :expiry_time,
+                  :start_date_type,
+                  :starts_on,
+                  :earliest_start_date,
+                  :latest_start_date,
+                  :other_start_date_details)
   end
 
   def set_up_copy_form
@@ -36,8 +52,11 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseControl
 
   def reset_date_fields
     vacancy.expires_at = nil
-    vacancy.starts_asap = nil
+    vacancy.start_date_type = nil
     vacancy.starts_on = nil
+    vacancy.earliest_start_date = nil
+    vacancy.latest_start_date = nil
+    vacancy.other_start_date_details = nil
     vacancy.publish_on = nil
   end
 end

@@ -39,14 +39,18 @@ RSpec.describe "Extend deadline" do
 
   describe "PATCH #update" do
     let(:expires_at) { 6.months.from_now }
+    let(:starts_on) { vacancy.starts_on }
 
     let(:form_params) do
       {
         "expires_at(1i)" => expires_at.year.to_s,
         "expires_at(2i)" => expires_at.month.to_s,
         "expires_at(3i)" => expires_at.day.to_s,
+        start_date_type: vacancy.start_date_type,
+        "starts_on(1i)" => starts_on.year.to_s,
+        "starts_on(2i)" => starts_on.month.to_s,
+        "starts_on(3i)" => starts_on.day.to_s,
         expiry_time: "9:00",
-        starts_asap: "0",
       }
     end
 

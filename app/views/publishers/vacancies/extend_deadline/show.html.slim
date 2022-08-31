@@ -20,13 +20,26 @@
         ->(option) { option },
         ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
 
-      = f.govuk_radio_buttons_fieldset :starts_asap, legend: { text: t("helpers.legend.publishers_job_listing_important_dates_form.starts_on") }, form_group: { data: { controller: "form" } } do
-        = f.govuk_radio_button :starts_asap, "false", link_errors: true, label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_date_specific") } do
+      = f.govuk_radio_buttons_fieldset :start_date_type, legend: { text: t("helpers.legend.publishers_job_listing_important_dates_form.starts_on") }, form_group: { data: { controller: "form" } } do
+        = f.govuk_radio_button :start_date_type, :specific_date, link_errors: true, label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_date_specific") }, data: { action: "click->form#clearListener" } do
           = f.govuk_date_field :starts_on,
-            legend: { text: "Enter date" },
+            legend: { text: "Date" },
             hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
             data: { "form-target": "inputText" }
-        = f.govuk_radio_button :starts_asap, "true", label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_asap") }, data: { action: "click->form#clearListener" }
+        = f.govuk_radio_button :start_date_type, :date_range, label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_date_range") }, data: { action: "click->form#clearListener" } do
+          = f.govuk_date_field :earliest_start_date,
+            legend: { text: "Earliest start date" },
+            hint: -> { t("helpers.hint.date", date: 2.months.from_now.strftime("%d %m %Y")) },
+            data: { "form-target": "inputText" }
+          = f.govuk_date_field :latest_start_date,
+            legend: { text: "Latest start date" },
+            hint: -> { t("helpers.hint.date", date: 3.months.from_now.strftime("%d %m %Y")) },
+            data: { "form-target": "inputText" }
+        = f.govuk_radio_button :start_date_type, :other, label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_date_other") }, data: { action: "click->form#clearListener" } do
+          = f.govuk_text_field :other_start_date_details,
+            label: { text: "Details" },
+            hint: -> { "For example 'Easter term'" },
+            data: { "form-target": "inputText" }
 
       = f.govuk_submit t("buttons.extend_deadline"), classes: "govuk-!-margin-bottom-5"
 

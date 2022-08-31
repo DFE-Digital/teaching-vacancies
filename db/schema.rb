@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_12_123147) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_30_142129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -519,11 +520,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_12_123147) do
     t.string "external_advert_url"
     t.integer "ect_status"
     t.integer "job_role"
-    t.integer "phases", array: true
-    t.text "full_time_details"
-    t.text "part_time_details"
     t.string "pay_scale"
     t.boolean "benefits"
+    t.text "full_time_details"
+    t.text "part_time_details"
+    t.integer "phases", array: true
+    t.integer "start_date_type"
+    t.date "earliest_start_date"
+    t.date "latest_start_date"
+    t.text "other_start_date_details"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["publish_on"], name: "index_vacancies_on_publish_on"

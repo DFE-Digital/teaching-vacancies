@@ -44,6 +44,27 @@ namespace :db do # rubocop:disable Metrics/BlockLength
   task add_friendlyid_organisation_slugs: :environment do
     SetOrganisationSlugsJob.perform_now
   end
+
+  desc "Set other_start_date_details and start_date_type for vacancies"
+  task set_start_date_fields: :environment do
+    Vacancy.find_each do |v|
+      start_date_type =
+        if v.starts_asap
+          "other"
+        elsif v.starts_on.present?
+          "specific_date"
+        else
+          "undefined"
+        end
+
+      v.update_column :start_date_type, start_date_type
+
+      if v.starts_asap
+        other_start_date_details = "As soon as possible"
+        v.update_column :other_start_date_details, other_start_date_details
+      end
+    end
+  end
 end
 
 namespace :dsi do

@@ -217,9 +217,11 @@ en:
       today: Deadline is today
       tomorrow: Deadline is tomorrow
     publication_date: Date to be published
-    starts_asap: As soon as possible
     start_on: Date job starts
     starts_on: Expected start date
+    earliest_start_date: Earliest start date
+    latest_start_date: Latest start date
+    other_start_date_details: Start date details
     publish_on: Publish on
     expires_at: Closing date
     time_at: at

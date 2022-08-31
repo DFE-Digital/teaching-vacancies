@@ -84,6 +84,8 @@ module VacancyHelpers
 
     choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
 
+    choose I18n.t("helpers.legend.publishers_job_listing_important_dates_form.start_date_specific")
+
     fill_in "publishers_job_listing_important_dates_form[starts_on(3i)]", with: vacancy.starts_on.day
     fill_in "publishers_job_listing_important_dates_form[starts_on(2i)]", with: vacancy.starts_on.month
     fill_in "publishers_job_listing_important_dates_form[starts_on(1i)]", with: vacancy.starts_on.year
@@ -179,8 +181,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
     if vacancy.starts_on?
       expect(page).to have_content(vacancy.starts_on.to_formatted_s.strip)
-    elsif vacancy.starts_asap?
-      expect(page).to have_content(I18n.t("jobs.starts_asap"))
     end
 
     expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
@@ -215,8 +215,6 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
     if vacancy.starts_on?
       expect(page).to have_content(vacancy.starts_on.to_formatted_s.strip)
-    elsif vacancy.starts_asap?
-      expect(page).to have_content(I18n.t("jobs.starts_asap"))
     end
 
     expect(page.html).to include(vacancy.school_visits)

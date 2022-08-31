@@ -39,6 +39,7 @@ FactoryBot.define do
     publish_on { Date.current }
     salary { factory_sample(SALARIES) }
     school_visits { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+    start_date_type { "specific_date" }
     starts_on { 1.year.from_now.to_date }
     status { :published }
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
@@ -79,11 +80,6 @@ FactoryBot.define do
       job_advert { Faker::Lorem.characters(number: 50_001) }
       job_title { Faker::Lorem.characters(number: 150) }
       salary { Faker::Lorem.characters(number: 257) }
-    end
-
-    trait :starts_asap do
-      starts_on { nil }
-      starts_asap { true }
     end
 
     trait :draft do

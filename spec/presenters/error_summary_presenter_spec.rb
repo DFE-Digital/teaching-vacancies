@@ -5,7 +5,7 @@ RSpec.describe ErrorSummaryPresenter do
   let(:errors) do
     [
       ActiveModel::Error.new(record, :job_title),
-      ActiveModel::Error.new(record, :starts_asap),
+      ActiveModel::Error.new(record, :ect_status),
     ]
   end
 
@@ -17,7 +17,7 @@ RSpec.describe ErrorSummaryPresenter do
         expect(presenter.formatted_error_messages).to eq(
           [
             [:job_title, "is invalid", "#job_title"],
-            [:starts_asap, "is invalid", "#starts_asap"],
+            [:ect_status, "is invalid", "#ect_status"],
           ],
         )
       end
@@ -34,7 +34,7 @@ RSpec.describe ErrorSummaryPresenter do
         expect(presenter.formatted_error_messages).to eq(
           [
             [:job_title, "is invalid", "/custom-error/job_title"],
-            [:starts_asap, "is invalid", "/custom-error/starts_asap"],
+            [:ect_status, "is invalid", "/custom-error/ect_status"],
           ],
         )
       end

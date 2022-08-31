@@ -117,20 +117,22 @@ RSpec.describe VacanciesHelper do
     end
 
     context "when the new value is a date" do
-      let(:attribute) { "expires_at" }
-      let(:new_value) { "2022-08-11T12:00:00.000+01:00" }
-
-      it "returns the correct translation with the date formatted" do
-        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: format_date(new_value.to_date)))
-      end
-    end
-
-    context "when the expected start date has been changed to 'As soon as possible'" do
       let(:attribute) { "starts_on" }
-      let(:new_value) { nil }
 
-      it "returns the correct translation" do
-        expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: t("jobs.starts_asap")))
+      context "when the new value is nil" do
+        let(:new_value) { nil }
+
+        it "returns the correct translation" do
+          expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}.deleted"))
+        end
+      end
+
+      context "when the new value is not nil" do
+        let(:new_value) { "2022-08-11T12:00:00.000+01:00" }
+
+        it "returns the correct translation with the date formatted" do
+          expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}.changed", new_value: format_date(new_value.to_date)))
+        end
       end
     end
 
@@ -141,6 +143,26 @@ RSpec.describe VacanciesHelper do
       it "returns the correct translation" do
         expect(subject).to eq(I18n.t("publishers.activity_log.school_visits", organisation_type: organisation_type.capitalize,
                                                                               new_value: new_value))
+      end
+    end
+
+    context "when the attribute is 'other_start_date_details'" do
+      let(:attribute) { "other_start_date_details" }
+
+      context "when the new value is nil" do
+        let(:new_value) { nil }
+
+        it "returns the correct translation" do
+          expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}.deleted"))
+        end
+      end
+
+      context "when the new value is not nil" do
+        let(:new_value) { "Example start date" }
+
+        it "returns the correct translation" do
+          expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}.changed", new_value: new_value))
+        end
       end
     end
 
