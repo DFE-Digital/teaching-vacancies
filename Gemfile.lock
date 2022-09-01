@@ -94,8 +94,8 @@ GEM
     ast (2.4.2)
     attr_required (1.0.1)
     aws-eventstream (1.2.0)
-    aws-partitions (1.620.0)
-    aws-sdk-core (3.132.0)
+    aws-partitions (1.624.0)
+    aws-sdk-core (3.138.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.525.0)
       aws-sigv4 (~> 1.1)
@@ -182,7 +182,7 @@ GEM
       railties (>= 5.0.0)
     faker (2.22.0)
       i18n (>= 1.8.11, < 2)
-    faraday (1.10.1)
+    faraday (1.10.2)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -212,7 +212,7 @@ GEM
     friendly_id (5.4.2)
       activerecord (>= 4.0.0)
     front_matter_parser (1.0.1)
-    fugit (1.5.3)
+    fugit (1.6.0)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     geocoder (1.8.0)
@@ -298,7 +298,7 @@ GEM
       aes_key_wrap
       bindata
       httpclient
-    jwt (2.4.1)
+    jwt (2.5.0)
     kramdown (2.4.0)
       rexml
     launchy (2.5.0)
@@ -412,7 +412,7 @@ GEM
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     public_suffix (5.0.0)
-    puma (5.6.4)
+    puma (5.6.5)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.6.0)
@@ -472,12 +472,12 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
-    rb-fsevent (0.11.1)
+    rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    recaptcha (5.10.0)
+    recaptcha (5.12.1)
       json
-    redis (4.7.1)
+    redis (4.8.0)
     regexp_parser (2.5.0)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -513,7 +513,7 @@ GEM
       rspec-mocks (~> 3.11)
       rspec-support (~> 3.11)
     rspec-support (3.11.0)
-    rubocop (1.35.1)
+    rubocop (1.36.0)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.1.2.1)
@@ -557,10 +557,10 @@ GEM
       sidekiq (>= 3.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
-    sidekiq (6.5.4)
-      connection_pool (>= 2.2.2)
+    sidekiq (6.5.6)
+      connection_pool (>= 2.2.5)
       rack (~> 2.0)
-      redis (>= 4.5.0)
+      redis (>= 4.5.0, < 5)
     sidekiq-cron (1.7.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
@@ -698,7 +698,7 @@ DEPENDENCIES
   launchy (~> 2.5)
   listen
   lockbox
-  mail-notify
+  mail-notify (< 1.0.5)
   mimemagic
   nokogiri
   noticed
