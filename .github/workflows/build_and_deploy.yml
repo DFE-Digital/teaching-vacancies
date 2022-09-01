@@ -323,7 +323,7 @@ jobs:
       - name: Terraform pin version
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.0.8
+          terraform_version: 1.2.8
 
       - name: Deploy monitoring
         run: |

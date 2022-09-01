@@ -37,9 +37,9 @@ runs:
         role-skip-session-tagging: true
 
     - name: Pin Terraform version
-      uses: hashicorp/setup-terraform@v1
+      uses: hashicorp/setup-terraform@v2
       with:
-        terraform_version: 1.0.8
+        terraform_version: 1.2.8
 
     - name: Set environment variables for review
       if: startsWith( inputs.environment, 'review')
