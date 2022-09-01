@@ -51,5 +51,5 @@ runs:
 
     - name: Install node.js dependencies
       if: ${{ inputs.skip-node == 'false' }}
-      run: yarn install
+      run: CI=true yarn install
       shell: bash
