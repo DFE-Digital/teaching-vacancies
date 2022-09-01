@@ -16,8 +16,7 @@ provider "cloudfoundry" {
 }
 
 provider "statuscake" {
-  username = local.infra_secrets.statuscake_username
-  apikey   = local.infra_secrets.statuscake_apikey
+  api_token = local.infra_secrets.statuscake_apikey
 }
 
 /*
