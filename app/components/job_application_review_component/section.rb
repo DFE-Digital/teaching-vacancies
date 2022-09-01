@@ -32,7 +32,7 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   end
 
   def error_path(**params)
-    jobseekers_job_application_build_path(@job_application, @name, **params)
+    jobseekers_job_application_build_path(@job_application, @name, **params) if @job_application.persisted?
   end
 
   def error_link_text

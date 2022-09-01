@@ -1,28 +1,32 @@
 - r.section :references
   - if job_application.references.none?
-      p.govuk-body = t(".references.none")
+    - if jobseeker_signed_in?
+      p.govuk-body = t("jobseekers.job_applications.review.employment_history.none")
+    - elsif publisher_signed_in?
+      p.govuk-body = t("jobseekers.job_applications.show.employment_history.none")
   - else
-    = govuk_accordion do |accordion|
-      - job_application.references.order(:created_at).each do |reference|
-        - accordion.section heading_text: reference.name do
-          = govuk_summary_list do |summary_list|
-            - summary_list.row do |row|
-              - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.job_title")
-              - row.value text: reference.job_title
+    - job_application.references.sort_by { |r| r[:created_at] }.each do |reference|
+      = govuk_summary_list html_attributes: { id: reference.name } do |summary_list|
+        - summary_list.row do |row|
+          - row.key text: reference.name
 
-            - summary_list.row do |row|
-              - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.organisation")
-              - row.value text: reference.organisation
+        - summary_list.row do |row|
+          - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.job_title")
+          - row.value text: reference.job_title
 
-            - summary_list.row do |row|
-              - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.relationship")
-              - row.value text: reference.relationship
+        - summary_list.row do |row|
+          - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.organisation")
+          - row.value text: reference.organisation
 
-            - summary_list.row do |row|
-              - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.email")
-              - row.value text: reference.email
+        - summary_list.row do |row|
+          - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.relationship")
+          - row.value text: reference.relationship
 
-            - if reference.phone_number?
-              - summary_list.row do |row|
-                - row.key text: t("helpers.legend.jobseekers_job_application_details_reference_form.phone_number")
-                - row.value text: reference.phone_number
+        - summary_list.row do |row|
+          - row.key text: t("helpers.label.jobseekers_job_application_details_reference_form.email")
+          - row.value text: reference.email
+
+        - if reference.phone_number?
+          - summary_list.row do |row|
+            - row.key text: t("helpers.legend.jobseekers_job_application_details_reference_form.phone_number")
+            - row.value text: reference.phone_number

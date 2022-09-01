@@ -183,7 +183,7 @@ en:
 
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications_options:
-          "true": Receive and manage applications through Teaching Vacancies
+          "false": You’ll need to provide additional details about how to apply
       publishers_job_listing_applying_for_the_job_details_form:
         application_form_html: >-
           <p class="govuk-body">The file must be:</p>
@@ -342,7 +342,7 @@ en:
       jobseekers_job_application_details_qualifications_shared_labels: &jobseekers_job_application_details_qualifications_shared_labels
         finished_studying_details: Please give details
         finished_studying_options:
-          false: "No"
+          false: "Not finished yet"
           true: "Yes"
         grade: Grade
         institution: School, college, or other organisation
@@ -500,8 +500,8 @@ en:
 
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications_options:
-          "false": Use another application process
-          "true": Use the Teaching Vacancies application form
+          "false": "No"
+          "true": "Yes"
       publishers_job_listing_applying_for_the_job_details_form:
         application_form: Upload an application form (optional)
         application_link_html: Link to online application (optional<span class='govuk-visually-hidden'> field</span>)</span>
@@ -717,7 +717,7 @@ en:
         user_participation_response: Would you like to participate in our research?
 
       publishers_job_listing_applying_for_the_job_form:
-        enable_job_applications: How would you like candidates to apply?
+        enable_job_applications: Do you want to use the application form?
       publishers_job_listing_copy_vacancy_form:
         expires_at: Closing date
         expiry_time: Time application is due
