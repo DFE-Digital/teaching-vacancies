@@ -39,7 +39,7 @@ gem "ipaddr"
 gem "jbuilder"
 gem "kramdown"
 gem "lockbox"
-gem "mail-notify", "< 1.0.5" # TODO: Pinned as 1.0.5 causing issue https://github.com/dxw/mail-notify/issues/61
+gem "mail-notify", "< 1.0.6" # TODO: Pinned as 1.0.5 causing issue https://github.com/dxw/mail-notify/issues/61
 gem "mimemagic"
 gem "nokogiri"
 gem "noticed"
