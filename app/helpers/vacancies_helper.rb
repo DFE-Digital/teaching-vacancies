@@ -1,6 +1,7 @@
 module VacanciesHelper
   include VacanciesOptionsHelper
   include AddressHelper
+  include LinksHelper
 
   WORD_EXCEPTIONS = %w[and the of upon].freeze
 
@@ -183,6 +184,53 @@ module VacanciesHelper
       (tag.div { t("jobs.full_time_details", details: vacancy.full_time_details) } if vacancy.full_time_details?),
       (tag.div { t("jobs.part_time_details", details: vacancy.part_time_details) } if vacancy.part_time_details?),
     ]
+  end
+
+  def vacancy_review_heading_inset_text(vacancy, status) # rubocop:disable Metrics/MethodLength
+    case status
+    when "published"
+      t("publishers.vacancies.show.heading_component.inset_text.published", publish_date: format_date(vacancy.publish_on),
+                                                                            expiry_time: format_time_to_datetime_at(vacancy.expires_at))
+    when "complete_draft"
+      if vacancy.publish_on.future?
+        t("publishers.vacancies.show.heading_component.inset_text.scheduled_complete_draft")
+      else
+        t("publishers.vacancies.show.heading_component.inset_text.complete_draft")
+      end
+    when "incomplete_draft"
+      t("publishers.vacancies.show.heading_component.inset_text.incomplete_draft")
+    when "closed"
+      t("publishers.vacancies.show.heading_component.inset_text.closed", publish_date: format_date(vacancy.publish_on),
+                                                                         expiry_time: format_time_to_datetime_at(vacancy.expires_at))
+    when "scheduled"
+      t("publishers.vacancies.show.heading_component.inset_text.scheduled", publish_date: format_date(vacancy.publish_on),
+                                                                            expiry_time: format_time_to_datetime_at(vacancy.expires_at))
+    end
+  end
+
+  def vacancy_review_heading_action_link(vacancy, action) # rubocop:disable Metrics/AbcSize,  Metrics/MethodLength
+    case action
+    when "view"
+      open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.view"), job_path(vacancy.id))
+    when "copy"
+      govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), new_organisation_job_copy_path(vacancy.id))
+    when "close_early"
+      govuk_link_to(t("publishers.vacancies.show.heading_component.action.close_early"), organisation_job_end_listing_path(vacancy.id))
+    when "extend_closing_date"
+      govuk_link_to(t("publishers.vacancies.show.heading_component.action.extend_closing_date"), organisation_job_extend_deadline_path(vacancy.id))
+    when "publish"
+      govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+    when "preview"
+      open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.preview"), organisation_job_preview_path(vacancy.id))
+    when "delete"
+      govuk_link_to(t("publishers.vacancies.show.heading_component.action.delete"), organisation_job_confirm_destroy_path(vacancy.id))
+    when "complete"
+      govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step), class: "govuk-!-margin-bottom-0")
+    when "convert_to_draft"
+      govuk_link_to(t("publishers.vacancies.show.heading_component.action.convert_to_draft"), organisation_job_convert_to_draft_path(vacancy.id))
+    when "schedule_complete_draft"
+      govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+    end
   end
 
   private

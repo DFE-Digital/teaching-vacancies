@@ -1,0 +1,12 @@
+h2 class="govuk-heading-m govuk-!-margin-bottom-4"
+  = t("publishers.vacancies.build.job_role.step_title")
+
+= govuk_summary_list(html_attributes: { id: "job_role" }) do |summary_list|
+  - summary_list.row do |row|
+    - row.key
+      = t("jobs.job_role")
+    - row.value
+      = vacancy.job_role.humanize
+    - row.action text: t("buttons.change"),
+                 href: organisation_job_build_path(vacancy.id, :job_role),
+                 visually_hidden_text: t("publishers.vacancies.steps.job_role")

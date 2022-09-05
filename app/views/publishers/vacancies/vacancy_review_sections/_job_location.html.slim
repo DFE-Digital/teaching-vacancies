@@ -1,0 +1,19 @@
+h2 class="govuk-heading-m govuk-!-margin-bottom-4"
+  = t("publishers.vacancies.build.job_location.step_title")
+
+= govuk_summary_list(html_attributes: { id: "job_location" }) do |summary_list|
+  - summary_list.row do |row|
+    - row.key
+      = vacancy_job_location_heading(vacancy)
+    - row.value
+      ul.govuk-list
+        - vacancy.organisations.each do |organisation|
+          li class="govuk-!-font-weight-bold"
+            - if organisation.school?
+              => organisation.name
+            - else
+              => t("organisations.job_location_heading.central_office")
+            span class="govuk-!-font-weight-regular" = full_address(organisation)
+    - row.action text: t("buttons.change"),
+                 href: organisation_job_build_path(vacancy.id, :job_location),
+                 visually_hidden_text: t("publishers.vacancies.steps.job_location")

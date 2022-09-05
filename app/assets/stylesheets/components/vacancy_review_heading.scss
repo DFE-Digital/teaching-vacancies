@@ -1,0 +1,14 @@
+@import 'base';
+
+.vacancy-review-heading-component {
+  &__action_items {
+    align-items: center;
+    display: flex;
+    list-style: none;
+  }
+
+  &__title {
+    align-items: center;
+    display: flex;
+  }
+}

@@ -21,7 +21,7 @@ en:
     cancel_and_return_to_jobs: Cancel and return to manage jobs
     cancel_copy: Cancel job listing copy
     cancel_end_listing: Cancel ending job listing
-    cancel_extend_deadline: Cancel deadline extension
+    cancel_extending_closing_date: Cancel extending closing date
     change: Change
     close_account: Close account
     complete_section: Complete section
@@ -47,12 +47,12 @@ en:
     edit: Edit
     end_listing: End job listing
     end_listing_early: End job listing early
-    extend_deadline: Extend deadline
+    extend_closing_date: Extend deadline
     find: Find
     go_to_teaching_vacancies: Go to Teaching Vacancies
     hide_filters: Hide filters
+    job_listing: Job listing
     make_changes: Make changes
-    manage_listing: Manage job listing
     preview_job_listing: Preview job listing
     reject: Reject
     reminder_continue: Continue to create a job
@@ -60,6 +60,7 @@ en:
     resend_email: Resend request
     save: Save
     save_and_continue: Save and continue
+    save_and_finish_later: Save and finish later
     save_changes: Save changes
     save_employment: Save role
     save_qualification:

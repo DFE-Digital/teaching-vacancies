@@ -201,6 +201,7 @@ Rails.application.routes.draw do
       resource :application_forms, only: %i[create destroy], controller: "publishers/vacancies/application_forms"
 
       get :confirm_destroy
+      get :convert_to_draft
       get :preview
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"

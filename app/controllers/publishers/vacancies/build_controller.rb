@@ -23,10 +23,14 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def update
     if form.valid?
       update_vacancy
-      if session[:current_step] == :review
-        update_listing
+      if all_steps_valid? || save_and_finish_later?
+        if vacancy.published?
+          redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
+        else
+          redirect_to organisation_job_path(vacancy.id)
+        end
       else
-        render_wizard vacancy
+        redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
       end
     else
       render_wizard
@@ -85,20 +89,12 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     strip_empty_checkboxes(STRIP_CHECKBOXES[step], "publishers_job_listing_#{step}_form".to_sym)
   end
 
-  def update_listing
-    vacancy.save
-
-    if step_process.last_of_group?
-      redirect_updated_job_with_message
-    else
-      redirect_to wizard_path(step_process.next_step)
-    end
-  end
-
   def update_vacancy
     vacancy.assign_attributes(form.params_to_save)
     vacancy.refresh_slug
     update_google_index(vacancy) if vacancy.listed?
+
+    vacancy.save
   end
 
   def skip_step_if_missing

@@ -1,0 +1,14 @@
+.vacancy-review-heading-component__title class="govuk-!-margin-bottom-8"
+  h1.govuk-heading-l class="govuk-!-margin-bottom-0"
+    = @vacancy.job_title
+  span class="govuk-!-margin-left-2"
+    - if status == "complete_draft" || status == "incomplete_draft"
+      = govuk_tag(text: t("publishers.vacancies.show.heading_component.status_tag.draft"), colour: colour)
+    - else
+      = govuk_tag(text: t("publishers.vacancies.show.heading_component.status_tag.#{status}"), colour: colour) unless status == "draft"
+= govuk_inset_text do
+  = vacancy_review_heading_inset_text(vacancy, status)
+  ul class="vacancy-review-heading-component__action_items govuk-!-margin-top-4 govuk-!-margin-bottom-0 govuk-!-padding-left-0"
+    - actions.each do |action|
+      li class="govuk-!-margin-right-2"
+        = vacancy_review_heading_action_link(vacancy, action)

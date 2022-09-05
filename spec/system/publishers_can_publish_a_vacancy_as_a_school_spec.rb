@@ -50,76 +50,78 @@ RSpec.describe "Creating a vacancy" do
 
       fill_in_education_phases_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
+
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_details))
 
       fill_in_job_details_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :working_patterns))
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :working_patterns))
 
       fill_in_working_patterns_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
       fill_in_pay_package_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
 
       fill_in_important_dates_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
       fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job_details))
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
       expect(current_path).to eq(organisation_job_application_forms_path(created_vacancy.id))
 
       fill_in_applying_for_the_job_details_form_fields(vacancy, local_authority_vacancy: false)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_documents_path(created_vacancy.id))
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_summary))
 
       fill_in_job_summary_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
-      expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(current_path).to eq(organisation_job_path(created_vacancy.id))
+      has_complete_draft_vacancy_review_heading?(vacancy)
       verify_all_vacancy_details(created_vacancy)
 
-      click_on I18n.t("buttons.submit_job_listing")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
       expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
     end
 
-    scenario "redirects to the vacancy review page when submitted successfully" do
+    scenario "saving and finishing later" do
       visit organisation_path
       click_on I18n.t("buttons.create_job")
-      click_on "Continue"
 
       fill_in_job_role_form_fields(vacancy)
       click_on I18n.t("buttons.continue")
@@ -131,39 +133,45 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.continue")
 
       fill_in_job_details_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
       fill_in_working_patterns_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_finish_later")
+
+      expect(current_path).to eq(organisation_job_path(created_vacancy.id))
+
+      has_incomplete_draft_vacancy_review_heading?(vacancy)
+
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
+
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
       fill_in_pay_package_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
       fill_in_important_dates_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
       fill_in_applying_for_the_job_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
       fill_in_applying_for_the_job_details_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
       fill_in_job_summary_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
-      expect(page).to have_content(I18n.t("jobs.current_step", step: 9, total: 9))
-      within("h2.govuk-heading-l") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
-      end
+      has_complete_draft_vacancy_review_heading?(vacancy)
       verify_all_vacancy_details(created_vacancy)
     end
 
     describe "#publish" do
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
-        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+
+        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.today, phases: %w[secondary], key_stages: %w[ks3])
         vacancy.assign_attributes expires_at: yesterday_date
         vacancy.save(validate: false)
 
@@ -179,7 +187,7 @@ RSpec.describe "Creating a vacancy" do
         expect(find_field("publishers_job_listing_important_dates_form[expires_at(2i)]").value).to eq(yesterday_date.month.to_s)
         expect(find_field("publishers_job_listing_important_dates_form[expires_at(1i)]").value).to eq(yesterday_date.year.to_s)
 
-        click_on I18n.t("buttons.update_job")
+        click_on I18n.t("buttons.save_and_continue")
 
         within(".govuk-error-summary") do
           expect(page).to have_content("There is a problem")
@@ -197,51 +205,19 @@ RSpec.describe "Creating a vacancy" do
         fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: expiry_date.year
         choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
 
-        click_on I18n.t("buttons.update_job")
+        click_on I18n.t("buttons.save_and_continue")
 
-        click_on I18n.t("buttons.submit_job_listing")
+        click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
         expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
-      end
-
-      scenario "only shows errors for a field once" do
-        visit organisation_path
-        click_on "Create a job listing"
-        click_on "Continue"
-
-        choose "Teacher"
-        click_on "Continue"
-
-        fill_in_ect_status_form_fields(vacancy)
-        click_on "Continue"
-
-        fill_in_education_phases_form_fields(vacancy)
-        click_on "Continue"
-
-        fill_in "Job title", with: "test vacancy"
-        choose "Permanent"
-        check "Key stage 3"
-        click_on "Continue"
-
-        click_on "Cancel and return to manage jobs"
-        click_on "test vacancy"
-        click_on "Confirm and submit job"
-
-        # Top level errors
-        errors = page.all(".govuk-error-summary__list a").map(&:text)
-        expect(errors).to match_array(errors.uniq)
-
-        # Inline errors
-        errors = page.all(".govuk-summary-list__row a").map(&:text)
-        expect(errors).to match_array(errors.uniq)
       end
 
       scenario "can be published at a later date" do
         vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
-        visit organisation_job_review_path(vacancy.id)
-        click_on "Confirm and submit job"
+        visit organisation_job_path(vacancy.id)
+        click_on I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft")
 
-        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: vacancy.publish_on.to_formatted_s.strip))
+        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: format_date(vacancy.publish_on)))
         visit organisation_job_path(vacancy.id)
         expect(page).to have_content(format_date(vacancy.publish_on).to_s)
       end
@@ -249,21 +225,17 @@ RSpec.describe "Creating a vacancy" do
       scenario "a published vacancy cannot be republished" do
         vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
-        visit organisation_job_review_path(vacancy.id)
-        click_on "Confirm and submit job"
-        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: vacancy.publish_on.to_formatted_s.strip))
+        visit organisation_job_path(vacancy.id)
 
-        visit organisation_job_publish_path(vacancy.id)
-
-        expect(page).to have_content(I18n.t("messages.jobs.already_published"))
+        expect(page).to_not have_content(I18n.t("publishers.vacancies.show.heading_component.action.publish"))
       end
 
       scenario "a published vacancy cannot be edited" do
         vacancy = create(:vacancy, :published, organisations: [school])
 
-        visit organisation_job_review_path(vacancy.id)
+        visit organisation_job_path(vacancy.id)
         expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-        expect(page).to have_content(I18n.t("messages.jobs.already_published"))
+        has_published_vacancy_review_heading?(vacancy)
       end
 
       context "adds a job to update the Google index in the queue" do
@@ -273,8 +245,8 @@ RSpec.describe "Creating a vacancy" do
           expect_any_instance_of(Publishers::Vacancies::BaseController)
             .to receive(:update_google_index).with(vacancy)
 
-          visit organisation_job_review_path(vacancy.id)
-          click_on I18n.t("buttons.submit_job_listing")
+          visit organisation_job_path(vacancy.id)
+          click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
         end
       end
     end

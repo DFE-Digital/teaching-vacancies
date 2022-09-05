@@ -1,9 +1,0 @@
-.govuk-button-group
-  - if vacancy.published?
-    = govuk_button_link_to t("buttons.copy_listing"), new_organisation_job_copy_path(vacancy.id), class: "govuk-button--secondary"
-    - unless vacancy.pending?
-      = govuk_button_link_to t("buttons.extend_deadline"), organisation_job_extend_deadline_path(vacancy.id), class: "govuk-button--secondary"
-    - unless vacancy.expired? || vacancy.pending?
-      = govuk_button_link_to t("buttons.end_listing_early"), organisation_job_end_listing_path(vacancy.id), class: "govuk-button--secondary"
-  - if vacancy.draft? || vacancy.pending?
-    = govuk_button_link_to vacancy.draft? ? t("buttons.delete_draft") : t("buttons.delete"), organisation_job_confirm_destroy_path(vacancy.id), class: "govuk-button--warning"

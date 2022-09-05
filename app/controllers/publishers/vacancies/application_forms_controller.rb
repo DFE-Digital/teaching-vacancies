@@ -53,12 +53,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     if form.valid?
       vacancy.update(form.params_to_save)
       update_google_index(vacancy) if vacancy.listed?
-
-      if session[:current_step] == :review
-        redirect_updated_job_with_message
-      else
-        redirect_to organisation_job_build_path(vacancy.id, :documents)
-      end
+      redirect_to_next_step
     else
       render "publishers/vacancies/build/applying_for_the_job_details"
     end

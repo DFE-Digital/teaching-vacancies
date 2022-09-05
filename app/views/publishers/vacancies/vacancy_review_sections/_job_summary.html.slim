@@ -1,0 +1,21 @@
+h2 class="govuk-heading-m govuk-!-margin-bottom-4"
+  = t("publishers.vacancies.build.job_summary.step_title")
+
+= govuk_summary_list(html_attributes: { id: "job_summary" }) do |summary_list|
+  - summary_list.row do |row|
+    - row.key
+      = t("jobs.job_advert")
+    - row.value
+      = vacancy.job_advert
+    - row.action text: t("buttons.change"),
+                 href: organisation_job_build_path(vacancy.id, :job_summary),
+                 visually_hidden_text: t("jobs.job_advert")
+
+  - summary_list.row do |row|
+    - row.key
+      = t("jobs.about_school", school: vacancy_about_school_label_organisation(vacancy))
+    - row.value
+      = vacancy.about_school
+    - row.action text: t("buttons.change"),
+                 href: organisation_job_build_path(vacancy.id, :job_summary),
+                 visually_hidden_text: t("jobs.about_school", school: vacancy_about_school_label_organisation(vacancy))

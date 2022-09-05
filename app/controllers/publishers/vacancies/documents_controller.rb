@@ -3,7 +3,7 @@ require "google/apis/drive_v3"
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
   helper_method :form
 
-  before_action :redirect_to_next_step, only: %i[create]
+  before_action :complete_step, unless: :document_added?, only: %i[create]
 
   def create
     form.valid_documents.each do |document|
@@ -38,15 +38,14 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     (params[:publishers_job_listing_documents_form] || params).permit(documents: [])
   end
 
-  def redirect_to_next_step
-    return if documents_form_params[:documents]
-
+  def complete_step
     vacancy.update(completed_steps: completed_steps)
-    if session[:current_step] == :review
-      redirect_updated_job_with_message
-    else
-      redirect_to organisation_job_build_path(vacancy.id, :job_summary)
-    end
+
+    redirect_to_next_step
+  end
+
+  def document_added?
+    documents_form_params[:documents].present?
   end
 
   def send_event(event_type, name, size, content_type)

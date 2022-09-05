@@ -179,4 +179,162 @@ RSpec.describe VacanciesHelper do
       end
     end
   end
+
+  describe "#vacancy_review_heading_inset_text" do
+    subject { helper.vacancy_review_heading_inset_text(vacancy, status) }
+
+    context "when the job has been published" do
+      let(:vacancy) { create(:vacancy, :published) }
+      let(:status) { "published" }
+
+      it "returns the correct text" do
+        expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.published", publish_date: format_date(vacancy.publish_on),
+                                                                                                    expiry_time: format_time_to_datetime_at(vacancy.expires_at)))
+      end
+    end
+
+    context "when the job is a draft" do
+      context "when the draft has been completed" do
+        let(:status) { "complete_draft" }
+        let(:vacancy) { create(:vacancy, :draft) }
+
+        it "returns the correct text" do
+          expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.complete_draft"))
+        end
+
+        context "when the publish on date is in the future" do
+          let(:vacancy) { create(:vacancy, :draft, publish_on: Date.tomorrow) }
+
+          it "returns the correct text" do
+            expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.scheduled_complete_draft"))
+          end
+        end
+      end
+
+      context "when the draft is incomplete" do
+        let(:vacancy) { create(:vacancy, :published, job_advert: nil) }
+        let(:status) { "incomplete_draft" }
+
+        it "returns the correct text" do
+          expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.incomplete_draft"))
+        end
+      end
+
+      context "when the job has closed" do
+        let(:vacancy) { create(:vacancy, :expired) }
+        let(:status) { "closed" }
+
+        it "returns the correct text" do
+          expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.closed", publish_date: format_date(vacancy.publish_on),
+                                                                                                   expiry_time: format_time_to_datetime_at(vacancy.expires_at)))
+        end
+      end
+
+      context "when the job has been scheduled" do
+        let(:vacancy) { create(:vacancy, :future_publish) }
+        let(:status) { "scheduled" }
+
+        it "returns the correct text" do
+          expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.scheduled", publish_date: format_date(vacancy.publish_on),
+                                                                                                      expiry_time: format_time_to_datetime_at(vacancy.expires_at)))
+        end
+      end
+    end
+  end
+
+  describe "#vacancy_review_heading_action_link" do
+    subject { helper.vacancy_review_heading_action_link(vacancy, action) }
+
+    let(:vacancy) { create(:vacancy) }
+
+    context "when the action is view" do
+      let(:action) { "view" }
+      let(:link) { helper.open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.view"), job_path(vacancy.id)) }
+
+      it "returns the correct link" do
+        expect(subject).to eq(link)
+      end
+    end
+
+    context "when the action is copy" do
+      let(:action) { "copy" }
+      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), new_organisation_job_copy_path(vacancy.id)) }
+
+      it "returns the correct link" do
+        expect(subject).to eq(link)
+      end
+    end
+
+    context "when the action is close_early" do
+      let(:action) { "close_early" }
+      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.close_early"), organisation_job_end_listing_path(vacancy.id)) }
+
+      it "returns the correct link" do
+        expect(subject).to eq(link)
+      end
+    end
+
+    context "when the action is extend_closing_date" do
+      let(:action) { "extend_closing_date" }
+      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.extend_closing_date"), organisation_job_extend_deadline_path(vacancy.id)) }
+
+      it "returns the correct link" do
+        expect(subject).to eq(link)
+      end
+    end
+
+    context "when the action is publish" do
+      let(:action) { "publish" }
+      let(:link) { helper.govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
+
+      it "returns the correct link" do
+        expect(subject).to eq(link)
+      end
+    end
+
+    context "when the action is preview" do
+      let(:action) { "preview" }
+      let(:link) { helper.open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.preview"), organisation_job_preview_path(vacancy.id)) }
+
+      it "returns the correct link" do
+        expect(subject).to eq(link)
+      end
+    end
+
+    context "when the action is delete" do
+      let(:action) { "delete" }
+      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.delete"), organisation_job_confirm_destroy_path(vacancy.id)) }
+
+      it "returns the correct link" do
+        expect(subject).to eq(link)
+      end
+    end
+
+    context "when the action is complete" do
+      let(:action) { "complete" }
+      let(:link) { helper.govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step), class: "govuk-!-margin-bottom-0") }
+
+      before do
+        # Helper uses next_invalid_step which is a helper method defined in Publishers::Vacancies::BaseController. This helper
+        # is not available in the context of the test, so I did the below. TODO: Other solutions involve moving these helpers out into
+        # a separate module and including that in the controller, but this was the quickest fix for now.
+        VacanciesHelper.instance_eval do
+          define_method(:next_invalid_step) { :working_patterns }
+        end
+      end
+
+      it "returns the correct link" do
+        expect(subject).to eq(link)
+      end
+    end
+
+    context "when the action is convert_to_draft" do
+      let(:action) { "convert_to_draft" }
+      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.convert_to_draft"), organisation_job_convert_to_draft_path(vacancy.id)) }
+
+      it "returns the correct link" do
+        expect(subject).to eq(link)
+      end
+    end
+  end
 end

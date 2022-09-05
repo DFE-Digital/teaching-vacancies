@@ -12,7 +12,7 @@ RSpec.describe "Publishers can end a job listing early" do
 
   it "submits form, renders error, then ends listing early" do
     click_on vacancy.job_title
-    click_on I18n.t("buttons.end_listing_early")
+    click_on I18n.t("publishers.vacancies.show.heading_component.action.close_early")
     click_on I18n.t("buttons.end_listing")
 
     expect(page).to have_content("There is a problem")
@@ -34,7 +34,7 @@ RSpec.describe "Publishers can end a job listing early" do
 
     it "sends an email to jobseekers with draft applications" do
       click_on vacancy.job_title
-      click_on I18n.t("buttons.end_listing_early")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.close_early")
       choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.hired_status_options.hired_other_free")
       choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.listed_elsewhere_options.listed_free")
 

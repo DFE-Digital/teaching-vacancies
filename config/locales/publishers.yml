@@ -298,12 +298,37 @@ en:
           view_more_applications: View more applications
       live:
         notice: You can only view active jobs
-      review:
-        heading: Review the job listing
-        steps: Create a job listing steps
       show:
         view_live_listing_link: View this listing
         view_live_listing_title: View the live job listing
+        draft:
+          caption: Create job listing
+          heading: Check details and schedule job listing
+        heading_component:
+          action:
+            close_early: Close early
+            complete: Complete job listing
+            convert_to_draft: Convert to draft
+            copy: Copy
+            delete: Delete
+            extend_closing_date: Extend closing date
+            preview: Preview
+            publish: Publish job listing
+            scheduled_complete_draft: Schedule job listing
+            view: View
+          inset_text:
+            complete_draft: This job listing is complete and needs to be published.
+            closed: This job listing was published on %{publish_date}. It closed on %{expiry_time}.
+            incomplete_draft: This job listing needs to be completed before it can be published.
+            published: This job listing was published on %{publish_date}. It will close on %{expiry_time}.
+            scheduled: This job listing will be published on %{publish_date}. It will close on %{expiry_time}.
+            scheduled_complete_draft: The job listing is complete and needs to be scheduled.
+          status_tag:
+            closed: Closed
+            draft: Draft
+            published: Published
+            scheduled: Scheduled
+        success: Job listing updated
       steps:
         job_role: Job role
         job_location: Job location
@@ -315,7 +340,8 @@ en:
         documents: Supporting documents
         applying_for_the_job: Applying for the job
         job_summary: Job summary
-        review_heading: Review the job listing
+      steps_component:
+        title: Create a job listing steps
       submit:
         cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft jobs.
       summary:

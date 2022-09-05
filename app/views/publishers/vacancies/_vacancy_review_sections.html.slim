@@ -1,117 +1,23 @@
-- r.section :job_role do |s|
-  - s.row :readable_job_role, label: t("jobs.job_role"), optional: true
-  - if vacancy.teacher?
-    - s.row :readable_ect_status, label: t("helpers.legend.publishers_job_listing_job_role_details_form.ect_status"), optional: true
+= render "publishers/vacancies/vacancy_review_sections/job_role"
 
-- unless current_organisation.school?
-  - r.section :job_location, forms: %w[JobLocationForm] do
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key
-          h4.govuk-heading-s = vacancy_job_location_heading(vacancy)
-        - row.value
-          ul.govuk-list
-            - vacancy.organisations.each do |organisation|
-              li class="govuk-!-font-weight-bold govuk-!-margin-bottom-4"
-                - if organisation.school?
-                  => organisation.name
-                - else
-                  => t("organisations.job_location_heading.central_office")
-                span class="govuk-!-font-weight-regular" = full_address(organisation)
+= render "publishers/vacancies/vacancy_review_sections/job_location"
 
-- r.section :job_details, forms: %w[EducationPhasesForm JobDetailsForm] do |s|
-  - if vacancy.allow_phase_to_be_set?
-    - s.row :phase, text: vacancy.phases.map(&:humanize).join(", "), label: t("jobs.filters.phases"), optional: true
-  - s.row :job_title
-  - s.row :contract_type, text: vacancy.contract_type_with_duration
-  - if vacancy.allow_key_stages?
-    - s.row :readable_key_stages, label: t("jobs.key_stage", count: vacancy.key_stages.count)
-  - if vacancy.allow_subjects?
-    - s.row :readable_subjects, label: t("jobs.subject", count: vacancy.subjects.count), optional: true
+= render "publishers/vacancies/vacancy_review_sections/job_details"
 
-- r.section :working_patterns do |s|
-  / TODO: Working Patterns: Remove this once all vacancies with legacy working patterns & working_pattern_details have expired
-  - if vacancy.full_time_details.nil? && vacancy.part_time_details.nil?
-    - s.row :readable_working_patterns, label: t("jobs.working_patterns")
-    - s.row :working_patterns_details
-  - else
-    = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key
-          h4.govuk-heading-s = t("jobs.working_patterns")
-        - row.value
-          = vacancy_working_patterns(vacancy)
+- if vacancy.completed_steps.include?("working_patterns")
+  = render "publishers/vacancies/vacancy_review_sections/working_patterns"
 
-- r.section :pay_package do
-  = govuk_summary_list do |summary_list|
-    - summary_list.row do |row|
-      - row.key
-        h4.govuk-heading-s = t("jobs.salary_details")
-      - row.value
-        ul.govuk-list
-          - if vacancy.salary?
-            li class="govuk-!-margin-bottom-4"
-              div => "#{t('jobs.annual_salary')}:"
-              = vacancy.salary
-          - if vacancy.actual_salary?
-            li class="govuk-!-margin-bottom-4"
-              div => "#{t('jobs.actual_salary')}:"
-              = vacancy.actual_salary
-          - if vacancy.pay_scale?
-            li class="govuk-!-margin-bottom-4"
-              div => "#{t('jobs.pay_scale')}:"
-              = vacancy.pay_scale
+- if vacancy.completed_steps.include?("pay_package")
+  = render "publishers/vacancies/vacancy_review_sections/pay_package"
 
-    - summary_list.row do |row|
-      - row.key
-        h4.govuk-heading-s class="govuk-!-margin-bottom-0"
-          = t("jobs.benefits")
-      - row.value
-        = vacancy.benefits? ? "Yes" : "No"
+- if vacancy.completed_steps.include?("important_dates")
+  = render "publishers/vacancies/vacancy_review_sections/important_dates"
 
-    - if vacancy.benefits?
-      - summary_list.row do |row|
-        - row.key
-          h4.govuk-heading-s class="govuk-!-margin-bottom-0"
-            = t("jobs.benefits_details")
-        - row.value
-          = vacancy.benefits_details
+- if vacancy.completed_steps.include?("applying_for_the_job") || (current_organisation.local_authority? && vacancy.completed_steps.include?("applying_for_the_job_details"))
+  = render "publishers/vacancies/vacancy_review_sections/applying_for_the_job"
 
-- r.section :important_dates do |s|
-  - s.row :publish_on,
-    label: t("jobs.publication_date"),
-    text: format_date(vacancy.publish_on)
-  - s.row :expires_at,
-    text: format_time_to_datetime_at(vacancy.expires_at),
-    label: t("jobs.application_deadline")
-  - s.row :starts_on, text: vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(vacancy.starts_on)
+- if vacancy.completed_steps.include?("documents")
+  = render "publishers/vacancies/vacancy_review_sections/documents"
 
-- r.section :applying_for_the_job do |s|
-  - unless current_organisation.group_type == "local_authority"
-    - s.row :enable_job_applications
-  - if vacancy.enable_job_applications?
-    - s.row :personal_statement_guidance, optional: true
-  - else
-    - s.row :application_link, value_if_attribute_present: open_in_new_tab_link_to(vacancy.application_link, vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"))
-    - if vacancy.application_form.present?
-      - s.row :application_form, text: vacancy.application_form.filename
-  - if vacancy.how_to_apply.present?
-    - s.row :how_to_apply
-  - s.row :contact_email, text: govuk_mail_to(vacancy.contact_email, nil, "aria-label": t("jobs.aria_labels.contact_email_link", email: vacancy.contact_email))
-  - s.row :contact_number, value_if_attribute_present: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}"), optional: true
-  - s.row :school_visits, label: t("jobs.#{school_or_trust_visits(vacancy.organisation)}"), optional: true
-
-- r.section :documents
-  = govuk_summary_list do |summary_list|
-    - if vacancy.supporting_documents.none?
-      - summary_list.row do |row|
-        - row.key classes: ["govuk-!-font-weight-regular"], text: t("jobs.no_supporting_documents")
-    - else
-      - vacancy.supporting_documents.each_with_index do |document, index|
-        - summary_list.row do |row|
-          - row.key text: "Document #{index + 1}"
-          - row.value text: document.filename
-
-- r.section :job_summary do |s|
-  - s.row :job_advert
-  - s.row :about_school, label: t("jobs.about_school", school: vacancy_about_school_label_organisation(vacancy))
+- if vacancy.completed_steps.include?("job_summary")
+  = render "publishers/vacancies/vacancy_review_sections/job_summary"

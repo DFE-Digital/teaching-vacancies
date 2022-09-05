@@ -41,6 +41,6 @@
             data: { "form-target": "inputText" }
         = f.govuk_radio_button :starts_asap, "true", label: { text: t("helpers.legend.publishers_job_listing_important_dates_form.start_asap") }, data: { action: "click->form#clearListener" }
 
-      = f.govuk_submit classes: "govuk-!-margin-bottom-5"
+      = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5"
 
     = govuk_link_to(t("buttons.cancel_copy"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
