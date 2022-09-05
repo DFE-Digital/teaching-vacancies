@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, current_organisation.name
 
 .dashboard-component
-  = render "publishers/vacancies/banner", vacancy: vacancy, title: t("tabs.applications.show_count", count: vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count)
+  = render "publishers/vacancies/banner", vacancy: vacancy
   = render "publishers/vacancies/tabs_show", vacancy: vacancy
 
   - if vacancy.within_data_access_period? && job_applications.many?

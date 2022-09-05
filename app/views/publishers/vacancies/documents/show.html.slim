@@ -1,11 +1,14 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.documents"))
 
-= vacancy_form_page_heading(vacancy, step_process)
+= vacancy_form_page_heading(vacancy, step_process, params: params)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds data-controller="upload-documents"
-    = form_for form, url: organisation_job_documents_path(vacancy.id, back_to: params[:back_to]) do |f|
+    = form_for form, url: organisation_job_documents_path(vacancy.id) do |f|
       = f.govuk_error_summary
+
+      - if params[:back_to_review]
+        = f.hidden_field :back_to_review, value: "true"
 
       h2.govuk-heading-l
         = t("publishers.vacancies.steps.documents")

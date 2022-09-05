@@ -118,6 +118,11 @@ class Vacancy < ApplicationRecord
     organisations.schools.filter_map(&:readable_phase).uniq
   end
 
+  def draft!
+    self.publish_on = nil
+    super
+  end
+
   def central_office?
     organisations.one? && organisations.first.trust?
   end

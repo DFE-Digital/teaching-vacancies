@@ -1,7 +1,5 @@
 - content_for :breadcrumbs do
   = govuk_breadcrumbs breadcrumbs: { "#{t("jobs.dashboard.#{vacancy.publication_status}.tab_heading")}": jobs_with_type_organisation_path(vacancy.publication_status),
-                                     "#{vacancy.job_title}": "" }
+                                    "#{vacancy.job_title}": "" }
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    h1.govuk-heading-l = title
+h1.govuk-heading-l = vacancy.job_title

@@ -15,7 +15,7 @@ RSpec.describe "Copying a vacancy" do
 
       visit organisation_path
       click_on original_vacancy.job_title
-      click_on I18n.t("buttons.copy_listing")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
 
@@ -31,7 +31,7 @@ RSpec.describe "Copying a vacancy" do
 
       visit organisation_path
       click_on original_vacancy.job_title
-      click_on I18n.t("buttons.copy_listing")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
 
@@ -51,19 +51,15 @@ RSpec.describe "Copying a vacancy" do
 
     visit organisation_path
     click_on original_vacancy.job_title
-    click_on I18n.t("buttons.copy_listing")
+    click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
-    within("h1.govuk-heading-m") do
-      expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
-    end
+    expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
 
     fill_in_copy_vacancy_form_fields(new_vacancy)
-    click_on I18n.t("buttons.continue")
+    click_on I18n.t("buttons.save_and_continue")
+    has_complete_draft_vacancy_review_heading?(new_vacancy)
 
-    within("h2.govuk-heading-l") do
-      expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
-    end
-    click_on I18n.t("buttons.submit_job_listing")
+    click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
     expect(page).to have_content(I18n.t("publishers.vacancies.summary.heading.published"))
   end
@@ -84,7 +80,7 @@ RSpec.describe "Copying a vacancy" do
     scenario "the job can be successfully copied but not published until valid" do
       visit organisation_path
       click_on original_vacancy.job_title
-      click_on I18n.t("buttons.copy_listing")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       new_vacancy = original_vacancy.dup
       new_vacancy.job_title = "A new job title"
@@ -97,45 +93,45 @@ RSpec.describe "Copying a vacancy" do
       end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
-      expect(page).to have_content(I18n.t("job_summary_errors.about_school.blank", organisation: "school"))
+      has_incomplete_draft_vacancy_review_heading?(new_vacancy)
 
       new_persisted_vacancy = Vacancy.find_by(job_title: "A new job title")
       visit organisation_job_build_path(new_persisted_vacancy.id, :job_summary)
 
       fill_in "publishers_job_listing_job_summary_form[about_school]", with: "Some description about the school"
-      click_on I18n.t("buttons.update_job")
+      click_on I18n.t("buttons.save_and_continue")
 
-      within("h2.govuk-heading-l") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
-      end
+      has_complete_draft_vacancy_review_heading?(new_persisted_vacancy)
       expect(page).to have_content("Some description about the school")
 
-      click_on I18n.t("buttons.submit_job_listing")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
-      expect(page).to have_content(I18n.t("publishers.vacancies.summary.heading.published"))
+      expect(current_path).to eq(organisation_job_summary_path(new_persisted_vacancy.id))
     end
   end
 
   context "when the original job is pending/scheduled/future_publish" do
     let!(:original_vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
+    let(:copied_job_title) { "Scheduled copy" }
 
     scenario "a job can be successfully copied" do
       visit organisation_path
       click_on I18n.t("jobs.dashboard.pending.tab_heading")
       click_on original_vacancy.job_title
-      click_on I18n.t("buttons.copy_listing")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       within("h1.govuk-heading-m") do
         expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
       end
 
-      click_on I18n.t("buttons.continue")
+      fill_in "publishers_job_listing_copy_vacancy_form[job_title]", with: copied_job_title
+      click_on I18n.t("buttons.save_and_continue")
 
-      within("h2.govuk-heading-l") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
-      end
+      newly_persisted_vacancy = Vacancy.find_by(job_title: copied_job_title)
+
+      has_complete_draft_vacancy_review_heading?(newly_persisted_vacancy)
     end
   end
 
@@ -152,18 +148,16 @@ RSpec.describe "Copying a vacancy" do
       visit organisation_path
       click_on I18n.t("jobs.dashboard.expired.tab_heading")
       click_on original_vacancy.job_title
-      click_on I18n.t("buttons.copy_listing")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       within("h1.govuk-heading-m") do
         expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
       end
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
-      within("h2.govuk-heading-l") do
-        expect(page).to have_content(I18n.t("publishers.vacancies.steps.review_heading"))
-      end
+      has_complete_draft_vacancy_review_heading?(new_vacancy)
     end
   end
 
@@ -178,7 +172,7 @@ RSpec.describe "Copying a vacancy" do
 
       visit organisation_path
       click_on original_vacancy.job_title
-      click_on I18n.t("buttons.copy_listing")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       within("h1.govuk-heading-m") do
         expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
@@ -187,7 +181,7 @@ RSpec.describe "Copying a vacancy" do
       fill_in_copy_vacancy_form_fields(new_vacancy)
       fill_in "publishers_job_listing_copy_vacancy_form[expires_at(2i)]", with: "090"
 
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content(I18n.t("activerecord.errors.models.vacancy.attributes.expires_at.invalid"))
     end
   end
@@ -199,12 +193,12 @@ RSpec.describe "Copying a vacancy" do
     before do
       visit organisation_path
       click_on original_vacancy.job_title
-      click_on I18n.t("buttons.copy_listing")
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       expect(page).to have_content(I18n.t("jobs.copy_job_title", job_title: original_vacancy.job_title))
 
       fill_in_copy_vacancy_form_fields(new_vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
     end
 
     context "when publish on is blank" do

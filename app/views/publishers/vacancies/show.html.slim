@@ -1,25 +1,25 @@
-- content_for :page_title_prefix, review_page_title_prefix(vacancy,
-  show_errors: params[:show_errors])
+- content_for :page_title_prefix, review_page_title_prefix(vacancy, show_errors: true)
 
-= vacancy_review(vacancy, step_process: step_process, back_to: "manage_draft", show_errors: params[:show_errors]) do |r|
-  - r.header
-    = render "banner", vacancy: vacancy, title: t("jobs.manage_listing", state: (vacancy.draft? ? "draft" : "job"))
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - if vacancy.listed?
+      = render "review_heading", status: "published", colour: "green", actions: %w[view copy close_early extend_closing_date]
+
+    - elsif vacancy.draft? && all_steps_valid?
+      = render "review_heading", status: "complete_draft",
+                                         colour: "grey",
+                                         actions: (vacancy.publish_on.future? ? %w[schedule_complete_draft preview copy delete] : %w[publish preview copy delete])
+
+    - elsif vacancy.draft?
+      = render "review_heading", status: "incomplete_draft", colour: "grey", actions: %w[complete copy delete]
+
+    - elsif vacancy.expired?
+      = render "review_heading", status: "closed", colour: "red", actions: %w[view copy extend_closing_date]
+
+    - elsif vacancy.pending?
+      = render "review_heading", status: "scheduled", colour: "yellow", actions: %w[preview copy delete convert_to_draft]
+
     - if vacancy.published?
       = render "tabs_show", vacancy: vacancy
 
-  - r.above
-    = render "actions"
-
-    - if params[:show_errors]
-      = render "shared/error_messages", model: vacancy, presenter: r.error_presenter
-
-  - render "vacancy_review_sections", r: r
-
-  - r.below
-    = render "publish_buttons", back_to: "manage_draft" if vacancy.draft?
-    = govuk_link_to(t("buttons.back_to_manage_jobs"), jobs_with_type_organisation_path(vacancy.publication_status), class: "govuk-link--no-visited-state")
-
-  - if vacancy.published? && !vacancy.pending?
-    - r.sidebar(classes: %w[govuk-!-padding-bottom-4])
-      h3.govuk-heading-s = t(".view_live_listing_title")
-      = open_in_new_tab_link_to(t(".view_live_listing_link"), job_path(vacancy.id))
+    = render "vacancy_review_sections"

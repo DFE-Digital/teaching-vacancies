@@ -180,7 +180,6 @@ en:
     location_find_more_html:
       one: Find more school jobs in %{location_link}
       other: Find more school jobs in %{location_link} and %{second_location_link}
-
     job_title: Job title
     job_role: Job role
     job_summary: "%{job_title} job summary"
@@ -226,6 +225,7 @@ en:
     expires_at: Closing date
     time_at: at
 
+    supporting_documents: Supporting documents
     supporting_documents_accessibility: If you need these documents in an accessible format, please contact the school.
     no_files_message: No files selected
     no_supporting_documents: No documents uploaded
@@ -252,6 +252,7 @@ en:
 
     apply: More on how to apply
     application_link: Link to online application
+    application_form: Application form
     contact_email: Contact email
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: Regarding the job at %{url}

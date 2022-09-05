@@ -8,7 +8,9 @@ en:
         label: action required
         message:
           jobseeker: You must complete the required actions below in order to submit this application.
-          publisher: You must complete the required actions below in order to publish this listing.
+          publisher:
+            body_html: <span class="govuk-!-font-weight-bold">Your job listing is incomplete. %{link}</span>
+            link: Finish job listing.
       already_published: This job has already been published
       draft_saved_html: <span class="govuk-!-font-weight-bold">Draft saved</span> for %{job_title}
       feedback:

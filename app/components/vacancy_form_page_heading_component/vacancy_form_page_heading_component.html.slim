@@ -1,4 +1,4 @@
-- if step_process.previous_step_or_review.present? && step_process.current_step != :review
+- if render_back_link?
   - content_for :breadcrumbs do
     = govuk_back_link text: t("buttons.back"), href: back_path
 

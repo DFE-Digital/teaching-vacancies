@@ -1,7 +1,7 @@
 module VacancyHelpers
   def change_job_locations(vacancy, organisations)
     vacancy.organisations = organisations
-    click_header_link(I18n.t("publishers.vacancies.steps.job_location"))
+    click_review_page_change_link(section: "job_location")
     fill_in_job_location_form_field(vacancy)
   end
 
@@ -275,5 +275,45 @@ module VacancyHelpers
       yield vacancy if block_given?
       vacancy.save(validate: false) # Validation prevents publishing on a past date
     end
+  end
+
+  def has_published_vacancy_review_heading?(vacancy)
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.status_tag.published"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.published", publish_date: format_date(vacancy.publish_on), expiry_time: format_time_to_datetime_at(vacancy.expires_at)))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.view"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.close_early"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.extend_closing_date"))
+  end
+
+  def has_complete_draft_vacancy_review_heading?(vacancy)
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.status_tag.draft"))
+    if vacancy.publish_on.future?
+      expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.scheduled_complete_draft"))
+      expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"))
+    else
+      expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.complete_draft"))
+      expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.publish"))
+    end
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.preview"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.delete"))
+  end
+
+  def has_incomplete_draft_vacancy_review_heading?(vacancy)
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.status_tag.draft"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.incomplete_draft", publish_date: format_date(vacancy.publish_on), expiry_time: format_time_to_datetime_at(vacancy.expires_at)))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.complete"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.delete"))
+  end
+
+  def has_scheduled_vacancy_review_heading?(vacancy)
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.status_tag.scheduled"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.scheduled", publish_date: format_date(vacancy.publish_on), expiry_time: format_time_to_datetime_at(vacancy.expires_at)))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.preview"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.delete"))
+    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.convert_to_draft"))
   end
 end

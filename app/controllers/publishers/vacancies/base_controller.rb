@@ -5,14 +5,13 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
   private
 
-  helper_method :current_step, :step_process, :vacancy, :vacancies
+  helper_method :current_step, :step_process, :vacancy, :vacancies, :all_steps_valid?, :next_invalid_step
 
   def step_process
     Publishers::Vacancies::VacancyStepProcess.new(
       current_step || :review,
       vacancy: vacancy,
       organisation: current_organisation,
-      session: session,
     )
   end
 
@@ -39,27 +38,19 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     form_sequence.all_steps_valid?
   end
 
-  def back_to(**extras)
-    organisation_job_path(
-      id: vacancy.id,
-      anchor: "errors",
-      **extras,
-    )
+  def redirect_to_next_step
+    if all_steps_valid? || save_and_finish_later?
+      redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
+    else
+      redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
+    end
   end
 
-  def redirect_updated_job_with_message
-    updated_job_path = if vacancy.published? || params[:back_to] == "manage_draft"
-                         organisation_job_path(vacancy.id)
-                       else
-                         organisation_job_review_path(vacancy.id)
-                       end
+  def next_invalid_step
+    # Due to documents being an optional step (no validations) it needs to be handled differently
+    return :documents if next_incomplete_step_documents?
 
-    redirect_to updated_job_path,
-                success: t("messages.jobs.listing_updated_html",
-                           job_title: vacancy.job_title,
-                           link_to: helpers.govuk_link_to(t("messages.jobs.listing_updated_link_text"),
-                                                          jobs_with_type_organisation_path(vacancy.publication_status),
-                                                          class: "govuk-link--no-visited-state"))
+    form_sequence.validate_all_steps.filter_map { |step, form| step unless form.valid? }.first
   end
 
   def remove_google_index(job)
@@ -69,14 +60,18 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     RemoveGoogleIndexQueueJob.perform_later(url)
   end
 
-  def reset_session_vacancy!
-    session[:current_step] = nil
-  end
-
   def update_google_index(job)
     return if DisableExpensiveJobs.enabled?
 
     url = job_url(job)
     UpdateGoogleIndexQueueJob.perform_later(url)
+  end
+
+  def next_incomplete_step_documents?
+    vacancy.completed_steps.last == "applying_for_the_job_details" && vacancy.completed_steps.exclude?("documents")
+  end
+
+  def save_and_finish_later?
+    params["save_and_finish_later"] == "true"
   end
 end
