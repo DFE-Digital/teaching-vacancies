@@ -5,7 +5,7 @@ ARG USERNAME=teaching-vacancies
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG NODEJS_MAJOR_VERSION=18
-ARG TERRAFORM_VERSION=1.0.8
+ARG TERRAFORM_VERSION=1.2.8
 
 # Set up NodeSource repository for newer Node.JS
 RUN apt update -yq \

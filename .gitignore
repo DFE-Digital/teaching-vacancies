@@ -58,9 +58,6 @@ terraform.tfstate.d/
 .terraform.tfstate.lock.info
 tokens
 
-# Ignore Terraform lock files while they conflict with local plugin cache
-/terraform/**/.terraform.lock.hcl
-
 # ENV files
 .env*
 !.env.development

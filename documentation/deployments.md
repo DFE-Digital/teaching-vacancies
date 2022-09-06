@@ -59,7 +59,7 @@ performs these steps:
 
 Requirements:
 - docker CLI of at least version `19.03`
-- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `1.0.8`
+- [terraform CLI](https://www.terraform.io/downloads.html) of at least version `1.2.8`
 - Write access to Docker Hub `dfedigital/teaching-vacancies` repository. Ask in #digital-tools-support should you require it.
 - Log in to Container registry (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
 - Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
