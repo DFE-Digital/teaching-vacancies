@@ -40,7 +40,7 @@
         - row.key
           h4.govuk-heading-s = t("jobs.working_patterns")
         - row.value
-          ul.govuk-list = vacancy_working_patterns(vacancy)
+          = vacancy_working_patterns(vacancy)
 
 - r.section :pay_package do
   = govuk_summary_list do |summary_list|
