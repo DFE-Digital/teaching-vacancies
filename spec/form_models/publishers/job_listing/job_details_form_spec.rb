@@ -21,7 +21,9 @@ RSpec.describe Publishers::JobListing::JobDetailsForm, type: :model do
     it { is_expected.to validate_presence_of(:parental_leave_cover_contract_duration) }
   end
 
-  context "when key stages is not present" do
-    it { is_expected.to allow_value([]).for(:key_stages) }
+  context "when validate_key_stages is true" do
+    before { allow(subject).to receive(:validate_key_stages).and_return("true") }
+
+    it { is_expected.not_to allow_value([]).for(:key_stages) }
   end
 end
