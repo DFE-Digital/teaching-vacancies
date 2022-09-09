@@ -121,7 +121,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       let(:jobseeker) { create(:jobseeker, email: email) }
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
-      before { allow(Rails.env).to receive(:sandbox?).and_return(true) }
+      before { allow(ENV).to receive(:[]).with("APP_ROLE").and_return("sandbox") }
 
       it "triggers a `publisher_sign_in_fallback` email event" do
         expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_update).with_data(expected_data)
