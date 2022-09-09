@@ -241,7 +241,7 @@ RSpec.describe "Creating a vacancy" do
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
 
-        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: vacancy.publish_on.to_formatted_s.strip!))
+        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: vacancy.publish_on.to_formatted_s.strip))
         visit organisation_job_path(vacancy.id)
         expect(page).to have_content(format_date(vacancy.publish_on).to_s)
       end
@@ -251,7 +251,7 @@ RSpec.describe "Creating a vacancy" do
 
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
-        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: vacancy.publish_on.to_formatted_s.strip!))
+        expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: vacancy.publish_on.to_formatted_s.strip))
 
         visit organisation_job_publish_path(vacancy.id)
 
