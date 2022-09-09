@@ -163,7 +163,7 @@ RSpec.describe "Creating a vacancy" do
     describe "#publish" do
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
-        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary])
+        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
         vacancy.assign_attributes expires_at: yesterday_date
         vacancy.save(validate: false)
 
@@ -236,7 +236,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "can be published at a later date" do
-        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary])
+        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
@@ -247,7 +247,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "a published vacancy cannot be republished" do
-        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary])
+        vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
         visit organisation_job_review_path(vacancy.id)
         click_on "Confirm and submit job"
@@ -268,7 +268,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "adds a job to update the Google index in the queue" do
         scenario "if the vacancy is published immediately" do
-          vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Date.current, phases: %w[secondary])
+          vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Date.current, phases: %w[secondary], key_stages: %w[ks3])
 
           expect_any_instance_of(Publishers::Vacancies::BaseController)
             .to receive(:update_google_index).with(vacancy)

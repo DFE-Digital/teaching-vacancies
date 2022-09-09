@@ -74,7 +74,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       end
 
       scenario "ensures the vacancy slug is updated when the title is saved" do
-        vacancy = create(:vacancy, :published, slug: "the-vacancy-slug", organisations: [school])
+        vacancy = create(:vacancy, :published, slug: "the-vacancy-slug", organisations: [school], phases: %w[secondary], key_stages: %w[ks3])
         visit organisation_job_path(vacancy.id)
         click_header_link(I18n.t("publishers.vacancies.steps.job_details"))
 

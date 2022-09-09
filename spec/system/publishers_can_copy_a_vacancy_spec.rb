@@ -4,7 +4,7 @@ RSpec.describe "Copying a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 
-  let!(:original_vacancy) { create_published_vacancy(organisations: [school], phases: %w[secondary]) }
+  let!(:original_vacancy) { create_published_vacancy(organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
@@ -76,7 +76,7 @@ RSpec.describe "Copying a vacancy" do
 
   context "when the original job is now invalid" do
     let!(:original_vacancy) do
-      create_published_vacancy(about_school: nil, organisations: [school], phases: %w[secondary]) do |vacancy|
+      create_published_vacancy(about_school: nil, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) do |vacancy|
         vacancy.send(:set_slug)
       end
     end

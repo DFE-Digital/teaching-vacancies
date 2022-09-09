@@ -6,7 +6,6 @@
   .govuk-grid-column-two-thirds
     = form_for form, url: wizard_path(current_step, back_to: params[:back_to]), method: :patch do |f|
       = f.govuk_error_summary
-      = f.hidden_field :validate_key_stages, value: vacancy.allow_key_stages?
 
       h2.govuk-heading-l = t("publishers.vacancies.steps.job_details")
 
