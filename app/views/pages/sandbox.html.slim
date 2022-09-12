@@ -1,46 +1,42 @@
 - content_for :page_title_prefix do
-  | Sign in to Teaching Vacancies
+  | Sandbox Guidance
 
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: root_path
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    markdown:
 
-      The Teaching Vacancies sandbox is a test environment that lets you experience the service as a member of hiring staff, or as a jobseeker.
+    p.govuk-body
+      | The Teaching Vacancies sandbox is a test environment that lets you experience the service as a member of hiring staff, or as a jobseeker.
 
-      You can:
+      | You can:
 
-      * sign in as a member of hiring staff to create and manage job listings
-      * search for jobs on the service
-      * sign in as a jobseeker to save and apply for jobs
-      {: .govuk-list.govuk-list--bullet }
+    ul.govuk-list.govuk-list--bullet
+      li sign in as a member of hiring staff to create and manage job listings
+      li search for jobs on the service
+      li sign in as a jobseeker to save and apply for jobs
 
-      Throughout, you'll be able to give us feedback so that we can improve the service.
+    p.govuk-body Throughout, you'll be able to give us feedback so that we can improve the service.
 
-      Please note, **any job listings or applications created in the sandbox will not be visible on the live service**. All data remains within the sandbox, and is separate from the data on the live service.
+    .govuk-body class="govuk-!-margin-top-4"
+      | Please note, <span class="govuk-!-font-weight-bold">any job listings or applications created in the sandbox will not be visible on the live service</span>. All data remains within the sandbox, and is separate from the data on the live service.
 
-      ##  Get started as a member of hiring staff
-      {: .govuk-heading-l}
+    h2.govuk-heading-l#heading Get started as a member of hiring staff
 
-      You can use your DfE Sign-In details to [log in to the sandbox](https://sandbox.teaching-vacancies.service.gov.uk/publishers/sign-in){: .govuk-link} as your school, trust or local authority.
-      If you do not have a DfE Sign-In account, please [create one](https://profile.signin.education.gov.uk/register){: .govuk-link} and follow the steps to request a Teaching Vacancies account for your organisation.
-      You can find guidance on how to request access [here](https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-request-organisation-access){: .govuk-link}.
+    p.govuk-body You can use your DfE Sign-In details to #{govuk_link_to("log in to the sandbox", "https://sandbox.teaching-vacancies.service.gov.uk/publishers/sign-in")} as your school, trust or local authority.
+    p.govuk-body If you do not have a DfE Sign-In account, please #{govuk_link_to("create one", "https://profile.signin.education.gov.uk/register")} and follow the steps to request a Teaching Vacancies account for your organisation.
+    p.govuk-body You can find guidance on how to request access #{govuk_link_to("here", "https://teaching-vacancies.service.gov.uk/get-help-hiring/how-to-request-organisation-access")}.
 
     = govuk_button_link_to t("buttons.sign_in_publisher"), new_publisher_session_path
 
-    markdown:
-      You don’t need an account to search for jobs, but if you’d like to save or apply for a job, you will need to [create a jobseeker account](https://sandbox.teaching-vacancies.service.gov.uk/jobseekers/sign_up){: .govuk-link}.
+    p.govuk-body You don’t need an account to search for jobs, but if you’d like to save or apply for a job, you will need to #{govuk_link_to("create a jobseeker account", "https://sandbox.teaching-vacancies.service.gov.uk/jobseekers/sign_up")}
 
     = govuk_button_link_to t("buttons.sign_in_jobseeker"), new_jobseeker_session_path
 
-    markdown:
+    p.govuk-body Please do not sign up with anybody else's email address, as the system will generate real emails as part of the sandbox experience.
+    p.govuk-body Any other data you enter should be anonymised or fictional.
 
-      Please do not sign up with anybody else's email address, as the system will generate real emails as part of the sandbox experience.
-      Any other data you enter should be anonymised or fictional.
+    h2.govuk-heading-l#heading Help and support
 
-      ## Help and support
-      {: .govuk-heading-l}
-
-      If you need help accessing the Teaching Vacancies sandbox, or the live service, please [request support](https://teaching-vacancies.service.gov.uk/support_request/new){: .govuk-link} using our form.
+    p.govuk-body If you need help accessing the Teaching Vacancies sandbox, or the live service, please #{govuk_link_to("request support", "https://teaching-vacancies.service.gov.uk/support_request/new")}
