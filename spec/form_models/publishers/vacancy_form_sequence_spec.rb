@@ -9,7 +9,7 @@ RSpec.describe Publishers::VacancyFormSequence do
   end
 
   let(:vacancy) do
-    create(:vacancy, job_title: nil, phases: %w[secondary])
+    create(:vacancy, job_title: nil, phases: %w[secondary], key_stages: %w[ks3])
   end
 
   let(:organisation) { create(:school) }

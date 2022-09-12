@@ -37,7 +37,7 @@ module Publishers::Wizardable
 
   def job_details_params(params)
     params.require(:publishers_job_listing_job_details_form)
-          .permit(:job_title, :contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration, :validate_key_stages, key_stages: [], subjects: [])
+          .permit(:job_title, :contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration, key_stages: [], subjects: [])
           .merge(completed_steps: completed_steps, status: vacancy.status || "draft")
   end
 
