@@ -47,3 +47,6 @@
               = link_to t("nav.sign_in"), new_publisher_session_path, class: "govuk-footer__link"
           li.govuk-footer__list-item
             = link_to t("footer.school_hiring_guides"), posts_path(section: "get-help-hiring"), class: "govuk-footer__link"
+          - if Rails.configuration.app_role == "sandbox"
+            li.govuk-footer__list-item
+              = link_to "Sandbox guidance", page_path("sandbox"), class: "govuk-footer__link"
