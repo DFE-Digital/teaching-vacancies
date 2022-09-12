@@ -31,6 +31,6 @@ class ApplicationMailer < Mail::Notify::Mailer
   end
 
   def template
-    ENV["APP_ROLE"] == "sandbox" ? NOTIFY_SANDBOX_TEMPLATE : NOTIFY_PRODUCTION_TEMPLATE
+    Rails.configuration.app_role == "sandbox" ? NOTIFY_SANDBOX_TEMPLATE : NOTIFY_PRODUCTION_TEMPLATE
   end
 end

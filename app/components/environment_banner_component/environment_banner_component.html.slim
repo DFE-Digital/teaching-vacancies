@@ -2,4 +2,7 @@
   .govuk-width-container
     .govuk-tag.govuk-tag--environment class="govuk-!-font-weight-bold"
       = Rails.configuration.app_role.upcase
-    = t("app.environment_html", environment: Rails.configuration.app_role)
+    - if Rails.configuration.app_role == "sandbox"
+      = t("app.environment_html", environment: govuk_link_to("sandbox", page_path("sandbox")))
+    - else
+      = t("app.environment_html", environment: Rails.configuration.app_role)
