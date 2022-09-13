@@ -39,7 +39,6 @@ const Map = class {
         addToLayer ? addToLayer.addLayer(marker) : this.container.addLayer(marker);
 
         marker.on('add', () => {
-          marker.on('add', () => marker.getElement().setAttribute('aria-controls', 'sidebar-content'));
           marker.getElement().setAttribute('id', id);
           Map.onAddMarker(marker, id, trackingType);
           if (details.target && details.target.ui === 'custom') {
@@ -130,7 +129,7 @@ const Map = class {
     const tracking = template.trackingAttributes(id, trackingType);
     const markerEl = marker.getElement();
     Object.keys(tracking).forEach((a) => { markerEl.dataset[a] = tracking[a]; });
-    markerEl.setAttribute('aria-controls', 'map-sidebar');
+
     markerEl.setAttribute('id', id);
   }
 
