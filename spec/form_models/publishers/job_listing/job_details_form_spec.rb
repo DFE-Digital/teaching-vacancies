@@ -20,6 +20,4 @@ RSpec.describe Publishers::JobListing::JobDetailsForm, type: :model do
 
     it { is_expected.to validate_presence_of(:parental_leave_cover_contract_duration) }
   end
-
-  it { is_expected.not_to allow_value([]).for(:key_stages) }
 end
