@@ -19,7 +19,7 @@ class Vacancy < ApplicationRecord
     nursery: %i[early_years],
     primary: %i[early_years ks1 ks2],
     middle: %i[ks1 ks2 ks3 ks4],
-    secondary: %i[ks3 ks4],
+    secondary: %i[ks3 ks4 ks5],
     sixth_form_or_college: %i[ks5],
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
   }.freeze
