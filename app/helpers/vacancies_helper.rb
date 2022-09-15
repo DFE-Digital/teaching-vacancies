@@ -162,8 +162,10 @@ module VacanciesHelper
       t("publishers.activity_log.#{attribute}", new_value: new_value.to_sentence, count: new_value.count)
     when "about_school", "job_advert"
       t("publishers.activity_log.#{attribute}", organisation_type: organisation_type)
-    when "expires_at", "starts_on"
-      t("publishers.activity_log.#{attribute}", new_value: (new_value.nil? ? t("jobs.starts_asap") : format_date(new_value.to_date)))
+    when "expires_at", "starts_on", "earliest_start_date", "latest_start_date"
+      new_value.nil? ? t("publishers.activity_log.#{attribute}.deleted") : t("publishers.activity_log.#{attribute}.changed", new_value: format_date(new_value.to_date))
+    when "other_start_date_details"
+      new_value.nil? ? t("publishers.activity_log.#{attribute}.deleted") : t("publishers.activity_log.#{attribute}.changed", new_value: new_value)
     when "school_visits"
       t("publishers.activity_log.school_visits", organisation_type: organisation_type.capitalize, new_value: new_value)
     else

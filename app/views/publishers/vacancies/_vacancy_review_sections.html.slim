@@ -84,7 +84,14 @@
   - s.row :expires_at,
     text: format_time_to_datetime_at(vacancy.expires_at),
     label: t("jobs.application_deadline")
-  - s.row :starts_on, text: vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(vacancy.starts_on)
+  - case vacancy.start_date_type
+    - when "specific_date"
+      - s.row :starts_on, text: format_date(vacancy.starts_on)
+    - when "date_range"
+      - s.row :earliest_start_date, text: format_date(vacancy.earliest_start_date)
+      - s.row :latest_start_date, text: format_date(vacancy.latest_start_date)
+    - when "other"
+      - s.row :other_start_date_details, text: vacancy.other_start_date_details
 
 - r.section :applying_for_the_job do |s|
   - unless current_organisation.group_type == "local_authority"

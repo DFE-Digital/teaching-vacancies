@@ -282,7 +282,11 @@ shared:
     - job_advert
     - benefits
     - benefits_details
+    - start_date_type
     - starts_on
+    - earliest_start_date
+    - latest_start_date
+    - other_start_date_details
     - contact_email
     - status
     - publish_on
@@ -305,7 +309,6 @@ shared:
     - ect_status
     - contact_number
     - publisher_organisation_id
-    - starts_asap
     - contract_type
     - fixed_term_contract_duration
     - parental_leave_cover_contract_duration

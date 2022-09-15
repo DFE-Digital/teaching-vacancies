@@ -518,8 +518,6 @@ en:
           another_day: Another date
           today: Today
           tomorrow: Tomorrow
-        starts_asap_options:
-          "true": As soon as possible
       publishers_job_listing_documents_form:
         documents: Upload files
       publishers_job_listing_expired_feedback_form: &expired_vacancy_feedback_shared_labels
@@ -537,9 +535,6 @@ en:
           listed_mix: Yes, a mix of paid and free listings
           listed_paid: Yes, on one or more paid services
           not_listed: "No"
-      publishers_job_listing_extend_deadline_form:
-        starts_asap_options:
-          "true": As soon as possible
       publishers_job_listing_end_listing_form:
         <<: *expired_vacancy_feedback_shared_labels
       publishers_job_listing_feedback_form:
@@ -571,8 +566,6 @@ en:
           another_day: Another date
           today: Today (%{date})
           tomorrow: Tomorrow (%{date})
-        starts_asap_options:
-          "true": As soon as possible
       publishers_job_listing_job_details_form:
         fixed_term_contract_duration: Duration of contract
         parental_leave_cover_contract_duration: Duration of contract
@@ -752,9 +745,10 @@ en:
         expiry_time: Closing time
         publish_on: Another date
         publish_on_day: Publish date
-        start_asap: As soon as possible
+        start_date_other: Other
+        start_date_range: Date range
         start_date_specific: Specific date
-        starts_on: Date job starts (optional)
+        starts_on: Date job starts
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_job_details_form:
         contract_type: Contract type
