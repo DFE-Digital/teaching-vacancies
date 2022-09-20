@@ -199,7 +199,7 @@ en:
     application_link:
       url: Enter a link in the correct format, like www.school.ac.uk
     contact_email:
-      blank: Enter a contact email
+      blank: Enter an email address
     contact_number:
       invalid: Contact number must be a valid phone number
     how_to_apply:
