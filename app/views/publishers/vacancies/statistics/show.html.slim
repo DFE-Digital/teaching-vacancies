@@ -1,7 +1,6 @@
 - content_for :page_title_prefix, t(".title")
 
-= render "publishers/vacancies/banner", vacancy: vacancy
-= render "publishers/vacancies/tabs_show", vacancy: vacancy
+= render "publishers/vacancies/review_banner"
 
 .govuk-grid-row
   - if vacancy.draft? || vacancy.pending?

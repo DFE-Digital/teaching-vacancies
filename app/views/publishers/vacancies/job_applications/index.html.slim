@@ -1,37 +1,35 @@
 - content_for :page_title_prefix, current_organisation.name
 
-.dashboard-component
-  = render "publishers/vacancies/banner", vacancy: vacancy
-  = render "publishers/vacancies/tabs_show", vacancy: vacancy
+= render "publishers/vacancies/review_banner"
 
-  - if vacancy.within_data_access_period? && job_applications.many?
-    .govuk-grid-row
-      .govuk-grid-column-full
-        = render SortComponent.new path: method(:organisation_job_job_applications_path), sort: sort, url_params: { job_id: vacancy.id }
-
+- if vacancy.within_data_access_period? && job_applications.many?
   .govuk-grid-row
     .govuk-grid-column-full
-      - if job_applications.any? && vacancy.within_data_access_period?
-        = govuk_summary_list do |summary_list|
-          - sorted_job_applications.each do |application|
-            - summary_list.row classes: "application-#{application.status}" do |row|
-              - row.key do
-                = job_application_view_applicant(vacancy, application)
+      = render SortComponent.new path: method(:organisation_job_job_applications_path), sort: sort, url_params: { job_id: vacancy.id }
 
-              - row.value do
-                = publisher_job_application_status_tag(application.status)
-                dl
-                  dt = "#{t('.received')}:"
-                  dd = application.submitted_at.strftime("%d %B %Y at %H:%M")
+.govuk-grid-row
+  .govuk-grid-column-full
+    - if job_applications.any? && vacancy.within_data_access_period?
+      = govuk_summary_list do |summary_list|
+        - sorted_job_applications.each do |application|
+          - summary_list.row classes: "application-#{application.status}" do |row|
+            - row.key do
+              = job_application_view_applicant(vacancy, application)
 
-              - if application.status.in?(%w[reviewed shortlisted submitted])
-                - if application.reviewed? || application.submitted?
-                  - row.action text: t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
-                - row.action text: t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
+            - row.value do
+              = publisher_job_application_status_tag(application.status)
+              dl
+                dt = "#{t('.received')}:"
+                dd = application.submitted_at.strftime("%d %B %Y at %H:%M")
 
-      - elsif !vacancy.within_data_access_period?
-        = govuk_inset_text do
-          p = t(".expired_more_than_year")
+            - if application.status.in?(%w[reviewed shortlisted submitted])
+              - if application.reviewed? || application.submitted?
+                - row.action text: t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
+              - row.action text: t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
 
-      - else
+    - elsif !vacancy.within_data_access_period?
+      = govuk_inset_text do
+        p = t(".expired_more_than_year")
+
+    - else
         = render EmptySectionComponent.new title: t(".no_applicants")

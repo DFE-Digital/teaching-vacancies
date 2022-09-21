@@ -1,0 +1,12 @@
+h1.govuk-heading-l class="govuk-!-display-inline govuk-!-margin-right-4"
+  = vacancy.job_title
+= govuk_tag(text: t("publishers.vacancies.show.heading_component.status_tag.draft"), html_attributes: { class: "vertical-align-super" }, colour: "grey")
+= govuk_inset_text do
+  = vacancy_review_heading_inset_text(vacancy, "complete_draft")
+  .govuk-button-group class="govuk-!-margin-top-4"
+    - if vacancy.publish_on.future?
+      - %w[schedule_complete_draft preview copy delete].each do |action|
+        = vacancy_review_heading_action_link(vacancy, action)
+    - else
+      - %w[publish preview copy delete].each do |action|
+          = vacancy_review_heading_action_link(vacancy, action)
