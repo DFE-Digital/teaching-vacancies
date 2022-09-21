@@ -6,7 +6,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.key
       = t("jobs.job_role")
     - row.value
-      = vacancy.job_role ? t("helpers.label.publishers_job_listing_job_details_form.job_roles_options.#{vacancy.job_role}") : nil
+      = vacancy.job_role ? t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_role}") : nil
     - row.action text: t("buttons.change"),
                  href: organisation_job_build_path(vacancy.id, :job_role, back_to_review: "true"),
                  visually_hidden_text: t("publishers.vacancies.steps.job_role")
