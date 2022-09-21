@@ -156,7 +156,7 @@ en:
           benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
         phone_number: Enter a phone number you are happy to be contacted on, like 01632 960 001, 07700 900 982 or +44 0808 157 0192.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
-        teacher_reference_number: Enter the 7 numbers of your TRN, excluding any letters and symbols.
+        teacher_reference_number_html: You can <a href="https://find-a-lost-trn.education.gov.uk/start" target="_blank">find your TRN (opens in new tab)<span class="govuk-visually-hidden"> (link)</span></a> if you cannot remember it, or want to check it.
       jobseekers_job_application_qualifications_form:
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
       jobseekers_job_alert_further_feedback_form:
