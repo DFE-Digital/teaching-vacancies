@@ -1,0 +1,83 @@
+h2 class="govuk-heading-m govuk-!-margin-bottom-4"
+  = t("publishers.vacancies.build.applying_for_the_job.step_title")
+
+= govuk_summary_list(html_attributes: { id: "applying_for_the_job" }) do |summary_list|
+  - unless current_organisation.group_type == "local_authority"
+    - summary_list.row do |row|
+      - row.key
+        = t("jobs.enable_job_applications")
+      - row.value
+        = vacancy.enable_job_applications ? "Yes" : "No"
+      - row.action text: t("buttons.change"),
+                   href: organisation_job_build_path(vacancy.id, :applying_for_the_job, back_to_review: "true"),
+                   visually_hidden_text: t("jobs.enable_job_applications")
+
+  - if vacancy.completed_steps.include?("applying_for_the_job_details")
+
+    - summary_list.row do |row|
+      - if vacancy.enable_job_applications?
+          - row.key
+            = t("jobs.personal_statement_guidance")
+          - row.value
+            = vacancy.personal_statement_guidance? ? vacancy.personal_statement_guidance : t("jobs.not_defined")
+          - row.action text: t("buttons.change"),
+                      href: organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to_review: "true"),
+                      visually_hidden_text: t("jobs.personal_statement_guidance")
+      - else
+          - row.key
+            = t("jobs.application_link")
+          - row.value
+            - if vacancy.application_link?
+              = open_in_new_tab_link_to(vacancy.application_link, vacancy.application_link, "aria-label": t("jobs.aria_labels.apply_link"))
+            - else
+              = t("jobs.not_defined")
+          - row.action text: t("buttons.change"),
+                      href: organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to_review: "true"),
+                      visually_hidden_text: t("jobs.application_link")
+
+    - unless vacancy.enable_job_applications?
+      - summary_list.row do |row|
+        - row.key
+          = t("jobs.application_form")
+        - row.value
+          = vacancy.application_form ? vacancy.application_form.filename : t("jobs.not_defined")
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to_review: "true"),
+                    visually_hidden_text: t("jobs.application_form")
+
+    - if vacancy.how_to_apply.present?
+      - summary_list.row do |row|
+        - row.key
+          = t("jobs.how_to_apply")
+        - row.value
+          = vacancy.how_to_apply
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to_review: "true"),
+                    visually_hidden_text: t("jobs.how_to_apply")
+
+    - summary_list.row do |row|
+      - row.key
+        = t("jobs.contact_email")
+      - row.value
+        = vacancy.contact_email
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.contact_email")
+
+    - summary_list.row do |row|
+      - row.key
+        = t("jobs.contact_number")
+      - row.value
+        = vacancy.contact_number? ? vacancy.contact_number : t("jobs.not_defined")
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.contact_number")
+
+    - summary_list.row do |row|
+      - row.key
+        = t("jobs.#{school_or_trust_visits(vacancy.organisation)}")
+      - row.value
+        = vacancy.school_visits? ? vacancy.school_visits : t("jobs.not_defined")
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :applying_for_the_job_details, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.#{school_or_trust_visits(vacancy.organisation)}")

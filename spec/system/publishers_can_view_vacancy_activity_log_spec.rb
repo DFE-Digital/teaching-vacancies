@@ -15,7 +15,7 @@ RSpec.describe "Publishers can view a vacancy's activity log", versioning: true 
   end
 
   it "updates the activity log" do
-    within("#job_details") { click_on "Change" }
+    click_review_page_change_link(section: "job_details")
 
     fill_in I18n.t("helpers.label.publishers_job_listing_job_details_form.job_title"), with: new_job_title
 
@@ -28,7 +28,7 @@ RSpec.describe "Publishers can view a vacancy's activity log", versioning: true 
     old_subjects.each { |subject| uncheck subject }
     new_subjects.each { |subject| check subject }
 
-    click_on I18n.t("buttons.update_job")
+    click_on I18n.t("buttons.save_and_continue")
     click_on I18n.t("tabs.activity_log")
 
     expect(page).to have_content(I18n.t("publishers.activity_log.job_title", new_value: new_job_title))

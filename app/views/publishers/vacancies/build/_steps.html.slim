@@ -1,4 +1,4 @@
-= render StepsComponent.new title: t("publishers.vacancies.review.steps"), classes: "govuk-!-margin-top-6" do |component|
+= render StepsComponent.new title: t("publishers.vacancies.steps_component.title"), classes: "govuk-!-margin-top-6" do |component|
   - step_process.step_groups.each_key do |vacancy_step|
     - component.step( \
         label: t("publishers.vacancies.build.#{vacancy_step}.step_title"), \

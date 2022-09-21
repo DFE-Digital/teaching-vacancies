@@ -1,10 +1,9 @@
 class Publishers::Vacancies::VacancyStepProcess < StepProcess
-  attr_reader :vacancy, :organisation, :session
+  attr_reader :vacancy, :organisation
 
-  def initialize(current_step, vacancy:, organisation:, session: {})
+  def initialize(current_step, vacancy:, organisation:)
     @vacancy = vacancy
     @organisation = organisation
-    @session = session
 
     super(current_step, {
       job_role: job_role_steps,
@@ -18,12 +17,6 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
       job_summary: %i[job_summary],
       review: %i[review],
     })
-  end
-
-  def previous_step_or_review
-    return steps.last if session[:current_step] == :review && first_of_group?
-
-    previous_step
   end
 
   private

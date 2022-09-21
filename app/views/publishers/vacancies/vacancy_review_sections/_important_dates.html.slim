@@ -1,0 +1,33 @@
+h2 class="govuk-heading-m govuk-!-margin-bottom-4"
+  = t("publishers.vacancies.build.important_dates.step_title")
+
+= govuk_summary_list(html_attributes: { id: "important_dates" }) do |summary_list|
+  - summary_list.row do |row|
+    - row.key
+      = t("jobs.publication_date")
+    - row.value
+      = format_date(vacancy.publish_on)
+    - row.action text: t("buttons.change"),
+                 href: organisation_job_build_path(vacancy.id, :important_dates, back_to_review: "true"),
+                 visually_hidden_text: t("jobs.publication_date")
+
+  - summary_list.row do |row|
+    - row.key
+      = t("jobs.application_deadline")
+    - row.value
+      = format_time_to_datetime_at(vacancy.expires_at)
+    - row.action text: t("buttons.change"),
+                 href: organisation_job_build_path(vacancy.id, :important_dates, back_to_review: "true"),
+                 visually_hidden_text: t("jobs.application_deadline")
+
+  - summary_list.row do |row|
+    - row.key
+      = t("jobs.starts_on")
+    - row.value
+      - if vacancy.starts_on? || vacancy.starts_asap?
+        = vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(vacancy.starts_on)
+      - else
+        = t("jobs.not_defined")
+    - row.action text: t("buttons.change"),
+                 href: organisation_job_build_path(vacancy.id, :pay_package, back_to_review: "true"),
+                 visually_hidden_text: t("jobs.starts_on")

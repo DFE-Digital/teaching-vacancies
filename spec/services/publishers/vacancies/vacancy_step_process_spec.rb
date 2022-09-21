@@ -1,13 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Publishers::Vacancies::VacancyStepProcess do
-  subject { described_class.new(current_step, vacancy: vacancy, organisation: organisation, session: session) }
+  subject { described_class.new(current_step, vacancy: vacancy, organisation: organisation) }
 
   let(:current_step) { :job_details }
 
   let(:vacancy) { build_stubbed(:vacancy, :draft, :teacher) }
   let(:organisation) { build_stubbed(:school) }
-  let(:session) { {} }
 
   describe "#step_groups" do
     context "when signed in as a school" do

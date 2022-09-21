@@ -10,8 +10,7 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   let(:vacancy_step_process) do
     instance_double(Publishers::Vacancies::VacancyStepProcess, current_step: "step_one",
                                                                vacancy: vacancy,
-                                                               organisation: organisation,
-                                                               session: {})
+                                                               organisation: organisation)
   end
 
   subject { described_class.new(vacancy, vacancy_step_process) }
@@ -19,7 +18,6 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   before do
     allow(subject).to receive(:current_organisation).and_return(organisation)
     allow(vacancy_step_process).to receive(:previous_step).and_return(previous_step)
-    allow(vacancy_step_process).to receive(:previous_step_or_review).and_return(previous_step)
     allow(vacancy_step_process).to receive(:steps).and_return(steps)
     allow(vacancy_step_process).to receive(:current_step_group_number).and_return(1)
     allow(vacancy_step_process).to receive(:total_step_groups).and_return(2)

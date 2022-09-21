@@ -80,7 +80,7 @@ module Publishers::Wizardable
   end
 
   def completed_steps
-    (vacancy.completed_steps | [(current_step || "review").to_s]).compact
+    (vacancy.completed_steps | [current_step.to_s]).compact
   end
 
   def current_step

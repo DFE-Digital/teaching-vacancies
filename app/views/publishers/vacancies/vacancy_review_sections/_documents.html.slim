@@ -1,0 +1,19 @@
+h2 class="govuk-heading-m govuk-!-margin-bottom-4"
+  = t("publishers.vacancies.build.documents.step_title")
+
+= govuk_summary_list(html_attributes: { id: "documents" }) do |summary_list|
+  - if vacancy.supporting_documents.none?
+    - summary_list.row do |row|
+      - row.key classes: ["govuk-!-font-weight-regular"]
+        = t("jobs.no_supporting_documents")
+      - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :documents, back_to_review: "true"),
+                    visually_hidden_text: t("jobs.supporting_documents")
+  - else
+    - vacancy.supporting_documents.each_with_index do |document, index|
+      - summary_list.row do |row|
+        - row.key text: "Document #{index + 1}"
+        - row.value text: document.filename
+        - row.action text: t("buttons.change"),
+                      href: organisation_job_build_path(vacancy.id, :documents, back_to_review: "true"),
+                      visually_hidden_text: t("jobs.supporting_documents")

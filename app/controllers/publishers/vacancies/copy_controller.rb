@@ -22,7 +22,7 @@ class Publishers::Vacancies::CopyController < Publishers::Vacancies::BaseControl
       new_vacancy.refresh_slug
       new_vacancy.save
       update_google_index(new_vacancy) if new_vacancy.listed?
-      redirect_to organisation_job_review_path(new_vacancy.id)
+      redirect_to organisation_job_path(new_vacancy.id)
     else
       render :new
     end

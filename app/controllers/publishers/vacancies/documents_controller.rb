@@ -3,13 +3,16 @@ require "google/apis/drive_v3"
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
   helper_method :form
 
-  before_action :redirect_to_next_step, only: %i[create]
+  before_action :complete_step, unless: :document_added?, only: %i[create]
 
   def create
     form.valid_documents.each do |document|
       vacancy.supporting_documents.attach(document)
       send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
     end
+
+    # So they are taken back to the review page upon clicking the back link, even after creating or deleting a document
+    params[:back_to_review] = params[:publishers_job_listing_documents_form][:back_to_review]
 
     render :show
   end
@@ -19,7 +22,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     document.purge_later
     send_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
 
-    redirect_to organisation_job_documents_path(vacancy.id), flash: {
+    redirect_to organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review]), flash: {
       success: t("jobs.file_delete_success_message", filename: document.filename),
     }
   end
@@ -38,15 +41,14 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     (params[:publishers_job_listing_documents_form] || params).permit(documents: [])
   end
 
-  def redirect_to_next_step
-    return if documents_form_params[:documents]
-
+  def complete_step
     vacancy.update(completed_steps: completed_steps)
-    if session[:current_step] == :review
-      redirect_updated_job_with_message
-    else
-      redirect_to organisation_job_build_path(vacancy.id, :job_summary)
-    end
+
+    redirect_to_next_step
+  end
+
+  def document_added?
+    documents_form_params[:documents].present?
   end
 
   def send_event(event_type, name, size, content_type)

@@ -1,6 +1,8 @@
 module CapybaraHelper
-  def click_header_link(text)
-    find(".review-component__section__heading__title", text: text).find("a", text: "Change").click
+  def click_review_page_change_link(section:)
+    within("dl", class: "govuk-summary-list", id: section) do
+      find(".govuk-link", match: :first).click
+    end
   end
 
   def within_row_for(text:, element: "label", &block)
