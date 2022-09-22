@@ -78,14 +78,12 @@ module VacanciesHelper
     end
   end
 
-  def vacancy_job_location_heading(vacancy)
-    if vacancy.central_office?
-      t("organisations.job_location_heading.central_office")
-    elsif vacancy.organisations.many?
-      t("organisations.job_location_heading.at_multiple_locations", organisation_type: organisation_type_basic(vacancy.organisation))
-    else
-      t("organisations.job_location_heading.at_one_location")
-    end
+  def vacancy_job_locations(vacancy)
+    safe_join(
+      vacancy.organisations.map do |organisation|
+        tag.li("#{organisation.school? ? organisation.name : t('organisations.job_location_heading.central_office')}, #{full_address(organisation)}")
+      end,
+    )
   end
 
   def vacancy_job_location(vacancy)

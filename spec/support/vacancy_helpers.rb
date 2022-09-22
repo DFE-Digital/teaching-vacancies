@@ -148,15 +148,7 @@ module VacancyHelpers
     vacancy.reload
     vacancy = VacancyPresenter.new(vacancy) unless vacancy.is_a?(VacancyPresenter)
 
-    unless vacancy.organisation.school?
-      if vacancy.organisations.many?
-        expect(page).to have_content(I18n.t("organisations.job_location_heading.at_multiple_locations", organisation_type: organisation_type_basic(vacancy.organisation)))
-      else
-        expect(page).to have_content(I18n.t("organisations.job_location_heading.central_office"))
-      end
-      expect(page).to have_content(vacancy.organisations.first.name)
-      expect(page).to have_content(full_address(vacancy.organisations.first))
-    end
+    verify_job_locations(vacancy)
 
     expect(page).to have_content(vacancy.readable_job_role)
     expect(page).to have_content(strip_tags(vacancy.readable_ect_status)) if vacancy.ect_status.present?
@@ -315,5 +307,15 @@ module VacancyHelpers
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.delete"))
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.convert_to_draft"))
+  end
+
+  def verify_job_locations(vacancy)
+    vacancy.organisations.each do |organisation|
+      if organisation.school?
+        expect(page).to have_content("#{organisation.name}, #{full_address(organisation)}")
+      else
+        expect(page).to have_content("#{I18n.t('organisations.job_location_heading.central_office')}, #{full_address(organisation)}")
+      end
+    end
   end
 end

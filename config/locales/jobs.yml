@@ -180,6 +180,7 @@ en:
     location_find_more_html:
       one: Find more school jobs in %{location_link}
       other: Find more school jobs in %{location_link} and %{second_location_link}
+    job_location: Locations where the job is based
     job_title: Job title
     job_role: Job role
     job_summary: "%{job_title} job summary"
