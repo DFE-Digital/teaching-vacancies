@@ -6,17 +6,17 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.key
       h4.govuk-heading-s = t("jobs.salary_details")
     - row.value
-      ul.govuk-list
+      ul.govuk-list.govuk-list--spaced class="govuk-!-margin-bottom-0"
         - if vacancy.salary?
-          li class="govuk-!-margin-bottom-4"
+          li
             div => "#{t('jobs.annual_salary')}:"
             = vacancy.salary
         - if vacancy.actual_salary?
-          li class="govuk-!-margin-bottom-4"
+          li
             div => "#{t('jobs.actual_salary')}:"
             = vacancy.actual_salary
         - if vacancy.pay_scale?
-          li class="govuk-!-margin-bottom-4"
+          li class="govuk-!-margin-bottom-0"
             div => "#{t('jobs.pay_scale')}:"
             = vacancy.pay_scale
     - row.action text: t("buttons.change"),
