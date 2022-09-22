@@ -1,25 +1,7 @@
 - content_for :page_title_prefix, review_page_title_prefix(vacancy, show_errors: true)
 
+= render "review_banner"
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if vacancy.listed?
-      = render "review_heading", status: "published", colour: "green", actions: %w[view copy close_early extend_closing_date]
-
-    - elsif vacancy.draft? && all_steps_valid?
-      = render "review_heading", status: "complete_draft",
-                                         colour: "grey",
-                                         actions: (vacancy.publish_on.future? ? %w[schedule_complete_draft preview copy delete] : %w[publish preview copy delete])
-
-    - elsif vacancy.draft?
-      = render "review_heading", status: "incomplete_draft", colour: "grey", actions: %w[complete copy delete]
-
-    - elsif vacancy.expired?
-      = render "review_heading", status: "closed", colour: "red", actions: %w[view copy extend_closing_date]
-
-    - elsif vacancy.pending?
-      = render "review_heading", status: "scheduled", colour: "yellow", actions: %w[preview copy delete convert_to_draft]
-
-    - if vacancy.published?
-      = render "tabs_show", vacancy: vacancy
-
     = render "vacancy_review_sections"

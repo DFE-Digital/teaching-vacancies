@@ -1,0 +1,25 @@
+- content_for :breadcrumbs do
+  = govuk_breadcrumbs breadcrumbs: { "#{t("jobs.dashboard.#{vacancy.publication_status}.tab_heading")}": jobs_with_type_organisation_path(vacancy.publication_status),
+                                    "#{vacancy.job_title}": "" }
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    - if vacancy.listed?
+      = render "publishers/vacancies/review_banners/published"
+
+    - elsif vacancy.draft? && all_steps_valid?
+      = render "publishers/vacancies/review_banners/complete_draft"
+
+    - elsif vacancy.draft?
+      = render "publishers/vacancies/review_banners/incomplete_draft"
+
+    - elsif vacancy.expired?
+      = render "publishers/vacancies/review_banners/closed"
+
+    - elsif vacancy.pending?
+      = render "publishers/vacancies/review_banners/scheduled"
+
+- if vacancy.published?
+  .govuk-grid-row
+    .govuk-grid-column-full
+      = render "publishers/vacancies/review_tabs"
