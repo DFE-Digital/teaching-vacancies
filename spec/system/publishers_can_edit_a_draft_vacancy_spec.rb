@@ -61,17 +61,13 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-        expect(page).to have_content(I18n.t("organisations.job_location_heading.at_one_location"))
-        expect(page).to have_content(full_address(another_primary_school))
-        displays_all_vacancy_organisations?(vacancy)
+        verify_job_locations(vacancy)
 
         change_job_locations(vacancy, [primary_school, another_primary_school])
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-        expect(page).to have_content(I18n.t("organisations.job_location_heading.at_multiple_locations",
-                                            organisation_type: "trust"))
-        displays_all_vacancy_organisations?(vacancy)
+        verify_job_locations(vacancy)
       end
 
       context "when the new job location is the trust's central office" do
