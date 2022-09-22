@@ -1,6 +1,6 @@
-h1.govuk-heading-l class="govuk-!-display-inline govuk-!-margin-right-4"
+h1.govuk-heading-l class="govuk-!-display-inline"
   = vacancy.job_title
-= govuk_tag(text: t("publishers.vacancies.show.heading_component.status_tag.published"), html_attributes: { class: "vertical-align-super" }, colour: "green")
+  = govuk_tag(text: t("publishers.vacancies.show.heading_component.status_tag.published"), html_attributes: { class: "vertical-align-middle govuk-!-margin-left-1" }, colour: "green")
 = govuk_inset_text do
   = vacancy_review_heading_inset_text(vacancy, "published")
   .govuk-button-group class="govuk-!-margin-top-4"
