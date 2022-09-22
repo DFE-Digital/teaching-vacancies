@@ -181,8 +181,8 @@ module VacanciesHelper
     return vacancy_working_patterns_summary(vacancy) unless vacancy.full_time_details? || vacancy.part_time_details?
 
     safe_join [
-      (tag.div { t("jobs.full_time_details", details: vacancy.full_time_details) } if vacancy.full_time_details?),
-      (tag.div { t("jobs.part_time_details", details: vacancy.part_time_details) } if vacancy.part_time_details?),
+      (tag.li { t("jobs.full_time_details", details: vacancy.full_time_details) } if vacancy.full_time_details?),
+      (tag.li { t("jobs.part_time_details", details: vacancy.part_time_details) } if vacancy.part_time_details?),
     ]
   end
 
