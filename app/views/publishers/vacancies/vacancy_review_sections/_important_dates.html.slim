@@ -24,8 +24,13 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.key
       = t("jobs.starts_on")
     - row.value
-      - if vacancy.starts_on? || vacancy.starts_asap?
-        = vacancy.starts_asap? ? t("jobs.starts_asap") : format_date(vacancy.starts_on)
+      - case vacancy.start_date_type
+      - when "specific_date"
+        = format_date(vacancy.starts_on)
+      - when "date_range"
+        = "#{format_date(vacancy.earliest_start_date)} - #{format_date(vacancy.latest_start_date)}"
+      - when "other"
+        = vacancy.other_start_date_details
       - else
         = t("jobs.not_defined")
     - row.action text: t("buttons.change"),
