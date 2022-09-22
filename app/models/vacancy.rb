@@ -18,7 +18,7 @@ class Vacancy < ApplicationRecord
   PHASES_TO_KEY_STAGES_MAPPINGS = {
     nursery: %i[early_years],
     primary: %i[early_years ks1 ks2],
-    middle: %i[ks1 ks2 ks3 ks4],
+    middle: %i[ks1 ks2 ks3 ks4 ks5],
     secondary: %i[ks3 ks4 ks5],
     sixth_form_or_college: %i[ks5],
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
@@ -27,7 +27,7 @@ class Vacancy < ApplicationRecord
   # When removing a job_role or working_pattern, remember to update *subscriptions* that have the old values.
   # TODO: remove job_roles when we are confident about the migration
   # array_enum job_roles: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5, send_responsible: 2, ect_suitable: 3 }
-  array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
+  array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ksπ4: 4, ks5: 5 }
   # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
   array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }
   array_enum phases: { nursery: 0, primary: 1, middle: 2, secondary: 3, sixth_form_or_college: 4, through: 5 }
