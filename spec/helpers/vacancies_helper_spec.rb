@@ -280,7 +280,7 @@ RSpec.describe VacanciesHelper do
 
     context "when the action is copy" do
       let(:action) { "copy" }
-      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), new_organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
+      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post) }
 
       it "returns the correct link" do
         expect(subject).to eq(link)
