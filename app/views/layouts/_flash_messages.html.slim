@@ -1,4 +1,4 @@
 - flash.each do |variant, message|
   - next unless variant.in? t("banners").keys.map(&:to_s)
-  = govuk_notification_banner title_text: t("banners.#{variant}"), classes: "govuk-notification-banner--#{variant} govuk-!-margin-top-3 govuk-!-margin-bottom-0" do
-    = raw(message)
+  = govuk_notification_banner title_text: t("banners.#{variant}"), classes: "govuk-notification-banner--#{variant} govuk-!-margin-top-3 govuk-!-margin-bottom-0" do |notification_banner|
+    - notification_banner.heading(text: message)
