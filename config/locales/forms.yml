@@ -20,7 +20,6 @@ en:
     cancel_and_return_to_account: Cancel and return to account
     cancel_and_return_to_jobs: Cancel and return to manage jobs
     cancel_copy: Cancel job listing copy
-    cancel_extending_closing_date: Cancel extending closing date
     change: Change
     close_account: Close account
     complete_section: Complete section
@@ -46,7 +45,7 @@ en:
     edit: Edit
     end_listing: Close job listing
     end_listing_early: End job listing early
-    extend_closing_date: Extend deadline
+    extend_closing_date: Extend closing date
     find: Find
     go_to_teaching_vacancies: Go to Teaching Vacancies
     hide_filters: Hide filters

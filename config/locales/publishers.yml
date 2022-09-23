@@ -225,8 +225,8 @@ en:
           deadline:
             future: The current deadline is
             past: The previous deadline was
-          heading: Extend deadline
-          title: Extend deadline - %{job_title}
+          heading: Extend closing date
+          title: Extend closing date - %{job_title}
         update:
           success: "The deadline for %{job_title} has been extended"
       expired_feedbacks:
