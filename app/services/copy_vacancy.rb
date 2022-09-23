@@ -22,6 +22,17 @@ class CopyVacancy
   def setup_new_vacancy
     @new_vacancy = @vacancy.dup
     @new_vacancy.status = :draft
+    reset_date_fields if @vacancy.publish_on&.past?
     @new_vacancy.organisations = @vacancy.organisations
+  end
+
+  def reset_date_fields
+    @new_vacancy.expires_at = nil
+    @new_vacancy.start_date_type = nil
+    @new_vacancy.starts_on = nil
+    @new_vacancy.earliest_start_date = nil
+    @new_vacancy.latest_start_date = nil
+    @new_vacancy.other_start_date_details = nil
+    @new_vacancy.publish_on = nil
   end
 end

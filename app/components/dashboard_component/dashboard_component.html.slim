@@ -112,7 +112,10 @@
                   p.govuk-body-xs.external-notice
                     = t("jobs.manage.external_notice")
               - unless vacancy.external? || vacancy.draft?
-                - row.action(text: t("buttons.copy_listing"), href: new_organisation_job_copy_path(job_id: vacancy.id), visually_hidden_text: "#{t('buttons.copy_listing')} #{vacancy.job_title}")
+                - row.action(text: t("buttons.copy_listing"),
+                             href: organisation_job_copy_path(vacancy.id),
+                             visually_hidden_text: "#{t('buttons.copy_listing')} #{vacancy.job_title}",
+                             html_attributes: { "data-method": "post" })
 
     - unless @organisation.school_group?
       .govuk-grid-column-one-quarter

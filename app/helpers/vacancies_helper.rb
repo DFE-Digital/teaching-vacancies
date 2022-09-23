@@ -213,7 +213,7 @@ module VacanciesHelper
     when "view"
       open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.view"), job_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     when "copy"
-      govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), new_organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+      govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post)
     when "close_early"
       govuk_link_to(t("publishers.vacancies.show.heading_component.action.close_early"), organisation_job_end_listing_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     when "extend_closing_date"
