@@ -1,5 +1,8 @@
 - content_for :page_title_prefix, t(".title", job_title: vacancy.job_title)
 
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: organisation_job_path(vacancy.id)
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     span.govuk-caption-l = vacancy.job_title
@@ -28,4 +31,4 @@
 
       = f.govuk_submit t("buttons.end_listing"), classes: "govuk-!-margin-bottom-5"
 
-    = govuk_link_to(t("buttons.cancel_end_listing"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
+    = govuk_link_to(t("buttons.cancel"), organisation_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")

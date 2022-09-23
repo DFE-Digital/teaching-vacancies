@@ -216,7 +216,7 @@ en:
           %{job_title} has been <span class="govuk-!-font-weight-bold">deleted</span>
       end_listing:
         show:
-          heading: End job listing early
+          heading: Close early
           title: End listing - %{job_title}
         update:
           success: "%{job_title} has been ended early"
