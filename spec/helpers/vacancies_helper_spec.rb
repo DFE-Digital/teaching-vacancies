@@ -197,7 +197,7 @@ RSpec.describe VacanciesHelper do
       let(:vacancy) { build(:vacancy, working_patterns: %w[full_time part_time]) }
 
       it "returns the working patterns with details for each working pattern" do
-        expect(subject).to eq("<div>Full time - #{vacancy.full_time_details}</div><div>Part time - #{vacancy.part_time_details}</div>")
+        expect(subject).to eq("<li>Full time - #{vacancy.full_time_details}</li><li>Part time - #{vacancy.part_time_details}</li>")
       end
     end
   end

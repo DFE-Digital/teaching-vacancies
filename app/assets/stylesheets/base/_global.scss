@@ -16,6 +16,12 @@ dl {
 
     dd {
       margin-left: govuk-spacing(1);
+
+      .govuk-list--spaced {
+        li:last-child {
+          margin-bottom: 0;
+        }
+      }
     }
   }
 

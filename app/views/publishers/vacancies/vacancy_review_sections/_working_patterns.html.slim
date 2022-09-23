@@ -26,7 +26,8 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.key
         h4.govuk-heading-s = t("jobs.working_patterns")
       - row.value
-        ul.govuk-list = vacancy_working_patterns(vacancy)
+        ul.govuk-list.govuk-list--spaced class="govuk-!-margin-bottom-0"
+          = vacancy_working_patterns(vacancy)
       - row.action text: t("buttons.change"),
                    href: organisation_job_build_path(vacancy.id, :working_patterns, back_to_review: "true"),
                    visually_hidden_text: t("jobs.working_patterns")
