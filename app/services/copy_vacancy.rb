@@ -23,6 +23,7 @@ class CopyVacancy
     @new_vacancy = @vacancy.dup
     @new_vacancy.status = :draft
     reset_date_fields if @vacancy.publish_on&.past?
+    @new_vacancy.completed_steps = current_steps
     @new_vacancy.organisations = @vacancy.organisations
   end
 
@@ -34,5 +35,11 @@ class CopyVacancy
     @new_vacancy.latest_start_date = nil
     @new_vacancy.other_start_date_details = nil
     @new_vacancy.publish_on = nil
+  end
+
+  def current_steps
+    Publishers::Vacancies::VacancyStepProcess.new(:job_role,
+                                                  vacancy: @vacancy,
+                                                  organisation: @vacancy.organisation).steps
   end
 end
