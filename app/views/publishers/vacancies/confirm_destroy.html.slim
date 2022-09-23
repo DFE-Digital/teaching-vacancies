@@ -5,13 +5,10 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l = "#{vacancy.job_title} at #{vacancy_job_location(vacancy)}"
+    span.govuk-caption-l = "#{vacancy.job_title} - #{vacancy_job_location(vacancy)}"
 
     h1.govuk-heading-l = t(".page_title")
 
-    h3.govuk-heading-m = t(".are_you_sure")
+    = govuk_button_link_to t("buttons.confirm_deletion"), organisation_job_path(vacancy.id), method: :delete, class: "govuk-button--warning"
 
-    .govuk-button-group
-      = govuk_button_link_to t("buttons.confirm_deletion"), organisation_job_path(vacancy.id), method: :delete, class: "govuk-button--warning"
-
-      = govuk_link_to t("buttons.cancel"), organisation_job_path(vacancy.id), class: "govuk-link--no-visited-state"
+    div = govuk_link_to t("buttons.cancel"), organisation_job_path(vacancy.id), class: "govuk-link--no-visited-state"
