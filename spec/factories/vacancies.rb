@@ -29,7 +29,7 @@ FactoryBot.define do
     contract_type { factory_sample(Vacancy.contract_types.keys) }
     fixed_term_contract_duration { "6 months" }
     further_details_provided { true }
-    further_details { Faker::Lorem.paragraph(sentence_count: factory_rand(50..100)) }
+    further_details { Faker::Lorem.sentence(word_count: factory_rand(50..100)) }
     parental_leave_cover_contract_duration { "6 months" }
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
@@ -43,10 +43,10 @@ FactoryBot.define do
     publish_on { Date.current }
     salary { factory_sample(SALARIES) }
     safeguarding_information_provided { true }
-    safeguarding_information { Faker::Lorem.paragraph(sentence_count: factory_rand(50..100)) }
-    school_offer { Faker::Lorem.paragraph(sentence_count: factory_rand(50..150)) }
+    safeguarding_information { Faker::Lorem.sentence(word_count: factory_rand(50..100)) }
+    school_offer { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
     school_visits { true }
-    skills_and_experience { Faker::Lorem.paragraph(sentence_count: factory_rand(50..150)) }
+    skills_and_experience { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
     start_date_type { "specific_date" }
     starts_on { 1.year.from_now.to_date }
     status { :published }

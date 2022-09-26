@@ -229,16 +229,20 @@ en:
       inclusion: Select yes if this role is suitable for an early career teacher
     skills_and_experience:
       blank: Enter the skills and experience required for the role
+      maximum_words: Skills and experience must be 150 words or less
     school_offer:
       blank: Enter the information about what your %{organisation} offers
+      maximum_words: "%{organisation} offer must be 150 words or less"
     safeguarding_information_provided:
       inclusion: Select yes if you would like to add information about your commitment to safeguarding
     safeguarding_information:
       blank: Enter the information about your commitment to safeguarding
+      maximum_words: Safeguarding information must be 100 words or less
     further_details_provided:
       inclusion: Select yes if you would like to add further details about the role
     further_details:
       blank: Enter the further details about the role
+      maximum_words: Further details must be 100 words or less
   include_additional_documents_errors: &include_additional_documents_errors
     include_additional_documents:
       inclusion: Select yes if you would like to upload additional documents
