@@ -2,12 +2,12 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    fieldset.govuk-fieldset
-      legend.govuk-fieldset__legend.govuk-fieldset__legend--l
-        = vacancy_form_page_heading(vacancy, step_process, params: params)
+    = form_for form, url: wizard_path(current_step), method: :patch do |f|
+      = f.govuk_error_summary
 
-      = form_for form, url: wizard_path(current_step), method: :patch do |f|
-        = f.govuk_error_summary
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          = vacancy_form_page_heading(vacancy, step_process, params: params)
 
         = f.govuk_radio_buttons_fieldset :contract_type, legend: nil do
           = f.govuk_radio_button :contract_type, :permanent, link_errors: true
@@ -18,4 +18,4 @@
           = f.govuk_radio_button :contract_type, :parental_leave_cover do
             = f.govuk_text_field :parental_leave_cover_contract_duration, label: { size: "s" }
 
-        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

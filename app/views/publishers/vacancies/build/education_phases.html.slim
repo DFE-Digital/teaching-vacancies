@@ -1,13 +1,11 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.education_phases"))
 
 .govuk-grid-row
-  .govuk-grid-column-full
-    = vacancy_form_page_heading(vacancy, step_process, params: params)
-
-.govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
+
+      = vacancy_form_page_heading(vacancy, step_process, params: params)
 
       = f.govuk_collection_check_boxes :phases, Vacancy.phases.keys, :to_s, :to_s, legend: nil
 

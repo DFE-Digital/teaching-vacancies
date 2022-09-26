@@ -1,11 +1,11 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.start_date"))
 
-= vacancy_form_page_heading(vacancy, step_process, params: params)
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
+
+      = vacancy_form_page_heading(vacancy, step_process, params: params)
 
       = f.govuk_radio_buttons_fieldset :start_date_type, legend: { text: t("helpers.legend.publishers_job_listing_start_date_form.starts_on"), tag: nil }, form_group: { data: { controller: "form" } } do
         = f.govuk_radio_button :start_date_type, :specific_date, link_errors: true, label: { text: t("helpers.legend.publishers_job_listing_start_date_form.start_date_specific") }, data: { action: "click->form#clearListener" } do
