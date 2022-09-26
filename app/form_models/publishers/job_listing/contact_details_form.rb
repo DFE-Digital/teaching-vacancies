@@ -13,14 +13,20 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
   def contact_email
     return unless @vacancy.contact_email || params[:contact_email]
 
-    if @vacancy.contact_email == @current_publisher&.email
-      @current_publisher.email
-    else
-      "other"
+    if params[:contact_email].present?
+      return params[:contact_email] if params[:contact_email] == @current_publisher&.email
+
+      return "other"
     end
+
+    return @current_publisher&.email if @vacancy.contact_email == @current_publisher&.email
+
+    "other"
   end
 
   def other_contact_email
+    return params[:other_contact_email] if params[:other_contact_email]
+
     @vacancy.contact_email unless @vacancy.contact_email == @current_publisher&.email
   end
 

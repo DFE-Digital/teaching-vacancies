@@ -29,14 +29,20 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Uplo
   def application_email
     return unless @vacancy.application_email || params[:application_email]
 
-    if @vacancy.application_email == @current_publisher&.email
-      @current_publisher.email
-    else
-      "other"
+    if params[:application_email].present?
+      return params[:application_email] if params[:application_email] == @current_publisher&.email
+
+      return "other"
     end
+
+    return @current_publisher&.email if @vacancy.application_email == @current_publisher&.email
+
+    "other"
   end
 
   def other_application_email
+    return params[:other_application_email] if params[:other_application_email]
+
     @vacancy.application_email unless @vacancy.application_email == @current_publisher&.email
   end
 
