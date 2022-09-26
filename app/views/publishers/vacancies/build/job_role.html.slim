@@ -1,12 +1,14 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_role"))
 
-= vacancy_form_page_heading(vacancy, step_process, params: params)
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for form, url: wizard_path(current_step), method: :patch do |f|
-      = f.govuk_error_summary
+    fieldset.govuk-fieldset
+      legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+        = vacancy_form_page_heading(vacancy, step_process, params: params)
 
-      = f.govuk_collection_radio_buttons :job_role, Vacancy.job_roles.keys, :to_s, legend: nil
+      = form_for form, url: wizard_path(current_step), method: :patch do |f|
+        = f.govuk_error_summary
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+        = f.govuk_collection_radio_buttons :job_role, Vacancy.job_roles.keys, :to_s, legend: nil
+
+        = render "publishers/vacancies/vacancy_form_partials/submit", f: f
