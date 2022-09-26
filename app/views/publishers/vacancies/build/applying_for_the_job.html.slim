@@ -12,7 +12,7 @@
       - if vacancy.listed? || current_organisation.local_authority?
         = f.hidden_field :enable_job_applications
       - else
-        = f.govuk_radio_buttons_fieldset :enable_job_applications, legend: { size: "m" } do
+        = f.govuk_radio_buttons_fieldset :enable_job_applications, legend: { size: "m", tag: nil } do
           = f.govuk_radio_button :enable_job_applications, true, link_errors: true
           = f.govuk_radio_button :enable_job_applications, "false"
 

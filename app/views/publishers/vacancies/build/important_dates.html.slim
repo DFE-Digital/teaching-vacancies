@@ -15,7 +15,7 @@
         br
         = f.govuk_date_field :publish_on, class: "govuk-!-display-none"
       - else
-        = f.govuk_radio_buttons_fieldset :publish_on_day, legend: { size: "m" } do
+        = f.govuk_radio_buttons_fieldset :publish_on_day, legend: { size: "m", tag: nil } do
           = f.govuk_radio_button :publish_on_day, :today, link_errors: true, label: { text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: Time.now.strftime("%-e %-B %Y")) }
           = f.govuk_radio_button :publish_on_day, :tomorrow, label: { text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.tomorrow", date: 1.day.from_now.strftime("%-e %-B %Y")) }
           = f.govuk_radio_button :publish_on_day, :another_day do
@@ -24,12 +24,12 @@
 
       = f.govuk_date_field :expires_at,
                            hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%-d %-m %Y")) },
-                           legend: { size: "m" }
+                           legend: { size: "m", tag: nil }
 
       = f.govuk_collection_radio_buttons :expiry_time,
         Vacancy::EXPIRY_TIME_OPTIONS,
         ->(option) { option },
         ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") },
-        legend: { size: "m" }
+        legend: { size: "m", tag: nil }
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

@@ -12,7 +12,7 @@
           Vacancy.ect_statuses.keys,
           :to_s,
           classes: ["ect-status-radios"],
-          legend: { size: "m" }
+          legend: { size: "m", tag: nil }
 
       = f.govuk_text_area :skills_and_experience,
                           label: -> { tag.label(t("helpers.label.publishers_job_listing_about_the_role_form.skills_and_experience"), class: ["govuk-label--m", "govuk-!-font-weight-bold"]) },
@@ -22,14 +22,14 @@
               label: -> { tag.label(t("helpers.label.publishers_job_listing_about_the_role_form.school_offer"), class: ["govuk-label--m", "govuk-!-font-weight-bold"]) },
               max_words: 150
 
-      = f.govuk_radio_buttons_fieldset :safeguarding_information_provided, legend: { size: "m" }, classes: ["safeguarding-information-provided-radios"] do
+      = f.govuk_radio_buttons_fieldset :safeguarding_information_provided, legend: { size: "m", tag: nil }, classes: ["safeguarding-information-provided-radios"] do
         = f.govuk_radio_button :safeguarding_information_provided, "true" do
           = f.govuk_text_area :safeguarding_information,
                               label: -> { tag.label(t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
                               max_words: 100
         = f.govuk_radio_button :safeguarding_information_provided, "false", link_errors: true
 
-      = f.govuk_radio_buttons_fieldset :further_details_provided, legend: { size: "m" }, classes: ["further-details-provided-radios"] do
+      = f.govuk_radio_buttons_fieldset :further_details_provided, legend: { size: "m", tag: nil }, classes: ["further-details-provided-radios"] do
         = f.govuk_radio_button :further_details_provided, "true" do
           = f.govuk_text_area :further_details,
                               label: -> { tag.label(t("helpers.label.publishers_job_listing_about_the_role_form.further_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
