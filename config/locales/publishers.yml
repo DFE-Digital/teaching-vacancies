@@ -190,13 +190,11 @@ en:
               content_with_link_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link}
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
-          enable_job_applications_html: >-
-            <p class="govuk-body">This application form:</p>
-            <ul class="govuk-list govuk-list--bullet">
-            <li>provides a quick and simple experience for applicants</li>
-            <li>makes it easy for you to view, shortlist or reject applications in one place</li>
-            <li>is always up to date with the 'keeping children safe in education' guidelines</li>
-            </ul>
+          about_title: "This application form:"
+          about_items:
+            - provides a quick and simple experience for applicants
+            - makes it easy for you to view, shortlist or reject applications in one place
+            - is always up to date with the ‘keeping children safe in education’ guidelines
           step_title: Applying for the job
         contact_details:
           description: Give contact details to ask question about the job.

@@ -7,7 +7,11 @@
 
       = vacancy_form_page_heading(vacancy, step_process, params: params)
 
-      p.govuk-body = t(".enable_job_applications_html")
+      p.govuk-body = t(".about_title")
+
+      ul.govuk-list.govuk-list--bullet
+        - t(".about_items").each do |item|
+          li = item
 
       - if vacancy.listed? || current_organisation.local_authority?
         = f.hidden_field :enable_job_applications
