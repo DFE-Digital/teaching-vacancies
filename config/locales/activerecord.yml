@@ -154,18 +154,18 @@ en:
     expires_at:
       after: The closing date must be after the date the job will be listed
       blank: Enter a closing date
-      invalid: Enter a date in the correct format
+      invalid: Enter a closing date in the correct format
       on_or_after: The closing date must be in the future
       on_or_before: The closing date must be less than two years in the future
     expiry_time:
-      inclusion: Choose the time the application is due from the options provided
+      inclusion: Select closing time
     publish_on_day:
-      inclusion: Enter the date the job will be listed
+      inclusion: Select publish date
     publish_on:
-      blank: Enter the date the job will be listed
-      invalid: Enter a date in the correct format
-      on_or_after: The date the job will be listed must be either today or in the future
-      on_or_before: The date the job will be listed must be less than two years in the future
+      blank: Enter publish date
+      invalid: Enter a publish date in the correct format
+      on_or_after: The publish date must be either today or in the future
+      on_or_before: The publish date must be less than two years in the future
   start_date_errors: &start_date_errors
     earliest_start_date:
       after: The date the job starts must be after the closing date
@@ -181,12 +181,12 @@ en:
       on_or_after: The date the job starts must be in the future
       on_or_before: The date the job starts must be less than two years in the future
     other_start_date_details:
-      blank: Enter the start date details
+      blank: Enter details about the job start date
     start_date_type:
-      inclusion: Select a start date
-    starts_on:
+      inclusion: Select job start date
+    start_date:
       after: The date the job starts must be after the closing date
-      blank: Enter the start date
+      blank: Select job start date
       invalid: Enter a date in the correct format
       on_or_after: The date the job starts must be in the future
       on_or_before: The date the job starts must be less than two years in the future
@@ -202,7 +202,7 @@ en:
     application_email:
       blank: Select the email address to receive applications
     application_form:
-      blank: Upload a valid application form
+      blank: Select application form
     other_application_email:
       blank: Enter an email address
   application_link_errors: &application_link_errors
@@ -228,7 +228,7 @@ en:
     ect_status:
       inclusion: Select yes if this role is suitable for an early career teacher
     skills_and_experience:
-      blank: Enter the skills and experience required for the role
+      blank: Enter the skills and experience you’re looking for
       maximum_words: Skills and experience must be 150 words or less
     school_offer:
       blank: Enter the information about what your %{organisation} offers

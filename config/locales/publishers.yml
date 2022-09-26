@@ -207,7 +207,7 @@ en:
         how_to_receive_applications:
           step_title: Receiving application
         important_dates:
-          step_title: Important dates and deadlines
+          step_title: Publish and closing dates
         include_additional_documents:
           step_title: Do you want to upload any additional documents?
         job_details:
@@ -383,7 +383,7 @@ en:
         contract_type: Contract type
         working_patterns: Working pattern
         pay_package: Salary and allowances
-        important_dates: Important dates and deadlines
+        important_dates: Publish and closing dates
         start_date: Job start date
         application_process: Application process
         applying_for_the_job: Using the application form

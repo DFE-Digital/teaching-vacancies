@@ -227,7 +227,7 @@ en:
       today: Deadline is today
       tomorrow: Deadline is tomorrow
     publication_date: Date to be published
-    start_on: Date job starts
+    start_on: Job start date
     starts_on: Expected start date
     earliest_start_date: Earliest start date
     latest_start_date: Latest start date
@@ -243,8 +243,8 @@ en:
     file_delete_success_message: '%{filename} was removed'
     file_google_error_message: '%{filename} could not be uploaded - try again'
     file_input_error_message: The selected file(s) could not be uploaded
-    file_size_error_message: '%{filename} must be smaller than %{size_limit}'
-    file_type_error_message: '%{filename} must be a valid file type'
+    file_size_error_message: 'The selected file must be smaller than %{size_limit}'
+    file_type_error_message: The selected file must be a PDF or DOCX file
     file_virus_error_message: '%{filename} contains a virus'
     upload_documents_table:
       headers:

@@ -742,7 +742,7 @@ en:
         start_date_other: Other
         start_date_range: Date range
         start_date_specific: Specific date
-        starts_on: Date job starts
+        starts_on: Job start date
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_feedback_form:
         rating: How satisfied are you with the job listing process on Teaching Vacancies?
@@ -761,7 +761,7 @@ en:
         start_date_other: Other
         start_date_range: Date range
         start_date_specific: Specific date
-        starts_on: Date job starts
+        starts_on: Job start date
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_key_stages_form:
         key_stages: Key stages
