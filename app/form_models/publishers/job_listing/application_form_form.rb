@@ -7,6 +7,7 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Uplo
 
   validates :application_email, presence: true
   validate :other_application_email_presence
+  validate :other_application_email_valid
   validate :application_form_presence
 
   def self.fields
@@ -60,6 +61,12 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Uplo
 
   def other_application_email_presence
     errors.add(:other_application_email, :blank) if params[:application_email] == "other" && params[:other_application_email].blank?
+  end
+
+  def other_application_email_valid
+    return unless params[:other_application_email].present? && params[:application_email] == "other"
+
+    errors.add(:other_application_email, :invalid) unless params[:other_application_email].match? URI::MailTo::EMAIL_REGEXP
   end
 
   def application_form_presence

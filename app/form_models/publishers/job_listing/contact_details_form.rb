@@ -3,6 +3,7 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
   validates :contact_number, presence: true, format: { with: /\A\+?(?:\d\s?){10,12}\z/ }, if: -> { contact_number_provided == "true" }
   validates :contact_number_provided, inclusion: { in: [true, false, "true", "false"] }
   validate :other_contact_email_presence
+  validate :other_contact_email_valid
 
   def self.fields
     %i[contact_email contact_number contact_number_provided]
@@ -42,5 +43,11 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
 
   def other_contact_email_presence
     errors.add(:other_contact_email, :blank) if params[:contact_email] == "other" && params[:other_contact_email].blank?
+  end
+
+  def other_contact_email_valid
+    return unless params[:other_contact_email].present? && params[:contact_email] == "other"
+
+    errors.add(:other_contact_email, :invalid) unless params[:other_contact_email].match? URI::MailTo::EMAIL_REGEXP
   end
 end

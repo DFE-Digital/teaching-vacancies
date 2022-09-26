@@ -47,6 +47,15 @@ RSpec.describe Publishers::JobListing::ApplicationFormForm, type: :model do
       end
     end
 
+    context "when application email is other email and invalid" do
+      let(:params) { { other_application_email: "invalidemail", application_email: "other" } }
+
+      it "is invalid" do
+        expect(subject).to be_invalid
+        expect(subject.errors.of_kind?(:other_application_email, :invalid)).to be true
+      end
+    end
+
     context "when application email is other email and other email is not nil" do
       let(:params) { { other_application_email: "test2@example.com", application_email: current_publisher.email } }
 

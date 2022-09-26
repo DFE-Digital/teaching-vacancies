@@ -64,6 +64,15 @@ RSpec.describe Publishers::JobListing::ContactDetailsForm, type: :model do
       end
     end
 
+    context "when contact email is other email and invalid" do
+      let(:params) { { other_contact_email: "invalid_email", contact_email: "other" } }
+
+      it "is invalid" do
+        expect(subject).to be_invalid
+        expect(subject.errors.of_kind?(:other_contact_email, :invalid)).to be true
+      end
+    end
+
     context "when contact_email is other and other_contact_email valid" do
       let(:params) { { other_contact_email: "test2@example.com", contact_email: current_publisher.email } }
 
