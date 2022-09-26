@@ -8,9 +8,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         = t("jobs.enable_job_applications")
       - row.value
         = vacancy.enable_job_applications ? "Yes" : "No"
-      - row.action text: t("buttons.change"),
-                   href: organisation_job_build_path(vacancy.id, :applying_for_the_job, back_to_review: "true"),
-                   visually_hidden_text: t("jobs.enable_job_applications")
+      - unless vacancy.published?
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :applying_for_the_job, back_to_review: "true"),
+                    visually_hidden_text: t("jobs.enable_job_applications")
 
   - if !vacancy.enable_job_applications && vacancy.receive_applications.present?
     - summary_list.row(html_attributes: { id: "receive_applications" }) do |row|
