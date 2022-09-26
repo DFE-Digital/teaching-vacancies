@@ -5,4 +5,5 @@
     = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5", "data-upload-documents-target": "saveListingButton"
   - if vacancy.draft? && !all_steps_valid?
     = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true, classes: "govuk-!-margin-bottom-5", "data-upload-documents-target": "saveListingButton"
-  = govuk_link_to(t("buttons.cancel_and_return_to_jobs"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state")
+
+= govuk_link_to(t("buttons.cancel"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state govuk-body-m")

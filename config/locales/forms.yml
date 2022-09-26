@@ -18,7 +18,6 @@ en:
     cancel: Cancel
     cancel_and_return: Cancel and return
     cancel_and_return_to_account: Cancel and return to account
-    cancel_and_return_to_jobs: Cancel and return to manage jobs
     cancel_copy: Cancel job listing copy
     cancel_end_listing: Cancel ending job listing
     cancel_extending_closing_date: Cancel extending closing date
