@@ -333,7 +333,7 @@ en:
         time_created: Date created
         time_updated: Date last updated
       edit_link_text: Edit listing
-      extend_link_text: Extend deadline
+      extend_link_text: Extend closing date
       external_notice: This job listing was imported from your organisation's recruitment system and cannot be changed on Teaching Vacancies.
       external_tag: Imported
       expired:

@@ -20,12 +20,10 @@ en:
     cancel_and_return_to_account: Cancel and return to account
     cancel_and_return_to_jobs: Cancel and return to manage jobs
     cancel_copy: Cancel job listing copy
-    cancel_end_listing: Cancel ending job listing
-    cancel_extending_closing_date: Cancel extending closing date
     change: Change
     close_account: Close account
     complete_section: Complete section
-    confirm_deletion: Confirm deletion
+    confirm_deletion: Delete job listing
     confirm_destroy: Yes I am sure - delete this entry
     confirm_rejection: Confirm rejection
     confirm_unsubscribe: Unsubscribe
@@ -45,9 +43,9 @@ en:
     download_application_form: Download an application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)
     edit: Edit
-    end_listing: End job listing
+    end_listing: Close job listing
     end_listing_early: End job listing early
-    extend_closing_date: Extend deadline
+    extend_closing_date: Extend closing date
     find: Find
     go_to_teaching_vacancies: Go to Teaching Vacancies
     hide_filters: Hide filters
