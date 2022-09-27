@@ -12,11 +12,11 @@
       = f.govuk_radio_buttons_fieldset :contact_email, legend: { size: "m", tag: nil } do
         = f.govuk_radio_button :contact_email, current_publisher.email, label: { text: current_publisher.email }, link_errors: true
         = f.govuk_radio_button :contact_email, "other" do
-          = f.govuk_text_field :other_contact_email
+          = f.govuk_text_field :other_contact_email, label: { class: "govuk-label govuk-label--s" }
 
       = f.govuk_radio_buttons_fieldset :contact_number_provided, legend: { size: "m", tag: nil } do
         = f.govuk_radio_button :contact_number_provided, "true", link_errors: true do
-          = f.govuk_text_field :contact_number
+          = f.govuk_text_field :contact_number, label: { class: "govuk-label govuk-label--s" }
         = f.govuk_radio_button :contact_number_provided, "false"
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

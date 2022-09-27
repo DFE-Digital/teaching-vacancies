@@ -29,6 +29,6 @@
       = f.govuk_radio_buttons_fieldset :application_email, legend: { size: "m", tag: nil } do
         = f.govuk_radio_button :application_email, current_publisher.email, label: { text: current_publisher.email }, link_errors: true
         = f.govuk_radio_button :application_email, "other" do
-          = f.govuk_text_field :other_application_email
+          = f.govuk_text_field :other_application_email, label: { class: "govuk-label govuk-label--s" }
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

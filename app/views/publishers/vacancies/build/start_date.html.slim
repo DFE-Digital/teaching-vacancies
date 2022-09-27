@@ -24,7 +24,7 @@
             data: { "form-target": "inputText" }
         = f.govuk_radio_button :start_date_type, :other, label: { text: t("helpers.legend.publishers_job_listing_start_date_form.start_date_other") }, data: { action: "click->form#clearListener" } do
           = f.govuk_text_field :other_start_date_details,
-            label: { text: "Details" },
+            label: { text: "Details", class: "govuk-label--s" },
             hint: -> { "For example 'Easter term'" },
             data: { "form-target": "inputText" }
 
