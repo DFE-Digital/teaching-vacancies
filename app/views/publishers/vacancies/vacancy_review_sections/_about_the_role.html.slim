@@ -108,15 +108,19 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.key
       = t("jobs.additional_documents")
     - row.value
-      - if vacancy.completed_steps.include?("documents")
-        - if vacancy.supporting_documents.any?
-          ul.govuk-list
-            - vacancy.supporting_documents.each do |document|
-              li = govuk_link_to "#{document.filename}, #{number_to_human_size(document.byte_size)}", job_document_path(vacancy, document.id)
-        - else
-          = t("jobs.not_defined")
-      - else
+      - if vacancy.supporting_documents.any?
+        ul.govuk-list
+          - vacancy.supporting_documents.each do |document|
+            li = govuk_link_to "#{document.filename}, #{number_to_human_size(document.byte_size)}", job_document_path(vacancy, document.id)
+      - elsif vacancy.include_additional_documents?
         = t("jobs.not_answered")
-    - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :documents, back_to_review: "true"),
-                visually_hidden_text: t("jobs.additional_documents")
+      - else
+        = vacancy.completed_steps.include?("documents") ? t("jobs.not_defined") : t("jobs.not_answered")
+    - if vacancy.completed_steps.include?("include_additional_documents")
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :documents, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.additional_documents")
+    - else
+      - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :include_additional_documents, back_to_review: "true"),
+                    visually_hidden_text: t("jobs.additional_documents")
