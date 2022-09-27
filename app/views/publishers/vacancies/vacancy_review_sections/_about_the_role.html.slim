@@ -7,7 +7,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.key
         = t("jobs.ect_status")
       - row.value
-        = vacancy.ect_status == "ect_suitable" ? "Yes" : "No"
+        - if vacancy.ect_status.nil?
+          = t("jobs.not_answered")
+        - else
+          = vacancy.ect_status == "ect_suitable" ? "Yes" : "No"
       - row.action text: t("buttons.change"),
                    href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
                    visually_hidden_text: t("jobs.ect_status")
