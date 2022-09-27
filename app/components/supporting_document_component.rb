@@ -10,7 +10,7 @@ class SupportingDocumentComponent < ApplicationComponent
   end
 
   def document_size
-    å(supporting_document.byte_size)
+    (supporting_document.byte_size)
   end
 
   private
