@@ -1,5 +1,10 @@
 - content_for :page_title_prefix, review_page_title_prefix(vacancy, show_errors: true)
 
+- unless flash.any?
+  = govuk_notification_banner(title_text: t("banners.important")) do |banner|
+    - banner.heading(text: t("publishers.job_listing_process_changed_banner.heading"))
+    span class="govuk-!-margin-top-3" = t("publishers.job_listing_process_changed_banner.body")
+
 = render "review_banner"
 
 .govuk-grid-row

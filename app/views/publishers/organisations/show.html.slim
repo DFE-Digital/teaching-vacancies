@@ -1,3 +1,7 @@
+= govuk_notification_banner(title_text: t("banners.important")) do |banner|
+  - banner.heading(text: t("publishers.job_listing_process_changed_banner.heading"))
+  span class="govuk-!-margin-top-3" = t("publishers.job_listing_process_changed_banner.body")
+
 - content_for :page_title_prefix, current_organisation.name
 
 - content_for :skip_links do

@@ -53,6 +53,9 @@ en:
         one: Working pattern changed to %{new_value}
         other: Working patterns changed to %{new_value}
       show_value_changed: "%{attribute} changed to %{new_value}"
+    job_listing_process_changed_banner:
+      heading: The way you create a job listing has changed
+      body: If you edit an existing job listing you'll be asked to make changes.
     login_keys:
       new:
         notice: >-
