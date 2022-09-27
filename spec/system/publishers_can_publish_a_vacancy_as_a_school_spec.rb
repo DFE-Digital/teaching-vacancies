@@ -147,8 +147,7 @@ RSpec.describe "Creating a vacancy" do
       fill_in_include_additional_documents_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(current_path).to eq(organisation_job_path(created_vacancy.id))
-      has_complete_draft_vacancy_review_heading?(vacancy)
+      expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
       verify_all_vacancy_details(created_vacancy)
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
@@ -212,7 +211,7 @@ RSpec.describe "Creating a vacancy" do
       fill_in_include_additional_documents_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      has_complete_draft_vacancy_review_heading?(vacancy)
+      expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
       verify_all_vacancy_details(created_vacancy)
     end
 

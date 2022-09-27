@@ -203,6 +203,7 @@ Rails.application.routes.draw do
       get :confirm_destroy
       get :convert_to_draft
       get :preview
+      get :review
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"
       get :summary

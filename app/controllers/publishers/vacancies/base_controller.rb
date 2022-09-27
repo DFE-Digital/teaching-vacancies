@@ -40,7 +40,11 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
   def redirect_to_next_step
     if all_steps_valid? || save_and_finish_later?
-      redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
+      if vacancy.draft? && all_steps_valid?
+        redirect_to organisation_job_review_path(vacancy.id)
+      else
+        redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
+      end
     else
       redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
     end

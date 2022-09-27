@@ -24,11 +24,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def update
     if form.valid?
       update_vacancy
-      if all_steps_valid? || save_and_finish_later?
-        redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
-      else
-        redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
-      end
+      redirect_to_next_step
     else
       render_wizard
     end

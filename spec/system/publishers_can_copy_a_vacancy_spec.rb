@@ -30,7 +30,7 @@ RSpec.describe "Copying a vacancy" do
       fill_in_start_date_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      has_complete_draft_vacancy_review_heading?(new_vacancy)
+      expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
@@ -80,7 +80,7 @@ RSpec.describe "Copying a vacancy" do
       fill_in_about_the_role_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      has_complete_draft_vacancy_review_heading?(new_vacancy)
+      expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
@@ -101,7 +101,7 @@ RSpec.describe "Copying a vacancy" do
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(current_path).to eq(organisation_job_path(new_vacancy.id))
+      expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
     end
   end
 

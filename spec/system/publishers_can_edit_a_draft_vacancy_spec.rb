@@ -28,8 +28,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(current_path).to eq(organisation_job_path(vacancy.id))
-      has_complete_draft_vacancy_review_heading?(vacancy)
+      expect(current_path).to eq(organisation_job_review_path(vacancy.id))
       expect(page).to have_content(vacancy.job_role.humanize)
     end
 
@@ -60,13 +59,13 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         change_job_locations(vacancy, [another_primary_school])
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page.current_path).to eq(organisation_job_path(vacancy.id))
+        expect(current_path).to eq(organisation_job_review_path(vacancy.id))
         verify_job_locations(vacancy)
 
         change_job_locations(vacancy, [primary_school, another_primary_school])
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page.current_path).to eq(organisation_job_path(vacancy.id))
+        expect(current_path).to eq(organisation_job_review_path(vacancy.id))
         verify_job_locations(vacancy)
       end
 

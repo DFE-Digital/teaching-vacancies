@@ -1,0 +1,30 @@
+- content_for :page_title_prefix, review_page_title_prefix(vacancy, show_errors: true)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l Create job listing
+    h1.govuk-heading-l Check details and schedule job listing
+
+    - if (vacancy.completed_steps & %w[job_location job_role]).any?
+      = render "publishers/vacancies/vacancy_review_sections/job_details"
+
+    - if vacancy.completed_steps.include?("important_dates")
+      = render "publishers/vacancies/vacancy_review_sections/important_dates"
+
+    - if (vacancy.completed_steps & %w[applying_for_the_job how_to_receive_applications]).any?
+      = render "publishers/vacancies/vacancy_review_sections/application_process"
+
+    - if vacancy.completed_steps.include?("about_the_role") || vacancy.publication_status.in?(%w[published pending])
+      = render "publishers/vacancies/vacancy_review_sections/about_the_role"
+
+    p
+      = open_in_new_tab_link_to("Preview job listing", organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+    p
+      | By publishing this job listing you agree to the #{govuk_link_to "terms and conditions", page_path("terms-and-conditions")}
+
+    - if vacancy.publish_on&.future?
+      = govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+    - else
+      = govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+
+    = govuk_button_link_to(t("buttons.save_and_finish_later"), jobs_with_type_organisation_path(:draft), class: "govuk-button--secondary govuk-!-margin-left-2")
