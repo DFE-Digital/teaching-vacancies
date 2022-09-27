@@ -36,7 +36,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                   href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, back_to_review: "true"),
                   visually_hidden_text: t("jobs.how_to_apply")
 
-  - if !vacancy.enable_job_applications
+  - unless vacancy.enable_job_applications?
     - summary_list.row(html_attributes: { id: "receive_applications" }) do |row|
       - row.key
         = t("jobs.how_to_receive_applications")
@@ -103,10 +103,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.key
       = t("jobs.contact_number_provided")
     - row.value
-      - unless vacancy.contact_number_provided? || vacancy.contact_number?
-        = t("jobs.not_answered")
-      - else
-        = vacancy.contact_number_provided || vacancy.contact_number? ? "Yes" : "No"
+      -vacancy.contact_number_provided? || vacancy.contact_number? ? "Yes" : t("jobs.not_answered")
     - row.action text: t("buttons.change"),
                 href: organisation_job_build_path(vacancy.id, :contact_details, back_to_review: "true"),
                 visually_hidden_text: t("jobs.contact_number_provided")
