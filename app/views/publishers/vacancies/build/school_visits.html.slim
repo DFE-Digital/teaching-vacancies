@@ -3,9 +3,9 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
-      fieldset.govuk-fieldset
-        = f.govuk_error_summary
+      = f.govuk_error_summary
 
+      fieldset.govuk-fieldset
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           = vacancy_form_page_heading(vacancy, step_process, params: params)
 

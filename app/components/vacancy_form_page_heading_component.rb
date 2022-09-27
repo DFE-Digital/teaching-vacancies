@@ -1,10 +1,15 @@
 class VacancyFormPageHeadingComponent < ViewComponent::Base
   delegate :current_organisation, to: :helpers
 
-  def initialize(vacancy, step_process, params: {})
+  def initialize(vacancy, step_process, params: {}, fieldset: true)
     @vacancy = vacancy
     @step_process = step_process
     @params = params
+    @fieldset = fieldset
+  end
+
+  def heading_class
+    @fieldset ? "govuk-fieldset__heading" : "govuk-heading-l"
   end
 
   def heading

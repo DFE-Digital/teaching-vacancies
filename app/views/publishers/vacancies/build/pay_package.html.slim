@@ -5,7 +5,7 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = vacancy_form_page_heading(vacancy, step_process, params: params)
+      = vacancy_form_page_heading(vacancy, step_process, params: params, fieldset: false)
 
       = f.govuk_check_boxes_fieldset :salary_types, legend: { size: "m", tag: nil } do
         = f.govuk_check_box :salary_types, "full_time", link_errors: true do

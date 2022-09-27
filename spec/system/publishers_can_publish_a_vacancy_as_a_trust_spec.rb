@@ -36,7 +36,7 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.create_job")
 
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
-      within("h1.govuk-heading-l") do
+      within("h1") do
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
       end
 
@@ -44,7 +44,7 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.continue")
 
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
-      within("h1.govuk-heading-l") do
+      within("h1") do
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_role"))
       end
     end

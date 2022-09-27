@@ -184,7 +184,7 @@ en:
       blank: Enter details about the job start date
     start_date_type:
       inclusion: Select job start date
-    start_date:
+    starts_on:
       after: The date the job starts must be after the closing date
       blank: Select job start date
       invalid: Enter a date in the correct format
@@ -219,12 +219,12 @@ en:
       invalid: Enter a valid email address
     contact_number:
       blank: Enter a phone number
-      invalid: Enter a valid phone number
+      invalid: Enter a phone number in the correct format
     contact_number_provided:
       inclusion: Select yes if you would like to add a contact phone number
     other_contact_email:
       blank: Enter an email address
-      invalid: Enter a valid email address
+      invalid: Enter an email address in the correct format, like name@example.com
   about_the_role_errors: &about_the_role_errors
     ect_status:
       inclusion: Select yes if this role is suitable for an early career teacher

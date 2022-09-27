@@ -380,7 +380,7 @@ en:
         education_phases: Education phase
         job_title: Job title
         key_stages: Key stages
-        subjects: Subjects
+        subjects: Subjects (optional)
         contract_type: Contract type
         working_patterns: Working pattern
         pay_package: Salary and allowances

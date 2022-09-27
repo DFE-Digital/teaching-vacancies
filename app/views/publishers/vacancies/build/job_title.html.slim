@@ -5,15 +5,17 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = vacancy_form_page_heading(vacancy, step_process, params: params)
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          = vacancy_form_page_heading(vacancy, step_process, params: params)
 
-      = f.govuk_text_area :job_title,
-        label: nil,
-        class: "govuk-input string required",
-        max_chars: 75,
-        required: true
+        = f.govuk_text_area :job_title,
+          label: nil,
+          class: "govuk-input string required",
+          max_chars: 75,
+          required: true
 
-      = govuk_inset_text do
-        = t("publishers.vacancies.build.job_title.phase_inset_text.phase", phase: vacancy.phases.first&.humanize&.downcase)
+        = govuk_inset_text do
+          = t("publishers.vacancies.build.job_title.phase_inset_text.phase", phase: vacancy.phases.first&.humanize&.downcase)
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

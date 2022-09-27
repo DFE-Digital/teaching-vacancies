@@ -5,7 +5,7 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = vacancy_form_page_heading(vacancy, step_process, params: params)
+      = vacancy_form_page_heading(vacancy, step_process, params: params, fieldset: false)
 
       p.govuk-body-m = t("publishers.vacancies.build.contact_details.description")
 
