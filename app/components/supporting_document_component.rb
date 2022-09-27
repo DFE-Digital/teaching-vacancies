@@ -10,7 +10,7 @@ class SupportingDocumentComponent < ApplicationComponent
   end
 
   def document_size
-    number_to_human_size(supporting_document.byte_size)
+    å(supporting_document.byte_size)
   end
 
   private
