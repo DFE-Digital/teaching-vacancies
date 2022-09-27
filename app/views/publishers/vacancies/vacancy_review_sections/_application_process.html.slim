@@ -7,89 +7,115 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.key
         = t("jobs.enable_job_applications")
       - row.value
-        = vacancy.enable_job_applications ? "Yes" : "No"
+        - if vacancy.completed_steps.include?("applying_for_the_job")
+          = vacancy.enable_job_applications ? "Yes" : "No"
+        - else
+          = t("jobs.not_answered")
       - unless vacancy.published?
         - row.action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :applying_for_the_job, back_to_review: "true"),
                     visually_hidden_text: t("jobs.enable_job_applications")
 
-  - if !vacancy.enable_job_applications && vacancy.receive_applications.present?
+  - if vacancy.enable_job_applications? && vacancy.personal_statement_guidance?
+    - summary_list.row do |row|
+      - row.key
+        = t("jobs.personal_statement_guidance")
+      - row.value
+        = vacancy.personal_statement_guidance
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :school_visits, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.personal_statement_guidance")
+
+  - unless vacancy.enable_job_applications? && vacancy.how_to_apply.nil?
+    - summary_list.row do |row|
+      - row.key
+        = t("jobs.how_to_apply")
+      - row.value
+        = vacancy.how_to_apply
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.how_to_apply")
+
+  - unless vacancy.enable_job_applications?
     - summary_list.row(html_attributes: { id: "receive_applications" }) do |row|
       - row.key
         = t("jobs.how_to_receive_applications")
       - row.value
-        = vacancy.receive_applications.humanize
+        = vacancy.receive_applications.present? ? vacancy.receive_applications.humanize : t("jobs.not_answered")
       - row.action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, back_to_review: "true"),
                   visually_hidden_text: t("jobs.how_to_receive_applications")
 
-  - if vacancy.receive_applications == "email"
-    - if vacancy.application_form.present?
-      - summary_list.row(html_attributes: { id: "application_form" }) do |row|
+    - if vacancy.receive_applications == "email"
+        - summary_list.row(html_attributes: { id: "application_form" }) do |row|
+          - row.key
+            = t("jobs.application_form")
+          - row.value
+            - if vacancy.application_form.present?
+              = govuk_link_to("#{vacancy.application_form.filename}, #{number_to_human_size(vacancy.application_form.byte_size)}", job_document_path(vacancy, vacancy.application_form.id))
+            - else
+              = t("jobs.not_answered")
+          - row.action text: t("buttons.change"),
+                        href: organisation_job_build_path(vacancy.id, :application_form, back_to_review: "true"),
+                        visually_hidden_text: t("jobs.application_form")
+
+        - summary_list.row(html_attributes: { id: "application_email" }) do |row|
+          - row.key
+            = t("jobs.application_email")
+          - row.value
+            = vacancy.application_email.present? ? vacancy.application_email : t(jobs.not_answered)
+          - row.action text: t("buttons.change"),
+                        href: organisation_job_build_path(vacancy.id, :application_form, back_to_review: "true"),
+                        visually_hidden_text: t("jobs.application_email")
+
+    - if vacancy.receive_applications == "website"
+      - summary_list.row(html_attributes: { id: "application_link" }) do |row|
         - row.key
-          = t("jobs.application_form")
+          = t("jobs.application_link")
         - row.value
-          = govuk_link_to "#{vacancy.application_form.filename}, #{number_to_human_size(vacancy.application_form.byte_size)}", job_document_path(vacancy, vacancy.application_form.id)
+          = vacancy.application_link.present? ? vacancy.application_link : t("jobs.answered")
         - row.action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :application_form, back_to_review: "true"),
-                      visually_hidden_text: t("jobs.application_form")
+                      href: organisation_job_build_path(vacancy.id, :application_link, back_to_review: "true"),
+                      visually_hidden_text: t("jobs.application_link")
 
-    - if vacancy.application_email.present?
-      - summary_list.row(html_attributes: { id: "application_email" }) do |row|
-        - row.key
-          = t("jobs.application_email")
-        - row.value
-          = vacancy.application_email
-        - row.action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :application_form, back_to_review: "true"),
-                      visually_hidden_text: t("jobs.application_email")
-
-  - if vacancy.receive_applications == "website" && vacancy.application_link.present?
-    - summary_list.row(html_attributes: { id: "application_link" }) do |row|
-      - row.key
-        = t("jobs.application_link")
-      - row.value
-        = vacancy.application_link
-      - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :application_link, back_to_review: "true"),
-                    visually_hidden_text: t("jobs.application_link")
-
-  - unless vacancy.school_visits.nil?
-    - summary_list.row(html_attributes: { id: "school_visits" }) do |row|
-      - row.key
-        = t("jobs.school_visits")
-      - row.value
+  - summary_list.row(html_attributes: { id: "school_visits" }) do |row|
+    - row.key
+      = t("jobs.school_visits")
+    - row.value
+      - if vacancy.school_visits.nil?
+        = t("jobs.not_answered")
+      - else
         = vacancy.school_visits ? "Yes" : "No"
-      - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :school_visits, back_to_review: "true"),
-                    visually_hidden_text: t("jobs.school_visits")
+    - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :school_visits, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.school_visits")
 
-  - if vacancy.contact_email.present?
-    - summary_list.row(html_attributes: { id: "contact_email" }) do |row|
-      - row.key
-        = t("jobs.contact_email")
-      - row.value
-        = vacancy.contact_email
-      - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :contact_details, back_to_review: "true"),
-                    visually_hidden_text: t("jobs.contact_email")
-
-  - unless vacancy.contact_number_provided.nil?
-    - summary_list.row(html_attributes: { id: "contact_number_provided" }) do |row|
-      - row.key
-        = t("jobs.contact_number_provided")
-      - row.value
-        = vacancy.contact_number_provided ? "Yes" : "No"
-      - row.action text: t("buttons.change"),
+  - summary_list.row(html_attributes: { id: "contact_email" }) do |row|
+    - row.key
+      = t("jobs.contact_email")
+    - row.value
+      = vacancy.contact_email.present? ? vacancy.contact_email : t("jobs.not_answered")
+    - row.action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :contact_details, back_to_review: "true"),
-                  visually_hidden_text: t("jobs.contact_number_provided")
+                  visually_hidden_text: t("jobs.contact_email")
 
-    - if vacancy.contact_number.present?
-      - summary_list.row(html_attributes: { id: "contact_number" }) do |row|
-        - row.key
-          = t("jobs.contact_number")
-        - row.value
-          = vacancy.contact_number
-        - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :contact_details, back_to_review: "true"),
-                    visually_hidden_text: t("jobs.contact_number")
+  - summary_list.row(html_attributes: { id: "contact_number_provided" }) do |row|
+    - row.key
+      = t("jobs.contact_number_provided")
+    - row.value
+      -vacancy.contact_number_provided? || vacancy.contact_number? ? "Yes" : t("jobs.not_answered")
+    - row.action text: t("buttons.change"),
+                href: organisation_job_build_path(vacancy.id, :contact_details, back_to_review: "true"),
+                visually_hidden_text: t("jobs.contact_number_provided")
+
+  - summary_list.row(html_attributes: { id: "contact_number" }) do |row|
+    - row.key
+      = t("jobs.contact_number")
+    - row.value
+      - if vacancy.completed_steps.include?("applying_for_the_job_details")
+        = vacancy.contact_number? ? vacancy.contact_number : t("jobs.not_defined")
+      - else
+        = vacancy.contact_number? ? vacancy.contact_number : t("jobs.not_answered")
+    - row.action text: t("buttons.change"),
+                href: organisation_job_build_path(vacancy.id, :contact_details, back_to_review: "true"),
+                visually_hidden_text: t("jobs.contact_number")

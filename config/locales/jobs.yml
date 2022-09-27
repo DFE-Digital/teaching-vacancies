@@ -264,7 +264,7 @@ en:
     additional_documents: Additional documents
     apply: More on how to apply
     application_link: Link to online application
-    application_email: Email address to receive applications	
+    application_email: Email address to receive applications
     application_email_subject: '%{job} job application'
     application_email_body: Regarding the job at %{url}
     application_form: Application form
@@ -291,6 +291,7 @@ en:
     review: Review your entries for each section below, making any changes needed before you publish the job listing.
     review_future:
       Review your entries for each section below, making any changes before you submit the listing for publication.
+    not_answered: Not answered
     not_defined: Not provided (will not be seen on published listing)
     edit: Edit the job details.
 

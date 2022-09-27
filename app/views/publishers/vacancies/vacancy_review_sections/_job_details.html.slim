@@ -30,65 +30,69 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                  href: organisation_job_build_path(vacancy.id, :job_title, back_to_review: "true"),
                  visually_hidden_text: t("jobs.job_title")
 
-  - if vacancy.key_stages.any?
+  - if vacancy.allow_key_stages?
     - summary_list.row(html_attributes: { id: "key_stages" }) do |row|
       - row.key
         = t("jobs.key_stage", count: vacancy.key_stages.count)
       - row.value
-        = vacancy.readable_key_stages
+        = vacancy.key_stages.any? ? vacancy.readable_key_stages : t("jobs.not_answered")
       - row.action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :key_stages, back_to_review: "true"),
                   visually_hidden_text: t("jobs.key_stage", count: vacancy.key_stages.count)
 
-  - if vacancy.allow_subjects? && vacancy.subjects.any?
+  - if vacancy.allow_subjects?
     - summary_list.row(html_attributes: { id: "subjects" }) do |row|
       - row.key
         = t("jobs.subjects")
       - row.value
-        = vacancy.readable_subjects
+        - if vacancy.completed_steps.include?("subjects")
+          = vacancy.subjects.any? ? vacancy.readable_subjects : t("jobs.not_defined")
+        - else
+          = vacancy.subjects.any? ? vacancy.readable_subjects : t("jobs.not_answered")
       - row.action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :subjects, back_to_review: "true"),
                   visually_hidden_text: t("jobs.subjects")
 
-  - if vacancy.contract_type.present?
-    - summary_list.row(html_attributes: { id: "contract_type" }) do |row|
+  - summary_list.row(html_attributes: { id: "contract_type" }) do |row|
+    - row.key
+      = t("jobs.contract_type")
+    - row.value
+      = vacancy.contract_type.present? ? vacancy.contract_type.humanize : t("jobs.not_answered")
+    - row.action text: t("buttons.change"),
+                href: organisation_job_build_path(vacancy.id, :contract_type, back_to_review: "true"),
+                visually_hidden_text: t("jobs.contract_type")
+
+  - if vacancy.completed_steps.include?("working_patterns") && (vacancy.full_time_details.nil? && vacancy.part_time_details.nil?)
+    - summary_list.row(html_attributes: { id: "working_patterns" }) do |row|
       - row.key
-        = t("jobs.contract_type")
+        = t("jobs.working_patterns")
       - row.value
-        = vacancy.contract_type.humanize
+        = vacancy.working_patterns.any? ? vacancy.readable_working_patterns : t("jobs.not_answered")
       - row.action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :contract_type, back_to_review: "true"),
-                  visually_hidden_text: t("jobs.contract_type")
+                  href: organisation_job_build_path(vacancy.id, :working_patterns, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.working_patterns")
 
-  - if vacancy.working_patterns.any?
-    - if vacancy.full_time_details.nil? && vacancy.part_time_details.nil?
-      - summary_list.row(html_attributes: { id: "working_patterns" }) do |row|
-        - row.key
-          = t("jobs.working_patterns")
-        - row.value
-          = vacancy.readable_working_patterns
-        - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :working_patterns, back_to_review: "true"),
-                    visually_hidden_text: t("jobs.working_patterns")
+    - summary_list.row(html_attributes: { id: "working_patterns_details" }) do |row|
+      - row.key
+        = t("jobs.working_patterns_details")
+      - row.value
+        = vacancy.working_patterns_details? ? vacancy.working_patterns_details : t("jobs.not_defined")
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :working_patterns, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.working_patterns")
 
-      - summary_list.row(html_attributes: { id: "working_patterns_details" }) do |row|
-        - row.key
-          = t("jobs.working_patterns_details")
-        - row.value
-          = vacancy.working_patterns_details? ? vacancy.working_patterns_details : t("jobs.not_defined")
-        - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :working_patterns, back_to_review: "true"),
-                    visually_hidden_text: t("jobs.working_patterns")
-
-    - else
-      - summary_list.row(html_attributes: { id: "working_patterns" }) do |row|
-        - row.key
-          h4.govuk-heading-s = t("jobs.working_patterns")
-        - row.value
+  - else
+    - summary_list.row(html_attributes: { id: "working_patterns" }) do |row|
+      - row.key
+        h4.govuk-heading-s = t("jobs.working_patterns")
+      - row.value
+        - if vacancy.working_patterns.any?
           ul.govuk-list = vacancy_working_patterns(vacancy)
-        - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :working_patterns, back_to_review: "true"),
-                    visually_hidden_text: t("jobs.working_patterns")
+        - else
+          = t("jobs.not_answered")
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :working_patterns, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.working_patterns")
 
   - if vacancy.salary_types.any?
     - summary_list.row(html_attributes: { id: "salary" }) do |row|
@@ -108,28 +112,31 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
             li class="govuk-!-margin-bottom-4"
               div => "#{t('jobs.pay_scale')}:"
               = vacancy.pay_scale
+          - unless vacancy.salary? && vacancy.actual_salary? && vacancy.pay_scale?
+            = t("jobs.not_answered")
       - row.action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :pay_package, back_to_review: "true"),
                     visually_hidden_text: t("jobs.salary_details")
 
-  - unless vacancy.benefits.nil?
-    - summary_list.row(html_attributes: { id: "benefits" }) do |row|
-      - row.key
-        h4.govuk-heading-s class="govuk-!-margin-bottom-0"
-          = t("jobs.benefits")
-      - row.value
+  - summary_list.row(html_attributes: { id: "benefits" }) do |row|
+    - row.key
+      h4.govuk-heading-s class="govuk-!-margin-bottom-0"
+        = t("jobs.benefits")
+    - row.value
+      - if vacancy.benefits.nil?
+        = t("jobs.not_answered")
+      - else
         = vacancy.benefits? ? "Yes" : "No"
-      - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :pay_package, back_to_review: "true"),
-                    visually_hidden_text: t("jobs.benefits")
+    - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :pay_package, back_to_review: "true"),
+                  visually_hidden_text: t("jobs.benefits")
 
-    - if vacancy.benefits?
-      - summary_list.row(html_attributes: { id: "benefits_details" }) do |row|
-        - row.key
-          h4.govuk-heading-s class="govuk-!-margin-bottom-0"
-            = t("jobs.benefits_details")
-        - row.value
-          = vacancy.benefits_details
-        - row.action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :pay_package),
-                      visually_hidden_text: t("jobs.benefits_details")
+  - summary_list.row(html_attributes: { id: "benefits_details" }) do |row|
+    - row.key
+      h4.govuk-heading-s class="govuk-!-margin-bottom-0"
+        = t("jobs.benefits_details")
+    - row.value
+      = vacancy.benefits_details.present? ? vacancy.benefits_details : t("jobs.not_answered")
+    - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :pay_package),
+                  visually_hidden_text: t("jobs.benefits_details")
