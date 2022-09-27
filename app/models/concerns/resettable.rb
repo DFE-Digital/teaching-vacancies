@@ -9,6 +9,9 @@ module Resettable
     reset_actual_salary
     reset_fixed_term_contract_duration
     reset_parental_leave_cover_contract_duration
+    reset_receive_applications
+    reset_application_email
+    reset_application_link
     set_default_key_stage
     reset_subjects
   end
@@ -37,5 +40,23 @@ module Resettable
 
   def reset_subjects
     self.subjects = [] unless allow_subjects?
+  end
+
+  def reset_receive_applications
+    return unless enable_job_applications_changed? && enable_job_applications
+
+    self.receive_applications = nil
+  end
+
+  def reset_application_email
+    return unless receive_applications_changed? && receive_applications != "email"
+
+    self.application_email = nil
+  end
+
+  def reset_application_link
+    return unless receive_applications_changed? && receive_applications != "website"
+
+    self.application_link = nil
   end
 end
