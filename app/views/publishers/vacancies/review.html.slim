@@ -3,7 +3,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     span.govuk-caption-l Create job listing
-    h1.govuk-heading-l Check details and schedule job listing
+    h1.govuk-heading-l Check details and #{vacancy.publish_on&.future? ? "schedule" : "publish" } job listing
 
     - if (vacancy.completed_steps & %w[job_location job_role]).any?
       = render "publishers/vacancies/vacancy_review_sections/job_details"
