@@ -1,26 +1,28 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.documents"))
 
-= vacancy_form_page_heading(vacancy, step_process, params: params)
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds data-controller="upload-documents"
     = form_for form, url: organisation_job_documents_path(vacancy.id) do |f|
       = f.govuk_error_summary
 
-      - if params[:back_to_review]
-        = f.hidden_field :back_to_review, value: "true"
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          = vacancy_form_page_heading(vacancy, step_process, params: params)
 
-      = f.govuk_file_field :documents,
-        label: nil,
-        accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
-        multiple: true,
-        include_hidden: false,
-        enctype: "multipart/form-data",
-        "data-upload-documents-target": "inputFileUpload",
-        "data-action": "change->upload-documents#uploadFiles"
+        - if params[:back_to_review]
+          = f.hidden_field :back_to_review, value: "true"
 
-      button.govuk-file-upload class="govuk-!-display-none govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#triggerUpload"
-        = t("buttons.choose_file")
+        = f.govuk_file_field :documents,
+          label: nil,
+          accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
+          multiple: true,
+          include_hidden: false,
+          enctype: "multipart/form-data",
+          "data-upload-documents-target": "inputFileUpload",
+          "data-action": "change->upload-documents#uploadFiles"
+
+        button.govuk-file-upload class="govuk-!-display-none govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#triggerUpload"
+          = t("buttons.choose_file")
 
       = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
 
