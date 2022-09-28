@@ -18,7 +18,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     filename = vacancy.application_form.filename
     vacancy.application_form.purge_later
 
-    redirect_to organisation_job_build_path(vacancy.id, :application_form, back_to_review: params[:back_to_review]), flash: {
+    redirect_to organisation_job_build_path(vacancy.id, :application_form, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show]), flash: {
       success: t("jobs.file_delete_success_message", filename: filename),
     }
   end
@@ -46,8 +46,9 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
       send_event(:supporting_document_created, vacancy.application_form)
     end
 
-    # So they are taken back to the review page upon clicking the back link, even after creating a document
+    # So they are taken back to the show or review page upon clicking the back link, even after creating a document
     params[:back_to_review] = params[:publishers_job_listing_application_form_form][:back_to_review]
+    params[:back_to_show] = params[:publishers_job_listing_application_form_form][:back_to_show]
 
     render "publishers/vacancies/build/application_form"
   end
@@ -58,8 +59,9 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
       update_google_index(vacancy) if vacancy.listed?
       redirect_to_next_step
     else
-      # So they are taken back to the review page upon clicking the back link, even after uploading a school_visit
+      # So they are taken back to the show or review page upon clicking the back link, even after uploading a school_visit
       params[:back_to_review] = params[:publishers_job_listing_application_form_form][:back_to_review]
+      params[:back_to_show] = params[:publishers_job_listing_application_form_form][:back_to_show]
 
       render "publishers/vacancies/build/application_form"
     end

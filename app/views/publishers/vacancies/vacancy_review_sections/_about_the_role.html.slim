@@ -12,7 +12,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - else
           = vacancy.ect_status == "ect_suitable" ? "Yes" : "No"
       - row.action text: t("buttons.change"),
-                   href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                   href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                    visually_hidden_text: t("jobs.ect_status")
 
   - if vacancy.job_advert.present?
@@ -22,7 +22,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.job_advert
       - row.action text: t("buttons.change"),
-                   href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                   href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                    visually_hidden_text: t("jobs.job_advert")
 
   - if strip_tags(vacancy.about_school).present?
@@ -32,7 +32,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.about_school
       - row.action text: t("buttons.change"),
-                   href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                   href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                    visually_hidden_text: t("jobs.about_school")
 
   - summary_list.row(html_attributes: { id: "skills_and_experience" }) do |row|
@@ -41,7 +41,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.value
       = vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : t("jobs.not_answered")
     - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                 visually_hidden_text: t("jobs.skills_and_experience")
 
   - summary_list.row(html_attributes: { id: "school_offer" }) do |row|
@@ -50,7 +50,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.value
       = vacancy.school_offer.present? ? vacancy.school_offer : t("jobs.not_answered")
     - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                 visually_hidden_text: t("jobs.school_offer")
 
   - summary_list.row(html_attributes: { id: "safeguarding_information_provided" }) do |row|
@@ -62,7 +62,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - else
         = vacancy.safeguarding_information_provided ? "Yes" : "No"
     - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                 visually_hidden_text: t("jobs.safeguarding_information_provided")
 
   - summary_list.row(html_attributes: { id: "safeguarding_information" }) do |row|
@@ -71,7 +71,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.value
       = vacancy.safeguarding_information.present? ? vacancy.safeguarding_information : t("jobs.not_answered")
     - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                 visually_hidden_text: t("jobs.safeguarding_information")
 
   - summary_list.row(html_attributes: { id: "further_details_provided" }) do |row|
@@ -83,7 +83,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - else
         = vacancy.further_details_provided ? "Yes" : "No"
     - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                 visually_hidden_text: t("jobs.further_details_provided")
 
   - summary_list.row(html_attributes: { id: "further_details" }) do |row|
@@ -92,7 +92,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.value
       = vacancy.further_details.present? ? vacancy.further_details : t("jobs.not_answered")
     - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, back_to_review: "true"),
+                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                 visually_hidden_text: t("jobs.further_details")
 
   - summary_list.row(html_attributes: { id: "include_additional_documents" }) do |row|
@@ -104,7 +104,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - else
         = vacancy.include_additional_documents ? "Yes" : "No"
     - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :include_additional_documents, back_to_review: "true"),
+                href: organisation_job_build_path(vacancy.id, :include_additional_documents, "back_to_#{action_name}": "true"),
                 visually_hidden_text: t("jobs.include_additional_documents")
 
   - summary_list.row(html_attributes: { id: "supporting_documents" }) do |row|
@@ -121,9 +121,9 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         = vacancy.completed_steps.include?("documents") ? t("jobs.not_defined") : t("jobs.not_answered")
     - if vacancy.completed_steps.include?("include_additional_documents")
       - row.action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :documents, back_to_review: "true"),
+                  href: organisation_job_build_path(vacancy.id, :documents, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.additional_documents")
     - else
       - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :include_additional_documents, back_to_review: "true"),
+                    href: organisation_job_build_path(vacancy.id, :include_additional_documents, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.additional_documents")

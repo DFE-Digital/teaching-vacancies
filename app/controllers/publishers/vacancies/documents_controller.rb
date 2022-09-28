@@ -11,8 +11,11 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
       send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
     end
 
-    # So they are taken back to the review page upon clicking the back link, even after creating or deleting a document
-    params[:back_to_review] = params[:publishers_job_listing_documents_form][:back_to_review] if params[:publishers_job_listing_documents_form]
+    # So they are taken back to the show or review page upon clicking the back link, even after creating or deleting a document
+    if params[:publishers_job_listing_documents_form]
+      params[:back_to_review] = params[:publishers_job_listing_documents_form][:back_to_review]
+      params[:back_to_show] = params[:publishers_job_listing_documents_form][:back_to_show]
+    end
 
     render :show
   end
@@ -22,7 +25,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     document.purge_later
     send_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
 
-    redirect_to organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review]), flash: {
+    redirect_to organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show]), flash: {
       success: t("jobs.file_delete_success_message", filename: document.filename),
     }
   end

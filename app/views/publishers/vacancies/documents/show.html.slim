@@ -9,8 +9,8 @@
         legend.govuk-fieldset__legend.govuk-fieldset__legend--l
           = vacancy_form_page_heading(vacancy, step_process, params: params)
 
-        - if params[:back_to_review]
-          = f.hidden_field :back_to_review, value: "true"
+        - if params["back_to_#{action_name}"]
+          = f.hidden_field "back_to_#{action_name}", value: "true"
 
         = f.govuk_file_field :documents,
           label: nil,

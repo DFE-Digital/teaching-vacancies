@@ -33,13 +33,14 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
   end
 
   def back_path
-    return organisation_job_path(vacancy.id) if params[:back_to_review] == "true"
+    return organisation_job_review_path(vacancy.id) if params[:back_to_review] == "true"
+    return organisation_job_path(vacancy.id) if params[:back_to_show] == "true"
 
     organisation_job_build_path(vacancy.id, step_process.previous_step)
   end
 
   def render_back_link?
-    steps_to_include_back_link = params[:back_to_review].present? ? step_process.steps : step_process.steps[1..]
+    steps_to_include_back_link = params[:back_to_review].present? || params[:back_to_show].present? ? step_process.steps : step_process.steps[1..]
 
     step_process.current_step.in?(steps_to_include_back_link)
   end

@@ -16,7 +16,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def show
     skip_step_if_missing
 
-    return redirect_to(organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review])) if current_step == :documents
+    return redirect_to(organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show])) if current_step == :documents
 
     render_wizard
   end
