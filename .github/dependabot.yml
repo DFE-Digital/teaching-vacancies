@@ -22,6 +22,8 @@ updates:
     open-pull-requests-limit: 2
     labels:
     - DevOps
+    - dependencies
+    - github-actions
 
   - package-ecosystem: "npm"
     directory: "/"
@@ -31,10 +33,34 @@ updates:
     open-pull-requests-limit: 2
 
   - package-ecosystem: "terraform"
-    directory: "/terraform"
+    directory: "/terraform/app"
     schedule:
       interval: "weekly"
       day: "wednesday"
     open-pull-requests-limit: 2
     labels:
     - DevOps
+    - dependencies
+    - terraform-app
+
+  - package-ecosystem: "terraform"
+    directory: "/terraform/common"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+    open-pull-requests-limit: 2
+    labels:
+    - DevOps
+    - dependencies
+    - terraform-common
+
+  - package-ecosystem: "terraform"
+    directory: "/terraform/monitoring"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+    open-pull-requests-limit: 2
+    labels:
+    - DevOps
+    - dependencies
+    - terraform-monitoring
