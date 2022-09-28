@@ -2,23 +2,13 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l Create job listing
-    h1.govuk-heading-l Check details and #{vacancy.publish_on&.future? ? "schedule" : "publish" } job listing
+    span.govuk-caption-l = t(".caption")
+    h1.govuk-heading-l = t(".heading", status: (vacancy.publish_on&.future? ? "schedule" : "publish"))
 
-    - if (vacancy.completed_steps & %w[job_location job_role]).any?
-      = render "publishers/vacancies/vacancy_review_sections/job_details"
-
-    - if vacancy.completed_steps.include?("important_dates")
-      = render "publishers/vacancies/vacancy_review_sections/important_dates"
-
-    - if (vacancy.completed_steps & %w[applying_for_the_job how_to_receive_applications]).any?
-      = render "publishers/vacancies/vacancy_review_sections/application_process"
-
-    - if vacancy.completed_steps.include?("about_the_role") || vacancy.publication_status.in?(%w[published pending])
-      = render "publishers/vacancies/vacancy_review_sections/about_the_role"
+    = render "publishers/vacancies/sections"
 
     p
-      = open_in_new_tab_link_to("Preview job listing", organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+      = open_in_new_tab_link_to(t("buttons.preview_job_listing"), organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     p
       | By publishing this job listing you agree to the #{govuk_link_to "terms and conditions", page_path("terms-and-conditions")}
 

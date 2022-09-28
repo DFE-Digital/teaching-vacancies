@@ -18,10 +18,10 @@ en:
       contact_email: Contact email changed to %{new_value}
       contact_number: Contact number changed to %{new_value}
       contract_type: Contract type changed to %{new_value}
-      earliest_start_date: 
+      earliest_start_date:
         changed: Earliest start date changed to %{new_value}
         deleted: Earliest start date was deleted
-      expires_at: 
+      expires_at:
         changed: Application deadline changed to %{new_value}
       how_to_apply: How to apply changed to %{new_value}
       job_advert: There were changes to the job advert
@@ -33,7 +33,7 @@ en:
       key_stages:
         one: Key stage changed to %{new_value}
         other: Key stages changed to %{new_value}
-      latest_start_date: 
+      latest_start_date:
         changed: Latest start date changed to %{new_value}
         deleted: Latest start date was deleted
       no_changes: Changes to the job listing will be listed here.
@@ -43,7 +43,7 @@ en:
       personal_statement_guidance: Personal statement guidance changed to %{new_value}
       salary: Salary changed to %{new_value}
       school_visits: "%{organisation_type} visits changed to %{new_value}"
-      starts_on: 
+      starts_on:
         changed: Expected start date changed to %{new_value}
         deleted: Expected start date was deleted
       subjects:
@@ -339,7 +339,8 @@ en:
       live:
         notice: You can only view active jobs
       review:
-        heading: Review the job listing
+        caption: Create job listing
+        heading: Check details and %{status} job listing
         steps: Create a job listing steps
       show:
         view_live_listing_link: View this listing
