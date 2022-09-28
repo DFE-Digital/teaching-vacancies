@@ -116,7 +116,7 @@ en:
       inclusion: Select at least one key stage
   contract_type_errors: &contract_type_errors
     contract_type:
-      inclusion: Select if the contract type is permanent, fixed term, or maternity or parental leave cover
+      inclusion: Select contract type
     fixed_term_contract_duration:
       blank: Enter the length of the fixed term contract
     parental_leave_cover_contract_duration:

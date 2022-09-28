@@ -7,8 +7,6 @@
 
       = vacancy_form_page_heading(vacancy, step_process, params: params, fieldset: false)
 
-      p.govuk-body-m = t("publishers.vacancies.build.contact_details.description")
-
       = f.govuk_radio_buttons_fieldset :contact_email, legend: { size: "m", tag: nil } do
         = f.govuk_radio_button :contact_email, current_publisher.email, label: { text: current_publisher.email }, link_errors: true
         = f.govuk_radio_button :contact_email, "other" do

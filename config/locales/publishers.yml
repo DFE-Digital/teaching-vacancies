@@ -200,7 +200,6 @@ en:
             - is always up to date with the ‘keeping children safe in education’ guidelines
           step_title: Applying for the job
         contact_details:
-          description: Give contact details to ask question about the job.
           step_title: Contact details
         documents:
           accessibility_link_text: How to make documents accessible
