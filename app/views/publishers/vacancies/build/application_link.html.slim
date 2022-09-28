@@ -5,8 +5,10 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = vacancy_form_page_heading(vacancy, step_process, params: params)
+      fieldset.govuk-fieldset
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--l
+          = vacancy_form_page_heading(vacancy, step_process, params: params)
 
-      = f.govuk_url_field :application_link, label: nil
+        = f.govuk_url_field :application_link, label: nil
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
