@@ -160,7 +160,7 @@ class Vacancy < ApplicationRecord
   end
 
   def allow_subjects?
-    phases.any? { |phase| phase.in? %w[middle secondary through] }
+    phases.any? { |phase| phase.in? %w[middle secondary sixth_form_or_college through] }
   end
 
   def key_stages_for_phases
