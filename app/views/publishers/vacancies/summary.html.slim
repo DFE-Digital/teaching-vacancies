@@ -12,7 +12,10 @@
     p = t(".you_can")
 
     ul.govuk-list.govuk-list--bullet
-      li = govuk_link_to t(".view_listing"), job_path(@vacancy.id)
+      - if vacancy.publish_on.future?
+        li = open_in_new_tab_link_to t(".preview_listing"), organisation_job_preview_path(@vacancy.id)
+      - else
+        li = govuk_link_to t(".view_listing"), job_path(@vacancy.id)
       li = govuk_link_to t(".make_changes"), organisation_job_path(@vacancy.id)
       li = govuk_link_to t(".manage_jobs"), jobs_with_type_organisation_path(:published)
 
