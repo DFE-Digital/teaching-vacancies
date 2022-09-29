@@ -469,6 +469,19 @@ RSpec.describe Vacancy do
         expect(subject.subjects).to be_empty
       end
     end
+
+    context "when role is changed from teacher to sendo" do
+      subject { create(:vacancy, job_role: :teacher, key_stages: %w[ks2]) }
+
+      before do
+        subject.assign_attributes(job_role: :sendco)
+        subject.save
+      end
+
+      it "drops the subjects" do
+        expect(subject.subjects).to be_empty
+      end
+    end
   end
 
   describe "validations" do

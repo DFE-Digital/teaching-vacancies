@@ -39,6 +39,9 @@ RSpec.describe "Editing a published vacancy" do
       fill_in_education_phases_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
+      check I18n.t("helpers.label.publishers_job_listing_job_details_form.key_stages_options.#{vacancy.key_stages.first}")
+      click_on I18n.t("buttons.save_and_continue")
+
       expect(page.current_path).to eq(organisation_job_path(vacancy.id))
       verify_job_locations(vacancy)
     end
