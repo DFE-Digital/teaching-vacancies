@@ -103,7 +103,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.key
       = t("jobs.contact_number_provided")
     - row.value
-      -vacancy.contact_number_provided? || vacancy.contact_number? ? "Yes" : t("jobs.not_answered")
+      - if vacancy.contact_number_provided.nil?
+        = t("jobs.not_answered")
+      - else
+        = vacancy.contact_number_provided? || vacancy.contact_number? ? "Yes" : "No"
     - row.action text: t("buttons.change"),
                 href: organisation_job_build_path(vacancy.id, :contact_details, "back_to_#{action_name}": "true"),
                 visually_hidden_text: t("jobs.contact_number_provided")
@@ -112,10 +115,12 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.key
       = t("jobs.contact_number")
     - row.value
-      - if vacancy.completed_steps.include?("applying_for_the_job_details")
-        = vacancy.contact_number? ? vacancy.contact_number : t("jobs.not_defined")
-      - else
-        = vacancy.contact_number? ? vacancy.contact_number : t("jobs.not_answered")
+      - if vacancy.contact_number?
+        = vacancy.contact_number
+      - elsif vacancy.contact_number_provided.nil?
+        = vacancy.completed_steps.include?("applying_for_the_job_details") ? t("jobs.not_defined") : t("jobs.not_answered")
+      - elsif vacancy.contact_number_provided == false
+        = t("jobs.not_defined")
     - row.action text: t("buttons.change"),
                 href: organisation_job_build_path(vacancy.id, :contact_details, "back_to_#{action_name}": "true"),
                 visually_hidden_text: t("jobs.contact_number")
