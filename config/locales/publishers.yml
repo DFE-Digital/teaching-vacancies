@@ -366,6 +366,7 @@ en:
         manage_jobs: manage jobs
         next_steps: Next steps
         page_title: The job listing for %{organisation} has been completed
+        preview_listing: preview the job listing
         view_listing: view the job listing
         you_can: "You can:"
       feedbacks:
