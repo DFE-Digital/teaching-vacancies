@@ -9,8 +9,9 @@ module Resettable
     reset_actual_salary
     reset_fixed_term_contract_duration
     reset_parental_leave_cover_contract_duration
-    set_default_key_stage
     reset_subjects
+    set_default_key_stage
+    reset_keystages
   end
 
   def reset_actual_salary
@@ -31,11 +32,15 @@ module Resettable
     self.parental_leave_cover_contract_duration = ""
   end
 
-  def set_default_key_stage
-    self.key_stages = key_stages_for_phases if key_stages_for_phases.one?
+  def reset_keystages
+    self.key_stages = [] unless allow_key_stages?
   end
 
   def reset_subjects
     self.subjects = [] unless allow_subjects?
+  end
+
+  def set_default_key_stage
+    self.key_stages = key_stages_for_phases if key_stages_for_phases.one?
   end
 end
