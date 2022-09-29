@@ -11,4 +11,7 @@
 
         = f.govuk_url_field :application_link, label: nil
 
+      - if vacancy.how_to_apply.present?
+        = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
+
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

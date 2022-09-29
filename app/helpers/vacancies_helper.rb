@@ -222,6 +222,17 @@ module VacanciesHelper
     end
   end
 
+  def vacancy_how_to_apply_step(vacancy)
+    case vacancy.receive_applications
+    when "email"
+      :application_form
+    when "website"
+      :application_link
+    else
+      :how_to_receive_applications
+    end
+  end
+
   private
 
   def vacancy_working_patterns_summary(vacancy)

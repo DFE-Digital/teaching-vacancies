@@ -23,7 +23,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.personal_statement_guidance
       - row.action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :school_visits, "back_to_#{action_name}": "true"),
+                  href: organisation_job_build_path(vacancy.id, :applying_for_the_job, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.personal_statement_guidance")
 
   - unless vacancy.enable_job_applications?
@@ -34,7 +34,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.value
           = vacancy.how_to_apply
         - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, "back_to_#{action_name}": "true"),
+                    href: organisation_job_build_path(vacancy.id, vacancy_how_to_apply_step(vacancy), "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.how_to_apply")
 
     - summary_list.row(html_attributes: { id: "receive_applications" }) do |row|
@@ -63,7 +63,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
           - row.key
             = t("jobs.application_email")
           - row.value
-            = vacancy.application_email.present? ? vacancy.application_email : t(jobs.not_answered)
+            = vacancy.application_email.present? ? vacancy.application_email : t("jobs.not_answered")
           - row.action text: t("buttons.change"),
                         href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
                         visually_hidden_text: t("jobs.application_email")
@@ -89,6 +89,16 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :school_visits, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.school_visits")
+
+  - if vacancy.school_visits_details.present?
+    - summary_list.row(html_attributes: { id: "school_visits_details" }) do |row|
+      - row.key
+        = "School visits details"
+      - row.value
+        = vacancy.school_visits_details
+      - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :school_visits, "back_to_#{action_name}": "true"),
+                    visually_hidden_text: "School visits details"
 
   - summary_list.row(html_attributes: { id: "contact_email" }) do |row|
     - row.key

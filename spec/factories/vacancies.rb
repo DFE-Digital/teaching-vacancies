@@ -14,7 +14,6 @@ FactoryBot.define do
   factory :vacancy do
     publisher
 
-    about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
     actual_salary { factory_rand(20_000..100_000) }
     enable_job_applications { true }
     benefits { true }
@@ -34,7 +33,6 @@ FactoryBot.define do
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
-    job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
     job_title { factory_sample(JOB_TITLES) }
     listed_elsewhere { nil }
     job_role { factory_sample(Vacancy.job_roles.keys) }
@@ -59,12 +57,17 @@ FactoryBot.define do
       v.part_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("part_time")
     end
 
+    trait :legacy_vacancy do
+      about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+      how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
+      job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
+      personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+    end
+
     trait :no_tv_applications do
       receive_applications { "website" }
       application_link { Faker::Internet.url(host: "example.com") }
       enable_job_applications { false }
-      how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
-      personal_statement_guidance { "" }
     end
 
     trait :central_office do

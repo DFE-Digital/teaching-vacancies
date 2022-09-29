@@ -9,9 +9,10 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Uplo
   validate :other_application_email_presence
   validate :other_application_email_valid
   validate :application_form_presence
+  validates :how_to_apply, presence: true, if: -> { vacancy.how_to_apply.present? }
 
   def self.fields
-    %i[application_email]
+    %i[how_to_apply application_email]
   end
   attr_accessor(:application_form, *fields)
   attr_writer(:other_application_email)

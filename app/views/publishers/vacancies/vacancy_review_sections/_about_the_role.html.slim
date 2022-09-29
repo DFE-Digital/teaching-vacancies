@@ -24,6 +24,15 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.action text: t("buttons.change"),
                    href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                    visually_hidden_text: t("jobs.job_advert")
+  - else
+    - summary_list.row(html_attributes: { id: "skills_and_experience" }) do |row|
+      - row.key
+        = t("jobs.skills_and_experience")
+      - row.value
+        = vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : t("jobs.not_answered")
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
+                  visually_hidden_text: t("jobs.skills_and_experience")
 
   - if strip_tags(vacancy.about_school).present?
     - summary_list.row(html_attributes: { id: "job_advert" }) do |row|
@@ -34,66 +43,58 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.action text: t("buttons.change"),
                    href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                    visually_hidden_text: t("jobs.about_school")
+  - else
+    - summary_list.row(html_attributes: { id: "school_offer" }) do |row|
+      - row.key
+        = t("jobs.school_offer")
+      - row.value
+        = vacancy.school_offer.present? ? vacancy.school_offer : t("jobs.not_answered")
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
+                  visually_hidden_text: t("jobs.school_offer")
 
-  - summary_list.row(html_attributes: { id: "skills_and_experience" }) do |row|
-    - row.key
-      = t("jobs.skills_and_experience")
-    - row.value
-      = vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : t("jobs.not_answered")
-    - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                visually_hidden_text: t("jobs.skills_and_experience")
+  - unless vacancy.job_advert.present? || vacancy.about_school.present?
+    - summary_list.row(html_attributes: { id: "safeguarding_information_provided" }) do |row|
+      - row.key
+        = t("jobs.safeguarding_information_provided")
+      - row.value
+        - if vacancy.safeguarding_information_provided.nil?
+          = t("jobs.not_answered")
+        - else
+          = vacancy.safeguarding_information_provided ? "Yes" : "No"
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
+                  visually_hidden_text: t("jobs.safeguarding_information_provided")
 
-  - summary_list.row(html_attributes: { id: "school_offer" }) do |row|
-    - row.key
-      = t("jobs.school_offer")
-    - row.value
-      = vacancy.school_offer.present? ? vacancy.school_offer : t("jobs.not_answered")
-    - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                visually_hidden_text: t("jobs.school_offer")
+    - summary_list.row(html_attributes: { id: "safeguarding_information" }) do |row|
+      - row.key
+        = t("jobs.safeguarding_information")
+      - row.value
+        = vacancy.safeguarding_information.present? ? vacancy.safeguarding_information : t("jobs.not_answered")
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
+                  visually_hidden_text: t("jobs.safeguarding_information")
 
-  - summary_list.row(html_attributes: { id: "safeguarding_information_provided" }) do |row|
-    - row.key
-      = t("jobs.safeguarding_information_provided")
-    - row.value
-      - if vacancy.safeguarding_information_provided.nil?
-        = t("jobs.not_answered")
-      - else
-        = vacancy.safeguarding_information_provided ? "Yes" : "No"
-    - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                visually_hidden_text: t("jobs.safeguarding_information_provided")
+    - summary_list.row(html_attributes: { id: "further_details_provided" }) do |row|
+      - row.key
+        = t("jobs.further_details_provided")
+      - row.value
+        - if vacancy.further_details_provided.nil?
+          = t("jobs.not_answered")
+        - else
+          = vacancy.further_details_provided ? "Yes" : "No"
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
+                  visually_hidden_text: t("jobs.further_details_provided")
 
-  - summary_list.row(html_attributes: { id: "safeguarding_information" }) do |row|
-    - row.key
-      = t("jobs.safeguarding_information")
-    - row.value
-      = vacancy.safeguarding_information.present? ? vacancy.safeguarding_information : t("jobs.not_answered")
-    - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                visually_hidden_text: t("jobs.safeguarding_information")
-
-  - summary_list.row(html_attributes: { id: "further_details_provided" }) do |row|
-    - row.key
-      = t("jobs.further_details_provided")
-    - row.value
-      - if vacancy.further_details_provided.nil?
-        = t("jobs.not_answered")
-      - else
-        = vacancy.further_details_provided ? "Yes" : "No"
-    - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                visually_hidden_text: t("jobs.further_details_provided")
-
-  - summary_list.row(html_attributes: { id: "further_details" }) do |row|
-    - row.key
-      = t("jobs.further_details")
-    - row.value
-      = vacancy.further_details.present? ? vacancy.further_details : t("jobs.not_answered")
-    - row.action text: t("buttons.change"),
-                href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                visually_hidden_text: t("jobs.further_details")
+    - summary_list.row(html_attributes: { id: "further_details" }) do |row|
+      - row.key
+        = t("jobs.further_details")
+      - row.value
+        = vacancy.further_details.present? ? vacancy.further_details : t("jobs.not_answered")
+      - row.action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
+                  visually_hidden_text: t("jobs.further_details")
 
   - summary_list.row(html_attributes: { id: "include_additional_documents" }) do |row|
     - row.key

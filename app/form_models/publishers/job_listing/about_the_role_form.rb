@@ -1,18 +1,23 @@
 class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::VacancyForm
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_role == "teacher" }
-  validates :skills_and_experience, presence: true
-  validate :skills_and_experience_does_not_exceed_maximum_words
-  validate :school_offer_presence
-  validate :school_offer_does_not_exceed_maximum_words
-  validates :safeguarding_information_provided, inclusion: { in: [true, false, "true", "false"] }
-  validates :safeguarding_information, presence: true, if: -> { safeguarding_information_provided == "true" }
-  validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided == "true" }
-  validates :further_details_provided, inclusion: { in: [true, false, "true", "false"] }
-  validates :further_details, presence: true, if: -> { further_details_provided == "true" }
-  validate :further_details_does_not_exceed_maximum_words, if: -> { further_details_provided == "true" }
+
+  validates :job_advert, presence: true, if: -> { vacancy.job_advert.present? }
+  validate :about_school_must_not_be_blank, if: -> { vacancy.job_advert.present? }
+  validates :skills_and_experience, presence: true, unless: -> { vacancy.job_advert.present? }
+  validate :skills_and_experience_does_not_exceed_maximum_words, unless: -> { vacancy.job_advert.present? }
+  validate :school_offer_presence, unless: -> { vacancy.about_school.present? }
+  validate :school_offer_does_not_exceed_maximum_words, unless: -> { vacancy.about_school.present? }
+  validates :safeguarding_information_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validates :safeguarding_information, presence: true, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validates :further_details_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validates :further_details, presence: true, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validate :further_details_does_not_exceed_maximum_words, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
 
   def self.fields
     %i[
+      job_advert
+      about_school
       ect_status
       skills_and_experience
       school_offer
@@ -56,5 +61,19 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
 
   def further_details_does_not_exceed_maximum_words
     errors.add(:further_details, :further_details_maximum_words, message: I18n.t("about_the_role_errors.further_details.maximum_words")) if further_details&.split&.length&.>(100)
+  end
+
+  def about_school_must_not_be_blank
+    return if about_school.present?
+
+    organisation = if vacancy&.central_office?
+                     "trust"
+                   elsif vacancy&.organisations&.many?
+                     "schools"
+                   else
+                     "school"
+                   end
+
+    errors.add(:about_school, I18n.t("job_summary_errors.about_school.blank", organisation: organisation))
   end
 end

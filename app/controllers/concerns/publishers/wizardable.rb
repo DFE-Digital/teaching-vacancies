@@ -83,7 +83,7 @@ module Publishers::Wizardable
   def applying_for_the_job_params(params)
     if params[:publishers_job_listing_applying_for_the_job_form]
       params.require(:publishers_job_listing_applying_for_the_job_form)
-            .permit(:enable_job_applications)
+            .permit(:personal_statement_guidance, :enable_job_applications)
     else
       {}
     end.merge(completed_steps: completed_steps, current_organisation: current_organisation)
@@ -100,20 +100,20 @@ module Publishers::Wizardable
 
   def application_link_params(params)
     params.require(:publishers_job_listing_application_link_form)
-          .permit(:application_link)
+          .permit(:how_to_apply, :application_link)
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 
   def application_form_params(params)
     params.require(:publishers_job_listing_application_form_form)
-          .permit(:application_email, :other_application_email)
+          .permit(:how_to_apply, :application_email, :other_application_email)
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 
   def school_visits_params(params)
     if params[:publishers_job_listing_school_visits_form]
       params.require(:publishers_job_listing_school_visits_form)
-            .permit(:school_visits)
+            .permit(:school_visits_details, :school_visits)
     else
       {}
     end.merge(completed_steps: completed_steps, current_organisation: current_organisation)
@@ -127,7 +127,7 @@ module Publishers::Wizardable
 
   def about_the_role_params(params)
     params.require(:publishers_job_listing_about_the_role_form)
-          .permit(:ect_status, :skills_and_experience, :school_offer, :safeguarding_information_provided, :safeguarding_information, :further_details_provided, :further_details)
+          .permit(:job_advert, :about_school, :ect_status, :skills_and_experience, :school_offer, :safeguarding_information_provided, :safeguarding_information, :further_details_provided, :further_details)
           .merge(completed_steps: completed_steps)
   end
 
