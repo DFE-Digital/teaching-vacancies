@@ -20,20 +20,22 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                  href: organisation_job_build_path(vacancy.id, :job_details, back_to_review: "true"),
                  visually_hidden_text: t("jobs.contract_type")
 
-  - summary_list.row do |row|
-    - row.key
-      = t("jobs.key_stage", count: vacancy.key_stages.count)
-    - row.value
-      = vacancy.readable_key_stages
-    - row.action text: t("buttons.change"),
-                 href: organisation_job_build_path(vacancy.id, :job_details, back_to_review: "true"),
-                 visually_hidden_text: t("jobs.key_stage", count: vacancy.key_stages.count)
+  - if vacancy.allow_key_stages?
+    - summary_list.row do |row|
+      - row.key
+        = t("jobs.key_stage", count: vacancy.key_stages.count)
+      - row.value
+        = vacancy.readable_key_stages
+      - row.action text: t("buttons.change"),
+                   href: organisation_job_build_path(vacancy.id, :job_details, back_to_review: "true"),
+                   visually_hidden_text: t("jobs.key_stage", count: vacancy.key_stages.count)
 
-  - summary_list.row do |row|
-    - row.key
-      = t("jobs.subjects")
-    - row.value
-      = vacancy.subjects.none? ? t("jobs.not_defined") : vacancy.readable_subjects
-    - row.action text: t("buttons.change"),
-                 href: organisation_job_build_path(vacancy.id, :job_details, back_to_review: "true"),
-                 visually_hidden_text: t("jobs.subjects")
+  - if vacancy.allow_subjects?
+    - summary_list.row do |row|
+      - row.key
+        = t("jobs.subjects")
+      - row.value
+        = vacancy.subjects.none? ? t("jobs.not_defined") : vacancy.readable_subjects
+      - row.action text: t("buttons.change"),
+                   href: organisation_job_build_path(vacancy.id, :job_details, back_to_review: "true"),
+                   visually_hidden_text: t("jobs.subjects")

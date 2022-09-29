@@ -7,13 +7,13 @@ section#job-details class="govuk-!-margin-bottom-5"
         h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.job_role")
       - row.value text: linked_job_role_and_ect_status(vacancy)
 
-    - if vacancy.key_stages.any?
+    - if vacancy.allow_key_stages? && vacancy.key_stages.any?
       - summary_list.row do |row|
         - row.key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.key_stage", count: vacancy.key_stages.count)
         - row.value text: vacancy.readable_key_stages
 
-    - if vacancy.subjects&.any?
+    - if vacancy.allow_subjects? && vacancy.subjects&.any?
       - summary_list.row do |row|
         - row.key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.subject", count: vacancy.subjects.count)
