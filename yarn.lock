@@ -2049,10 +2049,10 @@ core-js-compat@^3.25.1:
   dependencies:
     browserslist "^4.21.4"
 
-core-js@^3.25.2, core-js@^3.4.0:
-  version "3.25.2"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.25.2.tgz#2d3670c1455432b53fa780300a6fc1bd8304932c"
-  integrity sha512-YB4IAT1bjEfxTJ1XYy11hJAKskO+qmhuDBM8/guIfMz4JvdsAQAqvyb97zXX7JgSrfPLG5mRGFWJwJD39ruq2A==
+core-js@^3.25.3, core-js@^3.4.0:
+  version "3.25.3"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.25.3.tgz#cbc2be50b5ddfa7981837bd8c41639f27b166593"
+  integrity sha512-y1hvKXmPHvm5B7w4ln1S4uc9eV/O5+iFExSRUimnvIph11uaizFR8LFMdONN8hG3P2pipUfX4Y/fR8rAEtcHcQ==
 
 cosmiconfig@^7.0.1:
   version "7.0.1"
@@ -4791,10 +4791,10 @@ stylelint-scss@^4.0.0:
     postcss-selector-parser "^6.0.6"
     postcss-value-parser "^4.1.0"
 
-stylelint@^14.12.0:
-  version "14.12.0"
-  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-14.12.0.tgz#86d5b60d0f30a6bd0b59e1d4c85a267f0caef97e"
-  integrity sha512-9Sa+IsT31PN9zf9q5ZVZNvhT6jMVu6YhpI38g3Akn7vONipGL0GNd9QCblwtJ3ysaoM80P/+9mOcFB1xnytiQQ==
+stylelint@^14.13.0:
+  version "14.13.0"
+  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-14.13.0.tgz#0c0b8ba8c5cf39522a50c9928f5e44897c678538"
+  integrity sha512-NJSAdloiAB/jgVJKxMR90mWlctvmeBFGFVUvyKngi9+j/qPSJ5ZB+u8jOmGbLTnS7OHrII9NFGehPRyar8U5vg==
   dependencies:
     "@csstools/selector-specificity" "^2.0.2"
     balanced-match "^2.0.0"
