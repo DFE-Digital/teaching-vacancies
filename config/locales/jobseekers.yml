@@ -83,7 +83,7 @@ en:
             Schools need a complete picture of your work history, including time out of the workplace, in order to
             safeguard children.
           gap_with_duration: You have a break in your work history (%{duration})
-          heading: Current role and employment history
+          heading: Work history
           no_employments: No employment specified
           step_title: Employment history
           title: Current role and employment history — Application
@@ -132,7 +132,7 @@ en:
             undergraduate and postgraduate degrees.
           description_extra: >-
             Please also specify any other qualifications where you showed skills that might help you in this role.
-          heading: Education and qualifications
+          heading: Qualifications
           no_qualifications: No qualifications specified
           step_title: Education and qualifications
           title: Education and qualifications — Application
@@ -355,7 +355,7 @@ en:
         employment_history:
           current_role: Is this your current role?
           ended_on: End date
-          heading: Current role and employment history
+          heading: Work history
           main_duties: Main duties
           none: The candidate has not included any roles or employment history.
           organisation: School or other organisation
@@ -382,7 +382,7 @@ en:
           statutory_induction_complete: Have you completed your statutory induction year?
           qualified_teacher_status: Do you have qualified teacher status (QTS)?
         qualifications:
-          heading: Education and qualifications
+          heading: Qualifications
           none: The candidate has not included any qualifications.
           subjects_and_grades: Subjects and grades
         references:

@@ -2,14 +2,15 @@
   = header
 
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
+    div class=column_class
       = above
 
       - if sections.any?
-        ol.task-list
+        ul.govuk-list.review-component__sections
           - sections.each do |section|
             = section
 
       = below
 
-    = sidebar
+    - if show_sidebar?
+      = sidebar

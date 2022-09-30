@@ -2,33 +2,32 @@
 
 .review-component {
   &__section {
+    .govuk-summary-list {
+      table-layout: auto;
+    }
+
     &__heading {
       display: flex;
       margin-bottom: govuk-spacing(4);
 
       .govuk-link {
-        @include govuk-font($size: 16, $weight: bold);
+        @include govuk-font($size: 16);
 
         line-height: 1.6;
         white-space: nowrap;
 
         @include govuk-media-query($from: desktop) {
-          @include govuk-font($size: 19, $weight: bold);
+          @include govuk-font($size: 19);
         }
       }
 
       &__title {
         padding-bottom: govuk-spacing(2);
 
-        @include govuk-media-query($from: tablet) {
-          flex-basis: 75%;
-        }
-
         .govuk-heading-m {
           display: inline-block;
           margin-bottom: 0;
           margin-right: govuk-spacing(2);
-          vertical-align: text-top;
         }
 
         @media print {
@@ -47,93 +46,19 @@
         }
       }
     }
-
-    &__body {
-      margin-bottom: govuk-spacing(8);
-
-      @include govuk-media-query($from: tablet) {
-        border-top: 1px solid $govuk-border-colour;
-      }
-
-      .govuk-summary-list__value {
-        padding-right: 0;
-
-        > li {
-          display: contents;
-
-          ul {
-            list-style-type: disc;
-          }
-        }
-      }
-
-      .govuk-summary-list__key {
-        padding-right: govuk-spacing(2);
-      }
-
-      .govuk-accordion {
-        .govuk-summary-list__row:last-child,
-        .govuk-summary-list__row:first-child {
-          border: 0;
-        }
-      }
-
-      @media print {
-        .govuk-summary-list__row,
-        .govuk-summary-list__value .govuk-body {
-          border-bottom: 0 !important;
-        }
-      }
-    }
-  }
-}
-
-.task-list {
-  @include govuk-font($size:24, $weight: bold);
-  margin-bottom: 0;
-  margin-left: govuk-spacing(6);
-  margin-top: 0;
-  padding-left: 0;
-
-  @include govuk-media-query($until: desktop) {
-    margin-left: govuk-spacing(4);
   }
 
-  &--no-bullet {
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-  @media print {
-    margin: 0;
-
-    * {
-      font-size: medium !important;
+  &__sections {
+    > li {
+      margin-bottom: govuk-spacing(6);
     }
 
-    li::marker {
-      content: ' ';
-    }
-  }
-}
-
-.notification-tag {
-  float: right;
-  text-transform: uppercase;
-  vertical-align: middle;
-}
-
-.action-required-tag {
-  @extend .notification-tag;
-}
-
-.multiline {
-  .govuk-summary-list__value {
-    display: block;
-    width: 100%;
-
-    span {
-      display: block;
+    @media print {
+      margin: 0;
+  
+      * {
+        font-size: medium !important;
+      }
     }
   }
 }

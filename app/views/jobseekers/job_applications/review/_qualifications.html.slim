@@ -1,23 +1,48 @@
 - r.section :qualifications
   - if job_application.qualifications.none?
-    p.govuk-body = t(".qualifications.none")
+    - if jobseeker_signed_in?
+      p.govuk-body = t("jobseekers.job_applications.review.qualifications.none")
+    - elsif publisher_signed_in?
+      p.govuk-body = t("jobseekers.job_applications.show.qualifications.none")
   - else
-    = govuk_accordion do |accordion|
-      - job_application.qualifications.each do |qualification|
-        - accordion.section heading_text: qualification.name do
-          = govuk_summary_list do |summary_list|
-            - if qualification.secondary?
-              - summary_list.row do |row|
-                - row.key text: t(".qualifications.subjects_and_grades")
-                - row.value text: safe_join(qualification.qualification_results.map { |result| tag.div("#{result.subject} - #{result.grade}") })
+    - qualifications_sort_and_group(job_application.qualifications).each_value do |qualification_group|
+      h3 class="govuk-heading-s" class="govuk-!-margin-top-0 govuk-!-margin-bottom-1"
+        = t("helpers.label.jobseekers_job_application_details_qualifications_category_form.category_options.#{qualification_group.first[:category]}")
+      - qualification_group.each do |qualification|
 
-            - qualification.display_attributes.each do |attribute|
-              - if qualification[attribute].present?
-                - summary_list.row do |row|
-                  - row.key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
-                  - row.value text: qualification[attribute]
+        - if qualification.secondary?
+          div class="govuk-!-margin-bottom-6"
 
-            - unless qualification.finished_studying.nil?
-              - summary_list.row do |row|
-                - row.key text: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying")
-                - row.value text: safe_join([tag.div(t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}")), tag.div(qualification.finished_studying_details.presence)])
+            p class="govuk-!-margin-bottom-1"
+              = qualification.qualification_results.map { |result| "#{result.subject} (#{result.grade.upcase})" }.join(", ")
+
+            p.govuk-caption-m
+              - if qualification.display_attributes.include?("institution")
+                span class="govuk-!-display-inline-block"
+                  = qualification[:institution]
+              - if qualification.display_attributes.include?("year")
+                span class="govuk-!-display-inline-block"
+                  = ", #{qualification[:year]}"
+
+        - else
+          div class="govuk-!-margin-bottom-6"
+            p class="govuk-!-margin-bottom-1"
+              - if qualification.display_attributes.include?("subject")
+                span class="govuk-!-display-inline-block"
+                  = qualification[:subject]
+              - if qualification.display_attributes.include?("type")
+                span class="govuk-!-display-inline-block govuk-!-margin-left-1"
+                  = qualification[:type]
+              - if qualification.display_attributes.include?("grade")
+                span class="govuk-!-display-inline-block govuk-!-margin-left-1"
+                  = "(#{qualification[:grade]})"
+              - unless qualification.finished_studying == true
+                span class="govuk-!-display-inline-block govuk-!-margin-left-1"
+                  = "(#{t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}").downcase} #{qualification.finished_studying_details.presence.downcase})"
+            p.govuk-caption-m
+              - if qualification.display_attributes.include?("institution")
+                span class="govuk-!-display-inline-block"
+                  = qualification[:institution]
+              - if qualification.display_attributes.include?("year")
+                span class="govuk-!-display-inline-block"
+                  = ", #{qualification[:year]}"

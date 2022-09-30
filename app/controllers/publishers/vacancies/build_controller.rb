@@ -1,16 +1,20 @@
 class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseController
   include Wicked::Wizard
   include OrganisationsHelper
+  include QualificationsHelper
+  include QualificationFormConcerns
 
   steps :job_role, :job_role_details, :job_location, :education_phases, :job_details, :working_patterns,
         :pay_package, :important_dates, :applying_for_the_job, :applying_for_the_job_details, :documents, :job_summary
 
-  helper_method :form
+  helper_method :back_path, :form, :job_application
 
   before_action :strip_checkbox_params, only: %i[update]
   before_action :set_school_options
 
   helper_method :current_publisher_preference
+
+  helper_method :qualification_form_param_key
 
   def show
     skip_step_if_missing
@@ -18,6 +22,10 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     return redirect_to(organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review])) if current_step == :documents
 
     render_wizard
+  end
+
+  def job_application
+    @job_application ||= FactoryBot.build(:job_application, :job_application_sample)
   end
 
   def update

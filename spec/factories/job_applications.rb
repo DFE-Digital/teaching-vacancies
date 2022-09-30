@@ -183,4 +183,41 @@ FactoryBot.define do
 
     status { :withdrawn }
   end
+
+  trait :job_application_sample do
+    first_name { "Jane" }
+    last_name { "Smith" }
+    previous_names { "Churchill" }
+    street_address { "1 House Street" }
+    city { "Townington" }
+    postcode { "AB1 2CD" }
+    country { "England" }
+
+    email_address { "jane.smith@gmail.com" }
+
+    personal_statement do
+      "As an English teacher, I am extremely passionate about instilling a love of reading and the written word into young people. I have been interested in a position at your school for a number of years and was thrilled to see this opportunity. I received my QTS in 2019, and have since worked as an English teacher in a secondary school in Sheffield.<br />
+    In the classroom, I always strive to modify my approach to suit a range of abilities and motivation. By planning lessons around my students’ interests, I have been able to inspire even the most unmotivated readers into a love of books. For example, teaching descriptive writing by looking at their favourite sports and persuasive writing via marketing materials for their favourite shops. Furthermore, I have worked with dozens of students for whom English is their second language and nothing motivates me more than seeing that lightbulb moment happen when they can see their own progress. Last year, 95% of my GCSE students passed with grade 5 or above, and I have a proven track record for ensuring all of my KS3 students improve by at least two grades over years 7 to 9.<br />
+    Moreover, I believe that good teaching doesn’t just happen in the classroom. I am a strong advocate for student wellbeing and pastoral support and have greatly enjoyed leading a morning form class for the last three years. Also, in my current school I have contributed to the English department by running a weekly book club, and organising several school trips to literary locations such as Haworth and Stratford Upon Avon, as well as visits to see plays on the curriculum.<br />
+    I really resonate with your school’s ethos around inclusion and leaving no student behind, and I hope to be an asset to your English department, while continuing to grow as a teacher."
+    end
+
+    employment_history_section_completed { true }
+
+    employments do
+      Array.new(3) { association(:employment) }
+    end
+
+    references do
+      Array.new(2) { association(:reference) }
+    end
+
+    qualifications do
+      [
+        association(:qualification, :category_postgraduate),
+        association(:qualification, :category_a_level),
+        association(:qualification, :category_gcse),
+      ]
+    end
+  end
 end

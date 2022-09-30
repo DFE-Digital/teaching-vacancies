@@ -186,6 +186,11 @@ en:
             Candidates can apply using the Teaching Vacancies application form,
             or you can direct them to another service, like the local authority or a school's website.
             Read about %{link}.
+          about_title: "This application form:"
+          about_items:
+            - provides a quick and simple experience for applicants
+            - makes it easy for you to view, shortlist or reject applications in one place
+            - is always up to date with the ‘keeping children safe in education’ guidelines
           step_title: Applying for the job
         documents:
           accessibility_link_text: How to make documents accessible
@@ -349,7 +354,7 @@ en:
         pay_package: Salary and allowances
         important_dates: Important dates and deadlines
         documents: Supporting documents
-        applying_for_the_job: Applying for the job
+        applying_for_the_job: Using the application form
         job_summary: Job summary
       steps_component:
         title: Create a job listing steps
