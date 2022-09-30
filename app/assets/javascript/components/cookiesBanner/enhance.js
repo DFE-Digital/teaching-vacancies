@@ -4,12 +4,6 @@ import axios from 'axios';
 import logger from '../../lib/logging';
 
 const CookiesBannerController = class extends Controller {
-  connect() {
-    if (!navigator.cookieEnabled) {
-      this.element.parentElement.removeChild(this.element);
-    }
-  }
-
   submit(e) {
     const form = e.target.closest('form');
     const token = form.querySelector('input[name="authenticity_token"]').value;
