@@ -1,14 +1,11 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.working_patterns"))
 
-= vacancy_form_page_heading(vacancy, step_process, params: params)
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_check_boxes_fieldset :working_patterns,
-                                     legend: -> { tag.legend(class: ["govuk-fieldset__legend", "govuk-fieldset__legend--l"]) { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: ["govuk-fieldset__heading"]) } } do
+      = f.govuk_check_boxes_fieldset :working_patterns, legend: { text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" } do
         = f.govuk_check_box :working_patterns,
                             "full_time",
                             link_errors: true,
@@ -23,7 +20,3 @@
                               max_words: 50
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"

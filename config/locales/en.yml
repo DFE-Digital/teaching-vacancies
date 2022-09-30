@@ -538,6 +538,7 @@ en:
           other: "%{heading} page %{count} - Find a job in teaching"
     show:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
+      job_details: Job details
 
   vacancy_selector_component:
     job:

@@ -334,7 +334,7 @@ RSpec.describe VacanciesHelper do
 
     context "when the action is complete" do
       let(:action) { "complete" }
-      let(:link) { helper.govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_review: "true"), class: "govuk-!-margin-bottom-0") }
+      let(:link) { helper.govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_show: "true"), class: "govuk-!-margin-bottom-0") }
 
       before do
         # Helper uses next_invalid_step which is a helper method defined in Publishers::Vacancies::BaseController. This helper

@@ -20,7 +20,7 @@
         hint: nil),
         collection_count: SUBJECT_OPTIONS.count,
         options: { scrollable: true, border: true },
-        text: { aria_label: t("jobs.filters.subject"), placeholder: t("helpers.hint.publishers_job_listing_job_details_form.subjects_placeholder") })
+        text: { aria_label: t("jobs.filters.subject"), placeholder: t("helpers.hint.publishers_job_listing_subjects_form.subjects_placeholder") })
       - filters_component.group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, @form.ect_status_options, :first, :last, small: false, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
       - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, @form.phase_options, :first, :last, small: false, legend: { text: t("jobs.filters.phases") }, hint: nil)
       - filters_component.group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, @form.working_pattern_options, :first, :last, small: false, legend: { text: t("jobs.filters.working_patterns") }, hint: nil)

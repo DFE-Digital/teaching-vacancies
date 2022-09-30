@@ -15,7 +15,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     elsif current_organisation.local_authority?
       vacancy.update(enable_job_applications: false)
     end
-    redirect_to organisation_job_build_path(vacancy.id, :job_role)
+
+    redirect_to organisation_job_build_path(vacancy.id, :job_location)
   end
 
   def destroy
@@ -28,6 +29,10 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def preview
     redirect_to organisation_job_path(vacancy.id) unless all_steps_valid?
 
+    @vacancy = VacancyPresenter.new(vacancy)
+  end
+
+  def review
     @vacancy = VacancyPresenter.new(vacancy)
   end
 

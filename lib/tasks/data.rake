@@ -9,8 +9,8 @@ namespace :db do # rubocop:disable Metrics/BlockLength
   end
 
   # TODO: remove phase field from vacancies table once this is done
-  desc "Set phases from schools or old readable_phases field"
-  task set_new_phases: :environment do
+  desc "Set phases from schools or old readable_phases field and benefits"
+  task set_new_phases_and_benefits: :environment do
     Vacancy.find_each do |v|
       phases =
         if v.school_phases.any?
@@ -18,7 +18,7 @@ namespace :db do # rubocop:disable Metrics/BlockLength
         else
           v.readable_phases.map { |p| p.in?(["16-19", "16 to 19"]) ? 4 : Vacancy.phases[p] }
         end
-      v.update_column :phases, phases
+      v.update_columns phases: phases, benefits: v.benefits_details.present?
     end
   end
 
@@ -63,6 +63,16 @@ namespace :db do # rubocop:disable Metrics/BlockLength
         other_start_date_details = "As soon as possible"
         v.update_column :other_start_date_details, other_start_date_details
       end
+    end
+  end
+
+  desc "Set vacancy fields for new listing process"
+  task set_new_vacancy_fields: :environment do
+    Vacancy.find_each do |v|
+      v.update_columns(application_email: v.contact_email,
+                       contact_number_provided: v.contact_number.present?,
+                       include_additional_documents: v.supporting_documents.any?,
+                       school_visits: false)
     end
   end
 end

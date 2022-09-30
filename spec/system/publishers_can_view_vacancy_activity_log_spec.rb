@@ -15,25 +15,28 @@ RSpec.describe "Publishers can view a vacancy's activity log", versioning: true 
   end
 
   it "updates the activity log" do
-    click_review_page_change_link(section: "job_details")
-
-    fill_in I18n.t("helpers.label.publishers_job_listing_job_details_form.job_title"), with: new_job_title
-
-    choose I18n.t("helpers.label.publishers_job_listing_job_details_form.contract_type_options.#{new_contract_type}")
-
-    within("#publishers-job-listing-job-details-form-contract-type-fixed-term-conditional") do
-      fill_in I18n.t("helpers.label.publishers_job_listing_job_details_form.fixed_term_contract_duration"), with: "6 months"
-    end
+    click_review_page_change_link(section: "job_details", row: "subjects")
+    expect(current_path).to eq(organisation_job_build_path(vacancy.id, :subjects))
 
     old_subjects.each { |subject| uncheck subject }
     new_subjects.each { |subject| check subject }
 
     click_on I18n.t("buttons.save_and_continue")
+
+    click_review_page_change_link(section: "job_details", row: "contract_type")
+    expect(current_path).to eq(organisation_job_build_path(vacancy.id, :contract_type))
+
+    choose I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{new_contract_type}")
+    within("#publishers-job-listing-contract-type-form-contract-type-fixed-term-conditional") do
+      fill_in I18n.t("helpers.label.publishers_job_listing_contract_type_form.fixed_term_contract_duration"), with: "6 months"
+    end
+
+    click_on I18n.t("buttons.save_and_continue")
+
     click_on I18n.t("tabs.activity_log")
 
-    expect(page).to have_content(I18n.t("publishers.activity_log.job_title", new_value: new_job_title))
-    expect(page).to have_content(I18n.t("publishers.activity_log.contract_type", new_value: new_contract_type.humanize))
     expect(page).to have_content(I18n.t("publishers.activity_log.subjects", new_value: new_subjects.to_sentence, count: new_subjects.count))
+    expect(page).to have_content(I18n.t("publishers.activity_log.contract_type", new_value: new_contract_type.humanize))
     expect(page).to have_content(publisher.papertrail_display_name)
     expect(page).to have_content(vacancy.versions.first.created_at)
   end

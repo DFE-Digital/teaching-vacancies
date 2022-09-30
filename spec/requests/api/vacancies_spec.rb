@@ -174,7 +174,7 @@ RSpec.describe "Api::Vacancies" do
               "@type": "Organization",
               name: vacancy.organisation_name,
               identifier: vacancy.organisation.urn,
-              description: "<p>#{vacancy.about_school}</p>",
+              description: vacancy.about_school.present? ? "<p>#{vacancy.about_school}</p>" : nil,
             },
           }
           expect(json.to_h).to include(hiring_organization)

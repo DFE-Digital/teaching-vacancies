@@ -24,14 +24,12 @@ section#school-overview
 
   - if vacancy.school_visits?
     h4.govuk-heading-m
-      - if vacancy.central_office?
-        = t("organisations.about.central_office", organisation: vacancy.organisation_name)
-      - elsif vacancy.organisations.many?
-        = t("organisations.visits.at_multiple_schools")
-      - else
-        = t("organisations.visits.at_one_school", organisation: vacancy.organisation_name)
-
-    p.govuk-body = vacancy.school_visits
+      = t("jobs.arranging_a_visit.heading", organisation: vacancy.organisation_name)
+    p.govuk-body = t("jobs.arranging_a_visit.description_html", email: contact_email_link(vacancy, class: "link-wrap"))
+  - elsif vacancy.school_visits_details.present?
+    h4.govuk-heading-m
+      = t("jobs.arranging_a_visit.heading", organisation: vacancy.organisation_name)
+    p.govuk-body = vacancy.school_visits_details
 
   section#school-location
     h3.govuk-heading-l.heading--border-bottom
