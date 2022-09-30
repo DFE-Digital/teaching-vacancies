@@ -74,6 +74,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
                      "school"
                    end
 
-    errors.add(:about_school, I18n.t("job_summary_errors.about_school.blank", organisation: organisation))
+    errors.add(:about_school, I18n.t("about_the_role_errors.about_school.blank", organisation: organisation))
   end
 end

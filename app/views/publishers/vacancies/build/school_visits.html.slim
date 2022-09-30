@@ -13,7 +13,7 @@
           = f.govuk_radio_button :school_visits, "true", link_errors: true
             - if vacancy.school_visits_details.present?
               = f.govuk_text_area :school_visits_details,
-                                  label: -> { tag.label("School visits details", class: ["govuk-label", "govuk-!-font-weight-bold"]) },
+                                  label: -> { tag.label(t("helpers.label.publishers_job_listing_school_visits_form.school_visits_details_html"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
                                   max_words: 50
           = f.govuk_radio_button :school_visits, "false"
 

@@ -203,6 +203,8 @@ en:
       blank: Select the email address to receive applications
     application_form:
       blank: Select application form
+    how_to_apply:
+      blank: Please provide details about how candidates should apply
     other_application_email:
       blank: Enter an email address
       invalid: Enter a valid email address
@@ -210,6 +212,8 @@ en:
     application_link:
       blank: Enter the link to the application website
       url: Enter a link in the correct format, like www.school.ac.uk
+    how_to_apply:
+      blank: Please provide details about how candidates should apply
   school_visits_errors: &school_visits_errors
     school_visits:
       inclusion: Select yes if school visits are offered
@@ -226,8 +230,12 @@ en:
       blank: Enter an email address
       invalid: Enter an email address in the correct format, like name@example.com
   about_the_role_errors: &about_the_role_errors
+    about_school:
+      blank: Enter a description of the %{organisation}
     ect_status:
       inclusion: Select yes if this role is suitable for an early career teacher
+    job_advert:
+      blank: Enter a job advert
     skills_and_experience:
       blank: Enter the skills and experience you’re looking for
       maximum_words: Skills and experience must be 150 words or less

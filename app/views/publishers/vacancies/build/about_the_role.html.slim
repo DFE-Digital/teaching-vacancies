@@ -16,7 +16,8 @@
 
       - if vacancy.job_advert.present?
         = f.govuk_text_area :job_advert,
-                            label: -> { tag.label("Job advert", class: ["govuk-label--m", "govuk-!-font-weight-bold"]) }
+                            label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.job_advert"), size: "s", id: "job-advert-label" },
+                            hint: { text: t("helpers.hint.publishers_job_listing_about_the_role_form.job_advert") }
 
       - else
         = f.govuk_text_area :skills_and_experience,
@@ -25,7 +26,11 @@
 
       - if vacancy.about_school.present?
         = f.govuk_text_area :about_school,
-                            label: -> { tag.label("About school", class: ["govuk-label--m", "govuk-!-font-weight-bold"]) }
+                label: { id: "about-school-label", text: t("helpers.label.publishers_job_listing_about_the_role_form.about_organisation", organisation: vacancy_about_school_label_organisation(vacancy)), size: "s" },
+                hint: { text: vacancy_about_school_hint_text(vacancy) },
+                value: vacancy_about_school_value(vacancy),
+                rows: 10,
+                required: true
 
       - else
         = f.govuk_text_area :school_offer,

@@ -184,7 +184,16 @@ en:
           what they need to improve or develop for their future in teaching.
 
       publishers_job_listing_about_the_role_form:
+        about_organisation: >-
+          This will appear next to the job details under '%{organisation_type} overview'. Feel free to adapt this text
+        about_schools: >-
+          Give a brief summary of the schools where the jobseeker would be teaching and any relevant information about
+          the %{organisation_type}
         ect_status: Early career teachers were previously called newly qualified teachers (NQT)
+        job_advert: >-
+          Get jobseekers interested in the role by providing a brief summary of around 400 words.
+          You should cover what the role is and who you're looking to recruit.
+          The first 20 to 40 words will be shown in search results, so make them stand out.
       publishers_job_listing_application_link_form:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
@@ -192,6 +201,7 @@ en:
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications_options:
           "false": You'll need to provide additional details about how to apply
+        personal_statement_guidance: Provide guidance on how long it should be and any specific information you'd like them to include
       publishers_job_listing_copy_vacancy_form:
         job_title: For example 'Teacher of KS1'
       publishers_job_listing_documents_form:
@@ -472,6 +482,7 @@ en:
         rejection_reasons_html: What are the reasons for the rejection? (optional<span class='govuk-visually-hidden'> field</span>)</span>
 
       publishers_job_listing_about_the_role_form:
+        about_organisation: About %{organisation}
         ect_status_options:
           ect_suitable: "Yes"
           ect_unsuitable: "No"
@@ -479,6 +490,7 @@ en:
         further_details_provided_options:
           false: "No"
           true: "Yes"
+        job_advert: Job advert
         safeguarding_information: Information about your commitment to safeguarding
         safeguarding_information_provided_options:
           false: "No"
@@ -487,15 +499,18 @@ en:
         skills_and_experience: What skills and experience are you looking for?
       publishers_job_listing_application_link_form:
         application_link: Link to website
+        how_to_apply: Explain how to apply for the job
       publishers_job_listing_application_form_form:
         application_form: Upload application form
         application_email_options:
           other: Another email address
+        how_to_apply: Explain how to apply for the job
         other_application_email: Email address
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications_options:
           false: "No"
           true: "Yes"
+        personal_statement_guidance_html: Help candidates to write their personal statement (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_contract_type_form:
         contract_type_options:
           fixed_term: Fixed term
@@ -616,6 +631,7 @@ en:
         school_visits_options:
           false: "No"
           true: "Yes"
+        school_visits_details_html: School visits details (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_working_patterns_form:
         full_time_details: Details
         part_time_details: Details
