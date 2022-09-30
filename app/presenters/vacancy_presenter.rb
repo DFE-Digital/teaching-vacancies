@@ -8,7 +8,7 @@ class VacancyPresenter < BasePresenter
   end
 
   def about_school
-    simple_format(fix_bullet_points(model.about_school))
+    simple_format(fix_bullet_points(model.about_school)) if model.about_school.present?
   end
 
   def how_to_apply

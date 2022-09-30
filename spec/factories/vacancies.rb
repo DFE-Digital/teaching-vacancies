@@ -175,6 +175,10 @@ FactoryBot.define do
     end
 
     trait :external do
+      about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+      how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
+      job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
+      personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
       external_source { "may_the_feed_be_with_you" }
       external_reference { "J3D1" }
       external_advert_url { "https://example.com/jobs/123" }
