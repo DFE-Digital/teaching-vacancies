@@ -38,7 +38,7 @@
                   = "(#{qualification[:grade]})"
               - unless qualification.finished_studying == true
                 span class="govuk-!-display-inline-block govuk-!-margin-left-1"
-                  = "(#{t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}").downcase} #{qualification.finished_studying_details.presence.downcase})"
+                  = "(#{t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}").downcase} #{qualification.finished_studying_details&.downcase})"
             p.govuk-caption-m
               - if qualification.display_attributes.include?("institution")
                 span class="govuk-!-display-inline-block"
