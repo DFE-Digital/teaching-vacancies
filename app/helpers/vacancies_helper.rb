@@ -56,10 +56,30 @@ module VacanciesHelper
     vacancy.organisations.many? ? "the schools" : vacancy.organisation_name
   end
 
-  def vacancy_about_school_hint_text(vacancy)
-    return t("helpers.hint.publishers_job_listing_job_summary_form.about_schools", organisation_type: organisation_type_basic(vacancy.organisation)) if vacancy.organisations.many?
+  def vacancy_school_offer_label(vacancy)
+    if vacancy&.central_office?
+      t("helpers.label.publishers_job_listing_about_the_role_form.school_offer", organisation: "trust")
+    elsif vacancy&.organisations&.many?
+      t("helpers.label.publishers_job_listing_about_the_role_form.schools_offer")
+    else
+      t("helpers.label.publishers_job_listing_about_the_role_form.school_offer", organisation: "school")
+    end
+  end
 
-    t("helpers.hint.publishers_job_listing_job_summary_form.about_organisation", organisation_type: organisation_type_basic(vacancy.organisation).capitalize)
+  def vacancy_school_offer_review_label(vacancy)
+    if vacancy&.central_office?
+      t("jobs.school_offer", organisation: "trust")
+    elsif vacancy&.organisations&.many?
+      t("jobs.schools_offer")
+    else
+      t("jobs.school_offer", organisation: "school")
+    end
+  end
+
+  def vacancy_about_school_hint_text(vacancy)
+    return t("helpers.hint.publishers_job_listing_about_the_role_form.about_schools", organisation_type: organisation_type_basic(vacancy.organisation)) if vacancy.organisations.many?
+
+    t("helpers.hint.publishers_job_listing_about_the_role_form.about_organisation", organisation_type: organisation_type_basic(vacancy.organisation).capitalize)
   end
 
   def vacancy_about_school_value(vacancy)
@@ -102,11 +122,6 @@ module VacanciesHelper
 
   def vacancy_listing_page_title_prefix(vacancy)
     "#{vacancy.job_title} - #{vacancy.organisation_name}"
-  end
-
-  def vacancy_school_visits_hint(vacancy)
-    organisation = organisation_type_basic(vacancy.organisation).tr(" ", "_")
-    t("helpers.hint.publishers_job_listing_applying_for_the_job_details_form.#{organisation}_visits")
   end
 
   def vacancy_step_completed?(vacancy, step)
@@ -225,11 +240,22 @@ module VacanciesHelper
     when "delete"
       govuk_link_to(t("publishers.vacancies.show.heading_component.action.delete"), organisation_job_confirm_destroy_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     when "complete"
-      govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_review: "true"), class: "govuk-!-margin-bottom-0")
+      govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_show: "true"), class: "govuk-!-margin-bottom-0")
     when "convert_to_draft"
       govuk_link_to(t("publishers.vacancies.show.heading_component.action.convert_to_draft"), organisation_job_convert_to_draft_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     when "schedule_complete_draft"
       govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+    end
+  end
+
+  def vacancy_how_to_apply_step(vacancy)
+    case vacancy.receive_applications
+    when "email"
+      :application_form
+    when "website"
+      :application_link
+    else
+      :how_to_receive_applications
     end
   end
 

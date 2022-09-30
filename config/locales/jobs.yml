@@ -173,9 +173,13 @@ en:
     new_job_listing_details: New job listing details
     review_page_title: Review the job listing — Create a job listing for %{organisation}
     edit_job_title: Edit %{job_title}
+    edit_job_caption: Edit a job listing - section %{step} of %{total}
+    create_job_caption: Create a job listing - section %{step} of %{total}
     current_step: Step %{step} of %{total}
 
+    ect_status: Is this role suitable for an early career teacher (ECT)?
     full_time_details: Full time - %{details}
+    further_details: Further details about the role
     location: Location
     location_find_more_html:
       one: Find more school jobs in %{location_link}
@@ -188,8 +192,12 @@ en:
       one: Key stage
       other: Key stages
     part_time_details: Part time - %{details}
+    safeguarding_information: Information about your commitment to safeguarding
+    school_offer: What does your %{organisation} offer?
+    schools_offer: What does your school offer?
+    skills_and_experience: What skills and experience are you looking for?
     suitable_for_ect: Is this job suitable for ECTs?
-    subjects: Subject(s)
+    subjects: Subject
     subject:
       one: Subject
       other: Subjects
@@ -208,17 +216,20 @@ en:
     salary: Salary
     salary_details: Salary details
 
+    arranging_a_visit:
+      description_html: To arrange a visit and increase the chance of a successful application email %{email}.
+      heading: Arranging a visit to %{organisation}
     school_visits_html: School visits
     trust_visits_html: Trust visits
 
-    application_deadline: Application deadline
+    application_deadline: Closing date
     days_to_apply:
       remaining: '%{days_remaining} days remaining to apply'
       today: Deadline is today
       tomorrow: Deadline is tomorrow
-    publication_date: Date to be published
-    start_on: Date job starts
-    starts_on: Expected start date
+    publication_date: Publish date
+    start_on: Job start date
+    starts_on: Job start date
     earliest_start_date: Earliest start date
     latest_start_date: Latest start date
     other_start_date_details: Start date details
@@ -233,8 +244,8 @@ en:
     file_delete_success_message: '%{filename} was removed'
     file_google_error_message: '%{filename} could not be uploaded - try again'
     file_input_error_message: The selected file(s) could not be uploaded
-    file_size_error_message: '%{filename} must be smaller than %{size_limit}'
-    file_type_error_message: '%{filename} must be a valid file type'
+    file_size_error_message: 'The selected file must be smaller than %{size_limit}'
+    file_type_error_message: The selected file must be a PDF or DOCX file
     file_virus_error_message: '%{filename} contains a virus'
     upload_documents_table:
       headers:
@@ -251,15 +262,27 @@ en:
         remove: Remove
         removing: Removing...
 
+    additional_documents: Additional documents
     apply: More on how to apply
-    application_link: Link to online application
+    application_link: Link to website
+    application_email: Email address to receive applications
+    application_email_subject: '%{job} job application'
+    application_email_body: Regarding the job at %{url}
     application_form: Application form
-    contact_email: Contact email
+    apply_via_email_html: Please download the application form using the link below, and once completed send to %{email}
+    apply_via_website: Apply for the job by following the link below
+    contact_email: Email address
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: Regarding the job at %{url}
-    contact_number: Contact phone number
-    enable_job_applications: Apply through Teaching Vacancies
+    contact_number: Phone number
+    contact_number_provided: Do you want to give a contact phone number?
+    enable_job_applications: Do you want to use the application form?
+    further_details_provided: Do you want to add further details about the role?
+    how_to_receive_applications: How do you want to receive applications?
+    include_additional_documents: Do you want to upload any additional documents?
     personal_statement_guidance: Personal statement instructions
+    safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
+    school_visits: Do you want to offer school visits?
     school_visits_heading: Arranging a visit to %{school}
     how_to_apply: Application instructions
 
@@ -269,7 +292,7 @@ en:
     review: Review your entries for each section below, making any changes needed before you publish the job listing.
     review_future:
       Review your entries for each section below, making any changes before you submit the listing for publication.
-    not_defined: Not provided (will not be seen on published listing)
+    not_defined: Not entered (will not be seen on published listing)
     edit: Edit the job details.
 
     view_public_link: 'View the public page for this job'

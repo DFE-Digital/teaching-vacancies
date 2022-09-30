@@ -5,7 +5,7 @@ RSpec.describe "Documents" do
 
   let(:publisher) { create(:publisher) }
   let(:organisation) { build(:school) }
-  let(:vacancy) { create(:vacancy, organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [organisation]) }
 
   before do
     allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)

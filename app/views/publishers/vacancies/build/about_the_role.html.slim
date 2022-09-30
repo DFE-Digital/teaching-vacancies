@@ -1,0 +1,49 @@
+- content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.about_the_role"))
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = vacancy_form_page_heading(vacancy, step_process, params: params, fieldset: false)
+
+      - if vacancy.job_role == "teacher"
+        = f.govuk_collection_radio_buttons :ect_status,
+          Vacancy.ect_statuses.keys,
+          :to_s,
+          classes: ["ect-status-radios"],
+          legend: { size: "m", tag: nil }
+
+      - if vacancy.job_advert.present?
+        = editor(form_input: f.govuk_text_area(:job_advert, label: { size: "s", id: "job-advert-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.job_advert, field_name: "publishers_job_listing_about_the_role_form[job_advert]", label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.job_advert"), size: "s", id: "job-advert-label" })
+
+      - else
+        = editor(form_input: f.govuk_text_area(:skills_and_experience, max_words: 150, label: { size: "s", id: "skills-and-experience-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.skills_and_experience, field_name: "publishers_job_listing_about_the_role_form[skills_and_experience]", label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.skills_and_experience"), size: "s", id: "skills-and-experience-label" })
+
+      - if vacancy.about_school.present?
+        = f.govuk_text_area :about_school,
+                label: { id: "about-school-label", text: t("helpers.label.publishers_job_listing_about_the_role_form.about_organisation", organisation: vacancy_about_school_label_organisation(vacancy)), size: "m" },
+                hint: { text: vacancy_about_school_hint_text(vacancy) },
+                value: vacancy_about_school_value(vacancy),
+                rows: 10,
+                required: true
+
+      - else
+        = editor(form_input: f.govuk_text_area(:school_offer, max_words: 150, label: { size: "s", id: "school-offer-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.school_offer, field_name: "publishers_job_listing_about_the_role_form[school_offer]", label: { text: vacancy_school_offer_label(vacancy), size: "s", id: "school-offer-label" })
+
+      - unless vacancy.job_advert.present?
+        = f.govuk_radio_buttons_fieldset :safeguarding_information_provided, legend: { size: "m", tag: nil }, classes: ["safeguarding-information-provided-radios"] do
+          = f.govuk_radio_button :safeguarding_information_provided, "true" do
+            = f.govuk_text_area :safeguarding_information,
+                                label: -> { tag.label(t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
+                                max_words: 100
+          = f.govuk_radio_button :safeguarding_information_provided, "false", link_errors: true
+
+        = f.govuk_radio_buttons_fieldset :further_details_provided, legend: { size: "m", tag: nil }, classes: ["further-details-provided-radios"] do
+          = f.govuk_radio_button :further_details_provided, "true" do
+            = f.govuk_text_area :further_details,
+                                label: -> { tag.label(t("helpers.label.publishers_job_listing_about_the_role_form.further_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
+                                max_words: 100
+          = f.govuk_radio_button :further_details_provided, "false", link_errors: true
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

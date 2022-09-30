@@ -2,37 +2,43 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   = t("publishers.vacancies.build.important_dates.step_title")
 
 = govuk_summary_list(html_attributes: { id: "important_dates" }) do |summary_list|
-  - summary_list.row do |row|
-    - row.key
-      = t("jobs.publication_date")
-    - row.value
-      = format_date(vacancy.publish_on)
-    - row.action text: t("buttons.change"),
-                 href: organisation_job_build_path(vacancy.id, :important_dates, back_to_review: "true"),
-                 visually_hidden_text: t("jobs.publication_date")
+  - unless vacancy.publish_on.nil?
+    - summary_list.row(html_attributes: { id: "publish_on" }) do |row|
+      - row.key
+        = t("jobs.publication_date")
+      - row.value
+        = format_date(vacancy.publish_on)
+      - unless vacancy.legacy_draft?
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :important_dates, "back_to_#{action_name}": "true"),
+                    visually_hidden_text: t("jobs.publication_date")
 
-  - summary_list.row do |row|
-    - row.key
-      = t("jobs.application_deadline")
-    - row.value
-      = format_time_to_datetime_at(vacancy.expires_at)
-    - row.action text: t("buttons.change"),
-                 href: organisation_job_build_path(vacancy.id, :important_dates, back_to_review: "true"),
-                 visually_hidden_text: t("jobs.application_deadline")
+  - unless vacancy.expires_at.nil?
+    - summary_list.row(html_attributes: { id: "expires_at" }) do |row|
+      - row.key
+        = t("jobs.application_deadline")
+      - row.value
+        = format_time_to_datetime_at(vacancy.expires_at)
+      - unless vacancy.legacy_draft?
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :important_dates, "back_to_#{action_name}": "true"),
+                    visually_hidden_text: t("jobs.application_deadline")
 
-  - summary_list.row do |row|
-    - row.key
-      = t("jobs.starts_on")
-    - row.value
-      - case vacancy.start_date_type
-      - when "specific_date"
-        = format_date(vacancy.starts_on)
-      - when "date_range"
-        = "#{format_date(vacancy.earliest_start_date)} - #{format_date(vacancy.latest_start_date)}"
-      - when "other"
-        = vacancy.other_start_date_details
-      - else
-        = t("jobs.not_defined")
-    - row.action text: t("buttons.change"),
-                 href: organisation_job_build_path(vacancy.id, :important_dates, back_to_review: "true"),
-                 visually_hidden_text: t("jobs.starts_on")
+  - unless vacancy.start_date_type.nil?
+    - summary_list.row(html_attributes: { id: "start_date" }) do |row|
+      - row.key
+        = t("jobs.starts_on")
+      - row.value
+        - case vacancy.start_date_type
+        - when "specific_date"
+          = format_date(vacancy.starts_on)
+        - when "date_range"
+          = "#{format_date(vacancy.earliest_start_date)} to #{format_date(vacancy.latest_start_date)}"
+        - when "other"
+          = vacancy.other_start_date_details
+        - else
+          = t("jobs.not_defined")
+      - unless vacancy.legacy_draft?
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :start_date, "back_to_#{action_name}": "true"),
+                    visually_hidden_text: t("jobs.starts_on")

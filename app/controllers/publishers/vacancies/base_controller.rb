@@ -3,6 +3,8 @@ require "indexing"
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable
 
+  delegate :all_steps_valid?, :invalid_dependent_steps?, :next_invalid_step, :next_invalid_dependent_step, to: :form_sequence
+
   private
 
   helper_method :current_step, :step_process, :vacancy, :vacancies, :all_steps_valid?, :next_invalid_step
@@ -31,28 +33,20 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     @form_sequence ||= Publishers::VacancyFormSequence.new(
       vacancy: vacancy,
       organisation: current_organisation,
+      step_process: step_process,
     )
   end
 
-  def all_steps_valid?
-    form_sequence.all_steps_valid?
-  end
-
   def redirect_to_next_step
-    if (vacancy.published? && all_steps_valid?) || (save_and_finish_later? && !all_steps_valid?)
+    if vacancy.published? && invalid_dependent_steps?
+      redirect_to organisation_job_build_path(vacancy.id, next_invalid_dependent_step)
+    elsif (vacancy.published? && all_steps_valid?) || (save_and_finish_later? && !all_steps_valid?)
       redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
     elsif all_steps_valid?
       redirect_to organisation_job_review_path(vacancy.id)
     else
       redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
     end
-  end
-
-  def next_invalid_step
-    # Due to documents being an optional step (no validations) it needs to be handled differently
-    return :documents if next_incomplete_step_documents?
-
-    form_sequence.validate_all_steps.filter_map { |step, form| step unless form.valid? }.first
   end
 
   def remove_google_index(job)
@@ -67,10 +61,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
     url = job_url(job)
     UpdateGoogleIndexQueueJob.perform_later(url)
-  end
-
-  def next_incomplete_step_documents?
-    vacancy.completed_steps.last == "applying_for_the_job_details" && vacancy.completed_steps.exclude?("documents")
   end
 
   def save_and_finish_later?

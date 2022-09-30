@@ -9,9 +9,10 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
+  # TODO: Update with job listing updates
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
     about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
-    job_role job_roles job_role_details job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
+    job_role job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
     working_patterns
   ].freeze
 
@@ -23,6 +24,8 @@ class Vacancy < ApplicationRecord
     sixth_form_or_college: %i[ks5],
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
   }.freeze
+
+  LEGACY_VACANCY_DATE = DateTime.new(2022, 10, 10, 14, 35, 0)
 
   # When removing a job_role or working_pattern, remember to update *subscriptions* that have the old values.
   # TODO: remove job_roles when we are confident about the migration
@@ -39,6 +42,7 @@ class Vacancy < ApplicationRecord
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum start_date_type: { specific_date: 0, date_range: 1, other: 2, undefined: 3 }
   enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
+  enum receive_applications: { email: 0, website: 1 }
 
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
@@ -131,6 +135,14 @@ class Vacancy < ApplicationRecord
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
   end
 
+  def legacy?
+    created_at <= LEGACY_VACANCY_DATE
+  end
+
+  def legacy_draft?
+    draft? && created_at <= LEGACY_VACANCY_DATE
+  end
+
   def pending?
     published? && publish_on&.future?
   end
@@ -207,6 +219,10 @@ class Vacancy < ApplicationRecord
       actual_salary.present? ? "part_time" : nil,
       pay_scale.present? ? "pay_scale" : nil,
     ]
+  end
+
+  def other_contact_email(current_publisher)
+    contact_email? && contact_email != current_publisher.email
   end
 
   private

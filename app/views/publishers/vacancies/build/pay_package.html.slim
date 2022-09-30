@@ -1,15 +1,13 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.pay_package"))
 
-= vacancy_form_page_heading(vacancy, step_process, params: params)
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("publishers.vacancies.steps.pay_package")
+      = vacancy_form_page_heading(vacancy, step_process, params: params, fieldset: false)
 
-      = f.govuk_check_boxes_fieldset :salary_types, legend: { size: "m" } do
+      = f.govuk_check_boxes_fieldset :salary_types, legend: { size: "m", tag: nil } do
         = f.govuk_check_box :salary_types, "full_time", link_errors: true do
           = f.govuk_text_field :salary, label: { size: "s" }
 
@@ -20,13 +18,9 @@
         = f.govuk_check_box :salary_types, "pay_scale" do
           = f.govuk_text_field :pay_scale, label: { size: "s" }
 
-      = f.govuk_radio_buttons_fieldset :benefits, legend: { size: "m" } do
+      = f.govuk_radio_buttons_fieldset :benefits, legend: { size: "m", tag: nil } do
         = f.govuk_radio_button :benefits, "true" do
           = f.govuk_text_field :benefits_details, label: { size: "s" }
         = f.govuk_radio_button :benefits, "false", link_errors: true
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"

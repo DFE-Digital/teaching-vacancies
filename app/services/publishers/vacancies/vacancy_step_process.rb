@@ -6,48 +6,55 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
     @organisation = organisation
 
     super(current_step, {
-      job_role: job_role_steps,
-      job_location: job_location_steps,
       job_details: job_details_steps,
-      working_patterns: %i[working_patterns],
-      pay_package: %i[pay_package],
-      important_dates: %i[important_dates],
-      applying_for_the_job: applying_for_the_job_steps,
-      documents: %i[documents],
-      job_summary: %i[job_summary],
+      important_dates: %i[important_dates start_date],
+      application_process: application_process_steps,
+      about_the_role: about_the_role_steps,
       review: %i[review],
     })
   end
 
   private
 
-  def job_role_steps
-    if vacancy.teacher?
-      %i[job_role job_role_details]
-    else
-      %i[job_role]
-    end
-  end
-
-  def job_location_steps
-    return [] if organisation.school?
-
-    %i[job_location]
-  end
-
   def job_details_steps
-    if vacancy.allow_phase_to_be_set?
-      %i[education_phases job_details]
-    else
-      %i[job_details]
-    end
+    steps = %i[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package]
+    steps.delete(:job_location) if organisation.school?
+    steps.delete(:education_phases) unless vacancy.allow_phase_to_be_set?
+    steps.delete(:key_stages) unless vacancy.allow_key_stages?
+    steps.delete(:subjects) unless vacancy.allow_subjects?
+
+    steps
   end
 
-  def applying_for_the_job_steps
+  def application_process_steps
     if vacancy.published? || organisation.local_authority?
-      %i[applying_for_the_job_details]
+      steps = %i[school_visits contact_details]
+      steps.insert(0, :how_to_receive_applications) unless vacancy.enable_job_applications
+      steps.insert(1, application_method) if application_method.present?
     else
-      %i[applying_for_the_job applying_for_the_job_details]
+      steps = %i[applying_for_the_job school_visits contact_details]
+      steps.insert(1, :how_to_receive_applications) unless vacancy.enable_job_applications
+      steps.insert(2, application_method) if application_method.present?
+    end
+
+    steps
+  end
+
+  def about_the_role_steps
+    steps = %i[about_the_role include_additional_documents documents]
+    steps.delete(:documents) unless vacancy.include_additional_documents
+
+    steps
+  end
+
+  def application_method
+    return if vacancy.enable_job_applications
+
+    case vacancy.receive_applications
+    when "email"
+      :application_form
+    when "website"
+      :application_link
     end
   end
 end
