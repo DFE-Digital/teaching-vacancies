@@ -9,40 +9,8 @@
       h3 class="govuk-heading-s" class="govuk-!-margin-top-0 govuk-!-margin-bottom-1"
         = t("helpers.label.jobseekers_job_application_details_qualifications_category_form.category_options.#{qualification_group.first[:category]}")
       - qualification_group.each do |qualification|
-
-        - if qualification.secondary?
-          div class="govuk-!-margin-bottom-6"
-
-            p class="govuk-!-margin-bottom-1"
-              = qualification.qualification_results.map { |result| "#{result.subject} (#{result.grade.upcase})" }.join(", ")
-
-            p.govuk-caption-m
-              - if qualification.display_attributes.include?("institution")
-                span class="govuk-!-display-inline-block"
-                  = qualification[:institution]
-              - if qualification.display_attributes.include?("year")
-                span class="govuk-!-display-inline-block"
-                  = ", #{qualification[:year]}"
-
-        - else
-          div class="govuk-!-margin-bottom-6"
-            p class="govuk-!-margin-bottom-1"
-              - if qualification.display_attributes.include?("subject")
-                span class="govuk-!-display-inline-block"
-                  = qualification[:subject]
-              - if qualification.display_attributes.include?("type")
-                span class="govuk-!-display-inline-block govuk-!-margin-left-1"
-                  = qualification[:type]
-              - if qualification.display_attributes.include?("grade")
-                span class="govuk-!-display-inline-block govuk-!-margin-left-1"
-                  = "(#{qualification[:grade]})"
-              - unless qualification.finished_studying == true
-                span class="govuk-!-display-inline-block govuk-!-margin-left-1"
-                  = "(#{t("helpers.label.jobseekers_job_application_details_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}").downcase} #{qualification.finished_studying_details&.downcase})"
-            p.govuk-caption-m
-              - if qualification.display_attributes.include?("institution")
-                span class="govuk-!-display-inline-block"
-                  = qualification[:institution]
-              - if qualification.display_attributes.include?("year")
-                span class="govuk-!-display-inline-block"
-                  = ", #{qualification[:year]}"
+        div class="govuk-!-margin-bottom-6"
+          - if qualification.secondary?
+            = render "jobseekers/job_applications/review/qualifications/secondary_qualification", qualification: qualification
+          - else
+            = render "jobseekers/job_applications/review/qualifications/qualification", qualification: qualification

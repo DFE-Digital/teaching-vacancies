@@ -1,0 +1,10 @@
+p class="govuk-!-margin-bottom-1"
+  = qualification.qualification_results.map { |result| "#{result.subject} (#{result.grade.upcase})" }.join(", ")
+
+p.govuk-caption-m
+  - if qualification.display_attributes.include?("institution")
+    span class="govuk-!-display-inline-block"
+      = qualification[:institution]
+  - if qualification.display_attributes.include?("year")
+    span class="govuk-!-display-inline-block"
+      = ", #{qualification[:year]}"
