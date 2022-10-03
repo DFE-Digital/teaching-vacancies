@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.1.0",
-    "@sentry/browser": "^7.13.0",
+    "@sentry/browser": "^7.14.1",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.4",
     "axios": "^0.27.2",
@@ -35,7 +35,7 @@
     "eslint": "^8.24.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "jest": "^29.1.1",
+    "jest": "^29.1.2",
     "jest-environment-jsdom": "^29.1.2",
     "jsdom": "^20.0.0",
     "postcss": "^8.4.16",
