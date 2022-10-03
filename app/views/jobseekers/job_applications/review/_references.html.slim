@@ -5,7 +5,7 @@
     - elsif publisher_signed_in?
       p.govuk-body = t("jobseekers.job_applications.show.employment_history.none")
   - else
-    - job_application.references.sort_by { |r| r[:created_at] }.each do |reference|
+    - job_application.references.order(:created_at).each do |reference|
       = govuk_summary_list html_attributes: { id: reference.name } do |summary_list|
         - summary_list.row do |row|
           - row.key text: reference.name

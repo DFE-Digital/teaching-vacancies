@@ -37,7 +37,7 @@
               - row.value text: employment.ended_on
 
       - elsif employment.break?
-        = render "jobseekers/job_applications/explained_employment_break", employment: employment, index: index
+        = render "jobseekers/job_applications/explained_employment_break", job_application: job_application, employment: employment, index: index
 
       - if employment_history_gap?(index, job_application.employments)
-        = render "jobseekers/job_applications/unexplained_employment_break", employment: employment, index: index
+        = render "jobseekers/job_applications/unexplained_employment_break", job_application: job_application, employment: employment, index: index

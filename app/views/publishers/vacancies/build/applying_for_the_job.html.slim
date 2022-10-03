@@ -16,8 +16,8 @@
           li = item
 
       = govuk_details(summary_text: "See what an application form looks like") do
-        = job_application_review(job_application, step_process: {}, show_tracks: false, show_sidebar: false, allow_edit: false) do |r|
-          - render "jobseekers/job_applications/job_application_review_sections", r: r
+        = job_application_review(job_application_sample, step_process: {}, show_tracks: false, show_sidebar: false, allow_edit: false) do |r|
+          - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: job_application_sample
 
       - if vacancy.listed? || current_organisation.local_authority?
         = f.hidden_field :enable_job_applications
