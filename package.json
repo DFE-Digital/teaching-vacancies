@@ -43,7 +43,7 @@
     "stylelint": "^14.13.0",
     "stylelint-config-sass-guidelines": "^9.0.1",
     "stylelint-config-standard": "^28.0.0",
-    "yaml": "^2.1.1"
+    "yaml": "^2.1.2"
   },
   "scripts": {
     "build": "node esbuild.config.js",
