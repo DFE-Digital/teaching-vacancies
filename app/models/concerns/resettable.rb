@@ -12,6 +12,7 @@ module Resettable
     reset_subjects
     set_default_key_stage
     reset_keystages
+    reset_ect_status
   end
 
   def reset_actual_salary
@@ -42,5 +43,11 @@ module Resettable
 
   def set_default_key_stage
     self.key_stages = key_stages_for_phases if key_stages_for_phases.one?
+  end
+
+  def reset_ect_status
+    return unless job_role_changed? && job_role != "teacher"
+
+    self.ect_status = nil
   end
 end
