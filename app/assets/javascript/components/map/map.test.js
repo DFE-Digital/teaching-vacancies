@@ -13,6 +13,8 @@ const initialiseStimulus = () => {
   application.register('map', MapController);
 };
 
+jest.mock('./marker/service');
+
 const point = JSON.stringify({ type: 'Point', coordinates: [-0.1583477, 51.46761] });
 
 const getMarkerHTML = (count, type) => {
