@@ -211,6 +211,29 @@ RSpec.describe "Creating a vacancy" do
         expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
       end
 
+      context "when publishing a vacancy" do
+        let(:publisher_that_created_vacancy) { create(:publisher, organisations: [trust]) }
+        let(:publisher_that_publishes_vacancy) { create(:publisher, organisations: [school]) }
+        let(:school) { create(:school) }
+        let(:trust) { create(:trust, schools: [school]) }
+        let(:vacancy) { create(:vacancy, :draft, organisations: [school], publisher: publisher_that_created_vacancy, publisher_organisation: trust) }
+
+        before { login_publisher(publisher: publisher_that_publishes_vacancy, organisation: school) }
+
+        scenario "the publisher and organisation_publisher are reset" do
+          visit organisation_job_path(vacancy.id)
+
+          has_complete_draft_vacancy_review_heading?(vacancy)
+
+          click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
+
+          vacancy.reload
+
+          expect(vacancy.publisher).to eq(publisher_that_publishes_vacancy)
+          expect(vacancy.publisher_organisation).to eq(school)
+        end
+      end
+
       scenario "can be published at a later date" do
         vacancy = create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
