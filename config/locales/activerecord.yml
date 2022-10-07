@@ -194,7 +194,7 @@ en:
     enable_job_applications:
       cannot_be_changed_once_listed: >-
         You cannot change how you would like candidates to apply now that your listing is published
-      inclusion: Select yes if you would like candidates to use the application form
+      inclusion: Select yes if you want candidates to use the application form
   how_to_receive_applications_errors: &how_to_receive_applications_errors
     receive_applications:
       inclusion: Select how you want to receive applications
@@ -243,7 +243,7 @@ en:
       blank: Enter the information about what your %{organisation} offers
       maximum_words: "%{organisation} offer must be 150 words or less"
     safeguarding_information_provided:
-      inclusion: Select yes if you would like to add information about your commitment to safeguarding
+      inclusion: Select yes if you want to add information about your commitment to safeguarding
     safeguarding_information:
       blank: Enter the information about your commitment to safeguarding
       maximum_words: Safeguarding information must be 100 words or less

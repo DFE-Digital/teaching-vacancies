@@ -1,6 +1,5 @@
 class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::VacancyForm
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_role == "teacher" }
-  validates :job_advert, presence: true, if: -> { vacancy.job_advert.present? }
   validate :about_school_must_not_be_blank, if: -> { vacancy.job_advert.present? }
   validates :skills_and_experience, presence: true, unless: -> { vacancy.job_advert.present? }
   validate :skills_and_experience_does_not_exceed_maximum_words, unless: -> { vacancy.job_advert.present? }
@@ -19,7 +18,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
       about_school
       ect_status
       skills_and_experience
-      school_offer
+      school_offer 
       safeguarding_information_provided
       safeguarding_information
       further_details_provided
