@@ -12,6 +12,8 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::UploadBase
     application/vnd.openxmlformats-officedocument.presentationml.presentation
   ].freeze
 
+  validate :document_presence
+
   attr_accessor :documents
 
   def self.fields
@@ -34,5 +36,11 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::UploadBase
 
   def content_types_allowed
     CONTENT_TYPES_ALLOWED
+  end
+
+  def document_presence
+    return unless vacancy.include_additional_documents
+
+    errors.add(:documents, :blank) unless vacancy.supporting_documents.any?
   end
 end
