@@ -62,9 +62,9 @@ FactoryBot.define do
       further_details_provided { nil }
       further_details { nil }
       how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
-      how_to_receive_applications { nil }
       job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
       personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+      receive_applications { nil }
       safeguarding_information_provided { nil }
       safeguarding_information { nil }
       school_offer { nil }

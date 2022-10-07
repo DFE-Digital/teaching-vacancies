@@ -42,7 +42,11 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   def school_offer_presence
     return if school_offer.present?
 
-    errors.add(:school_offer, I18n.t("about_the_role_errors.school_offer.blank", organisation: organisation_type))
+    if organisation_type == "schools"
+      errors.add(:school_offer, I18n.t("about_the_role_errors.schools_offer.blank", organisation: organisation_type))
+    else
+      errors.add(:school_offer, I18n.t("about_the_role_errors.school_offer.blank", organisation: organisation_type))
+    end
   end
 
   def school_offer_does_not_exceed_maximum_words
@@ -64,14 +68,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   def about_school_must_not_be_blank
     return if about_school.present?
 
-    organisation = if vacancy&.central_office?
-                     "trust"
-                   elsif vacancy&.organisations&.many?
-                     "schools"
-                   else
-                     "school"
-                   end
-
-    errors.add(:about_school, I18n.t("about_the_role_errors.about_school.blank", organisation: organisation))
+    errors.add(:about_school, I18n.t("about_the_role_errors.about_school.blank", organisation: organisation_type))
   end
 end

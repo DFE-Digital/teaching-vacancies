@@ -122,7 +122,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
             li class="govuk-!-margin-bottom-4"
               div => "#{t('jobs.pay_scale')}:"
               = vacancy.pay_scale
-          - unless vacancy.salary? && vacancy.actual_salary? && vacancy.pay_scale?
+          - unless vacancy.salary? || vacancy.actual_salary? || vacancy.pay_scale?
             = t("jobs.not_answered")
       - row.action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :pay_package, "back_to_#{action_name}": "true"),

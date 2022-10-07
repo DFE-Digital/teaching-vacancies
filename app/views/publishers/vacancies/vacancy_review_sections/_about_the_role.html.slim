@@ -46,7 +46,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   - else
     - summary_list.row(html_attributes: { id: "school_offer" }) do |row|
       - row.key
-        = t("jobs.school_offer")
+        = vacancy_school_offer_review_label(vacancy)
       - row.value
         == vacancy.school_offer.present? ? vacancy.school_offer : t("jobs.not_answered")
       - row.action text: t("buttons.change"),

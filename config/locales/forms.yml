@@ -493,7 +493,8 @@ en:
         safeguarding_information_provided_options:
           false: "No"
           true: "Yes"
-        school_offer: What does your school offer?
+        school_offer: What does your %{organisation} offer?
+        schools_offer: What do your schools offer?
         skills_and_experience: What skills and experience are you looking for?
       publishers_job_listing_application_link_form:
         application_link: Link to website

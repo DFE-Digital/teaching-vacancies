@@ -193,7 +193,7 @@ en:
   applying_for_the_job_errors: &applying_for_the_job_errors
     enable_job_applications:
       cannot_be_changed_once_listed: >-
-        You cannot change how you would like candidates to apply now that your listing is published
+        You cannot change how you want candidates to apply now that your listing is published
       inclusion: Select yes if you want candidates to use the application form
   how_to_receive_applications_errors: &how_to_receive_applications_errors
     receive_applications:
@@ -242,6 +242,8 @@ en:
     school_offer:
       blank: Enter the information about what your %{organisation} offers
       maximum_words: "%{organisation} offer must be 150 words or less"
+    schools_offer:
+      blank: Enter the information about what your %{organisation} offer
     safeguarding_information_provided:
       inclusion: Select yes if you want to add information about your commitment to safeguarding
     safeguarding_information:
@@ -254,7 +256,7 @@ en:
       maximum_words: Further details must be 100 words or less
   include_additional_documents_errors: &include_additional_documents_errors
     include_additional_documents:
-      inclusion: Select yes if you would like to upload additional documents
+      inclusion: Select yes if want to upload additional documents
   documents_errors: &documents_errors
     documents:
       blank: Upload at least one document

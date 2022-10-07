@@ -193,7 +193,8 @@ en:
       other: Key stages
     part_time_details: Part time - %{details}
     safeguarding_information: Our commitment to safeguarding
-    school_offer: What the school offers its staff
+    school_offer: What the %{organisation} offers its staff
+    schools_offer: What the schools offer their staff
     skills_and_experience: What skills and experience we're looking for
     suitable_for_ect: Is this job suitable for ECTs?
     subjects: Subject(s)

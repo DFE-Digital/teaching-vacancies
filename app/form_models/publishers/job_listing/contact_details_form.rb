@@ -1,9 +1,9 @@
 class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::VacancyForm
   validates :contact_email, presence: true
-  validates :contact_number, presence: true, format: { with: /\A\+?(?:\d\s?){10,12}\z/ }, if: -> { contact_number_provided == "true" }
-  validates :contact_number_provided, inclusion: { in: [true, false, "true", "false"] }
   validate :other_contact_email_presence
   validate :other_contact_email_valid
+  validates :contact_number_provided, inclusion: { in: [true, false, "true", "false"] }
+  validates :contact_number, presence: true, format: { with: /\A\+?(?:\d\s?){10,12}\z/ }, if: -> { contact_number_provided == "true" }
 
   def self.fields
     %i[contact_email contact_number contact_number_provided]
