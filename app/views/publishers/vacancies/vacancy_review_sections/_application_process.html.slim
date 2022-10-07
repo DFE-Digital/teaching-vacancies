@@ -2,7 +2,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   = t("publishers.vacancies.build.application_process.step_title")
 
 = govuk_summary_list(html_attributes: { id: "application_process" }) do |summary_list|
-  - unless current_organisation.group_type == "local_authority" || vacancy.enable_job_applications.nil?
+  - unless current_organisation.group_type == "local_authority"
     - summary_list.row(html_attributes: { id: "enable_job_applications" }) do |row|
       - row.key
         = t("jobs.enable_job_applications")

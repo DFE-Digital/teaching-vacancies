@@ -59,9 +59,17 @@ FactoryBot.define do
 
     trait :legacy_vacancy do
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+      further_details_provided { nil }
+      further_details { nil }
       how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
+      how_to_receive_applications { nil }
       job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
       personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+      safeguarding_information_provided { nil }
+      safeguarding_information { nil }
+      school_offer { nil }
+      school_visits_details { Faker::Lorem.paragraph(sentence_count: 4) }
+      skills_and_experience { nil }
     end
 
     trait :no_tv_applications do

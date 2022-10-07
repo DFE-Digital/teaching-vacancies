@@ -17,6 +17,7 @@ module Resettable
     reset_application_email
     reset_application_link
     reset_documents
+    reset_personal_statement_guidance
   end
 
   def reset_actual_salary
@@ -77,5 +78,11 @@ module Resettable
     return unless include_additional_documents_changed?
 
     supporting_documents.each(&:purge_later) unless include_additional_documents?
+  end
+
+  def reset_personal_statement_guidance
+    return unless enable_job_applications_changed? && !enable_job_applications
+
+    self.personal_statement_guidance = nil
   end
 end
