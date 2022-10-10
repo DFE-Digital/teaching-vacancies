@@ -133,6 +133,10 @@ class Vacancy < ApplicationRecord
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
   end
 
+  def legacy_draft?
+    draft? && created_at <= DateTime.new(2022, 10, 10, 14, 35, 0)
+  end
+
   def pending?
     published? && publish_on&.future?
   end
