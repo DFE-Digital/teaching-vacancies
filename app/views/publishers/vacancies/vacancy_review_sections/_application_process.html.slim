@@ -22,9 +22,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         = t("jobs.personal_statement_guidance")
       - row.value
         = vacancy.personal_statement_guidance
-      - row.action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :applying_for_the_job, "back_to_#{action_name}": "true"),
-                  visually_hidden_text: t("jobs.personal_statement_guidance")
+      - unless vacancy.published?
+        - row.action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :applying_for_the_job, "back_to_#{action_name}": "true"),
+                    visually_hidden_text: t("jobs.personal_statement_guidance")
 
   - unless vacancy.enable_job_applications?
     - if vacancy.how_to_apply.present?
