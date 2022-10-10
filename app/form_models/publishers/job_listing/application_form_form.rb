@@ -51,6 +51,7 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Uplo
   def params_to_save
     {
       application_email: params[:application_email] == "other" ? params[:other_application_email] : params[:application_email],
+      how_to_apply: how_to_apply,
     }
   end
 
