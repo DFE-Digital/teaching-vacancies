@@ -113,12 +113,12 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     href: organisation_job_build_path(vacancy.id, :include_additional_documents, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.include_additional_documents")
 
-  - if vacancy.supporting_documents.attached? || vacancy.completed_steps.include?("documents")
+  - if vacancy.supporting_documents.attachments.any?
     - summary_list.row(html_attributes: { id: "supporting_documents" }) do |row|
       - row.key
         = t("jobs.additional_documents")
       - row.value
-        - if vacancy.supporting_documents.attached?
+        - if vacancy.supporting_documents.attachments.any?
           ul.govuk-list
             - vacancy.supporting_documents.each do |document|
               li = govuk_link_to "#{document.filename}, #{number_to_human_size(document.byte_size)}", job_document_path(vacancy, document.id)

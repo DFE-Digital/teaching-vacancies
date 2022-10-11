@@ -71,7 +71,7 @@ namespace :db do # rubocop:disable Metrics/BlockLength
     Vacancy.find_each do |v|
       v.update_columns(application_email: v.contact_email,
                        contact_number_provided: v.contact_number.present?,
-                       include_additional_documents: v.supporting_documents.any?,
+                       include_additional_documents: vacancy.supporting_documents.attachments.any?,
                        school_visits: false)
     end
   end
