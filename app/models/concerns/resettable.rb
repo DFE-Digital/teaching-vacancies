@@ -19,6 +19,7 @@ module Resettable
     reset_documents
     reset_personal_statement_guidance
     reset_school_visits_details
+    reset_contact_number
   end
 
   def reset_actual_salary
@@ -91,5 +92,11 @@ module Resettable
     return unless school_visits_changed? && !school_visits
 
     self.school_visits_details = nil
+  end
+
+  def reset_contact_number
+    return unless contact_number_provided_changed? && !contact_number_provided
+
+    self.contact_number = nil
   end
 end
