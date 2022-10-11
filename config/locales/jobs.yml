@@ -188,9 +188,7 @@ en:
     job_title: Job title
     job_role: Job role
     job_summary: "%{job_title} job summary"
-    key_stage:
-      one: Key stage
-      other: Key stages
+    key_stage: Key stage
     part_time_details: Part time - %{details}
     safeguarding_information: Information about your commitment to safeguarding
     school_offer: What does your %{organisation} offer?
