@@ -290,7 +290,7 @@ en:
     review: Review your entries for each section below, making any changes needed before you publish the job listing.
     review_future:
       Review your entries for each section below, making any changes before you submit the listing for publication.
-    not_defined: Not entered (will not be seen on published listing)
+    not_defined: Not entered
     edit: Edit the job details.
 
     view_public_link: 'View the public page for this job'
