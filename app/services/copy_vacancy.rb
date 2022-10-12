@@ -17,6 +17,7 @@ class CopyVacancy
     @new_vacancy.status = :draft
     reset_date_fields if @vacancy.publish_on&.past?
     reset_legacy_fields
+    @new_vacancy.include_additional_documents = nil
     @new_vacancy.completed_steps = current_steps
     @new_vacancy.organisations = @vacancy.organisations
   end

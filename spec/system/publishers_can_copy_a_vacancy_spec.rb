@@ -30,6 +30,12 @@ RSpec.describe "Copying a vacancy" do
       fill_in_start_date_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
+      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+
+      new_vacancy.include_additional_documents = false
+      fill_in_include_additional_documents_form_fields(new_vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
       expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
@@ -80,6 +86,12 @@ RSpec.describe "Copying a vacancy" do
       fill_in_about_the_role_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
+      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+
+      new_vacancy.include_additional_documents = false
+      fill_in_include_additional_documents_form_fields(new_vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
       expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
@@ -99,6 +111,12 @@ RSpec.describe "Copying a vacancy" do
       new_vacancy = Vacancy.all.order(:created_at).last
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+
+      new_vacancy.include_additional_documents = false
+      fill_in_include_additional_documents_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
