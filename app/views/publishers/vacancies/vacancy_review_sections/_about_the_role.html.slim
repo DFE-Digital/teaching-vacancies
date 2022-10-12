@@ -28,13 +28,13 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   - unless vacancy.skills_and_experience.nil?
     - summary_list.row(html_attributes: { id: "skills_and_experience" }) do |row|
       - row.key
-        = t("jobs.skills_and_experience")
+        = t("jobs.skills_and_experience.publisher")
       - row.value
         == vacancy.skills_and_experience
       - unless vacancy.legacy_draft?
         - row.action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                    visually_hidden_text: t("jobs.skills_and_experience")
+                    visually_hidden_text: t("jobs.skills_and_experience.publisher")
 
   - if strip_tags(vacancy.about_school).present?
     - summary_list.row(html_attributes: { id: "job_advert" }) do |row|
@@ -50,13 +50,13 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   - unless vacancy.school_offer.nil?
     - summary_list.row(html_attributes: { id: "school_offer" }) do |row|
       - row.key
-        = vacancy_school_offer_review_label(vacancy)
+        = vacancy_school_offer_label(vacancy, jobseeker_or_publisher: "publisher")
       - row.value
         == vacancy.school_offer
       - unless vacancy.legacy_draft?
         - row.action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                    visually_hidden_text: t("jobs.school_offer", organisation: vacancy.organisation.type.downcase)
+                    visually_hidden_text: t("jobs.school_offer.publisher", organisation: vacancy.organisation.type.downcase)
 
   - unless vacancy.safeguarding_information_provided.nil?
     - summary_list.row(html_attributes: { id: "safeguarding_information_provided" }) do |row|
@@ -72,13 +72,13 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   - if vacancy.safeguarding_information.present?
     - summary_list.row(html_attributes: { id: "safeguarding_information" }) do |row|
       - row.key
-        = t("jobs.safeguarding_information")
+        = t("jobs.safeguarding_information.publisher")
       - row.value
         = vacancy.safeguarding_information
       - unless vacancy.legacy_draft?
         - row.action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                    visually_hidden_text: t("jobs.safeguarding_information")
+                    visually_hidden_text: t("jobs.safeguarding_information.publisher")
 
   - if vacancy.further_details_provided.present?
     - summary_list.row(html_attributes: { id: "further_details_provided" }) do |row|

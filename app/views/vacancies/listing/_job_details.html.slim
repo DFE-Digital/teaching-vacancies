@@ -55,14 +55,14 @@ section#job-details class="govuk-!-margin-bottom-5"
         - row.value text: vacancy.benefits_details
 
   - if vacancy.skills_and_experience.present?
-    h2.govuk-heading-m = t("jobs.skills_and_experience")
+    h2.govuk-heading-m = t("jobs.skills_and_experience.jobseeker")
     .govuk-body == vacancy.skills_and_experience
   - elsif vacancy.job_advert.present?
     h2.govuk-heading-m = t("jobs.job_summary", job_title: vacancy.job_title)
     .govuk-body == vacancy.job_advert
 
   - if vacancy.school_offer.present?
-    h2.govuk-heading-m = t("jobs.school_offer", organisation: vacancy.organisation.type&.downcase)
+    h2.govuk-heading-m = vacancy_school_offer_label(vacancy, jobseeker_or_publisher: "jobseeker")
     .govuk-body == vacancy.school_offer
 
   - if vacancy.further_details_provided?
@@ -70,7 +70,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     p.govuk-body = vacancy.further_details
 
   - if vacancy.safeguarding_information_provided?
-    h2.govuk-heading-m = t("jobs.safeguarding_information")
+    h2.govuk-heading-m = t("jobs.safeguarding_information.jobseeker")
     p.govuk-body = vacancy.safeguarding_information
 
   - if vacancy.expires_at.future?

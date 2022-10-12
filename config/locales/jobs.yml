@@ -190,10 +190,18 @@ en:
     job_summary: "%{job_title} job summary"
     key_stage: Key stage
     part_time_details: Part time - %{details}
-    safeguarding_information: Information about your commitment to safeguarding
-    school_offer: What does your %{organisation} offer?
-    schools_offer: What does your school offer?
-    skills_and_experience: What skills and experience are you looking for?
+    safeguarding_information:
+      jobseeker: Commitment to safeguarding
+      publisher: Information about your commitment to safeguarding
+    school_offer:
+      jobseeker: What the %{organisation} offers its staff
+      publisher: What does your %{organisation} offer?
+    schools_offer:
+      jobseeker: What the schools offer their staff
+      publisher: What do your schools offer?
+    skills_and_experience:
+      jobseeker: What skills and experience we're looking for
+      publisher: What skills and experience are you looking for?
     suitable_for_ect: Is this job suitable for ECTs?
     subjects: Subject
     subject:
