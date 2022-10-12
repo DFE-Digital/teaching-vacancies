@@ -8,4 +8,10 @@ module MapsHelper
       }
     end
   end
+
+  def organisation_map_can_be_displayed?(vacancy)
+    return true unless vacancy.central_office?
+
+    vacancy.organisation.geopoint.present?
+  end
 end
