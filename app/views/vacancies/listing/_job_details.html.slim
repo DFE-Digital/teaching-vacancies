@@ -62,7 +62,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     .govuk-body == vacancy.job_advert
 
   - if vacancy.school_offer.present?
-    h2.govuk-heading-m = t("jobs.school_offer")
+    h2.govuk-heading-m = t("jobs.school_offer", organisation: vacancy.organisation.type&.downcase)
     .govuk-body == vacancy.school_offer
 
   - if vacancy.further_details_provided?

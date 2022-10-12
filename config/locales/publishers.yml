@@ -53,9 +53,10 @@ en:
         one: Working pattern changed to %{new_value}
         other: Working patterns changed to %{new_value}
       show_value_changed: "%{attribute} changed to %{new_value}"
-    job_listing_process_changed_banner:
-      heading: The way you create a job listing has changed
-      body: If you edit an existing job listing you'll be asked to make changes.
+    job_listing_process_changed_published_banner:
+      heading_html: "%{contact_support_link} if you need to change the instructions about how to apply or write a personal statement."
+    job_listing_process_changed_draft_banner:
+      heading_html: "You cannot make changes to this draft job listing. %{create_new_link} or %{contact_support_link}."
     login_keys:
       new:
         notice: >-
