@@ -69,10 +69,9 @@ namespace :db do # rubocop:disable Metrics/BlockLength
   desc "Set vacancy fields for new listing process"
   task set_new_vacancy_fields: :environment do
     Vacancy.find_each do |v|
-      v.update_columns(application_email: v.contact_email,
-                       contact_number_provided: v.contact_number.present?,
+      v.update_columns(contact_number_provided: v.contact_number.present?,
                        include_additional_documents: vacancy.supporting_documents.attachments.any?,
-                       school_visits: false)
+                       school_visits: v.school_visits_details.present?)
     end
   end
 end
