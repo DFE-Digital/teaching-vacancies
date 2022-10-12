@@ -218,8 +218,9 @@ en:
         benefits: For example, special educational needs (SEN) or teaching and learning responsibility (TLR) payments
         salary_types: Select all that apply
         salary_types_options:
-          full_time: This is what the annual salary would be for someone working full time
+          full_time: For example, 'Between £20,000 and £40,000'
           part_time: This is the annual amount someone will take home
+          pay_scale: For example, 'M1 to M2'
       publishers_job_listing_schools_form:
         add_school: Add a school to your account
         edit_schools: "Can't see the school you are looking for?"
