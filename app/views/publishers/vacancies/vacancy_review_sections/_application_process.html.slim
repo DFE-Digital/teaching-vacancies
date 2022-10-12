@@ -48,7 +48,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                       visually_hidden_text: t("jobs.how_to_receive_applications")
 
       - if vacancy.receive_applications == "email"
-        - if vacancy.application_form.attachments.any?
+        - if vacancy.application_form.attachments&.any?
           - summary_list.row(html_attributes: { id: "application_form" }) do |row|
             - row.key
               = t("jobs.application_form")

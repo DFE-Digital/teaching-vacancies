@@ -70,7 +70,7 @@ namespace :db do # rubocop:disable Metrics/BlockLength
   task set_new_vacancy_fields: :environment do
     Vacancy.find_each do |v|
       v.update_columns(contact_number_provided: v.contact_number.present?,
-                       include_additional_documents: vacancy.supporting_documents.attachments.any?,
+                       include_additional_documents: vacancy.supporting_documents.attachments&.any?,
                        school_visits: v.school_visits_details.present?)
     end
   end
