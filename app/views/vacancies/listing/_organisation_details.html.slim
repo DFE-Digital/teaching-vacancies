@@ -36,7 +36,7 @@ section#school-overview
   section#school-location
     h3.govuk-heading-l.heading--border-bottom
       - if vacancy.central_office?
-        = t("organisations.about.central_office", organisation: vacancy.organisation_name)
+        = t("organisations.locations.central_office", organisation: vacancy.organisation_name)
       - elsif vacancy.organisations.many?
         = t("organisations.locations.at_multiple_schools")
       - else
