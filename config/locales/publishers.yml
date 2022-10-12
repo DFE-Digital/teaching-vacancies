@@ -343,6 +343,8 @@ en:
         heading: Check details and %{status} job listing
         steps: Create a job listing steps
       show:
+        copied:
+          success: Job listing copied
         view_live_listing_link: View this listing
         view_live_listing_title: View the live job listing
         draft:

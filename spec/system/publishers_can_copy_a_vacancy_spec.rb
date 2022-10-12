@@ -17,6 +17,8 @@ RSpec.describe "Copying a vacancy" do
 
       new_vacancy = Vacancy.all.order(:created_at).last
 
+      expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
 
       new_vacancy.publish_on = Date.current
@@ -52,7 +54,7 @@ RSpec.describe "Copying a vacancy" do
 
     new_vacancy = Vacancy.all.order(:created_at).last
 
-    expect(current_path).to eq organisation_job_build_path(new_vacancy.id, :important_dates)
+    expect(current_path).to eq organisation_job_path(new_vacancy.id)
   end
 
   context "when the original job is now invalid" do
@@ -68,6 +70,9 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       new_vacancy = Vacancy.all.order(:created_at).last
+
+      expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
 
@@ -109,9 +114,8 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       new_vacancy = Vacancy.all.order(:created_at).last
-
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
-      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
 
