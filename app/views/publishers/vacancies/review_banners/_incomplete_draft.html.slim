@@ -5,4 +5,4 @@ h1.govuk-heading-l class="govuk-!-display-inline"
   = vacancy_review_heading_inset_text(vacancy, "incomplete_draft")
   .govuk-button-group class="govuk-!-margin-top-4"
     - %w[complete copy delete].each do |action|
-      = vacancy_review_heading_action_link(vacancy, action)
+      = vacancy_review_heading_action_link(vacancy, action) unless vacancy.legacy_draft? && action == "complete"
