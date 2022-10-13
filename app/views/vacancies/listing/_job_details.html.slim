@@ -55,7 +55,7 @@ section#job-details class="govuk-!-margin-bottom-5"
         - row.value text: vacancy.benefits_details
 
   h2.govuk-heading-m = t("jobs.job_summary", job_title: vacancy.job_title)
-  == vacancy.job_advert
+  .govuk-body == vacancy.job_advert
 
   - if vacancy.expires_at.future?
     - if vacancy.enable_job_applications?
