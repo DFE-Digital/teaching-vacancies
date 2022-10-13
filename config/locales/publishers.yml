@@ -314,6 +314,10 @@ en:
           view_more_applications: View more applications
       live:
         notice: You can only view active jobs
+      review:
+        caption: Create job listing
+        heading: Check details and %{status} job listing
+        steps: Create a job listing steps
       show:
         view_live_listing_link: View this listing
         view_live_listing_title: View the live job listing

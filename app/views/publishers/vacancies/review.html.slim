@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, review_page_title_prefix(vacancy, show_errors: true)
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: organisation_job_build_path(vacancy.id, step_process.previous_step)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = t(".caption")
+    h1.govuk-heading-l = t(".heading", status: (vacancy.publish_on&.future? ? "schedule" : "publish"))
+
+    = render "publishers/vacancies/sections"
+
+    p
+      = open_in_new_tab_link_to(t("buttons.preview_job_listing"), organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+    p
+      | By publishing this job listing you agree to the #{govuk_link_to "terms and conditions", page_path("terms-and-conditions")}.
+
+    - if vacancy.publish_on&.future?
+      = govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+    - else
+      = govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+
+    = govuk_button_link_to(t("buttons.save_and_finish_later"), jobs_with_type_organisation_path(:draft), class: "govuk-button--secondary govuk-!-margin-left-2")
