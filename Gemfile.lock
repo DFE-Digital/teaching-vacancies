@@ -706,7 +706,6 @@ DEPENDENCIES
   omniauth
   omniauth-rails_csrf_protection (~> 1.0)
   omniauth_openid_connect
-  pagy
   paper_trail
   paper_trail-globalid
   parslet
@@ -747,7 +746,6 @@ DEPENDENCIES
   tzinfo-data
   validate_url
   vcr
-  view_component
   web-console
   webmock
   wicked
