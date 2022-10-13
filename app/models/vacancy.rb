@@ -25,8 +25,6 @@ class Vacancy < ApplicationRecord
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
   }.freeze
 
-  LEGACY_VACANCY_DATE = DateTime.new(2022, 10, 10, 14, 35, 0)
-
   # When removing a job_role or working_pattern, remember to update *subscriptions* that have the old values.
   # TODO: remove job_roles when we are confident about the migration
   # array_enum job_roles: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, education_support: 4, sendco: 5, send_responsible: 2, ect_suitable: 3 }
@@ -136,11 +134,11 @@ class Vacancy < ApplicationRecord
   end
 
   def legacy?
-    created_at <= LEGACY_VACANCY_DATE
+    [job_advert, about_school, personal_statement_guidance, school_visits_details, how_to_apply].filter_map(&:present?).any?
   end
 
   def legacy_draft?
-    draft? && created_at <= LEGACY_VACANCY_DATE
+    legacy? && draft?
   end
 
   def pending?

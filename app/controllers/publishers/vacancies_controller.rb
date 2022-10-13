@@ -36,10 +36,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
-  def review
-    @vacancy = VacancyPresenter.new(vacancy)
-  end
-
   def convert_to_draft
     vacancy.draft!
     redirect_to organisation_job_path(vacancy.id)
