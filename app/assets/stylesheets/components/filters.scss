@@ -68,13 +68,13 @@
         border: 1px solid $govuk-input-border-colour;
         border-radius: govuk-spacing(1);
         cursor: pointer;
+        display: grid;
         -webkit-font-smoothing: antialiased;
         font-weight: 400;
-        line-height: 2.5;
         margin-top: govuk-spacing(1);
         padding: govuk-spacing(1);
         text-align: left;
-        white-space: nowrap;
+        white-space: break-spaces;
 
         &::after {
           height: 0;
