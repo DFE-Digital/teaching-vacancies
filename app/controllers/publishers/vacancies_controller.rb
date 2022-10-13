@@ -18,6 +18,10 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     redirect_to organisation_job_build_path(vacancy.id, :job_role)
   end
 
+  def review
+    @vacancy = VacancyPresenter.new(vacancy)
+  end
+
   def destroy
     vacancy.supporting_documents.purge_later
     vacancy.trashed!
