@@ -17,20 +17,16 @@ southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
 users = [
   { email: "adam.silver@digital.education.gov.uk", family_name: "Silver", given_name: "Adam" },
   { email: "alex.bowen@digital.education.gov.uk", family_name: "Bowen", given_name: "Alex" },
-  { email: "alex.wiskar@digital.education.gov.uk", family_name: "Wiskar", given_name: "Alex" },
   { email: "ben.mitchell@digital.education.gov.uk", family_name: "Mitchell", given_name: "Ben" },
-  { email: "cesidio.dilanda@digital.education.gov.uk", family_name: "Di Landa", given_name: "Cesidio" },
   { email: "colin.saliceti@digital.education.gov.uk", family_name: "Saliceti", given_name: "Colin" },
   { email: "davide.dippolito@digital.education.gov.uk", family_name: "Dippolito", given_name: "Davide" },
   { email: "joseph.hull@digital.education.gov.uk", family_name: "Hull", given_name: "Joseph" },
   { email: "leonie.shanks@digital.education.gov.uk", family_name: "Shanks", given_name: "Leonie" },
   { email: "molly.capstick@digital.education.gov.uk", family_name: "Capstick", given_name: "Molly" },
   { email: "rachael.harvey@digital.education.gov.uk", family_name: "Harvey", given_name: "Rachael" },
-  { email: "rishil.patel@digital.education.gov.uk", family_name: "Patel", given_name: "Rishil" },
   { email: "rob.young@digital.education.gov.uk", family_name: "Young", given_name: "Rob" },
   { email: "rose.mackworth-young@digital.education.gov.uk", family_name: "Mackworth-Young", given_name: "Rose" },
   { email: "sabrina.altieri@education.gov.uk", family_name: "Altieri", given_name: "Sabrina" },
-  { email: "shahad.rahman@digital.education.gov.uk", family_name: "Rahman", given_name: "Shahad" },
 ]
 
 users.each do |user|

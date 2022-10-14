@@ -65,13 +65,13 @@ module Resettable
   end
 
   def reset_application_email
-    return unless receive_applications_changed? && (receive_applications != "email" || how_to_apply.present?)
+    return unless receive_applications_changed? && receive_applications != "email"
 
     self.application_email = nil
   end
 
   def reset_application_link
-    return unless receive_applications_changed? && (receive_applications != "website" || how_to_apply.present?)
+    return unless receive_applications_changed? && receive_applications != "website"
 
     self.application_link = nil
   end
