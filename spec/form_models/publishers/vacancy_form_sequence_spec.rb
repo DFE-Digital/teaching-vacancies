@@ -68,4 +68,67 @@ RSpec.describe Publishers::VacancyFormSequence do
       expect(sequence).to be_all_steps_valid
     end
   end
+
+  describe "#invalid_dependent_steps?" do
+    before { allow(step_process).to receive(:current_step).and_return(current_step) }
+
+    context "when current step has no dependent steps" do
+      let(:current_step) { :school_visits }
+
+      it "returns false" do
+        expect(sequence.invalid_dependent_steps?).to be false
+      end
+    end
+
+    context "when current step has dependent steps" do
+      before { vacancy.update(application_link: nil) }
+
+      let(:current_step) { :how_to_receive_applications }
+
+      it "returns true" do
+        expect(sequence.invalid_dependent_steps?).to be true
+      end
+    end
+  end
+
+  describe "#next_invalid_step" do
+    context "when the next incomplete step is subjects" do
+      before { allow(sequence).to receive(:next_incomplete_step_subjects?).and_return(true) }
+
+      it "returns subjects" do
+        expect(sequence.next_invalid_step).to be(:subjects)
+      end
+    end
+
+    context "when the next incomplete step is not subjects" do
+      before { allow(step_process).to receive(:current_step).and_return(:application_link) }
+
+      it "returns the correct step" do
+        expect(sequence.next_invalid_step).to be(:school_visits)
+      end
+    end
+  end
+
+  describe "#next_invalid_dependent_step" do
+    before do
+      vacancy.update(application_link: nil)
+      allow(step_process).to receive(:current_step).and_return(current_step)
+    end
+
+    context "when the current step has dependent steps" do
+      let(:current_step) { :how_to_receive_applications }
+
+      it "returns the correct invalid dependent step" do
+        expect(sequence.next_invalid_dependent_step).to eq(:application_link)
+      end
+    end
+
+    context "when the current step has no dependent steps" do
+      let(:current_step) { :subjects }
+
+      it "returns nil" do
+        expect(sequence.next_invalid_dependent_step).to be_nil
+      end
+    end
+  end
 end
