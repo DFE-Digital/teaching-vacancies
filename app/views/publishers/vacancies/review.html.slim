@@ -20,4 +20,4 @@
     - else
       = govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
 
-    = govuk_button_link_to(t("buttons.save_and_finish_later"), jobs_with_type_organisation_path(:draft), class: "govuk-button--secondary govuk-!-margin-left-2")
+    = govuk_button_link_to(t("buttons.save_and_finish_later"), organisation_job_path(vacancy.id, flash: "success"), class: "govuk-button--secondary govuk-!-margin-left-2")
