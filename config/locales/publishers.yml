@@ -372,7 +372,7 @@ en:
           status_tag:
             closed: Closed
             draft: Draft
-            published: Published
+            published: Active
             scheduled: Scheduled
         success: Job listing saved
       steps:
