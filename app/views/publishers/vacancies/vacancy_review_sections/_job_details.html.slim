@@ -6,7 +6,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.key
       = t("jobs.job_location")
     - row.value
-      ul.govuk-list
+      ul.govuk-list.govuk-list--spaced
         = vacancy_job_locations(vacancy)
     - unless vacancy.legacy_draft?
       - row.action text: t("buttons.change"),
@@ -93,7 +93,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.key
           h4.govuk-heading-s = t("jobs.working_patterns")
         - row.value
-            ul.govuk-list = vacancy_working_patterns(vacancy)
+            ul.govuk-list.govuk-list--spaced = vacancy_working_patterns(vacancy)
         - unless vacancy.legacy_draft?
           - row.action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{action_name}": "true"),
@@ -104,17 +104,17 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.key
         h4.govuk-heading-s = t("jobs.salary_details")
       - row.value
-        ul.govuk-list
+        ul.govuk-list.govuk-list--spaced
           - if vacancy.salary?
-            li class="govuk-!-margin-bottom-4"
+            li
               div => "#{t('jobs.annual_salary')}:"
               = vacancy.salary
           - if vacancy.actual_salary?
-            li class="govuk-!-margin-bottom-4"
+            li
               div => "#{t('jobs.actual_salary')}:"
               = vacancy.actual_salary
           - if vacancy.pay_scale?
-            li class="govuk-!-margin-bottom-4"
+            li
               div => "#{t('jobs.pay_scale')}:"
               = vacancy.pay_scale
       - unless vacancy.legacy_draft?

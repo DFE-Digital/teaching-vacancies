@@ -13,13 +13,16 @@ dl {
       display: inline-block;
     }
 
-
     dd {
       margin-left: govuk-spacing(1);
 
       .govuk-list--spaced {
-        li:last-child {
-          margin-bottom: 0;
+        li {
+          margin-bottom: govuk-spacing(4);
+
+          &:last-child {
+            margin-bottom: 0;
+          }
         }
       }
     }
