@@ -1,21 +1,4 @@
 @import 'base';
- 
-editor-content {
-  @extend .govuk-body;
-
-  ul {
-    @extend .govuk-list, .govuk-list--bullet;
-
-    p {
-      margin: 0;
-      padding: 0;
-    }
-  }
-
-  p:empty {
-    display: none;
-  }
-}
 
 .js-enabled {
   .editor-component {
@@ -24,7 +7,10 @@ editor-content {
     }
 
     .govuk-form-group {
-      @extend .govuk-visually-hidden;
+      textarea,
+      label {
+        @extend .govuk-visually-hidden;
+      }
     }
   }
 }
@@ -38,7 +24,8 @@ editor-content {
   &__content {
     @extend .govuk-textarea;
 
-    height: 250px;
+    height: 130px;
+    margin-bottom: govuk-spacing(1);
     overflow: scroll;
 
     p:first-child {

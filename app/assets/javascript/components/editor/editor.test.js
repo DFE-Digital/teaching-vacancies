@@ -15,8 +15,8 @@ const initialiseStimulus = () => {
 };
 
 const createEditorToolbar = (actions) => `<div class="editor-component__toolbar" data-editor-target="toolbar">
-${Object.keys(actions).map((action) => `<button class="editor-component__toolbar-button" data-action="editor#performAction" data-editor-action="${action}"></button>`)}
-</div>`;
+ ${Object.keys(actions).map((action) => `<button class="editor-component__toolbar-button" data-action="editor#performAction" data-editor-action="${action}"></button>`)}
+ </div>`;
 
 const words = ['Three', 'little', 'piggies', 'went', 'to', 'market', 'and', 'then', 'got', 'bus', 'home'];
 
@@ -37,14 +37,17 @@ const editorValue = generateContent(5, false);
 
 beforeAll(() => {
   document.body.innerHTML = `<div class="editor-component" data-controller="editor">
-  <label data-action="click->editor#focus" for="">Editor label text</label>
-  <div class="govuk-hint" id="editor-hint">Editor hint text</div>
-  ${createEditorToolbar(EditorController.TOOLBAR_ACTIONS)}
-  <div class="editor-component__content" contenteditable="true" data-action="input->editor#update paste->editor#handlePaste blur->editor#tidy" data-editor-target="editor">${editorValue}</div>
-  <div class="editor-component__form-input" data-editor-target="formInput">
-  <textarea name="input-test" id="input-test"></textarea>
-  </div>
-  </div>`;
+   <label data-action="click->editor#focus" for="">Editor label text</label>
+   <div class="govuk-hint" id="editor-hint">Editor hint text</div>
+   ${createEditorToolbar(EditorController.TOOLBAR_ACTIONS)}
+   <div class="editor-component__form-input" data-editor-target="formInput">
+   <div class="editor-component__content-container">
+   <div class="editor-component__content" contenteditable="true" data-action="input->editor#update paste->editor#handlePaste blur->editor#tidy" data-editor-target="editor">${editorValue}</div>
+   </div>
+   <textarea name="input-test" id="input-test"></textarea>
+   <div class="govuk-hint govuk-character-count__message govuk-character-count__status"></div>
+   </div>
+   </div>`;
 
   document.execCommand = jest.fn();
   spy = jest.spyOn(document, 'execCommand');
@@ -64,14 +67,14 @@ describe('Content editable form control', () => {
   });
 
   it('should set form input value when component is first rendered', () => {
-    expect(document.getElementById('input-test').value).toBe(EditorController.contentWrapper(editorValue));
+    expect(document.getElementById('input-test').value).toBe(editorValue);
   });
 
   it('should update hidden form input value when user updates content', () => {
     const newEditorValue = `${editorValue}${generateContent(5, false)}`;
     controller.editorTarget.innerHTML = newEditorValue;
     controller.editorTarget.dispatchEvent(new Event('input'));
-    expect(document.getElementById('input-test').value).toBe(EditorController.contentWrapper(newEditorValue));
+    expect(document.getElementById('input-test').value).toBe(newEditorValue);
   });
 
   it('should call command for associated toolbar action', () => {
@@ -82,10 +85,6 @@ describe('Content editable form control', () => {
   it('should put focus on editor input area when clicking label', () => {
     controller.element.querySelector('label').click();
     expect(document.activeElement).toBe(controller.editorTarget);
-  });
-
-  it('should output content with one content custom element', () => {
-    expect(EditorController.contentWrapper('<editor-content>test</editor-content>')).toBe('<editor-content>test</editor-content>');
   });
 
   it('should remove unwanted HTML attributes when content is pasted', () => {
@@ -114,9 +113,9 @@ describe('Content editable form control', () => {
   });
 
   it('should wrap orphaned text nodes in paragraph tag', () => {
-    const newEditorValue = EditorController.contentWrapper(`${generateContent(5, true)}`);
+    const newEditorValue = generateContent(5, true);
     controller.editorTarget.innerHTML = newEditorValue;
     controller.wrapOrphanedText();
-    expect(controller.editorTarget.innerHTML).toBe(EditorController.contentWrapper(`<p>${newEditorValue}</p>`));
+    expect(controller.editorTarget.innerHTML).toBe(`<p>${newEditorValue}</p>`);
   });
 });

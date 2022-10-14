@@ -30,6 +30,12 @@ const EditorController = class extends Controller {
     this.formInput.setAttribute('aria-hidden', true);
     this.formInput.setAttribute('tabindex', '-1');
 
+    // move editable area next to texarea so error styles applied correctly
+    const editableArea = this.formInputTarget.querySelector('.editor-component__content-container');
+    const editableAreaHhtml = editableArea.innerHTML;
+    editableArea.remove();
+    this.formInput.insertAdjacentHTML('beforeBegin', editableAreaHhtml);
+
     this.update();
   }
 
@@ -74,6 +80,7 @@ const EditorController = class extends Controller {
 
   removeEmptyParagraphs() {
     const paragraphs = this.editorTarget.querySelectorAll('p');
+
     paragraphs.forEach((p) => {
       if (p.textContent.trim().length > 0) return;
       p.parentNode.removeChild(p);
@@ -129,11 +136,49 @@ const EditorController = class extends Controller {
 
   static contentWrapper = (content) => {
     const strippedContent = content.replace('<editor-content>', '').replace('</editor-content>', '');
-    return `<editor-content>${strippedContent}</editor-content>`;
+    return strippedContent;
   };
 
+  wordCount(content) {
+    const strippedContent = content.replace(/<(.|\n)*?>/g, ' ');
+    const numberwords = strippedContent.trim().split(/\s+/);
+
+    let message;
+
+    if (numberwords.length > 150) {
+      message = `You have ${numberwords.length - 150} words too many`;
+      this.wordCountErrorState();
+    } else if (numberwords.length <= 150 && numberwords[0].length > 0) {
+      message = `You have ${150 - numberwords.length} words remaining`;
+      this.wordCountDefaultState();
+    } else {
+      message = 'You have 150 words remaining';
+      this.wordCountDefaultState();
+    }
+
+    this.wordCountSetMessage(message);
+  }
+
+  wordCountErrorState() {
+    this.formInputTarget.querySelector('div.govuk-character-count__message').classList.add('govuk-error-message');
+    this.formInputTarget.querySelector('div.govuk-character-count__message').classList.remove('govuk-hint');
+  }
+
+  wordCountDefaultState() {
+    this.formInputTarget.querySelector('div.govuk-character-count__message').classList.remove('govuk-error-message');
+    this.formInputTarget.querySelector('div.govuk-character-count__message').classList.add('govuk-hint');
+  }
+
+  wordCountSetMessage(message) {
+    this.formInputTarget.querySelector('div.govuk-character-count__message').innerHTML = message;
+  }
+
   update() {
-    this.formInput.value = EditorController.contentWrapper(this.editorTarget.innerHTML);
+    this.formInput.value = this.editorTarget.innerHTML;
+
+    if (this.formInputTarget.querySelector('div.govuk-character-count__message')) {
+      this.wordCount(this.editorTarget.innerHTML);
+    }
 
     // dispatch event for other components to listen to e.g editor debug/preview
     if (this.enabled) {
