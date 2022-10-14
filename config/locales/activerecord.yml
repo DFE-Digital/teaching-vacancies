@@ -203,8 +203,6 @@ en:
       blank: Select the email address to receive applications
     application_form:
       blank: Select application form
-    how_to_apply:
-      blank: Please provide details about how candidates should apply
     other_application_email:
       blank: Enter an email address
       invalid: Enter an email address in the correct format, like name@example.com
@@ -212,8 +210,6 @@ en:
     application_link:
       blank: Enter the link to the application website
       url: Enter a link in the correct format, like www.school.ac.uk
-    how_to_apply:
-      blank: Please provide details about how candidates should apply
   school_visits_errors: &school_visits_errors
     school_visits:
       inclusion: Select yes if school visits are offered

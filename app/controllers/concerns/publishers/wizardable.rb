@@ -83,7 +83,7 @@ module Publishers::Wizardable
   def applying_for_the_job_params(params)
     if params[:publishers_job_listing_applying_for_the_job_form]
       params.require(:publishers_job_listing_applying_for_the_job_form)
-            .permit(:personal_statement_guidance, :enable_job_applications)
+            .permit(:enable_job_applications)
     else
       {}
     end.merge(completed_steps: completed_steps, current_organisation: current_organisation)
@@ -100,13 +100,13 @@ module Publishers::Wizardable
 
   def application_link_params(params)
     params.require(:publishers_job_listing_application_link_form)
-          .permit(:how_to_apply, :application_link)
+          .permit(:application_link)
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 
   def application_form_params(params)
     params.require(:publishers_job_listing_application_form_form)
-          .permit(:how_to_apply, :application_email, :other_application_email)
+          .permit(:application_email, :other_application_email)
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 

@@ -4,7 +4,7 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
   validates :enable_job_applications, inclusion: { in: [true, false, "true", "false"] }
 
   def self.fields
-    %i[personal_statement_guidance enable_job_applications]
+    %i[enable_job_applications]
   end
   attr_accessor(*fields)
 

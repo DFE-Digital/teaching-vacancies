@@ -24,7 +24,4 @@
           = f.govuk_radio_button :enable_job_applications, true, link_errors: true
           = f.govuk_radio_button :enable_job_applications, "false"
 
-      - if vacancy.personal_statement_guidance.present?
-        = f.govuk_text_area :personal_statement_guidance, label: { size: "s" }
-
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

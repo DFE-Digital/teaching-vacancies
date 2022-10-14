@@ -199,7 +199,6 @@ en:
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications_options:
           "false": You'll need to provide additional details about how to apply
-        personal_statement_guidance: Provide guidance on how long it should be and any specific information you'd like them to include
       publishers_job_listing_copy_vacancy_form:
         job_title: For example 'Teacher of KS1'
       publishers_job_listing_documents_form:
@@ -501,18 +500,15 @@ en:
         skills_and_experience: What skills and experience are you looking for?
       publishers_job_listing_application_link_form:
         application_link: Link to website
-        how_to_apply: Explain how to apply for the job
       publishers_job_listing_application_form_form:
         application_form: Upload application form
         application_email_options:
           other: Another email address
-        how_to_apply: Explain how to apply for the job
         other_application_email: Email address
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications_options:
           false: "No"
           true: "Yes"
-        personal_statement_guidance_html: Help candidates to write their personal statement (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_contract_type_form:
         contract_type_options:
           fixed_term: Fixed term

@@ -1,10 +1,9 @@
 class Publishers::JobListing::ApplicationLinkForm < Publishers::JobListing::VacancyForm
   validates :application_link, presence: true, url: true
   validate :application_link_valid_uri
-  validates :how_to_apply, presence: true, if: -> { vacancy.how_to_apply.present? }
 
   def self.fields
-    %i[how_to_apply application_link]
+    %i[application_link]
   end
   attr_accessor(*fields)
 

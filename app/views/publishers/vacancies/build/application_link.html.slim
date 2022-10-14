@@ -7,7 +7,4 @@
 
       = f.govuk_url_field :application_link, label: { text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" }
 
-      - if vacancy.how_to_apply.present?
-        = f.govuk_text_area :how_to_apply, label: { size: "s" }, rows: 10
-
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
