@@ -3,7 +3,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
 
   def new
     if (attempted_path = params[:attempted_path])
-      alert_text = t("jobseekers.forced_login.#{forced_login_resource(attempted_path)}",
+      alert_text = t("jobseekers.forced_login.#{forced_login_resource(attempted_path)}_html",
                      account_creation_link: helpers.govuk_link_to(t("jobseekers.forced_login.create_account"), new_jobseeker_registration_url))
       flash.now[:alert] = alert_text
     elsif (login_failure = params[:login_failure])
