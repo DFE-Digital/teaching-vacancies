@@ -20,6 +20,8 @@ module Resettable
     reset_personal_statement_guidance
     reset_school_visits_details
     reset_contact_number
+    reset_safeguarding_information
+    reset_further_details
   end
 
   def reset_actual_salary
@@ -98,5 +100,17 @@ module Resettable
     return unless contact_number_provided_changed? && !contact_number_provided
 
     self.contact_number = nil
+  end
+
+  def reset_safeguarding_information
+    return unless safeguarding_information_provided_changed? && !safeguarding_information_provided
+
+    self.safeguarding_information = nil
+  end
+
+  def reset_further_details
+    return unless further_details_provided_changed? && !further_details_provided
+
+    self.further_details = nil
   end
 end

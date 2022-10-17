@@ -198,4 +198,30 @@ RSpec.describe Resettable do
         .from(previous_contact_number).to(nil)
     end
   end
+
+  context "when changing safeguarding information provided" do
+    subject(:update_safeguarding_information_provided) { vacancy.update(safeguarding_information_provided: false) }
+
+    let(:vacancy) { create(:vacancy, safeguarding_information_provided: true, safeguarding_information: "test") }
+    let(:previous_safeguarding_information) { vacancy.safeguarding_information }
+
+    it "resets safeguarding information" do
+      expect { update_safeguarding_information_provided }
+        .to change { vacancy.safeguarding_information }
+        .from(previous_safeguarding_information).to(nil)
+    end
+  end
+
+  context "when changing further details provided" do
+    subject(:update_further_details_provided) { vacancy.update(further_details_provided: false) }
+
+    let(:vacancy) { create(:vacancy, further_details_provided: true, further_details: "test") }
+    let(:previous_further_details) { vacancy.further_details }
+
+    it "resets further details" do
+      expect { update_further_details_provided }
+        .to change { vacancy.further_details }
+        .from(previous_further_details).to(nil)
+    end
+  end
 end
