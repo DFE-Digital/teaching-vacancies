@@ -3,9 +3,12 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :redirect_to_new_features_reminder, only: %i[create]
 
   def show
-    redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success") if params[:flash] == "success"
-
     @vacancy = VacancyPresenter.new(vacancy)
+  end
+
+  # We don't save anything here - just redirect to the show page
+  def save_and_finish_later
+    redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
   end
 
   def create

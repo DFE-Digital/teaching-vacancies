@@ -15,9 +15,10 @@
     p
       | By publishing this job listing you agree to the #{govuk_link_to "terms and conditions", page_path("terms-and-conditions")}.
 
-    - if vacancy.publish_on&.future?
-      = govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    - else
-      = govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+    .govuk-button-group
+      - if vacancy.publish_on&.future?
+        = govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+      - else
+        = govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
 
-    = govuk_button_link_to(t("buttons.save_and_finish_later"), organisation_job_path(vacancy.id, flash: "success"), class: "govuk-button--secondary govuk-!-margin-left-2")
+      = govuk_button_to(t("buttons.save_and_finish_later"), organisation_job_save_and_finish_later_path(vacancy.id), class: "govuk-button--secondary govuk-!-margin-left-2")
