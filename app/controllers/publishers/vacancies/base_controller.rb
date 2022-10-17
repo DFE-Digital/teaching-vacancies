@@ -37,10 +37,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     )
   end
 
-  def all_steps_valid?
-    form_sequence.validate_all_steps.values.all?(&:valid?)
-  end
-
   def redirect_to_next_step
     if vacancy.published? && invalid_dependent_steps?
       redirect_to organisation_job_build_path(vacancy.id, next_invalid_dependent_step)
