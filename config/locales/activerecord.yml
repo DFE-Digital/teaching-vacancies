@@ -152,7 +152,7 @@ en:
       invalid: Select salary details
   important_dates_errors: &important_dates_errors
     expires_at:
-      after: The closing date must be after the date the job will be listed
+      after: The closing date must be after the publish date
       blank: Enter closing date
       invalid: Enter closing date in the correct format
       on_or_after: The closing date must be in the future
