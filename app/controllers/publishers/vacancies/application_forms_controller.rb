@@ -47,8 +47,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     end
 
     # So they are taken back to the show or review page upon clicking the back link, even after creating a document
-    params[:back_to_review] = params[:publishers_job_listing_application_form_form][:back_to_review]
-    params[:back_to_show] = params[:publishers_job_listing_application_form_form][:back_to_show]
+    params["back_to_#{back_link_destination}"] = "true" if back_link_destination
 
     render "publishers/vacancies/build/application_form"
   end
@@ -60,8 +59,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
       redirect_to_next_step
     else
       # So they are taken back to the show or review page upon clicking the back link, even after uploading a school_visit
-      params[:back_to_review] = params[:publishers_job_listing_application_form_form][:back_to_review]
-      params[:back_to_show] = params[:publishers_job_listing_application_form_form][:back_to_show]
+      params["back_to_#{back_link_destination}"] = "true" if back_link_destination
 
       render "publishers/vacancies/build/application_form"
     end
@@ -77,6 +75,14 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
         size: application_form.byte_size,
         content_type: application_form.content_type,
       )
+    end
+  end
+
+  def back_link_destination
+    if params[:publishers_job_listing_application_form_form][:back_to_review]
+      :review
+    elsif params[:publishers_job_listing_application_form_form][:back_to_show]
+      :show
     end
   end
 end
