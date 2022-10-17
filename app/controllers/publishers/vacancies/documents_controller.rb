@@ -13,8 +13,13 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
     # So they are taken back to the show or review page upon clicking the back link, even after creating or deleting a document
     if params[:publishers_job_listing_documents_form]
-      params[:back_to_review] = params[:publishers_job_listing_documents_form][:back_to_review]
-      params[:back_to_show] = params[:publishers_job_listing_documents_form][:back_to_show]
+      @back_link_destination = if params[:publishers_job_listing_documents_form][:back_to_review]
+                                 :review
+                               elsif params[:publishers_job_listing_documents_form][:back_to_show]
+                                 :show
+                               end
+
+      params["back_to_#{@back_link_destination}"] = "true" if @back_link_destination
     end
 
     render :show
