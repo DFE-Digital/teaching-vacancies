@@ -11,29 +11,17 @@ class Publishers::VacancyFormSequence < FormSequence
     )
   end
 
-  def invalid_dependent_steps?
-    return false unless dependent_steps
-
-    validate_steps(dependent_steps).values.any?(&:invalid?)
-  end
-
   def next_invalid_step
     # Due to subjects being an optional step (no validations) it needs to be handled differently
     return :subjects if next_incomplete_step_subjects?
 
-    validate_all_steps.filter_map { |step, form| step unless form.valid? }.first
-  end
-
-  def next_invalid_dependent_step
-    return unless dependent_steps
-
-    validate_steps(dependent_steps).filter_map { |step, form| step if form.invalid? }.first
+    validate_all_steps.filter_map { |step, form| step if form.invalid? }.first
   end
 
   private
 
-  def validate_steps(steps)
-    steps.each.with_object({}) { |s, h| h[s] = validate_step(s) }
+  def validatable_steps
+    @vacancy.published? ? dependent_steps : @step_names - not_validatable_steps
   end
 
   def dependent_steps
@@ -52,6 +40,8 @@ class Publishers::VacancyFormSequence < FormSequence
       end
     when :include_additional_documents
       %i[documents]
+    else
+      []
     end
   end
 
