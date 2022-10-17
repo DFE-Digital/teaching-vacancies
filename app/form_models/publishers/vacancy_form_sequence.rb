@@ -21,17 +21,21 @@ class Publishers::VacancyFormSequence < FormSequence
   private
 
   def validatable_steps
-    @vacancy.published? ? dependent_steps : @step_names - not_validatable_steps
+    return dependent_steps if @vacancy.published?
+
+    super
   end
 
   def dependent_steps
     case @step_process.current_step
     when :job_location
-      %i[education_phases key_stages]
+      %i[education_phases]
     when :job_role
       %i[key_stages about_the_role]
     when :education_phases
       %i[key_stages]
+    when :key_stages
+      %i[about_the_role]
     when :how_to_receive_applications
       if @vacancy.receive_applications == "email"
         %i[application_form]

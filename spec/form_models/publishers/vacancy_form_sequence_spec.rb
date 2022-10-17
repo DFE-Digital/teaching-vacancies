@@ -9,9 +9,10 @@ RSpec.describe Publishers::VacancyFormSequence do
     )
   end
 
-  let(:vacancy) { create(:vacancy, :no_tv_applications, school_visits: nil, key_stages: %w[ks3], phases: %w[secondary], organisations: [organisation]) }
+  let(:vacancy) { create(:vacancy, :draft, :no_tv_applications, school_visits: nil, key_stages: %w[ks3], phases: %w[secondary], organisations: [organisation]) }
   let(:organisation) { create(:school) }
-  let(:step_process) { double(:step_process, steps: all_steps) }
+  let(:step_process) { double(:step_process, steps: all_steps, current_step: current_step) }
+  let(:current_step) { :review }
   let(:all_steps) do
     %i[
       job_location
@@ -59,6 +60,37 @@ RSpec.describe Publishers::VacancyFormSequence do
       expect(vacancy.errors).to have_key(:school_visits)
       expect(vacancy.errors.where(:school_visits).first.options[:step]).to eq(:school_visits)
     end
+
+    context "when the vacancy has been published" do
+      let(:vacancy) { create(:vacancy, :published, phases: %w[secondary], organisations: [organisation]) }
+
+      context "when the current step has dependent steps" do
+        let(:current_step) { :job_location }
+        let(:validated_forms) { sequence.validate_all_steps }
+
+        context "when the dependent steps are invalid" do
+          let(:vacancy) { create(:vacancy, :published, phases: nil, organisations: [organisation]) }
+
+          it "returns a hash containing invalid forms for each dependent step" do
+            validated_forms.each { |_, form| expect(form).to be_invalid }
+          end
+        end
+
+        context "when the dependent steps are valid" do
+          it "returns a hash containing valid forms for each dependent step" do
+            validated_forms.each { |_, form| expect(form).to be_valid }
+          end
+        end
+      end
+
+      context "when the current step does not have dependent steps" do
+        let(:current_step) { :job_title }
+
+        it "returns an empty hash" do
+          expect(sequence.validate_all_steps).to eq({})
+        end
+      end
+    end
   end
 
   describe "#all_steps_valid?" do
@@ -67,67 +99,62 @@ RSpec.describe Publishers::VacancyFormSequence do
       vacancy.update(school_visits: true)
       expect(sequence).to be_all_steps_valid
     end
-  end
 
-  describe "#invalid_dependent_steps?" do
-    before { allow(step_process).to receive(:current_step).and_return(current_step) }
+    context "when the vacancy has been published" do
+      let(:vacancy) { create(:vacancy, :published, phases: %w[secondary], organisations: [organisation]) }
 
-    context "when current step has no dependent steps" do
-      let(:current_step) { :school_visits }
+      context "when the current step has dependent steps" do
+        let(:current_step) { :job_location }
+        let(:validated_forms) { sequence.validate_all_steps }
 
-      it "returns false" do
-        expect(sequence.invalid_dependent_steps?).to be false
+        context "when the dependent steps are invalid" do
+          let(:vacancy) { create(:vacancy, :published, phases: nil, organisations: [organisation]) }
+
+          it "returns false" do
+            expect(sequence.all_steps_valid?).to be false
+          end
+        end
+
+        context "when the dependent steps are valid" do
+          it "returns true" do
+            expect(sequence.all_steps_valid?).to be true
+          end
+        end
       end
-    end
 
-    context "when current step has dependent steps" do
-      before { vacancy.update(application_link: nil) }
+      context "when the current step does not have dependent steps" do
+        let(:current_step) { :job_title }
 
-      let(:current_step) { :how_to_receive_applications }
-
-      it "returns true" do
-        expect(sequence.invalid_dependent_steps?).to be true
+        it "returns true" do
+          expect(sequence.all_steps_valid?).to be true
+        end
       end
     end
   end
 
   describe "#next_invalid_step" do
+    it "returns the next invalid step" do
+      expect(sequence.next_invalid_step).to eq(:school_visits)
+    end
+
     context "when the next incomplete step is subjects" do
-      before { allow(sequence).to receive(:next_incomplete_step_subjects?).and_return(true) }
+      let(:vacancy) { create(:vacancy, phases: %w[secondary], key_stages: %w[ks3], completed_steps: %w[job_location, job_role, education_phases, job_title, key_stages]) }
+
+      before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
       it "returns subjects" do
         expect(sequence.next_invalid_step).to be(:subjects)
       end
     end
 
-    context "when the next incomplete step is not subjects" do
-      before { allow(step_process).to receive(:current_step).and_return(:application_link) }
+    context "when the vacancy has been published" do
+      let(:current_step) { :job_location }
+      let(:vacancy) { create(:vacancy, :published, phases: nil, organisations: [organisation]) }
 
-      it "returns the correct step" do
-        expect(sequence.next_invalid_step).to be(:school_visits)
-      end
-    end
-  end
-
-  describe "#next_invalid_dependent_step" do
-    before do
-      vacancy.update(application_link: nil)
-      allow(step_process).to receive(:current_step).and_return(current_step)
-    end
-
-    context "when the current step has dependent steps" do
-      let(:current_step) { :how_to_receive_applications }
-
-      it "returns the correct invalid dependent step" do
-        expect(sequence.next_invalid_dependent_step).to eq(:application_link)
-      end
-    end
-
-    context "when the current step has no dependent steps" do
-      let(:current_step) { :subjects }
-
-      it "returns nil" do
-        expect(sequence.next_invalid_dependent_step).to be_nil
+      context "when a dependent step is invalid" do
+        it "returns the first invalid dependent step" do
+          expect(sequence.next_invalid_step).to eq(:education_phases)
+        end
       end
     end
   end
