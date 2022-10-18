@@ -20,7 +20,10 @@ RSpec.describe "Job applications build" do
         context "when changing the job location" do
           let(:vacancy) { create(:vacancy, :published, phase: "nursery", organisations: [school_one]) }
 
-          before { patch(organisation_job_build_path(vacancy.id, :job_location, params)) }
+          before do
+            allow(vacancy).to receive(:allow_key_stages?).and_return(true)
+            patch(organisation_job_build_path(vacancy.id, :job_location, params))
+          end
 
           context "when the job location is in a new phase" do
             let(:params) { { publishers_job_listing_job_location_form: { organisation_ids: [school_two.id] } } }

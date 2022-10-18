@@ -10,7 +10,7 @@
       - if form.disable_editing_publish_on?
         #publish_on
           legend.govuk-fieldset__legend.govuk-fieldset__legend--m
-            .govuk-fieldset__heading = t("helpers.legend.publishers_job_listing_important_dates_form.publish_on")
+            .govuk-fieldset__heading = t("helpers.legend.publishers_job_listing_important_dates_form.publish_on_day")
           p = format_date vacancy.publish_on
         br
         = f.govuk_date_field :publish_on, class: "govuk-!-display-none"

@@ -8,7 +8,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         = t("jobs.publication_date")
       - row.value
         = format_date(vacancy.publish_on)
-      - unless vacancy.legacy_draft?
+      - unless vacancy.legacy_draft? || vacancy.listed?
         - row.action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :important_dates, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.publication_date")

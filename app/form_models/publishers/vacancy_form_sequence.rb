@@ -26,16 +26,18 @@ class Publishers::VacancyFormSequence < FormSequence
     super
   end
 
-  def dependent_steps
+  def dependent_steps # rubocop:disable Metrics/MethodLength
     case @step_process.current_step
     when :job_location
-      %i[education_phases]
+      %i[education_phases key_stages]
     when :job_role
       %i[key_stages about_the_role]
     when :education_phases
       %i[key_stages]
     when :key_stages
       %i[about_the_role]
+    when :applying_for_the_job
+      %i[how_to_receive_applications] unless @vacancy.enable_job_applications
     when :how_to_receive_applications
       if @vacancy.receive_applications == "email"
         %i[application_form]
@@ -50,6 +52,7 @@ class Publishers::VacancyFormSequence < FormSequence
   end
 
   def next_incomplete_step_subjects?
+    return unless @vacancy.allow_subjects?
     return if @vacancy.completed_steps.include?("subjects")
 
     @vacancy.completed_steps.last == if @vacancy.allow_key_stages?

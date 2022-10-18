@@ -69,7 +69,9 @@ RSpec.describe Publishers::VacancyFormSequence do
         let(:validated_forms) { sequence.validate_all_steps }
 
         context "when the dependent steps are invalid" do
-          let(:vacancy) { create(:vacancy, :published, phases: nil, organisations: [organisation]) }
+          let(:vacancy) { create(:vacancy, :published, phases: nil, key_stages: nil, organisations: [organisation]) }
+
+          before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
           it "returns a hash containing invalid forms for each dependent step" do
             validated_forms.each { |_, form| expect(form).to be_invalid }
@@ -77,6 +79,8 @@ RSpec.describe Publishers::VacancyFormSequence do
         end
 
         context "when the dependent steps are valid" do
+          let(:vacancy) { create(:vacancy, :published, phases: %w[secondary], key_stages: %w[ks3], organisations: [organisation]) }
+
           it "returns a hash containing valid forms for each dependent step" do
             validated_forms.each { |_, form| expect(form).to be_valid }
           end
@@ -105,10 +109,9 @@ RSpec.describe Publishers::VacancyFormSequence do
 
       context "when the current step has dependent steps" do
         let(:current_step) { :job_location }
-        let(:validated_forms) { sequence.validate_all_steps }
 
         context "when the dependent steps are invalid" do
-          let(:vacancy) { create(:vacancy, :published, phases: nil, organisations: [organisation]) }
+          let(:vacancy) { create(:vacancy, :published, phases: nil, key_stages: nil, organisations: [organisation]) }
 
           it "returns false" do
             expect(sequence.all_steps_valid?).to be false
@@ -116,6 +119,8 @@ RSpec.describe Publishers::VacancyFormSequence do
         end
 
         context "when the dependent steps are valid" do
+          let(:vacancy) { create(:vacancy, :published, phases: %w[secondary], key_stages: %w[ks3], organisations: [organisation]) }
+
           it "returns true" do
             expect(sequence.all_steps_valid?).to be true
           end
@@ -138,7 +143,7 @@ RSpec.describe Publishers::VacancyFormSequence do
     end
 
     context "when the next incomplete step is subjects" do
-      let(:vacancy) { create(:vacancy, phases: %w[secondary], key_stages: %w[ks3], completed_steps: %w[job_location, job_role, education_phases, job_title, key_stages]) }
+      let(:vacancy) { create(:vacancy, phases: %w[secondary], key_stages: %w[ks3], completed_steps: %w[job_location job_role education_phases job_title key_stages]) }
 
       before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
