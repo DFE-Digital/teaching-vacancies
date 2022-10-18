@@ -50,7 +50,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   - unless vacancy.school_offer.nil?
     - summary_list.row(html_attributes: { id: "school_offer" }) do |row|
       - row.key
-        = vacancy_school_offer_label(vacancy, jobseeker_or_publisher: "publisher")
+        = t("jobs.school_offer.publisher")
       - row.value
         == vacancy.school_offer
       - unless vacancy.legacy_draft?

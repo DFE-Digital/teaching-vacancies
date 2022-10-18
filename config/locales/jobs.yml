@@ -193,11 +193,8 @@ en:
       jobseeker: Commitment to safeguarding
       publisher: Information about your commitment to safeguarding
     school_offer:
-      jobseeker: What the %{organisation} offers its staff
-      publisher: What does your %{organisation} offer?
-    schools_offer:
-      jobseeker: What the schools offer their staff
-      publisher: What do your schools offer?
+      jobseeker: What the school offers its staff
+      publisher: What does your school offer?
     skills_and_experience:
       jobseeker: What skills and experience we're looking for
       publisher: What skills and experience are you looking for?

@@ -56,16 +56,6 @@ module VacanciesHelper
     vacancy.organisations.many? ? "the schools" : vacancy.organisation_name
   end
 
-  def vacancy_school_offer_label(vacancy, jobseeker_or_publisher:)
-    if vacancy&.central_office?
-      t("jobs.school_offer.#{jobseeker_or_publisher}", organisation: "trust")
-    elsif vacancy&.organisations&.many?
-      t("jobs.schools_offer.#{jobseeker_or_publisher}")
-    else
-      t("jobs..school_offer.#{jobseeker_or_publisher}", organisation: "school")
-    end
-  end
-
   def vacancy_about_school_hint_text(vacancy)
     return t("helpers.hint.publishers_job_listing_about_the_role_form.about_schools", organisation_type: organisation_type_basic(vacancy.organisation)) if vacancy.organisations.many?
 

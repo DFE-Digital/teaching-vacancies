@@ -29,7 +29,7 @@
                 required: true
 
       - else
-        = editor(form_input: f.govuk_text_area(:school_offer, max_words: 150, label: { size: "s", id: "school-offer-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.school_offer, field_name: "publishers_job_listing_about_the_role_form[school_offer]", label: { text: vacancy_school_offer_label(vacancy, jobseeker_or_publisher: "publisher"), size: "s", id: "school-offer-label" })
+        = editor(form_input: f.govuk_text_area(:school_offer, max_words: 150, label: { size: "s", id: "school-offer-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.school_offer, field_name: "publishers_job_listing_about_the_role_form[school_offer]", label: { text: t("jobs.school_offer.publisher"), size: "s", id: "school-offer-label" })
 
       - unless vacancy.job_advert.present?
         = f.govuk_radio_buttons_fieldset :safeguarding_information_provided, legend: { size: "m", tag: nil }, classes: ["safeguarding-information-provided-radios"] do
