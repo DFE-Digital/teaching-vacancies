@@ -18,10 +18,10 @@ en:
       contact_email: Contact email changed to %{new_value}
       contact_number: Contact number changed to %{new_value}
       contract_type: Contract type changed to %{new_value}
-      earliest_start_date: 
+      earliest_start_date:
         changed: Earliest start date changed to %{new_value}
         deleted: Earliest start date was deleted
-      expires_at: 
+      expires_at:
         changed: Application deadline changed to %{new_value}
       how_to_apply: How to apply changed to %{new_value}
       job_advert: There were changes to the job advert
@@ -33,7 +33,7 @@ en:
       key_stages:
         one: Key stage changed to %{new_value}
         other: Key stages changed to %{new_value}
-      latest_start_date: 
+      latest_start_date:
         changed: Latest start date changed to %{new_value}
         deleted: Latest start date was deleted
       no_changes: Changes to the job listing will be listed here.
@@ -43,7 +43,7 @@ en:
       personal_statement_guidance: Personal statement guidance changed to %{new_value}
       salary: Salary changed to %{new_value}
       school_visits: "%{organisation_type} visits changed to %{new_value}"
-      starts_on: 
+      starts_on:
         changed: Expected start date changed to %{new_value}
         deleted: Expected start date was deleted
       subjects:
@@ -53,6 +53,10 @@ en:
         one: Working pattern changed to %{new_value}
         other: Working patterns changed to %{new_value}
       show_value_changed: "%{attribute} changed to %{new_value}"
+    job_listing_process_changed_published_banner:
+      heading_html: "%{contact_support_link} if you need to change the instructions about how to apply or write a personal statement."
+    job_listing_process_changed_draft_banner:
+      heading_html: "You cannot make changes to this draft job listing. %{create_new_link} or %{contact_support_link}."
     login_keys:
       new:
         notice: >-
@@ -174,6 +178,14 @@ en:
           after: Deadline passed
           before: Application deadline
       build:
+        about_the_role:
+          step_title: About the role
+        application_link:
+          step_title: Link to website
+        application_form:
+          step_title: Receiving applications
+        application_process:
+          step_title: Application process
         applying_for_the_job:
           accepting_job_applications_link_text: why you should use Teaching Vacancies for applications
           banner:
@@ -182,31 +194,43 @@ en:
               content_with_link_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link}
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
-          enable_job_applications_html: >-
-            Candidates can apply using the Teaching Vacancies application form,
-            or you can direct them to another service, like the local authority or a school's website.
-            Read about %{link}.
           about_title: "This application form:"
           about_items:
             - provides a quick and simple experience for applicants
             - makes it easy for you to view, shortlist or reject applications in one place
             - is always up to date with the ‘keeping children safe in education’ guidelines
           step_title: Applying for the job
+        contact_details:
+          step_title: Contact details
         documents:
           accessibility_link_text: How to make documents accessible
           step_title: Supporting documents
+        how_to_receive_applications:
+          step_title: Receiving application
         important_dates:
-          step_title: Important dates and deadlines
+          step_title: Publish and closing dates
+        include_additional_documents:
+          step_title: Do you want to upload any additional documents?
         job_details:
           step_title: Job details
-          phase_inset_text:
-            phase: The job listing will say it’s a %{phase} role.
         job_location:
           step_title: Job location
         job_role:
           step_title: Job role
-        job_summary:
-          step_title: Job summary
+        job_title:
+          step_title: Job title
+          phase_inset_text:
+            phase: The job listing will say it’s a %{phase} role.
+        key_stages:
+          step_title: Key stage
+        school_visits:
+          step_title: School visits
+        start_date:
+          step_title: Job start date
+        subjects:
+          step_title: Subjects
+        contract_type:
+          step_title: Contract type
         pay_package:
           step_title: Salary and allowances
         review:
@@ -319,6 +343,8 @@ en:
         heading: Check details and %{status} job listing
         steps: Create a job listing steps
       show:
+        copied:
+          success: Job listing copied
         view_live_listing_link: View this listing
         view_live_listing_title: View the live job listing
         draft:
@@ -346,22 +372,33 @@ en:
           status_tag:
             closed: Closed
             draft: Draft
-            published: Published
+            published: Active
             scheduled: Scheduled
         success: Job listing saved
       steps:
-        job_role: Job role
-        job_location: Job location
-        education_phases: Job details
         job_details: Job details
+        job_role: Job role
+        job_location: Locations where the job is based
+        education_phases: Education phase
+        job_title: Job title
+        key_stages: Key stage
+        subjects: Subjects (optional)
+        contract_type: Contract type
         working_patterns: Working pattern
         pay_package: Salary and allowances
-        important_dates: Important dates and deadlines
-        documents: Supporting documents
+        important_dates: Publish and closing dates
+        start_date: Job start date
+        application_process: Application process
         applying_for_the_job: Using the application form
-        job_summary: Job summary
-      steps_component:
-        title: Create a job listing steps
+        how_to_receive_applications: How do you want to receive applications?
+        application_link: Link to website
+        application_form: Receiving applications
+        school_visits: Do you want to offer school visits?
+        contact_details: Contact details
+        about_the_role: About the role
+        include_additional_documents: Do you want to upload any additional documents?
+        documents: Upload additional documents
+        review_heading: Review the job listing
       submit:
         cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft jobs.
       summary:

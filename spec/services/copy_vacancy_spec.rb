@@ -29,16 +29,6 @@ RSpec.describe CopyVacancy do
       end
     end
 
-    describe "#documents" do
-      let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [school]) }
-      let(:result) { described_class.new(vacancy).call }
-
-      it "attaches supporting document when copying a vacancy" do
-        expect(result.supporting_documents.count).to eq(1)
-        expect(result.supporting_documents.first.blob).to eq(vacancy.supporting_documents.first.blob)
-      end
-    end
-
     context "not all fields are copied" do
       let(:vacancy) do
         create(:vacancy,

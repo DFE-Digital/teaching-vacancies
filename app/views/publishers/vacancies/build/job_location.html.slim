@@ -1,15 +1,11 @@
 - content_for :page_title_prefix, page_title_prefix(vacancy, form, t("publishers.vacancies.steps.job_location"))
 
-= vacancy_form_page_heading(vacancy, step_process, params: params)
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      h2.govuk-heading-l = t("publishers.vacancies.steps.job_location")
-
-      = f.govuk_fieldset legend: { text: t("helpers.legend.publishers_job_listing_schools_form.organisations") } do
+      = f.govuk_fieldset legend: nil do
         - if current_organisation.local_authority?
           span.govuk-hint
             = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
@@ -21,7 +17,7 @@
           :id,
           :name,
           :address,
-          legend: nil,
+          legend: { text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" },
           hint: nil,
           classes: "checkbox-label__bold govuk-!-margin-top-2"),
           collection_count: @school_options.count,
@@ -30,7 +26,3 @@
 
       div class="govuk-!-margin-top-6"
         = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
-  - unless vacancy.published?
-    .govuk-grid-column-one-third
-      = render "steps"

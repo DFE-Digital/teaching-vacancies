@@ -169,7 +169,7 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
         end
 
         it "uses a 'not defined' translation" do
-          expect(row.build_text).to eq("Not provided (will not be seen on published listing)")
+          expect(row.build_text).to eq("Not entered")
         end
       end
     end

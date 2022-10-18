@@ -17,13 +17,25 @@ RSpec.describe "Copying a vacancy" do
 
       new_vacancy = Vacancy.all.order(:created_at).last
 
+      expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
 
       new_vacancy.publish_on = Date.current
       new_vacancy.expires_at = 30.days.from_now
-      new_vacancy.starts_on = 35.days.from_now
 
-      fill_in_important_dates_fields(new_vacancy)
+      fill_in_important_dates_form_fields(new_vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
+      new_vacancy.start_date_type = "specific_date"
+      new_vacancy.starts_on = 35.days.from_now
+      fill_in_start_date_form_fields(new_vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+
+      new_vacancy.include_additional_documents = false
+      fill_in_include_additional_documents_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
@@ -42,12 +54,12 @@ RSpec.describe "Copying a vacancy" do
 
     new_vacancy = Vacancy.all.order(:created_at).last
 
-    expect(current_path).to eq organisation_job_build_path(new_vacancy.id, :important_dates)
+    expect(current_path).to eq organisation_job_path(new_vacancy.id)
   end
 
   context "when the original job is now invalid" do
     let!(:original_vacancy) do
-      create_published_vacancy(about_school: nil, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) do |vacancy|
+      create_published_vacancy(school_offer: nil, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) do |vacancy|
         vacancy.send(:set_slug)
       end
     end
@@ -59,17 +71,30 @@ RSpec.describe "Copying a vacancy" do
 
       new_vacancy = Vacancy.all.order(:created_at).last
 
+      expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
+
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
 
       new_vacancy.publish_on = Date.current
       new_vacancy.expires_at = 30.days.from_now
-      new_vacancy.starts_on = 35.days.from_now
 
-      fill_in_important_dates_fields(new_vacancy)
+      fill_in_important_dates_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      new_vacancy.about_school = "It's a nice place to work"
-      fill_in_job_summary_form_fields(new_vacancy)
+      new_vacancy.start_date_type = "specific_date"
+      new_vacancy.starts_on = 35.days.from_now
+      fill_in_start_date_form_fields(new_vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
+      new_vacancy.school_offer = "It's a nice place to work"
+      fill_in_about_the_role_form_fields(new_vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+
+      new_vacancy.include_additional_documents = false
+      fill_in_include_additional_documents_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
@@ -89,8 +114,13 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       new_vacancy = Vacancy.all.order(:created_at).last
+      expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
 
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
+      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+
+      new_vacancy.include_additional_documents = false
+      fill_in_include_additional_documents_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))

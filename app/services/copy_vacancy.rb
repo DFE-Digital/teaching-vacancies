@@ -7,22 +7,17 @@ class CopyVacancy
   def call
     @new_vacancy.send(:set_slug)
     @new_vacancy.save(validate: false)
-    copy_documents
     @new_vacancy
   end
 
   private
 
-  def copy_documents
-    @vacancy.supporting_documents.each do |supporting_doc|
-      @new_vacancy.supporting_documents.attach(supporting_doc.blob)
-    end
-  end
-
   def setup_new_vacancy
     @new_vacancy = @vacancy.dup
     @new_vacancy.status = :draft
     reset_date_fields if @vacancy.publish_on&.past?
+    reset_legacy_fields
+    @new_vacancy.include_additional_documents = nil
     @new_vacancy.completed_steps = current_steps
     @new_vacancy.organisations = @vacancy.organisations
   end
@@ -35,6 +30,14 @@ class CopyVacancy
     @new_vacancy.latest_start_date = nil
     @new_vacancy.other_start_date_details = nil
     @new_vacancy.publish_on = nil
+  end
+
+  def reset_legacy_fields
+    @new_vacancy.job_advert = nil
+    @new_vacancy.about_school = nil
+    @new_vacancy.personal_statement_guidance = nil
+    @new_vacancy.school_visits_details = nil
+    @new_vacancy.how_to_apply = nil
   end
 
   def current_steps

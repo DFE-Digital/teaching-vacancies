@@ -206,6 +206,7 @@ Rails.application.routes.draw do
       get :review
       post :publish, to: "publishers/vacancies/publish#create"
       get :publish, to: "publishers/vacancies/publish#create"
+      post :save_and_finish_later
       get :summary
       resource :activity_log, only: %i[show], controller: "publishers/vacancies/activity_log"
       resource :feedback, only: %i[new create], controller: "publishers/vacancies/feedbacks"

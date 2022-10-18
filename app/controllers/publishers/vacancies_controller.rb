@@ -6,6 +6,11 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
+  # We don't save anything here - just redirect to the show page
+  def save_and_finish_later
+    redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
+  end
+
   def create
     vacancy = Vacancy.create(publisher: current_publisher, publisher_organisation: current_organisation)
 
@@ -15,7 +20,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     elsif current_organisation.local_authority?
       vacancy.update(enable_job_applications: false)
     end
-    redirect_to organisation_job_build_path(vacancy.id, :job_role)
+
+    redirect_to organisation_job_build_path(vacancy.id, :job_location)
   end
 
   def review
