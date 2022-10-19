@@ -22,6 +22,7 @@ module Resettable
     reset_contact_number
     reset_safeguarding_information
     reset_further_details
+    reset_benefits_details
   end
 
   def reset_actual_salary
@@ -112,5 +113,11 @@ module Resettable
     return unless further_details_provided_changed? && !further_details_provided
 
     self.further_details = nil
+  end
+
+  def reset_benefits_details
+    return unless benefits_changed? && !benefits
+
+    self.benefits_details = nil
   end
 end
