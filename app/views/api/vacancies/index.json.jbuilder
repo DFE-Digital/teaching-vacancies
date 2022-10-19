@@ -28,4 +28,5 @@ end
 
 json.meta do
   json.totalPages @pagy.pages
+  json.count @pagy.count
 end

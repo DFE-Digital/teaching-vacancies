@@ -88,6 +88,10 @@ RSpec.describe "Api::Vacancies" do
       it "includes the total pages" do
         expect(json[:meta]).to include(totalPages: 4)
       end
+
+      it "includes the count" do
+        expect(json[:meta]).to include(count: 16)
+      end
     end
 
     it "does not retrieve incomplete or deleted vacancies" do
