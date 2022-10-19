@@ -20,7 +20,7 @@
 
       = f.govuk_radio_buttons_fieldset :benefits, legend: { size: "m", tag: nil } do
         = f.govuk_radio_button :benefits, "true" do
-          = f.govuk_text_field :benefits_details, label: { size: "s" }
+          = f.govuk_text_area :benefits_details, label: { size: "s" }
         = f.govuk_radio_button :benefits, "false", link_errors: true
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
