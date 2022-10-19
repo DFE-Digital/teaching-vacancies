@@ -322,11 +322,11 @@ en:
     job_location_heading:
       at_multiple_locations: At more than one location in the %{organisation_type}
       at_one_location: Single location
-      central_office: Trust head office
+      central_office: Head office
     job_location_summary:
       at_multiple_locations: More than one location
       at_multiple_locations_with_count: More than one location (%{count})
-      central_office: Trust head office
+      central_office: Head office
     locations:
       at_one_school: School location
       at_multiple_schools: School locations

@@ -78,7 +78,7 @@ class DashboardComponent < ApplicationComponent
 
     count = organisation.vacancies.send(selected_scope).count
     @organisation_options.unshift(
-      Option.new(id: organisation.id, name: "Trust head office", label: "Trust head office (#{count})"),
+      Option.new(id: organisation.id, name: "Head office", label: "Head office (#{count})"),
     )
   end
 

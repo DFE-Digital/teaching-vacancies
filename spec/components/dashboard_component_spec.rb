@@ -109,8 +109,8 @@ RSpec.describe DashboardComponent, type: :component do
           ).to eq(I18n.t("buttons.apply_filters"))
         end
 
-        it "renders the trust head office as a filter option" do
-          expect(inline_component.css(".edit_publisher_preference").to_html).to include("Trust head office")
+        it "renders the head office as a filter option" do
+          expect(inline_component.css(".edit_publisher_preference").to_html).to include("Head office")
         end
 
         it "renders the open school as a filter option" do
@@ -156,8 +156,8 @@ RSpec.describe DashboardComponent, type: :component do
           ).to eq(I18n.t("buttons.apply_filters"))
         end
 
-        it "does not render the trust head office as a filter option" do
-          expect(inline_component.css(".edit_publisher_preference").to_html).not_to include("Trust head office")
+        it "does not render the head office as a filter option" do
+          expect(inline_component.css(".edit_publisher_preference").to_html).not_to include("Head office")
         end
 
         it "renders the open school as a filter option" do
