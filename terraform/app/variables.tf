@@ -94,7 +94,7 @@ variable "paas_web_app_instances" {
 }
 
 variable "paas_web_app_memory" {
-  default = 512
+  default = 1024
 }
 
 variable "paas_web_app_start_command" {
@@ -110,7 +110,7 @@ variable "paas_worker_app_instances" {
 }
 
 variable "paas_worker_app_memory" {
-  default = 512
+  default = 1024
 }
 
 variable "paas_restore_from_db_guid" {
