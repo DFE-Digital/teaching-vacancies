@@ -174,7 +174,7 @@ const EditorController = class extends Controller {
   }
 
   update() {
-    this.formInput.value = this.editorTarget.innerHTML;
+    this.formInput.value = this.editorTarget.innerHTML.replace(/&nbsp;/g, '');
 
     if (this.formInputTarget.querySelector('div.govuk-character-count__message')) {
       this.wordCount(this.editorTarget.innerHTML);
