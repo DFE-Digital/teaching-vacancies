@@ -1,8 +1,8 @@
 class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::VacancyForm
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_role == "teacher" }
-  validates :job_advert, presence: true, if: -> { vacancy.job_advert.present? }
-  validate :about_school_must_not_be_blank, if: -> { vacancy.job_advert.present? }
-  validates :skills_and_experience, presence: true, unless: -> { vacancy.job_advert.present? }
+  validate :job_advert_presence, if: -> { vacancy.job_advert.present? }
+  validate :about_school_presence, if: -> { vacancy.about_school.present? }
+  validate :skills_and_experience_presence, unless: -> { vacancy.job_advert.present? }
   validate :skills_and_experience_does_not_exceed_maximum_words, unless: -> { vacancy.job_advert.present? }
   validate :school_offer_presence, unless: -> { vacancy.about_school.present? }
   validate :school_offer_does_not_exceed_maximum_words, unless: -> { vacancy.about_school.present? }
@@ -41,34 +41,52 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   end
 
   def school_offer_presence
-    return if school_offer.present?
+    return if remove_html_tags(school_offer).present?
 
-    if organisation_type == "schools"
-      errors.add(:school_offer, I18n.t("about_the_role_errors.schools_offer.blank", organisation: organisation_type))
-    else
-      errors.add(:school_offer, I18n.t("about_the_role_errors.school_offer.blank", organisation: organisation_type))
-    end
+    errors.add(:school_offer, :blank, organisation: organisation_type)
   end
 
   def school_offer_does_not_exceed_maximum_words
-    errors.add(:school_offer, :school_offer_maximum_words, message: I18n.t("about_the_role_errors.school_offer.maximum_words", organisation: organisation_type.capitalize)) if school_offer&.split&.length&.>(150)
+    errors.add(:school_offer, :length, organisation: organisation_type.capitalize) if number_of_words_exceeds_permitted_length?(150, school_offer)
+  end
+
+  def skills_and_experience_presence
+    return if remove_html_tags(skills_and_experience).present?
+
+    errors.add(:skills_and_experience, :blank)
   end
 
   def skills_and_experience_does_not_exceed_maximum_words
-    errors.add(:skills_and_experience, :skills_and_experience_maximum_words, message: I18n.t("about_the_role_errors.skills_and_experience.maximum_words")) if skills_and_experience&.split&.length&.>(150)
+    errors.add(:skills_and_experience, :length) if number_of_words_exceeds_permitted_length?(150, skills_and_experience)
   end
 
   def safeguarding_information_does_not_exceed_maximum_words
-    errors.add(:safeguarding_information, :safeguarding_information_maximum_words, message: I18n.t("about_the_role_errors.safeguarding_information.maximum_words")) if safeguarding_information&.split&.length&.>(100)
+    errors.add(:safeguarding_information, :length) if number_of_words_exceeds_permitted_length?(100, safeguarding_information)
   end
 
   def further_details_does_not_exceed_maximum_words
-    errors.add(:further_details, :further_details_maximum_words, message: I18n.t("about_the_role_errors.further_details.maximum_words")) if further_details&.split&.length&.>(100)
+    errors.add(:further_details, :length) if number_of_words_exceeds_permitted_length?(100, further_details)
   end
 
-  def about_school_must_not_be_blank
+  def about_school_presence
     return if about_school.present?
 
-    errors.add(:about_school, I18n.t("about_the_role_errors.about_school.blank", organisation: organisation_type))
+    errors.add(:about_school, :blank, organisation: organisation_type)
+  end
+
+  def job_advert_presence
+    return if remove_html_tags(job_advert).present?
+
+    errors.add(:job_advert, :blank)
+  end
+
+  def remove_html_tags(field)
+    regex = /<("[^"]*"|'[^']*'|[^'">])*>/
+
+    field&.gsub(regex, "")
+  end
+
+  def number_of_words_exceeds_permitted_length?(number, attribute)
+    attribute&.split&.length&.>(number)
   end
 end
