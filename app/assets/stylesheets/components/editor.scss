@@ -15,7 +15,6 @@
   }
 }
 
-
 .editor-component {
   &__controls {
     display: none;
@@ -73,5 +72,13 @@
         z-index: 2;
       }
     }
+  }
+}
+
+.editor-rendered-content {
+  ul:not([class]) {
+    @extend %govuk-list;
+    @extend %govuk-list--bullet;
+    max-width: 40rem;
   }
 }
