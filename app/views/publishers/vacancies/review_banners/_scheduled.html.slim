@@ -2,7 +2,7 @@ h1.govuk-heading-l class="govuk-!-display-inline"
   = vacancy.job_title
   = govuk_tag(text: t("publishers.vacancies.show.heading_component.status_tag.scheduled"), html_attributes: { class: "vertical-align-middle govuk-!-margin-left-1" }, colour: "yellow")
 = govuk_inset_text do
-  = vacancy_review_heading_inset_text(vacancy, "scheduled")
+  = vacancy_review_form_heading_inset_text(vacancy, "scheduled")
   .govuk-button-group class="govuk-!-margin-top-4"
     - %w[preview copy delete convert_to_draft].each do |action|
-      = vacancy_review_heading_action_link(vacancy, action)
+      = vacancy_review_form_heading_action_link(vacancy, action)

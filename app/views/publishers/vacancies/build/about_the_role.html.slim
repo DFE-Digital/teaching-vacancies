@@ -22,8 +22,8 @@
 
       - if vacancy.about_school.present?
         = f.govuk_text_area :about_school,
-                label: { id: "about-school-label", text: t("helpers.label.publishers_job_listing_about_the_role_form.about_organisation", organisation: vacancy_about_school_label_organisation(vacancy)), size: "m" },
-                hint: { text: vacancy_about_school_hint_text(vacancy) },
+                label: { id: "about-school-label", text: t("helpers.label.publishers_job_listing_about_the_role_form.about_organisation", organisation: vacancy_about_school_form_label(vacancy)), size: "m" },
+                hint: { text: vacancy_about_school_form_hint_text(vacancy) },
                 value: vacancy_about_school_value(vacancy),
                 rows: 10,
                 required: true
