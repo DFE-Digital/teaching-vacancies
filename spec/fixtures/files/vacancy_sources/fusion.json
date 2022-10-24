@@ -1,0 +1,27 @@
+{
+  "result": [
+    {
+      "reference": "0044",
+      "advertUrl": "http://testurl.com",
+      "applicationUrl": "http://testurl.com",
+      "expiresAt": "2022-10-28T12:00:00",
+      "startDate": "2022-11-21T00:00:00",
+      "jobTitle": "Class Teacher",
+      "jobAdvert": "Lorem Ipsum dolor sit amet",
+      "salary": "£25,714.00 to £41,604.00",
+      "schoolUrns": [
+        "145506"
+      ],
+      "jobRole": "teacher",
+      "workingPatterns": "full_time",
+      "contractType": "fixed_term",
+      "phase": "primary",
+      "trustId": "16614"
+    }
+  ],
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
+}
