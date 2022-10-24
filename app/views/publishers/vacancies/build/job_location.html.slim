@@ -5,20 +5,18 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_fieldset legend: nil do
-        - if current_organisation.local_authority?
+      = f.govuk_fieldset legend: ({ text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" } if @school_options.count >= 10) do
+        - if current_organisation.local_authority? && @school_options.count >= 10
           span.govuk-hint
-            = t("helpers.hint.publishers_job_listing_schools_form.edit_schools")
-            =< govuk_link_to t("helpers.hint.publishers_job_listing_schools_form.add_school"),
-                               edit_publishers_publisher_preference_path(current_publisher_preference), class: "govuk-link--no-visited-state"
+            = local_authority_job_location_hint(current_publisher_preference)
 
         = searchable_collection(collection: f.govuk_collection_check_boxes(:organisation_ids,
           @school_options,
           :id,
           :name,
           :address,
-          legend: { text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" },
-          hint: nil,
+          legend: ({ text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" } if @school_options.count < 10),
+          hint: ({ text: local_authority_job_location_hint(current_publisher_preference) } if current_organisation.local_authority? && @school_options.count < 10),
           classes: "checkbox-label__bold govuk-!-margin-top-2"),
           collection_count: @school_options.count,
           options: { border: true },
