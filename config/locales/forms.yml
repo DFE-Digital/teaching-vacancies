@@ -215,8 +215,8 @@ en:
         include_additional_documents: For example, a job description or person specification
       publishers_job_listing_pay_package_form:
         benefits: For example, special educational needs (SEN) or teaching and learning responsibility (TLR) payments
-        pay_scale: For example, 'M1 to M2'
-        salary: For example, 'Between £20,000 and £40,000'
+        pay_scale: For example, ‘M1 to M2’
+        salary: For example, ‘Between £20,000 and £40,000’
         salary_types: Select all that apply
         salary_types_options:
           full_time: This is what the annual salary would be for someone working full time
