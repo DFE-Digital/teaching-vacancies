@@ -199,8 +199,6 @@ en:
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications_options:
           "false": You'll need to provide additional details about how to apply
-      publishers_job_listing_copy_vacancy_form:
-        job_title: For example 'Teacher of KS1'
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 10MB
       publishers_job_listing_feedback_form:
@@ -227,7 +225,22 @@ en:
       publishers_job_listing_subjects_form:
         subjects_placeholder: Search
       publishers_job_listing_job_title_form:
-        job_title: For example 'Teacher of KS1'
+        job_title:
+          education_support: For example ‘Learning support assistant’
+          higher_level_teaching_assistant: ‘Higher level teaching assistant’
+          middle_leader:
+            middle_secondary_or_sixth_form_or_college: For example ’Head of modern foreign languages’
+            nursery: For example, ‘Nursery phase leader’
+            primary: For example ‘KS1 phase leader’
+            through: For example ‘KS1 phase leader’ or ’Head of modern foreign languages’
+          sendco: For example ‘Teaching assistant’
+          senior_leader: "For example ‘Assistant headteacher’"
+          teacher:
+            middle_secondary_or_sixth_form_or_college: For example ‘Teacher of Maths’
+            nursery: For example ‘Nursery Teacher’
+            primary: For example ‘Teacher of KS1’
+            through: For example ‘Teacher of KS1’ or ‘Teacher of Maths’
+          teaching_assistant: For example ‘Teaching assistant’
       publishers_job_listing_working_patterns_form:
         working_patterns_options:
           full_time_education_support: Usually at least 27.5 hours a week

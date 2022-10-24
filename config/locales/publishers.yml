@@ -220,6 +220,7 @@ en:
         job_title:
           step_title: Job title
           phase_inset_text:
+            multiple_phases: The job listing will list the education phases.
             phase: The job listing will say it’s a %{phase} role.
         key_stages:
           step_title: Key stage

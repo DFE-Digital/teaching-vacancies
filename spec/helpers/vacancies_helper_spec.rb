@@ -202,8 +202,8 @@ RSpec.describe VacanciesHelper do
     end
   end
 
-  describe "#vacancy_review_heading_inset_text" do
-    subject { helper.vacancy_review_heading_inset_text(vacancy, status) }
+  describe "#vacancy_review_form_heading_inset_text" do
+    subject { helper.vacancy_review_form_heading_inset_text(vacancy, status) }
 
     context "when the job has been published" do
       let(:vacancy) { create(:vacancy, :published) }
@@ -264,8 +264,8 @@ RSpec.describe VacanciesHelper do
     end
   end
 
-  describe "#vacancy_review_heading_action_link" do
-    subject { helper.vacancy_review_heading_action_link(vacancy, action) }
+  describe "#vacancy_review_form_heading_action_link" do
+    subject { helper.vacancy_review_form_heading_action_link(vacancy, action) }
 
     let(:vacancy) { create(:vacancy) }
 

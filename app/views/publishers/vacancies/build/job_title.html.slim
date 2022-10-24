@@ -7,11 +7,15 @@
 
       = f.govuk_text_area :job_title,
         label: { text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" },
-        class: "govuk-input string required",
+        hint: { text: vacancy_job_title_form_hint_text(vacancy) },
+        class: "govuk-input",
         max_chars: 75,
         required: true
 
       = govuk_inset_text do
-        = t("publishers.vacancies.build.job_title.phase_inset_text.phase", phase: vacancy.phases.first&.humanize&.downcase)
+        - if vacancy.phases.many?
+          = t("publishers.vacancies.build.job_title.phase_inset_text.multiple_phases")
+        - else
+          = t("publishers.vacancies.build.job_title.phase_inset_text.phase", phase: vacancy.phases.first&.humanize&.downcase)
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
