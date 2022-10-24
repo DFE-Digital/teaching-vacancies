@@ -1,12 +1,10 @@
 module StatusTagHelper
   def review_section_tag(resource, steps, form_classes)
-    return if (resource.is_a?(Vacancy) || resource.is_a?(VacancyPresenter)) && resource.published?
-
     if form_classes.all?(&:optional?)
       optional
     elsif resource.is_a?(JobApplication) && steps.all? { |step| job_application_step_in_progress?(resource, step) }
       in_progress
-    elsif steps.none? { |step| vacancy_step_completed?(resource, step) }
+    elsif steps.none? { |step| step_completed?(resource, step) }
       not_started
     elsif step_forms_contain_errors?(resource, form_classes)
       action_required
@@ -16,6 +14,10 @@ module StatusTagHelper
   end
 
   private
+
+  def step_completed?(resource, step)
+    resource.completed_steps.include?(step.to_s)
+  end
 
   def step_forms_contain_errors?(resource, form_classes)
     form_classes.any? do |form_class|
