@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Resettable do
   context "inclusion" do
-    let(:vacancy) { create(:vacancy) }
+    let(:vacancy) { build(:vacancy) }
 
     it { expect(vacancy).to respond_to(:reset_dependent_fields) }
   end
@@ -10,7 +10,7 @@ RSpec.describe Resettable do
   context "when changing working patterns" do
     subject(:update_working_patterns) { vacancy.update(working_patterns: %w[full_time]) }
 
-    let(:vacancy) { create(:vacancy, working_patterns: %w[part_time]) }
+    let(:vacancy) { build(:vacancy, working_patterns: %w[part_time]) }
     let(:previous_actual_salary) { vacancy.actual_salary }
 
     it "resets actual salary" do
@@ -23,7 +23,7 @@ RSpec.describe Resettable do
   context "when changing contract type" do
     subject(:update_contract_type) { vacancy.update(contract_type: "permanent") }
 
-    let(:vacancy) { create(:vacancy, contract_type: contract_type) }
+    let(:vacancy) { build(:vacancy, contract_type: contract_type) }
     let(:previous_fixed_term_contract_duration) { vacancy.fixed_term_contract_duration }
     let(:previous_parental_leave_cover_contract_duration) { vacancy.parental_leave_cover_contract_duration }
 
@@ -51,7 +51,7 @@ RSpec.describe Resettable do
   context "when changing education support" do
     subject(:update_education_support) { vacancy.update(job_role: "education_support") }
 
-    let(:vacancy) { create(:vacancy, phases: %w[primary], job_role: "teacher", key_stages: %w[ks1]) }
+    let(:vacancy) { build(:vacancy, phases: %w[primary], job_role: "teacher", key_stages: %w[ks1]) }
     let(:previous_key_stages) { vacancy.key_stages }
 
     it "resets key stages" do
@@ -64,7 +64,7 @@ RSpec.describe Resettable do
   context "when changing education phases" do
     subject(:update_education_phases) { vacancy.update(phases: updated_phases) }
 
-    let(:vacancy) { create(:vacancy, phases: %w[secondary], key_stages: %w[ks1]) }
+    let(:vacancy) { build(:vacancy, phases: %w[secondary], key_stages: %w[ks1]) }
     let(:previous_subjects) { vacancy.subjects }
     let(:previous_key_stages) { vacancy.key_stages }
 
@@ -92,7 +92,7 @@ RSpec.describe Resettable do
   context "when changing job role" do
     subject(:update_job_role) { vacancy.update(job_role: "education_support") }
 
-    let(:vacancy) { create(:vacancy, job_role: "teacher") }
+    let(:vacancy) { build(:vacancy, job_role: "teacher") }
     let(:previous_ect_status) { vacancy.ect_status }
 
     it "resets the ect status" do
@@ -105,7 +105,7 @@ RSpec.describe Resettable do
   context "when changing enable job applications" do
     subject(:update_job_applications) { vacancy.update(enable_job_applications: true) }
 
-    let(:vacancy) { create(:vacancy, receive_applications: "website", enable_job_applications: false) }
+    let(:vacancy) { build(:vacancy, receive_applications: "website", enable_job_applications: false) }
     let(:previous_receive_applications) { vacancy.receive_applications }
 
     before { vacancy.update(status: :draft) }
@@ -121,7 +121,7 @@ RSpec.describe Resettable do
     subject(:update_receive_application) { vacancy.update(receive_applications: new_receive_applications) }
 
     context "from email to website" do
-      let(:vacancy) { create(:vacancy, receive_applications: "email", application_email: "test@test.com") }
+      let(:vacancy) { build(:vacancy, enable_job_applications: false, receive_applications: "email", application_email: "test@test.com") }
       let(:new_receive_applications) { "website" }
       let(:previous_application_email) { vacancy.application_email }
 
@@ -133,7 +133,7 @@ RSpec.describe Resettable do
     end
 
     context "from website to email" do
-      let(:vacancy) { create(:vacancy, receive_applications: "website", application_link: "www.test.com") }
+      let(:vacancy) { build(:vacancy, enable_job_applications: false, receive_applications: "website", application_link: "www.test.com") }
       let(:new_receive_applications) { "email" }
       let(:previous_application_link) { vacancy.application_link }
 
@@ -146,7 +146,7 @@ RSpec.describe Resettable do
   end
 
   context "when changing additional documents" do
-    let(:vacancy) { create(:vacancy, :with_supporting_documents) }
+    let(:vacancy) { build(:vacancy, :with_supporting_documents) }
     let(:previous_supporting_documents) { vacancy.supporting_documents }
     let(:document) { double("ActiveRecordStorage", purge_later: nil) }
 
@@ -163,7 +163,7 @@ RSpec.describe Resettable do
   context "when changing enable job applications" do
     subject(:update_enable_job_applications) { vacancy.update(enable_job_applications: false) }
 
-    let(:vacancy) { create(:vacancy, :draft, personal_statement_guidance: "test") }
+    let(:vacancy) { build(:vacancy, :draft, personal_statement_guidance: "test") }
     let(:previous_personal_statement_guidance) { vacancy.personal_statement_guidance }
 
     it "resets the personal statement guidance" do
@@ -176,7 +176,7 @@ RSpec.describe Resettable do
   context "when changing school visits" do
     subject(:update_school_visits) { vacancy.update(school_visits: false) }
 
-    let(:vacancy) { create(:vacancy, school_visits: true, school_visits_details: "test") }
+    let(:vacancy) { build(:vacancy, school_visits: true, school_visits_details: "test") }
     let(:previous_school_visits_details) { vacancy.school_visits_details }
 
     it "resets school visits details" do
@@ -189,7 +189,7 @@ RSpec.describe Resettable do
   context "when changing contact number provided" do
     subject(:update_contact_number_provided) { vacancy.update(contact_number_provided: false) }
 
-    let(:vacancy) { create(:vacancy, contact_number_provided: true, contact_number: "1111111111") }
+    let(:vacancy) { build(:vacancy, contact_number_provided: true, contact_number: "1111111111") }
     let(:previous_contact_number) { vacancy.contact_number }
 
     it "resets contact number" do
@@ -202,7 +202,7 @@ RSpec.describe Resettable do
   context "when changing safeguarding information provided" do
     subject(:update_safeguarding_information_provided) { vacancy.update(safeguarding_information_provided: false) }
 
-    let(:vacancy) { create(:vacancy, safeguarding_information_provided: true, safeguarding_information: "test") }
+    let(:vacancy) { build(:vacancy, safeguarding_information_provided: true, safeguarding_information: "test") }
     let(:previous_safeguarding_information) { vacancy.safeguarding_information }
 
     it "resets safeguarding information" do
@@ -215,13 +215,26 @@ RSpec.describe Resettable do
   context "when changing further details provided" do
     subject(:update_further_details_provided) { vacancy.update(further_details_provided: false) }
 
-    let(:vacancy) { create(:vacancy, further_details_provided: true, further_details: "test") }
+    let(:vacancy) { build(:vacancy, further_details_provided: true, further_details: "test") }
     let(:previous_further_details) { vacancy.further_details }
 
     it "resets further details" do
       expect { update_further_details_provided }
         .to change { vacancy.further_details }
         .from(previous_further_details).to(nil)
+    end
+  end
+
+  context "when changing benefits" do
+    subject(:update_benefits) { vacancy.update(benefits: false) }
+
+    let(:vacancy) { build(:vacancy, benefits: true, benefits_details: "test") }
+    let(:previous_benefits_details) { vacancy.benefits_details }
+
+    it "resets benefits details" do
+      expect { update_benefits }
+        .to change { vacancy.benefits_details }
+        .from(previous_benefits_details).to(nil)
     end
   end
 end
