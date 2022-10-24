@@ -18,24 +18,6 @@ module VacanciesHelper
     "#{'Error: ' if vacancy.errors.present? && show_errors}#{page_title}"
   end
 
-  def actual_salary(vacancy)
-    return unless vacancy.actual_salary?
-
-    [
-      tag.div(t("jobs.actual_salary"), class: "govuk-hint govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16"),
-      vacancy.actual_salary,
-    ]
-  end
-
-  def pay_scale(vacancy)
-    return unless vacancy.pay_scale?
-
-    [
-      tag.div(t("jobs.pay_scale"), class: "govuk-hint govuk-!-margin-bottom-0 govuk-!-margin-top-1 govuk-!-font-size-16"),
-      vacancy.pay_scale,
-    ]
-  end
-
   def organisation_type_label(vacancy)
     vacancy.central_office? ? t("jobs.trust_type") : t("jobs.school_type")
   end
@@ -132,14 +114,6 @@ module VacanciesHelper
     }
   end
 
-  def referrer_organisation_slug(referrer)
-    organisation_slug = referrer.path.gsub("/organisations/", "")
-
-    return unless referrer.host == request.host && OrganisationLandingPage.exists?(organisation_slug)
-
-    organisation_slug
-  end
-
   def organisation_landing_page_breadcrumbs(organisation_slug)
     landing_page = OrganisationLandingPage[organisation_slug]
     {
@@ -165,10 +139,6 @@ module VacanciesHelper
     else
       t("publishers.activity_log.#{attribute}", new_value: new_value.humanize)
     end
-  end
-
-  def vacancy_select_a_job_to_copy_hint(vacancy)
-    safe_join [tag.div(t(".closing_date", date: vacancy.expires_at)), tag.div(vacancy.organisation_name, class: "govuk-!-margin-top-1")]
   end
 
   def vacancy_working_patterns(vacancy)
@@ -240,6 +210,14 @@ module VacanciesHelper
   end
 
   private
+
+  def referrer_organisation_slug(referrer)
+    organisation_slug = referrer.path.gsub("/organisations/", "")
+
+    return unless referrer.host == request.host && OrganisationLandingPage.exists?(organisation_slug)
+
+    organisation_slug
+  end
 
   def vacancy_working_patterns_summary(vacancy)
     vacancy.working_patterns.map { |working_pattern|
