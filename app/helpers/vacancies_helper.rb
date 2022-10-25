@@ -5,17 +5,21 @@ module VacanciesHelper
 
   WORD_EXCEPTIONS = %w[and the of upon].freeze
 
-  def page_title_prefix(vacancy, form_object, page_heading)
-    if vacancy.published?
-      "#{form_object.errors.present? ? 'Error: ' : ''}Edit the #{page_heading} for #{vacancy.job_title}"
-    else
-      "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} — #{t('jobs.create_a_job_title', organisation: current_organisation.name)}"
-    end
+  def page_title_prefix(step_process, form_object)
+    page_heading = t("publishers.vacancies.steps.#{step_process.current_step}")
+    create_or_edit = step_process.vacancy.published? ? "edit" : "create"
+    section_number = step_process.current_step_group_number
+
+    "#{form_object.errors.present? ? 'Error: ' : ''}#{page_heading} - #{t("publishers.vacancies.build.page_title.#{create_or_edit}", section_number: section_number)}"
   end
 
-  def review_page_title_prefix(vacancy, organisation: current_organisation, show_errors: true)
-    page_title = t("jobs.review_page_title", organisation: organisation.name)
-    "#{'Error: ' if vacancy.errors.present? && show_errors}#{page_title}"
+  def review_page_title_prefix(vacancy)
+    heading = t("publishers.vacancies.review.heading", status: (vacancy.publish_on&.future? ? "schedule" : "publish"))
+    t("publishers.vacancies.review.page_title", heading: heading)
+  end
+
+  def publishers_show_page_title_prefix(vacancy)
+    t("publishers.vacancies.show.page_title", job_title: vacancy.job_title)
   end
 
   def organisation_type_label(vacancy)

@@ -1,6 +1,85 @@
 require "rails_helper"
 
 RSpec.describe VacanciesHelper do
+  describe "#page_title_prefix" do
+    subject { helper.page_title_prefix(step_process, form_object) }
+
+    let(:step_process) { double(:step_process, vacancy: vacancy, current_step: :job_title, current_step_group_number: 1) }
+    let(:form_object) { double(:form_object, errors: errors) }
+
+    context "when the vacancy is published" do
+      let(:vacancy) { build_stubbed(:vacancy) }
+
+      context "when there are errors" do
+        let(:errors) { ["test error"] }
+
+        it "returns the correct page title" do
+          expect(subject).to eq("Error: Job title - Change job listing - [Section 1 of 4] - Teaching Vacancies - GOV.UK")
+        end
+      end
+
+      context "when there are no errors" do
+        let(:errors) { [] }
+
+        it "returns the correct page title" do
+          expect(subject).to eq("Job title - Change job listing - [Section 1 of 4] - Teaching Vacancies - GOV.UK")
+        end
+      end
+    end
+
+    context "when the vacancy is not published" do
+      let(:vacancy) { build_stubbed(:vacancy, :draft) }
+
+      context "when there are errors" do
+        let(:errors) { ["test error"] }
+
+        it "returns the correct page title" do
+          expect(subject).to eq("Error: Job title - Create job listing - [Section 1 of 4] - Teaching Vacancies - GOV.UK")
+        end
+      end
+
+      context "when there are no errors" do
+        let(:errors) { [] }
+
+        it "returns the correct page title" do
+          expect(subject).to eq("Job title - Create job listing - [Section 1 of 4] - Teaching Vacancies - GOV.UK")
+        end
+      end
+    end
+  end
+
+  describe "#review_page_title_prefix" do
+    subject { helper.review_page_title_prefix(vacancy) }
+
+    let(:vacancy) { build_stubbed(:vacancy, :draft, publish_on: publish_on) }
+
+    context "when publish_on is in the future" do
+      let(:publish_on) { 2.days.from_now }
+
+      it "returns the correct page title" do
+        expect(subject).to eq("Check details and schedule job listing - Create job listing - Teaching Vacancies - GOV.UK")
+      end
+    end
+
+    context "when publish_on is not in the future" do
+      let(:publish_on) { Date.today }
+
+      it "returns the correct page title" do
+        expect(subject).to eq("Check details and publish job listing - Create job listing - Teaching Vacancies - GOV.UK")
+      end
+    end
+  end
+
+  describe "#publishers_show_page_title_prefix" do
+    subject { helper.publishers_show_page_title_prefix(vacancy) }
+
+    let(:vacancy) { build_stubbed(:vacancy, job_title: "Test job title") }
+
+    it "returns the correct page title" do
+      expect(subject).to eq("Test job title - Teaching Vacancies - GOV.UK")
+    end
+  end
+
   describe "#vacancy_full_job_location" do
     subject { helper.vacancy_full_job_location(vacancy) }
     let(:organisation_link) { helper.govuk_link_to(vacancy.organisation.name, organisation_landing_page_path(vacancy.organisation.slug)) }
