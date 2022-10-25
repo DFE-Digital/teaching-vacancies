@@ -243,13 +243,13 @@ en:
           teaching_assistant: For example ‘Teaching assistant’
       publishers_job_listing_working_patterns_form:
         working_patterns_options:
-          full_time_education_support: Usually at least 27.5 hours a week
-          full_time_higher_level_teaching_assistant: Usually at least 27.5 hours a week
-          full_time_middle_leader: Usually at least 36.5 hours a week
+          full_time_education_support: Usually at least 36.5 hours a week
+          full_time_higher_level_teaching_assistant: Usually at least 36.5 hours a week
+          full_time_middle_leader: Usually at least 27.5 hours a week
           full_time_sendco: ""
-          full_time_senior_leader: Usually at least 36.5 hours a week
-          full_time_teaching_assistant: Usually at least 27.5 hours a week
-          full_time_teacher: Usually at least 36.5 hours a week
+          full_time_senior_leader: Usually at least 27.5 hours a week
+          full_time_teaching_assistant: Usually at least 36.5 hours a week
+          full_time_teacher: Usually at least 27.5 hours a week
 
     label:
       publishers_new_features_form:
