@@ -195,7 +195,7 @@ RSpec.describe VacancyPresenter do
       let(:fixed_term_contract_duration) { "6 months" }
 
       it "returns Fixed term (duration)" do
-        expect(subject.contract_type_with_duration).to eq "Fixed term (6 months)"
+        expect(subject.contract_type_with_duration).to eq "Fixed term - 6 months"
       end
     end
   end
@@ -217,7 +217,7 @@ RSpec.describe VacancyPresenter do
       let(:parental_leave_cover_contract_duration) { "6 months" }
 
       it "returns Maternity or parental leave cover (duration)" do
-        expect(subject.contract_type_with_duration).to eq "Maternity or parental leave cover (6 months)"
+        expect(subject.contract_type_with_duration).to eq "Maternity or parental leave cover - 6 months"
       end
     end
   end
