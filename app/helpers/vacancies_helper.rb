@@ -76,10 +76,6 @@ module VacanciesHelper
     "#{vacancy.job_title} - #{vacancy.organisation_name}"
   end
 
-  def vacancy_step_completed?(vacancy, step)
-    vacancy.completed_steps.include?(step.to_s)
-  end
-
   # Determines a set of breadcrumbs for a vacancy view page based on whether the user has arrived
   # there from a search results page (take them back to search results) or somewhere else (take
   # them to the appropriate landing page, or if all else fails, the "all jobs" page)
