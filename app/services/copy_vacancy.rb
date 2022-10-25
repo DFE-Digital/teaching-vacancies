@@ -15,11 +15,28 @@ class CopyVacancy
   def setup_new_vacancy
     @new_vacancy = @vacancy.dup
     @new_vacancy.status = :draft
+    copy_application_form if @vacancy.application_form.attachments&.any?
+
+    if @vacancy.supporting_documents.attachments&.any?
+      copy_supporting_documents
+    else
+      @new_vacancy.include_additional_documents = nil
+    end
+
     reset_date_fields if @vacancy.publish_on&.past?
     reset_legacy_fields
-    @new_vacancy.include_additional_documents = nil
     @new_vacancy.completed_steps = current_steps
     @new_vacancy.organisations = @vacancy.organisations
+  end
+
+  def copy_application_form
+    @new_vacancy.application_form.attach(@vacancy.application_form.blob)
+  end
+
+  def copy_supporting_documents
+    @vacancy.supporting_documents.each { |supporting_document| @new_vacancy.supporting_documents.attach(supporting_document.blob) }
+
+    @new_vacancy.include_additional_documents = true
   end
 
   def reset_date_fields

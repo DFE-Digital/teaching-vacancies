@@ -29,6 +29,34 @@ RSpec.describe CopyVacancy do
       end
     end
 
+    context "when there are supporting documents" do
+      let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [school]) }
+      let(:supporting_documents) { vacancy.supporting_documents.attachments }
+
+      it "copies supporting_documents" do
+        copied_vacancy = described_class.new(vacancy).call
+
+        expect(copied_vacancy.supporting_documents.attachments.map(&:blob_id)).to eq(supporting_documents.map(&:blob_id))
+      end
+
+      it "sets include_additional_documents" do
+        copied_vacancy = described_class.new(vacancy).call
+
+        expect(copied_vacancy.include_additional_documents).to be true
+      end
+    end
+
+    context "when an application form has been attached" do
+      let(:vacancy) { create(:vacancy, :with_application_form, organisations: [school]) }
+      let(:application_form) { vacancy.application_form.attachments }
+
+      it "copies the application form" do
+        copied_vacancy = described_class.new(vacancy).call
+
+        expect(copied_vacancy.application_form.attachments.map(&:blob_id)).to eq(application_form.map(&:blob_id))
+      end
+    end
+
     context "not all fields are copied" do
       let(:vacancy) do
         create(:vacancy,
