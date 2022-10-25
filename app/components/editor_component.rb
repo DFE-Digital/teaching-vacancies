@@ -14,4 +14,10 @@ class EditorComponent < ApplicationComponent
   def default_classes
     %w[editor-component]
   end
+
+  def label_classes
+    return %w[govuk-label govuk-label--m editor-component__label].join(" ") unless @label[:classes].present?
+
+    %w[editor-component__label].push(@label[:classes]).join(" ")
+  end
 end

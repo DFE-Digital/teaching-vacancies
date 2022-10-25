@@ -34,16 +34,18 @@
       - unless vacancy.job_advert.present?
         = f.govuk_radio_buttons_fieldset :safeguarding_information_provided, legend: { size: "m", tag: nil }, classes: ["safeguarding-information-provided-radios"] do
           = f.govuk_radio_button :safeguarding_information_provided, "true" do
-            = f.govuk_text_area :safeguarding_information,
-                                label: -> { tag.label(t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
-                                max_words: 100
+            = editor(form_input: f.govuk_text_area(:safeguarding_information),
+                     value: form.safeguarding_information,
+                     field_name: "publishers_job_listing_about_the_role_form[safeguarding_information]",
+                     label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information"), classes: ["govuk-label", "govuk-label--s", "govuk-!-margin-bottom-2", "govuk-!-font-weight-bold"], id: "safeguarding-information-label" })
           = f.govuk_radio_button :safeguarding_information_provided, "false", link_errors: true
 
         = f.govuk_radio_buttons_fieldset :further_details_provided, legend: { size: "m", tag: nil }, classes: ["further-details-provided-radios"] do
           = f.govuk_radio_button :further_details_provided, "true" do
-            = f.govuk_text_area :further_details,
-                                label: -> { tag.label(t("helpers.label.publishers_job_listing_about_the_role_form.further_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
-                                max_words: 100
+            = editor(form_input: f.govuk_text_area(:further_details),
+                     value: form.further_details,
+                     field_name: "publishers_job_listing_about_the_role_form[further_details]",
+                     label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.further_details"), classes: ["govuk-label", "govuk-label--s", "govuk-!-margin-bottom-2", "govuk-!-font-weight-bold"], id: "further-details-label" })
           = f.govuk_radio_button :further_details_provided, "false", link_errors: true
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

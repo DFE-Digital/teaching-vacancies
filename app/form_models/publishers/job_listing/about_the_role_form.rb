@@ -7,10 +7,10 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validate :school_offer_presence, unless: -> { vacancy.about_school.present? }
   validate :school_offer_does_not_exceed_maximum_words, unless: -> { vacancy.about_school.present? }
   validates :safeguarding_information_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
-  validates :safeguarding_information, presence: true, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validate :safeguarding_information_presence, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validates :further_details_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
-  validates :further_details, presence: true, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validate :further_details_presence, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validate :further_details_does_not_exceed_maximum_words, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
 
   def self.fields
@@ -60,8 +60,20 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     errors.add(:skills_and_experience, :length) if number_of_words_exceeds_permitted_length?(150, skills_and_experience)
   end
 
+  def safeguarding_information_presence
+    return if remove_html_tags(safeguarding_information).present?
+
+    errors.add(:safeguarding_information, :blank)
+  end
+
   def safeguarding_information_does_not_exceed_maximum_words
     errors.add(:safeguarding_information, :length) if number_of_words_exceeds_permitted_length?(100, safeguarding_information)
+  end
+
+  def further_details_presence
+    return if remove_html_tags(further_details).present?
+
+    errors.add(:further_details, :blank)
   end
 
   def further_details_does_not_exceed_maximum_words
@@ -87,6 +99,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   end
 
   def number_of_words_exceeds_permitted_length?(number, attribute)
-    attribute&.split&.length&.>(number)
+    remove_html_tags(attribute)&.split&.length&.>(number)
   end
 end
