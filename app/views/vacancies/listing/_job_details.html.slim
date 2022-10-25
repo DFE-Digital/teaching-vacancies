@@ -67,11 +67,11 @@ section#job-details class="govuk-!-margin-bottom-5"
 
   - if vacancy.further_details_provided?
     h2.govuk-heading-m = t("jobs.further_details")
-    p.govuk-body = vacancy.further_details
+    .govuk-body == vacancy.further_details
 
   - if vacancy.safeguarding_information_provided?
     h2.govuk-heading-m = t("jobs.safeguarding_information.jobseeker")
-    p.govuk-body = vacancy.safeguarding_information
+    .govuk-body == vacancy.safeguarding_information
 
   - if vacancy.expires_at.future?
     h3.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")

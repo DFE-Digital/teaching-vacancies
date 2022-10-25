@@ -1,6 +1,6 @@
 = tag.div(class: classes, **html_attributes) do
   .editor-component__controls
-    label.govuk-label.govuk-label--m.editor-component__label data-action="click->editor#focus" for="#{@field_name}-field" id=@label[:id]
+    label class="#{label_classes}" data-action="click->editor#focus" for="#{@field_name}-field" id=@label[:id]
       = @label[:text]
     - if @hint.present?
       .govuk-hint id="#{@field_name}-hint"
