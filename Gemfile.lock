@@ -477,10 +477,7 @@ GEM
       ffi (~> 1.0)
     recaptcha (5.12.3)
       json
-    redis (5.0.5)
-      redis-client (>= 0.9.0)
-    redis-client (0.10.0)
-      connection_pool
+    redis (4.8.0)
     regexp_parser (2.5.0)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -726,7 +723,7 @@ DEPENDENCIES
   rails_semantic_logger
   railties (~> 7.0.3)
   recaptcha
-  redis
+  redis (= 4.8.0)
   rgeo-geojson
   rspec-rails (>= 6.0.0rc)
   rubocop-performance
