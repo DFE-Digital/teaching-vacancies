@@ -25,6 +25,10 @@ dl {
           }
         }
       }
+
+      .editor-rendered-content ul:not([class]) {
+        margin-bottom: 0;
+      }
     }
   }
 
