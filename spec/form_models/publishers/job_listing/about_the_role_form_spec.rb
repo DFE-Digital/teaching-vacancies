@@ -142,14 +142,34 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
     end
 
     context "when safeguarding_information_provided is true" do
-      before { allow(subject).to receive(:safeguarding_information_provided).and_return("true") }
+      let(:error) { %i[safeguarding_information blank] }
+      let(:params) { { safeguarding_information: safeguarding_information, safeguarding_information_provided: "true" } }
 
-      it { is_expected.to validate_presence_of(:safeguarding_information) }
+      context "when safeguarding_information has been provided" do
+        let(:error) { %i[safeguarding_information blank] }
+        let(:safeguarding_information) { Faker::Lorem.sentence(word_count: 99) }
+
+        it "passes validation" do
+          expect(subject.errors.added?(*error)).to be false
+        end
+      end
+
+      context "when safeguarding_information has not been provided" do
+        let(:error) { %i[safeguarding_information blank] }
+        let(:safeguarding_information) { nil }
+
+        it "fails validation" do
+          expect(subject.errors.added?(*error)).to be true
+        end
+      end
 
       context "when either job_advert or about_school is present" do
         let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", about_school: "Test") }
+        let(:safeguarding_information) { nil }
 
-        it { is_expected.not_to validate_presence_of(:safeguarding_information) }
+        it "does not fail validation" do
+          expect(subject.errors.added?(*error)).to be false
+        end
       end
 
       context "when safeguarding_information is over 100 words" do
