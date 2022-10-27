@@ -199,8 +199,7 @@ en:
       jobseeker: What skills and experience we're looking for
       publisher: What skills and experience are you looking for?
     suitable_for_ect: Is this job suitable for ECTs?
-    subjects: Subject
-    subject:
+    subjects:
       one: Subject
       other: Subjects
     working_patterns: Working pattern
