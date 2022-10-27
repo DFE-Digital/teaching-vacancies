@@ -198,9 +198,7 @@ module VacancyHelpers
       expect(page).to have_content(vacancy.starts_on.to_formatted_s.strip)
     end
 
-    if vacancy.enable_job_applications?
-      expect(page).to have_content(vacancy.personal_statement_guidance)
-    else
+    unless vacancy.enable_job_applications?
       expect(page.html).to include(I18n.t("helpers.label.publishers_job_listing_how_to_receive_applications_form.receive_applications_options.#{vacancy.receive_applications}"))
       expect(page).to have_content(vacancy.application_link) if vacancy.receive_applications == "website"
       expect(page).to have_content(vacancy.application_email) if vacancy.receive_applications == "email"

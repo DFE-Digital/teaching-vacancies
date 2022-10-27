@@ -33,7 +33,7 @@ RSpec.describe DashboardComponent, type: :component do
         let!(:inline_component) { render_inline(subject) }
 
         it "renders the Create a job listing button" do
-          expect(rendered_component).to include(Rails.application.routes.url_helpers.organisation_jobs_path)
+          expect(rendered_content).to include(Rails.application.routes.url_helpers.organisation_jobs_path)
         end
 
         it "renders the number of jobs in the heading" do
