@@ -1,12 +1,34 @@
 require "google/apis/drive_v3"
 
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
-  helper_method :form
+  helper_method :form, :new_documents_form
 
   before_action :complete_step, unless: :document_added?, only: %i[create]
 
+  def show
+    if params[:publishers_job_listing_documents_form] && (form.invalid? && params[:publishers_job_listing_documents_form][:additional_document] == "true")
+      render "publishers/vacancies/build/documents"
+      return
+    end
+
+    return redirect_to organisation_job_review_path(vacancy.id) if form.upload_additional_document == "false"
+  end
+
+  def new_documents_form
+    @new_documents_form ||= Publishers::JobListing::NewDocumentsForm.new(new_documents_form_params)
+  end
+
+  def new_documents_form_params
+    (params[:publishers_job_listing_new_documents_form] || params).permit(documents: [])
+  end
+
   def create
-    form.valid_documents.each do |document|
+    if new_documents_form.invalid?
+      render :show
+      return
+    end
+
+    new_documents_form.valid_documents.each do |document|
       vacancy.supporting_documents.attach(document)
       send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
     end
@@ -22,7 +44,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
       params["back_to_#{@back_link_destination}"] = "true" if @back_link_destination
     end
 
-    render :show
+    redirect_to organisation_job_build_path(vacancy.id, :documents)
   end
 
   def destroy
@@ -30,7 +52,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     document.purge_later
     send_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
 
-    redirect_to organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show]), flash: {
+    redirect_to organisation_job_build_path(vacancy.id, :documents, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show]), flash: {
       success: t("jobs.file_delete_success_message", filename: document.filename),
     }
   end
@@ -46,7 +68,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def documents_form_params
-    (params[:publishers_job_listing_documents_form] || params).permit(documents: [])
+    (params[:publishers_job_listing_documents_form] || params).permit(:upload_additional_document)
   end
 
   def complete_step

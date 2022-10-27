@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds data-controller="upload-documents"
-    = form_for form, url: organisation_job_documents_path(vacancy.id) do |f|
+    = form_for new_documents_form, url: organisation_job_documents_path(vacancy.id) do |f|
       = f.govuk_error_summary
 
       - if params["back_to_#{action_name}"]
@@ -10,20 +10,12 @@
 
       = f.govuk_file_field :documents,
         label: { text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" },
+        hint: { text: t("helpers.hint.new_publishers_job_listing_new_documents_form.documents") },
         accept: ".doc, .docx, .xls, .xlsx, .ppt, .pptx, .pdf, image/jpeg, image/png, video/mp4",
         multiple: true,
         include_hidden: false,
         enctype: "multipart/form-data",
         "data-upload-documents-target": "inputFileUpload",
         "data-action": "change->upload-documents#uploadFiles"
-
-      button.govuk-file-upload class="govuk-!-display-none govuk-!-margin-bottom-3" data-upload-documents-target="selectFileButton" data-action="upload-documents#triggerUpload"
-        = t("buttons.choose_file")
-
-      = f.govuk_submit t("buttons.upload_files"), secondary: true, "data-upload-documents-target": "uploadFilesButton"
-
-      .js-documents class=("js-documents--empty" if vacancy.supporting_documents.none?)
-        = render "publishers/vacancies/documents/documents"
-        p.js-documents__no-files = t("jobs.no_files_message")
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

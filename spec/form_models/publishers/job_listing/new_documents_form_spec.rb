@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Publishers::JobListing::DocumentsForm do
+RSpec.describe Publishers::JobListing::NewDocumentsForm do
   describe "#valid_documents" do
     subject { described_class.new(documents: documents) }
 

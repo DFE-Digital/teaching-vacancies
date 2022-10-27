@@ -33,7 +33,6 @@ RSpec.describe Publishers::VacancyFormSequence do
       contact_details
       about_the_role
       include_additional_documents
-      documents
       review
     ]
   end
