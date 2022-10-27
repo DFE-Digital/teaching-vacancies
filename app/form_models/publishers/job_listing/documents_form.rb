@@ -1,46 +1,17 @@
-class Publishers::JobListing::DocumentsForm < Publishers::JobListing::UploadBaseForm
-  CONTENT_TYPES_ALLOWED = %w[
-    application/pdf
-    image/jpeg
-    image/png
-    video/mp4
-    application/msword
-    application/vnd.ms-excel
-    application/vnd.ms-powerpoint
-    application/vnd.openxmlformats-officedocument.wordprocessingml.document
-    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-    application/vnd.openxmlformats-officedocument.presentationml.presentation
-  ].freeze
+class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyForm
+  validates :upload_additional_document, inclusion: { in: [true, false, "true", "false"] }
 
-  validate :document_presence
-
-  attr_accessor :documents
+  attr_accessor :upload_additional_document
 
   def self.fields
     []
   end
 
   def self.optional?
-    false
+    true
   end
 
-  def valid_documents
-    @valid_documents ||= documents&.select { |doc| valid_file_size?(doc) && valid_file_type?(doc) && virus_free?(doc) } || []
-  end
-
-  def file_upload_field_name
-    :documents
-  end
-
-  private
-
-  def content_types_allowed
-    CONTENT_TYPES_ALLOWED
-  end
-
-  def document_presence
-    return unless vacancy.include_additional_documents
-
-    errors.add(:documents, :blank) unless vacancy.supporting_documents.any?
+  def params_to_save
+    {}
   end
 end

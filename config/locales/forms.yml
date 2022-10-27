@@ -170,6 +170,8 @@ en:
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
 
+      new_publishers_job_listing_new_documents_form:
+        documents: You can only upload PDF or DOCX files under 10MB
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
 
@@ -756,6 +758,12 @@ en:
         publish_on: What date will the job be listed?
         publish_on_day: Date job will be listed
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
+      publishers_job_listing_documents_form:
+        summary_list_heading: Files added
+        upload_additional_document: Do you want to upload another document?
+        upload_additional_document_options:
+          false: "No"
+          true: "Yes"
       publishers_job_listing_education_phases_form:
         phases:  Education phase
       publishers_job_listing_expired_feedback_form: &expired_vacancy_feedback_shared_legends

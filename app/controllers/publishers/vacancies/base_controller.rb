@@ -44,6 +44,8 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
       if vacancy.published?
         redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
       else
+        return redirect_to organisation_job_build_path(vacancy.id, :documents) if current_step == :include_additional_documents
+
         redirect_to organisation_job_review_path(vacancy.id)
       end
     else

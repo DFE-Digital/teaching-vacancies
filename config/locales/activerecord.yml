@@ -254,8 +254,10 @@ en:
     include_additional_documents:
       inclusion: Select yes if want to upload additional documents
   documents_errors: &documents_errors
+    upload_additional_document:
+      inclusion: Select yes if you want to upload another document
     documents:
-      blank: Upload at least one document
+      blank: Select an additional document
 
   # External vacancies errors
   external_errors: &external_errors
@@ -354,6 +356,9 @@ en:
           attributes:
             <<: *include_additional_documents_errors
         publishers/job_listing/documents_form:
+          attributes:
+            <<: *documents_errors
+        publishers/job_listing/new_documents_form:
           attributes:
             <<: *documents_errors
         publishers/job_listing/copy_vacancy_form:

@@ -44,6 +44,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     if application_form
       vacancy.application_form.attach(application_form)
       send_event(:supporting_document_created, vacancy.application_form)
+      return redirect_to_next_step
     end
 
     # So they are taken back to the show or review page upon clicking the back link, even after creating a document
@@ -56,7 +57,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     if form.valid?
       vacancy.update(form.params_to_save)
       update_google_index(vacancy) if vacancy.listed?
-      redirect_to_next_step
+      return redirect_to_next_step
     else
       # So they are taken back to the show or review page upon clicking the back link, even after uploading a school_visit
       params["back_to_#{back_link_destination}"] = "true" if back_link_destination

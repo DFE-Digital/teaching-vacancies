@@ -16,7 +16,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def show
     skip_step_if_missing
 
-    return redirect_to(organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show])) if current_step == :documents
+    return redirect_to(organisation_job_documents_path(vacancy.id)) if vacancy.supporting_documents.none? && vacancy.include_additional_documents && current_step == :documents
 
     render_wizard
   end
@@ -28,6 +28,9 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def update
     if form.valid?
       update_vacancy
+
+      return redirect_to organisation_job_review_path(vacancy.id) if current_step == :include_additional_documents && vacancy.include_additional_documents.blank?
+
       redirect_to_next_step
     else
       render_wizard

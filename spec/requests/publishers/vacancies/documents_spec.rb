@@ -20,7 +20,7 @@ RSpec.describe "Documents" do
     it "triggers an event" do
       expect {
         post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { documents: [fixture_file_upload("blank_job_spec.pdf", "application/pdf")] },
+          publishers_job_listing_new_documents_form: { documents: [fixture_file_upload("blank_job_spec.pdf", "application/pdf")] },
         }
       }.to have_triggered_event(:supporting_document_created)
         .with_data(
@@ -35,7 +35,7 @@ RSpec.describe "Documents" do
     context "MIME type inspection" do
       before do
         post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { documents: [file] },
+          publishers_job_listing_new_documents_form: { documents: [file] },
         }
       end
 
@@ -94,6 +94,7 @@ RSpec.describe "Documents" do
 
     it "removes the document" do
       delete organisation_job_documents_path(id: document.id, job_id: vacancy.id)
+      follow_redirect!
       follow_redirect!
 
       expect(response.body).to include(I18n.t("jobs.file_delete_success_message", filename: document.filename))
