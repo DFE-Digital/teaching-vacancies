@@ -20,6 +20,7 @@ users = [
   { email: "ben.mitchell@digital.education.gov.uk", family_name: "Mitchell", given_name: "Ben" },
   { email: "colin.saliceti@digital.education.gov.uk", family_name: "Saliceti", given_name: "Colin" },
   { email: "davide.dippolito@digital.education.gov.uk", family_name: "Dippolito", given_name: "Davide" },
+  { email: "george.schena@digital.education.gov.uk", family_name: "Schena", given_name: "George" },
   { email: "joseph.hull@digital.education.gov.uk", family_name: "Hull", given_name: "Joseph" },
   { email: "leonie.shanks@digital.education.gov.uk", family_name: "Shanks", given_name: "Leonie" },
   { email: "molly.capstick@digital.education.gov.uk", family_name: "Capstick", given_name: "Molly" },
@@ -27,6 +28,7 @@ users = [
   { email: "rob.young@digital.education.gov.uk", family_name: "Young", given_name: "Rob" },
   { email: "rose.mackworth-young@digital.education.gov.uk", family_name: "Mackworth-Young", given_name: "Rose" },
   { email: "sabrina.altieri@education.gov.uk", family_name: "Altieri", given_name: "Sabrina" },
+  { email: "stan.klajn@digital.education.gov.uk", family_name: "Klajn", given_name: "Stan" },
 ]
 
 users.each do |user|
