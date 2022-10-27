@@ -47,13 +47,13 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
   - if vacancy.allow_subjects? && (vacancy.completed_steps.include?("subjects") || vacancy.completed_steps.include?("job_details"))
     - summary_list.row(html_attributes: { id: "subjects" }) do |row|
       - row.key
-        = t("jobs.subjects")
+        = t("jobs.subjects", count: vacancy.subjects.count)
       - row.value
         = vacancy.subjects.any? ? vacancy.readable_subjects : t("jobs.not_defined")
       - unless vacancy.legacy_draft?
         - row.action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :subjects, "back_to_#{action_name}": "true"),
-                    visually_hidden_text: t("jobs.subjects")
+                    visually_hidden_text: t("jobs.subjects", count: vacancy.subjects.count)
 
   - unless vacancy.contract_type.nil?
     - summary_list.row(html_attributes: { id: "contract_type" }) do |row|
