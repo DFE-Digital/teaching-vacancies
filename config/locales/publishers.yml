@@ -232,6 +232,9 @@ en:
           step_title: Subjects
         contract_type:
           step_title: Contract type
+        page_title:
+          create: Create job listing - [Section %{section_number} of 4] - Teaching Vacancies - GOV.UK
+          edit: Change job listing - [Section %{section_number} of 4] - Teaching Vacancies - GOV.UK
         pay_package:
           step_title: Salary and allowances
         review:
@@ -342,12 +345,11 @@ en:
       review:
         caption: Create job listing
         heading: Check details and %{status} job listing
+        page_title: "%{heading} - Create job listing - Teaching Vacancies - GOV.UK"
         steps: Create a job listing steps
       show:
         copied:
           success: Job listing copied
-        view_live_listing_link: View this listing
-        view_live_listing_title: View the live job listing
         draft:
           caption: Create job listing
           heading: Check details and schedule job listing
@@ -375,7 +377,10 @@ en:
             draft: Draft
             published: Active
             scheduled: Scheduled
+        page_title: "%{job_title} - Teaching Vacancies - GOV.UK"
         success: Job listing saved
+        view_live_listing_link: View this listing
+        view_live_listing_title: View the live job listing
       steps:
         job_details: Job details
         job_role: Job role
@@ -412,7 +417,7 @@ en:
         make_changes: make changes to the job listing
         manage_jobs: manage jobs
         next_steps: Next steps
-        page_title: The job listing for %{organisation} has been completed
+        page_title: Job listing published - Create job listing - Teaching Vacancies - GOV.UK
         preview_listing: preview the job listing
         view_listing: view the job listing
         you_can: "You can:"

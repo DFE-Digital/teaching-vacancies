@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, review_page_title_prefix(vacancy, show_errors: true)
+- content_for :page_title_prefix, publishers_show_page_title_prefix(vacancy)
 
 - if vacancy.legacy? && flash.none?
   - if vacancy.legacy_draft?
