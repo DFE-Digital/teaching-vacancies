@@ -69,6 +69,13 @@ module VacanciesHelper
     address_join([organisation.name, organisation.town, organisation.county])
   end
 
+  def local_authority_job_location_hint(current_publisher_preference)
+    t("helpers.hint.publishers_job_listing_schools_form.edit_schools_html",
+      link: govuk_link_to(t("helpers.hint.publishers_job_listing_schools_form.add_school"),
+                          edit_publishers_publisher_preference_path(current_publisher_preference),
+                          class: "govuk-link--no-visited-state"))
+  end
+
   def vacancy_full_job_location(vacancy)
     organisation = vacancy.organisation
     return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{govuk_link_to(organisation.name, organisation_landing_page_path(organisation))}".html_safe if vacancy.organisations.many?
