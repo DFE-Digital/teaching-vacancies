@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can manage settings" do
+RSpec.describe "Publishers can manage organization/school profile" do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
 
   before do
@@ -51,8 +51,10 @@ RSpec.describe "Publishers can manage settings" do
       expect(page.current_path).to eq(publishers_schools_path)
     end
 
-    it "allows to edit details of a school in the trust" do
-      within("//details[@data-id=\"#{school1.id}\"]") { click_link("Change", match: :first, visible: false) }
+    it "allows to navigate and manage school's profile settings page" do
+      click_on school1.name
+
+      click_link "Change", match: :first
 
       expect(find_field("publishers_organisation_form[url_override]").value).to eq(school1.url_override)
 
@@ -86,7 +88,8 @@ RSpec.describe "Publishers can manage settings" do
     end
 
     it "allows to edit details of a school in the local_authority" do
-      within("//details[@data-id=\"#{school1.id}\"]") { click_link("Change", match: :first, visible: false) }
+      click_on school1.name
+      click_link "Change", match: :first
 
       expect(find_field("publishers_organisation_form[url_override]").value).to eq(school1.url_override)
 
