@@ -1,0 +1,19 @@
+- content_for :page_title_prefix, "Schools"
+/ TODO: Generate page_title_prefix using search_results_heading component after schools search implemented
+/ - content_for :page_title_prefix, t(".title", count: params[:page].to_i, heading: search_results_heading(vacancies_search: @schools_search, strip_special_characters: true))
+
+h1 class="govuk-heading-l" role="heading" aria-level="1"
+  = "Schools (#{@pagy.count})"
+  / TODO: Use search_results_heading component after schools search implemented
+  / = search_results_heading(vacancies_search: @vacancies_search, landing_page: @landing_page)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds-at-desktop
+    #search-results
+      - if @schools.any?
+        = render "schools/search/results", schools: @schools
+      - else
+        p = t("schools.no_results")
+    = govuk_pagination(pagy: @pagy)
+    - if @schools.any?
+      = render "schools/search/stats"

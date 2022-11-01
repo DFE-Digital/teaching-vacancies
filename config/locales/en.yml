@@ -339,14 +339,31 @@ en:
       central_office: Arranging a visit to %{organisation}
 
   schools:
+    active_jobs: Active jobs
     address: Address
     age_range: Age range
     description: Description
+    key_stage: Key stage
+    key_stages:
+      early_years: Early years
+      ks1: KS1
+      ks2: KS2
+      ks3: KS3
+      ks4: KS4
+      ks5: KS5
     no_information: No information available
+    no_results: There are no results.
     not_given: Not given
     ofsted_report: Ofsted report
     organisation_page: '%{organisation_type} page'
     phase: Education phase
+    phases:
+      nursery: Nursery
+      primary: Primary school
+      middle: Middle school
+      secondary: Secondary school
+      sixth_form_or_college: Sixth form or college
+      through: Through school
     school_age: School age
     school_details: School details
     school_size: School size
