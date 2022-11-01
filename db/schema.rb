@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_08_153545) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_31_120442) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -221,6 +221,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_08_153545) do
     t.boolean "employment_history_section_completed"
     t.boolean "qualifications_section_completed"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
+  end
+
+  create_table "jobseeker_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "location"
+    t.integer "radius"
+    t.geography "location_preference", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
