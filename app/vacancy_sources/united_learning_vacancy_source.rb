@@ -1,12 +1,3 @@
-##
-# An experimental vacancy source for a vacancy feed for United Learning.
-#
-# Allows enumerating over the feed's contents and yields intialized `Vacancy` objects that can be
-# manipulated and persisted by calling code (e.g. an import job).
-#
-# Notes:
-#   - Ruby's `RSS` class doesn't recognise the demo feed as an Atom feed for some reason, so this
-#     uses slightly uglier vanilla XML parsing
 class UnitedLearningVacancySource
   FEED_URL = ENV.fetch("VACANCY_SOURCE_UNITED_LEARNING_FEED_URL").freeze
   UNITED_LEARNING_TRUST_UID = "5143".freeze
