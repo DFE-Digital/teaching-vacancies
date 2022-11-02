@@ -324,3 +324,20 @@ shared:
     - external_source
     - external_reference
     - external_advert_url
+    - school_visits_details
+    - school_visits_details
+    - job_location
+    - job_roles
+    - starts_asap
+    - phase
+    - pay_scale
+    - receive_applications
+    - application_email
+    - contact_number_provided
+    - skills_and_experience
+    - school_offer
+    - safeguarding_information_provided
+    - safeguarding_information
+    - further_details_provided
+    - further_details
+    - include_additional_documents
