@@ -131,7 +131,6 @@ en:
           label: Age group
         size:
           label: Size
-          value: "%{value} pupils enrolled"
         website:
           label: Website address
         description:

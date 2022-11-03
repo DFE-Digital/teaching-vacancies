@@ -22,10 +22,10 @@
       - row.key text: t(".school_age.label")
       - row.value text: age_range(organisation)
 
-    - if (size = organisation.gias_data["NumberOfPupils"].presence)
+    - if (text = number_of_pupils(organisation))
       - summary_list.row do |row|
         - row.key text: t(".size.label")
-        - row.value text: t(".size.value", value: size)
+        - row.value text: text
 
   - summary_list.row do |row|
     - row.key text: t(".website.label")

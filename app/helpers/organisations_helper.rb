@@ -70,7 +70,9 @@ module OrganisationsHelper
   private
 
   def number_of_pupils(school)
-    I18n.t("schools.size.enrolled", pupils: pupils, number: school.gias_data["NumberOfPupils"])
+    return unless (number = school.gias_data["NumberOfPupils"])
+
+    I18n.t("schools.size.enrolled", pupils: pupils, number: number)
   end
 
   def school_capacity(school)
