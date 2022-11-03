@@ -6,10 +6,11 @@
 
     = render "organisation", organisation: @organisation
 
-    h2.govuk-heading-m class="govuk-!-margin-0"
+    h2.govuk-heading-m class="govuk-!-margin-top-8"
       = t(".schools")
 
-    - @organisation.schools.not_closed.order(:name).each do |school|
-      .card-component
-        .govuk-heading-s
-          = govuk_link_to school.name.titlecase, publishers_school_path(school), no_visited_state: true
+    .link-list
+      - @organisation.schools.not_closed.order(:name).each do |school|
+        .link-list--element
+          .govuk-heading-s
+            = govuk_link_to school.name.titlecase, publishers_school_path(school), no_visited_state: true

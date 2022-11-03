@@ -108,7 +108,7 @@ en:
       update:
         success_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
       organisation:
-        not_provided: Not provided
+        not_provided: Not entered
         name:
           label: Name
         address:
