@@ -13,6 +13,8 @@ class LocationPolygon < ApplicationRecord
   end
 
   def self.include?(location)
+    return super unless location.is_a? String
+
     ALL_IMPORTED_LOCATIONS.include?(mapped_name(location))
   end
 
