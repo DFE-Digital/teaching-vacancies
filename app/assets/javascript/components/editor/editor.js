@@ -145,14 +145,14 @@ const EditorController = class extends Controller {
 
     let message;
 
-    if (numberwords.length > 150) {
-      message = `You have ${numberwords.length - 150} words too many`;
+    if (numberwords.length > 300) {
+      message = `You have ${numberwords.length - 300} words too many`;
       this.wordCountErrorState();
-    } else if (numberwords.length <= 150 && numberwords[0].length > 0) {
-      message = `You have ${150 - numberwords.length} words remaining`;
+    } else if (numberwords.length <= 300 && numberwords[0].length > 0) {
+      message = `You have ${300 - numberwords.length} words remaining`;
       this.wordCountDefaultState();
     } else {
-      message = 'You have 150 words remaining';
+      message = 'You have 300 words remaining';
       this.wordCountDefaultState();
     }
 
