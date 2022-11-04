@@ -140,7 +140,7 @@ const EditorController = class extends Controller {
   };
 
   wordCount(content) {
-    const MAX_WORDS = 300
+    const MAX_WORDS = 300;
     const strippedContent = content.replace(/<(.|\n)*?>/g, ' ');
     const numberwords = strippedContent.trim().split(/\s+/);
 
