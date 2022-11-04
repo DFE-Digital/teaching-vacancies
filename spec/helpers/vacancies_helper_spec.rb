@@ -82,7 +82,6 @@ RSpec.describe VacanciesHelper do
 
   describe "#vacancy_full_job_location" do
     subject { helper.vacancy_full_job_location(vacancy) }
-    let(:organisation_link) { helper.govuk_link_to(vacancy.organisation.name, organisation_landing_page_path(vacancy.organisation.slug)) }
 
     context "when the vacancy is at multiple schools" do
       let(:school_group) { create(:school_group) }
@@ -91,7 +90,7 @@ RSpec.describe VacanciesHelper do
       let(:vacancy) { build(:vacancy, organisations: [school, school2]) }
 
       it "returns the multiple schools location" do
-        expect(subject).to eq("More than one location, #{organisation_link}")
+        expect(subject).to eq("More than one location, #{vacancy.organisation.name}")
       end
     end
 
@@ -100,7 +99,7 @@ RSpec.describe VacanciesHelper do
       let(:vacancy) { build(:vacancy, organisations: [school]) }
 
       it "returns the full location" do
-        expect(subject).to eq("#{organisation_link}, Cool Town, Orange County, SW1A")
+        expect(subject).to eq("#{vacancy.organisation.name}, Cool Town, Orange County, SW1A")
       end
     end
   end

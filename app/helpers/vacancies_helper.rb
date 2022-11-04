@@ -78,9 +78,9 @@ module VacanciesHelper
 
   def vacancy_full_job_location(vacancy)
     organisation = vacancy.organisation
-    return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{govuk_link_to(organisation.name, organisation_landing_page_path(organisation))}".html_safe if vacancy.organisations.many?
+    return "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}" if vacancy.organisations.many?
 
-    address_join([govuk_link_to(organisation.name, organisation_landing_page_path(organisation)), organisation.town, organisation.county, organisation.postcode]).html_safe
+    address_join([organisation.name, organisation.town, organisation.county, organisation.postcode])
   end
 
   def vacancy_listing_page_title_prefix(vacancy)
