@@ -140,19 +140,20 @@ const EditorController = class extends Controller {
   };
 
   wordCount(content) {
+    const MAX_WORDS = 300
     const strippedContent = content.replace(/<(.|\n)*?>/g, ' ');
     const numberwords = strippedContent.trim().split(/\s+/);
 
     let message;
 
-    if (numberwords.length > 300) {
-      message = `You have ${numberwords.length - 300} words too many`;
+    if (numberwords.length > MAX_WORDS) {
+      message = `You have ${numberwords.length - MAX_WORDS} words too many`;
       this.wordCountErrorState();
-    } else if (numberwords.length <= 300 && numberwords[0].length > 0) {
-      message = `You have ${300 - numberwords.length} words remaining`;
+    } else if (numberwords.length <= MAX_WORDS && numberwords[0].length > 0) {
+      message = `You have ${MAX_WORDS - numberwords.length} words remaining`;
       this.wordCountDefaultState();
     } else {
-      message = 'You have 300 words remaining';
+      message = `You have ${MAX_WORDS} words remaining`;
       this.wordCountDefaultState();
     }
 
