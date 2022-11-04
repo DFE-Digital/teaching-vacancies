@@ -11,7 +11,7 @@ RSpec.describe "Jobseekers can view organisation landing pages" do
       expect(page.title).to eq("School & Teaching Jobs at #{school.name} - Teaching Vacancies - GOV.UK")
       expect(page).to have_css("h1", text: "1 job found at #{school.name}")
       expect(page).to have_link(vacancy.job_title.to_s)
-      expect(page).to have_link(school.name, href: organisation_landing_page_path(school.slug))
+      expect(page).to have_css("p", text: school.name)
     end
   end
 
@@ -27,17 +27,8 @@ RSpec.describe "Jobseekers can view organisation landing pages" do
       expect(page).to have_css("h1", text: "2 jobs found at #{school_group.name}")
       expect(page).to have_link(vacancy.job_title.to_s)
       expect(page).to have_link(vacancy2.job_title.to_s)
-      expect(page).to have_link(school.name, href: organisation_landing_page_path(school.slug))
-      expect(page).to have_link(school_group.name, href: organisation_landing_page_path(school_group.slug))
-    end
-  end
-
-  context "when clicking on an organisation link from the search results page" do
-    it "takes you to the organisation landing page" do
-      visit root_path
-      click_on I18n.t("buttons.search")
-      click_on school.name
-      expect(current_path).to eq(organisation_landing_page_path(school.slug))
+      expect(page).to have_css("p", text: school.name)
+      expect(page).to have_css("p", text: school_group.name)
     end
   end
 end
