@@ -18,7 +18,7 @@
         = editor(form_input: f.govuk_text_area(:job_advert, label: { size: "s", id: "job-advert-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.job_advert, field_name: "publishers_job_listing_about_the_role_form[job_advert]", label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.job_advert"), size: "s", id: "job-advert-label" })
 
       - else
-        = editor(form_input: f.govuk_text_area(:skills_and_experience, max_words: 150, label: { size: "s", id: "skills-and-experience-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.skills_and_experience, field_name: "publishers_job_listing_about_the_role_form[skills_and_experience]", label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.skills_and_experience"), size: "s", id: "skills-and-experience-label" })
+        = editor(form_input: f.govuk_text_area(:skills_and_experience, max_words: 300, label: { size: "s", id: "skills-and-experience-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.skills_and_experience, field_name: "publishers_job_listing_about_the_role_form[skills_and_experience]", label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.skills_and_experience"), size: "s", id: "skills-and-experience-label" })
 
       - if vacancy.about_school.present?
         = f.govuk_text_area :about_school,
@@ -29,7 +29,7 @@
                 required: true
 
       - else
-        = editor(form_input: f.govuk_text_area(:school_offer, max_words: 150, label: { size: "s", id: "school-offer-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.school_offer, field_name: "publishers_job_listing_about_the_role_form[school_offer]", label: { text: t("jobs.school_offer.publisher"), size: "s", id: "school-offer-label" })
+        = editor(form_input: f.govuk_text_area(:school_offer, max_words: 300, label: { size: "s", id: "school-offer-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.school_offer, field_name: "publishers_job_listing_about_the_role_form[school_offer]", label: { text: t("jobs.school_offer.publisher"), size: "s", id: "school-offer-label" })
 
       - unless vacancy.job_advert.present?
         = f.govuk_radio_buttons_fieldset :safeguarding_information_provided, legend: { size: "m", tag: nil }, classes: ["safeguarding-information-provided-radios"] do
