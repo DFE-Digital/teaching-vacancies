@@ -30,6 +30,7 @@ users = [
   { email: "sabrina.altieri@education.gov.uk", family_name: "Altieri", given_name: "Sabrina" },
   { email: "stan.klajn@digital.education.gov.uk", family_name: "Klajn", given_name: "Stan" },
   { email: "george.schena@digital.education.gov.uk", family_name: "Schena", given_name: "George" },
+  { email: "luke.anslow@education.gov.uk", family_name: "Anslow", given_name: "Luke" },
 ]
 
 users.each do |user|
