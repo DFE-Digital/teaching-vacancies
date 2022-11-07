@@ -9,7 +9,7 @@
       - if params["back_to_#{action_name}"]
         = f.hidden_field "back_to_#{action_name}", value: "true"
 
-      = vacancy_form_page_heading(vacancy, step_process, params: params, fieldset: false)
+      = vacancy_form_page_heading(vacancy, step_process, back_path: new_organisation_job_document_path(vacancy.id, :documents), fieldset: false)
 
       h2.govuk-heading-m = t("publishers.vacancies.documents.index.summary_list_heading")
 

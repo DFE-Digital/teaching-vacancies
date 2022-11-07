@@ -5,6 +5,6 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_url_field :application_link, label: { text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" }
+      = f.govuk_url_field :application_link, label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" }
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

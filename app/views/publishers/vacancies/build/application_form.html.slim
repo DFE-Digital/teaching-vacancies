@@ -5,7 +5,7 @@
     = form_for form, url: organisation_job_application_forms_path(vacancy.id) do |f|
       = f.govuk_error_summary
 
-      = vacancy_form_page_heading(vacancy, step_process, params: params, fieldset: false)
+      = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
       - if params["back_to_#{action_name}"]
         = f.hidden_field "back_to_#{action_name}", value: "true"
