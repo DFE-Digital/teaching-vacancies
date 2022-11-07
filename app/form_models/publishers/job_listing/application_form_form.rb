@@ -1,11 +1,6 @@
 class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::UploadBaseForm
-  CONTENT_TYPES_ALLOWED = %w[
-    application/pdf
-    application/msword
-    application/vnd.openxmlformats-officedocument.wordprocessingml.document
-  ].freeze
-
   validate :application_form_presence
+  validate :valid_application_form
   validates :application_email, presence: true
   validate :other_application_email_presence
   validate :other_application_email_valid
@@ -55,10 +50,6 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Uplo
 
   private
 
-  def content_types_allowed
-    CONTENT_TYPES_ALLOWED
-  end
-
   def other_application_email_presence
     errors.add(:other_application_email, :blank) if params[:application_email] == "other" && params[:other_application_email].blank?
   end
@@ -70,6 +61,8 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Uplo
   end
 
   def application_form_presence
+    return if application_form.present?
+
     errors.add(:application_form, :blank) unless vacancy.application_form&.attached?
   end
 end

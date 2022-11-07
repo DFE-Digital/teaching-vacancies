@@ -236,7 +236,7 @@ en:
     supporting_documents_accessibility: If you need these documents in an accessible format, please contact the school.
     no_files_message: No files selected
     no_supporting_documents: No documents uploaded
-    file_delete_success_message: '%{filename} was removed'
+    file_delete_success_message: '%{filename} deleted'
     file_google_error_message: '%{filename} could not be uploaded - try again'
     file_input_error_message: The selected file(s) could not be uploaded
     file_size_error_message: 'The selected file must be smaller than %{size_limit}'
@@ -254,8 +254,7 @@ en:
       actions:
         are_you_sure: Are you sure you want to remove ‘%{filename}’?
         cancel: Cancel
-        remove: Remove
-        removing: Removing...
+        delete: Delete
 
     additional_documents: Additional documents
     apply: More on how to apply

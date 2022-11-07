@@ -1,0 +1,24 @@
+- content_for :page_title_prefix, page_title_prefix(step_process, confirmation_form)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds data-controller="upload-documents"
+
+    = form_for confirmation_form, url: confirm_organisation_job_documents_path(vacancy.id), method: :post do |f|
+      = f.govuk_error_summary
+
+      - if params["back_to_#{action_name}"]
+        = f.hidden_field "back_to_#{action_name}", value: "true"
+
+      = vacancy_form_page_heading(vacancy, step_process, params: params, fieldset: false)
+
+      h2.govuk-heading-m = t("publishers.vacancies.documents.index.summary_list_heading")
+
+      .js-documents class=("js-documents--empty" if vacancy.supporting_documents.none?)
+        = render "publishers/vacancies/documents/documents"
+        p.js-documents__no-files = t("jobs.no_files_message")
+
+      = f.govuk_radio_buttons_fieldset :upload_additional_document, legend: { text: t("helpers.legend.publishers_job_listing_documents_confirmation_form.upload_additional_document"), tag: nil, size: "m" } do
+        = f.govuk_radio_button :upload_additional_document, "true", link_errors: true
+        = f.govuk_radio_button :upload_additional_document, "false"
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

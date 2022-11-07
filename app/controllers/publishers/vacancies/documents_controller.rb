@@ -1,28 +1,21 @@
 require "google/apis/drive_v3"
 
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
-  helper_method :form
-
-  before_action :complete_step, unless: :document_added?, only: %i[create]
+  helper_method :documents_form, :confirmation_form
 
   def create
-    form.valid_documents.each do |document|
-      vacancy.supporting_documents.attach(document)
-      send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
+    if documents_form.valid?
+      documents_form.valid_documents.each do |document|
+        vacancy.supporting_documents.attach(document)
+        send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
+      end
+
+      vacancy.update(completed_steps: completed_steps)
+
+      render :index
+    else
+      render :new
     end
-
-    # So they are taken back to the show or review page upon clicking the back link, even after creating or deleting a document
-    if params[:publishers_job_listing_documents_form]
-      @back_link_destination = if params[:publishers_job_listing_documents_form][:back_to_review]
-                                 :review
-                               elsif params[:publishers_job_listing_documents_form][:back_to_show]
-                                 :show
-                               end
-
-      params["back_to_#{@back_link_destination}"] = "true" if @back_link_destination
-    end
-
-    render :show
   end
 
   def destroy
@@ -30,9 +23,17 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     document.purge_later
     send_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
 
-    redirect_to organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show]), flash: {
-      success: t("jobs.file_delete_success_message", filename: document.filename),
-    }
+    redirect_to after_document_delete_path, flash: { success: t("jobs.file_delete_success_message", filename: document.filename) }
+  end
+
+  def confirm
+    if confirmation_form.valid?
+      return redirect_to_next_step unless uploading_more_documents?
+
+      redirect_to new_organisation_job_document_path(vacancy.id)
+    else
+      render :index
+    end
   end
 
   private
@@ -41,24 +42,32 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     :documents
   end
 
-  def form
-    @form ||= Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
+  def documents_form
+    @documents_form ||= Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
   end
 
   def documents_form_params
     (params[:publishers_job_listing_documents_form] || params).permit(documents: [])
   end
 
-  def complete_step
-    return if form.invalid?
-
-    vacancy.update(completed_steps: completed_steps)
-
-    redirect_to_next_step
+  def confirmation_form
+    @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params, vacancy)
   end
 
-  def document_added?
-    documents_form_params[:documents].present?
+  def confirmation_form_params
+    (params[:publishers_job_listing_documents_confirmation_form] || params)&.permit(:upload_additional_document)
+  end
+
+  def uploading_more_documents?
+    confirmation_form_params[:upload_additional_document] == "true"
+  end
+
+  def after_document_delete_path
+    if vacancy.supporting_documents.none?
+      new_organisation_job_document_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show])
+    else
+      organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show])
+    end
   end
 
   def send_event(event_type, name, size, content_type)

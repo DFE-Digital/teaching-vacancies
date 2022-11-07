@@ -275,6 +275,9 @@ en:
       destroy:
         success_html: >-
           %{job_title} has been <span class="govuk-!-font-weight-bold">deleted</span>
+      documents:
+        index:
+          summary_list_heading: Files added
       end_listing:
         show:
           heading: Close early

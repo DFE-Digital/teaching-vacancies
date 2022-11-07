@@ -25,7 +25,6 @@ import ManageQualificationsController from './js_components/manageQualifications
 import PanelController from './js_components/panel/panel';
 import ShowHiddenContentController from './js_components/showHiddenContent/showHiddenContent';
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
-import UploadDocumentsController from './js_components/uploadDocuments/uploadDocuments';
 import UtilsController from './js_components/utils';
 
 Sentry.init({
@@ -58,7 +57,6 @@ application.register('editor', EditorController);
 application.register('editor-preview', EditorPreviewController);
 application.register('show-hidden-content', ShowHiddenContentController);
 application.register('tracked-link', TrackedLinkController);
-application.register('upload-documents', UploadDocumentsController);
 application.register('utils', UtilsController);
 
 Rails.start();
