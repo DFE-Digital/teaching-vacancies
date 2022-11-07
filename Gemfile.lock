@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/DFE-Digital/dfe-analytics.git
+  revision: bfa569a60b4fca7545ca7b72764c526b65d913b9
+  tag: v1.5.3
+  specs:
+    dfe-analytics (1.5.3)
+      google-cloud-bigquery (~> 1.38)
+      request_store_rails (~> 2)
+
+GIT
   remote: https://github.com/rails/spring-watcher-listen.git
   revision: 5c8aa810b723dec01a12dbb33d1722d097994ebe
   specs:
@@ -218,9 +227,9 @@ GEM
     geocoder (1.8.1)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    google-apis-bigquery_v2 (0.40.0)
-      google-apis-core (>= 0.7, < 2.a)
-    google-apis-core (0.9.0)
+    google-apis-bigquery_v2 (0.42.0)
+      google-apis-core (>= 0.9.0, < 2.a)
+    google-apis-core (0.9.1)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (>= 0.16.2, < 2.a)
       httpclient (>= 2.8.1, < 3.a)
@@ -245,7 +254,7 @@ GEM
     google-cloud-env (1.6.0)
       faraday (>= 0.17.3, < 3.0)
     google-cloud-errors (1.3.0)
-    googleauth (1.2.0)
+    googleauth (1.3.0)
       faraday (>= 0.17.3, < 3.a)
       jwt (>= 1.4, < 3.0)
       memoist (~> 0.16)
@@ -485,6 +494,8 @@ GEM
       uber (< 0.2.0)
     request_store (1.5.1)
       rack (>= 1.4)
+    request_store_rails (2.0.0)
+      concurrent-ruby (~> 1.0)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -679,6 +690,7 @@ DEPENDENCIES
   climate_control
   cssbundling-rails
   devise
+  dfe-analytics!
   dotenv-rails
   factory_bot_rails
   faker
