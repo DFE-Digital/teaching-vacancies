@@ -1,0 +1,16 @@
+@import 'base';
+
+.link-list {
+  &--element {
+    border-bottom: 1px solid govuk-colour('mid-grey');
+    padding: govuk-spacing(3) 0;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    .govuk-heading-s {
+      margin: 0;
+    }
+  }
+}

@@ -213,6 +213,8 @@ en:
     find_job: Find a teaching job
     manage_jobs: Manage jobs
     manage_settings: Manage settings
+    school_profile: School profile
+    organisation_profile: Organisation profile
     notifications_html:
       zero: Notifications
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>

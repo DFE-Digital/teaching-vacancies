@@ -1,9 +1,11 @@
 - content_for :page_title_prefix, @organisation.name
 
+- if current_organisation.school_group?
+  - content_for :breadcrumbs do
+    = govuk_breadcrumbs breadcrumbs: { t("nav.organisation_profile") => publishers_schools_path, t("nav.school_profile") => nil }
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".title", organisation_type: organisation_type_basic(@organisation))
-
-    h2.govuk-heading-m.heading--border-bottom = @organisation.name
 
     = render "organisation", organisation: @organisation

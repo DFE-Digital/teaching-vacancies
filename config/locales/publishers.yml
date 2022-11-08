@@ -95,19 +95,48 @@ en:
     schools:
       index:
         contact_support: contact our support team
-        description: Jobseekers will see this information in job listings about the schools and job locations within the %{organisation_type}
         missing_information_title: Is information missing or incorrect?
         missing_information_description_html: >-
           If a school in your %{organisation_type} is missing from this list,
           or the information isn't correct, please %{contact_support_link}.
-        schools: Schools (%{count})
-        title: Schools in your %{organisation_type}
+        schools: Schools
+        title: Organisation profile
       edit:
         title: Change %{organisation_type} details
       show:
-        title: Manage settings
+        title: School profile
       update:
         success_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
+      organisation:
+        not_provided: Not entered
+        name:
+          label: Name
+        address:
+          label: Address
+        type:
+          label: Type
+        phase:
+          label: Education phase
+          values:
+            middle: Middle school
+            nursery: Nursery
+            primary: Primary school
+            secondary: Secondary school
+            sixth_form_or_college: Sixth form or college
+            through: Through
+            middle_deemed_secondary: Middle deamed secondary school
+            middle_deemed_primary: Middle deamed primary school
+
+        school_age:
+          label: Age group
+        size:
+          label: Size
+        website:
+          label: Website address
+        description:
+          label:
+            school: School description
+            organisation: Organisation description
     publisher_preferences:
       new:
         description_1: >-
