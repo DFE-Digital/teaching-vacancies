@@ -22,7 +22,7 @@ class Search::LocationBuilder
   end
 
   def search_with_polygons?
-    location.present? && LocationPolygon.include?(location)
+    location.present? && LocationPolygon.contain?(location)
   end
 
   def point_coordinates

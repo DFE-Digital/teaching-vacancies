@@ -50,7 +50,7 @@ class SubscriptionPresenter < BasePresenter
 
     if radius.present? && radius.to_s != "0"
       { location: I18n.t("subscriptions.location_with_radius", radius: radius, location: location) }
-    elsif LocationPolygon.include?(location)
+    elsif LocationPolygon.contain?(location)
       { location: I18n.t("subscriptions.location_in", location: location) }
     end
   end

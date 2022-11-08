@@ -14,7 +14,7 @@ class LocationQuery < ApplicationQuery
 
     if normalised_query.blank? || NATIONWIDE_LOCATIONS.include?(normalised_query)
       scope
-    elsif LocationPolygon.include?(normalised_query)
+    elsif LocationPolygon.contain?(normalised_query)
       polygon = LocationPolygon.with_name(normalised_query)
 
       scope

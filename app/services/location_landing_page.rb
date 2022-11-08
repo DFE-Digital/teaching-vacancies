@@ -5,7 +5,7 @@ class LocationLandingPage < LandingPage
     # TODO: This is the logic that previously was in the routes, should be tidied up
     # Landing page slugs may only contain lowercase characters and dashes
     # (avoids duplicate landing pages for e.g. "Narnia" and "narnia")
-    location.match?(/^[a-z-]+$/) && LocationPolygon.include?(location.titleize)
+    location.match?(/^[a-z-]+$/) && LocationPolygon.contain?(location.titleize)
   end
 
   def self.[](location)
