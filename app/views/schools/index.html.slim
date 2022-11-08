@@ -1,27 +1,11 @@
 - content_for :page_title_prefix, "Schools"
-/ TODO: Generate page_title_prefix using search_results_heading component after schools search implemented
-/ - content_for :page_title_prefix, t(".title", count: params[:page].to_i, heading: search_results_heading(vacancies_search: @schools_search, strip_special_characters: true))
 
 h1 class="govuk-heading-l" role="heading" aria-level="1"
   = "Schools (#{@pagy.count})"
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds-at-desktop
-    = form_for search_form, as: :search, url: schools_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
-      .filters-component class='govuk-!-margin-bottom-4'
-        .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" class="govuk-!-margin-bottom-4"
-          = f.govuk_text_field :location,
-            label: { text: "City, county or postcode", size: "s" },
-            class: %w[location-finder__input]
-
-        = f.govuk_collection_select :radius, radius_filter_options, :last, :first,
-          label: { text: t("jobs.search.within_radius"), size: "s" },
-          data: { "change-submit": "false" },
-          form_group: { classes: "location-search__radius" },
-          options: { selected: search_form.radius || Search::RadiusBuilder::DEFAULT_BUFFER_FOR_POLYGON_SEARCHES }
-
-        .search-results-controls__submit
-          = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0"
+    = render "schools/search/form"
 
     #search-results
       - if @schools.any?
