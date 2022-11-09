@@ -23,16 +23,16 @@ RSpec.describe LocationPolygon do
     end
   end
 
-  describe ".include?" do
-    context "when location is included on the list of locations to import" do
+  describe ".contain?" do
+    context "when location is contained on the list of locations to import" do
       it "returns true" do
-        expect(described_class.include?("London")).to be_truthy
+        expect(described_class.contain?("London")).to be_truthy
       end
     end
 
-    context "when location is not included on the list of locations to import" do
+    context "when location is not contained on the list of locations to import" do
       it "returns false" do
-        expect(described_class.include?("Canterbury")).to be_falsey
+        expect(described_class.contain?("Canterbury")).to be_falsey
       end
     end
   end

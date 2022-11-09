@@ -325,7 +325,6 @@ shared:
     - external_reference
     - external_advert_url
     - school_visits_details
-    - school_visits_details
     - job_location
     - job_roles
     - starts_asap

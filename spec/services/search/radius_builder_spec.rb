@@ -38,7 +38,7 @@ RSpec.describe Search::RadiusBuilder do
     end
 
     context "when a polygonable location is specified" do
-      before { allow(LocationPolygon).to receive(:include?).with(location).and_return(true) }
+      before { allow(LocationPolygon).to receive(:contain?).with(location).and_return(true) }
 
       context "when no radius is specified" do
         let(:radius) { nil }

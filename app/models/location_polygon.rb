@@ -12,9 +12,7 @@ class LocationPolygon < ApplicationRecord
     find_by(name: mapped_name(location))
   end
 
-  def self.include?(location)
-    return super unless location.is_a? String
-
+  def self.contain?(location)
     ALL_IMPORTED_LOCATIONS.include?(mapped_name(location))
   end
 

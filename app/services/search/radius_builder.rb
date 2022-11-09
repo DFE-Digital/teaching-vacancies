@@ -28,6 +28,6 @@ class Search::RadiusBuilder
   end
 
   def search_with_polygons?
-    location.present? && LocationPolygon.include?(location)
+    location.present? && LocationPolygon.contain?(location)
   end
 end
