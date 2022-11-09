@@ -17,19 +17,43 @@ RSpec.describe "Documents" do
       allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
     end
 
-    it "triggers an event" do
-      expect {
+    context "when the form is valid" do
+      let(:request) do
         post organisation_job_documents_path(vacancy.id), params: {
           publishers_job_listing_documents_form: { documents: [fixture_file_upload("blank_job_spec.pdf", "application/pdf")] },
         }
-      }.to have_triggered_event(:supporting_document_created)
-        .with_data(
-          vacancy_id: anonymised_form_of(vacancy.id),
-          document_type: "supporting_document",
-          name: "blank_job_spec.pdf",
-          size: 28_527,
-          content_type: "application/pdf",
-        )
+      end
+
+      it "triggers an event" do
+        expect { request }.to have_triggered_event(:supporting_document_created)
+                       .with_data(
+                         vacancy_id: anonymised_form_of(vacancy.id),
+                         document_type: "supporting_document",
+                         name: "blank_job_spec.pdf",
+                         size: 28_527,
+                         content_type: "application/pdf",
+                       )
+      end
+
+      it "renders the index page" do
+        expect(request).to render_template(:index)
+      end
+    end
+
+    context "when the form is invalid" do
+      let(:request) do
+        post organisation_job_documents_path(vacancy.id), params: {
+          publishers_job_listing_documents_form: { documents: [fixture_file_upload("mime_types/invalid_plain_text_file.txt")] },
+        }
+      end
+
+      it "does not trigger an event" do
+        expect { request }.to_not have_triggered_event(:supporting_document_created)
+      end
+
+      it "renders the new page" do
+        expect(request).to render_template(:new)
+      end
     end
 
     context "MIME type inspection" do
@@ -58,10 +82,10 @@ RSpec.describe "Documents" do
       end
 
       context "with a file with a valid extension but invalid 'real' MIME type" do
-        let(:file) { fixture_file_upload("mime_types/zip_file_pretending_to_be_an_image.png") }
+        let(:file) { fixture_file_upload("mime_types/zip_file_pretending_to_be_a_pdf.pdf") }
 
         it "is rejected even if the file extension suggests it is valid" do
-          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "zip_file_pretending_to_be_an_image.png"))
+          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "zip_file_pretending_to_be_a_pdf.pdf"))
         end
       end
 
@@ -78,26 +102,75 @@ RSpec.describe "Documents" do
   describe "DELETE #destroy" do
     let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [organisation]) }
     let(:document) { vacancy.supporting_documents.first }
+    let(:request) { delete organisation_job_document_path(id: document.id, job_id: vacancy.id) }
 
     it "triggers an event" do
-      expect {
-        delete organisation_job_documents_path(id: document.id, job_id: vacancy.id)
-      }.to have_triggered_event(:supporting_document_deleted)
-        .with_data(
-          vacancy_id: anonymised_form_of(vacancy.id),
-          document_type: "supporting_document",
-          name: "blank_job_spec.pdf",
-          size: 28_527,
-          content_type: "application/pdf",
-        )
+      expect { request }.to have_triggered_event(:supporting_document_deleted)
+                        .with_data(
+                          vacancy_id: anonymised_form_of(vacancy.id),
+                          document_type: "supporting_document",
+                          name: "blank_job_spec.pdf",
+                          size: 28_527,
+                          content_type: "application/pdf",
+                        )
     end
 
     it "removes the document" do
-      delete organisation_job_documents_path(id: document.id, job_id: vacancy.id)
+      request
       follow_redirect!
 
       expect(response.body).to include(I18n.t("jobs.file_delete_success_message", filename: document.filename))
       expect(vacancy.reload.supporting_documents).to be_empty
+    end
+
+    context "when there are no longer any documents attached to the vacancy" do
+      it "redirects to the new documents form" do
+        expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
+      end
+    end
+
+    context "when other documents are attached to the vacancy" do
+      let(:file) { fixture_file_upload("mime_types/valid_word_document.docx") }
+
+      before { vacancy.supporting_documents.attach(file) }
+
+      it "redirects to the documents index page" do
+        expect(request).to redirect_to(organisation_job_documents_path(vacancy.id))
+      end
+    end
+  end
+
+  describe "#confirm" do
+    let(:request) do
+      post confirm_organisation_job_documents_path(vacancy.id), params: {
+        publishers_job_listing_documents_confirmation_form: { upload_additional_document: upload_additional_document },
+      }
+    end
+
+    context "when the form is valid" do
+      let(:upload_additional_document) { "false" }
+
+      context "when upload_additional_document is false" do
+        it "redirects to the new documents form" do
+          expect(request).to redirect_to(organisation_job_path(vacancy.id))
+        end
+      end
+
+      context "when upload_additional_document is true" do
+        let(:upload_additional_document) { "true" }
+
+        it "redirects to the next step" do
+          expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
+        end
+      end
+    end
+
+    context "when the form is invalid" do
+      let(:upload_additional_document) { nil }
+
+      it "renders the documents index page" do
+        expect(request).to render_template(:index)
+      end
     end
   end
 end

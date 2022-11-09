@@ -4,10 +4,16 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   helper_method :form
 
   def create
-    if application_form_params[:application_form]
-      create_application_form
+    if form.valid?
+      vacancy.application_form.attach(form.application_form)
+      send_event(:supporting_document_created, vacancy.application_form)
+
+      vacancy.update(form.params_to_save)
+      update_google_index(vacancy) if vacancy.listed?
+
+      redirect_to_next_step
     else
-      update_vacancy
+      render "publishers/vacancies/build/application_form"
     end
   end
 
@@ -37,32 +43,6 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     params.require(:publishers_job_listing_application_form_form)
           .permit(:application_form, :application_email, :other_application_email)
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
-  end
-
-  def create_application_form
-    application_form = form.valid_application_form
-    if application_form
-      vacancy.application_form.attach(application_form)
-      send_event(:supporting_document_created, vacancy.application_form)
-    end
-
-    # So they are taken back to the show or review page upon clicking the back link, even after creating a document
-    params["back_to_#{back_link_destination}"] = "true" if back_link_destination
-
-    render "publishers/vacancies/build/application_form"
-  end
-
-  def update_vacancy
-    if form.valid?
-      vacancy.update(form.params_to_save)
-      update_google_index(vacancy) if vacancy.listed?
-      redirect_to_next_step
-    else
-      # So they are taken back to the show or review page upon clicking the back link, even after uploading a school_visit
-      params["back_to_#{back_link_destination}"] = "true" if back_link_destination
-
-      render "publishers/vacancies/build/application_form"
-    end
   end
 
   def send_event(event_type, application_form)

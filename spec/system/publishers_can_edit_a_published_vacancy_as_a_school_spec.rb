@@ -235,7 +235,11 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         click_review_page_change_link(section: "about_the_role", row: "supporting_documents")
 
-        expect(page).to have_content(I18n.t("helpers.label.publishers_job_listing_documents_form.documents"))
+        expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
+
+        choose I18n.t("helpers.label.publishers_job_listing_documents_confirmation_form.upload_additional_document_options.true")
+
+        click_on I18n.t("buttons.save_and_continue")
 
         allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
         upload_document(
@@ -243,6 +247,10 @@ RSpec.describe "Publishers can edit a vacancy" do
           "publishers-job-listing-documents-form-documents-field",
           "spec/fixtures/files/#{filename}",
         )
+        click_on I18n.t("buttons.save_and_continue")
+
+        choose I18n.t("helpers.label.publishers_job_listing_documents_confirmation_form.upload_additional_document_options.false")
+
         click_on I18n.t("buttons.save_and_continue")
 
         expect(current_path).to eq(organisation_job_path(vacancy.id))

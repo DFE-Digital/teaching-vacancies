@@ -5,7 +5,7 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_fieldset legend: ({ text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" } if @school_options.count >= 10) do
+      = f.govuk_fieldset legend: ({ text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } if @school_options.count >= 10) do
         - if current_organisation.local_authority? && @school_options.count >= 10
           span.govuk-hint
             = local_authority_job_location_hint(current_publisher_preference)
@@ -15,7 +15,7 @@
           :id,
           :name,
           :address,
-          legend: ({ text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" } if @school_options.count < 10),
+          legend: ({ text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } if @school_options.count < 10),
           hint: ({ text: local_authority_job_location_hint(current_publisher_preference) } if current_organisation.local_authority? && @school_options.count < 10),
           classes: "checkbox-label__bold govuk-!-margin-top-2"),
           collection_count: @school_options.count,

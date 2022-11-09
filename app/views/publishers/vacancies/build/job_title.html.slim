@@ -6,7 +6,7 @@
       = f.govuk_error_summary
 
       = f.govuk_text_area :job_title,
-        label: { text: vacancy_form_page_heading(vacancy, step_process, params: params), tag: "h1", size: "l" },
+        label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
         hint: { text: vacancy_job_title_form_hint_text(vacancy) },
         class: "govuk-input",
         max_chars: 75,

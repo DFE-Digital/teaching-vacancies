@@ -545,6 +545,10 @@ en:
           tomorrow: Tomorrow
       publishers_job_listing_documents_form:
         documents: Upload files
+      publishers_job_listing_documents_confirmation_form:
+        upload_additional_document_options:
+          false: "No"
+          true: "Yes"
       publishers_job_listing_expired_feedback_form: &expired_vacancy_feedback_shared_labels
         hired_status_options:
           hired_dont_know: I don't know
@@ -756,6 +760,8 @@ en:
         publish_on: What date will the job be listed?
         publish_on_day: Date job will be listed
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
+      publishers_job_listing_documents_confirmation_form:
+        upload_additional_document: Do you want to upload another document?
       publishers_job_listing_education_phases_form:
         phases:  Education phase
       publishers_job_listing_expired_feedback_form: &expired_vacancy_feedback_shared_legends

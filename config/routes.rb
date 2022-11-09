@@ -197,7 +197,9 @@ Rails.application.routes.draw do
 
     resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
-      resource :documents, only: %i[create destroy show], controller: "publishers/vacancies/documents"
+      resources :documents, only: %i[index new create destroy], controller: "publishers/vacancies/documents" do
+        post :confirm, :on => :collection
+      end
       resource :application_forms, only: %i[create destroy], controller: "publishers/vacancies/application_forms"
 
       get :confirm_destroy

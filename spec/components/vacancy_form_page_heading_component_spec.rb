@@ -5,6 +5,8 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   let(:vacancy) { create(:vacancy, status, organisations: [organisation], job_title: "Test job title", completed_steps: %w[job_location job_role review]) }
   let(:status) { :published }
   let(:current_publisher_is_part_of_school_group?) { true }
+  let(:previous_step) { :review }
+  let(:back_path) { "/" }
   let(:steps) { %i[job_location job_role review] }
 
   let(:vacancy_step_process) do
@@ -13,7 +15,7 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
                                                                organisation: organisation)
   end
 
-  subject { described_class.new(vacancy, vacancy_step_process) }
+  subject { described_class.new(vacancy, vacancy_step_process, back_path: back_path) }
 
   before do
     allow(subject).to receive(:current_organisation).and_return(organisation)
@@ -26,8 +28,6 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   end
 
   describe "caption" do
-    let(:previous_step) { :review }
-
     context "when vacancy is not published" do
       let(:status) { :draft }
 
@@ -44,8 +44,6 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   end
 
   describe "#heading" do
-    let(:previous_step) { :review }
-
     it "returns edit job title" do
       expect(page).to have_content(I18n.t("publishers.vacancies.steps.#{vacancy_step_process.current_step}"))
     end

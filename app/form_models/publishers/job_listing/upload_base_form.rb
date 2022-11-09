@@ -1,6 +1,12 @@
 class Publishers::JobListing::UploadBaseForm < Publishers::JobListing::VacancyForm
   FILE_SIZE_LIMIT = 10.megabytes
 
+  CONTENT_TYPES_ALLOWED = %w[
+    application/pdf
+    application/msword
+    application/vnd.openxmlformats-officedocument.wordprocessingml.document
+  ].freeze
+
   private
 
   def valid_file_size?(file)
@@ -19,7 +25,7 @@ class Publishers::JobListing::UploadBaseForm < Publishers::JobListing::VacancyFo
 
   def valid_file_type?(file)
     content_type = MimeMagic.by_magic(file.tempfile)&.type
-    return true if content_types_allowed.include?(content_type)
+    return true if CONTENT_TYPES_ALLOWED.include?(content_type)
 
     Rails.logger.warn("Attempted to upload '#{file.original_filename}' with forbidden file type '#{content_type}'")
     errors.add(file_upload_field_name, I18n.t("jobs.file_type_error_message", filename: file.original_filename))
