@@ -10,7 +10,7 @@ en:
     environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <span class="govuk-!-font-weight-bold">%{environment}</span> version of the site.
     govuk: GOV.UK
     menu: Menu
-    opens_in_new_tab: "%{link_text} (opens in a new tab)"
+    opens_in_new_tab: "%{link_text} (opens in new tab)"
     pagy_stats_html: >-
       Showing <span class='govuk-!-font-weight-bold'>%{from}</span>
       to <span class='govuk-!-font-weight-bold'>%{to}</span>
