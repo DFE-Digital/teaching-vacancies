@@ -15,6 +15,7 @@ module Resettable
     reset_ect_status
     reset_receive_applications
     reset_application_email
+    reset_application_form
     reset_application_link
     reset_documents
     reset_personal_statement_guidance
@@ -71,6 +72,12 @@ module Resettable
     return unless receive_applications_changed? && receive_applications != "email"
 
     self.application_email = nil
+  end
+
+  def reset_application_form
+    return unless enable_job_applications_changed? || receive_applications_changed?
+
+    application_form.purge_later if enable_job_applications || receive_applications == "website"
   end
 
   def reset_application_link
