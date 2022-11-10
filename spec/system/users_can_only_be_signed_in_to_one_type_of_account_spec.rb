@@ -36,7 +36,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
 
         visit new_publisher_session_path
         sign_in_publisher
-        expect(page).to have_current_path(organisation_path)
+        expect(page).to have_current_path(publisher_root_path)
 
         visit jobseekers_account_path
         expect(current_path).to eq(new_jobseeker_session_path)
@@ -56,7 +56,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
         expect(page).to have_content(I18n.t("jobseekers.accounts.show.page_title"))
 
         visit publishers_login_key_path(login_key)
-        expect(page).to have_current_path(organisation_path)
+        expect(page).to have_current_path(publisher_root_path)
 
         visit jobseekers_account_path
         expect(current_path).to eq(new_jobseeker_session_path)
@@ -69,15 +69,15 @@ RSpec.describe "Users can only be signed in to one type of account" do
 
     context "when email fallback is disabled" do
       it "signs out from the publisher account when signing in as a jobseeker" do
-        visit organisation_path
-        expect(current_path).to eq(organisation_path)
+        visit organisation_jobs_with_type_path
+        expect(current_path).to eq(organisation_jobs_with_type_path)
 
         visit new_jobseeker_session_path
         sign_in_jobseeker
 
         expect(current_path).to eq(jobseekers_saved_jobs_path)
 
-        visit organisation_path
+        visit organisation_jobs_with_type_path
         expect(current_path).to eq(new_publisher_session_path)
       end
     end
@@ -86,15 +86,15 @@ RSpec.describe "Users can only be signed in to one type of account" do
       let(:authentication_fallback_enabled?) { true }
 
       it "signs out from the publisher account when signing in as a jobseeker" do
-        visit organisation_path
-        expect(current_path).to eq(organisation_path)
+        visit organisation_jobs_with_type_path
+        expect(current_path).to eq(organisation_jobs_with_type_path)
 
         visit new_jobseeker_session_path
         sign_in_jobseeker
 
         expect(current_path).to eq(jobseekers_saved_jobs_path)
 
-        visit organisation_path
+        visit organisation_jobs_with_type_path
         expect(current_path).to eq(new_publishers_login_key_path)
       end
     end

@@ -82,16 +82,6 @@ en:
           zero: No unread notifications
           one: 1 unread notification
           other: "%{count} unread notifications"
-    organisations:
-      aria_change_description: '%{organisation_type} description'
-      aria_change_website: '%{organisation_type} website'
-      show:
-        awaiting:
-          one: You have %{count} job awaiting feedback
-          other: You have %{count} jobs awaiting feedback
-        job_applications: When you create a job listing you can now choose for candidates to apply through Teaching Vacancies.
-        job_applications_link_text: Preview the application form
-        skip_link: Skip to %{heading}
     schools:
       index:
         contact_support: contact our support team
@@ -317,6 +307,13 @@ en:
             heading: Feedback submitted
             body: Thank you
           title: Feedback submitted
+      index:
+        awaiting:
+          one: You have %{count} job awaiting feedback
+          other: You have %{count} jobs awaiting feedback
+        job_applications: When you create a job listing you can now choose for candidates to apply through Teaching Vacancies.
+        job_applications_link_text: Preview the application form
+        skip_link: Skip to %{heading}
       job_applications:
         header:
           status_heading: Applicant status

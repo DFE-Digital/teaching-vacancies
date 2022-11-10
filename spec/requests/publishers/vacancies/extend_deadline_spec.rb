@@ -94,7 +94,7 @@ RSpec.describe "Extend deadline" do
             .to change { vacancy.reload.expires_at }.from(1.month.from_now).to(expires_at.change({ hour: 9, minute: 0 }))
             .and have_enqueued_job(UpdateGoogleIndexQueueJob)
 
-        expect(response).to redirect_to(jobs_with_type_organisation_path(:published))
+        expect(response).to redirect_to(organisation_jobs_with_type_path(:published))
       end
     end
   end

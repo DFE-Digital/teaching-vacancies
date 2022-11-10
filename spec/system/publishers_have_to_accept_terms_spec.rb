@@ -9,7 +9,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
     before { login_publisher(publisher: publisher, organisation: school) }
 
     scenario "they will see the terms and conditions" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
 
       expect(page).to have_content(I18n.t("terms_and_conditions.please_accept"))
     end
@@ -68,7 +68,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
     before { login_publisher(publisher: publisher, organisation: school) }
 
     scenario "they will not see the terms and conditions" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
 
       expect(page).not_to have_content(I18n.t("terms_and_conditions.please_accept"))
     end
