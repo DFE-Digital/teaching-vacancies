@@ -36,3 +36,8 @@
     - row.key text: t(".description.label.#{organisation.school? ? :school : :organisation}")
     - row.value text: organisation.description? ? truncate(organisation.description, length: 130) : t(".not_provided")
     - row.action text: t("buttons.change"), href: edit_publishers_school_path(organisation), classes: "govuk-link--no-visited-state"
+
+  - if organisation.has_ofsted_report?
+    - summary_list.row do |row|
+      - row.key text: t("schools.ofsted_report")
+      - row.value text: ofsted_report_link(organisation, class: "wordwrap")
