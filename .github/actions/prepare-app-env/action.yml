@@ -37,7 +37,7 @@ runs:
     - name: Yarn cache
       if: ${{ inputs.skip-node == 'false' }}
       id: yarn-cache
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
       shell: bash
 
     - name: Set up yarn cache
