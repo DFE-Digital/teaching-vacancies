@@ -18,6 +18,7 @@ RSpec.describe FusionVacancySource do
         job_advert: "Lorem Ipsum dolor sit amet",
         salary: "£25,714.00 to £41,604.00",
         job_role: "teacher",
+        key_stages: %w[ks1 ks2],
         working_patterns: %w[full_time],
         contract_type: "fixed_term",
         phases: %w[primary],

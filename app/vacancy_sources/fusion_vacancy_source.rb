@@ -46,9 +46,15 @@ class FusionVacancySource
       working_patterns: item["workingPatterns"].presence&.split(","),
       contract_type: item["contractType"].presence,
       phases: item["phase"].presence&.parameterize(separator: "_"),
+      key_stages: item["keyStages"].presence&.split(","),
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
+    }.merge(organisation_fields(item))
+  end
+
+  def organisation_fields(item)
+    {
       readable_job_location: organisations_for(item).first&.name,
       organisations: organisations_for(item),
       about_school: organisations_for(item).first&.description,
