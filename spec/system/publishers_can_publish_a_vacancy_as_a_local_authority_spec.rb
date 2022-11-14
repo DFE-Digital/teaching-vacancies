@@ -15,7 +15,7 @@ RSpec.describe "Creating a vacancy" do
   end
 
   scenario "publishes a vacancy" do
-    visit organisation_path
+    visit organisation_jobs_with_type_path
     click_on I18n.t("buttons.create_job")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_location))
 

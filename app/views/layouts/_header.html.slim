@@ -1,7 +1,7 @@
 = govuk_header do |header|
   - header.product_name(name: t("app.title"))
   - if publisher_signed_in?
-    = header.navigation_item text: t("nav.manage_jobs"), href: organisation_path, active: manage_jobs_active?
+    = header.navigation_item text: t("nav.manage_jobs"), href: organisation_jobs_with_type_path, active: manage_jobs_active?
     - if current_organisation.school_group?
       = header.navigation_item text: t("nav.organisation_profile"), href: publishers_schools_path, active: schools_in_your_trust_active?
     - else

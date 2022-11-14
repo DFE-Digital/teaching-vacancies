@@ -64,7 +64,7 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
         sign_in_support_user(navigate: true)
         visit new_publisher_session_path
 
-        expect(current_path).not_to eq(organisation_path)
+        expect(current_path).not_to eq(publisher_root_path)
       end
     end
   end

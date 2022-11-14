@@ -12,7 +12,7 @@ class Publishers::NewFeaturesController < Publishers::BaseController
     @new_features_form = Publishers::NewFeaturesForm.new(new_features_params)
 
     current_publisher.update(dismissed_new_features_page_at: Time.current) if new_features_params[:dismiss].present?
-    redirect_to organisation_path
+    redirect_to publisher_root_path
   end
 
   def reminder

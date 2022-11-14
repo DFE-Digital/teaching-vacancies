@@ -16,7 +16,7 @@ RSpec.describe "Creating a vacancy" do
 
   describe "the job location step" do
     scenario "displays error message unless a location is selected" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
 
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
@@ -32,7 +32,7 @@ RSpec.describe "Creating a vacancy" do
     end
 
     scenario "redirects to job details when submitted successfully" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
 
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
@@ -51,7 +51,7 @@ RSpec.describe "Creating a vacancy" do
   end
 
   scenario "publishes a vacancy" do
-    visit organisation_path
+    visit organisation_jobs_with_type_path
     click_on I18n.t("buttons.create_job")
 
     click_on I18n.t("buttons.continue")

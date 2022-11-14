@@ -95,7 +95,7 @@ RSpec.describe "Users are redirected after sign in" do
 
         sign_in_publisher(navigate: true)
 
-        expect(current_path).to eq(organisation_path)
+        expect(current_path).to eq(publisher_root_path)
       end
     end
   end

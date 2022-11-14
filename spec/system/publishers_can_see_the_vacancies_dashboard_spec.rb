@@ -8,7 +8,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     login_publisher(publisher: publisher, organisation: school)
     vacancy = create(:vacancy, status: "published", organisations: [school])
 
-    visit organisation_path
+    visit organisation_jobs_with_type_path
 
     click_on(vacancy.job_title)
 
@@ -31,7 +31,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     scenario "jobs are split into sections" do
       create_list(:vacancy, 5, :published, organisations: [school])
 
-      visit organisation_path
+      visit organisation_jobs_with_type_path
 
       expect(page).to have_content(I18n.t("jobs.dashboard.published.tab_heading"))
       expect(page).to have_content(I18n.t("jobs.dashboard.draft.tab_heading"))
@@ -41,7 +41,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     end
 
     scenario "with published vacancies" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
 
       within(".tabs-component-navigation__list") do
         click_on(I18n.t("jobs.dashboard.published.tab_heading"))
@@ -52,7 +52,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     end
 
     scenario "with draft vacancies" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
 
       within(".tabs-component-navigation__list") do
         click_on(I18n.t("jobs.dashboard.draft.tab_heading"))
@@ -66,7 +66,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     end
 
     scenario "with pending vacancies" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
 
       within(".tabs-component-navigation__list") do
         click_on(I18n.t("jobs.dashboard.pending.tab_heading"))
@@ -80,7 +80,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     end
 
     scenario "with expired vacancies" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
 
       within(".tabs-component-navigation__list") do
         click_on(I18n.t("jobs.dashboard.expired.tab_heading"))
@@ -97,7 +97,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
 
       scenario "shows the last updated at" do
         draft_vacancy
-        visit organisation_path
+        visit organisation_jobs_with_type_path
 
         within(".tabs-component-navigation__list") do
           click_on(I18n.t("jobs.dashboard.draft.tab_heading"))

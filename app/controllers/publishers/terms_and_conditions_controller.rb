@@ -9,7 +9,7 @@ class Publishers::TermsAndConditionsController < Publishers::BaseController
     @terms_and_conditions_form = Publishers::TermsAndConditionsForm.new(terms_params)
     if @terms_and_conditions_form.valid?
       current_publisher.update(accepted_terms_at: Time.current)
-      redirect_to organisation_path
+      redirect_to publisher_root_path
     else
       render :show
     end

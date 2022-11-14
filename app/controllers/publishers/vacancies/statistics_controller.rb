@@ -16,10 +16,10 @@ class Publishers::Vacancies::StatisticsController < Publishers::Vacancies::BaseC
       # An expired vacancy can be invalid, if validations have been added since it was published.
       vacancy.save(validate: false)
 
-      redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback),
+      redirect_to organisation_jobs_with_type_path(type: :awaiting_feedback),
                   success: t(".success", job_title: vacancy.job_title)
     else
-      redirect_to jobs_with_type_organisation_path(type: :awaiting_feedback, params: {
+      redirect_to organisation_jobs_with_type_path(type: :awaiting_feedback, params: {
         invalid_form_job_id: vacancy.id,
         publishers_vacancy_statistics_form: statistics_params,
       })
