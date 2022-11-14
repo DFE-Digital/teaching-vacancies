@@ -14,7 +14,7 @@ RSpec.describe "Publisher session" do
   end
 
   it "expires after TIMEOUT_PERIOD and redirects to login page" do
-    visit organisation_jobs_with_type_path
+    visit organisation_path
     click_on I18n.t("buttons.create_job")
 
     travel(Publisher.timeout_in + 1.minute) do
@@ -27,7 +27,7 @@ RSpec.describe "Publisher session" do
   end
 
   it "doesn't expire before TIMEOUT_PERIOD" do
-    visit organisation_jobs_with_type_path
+    visit organisation_path
     click_on I18n.t("buttons.create_job")
 
     travel(Publisher.timeout_in - 1.minute) do

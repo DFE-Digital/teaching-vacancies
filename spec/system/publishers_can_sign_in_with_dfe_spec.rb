@@ -74,7 +74,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
-      expect(current_path).to eq(publisher_root_path)
+      expect(current_path).to eq(organisation_path)
     end
 
     scenario "it displays the hiring staff CTA section with the text for when they are signed in" do
@@ -82,7 +82,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       visit root_path
 
       expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
-      expect(page).to have_link(I18n.t("home.index.publisher_section.signed_in.link_text.manage_jobs"), href: organisation_jobs_with_type_path)
+      expect(page).to have_link(I18n.t("home.index.publisher_section.signed_in.link_text.manage_jobs"), href: organisation_path)
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(reminder_publishers_new_features_path)
     end
@@ -115,7 +115,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       let!(:school_group) { create(:trust, uid: "14323", schools: [school]) }
 
       it "associates the user with the trust instead of the school" do
-        expect(current_path).to eq(publisher_root_path)
+        expect(current_path).to eq(organisation_path)
       end
 
       it "shows the trust name" do
@@ -156,7 +156,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
-      expect(current_path).to eq(publisher_root_path)
+      expect(current_path).to eq(organisation_path)
     end
   end
 
@@ -181,7 +181,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
         sign_in_publisher
 
         expect(page).to have_content(organisation.name)
-        expect(current_path).to eq(publisher_root_path)
+        expect(current_path).to eq(organisation_path)
       end
     end
 

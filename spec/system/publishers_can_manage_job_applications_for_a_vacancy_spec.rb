@@ -23,7 +23,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     describe "the summary section" do
       it "shows breadcrumb with link to passed deadline in dashboard" do
         within(".govuk-breadcrumbs") do
-          expect(page).to have_link(I18n.t("jobs.dashboard.expired.tab_heading"), href: organisation_jobs_with_type_path(:expired))
+          expect(page).to have_link(I18n.t("jobs.dashboard.expired.tab_heading"), href: jobs_with_type_organisation_path(:expired))
         end
       end
 
@@ -183,7 +183,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     describe "the summary section" do
       it "shows breadcrumb with link to active jobs in dashboard" do
         within(".govuk-breadcrumbs") do
-          expect(page).to have_link(I18n.t("jobs.dashboard.published.tab_heading"), href: organisation_jobs_with_type_path(:published))
+          expect(page).to have_link(I18n.t("jobs.dashboard.published.tab_heading"), href: jobs_with_type_organisation_path(:published))
         end
       end
 

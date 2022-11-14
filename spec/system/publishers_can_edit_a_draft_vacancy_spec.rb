@@ -11,7 +11,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
 
     before do
-      visit organisation_jobs_with_type_path
+      visit organisation_path(organisation)
       click_on "Draft jobs"
       click_on vacancy.job_title
     end

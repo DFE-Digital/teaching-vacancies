@@ -33,7 +33,7 @@ class Publishers::LoginKeysController < ApplicationController
   def redirect_signed_in_publishers
     return unless publisher_signed_in? && current_organisation.present?
 
-    redirect_to publisher_root_path
+    redirect_to organisation_path
   end
 
   def redirect_for_dsi_authentication

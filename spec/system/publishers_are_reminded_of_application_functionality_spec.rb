@@ -11,7 +11,7 @@ RSpec.describe "Application feature reminder" do
     let!(:vacancy) { create(:vacancy, :published, enable_job_applications: true, publisher: publisher, organisations: [organisation]) }
 
     it "does not show reminder page when creating a job" do
-      visit organisation_jobs_with_type_path
+      visit organisation_path
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_role))
     end
@@ -23,7 +23,7 @@ RSpec.describe "Application feature reminder" do
     let!(:vacancy) { create(:vacancy, :published, enable_job_applications: false, publisher: publisher, organisations: [organisation]) }
 
     it "shows reminder page before first step of create job and does not show it twice in the same session" do
-      visit organisation_jobs_with_type_path
+      visit organisation_path
       click_on I18n.t("buttons.create_job")
 
       expect(page).to have_content(I18n.t("publishers.new_features.reminder.page_title"))
@@ -35,7 +35,7 @@ RSpec.describe "Application feature reminder" do
 
       expect(page).not_to have_content(I18n.t("publishers.new_features.reminder.page_title"))
 
-      visit organisation_jobs_with_type_path
+      visit organisation_path
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(organisation_job_build_path(Vacancy.order("created_at").last.id, :job_role))
     end
@@ -53,11 +53,11 @@ RSpec.describe "Application feature reminder" do
       let(:publisher) { create(:publisher, dismissed_new_features_page_at: nil) }
 
       it "does not show the reminder page" do
-        visit organisation_jobs_with_type_path
+        visit organisation_path
         expect(current_path).to eq(publishers_new_features_path)
         check I18n.t("helpers.label.publishers_new_features_form.dismiss_options.true")
         click_on I18n.t("buttons.continue_to_account")
-        visit organisation_jobs_with_type_path
+        visit organisation_path
         click_on I18n.t("buttons.create_job")
         expect(current_path).to eq(organisation_jobs_path)
       end

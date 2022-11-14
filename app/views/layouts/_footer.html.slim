@@ -41,7 +41,7 @@
             li.govuk-footer__list-item
               = button_to(t("footer.list_a_teaching_job"), organisation_jobs_path, class: "govuk-footer__link govuk-body-s")
             li.govuk-footer__list-item
-              = link_to t("footer.manage_job_listings"), organisation_jobs_with_type_path, class: "govuk-footer__link"
+              = link_to t("footer.manage_job_listings"), organisation_path, class: "govuk-footer__link"
           - else
             li.govuk-footer__list-item
               = link_to t("nav.sign_in"), new_publisher_session_path, class: "govuk-footer__link"

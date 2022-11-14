@@ -15,7 +15,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     let!(:third_vacancy) { create(:vacancy, :expired, job_title: "Science teacher", organisations: [school]) }
 
     scenario "displays the vacancies awaiting feedback" do
-      visit organisation_jobs_with_type_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       expect(page).to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
       expect(page).to have_link(another_vacancy.job_title, href: organisation_job_path(another_vacancy.id))
@@ -27,7 +27,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     end
 
     scenario "it saves feedback to the correct record" do
-      visit organisation_jobs_with_type_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       submit_feedback_for(another_vacancy)
 
@@ -38,7 +38,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
 
     context "when an invalid form is submitted" do
       before do
-        visit organisation_jobs_with_type_path(type: :awaiting_feedback)
+        visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
         within(".feedback-row", text: vacancy.job_title) do
           click_on I18n.t("buttons.submit")
@@ -58,7 +58,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
       end
 
       scenario "it saves the feedback to the model without triggering validation errors" do
-        visit organisation_jobs_with_type_path(type: :awaiting_feedback)
+        visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
         submit_feedback_for(invalid_vacancy)
 
@@ -78,7 +78,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     end
 
     scenario "the no vacancies component is displayed" do
-      visit organisation_jobs_with_type_path(type: :awaiting_feedback)
+      visit jobs_with_type_organisation_path(type: :awaiting_feedback)
 
       expect(page).not_to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
       expect(page).to have_content(I18n.t("jobs.manage.awaiting_feedback.no_jobs.no_filters"))
