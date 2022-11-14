@@ -92,7 +92,7 @@ module VacancyHelpers
     page.attach_file(input_name, Rails.root.join(filepath))
     # Submit form on file upload without requiring Javascript driver
     form = page.find("##{form_id}")
-    Capybara::RackTest::Form.new(page.driver, form.native).submit(form)
+    Capybara::RackTest::Form.new(page.driver.browser, form.native).submit(form)
   end
 
   def fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
