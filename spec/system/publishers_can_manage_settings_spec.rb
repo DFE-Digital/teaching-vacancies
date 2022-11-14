@@ -5,7 +5,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
-    visit organisation_path
+    visit publisher_root_path
   end
 
   context "when publisher logs in as a school" do

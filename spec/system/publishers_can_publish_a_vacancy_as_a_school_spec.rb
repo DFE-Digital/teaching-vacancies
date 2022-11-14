@@ -7,7 +7,7 @@ RSpec.describe "Creating a vacancy" do
   before { login_publisher(publisher: publisher, organisation: school) }
 
   scenario "Visiting the school page" do
-    visit organisation_path
+    visit organisation_jobs_with_type_path
 
     expect(page).to have_content("Salisbury School")
 
@@ -28,7 +28,7 @@ RSpec.describe "Creating a vacancy" do
     let(:created_vacancy) { Vacancy.last }
 
     scenario "follows the flow" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
 
@@ -155,7 +155,7 @@ RSpec.describe "Creating a vacancy" do
     end
 
     scenario "saving and finishing later" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
 
       fill_in_job_role_form_fields(vacancy)

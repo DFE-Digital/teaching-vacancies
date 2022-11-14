@@ -4,7 +4,7 @@ module NavigationsHelper
   end
 
   def manage_jobs_active?
-    current_page?(organisation_path) || request.original_fullpath =~ %r{^/organisation/jobs}
+    current_page?(organisation_jobs_with_type_path) || request.original_fullpath =~ %r{^/organisation/jobs}
   end
 
   def schools_in_your_trust_active?

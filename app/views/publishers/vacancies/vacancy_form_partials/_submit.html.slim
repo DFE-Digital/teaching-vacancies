@@ -6,4 +6,4 @@
   - if vacancy.draft? || (current_step == :job_title && vacancy.status.nil?)
     = f.govuk_submit t("buttons.save_and_finish_later"), name: "save_and_finish_later", value: "true", secondary: true, classes: "govuk-!-margin-bottom-5", "data-upload-documents-target": "saveListingButton"
 
-= govuk_link_to(t("buttons.cancel"), jobs_with_type_organisation_path(:draft), class: "govuk-link--no-visited-state govuk-body-m")
+= govuk_link_to(t("buttons.cancel"), organisation_jobs_with_type_path(:draft), class: "govuk-link--no-visited-state govuk-body-m")
