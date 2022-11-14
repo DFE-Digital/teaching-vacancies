@@ -19,7 +19,7 @@ class Publishers::SessionsController < Devise::SessionsController
       sign_out_except(:publisher)
 
       trigger_successful_publisher_sign_in_event(:email)
-      redirect_to publisher_root_path
+      redirect_to organisation_path
     else
       trigger_failed_dsi_sign_in_event(:email, publisher.oid)
       redirect_to new_publisher_session_path, notice: t(".not_authorised")

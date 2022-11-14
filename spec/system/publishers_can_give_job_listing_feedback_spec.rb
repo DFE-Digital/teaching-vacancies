@@ -36,7 +36,7 @@ RSpec.describe "Publishers can give job listing feedback" do
         publisher.feedbacks.where(comment: comment, email: publisher.email, feedback_type: "vacancy_publisher", user_participation_response: "interested", vacancy_id: vacancy.id).count
       }.by(1)
 
-      expect(current_path).to eq(organisation_jobs_with_type_path(:published))
+      expect(current_path).to eq(jobs_with_type_organisation_path(:published))
 
       expect(page).to have_content(strip_tags(I18n.t("messages.jobs.feedback.success_html")))
     end

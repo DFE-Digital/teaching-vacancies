@@ -9,7 +9,7 @@ RSpec.describe "Publishers can extend a deadline" do
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
   it "submits form, renders error, then ends listing early" do
-    visit organisation_jobs_with_type_path(:published)
+    visit jobs_with_type_organisation_path(:published)
     click_on vacancy.job_title
     click_on I18n.t("publishers.vacancies.show.heading_component.action.extend_closing_date")
     click_on I18n.t("buttons.extend_closing_date")
@@ -23,13 +23,13 @@ RSpec.describe "Publishers can extend a deadline" do
 
     click_on I18n.t("buttons.extend_closing_date")
 
-    expect(current_path).to eq(organisation_jobs_with_type_path(:published))
+    expect(current_path).to eq(jobs_with_type_organisation_path(:published))
   end
 
   context "when the vacancy has expired" do
     let!(:expired_vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
 
-    before { visit organisation_jobs_with_type_path(:expired) }
+    before { visit jobs_with_type_organisation_path(:expired) }
 
     scenario "the closing date can be extended" do
       click_on expired_vacancy.job_title
@@ -42,7 +42,7 @@ RSpec.describe "Publishers can extend a deadline" do
 
       click_on I18n.t("buttons.extend_closing_date")
 
-      expect(current_path).to eq(organisation_jobs_with_type_path(:published))
+      expect(current_path).to eq(jobs_with_type_organisation_path(:published))
     end
   end
 end

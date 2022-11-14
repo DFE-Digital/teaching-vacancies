@@ -7,7 +7,7 @@ RSpec.xdescribe "Publishers are shown the new features page" do
   before do
     allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
     login_publisher(publisher: publisher, organisation: organisation)
-    visit publisher_root_path
+    visit organisation_path
   end
 
   context "when the publisher has not dismissed the new features page" do
@@ -22,7 +22,7 @@ RSpec.xdescribe "Publishers are shown the new features page" do
       click_on I18n.t("buttons.continue_to_account")
 
       publisher.reload
-      expect(current_path).to eq(publisher_root_path)
+      expect(current_path).to eq(organisation_path)
       expect(publisher).to be_dismissed_new_features_page_at
     end
 
@@ -30,17 +30,17 @@ RSpec.xdescribe "Publishers are shown the new features page" do
       let(:organisation) { create(:local_authority) }
 
       it "does not redirect them to the new features page" do
-        expect(current_path).to eq(publisher_root_path)
+        expect(current_path).to eq(organisation_path)
       end
     end
 
     context "when they have already used the new feature (published jobs that enable applications for education support roles)" do
       let!(:vacancy) { create(:vacancy, :education_support, enable_job_applications: true, publisher: publisher, organisations: [organisation]) }
 
-      before { visit publisher_root_path }
+      before { visit organisation_path }
 
       it "does not redirect them to the new features page" do
-        expect(current_path).to eq(publisher_root_path)
+        expect(current_path).to eq(organisation_path)
       end
     end
   end
@@ -49,7 +49,7 @@ RSpec.xdescribe "Publishers are shown the new features page" do
     let(:publisher) { create(:publisher, dismissed_new_features_page_at: 2.days.ago) }
 
     it "does not redirect them to the new features page" do
-      expect(current_path).to eq(publisher_root_path)
+      expect(current_path).to eq(organisation_path)
     end
   end
 end

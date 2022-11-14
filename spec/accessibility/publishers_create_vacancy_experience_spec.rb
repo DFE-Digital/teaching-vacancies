@@ -9,7 +9,7 @@ RSpec.describe "Publisher experience", type: :system, accessibility: true do
   context "Publisher creates a vacancy" do
     describe "Job details page" do
       before do
-        visit organisation_jobs_with_type_path
+        visit organisation_path
         click_on I18n.t("buttons.create_job")
       end
 

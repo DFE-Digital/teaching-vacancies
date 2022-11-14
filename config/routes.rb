@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root
 
-  get "/organisation", to: "publishers/vacancies#index", as: :publisher_root
+  get "/organisation", to: "publishers/organisations#show", as: :publisher_root
 
   get "/sha", to: "sha#sha"
 
@@ -190,9 +190,9 @@ Rails.application.routes.draw do
     resources :events, only: %i[create]
   end
 
-  scope "/organisation", as: "organisation" do
+  resource :organisation, only: %i[show edit update], controller: "publishers/organisations" do
     scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do
-      get "jobs(/:type)", to: "publishers/vacancies#index", defaults: { type: :published }, as: :jobs_with_type
+      get "jobs(/:type)", to: "publishers/organisations#show", defaults: { type: :published }, as: :jobs_with_type
     end
 
     resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do

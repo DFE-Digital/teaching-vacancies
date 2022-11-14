@@ -17,7 +17,7 @@
       - else
         li = govuk_link_to t(".view_listing"), job_path(@vacancy.id)
       li = govuk_link_to t(".make_changes"), organisation_job_path(@vacancy.id)
-      li = govuk_link_to t(".manage_jobs"), organisation_jobs_with_type_path(:published)
+      li = govuk_link_to t(".manage_jobs"), jobs_with_type_organisation_path(:published)
 
     h2.govuk-heading-m = t(".give_feedback")
     p.govuk-body = t(".feedback_link_html", url: new_organisation_job_feedback_path(@vacancy.id))

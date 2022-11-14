@@ -10,7 +10,7 @@ RSpec.describe "Publisher dashboard experience", type: :system, accessibility: t
   context "Publisher visits the vacancy dashboard page" do
     before do
       create_list(:vacancy, 5, :published, organisations: [organisation])
-      visit organisation_jobs_with_type_path
+      visit organisation_path
     end
 
     it "it meets accessibility standards" do

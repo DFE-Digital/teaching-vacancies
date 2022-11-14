@@ -8,7 +8,7 @@ class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::BaseCo
 
     if @feedback_form.valid?
       @feedback = Feedback.create(feedback_attributes)
-      redirect_to organisation_jobs_with_type_path(:published), success: t("messages.jobs.feedback.success_html")
+      redirect_to jobs_with_type_organisation_path(:published), success: t("messages.jobs.feedback.success_html")
     else
       render "publishers/vacancies/feedbacks/new"
     end

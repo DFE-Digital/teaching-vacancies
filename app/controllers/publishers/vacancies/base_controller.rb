@@ -59,7 +59,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     elsif step_process.previous_step
       organisation_job_build_path(vacancy.id, step_process.previous_step)
     else
-      organisation_jobs_with_type_path(:published)
+      jobs_with_type_organisation_path(:published)
     end
   end
 
