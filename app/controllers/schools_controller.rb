@@ -11,6 +11,6 @@ class SchoolsController < ApplicationController
   end
 
   def search_scope
-    Organisation.schools.or(Organisation.trusts).order(:name)
+    Organisation.schools.or(Organisation.trusts).registered_for_service.order(:name)
   end
 end
