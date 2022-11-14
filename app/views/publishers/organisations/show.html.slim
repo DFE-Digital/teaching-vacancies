@@ -1,0 +1,22 @@
+- content_for :page_title_prefix, @organisation.name
+
+- if current_organisation.school_group? && @organisation.school?
+  - content_for :breadcrumbs do
+    = govuk_breadcrumbs breadcrumbs: { t("nav.organisation_profile") => publishers_organisation_path(current_organisation), t("nav.school_profile") => nil }
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".title", organisation_type: @organisation.school_group? ? "Organisation" : "School")
+
+    = render "organisation", organisation: @organisation
+
+    - if @organisation.school_group?
+
+      h2.govuk-heading-m class="govuk-!-margin-top-8"
+        = t(".schools")
+
+      .link-list
+        - @organisation.schools.not_closed.order(:name).each do |school|
+          .link-list--element
+            .govuk-heading-s
+              = govuk_link_to school.name.titlecase, publishers_organisation_path(school), no_visited_state: true

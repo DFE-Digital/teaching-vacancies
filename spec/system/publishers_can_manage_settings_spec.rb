@@ -25,7 +25,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_content("Details updated for #{organisation.name}")
-      expect(page.current_path).to eq(publishers_school_path(organisation))
+      expect(page.current_path).to eq(publishers_organisation_path(organisation))
     end
   end
 
@@ -48,7 +48,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_content("Details updated for #{organisation.name}")
-      expect(page.current_path).to eq(publishers_schools_path)
+      expect(page.current_path).to eq(publishers_organisation_path(organisation))
     end
 
     it "allows to navigate and manage school's profile settings page" do
@@ -63,7 +63,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_content("Details updated for #{school1.name}")
-      expect(page.current_path).to eq(publishers_schools_path)
+      expect(page.current_path).to eq(publishers_organisation_path(school1))
     end
   end
 
@@ -84,7 +84,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_content("Details updated for #{organisation.name}")
-      expect(page.current_path).to eq(publishers_schools_path)
+      expect(page.current_path).to eq(publishers_organisation_path(organisation))
     end
 
     it "allows to edit details of a school in the local_authority" do
@@ -98,7 +98,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       click_on I18n.t("buttons.save_changes")
 
       expect(page).to have_content("Details updated for #{school1.name}")
-      expect(page.current_path).to eq(publishers_schools_path)
+      expect(page.current_path).to eq(publishers_organisation_path(school1))
     end
   end
 end

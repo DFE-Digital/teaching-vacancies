@@ -82,19 +82,12 @@ en:
           zero: No unread notifications
           one: 1 unread notification
           other: "%{count} unread notifications"
-    schools:
-      index:
-        contact_support: contact our support team
-        missing_information_title: Is information missing or incorrect?
-        missing_information_description_html: >-
-          If a school in your %{organisation_type} is missing from this list,
-          or the information isn't correct, please %{contact_support_link}.
-        schools: Schools
-        title: Organisation profile
+    organisations:
       edit:
         title: Change %{organisation_type} details
       show:
-        title: School profile
+        schools: Schools
+        title: '%{organisation_type} profile'
       update:
         success_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
       organisation:
@@ -116,7 +109,6 @@ en:
             through: Through
             middle_deemed_secondary: Middle deamed secondary school
             middle_deemed_primary: Middle deamed primary school
-
         school_age:
           label: Age group
         size:

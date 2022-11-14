@@ -1,8 +1,4 @@
-class Publishers::SchoolsController < Publishers::BaseController
-  def index
-    @organisation = current_organisation
-  end
-
+class Publishers::OrganisationsController < Publishers::BaseController
   def show
     organisation
   end
@@ -18,7 +14,7 @@ class Publishers::SchoolsController < Publishers::BaseController
 
     if organisation && @organisation_form.valid?
       organisation.update(organisation_params)
-      redirect_to redirect_path, success: t(".success_html", organisation: organisation.name)
+      redirect_to publishers_organisation_path(organisation), success: t(".success_html", organisation: organisation.name)
     else
       render :edit
     end
@@ -28,10 +24,6 @@ class Publishers::SchoolsController < Publishers::BaseController
 
   def organisation
     @organisation ||= current_organisation.friendly_id == params[:id] ? current_organisation : current_organisation.schools.friendly.find(params[:id])
-  end
-
-  def redirect_path
-    current_organisation.school? ? publishers_school_path(current_organisation) : publishers_schools_path
   end
 
   def organisation_params
