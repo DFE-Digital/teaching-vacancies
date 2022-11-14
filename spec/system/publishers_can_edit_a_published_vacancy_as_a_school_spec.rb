@@ -351,7 +351,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     scenario "it is visible on the dashboard but cannot be edited" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
       expect(page).to have_content("Imported vacancy")
       expect(page).not_to have_link("Imported vacancy")
 

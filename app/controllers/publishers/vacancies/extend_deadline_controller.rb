@@ -5,7 +5,7 @@ class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::B
     if form.valid?
       vacancy.update(form.attributes_to_save)
       update_google_index(vacancy)
-      redirect_to jobs_with_type_organisation_path(:published), success: t(".success", job_title: vacancy.job_title)
+      redirect_to organisation_jobs_with_type_path(:published), success: t(".success", job_title: vacancy.job_title)
     else
       render :show
     end

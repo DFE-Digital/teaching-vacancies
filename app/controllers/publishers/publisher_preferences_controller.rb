@@ -10,7 +10,7 @@ class Publishers::PublisherPreferencesController < Publishers::BaseController
 
     if publisher_preference_params[:school_ids].any?
       @publisher_preference.update schools: Organisation.find(publisher_preference_params[:school_ids])
-      redirect_to organisation_path
+      redirect_to publisher_root_path
     else
       @publisher_preference.errors.add(:school_ids_fieldset, t(".form.missing_schools_error"))
       render :new
@@ -32,19 +32,19 @@ class Publishers::PublisherPreferencesController < Publishers::BaseController
     elsif publisher_preference_params[:organisation_ids]
       @publisher_preference.update organisations: Organisation.find(publisher_preference_params[:organisation_ids])
     end
-    redirect_to jobs_with_type_organisation_path(publisher_preference_params[:jobs_type])
+    redirect_to organisation_jobs_with_type_path(publisher_preference_params[:jobs_type])
   end
 
   def destroy
     publisher_preference = PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
     publisher_preference.organisation_publisher_preferences.destroy_all
-    redirect_to organisation_path
+    redirect_to publisher_root_path
   end
 
   def remove_organisation
     publisher_preference = PublisherPreference.find_by(publisher: current_publisher, organisation: current_organisation)
     publisher_preference.organisation_publisher_preferences.find_by(organisation_id: params[:filter_id]).destroy
-    redirect_to organisation_path
+    redirect_to publisher_root_path
   end
 
   private

@@ -17,7 +17,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
   context "when no organisations have been previously selected" do
     context "when viewing active jobs tab" do
       scenario "it shows all published vacancies" do
-        visit jobs_with_type_organisation_path(:published)
+        visit organisation_jobs_with_type_path(:published)
 
         expect(page).to_not have_css(".filters-component__remove-tags__tag")
 
@@ -29,7 +29,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
       context "when applying filters" do
         scenario "it shows filtered published vacancies" do
-          visit jobs_with_type_organisation_path(:published)
+          visit organisation_jobs_with_type_path(:published)
 
           check "Happy Rainbows School (1)"
           click_on I18n.t("buttons.apply_filters")
@@ -46,7 +46,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       context "when clearing all filters" do
         before do
           PublisherPreference.create(publisher: publisher, organisation: trust, organisations: [school1])
-          visit jobs_with_type_organisation_path(:published)
+          visit organisation_jobs_with_type_path(:published)
           click_on I18n.t("shared.filter_group.clear_all_filters")
         end
 
@@ -60,7 +60,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
     context "when viewing draft jobs tab" do
       scenario "it shows all draft vacancies" do
-        visit jobs_with_type_organisation_path(:draft)
+        visit organisation_jobs_with_type_path(:draft)
 
         expect(page).to_not have_css(".filters-component__remove-tags__tag")
 
@@ -76,7 +76,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
     let!(:publisher_preference_trust) { PublisherPreference.create(publisher: publisher, organisation: trust, organisations: [school1, school2]) }
 
     scenario "it shows filtered published vacancies" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
 
       expect(page).to have_css(".filters-component__remove-tags__tag", count: 2)
 

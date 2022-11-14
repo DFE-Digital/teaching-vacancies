@@ -9,7 +9,7 @@ RSpec.describe "Copying a vacancy" do
   before { login_publisher(publisher: publisher, organisation: school) }
 
   RSpec.shared_examples "publishing a copied vacancy" do |options|
-    before { visit organisation_path(type: options[:type]) }
+    before { visit organisation_jobs_with_type_path(type: options[:type]) }
 
     scenario "a job can be successfully copied and published" do
       click_on original_vacancy.job_title
@@ -49,7 +49,7 @@ RSpec.describe "Copying a vacancy" do
   include_examples "publishing a copied vacancy", type: "published"
 
   scenario "a job can be copied from the dashboard" do
-    visit organisation_path
+    visit organisation_jobs_with_type_path
     click_on "#{I18n.t('buttons.copy_listing')} #{original_vacancy.job_title}"
 
     new_vacancy = Vacancy.all.order(:created_at).last
@@ -65,7 +65,7 @@ RSpec.describe "Copying a vacancy" do
     end
 
     scenario "the user is taken through the invalid steps" do
-      visit organisation_path
+      visit organisation_jobs_with_type_path
       click_on original_vacancy.job_title
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
@@ -109,7 +109,7 @@ RSpec.describe "Copying a vacancy" do
     let!(:original_vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
 
     scenario "the dates are pre-filled" do
-      visit organisation_path(type: "pending")
+      visit organisation_jobs_with_type_path(type: "pending")
       click_on original_vacancy.job_title
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 

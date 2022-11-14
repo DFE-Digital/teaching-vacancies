@@ -14,12 +14,12 @@
 
   = tabs do |tabs|
     - @vacancy_types.each do |vacancy_type|
-      - tabs.navigation_item text: t("jobs.dashboard.#{vacancy_type}.tab_heading"), link: jobs_with_type_organisation_path(vacancy_type), active: selected_type == vacancy_type
+      - tabs.navigation_item text: t("jobs.dashboard.#{vacancy_type}.tab_heading"), link: organisation_jobs_with_type_path(vacancy_type), active: selected_type == vacancy_type
 
   .govuk-grid-row class="govuk-!-margin-bottom-7"
     - if @vacancies.many?
       .govuk-grid-column-full
-        = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:jobs_with_type_organisation_path)
+        = render SortComponent.new sort: @sort, url_params: { type: @selected_type }, path: method(:organisation_jobs_with_type_path)
     - if @organisation.school_group?
       .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
         - if @organisation.local_authority?
@@ -55,7 +55,7 @@
         = empty_section do
           = no_jobs_text
       - elsif @selected_type == "awaiting_feedback"
-        = render "publishers/organisations/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
+        = render "publishers/vacancies/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
       - else
         = govuk_summary_list do |summary_list|
           - vacancies.each do |vacancy|
