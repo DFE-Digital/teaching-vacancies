@@ -43,19 +43,20 @@
 
   .search-results-controls {
     background-color: govuk-colour('light-grey');
-    margin-bottom: govuk-spacing(4);
     padding: $govuk-gutter-half;
 
     @include govuk-media-query($from: tablet) {
-      background-color: transparent;
-      column-gap: govuk-spacing(2);
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      padding: 0;
+      margin-bottom: govuk-spacing(4);
 
-      .govuk-heading-m {
-        display: none;
+      .autocomplete, .govuk-form-group {
+        margin-bottom: 20px;
+      }
+
+      .location-search__radius {
+        .govuk-select[name='radius'] {
+          width: min-content;
+          min-width: 0;
+        }
       }
 
       .autocomplete__menu {
@@ -64,22 +65,10 @@
         }
       }
 
-      >* {
-        flex-grow: 1;
-      }
-
       &__submit {
-        flex-basis: 100%;
-
-        @media (min-width: 1020px) {
-          flex-basis: auto;
-          flex-grow: 0;
-          margin-top: govuk-spacing(6);
+        .govuk-button {
+          margin-bottom: 0;
         }
-      }
-
-      @media (min-width: 1020px) {
-        flex-wrap: nowrap;
       }
 
       .govuk-hint {
@@ -87,12 +76,22 @@
       }
     }
 
+    @include govuk-media-query($until: tablet) {
+      &__submit {
+        .govuk-button {
+          margin-bottom: govuk-spacing(3);
+        }
+      }
+    }
+
     .location-search__radius {
       margin-top: govuk-spacing(6);
       flex-basis: 200px;
 
-      .govuk-select[name='radius'] {
-        width: 100%;
+      @include govuk-media-query($until: tablet) {
+        .govuk-select[name='radius'] {
+          width: 100%;
+        }      
       }
 
       @include govuk-media-query($from: tablet) {
