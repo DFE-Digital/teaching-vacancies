@@ -6,6 +6,10 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    - unless @organisation.profile_complete?
+      = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
+        - banner.heading text: t(".profile_incomplete_banner.title", organisation_type: @organisation.school? ? :school : :organisation)
+
     h1.govuk-heading-l = t(".title", organisation_type: @organisation.school_group? ? "Organisation" : "School")
 
     = render "organisation", organisation: @organisation
@@ -16,7 +20,12 @@
         = t(".schools")
 
       .link-list
-        - @organisation.schools.not_closed.order(:name).each do |school|
+        - @organisation.schools.not_closed.order(:name).partition(&:profile_complete?).reverse.flatten.each do |school|
           .link-list--element
-            .govuk-heading-s
-              = govuk_link_to school.name.titlecase, publishers_organisation_path(school), no_visited_state: true
+            - if school.profile_complete?
+              .govuk-heading-s
+                = govuk_link_to school.name.titlecase, publishers_organisation_path(school), no_visited_state: true
+            - else
+              .govuk-inset-text.govuk-inset-text--dark-blue.inset-text--narrow-border class="govuk-!-margin-0"
+                p.govuk-inset-text--header = govuk_link_to school.name.titlecase, publishers_organisation_path(school), no_visited_state: true
+                p.govuk-inset-text--header = t(".complete_school_profile", raise: true)

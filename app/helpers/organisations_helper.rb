@@ -67,6 +67,19 @@ module OrganisationsHelper
     I18n.t("schools.no_information")
   end
 
+  def required_profile_info(value:, missing_text:, missing_prompt:)
+    if value.present?
+      value
+    else
+      content_tag(:div, class: %i[govuk-inset-text govuk-inset-text--dark-blue inset-text--narrow-border]) do
+        [
+          content_tag(:p, missing_prompt, class: %i[govuk-inset-text--header]),
+          content_tag(:p, missing_text),
+        ].join.html_safe
+      end
+    end
+  end
+
   private
 
   def number_of_pupils(school)

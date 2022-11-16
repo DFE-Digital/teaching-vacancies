@@ -86,6 +86,10 @@ class Organisation < ApplicationRecord
     urn.present?
   end
 
+  def profile_complete?
+    %i[url description].all? { |attribute| send(attribute).present? }
+  end
+
   private
 
   def slug_candidates

@@ -1,11 +1,30 @@
 .govuk-inset-text {
-  .govuk-summary-list__value & {
+  .govuk-summary-list__value &, .link-list & {
     margin-top: 0;
     padding-bottom: 0;
     padding-top: 0;
   }
 
+  &--header {
+    @extend .govuk-heading-s;
+    margin-bottom: govuk-spacing(2);
+  }
+
   &--blue {
     border-left-color: govuk-colour('light-blue');
+
+    .govuk-inset-text--header {
+      color: govuk-colour('light-blue');
+    }
+
+  }
+
+  &--dark-blue {
+    border-left-color: govuk-colour('blue');
+
+    .govuk-inset-text--header {
+      color: govuk-colour('blue');
+    }
+
   }
 }

@@ -88,6 +88,9 @@ en:
       show:
         schools: Schools
         title: '%{organisation_type} profile'
+        profile_incomplete_banner:
+          title: Complete your %{organisation_type} profile
+        complete_school_profile: Complete your school profile
       update:
         success_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
       organisation:
@@ -114,8 +117,10 @@ en:
         size:
           label: Size
         website:
+          missing_prompt: Enter website
           label: Website address
         description:
+          missing_prompt: Enter a school description
           label:
             school: School description
             organisation: Organisation description
