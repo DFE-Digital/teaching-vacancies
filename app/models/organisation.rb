@@ -23,6 +23,14 @@ class Organisation < ApplicationRecord
   }
   scope :in_vacancy_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct })
 
+  scope :search_by_location, OrganisationLocationQuery
+
+  scope(:registered_for_service, lambda do
+    registered_organisations = OrganisationPublisher.select(:organisation_id)
+    where(id: registered_organisations)
+      .or(where(id: SchoolGroupMembership.select(:school_id).where(school_group_id: registered_organisations)))
+  end)
+
   alias_attribute :data, :gias_data
 
   def all_vacancies

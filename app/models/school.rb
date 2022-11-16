@@ -28,6 +28,16 @@ class School < Organisation
     through: "through",
   }.freeze
 
+  PHASE_TO_KEY_STAGES_MAPPINGS = {
+    nursery: %i[early_years],
+    primary: %i[early_years ks1 ks2],
+    middle_deemed_primary: %i[ks1 ks2 ks3 ks4 ks5],
+    middle_deemed_secondary: %i[ks1 ks2 ks3 ks4 ks5],
+    secondary: %i[ks3 ks4 ks5],
+    sixth_form_or_college: %i[ks5],
+    through: %i[early_years ks1 ks2 ks3 ks4 ks5],
+  }.freeze
+
   def readable_phase
     READABLE_PHASE_MAPPINGS[phase.to_sym]
   end
@@ -41,5 +51,11 @@ class School < Organisation
 
   def school_type
     read_attribute(:school_type).singularize
+  end
+
+  def key_stages
+    return if phase == "not_applicable"
+
+    PHASE_TO_KEY_STAGES_MAPPINGS[phase.to_sym]
   end
 end
