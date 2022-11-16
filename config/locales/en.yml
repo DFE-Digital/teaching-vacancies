@@ -173,7 +173,7 @@ en:
     manage_job_listings: Manage job listings
     provide_feedback: Provide feedback on Teaching Vacancies
     request_support: Get help or report a problem
-    school_hiring_guides: School hiring guides
+    hiring_guides: Hiring guides
     search_teaching_vacancies: Find a job
     service_support: Get support
 
@@ -220,7 +220,7 @@ en:
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
       other: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
     personal_statement: Writing a personal statement
-    school_hiring_guides: School hiring guides
+    hiring_guides: Hiring guides
     sign_in: Sign in
     sign_out: Sign out
     support_user_dashboard: Support dashboard
@@ -303,7 +303,7 @@ en:
         meta_description: >-
           Expert advice on how to hire excellent staff for your school. Get tips on the recruitment process and guidance on how to use Teaching Vacancies.
         page_title: Hiring Advice for Schools
-        title: School hiring guides
+        title: Hiring guides
       jobseeker-guides:
         description: >-
           Looking for your next teaching job, or another role within a school? Take a look at our expert advice covering applications, interviews, and more
