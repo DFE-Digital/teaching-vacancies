@@ -5,4 +5,10 @@ class SchoolGroup < Organisation
   def key_stages
     schools.map(&:key_stages).flatten.uniq.compact
   end
+
+  def profile_complete?
+    return true unless trust?
+
+    super && schools.all?(&:profile_complete?)
+  end
 end

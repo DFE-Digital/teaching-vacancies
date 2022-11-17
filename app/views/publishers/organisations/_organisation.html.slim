@@ -29,12 +29,15 @@
 
   - summary_list.row do |row|
     - row.key text: t(".website.label")
-    - row.value text: organisation.url ? open_in_new_tab_link_to(organisation.url, organisation.url, class: "wordwrap") : t(".not_provided")
+    - row.with_value do
+      - link = open_in_new_tab_link_to(organisation.url, organisation.url, class: "wordwrap") if organisation.url.present?
+      = required_profile_info(value: link, missing_prompt: t(".website.missing_prompt"), missing_text: t(".not_provided"))
     - row.action text: t("buttons.change"), href: edit_publishers_organisation_path(organisation), classes: "govuk-link--no-visited-state"
 
   - summary_list.row do |row|
     - row.key text: t(".description.label.#{organisation.school? ? :school : :organisation}")
-    - row.value text: organisation.description? ? truncate(organisation.description, length: 130) : t(".not_provided")
+    - row.with_value do
+      = required_profile_info(value: truncate(organisation.description, length: 130), missing_prompt: t(".description.missing_prompt.#{organisation.school? ? :school : :organisation}"), missing_text: t(".not_provided"))
     - row.action text: t("buttons.change"), href: edit_publishers_organisation_path(organisation), classes: "govuk-link--no-visited-state"
 
   - if organisation.has_ofsted_report?
