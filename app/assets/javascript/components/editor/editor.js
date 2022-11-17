@@ -23,6 +23,10 @@ const EditorController = class extends Controller {
       this.toolbarTarget.style.display = 'block';
     }
 
+    if (this.hasErrorState()) {
+      this.element.classList.add('govuk-form-group', 'govuk-form-group--error');
+    }
+
     // Ensure paragraphs are created instead of divs
     document.execCommand('defaultParagraphSeparator', false, 'p');
 
@@ -37,6 +41,10 @@ const EditorController = class extends Controller {
     this.formInput.insertAdjacentHTML('beforeBegin', editableAreaHhtml);
 
     this.update();
+  }
+
+  hasErrorState() {
+    return this.formInputTarget.querySelector('textarea').closest('.govuk-form-group').classList.contains('govuk-form-group--error');
   }
 
   handlePaste(event) {
