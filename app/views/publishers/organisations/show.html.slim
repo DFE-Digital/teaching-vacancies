@@ -4,11 +4,12 @@
   - content_for :breadcrumbs do
     = govuk_breadcrumbs breadcrumbs: { t("nav.organisation_profile") => publishers_organisation_path(current_organisation), t("nav.school_profile") => nil }
 
+- unless @organisation.profile_complete?
+  = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
+    - banner.heading text: t(".profile_incomplete_banner.title", organisation_type: @organisation.school? ? :school : :organisation)
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - unless @organisation.profile_complete?
-      = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
-        - banner.heading text: t(".profile_incomplete_banner.title", organisation_type: @organisation.school? ? :school : :organisation)
 
     h1.govuk-heading-l = t(".title", organisation_type: @organisation.school_group? ? "Organisation" : "School")
 
@@ -19,13 +20,14 @@
       h2.govuk-heading-m class="govuk-!-margin-top-8"
         = t(".schools")
 
-      .link-list
+      = govuk_summary_list do |summary_list|
         - @organisation.schools.not_closed.order(:name).partition(&:profile_complete?).reverse.flatten.each do |school|
-          .link-list--element
-            - if school.profile_complete?
-              .govuk-heading-s
-                = govuk_link_to school.name.titlecase, publishers_organisation_path(school), no_visited_state: true
-            - else
-              .govuk-inset-text.govuk-inset-text--dark-blue.inset-text--narrow-border class="govuk-!-margin-0"
-                p.govuk-inset-text--header = govuk_link_to school.name.titlecase, publishers_organisation_path(school), no_visited_state: true
-                p.govuk-inset-text--header = t(".complete_school_profile", raise: true)
+          - summary_list.row do |row|
+            - row.with_value do
+              - if school.profile_complete?
+                .govuk-heading-s class="govuk-!-margin-bottom-2 govuk-!-margin-top-2"
+                  = govuk_link_to school.name.titlecase, publishers_organisation_path(school), no_visited_state: true
+              - else
+                .govuk-inset-text.govuk-inset-text--dark-blue.inset-text--narrow-border class="govuk-!-margin-bottom-2"
+                  p.govuk-inset-text--header = govuk_link_to school.name.titlecase, publishers_organisation_path(school), no_visited_state: true
+                  p.govuk-inset-text--header = t(".complete_school_profile", raise: true)

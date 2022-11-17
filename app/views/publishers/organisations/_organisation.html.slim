@@ -37,7 +37,7 @@
   - summary_list.row do |row|
     - row.key text: t(".description.label.#{organisation.school? ? :school : :organisation}")
     - row.with_value do
-      = required_profile_info(value: truncate(organisation.description, length: 130), missing_prompt: t(".description.missing_prompt"), missing_text: t(".not_provided"))
+      = required_profile_info(value: truncate(organisation.description, length: 130), missing_prompt: t(".description.missing_prompt.#{organisation.school? ? :school : :organisation}"), missing_text: t(".not_provided"))
     - row.action text: t("buttons.change"), href: edit_publishers_organisation_path(organisation), classes: "govuk-link--no-visited-state"
 
   - if organisation.has_ofsted_report?
