@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, "Schools"
 
 h1 class="govuk-heading-l" role="heading" aria-level="1"
-  = "Schools (#{@pagy.count})"
+  = "Schools (#{number_with_delimiter(@pagy.count)})"
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds-at-desktop
