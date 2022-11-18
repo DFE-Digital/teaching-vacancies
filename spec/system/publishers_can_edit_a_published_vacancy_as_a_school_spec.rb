@@ -226,6 +226,31 @@ RSpec.describe "Publishers can edit a vacancy" do
       end
     end
 
+    describe "#application_form" do
+      let(:vacancy) { create(:vacancy, :with_application_form, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
+
+      scenario "replacing an application form" do
+        visit organisation_job_path(vacancy.id)
+        click_review_page_change_link(section: "application_process", row: "application_form")
+
+        expect(current_path).to eq(organisation_job_build_path(vacancy.id, :application_form))
+
+        click_on I18n.t("jobs.upload_documents_table.actions.delete")
+
+        expect(current_path).to eq(organisation_job_build_path(vacancy.id, :application_form))
+        expect(page.has_field?("publishers_job_listing_application_form_form_application_form_staged_for_replacement", type: :hidden, with: "true")).to be true
+
+        old_file_id = vacancy.application_form.id
+
+        allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
+        page.attach_file("publishers_job_listing_application_form_form[application_form]", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
+        choose publisher.email
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(vacancy.reload.application_form.id).not_to eq(old_file_id)
+      end
+    end
+
     describe "#documents" do
       let(:filename) { "blank_job_spec.pdf" }
 

@@ -124,6 +124,85 @@ RSpec.describe "Documents" do
       end
     end
 
+    context "when an application form has been staged for replacement" do
+      context "when a replacement application form has been provided" do
+        let(:vacancy) { create(:vacancy, :with_application_form, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
+        let(:old_file) { vacancy.application_form }
+        let(:replacement_file) { fixture_file_upload("blank_job_spec.pdf") }
+        let(:request) do
+          post organisation_job_application_forms_path(vacancy.id), params: {
+            publishers_job_listing_application_form_form: {
+              application_form: replacement_file,
+              application_email: "test@example.com",
+              application_form_staged_for_replacement: true,
+            },
+          }
+        end
+
+        before do
+          allow_any_instance_of(Publishers::Vacancies::BaseController).to receive(:all_steps_valid?).and_return(false)
+          allow_any_instance_of(Publishers::Vacancies::BaseController).to receive(:next_invalid_step).and_return(:school_visits)
+        end
+
+        it "replaces the old file with the new file" do
+          old_file_id = vacancy.application_form.id
+
+          request
+
+          expect(vacancy.reload.application_form.id).not_to eq(old_file_id)
+        end
+
+        it "sends a supporting_document_replaced event" do
+          expect { request }
+            .to have_triggered_event(:supporting_document_replaced)
+            .with_data(
+              vacancy_id: anonymised_form_of(vacancy.id),
+              document_type: "application_form",
+              name: "blank_job_spec.pdf",
+              size: 28_527,
+              content_type: "application/pdf",
+            )
+        end
+
+        it "redirects to the next step" do
+          expect(request).to redirect_to(organisation_job_build_path(vacancy.id, :school_visits))
+        end
+      end
+
+      context "when a replacement application form has not been provided" do
+        let(:hidden_field) do
+          "<input value=\"true\" autocomplete=\"off\" type=\"hidden\" name=\"publishers_job_listing_application_form_form[application_form_staged_for_replacement]\" " \
+          "id=\"publishers_job_listing_application_form_form_application_form_staged_for_replacement\" />"
+        end
+        let(:error_message) { I18n.t("activemodel.errors.models.publishers/job_listing/application_form_form.attributes.application_form.blank") }
+        let(:request) do
+          post organisation_job_application_forms_path(vacancy.id), params: {
+            publishers_job_listing_application_form_form: {
+              application_form: nil,
+              application_email: "test@example.com",
+              application_form_staged_for_replacement: true,
+            },
+          }
+        end
+
+        it "fails validation" do
+          expect(request).to render_template("publishers/vacancies/build/application_form")
+        end
+
+        it "displays an error message" do
+          request
+
+          expect(response.body).to include(error_message)
+        end
+
+        it "adds the application_form_staged_for_replacement hidden field to the form" do
+          request
+
+          expect(response.body).to include(hidden_field)
+        end
+      end
+    end
+
     context "MIME type inspection" do
       before do
         post organisation_job_application_forms_path(vacancy.id), params: {
@@ -164,32 +243,6 @@ RSpec.describe "Documents" do
           expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "invalid_plain_text_file.txt"))
         end
       end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    let(:vacancy) { create(:vacancy, :with_application_form, organisations: [organisation]) }
-    let(:application_form) { vacancy.application_form }
-
-    it "triggers an event" do
-      expect {
-        delete organisation_job_application_forms_path(id: application_form.id, job_id: vacancy.id)
-      }.to have_triggered_event(:supporting_document_deleted)
-        .with_data(
-          vacancy_id: anonymised_form_of(vacancy.id),
-          document_type: "application_form",
-          name: "blank_job_spec.pdf",
-          size: 28_527,
-          content_type: "application/pdf",
-        )
-    end
-
-    it "removes the application form" do
-      delete organisation_job_application_forms_path(id: application_form.id, job_id: vacancy.id)
-      follow_redirect!
-
-      expect(response.body).to include(I18n.t("jobs.file_delete_success_message", filename: application_form.filename))
-      expect(vacancy.reload.application_form).not_to be_present
     end
   end
 end

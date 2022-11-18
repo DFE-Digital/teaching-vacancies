@@ -8,7 +8,7 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Uplo
   def self.fields
     %i[application_email]
   end
-  attr_accessor(:application_form, *fields)
+  attr_accessor(:application_form, :application_form_staged_for_replacement, *fields)
   attr_writer(:other_application_email)
 
   def valid_application_form
@@ -63,6 +63,7 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Uplo
   def application_form_presence
     return if application_form.present?
 
-    errors.add(:application_form, :blank) unless vacancy.application_form&.attached?
+    # See commit message for 1aa28cce3239c42b1af23d61ae08add3e8c51e5e for context
+    errors.add(:application_form, :blank) if vacancy.application_form&.blank? || application_form_staged_for_replacement
   end
 end
