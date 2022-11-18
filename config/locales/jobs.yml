@@ -67,8 +67,7 @@ en:
         Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
         You can use any keywords that describe your ideal role.
         This alert is especially for jobs suitable for early career teachers, so you don’t need to add early career teacher or ECT as a keyword.
-      location: Location
-      location_hint: For example, city, county or postcode
+      location: City, county or postcode (in England)
       number_of_miles:
         zero: This area only
         one: '%{count} mile'
@@ -81,30 +80,10 @@ en:
           science: Science
           teaching_assistant: Teaching Assistant
         title: "Popular searches:"
-      title: Search job listings
       use_current_location_html: use current location<span class="govuk-visually-hidden"> to search teaching vacancies</span>
       within_radius: Search radius
 
-    search_result_heading:
-      count_html:
-        one: "%{jobs_count} job"
-        other: "%{jobs_count} jobs"
-      keyword_html:
-        one: matches &lsquo;%{keyword}&rsquo;
-        other: match &lsquo;%{keyword}&rsquo;
-      no_keyword: found
-      radius_html:
-        zero: in
-        one: >-
-          within %{count} %{units} of
-        other: >-
-          within %{count} %{units} of
-      location_html: "&lsquo;%{location}&rsquo;"
-      organisation_html: at <span class='govuk-!-font-weight-bold'>%{organisation}</span>
-      unit_of_length: mile
-      without_search:
-        one: "%{jobs_count} job listed"
-        other: "%{jobs_count} jobs listed"
+    search_result_heading: "Jobs (%{count})"
 
     legacy_job_alert:
       link: Receive a job alert

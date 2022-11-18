@@ -10,17 +10,21 @@
       - if params["back_to_#{action_name}"]
         = f.hidden_field "back_to_#{action_name}", value: "true"
 
-      - if vacancy.application_form.present?
+      / See commit message for 1aa28cce3239c42b1af23d61ae08add3e8c51e5e for context
+      - if params[:application_form_staged_for_replacement] || local_assigns[:application_form_staged_for_replacement]
+        = f.hidden_field "application_form_staged_for_replacement", value: "true"
+
+      - if vacancy.application_form.blank? || (params[:application_form_staged_for_replacement].present? || local_assigns[:application_form_staged_for_replacement])
+        = f.govuk_file_field :application_form,
+            label: { size: "m" },
+            accept: ".doc, .docx, .pdf",
+            enctype: "multipart/form-data"
+      - else
         h2.govuk-heading-m = "Upload application form"
         dl.govuk-summary-list
           .govuk-summary-list__row
             dt.govuk-summary-list__value == govuk_link_to("#{vacancy.application_form.filename}  (#{number_to_human_size(vacancy.application_form.byte_size)})", vacancy.application_form, download: "true")
-            dd.govuk-summary-list__actions = remove_application_form_link(vacancy.application_form, vacancy)
-      - else
-        = f.govuk_file_field :application_form,
-          label: { size: "m" },
-          accept: ".doc, .docx, .pdf",
-          enctype: "multipart/form-data"
+            dd.govuk-summary-list__actions = remove_application_form_link
 
       = f.govuk_radio_buttons_fieldset :application_email, legend: { size: "m", tag: nil } do
         = f.govuk_radio_button :application_email, current_publisher.email, label: { text: current_publisher.email }, link_errors: true

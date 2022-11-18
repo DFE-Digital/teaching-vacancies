@@ -2,7 +2,8 @@
 
 .js-enabled {
   .editor-component {
-    &__controls {
+    &__controls,
+    &__content-container {
       display: block;
     }
 
@@ -16,7 +17,8 @@
 }
 
 .editor-component {
-  &__controls {
+  &__controls,
+  &__content-container {
     display: none;
   }
 

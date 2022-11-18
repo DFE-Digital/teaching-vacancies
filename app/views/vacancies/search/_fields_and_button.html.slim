@@ -1,6 +1,5 @@
-.search-results-controls class="govuk-!-margin-bottom-0"
+.search-results-controls
 
-  h2.govuk-heading-m = t("jobs.search.title")
   = render "vacancies/search/keyword", f: f
 
   - unless @vacancies_search.organisation_slug.present?
@@ -10,4 +9,4 @@
   = f.hidden_field :sort_by, value: form.sort.by
 
   .search-results-controls__submit
-    = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-3 govuk-!-width-full"
+    = f.govuk_submit t("buttons.search"), classes: "govuk-button"

@@ -37,16 +37,18 @@ const editorValue = generateContent(5, false);
 
 beforeAll(() => {
   document.body.innerHTML = `<div class="editor-component" data-controller="editor">
-  <label data-action="click->editor#focus" for="">Editor label text</label>
-  <div class="govuk-hint" id="editor-hint">Editor hint text</div>
-  ${createEditorToolbar(EditorController.TOOLBAR_ACTIONS)}
-  <div class="editor-component__form-input" data-editor-target="formInput">
-  <div class="editor-component__content-container">
-  <div class="editor-component__content" contenteditable="true" data-action="input->editor#update paste->editor#handlePaste blur->editor#tidy" data-editor-target="editor">${editorValue}</div>
-  </div>
-  <textarea name="input-test" id="input-test"></textarea>
-  <div class="govuk-hint govuk-character-count__message govuk-character-count__status"></div>
-  </div>
+    <label data-action="click->editor#focus" for="">Editor label text</label>
+    <div class="govuk-hint" id="editor-hint">Editor hint text</div>
+    ${createEditorToolbar(EditorController.TOOLBAR_ACTIONS)}
+    <div class="editor-component__form-input" data-editor-target="formInput">
+      <div class="govuk-form-group govuk-form-group--error">
+        <div class="editor-component__content-container">
+          <div class="editor-component__content" contenteditable="true" data-action="input->editor#update paste->editor#handlePaste blur->editor#tidy" data-editor-target="editor">${editorValue}</div>
+        </div>
+        <textarea name="input-test" id="input-test"></textarea>
+        <div class="govuk-hint govuk-character-count__message govuk-character-count__status"></div>
+      </div>
+    </div>
   </div>`;
 
   document.execCommand = jest.fn();
@@ -68,6 +70,10 @@ describe('Content editable form control', () => {
 
   it('should set form input value when component is first rendered', () => {
     expect(document.getElementById('input-test').value).toBe(editorValue);
+  });
+
+  it('should add error class to element when form group has error', () => {
+    expect(controller.element.classList.contains('govuk-form-group--error')).toBe(true);
   });
 
   it('should update hidden form input value when user updates content', () => {

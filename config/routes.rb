@@ -168,6 +168,8 @@ Rails.application.routes.draw do
     resources :documents, only: %i[show]
   end
 
+  resources :schools, only: %i[index]
+
   resource :feedback, only: %i[new create], controller: "general_feedbacks"
   resource :support_request, only: %i[new create]
 
