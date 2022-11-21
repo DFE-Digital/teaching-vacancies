@@ -17,7 +17,7 @@ RSpec.describe TabsComponent, type: :component do
     end
 
     it "renders the navigation items" do
-      expect(page).to have_css("div", class: "tabs-component") do |tabs|
+      expect(page).to have_css("nav", class: "tabs-component") do |tabs|
         expect(tabs).to have_css("li", class: "tabs-component-navigation__item", text: "A dashboard item") do |item|
           expect(item).to have_link("A dashboard item", href: "/item", class: "tabs-component-navigation__link")
           expect(item).to have_xpath("//a[@aria-current=\"page\"]")

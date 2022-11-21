@@ -12,6 +12,24 @@ RSpec.describe "Jobseekers can view all the jobs" do
     expect(current_path).to eq(jobs_path)
   end
 
+  it "jobseekers can visit the home page and use secondary navigation to view jobs" do
+    visit root_path
+
+    within ".sub-navigation" do
+      click_on I18n.t("jobseekers.sub_navigation.jobs")
+      expect(current_path).to eq(jobs_path)
+    end
+  end
+
+  it "jobseekers can visit the home page and use secondary navigation to view schools" do
+    visit root_path
+
+    within ".sub-navigation" do
+      click_on I18n.t("jobseekers.sub_navigation.schools")
+      expect(current_path).to eq(organisations_path)
+    end
+  end
+
   describe "pagination" do
     shared_examples "jobseekers can view jobs and navigate between pages" do
       scenario "jobseekers can view jobs and navigate between pages" do

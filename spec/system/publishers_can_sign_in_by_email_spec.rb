@@ -5,7 +5,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
   it "can reach email authentication page" do
     visit root_path
-    within("nav") { click_on I18n.t("buttons.sign_in") }
+    within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
     click_on I18n.t("buttons.sign_in_publisher")
 
     expect(page).to have_content(I18n.t("publishers.login_keys.new.notice"))
@@ -50,7 +50,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
       it "can sign in, choose an org, sign out" do
         freeze_time do
           visit root_path
-          within("nav") { click_on I18n.t("buttons.sign_in") }
+          within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
           click_on I18n.t("buttons.sign_in_publisher")
 
           # Expect to send an email
@@ -79,7 +79,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           # Can sign out
           click_on(I18n.t("nav.sign_out"))
 
-          within("nav") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
+          within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
 
           # Login link no longer works
           visit publishers_login_key_path(login_key)
@@ -108,7 +108,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            within("nav") { click_on I18n.t("buttons.sign_in") }
+            within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
             click_on I18n.t("buttons.sign_in_publisher")
 
             # Expect to send an email
@@ -139,7 +139,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            within("nav") { click_on I18n.t("buttons.sign_in") }
+            within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
             click_on I18n.t("buttons.sign_in_publisher")
 
             # Expect to send an email
@@ -173,7 +173,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         it "can sign in and bypass choice of org" do
           freeze_time do
             visit root_path
-            within("nav") { click_on I18n.t("buttons.sign_in") }
+            within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
             click_on I18n.t("buttons.sign_in_publisher")
 
             # Expect to send an email

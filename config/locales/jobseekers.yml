@@ -531,6 +531,9 @@ en:
         skip_link: Skip to my job alerts
         zero_subscriptions_body_html: '%{link_to} to be made aware of future listings.'
         zero_subscriptions_title: You have no job alerts set up
+    sub_navigation:
+      jobs: "Jobs"
+      schools: "Schools"
     unlocks:
       new:
         description: This link has already been used or is incorrect. If you still want to unlock your Teaching Vacancies account enter your email below.

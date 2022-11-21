@@ -1,0 +1,6 @@
+- unless publisher_signed_in?
+  .sub-navigation
+    .govuk-width-container
+      = tabs html_attributes: { "aria-label": "main menu" } do |tabs|
+        - tabs.navigation_item text: t("jobseekers.sub_navigation.jobs"), link: jobs_path
+        - tabs.navigation_item text: t("jobseekers.sub_navigation.schools"), link: organisations_path

@@ -14,7 +14,11 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
         - if @schools.any?
           = render "organisations/search/results", schools: @schools
         - else
-          p = t("schools.no_results")
+          p.govuk-heading-m = t("organisations.search.no_results_heading")
+          p = t("organisations.search.no_results_text")
+          ul.govuk-list.govuk-list--bullet
+            - t("organisations.search.no_results_hints").each do |hint|
+              li = hint
 
       = govuk_pagination(pagy: @pagy)
 

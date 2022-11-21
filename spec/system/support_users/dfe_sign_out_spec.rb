@@ -8,7 +8,7 @@ RSpec.describe "Support users can sign out with DfE Sign In" do
 
     click_on(I18n.t("nav.sign_out"))
 
-    within("nav") { expect(page).not_to have_content(I18n.t("nav.sign_out")) }
+    within(".govuk-header__navigation") { expect(page).not_to have_content(I18n.t("nav.sign_out")) }
     expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
   end
 end
