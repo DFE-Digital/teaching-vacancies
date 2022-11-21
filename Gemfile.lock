@@ -268,7 +268,7 @@ GEM
       pagy (~> 5.10.1)
       railties (>= 6.1)
       view_component (~> 2.74.1)
-    govuk_design_system_formbuilder (3.2.0)
+    govuk_design_system_formbuilder (3.3.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
