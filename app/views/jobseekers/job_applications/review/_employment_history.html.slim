@@ -5,7 +5,7 @@
     - elsif publisher_signed_in?
       p.govuk-body = t("jobseekers.job_applications.show.employment_history.none")
   - else
-    - job_application.employments.each_with_index do |employment, index|
+    - job_application.employments.order(:started_on).each_with_index do |employment, index|
       - if employment.job?
         = govuk_summary_list html_attributes: { id: "#{employment.job_title}-#{index}" } do |summary_list|
           - summary_list.row do |row|
@@ -37,7 +37,7 @@
               - row.value text: employment.ended_on
 
       - elsif employment.break?
-        = render "jobseekers/job_applications/explained_employment_break", job_application: job_application, employment: employment, index: index
+        = render "jobseekers/job_applications/explained_employment_break", employment: employment, index: index
 
-      - if employment_history_gap?(index, job_application.employments)
-        = render "jobseekers/job_applications/unexplained_employment_break", job_application: job_application, employment: employment, index: index
+      - if employment_history_gap?(index, job_application.employments.order(:started_on))
+        = render "jobseekers/job_applications/unexplained_employment_break", employments: job_application.employments.order(:started_on), employment: employment, index: index
