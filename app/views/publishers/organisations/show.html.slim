@@ -15,13 +15,12 @@
 
     = render "organisation", organisation: @organisation
 
-    - if @organisation.school_group?
-
+    - if current_organisation.trust?
       h2.govuk-heading-m class="govuk-!-margin-top-8"
         = t(".schools")
 
       = govuk_summary_list do |summary_list|
-        - @organisation.schools.not_closed.order(:name).partition(&:profile_complete?).reverse.flatten.each do |school|
+        - current_organisation.schools.not_closed.order(:name).partition(&:profile_complete?).reverse.flatten.each do |school|
           - summary_list.row do |row|
             - row.with_value do
               - if school.profile_complete?
