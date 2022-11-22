@@ -10,8 +10,10 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".title", organisation_type: (@organisation.school? ? "School" : "Organisation"))
 
-    h1.govuk-heading-l = t(".title", organisation_type: @organisation.school_group? ? "Organisation" : "School")
+    .govuk-body
+      = govuk_link_to(t(".preview_link_text", organisation_type: (@organisation.school? ? "school" : "organisation")), publishers_organisation_preview_path(@organisation))
 
     = render "organisation", organisation: @organisation
 

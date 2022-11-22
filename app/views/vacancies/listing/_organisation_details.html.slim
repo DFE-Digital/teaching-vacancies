@@ -16,7 +16,7 @@ section#school-overview
     p.govuk-body = vacancy_or_organisation_description(vacancy)
 
   - if vacancy.organisations.many?
-    h4.govuk-heading-m = t("schools.school_details")
+    h4.govuk-heading-m = t(".schools.school_details")
     = govuk_accordion do |accordion|
       - vacancy.organisations.select(&:school?).each do |organisation|
         - accordion.section heading_text: organisation.name do
@@ -41,4 +41,4 @@ section#school-overview
         - else
           = t("organisations.locations.at_one_school", organisation: vacancy.organisation_name)
 
-      = map(markers: organisation_map_markers(vacancy), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })
+      = map(markers: vacancy_organisations_map_markers(vacancy), marker: { type: "organisation", tracking: { link: "school_website_from_map" } })

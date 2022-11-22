@@ -104,7 +104,10 @@ Rails.application.routes.draw do
     end
     resources :notifications, only: %i[index]
     resources :publisher_preferences, only: %i[new create edit update destroy]
-    resources :organisations, only: %i[show edit update]
+    resources :organisations, only: %i[show edit update] do
+      get :preview
+      get "schools/preview", to: "/publishers/organisations/schools#preview"
+    end
     resource :terms_and_conditions, only: %i[show update]
     get :remove_organisation_filter, to: "publisher_preferences#remove_organisation"
   end
@@ -168,7 +171,9 @@ Rails.application.routes.draw do
     resources :documents, only: %i[show]
   end
 
-  resources :schools, only: %i[index]
+  resources :organisations, only: %i[index show], path: "schools" do
+    resources :schools, only: %i[index], controller: "organisations/schools"
+  end
 
   resource :feedback, only: %i[new create], controller: "general_feedbacks"
   resource :support_request, only: %i[new create]

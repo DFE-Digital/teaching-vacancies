@@ -1,4 +1,4 @@
-= form_for search_form, as: :search, url: schools_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
+= form_for search_form, as: :search, url: organisations_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
   .filters-component class='govuk-!-margin-bottom-4'
     .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" class="govuk-!-margin-bottom-4"
       = f.govuk_text_field :location,

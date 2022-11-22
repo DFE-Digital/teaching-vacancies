@@ -1,5 +1,5 @@
 module MapsHelper
-  def organisation_map_markers(vacancy)
+  def vacancy_organisations_map_markers(vacancy)
     vacancy.organisations.map do |organisation|
       {
         id: vacancy.id,
@@ -7,6 +7,15 @@ module MapsHelper
         geopoint: RGeo::GeoJSON.encode(organisation.geopoint)&.to_json,
       }
     end
+  end
+
+  def organisation_map_marker(organisation)
+    [
+      {
+        parent_id: organisation.id,
+        geopoint: RGeo::GeoJSON.encode(organisation.geopoint)&.to_json,
+      },
+    ]
   end
 
   def organisation_map_can_be_displayed?(vacancy)

@@ -4,7 +4,7 @@ module OrganisationsHelper
   OFSTED_REPORT_ENDPOINT = "https://reports.ofsted.gov.uk/oxedu_providers/full/(urn)/".freeze
 
   def age_range(school)
-    return t("schools.not_given") unless school.minimum_age? && school.maximum_age?
+    return I18n.t("vacancies.listing.schools.not_given") unless school.minimum_age? && school.maximum_age?
 
     "#{school.minimum_age} to #{school.maximum_age}"
   end
@@ -64,7 +64,15 @@ module OrganisationsHelper
       return number_of_pupils(school) if school.gias_data["NumberOfPupils"].present?
       return school_capacity(school) if school.gias_data["SchoolCapacity"].present?
     end
-    I18n.t("schools.no_information")
+    I18n.t("vacancies.listing.schools.no_information")
+  end
+
+  def school_has_school_size_data?(school)
+    school.gias_data["NumberOfPupils"].present? || school.gias_data["SchoolCapacity"].present?
+  end
+
+  def school_is_part_of_a_trust?(school)
+    school.school_groups.any?(&:trust?)
   end
 
   def required_profile_info(value:, missing_text:, missing_prompt:)
@@ -85,11 +93,11 @@ module OrganisationsHelper
   def number_of_pupils(school)
     return unless (number = school.gias_data["NumberOfPupils"])
 
-    I18n.t("schools.size.enrolled", pupils: pupils, number: number)
+    I18n.t("vacancies.listing.schools.size.enrolled", pupils: pupils, number: number)
   end
 
   def school_capacity(school)
-    I18n.t("schools.size.up_to", capacity: school.gias_data["SchoolCapacity"], pupils: pupils)
+    I18n.t("vacancies.listing.schools.size.up_to", capacity: school.gias_data["SchoolCapacity"])
   end
 
   def pupils

@@ -52,7 +52,7 @@ module LinksHelper
 
   def school_website_link(organisation, vacancy: nil, **kwargs)
     tracked_open_in_new_tab_link_to(
-      t("schools.website_link_text", organisation_name: organisation.name),
+      t("vacancies.listing.schools.website_link_text", organisation_name: organisation.name),
       organisation.url,
       link_type: :school_website,
       link_subject: anon(vacancy&.id),
@@ -90,7 +90,7 @@ module LinksHelper
 
   def ofsted_report_link(organisation, vacancy: nil, **kwargs)
     tracked_open_in_new_tab_link_to(
-      t("schools.view_ofsted_report"),
+      t("vacancies.listing.schools.view_ofsted_report"),
       ofsted_report(organisation),
       link_type: :ofsted_report,
       link_subject: anon(vacancy&.id),

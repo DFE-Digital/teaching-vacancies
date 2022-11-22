@@ -1,0 +1,14 @@
+- content_for :page_title_prefix, t(".page_title", school_group_name: @organisation.trust.name)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    div class="govuk-!-margin-bottom-8"
+      h1.govuk-heading-l class="govuk-!-margin-bottom-1"
+        = @organisation.name
+      p.govuk-body-m = full_address(@organisation)
+
+= tabs(html_attributes: { "aria-label": "organisation menu" }) do |tabs|
+  - tabs.navigation_item text: t("organisations.show.tabs.organisation"), link: organisation_path(@organisation)
+  - tabs.navigation_item text: t("organisations.show.tabs.schools"), link: organisation_schools_path(@organisation)
+
+= render "schools", preview: false, organisation: @organisation
