@@ -4,7 +4,6 @@ require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
-require "axe-rspec"
 require "dfe/analytics/testing"
 require "factory_bot_rails"
 require "geocoder"
@@ -84,10 +83,6 @@ RSpec.configure do |config|
     driven_by :chrome_headless
   end
 
-  config.before(:each, type: :system, accessibility: true) do
-    driven_by :chrome_headless
-  end
-
   config.before(:each, geocode: true) do
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
@@ -109,7 +104,6 @@ RSpec.configure do |config|
     end
   end
 
-  config.include AccessibilityHelpers, type: :system
   config.include ActionView::Helpers::NumberHelper
   config.include ActionView::Helpers::TextHelper
   config.include ActiveJob::TestHelper, type: :job
