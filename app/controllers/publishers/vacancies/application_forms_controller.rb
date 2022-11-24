@@ -7,14 +7,14 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     if form.valid?
       # See commit message for 1aa28cce3239c42b1af23d61ae08add3e8c51e5e for context
       vacancy.application_form.attach(form.application_form)
+      vacancy.update(form.params_to_save)
+      update_google_index(vacancy) if vacancy.listed?
+
       if application_form_staged_for_replacement?
         send_event(:supporting_document_replaced, vacancy.application_form)
       else
         send_event(:supporting_document_created, vacancy.application_form)
       end
-
-      vacancy.update(form.params_to_save)
-      update_google_index(vacancy) if vacancy.listed?
 
       redirect_to_next_step
     else
