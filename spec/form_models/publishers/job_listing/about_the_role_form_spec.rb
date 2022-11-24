@@ -122,7 +122,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
     end
 
     context "when school_offer is over 300 words" do
-      let(:error) { [:school_offer, :length, { organisation: "School" }] }
+      let(:error) { [:school_offer, :length, { organisation: "school" }] }
       let(:params) { { school_offer: Faker::Lorem.sentence(word_count: 301) } }
 
       it "fails validation" do
@@ -130,7 +130,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       end
 
       it "has the correct error message" do
-        expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.length", organisation: "School"))
+        expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.length", organisation: "school"))
       end
     end
   end
