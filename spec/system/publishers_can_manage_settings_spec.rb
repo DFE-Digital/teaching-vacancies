@@ -86,19 +86,5 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       expect(page).to have_content("Details updated for #{organisation.name}")
       expect(page.current_path).to eq(publishers_organisation_path(organisation))
     end
-
-    it "allows to edit details of a school in the local_authority" do
-      click_on school1.name
-      click_link "Change", match: :first
-
-      expect(find_field("publishers_organisation_form[url_override]").value).to eq(school1.url_override)
-
-      fill_in "publishers_organisation_form[description]", with: "Our school prides itself on excellence."
-      fill_in "publishers_organisation_form[url_override]", with: "https://www.this-is-a-test-url.example.com"
-      click_on I18n.t("buttons.save_changes")
-
-      expect(page).to have_content("Details updated for #{school1.name}")
-      expect(page.current_path).to eq(publishers_organisation_path(school1))
-    end
   end
 end
