@@ -56,7 +56,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def render_job_roles_filter(value)
-    { job_role: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_roleform.job_role_options.#{role}") }.join(", ") }
+    { job_role: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", ") }
   end
 
   def render_ect_statuses_filter(value)
