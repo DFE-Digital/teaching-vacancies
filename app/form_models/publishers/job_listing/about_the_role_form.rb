@@ -47,7 +47,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   end
 
   def school_offer_does_not_exceed_maximum_words
-    errors.add(:school_offer, :length, organisation: organisation_type.capitalize) if number_of_words_exceeds_permitted_length?(300, school_offer)
+    errors.add(:school_offer, :length, organisation: organisation_type.downcase) if number_of_words_exceeds_permitted_length?(300, school_offer)
   end
 
   def skills_and_experience_presence
