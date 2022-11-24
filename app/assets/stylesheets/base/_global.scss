@@ -37,6 +37,12 @@ dl {
   }
 }
 
+.govuk-panel {
+  &__body {
+    overflow-wrap: break-word;
+  }
+}
+
 @media print {
   .govuk-header,
   .govuk-breadcrumbs,
