@@ -92,7 +92,7 @@ en:
           title: Complete your %{organisation_type} profile
         complete_school_profile: Complete your school profile
       update:
-        success_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
+        success: "%{organisation_type} details updated"
       organisation:
         not_provided: Not entered
         name:

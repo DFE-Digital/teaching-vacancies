@@ -24,7 +24,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       fill_in "publishers_organisation_form[url_override]", with: "https://www.this-is-a-test-url.example.com"
       click_on I18n.t("buttons.save_changes")
 
-      expect(page).to have_content("Details updated for #{organisation.name}")
+      expect(page).to have_content(I18n.t("publishers.organisations.update.success", organisation_type: "School"))
       expect(page.current_path).to eq(publishers_organisation_path(organisation))
     end
   end
@@ -47,7 +47,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       fill_in "publishers_organisation_form[url_override]", with: "https://www.this-is-a-test-url.example.com"
       click_on I18n.t("buttons.save_changes")
 
-      expect(page).to have_content("Details updated for #{organisation.name}")
+      expect(page).to have_content(I18n.t("publishers.organisations.update.success", organisation_type: "Organisation"))
       expect(page.current_path).to eq(publishers_organisation_path(organisation))
     end
 
@@ -62,7 +62,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       fill_in "publishers_organisation_form[url_override]", with: "https://www.this-is-a-test-url.example.com"
       click_on I18n.t("buttons.save_changes")
 
-      expect(page).to have_content("Details updated for #{school1.name}")
+      expect(page).to have_content(I18n.t("publishers.organisations.update.success", organisation_type: "School"))
       expect(page.current_path).to eq(publishers_organisation_path(school1))
     end
   end
@@ -83,7 +83,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
       fill_in "publishers_organisation_form[url_override]", with: "https://www.this-is-a-test-url.example.com"
       click_on I18n.t("buttons.save_changes")
 
-      expect(page).to have_content("Details updated for #{organisation.name}")
+      expect(page).to have_content(I18n.t("publishers.organisations.update.success", organisation_type: "Organisation"))
       expect(page.current_path).to eq(publishers_organisation_path(organisation))
     end
   end
