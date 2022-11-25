@@ -14,7 +14,7 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
     if organisation && @organisation_form.valid?
       organisation.update(organisation_params)
-      redirect_to publishers_organisation_path(organisation), success: t(".success_html", organisation: organisation.name)
+      redirect_to publishers_organisation_path(organisation), success: t(".success", organisation_type: organisation.school? ? "School" : "Organisation")
     else
       render :edit
     end
