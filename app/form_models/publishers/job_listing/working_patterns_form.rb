@@ -17,7 +17,6 @@ class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::Vaca
 
   def params_to_save
     {
-      completed_steps: completed_steps,
       working_patterns: working_patterns,
       part_time_details: (part_time_details if working_patterns&.include?("part_time")),
       full_time_details: (full_time_details if working_patterns&.include?("full_time")),

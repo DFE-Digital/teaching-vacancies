@@ -52,6 +52,12 @@ RSpec.describe "Documents" do
         expect(vacancy.reload.application_email).to eq(application_email)
       end
 
+      it "adds application_form to the completed steps" do
+        request
+
+        expect(vacancy.reload.completed_steps).to include("application_form")
+      end
+
       context "when the vacancy is listed" do
         before do
           allow(vacancy).to receive(:listed?).and_return(true)

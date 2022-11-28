@@ -10,7 +10,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
         send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
       end
 
-      vacancy.update(completed_steps: completed_steps)
+      vacancy.update(documents_form.params_to_save)
 
       render :index
     else
@@ -47,7 +47,9 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def documents_form_params
-    (params[:publishers_job_listing_documents_form] || params).permit(documents: [])
+    (params[:publishers_job_listing_documents_form] || params)
+      .permit(documents: [])
+      .merge(completed_steps: completed_steps)
   end
 
   def confirmation_form

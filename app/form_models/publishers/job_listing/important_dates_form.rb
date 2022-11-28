@@ -35,7 +35,6 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
 
   def params_to_save
     {
-      completed_steps: completed_steps,
       publish_on: publish_on,
       expires_at: expires_at,
     }
