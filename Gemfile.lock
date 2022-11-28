@@ -386,7 +386,7 @@ GEM
     parser (3.1.2.1)
       ast (~> 2.4.1)
     parslet (2.0.0)
-    pg (1.4.4)
+    pg (1.4.5)
     propshaft (0.6.4)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
