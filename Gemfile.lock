@@ -560,7 +560,7 @@ GEM
       faraday (>= 0.17.5, < 3.a)
       jwt (>= 1.5, < 3.0)
       multi_json (~> 1.10)
-    skylight (5.3.3)
+    skylight (5.3.4)
       activesupport (>= 5.2.0)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
