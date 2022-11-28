@@ -199,7 +199,7 @@ GEM
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
-    friendly_id (5.4.2)
+    friendly_id (5.5.0)
       activerecord (>= 4.0.0)
     front_matter_parser (1.0.1)
     fugit (1.7.1)
