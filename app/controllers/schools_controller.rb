@@ -7,7 +7,7 @@ class SchoolsController < ApplicationController
   private
 
   helper_method def search_form
-    @search_form ||= SchoolSearchForm.new(params[:search]&.permit(SchoolSearchForm.attribute_names))
+    @search_form ||= SchoolSearchForm.new(params)
   end
 
   def search_scope

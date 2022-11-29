@@ -5,8 +5,7 @@ RSpec.describe Search::SchoolSearch do
 
   let(:form_hash) do
     {
-      location: location,
-      radius: radius,
+      location: ([location, radius] if location.present?),
     }.compact
   end
 

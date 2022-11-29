@@ -3,15 +3,18 @@
 h1 class="govuk-heading-l" role="heading" aria-level="1"
   = "Schools (#{number_with_delimiter(@pagy.count)})"
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds-at-desktop
-    = render "schools/search/form"
+= form_for search_form, as: "", url: url_for, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
+  .govuk-grid-row
+    .govuk-grid-column-one-third-at-desktop
+      = render "schools/search/filters", f: f
+    .govuk-grid-column-two-thirds-at-desktop
+      = render "schools/search/form", f: f
 
-    #search-results
+      #search-results
+        - if @schools.any?
+          = render "schools/search/results", schools: @schools
+        - else
+          p = t("schools.no_results")
+      = govuk_pagination(pagy: @pagy)
       - if @schools.any?
-        = render "schools/search/results", schools: @schools
-      - else
-        p = t("schools.no_results")
-    = govuk_pagination(pagy: @pagy)
-    - if @schools.any?
-      = render "schools/search/stats"
+        = render "schools/search/stats"

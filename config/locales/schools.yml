@@ -1,0 +1,11 @@
+en:
+  schools:
+    filters:
+      education_phase: Phase of education
+      key_stage: Key stage
+      special_school: Special school
+      job_availability:
+        label: Job availability
+        options:
+          true: Has jobs
+          false: Does not have any jobs
