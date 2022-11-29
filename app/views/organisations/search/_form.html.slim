@@ -1,15 +1,14 @@
-= form_for search_form, as: :search, url: organisations_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
-  .filters-component class='govuk-!-margin-bottom-4'
-    .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" class="govuk-!-margin-bottom-4"
-      = f.govuk_text_field :location,
-        label: { text: "City, county or postcode", size: "s" },
-        class: %w[location-finder__input]
+.filters-component class='govuk-!-margin-bottom-4'
+  .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" class="govuk-!-margin-bottom-4"
+    = f.govuk_text_field :location,
+      label: { text: "City, county or postcode", size: "s" },
+      class: %w[location-finder__input]
 
-    = f.govuk_collection_select :radius, radius_filter_options, :last, :first,
-      label: { text: t("jobs.search.within_radius"), size: "s" },
-      data: { "change-submit": "false" },
-      form_group: { classes: "location-search__radius" },
-      options: { selected: search_form.radius || Search::RadiusBuilder::DEFAULT_BUFFER_FOR_POLYGON_SEARCHES }
+  = f.govuk_collection_select :radius, radius_filter_options, :last, :first,
+    label: { text: t("jobs.search.within_radius"), size: "s" },
+    data: { "change-submit": "false" },
+    form_group: { classes: "location-search__radius" },
+    options: { selected: search_form.radius || Search::RadiusBuilder::DEFAULT_BUFFER_FOR_POLYGON_SEARCHES }
 
-    .search-results-controls__submit
-      = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0"
+  .search-results-controls__submit
+    = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0"
