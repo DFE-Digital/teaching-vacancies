@@ -15,7 +15,7 @@
 
     = render "organisation", organisation: @organisation
 
-    - if current_organisation.trust?
+    - if current_organisation.trust? && @organisation.school_group?
       h2.govuk-heading-m class="govuk-!-margin-top-8"
         = t(".schools")
 
