@@ -129,6 +129,7 @@ class Vacancy < ApplicationRecord
     organisations.one? && organisations.first.trust?
   end
 
+  # TODO: This method matches conditions of :live scope, not :listed. We should rename it
   def listed?
     published? && expires_at&.future? && (publish_on&.today? || publish_on&.past?)
   end
