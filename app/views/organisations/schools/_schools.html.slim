@@ -1,0 +1,8 @@
+.govuk-heading-m = t("organisations.schools.index.heading")
+
+- organisation.schools.each do |school|
+  p.govuk-body
+    - if preview
+      = govuk_link_to(school.name, publishers_organisation_preview_path(school))
+    - else
+      = govuk_link_to(school.name, organisation_path(school))

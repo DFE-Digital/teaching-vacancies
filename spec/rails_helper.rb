@@ -121,6 +121,7 @@ RSpec.configure do |config|
   config.include JobseekerHelpers
   config.include MailerHelpers
   config.include OrganisationsHelper
+  config.include OrganisationHelpers
   config.include VacanciesHelper
   config.include VacancyHelpers
   config.include ViewComponent::TestHelpers, type: :component

@@ -1,28 +1,28 @@
 = govuk_summary_list actions: false do |summary_list|
   - summary_list.row do |row|
-    - row.key text: t("schools.type")
+    - row.key text: t("vacancies.listing.schools.type")
     - row.value text: organisation_type(organisation)
 
   - if organisation.phase? && !organisation.not_applicable?
     - summary_list.row do |row|
-      - row.key text: t("schools.phase")
+      - row.key text: t("vacancies.listing.schools.phase")
       - row.value text: linked_school_phase(organisation)
 
   - summary_list.row do |row|
-    - row.key text: t("schools.school_size")
+    - row.key text: t("vacancies.listing.schools.school_size")
     - row.value text: school_size(organisation)
 
   - summary_list.row do |row|
-    - row.key text: t("schools.age_range")
+    - row.key text: t("vacancies.listing.schools.age_range")
     - row.value text: age_range(organisation)
 
   - summary_list.row do |row|
-    - row.key text: t("schools.ofsted_report")
-    - row.value text: organisation.has_ofsted_report? ? ofsted_report_link(organisation, vacancy: vacancy, class: "wordwrap") : t("schools.no_information")
+    - row.key text: t("vacancies.listing.schools.ofsted_report")
+    - row.value text: organisation.has_ofsted_report? ? ofsted_report_link(organisation, vacancy: vacancy, class: "wordwrap") : t("vacancies.listing.schools.no_information")
 
   - if organisation.url.present?
     - summary_list.row do |row|
-      - row.key text: t("schools.website")
+      - row.key text: t("vacancies.listing.schools.website")
       - row.value text: school_website_link(organisation, vacancy: vacancy, class: "wordwrap")
 
   - if contact_details

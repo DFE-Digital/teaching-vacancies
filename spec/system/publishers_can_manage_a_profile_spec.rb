@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can manage organisation/school profile" do
+RSpec.describe "Publishers can manage an organisation or school profile" do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
 
   before do
@@ -8,13 +8,12 @@ RSpec.describe "Publishers can manage organisation/school profile" do
     visit publisher_root_path
   end
 
-  context "when publisher logs in as a school" do
+  context "when the publisher is signed in as a school" do
     before do
       click_link I18n.t("nav.school_profile")
     end
 
     let(:organisation) { create(:school) }
-
     it "allows to edit the school details" do
       click_link("Change", match: :first)
 
@@ -29,7 +28,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
     end
   end
 
-  context "when publisher logs in as a trust" do
+  context "when the publisher is signed in as a trust" do
     before do
       click_link I18n.t("nav.organisation_profile")
     end
@@ -67,7 +66,7 @@ RSpec.describe "Publishers can manage organisation/school profile" do
     end
   end
 
-  context "when publisher logs in as a local_authority" do
+  context "when the publisher is signed in as a local authority" do
     before do
       click_link I18n.t("nav.organisation_profile")
     end
