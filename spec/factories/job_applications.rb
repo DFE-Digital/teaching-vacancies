@@ -197,8 +197,10 @@ FactoryBot.define do
     qualified_teacher_status { "yes" }
     qualified_teacher_status_year { "2021" }
     email_address { "jane.smith@gmail.com" }
-    support_needed { "no" }
-    close_relationships { "no" }
+    support_needed { "yes" }
+    support_needed_details { "I require a wheelchair accessible room for an interview" }
+    close_relationships { "yes" }
+    close_relationships_details { "Brother-in-law works at the trust" }
 
     personal_statement do
       "As an English teacher, I am extremely passionate about instilling a love of reading and the written word into young people. I have been interested in a position at your school for a number of years and was thrilled to see this opportunity. I received my QTS in 2019, and have since worked as an English teacher in a secondary school in Sheffield.<br />
