@@ -14,12 +14,12 @@ FactoryBot.define do
   trait :employment1 do
     organisation { "Townington Secondary School" }
     job_title { "KS3 Teaching Assistant" }
-    main_duties { "Pastoral support for Year 7 students. Monitored students’ progress and gave feedback to teachers. Supported the teacher with behaviour management. Administrative duties, such as organising materials, and preparing and clearing up the classroom. Ran a daily homework club. First Aid trained." }
+    main_duties { "Pastoral support for students. Managing student behaviour. Monitored students’ progress and gave feedback to teachers." }
   end
 
   trait :employment2 do
     organisation { "English Teacher" }
     job_title { "Sheffield Secondary School" }
-    main_duties { "Planning and delivering English Literature and Language lessons ro a range of abilities across KS3 and GCSE to prepare them for exams. Marking work, tracking development, and feeding back to students and parents. Managing student behaviour. Supervising teaching assistants. Contributing to the English department via extra curricular activities, organising trips, and running a reading club. Keeping up to date with subject knowledge, INSET training, and CPD." }
+    main_duties { "Planning and delivering English Literature and Language lessons ro a range of abilities across KS3 and GCSE to prepare them for exams. Contributing to the English department via extra curricular activities, organising trips, and running a reading club." }
   end
 end
