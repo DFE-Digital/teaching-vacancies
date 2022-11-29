@@ -545,10 +545,10 @@ GEM
       sidekiq (>= 3.0)
     shoulda-matchers (5.2.0)
       activesupport (>= 5.2.0)
-    sidekiq (6.5.5)
-      connection_pool (>= 2.2.2)
+    sidekiq (6.5.8)
+      connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
-      redis (>= 4.5.0)
+      redis (>= 4.5.0, < 5)
     sidekiq-cron (1.8.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
@@ -704,7 +704,7 @@ DEPENDENCIES
   rails_semantic_logger
   railties (~> 7.0.3)
   recaptcha
-  redis (= 4.8.0)
+  redis
   rgeo-geojson
   rspec-rails (>= 6.0.0rc)
   rubocop-performance
@@ -716,7 +716,7 @@ DEPENDENCIES
   sentry-ruby
   sentry-sidekiq
   shoulda-matchers
-  sidekiq
+  sidekiq (< 7)
   sidekiq-cron
   skylight
   slim-rails
