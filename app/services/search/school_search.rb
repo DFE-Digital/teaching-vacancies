@@ -70,7 +70,7 @@ class Search::SchoolSearch
   def apply_job_availability_filter(scope)
     return scope unless @search_criteria.key?(:job_availability)
 
-    vacancy_ids = Vacancy.listed.select(:id)
+    vacancy_ids = Vacancy.live.select(:id)
     organisation_ids = OrganisationVacancy.where(vacancy_id: vacancy_ids).select(:organisation_id)
 
     if @search_criteria[:job_availability]
