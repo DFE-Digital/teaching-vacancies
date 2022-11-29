@@ -42,5 +42,5 @@
 
   - if organisation.has_ofsted_report?
     - summary_list.row do |row|
-      - row.key text: t("schools.ofsted_report")
+      - row.key text: t(".ofsted_report.label")
       - row.value text: ofsted_report_link(organisation, class: "wordwrap")

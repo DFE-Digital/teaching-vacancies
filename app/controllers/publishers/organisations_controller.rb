@@ -14,16 +14,24 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
     if organisation && @organisation_form.valid?
       organisation.update(organisation_params)
-      redirect_to publishers_organisation_path(organisation), success: t(".success_html", organisation: organisation.name)
+      redirect_to publishers_organisation_path(organisation), success: t(".success", organisation_type: organisation.school? ? "School" : "Organisation")
     else
       render :edit
     end
   end
 
+  def preview
+    @organisation = Organisation.friendly.find(params[:organisation_id])
+  end
+
   private
 
   def organisation
-    @organisation ||= current_organisation.friendly_id == params[:id] ? current_organisation : current_organisation.schools.friendly.find(params[:id])
+    @organisation ||= if current_organisation.friendly_id == (params[:id] || params[:organisation_id])
+                        current_organisation
+                      else
+                        current_organisation.schools.friendly.find(params[:id] || params[:organisation_id])
+                      end
   end
 
   def organisation_params

@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, t(".page_title", school_group_name: @organisation.trust.name)
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t(".exit_preview_link_text"), href: publishers_organisation_path(@organisation)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    div class="govuk-!-margin-bottom-8"
+      h1.govuk-heading-l class="govuk-!-margin-bottom-1"
+        = @organisation.name
+      p.govuk-body-m = full_address(@organisation)
+
+= tabs(html_attributes: { "aria-label": "organisation menu" }) do |tabs|
+  - tabs.navigation_item text: t("organisations.show.tabs.organisation"), link: publishers_organisation_preview_path(@organisation)
+  - tabs.navigation_item text: t("organisations.show.tabs.schools"), link: publishers_organisation_schools_preview_path(@organisation)
+
+= render "organisations/schools/schools", preview: true, organisation: @organisation

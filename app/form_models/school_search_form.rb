@@ -32,15 +32,15 @@ class SchoolSearchForm
   end
 
   def education_phase_options
-    School::READABLE_PHASE_MAPPINGS.values.uniq.compact.map { |i| [i, I18n.t(i, scope: "schools.phases")] }
+    School::READABLE_PHASE_MAPPINGS.values.uniq.compact.map { |i| [i, I18n.t(i, scope: "organisations.search.results.phases")] }
   end
 
   def key_stage_options
-    School::PHASE_TO_KEY_STAGES_MAPPINGS.values.flatten.uniq.sort.map { |i| [i.to_s, I18n.t(i, scope: "schools.key_stages")] }
+    School::PHASE_TO_KEY_STAGES_MAPPINGS.values.flatten.uniq.sort.map { |i| [i.to_s, I18n.t(i, scope: "organisations.search.results.key_stages")] }
   end
 
   def job_availability_options
-    [true, false].map { |i| [i.to_s, I18n.t(i, scope: "schools.filters.job_availability.options")] }
+    [true, false].map { |i| [i.to_s, I18n.t(i, scope: "organisations.filters.job_availability.options")] }
   end
 
   def assign_attributes(new_attributes)

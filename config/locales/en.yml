@@ -333,59 +333,60 @@ en:
       at_one_school: School location
       at_multiple_schools: School locations
       central_office: Head office location
-    visits:
-      at_one_school: Arranging a visit to %{organisation}
-      at_multiple_schools: Arranging a visit to one of the schools
-      central_office: Arranging a visit to %{organisation}
-
-  schools:
-    active_jobs: Active jobs
-    address: Address
-    age_range: Age range
-    description: Description
-    key_stage: Key stage
-    key_stages:
-      early_years: Early years
-      ks1: KS1
-      ks2: KS2
-      ks3: KS3
-      ks4: KS4
-      ks5: KS5
-    no_information: No information available
-    no_results: There are no results.
-    not_given: Not given
-    ofsted_report: Ofsted report
-    organisation_page: '%{organisation_type} page'
-    phase: Education phase
-    phases:
-      nursery: Nursery
-      primary: Primary school
-      middle: Middle school
-      secondary: Secondary school
-      sixth_form_or_college: Sixth form or college
-      through: Through school
-    school_age: School age
-    school_details: School details
-    school_size: School size
-    size:
-      enrolled: '%{number} %{pupils} enrolled'
-      up_to: 'Up to %{capacity} %{pupils}'
-      pupils: 'pupil'
-    type: 'School type'
-    urn: Unique identifier (URN)
-    view_ofsted_report: View Ofsted report
-    website: School website
-    website_link_text: '%{organisation_name} website'
-
-  school_groups:
-    address: Trust address
-    description: Description
-    group_type: Group type
-    school_visits_heading: Arranging a visit to %{school}
-    trust_overview: Trust overview
-    type: Trust type
-    uid: Unique identifier (UID)
-    website: '%{organisation_type} website'
+    map:
+      heading: Location and map
+    schools:
+      index:
+        heading: Schools
+        page_title: Schools - %{school_group_name}
+    search:
+      results:
+        active_jobs: Active jobs
+        key_stage: Key stage
+        key_stages:
+          early_years: Early years
+          ks1: KS1
+          ks2: KS2
+          ks3: KS3
+          ks4: KS4
+          ks5: KS5
+        phase: Education phase
+        phases:
+          nursery: Nursery
+          primary: Primary school
+          middle: Middle school
+          secondary: Secondary school
+          sixth_form_or_college: Sixth form or college
+          through: Through school
+    show:
+      job_alert:
+        button: Set up job alert
+        call_to_action: Get a job alert whenever a role is listed at %{organisation_name}
+        heading: Set up a job alert
+      summary:
+        address: Address
+        age_range: Age range
+        description: '%{organisation_type} description'
+        education_phase: Education phase
+        heading: Summary
+        name: Name
+        size: Size
+        type: Type
+        website_address: Website address
+      tabs:
+        organisation: Organisation
+        schools: Schools
+      vacancies:
+        heading: Current jobs
+      vacancy:
+        actual_salary: Actual salary
+        full_time_equivalent_salary: Full-time equivalent salary
+        job_role: Role
+        working_pattern: Working pattern
+      visits:
+        at_one_school: Arranging a visit to %{organisation}
+        at_multiple_schools: Arranging a visit to one of the schools
+        central_office: Arranging a visit to %{organisation}
 
   shared:
     filter_group:
@@ -537,6 +538,35 @@ en:
       page_description: >-
         Search for teaching jobs near you and other school jobs including headteacher and teaching assistant. Visit the official place to find teaching jobs.
       no_polygons: This search didn't use any polygons.
+    listing:
+      schools:
+        address: Address
+        age_range: Age range
+        no_information: No information available
+        not_given: Not given
+        ofsted_report: Ofsted report
+        organisation_page: '%{organisation_type} page'
+        phase: Education phase
+        school_age: School age
+        school_details: School details
+        school_size: School size
+        size:
+          enrolled: '%{number} pupils enrolled'
+          up_to: 'Up to %{capacity} pupils'
+        type: 'School type'
+        urn: Unique identifier (URN)
+        view_ofsted_report: View Ofsted report
+        website: School website
+        website_link_text: '%{organisation_name} website'
+      school_groups:
+        address: Trust address
+        description: Description
+        group_type: Group type
+        school_visits_heading: Arranging a visit to %{school}
+        trust_overview: Trust overview
+        type: Trust type
+        uid: Unique identifier (UID)
+        website: '%{organisation_type} website'
     search:
       no_results_organisation:
         no_active_jobs: There are no active jobs

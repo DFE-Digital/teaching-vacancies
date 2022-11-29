@@ -10,12 +10,14 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".title", organisation_type: (@organisation.school? ? "School" : "Organisation"))
 
-    h1.govuk-heading-l = t(".title", organisation_type: @organisation.school_group? ? "Organisation" : "School")
+    .govuk-body
+      = govuk_link_to(t(".preview_link_text", organisation_type: (@organisation.school? ? "school" : "organisation")), publishers_organisation_preview_path(@organisation))
 
     = render "organisation", organisation: @organisation
 
-    - if current_organisation.trust?
+    - if current_organisation.trust? && @organisation.school_group?
       h2.govuk-heading-m class="govuk-!-margin-top-8"
         = t(".schools")
 
@@ -29,4 +31,4 @@
               - else
                 .govuk-inset-text.govuk-inset-text--dark-blue.inset-text--narrow-border class="govuk-!-margin-bottom-2"
                   p.govuk-inset-text--header = govuk_link_to school.name.titlecase, publishers_organisation_path(school), no_visited_state: true
-                  p.govuk-inset-text--header = t(".complete_school_profile", raise: true)
+                  p.govuk-inset-text--header class="govuk-!-padding-top-0" = t(".complete_school_profile", raise: true)

@@ -47,4 +47,8 @@ class School < Organisation
 
     PHASE_TO_KEY_STAGES_MAPPINGS[phase.to_sym]
   end
+
+  def trust
+    school_groups&.find(&:trust?)
+  end
 end

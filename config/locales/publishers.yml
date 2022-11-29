@@ -85,14 +85,26 @@ en:
     organisations:
       edit:
         title: Change %{organisation_type} details
+      preview:
+        exit_preview_link_text: Exit preview
+        page_title: Preview %{organisation_name}
+        summary:
+          heading:
+            caption_with_link_html: Part of %{link}
+            link_text: '%{organisation_name}'
+      schools:
+        preview:
+          exit_preview_link_text: Exit preview
+          page_title: Schools - %{school_group_name}
       show:
+        preview_link_text: Preview %{organisation_type} profile
         schools: Schools
         title: '%{organisation_type} profile'
         profile_incomplete_banner:
           title: Complete your %{organisation_type} profile
         complete_school_profile: Complete your school profile
       update:
-        success_html: Details updated for <span class="govuk-!-font-weight-bold">%{organisation}</span>
+        success: "%{organisation_type} details updated"
       organisation:
         not_provided: Not entered
         name:
@@ -101,6 +113,8 @@ en:
           label: Address
         type:
           label: Type
+        ofsted_report:
+          label: Ofsted report
         phase:
           label: Education phase
           values:

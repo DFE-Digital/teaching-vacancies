@@ -10,4 +10,16 @@ FactoryBot.define do
 
     job_application
   end
+
+  trait :employment1 do
+    organisation { "Townington Secondary School" }
+    job_title { "KS3 Teaching Assistant" }
+    main_duties { "Pastoral support for students. Managing student behaviour. Monitored students’ progress and gave feedback to teachers." }
+  end
+
+  trait :employment2 do
+    organisation { "English Teacher" }
+    job_title { "Sheffield Secondary School" }
+    main_duties { "Planning and delivering English Literature and Language lessons ro a range of abilities across KS3 and GCSE to prepare them for exams. Contributing to the English department via extra curricular activities, organising trips, and running a reading club." }
+  end
 end

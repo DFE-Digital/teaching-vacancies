@@ -1,4 +1,8 @@
-class SchoolsController < ApplicationController
+class OrganisationsController < ApplicationController
+  def show
+    organisation
+  end
+
   def index
     @school_search = Search::SchoolSearch.new(search_form.to_h, scope: search_scope)
     @pagy, @schools = pagy(@school_search.organisations)
@@ -12,5 +16,9 @@ class SchoolsController < ApplicationController
 
   def search_scope
     Organisation.schools.or(Organisation.trusts).registered_for_service.order(:name)
+  end
+
+  def organisation
+    @organisation ||= Organisation.friendly.find(params[:id] || params[:organisation_id])
   end
 end
