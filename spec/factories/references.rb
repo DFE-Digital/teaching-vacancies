@@ -10,4 +10,18 @@ FactoryBot.define do
 
     job_application
   end
+
+  trait :reference1 do
+    name { "Laura Davison" }
+    organisation { "Townington Secondary School" }
+    relationship { "Line manager" }
+    email { "l.davison@english.townington.ac.uk" }
+  end
+
+  trait :reference2 do
+    name { "John Thompson" }
+    organisation { "Sheffield Secondary School" }
+    relationship { "Line manager" }
+    email { "john.thompson@english.sheffield.ac.uk" }
+  end
 end

@@ -192,8 +192,13 @@ FactoryBot.define do
     city { "Townington" }
     postcode { "AB1 2CD" }
     country { "England" }
-
+    phone_number { "07123456789" }
+    teacher_reference_number { "123456" }
+    qualified_teacher_status { "yes" }
+    qualified_teacher_status_year { "2021" }
     email_address { "jane.smith@gmail.com" }
+    support_needed { "no" }
+    close_relationships { "no" }
 
     personal_statement do
       "As an English teacher, I am extremely passionate about instilling a love of reading and the written word into young people. I have been interested in a position at your school for a number of years and was thrilled to see this opportunity. I received my QTS in 2019, and have since worked as an English teacher in a secondary school in Sheffield.<br />
@@ -205,16 +210,23 @@ FactoryBot.define do
     employment_history_section_completed { true }
 
     employments do
-      Array.new(3) { association(:employment) }
+      [
+        association(:employment, :employment1),
+        association(:employment, :employment2),
+      ]
     end
 
     references do
-      Array.new(2) { association(:reference) }
+      [
+        association(:reference, :reference1),
+        association(:reference, :reference2),
+      ]
     end
 
     qualifications do
       [
-        association(:qualification, :category_postgraduate),
+        association(:qualification, :category_undergraduate),
+        association(:qualification, :category_other),
         association(:qualification, :category_a_level),
         association(:qualification, :category_gcse),
       ]
