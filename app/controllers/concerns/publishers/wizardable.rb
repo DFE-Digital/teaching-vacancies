@@ -104,12 +104,6 @@ module Publishers::Wizardable
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 
-  def application_form_params(params)
-    params.require(:publishers_job_listing_application_form_form)
-          .permit(:application_email, :other_application_email)
-          .merge(completed_steps: completed_steps, current_organisation: current_organisation)
-  end
-
   def school_visits_params(params)
     if params[:publishers_job_listing_school_visits_form]
       params.require(:publishers_job_listing_school_visits_form)

@@ -38,6 +38,12 @@ RSpec.describe "Documents" do
       it "renders the index page" do
         expect(request).to render_template(:index)
       end
+
+      it "adds documents to the completed steps" do
+        request
+
+        expect(vacancy.reload.completed_steps).to include("documents")
+      end
     end
 
     context "when the form is invalid" do

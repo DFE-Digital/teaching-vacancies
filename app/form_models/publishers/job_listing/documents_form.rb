@@ -20,6 +20,10 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::UploadBase
     :documents
   end
 
+  def params_to_save
+    { completed_steps: params[:completed_steps] }
+  end
+
   private
 
   def document_presence
