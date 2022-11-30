@@ -107,6 +107,22 @@ RSpec.describe "Documents" do
           expect(request).to redirect_to(organisation_job_path(vacancy.id))
         end
       end
+
+      context "when only the application email has been changed" do
+        let(:vacancy) { create(:vacancy, :with_application_form, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
+        let(:request) do
+          post organisation_job_application_forms_path(vacancy.id), params: {
+            publishers_job_listing_application_form_form: {
+              application_form: nil,
+              application_email: application_email,
+            },
+          }
+        end
+
+        it "does not send a supporting_document_created event" do
+          expect { request }.to_not have_triggered_event(:supporting_document_created)
+        end
+      end
     end
 
     context "when the form is invalid" do
