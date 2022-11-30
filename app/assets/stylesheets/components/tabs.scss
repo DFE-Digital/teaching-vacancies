@@ -17,10 +17,6 @@
 
     &:visited {
       color: $govuk-link-colour;
-
-      &[aria-current] {
-        color: govuk-colour('black');
-      }
     }
 
     &:focus {
@@ -42,12 +38,6 @@
       margin-bottom: 0;
       margin-right: govuk-spacing(4);
       margin-top: 0;
-
-      @include govuk-media-query ($until: desktop) {
-        display: block;
-        line-height: 1;
-        margin-bottom: 0;
-      }
     }
 
     &__link {
@@ -60,15 +50,7 @@
       position: relative;
       text-decoration: none;
 
-      @include govuk-media-query ($until: desktop) {
-        padding: govuk-spacing(2);
-      }
-
       &[aria-current] {
-        @include govuk-media-query ($until: desktop) {
-          border-left: govuk-spacing(1) solid govuk-colour('light-blue');
-        }
-
         &::before {
           background-color: govuk-colour('light-blue');
           bottom: 0;
@@ -78,10 +60,6 @@
           left: 0;
           position: absolute;
           width: 100%;
-
-          @include govuk-media-query ($until: desktop) {
-            background: none;
-          }
         }
       }
     }

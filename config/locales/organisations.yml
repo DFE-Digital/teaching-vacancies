@@ -9,3 +9,9 @@ en:
         options:
           true: Has jobs
           false: Does not have any jobs
+    search:
+      no_results_heading: No schools found
+      no_results_text: "You may get more results if you:"
+      no_results_hints:
+        - change the radius of your search
+        - look at a wider geographical location, for example West Yorkshire instead of Leeds

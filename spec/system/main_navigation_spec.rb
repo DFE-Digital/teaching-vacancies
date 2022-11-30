@@ -9,7 +9,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
     before { visit root_path }
 
     it "renders the correct links" do
-      within "nav" do
+      within ".govuk-header__navigation" do
         expect(page).to have_content(I18n.t("nav.create_a_job_alert"))
         expect(page).to have_content(I18n.t("buttons.sign_in"))
       end
@@ -23,7 +23,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
     end
 
     it "renders the correct links" do
-      within "nav" do
+      within ".govuk-header__navigation" do
         expect(page).to have_content(I18n.t("nav.find_job"))
         expect(page).to have_content(I18n.t("nav.your_account"))
         expect(page).to have_content(I18n.t("nav.sign_out"))
@@ -38,7 +38,7 @@ RSpec.describe "Main navigation for users to sign in and out" do
     end
 
     it "renders the correct links" do
-      within "nav" do
+      within ".govuk-header__navigation" do
         expect(page).to have_content(I18n.t("nav.manage_jobs"))
         expect(page).to have_content(I18n.t("nav.notifications_html", count: 0))
         expect(page).to have_content(I18n.t("nav.sign_out"))

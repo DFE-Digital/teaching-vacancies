@@ -68,7 +68,7 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
       let!(:vacancy) { create(:vacancy, organisations: [school_one]) }
 
       before do
-        within("div.tabs-component") do
+        within(".organisation-navigation") do
           click_on I18n.t("organisations.show.tabs.schools")
         end
 

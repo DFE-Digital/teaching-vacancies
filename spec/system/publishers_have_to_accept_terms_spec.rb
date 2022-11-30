@@ -47,7 +47,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
         visit publishers_terms_and_conditions_path
         click_on(I18n.t("nav.sign_out"))
 
-        within("nav") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
+        within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
       end
 
       scenario "without authentication fallback" do

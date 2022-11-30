@@ -10,7 +10,7 @@ RSpec.describe "Jobseekers can view their dashboard" do
   end
 
   it "shows `Applications` tab" do
-    within ".tabs-component" do
+    within ".govuk-main-wrapper .tabs-component" do
       expect(page).to have_link(I18n.t("jobseekers.accounts.show.page_title"))
       expect(page).to_not have_link(I18n.t("jobseekers.job_applications.index.page_title"))
       expect(page).to_not have_link(I18n.t("jobseekers.saved_jobs.index.page_title"))

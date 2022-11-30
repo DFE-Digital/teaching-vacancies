@@ -15,11 +15,14 @@ html.govuk-template.app-html-class lang="en"
     = render "layouts/skip_links"
     = render EnvironmentBannerComponent.new
     = render "layouts/header"
-    div class="govuk-width-container"
+    .govuk-width-container
       = render "layouts/phase_banner"
+    = render "layouts/sub_navigation"
+
+    .govuk-width-container
       = content_for :breadcrumbs
       = render "layouts/flash_messages"
-      main#main-content.govuk-main-wrapper role="main"
+      main#main-content.govuk-main-wrapper.govuk-main-wrapper--auto-spacing role="main"
         = yield
       = content_for :after_main
     = render "layouts/footer"

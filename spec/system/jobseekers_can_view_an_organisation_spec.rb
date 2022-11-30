@@ -70,7 +70,7 @@ RSpec.describe "Viewing an organisation" do
     end
 
     it "displays a list of schools associated with the school group" do
-      within("div.tabs-component") do
+      within(".organisation-navigation") do
         expect(page).to have_content(I18n.t("organisations.show.tabs.schools"))
 
         click_on I18n.t("organisations.show.tabs.schools")
