@@ -155,6 +155,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
               .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
               .and_data(sign_in_type: "email")
 
+            click_on I18n.t("publishers.incomplete_profile.skip_to_link_text")
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(trust.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
