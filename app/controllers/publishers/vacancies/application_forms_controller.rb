@@ -5,17 +5,9 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
 
   def create
     if form.valid?
-      # See commit message for 1aa28cce3239c42b1af23d61ae08add3e8c51e5e for context
-      vacancy.application_form.attach(form.application_form)
-      vacancy.update(form.params_to_save)
-      update_google_index(vacancy) if vacancy.listed?
-
-      if application_form_staged_for_replacement?
-        send_event(:supporting_document_replaced, vacancy.application_form)
-      else
-        send_event(:supporting_document_created, vacancy.application_form)
-      end
-
+      vacancy.application_form.attach(form.application_form) if application_form_uploaded?
+      update_vacancy
+      send_event if application_form_uploaded?
       redirect_to_next_step
     else
       # See commit message for 1aa28cce3239c42b1af23d61ae08add3e8c51e5e for context
@@ -39,15 +31,26 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 
-  def send_event(event_type, application_form)
+  def update_vacancy
+    vacancy.update(form.params_to_save)
+    update_google_index(vacancy) if vacancy.listed?
+  end
+
+  def event_type
+    return :supporting_document_replaced if application_form_staged_for_replacement?
+
+    :supporting_document_created
+  end
+
+  def send_event
     fail_safe do
       request_event.trigger(
         event_type,
         vacancy_id: StringAnonymiser.new(vacancy.id),
         document_type: "application_form",
-        name: application_form.filename,
-        size: application_form.byte_size,
-        content_type: application_form.content_type,
+        name: vacancy.application_form.filename,
+        size: vacancy.application_form.byte_size,
+        content_type: vacancy.application_form.content_type,
       )
     end
   end
@@ -62,5 +65,9 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
 
   def application_form_staged_for_replacement?
     params[:publishers_job_listing_application_form_form][:application_form_staged_for_replacement].present?
+  end
+
+  def application_form_uploaded?
+    params[:publishers_job_listing_application_form_form][:application_form].present?
   end
 end
