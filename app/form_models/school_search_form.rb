@@ -2,6 +2,7 @@ class SchoolSearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
+  attribute :name
   attribute :location
   attribute :radius, :integer, default: 0
   attribute :education_phase, default: []

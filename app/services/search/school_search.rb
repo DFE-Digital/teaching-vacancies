@@ -2,10 +2,11 @@ class Search::SchoolSearch
   extend Forwardable
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :search_name, :location, :radius
+  attr_reader :search_criteria, :name, :location, :radius
 
   def initialize(search_criteria, scope: Organisation.all)
     @search_criteria = search_criteria
+    @name = search_criteria[:name]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
     @scope = scope
@@ -39,6 +40,7 @@ class Search::SchoolSearch
   def scope
     scope = @scope.all
 
+    scope = scope.where("organisations.name ILIKE ?", "%#{name}%") if name.present?
     scope = scope.search_by_location(*location) if location.present?
     scope = scope.where(phase: education_phase) if education_phase
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
