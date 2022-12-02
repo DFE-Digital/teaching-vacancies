@@ -346,3 +346,4 @@ shared:
     - source
     - created_at
     - updated_at
+    - external_reference

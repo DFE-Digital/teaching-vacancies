@@ -15,7 +15,7 @@ class ImportFromVacancySourcesJob < ApplicationJob
             Rails.logger.info("Imported vacancy #{vacancy.id} from feed #{source_klass.source_name}")
           else
             report_validation_errors(source_klass, vacancy)
-            FailedImportedVacancy.create(source: source_klass.source_name, import_errors: vacancy.errors.to_json)
+            FailedImportedVacancy.create(source: source_klass.source_name, external_reference: vacancy.external_reference, import_errors: vacancy.errors.to_json)
           end
         end
       end
