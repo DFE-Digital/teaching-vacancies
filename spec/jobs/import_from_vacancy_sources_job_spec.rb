@@ -53,6 +53,18 @@ RSpec.describe ImportFromVacancySourcesJob do
       end
     end
 
+    context "when there is already a duplicate vacancy in the FailedImportedVacancy table" do
+      let(:vacancies_from_source) { [vacancy1, vacancy2] }
+      let(:vacancy1) { build(:vacancy, :published, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
+      let(:vacancy2) { build(:vacancy, :published, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
+
+      it "does not save the second vacancy" do
+        described_class.perform_now
+
+        expect(FailedImportedVacancy.count).to eq(1)
+      end
+    end
+
     context "when a live vacancy no longer comes through" do
       let!(:vacancy) { create(:vacancy, :published, :external, phases: %w[secondary], organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
       let(:vacancies_from_source) { [] }
