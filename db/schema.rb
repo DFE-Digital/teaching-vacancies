@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_08_153545) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_02_125452) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -127,6 +127,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_08_153545) do
     t.integer "age_fifty_to_fifty_nine", default: 0, null: false
     t.integer "age_sixty_and_over", default: 0, null: false
     t.index ["vacancy_id"], name: "index_equal_opportunities_reports_on_vacancy_id"
+  end
+
+  create_table "failed_imported_vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "import_errors", default: [], array: true
+    t.string "source", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "external_reference"
   end
 
   create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -33,10 +33,35 @@ RSpec.describe ImportFromVacancySourcesJob do
 
     context "when a new vacancy comes through but isn't valid" do
       let(:vacancies_from_source) { [vacancy] }
-      let(:vacancy) { build(:vacancy, :published, :external, phases: %w[secondary], organisations: [school], job_title: "") }
+      let(:vacancy) { build(:vacancy, :published, :external, phases: [], organisations: [school], job_title: "") }
 
-      it "does not save the vacancy" do
+      it "does not save the vacancy to the Vacancies table" do
         expect { described_class.perform_now }.to change { Vacancy.count }.by(0)
+      end
+
+      it "saves the vacancy in the FailedVacancyImports table" do
+        expect { described_class.perform_now }.to change { FailedImportedVacancy.count }.by(1)
+      end
+
+      it "saves the vacancy in the FailedVacancyImports with the import errors and identifiable info" do
+        described_class.perform_now
+
+        expect(FailedImportedVacancy.first.source).to eq("fake_source")
+        expect(FailedImportedVacancy.first.external_reference).to eq("J3D1")
+        expect(FailedImportedVacancy.first.import_errors.first).to eq("job_title:[can't be blank]")
+        expect(FailedImportedVacancy.first.import_errors.last).to eq("phases:[can't be blank]")
+      end
+    end
+
+    context "when there is already a duplicate vacancy in the FailedImportedVacancy table" do
+      let(:vacancies_from_source) { [vacancy1, vacancy2] }
+      let(:vacancy1) { build(:vacancy, :published, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
+      let(:vacancy2) { build(:vacancy, :published, :external, external_reference: "123", phases: [], organisations: [school], job_title: "") }
+
+      it "does not save the second vacancy" do
+        described_class.perform_now
+
+        expect(FailedImportedVacancy.count).to eq(1)
       end
     end
 

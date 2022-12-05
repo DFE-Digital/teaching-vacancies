@@ -15,7 +15,7 @@ class ImportFromVacancySourcesJob < ApplicationJob
             Rails.logger.info("Imported vacancy #{vacancy.id} from feed #{source_klass.source_name}")
           else
             report_validation_errors(source_klass, vacancy)
-            Rails.logger.error("Failed to save imported vacancy: #{vacancy.errors.inspect}")
+            create_failed_imported_vacancy(source_klass, vacancy)
           end
         end
       end
@@ -28,6 +28,16 @@ class ImportFromVacancySourcesJob < ApplicationJob
   end
 
   private
+
+  def create_failed_imported_vacancy(source_klass, vacancy)
+    if FailedImportedVacancy.find_by(external_reference: vacancy.external_reference)
+      Rails.logger.info("Vacancy #{vacancy.external_reference} failed to save as its a duplicate")
+    else
+      FailedImportedVacancy.create(source: source_klass.source_name,
+                                   external_reference: vacancy.external_reference,
+                                   import_errors: vacancy.errors.to_json)
+    end
+  end
 
   def report_validation_errors(source_klass, vacancy)
     Sentry.with_scope do |scope|

@@ -340,3 +340,10 @@ shared:
     - further_details_provided
     - further_details
     - include_additional_documents
+  failed_imported_vacancies:
+    - id
+    - import_errors
+    - source
+    - created_at
+    - updated_at
+    - external_reference
