@@ -3,23 +3,6 @@ class Publishers::OrganisationsController < Publishers::BaseController
     organisation
   end
 
-  def edit
-    @organisation_form = Publishers::OrganisationForm.new(
-      description: organisation.description, url_override: organisation.url_override,
-    )
-  end
-
-  def update
-    @organisation_form = Publishers::OrganisationForm.new(organisation_params)
-
-    if organisation && @organisation_form.valid?
-      organisation.update(organisation_params)
-      redirect_to publishers_organisation_path(organisation), success: t(".success", organisation_type: organisation.school? ? "School" : "Organisation")
-    else
-      render :edit
-    end
-  end
-
   def preview
     @organisation = Organisation.friendly.find(params[:organisation_id])
   end

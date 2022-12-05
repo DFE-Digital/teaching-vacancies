@@ -8,82 +8,181 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
     visit publisher_root_path
   end
 
-  context "when the publisher is signed in as a school" do
-    before do
-      click_link I18n.t("nav.school_profile")
+  describe "changing the organisation's website" do
+    context "when the publisher is signed in as a school" do
+      let(:organisation) { create(:school) }
+      let(:school_website_url) { "https://www.this-is-a-test-url.example.com" }
+
+      before { click_link I18n.t("nav.school_profile") }
+
+      it "allows the publisher to edit the school's website" do
+        within("div.govuk-summary-list__row#website") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_url_override_form[url_override]").value).to be_nil
+
+        fill_in "publishers_organisation_url_override_form[url_override]", with: school_website_url
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(school_website_url)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
     end
 
-    let(:organisation) { create(:school) }
-    it "allows to edit the school details" do
-      click_link("Change", match: :first)
+    context "when the publisher is signed in as a trust" do
+      let(:organisation) { create(:trust, schools: [school1, school2], url_override: trust_website_url) }
+      let(:school1) { create(:school, url_override: school_website_url) }
+      let(:school2) { create(:school) }
+      let(:trust_website_url) { "https://www.this-is-a-test-url-for-a-trust.example.com" }
+      let(:new_trust_website_url) { "https://www.this-is-a-new-test-url-for-a-trust.example.com" }
+      let(:school_website_url) { "https://www.this-is-a-test-url-for-a-school.example.com" }
+      let(:new_school_website_url) { "https://www.this-is-a-new-test-url-for-a-school.example.com" }
 
-      expect(find_field("publishers_organisation_form[url_override]").value).to be_nil
+      before { click_link I18n.t("nav.organisation_profile") }
 
-      fill_in "publishers_organisation_form[description]", with: "Our school prides itself on excellence."
-      fill_in "publishers_organisation_form[url_override]", with: "https://www.this-is-a-test-url.example.com"
-      click_on I18n.t("buttons.save_changes")
+      it "allows the publisher to edit the trust's website" do
+        within("div.govuk-summary-list__row#website") do
+          click_link("Change")
+        end
 
-      expect(page).to have_content(I18n.t("publishers.organisations.update.success", organisation_type: "School"))
-      expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(find_field("publishers_organisation_url_override_form[url_override]").value).to eq(trust_website_url)
+
+        fill_in "publishers_organisation_url_override_form[url_override]", with: new_trust_website_url
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(new_trust_website_url)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
+
+      it "allows the publisher to navigate and edit a school's website" do
+        click_on school1.name
+
+        within("div.govuk-summary-list__row#website") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_url_override_form[url_override]").value).to eq(school_website_url)
+
+        fill_in "publishers_organisation_url_override_form[url_override]", with: new_school_website_url
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(new_school_website_url)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+        expect(page.current_path).to eq(publishers_organisation_path(school1))
+      end
+    end
+
+    context "when the publisher is signed in as a local authority" do
+      let(:organisation) { create(:local_authority) }
+      let(:local_authority_website) { "https://www.this-is-a-new-test-url-for-a-local-authority.example.com" }
+
+      before { click_link I18n.t("nav.organisation_profile") }
+
+      it "allows the publisher to edit the local authority's website'" do
+        within("div.govuk-summary-list__row#website") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_url_override_form[url_override]").value).to be_nil
+
+        fill_in "publishers_organisation_url_override_form[url_override]", with: local_authority_website
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(local_authority_website)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
     end
   end
 
-  context "when the publisher is signed in as a trust" do
-    before do
-      click_link I18n.t("nav.organisation_profile")
+  describe "changing the organisation's description" do
+    context "when the publisher is signed in as a school" do
+      let(:organisation) { create(:school) }
+      let(:school_description) { "A lovely place" }
+
+      before { click_link I18n.t("nav.school_profile") }
+
+      it "allows the publisher to edit the school's description" do
+        within("div.govuk-summary-list__row#description") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_description_form[description]").value).to eq(organisation.description)
+
+        fill_in "publishers_organisation_description_form[description]", with: school_description
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(school_description)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
     end
 
-    let(:organisation) { create(:trust, schools: [school1, school2]) }
-    let(:school1) { create(:school, url_override: "http://example.com") }
-    let(:school2) { create(:school) }
+    context "when the publisher is signed in as a trust" do
+      let(:organisation) { create(:trust, schools: [school1, school2]) }
+      let(:school1) { create(:school) }
+      let(:school2) { create(:school) }
+      let(:new_trust_description) { "A lovely trust" }
+      let(:new_school_description) { "A lovely school" }
 
-    it "allows to edit the trust details" do
-      click_link("Change", match: :first)
+      before { click_link I18n.t("nav.organisation_profile") }
 
-      expect(find_field("publishers_organisation_form[url_override]").value).to eq(organisation.url_override)
+      it "allows the publisher to edit the trust's description" do
+        within("div.govuk-summary-list__row#description") do
+          click_link("Change")
+        end
 
-      fill_in "publishers_organisation_form[description]", with: "Our school prides itself on excellence."
-      fill_in "publishers_organisation_form[url_override]", with: "https://www.this-is-a-test-url.example.com"
-      click_on I18n.t("buttons.save_changes")
+        expect(find_field("publishers_organisation_description_form[description]").value).to be_empty
 
-      expect(page).to have_content(I18n.t("publishers.organisations.update.success", organisation_type: "Organisation"))
-      expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        fill_in "publishers_organisation_description_form[description]", with: new_trust_description
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(new_trust_description)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
+
+      it "allows the publisher to navigate and edit a school's description" do
+        click_on school1.name
+
+        within("div.govuk-summary-list__row#description") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_description_form[description]").value).to eq(school1.description)
+
+        fill_in "publishers_organisation_description_form[description]", with: new_school_description
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(new_school_description)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+        expect(page.current_path).to eq(publishers_organisation_path(school1))
+      end
     end
 
-    it "allows to navigate and manage school's profile settings page" do
-      click_on school1.name
+    context "when the publisher is signed in as a local authority" do
+      let(:organisation) { create(:local_authority) }
+      let(:local_authority_description) { "A lovely local authority" }
 
-      click_link "Change", match: :first
+      before { click_link I18n.t("nav.organisation_profile") }
 
-      expect(find_field("publishers_organisation_form[url_override]").value).to eq(school1.url_override)
+      it "allows the publisher to edit the local authority's description" do
+        within("div.govuk-summary-list__row#description") do
+          click_link("Change")
+        end
 
-      fill_in "publishers_organisation_form[description]", with: "Our school prides itself on excellence."
-      fill_in "publishers_organisation_form[url_override]", with: "https://www.this-is-a-test-url.example.com"
-      click_on I18n.t("buttons.save_changes")
+        expect(find_field("publishers_organisation_description_form[description]").value).to be_empty
 
-      expect(page).to have_content(I18n.t("publishers.organisations.update.success", organisation_type: "School"))
-      expect(page.current_path).to eq(publishers_organisation_path(school1))
-    end
-  end
+        fill_in "publishers_organisation_description_form[description]", with: local_authority_description
+        click_on I18n.t("buttons.save_changes")
 
-  context "when the publisher is signed in as a local authority" do
-    before do
-      click_link I18n.t("nav.organisation_profile")
-    end
-
-    let(:organisation) { create(:local_authority, schools: [school1, school2]) }
-    let(:school1) { create(:school, url_override: "http://example.com") }
-    let(:school2) { create(:school) }
-
-    it "allows to edit the local_authority details" do
-      click_link("Change", match: :first)
-
-      fill_in "publishers_organisation_form[description]", with: "Our school prides itself on excellence."
-      fill_in "publishers_organisation_form[url_override]", with: "https://www.this-is-a-test-url.example.com"
-      click_on I18n.t("buttons.save_changes")
-
-      expect(page).to have_content(I18n.t("publishers.organisations.update.success", organisation_type: "Organisation"))
-      expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_content(local_authority_description)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
     end
   end
 end

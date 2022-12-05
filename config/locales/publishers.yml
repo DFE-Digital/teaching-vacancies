@@ -83,8 +83,9 @@ en:
           one: 1 unread notification
           other: "%{count} unread notifications"
     organisations:
-      edit:
-        title: Change %{organisation_type} details
+      description:
+        edit:
+           title: Change %{organisation_type} details
       preview:
         exit_preview_link_text: Exit preview
         page_title: Preview %{organisation_name}
@@ -103,8 +104,10 @@ en:
         profile_incomplete_banner:
           title: Complete your %{organisation_type} profile
         complete_school_profile: Complete your school profile
-      update:
-        success: "%{organisation_type} details updated"
+      update_success: "%{organisation_type} details updated"
+      url_override:
+        edit:
+          title: Change %{organisation_type} details
       organisation:
         not_provided: Not entered
         name:
