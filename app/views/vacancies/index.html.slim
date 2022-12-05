@@ -7,6 +7,8 @@
 
 = render "vacancies/search/page_title_and_description", landing_page: @landing_page
 
+= "Test"
+
 h1 class="govuk-heading-l" role="heading" aria-level="1"
   = t("jobs.search_result_heading", count: number_with_delimiter(@vacancies_search.total_count))
 
