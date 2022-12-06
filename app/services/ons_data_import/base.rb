@@ -7,7 +7,7 @@ class OnsDataImport::Base
   def call
     (0..).each do |offset|
       features = arcgis_features(offset)
-      break if features.none?
+      break if features.blank?
 
       features.each do |feature|
         name = feature["properties"][name_field].downcase
