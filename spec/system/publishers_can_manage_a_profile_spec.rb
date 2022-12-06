@@ -20,7 +20,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
           click_link("Change")
         end
 
-        expect(find_field("publishers_organisation_url_override_form[url_override]").value).to be_nil
+        expect(find_field("publishers_organisation_url_override_form[url_override]").value).to be_blank
 
         fill_in "publishers_organisation_url_override_form[url_override]", with: school_website_url
         click_on I18n.t("buttons.save_changes")
@@ -86,7 +86,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
           click_link("Change")
         end
 
-        expect(find_field("publishers_organisation_url_override_form[url_override]").value).to be_nil
+        expect(find_field("publishers_organisation_url_override_form[url_override]").value).to be_blank
 
         fill_in "publishers_organisation_url_override_form[url_override]", with: local_authority_website
         click_on I18n.t("buttons.save_changes")
