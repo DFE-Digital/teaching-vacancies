@@ -35,7 +35,8 @@ class ImportFromVacancySourcesJob < ApplicationJob
     else
       FailedImportedVacancy.create(source: source_klass.source_name,
                                    external_reference: vacancy.external_reference,
-                                   import_errors: vacancy.errors.to_json)
+                                   import_errors: vacancy.errors.to_json,
+                                   vacancy: vacancy)
     end
   end
 
