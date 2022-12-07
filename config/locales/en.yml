@@ -340,6 +340,8 @@ en:
         heading: Schools
         page_title: Schools - %{school_group_name}
     search:
+      name: Name of school
+      location: City, county or postcode
       results:
         active_jobs: Active jobs
         key_stage: Key stage

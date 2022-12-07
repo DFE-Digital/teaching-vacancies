@@ -1,7 +1,10 @@
 .filters-component class='govuk-!-margin-bottom-4'
+  = f.govuk_text_field :name,
+    label: { text: t("organisations.search.name"), size: "s" }
+
   .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" class="govuk-!-margin-bottom-4"
     = f.govuk_text_field :location,
-      label: { text: "City, county or postcode", size: "s" },
+      label: { text: t("organisations.search.location"), size: "s" },
       class: %w[location-finder__input]
 
   = f.govuk_collection_select :radius, radius_filter_options, :last, :first,
