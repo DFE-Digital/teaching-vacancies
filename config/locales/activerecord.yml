@@ -18,9 +18,6 @@ en:
     year:
       less_than_or_equal_to: The year the qualification was awarded must be the current year or in the past
       not_a_number: Enter the year the qualification was awarded
-  organisation_errors: &organisation_errors
-    url_override:
-      url: Enter a link in the correct format, like www.school.ac.uk
   subscription_errors: &subscription_errors
     email:
       blank: Enter your email address
@@ -35,6 +32,9 @@ en:
       inclusion: Tell us why you want to unsubscribe
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
+  url_override_errors: &url_override_errors
+    url_override:
+      url: Enter a link in the correct format, like www.school.ac.uk
 
   # Feedback forms
   account_feedback_errors: &account_feedback_errors
@@ -385,9 +385,9 @@ en:
               invalid: Enter a date in the correct format
               on_or_after: The closing date must be in the future
               on_or_before: The closing date must be less than two years in the future
-        publishers/organisation_form:
+        publishers/organisation/url_override_form:
           attributes:
-            <<: *organisation_errors
+            <<: *url_override_errors
         publishers/terms_and_conditions_form:
           attributes:
             terms:
