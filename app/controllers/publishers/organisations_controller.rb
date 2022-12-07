@@ -7,6 +7,10 @@ class Publishers::OrganisationsController < Publishers::BaseController
     @organisation = Organisation.friendly.find(params[:organisation_id])
   end
 
+  def profile_incomplete
+    organisation
+  end
+
   private
 
   def organisation

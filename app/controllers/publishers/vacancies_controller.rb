@@ -3,6 +3,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :redirect_to_new_features_reminder, only: %i[create]
 
   before_action :show_publisher_preferences, only: %i[index]
+  before_action :redirect_to_show_publisher_profile_incomplete, only: %i[index], if: -> { signing_in? }, unless: -> { current_organisation.profile_complete? }
   # TODO: Temporarily disabled for TEVA-4099
   # before_action :redirect_to_new_features_page, only: %i[show]
 
@@ -121,5 +122,13 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   def statistics_params
     params.require(:publishers_vacancy_statistics_form).permit(:listed_elsewhere, :hired_status)
+  end
+
+  def signing_in?
+    params[:signing_in].present?
+  end
+
+  def redirect_to_show_publisher_profile_incomplete
+    redirect_to publishers_organisation_profile_incomplete_path(current_organisation)
   end
 end

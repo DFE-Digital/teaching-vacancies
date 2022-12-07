@@ -1,0 +1,10 @@
+- content_for :page_title_prefix, @organisation.name.titlecase
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t("publishers.incomplete_profile.heading", organisation_type: @organisation.school? ? :school : :organisation)
+    p = t("publishers.incomplete_profile.hint", organisation_type: @organisation.school? ? :school : :organisation)
+
+    = govuk_button_link_to t("publishers.incomplete_profile.complete_link_text", organisation_type: @organisation.school? ? :school : :organisation), publishers_organisation_path(@organisation)
+
+    = govuk_link_to t("publishers.incomplete_profile.skip_to_link_text"), organisation_jobs_path, class: "govuk-!-display-block govuk-body-m"

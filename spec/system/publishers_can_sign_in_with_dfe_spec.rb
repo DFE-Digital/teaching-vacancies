@@ -115,10 +115,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       let!(:school_group) { create(:trust, uid: "14323", schools: [school]) }
 
       it "associates the user with the trust instead of the school" do
-        expect(current_path).to eq(publisher_root_path)
-      end
-
-      it "shows the trust name" do
+        click_on I18n.t("publishers.incomplete_profile.skip_to_link_text")
+        expect(current_path).to eq(organisation_jobs_path)
         expect(page).to have_content(school_group.name)
       end
     end
@@ -155,8 +153,9 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       sign_in_publisher
       visit new_publisher_session_path
 
+      click_on I18n.t("publishers.incomplete_profile.skip_to_link_text")
       expect(page).to have_content(organisation.name)
-      expect(current_path).to eq(publisher_root_path)
+      expect(current_path).to eq(organisation_jobs_path)
     end
   end
 

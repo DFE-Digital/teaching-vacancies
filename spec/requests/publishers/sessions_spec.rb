@@ -44,4 +44,24 @@ RSpec.describe "Redirect to correct authentication method" do
       end
     end
   end
+
+  context "when organisation profile is incomplete" do
+    let(:authentication_fallback_enabled?) { false }
+    let(:publisher) { create(:publisher) }
+    let(:organisation) { build(:school) }
+
+    before do
+      allow(organisation).to receive(:profile_complete?).and_return(false)
+      allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
+      allow_any_instance_of(Publishers::VacanciesController).to receive(:signing_in?).and_return(true)
+
+      sign_in(publisher, scope: :publisher)
+      get organisation_jobs_with_type_path
+    end
+
+    it "redirects to complete your profile reminder" do
+      follow_redirect!
+      expect(response.body).to include("Complete your school profile")
+    end
+  end
 end

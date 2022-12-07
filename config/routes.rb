@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   get "/jobseekers/saved_jobs", to: "jobseekers/saved_jobs#index", as: :jobseeker_root
 
-  get "/organisation", to: "publishers/vacancies#index", as: :publisher_root
+  get "/organisation", to: "publishers/vacancies#index", as: :publisher_root, defaults: { signing_in: "true" }
 
   get "/sha", to: "sha#sha"
 
@@ -109,6 +109,7 @@ Rails.application.routes.draw do
       resource :website, only: %i[edit update], controller: "organisations/url_override"
 
       get :preview
+      get :profile_incomplete
       get "schools/preview", to: "/publishers/organisations/schools#preview"
     end
     resource :terms_and_conditions, only: %i[show update]
