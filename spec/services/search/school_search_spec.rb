@@ -35,7 +35,7 @@ RSpec.describe Search::SchoolSearch do
     let(:name) { "Bexleyheath Academy" }
 
     it "returns scope modified by name search" do
-      expect(subject.organisations.to_sql).to eq(scope.where("organisations.name ILIKE ?", "%#{name}%").to_sql)
+      expect(subject.organisations.to_sql).to eq(scope.search_by_name(name).to_sql)
     end
   end
 end

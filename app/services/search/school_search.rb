@@ -40,7 +40,7 @@ class Search::SchoolSearch
   def scope
     scope = @scope.all
 
-    scope = scope.where("organisations.name ILIKE ?", "%#{name}%") if name.present?
+    scope = scope.search_by_name(name) if name.present?
     scope = scope.search_by_location(*location) if location.present?
     scope = scope.where(phase: education_phase) if education_phase
     scope = scope.where(phase: key_stage_phases) if key_stage_phases

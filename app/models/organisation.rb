@@ -1,6 +1,7 @@
 require "digest"
 
 class Organisation < ApplicationRecord
+  include PgSearch::Model
   extend FriendlyId
 
   friendly_id :slug_candidates, use: :slugged
@@ -24,6 +25,9 @@ class Organisation < ApplicationRecord
   scope :in_vacancy_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct })
 
   scope :search_by_location, OrganisationLocationQuery
+  pg_search_scope :search_by_name,
+                  against: :name,
+                  using: { tsearch: { prefix: true, dictionary: "english" } }
 
   scope(:registered_for_service, lambda do
     registered_organisations = OrganisationPublisher.select(:organisation_id)

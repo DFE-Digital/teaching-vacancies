@@ -379,6 +379,9 @@ GEM
       ast (~> 2.4.1)
     parslet (2.0.0)
     pg (1.4.5)
+    pg_search (2.3.6)
+      activerecord (>= 5.2)
+      activesupport (>= 5.2)
     propshaft (0.6.4)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -685,6 +688,7 @@ DEPENDENCIES
   parallel_tests
   parslet
   pg
+  pg_search
   propshaft
   pry
   pry-byebug
