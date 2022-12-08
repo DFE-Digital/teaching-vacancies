@@ -10,14 +10,14 @@
       "jobAdvert": "Lorem Ipsum dolor sit amet",
       "salary": "£25,714.00 to £41,604.00",
       "schoolUrns": [
-        "145506"
+        "111111", "222222"
       ],
       "keyStages": "ks1,ks2",
       "jobRole": "teacher",
       "workingPatterns": "full_time",
       "contractType": "fixed_term",
       "phase": "primary",
-      "trustId": "16614"
+      "trustId": "12345"
     }
   ],
   "targetUrl": null,

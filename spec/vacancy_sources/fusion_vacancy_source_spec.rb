@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe FusionVacancySource do
-  let!(:school) { create(:school, name: "Test School", urn: "145506", phase: :primary) }
-  let!(:school_group) { create(:school_group, name: "E-ACT", uid: "16614", schools: [school]) }
+  let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
+  let!(:school_group) { create(:school_group, name: "E-ACT", uid: "12345", schools: schools) }
+  let(:schools) { [school1] }
 
   let(:response) { double("FusionHttpResponse", success?: true, body: file_fixture("vacancy_sources/fusion.json").read) }
 
@@ -39,13 +40,13 @@ RSpec.describe FusionVacancySource do
     end
 
     it "assigns the vacancy to the correct school and organisation" do
-      expect(vacancy.organisations.first).to eq(school)
+      expect(vacancy.organisations.first).to eq(school1)
 
       expect(vacancy.external_source).to eq("fusion")
       expect(vacancy.external_advert_url).to eq("http://testurl.com")
       expect(vacancy.external_reference).to eq("0044")
 
-      expect(vacancy.organisations).to eq([school])
+      expect(vacancy.organisations).to eq(schools)
     end
 
     it "sets important dates" do
@@ -61,7 +62,7 @@ RSpec.describe FusionVacancySource do
           phases: %w[primary],
           external_source: "fusion",
           external_reference: "0044",
-          organisations: [school],
+          organisations: schools,
           job_title: "Out of date",
         )
       end
@@ -72,6 +73,15 @@ RSpec.describe FusionVacancySource do
         expect(vacancy).to be_changed
 
         expect(vacancy.job_title).to eq("Class Teacher")
+      end
+    end
+
+    context "when multiple school" do
+      let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+      let(:schools) { [school1, school2] }
+
+      it "assigns the vacancy job location to the central trust" do
+        expect(vacancy.readable_job_location).to eq(school_group.name)
       end
     end
   end
