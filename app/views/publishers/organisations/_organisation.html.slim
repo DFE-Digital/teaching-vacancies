@@ -27,6 +27,13 @@
         - row.key text: t(".size.label")
         - row.value text: text
 
+  - summary_list.row(html_attributes: { id: "email" }) do |row|
+    - row.key text: t(".email.label")
+    - row.with_value do
+      - link = govuk_mail_to(organisation.email, organisation.email, class: "wordwrap") if organisation.email.present?
+      = required_profile_info(value: link, missing_prompt: t(".email.missing_prompt"), missing_text: t(".not_provided"))
+    - row.action text: t("buttons.change"), href: edit_publishers_organisation_email_path(organisation), classes: "govuk-link--no-visited-state"
+
   - summary_list.row(html_attributes: { id: "website" }) do |row|
     - row.key text: t(".website.label")
     - row.with_value do

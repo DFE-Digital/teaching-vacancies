@@ -48,6 +48,13 @@
           - row.value
             = school_size(organisation)
 
+      - if organisation.email?
+        - summary_list.row do |row|
+          - row.key
+            = t("organisations.show.summary.email_address")
+          - row.value
+            = govuk_mail_to(organisation.email, organisation.email)
+
       - if organisation.url?
         - summary_list.row do |row|
           - row.key

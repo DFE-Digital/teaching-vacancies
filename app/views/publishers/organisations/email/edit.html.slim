@@ -1,0 +1,15 @@
+- content_for :page_title_prefix, @organisation.name.titlecase
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".title", organisation_type: organisation_type_basic(@organisation))
+
+    = form_for @email_form, url: publishers_organisation_email_path(@organisation), method: :patch do |f|
+      = f.govuk_error_summary
+
+      h2.govuk-heading-m = @organisation.name
+
+      = f.govuk_email_field :email,
+        label: { text: t("helpers.label.publishers_organisation_form.email", organisation_type: organisation_type_basic(@organisation), gias_url: @organisation[:url]), size: "s" }
+
+      = f.govuk_submit t("buttons.save_changes")

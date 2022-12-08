@@ -106,6 +106,7 @@ Rails.application.routes.draw do
     resources :publisher_preferences, only: %i[new create edit update destroy]
     resources :organisations, only: %i[show] do
       resource :description, only: %i[edit update], controller: "organisations/description"
+      resource :email, only: %i[edit update], controller: "organisations/email"
       resource :website, only: %i[edit update], controller: "organisations/url_override"
 
       get :preview
