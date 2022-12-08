@@ -8,7 +8,7 @@ class Publishers::Organisations::UrlOverrideController < Publishers::Organisatio
     @url_override_form = Publishers::Organisation::UrlOverrideForm.new(url_override_form_params)
 
     if @url_override_form.valid?
-      organisation.update(url_override: params[:publishers_organisation_url_override_form][:url_override])
+      organisation.update!(url_override: @url_override_form.url_override)
 
       redirect_to publishers_organisation_path(organisation), success: t("publishers.organisations.update_success", organisation_type: organisation.school? ? "School" : "Organisation")
     else

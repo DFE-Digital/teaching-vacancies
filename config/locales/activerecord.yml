@@ -34,7 +34,7 @@ en:
       inclusion: Please indicate if you'd like to participate in user research
   url_override_errors: &url_override_errors
     url_override:
-      url: Enter a link in the correct format, like www.school.ac.uk
+      url: Enter a link in the correct format, like https://www.school.ac.uk
 
   # Feedback forms
   account_feedback_errors: &account_feedback_errors
@@ -209,7 +209,7 @@ en:
   application_link_errors: &application_link_errors
     application_link:
       blank: Enter the link to the application website
-      url: Enter a link in the correct format, like www.school.ac.uk
+      url: Enter a link in the correct format, like https://www.school.ac.uk
   school_visits_errors: &school_visits_errors
     school_visits:
       inclusion: Select yes if school visits are offered
