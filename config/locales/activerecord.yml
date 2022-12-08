@@ -21,6 +21,10 @@ en:
     year:
       less_than_or_equal_to: The year the qualification was awarded must be the current year or in the past
       not_a_number: Enter the year the qualification was awarded
+  safeguarding_information_errors: &safeguarding_information_errors
+    safeguarding_information:
+      blank: Enter information about your commitment to safeguarding
+      length: Commitment to safeguarding must be 100 words or less
   subscription_errors: &subscription_errors
     email:
       blank: Enter your email address
@@ -391,6 +395,9 @@ en:
         publishers/organisation/email_form:
           attributes:
             <<: *email_errors
+        publishers/organisation/safeguarding_information_form:
+          attributes:
+            <<: *safeguarding_information_errors
         publishers/organisation/url_override_form:
           attributes:
             <<: *url_override_errors

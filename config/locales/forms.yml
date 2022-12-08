@@ -486,6 +486,7 @@ en:
       publishers_organisation_form:
         description: Description of %{organisation_type}
         email: Email address
+        safeguarding_information: Commitment to safeguarding
         url_override: "Override the %{organisation_type}'s website (defaults to \"%{gias_url}\")"
 
       publishers_job_application_notes_form:

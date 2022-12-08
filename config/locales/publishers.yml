@@ -101,6 +101,9 @@ en:
           heading:
             caption_with_link_html: Part of %{link}
             link_text: '%{organisation_name}'
+      safeguarding_information:
+        edit:
+          caption: Organisation profile
       schools:
         preview:
           exit_preview_link_text: Exit preview
@@ -140,6 +143,9 @@ en:
             through: Through
             middle_deemed_secondary: Middle deamed secondary school
             middle_deemed_primary: Middle deamed primary school
+        safeguarding_information:
+          missing_prompt: Enter information about your commitment to safeguarding
+          label: Commitment to safeguarding
         school_age:
           label: Age group
         size:

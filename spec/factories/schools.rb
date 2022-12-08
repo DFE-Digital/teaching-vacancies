@@ -6,6 +6,7 @@ FactoryBot.define do
     address { Faker::Address.street_name.delete("'") }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
+    email { Faker::Internet.email }
     establishment_status { "Open" }
     geopoint { "POINT(2 1)" }
     gias_data do
@@ -31,6 +32,7 @@ FactoryBot.define do
     phase { :secondary }
     readable_phases { %w[secondary] }
     region { "South-East England" }
+    safeguarding_information { Faker::Lorem.paragraph(sentence_count: 1) }
     sequence(:slug) { |n| "#{name.parameterize}-#{n}" }
     school_type { "LA maintained school" }
     postcode { Faker::Address.postcode }
@@ -71,6 +73,10 @@ FactoryBot.define do
 
     trait :no_geolocation do
       geopoint { nil }
+    end
+
+    trait :profile_incomplete do
+      description { nil }
     end
   end
 
