@@ -55,10 +55,14 @@ class FusionVacancySource
 
   def organisation_fields(item)
     {
-      readable_job_location: organisations_for(item).first&.name,
+      readable_job_location: main_organisation(item).name,
       organisations: organisations_for(item),
-      about_school: organisations_for(item).first&.description,
+      about_school: main_organisation(item).description,
     }
+  end
+
+  def main_organisation(item)
+    organisations_for(item).one? ? organisations_for(item).first : school_group(item)
   end
 
   def ect_status_for(item)
@@ -68,7 +72,11 @@ class FusionVacancySource
   end
 
   def organisations_for(item)
-    [school_group(item).schools.find_by(urn: item["schoolUrns"].first)]
+    if school_group(item).present?
+      school_group(item).schools.where(urn: item["schoolUrns"])
+    else
+      Organisation.where(urn: item["schoolUrns"])
+    end.to_a
   end
 
   def school_group(item)
