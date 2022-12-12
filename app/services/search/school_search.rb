@@ -66,7 +66,7 @@ class Search::SchoolSearch
   def key_stage_phases
     return unless @search_criteria.key?(:key_stage)
 
-    School::PHASE_TO_KEY_STAGES_MAPPINGS.select { |_, v| (@search_criteria[:key_stage] & v.map(&:to_s)).any? }.map(&:first).map(&:to_s)
+    School::PHASE_TO_KEY_STAGES_MAPPINGS.select { |_, v| @search_criteria[:key_stage].intersect?(v.map(&:to_s)) }.map(&:first).map(&:to_s)
   end
 
   def apply_job_availability_filter(scope)

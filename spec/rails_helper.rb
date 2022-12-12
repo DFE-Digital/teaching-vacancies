@@ -21,7 +21,7 @@ Geocoder::DEFAULT_STUB_COORDINATES = [51.67014192630465, -1.2809649516211556].fr
 Geocoder::DEFAULT_LOCATION = "TE5 T1NG".freeze
 
 Capybara.register_driver :chrome_headless do |app|
-  capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     "goog:chromeOptions" => { args: %w[no-sandbox headless disable-gpu window-size=1400,1400] },
   )
 
