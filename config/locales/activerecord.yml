@@ -2,6 +2,9 @@ en:
   cookies_preferences_errors: &cookies_preferences_errors
     cookies_consent:
       inclusion: Please select an option
+  email_errors: &email_errors
+    email:
+      blank: Enter an email address in the correct format, like name@example.com
   qualification_errors: &qualification_errors
     qualification_results_attributes_0_subject:
       at_least_one_result_required: Enter at least one subject and grade for this qualification
@@ -385,6 +388,9 @@ en:
               invalid: Enter a date in the correct format
               on_or_after: The closing date must be in the future
               on_or_before: The closing date must be less than two years in the future
+        publishers/organisation/email_form:
+          attributes:
+            <<: *email_errors
         publishers/organisation/url_override_form:
           attributes:
             <<: *url_override_errors

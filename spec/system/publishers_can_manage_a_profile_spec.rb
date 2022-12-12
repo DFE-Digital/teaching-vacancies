@@ -185,4 +185,92 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       end
     end
   end
+
+  describe "changing the organisation's email" do
+    context "when the publisher is signed in as a school" do
+      let(:organisation) { create(:school) }
+      let(:school_email) { "me@home.com" }
+
+      before { click_link I18n.t("nav.school_profile") }
+
+      it "allows the publisher to edit the school's email" do
+        within("div.govuk-summary-list__row#email") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_email_form[email]").value).to eq(organisation.email)
+
+        fill_in "publishers_organisation_email_form[email]", with: school_email
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(school_email)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
+    end
+
+    context "when the publisher is signed in as a trust" do
+      let(:organisation) { create(:trust, schools: [school1, school2]) }
+      let(:school1) { create(:school) }
+      let(:school2) { create(:school) }
+      let(:new_trust_email) { "me@trust.com" }
+      let(:new_school_email) { "me@school.com" }
+
+      before { click_link I18n.t("nav.organisation_profile") }
+
+      it "allows the publisher to edit the trust's email" do
+        within("div.govuk-summary-list__row#email") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_email_form[email]").value).to be_blank
+
+        fill_in "publishers_organisation_email_form[email]", with: new_trust_email
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(new_trust_email)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
+
+      it "allows the publisher to navigate and edit a school's email" do
+        click_on school1.name
+
+        within("div.govuk-summary-list__row#email") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_email_form[email]").value).to eq(school1.email)
+
+        fill_in "publishers_organisation_email_form[email]", with: new_school_email
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(new_school_email)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+        expect(page.current_path).to eq(publishers_organisation_path(school1))
+      end
+    end
+
+    context "when the publisher is signed in as a local authority" do
+      let(:organisation) { create(:local_authority) }
+      let(:local_authority_email) { "me@authority.com" }
+
+      before { click_link I18n.t("nav.organisation_profile") }
+
+      it "allows the publisher to edit the local authority's email" do
+        within("div.govuk-summary-list__row#email") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_email_form[email]").value).to be_blank
+
+        fill_in "publishers_organisation_email_form[email]", with: local_authority_email
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(local_authority_email)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
+    end
+  end
 end

@@ -91,6 +91,9 @@ en:
       description:
         edit:
            title: Change %{organisation_type} details
+      email:
+        edit:
+          title: Change %{organisation_type} details
       preview:
         exit_preview_link_text: Exit preview
         page_title: Preview %{organisation_name}
@@ -119,6 +122,9 @@ en:
           label: Name
         address:
           label: Address
+        email:
+          label: Email address
+          missing_prompt: Enter an email address
         type:
           label: Type
         ofsted_report:

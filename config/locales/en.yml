@@ -370,6 +370,7 @@ en:
         age_range: Age range
         description: '%{organisation_type} description'
         education_phase: Education phase
+        email_address: Email address
         heading: Summary
         name: Name
         size: Size

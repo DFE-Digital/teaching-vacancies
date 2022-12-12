@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_06_105414) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_08_092637) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -362,6 +362,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_105414) do
     t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.text "gias_data_hash"
     t.string "slug"
+    t.string "email"
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true
     t.index ["slug"], name: "index_organisations_on_slug", unique: true

@@ -167,6 +167,7 @@ shared:
     - uid
     - phase
     - url
+    - email
     - minimum_age
     - maximum_age
     - address
