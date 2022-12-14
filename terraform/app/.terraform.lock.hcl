@@ -6,6 +6,7 @@ provider "registry.terraform.io/cloudfoundry-community/cloudfoundry" {
   constraints = ">= 0.13.0, ~> 0.14"
   hashes = [
     "h1:FYXLCAr6F/5+Bbp7XV8EB74vsym0YtY3hoIKI9l9nFs=",
+    "h1:RnSQx1Z1mGfv0asZeW7rlp5gtwjPbTu4HDhNYGELxgs=",
     "zh:0f4384d5aedd17cd8ec8827db4075890bdebe151d5f2300669c28d5021ef67cf",
     "zh:164f74e6297b398f7d695c38bffc696fbb25377bc815a5f0a25d41da1085e771",
     "zh:337332a1bfcda419d6a0bf758a131631eb977eb830525e759213ed7d1d84aa10",
@@ -28,6 +29,7 @@ provider "registry.terraform.io/hashicorp/aws" {
   version     = "3.45.0"
   constraints = ">= 3.28.0, >= 3.45.0, ~> 3.45.0"
   hashes = [
+    "h1:9l/yDPt/OPG6a0ITu7amfq1LjdnWHTsOgn/KOxM26HA=",
     "h1:u1fmVwS10RxbjJEMz43bmRYkhRUuWymNpf1Ci6bBjuM=",
     "zh:0fdbb3af75ff55807466533f97eb314556ec41a908a543d7cafb06546930f7c6",
     "zh:20656895744fa0f4607096b9681c77b2385f450b1577f9151d3070818378a724",
@@ -48,6 +50,7 @@ provider "registry.terraform.io/statuscakedev/statuscake" {
   constraints = "2.0.4"
   hashes = [
     "h1:ZWhLMoREWISsr9NkKNGdqeCWV0yr9cU+DOWSa5l8ZeA=",
+    "h1:y2dthcfU+b/p0q6ZCa2u61cp1QnmeX1k63cylKEQ+KY=",
     "zh:0a0962aff7c3112c8b32182e3e80974f1d334a73570450c8a834cde905b804f6",
     "zh:1c3e89cf19118fc07d7b04257251fc9897e722c16e0a0df7b07fcd261f8c12e7",
     "zh:27a7b65fdd0e662ec1948ecd8ef52214b396e388f4d733221f2e8016dbc3e154",

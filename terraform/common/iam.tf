@@ -126,11 +126,49 @@ data "aws_iam_policy_document" "deployments_role_policy" {
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/attachment_buckets_policies/*"]
   }
 
+  # IAM user/key/policy management for images and logo buckets
+  statement {
+    sid = "ManageAttachmentImagesLogosBuckeUsers"
+    actions = [
+      "iam:GetUser",
+      "iam:CreateUser",
+      "iam:UpdateUser",
+      "iam:DeleteUser",
+      "iam:ListGroupsForUser",
+      "iam:ListAccessKeys",
+      "iam:CreateAccessKey",
+      "iam:DeleteAccessKey",
+      "iam:ListAttachedUserPolicies",
+      "iam:AttachUserPolicy",
+      "iam:DetachUserPolicy"
+    ]
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/attachment_images_logos_buckets_users/*"]
+  }
+  statement {
+    sid = "ManageAttachmentImagesLogosBucketPolicies"
+    actions = [
+      "iam:GetPolicy",
+      "iam:GetPolicyVersion",
+      "iam:ListPolicyVersions",
+      "iam:CreatePolicy",
+      "iam:DeletePolicy",
+      "iam:CreatePolicyVersion"
+    ]
+    resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/attachment_images_logos_buckets_policies/*"]
+  }
+
   # S3 file attachment buckets
   statement {
     sid       = "ManageAttachmentBucketS3"
     actions   = ["s3:*"]
     resources = ["arn:aws:s3:::${data.aws_caller_identity.current.account_id}-${local.service_abbreviation}-attachments-*"]
+  }
+
+  # S3 images and logos attachment buckets
+  statement {
+    sid       = "ManageAttachmentImagesLogosBucketS3"
+    actions   = ["s3:*"]
+    resources = ["arn:aws:s3:::${data.aws_caller_identity.current.account_id}-${local.service_abbreviation}-attachment-images-logos-*"]
   }
 
   # DB backups in S3

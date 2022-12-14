@@ -40,6 +40,11 @@ variable "documents_s3_bucket_force_destroy" {
   default = false
 }
 
+# School images and logos S3 bucket
+variable "schools_images_logos_s3_bucket_force_destroy" {
+  default = false
+}
+
 # Gov.UK PaaS
 
 variable "paas_app_docker_image" {
