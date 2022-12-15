@@ -250,8 +250,8 @@ en:
     safeguarding_information_provided:
       inclusion: Select yes if you want to add information about your commitment to safeguarding
     safeguarding_information:
-      blank: Enter the information about your commitment to safeguarding
-      length: Safeguarding information must be 100 words or less
+      blank: Enter information about your commitment to safeguarding
+      length: Commitment to safeguarding must be 100 words or less
     further_details_provided:
       inclusion: Select yes if you want to add further details about the role
     further_details:
