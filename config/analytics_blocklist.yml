@@ -149,4 +149,5 @@
   - current_sign_in_ip
   :organisations:
   - gias_data_hash
+  - searchable_content
   - slug
