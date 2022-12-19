@@ -75,9 +75,10 @@ module OrganisationsHelper
     school.school_groups.any?(&:trust?)
   end
 
-  def required_profile_info(value:, missing_text:, missing_prompt:)
+  def required_profile_info(value:, image: false, missing_text:, missing_prompt:)
     if value.present?
-      value
+      return value unless image
+      image_tag(value)
     else
       content_tag(:div, class: %i[govuk-inset-text govuk-inset-text--dark-blue inset-text--narrow-border]) do
         [

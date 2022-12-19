@@ -88,43 +88,44 @@ en:
           one: 1 unread notification
           other: "%{count} unread notifications"
     organisations:
-      description:
+      edit_organisation_title: Change %{organisation_type} details
+      logo:
         edit:
-           title: Change %{organisation_type} details
-      email:
-        edit:
-          title: Change %{organisation_type} details
-      preview:
-        exit_preview_link_text: Exit preview
-        page_title: Preview %{organisation_name}
-        summary:
-          heading:
-            caption_with_link_html: Part of %{link}
-            link_text: '%{organisation_name}'
-      schools:
-        preview:
-          exit_preview_link_text: Exit preview
-          page_title: Schools - %{school_group_name}
-      show:
-        preview_link_text: Preview %{organisation_type} profile
-        schools: Schools
-        title: '%{organisation_type} profile'
-        profile_incomplete_banner:
-          title: Complete your %{organisation_type} profile
-        complete_school_profile: Complete your school profile
-      update_success: "%{organisation_type} details updated"
-      url_override:
-        edit:
-          title: Change %{organisation_type} details
+          instructions:
+            dimensions: 300 pixels by 300 pixels
+            format: a PNG or JPG
+            header: 'The logo must be:'
+            size: smaller than 5MB
+            support:
+              text_html: '%{link} if you need help adding your organisation logo.'
+              link_text: Contact support
+          title: Organisation logo
       organisation:
-        not_provided: Not entered
-        name:
-          label: Name
         address:
           label: Address
+        description:
+          missing_prompt:
+            school: Enter a school description
+            organisation: Enter an organisation description
+          label:
+            school: School description
+            organisation: Organisation description
         email:
           label: Email address
           missing_prompt: Enter an email address
+        logo:
+          label: Organisation logo
+          missing_prompt:
+            organisation: Add an organisation logo
+            school: Add a school logo
+        name:
+          label: Name
+        not_provided: Not entered
+        photo:
+          label: Organisation photo
+          missing_prompt:
+            organisation: Add an organisation photo
+            school: Add a school photo
         type:
           label: Type
         ofsted_report:
@@ -147,13 +148,25 @@ en:
         website:
           missing_prompt: Enter website
           label: Website address
-        description:
-          missing_prompt:
-            school: Enter a school description
-            organisation: Enter an organisation description
-          label:
-            school: School description
-            organisation: Organisation description
+      preview:
+        exit_preview_link_text: Exit preview
+        page_title: Preview %{organisation_name}
+        summary:
+          heading:
+            caption_with_link_html: Part of %{link}
+            link_text: '%{organisation_name}'
+      schools:
+        preview:
+          exit_preview_link_text: Exit preview
+          page_title: Schools - %{school_group_name}
+      show:
+        preview_link_text: Preview %{organisation_type} profile
+        schools: Schools
+        title: '%{organisation_type} profile'
+        profile_incomplete_banner:
+          title: Complete your %{organisation_type} profile
+        complete_school_profile: Complete your school profile
+      update_success: "%{organisation_type} details updated"
     publisher_preferences:
       new:
         description_1: >-

@@ -221,6 +221,8 @@ en:
     file_size_error_message: 'The selected file must be smaller than %{size_limit}'
     file_type_error_message: The selected file must be a PDF or DOCX file
     file_virus_error_message: '%{filename} contains a virus'
+    image_dimension_error_message: 'The selected image is larger than 300 x 300'
+  
     upload_documents_table:
       headers:
         file_name: File name

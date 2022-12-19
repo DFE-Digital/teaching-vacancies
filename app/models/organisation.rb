@@ -5,6 +5,8 @@ class Organisation < ApplicationRecord
 
   friendly_id :slug_candidates, use: :slugged
 
+  has_one_attached :logo, service: :amazon_s3_images_and_logos
+
   has_many :organisation_vacancies, dependent: :destroy
   has_many :vacancies, through: :organisation_vacancies
 

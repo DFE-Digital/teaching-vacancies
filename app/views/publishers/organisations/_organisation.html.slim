@@ -47,6 +47,20 @@
       = required_profile_info(value: truncate(organisation.description, length: 130), missing_prompt: t(".description.missing_prompt.#{organisation.school? ? :school : :organisation}"), missing_text: t(".not_provided"))
     - row.action text: t("buttons.change"), href: edit_publishers_organisation_description_path(organisation), classes: "govuk-link--no-visited-state"
 
+
+  - summary_list.row(html_attributes: { id: "organisation_logo" }) do |row|
+    - row.key text: t(".logo.label")
+    - row.with_value do
+      = required_profile_info(value: @organisation.logo, image: true, missing_prompt: t(".logo.missing_prompt.#{organisation.school? ? :school : :organisation}"), missing_text: t(".not_provided"))
+    - row.action text: t("buttons.change"), href: edit_publishers_organisation_logo_path(organisation), classes: "govuk-link--no-visited-state"
+
+  - summary_list.row(html_attributes: { id: "organisation_photo" }) do |row|
+    - row.key text: t(".photo.label")
+    - row.with_value do
+      = required_profile_info(value: nil, missing_prompt: t(".photo.missing_prompt.#{organisation.school? ? :school : :organisation}"), missing_text: t(".not_provided"))
+    - row.action text: t("buttons.change"), href: edit_publishers_organisation_description_path(organisation), classes: "govuk-link--no-visited-state"
+
+
   - if organisation.has_ofsted_report?
     - summary_list.row do |row|
       - row.key text: t(".ofsted_report.label")

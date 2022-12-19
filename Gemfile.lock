@@ -194,6 +194,7 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
+    fastimage (2.2.6)
     ffi (1.15.5)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -658,6 +659,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  fastimage
   friendly_id
   front_matter_parser
   geocoder

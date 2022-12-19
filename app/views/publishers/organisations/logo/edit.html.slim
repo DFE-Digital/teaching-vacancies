@@ -1,0 +1,31 @@
+- content_for :page_title_prefix, @organisation.name.titlecase
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t("publishers.organisations.edit_organisation_title", organisation_type: organisation_type_basic(@organisation))
+
+    = form_for @logo_form, url: publishers_organisation_logo_path(@organisation), method: :patch do |f|
+      = f.govuk_error_summary
+
+      h2.govuk-heading-m = @organisation.name
+
+      p.govuk-body
+        = t(".instructions.header")
+
+      ul.govuk-list.govuk-list--bullet
+        li = t(".instructions.dimensions")
+        li = t(".instructions.format")
+        li = t(".instructions.size")
+
+      p.govuk-body
+        = t(".instructions.support.text_html", link: govuk_link_to(t(".instructions.support.link_text"), new_support_request_path))
+
+      = f.govuk_file_field :logo,
+        label: { text: t("helpers.label.publishers_organisation_form.logo"), size: "m" },
+        accept: "image/jpg, image/jpeg, image/png",
+        enctype: "multipart/form-data"
+
+      = f.govuk_submit t("buttons.continue")
+
+    .govuk-body
+      = govuk_link_to t("buttons.cancel"), publishers_organisation_path(@organisation)

@@ -26,6 +26,7 @@ gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.5.3"
 gem "factory_bot_rails"
 gem "faker"
+gem 'fastimage'
 gem "friendly_id"
 gem "front_matter_parser"
 gem "geocoder"
