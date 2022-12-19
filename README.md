@@ -74,6 +74,8 @@ bar, using the VS Code "Run task" option, or the Rails convention `bin/dev` scri
 
 ## Additional setup
 
+wkfjwebfk
+
 This section describes optional additional setup tasks once you have the application up and running.
 It is mainly relevant for developers and not strictly necessary to run the application.
 
