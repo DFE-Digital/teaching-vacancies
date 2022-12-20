@@ -7,6 +7,18 @@
 
       = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
+      - if vacancy.organisation&.description.present?
+        p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.description")
+        = govuk_details(summary_text: t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.description_summary_text")) do
+          = vacancy.organisation.description
+
+      - if vacancy.organisation&.safeguarding_information.present?
+        = f.hidden_field :safeguarding_information_provided, value: true
+        = f.hidden_field :safeguarding_information, value: vacancy.organisation.safeguarding_information
+        p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.safeguarding_information")
+        = govuk_details(summary_text: t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.safeguarding_information_summary_text")) do
+          = vacancy.organisation.safeguarding_information
+
       - if vacancy.job_role == "teacher"
         = f.govuk_collection_radio_buttons :ect_status,
           Vacancy.ect_statuses.keys,
@@ -32,13 +44,14 @@
         = editor(form_input: f.govuk_text_area(:school_offer, max_words: 300, label: { size: "s", id: "school-offer-label" }, rows: 5, required: true, aria: { hidden: false }), value: form.school_offer, field_name: "publishers_job_listing_about_the_role_form[school_offer]", label: { text: t("jobs.school_offer.publisher"), size: "s", id: "school-offer-label" })
 
       - unless vacancy.job_advert.present?
-        = f.govuk_radio_buttons_fieldset :safeguarding_information_provided, legend: { size: "m", tag: nil }, classes: ["safeguarding-information-provided-radios"] do
-          = f.govuk_radio_button :safeguarding_information_provided, "true" do
-            = editor(form_input: f.govuk_text_area(:safeguarding_information),
-                     value: form.safeguarding_information,
-                     field_name: "publishers_job_listing_about_the_role_form[safeguarding_information]",
-                     label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information"), classes: ["govuk-label", "govuk-label--s", "govuk-!-margin-bottom-2", "govuk-!-font-weight-bold"], id: "safeguarding-information-label" })
-          = f.govuk_radio_button :safeguarding_information_provided, "false", link_errors: true
+        - unless vacancy.organisation&.safeguarding_information.present?
+          = f.govuk_radio_buttons_fieldset :safeguarding_information_provided, legend: { size: "m", tag: nil }, classes: ["safeguarding-information-provided-radios"] do
+            = f.govuk_radio_button :safeguarding_information_provided, "true" do
+              = editor(form_input: f.govuk_text_area(:safeguarding_information),
+                      value: form.safeguarding_information,
+                      field_name: "publishers_job_listing_about_the_role_form[safeguarding_information]",
+                      label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information"), classes: ["govuk-label", "govuk-label--s", "govuk-!-margin-bottom-2", "govuk-!-font-weight-bold"], id: "safeguarding-information-label" })
+            = f.govuk_radio_button :safeguarding_information_provided, "false", link_errors: true
 
         = f.govuk_radio_buttons_fieldset :further_details_provided, legend: { size: "m", tag: nil }, classes: ["further-details-provided-radios"] do
           = f.govuk_radio_button :further_details_provided, "true" do

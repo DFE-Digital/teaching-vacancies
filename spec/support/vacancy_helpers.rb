@@ -204,7 +204,13 @@ module VacancyHelpers
     expect(page).to have_content(strip_tags(vacancy.readable_ect_status)) if vacancy.ect_status.present?
     expect(page).to have_content(vacancy.skills_and_experience)
     expect(page).to have_content(vacancy.school_offer)
-    expect(page).to have_content(vacancy.safeguarding_information) if vacancy.safeguarding_information_provided
+
+    if vacancy.organisation&.safeguarding_information.present?
+      expect(page).to have_content(vacancy.organisation.safeguarding_information)
+    elsif vacancy.safeguarding_information_provided
+      expect(page).to have_content(vacancy.safeguarding_information)
+    end
+
     expect(page).to have_content(vacancy.further_details) if vacancy.further_details_provided
     expect(page).to have_content(I18n.t("jobs.include_additional_documents"))
 
@@ -233,7 +239,13 @@ module VacancyHelpers
 
     expect(page.html).to include(vacancy.skills_and_experience)
     expect(page.html).to include(vacancy.school_offer)
-    expect(page.html).to include(vacancy.safeguarding_information)
+
+    if vacancy.organisation&.safeguarding_information.present?
+      expect(page.html).to include(vacancy.organisation.safeguarding_information)
+    elsif vacancy.safeguarding_information_provided
+      expect(page.html).to include(vacancy.safeguarding_information)
+    end
+
     expect(page.html).to include(vacancy.further_details)
 
     expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents")) if vacancy.supporting_documents.any?

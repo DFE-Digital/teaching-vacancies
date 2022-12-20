@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
-  let(:school) { create(:school, :not_applicable, name: "Salisbury School") }
+  let(:school) { create(:school, :not_applicable, name: "Salisbury School", safeguarding_information: nil) }
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
