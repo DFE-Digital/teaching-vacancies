@@ -21,6 +21,9 @@ RUN yarn install --check-files
 
 COPY . .
 
+ENV DOCUMENTS_S3_BUCKET=foo
+ENV SCHOOLS_IMAGES_LOGOS_S3_BUCKET=foo
+
 RUN RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used RAILS_SERVE_STATIC_FILES=1 bundle exec rake assets:precompile
 
 RUN rm -rf node_modules log tmp yarn.lock && \
