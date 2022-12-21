@@ -1,6 +1,6 @@
-class Publishers::JobListing::DocumentsForm < Publishers::JobListing::UploadBaseForm
+class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyForm
+  validates :documents, form_file: true
   validate :document_presence
-  validate :valid_documents
 
   attr_accessor :documents
 
@@ -12,12 +12,20 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::UploadBase
     false
   end
 
-  def valid_documents
-    @valid_documents ||= documents&.select { |doc| valid_file_size?(doc) && valid_file_type?(doc) && virus_free?(doc) } || []
+  def file_type
+    :document
   end
 
-  def file_upload_field_name
-    :documents
+  def content_types_allowed
+    %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze
+  end
+
+  def file_size_limit
+    10.megabytes
+  end
+
+  def valid_file_types
+    %i[PDF DOC DOCX]
   end
 
   def params_to_save

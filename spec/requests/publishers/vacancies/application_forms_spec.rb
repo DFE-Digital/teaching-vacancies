@@ -226,6 +226,8 @@ RSpec.describe "Documents" do
     end
 
     context "MIME type inspection" do
+      let(:valid_file_types) { "PDF, DOC or DOCX" }
+
       before do
         post organisation_job_application_forms_path(vacancy.id), params: {
           publishers_job_listing_application_form_form: { application_form: file },
@@ -236,7 +238,7 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("blank_job_spec.pdf") }
 
         it "is accepted" do
-          expect(response.body).not_to include(I18n.t("jobs.file_type_error_message", filename: "blank_job_spec.pdf"))
+          expect(response.body).not_to include(I18n.t("jobs.file_type_error_message", filename: "blank_job_spec.pdf", valid_file_types: valid_file_types))
         end
       end
 
@@ -246,7 +248,7 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("mime_types/valid_word_document.docx") }
 
         it "is accepted" do
-          expect(response.body).not_to include(I18n.t("jobs.file_type_error_message", filename: "valid_word_document.docx"))
+          expect(response.body).not_to include(I18n.t("jobs.file_type_error_message", filename: "valid_word_document.docx", valid_file_types: valid_file_types))
         end
       end
 
@@ -254,7 +256,7 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("mime_types/zip_file_pretending_to_be_a_pdf.pdf") }
 
         it "is rejected even if the file extension suggests it is valid" do
-          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "zip_file_pretending_to_be_a_pdf.pdf"))
+          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "zip_file_pretending_to_be_a_pdf.pdf", valid_file_types: valid_file_types))
         end
       end
 
@@ -262,7 +264,7 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("mime_types/invalid_plain_text_file.txt") }
 
         it "is rejected even if the file extension suggests it is valid" do
-          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "invalid_plain_text_file.txt"))
+          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "invalid_plain_text_file.txt", valid_file_types: valid_file_types))
         end
       end
     end
