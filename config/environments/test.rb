@@ -60,8 +60,6 @@ Rails.application.configure do
   # Use test geocoder lookup, unless otherwise specified
   config.geocoder_lookup = :test
 
-  config.active_storage.service = :test
-
   require "fake_dsi_sign_out_endpoint"
   ENV["DFE_SIGN_IN_ISSUER"] = "http://fake.dsi.example.com"
   config.middleware.insert_before 0, FakeDSISignOutEndpoint

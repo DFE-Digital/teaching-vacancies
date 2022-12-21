@@ -1,0 +1,13 @@
+amazon_s3_documents:
+  service: S3
+  access_key_id: <%= ENV["DOCUMENTS_ACCESS_KEY_ID"] %>
+  secret_access_key: <%= ENV["DOCUMENTS_ACCESS_KEY_SECRET"] %>
+  bucket: <%= ENV["DOCUMENTS_S3_BUCKET"] %>
+  region: eu-west-2
+
+amazon_s3_images_and_logos:
+  service: S3
+  access_key_id: <%= ENV["SCHOOLS_IMAGES_LOGOS_ACCESS_KEY_ID"] %>
+  secret_access_key: <%= ENV["SCHOOLS_IMAGES_LOGOS_ACCESS_KEY_SECRET"] %>
+  bucket: <%= ENV["SCHOOLS_IMAGES_LOGOS_S3_BUCKET"] %>
+  region: eu-west-2
