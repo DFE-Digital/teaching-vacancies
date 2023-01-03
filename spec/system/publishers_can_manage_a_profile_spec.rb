@@ -135,7 +135,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
           click_link("Change")
         end
 
-        expect(find_field("publishers_organisation_description_form[description]").value).to be_empty
+        expect(find_field("publishers_organisation_description_form[description]").value).to eq(organisation.description)
 
         fill_in "publishers_organisation_description_form[description]", with: new_trust_description
         click_on I18n.t("buttons.save_changes")
@@ -223,7 +223,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
           click_link("Change")
         end
 
-        expect(find_field("publishers_organisation_email_form[email]").value).to be_blank
+        expect(find_field("publishers_organisation_email_form[email]").value).to eq(organisation.email)
 
         fill_in "publishers_organisation_email_form[email]", with: new_trust_email
         click_on I18n.t("buttons.save_changes")
@@ -268,6 +268,94 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
         click_on I18n.t("buttons.save_changes")
 
         expect(page).to have_content(local_authority_email)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
+    end
+  end
+
+  describe "changing the organisation's safeguarding information" do
+    context "when the publisher is signed in as a school" do
+      let(:organisation) { create(:school) }
+      let(:school_safeguarding_information) { "A very safe school" }
+
+      before { click_link I18n.t("nav.school_profile") }
+
+      it "allows the publisher to edit the school's safeguarding information" do
+        within("div.govuk-summary-list__row#safeguarding_information") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_safeguarding_information_form[safeguarding_information]").value).to eq(organisation.safeguarding_information)
+
+        fill_in "publishers_organisation_safeguarding_information_form[safeguarding_information]", with: school_safeguarding_information
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(school_safeguarding_information)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
+    end
+
+    context "when the publisher is signed in as a trust" do
+      let(:organisation) { create(:trust, schools: [school1, school2]) }
+      let(:school1) { create(:school) }
+      let(:school2) { create(:school) }
+      let(:new_trust_safeguarding_information) { "This trust is very safe" }
+      let(:new_school_safeguarding_information) { "This school is very safe" }
+
+      before { click_link I18n.t("nav.organisation_profile") }
+
+      it "allows the publisher to edit the trust's safeguarding information" do
+        within("div.govuk-summary-list__row#safeguarding_information") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_safeguarding_information_form[safeguarding_information]").value).to eq(organisation.safeguarding_information)
+
+        fill_in "publishers_organisation_safeguarding_information_form[safeguarding_information]", with: new_trust_safeguarding_information
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(new_trust_safeguarding_information)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
+        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+      end
+
+      it "allows the publisher to navigate and edit a school's description" do
+        click_on school1.name
+
+        within("div.govuk-summary-list__row#safeguarding_information") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_safeguarding_information_form[safeguarding_information]").value).to eq(school1.safeguarding_information)
+
+        fill_in "publishers_organisation_safeguarding_information_form[safeguarding_information]", with: new_school_safeguarding_information
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(new_school_safeguarding_information)
+        expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+        expect(page.current_path).to eq(publishers_organisation_path(school1))
+      end
+    end
+
+    context "when the publisher is signed in as a local authority" do
+      let(:organisation) { create(:local_authority) }
+      let(:local_authority_safeguarding_information) { "A very safe local authority" }
+
+      before { click_link I18n.t("nav.organisation_profile") }
+
+      it "allows the publisher to edit the local authority's safeguarding information" do
+        within("div.govuk-summary-list__row#safeguarding_information") do
+          click_link("Change")
+        end
+
+        expect(find_field("publishers_organisation_safeguarding_information_form[safeguarding_information]").value).to eq(organisation.safeguarding_information)
+
+        fill_in "publishers_organisation_safeguarding_information_form[safeguarding_information]", with: local_authority_safeguarding_information
+        click_on I18n.t("buttons.save_changes")
+
+        expect(page).to have_content(local_authority_safeguarding_information)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
         expect(page.current_path).to eq(publishers_organisation_path(organisation))
       end

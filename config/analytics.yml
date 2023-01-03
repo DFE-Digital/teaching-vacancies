@@ -163,6 +163,7 @@ shared:
     - type
     - name
     - description
+    - safeguarding_information
     - urn
     - uid
     - phase

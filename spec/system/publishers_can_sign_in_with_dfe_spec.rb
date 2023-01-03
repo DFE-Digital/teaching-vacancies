@@ -99,7 +99,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
   context "with DSI data including a school group (trust or local authority) that the school belongs to" do
     let!(:publisher) { Publisher.find_by(oid: user_oid) }
-    let!(:school) { create(:school, urn: "246757") }
+    let!(:school) { create(:school, :profile_incomplete, urn: "246757") }
 
     before do
       publisher.update organisations: [school, school_group]
@@ -135,7 +135,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
   end
 
   context "with valid credentials that match a Trust" do
-    let(:organisation) { create(:trust) }
+    let(:organisation) { create(:trust, :profile_incomplete) }
     let(:publisher_preference) { instance_double(PublisherPreference) }
 
     before do

@@ -98,7 +98,7 @@ class Organisation < ApplicationRecord
   end
 
   def profile_complete?
-    %i[url description].all? { |attribute| send(attribute).present? }
+    %i[email description safeguarding_information url].all? { |attribute| send(attribute).present? }
   end
 
   private

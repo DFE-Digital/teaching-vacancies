@@ -69,6 +69,13 @@
           - row.value
             = organisation.description
 
+      - if organisation.safeguarding_information?
+        - summary_list.row do |row|
+          - row.key
+            = t("organisations.show.summary.safeguarding_information")
+          - row.value
+            = organisation.safeguarding_information
+
 - if organisation.geopoint?
   .govuk-grid-row
     .govuk-grid-column-two-thirds

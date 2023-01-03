@@ -22,6 +22,6 @@ class Publishers::OrganisationsController < Publishers::BaseController
   end
 
   def organisation_params
-    params.require(:publishers_organisation_form).permit(:description, :url_override, :email)
+    params.require(:publishers_organisation_form).permit(:description, :email, :safeguarding_information, :url_override)
   end
 end

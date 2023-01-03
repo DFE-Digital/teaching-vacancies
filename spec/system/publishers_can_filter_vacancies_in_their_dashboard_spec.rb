@@ -52,7 +52,6 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
         it "shows all published vacancies again" do
           expect(page).to_not have_css(".filters-component__remove-tags__tag")
-          click_on I18n.t("publishers.incomplete_profile.skip_to_link_text")
           expect(page).to have_content(school_group_vacancy.job_title)
           expect(page).to have_content(school1_vacancy.job_title)
         end

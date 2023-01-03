@@ -107,6 +107,7 @@ Rails.application.routes.draw do
     resources :organisations, only: %i[show] do
       resource :description, only: %i[edit update], controller: "organisations/description"
       resource :email, only: %i[edit update], controller: "organisations/email"
+      resource :safeguarding_information, only: %i[edit update], controller: "organisations/safeguarding_information"
       resource :website, only: %i[edit update], controller: "organisations/url_override"
 
       get :preview
