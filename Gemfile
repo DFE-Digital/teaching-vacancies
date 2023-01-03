@@ -63,7 +63,7 @@ gem "sentry-rails"
 gem "sentry-ruby"
 gem "sentry-sidekiq"
 # TODO: Pinned to <7 until compatible with sidekiq-cron
-gem "sidekiq", "<7"
+gem "sidekiq", "<8"
 gem "sidekiq-cron"
 gem "skylight"
 gem "slim-rails"
