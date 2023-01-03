@@ -40,7 +40,7 @@ RSpec.describe Search::LocationBuilder do
     end
 
     context "when a non-polygonable location is specified" do
-      let(:radius_in_metres) { 1_609 * expected_radius }
+      let(:radius_in_metres) { expected_radius * 1_609 }
       let(:location) { point_location }
 
       it "sets radius attribute, and location filter around the location" do
