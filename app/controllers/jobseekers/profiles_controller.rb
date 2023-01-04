@@ -1,4 +1,4 @@
-class Jobseekers::ProfileController < Jobseekers::BaseController
+class Jobseekers::ProfilesController < Jobseekers::BaseController
   SECTIONS = [
     {
       title: "Personal details",
@@ -40,9 +40,9 @@ class Jobseekers::ProfileController < Jobseekers::BaseController
       link_text: "Preview profile",
       page_path: -> { "" },
     },
-  ].freeze
+  ].map(&:freeze).freeze
 
-  def index
+  def show
     @sections = SECTIONS
   end
 end

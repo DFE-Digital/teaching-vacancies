@@ -78,7 +78,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :profile, only: %i[index]
+    resource :profile, only: %i[show]
 
     resources :saved_jobs, only: %i[index]
 
