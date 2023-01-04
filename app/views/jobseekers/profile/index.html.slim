@@ -7,6 +7,6 @@
 
     - @sections.each do |section|
         = tag.h2(section[:title], class: "govuk-heading-m govuk-!-font-size-27 govuk-!-padding-top-6")
-        p = govuk_link_to section[:link_text], section[:page_path], class: "govuk-!-padding-bottom-6"
+        p = govuk_link_to section[:link_text], instance_exec(&section[:page_path]), class: "govuk-!-padding-bottom-6"
 
     p = t(".activate_profile_text")
