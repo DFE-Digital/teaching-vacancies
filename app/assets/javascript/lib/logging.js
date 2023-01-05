@@ -22,7 +22,7 @@ const sentryLogger = {
   log: (msg = '[Sentry captureMessage] log unknown message') => Sentry.captureMessage(msg),
   info: (msg = '[Sentry captureMessage] info unknown message') => Sentry.captureMessage(msg),
   warn: (msg = '[Sentry captureMessage] warn unknown message') => Sentry.captureMessage(msg),
-  error: (error = new Error('[Sentry captureException] unknown error')) => Sentry.captureException(error),
+  error: (error) => Sentry.captureException(error),
 };
 
 const mockLogger = environment === 'test' ? silentLogger : consoleLogger;

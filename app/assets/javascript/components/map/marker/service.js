@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import logger from '../../../lib/logging';
+
 const Service = class {
   static async getMetaData({ id, parentId, markerType }) {
     if (!id) return false;
@@ -12,8 +14,8 @@ const Service = class {
       },
     })
       .then((response) => response.data)
-      .catch(() => {
-        // could log debug info to sentry but would provide little value
+      .catch((error) => {
+        logger.warn(error.message);
       });
 
     return request;

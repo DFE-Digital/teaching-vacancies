@@ -26,7 +26,7 @@ const CookiesBannerController = class extends Controller {
         }
       })
       .catch((error) => {
-        logger.log(error.message);
+        logger.warn(error.message);
       });
   }
 };

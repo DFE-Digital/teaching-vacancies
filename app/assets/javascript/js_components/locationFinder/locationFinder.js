@@ -2,9 +2,10 @@ import { Controller } from '@hotwired/stimulus';
 
 import loader from '../loadingIndicator/loadingIndicator';
 import api from './api';
+import logger from '../../lib/logging';
 
 export const ERROR_MESSAGE = 'Unable to find your location';
-export const LOGGING_MESSAGE = '[component: locationFinder]: Unable to find user location';
+export const LOGGING_MESSAGE = '[JS component: locationFinder]: Unable to find user location';
 
 export const DEFAULT_PLACEHOLDER = 'City, town or postcode';
 export const LOADING_PLACEHOLDER = 'Finding Location...';
@@ -33,8 +34,9 @@ const LocationFinder = class extends Controller {
     navigator.geolocation.getCurrentPosition((data) => {
       api[this.sourceValue](data.coords.latitude, data.coords.longitude).then((postcode) => {
         postcode ? this.onSuccess(postcode) : this.onFailure();
-      }).catch(() => {
+      }).catch((error) => {
         this.onFailure();
+        logger.info(`${LOGGING_MESSAGE}: ${error.message}`);
       });
     });
   }
