@@ -26,7 +26,7 @@ const CookiesBannerController = class extends Controller {
         }
       })
       .catch((error) => {
-        logger.log('cookie consent request failed', error.message);
+        logger.log(error.message);
       });
   }
 };
