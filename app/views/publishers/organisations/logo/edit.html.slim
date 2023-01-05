@@ -1,0 +1,42 @@
+- content_for :page_title_prefix, @organisation.name.titlecase
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: publishers_organisation_path(@organisation)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @logo_form, url: publishers_organisation_logo_path(@organisation), method: :patch do |f|
+      = f.govuk_error_summary
+
+      span.govuk-caption-l = t("publishers.organisations.profile_caption")
+      label.govuk-heading-l = t(".title")
+
+      p.govuk-body
+        = t(".instructions.header")
+
+      ul.govuk-list.govuk-list--bullet
+        li = t(".instructions.format")
+        li = t(".instructions.size")
+
+      p.govuk-body
+        = t(".instructions.shape")
+
+      p.govuk-body
+        = t(".instructions.support.text_html", link: govuk_link_to(t(".instructions.support.link_text"), new_support_request_path))
+
+      - if @organisation.logo.attached?
+        h2.govuk-heading-m = t(".current_logo_title")
+        = image_tag(@organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name), class: "contained-image--logo govuk-!-display-block govuk-!-margin-bottom-0")
+        p.govuk-body-s class="govuk-!-margin-bottom-1"
+          = @organisation.logo.filename
+        p.govuk-body
+          = govuk_link_to t(".delete_logo_link"), confirm_destroy_publishers_organisation_logo_path(@organisation)
+
+      = f.govuk_file_field :logo,
+        label: { text: (@organisation.logo.attached? ? t(".change_your_logo") : t("publishers.organisations.upload_a_file")), size: "m", class: "govuk-!-padding-top-2" },
+        enctype: "multipart/form-data"
+
+      = f.govuk_submit t("buttons.profile_update.logo")
+
+    .govuk-body
+      = govuk_link_to t("buttons.cancel"), publishers_organisation_path(@organisation)

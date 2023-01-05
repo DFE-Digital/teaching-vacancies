@@ -98,5 +98,16 @@ RSpec.describe "Users are redirected after sign in" do
         expect(current_path).to eq(publisher_root_path)
       end
     end
+
+    context "when the organisation's profile is incomplete " do
+      before { allow_any_instance_of(Organisation).to receive(:profile_complete?).and_return(false) }
+
+      scenario "it redirects to the interstitial profile completion reminder page" do
+        sign_in_publisher(navigate: true)
+
+        expect(current_path).to eq(publishers_organisation_profile_incomplete_path(organisation))
+        expect(page).to have_link(I18n.t("publishers.incomplete_profile.complete_link_text", organisation_type: :school), href: publishers_organisation_path(organisation))
+      end
+    end
   end
 end

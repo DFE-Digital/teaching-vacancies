@@ -52,6 +52,9 @@ en:
     job_listing: Job listing
     make_changes: Make changes
     preview_job_listing: Preview job listing
+    profile_update:
+      logo: Update organisation logo
+      photo: Update organisation photo
     reject: Reject
     reminder_continue: Continue to create a job
     request_dsi_account: Request a DfE Sign-in account
@@ -487,6 +490,7 @@ en:
         description: Description of %{organisation_type}
         email: Email address
         safeguarding_information: Commitment to safeguarding
+        logo: Upload a file
         url_override: "Override the %{organisation_type}'s website (defaults to \"%{gias_url}\")"
 
       publishers_job_application_notes_form:

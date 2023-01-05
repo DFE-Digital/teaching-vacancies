@@ -267,7 +267,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
-        upload_document(
+        upload_file(
           "new_publishers_job_listing_documents_form",
           "publishers-job-listing-documents-form-documents-field",
           "spec/fixtures/files/#{filename}",

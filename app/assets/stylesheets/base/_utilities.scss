@@ -27,6 +27,10 @@
   vertical-align: middle;
 }
 
+.vertical-align-top {
+  vertical-align: top;
+}
+
 .align-items-center {
   align-items: center;
 }
@@ -131,5 +135,13 @@
 
   .js-hidden {
     display: none !important;
+  }
+}
+
+.contained-image {
+  max-width: 100%;
+
+  &--logo {
+    max-width: 300px;
   }
 }

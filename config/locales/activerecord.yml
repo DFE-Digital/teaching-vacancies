@@ -39,9 +39,6 @@ en:
       inclusion: Tell us why you want to unsubscribe
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
-  url_override_errors: &url_override_errors
-    url_override:
-      url: Enter a link in the correct format, like https://www.school.ac.uk
 
   # Feedback forms
   account_feedback_errors: &account_feedback_errors
@@ -267,6 +264,17 @@ en:
     upload_additional_document:
       inclusion: Select yes if you want to upload another document
 
+  # Publisher profiles
+  publisher_profile_logo_errors: &publisher_profile_logo_errors
+    logo:
+      blank: Select a logo
+  publisher_profile_photo_errors: &publisher_profile_photo_errors
+    photo:
+      blank: Select a photo
+  publisher_profile_url_override_errors: &publisher_profile_url_override_errors
+    url_override:
+      url: Enter a link in the correct format, like https://www.school.ac.uk
+
   # External vacancies errors
   external_errors: &external_errors
     external_reference:
@@ -395,12 +403,18 @@ en:
         publishers/organisation/email_form:
           attributes:
             <<: *email_errors
+        publishers/organisation/logo_form:
+          attributes:
+            <<: *publisher_profile_logo_errors
         publishers/organisation/safeguarding_information_form:
           attributes:
             <<: *safeguarding_information_errors
+        publishers/organisation/photo_form:
+          attributes:
+            <<: *publisher_profile_photo_errors
         publishers/organisation/url_override_form:
           attributes:
-            <<: *url_override_errors
+            <<: *publisher_profile_url_override_errors
         publishers/terms_and_conditions_form:
           attributes:
             terms:

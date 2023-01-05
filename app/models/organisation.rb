@@ -107,7 +107,7 @@ class Organisation < ApplicationRecord
   end
 
   def profile_complete?
-    %i[email description safeguarding_information url].all? { |attribute| send(attribute).present? }
+    %i[email description safeguarding_information logo photo url].all? { |attribute| send(attribute).present? }
   end
 
   def self.update_all_searchable_content!

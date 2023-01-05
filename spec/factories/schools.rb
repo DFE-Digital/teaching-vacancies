@@ -40,6 +40,11 @@ FactoryBot.define do
     urn { Faker::Number.number(digits: 6) }
     url { Faker::Internet.url(host: "example.com") }
 
+    after(:build) do |school|
+      school.logo.attach(io: File.open(Rails.root.join("spec/fixtures/files/blank_image.png")), filename: "logo.png", content_type: "image/png")
+      school.photo.attach(io: File.open(Rails.root.join("spec/fixtures/files/blank_image.png")), filename: "photo.png", content_type: "image/png")
+    end
+
     trait :closed do
       establishment_status { "Closed" }
     end

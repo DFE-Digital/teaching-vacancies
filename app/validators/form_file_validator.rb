@@ -1,19 +1,14 @@
 class FormFileValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     # We only want to run the validations in this validator when the form is submitted to check that the file is virus free and the size and
-    # type are valid. Every job listing form model's validations are run after a step is completed in all_steps_valid? (see app/form_models/form_sequence.rb:13).
-    # At this point the custom validations in this validator do not need to be run.
+    # type are valid. Every job listing form model's validations are run after a step is completed in all_steps_valid?
+    # (see app/form_models/form_sequence.rb:13). At this point the custom validations in this validator do not need to be run.
     return true unless validating_files_after_form_submission?(value)
 
     @form = record
     @file_upload_field_name = attribute
     @form_field_value = value
-
-    [form_field_value].flatten.each do |file|
-      valid_file_size?(file) &&
-      valid_file_type?(file) &&
-      virus_free?(file)
-    end
+    record.file_type == :image ? validate_each_image : validate_each_document
   end
 
   private
@@ -25,6 +20,22 @@ class FormFileValidator < ActiveModel::EachValidator
     # of the form and not as part of checking if all_steps_valid?. We put the value in an array and then flatten because it (containing the file/files) can be either an array
     # of files or a single file.
     [value].flatten.all?(ActionDispatch::Http::UploadedFile)
+  end
+
+  def validate_each_image
+    [form_field_value].flatten.each do |file|
+      valid_file_size?(file) &&
+        valid_file_type?(file) &&
+        virus_free?(file)
+    end
+  end
+
+  def validate_each_document
+    [form_field_value].flatten.each do |file|
+      valid_file_size?(file) &&
+        valid_file_type?(file) &&
+        virus_free?(file)
+    end
   end
 
   def valid_file_size?(file)
