@@ -19,8 +19,8 @@ const consoleLogger = {
 /* eslint-enable no-console */
 
 const sentryLogger = {
-  log: Sentry.captureMessage,
-  error: Sentry.captureException,
+  log: () => Sentry.captureMessage(new Error('sentry fetch error captureMessage')),
+  error: () => Sentry.captureException(new Error('sentry fetch error captureException')),
 };
 
 const mockLogger = environment === 'test' ? silentLogger : consoleLogger;
