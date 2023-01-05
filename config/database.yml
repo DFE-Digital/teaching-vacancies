@@ -12,7 +12,7 @@ development:
 
 test:
   <<: *default
-  database: tvs_test
+  database: tvs_test<%= ENV['TEST_ENV_NUMBER'] %>
 
 staging:
   <<: *default
