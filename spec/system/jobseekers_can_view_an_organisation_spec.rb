@@ -17,6 +17,14 @@ RSpec.describe "Viewing an organisation" do
     has_profile_summary?(organisation)
   end
 
+  it "displays the organisation's description" do
+    expect(page).to have_content(organisation.description)
+  end
+
+  it "displays the organisation's safeguarding information" do
+    expect(page).to have_content(organisation.safeguarding_information)
+  end
+
   it "has a list of live jobs at the organisation" do
     has_list_of_live_jobs?(organisation)
   end
@@ -51,6 +59,14 @@ RSpec.describe "Viewing an organisation" do
 
     it "displays a profile summary" do
       has_profile_summary?(organisation)
+    end
+
+    it "displays the organisation's description" do
+      expect(page).to have_content(organisation.description)
+    end
+
+    it "displays the organisation's safeguarding information" do
+      expect(page).to have_content(organisation.safeguarding_information)
     end
 
     it "has a list of live jobs at the organisation" do

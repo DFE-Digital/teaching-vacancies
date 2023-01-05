@@ -1,0 +1,12 @@
+.organisations_show {
+  .header {
+    align-items: center;
+    display: flex;
+    margin-bottom: govuk-spacing(8);
+
+    &-title {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

@@ -1,11 +1,14 @@
 - content_for :page_title_prefix, @organisation.name
-
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    div class="govuk-!-margin-bottom-8"
-      h1.govuk-heading-l class="govuk-!-margin-bottom-1"
-        = @organisation.name
-      p.govuk-body-m = full_address(@organisation)
+    .header class="govuk-!-margin-bottom-8"
+      - if @organisation.logo.attached?
+        = image_tag(@organisation.logo.attachment, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name), size: "70", class: "govuk-!-margin-right-3")
+      .title
+        h1.govuk-heading-l class="govuk-!-margin-bottom-1"
+          = @organisation.name
+        p.govuk-body-m class="govuk-!-margin-bottom-0"
+          = full_address(@organisation)
 
 - if @organisation.school_group?
     = tabs(html_attributes: { "aria-label": "organisation menu", class: "organisation-navigation" }) do |tabs|

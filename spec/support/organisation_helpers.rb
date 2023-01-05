@@ -9,7 +9,6 @@ module OrganisationHelpers
       expect(page).to have_content(age_range(organisation)) if organisation.minimum_age? && organisation.maximum_age?
       expect(page).to have_content(school_size(organisation)) if organisation.school? && school_has_school_size_data?(organisation)
       expect(page).to have_link(href: organisation.url) if organisation.url?
-      expect(page).to have_content(organisation.description) if organisation.description?
     end
   end
 

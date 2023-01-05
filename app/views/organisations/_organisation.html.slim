@@ -62,22 +62,21 @@
           - row.value
             = open_in_new_tab_link_to(organisation.url, organisation.url)
 
-      - if organisation.description?
-        - summary_list.row do |row|
-          - row.key
-            = t("organisations.show.summary.description", organisation_type: organisation_type_basic(organisation).capitalize)
-          - row.value
-            = organisation.description
+    - if organisation.description?
+      h2.govuk-heading-m = t("organisations.show.summary.description", organisation_name: organisation.name)
+      - if organisation.photo.attached?
+        = image_tag(@organisation.photo.attachment,
+                    alt: t("publishers.organisations.organisation.photo.alt_text", organisation_name: @organisation.name),
+                    class: "contained-image govuk-!-margin-bottom-5")
+      p.govuk-body
+        = organisation.description
 
-      - if organisation.safeguarding_information?
-        - summary_list.row do |row|
-          - row.key
-            = t("organisations.show.summary.safeguarding_information")
-          - row.value
-            = organisation.safeguarding_information
+    - if organisation.safeguarding_information?
+      h2.govuk-heading-m = t("organisations.show.summary.safeguarding_information")
+      p.govuk-body = organisation.safeguarding_information
 
 - if organisation.geopoint?
-  .govuk-grid-row
+  .govuk-grid-row class="govuk-!-margin-bottom-7"
     .govuk-grid-column-two-thirds
       h2.govuk-heading-m = t("organisations.map.heading")
       p.govuk-body = full_address(organisation)
