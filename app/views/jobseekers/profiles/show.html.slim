@@ -1,0 +1,13 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".page_title")
+    p = t(".page_description")
+
+    - @sections.each do |section|
+        h2.govuk-heading-m class="govuk-!-padding-top-6"
+          = section[:title]
+        p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
+
+    p = t(".activate_profile_text")

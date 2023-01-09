@@ -78,6 +78,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resource :profile, only: %i[show]
+
     resources :saved_jobs, only: %i[index]
 
     scope path: ":job_id" do
