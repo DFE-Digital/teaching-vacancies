@@ -4,12 +4,12 @@ RSpec.describe UnitedLearningVacancySource do
   let!(:school) { create(:school, name: "Test School", urn: "136636", phase: :secondary) }
   let!(:school_group) { create(:school_group, name: "United Learning", uid: "5143", schools: [school]) }
 
-  before do
-    # FIXME: Manually stubbing HTTParty because of weird interactions between VCR and Webmock
-    expect(HTTParty).to receive(:get).with("http://example.com/feed.xml").and_return(file_fixture("vacancy_sources/united_learning.xml").read)
-  end
-
   describe "enumeration" do
+    before do
+      # FIXME: Manually stubbing HTTParty because of weird interactions between VCR and Webmock
+      expect(HTTParty).to receive(:get).with("http://example.com/feed.xml").and_return(file_fixture("vacancy_sources/united_learning.xml").read)
+    end
+
     let(:vacancy) { subject.first }
 
     it "has the correct number of vacancies" do
@@ -62,6 +62,21 @@ RSpec.describe UnitedLearningVacancySource do
         expect(vacancy).to be_changed
 
         expect(vacancy.job_title).to eq("Head of Geography")
+      end
+    end
+  end
+
+  describe "enumeration error" do
+    before do
+      # FIXME: Manually stubbing HTTParty because of weird interactions between VCR and Webmock
+      expect(HTTParty).to receive(:get).with("http://example.com/feed.xml").and_return(file_fixture("vacancy_sources/united_learning_argument_error.xml").read)
+    end
+
+    let(:vacancy) { subject.first }
+
+    context "when incorrect values are provided" do
+      it "adds an error to the vacancy object" do
+        expect(vacancy.errors.count).to eq(1)
       end
     end
   end

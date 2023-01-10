@@ -33,11 +33,13 @@ class UnitedLearningVacancySource
       # (i.e. today, unless it already has a publish on date set)
       v.publish_on ||= Date.today
 
-      v.assign_attributes(attributes_for(item))
+      begin
+        v.assign_attributes(attributes_for(item))
+      rescue ArgumentError => e
+        v.errors.add(:base, e)
+      end
 
       yield v
-    rescue StandardError => e
-      Sentry.capture_exception(e)
     end
   end
 
