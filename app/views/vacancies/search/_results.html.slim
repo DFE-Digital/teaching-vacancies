@@ -1,10 +1,14 @@
 .search-results
   - vacancies.each do |vacancy|
     .search-results__item
-      h2.govuk-heading-m class="govuk-!-margin-bottom-0"
-        = results_link(vacancy, class: "view-vacancy-link")
-      p.govuk-body.address
-        = vacancy_full_job_location(vacancy)
+      .search-results__item__header
+        - if vacancy.organisation.logo.attached?
+          = image_tag(vacancy.organisation.logo, size: "60", class: "govuk-!-margin-right-3")
+        .search-results__item__heading-title
+          h2.govuk-heading-m class="govuk-!-margin-bottom-0"
+            = results_link(vacancy, class: "view-vacancy-link")
+          p.govuk-body.address class="govuk-!-margin-bottom-0"
+            = vacancy_full_job_location(vacancy)
 
       = govuk_summary_list(classes: "govuk-summary-list--no-border search-results__summary-list--compact") do |summary_list|
         - if vacancy.salary?
