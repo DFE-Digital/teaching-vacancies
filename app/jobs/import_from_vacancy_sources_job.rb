@@ -11,8 +11,8 @@ class ImportFromVacancySourcesJob < ApplicationJob
 
       source_klass.new.each do |vacancy|
         PaperTrail.request(whodunnit: "Import from external source") do
-          if vacancy.save
-            Rails.logger.info("Imported vacancy #{vacancy.id} from feed #{source_klass.source_name}")
+          if vacancy.valid?
+            import_vacancy(source_klass, vacancy)
           else
             report_validation_errors(source_klass, vacancy)
             create_failed_imported_vacancy(source_klass, vacancy)
@@ -28,6 +28,11 @@ class ImportFromVacancySourcesJob < ApplicationJob
   end
 
   private
+
+  def import_vacancy(source_klass, vacancy)
+    vacancy.save
+    Rails.logger.info("Imported vacancy #{vacancy.id} from feed #{source_klass.source_name}")
+  end
 
   def create_failed_imported_vacancy(source_klass, vacancy)
     if FailedImportedVacancy.find_by(external_reference: vacancy.external_reference)

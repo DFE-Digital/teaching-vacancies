@@ -6,12 +6,13 @@ RSpec.describe FusionVacancySource do
   let(:schools) { [school1] }
 
   let(:response) { double("FusionHttpResponse", success?: true, body: file_fixture("vacancy_sources/fusion.json").read) }
-
-  before do
-    expect(HTTParty).to receive(:get).with("http://example.com/feed.json").and_return(response)
-  end
+  let(:argument_error_response) { double("FusionHttpResponse", success?: true, body: file_fixture("vacancy_sources/fusion_argument_error.json").read) }
 
   describe "enumeration" do
+    before do
+      expect(HTTParty).to receive(:get).with("http://example.com/feed.json").and_return(response)
+    end
+
     let(:vacancy) { subject.first }
     let(:expected_vacancy) do
       {
@@ -82,6 +83,20 @@ RSpec.describe FusionVacancySource do
 
       it "assigns the vacancy job location to the central trust" do
         expect(vacancy.readable_job_location).to eq(school_group.name)
+      end
+    end
+  end
+
+  describe "enumeration error" do
+    before do
+      expect(HTTParty).to receive(:get).with("http://example.com/feed.json").and_return(argument_error_response)
+    end
+
+    let(:vacancy) { subject.first }
+
+    context "when incorrect values are provided" do
+      it "adds an error to the vacancy object" do
+        expect(vacancy.errors.count).to eq(1)
       end
     end
   end

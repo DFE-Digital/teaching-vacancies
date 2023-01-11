@@ -142,6 +142,15 @@ RSpec.describe ImportFromVacancySourcesJob do
           "working_patterns_details" => nil,
         )
       end
+
+      it "does not save the vacancy if it has errors attached to the vacancy" do
+        vacancy.errors.add(:base, "blah")
+        described_class.perform_now
+
+        expect(vacancy).to_not be_valid
+        expect(Vacancy.count).to eq(0)
+        expect(FailedImportedVacancy.count).to eq(1)
+      end
     end
 
     context "when there is already a duplicate vacancy in the FailedImportedVacancy table" do
