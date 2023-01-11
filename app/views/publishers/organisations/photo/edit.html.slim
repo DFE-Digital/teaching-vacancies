@@ -8,7 +8,7 @@
     = form_for @photo_form, url: publishers_organisation_photo_path(@organisation), method: :patch do |f|
       = f.govuk_error_summary
 
-      span.govuk-caption-l = t("publishers.organisations.profile_caption")
+      span.govuk-caption-l = t("publishers.organisations.profile_caption", organisation_type: @organisation.school? ? "School" : "Organisation")
       label.govuk-heading-l = t(".title")
 
       p.govuk-body
