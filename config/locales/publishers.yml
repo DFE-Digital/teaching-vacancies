@@ -88,7 +88,9 @@ en:
           one: 1 unread notification
           other: "%{count} unread notifications"
     organisations:
-      edit_organisation_title: Change %{organisation_type} details
+      description:
+        edit:
+          title: '%{organisation_type} description'
       logo:
         confirm_destroy:
           caption: Delete logo
@@ -110,7 +112,7 @@ en:
           title: Organisation logo
       email:
         edit:
-          title: Change %{organisation_type} details
+          title: Email address
       photo:
         confirm_destroy:
           caption: Delete photo
@@ -136,7 +138,10 @@ en:
           heading:
             caption_with_link_html: Part of %{link}
             link_text: '%{organisation_name}'
-      profile_caption: Organisation profile
+      profile_caption: '%{organisation_type} profile'
+      safeguarding_information:
+        edit:
+          title: Commitment to safeguarding
       schools:
         preview:
           exit_preview_link_text: Exit preview
@@ -152,7 +157,7 @@ en:
       upload_a_file: Upload a file
       url_override:
         edit:
-          title: Change %{organisation_type} details
+          title: Website address
       organisation:
         address:
           label: Address
