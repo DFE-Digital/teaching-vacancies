@@ -1,14 +1,18 @@
 - content_for :page_title_prefix, @organisation.name.titlecase
 
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: publishers_organisation_path(@organisation)
+
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @safeguarding_information_form, url: publishers_organisation_safeguarding_information_path(@organisation), method: :patch do |f|
       = f.govuk_error_summary
 
-      span.govuk-caption-l = t("publishers.organisations.profile_caption")
+      span.govuk-caption-l = t("publishers.organisations.profile_caption", organisation_type: @organisation.school? ? "School" : "Organisation")
+      label.govuk-heading-l = t(".title")
 
       = f.govuk_text_area :safeguarding_information,
-        label: { text: t("helpers.label.publishers_organisation_form.safeguarding_information"), size: "l" },
+        label: nil,
         rows: 10,
         max_words: 100
 
