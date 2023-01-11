@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
     visit root_path
 
     within ".sub-navigation" do
-      click_on I18n.t("jobseekers.sub_navigation.jobs")
+      click_on I18n.t("sub_nav.jobs")
       expect(current_path).to eq(jobs_path)
     end
   end
@@ -25,7 +25,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
     visit root_path
 
     within ".sub-navigation" do
-      click_on I18n.t("jobseekers.sub_navigation.schools")
+      click_on I18n.t("sub_nav.schools")
       expect(current_path).to eq(organisations_path)
     end
   end

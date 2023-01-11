@@ -9,9 +9,8 @@
     = header.navigation_item text: t("nav.hiring_guides"), href: posts_path(section: "get-help-hiring")
     = header.navigation_item text: t("nav.sign_out"), href: destroy_publisher_session_path, options: { method: :delete }
   - elsif jobseeker_signed_in?
-    = header.navigation_item text: t("nav.find_job"), href: root_path, active: find_jobs_active?
     = header.navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path
-    = header.navigation_item text: t("nav.your_account"), href: jobseeker_root_path, active: your_account_active?
+    = header.navigation_item text: t("nav.your_account"), href: jobseekers_account_path, active: your_account_active?
     = header.navigation_item text: t("nav.sign_out"), href: destroy_jobseeker_session_path, options: { method: :delete }
   - elsif support_user_signed_in?
     = header.navigation_item text: t("nav.support_user_dashboard"), href: support_user_root_path, active: current_page?(support_user_root_path)

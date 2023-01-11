@@ -225,7 +225,7 @@ en:
     sign_out: Sign out
     support_user_dashboard: Support dashboard
     support_user_return_to_service: Return to Teaching Vacancies
-    your_account: Account
+    your_account: Your account
 
   number:
     currency:
@@ -485,6 +485,14 @@ en:
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated
+
+  sub_nav:
+    jobs: Jobs
+    jobseekers:
+      applications: Applications
+      job_alerts: Job alerts
+      saved_jobs: Saved jobs
+    schools: Schools
 
   support_requests:
     new:

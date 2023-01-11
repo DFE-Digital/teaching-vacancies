@@ -9,12 +9,18 @@ RSpec.describe "Jobseekers can view their dashboard" do
     visit jobseekers_account_path
   end
 
-  it "shows `Applications` tab" do
-    within ".govuk-main-wrapper .tabs-component" do
-      expect(page).to have_link(I18n.t("jobseekers.accounts.show.page_title"))
-      expect(page).to_not have_link(I18n.t("jobseekers.job_applications.index.page_title"))
-      expect(page).to_not have_link(I18n.t("jobseekers.saved_jobs.index.page_title"))
-      expect(page).to_not have_link(I18n.t("jobseekers.subscriptions.index.page_title"))
+  it "displays a summary list with their email address and password" do
+    within ".govuk-summary-list" do
+      expect(page).to have_content(I18n.t("jobseekers.accounts.show.summary_list.email"))
+      expect(page).to have_content(I18n.t("jobseekers.accounts.show.summary_list.password"))
     end
+  end
+
+  it "allows the jobseeker to change their email address" do
+    expect(page).to have_link(href: edit_jobseeker_registration_path)
+  end
+
+  it "allows the jobseeker to change their email address" do
+    expect(page).to have_link(href: edit_jobseeker_registration_path(password_update: true))
   end
 end
