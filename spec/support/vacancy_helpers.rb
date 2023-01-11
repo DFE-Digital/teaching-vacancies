@@ -122,10 +122,10 @@ module VacancyHelpers
     fill_in "publishers_job_listing_about_the_role_form[skills_and_experience]", with: vacancy.skills_and_experience
     fill_in "publishers_job_listing_about_the_role_form[school_offer]", with: vacancy.school_offer
 
-    within ".safeguarding-information-provided-radios" do
-      choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information_provided_options.#{vacancy.safeguarding_information_provided}")
-      fill_in "publishers_job_listing_about_the_role_form[safeguarding_information]", with: vacancy.safeguarding_information
-    end
+    # within ".safeguarding-information-provided-radios" do
+    #   choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information_provided_options.#{vacancy.safeguarding_information_provided}")
+    #   fill_in "publishers_job_listing_about_the_role_form[safeguarding_information]", with: vacancy.safeguarding_information
+    # end
 
     within ".further-details-provided-radios" do
       choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.further_details_provided_options.#{vacancy.further_details_provided}")

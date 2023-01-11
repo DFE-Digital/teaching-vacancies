@@ -40,8 +40,6 @@ FactoryBot.define do
     pay_scale { factory_sample(SALARIES) }
     publish_on { Date.current }
     salary { factory_sample(SALARIES) }
-    safeguarding_information_provided { true }
-    safeguarding_information { Faker::Lorem.sentence(word_count: factory_rand(50..100)) }
     school_offer { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
     school_visits { true }
     skills_and_experience { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
