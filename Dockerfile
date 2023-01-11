@@ -21,6 +21,17 @@ RUN yarn install --check-files
 
 COPY . .
 
+# TODO: Replace fix below with something more elegant or appropriate.
+# Due to how we've configured ActiveStorage, particularly by specifying the service to use for attachments in the
+# model, an error is thrown when bundle exec rake assets:precompile is executed below. This rake command seems to load models.
+# When it hits a line where an attachment is defined and we specify a servicem, ActiveStorage attempts to set up that service,
+# configuring it using the ENV variables we provide in storage.yml. However, at this point, these ENV vars have not been loaded,
+# causing the error. Below we define two throaway ENV vars to prevent the error from being thrown. These are then later overwritten,
+# when all of the ENV vars are loaded.
+
+ENV DOCUMENTS_S3_BUCKET=throwaway_value
+ENV SCHOOLS_IMAGES_LOGOS_S3_BUCKET=throwaway_value
+
 RUN RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used RAILS_SERVE_STATIC_FILES=1 bundle exec rake assets:precompile
 
 RUN rm -rf node_modules log tmp yarn.lock && \

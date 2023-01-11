@@ -1,0 +1,7 @@
+amazon_s3_documents:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+amazon_s3_images_and_logos:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>

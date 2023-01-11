@@ -5,7 +5,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   def create
     if documents_form.valid?
-      documents_form.valid_documents.each do |document|
+      documents_form.documents.each do |document|
         vacancy.supporting_documents.attach(document)
         send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
       end

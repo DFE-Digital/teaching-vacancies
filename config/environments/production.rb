@@ -81,6 +81,4 @@ Rails.application.configure do
     ActionDispatch::RemoteIp::TRUSTED_PROXIES,
     AWSIpRanges.cloudfront_ips.map { |proxy| IPAddr.new(proxy) },
   ].flatten
-
-  config.active_storage.service = :amazon
 end

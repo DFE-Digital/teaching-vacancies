@@ -24,6 +24,14 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
       has_profile_summary?(organisation)
     end
 
+    it "displays the organisation's description" do
+      expect(page).to have_content(organisation.description)
+    end
+
+    it "displays the organisation's safeguarding information" do
+      expect(page).to have_content(organisation.safeguarding_information)
+    end
+
     it "has a list of live jobs at the organisation" do
       has_list_of_live_jobs?(organisation) if organisation.vacancies.any?
     end
@@ -52,6 +60,14 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
       has_profile_summary?(organisation)
     end
 
+    it "displays the organisation's description" do
+      expect(page).to have_content(organisation.description)
+    end
+
+    it "displays the organisation's safeguarding information" do
+      expect(page).to have_content(organisation.safeguarding_information)
+    end
+
     it "has a list of live jobs at the organisation" do
       has_list_of_live_jobs?(organisation)
     end
@@ -77,6 +93,14 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
 
       it "displays the school's profile" do
         has_profile_summary?(school_one)
+      end
+
+      it "displays the organisation's description" do
+        expect(page).to have_content(school_one.description)
+      end
+
+      it "displays the organisation's safeguarding information" do
+        expect(page).to have_content(school_one.safeguarding_information)
       end
 
       it "has a list of live jobs at the school" do

@@ -81,7 +81,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
       before { click_link I18n.t("nav.organisation_profile") }
 
-      it "allows the publisher to edit the local authority's website'" do
+      it "allows the publisher to edit the local authority's website" do
         within("div.govuk-summary-list__row#website") do
           click_link("Change")
         end
@@ -359,6 +359,108 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
         expect(page.current_path).to eq(publishers_organisation_path(organisation))
       end
+    end
+  end
+
+  describe "changing the organisation's logo" do
+    let(:organisation) { create(:school) }
+    let(:image_file_name) { "blank_image.png" }
+
+    before do
+      allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true)
+      click_link I18n.t("nav.school_profile")
+    end
+
+    it "allows the publisher to edit the organisation's logo" do
+      within("div.govuk-summary-list__row#logo") do
+        click_link("Change")
+      end
+
+      upload_file(
+        "new_publishers_organisation_logo_form",
+        "publishers-organisation-logo-form-logo-field",
+        "spec/fixtures/files/#{image_file_name}",
+      )
+
+      expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+      expect(organisation.reload.logo.attachment.filename.to_s).to eq(image_file_name)
+      expect(page).to have_css("img[src*='#{url_for(organisation.logo)}']")
+    end
+  end
+
+  describe "deleting the organisation's logo" do
+    let(:organisation) { create(:school) }
+    let(:image_file_name) { "blank_image.png" }
+
+    before do
+      allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true)
+      click_link I18n.t("nav.school_profile")
+    end
+
+    it "allows the publisher to delete the organisation's logo" do
+      within("div.govuk-summary-list__row#logo") do
+        click_link("Change")
+      end
+
+      click_on I18n.t("publishers.organisations.logo.edit.delete_logo_link")
+
+      expect(current_path).to eq(confirm_destroy_publishers_organisation_logo_path(organisation))
+
+      click_on I18n.t("buttons.delete_logo")
+
+      expect(page).to have_content(I18n.t("publishers.organisations.logo.destroy_success", organisation_type: "School"))
+      expect(organisation.reload.logo.attached?).to be false
+    end
+  end
+
+  describe "changing the organisation's photo" do
+    let(:organisation) { create(:school) }
+    let(:image_file_name) { "blank_image.png" }
+
+    before do
+      allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true)
+      click_link I18n.t("nav.school_profile")
+    end
+
+    it "allows the publisher to edit the organisation's photo" do
+      within("div.govuk-summary-list__row#photo") do
+        click_link("Change")
+      end
+
+      upload_file(
+        "new_publishers_organisation_photo_form",
+        "publishers-organisation-photo-form-photo-field",
+        "spec/fixtures/files/#{image_file_name}",
+      )
+
+      expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
+      expect(organisation.reload.photo.attachment.filename.to_s).to eq(image_file_name)
+      expect(page).to have_css("img[src*='#{url_for(organisation.photo)}']")
+    end
+  end
+
+  describe "deleting the organisation's photo" do
+    let(:organisation) { create(:school) }
+    let(:image_file_name) { "blank_image.png" }
+
+    before do
+      allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true)
+      click_link I18n.t("nav.school_profile")
+    end
+
+    it "allows the publisher to delete the organisation's photo" do
+      within("div.govuk-summary-list__row#photo") do
+        click_link("Change")
+      end
+
+      click_on I18n.t("publishers.organisations.photo.edit.delete_photo_link")
+
+      expect(current_path).to eq(confirm_destroy_publishers_organisation_photo_path(organisation))
+
+      click_on I18n.t("buttons.delete_photo")
+
+      expect(page).to have_content(I18n.t("publishers.organisations.photo.destroy_success", organisation_type: "School"))
+      expect(organisation.reload.photo.attached?).to be false
     end
   end
 end

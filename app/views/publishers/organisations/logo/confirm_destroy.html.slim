@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, @organisation.name.titlecase
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: edit_publishers_organisation_logo_path(@organisation)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-m = t(".caption")
+    h1.govuk-heading-l = t(".title")
+
+    = image_tag(@organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name), class: "contained-image--logo govuk-!-display-block govuk-!-margin-bottom-0")
+    p.govuk-body-s class="govuk-!-margin-bottom-4"
+      = @organisation.logo.filename
+
+    = govuk_button_link_to t("buttons.delete_logo"), publishers_organisation_logo_path, method: :delete, class: "govuk-button--warning"
+
+    = govuk_link_to t("buttons.cancel"), publishers_organisation_path(@organisation), class: "govuk-body-m govuk-link--no-visited-state  govuk-!-display-block"

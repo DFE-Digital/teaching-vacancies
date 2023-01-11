@@ -368,7 +368,7 @@ en:
       summary:
         address: Address
         age_range: Age range
-        description: '%{organisation_type} description'
+        description: 'About %{organisation_name}'
         education_phase: Education phase
         email_address: Email address
         heading: Summary

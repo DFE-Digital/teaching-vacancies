@@ -29,6 +29,11 @@ FactoryBot.define do
     uid { Faker::Number.number(digits: 5).to_s }
     url { Faker::Internet.url(host: "example.com") }
 
+    after(:build) do |school_group|
+      school_group.logo.attach(io: File.open(Rails.root.join("spec/fixtures/files/blank_image.png")), filename: "logo.png", content_type: "image/png")
+      school_group.photo.attach(io: File.open(Rails.root.join("spec/fixtures/files/blank_image.png")), filename: "photo.png", content_type: "image/png")
+    end
+
     trait :profile_incomplete do
       description { nil }
     end

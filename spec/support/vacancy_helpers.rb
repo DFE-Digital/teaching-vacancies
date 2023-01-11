@@ -88,13 +88,6 @@ module VacancyHelpers
     fill_in "publishers_job_listing_start_date_form[starts_on(1i)]", with: vacancy.starts_on.year
   end
 
-  def upload_document(form_id, input_name, filepath)
-    page.attach_file(input_name, Rails.root.join(filepath))
-    # Submit form on file upload without requiring Javascript driver
-    form = page.find("##{form_id}")
-    Capybara::RackTest::Form.new(page.driver.browser, form.native).submit(form)
-  end
-
   def fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
     return unless !local_authority_vacancy && vacancy.enable_job_applications?
 

@@ -118,6 +118,7 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include DistanceHelper
   config.include FactoryBot::Syntax::Methods
+  config.include FileUploadHelpers
   config.include JobseekerHelpers
   config.include MailerHelpers
   config.include OrganisationsHelper

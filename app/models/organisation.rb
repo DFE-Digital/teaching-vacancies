@@ -8,6 +8,9 @@ class Organisation < ApplicationRecord
 
   friendly_id :slug_candidates, use: :slugged
 
+  has_one_attached :logo, service: :amazon_s3_images_and_logos
+  has_one_attached :photo, service: :amazon_s3_images_and_logos
+
   has_many :organisation_vacancies, dependent: :destroy
   has_many :vacancies, through: :organisation_vacancies
 
@@ -104,7 +107,7 @@ class Organisation < ApplicationRecord
   end
 
   def profile_complete?
-    %i[email description safeguarding_information url].all? { |attribute| send(attribute).present? }
+    %i[email description safeguarding_information logo photo url].all? { |attribute| send(attribute).present? }
   end
 
   def self.update_all_searchable_content!

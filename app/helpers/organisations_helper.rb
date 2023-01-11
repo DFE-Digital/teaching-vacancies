@@ -75,17 +75,16 @@ module OrganisationsHelper
     school.school_groups.any?(&:trust?)
   end
 
-  def required_profile_info(value:, missing_text:, missing_prompt:)
-    if value.present?
-      value
-    else
-      content_tag(:div, class: %i[govuk-inset-text govuk-inset-text--dark-blue inset-text--narrow-border]) do
-        [
-          content_tag(:p, missing_prompt, class: %i[govuk-inset-text--header]),
-          content_tag(:p, missing_text),
-        ].join.html_safe
-      end
-    end
+  def required_profile_info(value:, missing_prompt:)
+    return value if value.present?
+
+    missing_profile_information_notification(missing_prompt)
+  end
+
+  def required_profile_image(image:, missing_prompt:, alt_text:)
+    return image_tag(image, alt: alt_text, class: "contained-image") if image.present?
+
+    missing_profile_information_notification(missing_prompt)
   end
 
   private
@@ -102,5 +101,14 @@ module OrganisationsHelper
 
   def pupils
     I18n.t("schools.size.pupils").pluralize
+  end
+
+  def missing_profile_information_notification(prompt)
+    content_tag(:div, class: %i[govuk-inset-text govuk-inset-text--dark-blue inset-text--narrow-border]) do
+      [
+        content_tag(:p, prompt, class: %i[govuk-inset-text--header]),
+        content_tag(:p, t("publishers.organisations.organisation.not_provided")),
+      ].join.html_safe
+    end
   end
 end
