@@ -1,152 +1,153 @@
 ---
-shared:
+:shared:
   :friendly_id_slugs:
-    - id
-    - slug
-    - sluggable_id
-    - sluggable_type
-    - scope
-    - created_at
+  - id
+  - slug
+  - sluggable_id
+  - sluggable_type
+  - scope
+  - created_at
   :versions:
-    - id
-    - item_type
-    - item_id
-    - event
-    - whodunnit
-    - object
-    - created_at
-    - object_changes
+  - id
+  - item_type
+  - item_id
+  - event
+  - whodunnit
+  - object
+  - created_at
+  - object_changes
   :sessions:
-    - id
-    - session_id
-    - data
-    - created_at
-    - updated_at
+  - id
+  - session_id
+  - data
+  - created_at
+  - updated_at
   :active_storage_variant_records:
-    - id
-    - blob_id
-    - variation_digest
+  - id
+  - blob_id
+  - variation_digest
   :active_storage_blobs:
-    - id
-    - key
-    - filename
-    - content_type
-    - metadata
-    - service_name
-    - byte_size
-    - checksum
-    - created_at
+  - id
+  - key
+  - filename
+  - content_type
+  - metadata
+  - service_name
+  - byte_size
+  - checksum
+  - created_at
   :active_storage_attachments:
-    - id
-    - name
-    - record_type
-    - record_id
-    - blob_id
-    - created_at
-  :vacancies:
-    - readable_job_location
-    - readable_phases
-    - searchable_content
-    - google_index_removed
-    - expired_vacancy_feedback_email_sent_at
+  - id
+  - name
+  - record_type
+  - record_id
+  - blob_id
+  - created_at
   :school_group_memberships:
-    - do_not_delete
+  - do_not_delete
   :references:
-    - name_ciphertext
-    - job_title_ciphertext
-    - organisation_ciphertext
-    - email_ciphertext
-    - phone_number_ciphertext
-  :qualifications:
-    - finished_studying_details_ciphertext
+  - name_ciphertext
+  - job_title_ciphertext
+  - organisation_ciphertext
+  - email_ciphertext
+  - phone_number_ciphertext
   :notifications:
-    - params
+  - params
   :notes:
-    - id
-    - content
-    - publisher_id
-    - job_application_id
-    - created_at
-    - updated_at
+  - id
+  - content
+  - publisher_id
+  - job_application_id
+  - created_at
+  - updated_at
   :markers:
-    - id
-    - vacancy_id
-    - organisation_id
-    - geopoint
-    - created_at
-    - updated_at
+  - id
+  - vacancy_id
+  - organisation_id
+  - geopoint
+  - created_at
+  - updated_at
   :job_applications:
-    - qualified_teacher_status_details
-    - disability
-    - gender
-    - gender_description
-    - orientation
-    - orientation_description
-    - ethnicity
-    - ethnicity_description
-    - religion
-    - religion_description
-    - age
-    - first_name_ciphertext
-    - last_name_ciphertext
-    - previous_names_ciphertext
-    - street_address_ciphertext
-    - city_ciphertext
-    - postcode_ciphertext
-    - phone_number_ciphertext
-    - teacher_reference_number_ciphertext
-    - national_insurance_number_ciphertext
-    - personal_statement_ciphertext
-    - support_needed_details_ciphertext
-    - close_relationships_details_ciphertext
-    - further_instructions_ciphertext
-    - rejection_reasons_ciphertext
-    - gaps_in_employment_details_ciphertext
-    - in_progress_steps
-    - employment_history_section_completed
-    - qualifications_section_completed
+  - qualified_teacher_status_details
+  - disability
+  - gender
+  - gender_description
+  - orientation
+  - orientation_description
+  - ethnicity
+  - ethnicity_description
+  - religion
+  - religion_description
+  - age
+  - first_name_ciphertext
+  - last_name_ciphertext
+  - previous_names_ciphertext
+  - street_address_ciphertext
+  - city_ciphertext
+  - postcode_ciphertext
+  - phone_number_ciphertext
+  - teacher_reference_number_ciphertext
+  - national_insurance_number_ciphertext
+  - personal_statement_ciphertext
+  - support_needed_details_ciphertext
+  - close_relationships_details_ciphertext
+  - further_instructions_ciphertext
+  - rejection_reasons_ciphertext
+  - gaps_in_employment_details_ciphertext
+  - in_progress_steps
+  - employment_history_section_completed
+  - qualifications_section_completed
   :employments:
-    - organisation_ciphertext
-    - job_title_ciphertext
-    - main_duties_ciphertext
+  - organisation_ciphertext
+  - job_title_ciphertext
+  - main_duties_ciphertext
   :emergency_login_keys:
-    - id
-    - not_valid_after
-    - publisher_id
-    - created_at
-    - updated_at
+  - id
+  - not_valid_after
+  - publisher_id
+  - created_at
+  - updated_at
   :alert_runs:
-    - id
-    - subscription_id
-    - run_on
-    - job_id
-    - created_at
-    - updated_at
-    - status
+  - id
+  - subscription_id
+  - run_on
+  - job_id
+  - created_at
+  - updated_at
+  - status
+  :qualifications:
+  - finished_studying_details_ciphertext
+  :vacancies:
+  - readable_job_location
+  - readable_phases
+  - searchable_content
+  - google_index_removed
+  - expired_vacancy_feedback_email_sent_at
   :feedbacks:
-    - comment
-    - other_unsubscribe_reason_comment
-    - visit_purpose_comment
-    - category
+  - comment
+  - other_unsubscribe_reason_comment
+  - visit_purpose_comment
+  - category
   :support_users:
-    - id
-    - oid
-    - email
-    - given_name
-    - family_name
-    - created_at
-    - updated_at
+  - id
+  - oid
+  - email
+  - given_name
+  - family_name
+  - created_at
+  - updated_at
   :publishers:
-    - family_name_ciphertext
-    - given_name_ciphertext
-    - dismissed_new_features_page_at
-    - unsubscribed_from_expired_vacancy_prompt_at
+  - family_name_ciphertext
+  - given_name_ciphertext
+  - dismissed_new_features_page_at
+  - unsubscribed_from_expired_vacancy_prompt_at
   :jobseekers:
-    - encrypted_password
-    - current_sign_in_ip_ciphertext
-    - last_sign_in_ip_ciphertext
-    - last_sign_in_ip
-    - current_sign_in_ip
+  - encrypted_password
+  - current_sign_in_ip_ciphertext
+  - last_sign_in_ip_ciphertext
+  - last_sign_in_ip
+  - current_sign_in_ip
   :organisations:
-    - gias_data_hash
-    - slug
+  - gias_data_hash
+  - searchable_content
+  - slug

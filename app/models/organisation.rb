@@ -1,6 +1,9 @@
 require "digest"
 
 class Organisation < ApplicationRecord
+  before_save :update_searchable_content
+
+  include PgSearch::Model
   extend FriendlyId
 
   friendly_id :slug_candidates, use: :slugged
@@ -24,6 +27,9 @@ class Organisation < ApplicationRecord
   scope :in_vacancy_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct })
 
   scope :search_by_location, OrganisationLocationQuery
+  pg_search_scope :search_by_name,
+                  against: :name,
+                  using: { tsearch: { prefix: true, tsvector_column: "searchable_content" } }
 
   scope(:registered_for_service, lambda do
     registered_organisations = OrganisationPublisher.select(:organisation_id)
@@ -99,6 +105,22 @@ class Organisation < ApplicationRecord
 
   def profile_complete?
     %i[email description safeguarding_information url].all? { |attribute| send(attribute).present? }
+  end
+
+  def self.update_all_searchable_content!
+    Organisation.all.find_each do |organisation|
+      organisation.update_columns(searchable_content: organisation.generate_searchable_content)
+    end
+  end
+
+  def update_searchable_content
+    self.searchable_content = generate_searchable_content
+  end
+
+  def generate_searchable_content
+    Search::Postgres::TsvectorGenerator.new(
+      a: [name],
+    ).tsvector
   end
 
   private
