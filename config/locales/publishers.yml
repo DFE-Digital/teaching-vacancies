@@ -90,7 +90,14 @@ en:
     organisations:
       edit_organisation_title: Change %{organisation_type} details
       logo:
+        confirm_destroy:
+          caption: Delete logo
+          title: Confirm that you want to delete this logo
+        destroy_success: '%{organisation_type} logo deleted'
         edit:
+          change_your_logo: Change your logo
+          current_logo_title: Your current logo
+          delete_logo_link: Delete this logo
           instructions:
             format: a PNG, JPG or JPEG
             header: 'The logo must be:'
@@ -105,7 +112,14 @@ en:
         edit:
           title: Change %{organisation_type} details
       photo:
+        confirm_destroy:
+          caption: Delete photo
+          title: Confirm that you want to delete this photo
+        destroy_success: '%{organisation_type} logo deleted'
         edit:
+          change_your_photo: Change your photo
+          current_photo_title: Your current photo
+          delete_photo_link: Delete this photo
           instructions:
             format: a PNG, JPG or JPEG
             header: 'The photo must be:'
@@ -134,7 +148,7 @@ en:
         profile_incomplete_banner:
           title: Complete your %{organisation_type} profile
         complete_school_profile: Complete your school profile
-      update_success: "%{organisation_type} details updated"
+      update_success: '%{organisation_type} details updated'
       upload_a_file: Upload a file
       url_override:
         edit:

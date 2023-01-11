@@ -37,6 +37,8 @@ en:
     delete: Delete
     delete_application: Delete application
     delete_draft: Delete draft
+    delete_logo: Delete logo
+    delete_photo: Delete photo
     delete_subject: Delete subject
     dismiss: Dismiss
     download_application: Download application

@@ -110,8 +110,12 @@ Rails.application.routes.draw do
       resource :description, only: %i[edit update], controller: "organisations/description"
       resource :email, only: %i[edit update], controller: "organisations/email"
       resource :safeguarding_information, only: %i[edit update], controller: "organisations/safeguarding_information"
-      resource :logo, only: %i[edit update], controller: "organisations/logo"
-      resource :photo, only: %i[edit update], controller: "organisations/photo"
+      resource :logo, only: %i[edit update destroy], controller: "organisations/logo" do
+        get :confirm_destroy
+      end
+      resource :photo, only: %i[edit update destroy], controller: "organisations/photo" do
+        get :confirm_destroy
+      end
       resource :website, only: %i[edit update], controller: "organisations/url_override"
 
       get :preview
