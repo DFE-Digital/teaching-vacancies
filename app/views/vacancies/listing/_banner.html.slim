@@ -3,7 +3,9 @@
 
 .banner-header
   - if vacancy.organisation.logo.attached?
-    = image_tag(vacancy.organisation.logo, size: "70", class: "govuk-!-margin-right-3")
+    .logo-image
+      .logo-spacer
+      = image_tag(vacancy.organisation.logo)
   .banner__header-title
     h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
       = vacancy.job_title

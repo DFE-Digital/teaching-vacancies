@@ -7,7 +7,9 @@
   .govuk-grid-column-two-thirds
     .header
       - if @organisation.logo.attached?
-        = image_tag(@organisation.logo.attachment, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name), size: "70", class: "govuk-!-margin-right-3")
+        .logo-image
+          .logo-spacer
+          = image_tag(@organisation.logo.attachment, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name))
       .header-title
         h1.govuk-heading-l class="govuk-!-margin-bottom-1"
           = @organisation.name
