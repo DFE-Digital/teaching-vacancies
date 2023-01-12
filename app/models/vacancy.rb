@@ -109,7 +109,7 @@ class Vacancy < ApplicationRecord
   def organisation
     return organisations.first if organisations.one?
 
-    organisations.find(&:trust?) || organisations.first&.school_groups&.first
+    organisations.find(&:trust?) || publisher_organisation || organisations.first&.school_groups&.first
   end
 
   def location
