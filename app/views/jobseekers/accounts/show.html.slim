@@ -1,19 +1,18 @@
 - content_for :page_title_prefix, t(".page_title")
 
-= render "jobseekers/dashboard/account_header", title: t(".page_title")
+h1.govuk-heading-l = t(".page_title")
 
-.dashboard-component
-  .govuk-grid-row
-    .govuk-grid-column-full
-      = govuk_summary_list do |summary_list|
-        - summary_list.row do |row|
-          - row.key text: t(".summary_list.email")
-          - row.value text: current_jobseeker.email
-          - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path, visually_hidden_text: t(".summary_list.email"))
+.govuk-grid-row
+  .govuk-grid-column-full
+    = govuk_summary_list do |summary_list|
+      - summary_list.row(html_attributes: { id: "email_address" }) do |row|
+        - row.key text: t(".summary_list.email")
+        - row.value text: current_jobseeker.email
+        - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path, visually_hidden_text: t(".summary_list.email"))
 
-        - summary_list.row do |row|
-          - row.key text: t(".summary_list.password")
-          - row.value text: t(".summary_list.password_placeholder")
-          - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path(password_update: true), visually_hidden_text: t(".summary_list.password"))
+      - summary_list.row(html_attributes: { id: "password" }) do |row|
+        - row.key text: t(".summary_list.password")
+        - row.value text: t(".summary_list.password_placeholder")
+        - row.action(text: t("buttons.change"), href: edit_jobseeker_registration_path(password_update: true), visually_hidden_text: t(".summary_list.password"))
 
-      p = govuk_link_to t(".close_account"), jobseekers_confirm_destroy_account_path
+    p = govuk_link_to t(".close_account"), jobseekers_confirm_destroy_account_path
