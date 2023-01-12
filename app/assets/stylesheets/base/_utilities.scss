@@ -145,3 +145,19 @@
     max-width: 300px;
   }
 }
+
+.logo-image {
+  height: 70px;
+  margin-right: govuk-spacing(3);
+  width: 70px;
+  
+  .logo-spacer {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  img {
+    width: 100%;
+  }
+}

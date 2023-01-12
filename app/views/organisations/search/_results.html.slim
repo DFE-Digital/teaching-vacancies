@@ -1,7 +1,9 @@
 - @schools.each do |school|
   .header
     - if school.logo.attached?
-      = image_tag(school.logo, size: "60", class: "govuk-!-margin-right-3")
+      .logo-image
+        .logo-spacer
+        = image_tag(school.logo)
     .title
       h2.govuk-heading-m class="govuk-!-margin-bottom-0"
         = govuk_link_to(school.name, organisation_path(school))

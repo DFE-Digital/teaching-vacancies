@@ -3,7 +3,9 @@
     .search-results__item
       .search-results__item__header
         - if vacancy.organisation.logo.attached?
-          = image_tag(vacancy.organisation.logo, size: "60", class: "govuk-!-margin-right-3")
+          .logo-image
+            .logo-spacer
+            = image_tag(vacancy.organisation.logo)
         .search-results__item__heading-title
           h2.govuk-heading-m class="govuk-!-margin-bottom-0"
             = results_link(vacancy, class: "view-vacancy-link")
