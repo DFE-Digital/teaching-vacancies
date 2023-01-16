@@ -10,7 +10,11 @@ class Publishers::Organisations::SafeguardingInformationController < Publishers:
     if @safeguarding_information_form.valid?
       organisation.update(safeguarding_information: @safeguarding_information_form.safeguarding_information)
 
-      redirect_to publishers_organisation_path(organisation), success: t("publishers.organisations.update_success", organisation_type: organisation.school? ? "School" : "Organisation")
+      if params[:publishers_organisation_safeguarding_information_form][:vacancy_id]
+        redirect_to organisation_job_build_path(params[:publishers_organisation_safeguarding_information_form][:vacancy_id], :about_the_role)
+      else
+        redirect_to publishers_organisation_path(organisation), success: t("publishers.organisations.update_success", organisation_type: organisation.school? ? "School" : "Organisation")
+      end
     else
       organisation
 

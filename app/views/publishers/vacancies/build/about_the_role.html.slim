@@ -13,7 +13,7 @@
           = vacancy.organisation.description
       - else
         p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_description", organisation: vacancy.organisation.school? ? "school" : "organisation")
-        p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_description_link.#{vacancy.organisation.school? ? 'school' : 'organisation'}"), edit_publishers_organisation_description_path(vacancy.organisation)
+        p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_description_link.#{vacancy.organisation.school? ? 'school' : 'organisation'}"), edit_publishers_organisation_description_path(vacancy.organisation, vacancy_id: vacancy.id)
 
       - unless vacancy.safeguarding_information.present?
         - if vacancy.organisation&.safeguarding_information.present?
@@ -22,7 +22,7 @@
             = vacancy.organisation&.safeguarding_information
         - else
           p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information", organisation: vacancy.organisation.school? ? "school" : "organisation")
-          p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information_link"), edit_publishers_organisation_safeguarding_information_path(vacancy.organisation)
+          p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information_link"), edit_publishers_organisation_safeguarding_information_path(vacancy.organisation, vacancy_id: vacancy.id)
 
       - if vacancy.job_role == "teacher"
         = f.govuk_collection_radio_buttons :ect_status,

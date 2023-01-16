@@ -24,4 +24,13 @@ class Publishers::OrganisationsController < Publishers::BaseController
   def organisation_params
     params.require(:publishers_organisation_form).permit(:description, :email, :safeguarding_information, :url_override)
   end
+
+  def back_link_destination
+    if params[:vacancy_id]
+      organisation_job_build_path(params[:vacancy_id], :about_the_role)
+    else
+      publishers_organisation_path(@organisation)
+    end
+  end
+  helper_method :back_link_destination
 end
