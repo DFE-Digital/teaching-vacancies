@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, t(".page_title", school_group_name: @organisation.trust.name)
+- content_for :page_title_prefix, t(".page_title", school_group_name: @organisation.name)
 
 - content_for :breadcrumbs do
   = govuk_back_link text: t(".exit_preview_link_text"), href: publishers_organisation_path(@organisation)
