@@ -75,6 +75,9 @@ section#job-details class="govuk-!-margin-bottom-5"
 
   - if vacancy.expires_at.future?
     h3.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")
+
+    .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link))
+
     - if vacancy.enable_job_applications?
       p.govuk-body = t("jobseekers.job_applications.applying_for_the_job_paragraph")
       = govuk_button_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(vacancy.id)

@@ -34,6 +34,8 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
                 radius: @vacancies_search.location_search.radius_in_meters,
                 marker: { type: "vacancy", tracking: { link: "vacancy_visited_from_map", marker: "vacancy_popup_opened_from_map" } })
 
+      = govuk_inset_text(text: t("vacancies.international_teacher_advice.text_html",
+                                 link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link)))
       #search-results
         - if @vacancies.any?
           = render "vacancies/search/sort", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies
