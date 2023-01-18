@@ -122,10 +122,10 @@ module VacancyHelpers
     fill_in "publishers_job_listing_about_the_role_form[skills_and_experience]", with: vacancy.skills_and_experience
     fill_in "publishers_job_listing_about_the_role_form[school_offer]", with: vacancy.school_offer
 
-    within ".safeguarding-information-provided-radios" do
-      choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information_provided_options.#{vacancy.safeguarding_information_provided}")
-      fill_in "publishers_job_listing_about_the_role_form[safeguarding_information]", with: vacancy.safeguarding_information
-    end
+    # within ".safeguarding-information-provided-radios" do
+    #   choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information_provided_options.#{vacancy.safeguarding_information_provided}")
+    #   fill_in "publishers_job_listing_about_the_role_form[safeguarding_information]", with: vacancy.safeguarding_information
+    # end
 
     within ".further-details-provided-radios" do
       choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.further_details_provided_options.#{vacancy.further_details_provided}")
@@ -204,7 +204,13 @@ module VacancyHelpers
     expect(page).to have_content(strip_tags(vacancy.readable_ect_status)) if vacancy.ect_status.present?
     expect(page).to have_content(vacancy.skills_and_experience)
     expect(page).to have_content(vacancy.school_offer)
-    expect(page).to have_content(vacancy.safeguarding_information) if vacancy.safeguarding_information_provided
+
+    if vacancy.organisation&.safeguarding_information.present?
+      expect(page).to have_content(vacancy.organisation.safeguarding_information)
+    elsif vacancy.safeguarding_information_provided
+      expect(page).to have_content(vacancy.safeguarding_information)
+    end
+
     expect(page).to have_content(vacancy.further_details) if vacancy.further_details_provided
     expect(page).to have_content(I18n.t("jobs.include_additional_documents"))
 
@@ -233,7 +239,13 @@ module VacancyHelpers
 
     expect(page.html).to include(vacancy.skills_and_experience)
     expect(page.html).to include(vacancy.school_offer)
-    expect(page.html).to include(vacancy.safeguarding_information)
+
+    if vacancy.organisation&.safeguarding_information.present?
+      expect(page.html).to include(vacancy.organisation.safeguarding_information)
+    elsif vacancy.safeguarding_information_provided
+      expect(page.html).to include(vacancy.safeguarding_information)
+    end
+
     expect(page.html).to include(vacancy.further_details)
 
     expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents")) if vacancy.supporting_documents.any?

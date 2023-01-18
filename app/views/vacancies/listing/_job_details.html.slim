@@ -69,7 +69,10 @@ section#job-details class="govuk-!-margin-bottom-5"
     h2.govuk-heading-m = t("jobs.further_details")
     .govuk-body == vacancy.further_details
 
-  - if vacancy.safeguarding_information_provided?
+  - if vacancy.organisation&.safeguarding_information.present?
+    h2.govuk-heading-m = t("jobs.safeguarding_information.jobseeker")
+    .govuk-body == vacancy.organisation.safeguarding_information
+  - elsif vacancy.safeguarding_information_provided?
     h2.govuk-heading-m = t("jobs.safeguarding_information.jobseeker")
     .govuk-body == vacancy.safeguarding_information
 

@@ -58,18 +58,18 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.school_offer.publisher", organisation: vacancy.organisation.type.downcase)
 
-  - unless vacancy.safeguarding_information_provided.nil?
-    - summary_list.row(html_attributes: { id: "safeguarding_information_provided" }) do |row|
-      - row.key
-        = t("jobs.safeguarding_information_provided")
-      - row.value
-        = vacancy.safeguarding_information_provided ? "Yes" : "No"
-      - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
-                    visually_hidden_text: t("jobs.safeguarding_information_provided")
-
   - if vacancy.safeguarding_information.present?
+    - unless vacancy.safeguarding_information_provided.nil?
+      - summary_list.row(html_attributes: { id: "safeguarding_information_provided" }) do |row|
+        - row.key
+          = t("jobs.safeguarding_information_provided")
+        - row.value
+          = vacancy.safeguarding_information_provided ? "Yes" : "No"
+        - unless vacancy.legacy_draft?
+          - row.action text: t("buttons.change"),
+                      href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
+                      visually_hidden_text: t("jobs.safeguarding_information_provided")
+
     - summary_list.row(html_attributes: { id: "safeguarding_information" }) do |row|
       - row.key
         = t("jobs.safeguarding_information.publisher")
@@ -79,6 +79,17 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.safeguarding_information.publisher")
+
+  - elsif vacancy.organisation&.safeguarding_information.present?
+    - summary_list.row(html_attributes: { id: "safeguarding_information" }) do |row|
+      - row.key
+        = t("jobs.safeguarding_information.publisher")
+      - row.value
+        .editor-rendered-content == vacancy.organisation.safeguarding_information
+        = govuk_inset_text(text: t("jobs.safeguarding_information.profile.description_html",
+                           link: govuk_link_to(t("jobs.safeguarding_information.profile.link_text"),
+                                 publishers_organisation_path(vacancy.organisation))),
+                           classes: "govuk-!-margin-top-3")
 
   - unless vacancy.further_details_provided.nil?
     - summary_list.row(html_attributes: { id: "further_details_provided" }) do |row|

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
   let!(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: school_group, schools: [school1, school2]) }
-  let(:school_group) { create(:local_authority, schools: [school1, school2]) }
+  let(:school_group) { create(:local_authority, schools: [school1, school2], safeguarding_information: nil) }
   let(:school1) { create(:school, :not_applicable, name: "First school") }
   let(:school2) { create(:school, :not_applicable, name: "Second school") }
   let(:vacancy) { build(:vacancy, :no_tv_applications, :teacher, :ect_suitable, phases: %w[secondary], organisations: [school1, school2]) }

@@ -55,6 +55,8 @@ class CopyVacancy
     @new_vacancy.personal_statement_guidance = nil
     @new_vacancy.school_visits_details = nil
     @new_vacancy.how_to_apply = nil
+    @new_vacancy.safeguarding_information_provided = nil
+    @new_vacancy.safeguarding_information = nil
   end
 
   def current_steps

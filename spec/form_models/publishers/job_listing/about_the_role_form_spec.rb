@@ -10,7 +10,6 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   before { subject.valid? }
 
   it { is_expected.to validate_inclusion_of(:ect_status).in_array(Vacancy.ect_statuses.keys) }
-  it { is_expected.to validate_inclusion_of(:safeguarding_information_provided).in_array([true, false, "true", "false"]) }
   it { is_expected.to validate_inclusion_of(:further_details_provided).in_array([true, false, "true", "false"]) }
 
   describe "skills_and_experience" do
@@ -136,53 +135,75 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   end
 
   describe "safeguarding_information" do
-    context "when safeguarding_information_provided is false" do
-      before { allow(subject).to receive(:safeguarding_information_provided).and_return("false") }
-      it { is_expected.not_to validate_presence_of(:safeguarding_information) }
-    end
+    context "when safeguarding_information is already present on the vacancy" do
+      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", safeguarding_information: "safeguarding") }
 
-    context "when safeguarding_information_provided is true" do
-      let(:error) { %i[safeguarding_information blank] }
-      let(:params) { { safeguarding_information: safeguarding_information, safeguarding_information_provided: "true" } }
-
-      context "when safeguarding_information has been provided" do
+      context "when safeguarding_information_provided is false" do
         let(:error) { %i[safeguarding_information blank] }
-        let(:safeguarding_information) { Faker::Lorem.sentence(word_count: 99) }
+
+        before { allow(subject).to receive(:safeguarding_information_provided).and_return("false") }
 
         it "passes validation" do
           expect(subject.errors.added?(*error)).to be false
         end
       end
 
-      context "when safeguarding_information has not been provided" do
+      context "when safeguarding_information_provided is true" do
         let(:error) { %i[safeguarding_information blank] }
-        let(:safeguarding_information) { nil }
+        let(:params) { { safeguarding_information: safeguarding_information, safeguarding_information_provided: "true" } }
 
-        it "fails validation" do
-          expect(subject.errors.added?(*error)).to be true
+        context "when safeguarding_information has been provided" do
+          let(:error) { %i[safeguarding_information blank] }
+          let(:safeguarding_information) { Faker::Lorem.sentence(word_count: 99) }
+
+          it "passes validation" do
+            expect(subject.errors.added?(*error)).to be false
+          end
+        end
+
+        context "when safeguarding_information has not been provided" do
+          let(:error) { %i[safeguarding_information blank] }
+          let(:safeguarding_information) { nil }
+
+          it "fails validation" do
+            expect(subject.errors.added?(*error)).to be true
+          end
+        end
+
+        context "when either job_advert or about_school is present" do
+          let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", about_school: "Test") }
+          let(:safeguarding_information) { nil }
+
+          it "does not fail validation" do
+            expect(subject.errors.added?(*error)).to be false
+          end
+        end
+
+        context "when safeguarding_information is over 100 words" do
+          let(:error) { %i[safeguarding_information length] }
+          let(:params) { { safeguarding_information: Faker::Lorem.sentence(word_count: 101), safeguarding_information_provided: "true" } }
+
+          it "fails validation" do
+            expect(subject.errors.added?(*error)).to be true
+          end
+
+          it "has the correct error message" do
+            expect(subject.errors.messages[:safeguarding_information]).to include(I18n.t("about_the_role_errors.safeguarding_information.length"))
+          end
         end
       end
+    end
 
-      context "when either job_advert or about_school is present" do
-        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", about_school: "Test") }
-        let(:safeguarding_information) { nil }
+    context "when safeguarding_information is not already present on the vacancy" do
+      let(:params) { { safeguarding_information: nil, safeguarding_information_provided: nil } }
+      let(:presence_error) { %i[safeguarding_information blank] }
+      let(:length_error) { %i[safeguarding_information length] }
 
-        it "does not fail validation" do
-          expect(subject.errors.added?(*error)).to be false
-        end
-      end
+      it { is_expected.not_to validate_inclusion_of(:safeguarding_information_provided).in_array([true, false, "true", "false"]) }
 
-      context "when safeguarding_information is over 100 words" do
-        let(:error) { %i[safeguarding_information length] }
-        let(:params) { { safeguarding_information: Faker::Lorem.sentence(word_count: 101), safeguarding_information_provided: "true" } }
-
-        it "fails validation" do
-          expect(subject.errors.added?(*error)).to be true
-        end
-
-        it "has the correct error message" do
-          expect(subject.errors.messages[:safeguarding_information]).to include(I18n.t("about_the_role_errors.safeguarding_information.length"))
-        end
+      it "passes validation" do
+        expect(subject.errors.added?(*presence_error)).to be false
+        expect(subject.errors.added?(*length_error)).to be false
       end
     end
   end

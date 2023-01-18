@@ -165,6 +165,9 @@ en:
     safeguarding_information:
       jobseeker: Commitment to safeguarding
       publisher: Information about your commitment to safeguarding
+      profile:
+        description_html: Change your information about your commitment to safeguarding in your %{link}.
+        link_text: profile
     school_offer:
       jobseeker: What the school offers its staff
       publisher: What does your school offer?

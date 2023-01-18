@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Copying a vacancy" do
   let(:publisher) { create(:publisher) }
-  let(:school) { create(:school) }
+  let(:school) { create(:school, safeguarding_information: nil) }
 
   let!(:original_vacancy) { create_published_vacancy(organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
 
