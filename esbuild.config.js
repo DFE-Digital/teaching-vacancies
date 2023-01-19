@@ -1,4 +1,4 @@
-import esbuild from 'esbuild';
+import * as esbuild from 'esbuild';
 import babel from 'esbuild-plugin-babel';
 
 const watch = process.argv[process.argv.length - 1] == '--watch';
@@ -11,22 +11,26 @@ const watch = process.argv[process.argv.length - 1] == '--watch';
 //          esbuild app/assets/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds \
 //          --public-path=assets --target=es6
 
-esbuild
-    .build({
-        bundle: true,
-        entryPoints: ['app/assets/javascript/application.js'],
-        minify: true,
-        outdir: 'app/assets/builds',
-        plugins: [
-          babel({
-            config: {
-              presets: ['@babel/preset-env'],
-              targets: '> 0.25%, not dead, IE 11'
-            }
-          })
-        ],
-        publicPath: 'assets',
-        target: ['ie11'],
-        watch: watch
+const config = {
+  bundle: true,
+  entryPoints: ['app/assets/javascript/application.js'],
+  minify: true,
+  outdir: 'app/assets/builds',
+  plugins: [
+    babel({
+      config: {
+        presets: ['@babel/preset-env'],
+        targets: '> 0.25%, not dead, IE 11'
+      }
     })
-    .catch(() => process.exit(1));
+  ],
+  publicPath: 'assets',
+  target: ['ie11']
+};
+
+if (watch) {
+  await esbuild.context(config);
+  await ctx.watch();
+} else {
+  await esbuild.build(config);
+}
