@@ -119,6 +119,10 @@ shared:
     - country
     - email_address
     - withdrawn_by_closing_account
+  jobseeker_profiles:
+    - id
+    - created_at
+    - updated_at
   jobseekers:
     - id
     - email
