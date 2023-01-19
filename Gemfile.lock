@@ -205,7 +205,7 @@ GEM
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     geocoder (1.8.1)
-    globalid (1.0.0)
+    globalid (1.0.1)
       activesupport (>= 5.0)
     google-apis-bigquery_v2 (0.44.0)
       google-apis-core (>= 0.9.1, < 2.a)
