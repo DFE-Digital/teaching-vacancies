@@ -15,6 +15,7 @@ class Jobseeker < ApplicationRecord
   has_many :feedbacks
   has_many :job_applications, dependent: :destroy
   has_many :saved_jobs, dependent: :destroy
+  has_one :jobseeker_profile
 
   after_update :update_subscription_emails
 
