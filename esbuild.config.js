@@ -29,7 +29,7 @@ const config = {
 };
 
 if (watch) {
-  await esbuild.context(config);
+  let ctx = await esbuild.context(config);
   await ctx.watch();
 } else {
   await esbuild.build(config);
