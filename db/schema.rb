@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_18_163603) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_23_161926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -235,6 +235,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_163603) do
   create_table "jobseeker_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "jobseeker_id"
+    t.index ["jobseeker_id"], name: "index_jobseeker_profiles_on_jobseeker_id"
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -585,6 +587,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_163603) do
   add_foreign_key "employments", "job_applications"
   add_foreign_key "equal_opportunities_reports", "vacancies"
   add_foreign_key "job_applications", "vacancies"
+  add_foreign_key "jobseeker_profiles", "jobseekers"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"
   add_foreign_key "notes", "job_applications"
