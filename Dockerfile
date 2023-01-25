@@ -1,4 +1,4 @@
-ARG PROD_PACKAGES="libxml2 libxslt libpq tzdata shared-mime-info"
+ARG PROD_PACKAGES="imagemagick libxml2 libxslt libpq tzdata shared-mime-info"
 
 FROM ruby:3.2.0-alpine3.16 AS builder
 

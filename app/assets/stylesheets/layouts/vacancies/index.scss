@@ -40,28 +40,6 @@
           margin-bottom: 0;
         }
       }
-
-      &__header {
-        align-items: center;
-        display: flex;
-        margin-bottom: govuk-spacing(1);
-
-        @include govuk-media-query($from: tablet) {
-          margin-bottom: 0;
-        }
-
-        &-title {
-          display: flex;
-          flex-direction: column;
-
-          .address {
-            margin-bottom: govuk-spacing(1);
-            @include govuk-media-query($from: tablet) {
-              margin-bottom: 0;
-            }
-          }
-        }
-      }
     }
 
     &__summary-list--compact {

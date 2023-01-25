@@ -1,12 +1,11 @@
 .search-results
   - vacancies.each do |vacancy|
     .search-results__item
-      .search-results__item__header
+      .header-with-logo
         - if vacancy.organisation.logo.attached?
-          .logo-image
-            .logo-spacer
-            = image_tag(vacancy.organisation.logo)
-        .search-results__item__heading-title
+          .header-with-logo-logo--search-result
+            = image_tag(vacancy.organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: vacancy.organisation.name))
+        .header-with-logo-title
           h2.govuk-heading-m class="govuk-!-margin-bottom-0"
             = results_link(vacancy, class: "view-vacancy-link")
           p.govuk-body.address class="govuk-!-margin-bottom-0"

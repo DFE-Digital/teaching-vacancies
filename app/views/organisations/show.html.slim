@@ -1,11 +1,10 @@
 - content_for :page_title_prefix, @organisation.name
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .header class="govuk-!-margin-bottom-8"
+    .header-with-logo class="govuk-!-margin-bottom-8"
       - if @organisation.logo.attached?
-        .logo-image
-          .logo-spacer
-          = image_tag(@organisation.logo.attachment, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name))
+        .header-with-logo-logo
+          = image_tag(@organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name))
       .title
         h1.govuk-heading-l class="govuk-!-margin-bottom-1"
           = @organisation.name

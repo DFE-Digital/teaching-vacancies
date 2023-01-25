@@ -41,8 +41,11 @@ FactoryBot.define do
     url { Faker::Internet.url(host: "example.com") }
 
     after(:build) do |school|
-      school.logo.attach(io: File.open(Rails.root.join("spec/fixtures/files/blank_image.png")), filename: "logo.png", content_type: "image/png")
-      school.photo.attach(io: File.open(Rails.root.join("spec/fixtures/files/blank_image.png")), filename: "photo.png", content_type: "image/png")
+      blank_image = File.open(Rails.root.join("spec/fixtures/files/blank_image.png"))
+      normalised_logo = ImageManipulator.new(image_file_path: blank_image.path).alter_dimensions_and_preserve_aspect_ratio("100", "100")
+
+      school.logo.attach(io: StringIO.open(normalised_logo.to_blob), filename: "logo.png", content_type: "image/png")
+      school.photo.attach(io: blank_image, filename: "photo.png", content_type: "image/png")
     end
 
     trait :closed do
