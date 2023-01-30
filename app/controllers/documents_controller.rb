@@ -38,7 +38,7 @@ class DocumentsController < ApplicationController
         filename: file.filename,
       )
 
-    DfE::Analytics::SendEvents.do(event)
+    DfE::Analytics::SendEvents.do([event])
   end
 
   def send_event
