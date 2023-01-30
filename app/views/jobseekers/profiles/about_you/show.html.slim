@@ -1,0 +1,16 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".page_title")
+
+    = govuk_summary_list do |summary_list|
+      - summary_list.row do |row|
+        - row.key text: t(".summary_title")
+        - row.value text: @profile.about_you
+        - row.action(text: t("buttons.change"), href: edit_jobseekers_profile_about_you_path)
+
+    = govuk_button_link_to t("buttons.return_to_profile"), jobseekers_profile_path

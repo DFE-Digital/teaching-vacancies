@@ -608,6 +608,11 @@ en:
               invalid:  Enter a phone number in the correct format
             relationship:
               blank: Enter the referee's relationship to you, for example line manager
+        jobseekers/profile/about_you_form:
+          attributes:
+            about_you:
+              blank: Enter your about you details
+              length: About you must be 1000 words or less
         publishers/job_application/notes_form:
           attributes:
             content:

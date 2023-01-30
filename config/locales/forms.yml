@@ -61,6 +61,7 @@ en:
     reminder_continue: Continue to create a job
     request_dsi_account: Request a DfE Sign-in account
     resend_email: Resend request
+    return_to_profile: Return to profile
     save: Save
     save_and_continue: Save and continue
     save_and_finish_later: Save and finish later
@@ -464,6 +465,8 @@ en:
           another_role: I have found another role
           changed_mind: I have changed my mind
           other: Some other reason
+      jobseekers_profile_about_you_form:
+        about_you: About you
       jobseekers_sign_in_form:
         email: Email address
         password: Password

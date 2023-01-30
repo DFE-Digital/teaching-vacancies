@@ -78,7 +78,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resource :profile, only: %i[show]
+    resource :profile, only: %i[show] do
+      resource :about_you, only: %i[edit update show], controller: "profiles/about_you"
+    end
 
     resources :saved_jobs, only: %i[index]
 
