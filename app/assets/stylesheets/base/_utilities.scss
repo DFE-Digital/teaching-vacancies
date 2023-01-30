@@ -146,21 +146,35 @@
   }
 }
 
-.logo-image {
+.header-with-logo {
+  align-items: center;
   display: flex;
-  height: 70px;
-  justify-content: center;
-  margin-right: govuk-spacing(3);
-  width: 70px;
 
-  .logo-spacer {
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
+  @include govuk-media-query($until: tablet) {
+    margin-bottom: govuk-spacing(2);
+  }
+
+  &-title {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-logo {
+    margin-right: govuk-spacing(3);
+
+    &--search-result {
+      align-items: center;
+      display: flex;
+      height: 70px;
+      justify-content: center;
+      margin-right: govuk-spacing(3);
+      width: 70px;
+    }
   }
 
   img {
-    max-height: 100%;
-    max-width: 100%;
+    max-height: 70px;
+    max-width: 70px;
   }
 }
+

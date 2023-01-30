@@ -5,12 +5,11 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    .header
+    .header-with-logo class="govuk-!-margin-bottom-7"
       - if @organisation.logo.attached?
-        .logo-image
-          .logo-spacer
-          = image_tag(@organisation.logo.attachment, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name))
-      .header-title
+        .header-with-logo-logo
+          = image_tag(@organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name))
+      .header-with-logo-title
         h1.govuk-heading-l class="govuk-!-margin-bottom-1"
           = @organisation.name
         p.govuk-body-m class="govuk-!-margin-bottom-0"

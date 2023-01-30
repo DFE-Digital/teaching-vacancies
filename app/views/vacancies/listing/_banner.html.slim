@@ -1,12 +1,11 @@
 - if vacancy.expired?
   = govuk_tag text: t("jobs.expired_listing.tag").upcase, colour: "orange"
 
-.banner-header
+.header-with-logo class="govuk-!-margin-bottom-5"
   - if vacancy.organisation.logo.attached?
-    .logo-image
-      .logo-spacer
-      = image_tag(vacancy.organisation.logo)
-  .banner__header-title
+    .header-with-logo-logo
+      = image_tag(vacancy.organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: vacancy.organisation.name))
+  .header-with-logo-title
     h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
       = vacancy.job_title
     span.govuk-caption-l class="govuk-!-margin-top-0"
