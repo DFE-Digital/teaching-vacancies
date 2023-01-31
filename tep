@@ -1,0 +1,82 @@
+=> [32m#<Jobseekers::Profile::PersonalDetailsForm:0x00007f15e7fb7f30[0m
+ @attributes[32m=[0m
+  [32m#<ActiveModel::AttributeSet:0x00007f15e7fb7d78[0m
+   @attributes[32m=[0m
+    {[31m[1;31m"[0m[31mcompleted_steps[1;31m"[0m[31m[0m=>
+      [32m#<ActiveModel::Attribute::FromUser:0x00007f165130bd80[0m
+       @name[32m=[0m[31m[1;31m"[0m[31mcompleted_steps[1;31m"[0m[31m[0m,
+       @original_attribute[32m=[0m
+        [32m#<ActiveModel::Attribute::UserProvidedDefault:0x00007f165130be20[0m
+         @name[32m=[0m[31m[1;31m"[0m[31mcompleted_steps[1;31m"[0m[31m[0m,
+         @original_attribute[32m=[0m[1;36mnil[0m,
+         @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+         @user_provided_value[32m=[0m[32m#<Proc:0x00007f15e7e79ee8 /home/rob/repos/teaching-vacancies/lib/multistep/form.rb:10 (lambda)>[0m,
+         @value_before_type_cast[32m=[0m[32m#<Proc:0x00007f15e7e79ee8 /home/rob/repos/teaching-vacancies/lib/multistep/form.rb:10 (lambda)>[0m[32m>[0m,
+       @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+       @value[32m=[0m{[33m:name[0m=>[33m:completed[0m, [33m:phone_number[0m=>[33m:completed[0m, [33m:review[0m=>[33m:completed[0m},
+       @value_before_type_cast[32m=[0m{[33m:name[0m=>[33m:completed[0m, [33m:phone_number[0m=>[33m:completed[0m, [33m:review[0m=>[33m:completed[0m}[32m>[0m}[32m>[0m,
+ @steps[32m=[0m
+  {[33m:name[0m=>
+    [32m#<Jobseekers::Profile::PersonalDetailsForm::Name:0x00007f15e7fb7698[0m
+     @attributes[32m=[0m
+      [32m#<ActiveModel::AttributeSet:0x00007f15e7fb7580[0m
+       @attributes[32m=[0m
+        {[31m[1;31m"[0m[31mfirst_name[1;31m"[0m[31m[0m=>
+          [32m#<ActiveModel::Attribute::FromUser:0x00007f165130b7e0[0m
+           @name[32m=[0m[31m[1;31m"[0m[31mfirst_name[1;31m"[0m[31m[0m,
+           @original_attribute[32m=[0m
+            [32m#<ActiveModel::Attribute::WithCastValue:0x00007f165130bd30[0m
+             @name[32m=[0m[31m[1;31m"[0m[31mfirst_name[1;31m"[0m[31m[0m,
+             @original_attribute[32m=[0m[1;36mnil[0m,
+             @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+             @value_before_type_cast[32m=[0m[1;36mnil[0m[32m>[0m,
+           @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+           @value[32m=[0m[31m[1;31m"[0m[31m[1;31m"[0m[31m[0m,
+           @value_before_type_cast[32m=[0m[31m[1;31m"[0m[31m[1;31m"[0m[31m[0m[32m>[0m,
+         [31m[1;31m"[0m[31mlast_name[1;31m"[0m[31m[0m=>
+          [32m#<ActiveModel::Attribute::FromUser:0x00007f165130b790[0m
+           @name[32m=[0m[31m[1;31m"[0m[31mlast_name[1;31m"[0m[31m[0m,
+           @original_attribute[32m=[0m
+            [32m#<ActiveModel::Attribute::WithCastValue:0x00007f165130bbf0[0m
+             @name[32m=[0m[31m[1;31m"[0m[31mlast_name[1;31m"[0m[31m[0m,
+             @original_attribute[32m=[0m[1;36mnil[0m,
+             @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+             @value_before_type_cast[32m=[0m[1;36mnil[0m[32m>[0m,
+           @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+           @value[32m=[0m[31m[1;31m"[0m[31mtest[1;31m"[0m[31m[0m,
+           @value_before_type_cast[32m=[0m[31m[1;31m"[0m[31mtest[1;31m"[0m[31m[0m[32m>[0m}[32m>[0m,
+     @errors[32m=[0m[32m#<ActiveModel::Errors [#<ActiveModel::Error attribute=first_name, type=blank, options={}>]>[0m,
+     @multistep[32m=[0m[32m#<Jobseekers::Profile::PersonalDetailsForm:0x00007f15e7fb7f30[0m ...[32m>[0m,
+     @validation_context[32m=[0m[1;36mnil[0m[32m>[0m,
+   [33m:phone_number[0m=>
+    [32m#<Jobseekers::Profile::PersonalDetailsForm::PhoneNumber:0x00007f15e7fb73f0[0m
+     @attributes[32m=[0m
+      [32m#<ActiveModel::AttributeSet:0x00007f15e7fb72d8[0m
+       @attributes[32m=[0m
+        {[31m[1;31m"[0m[31mphone_number_provided[1;31m"[0m[31m[0m=>
+          [32m#<ActiveModel::Attribute::FromUser:0x00007f165130b8d0[0m
+           @name[32m=[0m[31m[1;31m"[0m[31mphone_number_provided[1;31m"[0m[31m[0m,
+           @original_attribute[32m=[0m
+            [32m#<ActiveModel::Attribute::WithCastValue:0x00007f165130bba0[0m
+             @name[32m=[0m[31m[1;31m"[0m[31mphone_number_provided[1;31m"[0m[31m[0m,
+             @original_attribute[32m=[0m[1;36mnil[0m,
+             @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+             @value_before_type_cast[32m=[0m[1;36mnil[0m[32m>[0m,
+           @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+           @value_before_type_cast[32m=[0m[1;36mtrue[0m[32m>[0m,
+         [31m[1;31m"[0m[31mphone_number[1;31m"[0m[31m[0m=>
+          [32m#<ActiveModel::Attribute::FromUser:0x00007f165130b830[0m
+           @name[32m=[0m[31m[1;31m"[0m[31mphone_number[1;31m"[0m[31m[0m,
+           @original_attribute[32m=[0m
+            [32m#<ActiveModel::Attribute::WithCastValue:0x00007f165130bab0[0m
+             @name[32m=[0m[31m[1;31m"[0m[31mphone_number[1;31m"[0m[31m[0m,
+             @original_attribute[32m=[0m[1;36mnil[0m,
+             @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+             @value_before_type_cast[32m=[0m[1;36mnil[0m[32m>[0m,
+           @type[32m=[0m[32m#<ActiveModel::Type::Value:0x00007f1651ed8c80[0m @limit[32m=[0m[1;36mnil[0m, @precision[32m=[0m[1;36mnil[0m, @scale[32m=[0m[1;36mnil[0m[32m>[0m,
+           @value_before_type_cast[32m=[0m[31m[1;31m"[0m[31m07777777777[1;31m"[0m[31m[0m[32m>[0m}[32m>[0m,
+     @multistep[32m=[0m[32m#<Jobseekers::Profile::PersonalDetailsForm:0x00007f15e7fb7f30[0m ...[32m>[0m[32m>[0m,
+   [33m:review[0m=>
+    [32m#<Jobseekers::Profile::PersonalDetailsForm::Review:0x00007f15e7fb7148[0m
+     @attributes[32m=[0m[32m#<ActiveModel::AttributeSet:0x00007f15e7fb7030[0m @attributes[32m=[0m{}[32m>[0m,
+     @multistep[32m=[0m[32m#<Jobseekers::Profile::PersonalDetailsForm:0x00007f15e7fb7f30[0m ...[32m>[0m[32m>[0m}[32m>[0m

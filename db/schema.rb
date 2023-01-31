@@ -10,15 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_23_161926) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_06_153235) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "citext"
   enable_extension "fuzzystrmatch"
-  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
-  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -75,11 +72,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_161926) do
     t.uuid "job_application_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "employment_type", default: 0
-    t.text "reason_for_break", default: ""
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
+    t.integer "employment_type", default: 0
+    t.text "reason_for_break", default: ""
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
   end
 
@@ -381,6 +378,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_161926) do
     t.index ["urn"], name: "index_organisations_on_urn", unique: true
   end
 
+  create_table "personal_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "jobseeker_profile_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.boolean "phone_number_provided"
+    t.string "phone_number"
+    t.json "completed_steps", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jobseeker_profile_id"], name: "index_personal_details_on_jobseeker_profile_id"
+  end
+
   create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "publisher_id"
     t.uuid "organisation_id"
@@ -592,6 +601,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_161926) do
   add_foreign_key "markers", "vacancies"
   add_foreign_key "notes", "job_applications"
   add_foreign_key "notes", "publishers"
+  add_foreign_key "personal_details", "jobseeker_profiles"
   add_foreign_key "publisher_preferences", "publishers"
   add_foreign_key "qualification_results", "qualifications"
   add_foreign_key "qualifications", "job_applications"

@@ -123,7 +123,6 @@ shared:
     - id
     - created_at
     - updated_at
-    - jobseeker_id
   jobseekers:
     - id
     - email

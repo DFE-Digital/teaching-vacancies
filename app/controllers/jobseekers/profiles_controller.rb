@@ -1,9 +1,15 @@
 class Jobseekers::ProfilesController < Jobseekers::BaseController
+  helper_method :form, :jobseeker_profile
+
+  before_action :jobseeker_profile
+
   SECTIONS = [
     {
       title: "Personal details",
+      condition: -> { current_jobseeker.jobseeker_profile.personal_details&.completed_steps.present? },
       link_text: "Add personal details",
-      page_path: -> { "" },
+      page_path: -> { personal_details_jobseekers_profile_path },
+      partial: "jobseekers/profiles/personal_details/summary",
     },
     {
       title: "Job preferences",
@@ -44,5 +50,11 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
 
   def show
     @sections = SECTIONS
+  end
+
+  private
+
+  def jobseeker_profile
+    @jobseeker_profile ||= JobseekerProfile.find_or_create_by(jobseeker_id: current_jobseeker.id)
   end
 end

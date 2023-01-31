@@ -1,0 +1,75 @@
+require "rails_helper"
+
+RSpec.describe "Jobseekers can manage their profile" do
+  let(:jobseeker) { create(:jobseeker) }
+
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+  end
+
+  describe "changing personal details" do
+    let(:profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+
+    context "when filling in the profile for the first time" do
+      let(:personal_details) { create(:personal_details, :not_started, jobseeker_profile: profile) }
+      let(:first_name) { "Frodo" }
+      let(:last_name) { "Baggins" }
+      let(:phone_number) { "07777777777" }
+
+      before { visit jobseekers_profile_path }
+
+      it "allows the jobseeker to fill in their personal details" do
+        click_link("Add personal details")
+        fill_in "personal_details_form[first_name]", with: first_name
+        fill_in "personal_details_form[last_name]", with: last_name
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content("Do you want to provide a phone number?")
+        choose "Yes"
+        fill_in "personal_details_form[phone_number]", with: phone_number
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.return_to_profile")
+
+        expect(page).to have_content(first_name)
+        expect(page).to have_content(last_name)
+        expect(page).to have_content(phone_number)
+      end
+    end
+
+    context "when editing a profile that has already been completed" do
+      let!(:personal_details) do
+        create(:personal_details,
+               jobseeker_profile: profile,
+               first_name: "Frodo",
+               last_name: "Baggins",
+               phone_number_provided: true,
+               phone_number: old_phone_number,
+               completed_steps: { "name" => "completed", "phone_number" => "completed" })
+      end
+
+      let(:new_first_name) { "Samwise" }
+      let(:new_last_name) { "Gamgee" }
+      let(:old_phone_number) { "07777777777" }
+
+      before { visit jobseekers_profile_path }
+
+      it "allows the jobseeker to edit their profile" do
+        within ".govuk-summary-list__row:nth-child(1)" do
+          click_on "Change"
+        end
+
+        fill_in "personal_details_form[first_name]", with: new_first_name
+        fill_in "personal_details_form[last_name]", with: new_last_name
+        click_on I18n.t("buttons.save_and_continue")
+
+        choose "No"
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content(new_first_name)
+        expect(page).to have_content(new_last_name)
+        expect(page).to have_content("No")
+        expect(page).not_to have_content(old_phone_number)
+      end
+    end
+  end
+end

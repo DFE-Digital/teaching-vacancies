@@ -78,7 +78,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resource :profile, only: %i[show]
+    resource :profile, only: %i[show] do
+      get "personal-details", to: "profiles/personal_details#start"
+      get "personal-details/:step", to: "profiles/personal_details#edit", as: :edit_personal_details
+      post "personal-details/:step", to: "profiles/personal_details#update"
+    end
 
     resources :saved_jobs, only: %i[index]
 

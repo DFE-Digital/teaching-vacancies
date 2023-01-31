@@ -8,6 +8,10 @@
     - @sections.each do |section|
         h2.govuk-heading-m class="govuk-!-padding-top-6"
           = section[:title]
-        p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
+
+        - if section[:condition] && instance_exec(&section[:condition])
+          = render partial: section[:partial]
+        - else
+          p = govuk_link_to section[:link_text], personal_details_jobseekers_profile_path
 
     p = t(".activate_profile_text")

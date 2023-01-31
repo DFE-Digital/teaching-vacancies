@@ -1,0 +1,21 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: back_url
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @step, url: { action: :update }, method: :post, as: :personal_details_form do |f|
+      = f.govuk_error_summary
+
+      span.govuk-caption-l = t(".caption")
+      h1.govuk-heading-l = t(".heading")
+
+      = f.govuk_text_field :first_name, label: { size: "m" }
+
+      = f.govuk_text_field :last_name, label: { size: "m" }
+
+      = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5"
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
