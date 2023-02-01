@@ -36,9 +36,9 @@ RSpec.describe "Jobseekers can review a job application" do
         expect(page).to have_content(employment.organisation)
         expect(page).to have_content(employment.subjects)
         expect(page).to have_content(employment.main_duties)
-        expect(page).to have_content(employment.started_on)
+        expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
         expect(page).to have_content(employment.current_role.humanize)
-        expect(page).to have_content(employment.ended_on)
+        expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year))
       end
     end
 
