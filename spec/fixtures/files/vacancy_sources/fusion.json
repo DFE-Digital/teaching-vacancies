@@ -17,7 +17,7 @@
       "workingPatterns": "full_time",
       "contractType": "fixed_term",
       "phase": "primary",
-      "trustId": "12345"
+      "trustUID": "12345"
     }
   ],
   "targetUrl": null,

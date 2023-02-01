@@ -42,7 +42,7 @@ class FusionVacancySource
       salary: item["salary"],
       expires_at: Time.zone.parse(item["expiresAt"]),
       external_advert_url: item["advertUrl"],
-      job_role: item["jobRole"].presence&.gsub("leadership", "senior_leader")&.gsub(/\s+/, ""),
+      job_role: job_role(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence&.split(","),
       working_patterns: item["workingPatterns"].presence&.split(","),
@@ -57,32 +57,40 @@ class FusionVacancySource
 
   def organisation_fields(item)
     {
-      readable_job_location: main_organisation(item).name,
-      organisations: organisations_for(item),
-      about_school: main_organisation(item).description,
+      organisations: schools_for(item),
+      readable_job_location: main_organisation(item)&.name,
+      about_school: main_organisation(item)&.description,
     }
   end
 
+  def schools_for(item)
+    if multi_academy_trust(item).present?
+      multi_academy_trust(item).schools.where(urn: item["schoolUrns"])
+    else
+      Organisation.where(urn: item["schoolUrns"])
+    end.to_a
+  end
+
+  def multi_academy_trust(item)
+    SchoolGroup.trusts.find_by(uid: item["trustUID"])
+  end
+
   def main_organisation(item)
-    organisations_for(item).one? ? organisations_for(item).first : school_group(item)
+    schools_for(item).one? ? schools_for(item).first : multi_academy_trust(item)
+  end
+
+  def job_role(item)
+    item["jobRole"].presence
+      &.gsub("headteacher", "senior_leader")
+      &.gsub("head_of_year", "middle_leader")
+      &.gsub("learning_support", "education_support")
+      &.gsub(/\s+/, "")
   end
 
   def ect_status_for(item)
     return unless item["ect_suitable"].presence
 
     item["ect_suitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
-  end
-
-  def organisations_for(item)
-    if school_group(item).present?
-      school_group(item).schools.where(urn: item["schoolUrns"])
-    else
-      Organisation.where(urn: item["schoolUrns"])
-    end.to_a
-  end
-
-  def school_group(item)
-    @school_group ||= SchoolGroup.find_by!(uid: item["trustId"])
   end
 
   def results
