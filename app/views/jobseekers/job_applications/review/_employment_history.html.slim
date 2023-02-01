@@ -35,10 +35,9 @@
             - summary_list.row do |row|
               - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on")
               - row.value text: employment.ended_on.to_formatted_s(:month_year)
-      
+
       - elsif employment.break?
         = render "jobseekers/job_applications/explained_employment_break", employment: employment, index: index
 
-      - if employment.current_role == "no"
-        - if employment_history_gap?(index, job_application.employments)
-         = render "jobseekers/job_applications/unexplained_employment_break", employments: job_application.employments.order(:started_on), employment: employment, index: index
+      - if employment.current_role == "no" && employment_history_gap?(index, job_application.employments)
+        = render "jobseekers/job_applications/unexplained_employment_break", employments: job_application.employments.order(:started_on), employment: employment, index: index
