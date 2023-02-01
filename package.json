@@ -18,7 +18,7 @@
     "axios": "^1.0.0",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.27.2",
-    "dompurify": "^2.4.1",
+    "dompurify": "^2.4.3",
     "govuk-frontend": "^4.4.1",
     "leaflet": "^1.9.3",
     "leaflet-gesture-handling": "^1.2.2",
