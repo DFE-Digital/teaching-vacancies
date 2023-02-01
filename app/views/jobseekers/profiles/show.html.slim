@@ -8,6 +8,14 @@
     - @sections.each do |section|
         h2.govuk-heading-m class="govuk-!-padding-top-6"
           = section[:title]
-        p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
+
+        - if @profile[section[:key]].present?
+          = govuk_summary_list do |summary_list|
+            - summary_list.row do |row|
+              - row.key text: section[:title]
+              - row.value text: @profile.about_you
+              - row.action(text: t("buttons.change"), href: edit_jobseekers_profile_about_you_path)
+        - else
+          p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
 
     p = t(".activate_profile_text")

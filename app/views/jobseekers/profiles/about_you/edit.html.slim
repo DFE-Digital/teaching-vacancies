@@ -1,0 +1,24 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @form, url: jobseekers_profile_about_you_path, method: "patch" do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_fieldset legend: { text: t(".page_title"), tag: "h1", size: "l" } do
+
+        p = t(".page_description")
+
+        ul.govuk-list.govuk-list--bullet
+          - t(".page_description_items").each do |item|
+            li.govuk-list-item = item
+
+        = f.govuk_text_area :about_you, label: { size: "s" }, max_words: 1000, rows: 11
+
+        = f.govuk_submit t("buttons.save_and_continue")
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
