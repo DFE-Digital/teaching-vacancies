@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_13_123002) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_21_122348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -441,9 +441,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_123002) do
     t.string "name", default: "", null: false
     t.string "subject", default: "", null: false
     t.integer "year"
-    t.uuid "job_application_id", null: false
+    t.uuid "job_application_id"
     t.text "finished_studying_details_ciphertext"
+    t.uuid "jobseeker_profile_id"
     t.index ["job_application_id"], name: "index_qualifications_on_job_application_id"
+    t.index ["jobseeker_profile_id"], name: "index_qualifications_on_jobseeker_profile_id"
   end
 
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

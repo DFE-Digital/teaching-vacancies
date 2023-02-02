@@ -1,0 +1,18 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".page_title")
+
+    .govuk-button-group
+    - if profile.qualifications.any?
+      = render "jobseekers/qualifications/qualifications", qualifications: @qualifications
+      = govuk_button_link_to t("buttons.add_another_qualification"), select_category_jobseekers_profile_qualifications_path(profile), class: "govuk-button--secondary"
+    - else
+      = render EmptySectionComponent.new title: t(".no_qualifications") do
+        = govuk_button_link_to t("buttons.add_qualification"), select_category_jobseekers_profile_qualifications_path(profile), class: "govuk-button--secondary govuk-!-margin-bottom-0"
+
+    = govuk_button_link_to t("buttons.return_to_profile"), jobseekers_profile_path

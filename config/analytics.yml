@@ -246,6 +246,7 @@ shared:
     - subject
     - year
     - job_application_id
+    - jobseeker_profile_id
   qualification_results:
     - id
     - qualification_id

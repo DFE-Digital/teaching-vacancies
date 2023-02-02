@@ -18,17 +18,17 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
     },
     {
       title: "Qualified teacher status (QTS)",
-      display_summary: -> { false },
+      display_summary: -> { @profile.qualified_teacher_status.present? },
       key: "qualified_teacher_status",
       link_text: "Add qualified teacher status",
       page_path: -> { edit_jobseekers_profile_qualified_teacher_status_path },
     },
     {
       title: "Qualifications",
-      display_summary: -> { false },
-      key: "",
+      display_summary: -> { @profile.qualifications.present? },
+      key: "qualifications",
       link_text: "Add qualifications",
-      page_path: -> { "" },
+      page_path: -> { select_category_jobseekers_profile_qualifications_path },
     },
     {
       title: "Work history",

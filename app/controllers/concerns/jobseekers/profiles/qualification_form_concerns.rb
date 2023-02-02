@@ -1,4 +1,4 @@
-module QualificationFormConcerns
+module Jobseekers::Profiles::QualificationFormConcerns
   extend ActiveSupport::Concern
 
   def qualification_form_param_key(category)
@@ -8,6 +8,8 @@ module QualificationFormConcerns
   def category_form_class(category)
     name = if %w[select_category submit_category].include?(action_name)
              "CategoryForm"
+           elsif %w[confirm_destroy].include?(action_name)
+             "DeleteForm"
            else
              case category
              when "gcse", "a_level", "as_level"
@@ -20,6 +22,6 @@ module QualificationFormConcerns
                "OtherForm"
              end
            end
-    "Jobseekers::JobApplication::Details::Qualifications::#{name}".constantize
+    "Jobseekers::Profile::Qualifications::#{name}".constantize
   end
 end

@@ -1,0 +1,20 @@
+- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".page_title"))
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = t(".caption")
+
+    = form_for form, url: submit_category_jobseekers_profile_qualifications_path, method: :post do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_radio_buttons_fieldset :category, legend: { text: "Qualification type", size: "l", tag: "h1" } do
+        - Qualification.categories.each_key do |category|
+          = f.govuk_radio_button :category, category, link_errors: true
+
+      = f.govuk_submit t("buttons.save_and_continue")
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

@@ -1,5 +1,5 @@
 class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::JobApplications::BaseController
-  include QualificationFormConcerns
+  include Jobseekers::JobApplications::QualificationFormConcerns
   include DatesHelper
 
   helper_method :employments, :form, :job_applications, :qualification_form_param_key, :sort, :sorted_job_applications

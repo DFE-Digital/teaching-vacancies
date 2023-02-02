@@ -1,0 +1,27 @@
+- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".page_title"))
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = t(".caption")
+    h1.govuk-heading-l = t(".page_title")
+
+    = form_for form, url: jobseekers_profile_qualification_path(params[:qualification_id]), method: :delete do |f|
+
+      = govuk_summary_list do |summary_list|
+        - summary_list.row do |row|
+          - row.key text: "type"
+          - row.value text: qualification.category
+        - summary_list.row do |row|
+          - row.key text: "subject"
+          - row.value text: qualification.subject
+        - summary_list.row do |row|
+          - row.key text: "grade"
+          - row.value text: qualification.grade
+
+      = f.govuk_submit "Delete qualification"
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

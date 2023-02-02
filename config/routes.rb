@@ -87,6 +87,14 @@ Rails.application.routes.draw do
       get "personal-details", to: "profiles/personal_details#start"
       get "personal-details/:step", to: "profiles/personal_details#edit", as: :edit_personal_details
       post "personal-details/:step", to: "profiles/personal_details#update"
+      resources :qualifications, only: %i[new create edit update destroy], controller: "profiles/qualifications" do
+        get :review, on: :collection, to: "profiles/qualifications#review"
+        collection do
+          get :select_category
+          post :submit_category
+        end
+        get :confirm_destroy
+      end
     end
 
     resources :saved_jobs, only: %i[index]
