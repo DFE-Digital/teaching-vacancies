@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Qualification do
-  it { is_expected.to belong_to(:job_application) }
+  it { is_expected.to belong_to(:job_application).optional }
+  it { is_expected.to belong_to(:jobseeker_profile).optional }
 
   describe "#name" do
     let(:qualification) { build_stubbed(:qualification, name: name, category: category) }

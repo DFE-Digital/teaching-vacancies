@@ -34,12 +34,10 @@ export default class extends Controller {
     this.rowTargets.forEach((row, index) => {
       Array.from(row.children).forEach((column) => {
         Array.from(column.children).forEach((cell) => {
-          if (cell.tagName === 'LABEL') {
-            cell.innerHTML = cell.innerHTML.replace(/\d+/, `${index + 1}`);
-          }
+          cell.innerHTML = cell.innerHTML.replace(/\d+/, `${index + 1}`);
 
           Array.from(cell.attributes).filter((a) => ['for', 'id', 'name'].includes(a.name)).forEach((attribute) => {
-            cell.setAttribute(attribute.name, attribute.value.replace(/\d+/, `${index}`));
+            cell.setAttribute(attribute.name, attribute.value.replace(/\d+/, `${index + 1}`));
           });
         });
       });

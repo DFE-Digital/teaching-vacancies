@@ -96,6 +96,8 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "changing the jobseekers's QTS status" do
+    let(:jobseeker) { create(:jobseeker) }
+    let!(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id, qualified_teacher_status: nil) }
     before { visit jobseekers_profile_path }
 
     it "allows the jobseeker to edit their QTS status to yes with year acheived" do

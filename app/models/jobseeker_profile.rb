@@ -12,4 +12,5 @@ class JobseekerProfile < ApplicationRecord
 
     update_column(:active, false)
   end
+  has_many :qualifications
 end

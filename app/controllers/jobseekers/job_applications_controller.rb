@@ -1,5 +1,5 @@
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
-  include QualificationFormConcerns
+  include Jobseekers::JobApplications::QualificationFormConcerns
 
   before_action :raise_unless_vacancy_enable_job_applications,
                 :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]

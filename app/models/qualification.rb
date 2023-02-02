@@ -1,8 +1,10 @@
 class Qualification < ApplicationRecord
   include ActionView::Helpers::SanitizeHelper
 
-  belongs_to :job_application
-  has_many :qualification_results, dependent: :delete_all, autosave: true
+  belongs_to :job_application, optional: true
+  belongs_to :jobseeker_profile, optional: true
+
+  has_many :qualification_results, dependent: :destroy, autosave: true
   accepts_nested_attributes_for :qualification_results
   has_encrypted :finished_studying_details
 

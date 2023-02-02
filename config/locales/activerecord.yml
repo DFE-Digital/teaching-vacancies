@@ -639,7 +639,7 @@ en:
         jobseekers/profile/qualified_teacher_status_form:
           attributes:
             qualified_teacher_status:
-              inclusion: Enter your qualified teaching status details
+              inclusion: Enter your qualified teacher status details
             qualified_teacher_status_year:
               less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
               not_a_number: Enter the year your QTS was awarded
@@ -663,6 +663,36 @@ en:
               blank: Enter the date you started at this school or organisation
               invalid: Enter a date in the correct format
 
+        jobseekers/profile/qualifications/category_form:
+          attributes:
+            <<: *qualification_errors
+        jobseekers/profile/qualifications/degree_form:
+          attributes:
+            <<: *qualification_errors
+            institution:
+              blank: Enter an awarding body
+        jobseekers/profile/qualifications/secondary/common_form:
+          attributes:
+            <<: *qualification_errors
+            institution:
+              blank: Enter a school, college or other organisation
+        jobseekers/profile/qualifications/secondary/other_form:
+          attributes:
+            <<: *qualification_errors
+            institution:
+              blank: Enter a school, college or other organisation
+            name:
+              blank: Enter a qualification name
+        jobseekers/profile/qualifications/secondary/qualification_result_form:
+          attributes:
+            <<: *qualification_errors
+        jobseekers/profile/qualifications/other_form:
+          attributes:
+            <<: *qualification_errors
+            institution:
+              blank: Enter a school, college, university or other organisation
+            name:
+              blank: Enter a qualification or course name
         publishers/job_application/notes_form:
           attributes:
             content:

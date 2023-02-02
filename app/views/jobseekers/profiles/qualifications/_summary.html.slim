@@ -1,0 +1,6 @@
+p class="govuk-!-margin-bottom-6"
+  = govuk_link_to "add qualification", select_category_jobseekers_profile_qualifications_path
+
+- qualifications_sort_and_group(@profile.qualifications).each_value do |qualification_group|
+  - qualification_group.each do
+    = render "jobseekers/qualifications/qualifications", qualifications: @qualifications
