@@ -1,8 +1,8 @@
-class FusionVacancySource
-  FEED_URL = ENV.fetch("VACANCY_SOURCE_FUSION_FEED_URL").freeze
-  SOURCE_NAME = "fusion".freeze
+class EveryVacancySource
+  FEED_URL = ENV.fetch("VACANCY_SOURCE_EVERY_FEED_URL").freeze
+  SOURCE_NAME = "every".freeze
 
-  class FusionImportError < StandardError; end
+  class EveryImportError < StandardError; end
 
   include Enumerable
 
@@ -102,12 +102,12 @@ class FusionVacancySource
     raise HTTParty::ResponseError, error_message unless response.success?
 
     parsed_response = JSON.parse(response.body)
-    raise FusionImportError, error_message if parsed_response["error"]
+    raise EveryImportError, error_message + parsed_response["error"] if parsed_response["error"]
 
     parsed_response
   end
 
   def error_message
-    "Something went wrong with Fusion Import"
+    "Something went wrong with Fusion Import. Response:"
   end
 end
