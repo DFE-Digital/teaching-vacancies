@@ -1,0 +1,11 @@
+= govuk_summary_list do |summary_list|
+  - summary_list.row do |row|
+    - row.key text: t(".status_title")
+    - row.value text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.qualified_teacher_status_options.#{profile.qualified_teacher_status}")
+    - row.action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path)
+
+  - if profile.qualified_teacher_status_year.present?
+    - summary_list.row do |row|
+      - row.key text: t(".year_title")
+      - row.value text: profile.qualified_teacher_status_year
+      - row.action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path)

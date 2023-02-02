@@ -1,4 +1,6 @@
 class Jobseekers::ProfilesController < Jobseekers::BaseController
+  before_action :profile, only: %i[show]
+
   SECTIONS = [
     {
       title: "Personal details",
@@ -13,10 +15,10 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       page_path: -> { "" },
     },
     {
-      title: "Qualified teaching status (QTS)",
-      key: "",
-      link_text: "Add qualified teaching status",
-      page_path: -> { "" },
+      title: "Qualified teacher status (QTS)",
+      key: "qualified_teacher_status",
+      link_text: "Add qualified teacher status",
+      page_path: -> { edit_jobseekers_profile_qualified_teacher_status_path },
     },
     {
       title: "Qualifications",
@@ -51,7 +53,12 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
   ].map(&:freeze).freeze
 
   def show
-    @profile = JobseekerProfile.where(jobseeker_id: current_jobseeker.id).first_or_create
     @sections = SECTIONS
+  end
+
+  private
+
+  def profile
+    @profile ||= JobseekerProfile.find_or_create_by(jobseeker_id: current_jobseeker.id)
   end
 end

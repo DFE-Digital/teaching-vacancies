@@ -467,6 +467,12 @@ en:
           other: Some other reason
       jobseekers_profile_about_you_form:
         about_you: About you
+      jobseekers_profile_qualified_teacher_status_form:
+        qualified_teacher_status_year: Year QTS awarded
+        qualified_teacher_status_options:
+          "yes": "Yes"
+          "no": "No"
+          on_track: "I’m on track to receive QTS"
       jobseekers_sign_in_form:
         email: Email address
         password: Password
@@ -756,6 +762,8 @@ en:
         qualifications_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:
         withdraw_reason: Why would you like to withdraw your application?
+      jobseekers_profile_qualified_teacher_status_form:
+        qualified_teacher_status: Do you have qualified teacher status (QTS)?
 
       jobseekers_subscription_form:
         frequency: When do you want to receive alerts?
