@@ -102,12 +102,12 @@ class EveryVacancySource
     raise HTTParty::ResponseError, error_message unless response.success?
 
     parsed_response = JSON.parse(response.body)
-    raise FusionImportError, error_message if parsed_response["error"]
+    raise EveryImportError, error_message + parsed_response["error"] if parsed_response["error"]
 
     parsed_response
   end
 
   def error_message
-    "Something went wrong with Fusion Import"
+    "Something went wrong with Fusion Import. Response:"
   end
 end
