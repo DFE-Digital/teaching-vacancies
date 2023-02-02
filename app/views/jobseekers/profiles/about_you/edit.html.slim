@@ -5,7 +5,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @form, url: jobseekers_profile_about_you_path, method: "patch" do |f|
+    = form_for form, url: jobseekers_profile_about_you_path, method: "patch" do |f|
       = f.govuk_error_summary
 
       = f.govuk_fieldset legend: { text: t(".page_title"), tag: "h1", size: "l" } do

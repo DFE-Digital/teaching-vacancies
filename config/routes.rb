@@ -80,6 +80,7 @@ Rails.application.routes.draw do
 
     resource :profile, only: %i[show] do
       resource :about_you, only: %i[edit update show], controller: "profiles/about_you"
+      resource :qualified_teacher_status, only: %i[edit update show], controller: "profiles/qualified_teacher_status"
     end
 
     resources :saved_jobs, only: %i[index]
