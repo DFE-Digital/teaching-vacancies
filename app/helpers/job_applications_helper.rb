@@ -107,8 +107,7 @@ module JobApplicationsHelper
   end
 
   def employment_history_gap?(index, employments)
-    current_employment = employments[index]
-    next_employment = employments[index + 1]
+    current_employment, next_employment = employments.sort_by { |r| r[:started_on] }[index, index + 1]
 
     return false if employments.where(started_on: (..current_employment.started_on), current_role: "yes").any?
 
