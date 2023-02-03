@@ -14,14 +14,7 @@ Before you start writing, study the school’s website, recruitment pack and job
 
 
 ## What experience do you have?
-You should talk about your experience with different subjects, key stages, types of school, and pupil groupings, such as:
-* High priority attaining (HPA)
-* Low priority attaining (LPA)
-* Special education needs and disability (SEND)
-* English as an additional language (EAL)
-* Different genders
-* Different ethnicities
-* Disadvantaged groups
+Schools want to hear about your trainee experience with different subjects, key stages, types of school, and working with a range of pupils.
 
 Think about your approach to teaching, how you keep pupils engaged, and how you communicate with different kinds of people (children, staff, parents and carers). Ensure you provide evidence for how you have impacted student engagement and built positive relationships with pupils.
 
