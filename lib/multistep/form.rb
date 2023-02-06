@@ -35,15 +35,19 @@ module Multistep
     end
 
     def complete_step!(step)
-      if completed_steps.include?(step.to_s)
+      if completed?(step)
         self.completed_steps = completed_steps[0..completed_steps.index(step.to_s)]
       else
         completed_steps << step.to_s
       end
     end
 
+    def completed?(step)
+      completed_steps.include?(step.to_s)
+    end
+
     def attributes
-      super.merge(self.class.delegated_attributes.to_h { |name| [name.to_s, public_send(name)] })
+      super.merge(self.class.delegated_attributes.keys.to_h { |name| [name.to_s, public_send(name)] })
     end
 
     module ClassMethods
@@ -51,12 +55,16 @@ module Multistep
         @steps ||= {}
       end
 
+      def attribute_names
+        super + delegated_attributes.keys.map(&:to_s)
+      end
+
       def delegated_attributes
-        @delegated_attributes ||= []
+        @delegated_attributes ||= {}
       end
 
       def delegate_attributes(*attributes, step:)
-        delegated_attributes.concat attributes.map(&:to_sym)
+        delegated_attributes.merge!(attributes.zip([step].cycle).to_h)
 
         delegators = Module.new do
           attributes.each do |attribute|
