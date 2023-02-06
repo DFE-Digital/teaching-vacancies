@@ -86,11 +86,16 @@ class ApplicationController < ActionController::Base
     !verify_recaptcha(model: model, action: controller_name, minimum_score: SUSPICIOUS_RECAPTCHA_THRESHOLD) && recaptcha_reply
   end
 
+  def dfe_analytics_event
+    DfeAnalyticsEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
+  end
+
   def request_event
     RequestEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
   end
 
   def trigger_page_visited_event
+    dfe_analytics_event.trigger(:page_visited)
     request_event.trigger(:page_visited)
   end
 
