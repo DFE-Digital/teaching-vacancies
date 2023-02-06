@@ -78,7 +78,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resource :profile, only: %i[show]
+    resource :profile, only: %i[show] do
+      get 'job-preferences', to: 'profiles/job_preferences#start'
+      get 'job-preferences/:step', to: 'profiles/job_preferences#edit'
+      post 'job-preferences/:step', to: 'profiles/job_preferences#update'
+    end
 
     resources :saved_jobs, only: %i[index]
 

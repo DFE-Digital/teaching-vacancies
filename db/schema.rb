@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_23_161926) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_26_002411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -230,6 +230,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_23_161926) do
     t.boolean "employment_history_section_completed"
     t.boolean "qualifications_section_completed"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
+  end
+
+  create_table "job_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "roles", default: [], array: true
+    t.string "phases", default: [], array: true
+    t.string "key_stages", default: [], array: true
+    t.string "working_patterns", default: [], array: true
+    t.string "subjects", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "jobseeker_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

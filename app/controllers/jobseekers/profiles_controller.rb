@@ -8,7 +8,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
     {
       title: "Job preferences",
       link_text: "Add job preferences",
-      page_path: -> { "" },
+      page_path: -> { job_preferences_jobseekers_profile_path },
     },
     {
       title: "Qualified teaching status (QTS)",
