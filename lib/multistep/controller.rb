@@ -21,12 +21,16 @@ module Multistep
     def update
       @step = form.steps[current_step]
       # TODO: Move strong params inside the form implementation
-      @step.assign_attributes(params[self.class.multistep_form_key].to_unsafe_hash)
+      @step.assign_attributes(params[self.class.multistep_form_key].to_unsafe_hash || {})
 
       if @step.valid?
         form.complete_step! current_step
+        completed_hook = self.class.completed_hooks[current_step]
+        instance_exec(form, &completed_hook) if completed_hook
+        store_form!
+        return if performed?
+
         if (next_step = form.next_step(current_step: current_step))
-          store_form!
           redirect_to action: :edit, step: next_step
         else
           complete
@@ -39,7 +43,9 @@ module Multistep
     private
 
     def current_step
-      params[:step].to_sym
+      return @current_step if defined?(@current_step)
+
+      params[:step].to_sym if params.key?(:step)
     end
 
     def escape_path
@@ -90,6 +96,14 @@ module Multistep
         return @escape_path unless block
 
         @escape_path ||= block
+      end
+
+      def on_completed(step, &block)
+        completed_hooks[step] = block
+      end
+
+      def completed_hooks
+        @completed_hooks ||= {}
       end
     end
   end
