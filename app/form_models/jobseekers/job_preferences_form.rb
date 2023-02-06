@@ -6,6 +6,13 @@ module Jobseekers
 
     ROLES = %i[teacher senior_leader middle_leader  teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
     PHASES = %i[nursery primary middle secondary through]
+    WORKING_PATTERNS = %i[flexible full_time job_share part_time term_time]
+
+    attribute :locations, array: true
+
+    def self.from_record(record)
+      new record.attributes.slice(*self.attribute_names)
+    end
 
     step :roles do
       attribute :roles, array: true
@@ -30,7 +37,67 @@ module Jobseekers
       validates :phases, presence: true
 
       def options
-        PHASES.map {|opt| [opt.to_s, I18n.t("jobs.education_phase_options.#{opt}")]}
+        School::READABLE_PHASE_MAPPINGS.values.uniq.compact
+          .map {|opt| [opt.to_s, I18n.t("jobs.education_phase_options.#{opt}")]}
+      end
+    end
+
+    step :key_stages do
+      attribute :key_stages, array: true
+
+      validates :key_stages, presence: true
+
+      def options
+        school_types = School::READABLE_PHASE_MAPPINGS.select {|_,v| multistep.phases.include? v }.map(&:first)
+        School::PHASE_TO_KEY_STAGES_MAPPINGS.values_at(*school_types).flatten.uniq
+          .map {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{opt}")]}
+      end
+    end
+
+    step :working_patterns do
+      attribute :working_patterns, array: true
+
+      validates :working_patterns, presence: true
+
+      def options
+        WORKING_PATTERNS.map {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{opt}") ]}
+      end
+    end
+
+    step :locations do
+      attribute :add_location, :boolean
+      validates :add_location, inclusion: { in: [true, false], message: :blank }
+    end
+
+    def build_location_form(id)
+      return if id.present? && !locations[id]
+
+      attrs = id ? locations[id] : {}
+      LocationForm.new(attrs)
+    end
+
+    def update_location(id, attributes)
+      if id
+        locations[id].merge!(attributes)
+      else
+        locations << attributes
+      end
+    end
+
+    def locations=(values)
+      super values.map(&:symbolize_keys)
+    end
+
+    class LocationForm
+      include FormObject
+
+      attribute :location
+      attribute :radius
+
+      validates :location, :radius, presence: true
+
+      def radius_options
+        [0, 1,5, 10, 15, 20, 25, 50, 100, 200].map {|radius| [radius, I18n.t("jobs.search.number_of_miles", count: radius)]}
       end
     end
   end

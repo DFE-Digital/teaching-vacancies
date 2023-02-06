@@ -78,11 +78,18 @@ Rails.application.routes.draw do
       end
     end
 
-    resource :profile, only: %i[show] do
-      get 'job-preferences', to: 'profiles/job_preferences#start'
-      get 'job-preferences/:step', to: 'profiles/job_preferences#edit'
-      post 'job-preferences/:step', to: 'profiles/job_preferences#update'
+    resource :profile, only: %i[show]
+
+    scope controller: 'profiles/job_preferences', path: 'profile/job-preferences' do
+      get 'location(/:id)', action: :edit_location, as: nil
+      post 'location(/:id)', action: :update_location, as: nil
+      delete 'location(/:id)', action: :delete_location, as: nil
+
+      get '', action: :start, as: :job_preferences
+      get ':step', action: :edit, as: nil
+      post ':step', action: :update, as: nil
     end
+
 
     resources :saved_jobs, only: %i[index]
 

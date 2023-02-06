@@ -29,3 +29,4 @@ class Jobseeker < ApplicationRecord
     !!account_closed_on
   end
 end
+

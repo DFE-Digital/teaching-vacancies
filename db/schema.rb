@@ -233,13 +233,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_002411) do
   end
 
   create_table "job_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "jobseeker_id"
     t.string "roles", default: [], array: true
     t.string "phases", default: [], array: true
     t.string "key_stages", default: [], array: true
     t.string "working_patterns", default: [], array: true
-    t.string "subjects", default: [], array: true
+    t.json "locations", default: [], array: true
+    t.string "completed_steps", default: [], array: true
+    t.boolean "completed", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["jobseeker_id"], name: "index_job_preferences_on_jobseeker_id"
   end
 
   create_table "jobseeker_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -597,6 +601,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_002411) do
   add_foreign_key "employments", "job_applications"
   add_foreign_key "equal_opportunities_reports", "vacancies"
   add_foreign_key "job_applications", "vacancies"
+  add_foreign_key "job_preferences", "jobseekers"
   add_foreign_key "jobseeker_profiles", "jobseekers"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"

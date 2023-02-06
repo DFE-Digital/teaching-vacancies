@@ -151,3 +151,15 @@
   - gias_data_hash
   - searchable_content
   - slug
+  :job_preferences:
+  - id
+  - jobseeker_id
+  - roles
+  - phases
+  - key_stages
+  - working_patterns
+  - locations
+  - completed
+  - completed_steps
+  - created_at
+  - updated_at
