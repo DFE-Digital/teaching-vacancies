@@ -13,6 +13,7 @@ module FormObject
       def attribute(name, *args, array: false, **options)
         options[:default] ||= [] if array
         super(name, *args, **options)
+        return unless array
 
         define_method(:"#{name}=") do |value|
           super value.reject(&:blank?)
