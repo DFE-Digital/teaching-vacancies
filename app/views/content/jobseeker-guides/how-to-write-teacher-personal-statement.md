@@ -20,7 +20,7 @@ Think about your approach to teaching, how you keep pupils engaged, and how you 
 
 Schools will be interested in your approach to behaviour management, so think about your go-to strategies.
 
-## Are you engaged in teaching theory and research?
+### Are you engaged in teaching theory and research?
 Think about any research that has impacted your teaching and learning styles. Explain what has worked well and if it didn’t, what you learnt.
 
 
