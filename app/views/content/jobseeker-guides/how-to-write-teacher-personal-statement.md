@@ -13,7 +13,7 @@ Your personal statement is your first opportunity to show the school you’re a 
 Before you start writing, study the school’s website, recruitment pack and job specification. Really think about whether the school’s vision and values align with your own, and reflect the vocabulary from the school’s mission statement in your application. Look at the essential and desirable requirements and identify how you match up. If you don't have all the listed essential criteria, think about whether you can draw on other skills and experience to showcase how you meet the specification. You should show evidence and impact for each requirement, and tailor your application to the specific school.
 
 
-## What experience do you have?
+### What experience do you have?
 Schools want to hear about your trainee experience with different subjects, key stages, types of school, and working with a range of pupils.
 
 Think about your approach to teaching, how you keep pupils engaged, and how you communicate with different kinds of people (children, staff, parents and carers). Ensure you provide evidence for how you have impacted student engagement and built positive relationships with pupils.
