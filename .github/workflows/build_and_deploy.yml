@@ -10,6 +10,7 @@ on:
     - 'documentation/**'
     - 'terraform/common/**'
     - '**.md'
+    - '!views/content/**/*.md'
 
   pull_request:
     branches:
