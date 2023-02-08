@@ -13,6 +13,9 @@ ruby:
       map_values: ->(value, step) { step.options[value] },
       join_with: ', '
     },
+    subjects: {
+      join_with: ', '
+    },
     working_patterns: {
       map_values: ->(value, step) { step.options[value] },
       join_with: ', '
@@ -31,8 +34,8 @@ ruby:
       next unless condition.(form)
 
       value = form.public_send(attribute)
-      if options[:map_values]
-        value = value.map { |elem| options[:map_values].(elem, form.steps[step_name]) }
+      if options[:map_values] || options[:join_with]
+        value = value.map { |elem| options[:map_values].(elem, form.steps[step_name]) } if options[:map_values]
         value = value.map { |elem| ''.html_safe + elem }
         value = value.join(options[:join_with].html_safe).html_safe
       end

@@ -54,6 +54,17 @@ module Jobseekers
       end
     end
 
+    step :subjects do
+      attribute :subjects, array: true
+
+      def skip?
+        return false if (multistep.phases & %w[secondary sixth_form_or_college]).any?
+
+        self.subjects = []
+        true
+      end
+    end
+
     step :working_patterns do
       attribute :working_patterns, array: true
 

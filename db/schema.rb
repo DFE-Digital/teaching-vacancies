@@ -237,6 +237,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_002411) do
     t.string "roles", default: [], array: true
     t.string "phases", default: [], array: true
     t.string "key_stages", default: [], array: true
+    t.string "subjects", default: [], array: true
     t.string "working_patterns", default: [], array: true
     t.json "locations", default: [], array: true
     t.json "completed_steps", default: {}

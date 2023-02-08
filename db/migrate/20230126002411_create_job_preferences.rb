@@ -5,6 +5,7 @@ class CreateJobPreferences < ActiveRecord::Migration[7.0]
       t.string :roles, array: true, default: []
       t.string :phases, array: true, default: []
       t.string :key_stages, array: true, default: []
+      t.string :subjects, array: true, default: []
       t.string :working_patterns, array: true, default: []
       t.json :locations, array: true, default: []
       t.json :completed_steps, default: {}
