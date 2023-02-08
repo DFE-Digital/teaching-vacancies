@@ -7,7 +7,7 @@ module Multistep
     include FormObject
 
     included do
-      attribute :completed_steps, default: []
+      attribute :completed_steps, default: -> { {} }
     end
 
     def steps
@@ -16,17 +16,24 @@ module Multistep
       end
     end
 
-    def next_step(current_step: completed_steps.last&.to_sym)
+    def next_step(current_step: nil)
+      current_step = completed_steps.keys.last&.to_sym if current_step.nil?
       return steps.keys.first if current_step.nil?
-      raise "Step not completed: #{current_step}" unless completed_steps.include?(current_step.to_s)
+
+      current_step = current_step.to_sym
+      raise "Step not completed: #{current_step}" unless completed_steps.keys.include?(current_step)
+
+      completed_steps.to_a[0..completed_steps.keys.index(current_step)].each do |step, status|
+        return step if status == :invalidated
+      end
 
       steps.keys[steps.keys.index(current_step.to_sym) + 1]
     end
 
     def previous_step(current_step:)
-      current_index = completed_steps.index(current_step.to_s)
+      current_index = completed_steps.keys.index(current_step.to_sym)
       if current_index.nil?
-        return completed_steps.last&.to_s if next_step == current_step
+        return completed_steps.keys.last&.to_sym if next_step == current_step
 
         raise "Step not completed: #{current_step}"
       end
@@ -35,19 +42,26 @@ module Multistep
     end
 
     def complete_step!(step)
-      if completed?(step)
-        self.completed_steps = completed_steps[0..completed_steps.index(step.to_s)]
-      else
-        completed_steps << step.to_s
+      step = step.to_sym
+      completed_steps[step] = :completed
+      completed_steps.keys[completed_steps.keys.index(step)+1..-1].each do |step|
+        completed_steps[step] = :invalidated if steps[step].invalidate?
       end
+      step
     end
 
-    def completed?(step)
-      completed_steps.include?(step.to_s)
+    def completed?(step = nil)
+      return next_step.nil? unless step
+
+      completed_steps[step.to_sym] == :completed
     end
 
     def attributes
       super.merge(self.class.delegated_attributes.keys.to_h { |name| [name.to_s, public_send(name)] })
+    end
+
+    def completed_steps=(values)
+      super values.to_h { |k,v| [k.to_sym, v.to_sym] }
     end
 
     module ClassMethods
@@ -102,5 +116,13 @@ module Multistep
     end
 
     attr_reader :multistep
+
+    def invalidate?
+      false
+    end
+
+    def skip?
+      false
+    end
   end
 end

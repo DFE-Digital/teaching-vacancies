@@ -49,6 +49,8 @@ module Multistep
     end
 
     def escape_path
+      return @escape_path if defined?(@escape_path)
+
       instance_exec(&self.class.escape_path)
     end
 
