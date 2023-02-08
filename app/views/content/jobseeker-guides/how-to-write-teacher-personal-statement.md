@@ -30,7 +30,6 @@ Schools will also want to know how you overcome challenges.
 
 ## How can you contribute to wider school life?
 Set yourself apart by showing how your hobbies and achievements could contribute to the wider school community. Could you run an after school club or organise school trips?
- 
- 
-<h2 id="search-for-roles">Search for roles</h2>
+
+## Search for roles
 [Search for roles on Teaching Vacancies now.](https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=)
