@@ -8,8 +8,6 @@ module Jobseekers
     PHASES = %i[nursery primary middle secondary through]
     WORKING_PATTERNS = %i[flexible full_time job_share part_time term_time]
 
-    attribute :locations, array: true
-
     def self.from_record(record)
       new record.attributes.slice(*self.attribute_names)
     end
@@ -21,7 +19,7 @@ module Jobseekers
       validate :validate_roles
 
       def options
-        ROLES.map {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{opt}")]}
+        ROLES.to_h {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{opt}")]}
       end
 
       def validate_roles
@@ -33,24 +31,26 @@ module Jobseekers
 
     step :phases do
       attribute :phases, array: true
-
       validates :phases, presence: true
 
       def options
         School::READABLE_PHASE_MAPPINGS.values.uniq.compact
-          .map {|opt| [opt.to_s, I18n.t("jobs.education_phase_options.#{opt}")]}
+          .to_h {|opt| [opt.to_s, I18n.t("jobs.education_phase_options.#{opt}")]}
       end
     end
 
     step :key_stages do
       attribute :key_stages, array: true
-
       validates :key_stages, presence: true
 
       def options
         school_types = School::READABLE_PHASE_MAPPINGS.select {|_,v| multistep.phases.include? v }.map(&:first)
         School::PHASE_TO_KEY_STAGES_MAPPINGS.values_at(*school_types).flatten.uniq
-          .map {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{opt}")]}
+          .to_h {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{opt}")]}
+      end
+
+      def invalidate?
+        (key_stages - options.keys).any?
       end
     end
 
@@ -60,11 +60,12 @@ module Jobseekers
       validates :working_patterns, presence: true
 
       def options
-        WORKING_PATTERNS.map {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{opt}") ]}
+        WORKING_PATTERNS.to_h {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{opt}") ]}
       end
     end
 
     step :locations do
+      attribute :locations, array: true
       attribute :add_location, :boolean
       validates :add_location, inclusion: { in: [true, false], message: :blank }
     end
@@ -86,6 +87,12 @@ module Jobseekers
 
     def locations=(values)
       super values.map(&:symbolize_keys)
+    end
+
+    def next_step(current_step: nil)
+      return if current_step && completed?
+
+      super
     end
 
     class LocationForm

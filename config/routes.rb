@@ -81,12 +81,13 @@ Rails.application.routes.draw do
     resource :profile, only: %i[show]
 
     scope controller: 'profiles/job_preferences', path: 'profile/job-preferences' do
+      get 'review', action: :review, as: nil
       get 'location(/:id)', action: :edit_location, as: nil
       post 'location(/:id)', action: :update_location, as: nil
       delete 'location(/:id)', action: :delete_location, as: nil
 
       get '', action: :start, as: :job_preferences
-      get ':step', action: :edit, as: nil
+      get ':step', action: :edit, as: :job_preferences_step
       post ':step', action: :update, as: nil
     end
 

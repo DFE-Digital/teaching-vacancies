@@ -16,7 +16,11 @@
     .govuk-inset-text--header {
       color: govuk-colour('light-blue');
     }
+  }
 
+  &--narrow {
+    border-left-width: 5px;
+    padding-right: 0;
   }
 
   &--dark-blue {
@@ -25,6 +29,14 @@
     .govuk-inset-text--header {
       color: govuk-colour('blue');
     }
+  }
 
+  &--incomplete {
+    @extend .govuk-inset-text--narrow;
+    @extend .govuk-inset-text--dark-blue;
+
+    .govuk-summary-list {
+      margin-bottom: 15px;
+    }
   }
 }

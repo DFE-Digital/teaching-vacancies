@@ -239,8 +239,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_26_002411) do
     t.string "key_stages", default: [], array: true
     t.string "working_patterns", default: [], array: true
     t.json "locations", default: [], array: true
-    t.string "completed_steps", default: [], array: true
-    t.boolean "completed", default: false, null: false
+    t.json "completed_steps", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jobseeker_id"], name: "index_job_preferences_on_jobseeker_id"

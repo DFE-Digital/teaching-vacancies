@@ -9,6 +9,7 @@ module Jobseekers::Profiles
 
     on_completed(:locations) do |form|
       redirect_to action: :edit_location if form.add_location
+      form.add_location = nil
     end
 
     before_action :force_location_added, if: -> { current_step == :locations }
@@ -17,9 +18,9 @@ module Jobseekers::Profiles
       redirect_to action: :edit, step: all_steps.first
     end
 
-
     def edit_location
       @current_step = :locations
+      @escape_path = { action: :edit, step: :locations } if form.locations.any?
 
       redirect_to action: :edit, step: :locations and return unless location_form
       render 'location'
@@ -29,10 +30,13 @@ module Jobseekers::Profiles
       location_form.assign_attributes(params.require(:job_preferences_location).to_unsafe_hash)
       if location_form.valid?
         form.update_location(location_id, location_form.attributes)
+        form.complete_step!(:locations)
         store_form!
         redirect_to action: :edit, step: :locations
       else
         @current_step = :locations
+        @escape_path = { action: :edit, step: :locations } if form.locations.any?
+
         render 'location', status: :unprocessable_entity
       end
     end
@@ -41,12 +45,14 @@ module Jobseekers::Profiles
 
     end
 
-    def complete
-      job_preference_record.update!(completed: true)
-      super
+    def review
     end
 
     private
+
+    # def complete
+    #   # redirect_to action: :review
+    # end
 
     def store_form!
       job_preference_record.update!(form.attributes.without('add_location'))
@@ -57,7 +63,7 @@ module Jobseekers::Profiles
     end
 
     def job_preference_record
-      @job_preference_record ||= JobPreference.find_or_create_by(jobseeker_id: current_jobseeker.id)
+      @job_preference_record ||= JobPreferences.find_or_create_by(jobseeker_id: current_jobseeker.id)
     end
 
     def force_location_added

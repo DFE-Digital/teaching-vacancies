@@ -17,4 +17,4 @@
       = f.govuk_collection_radio_buttons :radius, f.object.radius_options, :first, :last, legend: { text: 'Search radius', size: 'm' }
 
       = f.govuk_submit 'Save and continue'
-      p = f.link_to 'Cancel', { action: :edit, step: :locations }
+      p = f.link_to 'Cancel', escape_path
