@@ -95,7 +95,6 @@ class ApplicationController < ActionController::Base
   end
 
   def trigger_page_visited_event
-    dfe_analytics_event.trigger(:page_visited)
     request_event.trigger(:page_visited)
   end
 

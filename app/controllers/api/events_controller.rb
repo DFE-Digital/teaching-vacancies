@@ -13,6 +13,7 @@ class Api::EventsController < Api::ApplicationController
 
     data = event_params[:data].to_h.slice(*EVENT_ALLOWLIST[type])
     frontend_event.trigger(type, data)
+    dfe_analytics_event.trigger(type, data)
 
     head :no_content
   end

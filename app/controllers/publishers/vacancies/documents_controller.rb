@@ -23,7 +23,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     document = vacancy.supporting_documents.find(params[:id])
     document.purge_later
     send_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
-    send_dfe_analytics_event(:supporting_document_deleted, document.original_filename, document.size, document.content_type)
+    send_dfe_analytics_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
 
     redirect_to after_document_delete_path, flash: { success: t("jobs.file_delete_success_message", filename: document.filename) }
   end
@@ -75,7 +75,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def send_dfe_analytics_event(event_type, name, size, content_type)
-    fail_safe
+    fail_safe do
       event_details = {
         vacancy_id: StringAnonymiser.new(vacancy.id),
         document_type: "supporting_document",

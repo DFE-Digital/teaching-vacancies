@@ -26,19 +26,17 @@ class DocumentsController < ApplicationController
   end
 
   def send_custom_event
-    event = DfE::Analytics::Event.new
-      .with_type(:vacancy_document_downloaded)
-      .with_request_details(request)
-      .with_response_details(response)
-      .with_user(current_user)
-      .with_data(
-        vacancy_id: StringAnonymiser.new(vacancy.id),
-        document_type: application_form? ? :application_form : :supporting_document,
-        document_id: StringAnonymiser.new(file.id),
-        filename: file.filename,
+    fail_safe do
+      dfe_analytics_event.trigger(
+        :vacancy_document_downloaded,
+        {
+          vacancy_id: StringAnonymiser.new(vacancy.id),
+          document_type: application_form? ? :application_form : :supporting_document,
+          document_id: StringAnonymiser.new(file.id),
+          filename: file.filename,
+        },
       )
-
-    DfE::Analytics::SendEvents.do([event])
+    end
   end
 
   def send_event
