@@ -1,0 +1,31 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-3" = t(".page_title")
+    p class="govuk-!-margin-bottom-3" = "QTS awarded in #{}."
+
+    h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+      = t(".job_preferences")
+
+    h2.govuk-heading-m class="govuk-!-padding-bottom-2"
+      = t(".about")
+    p = @profile.about_you
+
+    h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+      = t(".contact_details")
+    dl.govuk-summary-list
+      .govuk-summary-list__row
+        dt.govuk-summary-list__key == t(".email_address")
+        dd.govuk-summary-list__value = current_jobseeker.email
+
+    h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+      = t(".work_history")
+
+    h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+      = t(".qualifications")
+
+            

@@ -505,7 +505,7 @@ en:
       about_you:
         edit:
           page_title: About You
-          page_description: "Write a statement about yourself. This will be visible on your profile. This may include information about:"
+          page_description: "Write a statement about yourself. This will be visible on . This may include information about:"
           page_description_items:
             - "working with pupils"
             - "your teaching style and classroom management"
@@ -518,6 +518,15 @@ en:
         show:
           page_title: About You
           summary_title: About You
+      preview:
+        show:
+          page_title: Preview your profile
+          job_preferences: Job preferences
+          about: About
+          contact_details: Contact Details
+          email_address: Email address
+          work_history: Work history
+          qualifications: Qualifications
     sessions:
       new:
         description: Sign in here if you are a teacher, aspiring teacher or work in education support. Once signed in you'll be able to save and apply for jobs.

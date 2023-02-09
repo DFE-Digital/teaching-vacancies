@@ -46,7 +46,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       title: "Preview and turn on profile",
       key: "",
       link_text: "Preview profile",
-      page_path: -> { "" },
+      page_path: -> { jobseekers_profile_preview_path },
     },
   ].map(&:freeze).freeze
 
