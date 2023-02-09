@@ -82,27 +82,10 @@ class SubscriptionsController < ApplicationController
     subscription.update(recaptcha_score: recaptcha_reply&.dig("score"))
     Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
     trigger_subscription_event(:job_alert_subscription_created, subscription)
-    trigger_dfe_analytics_event(:job_alert_subscription_created, subscription)
   end
 
   def trigger_create_job_alert_clicked_event
     request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: StringAnonymiser.new(vacancy_id))
-  end
-
-  def trigger_dfe_analytics_event(type, subscription)
-    fail_safe do
-      dfe_analytics_event.trigger(
-        type,
-        {
-          autopopulated: session.delete(:subscription_autopopulated),
-          email_identifier: StringAnonymiser.new(subscription.email),
-          frequency: subscription.frequency,
-          recaptcha_score: subscription.recaptcha_score,
-          search_criteria: subscription.search_criteria,
-          subscription_identifier: StringAnonymiser.new(subscription.id),
-        },
-      )
-    end
   end
 
   def trigger_subscription_event(type, subscription)

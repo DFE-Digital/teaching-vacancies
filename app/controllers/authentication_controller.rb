@@ -25,15 +25,6 @@ class AuthenticationController < ApplicationController
   end
 
   def trigger_jobseeker_sign_in_event(success_or_failure, errors = nil)
-    dfe_analytics_event.trigger(
-      :jobseeker_sign_in_attempt,
-      {
-        email_identifier: StringAnonymiser.new(params.dig(:jobseeker, :email)),
-        success: success_or_failure == :success,
-        errors: errors,
-      },
-    )
-
     request_event.trigger(
       :jobseeker_sign_in_attempt,
       email_identifier: StringAnonymiser.new(params.dig(:jobseeker, :email)),
@@ -43,11 +34,6 @@ class AuthenticationController < ApplicationController
   end
 
   def trigger_successful_publisher_sign_in_event(sign_in_type, publisher_oid = nil)
-    dfe_analytics_event.trigger(
-      :successful_publisher_sign_in_attempt,
-      { user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid), sign_in_type: sign_in_type },
-    )
-
     request_event.trigger(
       :successful_publisher_sign_in_attempt,
       user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid),
@@ -64,11 +50,6 @@ class AuthenticationController < ApplicationController
   end
 
   def trigger_failed_dsi_sign_in_event(sign_in_type, oid = nil)
-    dfe_analytics_event.trigger(
-      :failed_dsi_sign_in_attempt,
-      { user_anonymised_id: StringAnonymiser.new(oid), sign_in_type: sign_in_type },
-    )
-
     request_event.trigger(
       :failed_dsi_sign_in_attempt,
       user_anonymised_id: StringAnonymiser.new(oid),
