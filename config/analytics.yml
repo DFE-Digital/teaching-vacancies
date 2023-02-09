@@ -124,6 +124,9 @@ shared:
     - created_at
     - updated_at
     - jobseeker_id
+    - about_you
+    - qualified_teacher_status
+    - qualified_teacher_status_year
   jobseekers:
     - id
     - email

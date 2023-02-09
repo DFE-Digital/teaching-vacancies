@@ -147,8 +147,6 @@
   - last_sign_in_ip_ciphertext
   - last_sign_in_ip
   - current_sign_in_ip
-  :jobseeker_profiles:
-  - about_you
   :organisations:
   - gias_data_hash
   - searchable_content

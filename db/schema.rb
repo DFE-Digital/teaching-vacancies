@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_31_122445) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -237,6 +237,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_122445) do
     t.datetime "updated_at", null: false
     t.uuid "jobseeker_id"
     t.string "about_you"
+    t.integer "qualified_teacher_status"
+    t.string "qualified_teacher_status_year"
     t.index ["jobseeker_id"], name: "index_jobseeker_profiles_on_jobseeker_id"
   end
 

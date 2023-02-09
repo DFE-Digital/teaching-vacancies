@@ -1,5 +1,4 @@
-class Jobseekers::Profile::AboutYouForm
-  include ActiveModel::Model
+class Jobseekers::Profile::AboutYouForm < BaseForm
   validates :about_you, presence: true
   validate :about_you_does_not_exceed_maximum_words
 

@@ -518,6 +518,17 @@ en:
         show:
           page_title: About You
           summary_title: About You
+        summary:
+          about_you_title: About You
+      qualified_teacher_status:
+        edit:
+          page_title: Qualified teaching status
+        show:
+          page_title: Qualified teaching status
+          summary_title: Do you have qualified teaching status (QTS)?
+        summary:
+          status_title: Do you have qualified teaching status (QTS)?
+          year_title: Year QTS awarded
     sessions:
       new:
         description: Sign in here if you are a teacher, aspiring teacher or work in education support. Once signed in you'll be able to save and apply for jobs.
