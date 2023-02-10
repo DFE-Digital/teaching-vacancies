@@ -19,9 +19,7 @@ module Jobseekers::Profiles
     end
 
     def edit_location
-      @current_step = :locations
-      @escape_path = { action: :edit, step: :locations } if form.locations.any?
-
+      setup_location_view
       redirect_to action: :edit, step: :locations and return unless location_form
       render 'location'
     end
@@ -34,15 +32,34 @@ module Jobseekers::Profiles
         store_form!
         redirect_to action: :edit, step: :locations
       else
-        @current_step = :locations
-        @escape_path = { action: :edit, step: :locations } if form.locations.any?
-
+        setup_location_view
         render 'location', status: :unprocessable_entity
       end
     end
 
     def delete_location
+      setup_location_view
+      @location = form.locations[params[:id].to_i - 1]
+      @last_location = form.locations.one?
+      @delete_form = Jobseekers::JobPreferencesForm::DeleteLocationForm.new
+    end
 
+    def process_delete_location
+      delete_location
+      @delete_form.assign_attributes(params.require(:delete_location).to_unsafe_hash)
+      render 'delete_location', status: :unprocessable_entity and return unless form.valid?
+
+      case @delete_form.action
+      when "delete"
+        form.locations.delete @location
+        form.complete_step!(:locations, :invalidated) if form.locations.empty?
+        store_form!
+        redirect_to escape_path
+      when "edit"
+        redirect_to(action: :edit_location, id: params[:id])
+      else
+        render 'delete_location', status: :unprocessable_entity
+      end
     end
 
     def review
@@ -50,9 +67,14 @@ module Jobseekers::Profiles
 
     private
 
-    # def complete
-    #   # redirect_to action: :review
-    # end
+    def setup_location_view
+      @escape_path = @back_url = { action: :edit, step: :locations } if form.locations.any?
+      @current_step = :locations
+    end
+
+    def complete
+      redirect_to action: :review
+    end
 
     def store_form!
       job_preference_record.update!(form.attributes.without('add_location'))

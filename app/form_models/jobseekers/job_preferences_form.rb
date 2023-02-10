@@ -43,14 +43,20 @@ module Jobseekers
       attribute :key_stages, array: true
       validates :key_stages, presence: true
 
-      def options
-        school_types = School::READABLE_PHASE_MAPPINGS.select {|_,v| multistep.phases.include? v }.map(&:first)
+      def options(phases: multistep.phases)
+        school_types = School::READABLE_PHASE_MAPPINGS.select {|_,v| phases.include? v }.map(&:first)
         School::PHASE_TO_KEY_STAGES_MAPPINGS.values_at(*school_types).flatten.uniq
           .to_h {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{opt}")]}
       end
 
       def invalidate?
-        (key_stages - options.keys).any?
+        return false unless multistep.phases_changed?
+
+        options_before, options_after = multistep.changes[:phases].map { |phases| options(phases: phases).keys }
+        self.key_stages = key_stages & options_after
+
+        any_new_option = (options_after - options_before).any?
+        any_new_option || key_stages.blank?
       end
     end
 
@@ -58,7 +64,7 @@ module Jobseekers
       attribute :subjects, array: true
 
       def skip?
-        return false if (multistep.phases & %w[secondary sixth_form_or_college]).any?
+        return false if (multistep.key_stages & %w[ks3 ks4 ks5]).any?
 
         self.subjects = []
         true
@@ -81,6 +87,8 @@ module Jobseekers
       validates :add_location, inclusion: { in: [true, false], message: :blank }
     end
 
+    attribute :builder_completed, :boolean, default: false
+
     def build_location_form(id)
       return if id.present? && !locations[id]
 
@@ -96,12 +104,18 @@ module Jobseekers
       end
     end
 
+    def complete_step!(*args)
+      super
+
+      self.builder_completed = true if completed?
+    end
+
     def locations=(values)
       super values.map(&:symbolize_keys)
     end
 
-    def next_step(current_step: nil)
-      return if current_step && completed?
+    def next_step(current_step: nil, **)
+      return next_step if current_step && builder_completed
 
       super
     end
@@ -116,6 +130,20 @@ module Jobseekers
 
       def radius_options
         [0, 1,5, 10, 15, 20, 25, 50, 100, 200].map {|radius| [radius, I18n.t("jobs.search.number_of_miles", count: radius)]}
+      end
+    end
+
+    class DeleteLocationForm
+      include FormObject
+
+      attribute :action
+      validates :action, inclusion: { in: %w[edit delete], message: :blank }
+
+      def options
+        {
+          "edit" => "No, change the location",
+          "delete" => "Yes, delete this location and turn off my profile"
+        }
       end
     end
   end

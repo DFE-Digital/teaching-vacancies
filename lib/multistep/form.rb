@@ -1,10 +1,12 @@
 require "form_object"
+require "multistep/form/dirty"
 
 module Multistep
   module Form
     extend ActiveSupport::Concern
 
     include FormObject
+    include Multistep::Form::Dirty
 
     included do
       attribute :completed_steps, default: -> { {} }
@@ -16,7 +18,7 @@ module Multistep
       end
     end
 
-    def next_step(current_step: nil)
+    def next_step(current_step: nil, include_skipped: false)
       current_step = completed_steps.keys.last&.to_sym if current_step.nil?
       return steps.keys.first if current_step.nil?
 
@@ -28,7 +30,7 @@ module Multistep
       end
 
       return unless (next_step = steps.keys[steps.keys.index(current_step.to_sym) + 1])
-      return next_step unless steps[next_step].skip?
+      return next_step if include_skipped || !steps[next_step].skip?
 
       self.next_step(current_step: next_step)
     end
@@ -56,11 +58,13 @@ module Multistep
         completed_steps[step] = :skipped if steps[step].skip?
       end
 
-      next_step = self.next_step(current_step: step)
+      next_step = self.next_step(current_step: step, include_skipped: true)
       while next_step && steps[next_step].skip?
         complete_step!(next_step, :skipped)
         next_step = self.next_step(current_step: next_step)
       end
+
+      clear_changes_information
     end
 
     def completed?(step = nil)
@@ -120,6 +124,7 @@ module Multistep
       end
     end
   end
+
 
   module Step
     extend ActiveSupport::Concern

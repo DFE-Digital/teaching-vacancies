@@ -160,7 +160,7 @@
   - subjects
   - working_patterns
   - locations
-  - completed
+  - builder_completed
   - completed_steps
   - created_at
   - updated_at

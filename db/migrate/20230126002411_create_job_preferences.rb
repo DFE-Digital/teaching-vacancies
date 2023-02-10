@@ -9,6 +9,7 @@ class CreateJobPreferences < ActiveRecord::Migration[7.0]
       t.string :working_patterns, array: true, default: []
       t.json :locations, array: true, default: []
       t.json :completed_steps, default: {}
+      t.boolean :builder_completed, default: false, null: false
 
       t.timestamps
     end

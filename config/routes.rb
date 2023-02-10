@@ -84,7 +84,9 @@ Rails.application.routes.draw do
       get 'review', action: :review, as: nil
       get 'location(/:id)', action: :edit_location, as: nil
       post 'location(/:id)', action: :update_location, as: nil
-      delete 'location(/:id)', action: :delete_location, as: nil
+
+      get 'location/:id/delete', action: :delete_location, as: nil
+      post 'location/:id/delete', action: :process_delete_location, as: nil
 
       get '', action: :start, as: :job_preferences
       get ':step', action: :edit, as: :job_preferences_step

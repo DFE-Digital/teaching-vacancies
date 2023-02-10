@@ -72,6 +72,8 @@ module Multistep
     end
 
     def back_url
+      return @back_url if defined? @back_url
+
       previous_step = form.previous_step(current_step: current_step)
       return escape_path if previous_step.nil?
 
