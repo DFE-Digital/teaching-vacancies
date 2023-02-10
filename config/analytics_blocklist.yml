@@ -26,13 +26,6 @@
   - id
   - blob_id
   - variation_digest
-  :active_storage_attachments:
-  - id
-  - name
-  - record_type
-  - record_id
-  - blob_id
-  - created_at
   :active_storage_blobs:
   - id
   - key
@@ -42,6 +35,13 @@
   - service_name
   - byte_size
   - checksum
+  - created_at
+  :active_storage_attachments:
+  - id
+  - name
+  - record_type
+  - record_id
+  - blob_id
   - created_at
   :school_group_memberships:
   - do_not_delete
@@ -67,8 +67,6 @@
   - geopoint
   - created_at
   - updated_at
-  :jobseeker_profiles:
-  - jobseeker_id
   :job_applications:
   - qualified_teacher_status_details
   - disability
@@ -151,16 +149,5 @@
   - current_sign_in_ip
   :organisations:
   - gias_data_hash
-  - slug
   - searchable_content
-  :personal_details:
-  - id
-  - jobseeker_profile_id
-  - first_name
-  - last_name
-  - phone_number_provided
-  - phone_number
-  - completed_steps
-  - created_at
-  - updated_at
-
+  - slug
