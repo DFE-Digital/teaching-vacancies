@@ -1,2 +1,29 @@
 shared:
+  - failed_dsi_sign_in_attempt
+  - page_visited
+  - publisher_sign_in_fallback
+  - publisher_applications_received
+  - publisher_prompt_for_feedback
+  - jobseeker_application_shortlisted
+  - jobseeker_application_unsuccessful
+  - jobseeker_subscription_alert
+  - job_alert_subscription_created
+  - job_alert_subscription_unsubscribed
+  - job_alert_subscription_updated
+  - jobseeker_email_changed
+  - jobseeker_unlock_instructions
+  - jobseeker_reset_password_instructions
+  - jobseeker_sign_in_attempt
+  - jobseeker_subscription_confirmation
+  - jobseeker_application_submitted
+  - jobseeker_subscription_update
+  - jobseeker_confirmation_instructions
+  - search_performed
+  - support_user_sign_in_fallback
+  - supporting_document_created
+  - supporting_document_deleted
+  - successful_publisher_sign_in_attempt
+  - tracked_link_clicked
+  - vacancy_apply_clicked
+  - vacancy_create_job_alert_clicked
   - vacancy_document_downloaded
