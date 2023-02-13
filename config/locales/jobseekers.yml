@@ -498,6 +498,25 @@ en:
       success_html: >-
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     profiles:
+      personal_details:
+        incomplete_message: You must complete your personal details before you turn on your profile.
+        name:
+          caption: Personal details
+          heading: Name
+          page_title: Name
+        phone_number:
+          caption: Personal details
+          heading: Do you want to provide a phone number?
+          page_title: Do you want to provide a phone number?
+        review:
+          heading: Personal details
+          page_title: Personal details
+        summary:
+          email: Email
+          first_name: First name
+          last_name: Last name
+          phone_number: Phone number
+          phone_number_provided: Do you want to provide a phone number?
       show:
         page_title: Your profile
         page_description: Your profile allows schools to find and invite you to apply for their jobs.

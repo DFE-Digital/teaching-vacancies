@@ -1,3 +1,5 @@
 FactoryBot.define do
-  factory :jobseeker_profile
+  factory :jobseeker_profile do
+    jobseeker
+  end
 end

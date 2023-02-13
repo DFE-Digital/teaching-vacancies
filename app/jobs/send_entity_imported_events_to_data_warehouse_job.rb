@@ -1,5 +1,6 @@
 class SendEntityImportedEventsToDataWarehouseJob < ApplicationJob
   TABLE_NAME = "events".freeze
+  PLURAL_MODELS = %w[PersonalDetails].freeze
 
   queue_as :low
 
@@ -13,15 +14,17 @@ class SendEntityImportedEventsToDataWarehouseJob < ApplicationJob
     ApplicationRecord.connection.tables.each do |db_table|
       next unless Rails.configuration.analytics.key?(db_table.to_sym)
 
-      Rails.logger.info("sending #{db_table.camelize.singularize.constantize.count} #{db_table} entity_imported events to bigquery")
-      db_table.camelize.singularize.constantize.find_in_batches(batch_size: 100) do |batch|
+      model_name = db_table.camelize
+      model_name = model_name.singularize unless model_name.in? PLURAL_MODELS
+
+      Rails.logger.info("sending #{model_name.constantize.count} #{db_table} entity_imported events to bigquery")
+
+      model_name.constantize.find_in_batches(batch_size: 100) do |batch|
         bq_table.insert(
           batch.map do |record|
-            {
-              type: :entity_imported,
+            { type: :entity_imported,
               occurred_at: occurred_at(record),
-              data: record.send(:event_data).map { |key, value| { key: key.to_s, value: formatted_value(value) } },
-            }
+              data: record.send(:event_data).map { |key, value| { key: key.to_s, value: formatted_value(value) } } }
           end,
         )
       end
