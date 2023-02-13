@@ -21,7 +21,7 @@ module Multistep
     def update
       @step = form.steps[current_step]
       # TODO: Move strong params inside the form implementation
-      @step.assign_attributes(params[self.class.multistep_form_key].to_unsafe_hash || {})
+      @step.assign_attributes(params[self.class.multistep_form_key]&.to_unsafe_hash || {})
 
       if @step.valid?
         form.complete_step! current_step
