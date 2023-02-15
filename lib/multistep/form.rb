@@ -23,7 +23,7 @@ module Multistep
       return steps.keys.first if current_step.nil?
 
       current_step = current_step.to_sym
-      raise "Step not completed: #{current_step}" unless completed_steps.keys.include?(current_step)
+      raise "Step not completed: #{current_step}" unless completed_steps.key?(current_step)
 
       completed_steps.to_a[0..completed_steps.keys.index(current_step)].each do |step, status|
         return step if status == :invalidated || (status == :skipped && !steps[step].skip?)
@@ -53,9 +53,9 @@ module Multistep
       completed_steps[step] = status
       return unless status == :completed
 
-      completed_steps.keys[completed_steps.keys.index(step)+1..-1].each do |step|
-        completed_steps[step] = :invalidated if steps[step].invalidate?
-        completed_steps[step] = :skipped if steps[step].skip?
+      completed_steps.keys[completed_steps.keys.index(step) + 1..].each do |completed_step|
+        completed_steps[completed_step] = :invalidated if steps[completed_step].invalidate?
+        completed_steps[completed_step] = :skipped if steps[completed_step].skip?
       end
 
       next_step = self.next_step(current_step: step, include_skipped: true)
@@ -78,7 +78,7 @@ module Multistep
     end
 
     def completed_steps=(values)
-      super values.to_h { |k,v| [k.to_sym, v.to_sym] }
+      super values.to_h { |k, v| [k.to_sym, v.to_sym] }
     end
 
     module ClassMethods
