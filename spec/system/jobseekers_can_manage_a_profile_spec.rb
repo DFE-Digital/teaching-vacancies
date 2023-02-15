@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their profile" do
   let(:jobseeker) { create(:jobseeker) }
+  let!(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
@@ -54,8 +55,8 @@ RSpec.describe "Jobseekers can manage their profile" do
       before { visit jobseekers_profile_path }
 
       it "allows the jobseeker to edit their profile" do
-        within ".govuk-summary-list__row:nth-child(1)" do
-          click_on "Change"
+        within "#personal_details" do
+          click_link "Change", match: :first
         end
 
         fill_in "personal_details_form[first_name]", with: new_first_name
@@ -73,12 +74,15 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "changing the jobseekers's about you" do
-    let(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id) }
+  describe "#about_you" do
+    let(:jobseeker) { create(:jobseeker) }
+    let!(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id, about_you: nil) }
     let(:jobseeker_about_you) { "I am an amazing teacher" }
     before { visit jobseekers_profile_path }
 
-    it "allows the jobseeker to edit their about you text" do
+    before { visit jobseekers_profile_path }
+
+    it "allows the jobseeker to add #about_you" do
       click_link("Add details about you")
 
       fill_in "jobseekers_profile_about_you_form[about_you]", with: jobseeker_about_you
@@ -92,7 +96,6 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "changing the jobseekers's QTS status" do
-    let(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id) }
     before { visit jobseekers_profile_path }
 
     it "allows the jobseeker to edit their QTS status to yes with year acheived" do
@@ -114,5 +117,89 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_content("I’m on track to receive QTS")
       expect(page).not_to have_content("2019")
     end
+  end
+
+  describe "work history" do
+    describe "adding an employment history entry to a profile" do
+      before { visit jobseekers_profile_path }
+
+      it "associates an 'employment' with their jobseeker profile" do
+        expect { add_jobseeker_profile_employment }.to change { profile.employments.count }.by(1)
+      end
+
+      context "when the form to add a new employment history entry is submitted" do
+        it "redirects to the review page" do
+          add_jobseeker_profile_employment
+
+          expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+        end
+
+        it "displays every employment history entry on the review page" do
+          add_jobseeker_profile_employment
+
+          profile.employments.each do |employment|
+            expect(page).to have_content(employment.organisation)
+            expect(page).to have_content(employment.job_title)
+            expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
+            expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year)) unless employment.current_role == "yes"
+            expect(page).to have_content(employment.main_duties)
+          end
+        end
+      end
+    end
+
+    describe "changing an existing employment history entry" do
+      let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
+      let(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id) }
+      let(:new_employer) { "NASA" }
+      let(:new_job_role) { "Chief ET locator" }
+
+      it "succesfully changes the employment record" do
+        visit jobseekers_profile_path
+
+        within(".work_history_entry", match: :first) { click_link I18n.t("buttons.change") }
+
+        expect(current_path).to eq(edit_jobseekers_profile_work_history_path(employment))
+
+        fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: new_employer
+        fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: new_job_role
+
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(profile.employments.count).to eq(1)
+        expect(profile.employments.first.organisation).to eq(new_employer)
+        expect(profile.employments.first.job_title).to eq(new_job_role)
+        expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+      end
+    end
+
+    describe "deleting an employment history entry" do
+      let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
+      let(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id) }
+
+      it "deletes the employment record" do
+        visit review_jobseekers_profile_work_history_index_path
+
+        within(".work_history_entry", match: :first) { click_link I18n.t("buttons.delete") }
+
+        expect(profile.employments.any?).to be false
+        expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+      end
+    end
+  end
+
+  private
+
+  def add_jobseeker_profile_employment
+    click_link("Add roles")
+
+    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: "Arsenal"
+    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: "Number 9"
+    fill_in "jobseekers_profile_employment_form[started_on(1i)]", with: "1991"
+    fill_in "jobseekers_profile_employment_form[started_on(2i)]", with: "09"
+    choose "Yes", name: "jobseekers_profile_employment_form[current_role]"
+    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: "Goals and that"
+
+    click_on I18n.t("buttons.save_and_continue")
   end
 end

@@ -175,6 +175,10 @@ en:
         first_name: Or given names
         last_name: Or family name
         phone_number: Enter a phone number you are happy to be contacted on, like 01632 960 001, 07700 900 982 or +44 0808 157 0192.
+      jobseekers_profile_employment_form:
+        job_title: If you had more than one role with this employer, enter your last role
+        main_duties: Provide the responsibilties you undertook in this role
+        organisation_name: If you worked for yourself, enter ‘self-employed’
 
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
@@ -473,6 +477,7 @@ en:
           another_role: I have found another role
           changed_mind: I have changed my mind
           other: Some other reason
+
       jobseekers_profile_about_you_form:
         about_you: About you
       jobseekers_profile_qualified_teacher_status_form:
@@ -493,6 +498,14 @@ en:
         phone_number_provided_options:
           false: "No"
           true: "Yes"
+      jobseekers_profile_employment_form:
+        current_role_options:
+          "no": "No"
+          "yes": "Yes"
+        job_title: Role
+        main_duties: Main duties
+        organisation: Name of school or employer
+
 
       jobseekers_sign_in_form:
         email: Email address
@@ -785,6 +798,11 @@ en:
         withdraw_reason: Why would you like to withdraw your application?
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
+
+      jobseekers_profile_employment_form:
+        current_role: Are you still working in this role?
+        ended_on: End date
+        started_on: Start date
 
       jobseekers_subscription_form:
         frequency: When do you want to receive alerts?

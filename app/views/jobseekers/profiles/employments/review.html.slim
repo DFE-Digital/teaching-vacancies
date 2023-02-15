@@ -1,0 +1,12 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+
+    h1.govuk-heading-l = t(".title")
+
+    = govuk_button_link_to(t(".add_role_button_text"), new_jobseekers_profile_work_history_path, secondary: true)
+
+    = render "jobseekers/employments/employments", employments: @employments
+
+    = govuk_button_link_to(t(".return_to_profile"), jobseekers_profile_path)

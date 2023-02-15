@@ -10,7 +10,7 @@
           = section[:title]
 
         - if section[:display_summary] && instance_exec(&section[:display_summary])
-          = render(partial: "jobseekers/profiles/#{section[:key]}/summary", locals: { profile: @profile })
+          = render(partial: "jobseekers/profiles/#{section[:key]}/summary", locals: { profile: @profile, section: section })
         - else
           p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
 

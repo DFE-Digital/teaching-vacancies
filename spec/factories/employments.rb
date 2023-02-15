@@ -22,4 +22,10 @@ FactoryBot.define do
     job_title { "Sheffield Secondary School" }
     main_duties { "Planning and delivering English Literature and Language lessons ro a range of abilities across KS3 and GCSE to prepare them for exams. Contributing to the English department via extra curricular activities, organising trips, and running a reading club." }
   end
+
+  trait :jobseeker_profile_employment do
+    job_application { nil }
+
+    jobseeker_profile
+  end
 end
