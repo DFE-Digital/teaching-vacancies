@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
   subject(:multistep) { described_class.new initial_attributes }
@@ -18,7 +18,7 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
     subject(:step) { multistep.steps[:key_stages] }
     it { is_expected.to validate_presence_of :key_stages }
 
-    describe '#options' do
+    describe "#options" do
       it "depend on the value of phases" do
         expect(step.options).to be_empty
 
@@ -30,7 +30,7 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
       end
     end
 
-    describe 'invalidate?' do
+    describe "invalidate?" do
       let(:initial_attributes) { { phases: %w[primary], key_stages: %w[early_years ks1] } }
 
       context "when new options are added in a result of change of phases" do
@@ -63,9 +63,9 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
     subject(:step) { multistep.steps[:subjects] }
     it { is_expected.not_to validate_presence_of :subjects }
 
-    describe '#skip?' do
+    describe "#skip?" do
       context "when user selected any of ks3+ stages" do
-        let(:initial_attributes) { { key_stages: %w[ks3] }}
+        let(:initial_attributes) { { key_stages: %w[ks3] } }
 
         it "the subjects step is not skipped" do
           expect(step.skip?).to be false

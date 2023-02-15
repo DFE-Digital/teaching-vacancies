@@ -1,4 +1,4 @@
-require 'multistep/controller'
+require "multistep/controller"
 
 module Jobseekers::Profiles
   class JobPreferencesController < ApplicationController
@@ -21,7 +21,8 @@ module Jobseekers::Profiles
     def edit_location
       setup_location_view
       redirect_to action: :edit, step: :locations and return unless location_form
-      render 'location'
+
+      render "location"
     end
 
     def update_location
@@ -33,7 +34,7 @@ module Jobseekers::Profiles
         redirect_to action: :edit, step: :locations
       else
         setup_location_view
-        render 'location', status: :unprocessable_entity
+        render "location", status: :unprocessable_entity
       end
     end
 
@@ -47,7 +48,7 @@ module Jobseekers::Profiles
     def process_delete_location
       delete_location
       @delete_form.assign_attributes(params.require(:delete_location).to_unsafe_hash)
-      render 'delete_location', status: :unprocessable_entity and return unless form.valid?
+      render "delete_location", status: :unprocessable_entity and return unless form.valid?
 
       case @delete_form.action
       when "delete"
@@ -58,12 +59,11 @@ module Jobseekers::Profiles
       when "edit"
         redirect_to(action: :edit_location, id: params[:id])
       else
-        render 'delete_location', status: :unprocessable_entity
+        render "delete_location", status: :unprocessable_entity
       end
     end
 
-    def review
-    end
+    def review; end
 
     private
 
@@ -77,7 +77,7 @@ module Jobseekers::Profiles
     end
 
     def store_form!
-      job_preference_record.update!(form.attributes.without('add_location'))
+      job_preference_record.update!(form.attributes.without("add_location"))
     end
 
     def attributes_from_store

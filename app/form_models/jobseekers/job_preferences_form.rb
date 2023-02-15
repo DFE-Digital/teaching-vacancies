@@ -1,15 +1,15 @@
-require_dependency 'multistep/form'
+require_dependency "multistep/form"
 
 module Jobseekers
   class JobPreferencesForm
     include Multistep::Form
 
-    ROLES = %i[teacher senior_leader middle_leader  teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
-    PHASES = %i[nursery primary middle secondary through]
-    WORKING_PATTERNS = %i[flexible full_time job_share part_time term_time]
+    ROLES = %i[teacher senior_leader middle_leader teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
+    PHASES = %i[nursery primary middle secondary through].freeze
+    WORKING_PATTERNS = %i[flexible full_time job_share part_time term_time].freeze
 
     def self.from_record(record)
-      new record.attributes.slice(*self.attribute_names)
+      new record.attributes.slice(*attribute_names)
     end
 
     step :roles do
@@ -19,7 +19,7 @@ module Jobseekers
       validate :validate_roles
 
       def options
-        ROLES.to_h {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{opt}")]}
+        ROLES.to_h { |opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{opt}")] }
       end
 
       def validate_roles
@@ -35,7 +35,7 @@ module Jobseekers
 
       def options
         School::READABLE_PHASE_MAPPINGS.values.uniq.compact
-          .to_h {|opt| [opt.to_s, I18n.t("jobs.education_phase_options.#{opt}")]}
+          .to_h { |opt| [opt.to_s, I18n.t("jobs.education_phase_options.#{opt}")] }
       end
     end
 
@@ -44,9 +44,9 @@ module Jobseekers
       validates :key_stages, presence: true
 
       def options(phases: multistep.phases)
-        school_types = School::READABLE_PHASE_MAPPINGS.select {|_,v| phases.include? v }.map(&:first)
+        school_types = School::READABLE_PHASE_MAPPINGS.select { |_, v| phases.include? v }.map(&:first)
         School::PHASE_TO_KEY_STAGES_MAPPINGS.values_at(*school_types).flatten.uniq
-          .to_h {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{opt}")]}
+          .to_h { |opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{opt}")] }
       end
 
       def invalidate?
@@ -64,7 +64,7 @@ module Jobseekers
       attribute :subjects, array: true
 
       def skip?
-        return false if (multistep.key_stages & %w[ks3 ks4 ks5]).any?
+        return false if multistep.key_stages.intersect?(%w[ks3 ks4 ks5])
 
         self.subjects = []
         true
@@ -77,7 +77,7 @@ module Jobseekers
       validates :working_patterns, presence: true
 
       def options
-        WORKING_PATTERNS.to_h {|opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{opt}") ]}
+        WORKING_PATTERNS.to_h { |opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{opt}")] }
       end
     end
 
@@ -129,7 +129,7 @@ module Jobseekers
       validates :location, :radius, presence: true
 
       def radius_options
-        [0, 1,5, 10, 15, 20, 25, 50, 100, 200].map {|radius| [radius, I18n.t("jobs.search.number_of_miles", count: radius)]}
+        [0, 1, 5, 10, 15, 20, 25, 50, 100, 200].map { |radius| [radius, I18n.t("jobs.search.number_of_miles", count: radius)] }
       end
     end
 
@@ -142,7 +142,7 @@ module Jobseekers
       def options
         {
           "edit" => "No, change the location",
-          "delete" => "Yes, delete this location and turn off my profile"
+          "delete" => "Yes, delete this location and turn off my profile",
         }
       end
     end

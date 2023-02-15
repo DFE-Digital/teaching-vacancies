@@ -7,14 +7,14 @@ module Multistep
         ActiveModel::AttributeMutationTracker.new(
           ActiveModel::AttributeSet.new(
             @attributes.send(:attributes)
-              .merge(*steps.values.map {|step| step.instance_variable_get(:@attributes).send(:attributes)})
-          )
+              .merge(*steps.values.map { |step| step.instance_variable_get(:@attributes).send(:attributes) }),
+          ),
         )
       end
 
       def clear_changes_information
         super
-        steps.values.each(&:clear_changes_information)
+        steps.each_value(&:clear_changes_information)
       end
     end
   end

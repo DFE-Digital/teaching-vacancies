@@ -10,7 +10,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       condition: -> { current_jobseeker.job_preferences&.completed_steps.present? },
       link_text: "Add job preferences",
       page_path: -> { jobseekers_job_preferences_path },
-      partial: 'jobseekers/profiles/job_preferences/summary',
+      partial: "jobseekers/profiles/job_preferences/summary",
     },
     {
       title: "Qualified teaching status (QTS)",

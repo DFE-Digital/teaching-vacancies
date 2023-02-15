@@ -18,6 +18,10 @@ module Multistep
       end
     end
 
+    # The below method is quite a bit too complex - it seems that controlling the flow of the multistep journey should
+    # be managed by a specialized flow object rather than being squished in here.
+    # TODO: Extract flow management into a separate object!
+    # rubocop:disable Metrics/AbcSize
     def next_step(current_step: nil, include_skipped: false)
       current_step = completed_steps.keys.last&.to_sym if current_step.nil?
       return steps.keys.first if current_step.nil?
@@ -34,6 +38,7 @@ module Multistep
 
       self.next_step(current_step: next_step)
     end
+    # rubocop:enable Metrics/AbcSize
 
     def previous_step(current_step:)
       completed = completed_steps.keys + [next_step].compact
@@ -124,7 +129,6 @@ module Multistep
       end
     end
   end
-
 
   module Step
     extend ActiveSupport::Concern
