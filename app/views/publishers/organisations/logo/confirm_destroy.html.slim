@@ -8,7 +8,7 @@
     span.govuk-caption-m = t(".caption")
     h1.govuk-heading-l = t(".title")
 
-    = image_tag(@organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name), class: "contained-image--logo govuk-!-display-block govuk-!-margin-bottom-0")
+    = image_tag(@organisation.logo, size: "70", alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: @organisation.name), class: "contained-image--logo govuk-!-display-block govuk-!-margin-bottom-0")
     p.govuk-body-s class="govuk-!-margin-bottom-4"
       = @organisation.logo.filename
 

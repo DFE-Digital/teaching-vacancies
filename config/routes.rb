@@ -78,7 +78,10 @@ Rails.application.routes.draw do
       end
     end
 
-    resource :profile, only: %i[show]
+    resource :profile, only: %i[show] do
+      resource :about_you, only: %i[edit update show], controller: "profiles/about_you"
+      resource :qualified_teacher_status, only: %i[edit update show], controller: "profiles/qualified_teacher_status"
+    end
 
     scope controller: "profiles/job_preferences", path: "profile/job-preferences" do
       get "review", action: :review, as: nil

@@ -502,6 +502,33 @@ en:
         page_title: Your profile
         page_description: Your profile allows schools to find and invite you to apply for their jobs.
         activate_profile_text: When you turn on your profile, it'll be visible to hiring staff.
+      about_you:
+        edit:
+          page_title: About You
+          page_description: "Write a statement about yourself. This will be visible on your profile. This may include information about:"
+          page_description_items:
+            - "working with pupils"
+            - "your teaching style and classroom management"
+            - "your knowledge of the curriculum"
+            - "your understanding of safeguarding and student wellbeing"
+            - "any extra training you’ve done"
+            - "additional responsibilities you’ve taken on in school"
+            - "experience in special educational needs and disability (SEND)"
+            - "any relevant interests or extra-curricular activities"
+        show:
+          page_title: About You
+          summary_title: About You
+        summary:
+          about_you_title: About You
+      qualified_teacher_status:
+        edit:
+          page_title: Qualified teaching status
+        show:
+          page_title: Qualified teaching status
+          summary_title: Do you have qualified teaching status (QTS)?
+        summary:
+          status_title: Do you have qualified teaching status (QTS)?
+          year_title: Year QTS awarded
     sessions:
       new:
         description: Sign in here if you are a teacher, aspiring teacher or work in education support. Once signed in you'll be able to save and apply for jobs.
