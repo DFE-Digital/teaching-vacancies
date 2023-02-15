@@ -4,10 +4,10 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
   SECTIONS = [
     {
       title: "Personal details",
-      display_summary: -> { false },
-      key: "",
+      display_summary: -> { current_jobseeker.jobseeker_profile.personal_details&.completed_steps.present? },
+      key: "personal_details",
       link_text: "Add personal details",
-      page_path: -> { false },
+      page_path: -> { personal_details_jobseekers_profile_path },
     },
     {
       title: "Job preferences",
@@ -41,8 +41,10 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       title: "About you",
       display_summary: -> { @profile.about_you.present? },
       key: "about_you",
+      condition: -> { current_jobseeker.jobseeker_profile.about_you.present? },
       link_text: "Add details about you",
       page_path: -> { edit_jobseekers_profile_about_you_path },
+      partial: "jobseekers/profiles/about_you/summary",
     },
     {
       title: "Hide profile from schools or trusts",
