@@ -1,10 +1,10 @@
-- content_for :page_title_prefix, 'Job preferences: roles'
+- content_for :page_title_prefix, "Job preferences: roles"
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: back_url
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @step, url: { action: :update }, as: :job_preferences do |f|
-      = f.govuk_collection_check_boxes(:subjects, SUBJECT_OPTIONS, :first, :first,:last, legend: { size: 'l', text: 'Subjects (optional)' }, caption: { text: 'Job preferences', size: 'l' })
-      = f.govuk_submit 'Save and continue'
-      p = f.link_to 'Cancel', escape_path
+      = f.govuk_collection_check_boxes(:subjects, SUBJECT_OPTIONS, :first, :first, :last, legend: { size: "l", text: "Subjects (optional)" }, caption: { text: "Job preferences", size: "l" })
+      = f.govuk_submit "Save and continue"
+      p = f.link_to "Cancel", escape_path
