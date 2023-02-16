@@ -90,7 +90,7 @@ class VacancySource::Source::Every
   def ect_status_for(item)
     return unless item["ectSuitable"].presence
 
-    item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
+    item["ectSuitable"].to_s == "true" ? "ect_suitable" : "ect_unsuitable"
   end
 
   def results
@@ -108,6 +108,6 @@ class VacancySource::Source::Every
   end
 
   def error_message
-    "Something went wrong with Fusion Import. Response:"
+    "Something went wrong with Every Import. Response:"
   end
 end
