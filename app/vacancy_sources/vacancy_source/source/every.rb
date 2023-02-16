@@ -88,7 +88,7 @@ class VacancySource::Source::Every
   end
 
   def ect_status_for(item)
-    return unless item["ect_suitable"].presence
+    return unless item["ectSuitable"].presence
 
     item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
   end
