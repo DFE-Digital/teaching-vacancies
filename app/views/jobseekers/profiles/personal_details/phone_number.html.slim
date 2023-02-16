@@ -1,0 +1,19 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: back_url
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @step, url: { action: :update }, method: :post, as: :personal_details_form do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_radio_buttons_fieldset :phone_number_provided, legend: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".caption"), size: "l" } do
+        = f.govuk_radio_button :phone_number_provided, "true", link_errors: true do
+          = f.govuk_text_field :phone_number, label: { class: "govuk-label govuk-label--s" }
+        = f.govuk_radio_button :phone_number_provided, "false"
+
+      = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5"
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

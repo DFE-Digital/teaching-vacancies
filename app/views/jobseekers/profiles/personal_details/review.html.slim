@@ -1,0 +1,9 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".heading")
+
+    = render "summary"
+
+    = govuk_button_link_to t("buttons.return_to_profile"), jobseekers_profile_path, classes: "govuk-!-margin-bottom-5"

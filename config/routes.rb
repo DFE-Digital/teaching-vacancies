@@ -81,6 +81,9 @@ Rails.application.routes.draw do
     resource :profile, only: %i[show] do
       resource :about_you, only: %i[edit update show], controller: "profiles/about_you"
       resource :qualified_teacher_status, only: %i[edit update show], controller: "profiles/qualified_teacher_status"
+      get "personal-details", to: "profiles/personal_details#start"
+      get "personal-details/:step", to: "profiles/personal_details#edit", as: :edit_personal_details
+      post "personal-details/:step", to: "profiles/personal_details#update"
     end
 
     scope controller: "profiles/job_preferences", path: "profile/job-preferences" do

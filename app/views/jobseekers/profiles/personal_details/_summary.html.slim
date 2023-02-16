@@ -1,0 +1,48 @@
+ruby:
+  form = Jobseekers::Profile::PersonalDetailsForm.from_record(current_jobseeker.jobseeker_profile.personal_details)
+
+  attributes = {
+                 first_name: nil,
+                 last_name: nil,
+                 phone_number_provided: { map_values: ->(value) { t("helpers.label.personal_details_form.phone_number_provided_options.#{value}") } },
+                 phone_number: nil,
+               }
+
+  summary = govuk_summary_list do |summary_list|
+    attributes.each do |attribute, options|
+      step_name = form.class.delegated_attributes[attribute.to_s]
+      condition = ->(f) { f.completed?(step_name) }
+      next unless condition.call(form)
+
+      value = form.public_send(attribute)
+      next if value.nil?
+
+      if options && options[:map_values]
+        value = options[:map_values].call(value)
+      end
+
+      summary_list.row do |row|
+        row.key text: t(".#{attribute}")
+        row.value text: value
+        row.action(text: t("buttons.change"), href: edit_personal_details_jobseekers_profile_path(step: step_name))
+      end
+    end
+
+    summary_list.row do |row|
+      row.key text: t(".email")
+      row.value text: (current_jobseeker.email +
+                       govuk_inset_text(text: t("helpers.label.personal_details_form.change_email_html",
+                                              link: govuk_link_to(t("helpers.label.personal_details_form.change_email_link_text"),
+                                                    jobseekers_account_path)),
+                                        classes: "govuk-!-margin-top-3")).html_safe
+    end
+  end
+
+- if form.completed?
+  = summary
+- else
+  .govuk-inset-text.govuk-inset-text--incomplete
+    = summary
+    p.govuk-body-m.govuk-inset-text--header
+      strong = t("jobseekers.profiles.personal_details.incomplete_message")
+    = govuk_link_to t("buttons.complete_personal_details"), edit_personal_details_jobseekers_profile_path(step: form.next_step), class: "govuk-button"

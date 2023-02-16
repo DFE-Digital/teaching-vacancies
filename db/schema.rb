@@ -399,6 +399,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
     t.index ["urn"], name: "index_organisations_on_urn", unique: true
   end
 
+  create_table "personal_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "jobseeker_profile_id", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.boolean "phone_number_provided"
+    t.string "phone_number"
+    t.json "completed_steps", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jobseeker_profile_id"], name: "index_personal_details_on_jobseeker_profile_id"
+  end
+
   create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "publisher_id"
     t.uuid "organisation_id"
@@ -611,6 +623,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
   add_foreign_key "markers", "vacancies"
   add_foreign_key "notes", "job_applications"
   add_foreign_key "notes", "publishers"
+  add_foreign_key "personal_details", "jobseeker_profiles"
   add_foreign_key "publisher_preferences", "publishers"
   add_foreign_key "qualification_results", "qualifications"
   add_foreign_key "qualifications", "job_applications"
