@@ -157,7 +157,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       it "succesfully changes the employment record" do
         visit jobseekers_profile_path
 
-        within(".work_history_entry", match: :first) { click_link I18n.t("buttons.change") }
+        within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.change") }
 
         expect(current_path).to eq(edit_jobseekers_profile_work_history_path(employment))
 
@@ -180,7 +180,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       it "deletes the employment record" do
         visit review_jobseekers_profile_work_history_index_path
 
-        within(".work_history_entry", match: :first) { click_link I18n.t("buttons.delete") }
+        within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.delete") }
 
         expect(profile.employments.any?).to be false
         expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)

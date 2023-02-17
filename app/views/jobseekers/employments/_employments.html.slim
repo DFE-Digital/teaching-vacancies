@@ -1,21 +1,26 @@
-- employments.each do |employment|
-  = render DetailComponent.new(title: employment.job_title, classes: ["work_history_entry"]) do |detail_component|
+- employments.sort_by { |r| r[:started_on] }.each do |employment|
+  = render DetailComponent.new(title: employment.job_title) do |detail_component|
     - detail_component.body do
-      = govuk_summary_list do |summary_list|
-        - summary_list.row(html_attributes: { id: "organisation" }) do |row|
+      = govuk_summary_list(classes: "govuk-!-margin-bottom-0") do |summary_list|
+        - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
           - row.key text: t("jobseekers.employments.organisation")
           - row.value text: employment.organisation
-        - summary_list.row(html_attributes: { id: "started_date" }) do |row|
+        - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
           - row.key text: t("jobseekers.employments.started_on")
           - row.value text: employment.started_on.to_formatted_s(:month_year)
-        - if employment.ended_on.present?
-          - summary_list.row(html_attributes: { id: "ended_date" }) do |row|
+        - summary_list.row do |row|
+          - row.key text: t("jobseekers.employments.current_role")
+          - row.value text: employment.current_role.humanize
+        - if employment.current_role == "no"
+          - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
             - row.key text: t("jobseekers.employments.ended_on")
             - row.value text: employment.ended_on.to_formatted_s(:month_year)
-        - summary_list.row(html_attributes: { id: "main_duties" }) do |row|
+        - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
           - row.key text: t("jobseekers.employments.main_duties")
           - row.value text: employment.main_duties
     - detail_component.actions do
-      = govuk_link_to(t("buttons.change"), edit_jobseekers_profile_work_history_path(employment))
-      - if current_page?(controller: "jobseekers/profiles/employments", action: "review")
-        = govuk_link_to(t("buttons.delete"), jobseekers_profile_work_history_path(employment), method: :delete)
+      .govuk-summary-card__action
+        = govuk_link_to(t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_profile_work_history_path(employment))
+
+      .govuk-summary-card__action
+        = govuk_link_to(t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_profile_work_history_path(employment), method: :delete)

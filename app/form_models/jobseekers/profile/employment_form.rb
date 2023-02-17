@@ -9,14 +9,10 @@ class Jobseekers::Profile::EmploymentForm < BaseForm
 
   attr_reader :started_on, :ended_on
 
-  validates :organisation, presence: true
-  validates :job_title, presence: true
-  validates :started_on, presence: true
-  validates :started_on, date: { before: :ended_on }, if: -> { ended_on.present? }
+  validates :organisation, :job_title, :main_duties, presence: true
+  validates :started_on, date: { before: :today }
   validates :current_role, inclusion: { in: %w[yes no] }
-  validates :ended_on, presence: true, unless: -> { current_role == "yes" }
-  validates :ended_on, date: { after: :started_on }, unless: -> { current_role == "yes" }
-  validates :main_duties, presence: true
+  validates :ended_on, date: { before: :today, after: :started_on }, if: -> { current_role == "no" }
 
   def started_on=(value)
     @started_on = date_from_multiparameter_hash(value)

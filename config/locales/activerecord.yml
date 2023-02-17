@@ -657,7 +657,7 @@ en:
             main_duties:
               blank: Tell us briefly what your main duties were
             organisation:
-              blank: Enter your qualified teaching status details
+              blank: Enter a school or other organisation
             started_on:
               before: The date the role started must be in the past
               blank: Enter the date you started at this school or organisation

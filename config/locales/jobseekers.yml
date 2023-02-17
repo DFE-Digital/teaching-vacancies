@@ -28,9 +28,10 @@ en:
         confirm: Confirm
         title: Confirm your email address
     employments:
+      current_role: Is this your current role?
       ended_on: End date
       main_duties: Main duties
-      organisation: Job title
+      organisation: School or employer
       started_on: Start date
     forced_login:
       create_account: create an account

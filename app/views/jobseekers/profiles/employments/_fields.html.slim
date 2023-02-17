@@ -5,7 +5,7 @@
 = f.govuk_date_field :started_on,
   omit_day: true,
   legend: { tag: nil, size: "m" },
-  hint: -> { t("helpers.hint.date", date: 1.week.from_now.strftime("%-d %-m %Y")) }
+  hint: -> { t("helpers.hint.date", date: 2.year.ago.strftime("%-m %Y")) }
 
 = f.govuk_radio_buttons_fieldset :current_role, legend: { size: "m", tag: nil } do
   = f.govuk_radio_button :current_role, "yes", link_errors: true
@@ -13,7 +13,7 @@
     = f.govuk_date_field :ended_on,
       omit_day: true,
       legend: { tag: nil, size: "m" },
-      hint: -> { t("helpers.hint.date", date: 1.week.from_now.strftime("%-d %-m %Y")) }
+      hint: -> { t("helpers.hint.date", date: 1.year.ago.strftime("%-m %Y")) }
 
 = f.govuk_text_area :main_duties, label: { size: "m" }
 

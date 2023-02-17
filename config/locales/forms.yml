@@ -20,6 +20,7 @@ en:
     cancel_and_return_to_account: Cancel and return to account
     cancel_copy: Cancel job listing copy
     change: Change
+    change_hidden_text_html: Change <span class='govuk-visually-hidden'>%{hidden_text}</span>
     choose_file: Choose a file
     close_account: Close account
     complete_personal_details: Complete personal details
@@ -36,6 +37,7 @@ en:
     create_account: Create an account
     create_job: Create a job listing
     delete: Delete
+    delete_hidden_text_html: Delete <span class='govuk-visually-hidden'>%{hidden_text}</span>
     delete_application: Delete application
     delete_draft: Delete draft
     delete_logo: Delete logo
@@ -179,6 +181,7 @@ en:
         job_title: If you had more than one role with this employer, enter your last role
         main_duties: Provide the responsibilties you undertook in this role
         organisation_name: If you worked for yourself, enter ‘self-employed’
+        started_on: For example, %{date}
 
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
