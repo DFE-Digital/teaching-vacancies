@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_13_123002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -72,7 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
     t.string "current_role", default: "", null: false
     t.date "started_on"
     t.date "ended_on"
-    t.uuid "job_application_id", null: false
+    t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "employment_type", default: 0
@@ -80,7 +80,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
+    t.uuid "jobseeker_profile_id"
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
+    t.index ["jobseeker_profile_id"], name: "index_employments_on_jobseeker_profile_id"
   end
 
   create_table "equal_opportunities_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

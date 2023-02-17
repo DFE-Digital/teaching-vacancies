@@ -27,6 +27,12 @@ en:
       show:
         confirm: Confirm
         title: Confirm your email address
+    employments:
+      current_role: Is this your current role?
+      ended_on: End date
+      main_duties: Main duties
+      organisation: School or employer
+      started_on: Start date
     forced_login:
       create_account: create an account
       job_application_html: You need to login or %{account_creation_link} with Teaching Vacancies to apply for this job.
@@ -548,6 +554,24 @@ en:
         summary:
           status_title: Do you have qualified teaching status (QTS)?
           year_title: Year QTS awarded
+      employments:
+        edit:
+          caption: Work history
+          page_title: Edit a role — Profile
+          title: Role
+        destroy:
+          success: One role has been deleted
+        new:
+          caption: Work history
+          page_title: Add a role — Profile
+          title: Role
+        review:
+          add_role_button_text: Add role
+          return_to_profile: Return to profile
+          page_title: Current role and employment history — Profile
+          title: Work history
+        update:
+          success: One role has been changed
     sessions:
       new:
         description: Sign in here if you are a teacher, aspiring teacher or work in education support. Once signed in you'll be able to save and apply for jobs.

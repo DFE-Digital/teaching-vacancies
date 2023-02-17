@@ -8,7 +8,7 @@ ruby:
                  phone_number: nil,
                }
 
-  summary = govuk_summary_list do |summary_list|
+  summary = govuk_summary_list(html_attributes: { id: "personal_details" }) do |summary_list|
     attributes.each do |attribute, options|
       step_name = form.class.delegated_attributes[attribute.to_s]
       condition = ->(f) { f.completed?(step_name) }

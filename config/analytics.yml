@@ -15,6 +15,7 @@ shared:
     - reason_for_break
     - created_at
     - updated_at
+    - jobseeker_profile_id
   equal_opportunities_reports:
     - id
     - vacancy_id
