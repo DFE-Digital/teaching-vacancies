@@ -13,6 +13,7 @@ class Api::EventsController < Api::ApplicationController
 
     data = event_params[:data].to_h.slice(*EVENT_ALLOWLIST[type])
     frontend_event.trigger(type, data)
+    send_dfe_analytics_event(type, data)
 
     head :no_content
   end
@@ -29,5 +30,17 @@ class Api::EventsController < Api::ApplicationController
 
   def bad_request
     head(:bad_request)
+  end
+
+  def send_dfe_analytics_event(type, data)
+    fail_safe do
+      event = DfE::Analytics::Event.new
+        .with_type(type)
+        .with_request_details(request)
+        .with_response_details(response)
+        .with_data(data)
+
+      DfE::Analytics::SendEvents.do([event])
+    end
   end
 end
