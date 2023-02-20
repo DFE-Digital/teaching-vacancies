@@ -8,6 +8,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
       documents_form.documents.each do |document|
         vacancy.supporting_documents.attach(document)
         send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
+        send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
       end
 
       vacancy.update(documents_form.params_to_save)
@@ -22,6 +23,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     document = vacancy.supporting_documents.find(params[:id])
     document.purge_later
     send_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
+    send_dfe_analytics_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
 
     redirect_to after_document_delete_path, flash: { success: t("jobs.file_delete_success_message", filename: document.filename) }
   end
@@ -69,6 +71,25 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
       new_organisation_job_document_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show])
     else
       organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show])
+    end
+  end
+
+  def send_dfe_analytics_event(event_type, name, size, content_type)
+    fail_safe do
+      event = DfE::Analytics::Event.new
+        .with_type(event_type)
+        .with_request_details(request)
+        .with_response_details(response)
+        .with_user(current_publisher)
+        .with_data(
+          vacancy_id: StringAnonymiser.new(vacancy.id),
+          document_type: "supporting_document",
+          name: name,
+          size: size,
+          content_type: content_type,
+        )
+
+      DfE::Analytics::SendEvents.do([event])
     end
   end
 
