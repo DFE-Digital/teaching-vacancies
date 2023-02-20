@@ -1,0 +1,35 @@
+en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/job_preferences_form/role:
+          attributes:
+            roles:
+              blank: Select what roles you are interested in to continue
+
+        jobseekers/job_preferences_form/phase:
+          attributes:
+            phases:
+              blank: Select what education phases you are interested in to continue
+
+        jobseekers/job_preferences_form/key_stage:
+          attributes:
+            key_stages:
+              blank: Select what key stages you are interested in to continue
+
+        jobseekers/job_preferences_form/working_pattern:
+          attributes:
+            working_patterns:
+              blank: Select what working patterns you are interested in to continue
+
+        jobseekers/job_preferences_form/location_form:
+          attributes:
+            location:
+              blank: Enter a location
+            radius:
+              blank: Select a search radius
+
+        jobseekers/job_preferences_form/location:
+          attributes:
+            add_location:
+              blank: Select yes if you want to add another location

@@ -6,7 +6,7 @@ module Jobseekers
 
     ROLES = %i[teacher senior_leader middle_leader teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
     PHASES = %i[nursery primary middle secondary through].freeze
-    WORKING_PATTERNS = %i[flexible full_time job_share part_time term_time].freeze
+    WORKING_PATTERNS = %i[full_time part_time].freeze
 
     def self.from_record(record)
       new record.attributes.slice(*attribute_names)

@@ -2,9 +2,11 @@
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: back_url
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for @step, url: { action: :update }, as: :job_preferences do |f|
+= form_for @step, url: { action: :update }, as: :job_preferences do |f|
+  = f.govuk_error_summary
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
       = f.govuk_collection_check_boxes :roles, @step.options, :first, :last, legend: { size: "l" }, caption: { text: "Job preferences", size: "l" }
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path
