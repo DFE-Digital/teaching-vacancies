@@ -6,9 +6,9 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl
       span.govuk-caption-xl Delete location
-      | Are you sure you want to delete #{@location[:location]} #{@location[:radius]}
+      | Confirm that you want to delete #{@location[:location]} (#{t("jobs.search.number_of_miles", count: @location[:radius].to_i)})
     = form_for @delete_form, url: {}, as: :delete_location do |f|
-      - if @last_location
+      - if @last_location && profile.active
         = govuk_warning_text text: "If you delete this, there will be no location information on your profile. Schools will not be able to see your profile. Change the location to keep your profile active."
 
         = f.govuk_collection_radio_buttons :action, f.object.options, :first, :last, legend: nil

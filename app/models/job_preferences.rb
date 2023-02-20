@@ -1,3 +1,3 @@
 class JobPreferences < ApplicationRecord
-  belongs_to :jobseeker
+  belongs_to :jobseeker_profile
 end

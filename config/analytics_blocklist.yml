@@ -159,6 +159,7 @@
   :job_preferences:
   - id
   - jobseeker_id
+  - jobseeker_profile_id
   - roles
   - phases
   - key_stages

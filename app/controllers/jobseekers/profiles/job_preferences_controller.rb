@@ -50,16 +50,19 @@ module Jobseekers::Profiles
       @delete_form.assign_attributes(params.require(:delete_location).to_unsafe_hash)
       render "delete_location", status: :unprocessable_entity and return unless form.valid?
 
-      case @delete_form.action
-      when "delete"
+      if @delete_form.action == "delete"
         form.locations.delete @location
-        form.complete_step!(:locations, :invalidated) if form.locations.empty?
-        store_form!
+        ApplicationRecord.transaction do
+          if form.locations.empty?
+            form.complete_step!(:locations, :invalidated)
+            profile.deactivate!
+          end
+          store_form!
+        end
+        flash[:success] = "Location deleted"
         redirect_to escape_path
-      when "edit"
-        redirect_to(action: :edit_location, id: params[:id])
       else
-        render "delete_location", status: :unprocessable_entity
+        redirect_to action: :edit_location, id: params[:id]
       end
     end
 
@@ -85,7 +88,7 @@ module Jobseekers::Profiles
     end
 
     def job_preference_record
-      @job_preference_record ||= JobPreferences.find_or_create_by(jobseeker_id: current_jobseeker.id)
+      @job_preference_record ||= JobPreferences.find_or_create_by(jobseeker_profile: profile)
     end
 
     def force_location_added
@@ -100,6 +103,10 @@ module Jobseekers::Profiles
 
     helper_method def location_form
       @location_form ||= form.build_location_form(location_id)
+    end
+
+    helper_method def profile
+      @profile ||= JobseekerProfile.find_or_create_by!(jobseeker: current_jobseeker)
     end
   end
 end

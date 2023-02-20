@@ -11,7 +11,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
     },
     {
       title: "Job preferences",
-      display_summary: -> { current_jobseeker.job_preferences&.completed_steps.present? },
+      display_summary: -> { profile.job_preferences&.completed_steps.present? },
       key: "job_preferences",
       link_text: "Add job preferences",
       page_path: -> { jobseekers_job_preferences_path },

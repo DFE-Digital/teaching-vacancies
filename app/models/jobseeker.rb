@@ -16,7 +16,6 @@ class Jobseeker < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_many :saved_jobs, dependent: :destroy
   has_one :jobseeker_profile
-  has_one :job_preferences
 
   after_update :update_subscription_emails
 

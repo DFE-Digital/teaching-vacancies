@@ -15,7 +15,6 @@
           label: { text: "Location", size: "m" },
           form_group: { classes: %w[location-finder__input govuk-!-margin-bottom-0] }
 
-
       = f.govuk_collection_radio_buttons :radius, f.object.radius_options, :first, :last, legend: { text: "Search radius", size: "m" }
 
       = f.govuk_submit "Save and continue"

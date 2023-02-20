@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_13_123002) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_20_172314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -235,7 +235,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_123002) do
   end
 
   create_table "job_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "jobseeker_id"
     t.string "roles", default: [], array: true
     t.string "phases", default: [], array: true
     t.string "key_stages", default: [], array: true
@@ -246,7 +245,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_123002) do
     t.boolean "builder_completed", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["jobseeker_id"], name: "index_job_preferences_on_jobseeker_id"
+    t.uuid "jobseeker_profile_id"
+    t.index ["jobseeker_profile_id"], name: "index_job_preferences_on_jobseeker_profile_id"
   end
 
   create_table "jobseeker_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -256,6 +256,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_123002) do
     t.string "about_you"
     t.integer "qualified_teacher_status"
     t.string "qualified_teacher_status_year"
+    t.boolean "active", default: false, null: false
     t.index ["jobseeker_id"], name: "index_jobseeker_profiles_on_jobseeker_id"
   end
 
@@ -619,7 +620,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_123002) do
   add_foreign_key "employments", "job_applications"
   add_foreign_key "equal_opportunities_reports", "vacancies"
   add_foreign_key "job_applications", "vacancies"
-  add_foreign_key "job_preferences", "jobseekers"
+  add_foreign_key "job_preferences", "jobseeker_profiles"
   add_foreign_key "jobseeker_profiles", "jobseekers"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"
