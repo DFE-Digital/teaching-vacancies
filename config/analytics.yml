@@ -15,6 +15,7 @@ shared:
     - reason_for_break
     - created_at
     - updated_at
+    - jobseeker_profile_id
   equal_opportunities_reports:
     - id
     - vacancy_id
@@ -124,6 +125,9 @@ shared:
     - created_at
     - updated_at
     - jobseeker_id
+    - about_you
+    - qualified_teacher_status
+    - qualified_teacher_status_year
   jobseekers:
     - id
     - email
@@ -355,3 +359,13 @@ shared:
     - updated_at
     - external_reference
     - vacancy
+  personal_details:
+    - id
+    - jobseeker_profile_id
+    - first_name
+    - last_name
+    - phone_number_provided
+    - phone_number
+    - completed_steps
+    - created_at
+    - updated_at

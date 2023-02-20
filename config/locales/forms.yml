@@ -20,8 +20,10 @@ en:
     cancel_and_return_to_account: Cancel and return to account
     cancel_copy: Cancel job listing copy
     change: Change
+    change_hidden_text_html: Change <span class='govuk-visually-hidden'>%{hidden_text}</span>
     choose_file: Choose a file
     close_account: Close account
+    complete_personal_details: Complete personal details
     complete_section: Complete section
     confirm_deletion: Delete job listing
     confirm_destroy: Yes I am sure - delete this entry
@@ -35,6 +37,7 @@ en:
     create_account: Create an account
     create_job: Create a job listing
     delete: Delete
+    delete_hidden_text_html: Delete <span class='govuk-visually-hidden'>%{hidden_text}</span>
     delete_application: Delete application
     delete_draft: Delete draft
     delete_logo: Delete logo
@@ -61,6 +64,7 @@ en:
     reminder_continue: Continue to create a job
     request_dsi_account: Request a DfE Sign-in account
     resend_email: Resend request
+    return_to_profile: Return to profile
     return_to_profile: Return to profile
     save: Save
     save_and_continue: Save and continue
@@ -168,6 +172,17 @@ en:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
+
+      personal_details_form:
+        first_name: Or given names
+        last_name: Or family name
+        phone_number: Enter a phone number you are happy to be contacted on, like 01632 960 001, 07700 900 982 or +44 0808 157 0192.
+      jobseekers_profile_employment_form:
+        job_title: If you had more than one role with this employer, enter your last role
+        main_duties: Provide the responsibilties you undertook in this role
+        organisation_name: If you worked for yourself, enter ‘self-employed’
+        started_on: For example, %{date}
+
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
       jobseekers_unsubscribe_feedback_form:
@@ -465,8 +480,36 @@ en:
           another_role: I have found another role
           changed_mind: I have changed my mind
           other: Some other reason
+
       jobseekers_profile_about_you_form:
         about_you: About you
+      jobseekers_profile_qualified_teacher_status_form:
+        qualified_teacher_status_year: Year QTS awarded
+        qualified_teacher_status_options:
+          "yes": "Yes"
+          "no": "No"
+          on_track: "I’m on track to receive QTS"
+
+      personal_details_form:
+        email: Email
+        change_email_html: Change your email address from within your %{link}
+        change_email_link_text: account
+        first_name: First name
+        last_name: Last name
+        phone_number: Phone number
+        phone_number_provided: Do you want to provide a phone number?
+        phone_number_provided_options:
+          false: "No"
+          true: "Yes"
+      jobseekers_profile_employment_form:
+        current_role_options:
+          "no": "No"
+          "yes": "Yes"
+        job_title: Role
+        main_duties: Main duties
+        organisation: Name of school or employer
+
+
       jobseekers_sign_in_form:
         email: Email address
         password: Password
@@ -756,6 +799,13 @@ en:
         qualifications_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:
         withdraw_reason: Why would you like to withdraw your application?
+      jobseekers_profile_qualified_teacher_status_form:
+        qualified_teacher_status: Do you have qualified teacher status (QTS)?
+
+      jobseekers_profile_employment_form:
+        current_role: Are you still working in this role?
+        ended_on: End date
+        started_on: Start date
 
       jobseekers_subscription_form:
         frequency: When do you want to receive alerts?

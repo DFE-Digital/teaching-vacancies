@@ -8,9 +8,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   helper_method :employments, :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
 
   def new
-    dfe_analytics_event.trigger(:vacancy_apply_clicked, { vacancy_id: StringAnonymiser.new(vacancy.id) })
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: StringAnonymiser.new(vacancy.id))
-
+    send_dfe_analytics_event
     redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id) if
       current_jobseeker.job_applications.not_draft.any?
   end
@@ -168,5 +167,18 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
                  else
                    job_application.vacancy
                  end
+  end
+
+  def send_dfe_analytics_event
+    fail_safe do
+      event = DfE::Analytics::Event.new
+        .with_type(:vacancy_apply_clicked)
+        .with_request_details(request)
+        .with_response_details(response)
+        .with_user(current_jobseeker)
+        .with_data(vacancy_id: StringAnonymiser.new(vacancy.id))
+
+      DfE::Analytics::SendEvents.do([event])
+    end
   end
 end

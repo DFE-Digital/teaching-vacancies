@@ -56,10 +56,7 @@ class VacanciesController < ApplicationController
       vacancy_ids = @vacancies_search.vacancies.map(&:id).map { |s| StringAnonymiser.new(s).to_s }
       polygon_id = StringAnonymiser.new(@vacancies_search.location_search.polygon.id).to_s if @vacancies_search.location_search.polygon
 
-      trigger_dfe_analytics_event(vacancy_ids, polygon_id)
-
-      request_event.trigger(
-        :search_performed,
+      event_data = {
         search_criteria: form.to_hash,
         sort_by: form.sort.by,
         page: params[:page] || 1,
@@ -68,23 +65,21 @@ class VacanciesController < ApplicationController
         location_polygon_used: polygon_id,
         landing_page: params[:landing_page_slug],
         filters_set_from_keywords: form.filters_from_keyword.present?,
-      )
+      }
+
+      request_event.trigger(:search_performed, event_data)
+      trigger_dfe_analytics_event(:search_performed, event_data)
     end
   end
 
-  def trigger_dfe_analytics_event(vacancy_ids, polygon_id)
-    dfe_analytics_event.trigger(
-      :search_peformed,
-      {
-        search_criteria: form.to_hash,
-        sort_by: form.sort.by,
-        page: params[:page] || 1,
-        total_count: @vacancies_search.total_count,
-        vacancies_on_page: vacancy_ids,
-        location_polygon_used: polygon_id,
-        landing_page: params[:landing_page_slug],
-        filters_set_from_keywords: form.filters_from_keyword.present?,
-      },
-    )
+  def trigger_dfe_analytics_event(event_type, event_data)
+    event = DfE::Analytics::Event.new
+      .with_type(event_type)
+      .with_request_details(request)
+      .with_response_details(response)
+      .with_user(current_jobseeker)
+      .with_data(event_data)
+
+    DfE::Analytics::SendEvents.do([event])
   end
 end

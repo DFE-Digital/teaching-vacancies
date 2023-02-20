@@ -1,0 +1,5 @@
+= govuk_summary_list do |summary_list|
+  - summary_list.row do |row|
+    - row.key text: t(".about_you_title")
+    - row.value text: profile.about_you
+    - row.action(text: t("buttons.change"), href: edit_jobseekers_profile_about_you_path)

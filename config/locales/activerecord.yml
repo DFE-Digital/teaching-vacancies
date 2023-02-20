@@ -96,6 +96,20 @@ en:
     listed_elsewhere:
       inclusion: Select an option for how the job was listed
 
+  # Profiles
+  name_errors: &name_errors
+    first_name:
+      blank: Enter your first name
+    last_name:
+      blank: Enter your last name
+
+  phone_number_errors: &phone_number_errors
+    phone_number:
+      blank: Enter your phone number
+      invalid: Enter a phone number in the correct format
+    phone_number_provided:
+      inclusion: Select yes if you want to provide a phone number
+
   # Publishers journey
   job_role_errors: &job_role_errors
     job_role:
@@ -315,6 +329,15 @@ en:
         jobseekers/unsubscribe_feedback_form:
           attributes:
             <<: *unsubscribe_feedback_errors
+
+        # Profiles
+        jobseekers/profile/personal_details_form/name:
+          attributes:
+            <<: *name_errors
+
+        jobseekers/profile/personal_details_form/phone_number:
+          attributes:
+            <<: *phone_number_errors
 
         # Publishers journey
         publishers/job_listing/job_role_form:
@@ -613,6 +636,33 @@ en:
             about_you:
               blank: Enter your about you details
               length: About you must be 1000 words or less
+        jobseekers/profile/qualified_teacher_status_form:
+          attributes:
+            qualified_teacher_status:
+              inclusion: Enter your qualified teaching status details
+            qualified_teacher_status_year:
+              less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
+              not_a_number: Enter the year your QTS was awarded
+        jobseekers/profile/employment_form:
+          attributes:
+            current_role:
+              inclusion: Select yes if this is your current role
+            ended_on:
+              after: End date must be after the start date
+              before: The date the role ended must be in the past
+              blank: Enter the date you left this school or organisation
+              invalid: Enter a date in the correct format
+            job_title:
+              blank: Enter your job title
+            main_duties:
+              blank: Tell us briefly what your main duties were
+            organisation:
+              blank: Enter a school or other organisation
+            started_on:
+              before: The date the role started must be in the past
+              blank: Enter the date you started at this school or organisation
+              invalid: Enter a date in the correct format
+
         publishers/job_application/notes_form:
           attributes:
             content:

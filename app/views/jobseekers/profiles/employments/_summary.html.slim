@@ -1,0 +1,4 @@
+div class="govuk-!-margin-bottom-6"
+  = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
+
+= render "jobseekers/employments/employments", employments: profile.employments

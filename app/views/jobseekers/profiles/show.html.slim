@@ -9,12 +9,8 @@
         h2.govuk-heading-m class="govuk-!-padding-top-6"
           = section[:title]
 
-        - if @profile[section[:key]].present?
-          = govuk_summary_list do |summary_list|
-            - summary_list.row do |row|
-              - row.key text: section[:title]
-              - row.value text: @profile[section[:key]]
-              - row.action(text: t("buttons.change"), href: instance_exec(&section[:page_path]))
+        - if section[:display_summary] && instance_exec(&section[:display_summary])
+          = render(partial: "jobseekers/profiles/#{section[:key]}/summary", locals: { profile: @profile, section: section })
         - else
           p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
 

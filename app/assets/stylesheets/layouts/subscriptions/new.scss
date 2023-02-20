@@ -14,5 +14,10 @@
     .location-search__radius {
       margin-top: govuk-spacing(6);
     }
+
+    /* https://trello.com/c/IlzRdzpP/151-disable-focus-styles-for-filters-ui-on-job-alert-creation-page */
+    .filters-component:focus {
+      outline: none;
+    }
   }
 }

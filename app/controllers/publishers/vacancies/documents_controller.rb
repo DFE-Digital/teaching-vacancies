@@ -76,15 +76,20 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   def send_dfe_analytics_event(event_type, name, size, content_type)
     fail_safe do
-      event_details = {
-        vacancy_id: StringAnonymiser.new(vacancy.id),
-        document_type: "supporting_document",
-        name: name,
-        size: size,
-        content_type: content_type,
-      }
+      event = DfE::Analytics::Event.new
+        .with_type(event_type)
+        .with_request_details(request)
+        .with_response_details(response)
+        .with_user(current_publisher)
+        .with_data(
+          vacancy_id: StringAnonymiser.new(vacancy.id),
+          document_type: "supporting_document",
+          name: name,
+          size: size,
+          content_type: content_type,
+        )
 
-      dfe_analytics_event.trigger(event_type, event_details)
+      DfE::Analytics::SendEvents.do([event])
     end
   end
 
