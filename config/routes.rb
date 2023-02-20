@@ -80,6 +80,9 @@ Rails.application.routes.draw do
 
     resource :profile, only: %i[show] do
       resource :about_you, only: %i[edit update show], controller: "profiles/about_you"
+      resources :work_history, only: %i[new create edit update destroy], controller: "profiles/employments" do
+        get :review, on: :collection, to: "profiles/employments#review"
+      end
       resource :qualified_teacher_status, only: %i[edit update show], controller: "profiles/qualified_teacher_status"
       get "personal-details", to: "profiles/personal_details#start"
       get "personal-details/:step", to: "profiles/personal_details#edit", as: :edit_personal_details

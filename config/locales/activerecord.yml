@@ -643,6 +643,26 @@ en:
             qualified_teacher_status_year:
               less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
               not_a_number: Enter the year your QTS was awarded
+        jobseekers/profile/employment_form:
+          attributes:
+            current_role:
+              inclusion: Select yes if this is your current role
+            ended_on:
+              after: End date must be after the start date
+              before: The date the role ended must be in the past
+              blank: Enter the date you left this school or organisation
+              invalid: Enter a date in the correct format
+            job_title:
+              blank: Enter your job title
+            main_duties:
+              blank: Tell us briefly what your main duties were
+            organisation:
+              blank: Enter a school or other organisation
+            started_on:
+              before: The date the role started must be in the past
+              blank: Enter the date you started at this school or organisation
+              invalid: Enter a date in the correct format
+
         publishers/job_application/notes_form:
           attributes:
             content:

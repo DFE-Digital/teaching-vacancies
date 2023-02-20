@@ -32,10 +32,10 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
     },
     {
       title: "Work history",
-      display_summary: -> { false },
-      key: "",
+      display_summary: -> { @profile.employments.any? },
+      key: "employments",
       link_text: "Add roles",
-      page_path: -> { "" },
+      page_path: -> { new_jobseekers_profile_work_history_path },
     },
     {
       title: "About you",
@@ -67,6 +67,8 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
   end
 
   private
+
+  helper_method :profile
 
   def profile
     @profile ||= JobseekerProfile.find_or_create_by(jobseeker_id: current_jobseeker.id)

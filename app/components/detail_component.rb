@@ -13,6 +13,6 @@ class DetailComponent < ApplicationComponent
   private
 
   def default_classes
-    %w[detail-component]
+    %w[detail-component govuk-summary-card]
   end
 end
