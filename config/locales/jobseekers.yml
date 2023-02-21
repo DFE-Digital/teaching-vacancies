@@ -504,6 +504,16 @@ en:
       success_html: >-
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     profiles:
+      preview:
+        show:
+          page_title: Preview your profile
+          phone_number: Phone number
+          job_preferences: Job preferences
+          about: About
+          contact_details: Contact Details
+          email_address: Email address
+          work_history: Work history
+          qualifications: Qualifications
       personal_details:
         incomplete_message: You must complete your personal details before you turn on your profile.
         name:

@@ -79,6 +79,7 @@ Rails.application.routes.draw do
     end
 
     resource :profile, only: %i[show] do
+      resource :preview, only: :show, controller: "profiles/preview"
       resource :about_you, only: %i[edit update show], controller: "profiles/about_you"
       resources :work_history, only: %i[new create edit update destroy], controller: "profiles/employments" do
         get :review, on: :collection, to: "profiles/employments#review"

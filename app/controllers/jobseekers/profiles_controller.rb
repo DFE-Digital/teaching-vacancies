@@ -58,7 +58,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       display_summary: -> { false },
       key: "",
       link_text: "Preview profile",
-      page_path: -> { "" },
+      page_path: -> { jobseekers_profile_preview_path },
     },
   ].map(&:freeze).freeze
 

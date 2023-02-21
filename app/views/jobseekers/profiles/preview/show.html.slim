@@ -1,0 +1,37 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-3" = t(".page_title")
+    p class="govuk-!-margin-bottom-3" = "QTS awarded in #{@profile.qualified_teacher_status_year}."
+
+    h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+      = t(".job_preferences")
+
+    h2.govuk-heading-m class="govuk-!-padding-bottom-2"
+      = t(".about")
+    p = @profile.about_you
+
+    h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+      = t(".contact_details")
+    dl.govuk-summary-list
+      .govuk-summary-list__row
+        dt.govuk-summary-list__key == t(".email_address")
+        dd.govuk-summary-list__value = current_jobseeker.email
+      .govuk-summary-list__row
+        dt.govuk-summary-list__key == t(".phone_number")
+        dd.govuk-summary-list__value = @personal_details.phone_number
+
+    h2.govuk-heading-m = t(".work_history")
+    - @profile.employments.each do |employment|
+      h3.govuk-heading-s class="govuk-!-padding-bottom-3"
+        = employment.organisation
+        p class="govuk-!-margin-bottom-0" = employment.job_title
+        p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
+        hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
+
+    h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+      = t(".qualifications")
