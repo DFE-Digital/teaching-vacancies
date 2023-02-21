@@ -1,6 +1,6 @@
 class OnsDataImport::ImportCounties < OnsDataImport::Base
   def api_name
-    "Counties_and_Unitary_Authorities_April_2019_EW_BUC_v2"
+    "Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BUC_2022"
   end
 
   def name_field
