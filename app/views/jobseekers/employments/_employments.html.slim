@@ -18,9 +18,6 @@
         - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
           - row.key text: t("jobseekers.employments.main_duties")
           - row.value text: employment.main_duties
-    - detail_component.actions do
-      .govuk-summary-card__action
-        = govuk_link_to(t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_profile_work_history_path(employment))
 
-      .govuk-summary-card__action
-        = govuk_link_to(t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_profile_work_history_path(employment), method: :delete)
+    - detail_component.action govuk_link_to(t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_profile_work_history_path(employment))
+    - detail_component.action govuk_link_to(t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_profile_work_history_path(employment), method: :delete)
