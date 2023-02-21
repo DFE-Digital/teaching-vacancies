@@ -16,6 +16,8 @@ require "view_component/compile_cache"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+fields = DfE::Analytics::Fields
+def fields.check!; end
 
 # These are needed in configuration before autoloading kicks in
 require_relative "../lib/fail_safe"
