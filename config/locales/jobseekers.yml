@@ -276,6 +276,7 @@ en:
           success: Your qualification was deleted
         qualifications_shared: &qualifications_shared
           caption: Education and qualifications
+          subjects_and_grades: Subjects and grades
         edit:
           <<: *qualifications_shared
           heading:
@@ -547,8 +548,12 @@ en:
           about_you_title: About You
       qualifications:
         confirm_destroy:
-          caption: Delete Qualification
-          page_title: Confirm that you want to delete this qualification?
+          secondary:
+            caption: Delete Qualifications
+            page_title: Confirm that you want to delete these qualifications?
+          other:
+            caption: Delete Qualification
+            page_title: Confirm that you want to delete this qualification?
         destroy:
           success: Qualification deleted
         new:
@@ -572,6 +577,7 @@ en:
         select_category:
           page_title: Qualification type
           caption: Qualifications
+        subjects_and_grades: Subjects and grades
       qualified_teacher_status:
         edit:
           page_title: Qualified teacher status

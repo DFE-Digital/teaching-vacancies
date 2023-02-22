@@ -40,7 +40,9 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     redirect_to review_jobseekers_profile_qualifications_path, success: t(".success")
   end
 
-  def confirm_destroy; end
+  def confirm_destroy
+    # binding.pry
+  end
 
   private
 
@@ -74,7 +76,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   end
 
   def category
-    @category ||= action_name.in?(%w[edit update]) ? qualification.category : category_param
+    @category ||= action_name.in?(%w[edit update confirm_destroy]) ? qualification.category : category_param
   end
 
   def category_param

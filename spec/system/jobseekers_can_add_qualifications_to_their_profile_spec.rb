@@ -48,7 +48,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         click_on "Add qualifications"
         select_qualification_category("GCSEs")
         # expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_profile_path)
-        expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.gcse"))
+        expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.gcse"))
         validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
         fill_in_gcses
         click_on I18n.t("buttons.save_qualification.other")
