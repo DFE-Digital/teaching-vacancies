@@ -1,4 +1,8 @@
 class Jobseekers::ProfilesController < Jobseekers::BaseController
+  include Jobseekers::QualificationFormConcerns
+
+  helper_method :qualification_form_param_key
+
   before_action :profile, only: %i[show]
 
   SECTIONS = [

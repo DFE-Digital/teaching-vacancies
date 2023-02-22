@@ -17,7 +17,7 @@ class Qualification < ApplicationRecord
   def name
     return read_attribute(:name) if read_attribute(:name).present? || other? || other_secondary?
 
-    I18n.t("helpers.label.jobseekers_job_application_details_qualifications_category_form.category_options.#{category}")
+    I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{category}")
   end
 
   def remove_inapplicable_data

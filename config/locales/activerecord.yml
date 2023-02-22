@@ -586,30 +586,30 @@ en:
               before: The date the role started must be in the past
               blank: Enter the date you started at this school or organisation
               invalid: Enter a date in the correct format
-        jobseekers/job_application/details/qualifications/category_form:
+        jobseekers/qualifications/category_form:
           attributes:
             <<: *qualification_errors
-        jobseekers/job_application/details/qualifications/degree_form:
+        jobseekers/qualifications/degree_form:
           attributes:
             <<: *qualification_errors
             institution:
               blank: Enter an awarding body
-        jobseekers/job_application/details/qualifications/secondary/common_form:
+        jobseekers/qualifications/secondary/common_form:
           attributes:
             <<: *qualification_errors
             institution:
               blank: Enter a school, college or other organisation
-        jobseekers/job_application/details/qualifications/secondary/other_form:
+        jobseekers/qualifications/secondary/other_form:
           attributes:
             <<: *qualification_errors
             institution:
               blank: Enter a school, college or other organisation
             name:
               blank: Enter a qualification name
-        jobseekers/job_application/details/qualifications/secondary/qualification_result_form:
+        jobseekers/qualifications/secondary/qualification_result_form:
           attributes:
             <<: *qualification_errors
-        jobseekers/job_application/details/qualifications/other_form:
+        jobseekers/qualifications/other_form:
           attributes:
             <<: *qualification_errors
             institution:
@@ -663,36 +663,6 @@ en:
               blank: Enter the date you started at this school or organisation
               invalid: Enter a date in the correct format
 
-        jobseekers/profile/qualifications/category_form:
-          attributes:
-            <<: *qualification_errors
-        jobseekers/profile/qualifications/degree_form:
-          attributes:
-            <<: *qualification_errors
-            institution:
-              blank: Enter an awarding body
-        jobseekers/profile/qualifications/secondary/common_form:
-          attributes:
-            <<: *qualification_errors
-            institution:
-              blank: Enter a school, college or other organisation
-        jobseekers/profile/qualifications/secondary/other_form:
-          attributes:
-            <<: *qualification_errors
-            institution:
-              blank: Enter a school, college or other organisation
-            name:
-              blank: Enter a qualification name
-        jobseekers/profile/qualifications/secondary/qualification_result_form:
-          attributes:
-            <<: *qualification_errors
-        jobseekers/profile/qualifications/other_form:
-          attributes:
-            <<: *qualification_errors
-            institution:
-              blank: Enter a school, college, university or other organisation
-            name:
-              blank: Enter a qualification or course name
         publishers/job_application/notes_form:
           attributes:
             content:

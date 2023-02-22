@@ -14,7 +14,7 @@
         - Qualification.categories.each_key do |category|
           = f.govuk_radio_button :category, category, link_errors: true
 
-      = f.govuk_submit t("buttons.save_and_continue")
+      = f.govuk_submit t("buttons.continue")
 
     .govuk-button-group
       = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

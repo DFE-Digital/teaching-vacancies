@@ -1,7 +1,7 @@
 class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesController
-  include Jobseekers::Profiles::QualificationFormConcerns
+  include Jobseekers::QualificationFormConcerns
 
-  helper_method :back_path, :category, :form, :jobseeker_profile, :qualification, :secondary?, :qualification_form_param_key
+  helper_method :category, :form, :jobseeker_profile, :qualification, :secondary?, :qualification_form_param_key
 
   def submit_category
     if form.valid?
@@ -79,10 +79,6 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   def category_param
     params.permit(:category)[:category]
-  end
-
-  def back_path
-    @back_path ||= jobseekers_profile_qualifications_path(profile, :qualifications)
   end
 
   def qualification

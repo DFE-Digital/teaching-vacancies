@@ -1,4 +1,4 @@
-module Jobseekers::Profiles::QualificationFormConcerns
+module Jobseekers::QualificationFormConcerns
   extend ActiveSupport::Concern
 
   def qualification_form_param_key(category)
@@ -22,6 +22,6 @@ module Jobseekers::Profiles::QualificationFormConcerns
                "OtherForm"
              end
            end
-    "Jobseekers::Profile::Qualifications::#{name}".constantize
+    "Jobseekers::Qualifications::#{name}".constantize
   end
 end

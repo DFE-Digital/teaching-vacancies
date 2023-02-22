@@ -351,7 +351,7 @@ en:
         employment_history_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
-      jobseekers_job_application_details_qualifications_category_form:
+      jobseekers_qualifications_shared_labels: &jobseekers_qualifications_shared_labels
         category_options:
           gcse: GCSEs
           as_level: AS Levels
@@ -360,7 +360,6 @@ en:
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate degree
           other: Other qualification or course
-      jobseekers_qualifications_shared_labels: &jobseekers_qualifications_shared_labels
         finished_studying_details: Please give details
         finished_studying_options:
           false: "Not finished yet"
@@ -368,22 +367,6 @@ en:
         grade: Grade
         subject: Subject
         year: Year qualification(s) was/were awarded
-      jobseekers_job_application_details_qualifications_degree_form:
-        <<: *jobseekers_qualifications_shared_labels
-        institution: Awarding body
-        year: Year qualification was awarded
-      jobseekers_job_application_details_qualifications_other_form:
-        <<: *jobseekers_qualifications_shared_labels
-        institution: School, college, university or other organisation
-        name: Qualification or course name
-        year: Year qualification was awarded
-      jobseekers_job_application_details_qualifications_secondary_common_form:
-        <<: *jobseekers_qualifications_shared_labels
-        institution: School, college, or other organisation
-      jobseekers_job_application_details_qualifications_secondary_other_form:
-        <<: *jobseekers_qualifications_shared_labels
-        institution: School, college, or other organisation
-        name: Qualification name
       jobseekers_job_application_details_reference_form:
         email: Email address
         job_title: Job title
@@ -488,7 +471,8 @@ en:
 
       jobseekers_profile_about_you_form:
         about_you: About you
-      jobseekers_profile_qualifications_category_form:
+      jobseekers_qualifications_category_form:
+        <<: *jobseekers_qualifications_shared_labels
         category_options:
           gcse: GCSEs
           as_level: AS Levels
@@ -497,22 +481,23 @@ en:
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate degree
           other: Other qualification or course
-      jobseekers_profile_qualifications_degree_form:
+      jobseekers_qualifications_degree_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: Awarding body
         qualifications: Qualifications
         year: Year qualification was awarded
-      jobseekers_profile_qualifications_other_form:
+      jobseekers_qualifications_other_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: School, college, university or other organisation
         name: Qualification or course name
         year: Year qualification was awarded
-      jobseekers_profile_qualifications_secondary_common_form:
+      jobseekers_qualifications_secondary_common_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: School, college, or other organisation
-      jobseekers_profile_qualifications_secondary_other_form:
+      jobseekers_qualifications_secondary_other_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: School, college, or other organisation
+        name: Qualification name
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status_options:
           "yes": "Yes"
@@ -827,11 +812,11 @@ en:
         qualifications_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:
         withdraw_reason: Why would you like to withdraw your application?
-      jobseekers_profile_qualifications_degree_form:
+      jobseekers_qualifications_degree_form:
         <<: *jobseekers_qualifications_shared_legends
-      jobseekers_profile_qualifications_other_form:
+      jobseekers_qualifications_other_form:
         <<: *jobseekers_qualifications_shared_legends
-      jobseekers_profile_qualified_teacher_status_form:
+      jobseekers_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
 
       jobseekers_profile_employment_form:

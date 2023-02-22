@@ -1,7 +1,7 @@
 class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseController
-  include Jobseekers::JobApplications::QualificationFormConcerns
+  include Jobseekers::QualificationFormConcerns
 
-  helper_method :back_path, :category, :form, :job_application, :qualification, :secondary?
+  helper_method :back_path, :category, :form, :job_application, :qualification, :secondary?, :qualification_form_param_key
 
   def submit_category
     if form.valid?

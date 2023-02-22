@@ -1,6 +1,6 @@
 class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications::BaseController
   include Wicked::Wizard
-  include Jobseekers::JobApplications::QualificationFormConcerns
+  include Jobseekers::QualificationFormConcerns
 
   steps :personal_details, :professional_status, :qualifications, :employment_history, :personal_statement, :references,
         :equal_opportunities, :ask_for_support, :declarations
