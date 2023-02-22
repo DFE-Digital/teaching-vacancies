@@ -15,6 +15,7 @@ ruby:
     },
     subjects: {
       join_with: ", ",
+      blank: "No subject preference chosen",
     },
     working_patterns: {
       map_values: ->(value, step) { step.options[value] },
@@ -42,7 +43,7 @@ ruby:
 
       summary_list.row do |row|
         row.key text: t(attribute)
-        row.value text: value
+        row.value text: value.presence || options[:blank]
         row.action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name))
       end
     end
