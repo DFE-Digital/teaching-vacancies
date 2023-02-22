@@ -40,9 +40,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     redirect_to review_jobseekers_profile_qualifications_path, success: t(".success")
   end
 
-  def confirm_destroy
-    # binding.pry
-  end
+  def confirm_destroy; end
 
   private
 

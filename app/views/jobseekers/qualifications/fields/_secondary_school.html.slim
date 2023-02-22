@@ -10,7 +10,7 @@
         = result_form.govuk_text_field :subject, label: { text: "Subject #{idx + 1}" }, aria: { required: idx.zero? }, form_group: { classes: "govuk-!-width-two-thirds" }
         = result_form.govuk_text_field :grade, aria: { required: idx.zero? }, form_group: { classes: "govuk-!-width-one-third" }, label: { text: "Subject #{idx + 1} Grade" }
         .govuk-form-group.button_to
-          button.govuk-button.js-action.govuk-button--warning class="govuk-!-margin-bottom-0" data-action="manage-qualifications#deleteRow"
+          button.govuk-button.js-action.govuk-button--secondary class="govuk-!-margin-bottom-0" data-action="manage-qualifications#deleteRow"
             = "#{t('buttons.delete_subject')} #{idx + 1}"
 
   span class="govuk-!-margin-bottom-6 govuk-!-margin-top-0 js-action button_to"

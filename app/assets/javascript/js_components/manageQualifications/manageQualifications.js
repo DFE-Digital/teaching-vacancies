@@ -37,7 +37,7 @@ export default class extends Controller {
           cell.innerHTML = cell.innerHTML.replace(/\d+/, `${index + 1}`);
 
           Array.from(cell.attributes).filter((a) => ['for', 'id', 'name'].includes(a.name)).forEach((attribute) => {
-            cell.setAttribute(attribute.name, attribute.value.replace(/\d+/, `${index + 1}`));
+            cell.setAttribute(attribute.name, attribute.value.replace(/\d+/, `${index}`));
           });
         });
       });
