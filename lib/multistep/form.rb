@@ -1,10 +1,12 @@
 require "form_object"
+require "multistep/form/dirty"
 
 module Multistep
   module Form
     extend ActiveSupport::Concern
 
     include FormObject
+    include Multistep::Form::Dirty
 
     included do
       attribute :completed_steps, default: -> { {} }
@@ -16,7 +18,11 @@ module Multistep
       end
     end
 
-    def next_step(current_step: nil)
+    # The below method is quite a bit too complex - it seems that controlling the flow of the multistep journey should
+    # be managed by a specialized flow object rather than being squished in here.
+    # TODO: Extract flow management into a separate object!
+    # rubocop:disable Metrics/AbcSize
+    def next_step(current_step: nil, include_skipped: false)
       current_step = completed_steps.keys.last&.to_sym if current_step.nil?
       return steps.keys.first if current_step.nil?
 
@@ -24,30 +30,46 @@ module Multistep
       raise "Step not completed: #{current_step}" unless completed_steps.key?(current_step)
 
       completed_steps.to_a[0..completed_steps.keys.index(current_step)].each do |step, status|
-        return step if status == :invalidated
+        return step if status == :invalidated || (status == :skipped && !steps[step].skip?)
       end
 
-      steps.keys[steps.keys.index(current_step.to_sym) + 1]
+      return unless (next_step = steps.keys[steps.keys.index(current_step.to_sym) + 1])
+      return next_step if include_skipped || !steps[next_step].skip?
+
+      self.next_step(current_step: next_step)
     end
+    # rubocop:enable Metrics/AbcSize
 
     def previous_step(current_step:)
-      current_index = completed_steps.keys.index(current_step.to_sym)
-      if current_index.nil?
-        return completed_steps.keys.last&.to_sym if next_step == current_step
+      completed = completed_steps.keys + [next_step].compact
+      current_index = completed.index(current_step.to_sym)
 
-        raise "Step not completed: #{current_step}"
-      end
+      raise "Step not completed: #{current_step}" unless current_index
+      return unless current_index.positive?
 
-      steps.keys[current_index - 1] if current_index.positive?
+      previous = completed[current_index - 1]
+      return previous unless completed_steps[previous] == :skipped
+
+      previous_step(current_step: previous)
     end
 
-    def complete_step!(step)
+    def complete_step!(step, status = :completed)
       step = step.to_sym
-      completed_steps[step] = :completed
+      completed_steps[step] = status
+      return unless status == :completed
+
       completed_steps.keys[completed_steps.keys.index(step) + 1..].each do |completed_step|
         completed_steps[completed_step] = :invalidated if steps[completed_step].invalidate?
+        completed_steps[completed_step] = :skipped if steps[completed_step].skip?
       end
-      step
+
+      next_step = self.next_step(current_step: step, include_skipped: true)
+      while next_step && steps[next_step].skip?
+        complete_step!(next_step, :skipped)
+        next_step = self.next_step(current_step: next_step)
+      end
+
+      clear_changes_information
     end
 
     def completed?(step = nil)
