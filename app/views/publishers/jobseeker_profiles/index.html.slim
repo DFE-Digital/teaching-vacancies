@@ -1,0 +1,19 @@
+- content_for :page_title_prefix, current_organisation.name
+- content_for :skip_links do
+  = govuk_skip_link(href: "#vacancy-results", text: t(".skip_link", heading: t("jobs.dashboard.#{@selected_type}.tab_heading")))
+
+h1 class="govuk-heading-l" role="heading" aria-level="1"
+  = t("publishers.jobseeker_profiles.search_result_heading", count: number_with_delimiter(@jobseeker_profiles.count))
+
+p = t("publishers.jobseeker_profiles.available_to_travel_text")
+
+.govuk-grid-row
+    .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
+
+    .govuk-grid-column-two-thirds-at-desktop
+      p = t("publishers.jobseeker_profiles.sort_result_text")
+      #search-results
+        - if @jobseeker_profiles.any?
+          = render "publishers/jobseeker_profiles/search/results", jobseeker_profiles: @jobseeker_profiles
+
+      = govuk_pagination(pagy: @pagy)

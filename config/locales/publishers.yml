@@ -62,6 +62,14 @@ en:
       heading_html: "%{contact_support_link} if you need to change the instructions about how to apply or write a personal statement."
     job_listing_process_changed_draft_banner:
       heading_html: "You cannot make changes to this draft job listing. %{create_new_link} or %{contact_support_link}."
+    jobseeker_profiles:
+      available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."
+      preferred_role: "Preferred role:"
+      preferred_key_stage: "Preferred key stage:s"
+      preferred_working_patterns: "Preferred working pattern"
+      search_result_heading: "Candidate profiles (%{count})"
+      sort_result_text: "Ordered by most recently updated."
+
     login_keys:
       new:
         notice: >-
