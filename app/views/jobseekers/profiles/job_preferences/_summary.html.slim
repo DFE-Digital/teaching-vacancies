@@ -1,0 +1,59 @@
+ruby:
+  multistep = Jobseekers::JobPreferencesForm.from_record(profile.job_preferences)
+  attributes = {
+    roles: {
+      map_values: ->(value, step) { step.options[value] },
+      join_with: "</br></br>",
+    },
+    phases: {
+      map_values: ->(value, step) { step.options[value] },
+      join_with: ", ",
+    },
+    key_stages: {
+      map_values: ->(value, step) { step.options[value] },
+      join_with: ", ",
+    },
+    subjects: {
+      join_with: ", ",
+      blank: "No subject preference chosen",
+    },
+    working_patterns: {
+      map_values: ->(value, step) { step.options[value] },
+      join_with: ", ",
+    },
+    locations: {
+      if: ->(form) { form.locations.any? },
+      map_values: ->(value, _) { "#{value[:location]} (#{t('jobs.search.number_of_miles', count: value[:radius].to_i)})" },
+      join_with: "</br>",
+    },
+  }
+
+  list = govuk_summary_list do |summary_list|
+    attributes.each do |attribute, options|
+      step_name = multistep.class.delegated_attributes[attribute.to_s]
+      condition = options[:if] || ->(form) { form.completed?(step_name) }
+      next unless condition.call(multistep)
+
+      value = multistep.public_send(attribute)
+      if options[:map_values] || options[:join_with]
+        value = value.map { |elem| options[:map_values].call(elem, multistep.steps[step_name]) } if options[:map_values]
+        value = value.map { |elem| "".html_safe + elem }
+        value = value.join(options[:join_with].html_safe).html_safe
+      end
+
+      summary_list.row do |row|
+        row.key text: t(attribute)
+        row.value text: value.presence || options[:blank]
+        row.action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name))
+      end
+    end
+  end
+
+- if multistep.completed?
+  = list
+- else
+  .govuk-inset-text.govuk-inset-text--incomplete
+    = list
+    p.govuk-body-m.govuk-inset-text--header
+      strong You must complete your job preferences before you turn on your profile.
+    = govuk_link_to "Complete job preferences", jobseekers_job_preferences_step_path(step: multistep.next_step), class: "govuk-button"
