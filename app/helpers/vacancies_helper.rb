@@ -5,6 +5,29 @@ module VacanciesHelper
 
   WORD_EXCEPTIONS = %w[and the of upon].freeze
 
+  def humanize_array(items)
+    humanized_string = ""
+
+    return items[0].humanize if items.length == 1
+
+    items.map do |item|
+      humanized_string.concat("#{item.humanize}, ")
+    end
+
+    humanized_string.chop.chop
+  end
+
+  def location_formatter(items)
+    humanized_string = ""
+
+    items.each do |value|
+      item_string = "#{value['location']} (#{t('jobs.search.number_of_miles', count: value['radius'].to_i)}) "
+      humanized_string.concat(item_string)
+    end
+
+    humanized_string
+  end
+
   def page_title_prefix(step_process, form_object)
     page_heading = t("publishers.vacancies.steps.#{step_process.current_step}")
     create_or_edit = step_process.vacancy.published? ? "edit" : "create"

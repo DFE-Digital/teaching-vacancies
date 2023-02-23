@@ -10,10 +10,32 @@
 
     h2.govuk-heading-m class="govuk-!-padding-bottom-3"
       = t(".job_preferences")
+    dl.govuk-summary-list
+      - if @job_preferences.roles.any?
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key == "Roles"
+          dd.govuk-summary-list__value = humanize_array(@job_preferences.roles)
+      - if @job_preferences.phases.any?
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key == "Education phase"
+          dd.govuk-summary-list__value =  humanize_array(@job_preferences.phases)
+      - if @job_preferences.key_stages.any?
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key == "Key stages"
+          dd.govuk-summary-list__value = humanize_array(@job_preferences.key_stages)
+      - if @job_preferences.working_patterns.any?
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key == "Working pattern"
+          dd.govuk-summary-list__value =  humanize_array(@job_preferences.working_patterns)
+      - if @job_preferences.locations.any?
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key == "Location"
+          dd.govuk-summary-list__value = location_formatter(@job_preferences.locations)
 
-    h2.govuk-heading-m class="govuk-!-padding-bottom-2"
-      = t(".about")
-    p = @profile.about_you
+    - unless @profile.about_you.empty?
+      h2.govuk-heading-m class="govuk-!-padding-bottom-2"
+        = t(".about")
+      p = @profile.about_you
 
     h2.govuk-heading-m class="govuk-!-padding-bottom-3"
       = t(".contact_details")
@@ -21,17 +43,19 @@
       .govuk-summary-list__row
         dt.govuk-summary-list__key == t(".email_address")
         dd.govuk-summary-list__value = current_jobseeker.email
-      .govuk-summary-list__row
-        dt.govuk-summary-list__key == t(".phone_number")
-        dd.govuk-summary-list__value = @personal_details.phone_number
+      - unless @personal_details.phone_number.empty?
+        .govuk-summary-list__row
+          dt.govuk-summary-list__key == t(".phone_number")
+          dd.govuk-summary-list__value = @personal_details.phone_number
 
-    h2.govuk-heading-m = t(".work_history")
-    - @profile.employments.each do |employment|
-      h3.govuk-heading-s class="govuk-!-padding-bottom-3"
-        = employment.organisation
-        p class="govuk-!-margin-bottom-0" = employment.job_title
-        p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
-        hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
+    - if @profile.employments.any?
+      h2.govuk-heading-m = t(".work_history")
+      - @profile.employments.order(:started_on).each do |employment|
+        h3.govuk-heading-s class="govuk-!-padding-bottom-3"
+          = employment.organisation
+          p class="govuk-!-margin-bottom-0" = employment.job_title
+          p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
+          hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
 
-    h2.govuk-heading-m class="govuk-!-padding-bottom-3"
-      = t(".qualifications")
+      h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+        = t(".qualifications")
