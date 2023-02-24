@@ -19,7 +19,7 @@ const consoleLogger = {
 /* eslint-enable no-console */
 
 const sentryLogger = {
-  log: noop,
+  log: (msg = '[Sentry captureMessage] log unknown message') => Sentry.captureMessage(msg),
   info: (msg = '[Sentry captureMessage] info unknown message') => Sentry.captureMessage(msg),
   warn: (msg = '[Sentry captureMessage] warn unknown message') => Sentry.captureMessage(msg),
   error: (error) => Sentry.captureException(error),
