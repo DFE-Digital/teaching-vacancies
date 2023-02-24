@@ -1,29 +1,35 @@
-class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseController
+class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesController
   include Jobseekers::QualificationFormConcerns
 
-  helper_method :back_path, :category, :form, :job_application, :qualification, :secondary?, :qualification_form_param_key
+  helper_method :category, :form, :jobseeker_profile, :qualification, :secondary?, :qualification_form_param_key
 
   def submit_category
     if form.valid?
-      redirect_to new_jobseekers_job_application_qualification_path(qualification_params)
+      redirect_to new_jobseekers_profile_qualification_path(qualification_params)
     else
       render :select_category
     end
   end
 
+  def new; end
+
   def create
     if form.valid?
-      job_application.qualifications.create(qualification_params)
-      redirect_to back_path
+      profile.qualifications.create(qualification_params)
+      redirect_to review_jobseekers_profile_qualifications_path
     else
       render :new
     end
   end
 
+  def edit; end
+
+  def review; end
+
   def update
     if form.valid?
       qualification.update(qualification_params)
-      redirect_to back_path
+      redirect_to review_jobseekers_profile_qualifications_path
     else
       render :edit
     end
@@ -31,8 +37,10 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
 
   def destroy
     qualification.destroy
-    redirect_to back_path, success: t(".success")
+    redirect_to review_jobseekers_profile_qualifications_path, success: t(".success")
   end
+
+  def confirm_destroy; end
 
   private
 
@@ -44,7 +52,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     case action_name
     when "new"
       { category: category }
-    when "select_category"
+    when "select_category", "confirm_destroy"
       {}
     when "edit"
       qualification
@@ -57,7 +65,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
 
   def qualification_params
     case action_name
-    when "new", "select_category", "submit_category"
+    when "new", "select_category", "submit_category", "confirm_destroy"
       (params[qualification_form_param_key(category)] || params).permit(:category)
     when "create", "edit", "update"
       params.require(qualification_form_param_key(category))
@@ -66,23 +74,15 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def category
-    @category ||= action_name.in?(%w[edit update]) ? qualification.category : category_param
+    @category ||= action_name.in?(%w[edit update confirm_destroy]) ? qualification.category : category_param
   end
 
   def category_param
     params.permit(:category)[:category]
   end
 
-  def back_path
-    @back_path ||= jobseekers_job_application_build_path(job_application, :qualifications)
-  end
-
-  def job_application
-    @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
-  end
-
   def qualification
-    @qualification ||= job_application.qualifications.find(params[:id])
+    @qualification ||= profile.qualifications.find(params[:id] || params[:qualification_id])
   end
 
   def secondary?

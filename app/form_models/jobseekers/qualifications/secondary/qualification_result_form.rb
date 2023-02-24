@@ -1,4 +1,4 @@
-class Jobseekers::JobApplication::Details::Qualifications::Secondary::QualificationResultForm
+class Jobseekers::Qualifications::Secondary::QualificationResultForm
   include ActiveModel::Model
 
   attr_accessor :id, :subject, :grade

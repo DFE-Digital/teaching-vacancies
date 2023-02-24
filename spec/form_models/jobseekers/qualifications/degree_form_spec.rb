@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Jobseekers::JobApplication::Details::Qualifications::DegreeForm, type: :model do
+RSpec.describe Jobseekers::Qualifications::DegreeForm, type: :model do
   subject { described_class.new(params) }
   let(:params) { {} }
 

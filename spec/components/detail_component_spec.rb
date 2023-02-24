@@ -22,7 +22,7 @@ RSpec.describe DetailComponent, type: :component do
 
     it "renders the detail without a title" do
       expect(page).to have_css("div", class: "detail-component") do |detail|
-        expect(detail).not_to have_css("div", class: "govuk-summary-card__title-wrapper")
+        expect(detail).not_to have_css("div", class: "govuk-summary-card__title")
       end
     end
   end
@@ -36,7 +36,7 @@ RSpec.describe DetailComponent, type: :component do
 
     it "renders the detail without actions" do
       expect(page).to have_css("div", class: "detail-component") do |detail|
-        expect(detail).not_to have_css("div", class: "govuk-summary-card__actions")
+        expect(detail).not_to have_css("div", class: "govuk-summary-card__action")
       end
     end
   end
@@ -45,7 +45,7 @@ RSpec.describe DetailComponent, type: :component do
     subject! do
       render_inline(described_class.new(title: title)) do |detail|
         detail.body { tag.p "Hello!" }
-        detail.actions { tag.a "Click this", href: "/test-url" }
+        detail.action tag.a "Click this"
       end
     end
 
@@ -59,8 +59,8 @@ RSpec.describe DetailComponent, type: :component do
 
     it "renders the detail with actions" do
       expect(page).to have_css("div", class: "detail-component") do |detail|
-        expect(detail).to have_css("div", class: "govuk-summary-card__actions") do |actions|
-          expect(actions).to have_css("a[href='/test-url']", text: "Click this")
+        expect(detail).to have_css("ul", class: "govuk-summary-card__actions") do |actions|
+          expect(actions).to have_css("a", text: "Click this")
         end
       end
     end

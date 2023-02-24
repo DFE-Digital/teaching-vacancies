@@ -1,5 +1,5 @@
-module Jobseekers::JobApplication::Details::Qualifications::Secondary
-  class CommonForm < ::Jobseekers::JobApplication::Details::Qualifications::QualificationForm
+module Jobseekers::Qualifications::Secondary
+  class CommonForm < ::Jobseekers::Qualifications::QualificationForm
     MAXIMUM_NUMBER_OF_RESULTS = 6
 
     attr_accessor :qualification_results

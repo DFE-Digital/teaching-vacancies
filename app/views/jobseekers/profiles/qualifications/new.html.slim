@@ -5,10 +5,11 @@
     span.govuk-caption-l = t(".caption")
     h1.govuk-heading-xl = t(".heading.#{category}")
 
-    = form_for form, url: jobseekers_job_application_qualifications_path(job_application, category: category), method: :post do |f|
+    = form_for form, url: jobseekers_profile_qualifications_path(@profile, category: category), method: :post do |f|
       = f.govuk_error_summary link_base_errors_to: :subject
 
       = render "jobseekers/qualifications/fields", f: f
 
       = f.govuk_submit t("buttons.save_qualification.#{secondary? ? 'other' : 'one'}")
-      = govuk_button_link_to t("buttons.cancel"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-button--secondary govuk-!-margin-left-3"
+
+    = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

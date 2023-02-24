@@ -29,11 +29,11 @@ RSpec.describe "Job applications qualifications" do
 
   describe "POST #submit_category" do
     let(:params) do
-      { jobseekers_job_application_details_qualifications_category_form: { category: "other" } }
+      { jobseekers_qualifications_category_form: { category: "other" } }
     end
 
     context "when the form is valid" do
-      before { allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::CategoryForm).to receive(:valid?).and_return(true) }
+      before { allow_any_instance_of(Jobseekers::Qualifications::CategoryForm).to receive(:valid?).and_return(true) }
 
       it "does not create a qualification and renders the next step" do
         expect { post submit_category_jobseekers_job_application_qualifications_path(job_application), params: params }
@@ -44,7 +44,7 @@ RSpec.describe "Job applications qualifications" do
     end
 
     context "when the form is invalid" do
-      before { allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::CategoryForm).to receive(:valid?).and_return(false) }
+      before { allow_any_instance_of(Jobseekers::Qualifications::CategoryForm).to receive(:valid?).and_return(false) }
 
       it "does not create a qualification and renders the select_category page" do
         expect { post submit_category_jobseekers_job_application_qualifications_path(job_application), params: params }
@@ -94,7 +94,7 @@ RSpec.describe "Job applications qualifications" do
   describe "POST #create" do
     context "when creating a non-secondary qualification" do
       let(:params) do
-        { category: "undergraduate", jobseekers_job_application_details_qualifications_degree_form: { subject: "Scaring" } }
+        { category: "undergraduate", jobseekers_qualifications_degree_form: { subject: "Scaring" } }
       end
 
       context "when the job application status is not draft" do
@@ -108,7 +108,7 @@ RSpec.describe "Job applications qualifications" do
       end
 
       context "when the form is valid" do
-        before { allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::DegreeForm).to receive(:valid?).and_return(true) }
+        before { allow_any_instance_of(Jobseekers::Qualifications::DegreeForm).to receive(:valid?).and_return(true) }
 
         it "creates the qualification and redirects to the qualification build step" do
           expect { post jobseekers_job_application_qualifications_path(job_application), params: params }
@@ -131,7 +131,7 @@ RSpec.describe "Job applications qualifications" do
     context "when creating a secondary qualification" do
       let(:params) do
         { category: "gcse",
-          jobseekers_job_application_details_qualifications_secondary_common_form: {
+          jobseekers_qualifications_secondary_common_form: {
             category: "gcse",
             qualification_results_attributes: {
               "0": {
@@ -153,8 +153,8 @@ RSpec.describe "Job applications qualifications" do
 
       context "when the parent and nested forms are valid" do
         before do
-          allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::Secondary::CommonForm).to receive(:valid?).and_return(true)
-          allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::Secondary::QualificationResultForm).to receive(:valid?).and_return(true)
+          allow_any_instance_of(Jobseekers::Qualifications::Secondary::CommonForm).to receive(:valid?).and_return(true)
+          allow_any_instance_of(Jobseekers::Qualifications::Secondary::QualificationResultForm).to receive(:valid?).and_return(true)
         end
 
         it "creates the qualification with its results, and redirects to the qualification build step" do
@@ -192,12 +192,12 @@ RSpec.describe "Job applications qualifications" do
       end
       let(:original_finished_studying) { "true" }
       let(:params) do
-        { jobseekers_job_application_details_qualifications_degree_form: { subject: "Spooking", finished_studying: new_finished_studying } }
+        { jobseekers_qualifications_degree_form: { subject: "Spooking", finished_studying: new_finished_studying } }
       end
       let(:new_finished_studying) { "true" }
 
       context "when the form is valid" do
-        before { allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::DegreeForm).to receive(:valid?).and_return(true) }
+        before { allow_any_instance_of(Jobseekers::Qualifications::DegreeForm).to receive(:valid?).and_return(true) }
 
         it "updates the qualification and redirects to the qualification build step" do
           expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: params }
@@ -258,7 +258,7 @@ RSpec.describe "Job applications qualifications" do
       let!(:result1) { qualification.qualification_results.second }
       let(:params) do
         { category: "a_level",
-          jobseekers_job_application_details_qualifications_secondary_common_form: {
+          jobseekers_qualifications_secondary_common_form: {
             category: "a_level",
             year: "2018",
             qualification_results_attributes: {
@@ -283,8 +283,8 @@ RSpec.describe "Job applications qualifications" do
 
       context "when the parent and nested forms are valid" do
         before do
-          allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::Secondary::CommonForm).to receive(:valid?).and_return(true)
-          allow_any_instance_of(Jobseekers::JobApplication::Details::Qualifications::Secondary::QualificationResultForm).to receive(:valid?).and_return(true)
+          allow_any_instance_of(Jobseekers::Qualifications::Secondary::CommonForm).to receive(:valid?).and_return(true)
+          allow_any_instance_of(Jobseekers::Qualifications::Secondary::QualificationResultForm).to receive(:valid?).and_return(true)
         end
 
         it "updates the qualification and its results, and redirects to the qualification build step" do

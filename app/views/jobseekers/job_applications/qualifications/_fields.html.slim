@@ -1,9 +1,0 @@
-= f.hidden_field :category
-
-- case category
-- when "gcse", "as_level", "a_level", "other_secondary"
-  = render "jobseekers/job_applications/qualifications/fields/secondary_school", f: f
-- when "undergraduate", "postgraduate"
-  = render "jobseekers/job_applications/qualifications/fields/degree", f: f
-- when "other"
-  = render "jobseekers/job_applications/qualifications/fields/other", f: f
