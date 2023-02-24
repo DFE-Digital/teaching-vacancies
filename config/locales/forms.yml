@@ -816,7 +816,7 @@ en:
         <<: *jobseekers_qualifications_shared_legends
       jobseekers_qualifications_other_form:
         <<: *jobseekers_qualifications_shared_legends
-      jobseekers_qualified_teacher_status_form:
+      jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
 
       jobseekers_profile_employment_form:
