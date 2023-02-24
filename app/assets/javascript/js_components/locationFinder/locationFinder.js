@@ -36,7 +36,7 @@ const LocationFinder = class extends Controller {
         postcode ? this.onSuccess(postcode) : this.onFailure();
       }).catch((error) => {
         this.onFailure();
-        logger.info(`${LOGGING_MESSAGE}: ${error.message}`);
+        logger.log(`${LOGGING_MESSAGE}: ${error.message}`);
       });
     });
   }
