@@ -28,6 +28,8 @@ const CookiesBannerController = class extends Controller {
       .catch((error) => {
         if (error.response && (error.response.status !== 200 || error.response.status !== 204)) {
           logger.warn(error.message);
+        } else {
+          logger.log(error.message);
         }
       });
   }
