@@ -8,12 +8,17 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
 p = t("publishers.jobseeker_profiles.available_to_travel_text")
 
 .govuk-grid-row
-    .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
+  .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
+    = form_for GOVUKDesignSystemFormBuilder, as: "", url: jobs_path, html: { method: "get" } do |f|
+      = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
+    options: { heading_text: "Filter", remove_filter_links: false },
+    html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
+        / - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:education_phase, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("organisations.filters.education_phase") }, hint: nil)
 
-    .govuk-grid-column-two-thirds-at-desktop
-      p = t("publishers.jobseeker_profiles.sort_result_text")
-      #search-results
-        - if @jobseeker_profiles.any?
-          = render "publishers/jobseeker_profiles/search/results", jobseeker_profiles: @jobseeker_profiles
+  .govuk-grid-column-two-thirds-at-desktop
+    p = t("publishers.jobseeker_profiles.sort_result_text")
+    #search-results
+      - if @jobseeker_profiles.any?
+        = render "publishers/jobseeker_profiles/search/results", jobseeker_profiles: @jobseeker_profiles
 
-      = govuk_pagination(pagy: @pagy)
+    = govuk_pagination(pagy: @pagy)

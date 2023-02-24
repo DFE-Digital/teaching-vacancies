@@ -1,4 +1,8 @@
 .govuk-summary-list {
+  &__row--no-actions:after {
+    display: none;
+  }
+
   &--no-wrap-actions {
     .govuk-summary-list__actions-list {
       white-space: nowrap;
