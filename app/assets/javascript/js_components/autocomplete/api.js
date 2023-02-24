@@ -7,7 +7,9 @@ export const getLocationSuggestions = ({ query, populateResults }) => axios.get(
   .then((data) => data.suggestions)
   .then(populateResults)
   .catch((error) => {
-    logger.warn(error.message);
+    if (error.response.status !== 200 || error.response.status !== 204) {
+      logger.warn(error.message);
+    }
   });
 
 const api = {

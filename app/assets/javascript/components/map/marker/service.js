@@ -15,7 +15,9 @@ const Service = class {
     })
       .then((response) => response.data)
       .catch((error) => {
-        logger.warn(error.message);
+        if (error.response.status !== 200 || error.response.status !== 204) {
+          logger.warn(error.message);
+        }
       });
 
     return request;
