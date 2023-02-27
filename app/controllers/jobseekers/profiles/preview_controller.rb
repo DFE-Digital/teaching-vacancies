@@ -9,6 +9,6 @@ class Jobseekers::Profiles::PreviewController < Jobseekers::ProfilesController
   private
 
   def jobseeker_profile
-    JobseekerProfile.where(jobseeker_id: current_jobseeker.id).first
+    JobseekerProfile.find_by!(jobseeker: current_jobseeker)
   end
 end
