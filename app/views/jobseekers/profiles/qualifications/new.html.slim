@@ -1,0 +1,15 @@
+- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = t(".caption")
+    h1.govuk-heading-xl = t(".heading.#{category}")
+
+    = form_for form, url: jobseekers_profile_qualifications_path(@profile, category: category), method: :post do |f|
+      = f.govuk_error_summary link_base_errors_to: :subject
+
+      = render "jobseekers/qualifications/fields", f: f
+
+      = f.govuk_submit t("buttons.save_qualification.#{secondary? ? 'other' : 'one'}")
+
+    = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

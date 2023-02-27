@@ -1,4 +1,4 @@
-class Jobseekers::JobApplication::Details::Qualifications::DegreeForm < Jobseekers::JobApplication::Details::Qualifications::QualificationForm
+class Jobseekers::Qualifications::DegreeForm < Jobseekers::Qualifications::QualificationForm
   attr_accessor :subject, :grade
 
   validates :finished_studying, :institution, :subject, presence: true

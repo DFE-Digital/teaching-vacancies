@@ -104,7 +104,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       it "allows jobseekers to edit the qualification and its results" do
         visit jobseekers_job_application_build_path(job_application, :qualifications)
         click_on I18n.t("buttons.change")
-        fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
+        fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
         empty_second_qualification_result
         fill_in "School", with: "St Nicholas School"
         expect { click_on I18n.t("buttons.save_qualification.one") }.to change { qualification.qualification_results.count }.by(-1)
@@ -129,7 +129,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
       click_on "Add another subject"
       fill_in "Subject 2", with: "A second subject"
-      fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "B"
+      fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "B"
       click_on "Save qualifications"
 
       expect(page).to have_css(".detail-component", count: 1)
@@ -139,7 +139,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
   end
 
   def empty_second_qualification_result
-    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: ""
-    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: ""
+    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: ""
+    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: ""
   end
 end

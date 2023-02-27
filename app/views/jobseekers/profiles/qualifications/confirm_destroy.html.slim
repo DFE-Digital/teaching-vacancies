@@ -1,0 +1,48 @@
+- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".other.page_title"))
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+
+    - if secondary?
+      span.govuk-caption-l = t(".secondary.caption")
+      h1.govuk-heading-l = t(".secondary.page_title")
+    - else
+      span.govuk-caption-l = t(".other.caption")
+      h1.govuk-heading-l = t(".other.page_title")
+
+    = form_for form, url: jobseekers_profile_qualification_path(params[:qualification_id]), method: :delete do |f|
+      = govuk_summary_list do |summary_list|
+        - if secondary?
+          - summary_list.row do |row|
+            - row.key text: "Type"
+            - row.value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
+          - summary_list.row do |row|
+            - row.key text: "Institution"
+            - row.value text: qualification.institution
+          - summary_list.row do |row|
+            - row.key text: "Year awarded"
+            - row.value text: qualification.year
+          - summary_list.row do |row|
+            - row.key text: t("jobseekers.qualifications.subjects_and_grades")
+            - row.value text: safe_join(qualification.qualification_results.map { |res| tag.div("#{res.subject} – #{res.grade}", class: "govuk-body govuk-!-margin-bottom-1") })
+        - else
+          - summary_list.row do |row|
+            - row.key text: "Type"
+            - row.value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
+          - summary_list.row do |row|
+            - row.key text: "Subject"
+            - row.value text: qualification.subject
+          - summary_list.row do |row|
+            - row.key text: "Grade"
+            - row.value text: qualification.grade
+
+      - if secondary?
+        = f.govuk_submit t(".secondary.caption")
+      - else
+        = f.govuk_submit t(".other.caption")
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

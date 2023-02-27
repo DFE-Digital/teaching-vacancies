@@ -1,4 +1,4 @@
-class Jobseekers::JobApplication::Details::Qualifications::QualificationForm
+class Jobseekers::Qualifications::QualificationForm
   include ActiveModel::Model
 
   attr_accessor :category, :finished_studying, :finished_studying_details, :name, :institution, :year
