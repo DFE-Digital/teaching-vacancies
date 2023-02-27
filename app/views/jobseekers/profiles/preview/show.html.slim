@@ -57,6 +57,6 @@
           p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
           hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
 
-    - if @profile.qualifications.any?  
+    - if @profile.qualifications.any?
       h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".qualifications")
       = render "jobseekers/qualifications/preview_qualifications", qualifications: @profile.qualifications
