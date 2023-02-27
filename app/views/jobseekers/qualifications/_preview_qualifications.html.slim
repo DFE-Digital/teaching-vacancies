@@ -5,7 +5,7 @@
       - if qualification.finished_studying?
         p class="govuk-body govuk-!-margin-bottom-0" = "#{qualification.subject} (#{qualification.grade})"
       - if qualification.secondary?
-        - qualification.qualification_results.each do | res |
+        - qualification.qualification_results.each do |res|
           p class="govuk-!-padding-bottom-0" = tag.div("#{res.subject} (#{res.grade})", class: "govuk-body govuk-!-margin-bottom-0")
       - unless qualification.finished_studying.nil?
         p class="govuk-!-margin-top-0" = tag.div(qualification.finished_studying_details.presence, class: "govuk-body")
