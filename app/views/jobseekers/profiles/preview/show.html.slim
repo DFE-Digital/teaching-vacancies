@@ -18,7 +18,7 @@
       - if @job_preferences.phases.any?
         .govuk-summary-list__row
           dt.govuk-summary-list__key == "Education phase"
-          dd.govuk-summary-list__value =  humanize_array(@job_preferences.phases)
+          dd.govuk-summary-list__value = humanize_array(@job_preferences.phases)
       - if @job_preferences.key_stages.any?
         .govuk-summary-list__row
           dt.govuk-summary-list__key == "Key stages"
@@ -26,7 +26,7 @@
       - if @job_preferences.working_patterns.any?
         .govuk-summary-list__row
           dt.govuk-summary-list__key == "Working pattern"
-          dd.govuk-summary-list__value =  humanize_array(@job_preferences.working_patterns)
+          dd.govuk-summary-list__value = humanize_array(@job_preferences.working_patterns)
       - if @job_preferences.locations.any?
         .govuk-summary-list__row
           dt.govuk-summary-list__key == "Location"
@@ -57,5 +57,6 @@
           p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
           hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
 
-      h2.govuk-heading-m class="govuk-!-padding-bottom-3"
-        = t(".qualifications")
+    - if @profile.qualifications.any?  
+      h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".qualifications")
+      = render "jobseekers/qualifications/preview_qualifications", qualifications: @profile.qualifications

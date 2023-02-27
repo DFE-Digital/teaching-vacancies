@@ -1,0 +1,12 @@
+- qualifications_sort_and_group(qualifications).each_value do |qualification_group|
+  - qualification_group.each do |qualification|
+    h3.govuk-heading-s class="govuk-!-padding-bottom-0"
+      = qualification.category.humanize
+      - if qualification.finished_studying == true
+        p class="govuk-body govuk-!-margin-bottom-0" = "#{qualification.subject} (#{qualification.grade})"
+      - if qualification.secondary?
+        p class="govuk-!-padding-bottom-0" = safe_join(qualification.qualification_results.map { |res| tag.div("#{res.subject} (#{res.grade})", class: "govuk-body govuk-!-margin-bottom-0") })
+      - unless qualification.finished_studying.nil?
+        p class="govuk-!-margin-top-0" = safe_join([tag.div(qualification.finished_studying_details.presence, class: "govuk-body")])
+      p.govuk-hint = qualification.year
+      hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
