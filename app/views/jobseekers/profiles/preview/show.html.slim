@@ -13,23 +13,23 @@
     dl.govuk-summary-list
       - if @job_preferences.roles.any?
         .govuk-summary-list__row
-          dt.govuk-summary-list__key == "Roles"
+          dt.govuk-summary-list__key == t(".roles")
           dd.govuk-summary-list__value = humanize_array(@job_preferences.roles)
       - if @job_preferences.phases.any?
         .govuk-summary-list__row
-          dt.govuk-summary-list__key == "Education phase"
+          dt.govuk-summary-list__key == t(".education_phase")
           dd.govuk-summary-list__value = humanize_array(@job_preferences.phases)
       - if @job_preferences.key_stages.any?
         .govuk-summary-list__row
-          dt.govuk-summary-list__key == "Key stages"
+          dt.govuk-summary-list__key == t(".key_stages")
           dd.govuk-summary-list__value = humanize_array(@job_preferences.key_stages)
       - if @job_preferences.working_patterns.any?
         .govuk-summary-list__row
-          dt.govuk-summary-list__key == "Working pattern"
+          dt.govuk-summary-list__key == t(".working_patten")
           dd.govuk-summary-list__value = humanize_array(@job_preferences.working_patterns)
       - if @job_preferences.locations.any?
         .govuk-summary-list__row
-          dt.govuk-summary-list__key == "Location"
+          dt.govuk-summary-list__key == t(".location")
           dd.govuk-summary-list__value = location_formatter(@job_preferences.locations)
 
     - unless @profile.about_you.empty?
