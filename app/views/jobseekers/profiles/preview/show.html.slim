@@ -5,32 +5,40 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = t(".page_title")
-    p class="govuk-!-margin-bottom-3" = "QTS awarded in #{@profile.qualified_teacher_status_year}."
+    - unless @personal_details.nil?
+      h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = "#{@personal_details.first_name} #{@personal_details.last_name} "
+    - case @profile.qualified_teacher_status
+      - when "on_track"
+        p class="govuk-!-margin-bottom-3" = "On track to receive QTS"
+      - when "yes"
+        p class="govuk-!-margin-bottom-3" = "QTS awarded in #{@profile.qualified_teacher_status_year}."
+      - when "no"
+        p class="govuk-!-margin-bottom-3" = "Does not have QTS"
 
-    h2.govuk-heading-m class="govuk-!-margin-bottom-5"
-      = t(".job_preferences")
-      = govuk_summary_list do |summary_list|
-        - if @job_preferences.roles.any?
-          - summary_list.row do |row|
-            - row.key text: t(".roles")
-            - row.value text: humanize_array(@job_preferences.roles)
-        - if @job_preferences.phases.any?
-          - summary_list.row do |row|
-            - row.key text: t(".education_phase")
-            - row.value text: humanize_array(@job_preferences.phases)
-        - if @job_preferences.key_stages.any?
-          - summary_list.row do |row|
-            - row.key text: t(".key_stages")
-            - row.value text: humanize_array(@job_preferences.key_stages)
-        - if @job_preferences.working_patterns.any?
-          - summary_list.row do |row|
-            - row.key text: t(".working_pattern")
-            - row.value text: humanize_array(@job_preferences.working_patterns)
-        - if @job_preferences.locations.any?
-          - summary_list.row do |row|
-            - row.key text: t(".location")
-            - row.value text: location_formatter(@job_preferences.locations)
+    - unless @job_preferences.nil?
+      h2.govuk-heading-m class="govuk-!-margin-bottom-5"
+        = t(".job_preferences")
+        = govuk_summary_list do |summary_list|
+          - if @job_preferences.roles.any?
+            - summary_list.row do |row|
+              - row.key text: t(".roles")
+              - row.value text: humanize_array(@job_preferences.roles)
+          - if @job_preferences.phases.any?
+            - summary_list.row do |row|
+              - row.key text: t(".education_phase")
+              - row.value text: humanize_array(@job_preferences.phases)
+          - if @job_preferences.key_stages.any?
+            - summary_list.row do |row|
+              - row.key text: t(".key_stages")
+              - row.value text: humanize_array(@job_preferences.key_stages)
+          - if @job_preferences.working_patterns.any?
+            - summary_list.row do |row|
+              - row.key text: t(".working_pattern")
+              - row.value text: humanize_array(@job_preferences.working_patterns)
+          - if @job_preferences.locations.any?
+            - summary_list.row do |row|
+              - row.key text: t(".location")
+              - row.value text: location_formatter(@job_preferences.locations)
 
     - if @profile.about_you.present?
       h2.govuk-heading-m class="govuk-!-padding-bottom-2"
@@ -43,7 +51,7 @@
       .govuk-summary-list__row
         dt.govuk-summary-list__key == t(".email_address")
         dd.govuk-summary-list__value = current_jobseeker.email
-      - unless @personal_details.phone_number.empty?
+      - unless @personal_details.nil? || @personal_details.phone_number.nil?
         .govuk-summary-list__row
           dt.govuk-summary-list__key == t(".phone_number")
           dd.govuk-summary-list__value = @personal_details.phone_number
