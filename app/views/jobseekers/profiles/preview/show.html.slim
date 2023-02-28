@@ -7,10 +7,12 @@
   .govuk-grid-column-two-thirds
     - unless @personal_details.nil?
       h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = "#{@personal_details.first_name} #{@personal_details.last_name} "
-    - if @profile.qualified_teacher_status_year.present?
+    - if @profile.qualified_teacher_status == "on_track"
+      p class="govuk-!-margin-bottom-3" = "On track to receive QTS"
+    - elsif @profile.qualified_teacher_status == "yes"
       p class="govuk-!-margin-bottom-3" = "QTS awarded in #{@profile.qualified_teacher_status_year}."
-    - else
-      p class="govuk-!-margin-bottom-3" = @profile.qualified_teacher_status == "no" ? "Does not have QTS" : "On track to receive QTS"
+    - elsif @profile.qualified_teacher_status == "no"
+      p class="govuk-!-margin-bottom-3" = "Does not have QTS"
 
     - unless @job_preferences.nil?
       h2.govuk-heading-m class="govuk-!-margin-bottom-5"
