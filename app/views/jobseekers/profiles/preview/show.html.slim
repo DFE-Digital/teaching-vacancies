@@ -48,7 +48,7 @@
       .govuk-summary-list__row
         dt.govuk-summary-list__key == t(".email_address")
         dd.govuk-summary-list__value = current_jobseeker.email
-      - unless @personal_details.nil? || @personal_details.phone_number.empty?
+      - unless @personal_details.nil? || @personal_details.phone_number.nil?
         .govuk-summary-list__row
           dt.govuk-summary-list__key == t(".phone_number")
           dd.govuk-summary-list__value = @personal_details.phone_number
