@@ -69,6 +69,23 @@ en:
       preferred_working_patterns: "Preferred working pattern"
       search_result_heading: "Candidate profiles (%{count})"
       sort_result_text: "Ordered by most recently updated."
+      filters:
+        preferred_role: "Preferred Role"
+        preferred_role_options:
+          teacher: "Teacher"
+          senior_leader: "Headteacher, deputy or assistant headteacher"
+          middle_leader: "Head of year, department, curriculum or phase"
+          teaching_assistant: "Teaching Assistant"
+          higher_level_teaching_assistant: "HLTA (higher level teaching assistant)"
+          education_support: "Learning support, cover supervisor or tutor"
+          sendco: "SENDCo (special educational needs and disabilities coordinator)"
+        qualified_teacher_status: "Qualified teaching status (QTS)"
+        qts_options:
+          none: "Does not have QTS"
+          on_track: "On track to receive QTS"
+          older_than_two: "Awarded QTS within the last 2 years"
+          older_than_three: "Awarded QTS 3 or more years ago"
+
 
     login_keys:
       new:
