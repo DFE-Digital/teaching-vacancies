@@ -5,8 +5,11 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = t(".page_title")
-    p class="govuk-!-margin-bottom-3" = "QTS awarded in #{@profile.qualified_teacher_status_year}."
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = "#{@personal_details.first_name} #{@personal_details.last_name} "
+    - if @profile.qualified_teacher_status_year.present?
+      p class="govuk-!-margin-bottom-3" = "QTS awarded in #{@profile.qualified_teacher_status_year}."
+    - else
+      p class="govuk-!-margin-bottom-3" = @profile.qualified_teacher_status == "no" ? "Does not have QTS" : "On track to receive QTS"
 
     h2.govuk-heading-m class="govuk-!-margin-bottom-5"
       = t(".job_preferences")
