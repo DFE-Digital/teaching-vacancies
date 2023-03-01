@@ -28,7 +28,7 @@ module Jobseekers::Profiles
     def update_location
       location_form.assign_attributes(params.require(:job_preferences_location).to_unsafe_hash)
       if location_form.valid?
-        form.update_location(location_id, location_form.attributes)
+        form.update_location(params[:id], location_form.attributes)
         form.complete_step!(:locations)
         store_form!
         redirect_to action: :edit, step: :locations
@@ -40,7 +40,7 @@ module Jobseekers::Profiles
 
     def delete_location
       setup_location_view
-      @location = form.locations[params[:id].to_i - 1]
+      @location = form.locations[params[:id]]
       @last_location = form.locations.one?
       @delete_form = Jobseekers::JobPreferencesForm::DeleteLocationForm.new
     end
@@ -51,7 +51,7 @@ module Jobseekers::Profiles
       render "delete_location", status: :unprocessable_entity and return unless form.valid?
 
       if @delete_form.action == "delete"
-        form.locations.delete @location
+        form.locations.delete params[:id]
         ApplicationRecord.transaction do
           if form.locations.empty?
             form.complete_step!(:locations, :invalidated)
@@ -80,11 +80,19 @@ module Jobseekers::Profiles
     end
 
     def store_form!
-      job_preference_record.update!(form.attributes.without("add_location"))
+      ApplicationRecord.transaction do
+        job_preference_record.update!(form.attributes.without("add_location", "locations"))
+        job_preference_record.locations.where.not(id: form.locations.keys).destroy_all
+        form.locations.each do |id, attrs|
+          loc = job_preference_record.locations.find_or_initialize_by(id: id)
+          loc.assign_attributes(name: attrs[:location], radius: attrs[:radius])
+          loc.save!
+        end
+      end
     end
 
-    def attributes_from_store
-      job_preference_record.attributes.slice(*self.class.multistep_form.attribute_names)
+    def form
+      @form ||= self.class.multistep_form.from_record(job_preference_record)
     end
 
     def job_preference_record
@@ -95,14 +103,8 @@ module Jobseekers::Profiles
       redirect_to action: :edit_location if form.locations.empty?
     end
 
-    def location_id
-      return @location_id if defined? @location_id
-
-      @location_id = params[:id].to_i - 1 if params[:id]
-    end
-
     helper_method def location_form
-      @location_form ||= form.build_location_form(location_id)
+      @location_form ||= form.build_location_form(params[:id])
     end
 
     helper_method def profile

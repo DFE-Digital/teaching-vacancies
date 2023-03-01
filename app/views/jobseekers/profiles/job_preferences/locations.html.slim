@@ -12,12 +12,12 @@
         | Locations
 
       = govuk_summary_list(classes: %w[govuk-summary-list--no-wrap-actions]) do |summary_list|
-        = @form.locations.each.with_index do |location, index|
+        = @form.locations.each.with_index do |(id, location), index|
           - summary_list.row do |row|
             - row.key text: "Location #{index + 1}"
             - row.value text: "#{location[:location]} (#{t 'jobs.search.number_of_miles', count: location[:radius].to_i})"
-            - row.action(text: t("buttons.change"), href: { action: :update_location, id: index + 1 })
-            - row.action(text: t("buttons.delete"), href: { action: :delete_location, id: index + 1 })
+            - row.action(text: t("buttons.change"), href: { action: :update_location, id: id })
+            - row.action(text: t("buttons.delete"), href: { action: :delete_location, id: id })
 
       = f.hidden_field :add_location, value: ""
       = f.govuk_radio_buttons_fieldset(:add_location, legend: { size: "m", text: "Do you want to add another location?" }) do
