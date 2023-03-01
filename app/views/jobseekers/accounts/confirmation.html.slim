@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_panel title_text: t(".page_title")
+
+    p.govuk-body
+      = t(".apply_for_jobs", link_text: govuk_link_to(t(".apply_for_jobs_link_text"), jobs_path)).html_safe
+
+    h2.govuk-heading-m = t(".create_profile.heading")
+    p.govuk-body = t(".create_profile.lead_in")
+    ul.govuk-list.govuk-list--bullet
+      li = t(".create_profile.share_your_qualifications")
+      li = t(".create_profile.specify_jobs")
+    p.govuk-body = t(".create_profile.functionality_guidance")
+
+    = govuk_button_link_to t(".create_profile.heading"), jobseekers_profile_path

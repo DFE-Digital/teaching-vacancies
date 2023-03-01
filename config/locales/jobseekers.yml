@@ -12,6 +12,16 @@ en:
           email: Email address
           password: Account password
           password_placeholder: "**************"
+      confirmation:
+        page_title: Account created
+        apply_for_jobs_link_text: search and apply for teaching jobs
+        apply_for_jobs: You can %{link_text}.
+        create_profile:
+          functionality_guidance: When you turn on your profile, schools can contact you about relevant jobs.
+          heading: Create a profile
+          lead_in: "With a profile, you can:"
+          share_your_qualifications: share your qualifications and experience with schools
+          specify_jobs: specify the types of teaching jobs you’re looking for
     account_feedbacks:
       create:
         success: Thank you for your feedback
