@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_27_131731) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_02_122530) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -444,6 +444,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_131731) do
     t.text "given_name_ciphertext"
     t.datetime "dismissed_new_features_page_at", precision: nil
     t.datetime "unsubscribed_from_expired_vacancy_prompt_at", precision: nil
+    t.boolean "acknowledged_candidate_profiles_interstitial", default: false, null: false
     t.index ["email"], name: "index_publishers_on_email"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end

@@ -520,6 +520,18 @@ en:
       show_count: Applications (%{count})
     statistics: Statistics
 
+  candidate_profiles_interstitials:
+    page_title: You can now view candidate profiles and invite them to apply to jobs
+    intro: A candidate's profile includes their job preferences, experience and qualifications.
+    list_header: >-
+      These candidates have specficied:
+    page_description_items:
+      - "that they're able to travel to your school"
+      - "that they're interested in an education phase that matches your school"
+    outro: You'll also be notified about any new candidate profiles that match your job listings
+    button_text: View candidate profiles
+    skip_text: Skip to job listings
+    
   terms_and_conditions:
     intro_html: >-
       Before listing any role at your school on Teaching Vacancies you must first read our %{link} and

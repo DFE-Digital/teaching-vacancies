@@ -23,7 +23,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
       click_on I18n.t("buttons.accept_and_continue")
 
       publisher.reload
-      expect(page).to have_content(school.name)
+      expect(page).to have_content("You can now view candidate profiles and invite them to apply to jobs")
       expect(publisher).to be_accepted_terms_at
     end
 
