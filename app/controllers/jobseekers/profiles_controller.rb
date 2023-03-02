@@ -75,6 +75,6 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
   helper_method :profile
 
   def profile
-    @profile ||= JobseekerProfile.find_or_create_by(jobseeker_id: current_jobseeker.id)
+    @profile ||= JobseekerProfile.prepare(jobseeker: current_jobseeker)
   end
 end
