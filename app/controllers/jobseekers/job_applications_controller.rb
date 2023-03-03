@@ -10,12 +10,14 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def new
     request_event.trigger(:vacancy_apply_clicked, vacancy_id: StringAnonymiser.new(vacancy.id))
     send_dfe_analytics_event
-    redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id) if
-      current_jobseeker.job_applications.not_draft.any?
+
+    return unless quick_apply?
+
+    redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
   end
 
   def create
-    new_job_application = current_jobseeker.job_applications.create(vacancy: vacancy)
+    new_job_application = current_jobseeker.job_applications.create(vacancy:)
     redirect_to jobseekers_job_application_build_path(new_job_application, :personal_details)
   end
 
@@ -24,15 +26,21 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def new_quick_apply
-    raise ActionController::RoutingError, "Cannot quick apply if there are no non-draft applications" unless
-      current_jobseeker.job_applications.not_draft.any?
+    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
   end
 
   def quick_apply
-    raise ActionController::RoutingError, "Cannot quick apply if there are no non-draft applications" unless
-      current_jobseeker.job_applications.not_draft.any?
+    raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
 
-    new_job_application = Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
+    new_job_application = if profile
+                            current_jobseeker.job_applications.build(vacancy:)
+                          else
+                            Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
+                          end
+
+    prefill_application(new_job_application)
+    new_job_application.save!
+
     redirect_to jobseekers_job_application_review_path(new_job_application)
   end
 
@@ -180,5 +188,32 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
       DfE::Analytics::SendEvents.do([event])
     end
+  end
+
+  def prefill_application(application)
+    return unless profile.present?
+
+    application.assign_attributes(
+      employments: profile.employments.map(&:duplicate),
+      first_name: profile.personal_details.first_name,
+      last_name: profile.personal_details.last_name,
+      phone_number: profile.personal_details.phone_number,
+      qualifications: profile.qualifications.map(&:duplicate),
+      qualified_teacher_status_year: (profile.qualified_teacher_status_year || ""),
+      qualified_teacher_status: (profile.qualified_teacher_status || ""),
+    )
+  end
+
+  def profile
+    @profile ||= current_jobseeker.jobseeker_profile
+  end
+  helper_method :profile
+
+  def previous_application?
+    current_jobseeker.job_applications.not_draft.any?
+  end
+
+  def quick_apply?
+    previous_application? || profile.present?
   end
 end
