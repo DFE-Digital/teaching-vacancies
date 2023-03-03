@@ -267,6 +267,9 @@ en:
           application. All you need to do now is the personal statement, the equal opportunities questions and the declarations.
         description2: You can review and change this information at any point.
         description3: You should read the job description and application pack before beginning your application.
+        description1_profile: >-
+          You have recently made a candidate profile, so some of your details have been imported into your application form.
+          All you need to do now is the personal statement, the equal opportunities questions and the declarations.
         heading: Helping you apply quicker
         save_and_return: You can save your application at any point and return to it later.
         title: Application
