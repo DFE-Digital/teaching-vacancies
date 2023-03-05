@@ -70,8 +70,8 @@ en:
       search_result_heading: "Candidate profiles (%{count})"
       sort_result_text: "Ordered by most recently updated."
       filters:
-        preferred_role: "Preferred Role"
-        preferred_role_options:
+        preferred_roles: "Preferred Role"
+        role_options:
           teacher: "Teacher"
           senior_leader: "Headteacher, deputy or assistant headteacher"
           middle_leader: "Head of year, department, curriculum or phase"
@@ -81,10 +81,29 @@ en:
           sendco: "SENDCo (special educational needs and disabilities coordinator)"
         qualified_teacher_status: "Qualified teaching status (QTS)"
         qts_options:
-          none: "Does not have QTS"
+          awarded: "Awarded QTS"
           on_track: "On track to receive QTS"
-          older_than_two: "Awarded QTS within the last 2 years"
-          older_than_three: "Awarded QTS 3 or more years ago"
+          none: "Does not have QTS"
+        preferred_working_patterns: "Preferred working patterns"
+        working_pattern_options:
+          full_time: "Full time"
+          part_time: "Part time"
+        preferred_education_phases: "Preferred education phase"
+        education_phase_options:
+          nursery: "Nursery"
+          primary: "Primary"
+          middle: "Middle"
+          secondary: "Secondary"
+          sixth_form_or_college: "Sixth form or college"
+          through: "Through"
+        preferred_key_stages: "Preferred key stage"
+        key_stage_options:
+          early_years: "Early years"
+          ks_1: "Key stage 1"
+          ks_2: "Key stage 2"
+          ks_3: "Key stage 3"
+          ks_4: "Key stage 4"
+          ks_5: "Key stage 5"
 
 
     login_keys:

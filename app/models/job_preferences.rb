@@ -13,6 +13,6 @@ class JobPreferences < ApplicationRecord
   end
 
   def all_working_patterns
-    key_stages.join(", ")
+    working_patterns.join(", ")
   end
 end
