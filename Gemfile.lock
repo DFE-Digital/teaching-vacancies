@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: b1617a618bdcfb505f6ba8f7b1c0b5efa20a3f1a
-  tag: v1.6.0
+  revision: a814932b0ac9feef69da29e1b7522d3565dd7e61
+  tag: v1.7.0
   specs:
-    dfe-analytics (1.6.0)
+    dfe-analytics (1.7.0)
       google-cloud-bigquery (~> 1.38)
       request_store_rails (~> 2)
 
@@ -139,7 +139,7 @@ GEM
       xpath (~> 3.2)
     climate_control (1.2.0)
     coderay (1.1.3)
-    concurrent-ruby (1.2.0)
+    concurrent-ruby (1.2.2)
     connection_pool (2.3.0)
     crack (0.4.5)
       rexml
@@ -208,8 +208,8 @@ GEM
     geocoder (1.8.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    google-apis-bigquery_v2 (0.46.0)
-      google-apis-core (>= 0.9.1, < 2.a)
+    google-apis-bigquery_v2 (0.48.0)
+      google-apis-core (>= 0.11.0, < 2.a)
     google-apis-core (0.11.0)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (>= 0.16.2, < 2.a)
@@ -234,7 +234,7 @@ GEM
       google-cloud-errors (~> 1.0)
     google-cloud-env (1.6.0)
       faraday (>= 0.17.3, < 3.0)
-    google-cloud-errors (1.3.0)
+    google-cloud-errors (1.3.1)
     googleauth (1.3.0)
       faraday (>= 0.17.3, < 3.a)
       jwt (>= 1.4, < 3.0)
