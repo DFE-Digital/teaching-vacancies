@@ -173,7 +173,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:new_employer) { "NASA" }
       let(:new_job_role) { "Chief ET locator" }
 
-      it "succesfully changes the employment record" do
+      it "successfully changes the employment record" do
         visit jobseekers_profile_path
 
         within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.change") }
