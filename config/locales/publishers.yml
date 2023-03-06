@@ -65,7 +65,7 @@ en:
     jobseeker_profiles:
       available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."
       preferred_role: "Preferred role:"
-      preferred_key_stage: "Preferred key stage:s"
+      preferred_key_stage: "Preferred key stages"
       preferred_working_patterns: "Preferred working pattern"
       search_result_heading: "Candidate profiles (%{count})"
       sort_result_text: "Ordered by most recently updated."
@@ -104,7 +104,6 @@ en:
           ks_3: "Key stage 3"
           ks_4: "Key stage 4"
           ks_5: "Key stage 5"
-
 
     login_keys:
       new:
