@@ -15,6 +15,6 @@ namespace :audit do
       puts "Deletion confirmed."
     end
 
-    pp EmailAddressAudit.run(**options) # rubocop:disable Lint/Debugger
+    pp EmailAddressAudit.run(**options)
   end
 end
