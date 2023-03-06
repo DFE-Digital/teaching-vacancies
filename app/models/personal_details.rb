@@ -19,6 +19,13 @@ class PersonalDetails < ApplicationRecord
     ]
   end
 
+  def self.steps_to_complete
+    %i[
+      name
+      phone_number
+    ]
+  end
+
   def reset_phone_number
     self.phone_number = nil unless phone_number_provided
   end

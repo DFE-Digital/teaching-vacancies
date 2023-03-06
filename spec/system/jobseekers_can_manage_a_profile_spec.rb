@@ -79,20 +79,9 @@ RSpec.describe "Jobseekers can manage their profile" do
     before { visit jobseekers_profile_path }
 
     it "prefills the form with the jobseeker's personal details" do
-      click_link "Add personal details"
-      expect(page).to have_field("personal_details_form[first_name]", with: previous_application.first_name)
-      expect(page).to have_field("personal_details_form[last_name]", with: previous_application.last_name)
-
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_field("personal_details_form[phone_number]", with: previous_application.phone_number)
-    end
-
-    it "doesn't overwrite the jobseeker's personal details if they have already been filled in" do
-      click_link "Add personal details"
-      fill_in "personal_details_form[first_name]", with: "Alan"
-      click_on I18n.t("buttons.save_and_continue")
-      click_on "Back"
-      expect(page).to have_field("personal_details_form[first_name]", with: "Alan")
+      expect(page).to have_content(previous_application.first_name)
+      expect(page).to have_content(previous_application.last_name)
+      expect(page).to have_content(previous_application.phone_number)
     end
   end
 

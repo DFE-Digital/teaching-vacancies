@@ -9,6 +9,10 @@ module ProfileSection
             attributes_to_copy.each do |attribute|
               record.assign_attributes(attribute => previous_application.public_send(attribute))
             end
+
+            steps_to_complete.each do |step|
+              record.completed_steps[step] = :completed
+            end
           end
 
           yield record if block_given?
@@ -20,6 +24,10 @@ module ProfileSection
 
     def attributes_to_copy
       %w[]
+    end
+
+    def steps_to_complete
+      %i[]
     end
   end
 end
