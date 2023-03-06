@@ -12,6 +12,6 @@ class Publishers::BaseController < ApplicationController
   end
 
   def check_candidate_profiles_interstitial_acknowledged
-    redirect_to publishers_candidate_profiles_interstitial_path unless current_publisher.nil? || current_publisher.acknowledged_candidate_profiles_interstitial
+    redirect_to publishers_candidate_profiles_interstitial_path unless current_publisher.nil? || current_publisher.acknowledged_candidate_profiles_interstitial?
   end
 end
