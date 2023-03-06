@@ -12,6 +12,7 @@ class JobseekerProfileQuery
   end
 
   private
+
   attr_reader :filters, :organisation
 
   def qts_database_values

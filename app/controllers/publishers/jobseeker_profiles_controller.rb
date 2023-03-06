@@ -1,4 +1,4 @@
-class Publishers::JobseekerProfilesController < ApplicationController
+class Publishers::JobseekerProfilesController < Publishers::BaseController
   def index
     @pagy, @jobseeker_profiles = pagy(JobseekerProfileQuery.new(params, current_organisation).call)
     @form = Publishers::JobseekerProfilesForm.new(jobseeker_profiles_params)
