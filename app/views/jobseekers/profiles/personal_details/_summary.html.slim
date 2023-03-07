@@ -1,5 +1,5 @@
 ruby:
-  form = Jobseekers::Profile::PersonalDetailsForm.from_record(current_jobseeker.jobseeker_profile.personal_details)
+  form = Jobseekers::Profile::PersonalDetailsForm.from_record(profile.personal_details)
 
   attributes = {
                  first_name: nil,
@@ -15,7 +15,6 @@ ruby:
       next unless condition.call(form)
 
       value = form.public_send(attribute)
-      next if value.nil?
 
       if options && options[:map_values]
         value = options[:map_values].call(value)

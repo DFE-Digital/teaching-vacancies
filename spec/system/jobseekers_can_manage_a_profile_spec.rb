@@ -11,7 +11,6 @@ RSpec.describe "Jobseekers can manage their profile" do
     let(:profile) { create(:jobseeker_profile, jobseeker:) }
 
     context "when filling in the profile for the first time" do
-      let(:personal_details) { create(:personal_details, :not_started, jobseeker_profile: profile) }
       let(:first_name) { "Frodo" }
       let(:last_name) { "Baggins" }
       let(:phone_number) { "07777777777" }
@@ -37,25 +36,27 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     context "when editing a profile that has already been completed" do
-      let!(:personal_details) do
-        create(:personal_details,
-               jobseeker_profile: profile,
-               first_name: "Frodo",
-               last_name: "Baggins",
-               phone_number_provided: true,
-               phone_number: old_phone_number,
-               completed_steps: { "name" => "completed", "phone_number" => "completed" })
-      end
-
       let(:new_first_name) { "Samwise" }
       let(:new_last_name) { "Gamgee" }
       let(:old_phone_number) { "07777777777" }
 
-      before { visit jobseekers_profile_path }
+      before do
+        profile.personal_details.update!(
+          first_name: "Frodo",
+          last_name: "Baggins",
+          phone_number_provided: true,
+          phone_number: old_phone_number,
+          completed_steps: { "name" => "completed", "phone_number" => "completed" },
+        )
+
+        visit jobseekers_profile_path
+      end
 
       it "allows the jobseeker to edit their profile" do
-        within "#personal_details" do
-          click_link "Change", match: :first
+        row = page.find(".govuk-summary-list__key", text: "First name").find(:xpath, "..")
+
+        within(row) do
+          click_link "Change"
         end
 
         fill_in "personal_details_form[first_name]", with: new_first_name
@@ -86,6 +87,21 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     it "adds a notice to inform the user" do
       expect(page).to have_content("your details have been imported into your profile")
+    end
+  end
+
+  describe "personal details if the jobseeker has a blank previous job application" do
+    let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
+
+    before { visit jobseekers_profile_path }
+
+    it "prefills the form with the jobseeker's provided personal details" do
+      expect(page).to have_content(previous_application.phone_number)
+    end
+
+    it "still shows the summary rows for the blank attributes" do
+      expect(page).to have_content("First name")
+      expect(page).to have_content("Last name")
     end
   end
 
