@@ -18,7 +18,7 @@ class Jobseekers::Profiles::PersonalDetailsController < Jobseekers::ProfilesCont
   end
 
   def personal_details_record
-    @personal_details_record ||= PersonalDetails.find_or_create_by(jobseeker_profile_id: current_jobseeker.jobseeker_profile.id)
+    @personal_details_record ||= profile.personal_details
   end
 
   def attributes_from_store

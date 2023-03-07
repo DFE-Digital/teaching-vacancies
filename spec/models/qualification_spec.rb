@@ -35,4 +35,41 @@ RSpec.describe Qualification do
       end
     end
   end
+
+  describe "#duplicate" do
+    subject(:duplicate) { qualification.duplicate }
+    let(:qualification) { create(:qualification) }
+
+    it "returns a new Qualification with the same attributes" do
+      %i[
+        category
+        finished_studying_details
+        finished_studying
+        grade
+        institution
+        name
+        subject
+        year
+      ].each do |attribute|
+        expect(duplicate.public_send(attribute)).to eq(qualification.public_send(attribute))
+      end
+    end
+
+    it "copies over the qualification results" do
+      expect(duplicate.qualification_results.flat_map(&:subject).sort)
+        .to eq(qualification.qualification_results.flat_map(&:subject).sort)
+    end
+
+    it "returns a new unsaved Qualification" do
+      expect(duplicate).to be_new_record
+    end
+
+    it "does not copy job application associations" do
+      expect(duplicate.job_application).to be_nil
+    end
+
+    it "does not copy jobseeker profile associations" do
+      expect(duplicate.jobseeker_profile).to be_nil
+    end
+  end
 end
