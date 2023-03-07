@@ -83,6 +83,10 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_content(previous_application.last_name)
       expect(page).to have_content(previous_application.phone_number)
     end
+
+    it "adds a notice to inform the user" do
+      expect(page).to have_content("your details have been imported into your profile")
+    end
   end
 
   describe "#about_you" do

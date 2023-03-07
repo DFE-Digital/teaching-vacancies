@@ -25,6 +25,8 @@ class JobseekerProfile < ApplicationRecord
           personal_details: PersonalDetails.prepare(profile: record),
         )
 
+        yield record if block_given?
+
         record.save!
       end
     end

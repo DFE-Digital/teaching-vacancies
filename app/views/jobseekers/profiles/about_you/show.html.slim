@@ -7,6 +7,6 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".page_title")
 
-    == render(partial: "summary", locals: { profile: @profile, title: t(".summary_title") })
+    == render(partial: "summary", locals: { profile:, title: t(".summary_title") })
 
     = govuk_button_link_to t("buttons.return_to_profile"), jobseekers_profile_path

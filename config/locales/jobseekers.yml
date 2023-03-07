@@ -540,9 +540,10 @@ en:
           phone_number: Phone number
           phone_number_provided: Do you want to provide a phone number?
       show:
-        page_title: Your profile
-        page_description: Your profile allows schools to find and invite you to apply for their jobs.
         activate_profile_text: When you turn on your profile, it'll be visible to hiring staff.
+        imported: You have recently submitted a job application, so some of your details have been imported into your profile.
+        page_description: Your profile allows schools to find and invite you to apply for their jobs.
+        page_title: Your profile
       about_you:
         edit:
           page_title: About You
