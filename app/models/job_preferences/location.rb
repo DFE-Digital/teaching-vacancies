@@ -5,6 +5,7 @@ class JobPreferences < ApplicationRecord
     include DistanceHelper
 
     self.table_name = "job_preferences_locations"
+    belongs_to :job_preferences
 
     before_create :set_area
 
