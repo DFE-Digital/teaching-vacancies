@@ -55,6 +55,11 @@ RSpec.describe Qualification do
       end
     end
 
+    it "copies over the qualification results" do
+      expect(duplicate.qualification_results.flat_map(&:subject).sort)
+        .to eq(qualification.qualification_results.flat_map(&:subject).sort)
+    end
+
     it "returns a new unsaved Qualification" do
       expect(duplicate).to be_new_record
     end

@@ -22,6 +22,7 @@ class Qualification < ApplicationRecord
       grade:,
       institution:,
       name:,
+      qualification_results: qualification_results.map(&:duplicate),
       subject:,
       year:,
     )
