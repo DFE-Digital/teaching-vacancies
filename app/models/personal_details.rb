@@ -22,9 +22,9 @@ class PersonalDetails < ApplicationRecord
       record.completed_steps["name"] = :completed
     end
 
-    if record.phone_number_provided == false || record.phone_number.present?
-      record.completed_steps["phone_number"] = :completed
-    end
+    return unless record.phone_number_provided == false || record.phone_number.present?
+
+    record.completed_steps["phone_number"] = :completed
   end
 
   def reset_phone_number

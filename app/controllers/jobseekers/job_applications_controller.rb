@@ -203,6 +203,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       qualified_teacher_status: (profile.qualified_teacher_status || ""),
     )
 
+    mark_step_completion(application)
+  end
+
+  def mark_step_completion(application)
     if application.first_name.present? || application.last_name.present? || application.phone_number.present?
       application.in_progress_steps << :personal_details
     end
@@ -211,9 +215,9 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       application.completed_steps << :employment_history
     end
 
-    if application.qualifications.any?
-      application.completed_steps << :qualifications
-    end
+    return unless application.qualifications.any?
+
+    application.completed_steps << :qualifications
   end
 
   def profile
