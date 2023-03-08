@@ -5,7 +5,7 @@ class JobseekerProfileQuery
   end
 
   def call
-    jobseeker_profiles_scope = JobseekerProfile.where(id: job_preferences_after_filters.select(:jobseeker_profile_id))
+    jobseeker_profiles_scope = JobseekerProfile.active.where(id: job_preferences_after_filters.select(:jobseeker_profile_id))
     jobseeker_profiles_scope = jobseeker_profiles_scope.where(qualified_teacher_status: qts_database_values) if filters[:qualified_teacher_status].present?
 
     jobseeker_profiles_scope

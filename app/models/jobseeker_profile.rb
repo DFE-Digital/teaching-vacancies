@@ -9,6 +9,9 @@ class JobseekerProfile < ApplicationRecord
   delegate :all_roles, to: :job_preferences
   delegate :all_key_stages, to: :job_preferences
   delegate :all_working_patterns, to: :job_preferences
+  delegate :first_name, :last_name, to: :personal_details, allow_nil: true
+
+  scope :active, -> { where(active: true) }
 
   enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2 }
 
