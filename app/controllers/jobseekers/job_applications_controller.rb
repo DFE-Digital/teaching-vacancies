@@ -202,6 +202,18 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       qualified_teacher_status_year: (profile.qualified_teacher_status_year || ""),
       qualified_teacher_status: (profile.qualified_teacher_status || ""),
     )
+
+    if application.first_name.present? || application.last_name.present? || application.phone_number.present?
+      application.in_progress_steps << :personal_details
+    end
+
+    if application.employments.any?
+      application.completed_steps << :employment_history
+    end
+
+    if application.qualifications.any?
+      application.completed_steps << :qualifications
+    end
   end
 
   def profile

@@ -2,32 +2,38 @@ module ProfileSection
   extend ActiveSupport::Concern
 
   class_methods do
-    def prepare(profile:)
-      find_or_initialize_by(jobseeker_profile: profile).tap do |record|
+    def prepare(**init_by)
+      find_or_initialize_by(**init_by).tap do |record|
         if record.new_record?
-          if (previous_application = profile.jobseeker.job_applications.last)
-            attributes_to_copy.each do |attribute|
-              record.assign_attributes(attribute => previous_application.public_send(attribute))
-            end
-
-            steps_to_complete.each do |step|
-              record.completed_steps[step] = :completed
-            end
+          if (previous_application = jobseeker(record).job_applications.last)
+            copy_attributes(record, previous_application)
           end
 
-          yield record if block_given?
+          prepare_associations(record)
+          complete_steps(record)
 
+          before_save_on_prepare(record)
           record.save!
         end
       end
     end
 
-    def attributes_to_copy
-      %w[]
+    def jobseeker(record)
+      record.jobseeker_profile.jobseeker
     end
 
-    def steps_to_complete
-      %i[]
+    def copy_attributes(record, previous_application)
+      attributes_to_copy.each do |attribute|
+        record.assign_attributes(attribute => previous_application.public_send(attribute))
+      end
     end
+
+    def attributes_to_copy
+      []
+    end
+
+    def prepare_associations(_record); end
+    def complete_steps(_record); end
+    def before_save_on_prepare(_record); end
   end
 end

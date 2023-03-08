@@ -11,15 +11,6 @@ RSpec.describe JobseekerProfile, type: :model do
       it "returns the existing profile" do
         expect(profile).to eq(existing_profile)
       end
-
-      it "does not allow modifying the record via the 'before save' callback" do
-        found_profile = described_class.prepare(jobseeker:) do |record|
-          record.qualified_teacher_status_year = "2199"
-        end
-
-        expect(found_profile.reload.qualified_teacher_status_year).not_to eq("2199")
-        expect(found_profile.reload.qualified_teacher_status_year).to eq(existing_profile.qualified_teacher_status_year)
-      end
     end
 
     context "when the jobseeker has a previous application" do
@@ -35,14 +26,6 @@ RSpec.describe JobseekerProfile, type: :model do
 
       it "creates a job preferences record" do
         expect(profile.job_preferences).to be_present
-      end
-
-      it "allows modifying the record before saving" do
-        new_profile = described_class.prepare(jobseeker:) do |record|
-          record.qualified_teacher_status_year = "2199"
-        end
-
-        expect(new_profile.reload.qualified_teacher_status_year).to eq("2199")
       end
     end
 
@@ -60,14 +43,6 @@ RSpec.describe JobseekerProfile, type: :model do
 
       it "still creates a job preferences record" do
         expect(profile.job_preferences).to be_present
-      end
-
-      it "allows modifying the record before saving" do
-        new_profile = described_class.prepare(jobseeker:) do |record|
-          record.qualified_teacher_status_year = "2199"
-        end
-
-        expect(new_profile.reload.qualified_teacher_status_year).to eq("2199")
       end
     end
   end

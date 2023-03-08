@@ -1,4 +1,6 @@
 class JobseekerProfile < ApplicationRecord
+  include ProfileSection
+
   belongs_to :jobseeker
 
   has_one :personal_details
@@ -8,28 +10,24 @@ class JobseekerProfile < ApplicationRecord
 
   enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2 }
 
-  def self.prepare(jobseeker:)
-    find_or_initialize_by(jobseeker:).tap do |record|
-      if record.new_record?
-        if (previous_application = jobseeker.job_applications.last)
-          record.assign_attributes(
-            employments: previous_application.employments.map(&:duplicate),
-            qualifications: previous_application.qualifications.map(&:duplicate),
-            qualified_teacher_status_year: previous_application.qualified_teacher_status_year,
-            qualified_teacher_status: previous_application.qualified_teacher_status,
-          )
-        end
+  def self.copy_attributes(record, previous_application)
+    record.assign_attributes(
+      employments: previous_application.employments.map(&:duplicate),
+      qualifications: previous_application.qualifications.map(&:duplicate),
+      qualified_teacher_status_year: previous_application.qualified_teacher_status_year,
+      qualified_teacher_status: previous_application.qualified_teacher_status,
+    )
+  end
 
-        record.assign_attributes(
-          job_preferences: JobPreferences.prepare(profile: record),
-          personal_details: PersonalDetails.prepare(profile: record),
-        )
+  def self.prepare_associations(record)
+    record.assign_attributes(
+      job_preferences: JobPreferences.prepare(jobseeker_profile: record),
+      personal_details: PersonalDetails.prepare(jobseeker_profile: record),
+    )
+  end
 
-        yield record if block_given?
-
-        record.save!
-      end
-    end
+  def self.jobseeker(record)
+    record.jobseeker
   end
 
   def deactivate!
