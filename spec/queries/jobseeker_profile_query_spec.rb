@@ -18,8 +18,8 @@ RSpec.describe JobseekerProfileQuery do
     let(:job_preferences_locations) { JobPreferences::Location.none }
 
     before do
-      allow(::JobPreferences::Location).to receive(:containing).
-        with(london_school.geopoint).and_return(job_preferences_locations)
+      allow(JobPreferences::Location).to receive(:containing)
+        .with(london_school.geopoint).and_return(job_preferences_locations)
     end
 
     it "returns profiles within the organisation area" do
