@@ -5,8 +5,9 @@ class PersonalDetails < ApplicationRecord
 
   before_save :reset_phone_number
 
-  def self.prepare(...)
-    super do |record|
+  def self.prepare(*args, **kwargs, &block)
+    super(*args, **kwargs) do |record|
+      block.call(record) if block
       record.phone_number_provided = record.phone_number.present?
     end
   end
