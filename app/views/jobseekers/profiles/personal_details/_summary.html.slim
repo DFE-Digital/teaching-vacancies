@@ -11,9 +11,6 @@ ruby:
   summary = govuk_summary_list(html_attributes: { id: "personal_details" }) do |summary_list|
     attributes.each do |attribute, options|
       step_name = form.class.delegated_attributes[attribute.to_s]
-      condition = ->(f) { f.completed?(step_name) }
-      next unless condition.call(form)
-
       value = form.public_send(attribute)
 
       if options && options[:map_values]

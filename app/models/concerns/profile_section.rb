@@ -2,7 +2,7 @@ module ProfileSection
   extend ActiveSupport::Concern
 
   class_methods do # rubocop:disable Metrics/BlockLength
-    def prepare(**init_by)
+    def prepare(**init_by, &block)
       find_or_initialize_by(**init_by).tap do |record|
         if record.new_record?
           if (previous_application = jobseeker(record).job_applications.last)
@@ -12,6 +12,7 @@ module ProfileSection
           prepare_associations(record)
           complete_steps(record)
 
+          block&.call(record)
           before_save_on_prepare(record)
           record.save!
         end
