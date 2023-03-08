@@ -254,7 +254,9 @@ en:
         heading: Before you start
         privacy_info: >-
           We will store your information so you can use it to quickly apply for other jobs that use the Teaching
-          Vacancies application form.
+          Vacancies application form. Once you have submitted your application, your details can also be imported
+          into a %{profile_link} so schools can contact you about relevant roles.
+        profile_link_text: candidate profile
         title: Application
       new_quick_apply:
         assistance:
