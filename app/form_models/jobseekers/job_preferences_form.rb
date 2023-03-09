@@ -9,7 +9,10 @@ module Jobseekers
     WORKING_PATTERNS = %i[full_time part_time].freeze
 
     def self.from_record(record)
-      new record.attributes.slice(*attribute_names)
+      new(
+        **record.attributes.slice(*attribute_names.without("locations")),
+        locations: record.locations.to_h { |l| [l.id, { location: l.name, radius: l.radius }] },
+      )
     end
 
     step :roles do
@@ -82,7 +85,7 @@ module Jobseekers
     end
 
     step :locations do
-      attribute :locations, array: true
+      attribute :locations, default: {}
       attribute :add_location, :boolean
       validates :add_location, inclusion: { in: [true, false], message: :blank }
     end
@@ -97,11 +100,8 @@ module Jobseekers
     end
 
     def update_location(id, attributes)
-      if id
-        locations[id].merge!(attributes)
-      else
-        locations << attributes
-      end
+      id ||= SecureRandom.uuid
+      (locations[id] ||= {}).merge!(attributes.symbolize_keys)
     end
 
     def complete_step!(*args)
@@ -111,7 +111,7 @@ module Jobseekers
     end
 
     def locations=(values)
-      super values.map(&:symbolize_keys)
+      super values.transform_values(&:symbolize_keys)
     end
 
     def next_step(current_step: nil, **)

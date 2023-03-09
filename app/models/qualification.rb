@@ -14,6 +14,20 @@ class Qualification < ApplicationRecord
 
   before_validation :remove_inapplicable_data, :mark_emptied_qualification_results_for_destruction
 
+  def duplicate
+    self.class.new(
+      category:,
+      finished_studying_details:,
+      finished_studying:,
+      grade:,
+      institution:,
+      name:,
+      qualification_results: qualification_results.map(&:duplicate),
+      subject:,
+      year:,
+    )
+  end
+
   def name
     return read_attribute(:name) if read_attribute(:name).present? || other? || other_secondary?
 

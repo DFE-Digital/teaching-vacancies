@@ -4,4 +4,19 @@ class Employment < ApplicationRecord
   has_encrypted :organisation, :job_title, :main_duties
 
   enum employment_type: { job: 0, break: 1 }
+
+  def duplicate
+    self.class.new(
+      current_role:,
+      employment_type:,
+      ended_on:,
+      job_title:,
+      main_duties:,
+      organisation:,
+      reason_for_break:,
+      salary:,
+      started_on:,
+      subjects:,
+    )
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_21_122348) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_27_131731) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -240,13 +240,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_21_122348) do
     t.string "key_stages", default: [], array: true
     t.string "subjects", default: [], array: true
     t.string "working_patterns", default: [], array: true
-    t.json "locations", default: [], array: true
     t.json "completed_steps", default: {}
     t.boolean "builder_completed", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "jobseeker_profile_id"
     t.index ["jobseeker_profile_id"], name: "index_job_preferences_on_jobseeker_profile_id"
+  end
+
+  create_table "job_preferences_locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_preferences_id", null: false
+    t.string "name", null: false
+    t.integer "radius", null: false
+    t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["area"], name: "index_job_preferences_locations_on_area", using: :gist
+    t.index ["job_preferences_id"], name: "index_job_preferences_locations_on_job_preferences_id"
   end
 
   create_table "jobseeker_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -623,6 +633,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_21_122348) do
   add_foreign_key "equal_opportunities_reports", "vacancies"
   add_foreign_key "job_applications", "vacancies"
   add_foreign_key "job_preferences", "jobseeker_profiles"
+  add_foreign_key "job_preferences_locations", "job_preferences", column: "job_preferences_id"
   add_foreign_key "jobseeker_profiles", "jobseekers"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"

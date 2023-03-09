@@ -23,7 +23,7 @@ ruby:
     },
     locations: {
       if: ->(form) { form.locations.any? },
-      map_values: ->(value, _) { "#{value[:location]} (#{t('jobs.search.number_of_miles', count: value[:radius].to_i)})" },
+      map_values: ->((_, value), _) { "#{value[:location]} (#{t('jobs.search.number_of_miles', count: value[:radius].to_i)})" },
       join_with: "</br>",
     },
   }
