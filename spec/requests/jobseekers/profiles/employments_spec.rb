@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseeker profile employments" do
   let(:jobseeker) { create(:jobseeker) }
-  let(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id) }
+  let(:profile) { create(:jobseeker_profile, jobseeker:) }
   let(:organisation) { "Arsenal" }
   let(:job_title) { "Number 9" }
   let(:started_on_month) { "01" }
