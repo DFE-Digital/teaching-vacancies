@@ -208,16 +208,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def mark_step_completion(application)
     if application.first_name.present? || application.last_name.present? || application.phone_number.present?
-      application.in_progress_steps << :personal_details
+      application.in_progress_steps += [:personal_details]
     end
 
     if application.employments.any?
-      application.completed_steps << :employment_history
+      application.completed_steps += [:employment_history]
     end
 
     return unless application.qualifications.any?
 
-    application.completed_steps << :qualifications
+    application.completed_steps += [:qualifications]
   end
 
   def profile
