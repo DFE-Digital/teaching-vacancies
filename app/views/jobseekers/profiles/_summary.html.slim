@@ -7,11 +7,11 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl class="govuk-!-margin-bottom-5" = local_assigns.fetch(:title)
-    - case @profile.qualified_teacher_status
+    - case profile.qualified_teacher_status
       - when "on_track"
         p class="govuk-!-margin-bottom-3" = "On track to receive QTS"
       - when "yes"
-        p class="govuk-!-margin-bottom-3" = "QTS awarded in #{@profile.qualified_teacher_status_year}."
+        p class="govuk-!-margin-bottom-3" = "QTS awarded in #{profile.qualified_teacher_status_year}."
       - when "no"
         p class="govuk-!-margin-bottom-3" = "Does not have QTS"
 
