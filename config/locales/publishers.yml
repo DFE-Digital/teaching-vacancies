@@ -62,6 +62,49 @@ en:
       heading_html: "%{contact_support_link} if you need to change the instructions about how to apply or write a personal statement."
     job_listing_process_changed_draft_banner:
       heading_html: "You cannot make changes to this draft job listing. %{create_new_link} or %{contact_support_link}."
+    jobseeker_profiles:
+      available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."
+      preferred_role: "Preferred role:"
+      preferred_key_stage: "Preferred key stages"
+      preferred_working_patterns: "Preferred working pattern"
+      search_result_heading: "Candidate profiles (%{count})"
+      sort_result_text: "Ordered by most recently updated."
+      filters:
+        preferred_roles: "Preferred Role"
+        role_options:
+          teacher: "Teacher"
+          senior_leader: "Headteacher, deputy or assistant headteacher"
+          middle_leader: "Head of year, department, curriculum or phase"
+          teaching_assistant: "Teaching Assistant"
+          higher_level_teaching_assistant: "HLTA (higher level teaching assistant)"
+          education_support: "Learning support, cover supervisor or tutor"
+          sendco: "SENDCo (special educational needs and disabilities coordinator)"
+        qualified_teacher_status: "Qualified teaching status (QTS)"
+        qts_options:
+          awarded: "Awarded QTS"
+          on_track: "On track to receive QTS"
+          none: "Does not have QTS"
+        preferred_working_patterns: "Preferred working patterns"
+        working_pattern_options:
+          full_time: "Full time"
+          part_time: "Part time"
+        preferred_education_phases: "Preferred education phase"
+        education_phase_options:
+          nursery: "Nursery"
+          primary: "Primary"
+          middle: "Middle"
+          secondary: "Secondary"
+          sixth_form_or_college: "Sixth form or college"
+          through: "Through"
+        preferred_key_stages: "Preferred key stage"
+        key_stage_options:
+          early_years: "Early years"
+          ks_1: "Key stage 1"
+          ks_2: "Key stage 2"
+          ks_3: "Key stage 3"
+          ks_4: "Key stage 4"
+          ks_5: "Key stage 5"
+
     login_keys:
       new:
         notice: >-

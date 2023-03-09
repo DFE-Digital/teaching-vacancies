@@ -20,6 +20,8 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
       end
 
       context "when editing a job alert" do
+        before { create(:location_polygon, name: "london") }
+
         before { click_on I18n.t("jobseekers.subscriptions.index.link_manage") }
 
         it "edits the job alert and redirects to the dashboard" do

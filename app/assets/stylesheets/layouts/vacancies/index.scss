@@ -1,4 +1,6 @@
 .vacancies_index {
+  @import '../shared/search-results';
+
   .no-results {
     &__job-alert-link {
       &--organisation {
@@ -9,50 +11,6 @@
 
         .govuk-link {
           text-decoration: none;
-        }
-      }
-    }
-  }
-
-  .search-results {
-    &__item {
-      border-bottom: 1px solid $govuk-border-colour;
-      padding-top: govuk-spacing(3);
-      padding-bottom: govuk-spacing(3);
-
-      &:first-of-type {
-        padding-top: 0;
-      }
-
-      .govuk-summary-list {
-        @include govuk-font(16);
-        margin-bottom: 0;
-      }
-
-      .govuk-summary-list__key, .govuk-summary-list__value {
-        padding-bottom: govuk-spacing(0);
-      }
-
-      .govuk-summary-list__row:last-child {
-        margin-bottom: 0;
-
-        .govuk-summary-list__value {
-          margin-bottom: 0;
-        }
-      }
-    }
-
-    &__summary-list--compact {
-      @include govuk-font(16);
-      margin-bottom: 0;
-
-      .govuk-summary-list__key, .govuk-summary-list__value {
-        padding-bottom: govuk-spacing(0);
-      }
-
-      @include govuk-media-query($from: tablet) {
-        .govuk-summary-list__key {
-          width: 37%;
         }
       }
     }
