@@ -1,6 +1,6 @@
 class JobseekerProfileQuery
   def initialize(filters, organisation)
-    @filters = filters
+    @filters = filters.each { |_, v| v.compact_blank! }
     @organisation = organisation
   end
 

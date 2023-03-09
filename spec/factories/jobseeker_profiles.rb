@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :jobseeker_profile do
     about_you { Faker::Lorem.paragraph(sentence_count: 2) }
     qualified_teacher_status { factory_sample(JobseekerProfile.qualified_teacher_statuses.keys) }
+    active { true }
 
     jobseeker
 

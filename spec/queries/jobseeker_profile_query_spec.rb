@@ -31,9 +31,14 @@ RSpec.describe JobseekerProfileQuery do
     let(:london_preference) { create(:job_preferences_location, name: "London", radius: 100) }
     let(:job_preferences) { create(:job_preferences, locations: [london_preference]) }
     let(:jobseeker_profile) { create(:jobseeker_profile, job_preferences: job_preferences) }
-    let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
+    let!(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
 
     let(:manchester_preference) { create(:job_preferences_location, name: "Manchester") }
+
+    before do
+      create(:location_polygon, name: "london")
+      create(:location_polygon, name: "manchester")
+    end
 
     it "returns profiles within the organisation area" do
       expect(query.call).to include(jobseeker_profile)
@@ -48,11 +53,11 @@ RSpec.describe JobseekerProfileQuery do
     let(:london_preferences) { create(:job_preferences_location, name: "London", radius: 100) }
     let(:job_preferences) { create(:job_preferences, locations: [london_preferences], roles: ["Teacher"]) }
     let(:jobseeker_profile) { create(:jobseeker_profile, job_preferences: job_preferences) }
-    let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
+    let(:jobseeker!) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
 
     let(:job_preferences2) { create(:job_preferences, locations: [london_preferences], roles: ["Leader"]) }
     let(:jobseeker_profile2) { create(:jobseeker_profile, job_preferences: job_preferences2) }
-    let(:jobseeker2) { create(:jobseeker, jobseeker_profile2: jobseeker_profile) }
+    let(:jobseeker2!) { create(:jobseeker, jobseeker_profile2: jobseeker_profile) }
 
     let(:filters) do
       {
