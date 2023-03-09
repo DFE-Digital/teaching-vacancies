@@ -17,9 +17,12 @@ en:
         apply_for_jobs_link_text: search and apply for teaching jobs
         apply_for_jobs: You can %{link_text}.
         create_profile:
-          functionality_guidance: When you turn on your profile, schools can contact you about relevant jobs.
+          functionality_guidance: >-
+            When you turn on your profile it will be only be visible to hiring staff in schools and trusts.
+            They can get in touch by email to invite you apply for roles.
           heading: Create a profile
           lead_in: "With a profile, you can:"
+          prefill: apply for roles more quickly by pre-filling your information
           share_your_qualifications: share your qualifications and experience with schools
           specify_jobs: specify the types of teaching jobs you’re looking for
     account_feedbacks:
@@ -551,8 +554,10 @@ en:
           phone_number_provided: Do you want to provide a phone number?
       show:
         page_title: Your profile
-        page_description: Your profile allows schools to find and invite you to apply for their jobs.
-        activate_profile_text: When you turn on your profile, it'll be visible to hiring staff.
+        page_description: Schools and trusts can find your profile and invite you to apply for roles.
+        activate_profile_text: >-
+          When you turn on your profile it will only be visible to hiring staff in schools and trusts.
+          They can get in touch by email to invite you apply for roles.
       about_you:
         edit:
           page_title: About You
