@@ -33,6 +33,10 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).to have_content(last_name)
         expect(page).to have_content(phone_number)
       end
+
+      it "does not a notice to inform the user about prefilling" do
+        expect(page).not_to have_content("your details have been imported into your profile")
+      end
     end
 
     context "when editing a profile that has already been completed" do

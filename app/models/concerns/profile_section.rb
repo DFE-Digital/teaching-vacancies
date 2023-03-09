@@ -7,13 +7,14 @@ module ProfileSection
         if record.new_record?
           if (previous_application = jobseeker(record).job_applications.last)
             copy_attributes(record, previous_application)
+
+            block&.call(record)
+            before_save_on_prepare(record)
           end
 
           prepare_associations(record)
           complete_steps(record)
 
-          block&.call(record)
-          before_save_on_prepare(record)
           record.save!
         end
       end
