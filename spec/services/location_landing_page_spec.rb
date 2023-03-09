@@ -10,6 +10,8 @@ RSpec.describe LocationLandingPage do
   let(:search) { instance_double(Search::VacancySearch, total_count: 34) }
 
   before do
+    create(:location_polygon, name: "narnia")
+
     allow(Search::VacancySearch)
       .to receive(:new)
       .with(hash_including(location: "Narnia"))

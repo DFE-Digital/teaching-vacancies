@@ -13,7 +13,7 @@ class LocationPolygon < ApplicationRecord
   end
 
   def self.contain?(location)
-    ALL_IMPORTED_LOCATIONS.include?(mapped_name(location))
+    with_name(location).present?
   end
 
   def self.mapped_name(location)

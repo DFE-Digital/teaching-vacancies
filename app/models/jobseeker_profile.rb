@@ -6,6 +6,13 @@ class JobseekerProfile < ApplicationRecord
   has_many :employments
   has_many :qualifications
 
+  delegate :all_roles, to: :job_preferences
+  delegate :all_key_stages, to: :job_preferences
+  delegate :all_working_patterns, to: :job_preferences
+  delegate :first_name, :last_name, to: :personal_details, allow_nil: true
+
+  scope :active, -> { where(active: true) }
+
   enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2 }
 
   def self.prepare(jobseeker:)
@@ -36,5 +43,20 @@ class JobseekerProfile < ApplicationRecord
     return unless active?
 
     update_column(:active, false)
+  end
+
+  def full_name
+    [first_name, last_name].join(" ")
+  end
+
+  def qts_status
+    case qualified_teacher_status
+    when "yes"
+      "Awarded QTS #{qualified_teacher_status_year}"
+    when "on_track"
+      "On track to receive QTS"
+    else
+      ""
+    end
   end
 end
