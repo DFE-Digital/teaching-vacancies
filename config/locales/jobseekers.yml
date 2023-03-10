@@ -423,9 +423,6 @@ en:
           heading: Have time to share some feedback?
         next_step:
           heading: What happens next
-          quick_apply: >-
-            We have saved your information so you can use it to quickly apply for other jobs that use the Teaching
-             Vacancies application form.
           shortlisted: >-
             If you are shortlisted for an interview %{organisation} will be in touch to let you know.
           view_applications: View your applications
