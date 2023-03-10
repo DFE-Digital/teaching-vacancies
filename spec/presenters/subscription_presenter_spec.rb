@@ -15,6 +15,8 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context "when the location is a LocationPolygon" do
+      before { create(:location_polygon, name: "barnet") }
+
       context "when the radius is present" do
         let(:search_criteria) { { location: "Barnet", radius: "10" } }
 

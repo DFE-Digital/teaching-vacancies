@@ -2,17 +2,15 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their profile" do
   let(:jobseeker) { create(:jobseeker) }
-  let!(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
   end
 
   describe "changing personal details" do
-    let(:profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+    let(:profile) { create(:jobseeker_profile, jobseeker:) }
 
     context "when filling in the profile for the first time" do
-      let(:personal_details) { create(:personal_details, :not_started, jobseeker_profile: profile) }
       let(:first_name) { "Frodo" }
       let(:last_name) { "Baggins" }
       let(:phone_number) { "07777777777" }
@@ -35,28 +33,34 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).to have_content(last_name)
         expect(page).to have_content(phone_number)
       end
+
+      it "does not a notice to inform the user about prefilling" do
+        expect(page).not_to have_content("your details have been imported into your profile")
+      end
     end
 
     context "when editing a profile that has already been completed" do
-      let!(:personal_details) do
-        create(:personal_details,
-               jobseeker_profile: profile,
-               first_name: "Frodo",
-               last_name: "Baggins",
-               phone_number_provided: true,
-               phone_number: old_phone_number,
-               completed_steps: { "name" => "completed", "phone_number" => "completed" })
-      end
-
       let(:new_first_name) { "Samwise" }
       let(:new_last_name) { "Gamgee" }
       let(:old_phone_number) { "07777777777" }
 
-      before { visit jobseekers_profile_path }
+      before do
+        profile.personal_details.update!(
+          first_name: "Frodo",
+          last_name: "Baggins",
+          phone_number_provided: true,
+          phone_number: old_phone_number,
+          completed_steps: { "name" => "completed", "phone_number" => "completed" },
+        )
+
+        visit jobseekers_profile_path
+      end
 
       it "allows the jobseeker to edit their profile" do
-        within "#personal_details" do
-          click_link "Change", match: :first
+        row = page.find(".govuk-summary-list__key", text: "First name").find(:xpath, "..")
+
+        within(row) do
+          click_link "Change"
         end
 
         fill_in "personal_details_form[first_name]", with: new_first_name
@@ -74,11 +78,39 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "#about_you" do
-    let(:jobseeker) { create(:jobseeker) }
-    let!(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id, about_you: nil) }
-    let(:jobseeker_about_you) { "I am an amazing teacher" }
+  describe "personal details if the jobseeker has a previous job application" do
+    let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+
     before { visit jobseekers_profile_path }
+
+    it "prefills the form with the jobseeker's personal details" do
+      expect(page).to have_content(previous_application.first_name)
+      expect(page).to have_content(previous_application.last_name)
+      expect(page).to have_content(previous_application.phone_number)
+    end
+
+    it "adds a notice to inform the user" do
+      expect(page).to have_content("your details have been imported into your profile")
+    end
+  end
+
+  describe "personal details if the jobseeker has a blank previous job application" do
+    let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
+
+    before { visit jobseekers_profile_path }
+
+    it "prefills the form with the jobseeker's provided personal details" do
+      expect(page).to have_content(previous_application.phone_number)
+    end
+
+    it "still shows the summary rows for the blank attributes" do
+      expect(page).to have_content("First name")
+      expect(page).to have_content("Last name")
+    end
+  end
+
+  describe "#about_you" do
+    let(:jobseeker_about_you) { "I am an amazing teacher" }
 
     before { visit jobseekers_profile_path }
 
@@ -96,8 +128,6 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "changing the jobseekers's QTS status" do
-    let(:jobseeker) { create(:jobseeker) }
-    let!(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id, qualified_teacher_status: nil) }
     before { visit jobseekers_profile_path }
 
     it "allows the jobseeker to edit their QTS status to yes with year acheived" do
@@ -121,8 +151,19 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
+  describe "QTS if the jobseeker has a previous job application" do
+    let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+
+    it "prefills the form with the jobseeker's personal details" do
+      visit jobseekers_profile_path
+      expect(page).to have_content("Year QTS awarded#{previous_application.qualified_teacher_status_year}")
+    end
+  end
+
   describe "work history" do
     describe "adding an employment history entry to a profile" do
+      let!(:profile) { create(:jobseeker_profile, jobseeker:) }
+
       before { visit jobseekers_profile_path }
 
       it "associates an 'employment' with their jobseeker profile" do
@@ -151,12 +192,12 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     describe "changing an existing employment history entry" do
-      let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
-      let(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id) }
+      let!(:profile) { create(:jobseeker_profile, jobseeker:) }
+      let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile) }
       let(:new_employer) { "NASA" }
       let(:new_job_role) { "Chief ET locator" }
 
-      it "succesfully changes the employment record" do
+      it "successfully changes the employment record" do
         visit jobseekers_profile_path
 
         within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.change") }
@@ -176,8 +217,8 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     describe "deleting an employment history entry" do
+      let!(:profile) { create(:jobseeker_profile, jobseeker:) }
       let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
-      let(:profile) { create(:jobseeker_profile, jobseeker_id: jobseeker.id) }
 
       it "deletes the employment record" do
         visit review_jobseekers_profile_work_history_index_path
@@ -186,6 +227,30 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         expect(profile.employments.any?).to be false
         expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+      end
+    end
+
+    context "if the jobseeker has a previous job application" do
+      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
+
+      it "prefills the form with the jobseeker's work history" do
+        visit jobseekers_profile_path
+        previous_application.employments.each do |employment|
+          expect(page).to have_content(employment.organisation)
+        end
+      end
+    end
+  end
+
+  describe "qualifications" do
+    context "if the jobseeker has a previous job application" do
+      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
+
+      it "prefills the form with the jobseeker's qualifications" do
+        visit jobseekers_profile_path
+        previous_application.qualifications.each do |qualification|
+          expect(page).to have_content(qualification.name)
+        end
       end
     end
   end

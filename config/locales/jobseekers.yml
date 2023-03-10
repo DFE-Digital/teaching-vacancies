@@ -254,7 +254,9 @@ en:
         heading: Before you start
         privacy_info: >-
           We will store your information so you can use it to quickly apply for other jobs that use the Teaching
-          Vacancies application form.
+          Vacancies application form. Once you have submitted your application, your details can also be imported
+          into a %{profile_link} so schools can contact you about relevant roles.
+        profile_link_text: candidate profile
         title: Application
       new_quick_apply:
         assistance:
@@ -267,6 +269,9 @@ en:
           application. All you need to do now is the personal statement, the equal opportunities questions and the declarations.
         description2: You can review and change this information at any point.
         description3: You should read the job description and application pack before beginning your application.
+        description1_profile: >-
+          You have recently made a candidate profile, so some of your details have been imported into your application form.
+          All you need to do now is the personal statement, the equal opportunities questions and the declarations.
         heading: Helping you apply quicker
         save_and_return: You can save your application at any point and return to it later.
         title: Application
@@ -540,9 +545,10 @@ en:
           phone_number: Phone number
           phone_number_provided: Do you want to provide a phone number?
       show:
-        page_title: Your profile
-        page_description: Your profile allows schools to find and invite you to apply for their jobs.
         activate_profile_text: When you turn on your profile, it'll be visible to hiring staff.
+        imported: You have recently submitted a job application, so some of your details have been imported into your profile.
+        page_description: Your profile allows schools to find and invite you to apply for their jobs.
+        page_title: Your profile
       about_you:
         edit:
           page_title: About You

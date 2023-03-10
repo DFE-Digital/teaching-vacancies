@@ -5,6 +5,7 @@ class JobPreferences < ApplicationRecord
     include DistanceHelper
 
     self.table_name = "job_preferences_locations"
+    belongs_to :job_preferences
 
     before_create :set_area
 
@@ -13,13 +14,12 @@ class JobPreferences < ApplicationRecord
     private
 
     def set_area
-      radius_meters = convert_miles_to_metres(Search::RadiusBuilder.new(name, radius).radius)
-
       if LocationPolygon.contain?(name)
-        self.area = LocationPolygon.buffered(radius_meters).with_name(name).area
+        self.area = LocationPolygon.buffered(radius).with_name(name).area
       else
         lat, long = Geocoding.new(name).coordinates.map(&:to_s)
-        self.area = RGeo::Geographic.spherical_factory(srid: 4326).point(lat, long).buffer(radius_meters)
+        radius_meters = convert_miles_to_metres(Search::RadiusBuilder.new(name, radius).radius)
+        self.area = RGeo::Geographic.spherical_factory(srid: 4326).point(long, lat).buffer(radius_meters)
       end
     end
   end

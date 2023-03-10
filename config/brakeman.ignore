@@ -1,22 +1,6 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Authentication",
-      "warning_code": 101,
-      "fingerprint": "1d94226b7d2099d5fbdfc82158f8100f98d20a42e468bc779bf98c2ac77b7c05",
-      "check_name": "Secrets",
-      "message": "Hardcoded value for `NOTIFY_JOBSEEKER_RESET_PASSWORD_TEMPLATE` in source code",
-      "file": "config/initializers/notifications.rb",
-      "line": 11,
-      "link": "https://brakemanscanner.org/docs/warning_types/authentication/",
-      "code": null,
-      "render_path": null,
-      "location": null,
-      "user_input": null,
-      "confidence": "Medium",
-      "note": ""
-    },
-    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "24062c57b5ebf41e370cdc934e79a6465da62a505547bc540b364ce04ab2fd4c",
@@ -45,23 +29,10 @@
       },
       "user_input": "params[:section]",
       "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
       "note": ""
-    },
-    {
-      "warning_type": "Authentication",
-      "warning_code": 101,
-      "fingerprint": "3fd6c02eaf08f8589806b4e13e635949f395519d1c3c68884f627224aa99a4d8",
-      "check_name": "Secrets",
-      "message": "Hardcoded value for `DFE_SIGN_IN_PASSWORD` in source code",
-      "file": "config/initializers/authorisation_service.rb",
-      "line": 3,
-      "link": "https://brakemanscanner.org/docs/warning_types/authentication/",
-      "code": null,
-      "render_path": null,
-      "location": null,
-      "user_input": null,
-      "confidence": "Medium",
-      "note": "Intended behaviour: Only applicable in test enviroment"
     },
     {
       "warning_type": "SQL Injection",
@@ -81,6 +52,9 @@
       },
       "user_input": "field_name",
       "confidence": "Weak",
+      "cwe_id": [
+        89
+      ],
       "note": ""
     },
     {
@@ -101,6 +75,9 @@
       },
       "user_input": "constituents.map do\n ActiveRecord::Base.connection.quote(c.downcase)\n end.join(\", \")",
       "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
       "note": "This is our own static data with no user input provided in the query"
     },
     {
@@ -121,6 +98,32 @@
       },
       "user_input": "field_name",
       "confidence": "Weak",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Unscoped Find",
+      "warning_code": 82,
+      "fingerprint": "9c93c9f5d08bf27281c1583b673b5915f80943fcb8f0b89e90c84c497242a7fe",
+      "check_name": "UnscopedFind",
+      "message": "Unscoped call to `EmergencyLoginKey#find_by`",
+      "file": "app/controllers/publishers/login_keys_controller.rb",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
+      "code": "EmergencyLoginKey.find_by(:id => params[:id])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Publishers::LoginKeysController",
+        "method": "show"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        285
+      ],
       "note": ""
     },
     {
@@ -141,29 +144,12 @@
       },
       "user_input": "convert_miles_to_metres((radius_in_miles or 0))",
       "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
       "note": "Does not receive any user input"
-    },
-    {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "e78cf0e304d252b88e78e94073acc31bbcc36810630ecd67bdac0c44d50d1e75",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/queries/vacancy_location_query.rb",
-      "line": 24,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "scope.joins(\"\\n          INNER JOIN location_polygons\\n          ON ST_DWithin(vacancies.geolocation, location_polygons.area, #{convert_miles_to_metres(radius_in_miles.to_i)})\\n        \")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "VacancyLocationQuery",
-        "method": "call"
-      },
-      "user_input": "convert_miles_to_metres(radius_in_miles.to_i)",
-      "confidence": "Weak",
-      "note": "User input is coerced to integer"
     }
   ],
-  "updated": "2022-05-20 15:26:58 +0100",
-  "brakeman_version": "5.2.3"
+  "updated": "2023-03-06 10:21:16 +0000",
+  "brakeman_version": "5.4.1"
 }

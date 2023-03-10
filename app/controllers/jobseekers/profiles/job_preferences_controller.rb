@@ -1,7 +1,7 @@
 require "multistep/controller"
 
 module Jobseekers::Profiles
-  class JobPreferencesController < ApplicationController
+  class JobPreferencesController < Jobseekers::ProfilesController
     include Multistep::Controller
 
     multistep_form Jobseekers::JobPreferencesForm, key: :job_preferences
@@ -96,7 +96,7 @@ module Jobseekers::Profiles
     end
 
     def job_preference_record
-      @job_preference_record ||= JobPreferences.find_or_create_by(jobseeker_profile: profile)
+      @job_preference_record ||= profile.job_preferences
     end
 
     def force_location_added
@@ -105,10 +105,6 @@ module Jobseekers::Profiles
 
     helper_method def location_form
       @location_form ||= form.build_location_form(params[:id])
-    end
-
-    helper_method def profile
-      @profile ||= JobseekerProfile.find_or_create_by!(jobseeker: current_jobseeker)
     end
   end
 end
