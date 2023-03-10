@@ -6,12 +6,12 @@
     p = t(".page_description")
 
     - @sections.each do |section|
-        h2.govuk-heading-m class="govuk-!-padding-top-6"
-          = section[:title]
+      h2.govuk-heading-m class="govuk-!-padding-top-6"
+        = section[:title]
 
-        - if section[:display_summary] && instance_exec(&section[:display_summary])
-          = render(partial: "jobseekers/profiles/#{section[:key]}/summary", locals: { profile: @profile })
-        - else
-          p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
+      - if section[:display_summary] && instance_exec(&section[:display_summary])
+        = render(partial: "jobseekers/profiles/#{section[:key]}/summary", locals: { profile:, section: })
+      - else
+        p = govuk_link_to section[:link_text], instance_exec(&section[:page_path])
 
     p = t(".activate_profile_text")

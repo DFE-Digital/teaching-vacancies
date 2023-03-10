@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: jobseekers_profile_work_history_index_path, method: :post do |f|
+      = f.govuk_error_summary
+
+      span.govuk-caption-l = t(".caption")
+      h1.govuk-heading-l = t(".title")
+
+      = render "fields", f: f
+
+    .govuk-button-group
+    = govuk_link_to(t("buttons.cancel"), jobseekers_profile_path)

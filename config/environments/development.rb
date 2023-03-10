@@ -49,7 +49,7 @@ Rails.application.configure do
   config.active_support.disallowed_deprecation_warnings = []
 
   # Raise an error on page load if there are pending migrations.
-  config.active_record.migration_error = :page_load
+  config.active_record.migration_error = false
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false

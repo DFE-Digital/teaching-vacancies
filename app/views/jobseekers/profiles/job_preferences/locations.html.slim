@@ -1,0 +1,28 @@
+- content_for :page_title_prefix, "Job preferences: locations"
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: back_url
+
+= form_for @step, as: :job_preferences, url: { action: :update } do |f|
+  = f.govuk_error_summary
+
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      h1.govuk-heading-l
+        span.govuk-caption-l Job preferences
+        | Locations
+
+      = govuk_summary_list(classes: %w[govuk-summary-list--no-wrap-actions]) do |summary_list|
+        = @form.locations.each.with_index do |(id, location), index|
+          - summary_list.row do |row|
+            - row.key text: "Location #{index + 1}"
+            - row.value text: "#{location[:location]} (#{t 'jobs.search.number_of_miles', count: location[:radius].to_i})"
+            - row.action(text: t("buttons.change"), href: { action: :update_location, id: id })
+            - row.action(text: t("buttons.delete"), href: { action: :delete_location, id: id })
+
+      = f.hidden_field :add_location, value: ""
+      = f.govuk_radio_buttons_fieldset(:add_location, legend: { size: "m", text: "Do you want to add another location?" }) do
+        = f.govuk_radio_button :add_location, "true", label: { text: "Yes" }
+        = f.govuk_radio_button :add_location, "false", label: { text: "No" }
+
+      = f.govuk_submit "Save and continue"
+      p = f.link_to "Cancel", escape_path

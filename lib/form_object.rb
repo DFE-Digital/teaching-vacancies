@@ -3,8 +3,15 @@ module FormObject
     mod.include ActiveModel::Model
     mod.include ActiveModel::Attributes
     mod.include ActiveModel::Validations::Callbacks
+    mod.include ActiveModel::Dirty
 
     mod.include Arrays
+  end
+
+  def initialize(*, **)
+    super
+
+    clear_changes_information
   end
 
   module Arrays
@@ -18,7 +25,7 @@ module FormObject
 
         mod = Module.new do
           define_method(:"#{name}=") do |value|
-            super value.reject(&:blank?)
+            super value&.reject(&:blank?) || []
           end
         end
 

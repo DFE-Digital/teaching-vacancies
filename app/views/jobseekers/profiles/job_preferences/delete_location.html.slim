@@ -1,0 +1,20 @@
+- content_for :page_title_prefix, "Job preferences: locations"
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: back_url
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl
+      span.govuk-caption-xl Delete location
+      | Confirm that you want to delete #{@location[:location]} (#{t("jobs.search.number_of_miles", count: @location[:radius].to_i)})
+    = form_for @delete_form, url: {}, as: :delete_location do |f|
+      - if @last_location && profile.active
+        = govuk_warning_text text: "If you delete this, there will be no location information on your profile. Schools will not be able to see your profile. Change the location to keep your profile active."
+
+        = f.govuk_collection_radio_buttons :action, f.object.options, :first, :last, legend: nil
+
+        = f.govuk_submit "Continue"
+      - else
+        = f.hidden_field :action, value: :delete
+        = f.govuk_submit "Delete this location"
+      p = f.link_to "Cancel", escape_path

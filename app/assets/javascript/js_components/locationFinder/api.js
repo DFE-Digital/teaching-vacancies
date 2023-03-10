@@ -6,7 +6,11 @@ export const getPostcodeFromCoordinates = (latitude, longitude) => axios.get('ht
   params: { latitude, longitude },
 }).then((response) => response.data.result[0].postcode)
   .catch((error) => {
-    logger.warn(error.message);
+    if (error.response && (error.response.status !== 200 || error.response.status !== 204)) {
+      logger.warn(error.message);
+    } else {
+      logger.log(error.message);
+    }
   });
 
 const api = {

@@ -5,7 +5,7 @@ RSpec.shared_examples "has a satisfaction rating table" do |data_testid, number_
     expect(page).to have_selector("table[data-testid='#{data_testid}']")
 
     within(find("table[data-testid='#{data_testid}']")) do
-      within(find('tr[data-testid="2022-03-22 -> 2022-03-28"]')) do
+      within(find("tr[data-testid='#{testid_for 1.month.ago}']")) do
         (1..number_of_options).each do |n|
           expect(find("td:nth-child(#{n + 1})").text).to eq(n.to_s)
         end
@@ -13,12 +13,16 @@ RSpec.shared_examples "has a satisfaction rating table" do |data_testid, number_
     end
 
     within(find("table[data-testid='#{data_testid}']")) do
-      within(find('tr[data-testid="2022-02-22 -> 2022-02-28"]')) do
+      within(find("tr[data-testid='#{testid_for 3.month.ago}']")) do
         (1..number_of_options).each do |n|
           expect(find("td:nth-child(#{n + 1})").text).to eq((n + number_of_options).to_s)
         end
       end
     end
+  end
+
+  def testid_for(time)
+    [time.to_date.beginning_of_week(:tuesday), time.to_date.end_of_week(:tuesday)].map(&:to_s).join(" -> ")
   end
 end
 
@@ -125,7 +129,7 @@ RSpec.describe "Feedback supportal section" do
               :feedback,
               feedback_responses.index(feedback_response) + 1,
               feedback_type: feedback_type,
-              created_at: Time.new(2022, 3, 23, 10, 0),
+              created_at: 1.months.ago,
               grouping_key => feedback_response,
             )
 
@@ -133,7 +137,7 @@ RSpec.describe "Feedback supportal section" do
               :feedback,
               feedback_responses.index(feedback_response) + feedback_responses.count + 1,
               feedback_type: feedback_type,
-              created_at: Time.new(2022, 2, 23, 10, 0),
+              created_at: 3.month.ago,
               grouping_key => feedback_response,
             )
           end

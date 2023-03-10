@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_27_131731) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -72,7 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
     t.string "current_role", default: "", null: false
     t.date "started_on"
     t.date "ended_on"
-    t.uuid "job_application_id", null: false
+    t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "employment_type", default: 0
@@ -80,7 +80,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
+    t.uuid "jobseeker_profile_id"
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
+    t.index ["jobseeker_profile_id"], name: "index_employments_on_jobseeker_profile_id"
   end
 
   create_table "equal_opportunities_reports", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -232,6 +234,31 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
 
+  create_table "job_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "roles", default: [], array: true
+    t.string "phases", default: [], array: true
+    t.string "key_stages", default: [], array: true
+    t.string "subjects", default: [], array: true
+    t.string "working_patterns", default: [], array: true
+    t.json "completed_steps", default: {}
+    t.boolean "builder_completed", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "jobseeker_profile_id"
+    t.index ["jobseeker_profile_id"], name: "index_job_preferences_on_jobseeker_profile_id"
+  end
+
+  create_table "job_preferences_locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_preferences_id", null: false
+    t.string "name", null: false
+    t.integer "radius", null: false
+    t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["area"], name: "index_job_preferences_locations_on_area", using: :gist
+    t.index ["job_preferences_id"], name: "index_job_preferences_locations_on_job_preferences_id"
+  end
+
   create_table "jobseeker_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -239,6 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
     t.string "about_you"
     t.integer "qualified_teacher_status"
     t.string "qualified_teacher_status_year"
+    t.boolean "active", default: false, null: false
     t.index ["jobseeker_id"], name: "index_jobseeker_profiles_on_jobseeker_id"
   end
 
@@ -439,9 +467,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
     t.string "name", default: "", null: false
     t.string "subject", default: "", null: false
     t.integer "year"
-    t.uuid "job_application_id", null: false
+    t.uuid "job_application_id"
     t.text "finished_studying_details_ciphertext"
+    t.uuid "jobseeker_profile_id"
     t.index ["job_application_id"], name: "index_qualifications_on_job_application_id"
+    t.index ["jobseeker_profile_id"], name: "index_qualifications_on_jobseeker_profile_id"
   end
 
   create_table "references", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -602,6 +632,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_091347) do
   add_foreign_key "employments", "job_applications"
   add_foreign_key "equal_opportunities_reports", "vacancies"
   add_foreign_key "job_applications", "vacancies"
+  add_foreign_key "job_preferences", "jobseeker_profiles"
+  add_foreign_key "job_preferences_locations", "job_preferences", column: "job_preferences_id"
   add_foreign_key "jobseeker_profiles", "jobseekers"
   add_foreign_key "markers", "organisations"
   add_foreign_key "markers", "vacancies"

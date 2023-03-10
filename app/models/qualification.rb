@@ -1,7 +1,9 @@
 class Qualification < ApplicationRecord
   include ActionView::Helpers::SanitizeHelper
 
-  belongs_to :job_application
+  belongs_to :job_application, optional: true
+  belongs_to :jobseeker_profile, optional: true
+
   has_many :qualification_results, dependent: :delete_all, autosave: true
   accepts_nested_attributes_for :qualification_results
   has_encrypted :finished_studying_details
@@ -12,10 +14,24 @@ class Qualification < ApplicationRecord
 
   before_validation :remove_inapplicable_data, :mark_emptied_qualification_results_for_destruction
 
+  def duplicate
+    self.class.new(
+      category:,
+      finished_studying_details:,
+      finished_studying:,
+      grade:,
+      institution:,
+      name:,
+      qualification_results: qualification_results.map(&:duplicate),
+      subject:,
+      year:,
+    )
+  end
+
   def name
     return read_attribute(:name) if read_attribute(:name).present? || other? || other_secondary?
 
-    I18n.t("helpers.label.jobseekers_job_application_details_qualifications_category_form.category_options.#{category}")
+    I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{category}")
   end
 
   def remove_inapplicable_data

@@ -1,11 +1,11 @@
 = tag.div(**html_attributes) do
-  - if title
-    .detail-component__title
-      h3.govuk-heading-s = title
+  .govuk-summary-card__title-wrapper
+    - if title
+      h3.govuk-summary-card__title = title
+    - if actions
+      ul.govuk-summary-card__actions
+        - actions.each do |action|
+          = action
   - if body
-    .detail-component__body
+    .govuk-summary-card__content
       = body
-  - if actions
-    .detail-component__actions
-      .border-container
-        = actions

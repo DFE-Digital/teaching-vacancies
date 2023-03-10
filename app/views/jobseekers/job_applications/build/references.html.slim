@@ -22,9 +22,8 @@
                     - row.key text: t("jobseekers.job_applications.references.#{attribute}")
                     - row.value text: reference[attribute]
 
-          - detail.actions do
-            = govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, reference), class: "govuk-link--no-visited-state"
-            = govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, reference), method: :delete
+          - detail.action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, reference), class: "govuk-link--no-visited-state"
+          - detail.action govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, reference), method: :delete
 
       = govuk_button_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_reference_path(job_application)
     - else

@@ -1,0 +1,26 @@
+- content_for :page_title_prefix, current_organisation.name
+
+h1 class="govuk-heading-l" role="heading" aria-level="1"
+  = t("publishers.jobseeker_profiles.search_result_heading", count: number_with_delimiter(@pagy.count))
+
+p = t("publishers.jobseeker_profiles.available_to_travel_text")
+
+.govuk-grid-row
+  .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
+    = form_for @form, as: "", url: url_for, method: "get", html: { data: { controller: "form" }, role: "search" } do |f|
+      = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
+        options: { heading_text: "Filter", remove_filter_links: false },
+        html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
+        - filters_component.group key: "qualified_teacher_status", component: f.govuk_collection_check_boxes(:qualified_teacher_status, f.object.qts_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.qualified_teacher_status") }, hint: nil)
+        - filters_component.group key: "roles", component: f.govuk_collection_check_boxes(:roles, f.object.role_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_roles") }, hint: nil)
+        - filters_component.group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, f.object.working_pattern_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_working_patterns") }, hint: nil)
+        - filters_component.group key: "education_phases", component: f.govuk_collection_check_boxes(:education_phases, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_education_phases") }, hint: nil)
+        - filters_component.group key: "key_stages", component: f.govuk_collection_check_boxes(:key_stages, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_key_stages") }, hint: nil)
+
+  .govuk-grid-column-two-thirds-at-desktop
+    p = t("publishers.jobseeker_profiles.sort_result_text")
+    #search-results
+      - if @jobseeker_profiles.any?
+        = render "publishers/jobseeker_profiles/search/results", jobseeker_profiles: @jobseeker_profiles
+
+    = govuk_pagination(pagy: @pagy)

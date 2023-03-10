@@ -27,6 +27,12 @@ en:
       show:
         confirm: Confirm
         title: Confirm your email address
+    employments:
+      current_role: Is this your current role?
+      ended_on: End date
+      main_duties: Main duties
+      organisation: School or employer
+      started_on: Start date
     forced_login:
       create_account: create an account
       job_application_html: You need to login or %{account_creation_link} with Teaching Vacancies to apply for this job.
@@ -248,7 +254,9 @@ en:
         heading: Before you start
         privacy_info: >-
           We will store your information so you can use it to quickly apply for other jobs that use the Teaching
-          Vacancies application form.
+          Vacancies application form. Once you have submitted your application, your details can also be imported
+          into a %{profile_link} so schools can contact you about relevant roles.
+        profile_link_text: candidate profile
         title: Application
       new_quick_apply:
         assistance:
@@ -261,6 +269,9 @@ en:
           application. All you need to do now is the personal statement, the equal opportunities questions and the declarations.
         description2: You can review and change this information at any point.
         description3: You should read the job description and application pack before beginning your application.
+        description1_profile: >-
+          You have recently made a candidate profile, so some of your details have been imported into your application form.
+          All you need to do now is the personal statement, the equal opportunities questions and the declarations.
         heading: Helping you apply quicker
         save_and_return: You can save your application at any point and return to it later.
         title: Application
@@ -270,6 +281,7 @@ en:
           success: Your qualification was deleted
         qualifications_shared: &qualifications_shared
           caption: Education and qualifications
+          subjects_and_grades: Subjects and grades
         edit:
           <<: *qualifications_shared
           heading:
@@ -411,9 +423,6 @@ en:
           heading: Have time to share some feedback?
         next_step:
           heading: What happens next
-          quick_apply: >-
-            We have saved your information so you can use it to quickly apply for other jobs that use the Teaching
-             Vacancies application form.
           shortlisted: >-
             If you are shortlisted for an interview %{organisation} will be in touch to let you know.
           view_applications: View your applications
@@ -498,6 +507,21 @@ en:
       success_html: >-
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     profiles:
+      preview:
+        show:
+          page_title: Preview your profile
+          phone_number: Phone number
+          job_preferences: Job preferences
+          about: About
+          contact_details: Contact Details
+          email_address: Email address
+          work_history: Work history
+          qualifications: Qualifications
+          roles: Roles
+          education_phase: Education phase
+          key_stages: Key stages
+          working_pattern: Working pattern
+          location: Location
       personal_details:
         incomplete_message: You must complete your personal details before you turn on your profile.
         name:
@@ -518,9 +542,10 @@ en:
           phone_number: Phone number
           phone_number_provided: Do you want to provide a phone number?
       show:
-        page_title: Your profile
-        page_description: Your profile allows schools to find and invite you to apply for their jobs.
         activate_profile_text: When you turn on your profile, it'll be visible to hiring staff.
+        imported: You have recently submitted a job application, so some of your details have been imported into your profile.
+        page_description: Your profile allows schools to find and invite you to apply for their jobs.
+        page_title: Your profile
       about_you:
         edit:
           page_title: About You
@@ -539,15 +564,65 @@ en:
           summary_title: About You
         summary:
           about_you_title: About You
+      qualifications:
+        confirm_destroy:
+          secondary:
+            caption: Delete Qualifications
+            page_title: Confirm that you want to delete these qualifications?
+          other:
+            caption: Delete Qualification
+            page_title: Confirm that you want to delete this qualification?
+        destroy:
+          success: Qualification deleted
+        new:
+          <<: *qualifications_shared
+          heading:
+            gcse: Add GCSEs
+            as_level: Add AS Levels
+            a_level: Add A Levels
+            other_secondary: Add secondary qualifications
+            undergraduate: Add an undergraduate degree
+            postgraduate: Add a postgraduate degree
+            other: Add a qualification or course
+          title: Add a qualification — Profile
+        edit:
+          page_title: Qualifications
+        review:
+          <<: *qualifications_shared
+          page_title: Qualifications
+        show:
+          page_title: Qualifications
+        select_category:
+          page_title: Qualification type
+          caption: Qualifications
+        subjects_and_grades: Subjects and grades
       qualified_teacher_status:
         edit:
-          page_title: Qualified teaching status
+          page_title: Qualified teacher status
         show:
-          page_title: Qualified teaching status
-          summary_title: Do you have qualified teaching status (QTS)?
+          page_title: Qualified teacher status
+          summary_title: Do you have qualified teacher status (QTS)?
         summary:
-          status_title: Do you have qualified teaching status (QTS)?
+          status_title: Do you have qualified teacher status (QTS)?
           year_title: Year QTS awarded
+      employments:
+        edit:
+          caption: Work history
+          page_title: Edit a role — Profile
+          title: Role
+        destroy:
+          success: One role has been deleted
+        new:
+          caption: Work history
+          page_title: Add a role — Profile
+          title: Role
+        review:
+          add_role_button_text: Add role
+          return_to_profile: Return to profile
+          page_title: Current role and employment history — Profile
+          title: Work history
+        update:
+          success: One role has been changed
     sessions:
       new:
         description: Sign in here if you are a teacher, aspiring teacher or work in education support. Once signed in you'll be able to save and apply for jobs.

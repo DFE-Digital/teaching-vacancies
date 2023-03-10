@@ -1,0 +1,11 @@
+.govuk-summary-card {
+  &__actions {
+    gap: govuk-spacing(2);
+  }
+
+  &__action {
+    &:last-child {
+      padding: 0;
+    }
+  }
+}

@@ -79,11 +79,36 @@ Rails.application.routes.draw do
     end
 
     resource :profile, only: %i[show] do
+      resource :preview, only: :show, controller: "profiles/preview"
       resource :about_you, only: %i[edit update show], controller: "profiles/about_you"
+      resources :work_history, only: %i[new create edit update destroy], controller: "profiles/employments" do
+        get :review, on: :collection, to: "profiles/employments#review"
+      end
       resource :qualified_teacher_status, only: %i[edit update show], controller: "profiles/qualified_teacher_status"
       get "personal-details", to: "profiles/personal_details#start"
       get "personal-details/:step", to: "profiles/personal_details#edit", as: :edit_personal_details
       post "personal-details/:step", to: "profiles/personal_details#update"
+      resources :qualifications, only: %i[new create edit update destroy], controller: "profiles/qualifications" do
+        get :review, on: :collection, to: "profiles/qualifications#review"
+        collection do
+          get :select_category
+          post :submit_category
+        end
+        get :confirm_destroy
+      end
+    end
+
+    scope controller: "profiles/job_preferences", path: "profile/job-preferences" do
+      get "review", action: :review, as: nil
+      get "location(/:id)", action: :edit_location, as: nil
+      post "location(/:id)", action: :update_location, as: nil
+
+      get "location/:id/delete", action: :delete_location, as: nil
+      post "location/:id/delete", action: :process_delete_location, as: nil
+
+      get "", action: :start, as: :job_preferences
+      get ":step", action: :edit, as: :job_preferences_step
+      post ":step", action: :update, as: nil
     end
 
     resources :saved_jobs, only: %i[index]
@@ -107,6 +132,7 @@ Rails.application.routes.draw do
       patch "unsubscribe", to: "accounts#unsubscribe"
     end
     resources :login_keys, only: %i[show new create]
+    resources :jobseeker_profiles, only: %i[index show]
     resource :new_features, only: %i[show update] do
       get :reminder
     end

@@ -41,13 +41,8 @@
                   - row.key text: t("jobseekers.job_applications.employments.main_duties")
                   - row.value text: employment.main_duties
 
-            - detail.actions do
-              = govuk_link_to edit_jobseekers_job_application_employment_path(job_application, employment), class: "govuk-link--no-visited-state"
-                = t("buttons.change")
-                span.govuk-visually-hidden = " for #{employment.job_title}"
-              = govuk_link_to jobseekers_job_application_employment_path(job_application, employment), method: :delete
-                = t("buttons.delete")
-                span.govuk-visually-hidden = " for #{employment.job_title}"
+            - detail.action govuk_link_to t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_job_application_employment_path(job_application, employment), class: "govuk-link--no-visited-state"
+            - detail.action govuk_link_to t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_job_application_employment_path(job_application, employment), method: :delete
 
         - elsif employment.break?
           = govuk_inset_text do

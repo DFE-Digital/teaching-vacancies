@@ -8,7 +8,7 @@ RSpec.describe OnsDataImport::ImportCounties do
 
   before do
     allow(HTTParty).to receive(:get)
-      .with(/Counties_and_Unitary_Authorities_April_2019_EW_BUC_v2/)
+      .with(/Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BUC_2022/)
       .and_return(response1, response2)
     subject.call
   end

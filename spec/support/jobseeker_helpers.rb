@@ -117,20 +117,20 @@ module JobseekerHelpers
   end
 
   def fill_in_gcses
-    fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Maths"
-    fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][0][grade]", with: "110%"
-    fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][1][subject]", with: "PE"
-    fill_in "jobseekers_job_application_details_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "90%"
+    fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Maths"
+    fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][grade]", with: "110%"
+    fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][subject]", with: "PE"
+    fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "90%"
     fill_in "School, college, or other organisation", with: "Churchill School for Gifted Macaques"
     fill_in "Year qualification(s) was/were awarded", with: "2020"
   end
 
   def fill_in_custom_secondary_qualifications
     fill_in "Qualification name", with: "Welsh Baccalaureate"
-    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Science"
-    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][0][grade]", with: "5"
-    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: "German"
-    fill_in "jobseekers_job_application_details_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: "4"
+    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Science"
+    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][0][grade]", with: "5"
+    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: "German"
+    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: "4"
     fill_in "School, college, or other organisation", with: "Happy Rainbows School for High Achievers"
     fill_in "Year qualification(s) was/were awarded", with: "2020"
   end
@@ -138,7 +138,7 @@ module JobseekerHelpers
   def fill_in_undergraduate_degree
     fill_in "Subject", with: "Linguistics"
     fill_in "Awarding body", with: "University of Life"
-    choose "Yes", name: "jobseekers_job_application_details_qualifications_degree_form[finished_studying]"
+    choose "Yes", name: "jobseekers_qualifications_degree_form[finished_studying]"
     fill_in "Grade", with: "2:1"
     fill_in "Year", with: "1960"
   end
@@ -146,7 +146,7 @@ module JobseekerHelpers
   def fill_in_other_qualification
     fill_in "Qualification or course name", with: "Superteacher Certificate"
     fill_in "School, college, university or other organisation", with: "Teachers Academy"
-    choose "No", name: "jobseekers_job_application_details_qualifications_other_form[finished_studying]"
+    choose "No", name: "jobseekers_qualifications_other_form[finished_studying]"
     fill_in "Please give details", with: "I expect to finish next year"
   end
 end

@@ -20,6 +20,7 @@ en:
     cancel_and_return_to_account: Cancel and return to account
     cancel_copy: Cancel job listing copy
     change: Change
+    change_hidden_text_html: Change <span class='govuk-visually-hidden'>%{hidden_text}</span>
     choose_file: Choose a file
     close_account: Close account
     complete_personal_details: Complete personal details
@@ -36,6 +37,7 @@ en:
     create_account: Create an account
     create_job: Create a job listing
     delete: Delete
+    delete_hidden_text_html: Delete <span class='govuk-visually-hidden'>%{hidden_text}</span>
     delete_application: Delete application
     delete_draft: Delete draft
     delete_logo: Delete logo
@@ -137,7 +139,8 @@ en:
         main_duties: A very brief summary
         organisation: For a non-teaching job, tell us the name of the organisation you worked at
       jobseekers_job_application_details_qualifications_degree_form:
-        institution: For example, a university or college
+        institution: Awarding body
+        year: Year qualification was awarded
       jobseekers_job_application_details_reference_form:
         phone_number: Please only give a phone number that your referee is happy to be contacted on.
       jobseekers_job_application_employment_history_form:
@@ -160,10 +163,11 @@ en:
         national_insurance_number: >-
           If you have a National Insurance number you should enter it here. It's on your National Insurance card,
           benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
-        phone_number: Enter a phone number you are happy to be contacted on, like 01632 960 001, 07700 900 982 or +44 0808 157 0192.
+        phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
         teacher_reference_number_html: You can <a href="https://find-a-lost-trn.education.gov.uk/start" target="_blank">find your TRN (opens in new tab)<span class="govuk-visually-hidden"> (link)</span></a> if you cannot remember it, or want to check it.
-      jobseekers_job_application_qualifications_form:
+      jobseekers_qualifications_degree_form:
+        institution: For example, a university or college
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
@@ -174,8 +178,15 @@ en:
       personal_details_form:
         first_name: Or given names
         last_name: Or family name
-        phone_number: Enter a phone number you are happy to be contacted on, like 01632 960 001, 07700 900 982 or +44 0808 157 0192.
+        phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
+      jobseekers_profile_employment_form:
+        job_title: If you had more than one role with this employer, enter your last role
+        main_duties: Provide the responsibilties you undertook in this role
+        organisation_name: If you worked for yourself, enter ‘self-employed’
+        started_on: For example, %{date}
 
+      jobseekers_qualifications_degree_form:
+        institution: For example, a university or college
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
       jobseekers_unsubscribe_feedback_form:
@@ -340,7 +351,7 @@ en:
         employment_history_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
-      jobseekers_job_application_details_qualifications_category_form:
+      jobseekers_qualifications_shared_labels: &jobseekers_qualifications_shared_labels
         category_options:
           gcse: GCSEs
           as_level: AS Levels
@@ -349,29 +360,13 @@ en:
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate degree
           other: Other qualification or course
-      jobseekers_job_application_details_qualifications_shared_labels: &jobseekers_job_application_details_qualifications_shared_labels
         finished_studying_details: Please give details
         finished_studying_options:
           false: "Not finished yet"
           true: "Yes"
         grade: Grade
-        institution: School, college, or other organisation
         subject: Subject
         year: Year qualification(s) was/were awarded
-      jobseekers_job_application_details_qualifications_degree_form:
-        <<: *jobseekers_job_application_details_qualifications_shared_labels
-        institution: Awarding body
-        year: Year qualification was awarded
-      jobseekers_job_application_details_qualifications_other_form:
-        <<: *jobseekers_job_application_details_qualifications_shared_labels
-        institution: School, college, university or other organisation
-        name: Qualification or course name
-        year: Year qualification was awarded
-      jobseekers_job_application_details_qualifications_secondary_common_form:
-        <<: *jobseekers_job_application_details_qualifications_shared_labels
-      jobseekers_job_application_details_qualifications_secondary_other_form:
-        <<: *jobseekers_job_application_details_qualifications_shared_labels
-        name: Qualification name
       jobseekers_job_application_details_reference_form:
         email: Email address
         job_title: Job title
@@ -473,14 +468,42 @@ en:
           another_role: I have found another role
           changed_mind: I have changed my mind
           other: Some other reason
+
       jobseekers_profile_about_you_form:
         about_you: About you
+      jobseekers_qualifications_category_form:
+        <<: *jobseekers_qualifications_shared_labels
+        category_options:
+          gcse: GCSEs
+          as_level: AS Levels
+          a_level: A Levels
+          other_secondary: Other secondary qualification
+          undergraduate: Undergraduate degree
+          postgraduate: Postgraduate degree
+          other: Other qualification or course
+      jobseekers_qualifications_degree_form:
+        <<: *jobseekers_qualifications_shared_labels
+        institution: Awarding body
+        qualifications: Qualifications
+        year: Year qualification was awarded
+      jobseekers_qualifications_other_form:
+        <<: *jobseekers_qualifications_shared_labels
+        institution: School, college, university or other organisation
+        name: Qualification or course name
+        year: Year qualification was awarded
+      jobseekers_qualifications_secondary_common_form:
+        <<: *jobseekers_qualifications_shared_labels
+        institution: School, college, or other organisation
+      jobseekers_qualifications_secondary_other_form:
+        <<: *jobseekers_qualifications_shared_labels
+        institution: School, college, or other organisation
+        name: Qualification name
       jobseekers_profile_qualified_teacher_status_form:
-        qualified_teacher_status_year: Year QTS awarded
         qualified_teacher_status_options:
           "yes": "Yes"
           "no": "No"
           on_track: "I’m on track to receive QTS"
+        qualified_teacher_status_year: Year QTS was awarded
 
       personal_details_form:
         email: Email
@@ -493,7 +516,13 @@ en:
         phone_number_provided_options:
           false: "No"
           true: "Yes"
-
+      jobseekers_profile_employment_form:
+        current_role_options:
+          "no": "No"
+          "yes": "Yes"
+        job_title: Role
+        main_duties: Main duties
+        organisation: Name of school or employer
       jobseekers_sign_in_form:
         email: Email address
         password: Password
@@ -764,13 +793,13 @@ en:
         started_on: Start date
       jobseekers_job_application_details_qualifications_category_form:
         category: What qualification would you like to add?
-      jobseekers_job_application_details_qualifications_shared_legends: &jobseekers_job_application_details_qualifications_shared_legends
+      jobseekers_qualifications_shared_legends: &jobseekers_qualifications_shared_legends
         finished_studying: Have you finished studying for this qualification?
         subjects: Subjects
       jobseekers_job_application_details_qualifications_degree_form:
-        <<: *jobseekers_job_application_details_qualifications_shared_legends
+        <<: *jobseekers_qualifications_shared_legends
       jobseekers_job_application_details_qualifications_other_form:
-        <<: *jobseekers_job_application_details_qualifications_shared_legends
+        <<: *jobseekers_qualifications_shared_legends
       jobseekers_job_application_feedback_form:
         rating: How satisfied are you with your experience of using Teaching Vacancies?
         user_participation_response: Would you like to participate in our research?
@@ -783,8 +812,17 @@ en:
         qualifications_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:
         withdraw_reason: Why would you like to withdraw your application?
+      jobseekers_qualifications_degree_form:
+        <<: *jobseekers_qualifications_shared_legends
+      jobseekers_qualifications_other_form:
+        <<: *jobseekers_qualifications_shared_legends
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
+
+      jobseekers_profile_employment_form:
+        current_role: Are you still working in this role?
+        ended_on: End date
+        started_on: Start date
 
       jobseekers_subscription_form:
         frequency: When do you want to receive alerts?
