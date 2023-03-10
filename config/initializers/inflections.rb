@@ -21,4 +21,6 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.acronym "ECT"
   inflect.acronym "SENDCo"
   inflect.acronym "DSI"
+
+  1.upto(5) { |n| inflect.acronym "KS#{n}" }
 end
