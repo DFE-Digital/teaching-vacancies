@@ -29,7 +29,7 @@ class AuthenticationController < ApplicationController
       .with_type(:jobseeker_sign_in_attempt)
       .with_request_details(request)
       .with_response_details(response)
-      .with_user(current_jobseeker)
+      .with_user(current_user)
       .with_data(
         email_identifier: StringAnonymiser.new(params.dig(:jobseeker, :email)),
         success: success_or_failure == :success,
@@ -51,7 +51,7 @@ class AuthenticationController < ApplicationController
       .with_type(:successful_publisher_sign_in_attempt)
       .with_request_details(request)
       .with_response_details(response)
-      .with_user(current_publisher)
+      .with_user(current_user)
       .with_data(user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid), sign_in_type: sign_in_type)
 
     DfE::Analytics::SendEvents.do([event])
@@ -86,9 +86,5 @@ class AuthenticationController < ApplicationController
       user_anonymised_id: StringAnonymiser.new(oid),
       sign_in_type: sign_in_type,
     )
-  end
-
-  def current_user
-    current_publisher || current_support_user || current_jobseeker
   end
 end
