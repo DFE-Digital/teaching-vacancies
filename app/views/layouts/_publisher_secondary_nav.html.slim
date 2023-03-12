@@ -1,6 +1,6 @@
 - if publisher_signed_in?
   .sub-navigation
     .govuk-width-container
-      = tabs html_attributes: { "aria-label": "publisher nav", "id": "publisher-nav" } do |tabs|
+      = tabs html_attributes: { "aria-label": "publisher nav", id: "publisher-nav" } do |tabs|
         - tabs.navigation_item text: "Job listings", link: organisation_jobs_with_type_path
         - tabs.navigation_item text: "Candidate profiles", link: publishers_jobseeker_profiles_path
