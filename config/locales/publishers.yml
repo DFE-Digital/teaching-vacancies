@@ -81,9 +81,9 @@ en:
           sendco: "SENDCo (special educational needs and disabilities coordinator)"
         qualified_teacher_status: "Qualified teaching status (QTS)"
         qts_options:
-          awarded: "Awarded QTS"
-          on_track: "On track to receive QTS"
-          none: "Does not have QTS"
+          "no": Does not have QTS
+          on_track: On track to receive QTS
+          "yes": Awarded QTS
         preferred_working_patterns: "Preferred working patterns"
         working_pattern_options:
           full_time: "Full time"
@@ -99,11 +99,11 @@ en:
         preferred_key_stages: "Preferred key stage"
         key_stage_options:
           early_years: "Early years"
-          ks_1: "Key stage 1"
-          ks_2: "Key stage 2"
-          ks_3: "Key stage 3"
-          ks_4: "Key stage 4"
-          ks_5: "Key stage 5"
+          ks1: "Key stage 1"
+          ks2: "Key stage 2"
+          ks3: "Key stage 3"
+          ks4: "Key stage 4"
+          ks5: "Key stage 5"
 
     login_keys:
       new:
