@@ -15,13 +15,6 @@ class Api::EventsController < Api::ApplicationController
     frontend_event.trigger(type, data)
     send_dfe_analytics_event(type, data)
 
-    event = DfE::Analytics::Event.new
-     .with_type(type)
-     .with_user(current_user)
-     .with_data(some: data)
-
-    DfE::Analytics::SendEvents.do([event])
-
     head :no_content
   end
 
@@ -45,6 +38,7 @@ class Api::EventsController < Api::ApplicationController
         .with_type(type)
         .with_request_details(request)
         .with_response_details(response)
+        .with_user(current_user)
         .with_data(data)
 
       DfE::Analytics::SendEvents.do([event])
