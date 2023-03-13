@@ -4,9 +4,16 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
     @form = Publishers::JobseekerProfilesForm.new(jobseeker_profiles_params)
   end
 
+  def show; end
+
   private
 
   def jobseeker_profiles_params
     params.permit(qualified_teacher_status: [], roles: [], working_patterns: [], key_stages: [], education_phases: [])
   end
+
+  def profile
+    @profile ||= JobseekerProfile.find(params[:id])
+  end
+  helper_method :profile
 end

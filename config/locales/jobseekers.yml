@@ -510,18 +510,6 @@ en:
       preview:
         show:
           page_title: Preview your profile
-          phone_number: Phone number
-          job_preferences: Job preferences
-          about: About
-          contact_details: Contact Details
-          email_address: Email address
-          work_history: Work history
-          qualifications: Qualifications
-          roles: Roles
-          education_phase: Education phase
-          key_stages: Key stages
-          working_pattern: Working pattern
-          location: Location
       personal_details:
         incomplete_message: You must complete your personal details before you turn on your profile.
         name:
@@ -623,6 +611,19 @@ en:
           title: Work history
         update:
           success: One role has been changed
+      summary:
+        about: About
+        contact_details: Contact Details
+        education_phase: Education phase
+        email_address: Email address
+        job_preferences: Job preferences
+        key_stages: Key stages
+        location: Location
+        phone_number: Phone number
+        qualifications: Qualifications
+        roles: Roles
+        work_history: Work history
+        working_pattern: Working pattern
     sessions:
       new:
         description: Sign in here if you are a teacher, aspiring teacher or work in education support. Once signed in you'll be able to save and apply for jobs.
