@@ -9,8 +9,8 @@
     = govuk_summary_list do |summary|
       - summary.row do |row|
         - row.key text: "Jobs to invite candidate to apply for"
-        - row.value text: @form.selected_jobs.map(&:job_title).map { |title| ''.html_safe + title }.join('<br/>').html_safe
-        - row.action text: 'Change', href: { action: :edit, step: @form.class.delegated_attributes['job_ids'] }
+        - row.value text: @form.selected_jobs.map(&:job_title).map { |title| "".html_safe + title }.join("<br/>").html_safe
+        - row.action text: "Change", href: { action: :edit, step: @form.class.delegated_attributes["job_ids"] }
 
     h2.govuk-heading-m Preview
     .govuk-inset-text

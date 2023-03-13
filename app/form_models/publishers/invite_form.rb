@@ -6,7 +6,7 @@ module Publishers
 
     Option = Struct.new(:value, :label, :hint)
 
-    attribute :jobseeker_id
+    attribute :jobseeker_profile_id
     attribute :organisation_id
     attribute :publisher_id
 
@@ -16,7 +16,7 @@ module Publishers
 
       def job_options
         @job_options ||= multistep.applicable_jobs.map do |job|
-          Option.new(job.id, job.job_title, I18n.t(job.job_role, scope: 'helpers.label.publishers_job_listing_job_role_form.job_role_options'))
+          Option.new(job.id, job.job_title, I18n.t(job.job_role, scope: "helpers.label.publishers_job_listing_job_role_form.job_role_options"))
         end
       end
     end
@@ -32,16 +32,16 @@ module Publishers
     end
 
     def jobseeker_name
-      personal_details = jobseeker.jobseeker_profile.personal_details
-      [personal_details.first_name, personal_details.last_name].join(' ')
+      personal_details = jobseeker_profile.personal_details
+      [personal_details.first_name, personal_details.last_name].join(" ")
     end
 
-    def jobseeker
-      @jobseeker ||= Jobseeker.find(jobseeker_id)
+    def jobseeker_profile
+      @jobseeker_profile ||= JobseekerProfile.find(jobseeker_profile_id)
     end
 
     def job_preferences
-      jobseeker.jobseeker_profile.job_preferences
+      jobseeker_profile.job_preferences
     end
 
     def organisation
@@ -49,7 +49,7 @@ module Publishers
     end
 
     def applicable_jobs
-      @job_options ||= job_preferences.vacancies(organisation.vacancies.active)
+      @applicable_jobs ||= job_preferences.vacancies(organisation.vacancies.active)
     end
 
     def selected_jobs
@@ -61,7 +61,7 @@ module Publishers
         InvitationToApply.new(
           vacancy_id: job_id,
           invited_by_id: publisher_id,
-          jobseeker_id: jobseeker_id
+          jobseeker_id: jobseeker_profile.jobseeker_id,
         )
       end
     end
@@ -69,7 +69,7 @@ module Publishers
     def mail
       @mail ||= InvitationsMailer.invite_to_apply(
         job_ids: job_ids,
-        jobseeker_id: jobseeker_id,
+        jobseeker_id: jobseeker_profile.jobseeker_id,
         publisher_id: publisher_id,
         organisation_id: organisation_id,
       )
