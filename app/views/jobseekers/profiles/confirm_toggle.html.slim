@@ -1,0 +1,12 @@
+- content_for :page_title_prefix, t(".confirm_turn_#{@off_on}")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = t("jobseekers.profiles.show.turn_#{@off_on}_profile")
+    h1.govuk-heading-l = t(".confirm_turn_#{@off_on}")
+    p = t("jobseekers.profiles.show.turn_#{@off_on}_profile_text")
+    p = govuk_button_to t("jobseekers.profiles.show.turn_#{@off_on}_profile"), toggle_jobseekers_profile_path
+    p = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
