@@ -1,0 +1,12 @@
+Dear <%= @jobseeker_name %>
+
+<%= @publisher_name %> at <%= @organisation_name %> has reviewed your profile. They'd like to invite you to apply for a role
+
+<%- @jobs.each do |job| %>
+  <%= job.job_title + "  " %>
+  <%= notify_link job_url(job) %>
+<% end %>
+
+### Get support
+
+Get support, report a problem or give feedback at <%= notify_mail_to I18n.t('help.email') %>

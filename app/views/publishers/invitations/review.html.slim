@@ -1,0 +1,19 @@
+- content_for :page_title_prefix, "Invite to apply for a job"
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: back_url
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l #{@form.jobseeker_name} - invite to apply for a job
+    h1.govuk-heading-l Check details and invite candidate to apply
+    = govuk_summary_list do |summary|
+      - summary.row do |row|
+        - row.key text: "Jobs to invite candidate to apply for"
+        - row.value text: @form.selected_jobs.map(&:job_title).map { |title| ''.html_safe + title }.join('<br/>').html_safe
+        - row.action text: 'Change', href: { action: :edit, step: @form.class.delegated_attributes['job_ids'] }
+
+    h2.govuk-heading-m Preview
+    .govuk-inset-text
+      = @form.mail_preview.html_safe
+
+    = govuk_button_link_to "Send invite to apply", jobseekers_profile_path

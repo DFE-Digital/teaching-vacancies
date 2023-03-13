@@ -1,0 +1,8 @@
+en:
+  activemodel:
+    errors:
+      models:
+        publishers/invite_form/job:
+          attributes:
+            job_ids:
+              what: Select at least one job to continue

@@ -155,6 +155,12 @@ Rails.application.routes.draw do
     end
     resource :terms_and_conditions, only: %i[show update]
     get :remove_organisation_filter, to: "publisher_preferences#remove_organisation"
+
+    scope controller: 'invitations', path: '/invite/:id' do
+      get "", action: :start, as: :job_preferences
+      get ":step", action: :edit, as: :job_preferences_step
+      post ":step", action: :update, as: nil
+    end
   end
 
   scope :publishers do
