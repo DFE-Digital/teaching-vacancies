@@ -16,4 +16,5 @@
     .govuk-inset-text
       = @form.mail_preview.html_safe
 
-    = govuk_button_link_to "Send invite to apply", jobseekers_profile_path
+    = form_for @step, url: { action: :update }, as: :invite do |f|
+      = f.govuk_submit "Send invite to apply"

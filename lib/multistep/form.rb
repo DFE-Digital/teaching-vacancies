@@ -86,6 +86,8 @@ module Multistep
       super values.to_h { |k, v| [k.to_sym, v.to_sym] }
     end
 
+    def complete!; end
+
     module ClassMethods
       def steps
         @steps ||= {}

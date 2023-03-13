@@ -23,6 +23,14 @@ module Publishers
 
     step :review
 
+    def complete!
+      ApplicationRecord.transaction do
+        invitations.each(&:save!)
+      end
+
+      mail.deliver_later
+    end
+
     def jobseeker_name
       personal_details = jobseeker.jobseeker_profile.personal_details
       [personal_details.first_name, personal_details.last_name].join(' ')
@@ -46,6 +54,16 @@ module Publishers
 
     def selected_jobs
       @selected_jobs ||= Vacancy.where(id: job_ids)
+    end
+
+    def invitations
+      @invitations ||= job_ids.map do |job_id|
+        InvitationToApply.new(
+          vacancy_id: job_id,
+          invited_by_id: publisher_id,
+          jobseeker_id: jobseeker_id
+        )
+      end
     end
 
     def mail
