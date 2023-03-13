@@ -55,6 +55,8 @@ RSpec.describe "Subscriptions" do
     let(:created_subscription) { Subscription.last }
 
     before do
+      create(:location_polygon, name: "london")
+
       # Required to set the session
       get new_subscription_path
     end
@@ -101,6 +103,8 @@ RSpec.describe "Subscriptions" do
 
   describe "PATCH #update" do
     subject { put subscription_path(subscription.token), params: { jobseekers_subscription_form: params } }
+
+    before { create(:location_polygon, name: "london") }
 
     let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
 

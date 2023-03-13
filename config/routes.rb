@@ -132,6 +132,7 @@ Rails.application.routes.draw do
       patch "unsubscribe", to: "accounts#unsubscribe"
     end
     resources :login_keys, only: %i[show new create]
+    resources :jobseeker_profiles, only: %i[index show]
     resource :new_features, only: %i[show update] do
       get :reminder
     end

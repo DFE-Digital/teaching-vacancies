@@ -25,6 +25,8 @@ RSpec.describe LocationPolygon do
 
   describe ".contain?" do
     context "when location is contained on the list of locations to import" do
+      before { create(:location_polygon, name: "london") }
+
       it "returns true" do
         expect(described_class.contain?("London")).to be_truthy
       end

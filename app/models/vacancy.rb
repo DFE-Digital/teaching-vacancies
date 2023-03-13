@@ -52,6 +52,7 @@ class Vacancy < ApplicationRecord
   has_many :organisation_vacancies, dependent: :destroy
   has_many :organisations, through: :organisation_vacancies, dependent: :destroy, after_add: :refresh_geolocation, after_remove: :refresh_geolocation
   has_many :markers, dependent: :destroy
+  has_many :feedbacks, dependent: :destroy, inverse_of: :vacancy
 
   delegate :name, to: :organisation, prefix: true, allow_nil: true
 
