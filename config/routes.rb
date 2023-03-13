@@ -134,6 +134,7 @@ Rails.application.routes.draw do
     resources :login_keys, only: %i[show new create]
     resources :jobseeker_profiles, only: %i[index show] do
       member do
+        resources :invitations, only: :index
         scope controller: "invitations", path: "/invite" do
           get "", action: :start, as: :invite_to_apply
           get ":step", action: :edit, as: :invite_to_apply_step

@@ -1,11 +1,2 @@
-- content_for :page_title_prefix, profile.full_name
-
-- content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: publishers_jobseeker_profiles_path
-
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = profile.full_name
-    - if can_invite?
-      = govuk_link_to "Invite to apply for a job", invite_to_apply_publishers_jobseeker_profile_path, class: %i[govuk-button govuk-!-margin-bottom-6]
-    = render "jobseekers/profiles/summary"
+= render layout: "layout", profile: profile do
+  = render "jobseekers/profiles/summary"

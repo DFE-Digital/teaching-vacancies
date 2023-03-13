@@ -18,10 +18,7 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
   helper_method :profile
 
   def can_invite?
-    Publishers::InviteForm.new(
-      organisation_id: current_organisation.id,
-      jobseeker_profile_id: profile.id,
-    ).applicable_jobs.any?
+    Publishers::InviteForm.new(organisation_id: current_organisation.id, jobseeker_profile_id: profile.id).applicable_jobs.any?
   end
   helper_method :can_invite?
 end

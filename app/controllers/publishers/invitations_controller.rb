@@ -6,6 +6,11 @@ class Publishers::InvitationsController < Publishers::BaseController
   multistep_form Publishers::InviteForm, key: :invite
   escape_path { publishers_jobseeker_profile_path(@form.jobseeker_profile_id) }
 
+  def index
+    @profile = JobseekerProfile.find(params[:id])
+    @invitations = InvitationToApply.where(jobseeker_id: @profile.jobseeker_id)
+  end
+
   def start
     @form = self.class.multistep_form.new(
       jobseeker_profile_id: params[:id],
