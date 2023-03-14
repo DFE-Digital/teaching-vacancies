@@ -3,12 +3,16 @@ class Geocoding
 
   attr_reader :location
 
+  def self.test_coordinates
+    Geocoder::DEFAULT_STUB_COORDINATES
+  end
+
   def initialize(location)
     @location = location
   end
 
   def coordinates
-    return Geocoder::DEFAULT_STUB_COORDINATES if Rails.application.config.geocoder_lookup == :test
+    return self.class.test_coordinates if Rails.application.config.geocoder_lookup == :test
 
     Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
       Geocoder.coordinates(location, lookup: :google, components: "country:gb")
