@@ -604,6 +604,7 @@ en:
           caption: Work history
           page_title: Add a role — Profile
           title: Role
+          hint_text: If you have had more than one role at the same school, add them all separately.
         review:
           add_role_button_text: Add role
           return_to_profile: Return to profile
