@@ -80,7 +80,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
         .with_type(event_type)
         .with_request_details(request)
         .with_response_details(response)
-        .with_user(current_user)
+        .with_user(current_publisher)
         .with_data(
           vacancy_id: StringAnonymiser.new(vacancy.id),
           document_type: "supporting_document",
