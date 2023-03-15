@@ -9,12 +9,6 @@ module VacanciesHelper
     items.map(&:humanize).join(", ")
   end
 
-  def location_formatter(items)
-    items.map { |value|
-      "#{value['location']} (#{t('jobs.search.number_of_miles', count: value['radius'].to_i)})"
-    }.join(" ")
-  end
-
   def page_title_prefix(step_process, form_object)
     page_heading = t("publishers.vacancies.steps.#{step_process.current_step}")
     create_or_edit = step_process.vacancy.published? ? "edit" : "create"

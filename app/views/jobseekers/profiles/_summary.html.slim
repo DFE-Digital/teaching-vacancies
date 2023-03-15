@@ -38,7 +38,10 @@
           - if (locations = job_preferences.locations).present?
             - summary_list.row do |row|
               - row.key text: t(".location")
-              - row.value text: location_formatter(locations)
+              - row.value do
+                .govuk-list
+                  - locations.each do |location|
+                    li = "#{location.name} (#{t('jobs.search.number_of_miles', count: location.radius&.to_i)})"
 
     - if profile.about_you.present?
       h2.govuk-heading-m class="govuk-!-padding-bottom-2"
