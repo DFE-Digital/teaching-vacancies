@@ -530,10 +530,22 @@ en:
           phone_number: Phone number
           phone_number_provided: Do you want to provide a phone number?
       show:
-        activate_profile_text: When you turn on your profile, it'll be visible to hiring staff.
+        active: Active
         imported: You have recently submitted a job application, so some of your details have been imported into your profile.
         page_description: Your profile allows schools to find and invite you to apply for their jobs.
         page_title: Your profile
+        preview_and_turn_off_profile: Preview and turn off profile
+        preview_and_turn_on_profile: Preview and turn on profile
+        preview_profile: Preview profile
+        profile_turned_off: Profile turned off
+        profile_turned_on: Profile turned on
+        turn_off_profile_text: When you turn off your profile it will not be visible to hiring staff in schools and trusts.
+        turn_off_profile: Turn off profile
+        turn_on_profile_text: When you turn on your profile it will be visible to hiring staff, and they can invite you to apply for roles.
+        turn_on_profile: Turn on profile
+      confirm_toggle:
+        confirm_turn_off: Confirm that you want to turn off your profile
+        confirm_turn_on: Confirm that you want to turn on your profile
       about_you:
         edit:
           page_title: About You

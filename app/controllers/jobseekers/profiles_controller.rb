@@ -55,17 +55,20 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       link_text: "Set up who cannot view your profile",
       page_path: -> { "" },
     },
-    {
-      title: "Preview and turn on profile",
-      display_summary: -> { false },
-      key: "",
-      link_text: "Preview profile",
-      page_path: -> { jobseekers_profile_preview_path },
-    },
   ].map(&:freeze).freeze
 
   def show
     @sections = SECTIONS
+    @off_on = (profile.active? ? "off" : "on")
+  end
+
+  def confirm_toggle
+    @off_on = (profile.active? ? "off" : "on")
+  end
+
+  def toggle
+    profile.update!(active: !profile.active?)
+    redirect_to jobseekers_profile_path, success: t("jobseekers.profiles.show.profile_turned_#{profile.active? ? 'on' : 'off'}")
   end
 
   private

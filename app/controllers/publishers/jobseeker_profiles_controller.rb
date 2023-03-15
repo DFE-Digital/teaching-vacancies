@@ -4,7 +4,9 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
     @form = Publishers::JobseekerProfileSearchForm.new(jobseeker_profile_search_params)
   end
 
-  def show; end
+  def show
+    not_found unless profile.active?
+  end
 
   private
 
