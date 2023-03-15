@@ -1,10 +1,9 @@
-  = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |notification_banner|
-    - notification_banner.heading(text: "Create a profile")
+= govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |notification_banner|
+  - notification_banner.heading(text: "Create a profile")
 
-	p.govuk-body =  t("candidate_profiles_banner.intro")
-	ul.govuk-list.govuk-list--bullet
-			- t("candidate_profiles_banner.summary_list").each do |item|
-				li = item
+  p.govuk-body = t("candidate_profiles_banner.intro")
+  ul.govuk-list.govuk-list--bullet
+    - t("candidate_profiles_banner.summary_list").each do |item|
+      li = item
 
-  	= govuk_link_to t("candidate_profiles_banner.link_to_profile"), jobseekers_profile_path, class: "govuk-link--no-visited-state"
-	
+    = govuk_link_to t("candidate_profiles_banner.link_to_profile"), jobseekers_profile_path, class: "govuk-link--no-visited-state"

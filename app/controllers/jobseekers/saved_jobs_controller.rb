@@ -54,7 +54,9 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   end
 
   def section_completed(object)
-    step_phases = %w[completed skipped]
-    object["completed_steps"].values.all? { |step| step_phases.include?(step) }
+    if object && object["completed_steps"].any?
+      step_phases = %w[completed skipped]
+      object["completed_steps"].values.all? { |step| step_phases.include?(step) }
+    end
   end
 end
