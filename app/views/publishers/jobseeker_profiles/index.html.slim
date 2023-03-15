@@ -18,9 +18,15 @@ p = t("publishers.jobseeker_profiles.available_to_travel_text")
         - filters_component.group key: "key_stages", component: f.govuk_collection_check_boxes(:key_stages, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_key_stages") }, hint: nil)
 
   .govuk-grid-column-two-thirds-at-desktop
-    p = t("publishers.jobseeker_profiles.sort_result_text")
-    #search-results
-      - if @jobseeker_profiles.any?
+    - if @jobseeker_profiles.any?
+      p = t("publishers.jobseeker_profiles.sort_result_text")
+      #search-results
         = render "publishers/jobseeker_profiles/search/results", jobseeker_profiles: @jobseeker_profiles
-
-    = govuk_pagination(pagy: @pagy)
+      = govuk_pagination(pagy: @pagy)
+    - else
+      h2.govuk-heading-m = t(".no_results.heading")
+      p = t(".no_results.lead_in")
+      ul.govuk-list.govuk-list--bullet
+        li = t(".no_results.not_turned_on_profile")
+        li = t(".no_results.outside_location")
+      p = t(".no_results.lead_out")
