@@ -15,6 +15,10 @@ class JobseekerProfile < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
+  delegate :email, to: :jobseeker
+
+  delegate :first_name, :last_name, to: :personal_details, allow_nil: true
+
   enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2 }
 
   def self.copy_attributes(record, previous_application)
@@ -44,7 +48,7 @@ class JobseekerProfile < ApplicationRecord
   end
 
   def full_name
-    [first_name, last_name].join(" ")
+    [first_name, last_name].join(" ").presence || "Jobseeker"
   end
 
   def qts_status

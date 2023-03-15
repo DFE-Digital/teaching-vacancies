@@ -81,6 +81,29 @@
       "note": "This is our own static data with no user input provided in the query"
     },
     {
+      "warning_type": "Unscoped Find",
+      "warning_code": 82,
+      "fingerprint": "91f40c38375f0a636bff503e39582a6114915364463203def97bbcfdf77077bc",
+      "check_name": "UnscopedFind",
+      "message": "Unscoped call to `JobseekerProfile#find`",
+      "file": "app/controllers/publishers/jobseeker_profiles_controller.rb",
+      "line": 16,
+      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
+      "code": "JobseekerProfile.find(params[:id])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Publishers::JobseekerProfilesController",
+        "method": "profile"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        285
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "96ec063511ec5b3ff90cd40b0814b7c156c7aab549803b3cb6837de5141336a6",

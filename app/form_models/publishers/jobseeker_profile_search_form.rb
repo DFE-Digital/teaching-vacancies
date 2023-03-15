@@ -1,4 +1,4 @@
-class Publishers::JobseekerProfilesForm
+class Publishers::JobseekerProfileSearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
@@ -13,7 +13,7 @@ class Publishers::JobseekerProfilesForm
   end
 
   def qts_options
-    %w[awarded on_track none].map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.qts_options")] }
+    %w[yes on_track no].map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.qts_options")] }
   end
 
   def working_pattern_options
@@ -25,6 +25,6 @@ class Publishers::JobseekerProfilesForm
   end
 
   def key_stage_options
-    %w[early_years ks_1 ks_2 ks_3 ks_4 ks_5].map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.key_stage_options")] }
+    %w[early_years ks1 ks2 ks3 ks4 ks5].map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.key_stage_options")] }
   end
 end

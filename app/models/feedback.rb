@@ -48,4 +48,10 @@ class Feedback < ApplicationRecord
   scope :with_comments, -> { except_job_alerts.where.not(comment: "") }
   scope :contactable, -> { except_job_alerts.where(user_participation_response: :interested) }
   scope :with_comments_or_contactable, -> { with_comments.or(contactable) }
+
+  belongs_to :job_application, optional: true, inverse_of: :feedbacks
+  belongs_to :jobseeker, optional: true
+  belongs_to :publisher, optional: true
+  belongs_to :subscription, optional: true
+  belongs_to :vacancy, optional: true
 end

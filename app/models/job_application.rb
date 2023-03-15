@@ -39,6 +39,8 @@ class JobApplication < ApplicationRecord
   has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
 
+  has_many :feedbacks, dependent: :destroy, inverse_of: :job_application
+
   has_noticed_notifications
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }

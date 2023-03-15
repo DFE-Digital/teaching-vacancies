@@ -639,7 +639,7 @@ en:
         jobseekers/profile/qualified_teacher_status_form:
           attributes:
             qualified_teacher_status:
-              inclusion: Enter your qualified teacher status details
+              inclusion: Select yes if you have qualified teacher status (QTS)
             qualified_teacher_status_year:
               less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
               not_a_number: Enter the year your QTS was awarded
