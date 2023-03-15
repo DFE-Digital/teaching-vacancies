@@ -126,4 +126,9 @@ class ApplicationController < ActionController::Base
       Sentry.set_user(id: user.id, "User Type": user.class.name)
     end
   end
+
+  # Current user is required by the DfE::Analytics::Event gem.
+  def current_user
+    current_publisher || current_support_user || current_jobseeker
+  end
 end
