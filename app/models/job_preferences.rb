@@ -5,14 +5,14 @@ class JobPreferences < ApplicationRecord
   has_many :locations, dependent: :destroy
 
   def all_roles
-    roles.join(", ")
+    roles.map(&:humanize).join(", ")
   end
 
   def all_key_stages
-    key_stages.join(", ")
+    key_stages.map(&:humanize).join(", ")
   end
 
   def all_working_patterns
-    working_patterns.join(", ")
+    working_patterns.map(&:humanize).join(", ")
   end
 end
