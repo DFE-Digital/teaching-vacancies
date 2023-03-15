@@ -24,10 +24,13 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
 
   def candidate_profile_complete?
     profile = current_jobseeker.jobseeker_profile
-    personal_details = profile.personal_details
-    job_preferences = profile.job_preferences
+    
+    if profile
+      personal_details = profile.personal_details
+      job_preferences = profile.job_preferences
 
-    section_completed(personal_details) && section_completed(job_preferences)
+      section_completed(personal_details) && section_completed(job_preferences)
+    end
   end
   helper_method :candidate_profile_complete?
 
