@@ -2,6 +2,8 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   helper_method :saved_jobs, :sort
 
   def index
+    @show_candidate_profiles_banner = show_candidate_profiles_banner
+
     redirect_to jobseekers_job_applications_path if session.delete(:after_sign_in) && current_jobseeker.job_applications.any?
   end
 
@@ -22,6 +24,15 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
 
   private
 
+  def show_candidate_profiles_banner
+    @profile ||= JobseekerProfile.where(jobseeker_id: current_jobseeker.id)
+
+    personal_details = PersonalDetails.where(jobseeker_profile_id: @profile).first
+    job_preferences = JobPreferences.where(jobseeker_profile_id: @profile).first
+
+    section_completed(personal_details) && section_completed(job_preferences)
+  end
+
   def saved_job
     @saved_job ||= current_jobseeker.saved_jobs.find_or_initialize_by(vacancy_id: vacancy.id)
   end
@@ -40,5 +51,10 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
 
   def vacancy
     @vacancy ||= Vacancy.listed.find(saved_job_params[:job_id])
+  end
+
+  def section_completed(object)
+    step_phases = %w[completed skipped]
+    object["completed_steps"].values.all? { |step| step_phases.include?(step) }
   end
 end
