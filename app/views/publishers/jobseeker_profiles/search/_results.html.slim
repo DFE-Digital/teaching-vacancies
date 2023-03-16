@@ -9,15 +9,15 @@
         - summary_list.row do |row|
           - row.value text: jobseeker_profile.qts_status, classes: "govuk-body-s govuk-!-padding-bottom-0"
 
-        - if jobseeker_profile.job_preferences.present?
+        - if (preferences = jobseeker_profile.job_preferences).present?
           - summary_list.row do |row|
-            - row.key text: t("publishers.jobseeker_profiles.preferred_role"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.key text: t("publishers.jobseeker_profiles.preferred_roles", count: preferences.roles.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
             - row.value text: jobseeker_profile.all_roles, classes: "govuk-body-s govuk-!-padding-bottom-0"
 
           - summary_list.row do |row|
-            - row.key text: t("publishers.jobseeker_profiles.preferred_key_stage"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.key text: t("publishers.jobseeker_profiles.preferred_key_stages", count: preferences.key_stages.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
             - row.value text: jobseeker_profile.all_key_stages, classes: "govuk-body-s govuk-!-padding-bottom-0"
 
           - summary_list.row do |row|
-            - row.key text: t("publishers.jobseeker_profiles.preferred_working_patterns"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.key text: t("publishers.jobseeker_profiles.preferred_working_patterns", count: preferences.working_patterns.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
             - row.value text: jobseeker_profile.job_preferences.all_working_patterns, classes: "govuk-body-s govuk-!-padding-bottom-0"

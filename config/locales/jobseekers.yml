@@ -507,6 +507,23 @@ en:
       success_html: >-
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     profiles:
+      job_preferences:
+        summary:
+          key_stages:
+            one: Key stage
+            other: Key stages
+          locations:
+            one: Location
+            other: Locations
+          phases:
+            one: Education phase
+            other: Education phases
+          roles:
+            one: Role
+            other: Roles
+          working_patterns:
+            one: Working pattern
+            other: Working patterns
       preview:
         show:
           page_title: Preview your profile
@@ -626,17 +643,28 @@ en:
           success: One role has been changed
       summary:
         about: About
-        contact_details: Contact Details
-        education_phase: Education phase
-        email_address: Email address
+        contact_details: Contact details
         job_preferences: Job preferences
-        key_stages: Key stages
-        location: Location
+        key_stages:
+          one: Key stage
+          other: Key stages
+        education_phases:
+          one: Education phase
+          other: Education phases
+        email_address: Email address
+        locations:
+          one: Location
+          other: Locations
         phone_number: Phone number
         qualifications: Qualifications
-        roles: Roles
+        roles:
+          one: Role
+          other: Roles
         work_history: Work history
-        working_pattern: Working pattern
+        working_patterns:
+          one: Working pattern
+          other: Working patterns
+
     sessions:
       new:
         description: Sign in here if you are a teacher, aspiring teacher or work in education support. Once signed in you'll be able to save and apply for jobs.
