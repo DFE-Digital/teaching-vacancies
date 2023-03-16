@@ -16,6 +16,8 @@ FactoryBot.define do
         locations: "completed",
       }
     end
+
+    locations { build_list(:job_preferences_location, 1, radius: 200, job_preferences: nil) }
     jobseeker_profile
   end
 end
