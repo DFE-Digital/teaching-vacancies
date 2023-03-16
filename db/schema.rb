@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_27_131731) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_16_091806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -421,6 +421,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_131731) do
     t.json "completed_steps", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "first_name_ciphertext"
+    t.text "last_name_ciphertext"
+    t.text "phone_number_ciphertext"
     t.index ["jobseeker_profile_id"], name: "index_personal_details_on_jobseeker_profile_id"
   end
 
