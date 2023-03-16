@@ -5,7 +5,7 @@
 
     h1.govuk-heading-l = t(".title")
 
-    = govuk_button_link_to(t(".add_role_button_text"), new_jobseekers_profile_work_history_path)
+    = govuk_button_link_to(t(".add_role_button_text"), new_jobseekers_profile_work_history_path, class: "govuk-button--secondary")
 
     = render "jobseekers/employments/employments", employments: @employments
 
