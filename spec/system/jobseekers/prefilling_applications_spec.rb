@@ -10,7 +10,7 @@ RSpec.describe "Jobseekers can prefill applications" do
   end
 
   context "when the jobseeker has a completed profile" do
-    let(:profile) { create(:jobseeker_profile, :with_qualifications, :with_employment_history, qualified_teacher_status: "yes") }
+    let(:profile) { create(:jobseeker_profile, :completed, qualified_teacher_status: "yes") }
     let(:jobseeker) { profile.jobseeker }
 
     it "prefills the application form with the jobseeker's details" do

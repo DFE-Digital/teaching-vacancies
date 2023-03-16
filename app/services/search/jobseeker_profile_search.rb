@@ -1,12 +1,12 @@
 class Search::JobseekerProfileSearch
-  def initialize(filters, organisation)
+  def initialize(filters)
     @filters = filters
-    @organisation = organisation
+    @current_organisation = filters[:current_organisation]
   end
 
   def jobseeker_profiles # rubocop:disable Metrics/AbcSize
     scope = JobseekerProfile.includes(:job_preferences).active
-    scope = scope.where(job_preferences: { id: location_preferences_containing_organisation_ids })
+    scope = scope.where(job_preferences: { id: location_preferences_ids_matching_location_search })
     scope = scope.where(qualified_teacher_status: filters[:qualified_teacher_status]) if filters[:qualified_teacher_status].present?
     scope = scope.where("job_preferences.roles && ARRAY[?]::varchar[]", filters[:roles]) if filters[:roles].present?
     scope = scope.where("job_preferences.working_patterns && ARRAY[?]::varchar[]", filters[:working_patterns]) if filters[:working_patterns].present?
@@ -18,11 +18,25 @@ class Search::JobseekerProfileSearch
 
   private
 
-  attr_reader :filters, :organisation
+  attr_reader :filters, :current_organisation
 
-  def location_preferences_containing_organisation_ids
-    return ::JobPreferences::Location.containing(organisation.geopoint).pluck(:job_preferences_id) if organisation.school?
+  def location_preferences_ids_matching_location_search
+    return location_preferences_containing_school(current_organisation) if current_organisation.school?
 
-    organisation.schools.flat_map { |school| ::JobPreferences::Location.containing(school.geopoint).uniq.pluck(:job_preferences_id) }
+    return location_preferences_containing_schools(schools_from_filters) if filters[:locations].present?
+
+    location_preferences_containing_schools(current_organisation.schools)
+  end
+
+  def location_preferences_containing_school(school)
+    JobPreferences::Location.containing(school.geopoint).pluck(:job_preferences_id)
+  end
+
+  def location_preferences_containing_schools(schools)
+    schools.flat_map { |school| JobPreferences::Location.containing(school.geopoint).uniq.pluck(:job_preferences_id) }
+  end
+
+  def schools_from_filters
+    School.where(id: filters[:locations])
   end
 end

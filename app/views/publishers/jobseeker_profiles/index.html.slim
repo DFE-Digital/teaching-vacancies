@@ -11,6 +11,8 @@ p = t("publishers.jobseeker_profiles.available_to_travel_text")
       = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
         options: { heading_text: "Filter", remove_filter_links: false },
         html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
+        - if current_organisation.trust?
+          - filters_component.group key: "location", component: f.govuk_collection_check_boxes(:locations, f.object.school_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.schools") })
         - filters_component.group key: "qualified_teacher_status", component: f.govuk_collection_check_boxes(:qualified_teacher_status, f.object.qts_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.qualified_teacher_status") }, hint: nil)
         - filters_component.group key: "roles", component: f.govuk_collection_check_boxes(:roles, f.object.role_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_roles") }, hint: nil)
         - filters_component.group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, f.object.working_pattern_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_working_patterns") }, hint: nil)

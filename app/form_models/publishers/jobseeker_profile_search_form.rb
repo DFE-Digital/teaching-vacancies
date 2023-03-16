@@ -2,11 +2,17 @@ class Publishers::JobseekerProfileSearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attribute :roles
+  attribute :current_organisation
+  attribute :locations
   attribute :qualified_teacher_status
+  attribute :roles
   attribute :working_patterns
   attribute :education_phases
   attribute :key_stages
+
+  def school_options
+    current_organisation.schools.map { |school| [school.id, school.name] }
+  end
 
   def role_options
     Vacancy.job_roles.keys.map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.role_options")] }
