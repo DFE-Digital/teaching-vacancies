@@ -18,30 +18,30 @@
     - if (job_preferences = profile.job_preferences).present?
       h2.govuk-heading-m class="govuk-!-margin-bottom-5"
         = t(".job_preferences")
-        = govuk_summary_list do |summary_list|
-          - if (roles = job_preferences.roles).present?
-            - summary_list.row do |row|
-              - row.key text: t(".roles")
-              - row.value text: humanize_array(roles)
-          - if (phases = job_preferences.phases).present?
-            - summary_list.row do |row|
-              - row.key text: t(".education_phase")
-              - row.value text: humanize_array(phases)
-          - if (stages = job_preferences.key_stages).present?
-            - summary_list.row do |row|
-              - row.key text: t(".key_stages")
-              - row.value text: humanize_array(stages)
-          - if (patterns = job_preferences.working_patterns).present?
-            - summary_list.row do |row|
-              - row.key text: t(".working_pattern")
-              - row.value text: humanize_array(patterns)
-          - if (locations = job_preferences.locations).present?
-            - summary_list.row do |row|
-              - row.key text: t(".location")
-              - row.value do
-                .govuk-list
-                  - locations.each do |location|
-                    li = "#{location.name} (#{t('jobs.search.number_of_miles', count: location.radius&.to_i)})"
+      = govuk_summary_list do |summary_list|
+        - if (roles = job_preferences.roles).present?
+          - summary_list.row do |row|
+            - row.key text: t(".roles")
+            - row.value text: humanize_array(roles)
+        - if (phases = job_preferences.phases).present?
+          - summary_list.row do |row|
+            - row.key text: t(".education_phase")
+            - row.value text: humanize_array(phases)
+        - if (stages = job_preferences.key_stages).present?
+          - summary_list.row do |row|
+            - row.key text: t(".key_stages")
+            - row.value text: humanize_array(stages)
+        - if (patterns = job_preferences.working_patterns).present?
+          - summary_list.row do |row|
+            - row.key text: t(".working_pattern")
+            - row.value text: humanize_array(patterns)
+        - if (locations = job_preferences.locations).present?
+          - summary_list.row do |row|
+            - row.key text: t(".location")
+            - row.value do
+              .govuk-list
+                - locations.each do |location|
+                  li = "#{location.name} (#{t('jobs.search.number_of_miles', count: location.radius&.to_i)})"
 
     - if profile.about_you.present?
       h2.govuk-heading-m class="govuk-!-padding-bottom-2"
