@@ -5,7 +5,8 @@ class PersonalDetails < ApplicationRecord
 
   before_save :reset_phone_number
 
-  has_encrypted :first_name, :last_name, :phone_number, migrating: true
+  has_encrypted :first_name, :last_name, :phone_number
+  self.ignored_columns = %w[first_name last_name phone_number].freeze
 
   def self.attributes_to_copy
     %w[
