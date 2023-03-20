@@ -46,7 +46,7 @@
     - if profile.about_you.present?
       h2.govuk-heading-m class="govuk-!-padding-bottom-2"
         = t(".about")
-      p = profile.about_you
+      p = simple_format(profile.about_you)
 
     h2.govuk-heading-m class="govuk-!-padding-bottom-3"
       = t(".contact_details")
