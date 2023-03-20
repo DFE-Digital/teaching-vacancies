@@ -18,6 +18,7 @@ p = t("publishers.jobseeker_profiles.available_to_travel_text")
         - filters_component.group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, f.object.working_pattern_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_working_patterns") }, hint: nil)
         - filters_component.group key: "education_phases", component: f.govuk_collection_check_boxes(:education_phases, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_education_phases") }, hint: nil)
         - filters_component.group key: "key_stages", component: f.govuk_collection_check_boxes(:key_stages, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_key_stages") }, hint: nil)
+        = render "shared/subjects_filter", filters_component: filters_component, f: f
 
   .govuk-grid-column-two-thirds-at-desktop
     - if @jobseeker_profiles.any?

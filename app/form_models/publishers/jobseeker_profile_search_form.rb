@@ -9,6 +9,7 @@ class Publishers::JobseekerProfileSearchForm
   attribute :working_patterns
   attribute :education_phases
   attribute :key_stages
+  attribute :subjects
 
   def school_options
     current_organisation.schools.map { |school| [school.id, school.name] }

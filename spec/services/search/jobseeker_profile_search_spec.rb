@@ -220,17 +220,29 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
     end
 
-    context "when multiple filters in the same group have been applied" do
-      let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: %w[KS1 KS2] } }
-      let(:control_job_preferences_attrs) { { key_stages: %w[KS3] } }
+    context "job_preferences subjects" do
+      let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: %w[History] } }
+      let(:control_job_preferences_attrs) { { subjects: %w[Biology] } }
       let(:control_profile_attrs) { {} }
 
-      let!(:job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: job_preferences) }
-      let(:job_preferences) { create(:job_preferences, key_stages: %w[KS1], jobseeker_profile: jobseeker_profile) }
-      let(:jobseeker_profile) { create(:jobseeker_profile) }
+      let(:history_jobseeker_profile) { create(:jobseeker_profile) }
+      let(:history_job_preferences) { create(:job_preferences, subjects: %w[History], jobseeker_profile: history_jobseeker_profile) }
+      let!(:history_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: history_job_preferences) }
 
-      it "should return a jobseeker profile with an attribute matching any of the values used in the filter" do
-        expect(search.jobseeker_profiles).to eq([jobseeker_profile])
+      it "should only return the jobseeker profiles with subjects present in the filters" do
+        expect(search.jobseeker_profiles).to eq([history_jobseeker_profile])
+      end
+
+      context "searching using multiple subjects" do
+        let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], working_patterns: [], phases: [], key_stages: [], subjects: %w[History Chemistry] } }
+
+        let(:chemistry_jobseeker_profile) { create(:jobseeker_profile) }
+        let(:chemistry_job_preferences) { create(:job_preferences, subjects: %w[Chemistry], jobseeker_profile: chemistry_jobseeker_profile) }
+        let!(:chemistry_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: chemistry_job_preferences) }
+
+        it "should return the jobseeker profiles with the key_stages specified in the filters" do
+          expect(search.jobseeker_profiles).to eq([history_jobseeker_profile, chemistry_jobseeker_profile])
+        end
       end
     end
 
