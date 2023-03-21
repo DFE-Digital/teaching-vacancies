@@ -13,7 +13,7 @@ module Publishers
 
       @subject = I18n.t("publishers.invitations_mailer.invite_to_apply.subject")
 
-      view_mail(template, to: @to, subject: @subject)
+      view_mail(template, to: jobseeker.email, subject: @subject)
     end
   end
 end

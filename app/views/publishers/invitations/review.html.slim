@@ -18,3 +18,4 @@
 
     = form_for @step, url: { action: :update }, as: :invite do |f|
       = f.govuk_submit "Send invite to apply"
+      p = f.link_to t("buttons.cancel"), escape_path
