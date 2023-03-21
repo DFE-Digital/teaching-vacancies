@@ -5,22 +5,22 @@ en:
         jobseekers/job_preferences_form/role:
           attributes:
             roles:
-              blank: Select what roles you are interested in to continue
+              blank: Select the roles you are interested in to continue
 
         jobseekers/job_preferences_form/phase:
           attributes:
             phases:
-              blank: Select what education phases you are interested in to continue
+              blank: Select the education phases you are interested in to continue
 
         jobseekers/job_preferences_form/key_stage:
           attributes:
             key_stages:
-              blank: Select what key stages you are interested in to continue
+              blank: Select the key stages you are interested in to continue
 
         jobseekers/job_preferences_form/working_pattern:
           attributes:
             working_patterns:
-              blank: Select what working patterns you are interested in to continue
+              blank: Select the working patterns you are interested in to continue
 
         jobseekers/job_preferences_form/location_form:
           attributes:

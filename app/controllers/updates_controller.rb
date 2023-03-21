@@ -1,5 +1,3 @@
-require "updates_parser"
-
 class UpdatesController < ApplicationController
   def index
     update_paths = Dir.glob(Rails.root.join("app/views/updates/update_files/*").to_s)

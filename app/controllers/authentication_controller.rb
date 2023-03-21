@@ -87,8 +87,4 @@ class AuthenticationController < ApplicationController
       sign_in_type: sign_in_type,
     )
   end
-
-  def current_user
-    current_publisher || current_support_user || current_jobseeker
-  end
 end

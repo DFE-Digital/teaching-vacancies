@@ -19,4 +19,8 @@ class Employment < ApplicationRecord
       subjects:,
     )
   end
+
+  def current_role?
+    current_role == "yes"
+  end
 end

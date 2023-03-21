@@ -11,7 +11,7 @@
         span.govuk-caption-l Job preferences
         | Locations
 
-      = govuk_summary_list(classes: %w[govuk-summary-list--no-wrap-actions]) do |summary_list|
+      = govuk_summary_list(classes: "locations-summary-list") do |summary_list|
         = @form.locations.each.with_index do |(id, location), index|
           - summary_list.row do |row|
             - row.key text: "Location #{index + 1}"

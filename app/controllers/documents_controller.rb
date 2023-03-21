@@ -50,8 +50,4 @@ class DocumentsController < ApplicationController
                             filename: file.filename)
     end
   end
-
-  def current_user
-    current_publisher || current_jobseeker
-  end
 end

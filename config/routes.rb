@@ -96,6 +96,9 @@ Rails.application.routes.draw do
         end
         get :confirm_destroy
       end
+
+      get "confirm_toggle", to: "profiles#confirm_toggle"
+      post "toggle", to: "profiles#toggle"
     end
 
     scope controller: "profiles/job_preferences", path: "profile/job-preferences" do
