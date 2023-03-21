@@ -9,7 +9,7 @@ class JobPreferences < ApplicationRecord
 
     before_save :set_area
 
-    scope :containing, ->(point) { where("ST_Within(ST_GeomFromText(?), area::geometry)", "SRID=4326;#{point.as_text}") }
+    scope :containing, ->(point) { where("ST_Within(ST_GeomFromEWKT(?), area::geometry)", "SRID=4326;#{point.as_text}") }
 
     private
 
