@@ -1,16 +1,16 @@
-- content_for :page_title_prefix, "Invite to apply for a job"
+- content_for :page_title_prefix, t(".title")
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: back_url
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l #{@form.jobseeker_name} - invite to apply for a job
-    h1.govuk-heading-l Check details and invite candidate to apply
+    span.govuk-caption-l = t(".caption", name: @form.jobseeker_name)
+    h1.govuk-heading-l = t(".header")
     = govuk_summary_list do |summary|
       - summary.row do |row|
-        - row.key text: "Jobs to invite candidate to apply for"
+        - row.key text: t(".summary.jobs")
         - row.value text: @form.selected_jobs.map(&:job_title).map { |title| "".html_safe + title }.join("<br/>").html_safe
-        - row.action text: "Change", href: { action: :edit, step: @form.class.delegated_attributes["job_ids"] }
+        - row.action text: t("buttons.change"), href: { action: :edit, step: @form.class.delegated_attributes["job_ids"] }
 
     h2.govuk-heading-m Preview
     .govuk-inset-text
