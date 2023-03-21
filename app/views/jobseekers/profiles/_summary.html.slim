@@ -39,6 +39,26 @@
     = t(".about")
   p = simple_format profile.about_you
 
+h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+  = t(".contact_details")
+dl.govuk-summary-list
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key == t(".email_address")
+    dd.govuk-summary-list__value = profile.email
+  - if (phone_number = profile.personal_details&.phone_number).present?
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key == t(".phone_number")
+      dd.govuk-summary-list__value = phone_number
+
+- if profile.employments.any?
+  h2.govuk-heading-m = t(".work_history")
+  - profile.employments.order(:started_on).each do |employment|
+    h3.govuk-heading-s class="govuk-!-padding-bottom-3"
+      = employment.organisation
+      p class="govuk-!-margin-bottom-0" = employment.job_title
+      p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
+      hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
+
 - if profile.qualifications.any?
   h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".qualifications")
   = render "jobseekers/qualifications/preview_qualifications", qualifications: profile.qualifications

@@ -10,7 +10,7 @@ class Publishers::InvitationsController < Publishers::BaseController
     @profile = JobseekerProfile.find(params[:id])
     @invitations = InvitationToApply.where(
       jobseeker_id: @profile.jobseeker_id,
-      vacancy_id: current_organisation.vacancies.select(:id)
+      vacancy_id: current_organisation.vacancies.select(:id),
     )
   end
 
