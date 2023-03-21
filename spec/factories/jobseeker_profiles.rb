@@ -7,7 +7,7 @@ FactoryBot.define do
 
     jobseeker
     personal_details { build(:personal_details, jobseeker_profile: instance) }
-    job_preferences { build :job_preferences, jobseeker_profile: instance }
+    job_preferences { build(:job_preferences, jobseeker_profile: instance) }
 
     trait :with_qualifications do
       qualifications { [build(:qualification, jobseeker_profile: instance)] }

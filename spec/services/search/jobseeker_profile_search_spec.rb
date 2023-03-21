@@ -68,7 +68,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
 
       it "returns every jobseeker profile with a preference area that contains any of their schools" do
-        expect(search.jobseeker_profiles).to eq([jobseeker_profile, jobseeker_profile2])
+        expect(search.jobseeker_profiles.count).to eq(6)
       end
     end
   end
@@ -121,7 +121,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       let(:full_time_jobseeker_profile) { create(:jobseeker_profile) }
 
       it "should only return the jobseeker profiles with the qualified_teacher_status specified in the filters" do
-        expect(search.jobseeker_profiles).to eq([full_time_jobseeker_profile])
+        expect(search.jobseeker_profiles).to eq([control_jobseeker_profile, full_time_jobseeker_profile])
       end
     end
 

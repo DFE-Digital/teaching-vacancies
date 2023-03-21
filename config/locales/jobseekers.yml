@@ -524,6 +524,9 @@ en:
           working_patterns:
             one: Working pattern
             other: Working patterns
+          subjects:
+            one: Subject
+            other: Subjects
       preview:
         show:
           page_title: Preview your profile
