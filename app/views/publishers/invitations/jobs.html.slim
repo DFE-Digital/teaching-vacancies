@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, "Invite to apply for a job"
+- content_for :page_title_prefix, t('.title')
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: back_url
 
@@ -10,5 +10,5 @@
       = f.govuk_collection_check_boxes(:job_ids, f.object.job_options, :value, :label, :hint,
         legend: { size: "l", text: "Jobs to invite the candidate to apply for" },
         caption: { text: "#{@form.jobseeker_name} - invite to apply for a job", size: "l" })
-      = f.govuk_submit "Continue"
-      p = f.link_to "Cancel", escape_path
+      = f.govuk_submit t("buttons.continue")
+      p = f.link_to t("buttons.cancel"), escape_path

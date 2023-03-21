@@ -4,7 +4,7 @@ class JobPreferences < ApplicationRecord
   belongs_to :jobseeker_profile
   has_many :locations, dependent: :destroy
 
-  def vacancies(scope = Vacancy.all)
+  def vacancies(scope = Vacancy.live)
     JobScope.new(scope, self).call
   end
 

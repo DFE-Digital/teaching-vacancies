@@ -8,7 +8,7 @@ class Publishers::InvitationsController < Publishers::BaseController
 
   def index
     @profile = JobseekerProfile.find(params[:id])
-    @invitations = InvitationToApply.where(jobseeker_id: @profile.jobseeker_id)
+    @invitations = InvitationToApply.where(jobseeker_id: @profile.jobseeker_id, organisation: current_organisation)
   end
 
   def start

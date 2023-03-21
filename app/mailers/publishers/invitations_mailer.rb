@@ -11,7 +11,7 @@ module Publishers
       @publisher_name = publisher.given_name
       @organisation_name = organisation.name
 
-      @subject = I18n.t("publishers.job_application_mailer.applications_received.subject", count: 0)
+      @subject = I18n.t("publishers.invitations_mailer.invite_to_apply.subject")
 
       view_mail(template, to: @to, subject: @subject)
     end
