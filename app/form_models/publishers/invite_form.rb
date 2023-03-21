@@ -79,7 +79,11 @@ module Publishers
     end
 
     def mail_preview
-      Kramdown::Document.new(mail.body.to_s).to_html
+      Kramdown::Document.new(mail.body.to_s).to_html.gsub(%r{</?h\d}) do |match|
+        # We need convert all h1 headers into h3. H1 are the only headers rendered in the email, but it would raise
+        # accessibility issue when rendered in the view
+        match[0..-2] + (match.last.to_i + 2).to_s
+      end
     end
   end
 end
