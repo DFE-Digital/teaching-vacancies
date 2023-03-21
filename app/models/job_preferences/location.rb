@@ -7,7 +7,7 @@ class JobPreferences < ApplicationRecord
     self.table_name = "job_preferences_locations"
     belongs_to :job_preferences
 
-    before_create :set_area
+    before_save :set_area
 
     scope :containing, ->(point) { where("ST_Within(ST_GeomFromText(?), area::geometry)", "SRID=4326;#{point.as_text}") }
 
