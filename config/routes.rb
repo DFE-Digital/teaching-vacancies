@@ -135,7 +135,16 @@ Rails.application.routes.draw do
       patch "unsubscribe", to: "accounts#unsubscribe"
     end
     resources :login_keys, only: %i[show new create]
-    resources :jobseeker_profiles, only: %i[index show]
+    resources :jobseeker_profiles, only: %i[index show] do
+      member do
+        resources :invitations, only: :index
+        scope controller: "invitations", path: "/invite" do
+          get "", action: :start, as: :invite_to_apply
+          get ":step", action: :edit, as: :invite_to_apply_step
+          post ":step", action: :update, as: nil
+        end
+      end
+    end
     resource :new_features, only: %i[show update] do
       get :reminder
     end

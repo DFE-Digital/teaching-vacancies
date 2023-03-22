@@ -4,7 +4,7 @@ RSpec.describe Search::JobseekerProfileSearch do
   subject(:search) { described_class.new(filters, organisation) }
 
   context "when no filters have been applied" do
-    let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: [] } }
+    let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: [] } }
 
     context "when the organisation is a school" do
       let(:organisation) { create(:school, geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(0.2861, 51.7094)) }
@@ -84,7 +84,7 @@ RSpec.describe Search::JobseekerProfileSearch do
     before { allow(Geocoding).to receive(:test_coordinates).and_return(location_near_organisation) }
 
     context "jobseeker_profile qualified_teacher_status" do
-      let(:filters) { { qualified_teacher_status: "yes", roles: [], working_patterns: [], phases: [], key_stages: [] } }
+      let(:filters) { { qualified_teacher_status: "yes", roles: [], working_patterns: [], education_phases: [], key_stages: [] } }
       let(:control_profile_attrs) { { qualified_teacher_status: "no" } }
       let(:control_job_preferences_attrs) { {} }
 
@@ -98,7 +98,7 @@ RSpec.describe Search::JobseekerProfileSearch do
     end
 
     context "job_preferences roles" do
-      let(:filters) { { qualified_teacher_status: [], roles: %w[teacher], working_patterns: [], phases: [], key_stages: [] } }
+      let(:filters) { { qualified_teacher_status: [], roles: %w[teacher], working_patterns: [], education_phases: [], key_stages: [] } }
       let(:control_job_preferences_attrs) { { roles: %w[leader] } }
       let(:control_profile_attrs) { {} }
 
@@ -112,7 +112,7 @@ RSpec.describe Search::JobseekerProfileSearch do
     end
 
     context "job_preferences working_patterns" do
-      let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: %w[full_time], phases: [], key_stages: [] } }
+      let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: %w[full_time], education_phases: [], key_stages: [] } }
       let(:control_job_preferences_attrs) { { working_patterns: %w[part_time] } }
       let(:control_profile_attrs) { {} }
 
@@ -126,7 +126,7 @@ RSpec.describe Search::JobseekerProfileSearch do
     end
 
     context "job_preferences phases" do
-      let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], phases: %w[secondary], key_stages: [] } }
+      let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: %w[secondary], key_stages: [] } }
       let(:control_job_preferences_attrs) { { phases: %w[primary] } }
       let(:control_profile_attrs) { {} }
 
@@ -134,13 +134,13 @@ RSpec.describe Search::JobseekerProfileSearch do
       let(:secondary_job_preferences) { create(:job_preferences, phases: %w[secondary], jobseeker_profile: secondary_jobseeker_profile) }
       let(:secondary_jobseeker_profile) { create(:jobseeker_profile) }
 
-      it "should only return the jobseeker profiles with the qualified_teacher_status specified in the filters" do
-        expect(search.jobseeker_profiles).to eq([control_jobseeker_profile, secondary_jobseeker_profile])
+      it "should only return the jobseeker profiles with the phases specified in the filters" do
+        expect(search.jobseeker_profiles).to eq([secondary_jobseeker_profile])
       end
     end
 
     context "job_preferences key_stages" do
-      let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: %w[KS1] } }
+      let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: %w[KS1] } }
       let(:control_job_preferences_attrs) { { key_stages: %w[KS2] } }
       let(:control_profile_attrs) { {} }
 
@@ -154,7 +154,7 @@ RSpec.describe Search::JobseekerProfileSearch do
     end
 
     context "when multiple filters in the same group have been applied" do
-      let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: %w[KS1 KS2] } }
+      let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: %w[KS1 KS2] } }
       let(:control_job_preferences_attrs) { { key_stages: %w[KS3] } }
       let(:control_profile_attrs) { {} }
 
@@ -168,7 +168,7 @@ RSpec.describe Search::JobseekerProfileSearch do
     end
 
     context "when multiple filters have been applied" do
-      let(:filters) { { qualified_teacher_status: %w[yes], roles: %w[teacher], working_patterns: %w[part_time], phases: %w[primary], key_stages: %w[KS1] } }
+      let(:filters) { { qualified_teacher_status: %w[yes], roles: %w[teacher], working_patterns: %w[part_time], education_phases: %w[primary], key_stages: %w[KS1] } }
       let(:control_job_preferences_attrs) { { roles: %w[leader], working_patterns: %w[full_time], phases: %w[secondary], key_stages: %w[KS4] } }
       let(:control_profile_attrs) { { qualified_teacher_status: "no" } }
 

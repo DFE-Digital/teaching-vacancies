@@ -117,6 +117,11 @@ en:
           ks3: "Key stage 3"
           ks4: "Key stage 4"
           ks5: "Key stage 5"
+    invitations:
+      index:
+        no_invitations:
+          school: This user has not been invited to apply to any roles at your school
+          organisation: This user has not been invited to apply to any roles at your organisation
 
     login_keys:
       new:
