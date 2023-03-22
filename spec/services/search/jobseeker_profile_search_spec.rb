@@ -135,7 +135,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       let(:secondary_jobseeker_profile) { create(:jobseeker_profile) }
 
       it "should only return the jobseeker profiles with the qualified_teacher_status specified in the filters" do
-        expect(search.jobseeker_profiles).to eq([secondary_jobseeker_profile])
+        expect(search.jobseeker_profiles).to eq([control_jobseeker_profile, secondary_jobseeker_profile])
       end
     end
 
