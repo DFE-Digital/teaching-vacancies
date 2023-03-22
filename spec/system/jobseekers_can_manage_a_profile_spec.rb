@@ -378,6 +378,104 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
+  describe "hiding profile from specific organisations" do
+    let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
+
+    let(:bexleyheath_geopoint) do
+      RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath)
+    end
+
+    let!(:permitted_organisation) do
+      create(:school,
+             name: "Permitted School",
+             publishers: [permitted_publisher],
+             geopoint: bexleyheath_geopoint)
+    end
+
+    let!(:forbidden_organisation) do
+      create(:school,
+             name: "Forbidden School",
+             publishers: [forbidden_publisher],
+             geopoint: bexleyheath_geopoint)
+    end
+
+    let(:permitted_publisher) { create(:publisher) }
+    let(:forbidden_publisher) { create(:publisher) }
+
+    let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: true) }
+
+    let(:job_preferences) do
+      build(:job_preferences,
+            jobseeker_profile: nil,
+            locations: build_list(:job_preferences_location, 1, radius: 200, job_preferences: nil))
+    end
+
+    before do
+      allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
+    end
+
+    it "allows the jobseeker hiding themselves from specific schools", js: true do
+      login_publisher(publisher: permitted_publisher)
+      visit publishers_jobseeker_profiles_path
+      expect(page).to have_content(profile.full_name)
+
+      login_publisher(publisher: forbidden_publisher)
+      visit publishers_jobseeker_profiles_path
+      expect(page).to have_content(profile.full_name)
+
+      visit jobseekers_profile_path
+      click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+      choose "Yes", visible: false
+      click_on I18n.t("buttons.save_and_continue")
+
+      field = find_field("Name of school or trust")
+      field.fill_in(with: forbidden_organisation.name)
+      field.native.send_keys(:tab)
+      click_on I18n.t("buttons.save_and_continue")
+
+      login_publisher(publisher: forbidden_publisher)
+      visit publishers_jobseeker_profiles_path
+      expect(page).not_to have_content(profile.full_name)
+
+      login_publisher(publisher: permitted_publisher)
+      visit publishers_jobseeker_profiles_path
+      expect(page).to have_content(profile.full_name)
+
+      visit jobseekers_profile_path
+      click_on I18n.t("jobseekers.profiles.hide_profile.summary.add_a_school")
+
+      field = find_field("Name of school or trust")
+      field.fill_in(with: permitted_organisation.name)
+      field.native.send_keys(:tab)
+      click_on I18n.t("buttons.save_and_continue")
+
+      login_publisher(publisher: permitted_publisher)
+      visit publishers_jobseeker_profiles_path
+      expect(page).not_to have_content(profile.full_name)
+
+      login_publisher(publisher: forbidden_publisher)
+      visit publishers_jobseeker_profiles_path
+      expect(page).not_to have_content(profile.full_name)
+
+      visit publishers_jobseeker_profile_path(profile)
+      expect(page).to have_content("Page not found")
+
+      visit schools_jobseekers_profile_hide_profile_path
+      within page.find(".govuk-summary-list__key", text: permitted_organisation.name).find(:xpath, "..") do
+        click_on I18n.t("buttons.delete")
+      end
+      click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
+
+      login_publisher(publisher: permitted_publisher)
+      visit publishers_jobseeker_profiles_path
+      expect(page).to have_content(profile.full_name)
+
+      login_publisher(publisher: forbidden_publisher)
+      visit publishers_jobseeker_profiles_path
+      expect(page).not_to have_content(profile.full_name)
+    end
+  end
+
   private
 
   def add_jobseeker_profile_employment

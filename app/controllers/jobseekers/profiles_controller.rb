@@ -51,11 +51,11 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       partial: "jobseekers/profiles/about_you/summary",
     },
     {
-      title: "Hide profile from schools or trusts",
-      display_summary: -> { false },
-      key: "",
-      link_text: "Set up who cannot view your profile",
-      page_path: -> { "" },
+      title: I18n.t("jobseekers.profiles.show.hide_profile"),
+      display_summary: -> { !profile.hide_profile.nil? },
+      key: "hide_profile",
+      link_text: I18n.t("jobseekers.profiles.show.set_up_profile_visibility"),
+      page_path: -> { jobseekers_profile_hide_profile_path },
     },
   ].map(&:freeze).freeze
 

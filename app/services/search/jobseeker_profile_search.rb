@@ -5,8 +5,11 @@ class Search::JobseekerProfileSearch
   end
 
   def jobseeker_profiles # rubocop:disable Metrics/AbcSize
-    scope = JobseekerProfile.includes(:job_preferences).active
-    scope = scope.where(job_preferences: { id: location_preferences_ids_matching_location_search })
+    scope = JobseekerProfile
+      .includes(:job_preferences)
+      .active.not_hidden_from(current_organisation)
+      .where(job_preferences: { id: location_preferences_ids_matching_location_search })
+
     scope = scope.where(qualified_teacher_status: filters[:qualified_teacher_status]) if filters[:qualified_teacher_status].present?
     scope = scope.where("job_preferences.roles && ARRAY[?]::varchar[]", filters[:roles]) if filters[:roles].present?
     scope = scope.where("job_preferences.working_patterns && ARRAY[?]::varchar[]", filters[:working_patterns]) if filters[:working_patterns].present?

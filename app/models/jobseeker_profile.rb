@@ -7,6 +7,8 @@ class JobseekerProfile < ApplicationRecord
   has_one :job_preferences, dependent: :destroy
   has_many :employments, dependent: :destroy
   has_many :qualifications, dependent: :destroy
+  has_many :organisation_exclusions, class_name: "JobseekerProfileExcludedOrganisation", dependent: :destroy
+  has_many :excluded_organisations, through: :organisation_exclusions, source: :organisation
 
   delegate :all_roles, to: :job_preferences
   delegate :all_key_stages, to: :job_preferences
@@ -14,6 +16,9 @@ class JobseekerProfile < ApplicationRecord
   delegate :first_name, :last_name, to: :personal_details, allow_nil: true
 
   scope :active, -> { where(active: true) }
+  scope :not_hidden_from, lambda { |organisation|
+    where.not(id: organisation.jobseeker_profile_exclusions.pluck(:jobseeker_profile_id))
+  }
 
   delegate :email, to: :jobseeker
 

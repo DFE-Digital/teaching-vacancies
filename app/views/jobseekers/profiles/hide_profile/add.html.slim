@@ -1,0 +1,22 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @form, url: add_school_jobseekers_profile_hide_profile_path, method: :post do |f|
+      = f.govuk_error_summary
+
+      span.govuk-caption-l = t(".caption")
+
+      .govuk-form-group.autocomplete data-source="getOrganisations" data-controller="autocomplete"
+        = f.govuk_text_field :organisation_name,
+          label: { text: t(".page_title"), size: "l" },
+          hint: { text: t(".hint") }
+
+      p = govuk_link_to t(".cannot_find_school"), cannot_find_school_jobseekers_profile_hide_profile_path
+
+      = f.govuk_submit t("buttons.save_and_continue")
+
+    .govuk-button-group = govuk_link_to(t("buttons.cancel"), jobseekers_profile_path)

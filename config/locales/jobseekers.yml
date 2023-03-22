@@ -520,6 +520,33 @@ en:
       success_html: >-
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     profiles:
+      hide_profile:
+        add:
+          cannot_find_school: I cannot find the school I'm looking for
+          caption: Hide profile from schools or trusts
+          hint:  Enter the name or address of the school or trust
+          page_title: Name of school or trust
+        cannot_find_school:
+          lead_in: "This may be because:"
+          not_in_england: the school is not in England
+          page_title: This school cannot be found
+          private_or_independent: it is a private or independent school
+          return_to_profile: Return to profile
+          search_again: Search again
+          spelled_incorrectly: the school is spelled incorrectly
+        delete:
+          delete_school: Delete school
+          page_title: Confirm that you no longer want to hide your profile from %{name}, %{address}
+        review:
+          page_title: Hide profile from schools or trusts
+        schools:
+          add_another: Do you want to add another school or trust?
+          page_title: Hide profile from schools or trusts
+        show:
+          page_title: Do you want to hide your profile from a school or trust?
+        summary:
+          add_a_school: Add a school or trust
+          hide_profile: Do you want to hide your profile from a school or trust?
       job_preferences:
         summary:
           key_stages:
@@ -567,6 +594,7 @@ en:
         activate_profile_text: >-
           When you turn on your profile it will only be visible to hiring staff in schools and trusts.
           They can get in touch by email to invite you apply for roles.
+        hide_profile: Hide profile from schools or trusts
         imported: You have recently submitted a job application, so some of your details have been imported into your profile.
         page_description: Your profile allows schools to find and invite you to apply for their jobs.
         page_title: Your profile
@@ -575,6 +603,7 @@ en:
         preview_profile: Preview profile
         profile_turned_off: Profile turned off
         profile_turned_on: Profile turned on
+        set_up_profile_visibility: Set up who cannot view your profile
         turn_off_profile_text: When you turn off your profile it will not be visible to hiring staff in schools and trusts.
         turn_off_profile: Turn off profile
         turn_on_profile_text: When you turn on your profile it will be visible to hiring staff, and they can invite you to apply for roles.

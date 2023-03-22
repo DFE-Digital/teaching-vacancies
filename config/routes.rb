@@ -97,6 +97,19 @@ Rails.application.routes.draw do
         get :confirm_destroy
       end
 
+      resource :hide_profile, only: %i[show], controller: "profiles/hide_profile" do
+        post :confirm_hide
+        get :add
+        post :add_school
+        get :cannot_find_school
+        get :schools
+        post :add_another
+        get :review
+
+        get ":exclusion_id/delete", action: :delete, as: :delete
+        delete ":exclusion_id/delete", action: :destroy
+      end
+
       get "confirm_toggle", to: "profiles#confirm_toggle"
       post "toggle", to: "profiles#toggle"
     end
@@ -254,6 +267,7 @@ Rails.application.routes.draw do
     scope "v:api_version", api_version: /1/ do
       resources :jobs, only: %i[index show], controller: "vacancies"
       get "/location_suggestion(/:location)", to: "location_suggestion#show", as: :location_suggestion
+      get "/organisations", to: "organisations#index", as: :organisations
       resources :markers, only: %i[show]
     end
 

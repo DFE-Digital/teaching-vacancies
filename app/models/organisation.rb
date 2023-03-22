@@ -17,6 +17,9 @@ class Organisation < ApplicationRecord
   has_many :organisation_publishers, dependent: :destroy
   has_many :publishers, through: :organisation_publishers
 
+  has_many :jobseeker_profile_exclusions, class_name: "JobseekerProfileExcludedOrganisation"
+  has_many :hidden_jobseeker_profiles, through: :jobseeker_profile_exclusions, source: :jobseeker_profile
+
   scope :not_closed, -> { where.not(establishment_status: "Closed") }
   scope :schools, -> { where(type: "School") }
   scope :school_groups, -> { where(type: "SchoolGroup") }
@@ -39,6 +42,8 @@ class Organisation < ApplicationRecord
     where(id: registered_organisations)
       .or(where(id: SchoolGroupMembership.select(:school_id).where(school_group_id: registered_organisations)))
   end)
+
+  scope :visible_to_jobseekers, -> { schools.not_closed.or(Organisation.trusts).registered_for_service }
 
   alias_attribute :data, :gias_data
 

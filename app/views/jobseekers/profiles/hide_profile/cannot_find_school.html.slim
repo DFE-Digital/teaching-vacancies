@@ -1,0 +1,18 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: add_jobseekers_profile_hide_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".page_title")
+
+    p = t(".lead_in")
+    ul.govuk-list.govuk-list--bullet
+      li = t(".spelled_incorrectly")
+      li = t(".not_in_england")
+      li = t(".private_or_independent")
+
+    .govuk-button-group
+      = govuk_button_link_to t(".search_again"), add_jobseekers_profile_hide_profile_path, class: "govuk-button--secondary"
+      = govuk_button_link_to t(".return_to_profile"), jobseekers_profile_path

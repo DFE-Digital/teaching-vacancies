@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import logger from '../../lib/logging';
 
-export const getLocationSuggestions = ({ query, populateResults }) => axios.get(`/api/v1/location_suggestion/${query}?format=json`)
+const getSuggestions = (url, populateResults) => axios.get(url)
   .then((response) => response.data)
   .then((data) => data.suggestions)
   .then(populateResults)
@@ -14,8 +14,12 @@ export const getLocationSuggestions = ({ query, populateResults }) => axios.get(
     }
   });
 
+export const getLocationSuggestions = ({ query, populateResults }) => getSuggestions(`/api/v1/location_suggestion/${query}?format=json`, populateResults);
+export const getOrganisations = ({ query, populateResults }) => getSuggestions(`/api/v1/organisations?query=${query}&format=json`, populateResults);
+
 const api = {
   getLocationSuggestions,
+  getOrganisations,
 };
 
 export default api;

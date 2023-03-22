@@ -1,0 +1,13 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: schools_jobseekers_profile_hide_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = t(".delete_school")
+    h1.govuk-heading-l = t(".page_title", name: @exclusion.organisation.name, address: @exclusion.organisation.address)
+
+    = govuk_button_to t(".delete_school"), delete_jobseekers_profile_hide_profile_path, method: :delete
+
+    .govuk-button-group = govuk_link_to(t("buttons.cancel"), schools_jobseekers_profile_hide_profile_path)
