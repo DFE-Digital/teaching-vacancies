@@ -1,0 +1,20 @@
+- content_for :page_title_prefix, "Invitations to apply - "
+- translation_scope = @virtual_path.tr("/", ".") # Apparently `render layout` changes translation path within the block
+
+= render(layout: "publishers/jobseeker_profiles/layout", locals: { profile: @profile }) do
+  - if @invitations.none?
+    p = t("no_invitations.#{current_organisation.school? ? :school : :organisation}", scope: translation_scope, raise: true)
+  - else
+    = govuk_table do |table|
+      - table.head do |head|
+        - head.row do |row|
+          - row.cell(header: true, text: "Jobs invited to apply for")
+          - row.cell(header: true, text: "Invited by")
+          - row.cell(header: true, text: "Date")
+
+      - table.body do |body|
+        - @invitations.each do |invitation|
+          - body.row do |row|
+            - row.cell(text: invitation.vacancy.job_title)
+            - row.cell(text: [invitation.invited_by.given_name, invitation.invited_by.family_name].join(" "))
+            - row.cell(text: invitation.created_at.to_fs)

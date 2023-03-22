@@ -86,6 +86,8 @@ module Multistep
       super values.to_h { |k, v| [k.to_sym, v.to_sym] }
     end
 
+    def complete!; end
+
     module ClassMethods
       def steps
         @steps ||= {}
@@ -118,11 +120,11 @@ module Multistep
       end
 
       def step(step_name, &block)
-        raise "Step #{name} already defined" if steps[step_name.to_sym].present?
+        raise "Step #{step_name} already defined" if steps[step_name.to_sym].present?
 
         step_class = steps[step_name.to_sym] = Class.new.include(Step)
         const_set(step_name.to_s.classify, step_class)
-        step_class.class_eval(&block)
+        step_class.class_eval(&block) if block
 
         delegate_attributes(*step_class.attribute_names, step: step_name)
         step_name.to_sym

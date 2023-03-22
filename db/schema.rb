@@ -179,6 +179,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_17_102633) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "invitation_to_applies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "jobseeker_id"
+    t.uuid "vacancy_id"
+    t.uuid "invited_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invited_by_id"], name: "index_invitation_to_applies_on_invited_by_id"
+    t.index ["jobseeker_id"], name: "index_invitation_to_applies_on_jobseeker_id"
+    t.index ["vacancy_id"], name: "index_invitation_to_applies_on_vacancy_id"
+  end
+
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "status"
     t.datetime "created_at", null: false
@@ -631,6 +642,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_17_102633) do
   add_foreign_key "emergency_login_keys", "publishers"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "equal_opportunities_reports", "vacancies"
+  add_foreign_key "invitation_to_applies", "publishers", column: "invited_by_id"
+  add_foreign_key "invitation_to_applies", "vacancies"
   add_foreign_key "job_applications", "vacancies"
   add_foreign_key "job_preferences", "jobseeker_profiles"
   add_foreign_key "job_preferences_locations", "job_preferences", column: "job_preferences_id"

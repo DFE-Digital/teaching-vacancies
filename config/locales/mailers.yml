@@ -188,6 +188,9 @@ en:
         view_applications:
           one: View %{count} new application
           other: View %{count} new applications
+    invitations_mailer:
+      invite_to_apply:
+        subject: You have been invited to apply for a role
 
   support_users:
     authentication_fallback_mailer:

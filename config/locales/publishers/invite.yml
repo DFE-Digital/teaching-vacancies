@@ -1,0 +1,21 @@
+en:
+  publishers:
+    invitations:
+      jobs:
+        title: Invite to apply for job
+        header: Jobs to invite the candidate to apply for
+        caption: "%{name} - invite to apply for job"
+      review:
+        title: Invite to apply for job
+        header: Check details and invite candidate to apply
+        caption: "%{name} - invite to apply for job"
+        summary:
+          jobs: Jobs to invite candidate to apply for
+
+  activemodel:
+    errors:
+      models:
+        publishers/invite_form/job:
+          attributes:
+            job_ids:
+              what: Select at least one job to continue
