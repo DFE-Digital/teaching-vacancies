@@ -521,6 +521,14 @@ en:
       show_count: Applications (%{count})
     statistics: Statistics
 
+  candidate_profiles_banner:
+    intro: 'Candidate profiles are a new feture that allows schools to contact you about relevant jobs. With a profile you can:'
+    summary_list:
+      - share your qualifications with schools
+      - specify the types of teaching jobs you're looking for
+      - apply for roles more quickly by pre-filling your information
+    link_to_profile: Create a profile to simplify your job search.
+
   terms_and_conditions:
     intro_html: >-
       Before listing any role at your school on Teaching Vacancies you must first read our %{link} and

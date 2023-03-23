@@ -13,6 +13,7 @@ h1.govuk-heading-l = t(".page_title")
 
 .govuk-grid-row
   .govuk-grid-column-full
+    = render "candidiate_profiles_banner" unless candidate_profile_complete?
     - if saved_jobs.any?
       #vacancy-results
         - saved_jobs.each do |saved_job|

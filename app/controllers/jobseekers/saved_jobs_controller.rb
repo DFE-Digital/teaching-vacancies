@@ -22,6 +22,18 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
 
   private
 
+  def candidate_profile_complete?
+    profile = current_jobseeker.jobseeker_profile
+
+    return unless profile
+
+    personal_details = profile.personal_details
+    job_preferences = profile.job_preferences
+
+    section_completed(personal_details) && section_completed(job_preferences)
+  end
+  helper_method :candidate_profile_complete?
+
   def saved_job
     @saved_job ||= current_jobseeker.saved_jobs.find_or_initialize_by(vacancy_id: vacancy.id)
   end
@@ -40,5 +52,12 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
 
   def vacancy
     @vacancy ||= Vacancy.listed.find(saved_job_params[:job_id])
+  end
+
+  def section_completed(record)
+    return if record.completed_steps.blank?
+
+    step_phases = %w[completed skipped]
+    record.completed_steps.values.all? { |step| step_phases.include?(step) }
   end
 end
