@@ -17,7 +17,10 @@ FactoryBot.define do
       }
     end
 
-    locations { build_list(:job_preferences_location, 1, radius: 200, job_preferences: nil) }
-    jobseeker_profile
+    association :jobseeker_profile
+
+    trait :with_locations do
+      locations { [build(:job_preferences_locations, name: Faker::Address.postcode, radius: Faker::Number.between(from: 1, to: 200), jobseeker_profile: instance)] }
+    end
   end
 end

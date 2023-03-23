@@ -7,8 +7,19 @@ RSpec.describe "Jobseekers can manage their profile" do
     login_as(jobseeker, scope: :jobseeker)
   end
 
+  it "allows the jobseeker to navigate to their profile" do
+    visit jobseeker_root_path
+
+    within "#navigation" do
+      expect(page).to have_content("Your profile")
+      click_on "Your profile"
+    end
+
+    expect(page).to have_current_path(jobseekers_profile_path)
+  end
+
   describe "changing personal details" do
-    let(:profile) { create(:jobseeker_profile, jobseeker:) }
+    let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
 
     context "when filling in the profile for the first time" do
       let(:first_name) { "Frodo" }

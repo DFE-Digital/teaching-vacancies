@@ -121,7 +121,11 @@ Rails.application.routes.draw do
     end
 
     resources :subscriptions, only: %i[index]
-    resource :account, only: %i[show]
+    resource :account, only: %i[show] do
+      member do
+        get :confirmation
+      end
+    end
     resource :account_feedback, only: %i[new create]
   end
 

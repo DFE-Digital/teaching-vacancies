@@ -31,6 +31,10 @@ RSpec.describe "Sub navigation for users to sign in and out" do
         expect(page).to have_content(I18n.t("sub_nav.jobseekers.saved_jobs"))
       end
     end
+
+    it "will not render the publisher secondary subnav" do
+      expect(page).to_not have_css("#publisher-nav")
+    end
   end
 
   context "when publisher is signed in" do
@@ -39,8 +43,8 @@ RSpec.describe "Sub navigation for users to sign in and out" do
       visit root_path
     end
 
-    it "does not render the subnav" do
-      expect(page).not_to have_css(".sub-navigation")
+    it "renders the publisher secondary subnav" do
+      expect(page).to have_css("#publisher-nav")
     end
   end
 end

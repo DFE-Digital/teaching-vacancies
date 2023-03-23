@@ -15,6 +15,22 @@ RSpec.describe "Jobseekers can sign up to an account" do
       ).and change { delivered_emails.count }.by(1)
       expect(current_path).to eq(jobseekers_check_your_email_path)
     end
+
+    it "allows jobseekers to reset their password" do
+      visit root_path
+      find(:xpath, "//a[@href='/jobseekers/sign_up']").click
+      fill_in "jobseeker[email]", with: jobseeker.email
+      fill_in "jobseeker[password]", with: "Jobseeker1234"
+      click_on I18n.t("buttons.create_account")
+
+      expect(page).to have_content I18n.t("jobseekers.registrations.check_your_email.title")
+
+      click_on I18n.t("jobseekers.registrations.check_your_email.resend_link")
+      visit first_link_from_last_mail
+      click_on "Confirm"
+
+      expect(current_path).to eq(confirmation_jobseekers_account_path)
+    end
   end
 
   describe "confirming email address" do
@@ -24,12 +40,15 @@ RSpec.describe "Jobseekers can sign up to an account" do
     end
 
     context "when the confirmation token is valid" do
-      it "confirms email, triggers email confirmed event and redirects to jobseeker saved jobs page" do
+      it "confirms email, triggers email confirmed event and redirects to jobseeker account confirmation interstitial" do
         expect { confirm_email_address }.to have_triggered_event(:jobseeker_email_confirmed).with_base_data(
           user_anonymised_jobseeker_id: StringAnonymiser.new(created_jobseeker.id).to_s,
         )
-        expect(current_path).to eq(jobseekers_saved_jobs_path)
-        expect(page).to have_content(I18n.t("devise.confirmations.confirmed"))
+        expect(current_path).to eq(confirmation_jobseekers_account_path)
+        expect(page).to have_content(I18n.t("jobseekers.accounts.confirmation.page_title"))
+        expect(page).to have_link(I18n.t("jobseekers.accounts.confirmation.apply_for_jobs_link_text"), href: jobs_path)
+        expect(page).to have_link(I18n.t("jobseekers.accounts.confirmation.create_profile.heading"), href: jobseekers_profile_path)
+        expect(page).not_to have_content(I18n.t("devise.confirmations.confirmed"))
       end
     end
 

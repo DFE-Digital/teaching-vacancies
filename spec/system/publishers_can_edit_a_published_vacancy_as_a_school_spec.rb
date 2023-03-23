@@ -30,7 +30,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       has_published_vacancy_review_heading?(vacancy)
 
-      expect(page).to have_css(".tabs-component", count: 1)
+      expect(page).to have_css(".tabs-component", count: 2)
     end
 
     scenario "create a job sidebar is not present" do

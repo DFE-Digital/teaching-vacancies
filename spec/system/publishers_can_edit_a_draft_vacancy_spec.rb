@@ -54,8 +54,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         expect(page).to have_content(full_address(primary_school))
         displays_all_vacancy_organisations?(vacancy)
 
-        expect(page).to_not have_css(".tabs-component")
-
         change_job_locations(vacancy, [another_primary_school])
         click_on I18n.t("buttons.save_and_continue")
 
