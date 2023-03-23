@@ -255,6 +255,95 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
+  describe "toggling on and off" do
+    let(:publisher) { organisation.publishers.first }
+
+    let(:organisation) do
+      create(:school,
+             publishers: [build(:publisher)],
+             geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
+    end
+
+    let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
+
+    let(:within_200_miles_of_bexleyheath) do
+      RGeo::Geographic
+        .spherical_factory(srid: 4326)
+        .point(*bexleyheath)
+        .buffer(200 * 1609.34)
+    end
+
+    let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
+
+    let(:job_preferences) do
+      build(:job_preferences,
+            jobseeker_profile: nil,
+            locations: build_list(:job_preferences_location, 1, radius: 200, job_preferences: nil))
+    end
+
+    before do
+      allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
+      login_publisher(publisher:)
+    end
+
+    context "if the profile does not exist" do
+      let!(:profile) { nil }
+
+      it "does not appear in search results" do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_css(".search-results__item")
+      end
+    end
+
+    context "if the profile is inactive" do
+      let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
+
+      it "does not appear in search results" do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+      end
+    end
+
+    it "can be toggled on and off" do
+      visit jobseekers_profile_path
+
+      expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
+      expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+
+      visit publishers_jobseeker_profiles_path
+      expect(page).not_to have_content(profile.full_name)
+
+      visit jobseekers_profile_path
+      within ".preview-and-turn-on-profile" do
+        click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+      end
+
+      click_button I18n.t("jobseekers.profiles.show.turn_on_profile")
+      expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_on"))
+      expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+      expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
+
+      visit publishers_jobseeker_profiles_path
+      expect(page).to have_content(profile.full_name)
+
+      visit jobseekers_profile_path
+      within ".preview-and-turn-on-profile" do
+        click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
+      end
+
+      click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
+      expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
+      expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+      expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
+
+      visit publishers_jobseeker_profiles_path
+      expect(page).not_to have_content(profile.full_name)
+
+      visit publishers_jobseeker_profile_path(profile)
+      expect(page).to have_content("Page not found")
+    end
+  end
+
   private
 
   def add_jobseeker_profile_employment

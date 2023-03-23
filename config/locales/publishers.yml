@@ -64,13 +64,26 @@ en:
       heading_html: "You cannot make changes to this draft job listing. %{create_new_link} or %{contact_support_link}."
     jobseeker_profiles:
       available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."
-      preferred_role: "Preferred role:"
-      preferred_key_stage: "Preferred key stages"
-      preferred_working_patterns: "Preferred working pattern"
+      index:
+        no_results:
+          heading: No candidates found
+          lead_in: "This may be because:"
+          not_turned_on_profile: candidates have not turned on their profile
+          outside_location: candidates are outside of the role’s location
+          lead_out: You may get more results if your remove some filters, if you have used them.
+      preferred_roles:
+        one: Preferred role
+        other: Preferred roles
+      preferred_key_stages:
+        one: Preferred key stage
+        other: Preferred key stages
+      preferred_working_patterns:
+        one: Preferred working pattern
+        other: Preferred working patterns
       search_result_heading: "Candidate profiles (%{count})"
       sort_result_text: "Ordered by most recently updated."
       filters:
-        preferred_roles: "Preferred Role"
+        preferred_roles: "Preferred roles"
         role_options:
           teacher: "Teacher"
           senior_leader: "Headteacher, deputy or assistant headteacher"
@@ -88,7 +101,7 @@ en:
         working_pattern_options:
           full_time: "Full time"
           part_time: "Part time"
-        preferred_education_phases: "Preferred education phase"
+        preferred_education_phases: "Preferred education phases"
         education_phase_options:
           nursery: "Nursery"
           primary: "Primary"
@@ -96,7 +109,7 @@ en:
           secondary: "Secondary"
           sixth_form_or_college: "Sixth form or college"
           through: "Through"
-        preferred_key_stages: "Preferred key stage"
+        preferred_key_stages: "Preferred key stages"
         key_stage_options:
           early_years: "Early years"
           ks1: "Key stage 1"
@@ -104,6 +117,11 @@ en:
           ks3: "Key stage 3"
           ks4: "Key stage 4"
           ks5: "Key stage 5"
+    invitations:
+      index:
+        no_invitations:
+          school: This user has not been invited to apply to any roles at your school
+          organisation: This user has not been invited to apply to any roles at your organisation
 
     login_keys:
       new:

@@ -38,6 +38,7 @@ class Api::EventsController < Api::ApplicationController
         .with_type(type)
         .with_request_details(request)
         .with_response_details(response)
+        .with_user(current_user)
         .with_data(data)
 
       DfE::Analytics::SendEvents.do([event])

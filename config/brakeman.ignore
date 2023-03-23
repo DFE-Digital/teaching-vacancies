@@ -35,6 +35,29 @@
       "note": ""
     },
     {
+      "warning_type": "Unscoped Find",
+      "warning_code": 82,
+      "fingerprint": "2958a42de474fe8d86f893d3f6735d7f6d05d0755845d75f54bf69290577cb5c",
+      "check_name": "UnscopedFind",
+      "message": "Unscoped call to `JobseekerProfile#find`",
+      "file": "app/controllers/publishers/invitations_controller.rb",
+      "line": 10,
+      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
+      "code": "JobseekerProfile.find(params[:id])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Publishers::InvitationsController",
+        "method": "index"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        285
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "4dc8ea18d14c96a6f2c2058fe234c8c0f39653ca43ce7ed40f0f7a90cdf84d11",
@@ -173,6 +196,6 @@
       "note": "Does not receive any user input"
     }
   ],
-  "updated": "2023-03-06 10:21:16 +0000",
+  "updated": "2023-03-13 15:54:49 +0000",
   "brakeman_version": "5.4.1"
 }

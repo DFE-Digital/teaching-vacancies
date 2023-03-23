@@ -35,6 +35,7 @@ ruby:
       next unless condition.call(multistep)
 
       value = multistep.public_send(attribute)
+      count = value.count
       if options[:map_values] || options[:join_with]
         value = value.map { |elem| options[:map_values].call(elem, multistep.steps[step_name]) } if options[:map_values]
         value = value.map { |elem| "".html_safe + elem }
@@ -42,7 +43,7 @@ ruby:
       end
 
       summary_list.row do |row|
-        row.key text: t(attribute)
+        row.key text: t(".#{attribute}", count:)
         row.value text: value.presence || options[:blank]
         row.action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name))
       end

@@ -1,0 +1,16 @@
+- content_for :page_title_prefix, profile.full_name
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: publishers_jobseeker_profiles_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = profile.full_name
+    - if Publishers::InviteForm.new(organisation_id: current_organisation.id, jobseeker_profile_id: profile.id).applicable_jobs.any?
+      = govuk_link_to "Invite to apply for a job", invite_to_apply_publishers_jobseeker_profile_path, class: %i[govuk-button govuk-!-margin-bottom-6]
+
+    = tabs do |tabs|
+      - tabs.navigation_item text: "Profile", link: publishers_jobseeker_profile_path(profile)
+      - tabs.navigation_item text: "Invitations to apply", link: publishers_invitations_path(profile)
+
+    = yield

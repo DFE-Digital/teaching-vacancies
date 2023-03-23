@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_02_122530) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_17_102633) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -177,6 +177,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_122530) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "invitation_to_applies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "jobseeker_id"
+    t.uuid "vacancy_id"
+    t.uuid "invited_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invited_by_id"], name: "index_invitation_to_applies_on_invited_by_id"
+    t.index ["jobseeker_id"], name: "index_invitation_to_applies_on_jobseeker_id"
+    t.index ["vacancy_id"], name: "index_invitation_to_applies_on_vacancy_id"
   end
 
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -414,13 +425,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_122530) do
 
   create_table "personal_details", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "jobseeker_profile_id", null: false
-    t.string "first_name"
-    t.string "last_name"
     t.boolean "phone_number_provided"
-    t.string "phone_number"
     t.json "completed_steps", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "first_name_ciphertext"
+    t.text "last_name_ciphertext"
+    t.text "phone_number_ciphertext"
     t.index ["jobseeker_profile_id"], name: "index_personal_details_on_jobseeker_profile_id"
   end
 
@@ -632,6 +643,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_02_122530) do
   add_foreign_key "emergency_login_keys", "publishers"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "equal_opportunities_reports", "vacancies"
+  add_foreign_key "invitation_to_applies", "publishers", column: "invited_by_id"
+  add_foreign_key "invitation_to_applies", "vacancies"
   add_foreign_key "job_applications", "vacancies"
   add_foreign_key "job_preferences", "jobseeker_profiles"
   add_foreign_key "job_preferences_locations", "job_preferences", column: "job_preferences_id"
