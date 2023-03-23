@@ -455,6 +455,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_17_102633) do
     t.text "given_name_ciphertext"
     t.datetime "dismissed_new_features_page_at", precision: nil
     t.datetime "unsubscribed_from_expired_vacancy_prompt_at", precision: nil
+    t.boolean "acknowledged_candidate_profiles_interstitial", default: false, null: false
     t.index ["email"], name: "index_publishers_on_email"
     t.index ["oid"], name: "index_publishers_on_oid", unique: true
   end

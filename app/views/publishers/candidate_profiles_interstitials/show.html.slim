@@ -1,0 +1,17 @@
+- content_for :page_title_prefix, t("candidate_profiles_interstitials.page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t("candidate_profiles_interstitials.page_title")
+    p = t("candidate_profiles_interstitials.intro")
+
+    p = t("candidate_profiles_interstitials.list_header")
+    ul.govuk-list.govuk-list--bullet
+      - t("candidate_profiles_interstitials.page_description_items").each do |item|
+        li.govuk-list-item = item
+
+    p = t("candidate_profiles_interstitials.outro")
+
+    = govuk_button_link_to t("candidate_profiles_interstitials.button_text"), publishers_jobseeker_profiles_path, class: "govuk-button--primary govuk-!-margin-bottom-5"
+    hr.govuk-section-break.govuk-section-break--s
+    = govuk_link_to t("candidate_profiles_interstitials.skip_text"), jobs_path, class: "govuk-link"
