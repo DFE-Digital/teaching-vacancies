@@ -8,7 +8,7 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "changing personal details" do
-    let(:profile) { create(:jobseeker_profile, jobseeker:) }
+    let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
 
     context "when filling in the profile for the first time" do
       let(:first_name) { "Frodo" }

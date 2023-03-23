@@ -83,7 +83,29 @@ en:
       search_result_heading: "Candidate profiles (%{count})"
       sort_result_text: "Ordered by most recently updated."
       filters:
+        education_phase_options:
+          nursery: "Nursery"
+          primary: "Primary"
+          middle: "Middle"
+          secondary: "Secondary"
+          sixth_form_or_college: "Sixth form or college"
+          through: "Through"
+        key_stage_options:
+          early_years: "Early years"
+          ks1: "Key stage 1"
+          ks2: "Key stage 2"
+          ks3: "Key stage 3"
+          ks4: "Key stage 4"
+          ks5: "Key stage 5"
+        preferred_education_phases: "Preferred education phase"
+        preferred_key_stages: "Preferred key stage"
         preferred_roles: "Preferred roles"
+        preferred_working_patterns: "Preferred working patterns"
+        qualified_teacher_status: "Qualified teaching status (QTS)"
+        qts_options:
+          "no": Does not have QTS
+          on_track: On track to receive QTS
+          "yes": Awarded QTS
         role_options:
           teacher: "Teacher"
           senior_leader: "Headteacher, deputy or assistant headteacher"
@@ -92,36 +114,10 @@ en:
           higher_level_teaching_assistant: "HLTA (higher level teaching assistant)"
           education_support: "Learning support, cover supervisor or tutor"
           sendco: "SENDCo (special educational needs and disabilities coordinator)"
-        qualified_teacher_status: "Qualified teaching status (QTS)"
-        qts_options:
-          "no": Does not have QTS
-          on_track: On track to receive QTS
-          "yes": Awarded QTS
-        preferred_working_patterns: "Preferred working patterns"
+        schools: Locations
         working_pattern_options:
           full_time: "Full time"
           part_time: "Part time"
-        preferred_education_phases: "Preferred education phases"
-        education_phase_options:
-          nursery: "Nursery"
-          primary: "Primary"
-          middle: "Middle"
-          secondary: "Secondary"
-          sixth_form_or_college: "Sixth form or college"
-          through: "Through"
-        preferred_key_stages: "Preferred key stages"
-        key_stage_options:
-          early_years: "Early years"
-          ks1: "Key stage 1"
-          ks2: "Key stage 2"
-          ks3: "Key stage 3"
-          ks4: "Key stage 4"
-          ks5: "Key stage 5"
-    invitations:
-      index:
-        no_invitations:
-          school: This user has not been invited to apply to any roles at your school
-          organisation: This user has not been invited to apply to any roles at your organisation
 
     login_keys:
       new:
