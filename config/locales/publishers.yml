@@ -119,6 +119,11 @@ en:
           full_time: "Full time"
           part_time: "Part time"
 
+    invitations:
+      index:
+        no_invitations:
+          school: This user has not been invited to apply to any roles at your school
+          organisation: This user has not been invited to apply to any roles at your organisation
     login_keys:
       new:
         notice: >-
