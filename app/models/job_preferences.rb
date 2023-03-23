@@ -27,4 +27,8 @@ class JobPreferences < ApplicationRecord
   def to_multistep
     Jobseekers::JobPreferencesForm.from_record(self)
   end
+
+  def key_stages_for_phases
+    phases.map { |phase| Vacancy::PHASES_TO_KEY_STAGES_MAPPINGS[phase.to_sym] }.flatten.uniq.sort
+  end
 end
