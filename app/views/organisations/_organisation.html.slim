@@ -23,9 +23,9 @@
 
       - summary_list.row do |row|
         - row.key
-          = t("organisations.show.summary.type")
+          = t("jobs.school_type")
         - row.value
-          = organisation_type_basic(organisation).humanize
+          = organisation_type(organisation)
 
       - if organisation.phase?
         - summary_list.row do |row|
