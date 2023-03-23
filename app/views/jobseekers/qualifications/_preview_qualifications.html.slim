@@ -1,9 +1,13 @@
 - qualifications_sort_and_group(qualifications).each_value do |qualification_group|
   - qualification_group.each do |qualification|
     h3.govuk-heading-s class="govuk-!-padding-bottom-0"
-      = qualification.category.humanize
+      = qualification.name
       - if qualification.finished_studying?
-        p class="govuk-body govuk-!-margin-bottom-0" = "#{qualification.subject} (#{qualification.grade})"
+        p class="govuk-body govuk-!-margin-bottom-0"
+          - if qualification.subject.present? && qualification.grade.present?
+            = "#{qualification.subject} (#{qualification.grade})"
+          - else
+            = qualification.subject.presence || qualification.grade
       - if qualification.secondary?
         - qualification.qualification_results.each do |res|
           p class="govuk-!-padding-bottom-0" = tag.div("#{res.subject} (#{res.grade})", class: "govuk-body govuk-!-margin-bottom-0")

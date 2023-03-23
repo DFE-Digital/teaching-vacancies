@@ -81,6 +81,7 @@ module Multistep
     end
 
     def complete
+      form.complete!
       redirect_to escape_path
     end
 

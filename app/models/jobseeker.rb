@@ -12,7 +12,7 @@ class Jobseeker < ApplicationRecord
     validatable
   ])
 
-  has_many :feedbacks
+  has_many :feedbacks, dependent: :destroy, inverse_of: :jobseeker
   has_many :job_applications, dependent: :destroy
   has_many :saved_jobs, dependent: :destroy
   has_one :jobseeker_profile

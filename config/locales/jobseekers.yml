@@ -267,7 +267,9 @@ en:
         heading: Before you start
         privacy_info: >-
           We will store your information so you can use it to quickly apply for other jobs that use the Teaching
-          Vacancies application form.
+          Vacancies application form. Once you have submitted your application, your details can also be imported
+          into a %{profile_link} so schools can contact you about relevant roles.
+        profile_link_text: candidate profile
         title: Application
       new_quick_apply:
         assistance:
@@ -280,6 +282,9 @@ en:
           application. All you need to do now is the personal statement, the equal opportunities questions and the declarations.
         description2: You can review and change this information at any point.
         description3: You should read the job description and application pack before beginning your application.
+        description1_profile: >-
+          You have recently made a candidate profile, so some of your details have been imported into your application form.
+          All you need to do now is the personal statement, the equal opportunities questions and the declarations.
         heading: Helping you apply quicker
         save_and_return: You can save your application at any point and return to it later.
         title: Application
@@ -431,9 +436,6 @@ en:
           heading: Have time to share some feedback?
         next_step:
           heading: What happens next
-          quick_apply: >-
-            We have saved your information so you can use it to quickly apply for other jobs that use the Teaching
-             Vacancies application form.
           shortlisted: >-
             If you are shortlisted for an interview %{organisation} will be in touch to let you know.
           view_applications: View your applications
@@ -518,21 +520,29 @@ en:
       success_html: >-
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     profiles:
+      job_preferences:
+        summary:
+          key_stages:
+            one: Key stage
+            other: Key stages
+          locations:
+            one: Location
+            other: Locations
+          phases:
+            one: Education phase
+            other: Education phases
+          roles:
+            one: Role
+            other: Roles
+          working_patterns:
+            one: Working pattern
+            other: Working patterns
+          subjects:
+            one: Subject
+            other: Subjects
       preview:
         show:
           page_title: Preview your profile
-          phone_number: Phone number
-          job_preferences: Job preferences
-          about: About
-          contact_details: Contact Details
-          email_address: Email address
-          work_history: Work history
-          qualifications: Qualifications
-          roles: Roles
-          education_phase: Education phase
-          key_stages: Key stages
-          working_pattern: Working pattern
-          location: Location
       personal_details:
         incomplete_message: You must complete your personal details before you turn on your profile.
         name:
@@ -553,12 +563,25 @@ en:
           phone_number: Phone number
           phone_number_provided: Do you want to provide a phone number?
       show:
+        active: Active
         activate_profile_text: >-
           When you turn on your profile it will only be visible to hiring staff in schools and trusts.
           They can get in touch by email to invite you apply for roles.
         imported: You have recently submitted a job application, so some of your details have been imported into your profile.
         page_description: Your profile allows schools to find and invite you to apply for their jobs.
         page_title: Your profile
+        preview_and_turn_off_profile: Preview and turn off profile
+        preview_and_turn_on_profile: Preview and turn on profile
+        preview_profile: Preview profile
+        profile_turned_off: Profile turned off
+        profile_turned_on: Profile turned on
+        turn_off_profile_text: When you turn off your profile it will not be visible to hiring staff in schools and trusts.
+        turn_off_profile: Turn off profile
+        turn_on_profile_text: When you turn on your profile it will be visible to hiring staff, and they can invite you to apply for roles.
+        turn_on_profile: Turn on profile
+      confirm_toggle:
+        confirm_turn_off: Confirm that you want to turn off your profile
+        confirm_turn_on: Confirm that you want to turn on your profile
       about_you:
         edit:
           page_title: About You
@@ -629,6 +652,7 @@ en:
           caption: Work history
           page_title: Add a role — Profile
           title: Role
+          hint_text: If you have had more than one role at the same school, add them all separately.
         review:
           add_role_button_text: Add role
           return_to_profile: Return to profile
@@ -636,6 +660,30 @@ en:
           title: Work history
         update:
           success: One role has been changed
+      summary:
+        about: About
+        contact_details: Contact details
+        job_preferences: Job preferences
+        key_stages:
+          one: Key stage
+          other: Key stages
+        education_phases:
+          one: Education phase
+          other: Education phases
+        email_address: Email address
+        locations:
+          one: Location
+          other: Locations
+        phone_number: Phone number
+        qualifications: Qualifications
+        roles:
+          one: Role
+          other: Roles
+        work_history: Work history
+        working_patterns:
+          one: Working pattern
+          other: Working patterns
+
     sessions:
       new:
         description: Sign in here if you are a teacher, aspiring teacher or work in education support. Once signed in you'll be able to save and apply for jobs.

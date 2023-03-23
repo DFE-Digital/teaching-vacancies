@@ -20,6 +20,7 @@ class JobApplication < ApplicationRecord
   array_enum in_progress_steps: {
     qualifications: 0,
     employment_history: 1,
+    personal_details: 2,
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
@@ -37,6 +38,8 @@ class JobApplication < ApplicationRecord
   has_many :qualifications, dependent: :destroy
   has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
+
+  has_many :feedbacks, dependent: :destroy, inverse_of: :job_application
 
   has_noticed_notifications
 

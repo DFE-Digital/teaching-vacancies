@@ -15,7 +15,7 @@ h2.govuk-heading-xl = t("jobseekers.job_applications.heading")
     p.govuk-body = t(".description.save_and_return")
 
     = govuk_notification_banner title_text: t("banners.important") do
-      = t(".privacy_info")
+      = t(".privacy_info", profile_link: govuk_link_to(t(".profile_link_text"), jobseekers_profile_path)).html_safe
 
     = govuk_button_to t("buttons.start_application"), jobseekers_job_job_application_path(vacancy.id)
 

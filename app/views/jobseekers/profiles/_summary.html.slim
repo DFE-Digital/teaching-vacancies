@@ -1,0 +1,64 @@
+- case profile.qualified_teacher_status
+  - when "on_track"
+    p class="govuk-!-margin-bottom-3" = "On track to receive QTS"
+  - when "yes"
+    p class="govuk-!-margin-bottom-3" = "QTS awarded in #{profile.qualified_teacher_status_year}."
+  - when "no"
+    p class="govuk-!-margin-bottom-3" = "Does not have QTS"
+
+- if (job_preferences = profile.job_preferences).present?
+  h2.govuk-heading-m class="govuk-!-margin-bottom-5"
+    = t(".job_preferences")
+    = govuk_summary_list do |summary_list|
+      - if (roles = job_preferences.roles).present?
+        - summary_list.row do |row|
+          - row.key text: t(".roles", count: roles.count)
+          - row.value text: humanize_array(roles)
+      - if (phases = job_preferences.phases).present?
+        - summary_list.row do |row|
+          - row.key text: t(".education_phases", count: phases.count)
+          - row.value text: humanize_array(phases)
+      - if (stages = job_preferences.key_stages).present?
+        - summary_list.row do |row|
+          - row.key text: t(".key_stages", count: stages.count)
+          - row.value text: humanize_array(stages)
+      - if (patterns = job_preferences.working_patterns).present?
+        - summary_list.row do |row|
+          - row.key text: t(".working_patterns", count: patterns.count)
+          - row.value text: humanize_array(patterns)
+      - if (locations = job_preferences.locations).present?
+        - summary_list.row do |row|
+          - row.key text: t(".locations", count: locations.count)
+          - row.value do
+            .govuk-list
+              - locations.each do |location|
+                li = "#{location.name} (#{t('jobs.search.number_of_miles', count: location.radius&.to_i)})"
+
+- if profile.about_you.present?
+  h2.govuk-heading-m class="govuk-!-padding-bottom-2"
+    = t(".about")
+  p = simple_format profile.about_you
+
+h2.govuk-heading-m class="govuk-!-padding-bottom-3"
+  = t(".contact_details")
+dl.govuk-summary-list
+  .govuk-summary-list__row
+    dt.govuk-summary-list__key == t(".email_address")
+    dd.govuk-summary-list__value = profile.email
+  - if (phone_number = profile.personal_details&.phone_number).present?
+    .govuk-summary-list__row
+      dt.govuk-summary-list__key == t(".phone_number")
+      dd.govuk-summary-list__value = phone_number
+
+- if profile.employments.any?
+  h2.govuk-heading-m = t(".work_history")
+  - profile.employments.order(:started_on).each do |employment|
+    h3.govuk-heading-s class="govuk-!-padding-bottom-3"
+      = employment.organisation
+      p class="govuk-!-margin-bottom-0" = employment.job_title
+      p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
+      hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
+
+- if profile.qualifications.any?
+  h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".qualifications")
+  = render "jobseekers/qualifications/preview_qualifications", qualifications: profile.qualifications

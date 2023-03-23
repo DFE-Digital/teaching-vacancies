@@ -14,11 +14,12 @@ class Jobseekers::Profiles::PersonalDetailsController < Jobseekers::ProfilesCont
   private
 
   def store_form!
-    personal_details_record.update!(form.attributes.compact)
+    personal_details_record.assign_attributes(form.attributes.compact)
+    personal_details_record.save!
   end
 
   def personal_details_record
-    @personal_details_record ||= profile.personal_details
+    @personal_details_record ||= profile.personal_details || profile.build_personal_details
   end
 
   def attributes_from_store

@@ -11,7 +11,6 @@ RSpec.describe "Jobseekers can manage their profile" do
     let(:profile) { create(:jobseeker_profile, jobseeker:) }
 
     context "when filling in the profile for the first time" do
-      let(:personal_details) { create(:personal_details, :not_started, jobseeker_profile: profile) }
       let(:first_name) { "Frodo" }
       let(:last_name) { "Baggins" }
       let(:phone_number) { "07777777777" }
@@ -34,28 +33,34 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).to have_content(last_name)
         expect(page).to have_content(phone_number)
       end
+
+      it "does not a notice to inform the user about prefilling" do
+        expect(page).not_to have_content("your details have been imported into your profile")
+      end
     end
 
     context "when editing a profile that has already been completed" do
-      let!(:personal_details) do
-        create(:personal_details,
-               jobseeker_profile: profile,
-               first_name: "Frodo",
-               last_name: "Baggins",
-               phone_number_provided: true,
-               phone_number: old_phone_number,
-               completed_steps: { "name" => "completed", "phone_number" => "completed" })
-      end
-
       let(:new_first_name) { "Samwise" }
       let(:new_last_name) { "Gamgee" }
       let(:old_phone_number) { "07777777777" }
 
-      before { visit jobseekers_profile_path }
+      before do
+        profile.personal_details.update!(
+          first_name: "Frodo",
+          last_name: "Baggins",
+          phone_number_provided: true,
+          phone_number: old_phone_number,
+          completed_steps: { "name" => "completed", "phone_number" => "completed" },
+        )
+
+        visit jobseekers_profile_path
+      end
 
       it "allows the jobseeker to edit their profile" do
-        within "#personal_details" do
-          click_link "Change", match: :first
+        row = page.find(".govuk-summary-list__key", text: "First name").find(:xpath, "..")
+
+        within(row) do
+          click_link "Change"
         end
 
         fill_in "personal_details_form[first_name]", with: new_first_name
@@ -86,6 +91,21 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     it "adds a notice to inform the user" do
       expect(page).to have_content("your details have been imported into your profile")
+    end
+  end
+
+  describe "personal details if the jobseeker has a blank previous job application" do
+    let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
+
+    before { visit jobseekers_profile_path }
+
+    it "prefills the form with the jobseeker's provided personal details" do
+      expect(page).to have_content(previous_application.phone_number)
+    end
+
+    it "still shows the summary rows for the blank attributes" do
+      expect(page).to have_content("First name")
+      expect(page).to have_content("Last name")
     end
   end
 
@@ -232,6 +252,95 @@ RSpec.describe "Jobseekers can manage their profile" do
           expect(page).to have_content(qualification.name)
         end
       end
+    end
+  end
+
+  describe "toggling on and off" do
+    let(:publisher) { organisation.publishers.first }
+
+    let(:organisation) do
+      create(:school,
+             publishers: [build(:publisher)],
+             geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
+    end
+
+    let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
+
+    let(:within_200_miles_of_bexleyheath) do
+      RGeo::Geographic
+        .spherical_factory(srid: 4326)
+        .point(*bexleyheath)
+        .buffer(200 * 1609.34)
+    end
+
+    let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
+
+    let(:job_preferences) do
+      build(:job_preferences,
+            jobseeker_profile: nil,
+            locations: build_list(:job_preferences_location, 1, radius: 200, job_preferences: nil))
+    end
+
+    before do
+      allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
+      login_publisher(publisher:)
+    end
+
+    context "if the profile does not exist" do
+      let!(:profile) { nil }
+
+      it "does not appear in search results" do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_css(".search-results__item")
+      end
+    end
+
+    context "if the profile is inactive" do
+      let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
+
+      it "does not appear in search results" do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+      end
+    end
+
+    it "can be toggled on and off" do
+      visit jobseekers_profile_path
+
+      expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
+      expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+
+      visit publishers_jobseeker_profiles_path
+      expect(page).not_to have_content(profile.full_name)
+
+      visit jobseekers_profile_path
+      within ".preview-and-turn-on-profile" do
+        click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+      end
+
+      click_button I18n.t("jobseekers.profiles.show.turn_on_profile")
+      expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_on"))
+      expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+      expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
+
+      visit publishers_jobseeker_profiles_path
+      expect(page).to have_content(profile.full_name)
+
+      visit jobseekers_profile_path
+      within ".preview-and-turn-on-profile" do
+        click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
+      end
+
+      click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
+      expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
+      expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+      expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
+
+      visit publishers_jobseeker_profiles_path
+      expect(page).not_to have_content(profile.full_name)
+
+      visit publishers_jobseeker_profile_path(profile)
+      expect(page).to have_content("Page not found")
     end
   end
 

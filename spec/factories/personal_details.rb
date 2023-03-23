@@ -6,13 +6,13 @@ FactoryBot.define do
     phone_number { "07777777777" }
     completed_steps { { "name" => "completed", "phone_number" => "completed" } }
     jobseeker_profile
-  end
 
-  trait :not_started do
-    first_name { nil }
-    last_name { nil }
-    phone_number_provided { nil }
-    phone_number { nil }
-    completed_steps { {} }
+    trait :not_started do
+      first_name { nil }
+      last_name { nil }
+      phone_number_provided { nil }
+      phone_number { nil }
+      completed_steps { {} }
+    end
   end
 end
