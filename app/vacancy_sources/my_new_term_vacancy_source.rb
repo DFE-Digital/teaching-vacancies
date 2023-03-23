@@ -63,27 +63,14 @@ class MyNewTermVacancySource
   end
 
   def organisation_fields(item)
+    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"])
+    schools = multi_academy_trust&.schools&.where(urn: item["schoolUrns"]) || Organisation.where(urn: item["schoolUrns"]) || []
+
     {
-      organisations: schools_for(item),
-      readable_job_location: main_organisation(item)&.name,
-      about_school: main_organisation(item)&.description,
+      organisations: schools,
+      readable_job_location: schools.first&.name,
+      about_school: schools.first&.description,
     }
-  end
-
-  def schools_for(item)
-    if item["trustUID"]
-      @multi_academy_trust&.schools&.where(urn: item["schoolUrns"])
-    else
-      Organisation.where(urn: item["schoolUrns"])
-    end.to_a || []
-  end
-
-  def main_organisation(item)
-    @multi_academy_trust || schools_for(item).first
-  end
-
-  def multi_academy_trust(item)
-    @multi_academy_trust ||= SchoolGroup.trusts.find_by(uid: item["trustUID"])
   end
 
   def job_role(item)
@@ -91,6 +78,7 @@ class MyNewTermVacancySource
     &.gsub("headteacher", "senior_leader")
     &.gsub("head_of_year", "middle_leader")
     &.gsub("learning_support", "education_support")
+    &.gsub("other_support", "education_support")
     &.gsub(/\s+/, "")
   end
 
@@ -105,10 +93,12 @@ class MyNewTermVacancySource
   end
 
   def get_job_listings(page_number: nil, records_per_page: nil)
-    params = {}
-    params[:pageNumber] = page_number if page_number
-    params[:recordsPerPage] = records_per_page if records_per_page
-    get_endpoint("job-listings", params)
+    query_params = []
+    query_params << "pageNumber=#{page_number}" if page_number
+    query_params << "recordsPerPage=#{records_per_page}" if records_per_page
+    query_string = query_params.empty? ? "" : "/#{query_params.join('&')}"
+
+    get_endpoint("job-listings#{query_string}")
   end
 
   def get_endpoint(endpoint, params = {})
