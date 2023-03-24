@@ -582,6 +582,8 @@ en:
       confirm_toggle:
         confirm_turn_off: Confirm that you want to turn off your profile
         confirm_turn_on: Confirm that you want to turn on your profile
+      toggle:
+        not_ready: You must complete your personal details and job preferences before you turn on your profile
       about_you:
         edit:
           page_title: About You

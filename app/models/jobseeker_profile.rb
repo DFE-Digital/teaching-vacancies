@@ -3,10 +3,10 @@ class JobseekerProfile < ApplicationRecord
 
   belongs_to :jobseeker
 
-  has_one :personal_details
-  has_one :job_preferences
-  has_many :employments
-  has_many :qualifications
+  has_one :personal_details, dependent: :destroy
+  has_one :job_preferences, dependent: :destroy
+  has_many :employments, dependent: :destroy
+  has_many :qualifications, dependent: :destroy
 
   delegate :all_roles, to: :job_preferences
   delegate :all_key_stages, to: :job_preferences
@@ -60,5 +60,9 @@ class JobseekerProfile < ApplicationRecord
     else
       ""
     end
+  end
+
+  def activable?
+    !!personal_details&.complete? && !!job_preferences&.complete?
   end
 end

@@ -1,6 +1,8 @@
 class Jobseekers::ProfilesController < Jobseekers::BaseController
   include Jobseekers::QualificationFormConcerns
 
+  before_action :check_activable!, only: %i[confirm_toggle toggle]
+
   helper_method :qualification_form_param_key
 
   SECTIONS = [
@@ -65,6 +67,13 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
   end
 
   private
+
+  def check_activable!
+    return if profile.active? || profile.activable?
+
+    flash[:important] = t("jobseekers.profiles.toggle.not_ready")
+    redirect_to action: :show
+  end
 
   def profile
     @profile ||= JobseekerProfile.prepare(jobseeker: current_jobseeker) do
