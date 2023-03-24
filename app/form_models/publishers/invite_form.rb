@@ -51,7 +51,7 @@ module Publishers
     def applicable_jobs
       existing_invitations = InvitationToApply.where(jobseeker_id: jobseeker_profile.jobseeker_id)
       @applicable_jobs ||= job_preferences
-        .vacancies(organisation.vacancies.active)
+        .vacancies(organisation.all_vacancies.active)
         .where.not(id: existing_invitations.select(:vacancy_id))
     end
 
