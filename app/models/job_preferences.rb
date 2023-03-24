@@ -19,4 +19,12 @@ class JobPreferences < ApplicationRecord
   def all_working_patterns
     working_patterns.map(&:humanize).join(", ")
   end
+
+  def complete?
+    to_multistep.completed?
+  end
+
+  def to_multistep
+    Jobseekers::JobPreferencesForm.from_record(self)
+  end
 end

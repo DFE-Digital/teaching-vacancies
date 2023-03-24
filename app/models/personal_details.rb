@@ -32,4 +32,8 @@ class PersonalDetails < ApplicationRecord
   def reset_phone_number
     self.phone_number = nil unless phone_number_provided?
   end
+
+  def complete?
+    first_name.present? && last_name.present? && (!phone_number_provided? || phone_number.present?)
+  end
 end

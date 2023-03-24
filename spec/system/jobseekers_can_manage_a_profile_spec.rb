@@ -275,14 +275,7 @@ RSpec.describe "Jobseekers can manage their profile" do
              geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(*bexleyheath))
     end
 
-    let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
-
-    let(:within_200_miles_of_bexleyheath) do
-      RGeo::Geographic
-        .spherical_factory(srid: 4326)
-        .point(*bexleyheath)
-        .buffer(200 * 1609.34)
-    end
+    let(:bexleyheath) { %w[0.14606549011864176 51.457814649098104] }
 
     let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
 
@@ -315,43 +308,73 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
     end
 
-    it "can be toggled on and off" do
-      visit jobseekers_profile_path
-
-      expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
-      expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
-
-      visit jobseekers_profile_path
-      within ".preview-and-turn-on-profile" do
-        click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+    context "when profile contains minimum information required for publishing" do
+      let!(:profile) do
+        create(:jobseeker_profile, :with_personal_details, :with_job_preferences,
+               job_preferences:,
+               jobseeker:,
+               active: false)
       end
 
-      click_button I18n.t("jobseekers.profiles.show.turn_on_profile")
-      expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_on"))
-      expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-      expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
+      it "can be toggled on and off" do
+        visit jobseekers_profile_path
 
-      visit publishers_jobseeker_profiles_path
-      expect(page).to have_content(profile.full_name)
+        expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
+        expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
 
-      visit jobseekers_profile_path
-      within ".preview-and-turn-on-profile" do
-        click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+
+        visit jobseekers_profile_path
+        within ".preview-and-turn-on-profile" do
+          click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+        end
+
+        click_button I18n.t("jobseekers.profiles.show.turn_on_profile")
+        expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_on"))
+        expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+        expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
+
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
+
+        visit jobseekers_profile_path
+        within ".preview-and-turn-on-profile" do
+          click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
+        end
+
+        click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
+        expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
+        expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+        expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
+
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+
+        visit publishers_jobseeker_profile_path(profile)
+        expect(page).to have_content("Page not found")
+      end
+    end
+
+    context "when profile does not contain minimum information required for publishing" do
+      let!(:profile) do
+        create(:jobseeker_profile, %i[with_personal_details with_job_preferences].sample,
+               jobseeker:,
+               active: false)
       end
 
-      click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
-      expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
-      expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-      expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
+      it "cannot be toggled on" do
+        visit jobseekers_profile_path
 
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
+        expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
+        expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
 
-      visit publishers_jobseeker_profile_path(profile)
-      expect(page).to have_content("Page not found")
+        within ".preview-and-turn-on-profile" do
+          click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+        end
+
+        expect(page).to have_content I18n.t("jobseekers.profiles.toggle.not_ready")
+      end
     end
   end
 
