@@ -1,6 +1,6 @@
 ARG PROD_PACKAGES="imagemagick libxml2 libxslt libpq tzdata shared-mime-info"
 
-FROM ruby:3.2.0-alpine3.16 AS builder
+FROM ruby:3.2.1-alpine3.16 AS builder
 
 WORKDIR /app
 
@@ -44,7 +44,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.2.0-alpine3.16 AS production
+FROM ruby:3.2.1-alpine3.16 AS production
 
 WORKDIR /app
 
