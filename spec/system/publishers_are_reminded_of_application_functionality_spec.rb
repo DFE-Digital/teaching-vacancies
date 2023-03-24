@@ -5,10 +5,10 @@ RSpec.describe "Application feature reminder" do
   let(:publisher) { create(:publisher) }
   let(:last_vacancy) { Vacancy.order("created_at").last }
 
-  before { login_publisher(publisher: publisher, organisation: organisation, allow_reminders: true) }
+  before { login_publisher(publisher:, organisation:, allow_reminders: true) }
 
   context "when at least one vacancy has been published that accepts applications through TV" do
-    let!(:vacancy) { create(:vacancy, :published, enable_job_applications: true, publisher: publisher, organisations: [organisation]) }
+    let!(:vacancy) { create(:vacancy, :published, enable_job_applications: true, publisher:, organisations: [organisation]) }
 
     it "does not show reminder page when creating a job" do
       visit organisation_jobs_with_type_path
@@ -20,7 +20,7 @@ RSpec.describe "Application feature reminder" do
   context "when no vacancy that accepts applications through TV has been published since the last update to the new features page" do
     before { stub_const("Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT", DateTime.new(2020, 1, 1).freeze) }
 
-    let!(:vacancy) { create(:vacancy, :published, enable_job_applications: false, publisher: publisher, organisations: [organisation]) }
+    let!(:vacancy) { create(:vacancy, :published, enable_job_applications: false, publisher:, organisations: [organisation]) }
 
     it "shows reminder page before first step of create job and does not show it twice in the same session" do
       visit organisation_jobs_with_type_path
@@ -38,6 +38,18 @@ RSpec.describe "Application feature reminder" do
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(organisation_job_build_path(Vacancy.order("created_at").last.id, :job_role))
+    end
+
+    context "when the organisation is a local authority" do
+      let(:publisher_preference) { create(:publisher_preference, organisation:) }
+      let(:organisation) { create(:local_authority) }
+      let(:publisher) { publisher_preference.publisher }
+
+      it "does not show reminder page when creating a job" do
+        visit organisation_jobs_with_type_path
+        click_on "List a job"
+        expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_location))
+      end
     end
 
     it "does not show reminder page when editing a job" do

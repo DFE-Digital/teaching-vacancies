@@ -74,7 +74,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def show_application_feature_reminder_page?
-    return false if session[:visited_application_feature_reminder_page] || session[:visited_new_features_page]
+    return false if session[:visited_application_feature_reminder_page] || session[:visited_new_features_page] || current_organisation.local_authority?
 
     Vacancy.published.where(
       publisher_id: current_publisher.id,
