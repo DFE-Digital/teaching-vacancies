@@ -5,7 +5,7 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
   end
 
   def show
-    not_found unless profile.active?
+    not_found unless visible_to_current_organisation?
   end
 
   private
@@ -20,4 +20,8 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
     @profile ||= JobseekerProfile.find(params[:id])
   end
   helper_method :profile
+
+  def visible_to_current_organisation?
+    profile.active? && profile.excluded_organisations.exclude?(current_organisation)
+  end
 end

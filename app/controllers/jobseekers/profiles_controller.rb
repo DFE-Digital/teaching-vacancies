@@ -50,6 +50,13 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       page_path: -> { edit_jobseekers_profile_about_you_path },
       partial: "jobseekers/profiles/about_you/summary",
     },
+    {
+      title: I18n.t("jobseekers.profiles.show.hide_profile"),
+      display_summary: -> { !profile.hide_profile.nil? },
+      key: "hide_profile",
+      link_text: I18n.t("jobseekers.profiles.show.set_up_profile_visibility"),
+      page_path: -> { jobseekers_profile_hide_profile_path },
+    },
   ].map(&:freeze).freeze
 
   def show

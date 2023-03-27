@@ -1,0 +1,28 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @form, url: add_another_jobseekers_profile_hide_profile_path, method: :post do |f|
+      = f.govuk_error_summary
+
+      h1.govuk-heading-l = t(".page_title")
+
+      = govuk_summary_list do |summary_list|
+        - profile.organisation_exclusions.each do |exclusion|
+          = summary_list.row do |row|
+            - row.key(text: exclusion.organisation.name)
+            - row.value(text: exclusion.organisation.address)
+            - row.action(text: t("buttons.delete"), href: delete_jobseekers_profile_hide_profile_path(exclusion))
+
+      = f.govuk_collection_radio_buttons :add_another,
+        [["Yes", true], ["No", false]],
+        :last,
+        :first,
+        legend: { size: "m", text: t(".add_another") }
+
+      = f.govuk_submit t("buttons.save_and_continue")
+
+    .govuk-button-group = govuk_link_to(t("buttons.cancel"), jobseekers_profile_path)
