@@ -22,6 +22,17 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
   helper_method :profile
 
   def visible_to_current_organisation?
-    profile.active? && profile.excluded_organisations.exclude?(current_organisation)
+    profile.active? && visible_to_specific_org? && visible_to_associated_groups?
+  end
+
+  def visible_to_specific_org?
+    profile.excluded_organisations.exclude?(current_organisation)
+  end
+
+  def visible_to_associated_groups?
+    return true unless current_organisation.respond_to?(:school_groups)
+    return true if (groups = current_organisation.school_groups).blank?
+
+    profile.excluded_organisations & groups == []
   end
 end

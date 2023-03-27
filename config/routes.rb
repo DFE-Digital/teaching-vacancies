@@ -101,6 +101,8 @@ Rails.application.routes.draw do
         post :confirm_hide
         get :add
         post :add_school
+        get :choose_school_or_trust
+        post :add_school_or_trust
         get :cannot_find_school
         get :schools
         post :add_another

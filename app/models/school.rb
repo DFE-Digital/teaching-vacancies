@@ -51,4 +51,8 @@ class School < Organisation
   def trust
     school_groups&.find(&:trust?)
   end
+
+  def part_of_a_trust?
+    trust.present?
+  end
 end

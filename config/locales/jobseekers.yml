@@ -534,6 +534,12 @@ en:
           return_to_profile: Return to profile
           search_again: Search again
           spelled_incorrectly: the school is spelled incorrectly
+        choose_school_or_trust:
+          page_title: This school is in a trust. Do you want to hide your profile from all schools within %{trust_name}?
+          hint: A trust is an organisation that runs an academy.
+          options:
+            school: No, just %{school_name}
+            trust: Yes, hide from all schools within %{trust_name}
         delete:
           delete_school: Delete school
           page_title: Confirm that you no longer want to hide your profile from %{name}, %{address}
@@ -541,6 +547,8 @@ en:
           page_title: Hide profile from schools or trusts
         schools:
           add_another: Do you want to add another school or trust?
+          already_hidden: You are already hidden from %{name}
+          hidden_from_trust_and_schools: Your profile will be hidden from all schools within this Trust.
           page_title: Hide profile from schools or trusts
         show:
           page_title: Do you want to hide your profile from a school or trust?

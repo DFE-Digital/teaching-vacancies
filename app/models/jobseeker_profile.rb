@@ -17,7 +17,14 @@ class JobseekerProfile < ApplicationRecord
 
   scope :active, -> { where(active: true) }
   scope :not_hidden_from, lambda { |organisation|
-    where.not(id: organisation.jobseeker_profile_exclusions.pluck(:jobseeker_profile_id))
+    relevant_orgs = [organisation]
+    relevant_orgs += organisation.school_groups if organisation.respond_to?(:school_groups)
+
+    hidden_profile_ids = JobseekerProfileExcludedOrganisation
+      .where(organisation: relevant_orgs)
+      .pluck(:jobseeker_profile_id)
+
+    where.not(id: hidden_profile_ids)
   }
 
   delegate :email, to: :jobseeker
