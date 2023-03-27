@@ -531,9 +531,9 @@ en:
     outro: You'll also be notified about any new candidate profiles that match your job listings
     button_text: View candidate profiles
     skip_text: Skip to job listings
-    
+
   candidate_profiles_banner:
-    intro: 'Candidate profiles are a new feture that allows schools to contact you about relevant jobs. With a profile you can:'
+    intro: 'Candidate profiles are a new feature that allows schools to contact you about relevant jobs. With a profile you can:'
     summary_list:
       - share your qualifications with schools
       - specify the types of teaching jobs you're looking for
