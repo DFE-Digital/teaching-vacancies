@@ -9,7 +9,7 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
       .permit(:hide_profile)
 
     if (@form = Jobseekers::Profile::HideProfileForm.new(form_params)).valid?
-      profile.update(hide_profile: @form.hide_profile)
+      profile.update!(hide_profile: @form.hide_profile)
 
       if profile.hide_profile?
         redirect_to add_jobseekers_profile_hide_profile_path
