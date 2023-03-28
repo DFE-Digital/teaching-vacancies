@@ -106,22 +106,6 @@ module JobApplicationsHelper
     end
   end
 
-  def employment_history_gap?(index, employments)
-    current_employment, next_employment = employments.sort_by { |r| r[:started_on] }[index, index + 1]
-
-    return false if employments.where(started_on: (..current_employment.started_on), current_role: "yes").any?
-
-    return false if current_employment.current_role == "yes"
-
-    return true if next_employment && current_employment.ended_on + 3.months < next_employment.started_on
-
-    true if !next_employment && current_employment.ended_on + 3.months < Date.current
-  end
-
-  def gap_duration(current_employment, next_employment)
-    distance_of_time_in_words(current_employment.ended_on, next_employment&.started_on || Date.current)
-  end
-
   def job_application_step_in_progress?(job_application, step)
     job_application.in_progress_steps.include?(step.to_s)
   end
