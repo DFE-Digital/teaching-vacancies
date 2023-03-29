@@ -70,6 +70,10 @@ class JobApplication < ApplicationRecord
     draft? && vacancy&.expired?
   end
 
+  def unexplained_employment_gaps
+    @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
+  end
+
   private
 
   def update_status_timestamp

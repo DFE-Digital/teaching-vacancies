@@ -39,5 +39,5 @@
       - elsif employment.break?
         = render "jobseekers/job_applications/explained_employment_break", employment: employment, index: index
 
-      - if employment_history_gap?(index, job_application.employments)
-        = render "jobseekers/job_applications/unexplained_employment_break", employments: job_application.employments.order(:started_on), employment: employment, index: index
+      - if (gap = job_application.unexplained_employment_gaps[employment]).present?
+        = render("jobseekers/job_applications/unexplained_employment_break", gap:, index:)

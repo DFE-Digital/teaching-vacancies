@@ -65,9 +65,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       expect(page).to have_content("Travelling around the world")
       expect(page).to have_content("February 2021 to June 2021")
 
-      within all(".govuk-inset-text")[1] do
-        click_on I18n.t("buttons.change")
-      end
+      click_on "Change Break in work history 2021-02-01 to 2021-06-01"
 
       fill_in "Enter reasons for break in work history", with: ""
       click_on I18n.t("buttons.continue")
@@ -79,9 +77,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
       expect(page).to have_content("Looking after my needy turtle")
 
-      within all(".govuk-inset-text")[1] do
-        click_on I18n.t("buttons.delete")
-      end
+      click_on "Delete Break in work history 2021-02-01 to 2021-06-01"
       click_on I18n.t("buttons.confirm_destroy")
 
       expect(page).not_to have_content("Looking after my needy turtle")

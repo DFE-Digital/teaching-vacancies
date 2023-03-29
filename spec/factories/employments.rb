@@ -28,4 +28,9 @@ FactoryBot.define do
 
     jobseeker_profile
   end
+
+  trait :current_role do
+    current_role { "yes" }
+    ended_on { nil }
+  end
 end
