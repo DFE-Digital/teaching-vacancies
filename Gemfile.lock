@@ -350,7 +350,7 @@ GEM
     omniauth-rails_csrf_protection (1.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
-    omniauth_openid_connect (0.6.0)
+    omniauth_openid_connect (0.6.1)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 1.1)
     openid_connect (1.4.2)
