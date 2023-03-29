@@ -389,7 +389,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "hiding profile from specific organisations" do
+  describe "hiding profile from specific organisations", js: true do
     let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
 
     let(:bexleyheath_geopoint) do
@@ -425,7 +425,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
     end
 
-    it "allows the jobseeker hiding themselves from specific schools", js: true do
+    it "allows the jobseeker to hide themselves from specific schools" do
       login_publisher(publisher: permitted_publisher)
       visit publishers_jobseeker_profiles_path
       expect(page).to have_content(profile.full_name)
@@ -484,6 +484,123 @@ RSpec.describe "Jobseekers can manage their profile" do
       login_publisher(publisher: forbidden_publisher)
       visit publishers_jobseeker_profiles_path
       expect(page).not_to have_content(profile.full_name)
+
+      click_on I18n.t("nav.sign_out")
+    end
+
+    context "if the jobseeker is already hidden from the school" do
+      before do
+        profile.excluded_organisations << forbidden_organisation
+      end
+
+      it "does not allow the jobseeker to hide themselves from the school again" do
+        visit jobseekers_profile_path
+        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+        choose "Yes", visible: false
+        click_on I18n.t("buttons.save_and_continue")
+
+        field = find_field("Name of school or trust")
+        field.fill_in(with: forbidden_organisation.name)
+        field.native.send_keys(:tab)
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
+
+        click_on I18n.t("nav.sign_out")
+      end
+    end
+
+    context "if the organisation is a trust" do
+      let!(:forbidden_trust) do
+        create(:trust,
+               name: "Forbidden Trust",
+               publishers: [forbidden_trust_publisher],
+               schools: [forbidden_organisation])
+      end
+
+      let(:forbidden_trust_publisher) { create(:publisher) }
+
+      it "allows the jobseeker to hide themselves from the trust and its schools" do
+        visit jobseekers_profile_path
+        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+        choose "Yes", visible: false
+        click_on I18n.t("buttons.save_and_continue")
+
+        field = find_field("Name of school or trust")
+        field.fill_in(with: forbidden_trust.name)
+        field.native.send_keys(:tab)
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.hidden_from_trust_and_schools"))
+
+        login_publisher(publisher: forbidden_trust_publisher)
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+
+        visit publishers_jobseeker_profile_path(profile)
+        expect(page).to have_content("Page not found")
+
+        login_publisher(publisher: forbidden_publisher)
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+
+        visit publishers_jobseeker_profile_path(profile)
+        expect(page).to have_content("Page not found")
+
+        login_publisher(publisher: permitted_publisher)
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
+
+        click_on I18n.t("nav.sign_out")
+      end
+    end
+
+    context "if the forbidden organisation is within a trust" do
+      let!(:forbidden_trust) do
+        create(:trust,
+               name: "Forbidden Trust",
+               publishers: [forbidden_trust_publisher],
+               schools: [forbidden_organisation])
+      end
+
+      let(:forbidden_trust_publisher) { create(:publisher) }
+
+      it "asks whether to hide from the whole trust or just the specific school" do
+        visit jobseekers_profile_path
+        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+        choose "Yes", visible: false
+        click_on I18n.t("buttons.save_and_continue")
+
+        field = find_field("Name of school or trust")
+        field.fill_in(with: forbidden_organisation.name)
+        field.native.send_keys(:tab)
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.choose_school_or_trust.page_title", trust_name: forbidden_trust.name))
+
+        choose I18n.t("jobseekers.profiles.hide_profile.choose_school_or_trust.options.trust", trust_name: forbidden_trust.name), visible: false
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content(forbidden_trust.name)
+
+        choose "Yes", visible: false
+        click_on I18n.t("buttons.save_and_continue")
+
+        field = find_field("Name of school or trust")
+        field.fill_in(with: forbidden_organisation.name)
+        field.native.send_keys(:tab)
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.choose_school_or_trust.page_title", trust_name: forbidden_trust.name))
+
+        choose I18n.t("jobseekers.profiles.hide_profile.choose_school_or_trust.options.school", school_name: forbidden_organisation.name), visible: false
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content(forbidden_trust.name)
+        expect(page).to have_content(forbidden_organisation.name)
+
+        click_on I18n.t("nav.sign_out")
+      end
     end
   end
 

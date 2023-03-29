@@ -1,0 +1,20 @@
+- content_for :page_title_prefix, t(".page_title", trust_name: @school.trust.name)
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: add_jobseekers_profile_hide_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @form, url: add_school_or_trust_jobseekers_profile_hide_profile_path, method: :post do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_collection_radio_buttons :organisation_id,
+        [[t(".options.trust", trust_name: @school.trust.name), @school.trust.id], [t(".options.school", school_name: @school.name), @school.id]],
+        :last,
+        :first,
+        legend: { size: "l", text: t(".page_title", trust_name: @school.trust.name), tag: "h1" },
+        hint: { text: t(".hint") }
+
+      = f.govuk_submit t("buttons.save_and_continue")
+
+    .govuk-button-group = govuk_link_to(t("buttons.cancel"), add_jobseekers_profile_hide_profile_path)

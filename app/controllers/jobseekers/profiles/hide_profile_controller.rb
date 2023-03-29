@@ -30,12 +30,28 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
       .require(:jobseekers_profile_select_organisation_form)
       .permit(:organisation_name)
 
-    if (@form = Jobseekers::Profile::SelectOrganisationForm.new(form_params)).valid?
-      profile.excluded_organisations << @form.organisation unless profile.excluded_organisations.include?(@form.organisation)
-      redirect_to schools_jobseekers_profile_hide_profile_path
+    form = Jobseekers::Profile::SelectOrganisationForm.new(form_params)
+
+    if form.organisation.respond_to?(:part_of_a_trust?) && form.organisation.part_of_a_trust?
+      redirect_to choose_school_or_trust_jobseekers_profile_hide_profile_path(school_id: form.organisation.id)
     else
-      redirect_to cannot_find_school_jobseekers_profile_hide_profile_path
+      hide_school(form)
     end
+  end
+
+  def choose_school_or_trust
+    @form = Jobseekers::Profile::ChooseSchoolOrTrustForm.new
+    @school = School.visible_to_jobseekers.find(params[:school_id])
+  end
+
+  def add_school_or_trust
+    form_params = params
+      .require(:jobseekers_profile_choose_school_or_trust_form)
+      .permit(:organisation_id)
+
+    form = Jobseekers::Profile::SelectOrganisationForm.new(form_params)
+
+    hide_school(form)
   end
 
   def cannot_find_school; end
@@ -63,4 +79,20 @@ class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesControll
   end
 
   def review; end
+
+  private
+
+  def hide_school(form)
+    if form.valid?
+      if profile.excluded_organisations.include?(form.organisation)
+        flash[:important] = t("jobseekers.profiles.hide_profile.schools.already_hidden", name: form.organisation.name)
+      else
+        profile.excluded_organisations << form.organisation
+      end
+
+      redirect_to schools_jobseekers_profile_hide_profile_path
+    else
+      redirect_to cannot_find_school_jobseekers_profile_hide_profile_path
+    end
+  end
 end
