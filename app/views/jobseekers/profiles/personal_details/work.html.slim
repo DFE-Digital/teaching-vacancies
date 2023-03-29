@@ -1,0 +1,38 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: back_url
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @step, url: { action: :update }, method: :post, as: :personal_details_form do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_radio_buttons_fieldset :right_to_work_in_uk,
+        legend: { \
+          text: t(".page_title"), \
+          tag: "h1", \
+          size: "l", \
+        }, \
+        caption: { \
+          text: t(".caption"), \
+          size: "l", \
+        },
+        hint: { \
+          text: t(".hint.text", link: govuk_link_to(t(".hint.link"), "https://www.gov.uk/government/publications/teach-in-england-if-you-qualified-outside-the-uk/teach-in-england-if-you-qualified-outside-the-uk", target: "_blank")).html_safe, \
+        } do
+
+        = f.govuk_radio_button :right_to_work_in_uk, "true", label: { text: t(".options.true") }, link_errors: true
+        = f.govuk_radio_button :right_to_work_in_uk, "false", label: { text: t(".options.false") }
+          p = t(".unlikely_unless_have_qts")
+          p = t(".may_be_able_to_apply_for_qts.text", link: govuk_link_to(t(".may_be_able_to_apply_for_qts.link"), "https://apply-for-qts-in-england.education.gov.uk/eligibility/start", target: "_blank")).html_safe
+          p = t(".schools_cannot_give_advice.text", link: govuk_link_to(t(".schools_cannot_give_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas", target: "_blank")).html_safe
+          ul.govuk-list.govuk-list--bullet
+            li = t(".learn_more.qualifications_and_experience")
+            li = t(".learn_more.visas")
+            li = t(".learn_more.other_routes_to_qts")
+
+      = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5"
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

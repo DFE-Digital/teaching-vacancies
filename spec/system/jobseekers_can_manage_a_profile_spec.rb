@@ -38,14 +38,20 @@ RSpec.describe "Jobseekers can manage their profile" do
         choose "Yes"
         fill_in "personal_details_form[phone_number]", with: phone_number
         click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content("Do you have the right to work in the UK?")
+        choose "Yes"
+        click_on I18n.t("buttons.save_and_continue")
+
         click_on I18n.t("buttons.return_to_profile")
 
         expect(page).to have_content(first_name)
         expect(page).to have_content(last_name)
         expect(page).to have_content(phone_number)
+        expect(page).to have_content("Do you have the right to work in the UK?Yes")
       end
 
-      it "does not a notice to inform the user about prefilling" do
+      it "does not display a notice to inform the user about prefilling" do
         expect(page).not_to have_content("your details have been imported into your profile")
       end
     end
@@ -81,10 +87,15 @@ RSpec.describe "Jobseekers can manage their profile" do
         choose "No"
         click_on I18n.t("buttons.save_and_continue")
 
+        choose "No"
+        expect(page).to have_content("You are unlikely to be given a teaching job in England unless you have qualified teacher status")
+        click_on I18n.t("buttons.save_and_continue")
+
         expect(page).to have_content(new_first_name)
         expect(page).to have_content(new_last_name)
-        expect(page).to have_content("No")
+        expect(page).to have_content("Do you want to provide a phone number?No")
         expect(page).not_to have_content(old_phone_number)
+        expect(page).to have_content("Do you have the right to work in the UK?No")
       end
     end
   end

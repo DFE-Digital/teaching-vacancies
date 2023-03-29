@@ -6,6 +6,7 @@ ruby:
                  last_name: nil,
                  phone_number_provided: { map_values: ->(value) { t("helpers.label.personal_details_form.phone_number_provided_options.#{value}") } },
                  phone_number: nil,
+                 right_to_work_in_uk: { map_values: ->(value) { t("jobseekers.profiles.personal_details.work.options.#{value}") } },
                }
 
   summary = govuk_summary_list(html_attributes: { id: "personal_details" }) do |summary_list|
