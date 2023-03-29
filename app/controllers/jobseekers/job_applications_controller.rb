@@ -201,13 +201,20 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       qualifications: profile.qualifications.map(&:duplicate),
       qualified_teacher_status_year: (profile.qualified_teacher_status_year || ""),
       qualified_teacher_status: (profile.qualified_teacher_status || ""),
+      right_to_work_in_uk: profile_right_to_work,
     )
 
     mark_step_completion(application)
   end
 
+  def profile_right_to_work
+    return "" if profile.personal_details.right_to_work_in_uk.nil?
+
+    profile.personal_details.right_to_work_in_uk? ? "yes" : "no"
+  end
+
   def mark_step_completion(application)
-    if application.first_name.present? || application.last_name.present? || application.phone_number.present?
+    if application.first_name.present? || application.last_name.present? || application.phone_number.present? || application.right_to_work_in_uk.present?
       application.in_progress_steps += [:personal_details]
     end
 

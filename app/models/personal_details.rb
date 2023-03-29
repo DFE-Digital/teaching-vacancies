@@ -12,6 +12,7 @@ class PersonalDetails < ApplicationRecord
       first_name
       last_name
       phone_number
+      right_to_work_in_uk
     ]
   end
 
@@ -24,9 +25,8 @@ class PersonalDetails < ApplicationRecord
       record.completed_steps["name"] = :completed
     end
 
-    return unless record.phone_number_provided == false || record.phone_number.present?
-
-    record.completed_steps["phone_number"] = :completed
+    record.completed_steps["phone_number"] = :completed if record.phone_number_provided == false || record.phone_number.present?
+    record.completed_steps["work"] = :completed unless record.right_to_work_in_uk.nil?
   end
 
   def reset_phone_number
@@ -34,6 +34,14 @@ class PersonalDetails < ApplicationRecord
   end
 
   def complete?
-    first_name.present? && last_name.present? && (!phone_number_provided? || phone_number.present?)
+    first_name.present? && last_name.present? && (!phone_number_provided? || phone_number.present?) && !right_to_work_in_uk.nil?
+  end
+
+  def right_to_work_in_uk=(value)
+    if value.is_a?(String)
+      super(%w[yes true].include?(value.downcase))
+    else
+      super
+    end
   end
 end

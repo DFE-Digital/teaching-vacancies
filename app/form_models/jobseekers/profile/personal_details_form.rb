@@ -21,4 +21,10 @@ class Jobseekers::Profile::PersonalDetailsForm
     validates :phone_number_provided, presence: true
     validates :phone_number, presence: true, format: { with: /\A\+?(?:\d\s?){10,13}\z/ }, if: -> { phone_number_provided == "true" }
   end
+
+  step :work do
+    attribute :right_to_work_in_uk
+
+    validates :right_to_work_in_uk, presence: true
+  end
 end

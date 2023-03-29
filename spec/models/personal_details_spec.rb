@@ -25,10 +25,11 @@ RSpec.describe PersonalDetails do
         expect(personal_details.first_name).to eq(previous_application.first_name)
         expect(personal_details.last_name).to eq(previous_application.last_name)
         expect(personal_details.phone_number).to eq(previous_application.phone_number)
+        expect(personal_details.right_to_work_in_uk).to eq(previous_application.right_to_work_in_uk == "yes")
       end
 
       it "sets some steps to completed" do
-        expect(personal_details.completed_steps).to include("name", "phone_number")
+        expect(personal_details.completed_steps).to include("name", "phone_number", "work")
       end
     end
 
