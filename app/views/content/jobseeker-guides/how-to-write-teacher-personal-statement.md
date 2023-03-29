@@ -20,7 +20,7 @@ Schools will be interested in your approach to behaviour management, so think ab
 Think about any research that has affected your teaching practice. Explain what has worked well and if it didn’t, what you learnt.
 
 
-## Are you up to date on safeguarding statutory guidance?
+# Are you up to date on safeguarding statutory guidance?
 You need to demonstrate your awareness of the importance of safeguarding and the requirements of [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2). Include any examples of how you worked with a Designated Safeguarding Lead.
 
 
@@ -30,7 +30,7 @@ Schools will also want to know how you overcome challenges.
 
 ## How can you contribute to wider school life?
 Set yourself apart by showing how your hobbies and achievements could contribute to the wider school community. Could you run an after school club or organise school trips?
- 
- 
+
+
 <h2 id="search-for-roles">Search for roles</h2>
 [Search for roles on Teaching Vacancies now.](https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=)
