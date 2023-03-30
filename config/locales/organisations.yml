@@ -1,5 +1,8 @@
 en:
   organisations:
+    school_type: School type
+    other_type: Type
+
     filters:
       education_phase: Phase of education
       key_stage: Key stage

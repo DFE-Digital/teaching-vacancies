@@ -23,7 +23,10 @@
 
       - summary_list.row do |row|
         - row.key
-          = t("jobs.school_type")
+          - if organisation.school?
+            = t("organisations.school_type")
+          - else
+            = t("organisations.other_type")
         - row.value
           = organisation_type(organisation)
 

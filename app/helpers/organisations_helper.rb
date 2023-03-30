@@ -22,7 +22,7 @@ module OrganisationsHelper
   end
 
   def organisation_type(organisation)
-    return organisation.group_type if organisation.school_group?
+    return organisation.group_type&.humanize if organisation.school_group?
 
     school_type_details = [
       organisation.school_type,
