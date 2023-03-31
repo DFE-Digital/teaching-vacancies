@@ -158,13 +158,14 @@ en:
       inclusion: Select yes if you want to include additional allowances
     benefits_details:
       blank: Enter additional allowances
+      too_long: Additional allowances must not be more than %{count} characters
     pay_scale:
       blank: Enter pay scale
       too_long: Pay scale must not be more than %{count} characters
       invalid_characters: Pay scale must not contain any HTML tags
     salary:
       blank: Enter full-time salary
-      too_long: Salary must not be more than %{count} characters
+      too_long: Full-time equivalent salary must not be more than %{count} characters
       invalid_characters: Salary must not contain any HTML tags
     salary_types:
       invalid: Select salary details
