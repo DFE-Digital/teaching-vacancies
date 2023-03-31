@@ -131,15 +131,6 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
         expect(subject.errors.of_kind?(:earliest_start_date, :after)).to be true
       end
     end
-
-    context "when date is after latest_start_date" do
-      let(:earliest_start_date) { latest_start_date + 1.month }
-
-      it "is invalid" do
-        expect(subject).to be_invalid
-        expect(subject.errors.of_kind?(:earliest_start_date, :before)).to be true
-      end
-    end
   end
 
   describe "latest_start_date" do

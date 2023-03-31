@@ -7,7 +7,7 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::VacancyFor
 
   validates :start_date_type, inclusion: { in: Vacancy.start_date_types.keys }
   validates :starts_on, presence: true, date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at }, if: -> { start_date_type == "specific_date" }
-  validates :earliest_start_date, presence: true, date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at, before: :latest_start_date }, if: -> { start_date_type == "date_range" }
+  validates :earliest_start_date, presence: true, date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at }, if: -> { start_date_type == "date_range" }
   validates :latest_start_date, presence: true, date: { on_or_after: :today, on_or_before: :far_future, after: :earliest_start_date }, if: -> { start_date_type == "date_range" }
   validates :other_start_date_details, presence: true, if: -> { start_date_type == "other" }
 
