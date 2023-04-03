@@ -89,3 +89,15 @@ Vacancy.listed.each do |vacancy|
     FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
   end
 end
+
+## Jobseeker Profiles
+weydon_trust_schools = weydon_trust.schools.all
+location_preference_names = weydon_trust_schools.map(&:postcode)
+
+Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
+  FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications, :with_employment_history, jobseeker: jobseeker) do |jobseeker_profile|
+    FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
+      FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
+    end
+  end
+end
