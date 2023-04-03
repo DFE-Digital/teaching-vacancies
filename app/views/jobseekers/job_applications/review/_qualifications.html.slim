@@ -6,9 +6,12 @@
       p.govuk-body = t("jobseekers.job_applications.show.qualifications.none")
   - else
     - qualifications_sort_and_group(job_application.qualifications).each_value do |qualification_group|
-      h3 class="govuk-heading-s" class="govuk-!-margin-top-0 govuk-!-margin-bottom-1"
-        = t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification_group.first[:category]}")
       - qualification_group.each do |qualification|
+        h3 class="govuk-heading-s" class="govuk-!-margin-top-0 govuk-!-margin-bottom-1"
+          - if qualifications_group_category_other?(qualification_group)
+            = qualification.name
+          - else
+            = t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification_group.first[:category]}")
         div class="govuk-!-margin-bottom-6"
           - if qualification.secondary?
             = render "jobseekers/job_applications/review/qualifications/secondary_qualification", qualification: qualification
