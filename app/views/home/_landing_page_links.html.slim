@@ -1,6 +1,6 @@
 .landing-page-links
   = govuk_accordion do |accordion|
-    - accordion.section(heading_text: t(".jobs_by_school_type_and_role"))
+    - accordion.section(heading_text: t(".jobs_by_school_type_and_role")) do
       = landing_page_link_group title: t(".job_roles"), classes: "govuk-grid-column-one-third" do |group|
         - group.landing_page "teacher-jobs"
         - group.landing_page "senior-leader-jobs"
@@ -25,7 +25,7 @@
         = group.landing_page "school-job-shares"
         = group.landing_page "school-term-time-jobs"
 
-    - accordion.section(heading_text: t(".jobs_by_location"))
+    - accordion.section(heading_text: t(".jobs_by_location")) do
       .govuk-grid-column-one-third
         = landing_page_link_group(use_locations: true) do |group|
           - group.title_landing_page "north-west"
@@ -101,7 +101,7 @@
           - group.landing_page "suffolk"
           - group.landing_page "norfolk"
 
-    - accordion.section(heading_text: t(".jobs_by_subject"))
+    - accordion.section(heading_text: t(".jobs_by_subject")) do
       = landing_page_link_group classes: "govuk-grid-column-one-third" do |group|
         - group.landing_page "maths-teacher-jobs"
         - group.landing_page "english-media-studies-teacher-jobs"
