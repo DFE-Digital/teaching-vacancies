@@ -4,7 +4,7 @@ module Authenticated
   included do
     before_action :authenticate_scope!
     mattr_accessor :authentication_scope
-    helper_method :user_type
+    helper_method :user_type, :jobseeker?
   end
 
   private
@@ -20,5 +20,9 @@ module Authenticated
 
   def user_type
     authentication_scope if signed_in?
+  end
+
+  def jobseeker?
+    user_type == :jobseeker
   end
 end
