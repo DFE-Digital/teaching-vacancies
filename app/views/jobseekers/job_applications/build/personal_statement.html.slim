@@ -28,12 +28,6 @@
       h3.govuk-heading-s = t(".additional_instructions")
       = govuk_inset_text text: job_application.vacancy.personal_statement_guidance
 
-  - if current_jobseeker.job_applications.not_draft.none?
-    .govuk-grid-column-one-third
-      = render "steps"
-
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
     = form_for form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
@@ -43,7 +37,11 @@
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
         span.govuk-caption-m
           = t("jobseekers.job_applications.cancel_caption")
+
   .govuk-grid-column-one-third
+    - if current_jobseeker.job_applications.not_draft.none?
+      = render "steps"
+
     .help-guide--desktop class="govuk-!-margin-top-6"
       h3.govuk-heading-m = t(".personal_statement_guide.title")
       p.govuk-body = t(".personal_statement_guide.description_desktop")
