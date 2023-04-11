@@ -31,12 +31,13 @@
 
 ---
 
-# <%= t(".feedback.heading") %>
+# <%= t(".relevance_feedback.heading") %>
 
-<%= notify_link(job_alert_feedback_url(true, subscription, @vacancies), t(".feedback.relevant_link_text")) %>
-<%= notify_link(job_alert_feedback_url(false, subscription, @vacancies), t(".feedback.irrelevant_link_text")) %>
+<%= job_alert_relevance_feedback_link(true, subscription, @vacancies) %>
+<%= job_alert_relevance_feedback_link(false, subscription, @vacancies) %>
 
-<%= t(".feedback.reason") %>
+
+<%= t(".relevance_feedback.reason") %>
 
 ---
 

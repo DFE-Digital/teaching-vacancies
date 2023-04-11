@@ -25,19 +25,19 @@ RSpec.describe Jobseekers::AlertMailer do
   let(:vacancies) { create_list(:vacancy, 1, :published, organisations: [school]).map { |vacancy| VacancyPresenter.new(vacancy) } }
   let(:utm_params) { { utm_source: "a_unique_identifier", utm_medium: "email", utm_campaign: "#{frequency}_alert" } }
   let(:relevant_job_alert_feedback_url) do
-    new_subscription_job_alert_feedback_url(
+    subscription_submit_feedback_url(
       subscription.token,
-      params: { job_alert_feedback: { relevant_to_user: true,
-                                      job_alert_vacancy_ids: vacancies.pluck(:id),
-                                      search_criteria: subscription.search_criteria } },
+      params: { job_alert_relevance_feedback: { relevant_to_user: true,
+                                                job_alert_vacancy_ids: vacancies.pluck(:id),
+                                                search_criteria: subscription.search_criteria } },
     )
   end
   let(:irrelevant_job_alert_feedback_url) do
-    new_subscription_job_alert_feedback_url(
+    subscription_submit_feedback_url(
       subscription.token,
-      params: { job_alert_feedback: { relevant_to_user: false,
-                                      job_alert_vacancy_ids: vacancies.pluck(:id),
-                                      search_criteria: subscription.search_criteria } },
+      params: { job_alert_relevance_feedback: { relevant_to_user: false,
+                                                job_alert_vacancy_ids: vacancies.pluck(:id),
+                                                search_criteria: subscription.search_criteria } },
     )
   end
 
@@ -54,8 +54,6 @@ RSpec.describe Jobseekers::AlertMailer do
   end
 
   before do
-    # Ensure present variant of ab test is used
-    allow_any_instance_of(described_class).to receive(:ab_tests).and_return({ :"2022_01_alert_mailer_subject_lines_ab_test" => "present_subject_line" })
     # Stub the uid so that we can test links more easily
     allow_any_instance_of(ApplicationMailer).to receive(:uid).and_return("a_unique_identifier")
     subscription.create_alert_run
@@ -74,7 +72,6 @@ RSpec.describe Jobseekers::AlertMailer do
       expect(mail.to).to eq([subscription.email])
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.daily", count: 1))
                   .and include(vacancies.first.job_title)
-                  .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **utm_params))
                   .and include(organisation_landing_page_url(vacancies.first.organisation.slug, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
@@ -86,12 +83,12 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.edit_link_text"))
                   .and include(edit_subscription_url(subscription.token, **utm_params))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.heading"))
-                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))
+                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.relevance_feedback.relevant_link_text')}\]\(.+true)/)
                   .and include(relevant_job_alert_feedback_url)
-                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
+                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.relevance_feedback.irrelevant_link_text')}\]\(.+false)/)
                   .and include(irrelevant_job_alert_feedback_url)
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.reason"))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.reason"))
                   .and include(unsubscribe_subscription_url(subscription.token, **utm_params))
     end
 
@@ -140,12 +137,12 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.edit_link_text"))
                   .and include(edit_subscription_url(subscription.token, **utm_params))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.heading"))
-                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.relevant_link_text')}\]\(.+true)/)
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))
+                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.relevance_feedback.relevant_link_text')}\]\(.+true)/)
                   .and include(relevant_job_alert_feedback_url)
-                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.feedback.irrelevant_link_text')}\]\(.+false)/)
+                  .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.relevance_feedback.irrelevant_link_text')}\]\(.+false)/)
                   .and include(irrelevant_job_alert_feedback_url)
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.feedback.reason"))
+                  .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.reason"))
                   .and include(unsubscribe_subscription_url(subscription.token, **utm_params))
     end
 

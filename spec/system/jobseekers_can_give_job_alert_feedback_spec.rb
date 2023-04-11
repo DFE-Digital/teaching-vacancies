@@ -33,8 +33,8 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
         it_behaves_like "a correctly created Feedback"
 
         it "renders the page title and notification" do
-          expect(page.title).to have_content(I18n.t("jobseekers.job_alert_feedbacks.edit.title"))
-          expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.new.success"))
+          expect(page.title).to have_content(I18n.t("jobseekers.subscriptions.feedbacks.further_feedbacks.new.title"))
+          expect(page).to have_content(I18n.t("jobseekers.subscriptions.feedbacks.relevance_feedbacks.submit_feedback.success"))
         end
       end
     end
@@ -53,8 +53,8 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
         it_behaves_like "a correctly created Feedback"
 
         it "renders the page title and notification" do
-          expect(page.title).to have_content(I18n.t("jobseekers.job_alert_feedbacks.edit.title"))
-          expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.new.success"))
+          expect(page.title).to have_content(I18n.t("jobseekers.subscriptions.feedbacks.further_feedbacks.new.title"))
+          expect(page).to have_content(I18n.t("jobseekers.subscriptions.feedbacks.relevance_feedbacks.submit_feedback.success"))
         end
       end
     end
@@ -125,11 +125,9 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
   end
 
   def follow_the_link_in_the_job_alert_email
-    visit new_subscription_job_alert_feedback_url(
+    visit subscription_submit_feedback_url(
       token,
-      params: { job_alert_feedback: { relevant_to_user: relevant_to_user,
-                                      job_alert_vacancy_ids: job_alert_vacancy_ids,
-                                      search_criteria: search_criteria } },
+      params: { job_alert_relevance_feedback: { relevant_to_user:, job_alert_vacancy_ids:, search_criteria: } },
     )
   end
 end

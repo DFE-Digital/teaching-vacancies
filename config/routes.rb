@@ -259,7 +259,11 @@ Rails.application.routes.draw do
   resources :subscriptions, except: %i[index show] do
     get :unsubscribe, on: :member
 
-    resources :job_alert_feedbacks, only: %i[new update edit], controller: "jobseekers/job_alert_feedbacks"
+    get :submit_feedback, controller: "jobseekers/subscriptions/feedbacks/relevance_feedbacks"
+
+    resources :feedbacks do
+      resources :further_feedbacks, only: %i[new create], controller: "jobseekers/subscriptions/feedbacks/further_feedbacks"
+    end
     resources :unsubscribe_feedbacks, only: %i[new create], controller: "jobseekers/unsubscribe_feedbacks"
   end
 
