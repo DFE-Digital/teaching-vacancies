@@ -179,11 +179,16 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#fixed_term_contract_duration" do
-    let(:vacancy) { build_stubbed(:vacancy, contract_type: contract_type, fixed_term_contract_duration: fixed_term_contract_duration) }
+    let(:vacancy) do
+      build_stubbed(:vacancy, contract_type: contract_type,
+                              fixed_term_contract_duration: fixed_term_contract_duration,
+                              parental_leave_cover_contract_duration: parental_leave_cover_contract_duration)
+    end
+    let(:parental_leave_cover_contract_duration) { "" }
 
     context "when permanent" do
       let(:contract_type) { :permanent }
-      let(:fixed_term_contract_duration) { nil }
+      let(:fixed_term_contract_duration) { "" }
 
       it "returns Permanent" do
         expect(subject.contract_type_with_duration).to eq "Permanent"
@@ -201,11 +206,16 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#parental_leave_cover_contract_duration" do
-    let(:vacancy) { build_stubbed(:vacancy, contract_type: contract_type, parental_leave_cover_contract_duration: parental_leave_cover_contract_duration) }
+    let(:vacancy) do
+      build_stubbed(:vacancy, contract_type: contract_type,
+                              parental_leave_cover_contract_duration: parental_leave_cover_contract_duration,
+                              fixed_term_contract_duration: fixed_term_contract_duration)
+    end
+    let(:fixed_term_contract_duration) { "" }
 
     context "when permanent" do
       let(:contract_type) { :permanent }
-      let(:parental_leave_cover_contract_duration) { nil }
+      let(:parental_leave_cover_contract_duration) { "" }
 
       it "returns Permanent" do
         expect(subject.contract_type_with_duration).to eq "Permanent"

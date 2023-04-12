@@ -70,11 +70,9 @@ class VacancyPresenter < BasePresenter
   def contract_type_with_duration
     return nil unless model.contract_type.present?
 
-    duration = if model.fixed_term?
-                 model.fixed_term_contract_duration
-               elsif model.parental_leave_cover?
-                 model.parental_leave_cover_contract_duration
-               end
+    duration = model.fixed_term? ? model.fixed_term_contract_duration : model.parental_leave_cover_contract_duration
+
+    return I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{model.contract_type}") if duration.blank?
 
     [I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{model.contract_type}"), duration].compact.join(" - ")
   end
