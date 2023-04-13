@@ -72,8 +72,11 @@ en:
         closing_date: "Closing date: %{closing_date}"
         edit_alert: Change your alert criteria to get job alerts that are more relevant to you. You can filter by keyword, location, job role, education phase or working pattern.
         edit_link_text: Manage your alert
-        feedback:
+        relevance_feedback:
           heading: Are these job listings relevant to your search?
+          feedback_link:
+            true: Yes, they are relevant
+            false: No, they are not relevant
           irrelevant_link_text: No, they are not relevant
           relevant_link_text: Yes, they are relevant
           reason: This feedback helps us improve our service.

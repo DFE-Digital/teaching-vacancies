@@ -44,11 +44,14 @@ module NotifyViewsHelper
     safe_join([tag.p("#{vacancy.job_title}:"), notify_link(url_with_utm_params, url)])
   end
 
-  def job_alert_feedback_url(relevant, subscription, vacancies)
-    params = { job_alert_feedback: { relevant_to_user: relevant,
-                                     job_alert_vacancy_ids: vacancies.pluck(:id),
-                                     search_criteria: subscription.search_criteria } }.merge(utm_params)
-    new_subscription_job_alert_feedback_url(subscription.token, **params)
+  def job_alert_relevance_feedback_link(relevant, subscription, vacancies)
+    params = { job_alert_relevance_feedback: { relevant_to_user: relevant,
+                                               job_alert_vacancy_ids: vacancies.pluck(:id),
+                                               search_criteria: subscription.search_criteria } }.merge(utm_params)
+
+    url = subscription_submit_feedback_url(subscription.token, **params)
+
+    notify_link(url, I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.feedback_link.#{relevant}"))
   end
 
   def jobseeker_job_applications_link
