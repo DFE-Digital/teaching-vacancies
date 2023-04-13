@@ -28,6 +28,28 @@ RSpec.describe "Saved jobs" do
     end
   end
 
+  describe "GET #index" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
+    context "when a jobseeker has completed their profile" do
+      let!(:completed_profile) { create(:jobseeker_profile, :completed, jobseeker_id: jobseeker.id) }
+
+      before { get jobseekers_saved_jobs_path }
+
+      it "does not display a reminder to create a profile" do
+        expect(response).to_not render_template(partial: "_candidiate_profiles_banner")
+      end
+    end
+
+    context "when a jobseeker has not completed their profile" do
+      before { get jobseekers_saved_jobs_path }
+
+      it "displays a reminder to create a profile" do
+        expect(response).to render_template(partial: "_candidiate_profiles_banner")
+      end
+    end
+  end
+
   describe "DELETE #destroy" do
     let!(:saved_job) { create(:saved_job, jobseeker: jobseeker, vacancy: vacancy) }
 
