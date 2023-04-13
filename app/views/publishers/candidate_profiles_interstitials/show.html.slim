@@ -13,5 +13,6 @@
     p = t("candidate_profiles_interstitials.outro")
 
     = govuk_button_link_to t("candidate_profiles_interstitials.button_text"), publishers_jobseeker_profiles_path, class: "govuk-button--primary govuk-!-margin-bottom-5"
-    hr.govuk-section-break.govuk-section-break--s
-    = govuk_link_to t("candidate_profiles_interstitials.skip_text"), jobs_path, class: "govuk-link"
+
+    .govuk-button-group
+      = govuk_link_to t("candidate_profiles_interstitials.skip_text"), jobs_path

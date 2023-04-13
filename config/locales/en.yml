@@ -528,7 +528,7 @@ en:
     page_description_items:
       - "that they're able to travel to your school"
       - "that they're interested in an education phase that matches your school"
-    outro: You'll also be notified about any new candidate profiles that match your job listings
+    outro: You'll also be notified about any new candidate profiles that match your job listings.
     button_text: View candidate profiles
     skip_text: Skip to job listings
 
