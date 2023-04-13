@@ -12,11 +12,6 @@ module NotifyViewsHelper
     notify_link(url)
   end
 
-  def edit_subscription_link(subscription)
-    url = edit_subscription_url(subscription.token, **utm_params)
-    notify_link(url, t(".edit_link_text"))
-  end
-
   def email_confirmation_link(token, confirmation_type)
     url = jobseeker_confirmation_url(confirmation_token: token, **utm_params)
     notify_link(url, t("#{confirmation_type}.link"))
@@ -62,6 +57,11 @@ module NotifyViewsHelper
   def jobseeker_job_application_link(job_application)
     url = jobseekers_job_application_url(job_application, **utm_params)
     notify_link(url, t(".job_application.link_text"))
+  end
+
+  def jobseeker_profile_link
+    url = jobseekers_profile_url(**utm_params)
+    notify_link(url, t(".create_a_profile.link_text"))
   end
 
   def privacy_policy_link
