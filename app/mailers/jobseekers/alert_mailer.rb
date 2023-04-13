@@ -5,7 +5,7 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   helper DatesHelper
   helper VacanciesHelper
 
-  helper_method :subscription, :jobseeker
+  helper_method :subscription, :jobseeker, :jobseeker_has_profile?
 
   def alert(subscription_id, vacancy_ids)
     @subscription_id = subscription_id
@@ -44,6 +44,12 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
 
   def subscription
     @subscription ||= SubscriptionPresenter.new(Subscription.find(subscription_id))
+  end
+
+  def jobseeker_has_profile?
+    return false unless jobseeker
+
+    jobseeker.jobseeker_profile.present?
   end
 
   def utm_campaign

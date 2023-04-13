@@ -23,13 +23,20 @@
 <%= t(".alert_frequency", frequency: subscription.frequency) %>
 
 ---
+<%- unless jobseeker_has_profile? %>
+  # <%= t(".create_a_profile.heading") %>
 
-# <%= t(".alert_relevance") %>
-<%= t(".edit_alert")%>
+  <%= t(".create_a_profile.intro")%>
 
-<%= edit_subscription_link(subscription)%>
+  * <%= t(".create_a_profile.bullet_points.share_qualifications_and_experience")%>
+  * <%= t(".create_a_profile.bullet_points.specify_preferences")%>
+  * <%= t(".create_a_profile.bullet_points.apply_quickly")%>
 
----
+<%= t(".create_a_profile.further_information")%>
+
+<%= jobseeker_profile_link %>
+  ---
+<% end %>
 
 # <%= t(".relevance_feedback.heading") %>
 

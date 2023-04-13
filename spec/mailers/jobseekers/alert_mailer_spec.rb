@@ -6,6 +6,7 @@ RSpec.describe Jobseekers::AlertMailer do
   include OrganisationsHelper
   include ERB::Util
 
+  let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
   let(:body) { mail.body.raw_source }
   let(:email) { "an@example.net" }
   let(:frequency) { :daily }
@@ -81,8 +82,6 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include(I18n.t("subscriptions.intro"))
                   .and include("Keyword: English")
                   .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.edit_link_text"))
-                  .and include(edit_subscription_url(subscription.token, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))
                   .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.relevance_feedback.relevant_link_text')}\]\(.+true)/)
                   .and include(relevant_job_alert_feedback_url)
@@ -135,8 +134,6 @@ RSpec.describe Jobseekers::AlertMailer do
                   .and include(I18n.t("subscriptions.intro"))
                   .and include("Keyword: English")
                   .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.edit_link_text"))
-                  .and include(edit_subscription_url(subscription.token, **utm_params))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))
                   .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.relevance_feedback.relevant_link_text')}\]\(.+true)/)
                   .and include(relevant_job_alert_feedback_url)
@@ -172,6 +169,35 @@ RSpec.describe Jobseekers::AlertMailer do
 
       it "triggers a `publisher_sign_in_fallback` email event" do
         expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
+      end
+    end
+
+    context "when the subscriber has a jobseeker account that has a profile" do
+      let(:jobseeker) { create(:jobseeker, email: email) }
+      let!(:profile) { create(:jobseeker_profile, :completed, jobseeker_id: jobseeker.id) }
+
+      it "does not display the section encouraging them to create a profile" do
+        expect(body).to_not include(jobseekers_profile_url(**utm_params))
+        expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
+        expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
+      end
+    end
+
+    context "when the subscriber does not have a jobseeker account" do
+      it "does not display the section encouraging them to create a profile" do
+        expect(body).to include(jobseekers_profile_url(**utm_params))
+                    .and include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
+                    .and include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
+      end
+    end
+
+    context "when the subscriber has a jobseeker account but no profile" do
+      let(:jobseeker) { create(:jobseeker, email: email) }
+
+      it "does not display the section encouraging them to create a profile" do
+        expect(body).to include(jobseekers_profile_url(**utm_params))
+                    .and include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
+                    .and include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
       end
     end
   end

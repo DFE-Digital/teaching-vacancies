@@ -68,10 +68,20 @@ en:
       alert:
         alert_frequency: >-
           You have set to receive this job alert %{frequency} when any jobs matching your criteria are listed.
-        alert_relevance: Get more relevant job alerts
         closing_date: "Closing date: %{closing_date}"
-        edit_alert: Change your alert criteria to get job alerts that are more relevant to you. You can filter by keyword, location, job role, education phase or working pattern.
-        edit_link_text: Manage your alert
+        create_a_profile:
+          heading: Create a profile
+          bullet_points:
+            apply_quickly: apply for roles more quickly by pre-filling your information
+            share_qualifications_and_experience: share your qualifications and experience with schools
+            specify_preferences: specify the types of teaching jobs you’re looking for
+          further_information: >-
+            When you turn on your profile, it will be visible to hiring staff in schools and trusts. They can
+            get in touch by email to invite you to apply for roles where they think you’d be a great fit.
+          intro: >-
+            Create a profile on Teaching Vacancies and let schools come to you. You will need to create an account
+            to build your profile. With a profile, you can:
+          link_text: Create a profile
         relevance_feedback:
           heading: Are these job listings relevant to your search?
           feedback_link:
