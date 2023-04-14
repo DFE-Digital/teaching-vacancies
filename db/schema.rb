@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_03_092228) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_14_110415) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -287,7 +287,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_03_092228) do
     t.integer "qualified_teacher_status"
     t.string "qualified_teacher_status_year"
     t.boolean "active", default: false, null: false
-    t.boolean "hide_profile"
+    t.boolean "requested_hidden_profile"
     t.index ["jobseeker_id"], name: "index_jobseeker_profiles_on_jobseeker_id"
   end
 

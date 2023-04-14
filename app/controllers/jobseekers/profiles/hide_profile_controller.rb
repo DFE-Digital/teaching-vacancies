@@ -1,17 +1,17 @@
 class Jobseekers::Profiles::HideProfileController < Jobseekers::ProfilesController
   def show
-    @form = Jobseekers::Profile::HideProfileForm.new(hide_profile: profile.hide_profile)
+    @form = Jobseekers::Profile::HideProfileForm.new(requested_hidden_profile: profile.requested_hidden_profile)
   end
 
   def confirm_hide
     form_params = params
       .require(:jobseekers_profile_hide_profile_form)
-      .permit(:hide_profile)
+      .permit(:requested_hidden_profile)
 
     if (@form = Jobseekers::Profile::HideProfileForm.new(form_params)).valid?
-      profile.update!(hide_profile: @form.hide_profile)
+      profile.update!(requested_hidden_profile: @form.requested_hidden_profile)
 
-      if profile.hide_profile?
+      if profile.requested_hidden_profile?
         redirect_to add_jobseekers_profile_hide_profile_path
       else
         redirect_to review_jobseekers_profile_hide_profile_path

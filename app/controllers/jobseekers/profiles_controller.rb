@@ -52,7 +52,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
     },
     {
       title: I18n.t("jobseekers.profiles.show.hide_profile"),
-      display_summary: -> { !profile.hide_profile.nil? },
+      display_summary: -> { !profile.requested_hidden_profile.nil? },
       key: "hide_profile",
       link_text: I18n.t("jobseekers.profiles.show.set_up_profile_visibility"),
       page_path: -> { jobseekers_profile_hide_profile_path },
