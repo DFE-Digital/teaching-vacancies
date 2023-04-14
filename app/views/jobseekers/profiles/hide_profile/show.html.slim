@@ -8,7 +8,7 @@
     = form_for @form, url: confirm_hide_jobseekers_profile_hide_profile_path, method: :post do |f|
       = f.govuk_error_summary
 
-      = f.govuk_collection_radio_buttons :hide_profile,
+      = f.govuk_collection_radio_buttons :requested_hidden_profile,
         [["Yes", true], ["No", false]],
         :last,
         :first,

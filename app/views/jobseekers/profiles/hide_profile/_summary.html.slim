@@ -1,9 +1,9 @@
-p = govuk_link_to(t(".add_a_school"), add_jobseekers_profile_hide_profile_path) if profile.hide_profile?
+p = govuk_link_to(t(".add_a_school"), add_jobseekers_profile_hide_profile_path) if profile.requested_hidden_profile?
 
 = govuk_summary_list do |summary_list|
   = summary_list.row do |row|
     - row.key(text: t(".hide_profile"))
-    - row.value(text: profile.hide_profile? ? "Yes" : "No")
+    - row.value(text: profile.hidden_from_any_organisations? ? "Yes" : "No")
     - row.action(text: t("buttons.change"), href: jobseekers_profile_hide_profile_path)
 
   - profile.organisation_exclusions.each do |exclusion|

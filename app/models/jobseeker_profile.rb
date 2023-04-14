@@ -77,4 +77,8 @@ class JobseekerProfile < ApplicationRecord
   def activable?
     !!personal_details&.complete? && !!job_preferences&.complete?
   end
+
+  def hidden_from_any_organisations?
+    requested_hidden_profile && excluded_organisations.any?
+  end
 end
