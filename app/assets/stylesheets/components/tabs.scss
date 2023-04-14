@@ -50,6 +50,10 @@
       position: relative;
       text-decoration: none;
 
+      &:focus {
+        padding-bottom: govuk-spacing(2);
+      }
+
       &[aria-current] {
         &::before {
           background-color: govuk-colour('light-blue');
