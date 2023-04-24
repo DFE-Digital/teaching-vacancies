@@ -18,7 +18,14 @@ on:
       - labeled
       - synchronize
       - reopened
-
+    paths:
+    - '!bigquery/**'
+    - '!documentation/**'
+    - '!terraform/common/**'
+    - '!**.md'
+    - 'views/content/**/*.md'
+    - '!views/content/**/*'
+    
 concurrency: workflow-Build-and-deploy-${{ github.ref }}
 
 env:
