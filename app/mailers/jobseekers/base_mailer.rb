@@ -5,6 +5,13 @@ class Jobseekers::BaseMailer < ApplicationMailer
     @email_event ||= EmailEvent.new(template, to, uid, jobseeker: @jobseeker, ab_tests: ab_tests)
   end
 
+  def dfe_analytics_email_event
+    @dfe_analytics_email_event ||= DfE::Analytics::Event.new
+      .with_type(email_event_type)
+      .with_user(@jobseeker)
+      .with_data(email_event_data)
+  end
+
   def ab_tests
     {}
   end
