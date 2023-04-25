@@ -20,12 +20,13 @@ on:
       - reopened
     paths:
     - '**'
+    - 'views/content/**/*.md'
+    - '!views/content/**/*'
+    - '!**/*.md'
     - '!bigquery/**'
     - '!documentation/**'
     - '!terraform/common/**'
-    - '!**.md'
     - '!**.yml'
-    - 'views/content/**/*.md'
     
 concurrency: workflow-Build-and-deploy-${{ github.ref }}
 
