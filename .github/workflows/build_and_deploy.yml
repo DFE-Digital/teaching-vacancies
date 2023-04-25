@@ -24,6 +24,7 @@ on:
     - '!documentation/**'
     - '!terraform/common/**'
     - '!**.md'
+    - '!**.yml'
     - 'views/content/**/*.md'
     
 concurrency: workflow-Build-and-deploy-${{ github.ref }}
