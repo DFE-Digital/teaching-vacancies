@@ -19,7 +19,7 @@
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.30.0",
     "dompurify": "^3.0.2",
-    "govuk-frontend": "^4.5.0",
+    "govuk-frontend": "^4.6.0",
     "leaflet": "^1.9.3",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
