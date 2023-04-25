@@ -9,7 +9,12 @@ on:
     - 'bigquery/**'
     - 'documentation/**'
     - 'terraform/common/**'
-    - '**.md'
+    - 'spec/fixtures/files/*.md'
+    - 'app/mailers/previewing_emails.md'
+    - 'README.md'
+    - 'app/assets/stylesheets/README.md'
+    - 'app/components/README.md'
+    - '.github/pull_request_template.md'
 
   pull_request:
     branches:
