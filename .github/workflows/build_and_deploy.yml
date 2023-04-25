@@ -18,15 +18,17 @@ on:
       - labeled
       - synchronize
       - reopened
-    paths:
-    - '**'
-    - 'views/content/**/*.md'
-    - '!views/content/**/*'
-    - '!**/*.md'
-    - '!bigquery/**'
-    - '!documentation/**'
-    - '!terraform/common/**'
-    - '!**.yml'
+    paths-ignore:
+    - 'bigquery/**'
+    - 'documentation/**'
+    - 'terraform/common/**'
+    - 'spec/fixtures/files/*.md'
+    - 'app/mailers/previewing_emails.md'
+    - 'README.md'
+    - 'app/assets/stylesheets/README.md'
+    - 'app/components/README.md'
+    - '.github/pull_request_template.md'
+
     
 concurrency: workflow-Build-and-deploy-${{ github.ref }}
 
