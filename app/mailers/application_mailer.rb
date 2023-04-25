@@ -15,7 +15,7 @@ class ApplicationMailer < Mail::Notify::Mailer
   end
 
   def trigger_dfe_analytics_email_event
-    DfE::Analytics::SendEvents.do([dfe_analytic_email_event])
+    DfE::Analytics::SendEvents.do([dfe_analytics_email_event])
   end
 
   def email_event_data

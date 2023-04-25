@@ -3,6 +3,7 @@ shared:
   - page_visited
   - publisher_sign_in_fallback
   - publisher_applications_received
+  - publisher_job_application_data_expiry
   - publisher_prompt_for_feedback
   - jobseeker_application_shortlisted
   - jobseeker_application_unsuccessful
@@ -18,6 +19,9 @@ shared:
   - jobseeker_application_submitted
   - jobseeker_subscription_update
   - jobseeker_confirmation_instructions
+  - jobseeker_inactive_account
+  - jobseeker_account_closed
+  - jobseeker_job_listing_ended_early
   - search_performed
   - support_user_sign_in_fallback
   - supporting_document_created
