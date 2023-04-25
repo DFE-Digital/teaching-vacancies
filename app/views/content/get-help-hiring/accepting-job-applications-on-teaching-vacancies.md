@@ -8,8 +8,6 @@ category_tags: how-to
 
 ## Why you should use Teaching Vacancies for applications
 
-TESTING TO SEE IF THIS CHANGES TRIGGERS BUILD AND DEPLOY
-
 When posting a new job on our service you’re given the option to use the Teaching Vacancies application form or an alternative application process. We recommend you choose to receive applications through Teaching Vacancies so you can:
  
 * set up an application process for your job listing with one click, saving time and money
