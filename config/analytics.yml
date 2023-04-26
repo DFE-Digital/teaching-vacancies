@@ -368,6 +368,7 @@ shared:
     - last_name
     - phone_number_provided
     - phone_number
+    - right_to_work_in_uk
     - completed_steps
     - created_at
     - updated_at
