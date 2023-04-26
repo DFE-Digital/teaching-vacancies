@@ -1,8 +1,4 @@
-## Jira ticket URL
-
-- Just add the ticket number to the end:
-
-https://dfedigital.atlassian.net/browse/TEVA-
+## Trello card URL
 
 ## Changes in this PR:
 
