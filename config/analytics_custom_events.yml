@@ -5,6 +5,7 @@ shared:
   - publisher_applications_received
   - publisher_job_application_data_expiry
   - publisher_prompt_for_feedback
+  - publisher_invite_to_apply
   - jobseeker_application_shortlisted
   - jobseeker_application_unsuccessful
   - jobseeker_subscription_alert
