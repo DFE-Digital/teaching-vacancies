@@ -17,6 +17,7 @@ southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
 users = [
   { email: "alex.lee@education.gov.uk", family_name: "Alex", given_name: "Lee" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
+  { email: "brandon.chan@education.gov.uk", family_name: "Chan", given_name: "Brandon" },
   { email: "ben.mitchell@education.gov.uk", family_name: "Mitchell", given_name: "Ben" },
   { email: "colin.saliceti@education.gov.uk", family_name: "Saliceti", given_name: "Colin" },
   { email: "danielle.dean@education.gov.uk", family_name: "Danielle", given_name: "Dean" },
