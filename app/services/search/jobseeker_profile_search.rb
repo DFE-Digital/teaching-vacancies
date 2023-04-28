@@ -20,6 +20,23 @@ class Search::JobseekerProfileSearch
     scope
   end
 
+  def total_count
+    jobseeker_profiles.count
+  end
+
+  def remove_filter_params
+    @filters
+  end
+
+  def total_filters
+    filter_counts = [:qualified_teacher_status, :roles, :working_patterns, :education_phases, :key_stages, :subjects].map { |filter| @filters[filter]&.count || 0 }
+    filter_counts.sum
+  end
+  
+  def clear_filters_params
+    @filters.merge({qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: []})
+  end
+
   private
 
   attr_reader :filters, :current_organisation

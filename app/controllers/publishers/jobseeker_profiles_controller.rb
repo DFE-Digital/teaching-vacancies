@@ -1,6 +1,7 @@
 class Publishers::JobseekerProfilesController < Publishers::BaseController
   def index
-    @pagy, @jobseeker_profiles = pagy(Search::JobseekerProfileSearch.new(jobseeker_profile_search_params).jobseeker_profiles)
+    @jobseeker_profile_search = Search::JobseekerProfileSearch.new(jobseeker_profile_search_params)
+    @pagy, @jobseeker_profiles = pagy(@jobseeker_profile_search.jobseeker_profiles)
     @form = Publishers::JobseekerProfileSearchForm.new(jobseeker_profile_search_params)
   end
 
