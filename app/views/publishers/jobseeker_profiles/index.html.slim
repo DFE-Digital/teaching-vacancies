@@ -1,47 +1,3 @@
-ruby:
-  filter_types = [
-    {
-      legend: t("publishers.jobseeker_profiles.filters.qualified_teacher_status"),
-      key: :qualified_teacher_status,
-      selected: @form.qualified_teacher_status,
-      options: @form.qts_options,
-      value_method: :first,
-      selected_method: :last,
-    },
-    {
-      legend: t("publishers.jobseeker_profiles.filters.preferred_roles"),
-      key: :roles,
-      selected: @form.roles,
-      options: @form.role_options,
-      value_method: :first,
-      selected_method: :last,
-      },
-    {
-      legend: t("publishers.jobseeker_profiles.filters.preferred_working_patterns"),
-      key: :working_patterns,
-      selected: @form.working_patterns,
-      options:  @form.working_pattern_options,
-      value_method: :first,
-      selected_method: :last,
-    },
-    {
-      legend: t("publishers.jobseeker_profiles.filters.preferred_education_phases"),
-      key: :education_phases,
-      selected: @form.education_phases,
-      options: @form.education_phase_options,
-      value_method: :first,
-      selected_method: :last,
-    },
-    {
-      legend: t("publishers.jobseeker_profiles.filters.preferred_key_stages"),
-      key: :key_stages,
-      selected: @form.key_stages,
-      options: @form.key_stage_options,
-      value_method: :first,
-      selected_method: :last,
-    },
-  ]
-
 - content_for :page_title_prefix, current_organisation.name
 
 h1 class="govuk-heading-l" role="heading" aria-level="1"
@@ -49,31 +5,10 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
 
 p = t("publishers.jobseeker_profiles.available_to_travel_text")
 
-
 .govuk-grid-row
   .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
     = form_for @form, as: "", url: url_for, method: "get", html: { data: { controller: "form" }, role: "search" } do |f|
-      = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
-        filters: { total_count: @jobseeker_profile_search.total_filters },
-        clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: publishers_jobseeker_profiles_path(@jobseeker_profile_search.clear_filters_params) },
-        options: { heading_text: "Filter", remove_filter_links: true },
-        html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
-        - if current_organisation.trust?
-          - filters_component.with_group key: "location", component: searchable_collection(collection: f.govuk_collection_check_boxes(:locations,
-            f.object.school_options,
-            :first, :last,
-            small: true, legend: { text: t("publishers.jobseeker_profiles.filters.schools") }),
-            collection_count: f.object.school_options.count,
-            options: { scrollable: true })
-        - filters_component.remove_filter_links do |rb|
-          - filter_types.each do |filter_type|
-            - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :publishers_jobseeker_profiles_path, params: @jobseeker_profile_search.filters }))
-        - filters_component.with_group key: "qualified_teacher_status", component: f.govuk_collection_check_boxes(:qualified_teacher_status, f.object.qts_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.qualified_teacher_status") }, hint: nil)
-        - filters_component.with_group key: "roles", component: f.govuk_collection_check_boxes(:roles, f.object.role_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_roles") }, hint: nil)
-        - filters_component.with_group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, f.object.working_pattern_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_working_patterns") }, hint: nil)
-        - filters_component.with_group key: "education_phases", component: f.govuk_collection_check_boxes(:education_phases, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_education_phases") }, hint: nil)
-        - filters_component.with_group key: "key_stages", component: f.govuk_collection_check_boxes(:key_stages, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_key_stages") }, hint: nil)
-        = render "shared/subjects_filter", filters_component: filters_component, f: f
+      = render "publishers/jobseeker_profiles/search/filters", f: f, form: @form, jobseeker_profile_search: @jobseeker_profile_search
 
   .govuk-grid-column-two-thirds-at-desktop
     - if @jobseeker_profiles.any?
