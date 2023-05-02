@@ -27,6 +27,7 @@ shared:
   - support_user_sign_in_fallback
   - supporting_document_created
   - supporting_document_deleted
+  - supporting_document_replaced
   - successful_publisher_sign_in_attempt
   - tracked_link_clicked
   - vacancy_apply_clicked
