@@ -42,7 +42,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
       expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
     end
 
-    context "it shows remove filter links" do
+    context "when filters are selected" do
       before do
         visit publishers_jobseeker_profiles_path
   
@@ -65,7 +65,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         click_link I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5")
 
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
-      expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
+        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
+        expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
       end
 
