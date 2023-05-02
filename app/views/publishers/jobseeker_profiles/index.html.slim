@@ -67,7 +67,7 @@ p = t("publishers.jobseeker_profiles.available_to_travel_text")
             options: { scrollable: true })
         - filters_component.remove_filter_links do |rb|
           - filter_types.each do |filter_type|
-            - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :publishers_jobseeker_profiles_path, params: @jobseeker_profile_search.remove_filter_params }))
+            - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :publishers_jobseeker_profiles_path, params: @jobseeker_profile_search.filters }))
         - filters_component.with_group key: "qualified_teacher_status", component: f.govuk_collection_check_boxes(:qualified_teacher_status, f.object.qts_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.qualified_teacher_status") }, hint: nil)
         - filters_component.with_group key: "roles", component: f.govuk_collection_check_boxes(:roles, f.object.role_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_roles") }, hint: nil)
         - filters_component.with_group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, f.object.working_pattern_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_working_patterns") }, hint: nil)
