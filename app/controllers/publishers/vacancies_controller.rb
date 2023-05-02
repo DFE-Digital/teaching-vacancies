@@ -61,6 +61,9 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   def summary
     return redirect_to organisation_job_path(vacancy.id) unless vacancy.published?
+
+    @vacancy = VacancyPresenter.new(vacancy)
+    @feedback_form = Publishers::JobListing::FeedbackForm.new
   end
 
   private

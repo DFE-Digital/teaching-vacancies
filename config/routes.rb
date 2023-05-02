@@ -301,7 +301,7 @@ Rails.application.routes.draw do
       post :save_and_finish_later
       get :summary
       resource :activity_log, only: %i[show], controller: "publishers/vacancies/activity_log"
-      resource :feedback, only: %i[new create], controller: "publishers/vacancies/feedbacks"
+      resource :feedback, only: %i[create], controller: "publishers/vacancies/feedbacks"
       resource :expired_feedback, only: %i[new create], controller: "publishers/vacancies/expired_feedbacks", path: "expired-feedback" do
         get :submitted
       end
