@@ -4,8 +4,8 @@ When onboarded, you will be provided with an AWS user. You can use it to access 
 [https://teaching-vacancies.signin.aws.amazon.com/console](https://teaching-vacancies.signin.aws.amazon.com/console).
 
 - Log in to the console, go to IAM and find your user: [IAM users](https://us-east-1.console.aws.amazon.com/iamv2/home?region=eu-west-2#/users).
-- Choose `Assign MFA device` and set up an authenticator app as a Virtual MFA device.
-- If using an Authenticator App, scan the QR code, and when prompted to enter codes, enter the first code, wait 30 seconds until a new code has been generated on your authenticator app, and enter the new code in the second box. Note: You may need to user your username when asked to name the MFA device.
+- Choose `Assign MFA device` and set up an authenticator app as a Virtual MFA device. Note: You may need to name the MFA device the same as your username.
+- If using an Authenticator App, scan the QR code, and when prompted to enter codes, enter the first code, wait 30 seconds until a new code has been generated on your authenticator app, and enter the new code in the second box.
 - Log out, and back in. You should be prompted for an MFA code.
 - Go to IAM and find your user again: [IAM users](https://us-east-1.console.aws.amazon.com/iamv2/home?region=eu-west-2#/users)
 - Choose `Create access key`. Note the credentials securely, as you will need these to configure the AWS CLI.
