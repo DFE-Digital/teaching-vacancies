@@ -78,6 +78,7 @@ group :development do
   gem "amazing_print" # optional dependency of `rails_semantic_logger`
   gem "aws-sdk-ssm"
   gem "listen"
+  gem "solargraph"
   gem "spring"
   gem "spring-commands-rspec"
   # TODO: Pinned until Spring >= 3 compatible version released

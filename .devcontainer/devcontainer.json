@@ -14,62 +14,67 @@
   ],
   "postCreateCommand": "/bin/bash .devcontainer/post_create.sh",
   "remoteUser": "teaching-vacancies",
-  "extensions": [
-    "actboy168.tasks",
-    "aki77.rails-db-schema",
-    "aki77.rails-i18n",
-    "aki77.rails-routes",
-    "castwide.solargraph",
-    "davidpallinder.rails-test-runner",
-    "jemmyw.rails-fast-nav",
-    "kaiwood.endwise",
-    "mtxr.sqltools",
-    "mtxr.sqltools-driver-pg",
-    "rebornix.Ruby",
-    "redhat.vscode-yaml",
-    "sianglim.slim",
-  ],
-  "settings": {
-    // Get highlighting for local env files
-    "files.associations": {
-      ".env.development": "env",
-      ".env.local": "env",
-      ".env.test": "env",
-      ".env.test.local": "env"
-    },
-    "rails.viewFileExtension": "html.slim",
-    "railsRoutes.railsCommand": "bin/rails",
-    "railsTestRunner.rspecCommand": "bin/rspec",
-    // Set up Ruby extension
-    "ruby.format": "rubocop",
-    "ruby.lint": {
-      "rubocop": {
-        "useBundler": false,
-        "forceExclusion": true
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "actboy168.tasks",
+        "aki77.rails-db-schema",
+        "aki77.rails-i18n",
+        "aki77.rails-routes",
+        "castwide.solargraph",
+        "davidpallinder.rails-test-runner",
+        "jemmyw.rails-fast-nav",
+        "kaiwood.endwise",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        "rebornix.Ruby",
+        "redhat.vscode-yaml",
+        "sianglim.slim",
+        "LoranKloeze.ruby-rubocop-revived"
+      ],
+      "settings": {
+        // Get highlighting for local env files
+        "files.associations": {
+          ".env.development": "env",
+          ".env.local": "env",
+          ".env.test": "env",
+          ".env.test.local": "env"
+        },
+        "rails.viewFileExtension": "html.slim",
+        "railsRoutes.railsCommand": "bin/rails",
+        "railsTestRunner.rspecCommand": "bin/rspec",
+        // Set up Ruby extension
+        "ruby.format": "rubocop",
+        "ruby.lint": {
+          "rubocop": {
+            "useBundler": false,
+            "forceExclusion": true
+          }
+        },
+        "ruby.useLanguageServer": true,
+        "sqltools.connections": [
+          {
+            "name": "Rails Development Database",
+            "driver": "PostgreSQL",
+            "previewLimit": 50,
+            "server": "db",
+            "port": 5432,
+            "database": "tvs_development",
+            "username": "postgres",
+            "password": "postgres"
+          },
+          {
+            "name": "Rails Test Database",
+            "driver": "PostgreSQL",
+            "previewLimit": 50,
+            "server": "db",
+            "port": 5432,
+            "database": "tvs_test",
+            "username": "postgres",
+            "password": "postgres"
+          }
+        ]
       }
-    },
-    "ruby.useLanguageServer": true,
-    "sqltools.connections": [
-      {
-        "name": "Rails Development Database",
-        "driver": "PostgreSQL",
-        "previewLimit": 50,
-        "server": "db",
-        "port": 5432,
-        "database": "tvs_development",
-        "username": "postgres",
-        "password": "postgres"
-      },
-      {
-        "name": "Rails Test Database",
-        "driver": "PostgreSQL",
-        "previewLimit": 50,
-        "server": "db",
-        "port": 5432,
-        "database": "tvs_test",
-        "username": "postgres",
-        "password": "postgres"
-      }
-    ]
+    }
   }
 }
