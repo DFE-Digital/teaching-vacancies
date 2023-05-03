@@ -27,12 +27,12 @@ class Search::JobseekerProfileSearch
   end
 
   def total_filters
-    filter_counts = [:qualified_teacher_status, :roles, :working_patterns, :education_phases, :key_stages, :subjects].map { |filter| @filters[filter]&.count || 0 }
+    filter_counts = %i[qualified_teacher_status roles working_patterns education_phases key_stages subjects].map { |filter| @filters[filter]&.count || 0 }
     filter_counts.sum
   end
-  
+
   def clear_filters_params
-    @filters.merge({qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: []})
+    @filters.merge({ qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: [] })
   end
 
   private

@@ -45,16 +45,16 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     context "when filters are selected" do
       before do
         visit publishers_jobseeker_profiles_path
-  
+
         within ".filters-component" do
           check I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time")
           check I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5")
         end
-  
+
         within ".filters-component" do
           click_on I18n.t("buttons.apply_filters")
         end
-  
+
         expect(page).to_not have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
@@ -72,7 +72,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
       it "will allow publisher to clear all filters" do
         click_link "Clear filters"
-  
+
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
