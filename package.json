@@ -26,7 +26,7 @@
     "rails-ujs": "^5.2.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.4",
+    "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.21.4",
     "concurrently": "^8.0.1",
     "dotenv": "^16.0.3",
