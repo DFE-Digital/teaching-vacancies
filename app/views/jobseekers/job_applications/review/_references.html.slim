@@ -1,4 +1,4 @@
-- r.section :references
+- r.with_section :references
   - if job_application.references.none?
     - if jobseeker_signed_in?
       p.govuk-body = t("jobseekers.job_applications.review.employment_history.none")

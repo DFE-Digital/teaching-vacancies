@@ -1,4 +1,4 @@
-- r.section :qualifications
+- r.with_section :qualifications
   - if job_application.qualifications.none?
     - if jobseeker_signed_in?
       p.govuk-body = t("jobseekers.job_applications.review.qualifications.none")

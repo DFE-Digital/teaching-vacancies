@@ -19,7 +19,7 @@ class ReviewComponent < ApplicationComponent
   def before_render
     return unless show_tracks?
 
-    sidebar do
+    with_sidebar do
       render("#{namespace}/build/steps", track_assigns)
     end
   end

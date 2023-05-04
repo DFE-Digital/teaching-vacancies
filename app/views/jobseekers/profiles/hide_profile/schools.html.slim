@@ -13,12 +13,12 @@
       = govuk_summary_list do |summary_list|
         - profile.organisation_exclusions.each do |exclusion|
           = summary_list.row do |row|
-            - row.key(text: exclusion.organisation.name)
-            - row.value do
+            - row.with_key(text: exclusion.organisation.name)
+            - row.with_value do
               = exclusion.organisation.address
               - if exclusion.organisation.trust?
                 = govuk_inset_text(text: t(".hidden_from_trust_and_schools"), classes: "govuk-!-margin-top-6")
-            - row.action(text: t("buttons.delete"), href: delete_jobseekers_profile_hide_profile_path(exclusion))
+            - row.with_action(text: t("buttons.delete"), href: delete_jobseekers_profile_hide_profile_path(exclusion))
 
       = f.govuk_collection_radio_buttons :add_another,
         [["Yes", true], ["No", false]],

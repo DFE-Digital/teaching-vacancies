@@ -1,5 +1,6 @@
 class VacancyFormPageHeadingComponent < ViewComponent::Base
   delegate :current_organisation, to: :helpers
+  warn_on_deprecated_slot_setter
 
   def initialize(vacancy, step_process, back_path:, fieldset: true)
     @vacancy = vacancy

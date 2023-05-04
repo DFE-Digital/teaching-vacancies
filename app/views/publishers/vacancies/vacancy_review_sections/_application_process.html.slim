@@ -9,7 +9,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.enable_job_applications ? "Yes" : "No"
       - unless vacancy.published? || vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :applying_for_the_job, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.enable_job_applications")
 
@@ -20,7 +20,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.value
           = vacancy.personal_statement_guidance
         - unless vacancy.published? || vacancy.legacy_draft?
-          - row.action text: t("buttons.change"),
+          - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :applying_for_the_job, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.personal_statement_guidance")
 
@@ -31,7 +31,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.value
           = vacancy.how_to_apply
         - unless vacancy.legacy?
-          - row.action text: t("buttons.change"),
+          - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, vacancy_how_to_apply_step(vacancy), "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.how_to_apply")
 
@@ -43,7 +43,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.value
           = t("helpers.label.publishers_job_listing_how_to_receive_applications_form.receive_applications_options.#{vacancy.receive_applications}")
         - unless vacancy.legacy_draft?
-          - row.action text: t("buttons.change"),
+          - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :how_to_receive_applications, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.how_to_receive_applications")
 
@@ -55,7 +55,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
             - row.value
               = govuk_link_to("#{vacancy.application_form.filename}, #{number_to_human_size(vacancy.application_form.byte_size)}", job_document_path(vacancy, vacancy.application_form.id))
             - unless vacancy.legacy_draft?
-              - row.action text: t("buttons.change"),
+              - row.with_action text: t("buttons.change"),
                             href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
                             visually_hidden_text: t("jobs.application_form")
 
@@ -66,7 +66,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
             - row.value
               = vacancy.application_email
             - unless vacancy.legacy_draft?
-              - row.action text: t("buttons.change"),
+              - row.with_action text: t("buttons.change"),
                             href: organisation_job_build_path(vacancy.id, :application_form, "back_to_#{action_name}": "true"),
                             visually_hidden_text: t("jobs.application_email")
 
@@ -77,7 +77,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.value
           = vacancy.application_link
         - unless vacancy.legacy_draft?
-          - row.action text: t("buttons.change"),
+          - row.with_action text: t("buttons.change"),
                         href: organisation_job_build_path(vacancy.id, :application_link, "back_to_#{action_name}": "true"),
                         visually_hidden_text: t("jobs.application_link")
 
@@ -88,7 +88,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.school_visits || vacancy.school_visits_details.present? ? "Yes" : "No"
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :school_visits, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.school_visits")
 
@@ -99,7 +99,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.school_visits_details
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :school_visits, "back_to_#{action_name}": "true"),
                       visually_hidden_text: "School visits details"
 
@@ -110,7 +110,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.contact_email
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :contact_details, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.contact_email")
 
@@ -121,7 +121,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.contact_number_provided? || vacancy.contact_number.present? ? "Yes" : "No"
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :contact_details, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.contact_number_provided")
 
@@ -132,6 +132,6 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.contact_number
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :contact_details, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.contact_number")

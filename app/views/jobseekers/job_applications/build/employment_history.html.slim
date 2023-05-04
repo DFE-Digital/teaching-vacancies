@@ -15,7 +15,7 @@
       - employments.each_with_index do |employment, index|
         - if employment.job?
           = render DetailComponent.new title: employment.job_title do |detail|
-            - detail.body do
+            - detail.with_body do
               = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
                 - summary_list.row do |row|
                   - row.key text: t("jobseekers.job_applications.employments.organisation")
@@ -41,8 +41,8 @@
                   - row.key text: t("jobseekers.job_applications.employments.main_duties")
                   - row.value text: employment.main_duties
 
-            - detail.action govuk_link_to t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_job_application_employment_path(job_application, employment), class: "govuk-link--no-visited-state"
-            - detail.action govuk_link_to t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_job_application_employment_path(job_application, employment), method: :delete
+            - detail.with_action govuk_link_to t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_job_application_employment_path(job_application, employment), class: "govuk-link--no-visited-state"
+            - detail.with_action govuk_link_to t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_job_application_employment_path(job_application, employment), method: :delete
 
         - elsif employment.break?
           = govuk_inset_text do

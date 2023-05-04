@@ -3,10 +3,10 @@
 - if vacancy.legacy? && flash.none?
   - if vacancy.legacy_draft?
     = govuk_notification_banner(title_text: t("banners.important")) do |banner|
-      - banner.heading(text: t("publishers.job_listing_process_changed_draft_banner.heading_html", contact_support_link: govuk_link_to("contact support", new_support_request_path), create_new_link: govuk_link_to("Create a new job listing", organisation_jobs_path, method: "post")))
+      - banner.with_heading(text: t("publishers.job_listing_process_changed_draft_banner.heading_html", contact_support_link: govuk_link_to("contact support", new_support_request_path), create_new_link: govuk_link_to("Create a new job listing", organisation_jobs_path, method: "post")))
   - else
     = govuk_notification_banner(title_text: t("banners.important")) do |banner|
-      - banner.heading(text: t("publishers.job_listing_process_changed_published_banner.heading_html", contact_support_link: govuk_link_to("Contact support", new_support_request_path)))
+      - banner.with_heading(text: t("publishers.job_listing_process_changed_published_banner.heading_html", contact_support_link: govuk_link_to("Contact support", new_support_request_path)))
 
 = render "review_banner"
 

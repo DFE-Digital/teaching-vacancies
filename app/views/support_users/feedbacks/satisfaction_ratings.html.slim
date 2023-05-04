@@ -4,7 +4,7 @@
 
 = tabs do |tabs|
   - @satisfaction_ratings.each do |satisfaction_rating_type|
-    - tabs.navigation_item text: t(".#{satisfaction_rating_type[:feedback_type]}.tab_heading"),
+    - tabs.with_navigation_item text: t(".#{satisfaction_rating_type[:feedback_type]}.tab_heading"),
                            link: support_users_feedback_satisfaction_ratings_path(satisfaction_rating_type: satisfaction_rating_type[:feedback_type]),
                            active: @satisfaction_rating_type[:feedback_type] == satisfaction_rating_type[:feedback_type]
 
@@ -15,7 +15,7 @@
       - @satisfaction_rating_type[:feedback_responses].each do |feedback_response|
         - row.cell(header: true, text: t(".#{@satisfaction_rating_type[:feedback_type]}.table_headings.#{feedback_response}"))
 
-  - table.body do |body|
+  - table.with_body do |body|
     - FeedbackReportingPeriod.all.last(52).reverse_each do |period|
       - results = reporting_period_summary(period, feedback_type: @satisfaction_rating_type[:feedback_type], grouping_key: @satisfaction_rating_type[:grouping_key])
       - body.row html_attributes: { "data-testid": period.to_s } do |row|

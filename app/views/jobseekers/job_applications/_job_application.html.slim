@@ -1,11 +1,11 @@
 - job_application_link = job_application.draft? ? jobseekers_job_application_review_path(job_application) : jobseekers_job_application_path(job_application)
 
 = render CardComponent.new do |card|
-  - card.header do
+  - card.with_header do
     = tag.div(govuk_link_to(job_application.vacancy.job_title, job_application_link, class: "govuk-link--no-visited-state"))
     = tag.div(vacancy_job_location(job_application.vacancy))
 
-  - card.body do
+  - card.with_body do
     - case job_application.status
     - when "draft"
       = tag.div(card.labelled_item(t(".last_edited"), format_time_to_datetime_at(job_application.updated_at)))
@@ -19,6 +19,6 @@
     = tag.div(card.labelled_item(t(".closing_date"), format_time_to_datetime_at(job_application.vacancy.expires_at)))
 
   - if job_application.draft? && job_application.vacancy.expired?
-    - card.action_item link: job_application_status_tag(:deadline_passed)
+    - card.with_action_item link: job_application_status_tag(:deadline_passed)
   - else
-    - card.action_item link: job_application_status_tag(job_application.status)
+    - card.with_action_item link: job_application_status_tag(job_application.status)

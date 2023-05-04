@@ -1,10 +1,10 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
 
 = job_application_review(@job_application, step_process: step_process, show_tracks: current_jobseeker.job_applications.not_draft.none?) do |r|
-  - r.header do
+  - r.with_header do
     = render "banner"
 
-  - r.above do
+  - r.with_above do
     - unless vacancy.listed?
       = govuk_notification_banner title_text: t("banners.important") do
         p.govuk-body = t(".deadline_passed")
@@ -20,7 +20,7 @@
 
   - render "job_application_review_sections", r: r
 
-  - r.below do
+  - r.with_below do
     - unless @job_application.deadline_passed?
       = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
         = f.govuk_error_summary

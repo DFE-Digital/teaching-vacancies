@@ -1,4 +1,4 @@
-- r.section :personal_statement
+- r.with_section :personal_statement
   - if job_application.personal_statement.present?
     .govuk-body.review-component__section__body--border = simple_format(job_application.personal_statement)
   - else

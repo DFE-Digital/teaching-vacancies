@@ -1,4 +1,5 @@
 class ValidatableSummaryListComponent::ErrorComponent < ViewComponent::Base
+  warn_on_deprecated_slot_setter
   def initialize(*args, errors:, error_path:, **kwargs)
     super(*args, **kwargs)
 

@@ -6,7 +6,7 @@
 
 - unless @organisation.profile_complete?
   = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
-    - banner.heading text: t(".profile_incomplete_banner.title", organisation_type: @organisation.school? ? :school : :organisation)
+    - banner.with_heading text: t(".profile_incomplete_banner.title", organisation_type: @organisation.school? ? :school : :organisation)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds

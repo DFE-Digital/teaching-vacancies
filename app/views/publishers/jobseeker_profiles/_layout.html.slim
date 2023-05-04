@@ -10,7 +10,7 @@
       = govuk_link_to "Invite to apply for a job", invite_to_apply_publishers_jobseeker_profile_path, class: %i[govuk-button govuk-!-margin-bottom-6]
 
     = tabs do |tabs|
-      - tabs.navigation_item text: "Profile", link: publishers_jobseeker_profile_path(profile)
-      - tabs.navigation_item text: "Invitations to apply", link: publishers_invitations_path(profile)
+      - tabs.with_navigation_item text: "Profile", link: publishers_jobseeker_profile_path(profile)
+      - tabs.with_navigation_item text: "Invitations to apply", link: publishers_invitations_path(profile)
 
     = yield

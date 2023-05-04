@@ -1,4 +1,4 @@
-- r.section :personal_details do |s|
+- r.with_section :personal_details do |s|
   - s.row do |row|
     - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.first_name")
     - row.value text: job_application.first_name

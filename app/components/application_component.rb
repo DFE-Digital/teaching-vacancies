@@ -1,4 +1,5 @@
 class ApplicationComponent < GovukComponent::Base
+  warn_on_deprecated_slot_setter
   attr_reader :classes
 
   def initialize(classes: [], html_attributes: {})

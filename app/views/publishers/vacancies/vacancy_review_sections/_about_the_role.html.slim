@@ -10,7 +10,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.ect_status == "ect_suitable" ? "Yes" : "No"
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.ect_status")
 
@@ -21,7 +21,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         .editor-rendered-content == vacancy.job_advert
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.job_advert")
 
@@ -32,7 +32,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         .editor-rendered-content == vacancy.skills_and_experience
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.skills_and_experience.publisher")
 
@@ -43,7 +43,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.about_school
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.about_school")
 
@@ -54,7 +54,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         .editor-rendered-content == vacancy.school_offer
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.school_offer.publisher", organisation: vacancy.organisation.type.downcase)
 
@@ -66,7 +66,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.value
           = vacancy.safeguarding_information_provided ? "Yes" : "No"
         - unless vacancy.legacy_draft?
-          - row.action text: t("buttons.change"),
+          - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.safeguarding_information_provided")
 
@@ -76,7 +76,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         .editor-rendered-content == vacancy.safeguarding_information
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.safeguarding_information.publisher")
 
@@ -98,7 +98,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.further_details_provided ? "Yes" : "No"
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.further_details_provided")
 
@@ -109,7 +109,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         .editor-rendered-content == vacancy.further_details
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.further_details")
 
@@ -120,7 +120,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.include_additional_documents || vacancy.supporting_documents.any? ? "Yes" : "No"
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :include_additional_documents, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.include_additional_documents")
 
@@ -136,6 +136,6 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - else
           = t("jobs.not_defined")
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_documents_path(vacancy.id, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.additional_documents")

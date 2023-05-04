@@ -16,7 +16,7 @@
       - qualifications_sort_and_group(job_application.qualifications).each_value do |qualification_group|
         - qualification_group.each do |qualification|
           = render DetailComponent.new title: qualification.name do |detail|
-            - detail.body do
+            - detail.with_body do
               = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
                 - if qualification.secondary?
                   - summary_list.row do |row|
@@ -34,9 +34,9 @@
                     - row.value text: safe_join([tag.div(t("helpers.label.jobseekers_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}"), class: "govuk-body"), tag.div(qualification.finished_studying_details.presence, class: "govuk-body")])
 
             - if qualification.secondary?
-              - detail.action govuk_link_to t("buttons.add_another_subject"), edit_jobseekers_job_application_qualification_path(job_application, qualification, new_subject: true), class: "govuk-link--no-visited-state"
-            - detail.action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_qualification_path(job_application, qualification), class: "govuk-link--no-visited-state"
-            - detail.action govuk_link_to t("buttons.delete"), jobseekers_job_application_qualification_path(job_application, qualification), method: :delete
+              - detail.with_action govuk_link_to t("buttons.add_another_subject"), edit_jobseekers_job_application_qualification_path(job_application, qualification, new_subject: true), class: "govuk-link--no-visited-state"
+            - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_qualification_path(job_application, qualification), class: "govuk-link--no-visited-state"
+            - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_qualification_path(job_application, qualification), method: :delete
 
       = govuk_button_link_to t("buttons.add_another_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-button--secondary"
     - else

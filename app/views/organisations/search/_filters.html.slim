@@ -1,7 +1,7 @@
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
   options: { heading_text: "Filter", remove_filter_links: false },
   html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
-    - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:education_phase, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("organisations.filters.education_phase") }, hint: nil)
-    - filters_component.group key: "key_stage", component: f.govuk_collection_check_boxes(:key_stage, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("organisations.filters.key_stage") }, hint: nil)
-    - filters_component.group key: "special_school", component: f.govuk_collection_check_boxes(:special_school, [["1", t("organisations.filters.special_school")]], :first, :last, small: true, legend: { text: t("organisations.filters.special_school") })
-    - filters_component.group key: "job_availability", component: f.govuk_collection_check_boxes(:job_availability, f.object.job_availability_options, :first, :last, small: true, legend: { text: t("organisations.filters.job_availability.label") })
+    - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:education_phase, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("organisations.filters.education_phase") }, hint: nil)
+    - filters_component.with_group key: "key_stage", component: f.govuk_collection_check_boxes(:key_stage, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("organisations.filters.key_stage") }, hint: nil)
+    - filters_component.with_group key: "special_school", component: f.govuk_collection_check_boxes(:special_school, [["1", t("organisations.filters.special_school")]], :first, :last, small: true, legend: { text: t("organisations.filters.special_school") })
+    - filters_component.with_group key: "job_availability", component: f.govuk_collection_check_boxes(:job_availability, f.object.job_availability_options, :first, :last, small: true, legend: { text: t("organisations.filters.job_availability.label") })

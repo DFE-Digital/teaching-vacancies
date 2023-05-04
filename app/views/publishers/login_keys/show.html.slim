@@ -4,7 +4,7 @@
   .govuk-grid-column-two-thirds
     - if @reason_for_failing_sign_in
       = govuk_notification_banner title_text: t("banners.important") do |banner|
-        - banner.heading text: t("publishers.temp_login.choose_organisation.denial.title")
+        - banner.with_heading text: t("publishers.temp_login.choose_organisation.denial.title")
         = t("publishers.temp_login.choose_organisation.denial.#{@reason_for_failing_sign_in}_html", try_again: govuk_link_to("try again", new_publisher_session_path))
 
     - else
