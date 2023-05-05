@@ -10,7 +10,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         = vacancy_job_locations(vacancy)
     - unless vacancy.legacy_draft? || current_organisation.school?
       - row.with_action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :job_location, "back_to_#{with_action_name}": "true"),
+                  href: organisation_job_build_path(vacancy.id, :job_location, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("publishers.vacancies.steps.job_location")
 
   - summary_list.row(html_attributes: { id: "job_role" }) do |row|
@@ -20,7 +20,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       = t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_role}") if vacancy.job_role?
     - unless vacancy.legacy_draft?
       - row.with_action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :job_role, "back_to_#{with_action_name}": "true"),
+                  href: organisation_job_build_path(vacancy.id, :job_role, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("publishers.vacancies.steps.job_role")
 
   - summary_list.row(html_attributes: { id: "job_title" }) do |row|
@@ -30,7 +30,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       = vacancy.job_title
     - unless vacancy.legacy_draft?
       - row.with_action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :job_title, "back_to_#{with_action_name}": "true"),
+                  href: organisation_job_build_path(vacancy.id, :job_title, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.job_title")
 
   - if vacancy.allow_key_stages? && vacancy.key_stages.any?
@@ -41,7 +41,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         = vacancy.readable_key_stages
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :key_stages, "back_to_#{with_action_name}": "true"),
+                    href: organisation_job_build_path(vacancy.id, :key_stages, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.key_stage", count: vacancy.key_stages.count)
 
   - if vacancy.allow_subjects? && (vacancy.completed_steps.include?("subjects") || vacancy.completed_steps.include?("job_details"))
@@ -52,7 +52,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         = vacancy.subjects.any? ? vacancy.readable_subjects : t("jobs.not_defined")
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :subjects, "back_to_#{with_action_name}": "true"),
+                    href: organisation_job_build_path(vacancy.id, :subjects, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.subjects", count: vacancy.subjects.count)
 
   - unless vacancy.contract_type.nil?
@@ -63,7 +63,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         = vacancy.contract_type_with_duration
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
-                    href: organisation_job_build_path(vacancy.id, :contract_type, "back_to_#{with_action_name}": "true"),
+                    href: organisation_job_build_path(vacancy.id, :contract_type, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.contract_type")
 
   - if vacancy.working_patterns.any?
@@ -75,7 +75,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
           = vacancy.readable_working_patterns
         - unless vacancy.legacy_draft?
           - row.with_action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{with_action_name}": "true"),
+                      href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.working_patterns")
 
       - summary_list.row(html_attributes: { id: "working_patterns_details" }) do |row|
@@ -85,7 +85,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
           = vacancy.working_patterns_details? ? vacancy.working_patterns_details : t("jobs.not_defined")
         - unless vacancy.legacy_draft?
           - row.with_action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{with_action_name}": "true"),
+                      href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.working_patterns")
 
     - else
@@ -96,7 +96,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
             ul.govuk-list.govuk-list--spaced = vacancy_working_patterns(vacancy)
         - unless vacancy.legacy_draft?
           - row.with_action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{with_action_name}": "true"),
+                      href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.working_patterns")
 
   - if vacancy.salary_types.any?
@@ -119,7 +119,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
               = vacancy.pay_scale
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :pay_package, "back_to_#{with_action_name}": "true"),
+                      href: organisation_job_build_path(vacancy.id, :pay_package, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.salary_details")
 
   - unless vacancy.benefits.nil?
@@ -131,7 +131,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         = vacancy.benefits? ? "Yes" : "No"
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
-                      href: organisation_job_build_path(vacancy.id, :pay_package, "back_to_#{with_action_name}": "true"),
+                      href: organisation_job_build_path(vacancy.id, :pay_package, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.benefits")
 
   - if vacancy.benefits == true
