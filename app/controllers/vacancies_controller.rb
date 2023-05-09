@@ -53,7 +53,7 @@ class VacanciesController < ApplicationController
 
   def trigger_search_performed_event
     fail_safe do
-      vacancy_ids = @vacancies_search.vacancies.map(&:id).map { |s| StringAnonymiser.new(s).to_s }
+      vacancy_ids = @vacancies_search.vacancies.map(&:id)
       polygon_id = StringAnonymiser.new(@vacancies_search.location_search.polygon.id).to_s if @vacancies_search.location_search.polygon
 
       event_data = {

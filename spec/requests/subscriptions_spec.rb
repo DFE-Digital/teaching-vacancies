@@ -128,7 +128,7 @@ RSpec.describe "Subscriptions" do
         autopopulated: nil,
         email_identifier: anonymised_form_of("jimi@hendrix.com"),
         frequency: "weekly",
-        subscription_identifier: anonymised_form_of(subscription.id),
+        subscription_identifier: subscription.id,
         search_criteria: /^{.*}$/,
       )
     end
@@ -158,7 +158,7 @@ RSpec.describe "Subscriptions" do
         autopopulated: nil,
         email_identifier: anonymised_form_of("bob@dylan.com"),
         frequency: "daily",
-        subscription_identifier: anonymised_form_of(subscription.id),
+        subscription_identifier: subscription.id,
         search_criteria: /^{.*}$/,
       )
     end

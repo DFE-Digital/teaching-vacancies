@@ -86,7 +86,7 @@ class SubscriptionsController < ApplicationController
 
   def trigger_create_job_alert_clicked_event
     request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: StringAnonymiser.new(vacancy_id))
-    trigger_dfe_analytics_event(:vacancy_create_job_alert_clicked, { vacancy_id: StringAnonymiser.new(vacancy_id) })
+    trigger_dfe_analytics_event(:vacancy_create_job_alert_clicked, { vacancy_id: vacancy_id })
   end
 
   def trigger_dfe_analytics_event(type, data)
@@ -105,11 +105,11 @@ class SubscriptionsController < ApplicationController
   def trigger_subscription_event(type, subscription)
     event_data = {
       autopopulated: session.delete(:subscription_autopopulated),
-      email_identifier: StringAnonymiser.new(subscription.email),
+      email_identifier: StringAnonymiser.new(subscription.email).to_s,
       frequency: subscription.frequency,
       recaptcha_score: subscription.recaptcha_score,
       search_criteria: subscription.search_criteria,
-      subscription_identifier: StringAnonymiser.new(subscription.id),
+      subscription_identifier: subscription.id,
     }
 
     request_event.trigger(type, event_data)

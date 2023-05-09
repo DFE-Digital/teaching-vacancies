@@ -184,7 +184,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
         .with_request_details(request)
         .with_response_details(response)
         .with_user(current_jobseeker)
-        .with_data(vacancy_id: StringAnonymiser.new(vacancy.id))
+        .with_data(vacancy_id: StringAnonymiser.new(vacancy.id).to_s)
 
       DfE::Analytics::SendEvents.do([event])
     end

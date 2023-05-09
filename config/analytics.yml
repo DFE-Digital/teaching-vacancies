@@ -370,4 +370,5 @@ shared:
     - phone_number
     - completed_steps
     - created_at
+    - right_to_work_in_uk
     - updated_at

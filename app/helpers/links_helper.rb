@@ -55,7 +55,7 @@ module LinksHelper
       t("vacancies.listing.schools.website_link_text", organisation_name: organisation.name),
       organisation.url,
       link_type: :school_website,
-      link_subject: anon(vacancy&.id),
+      link_subject: vacancy&.id,
       **kwargs,
     )
   end
@@ -72,7 +72,7 @@ module LinksHelper
       t("jobs.external.link"),
       vacancy.external_advert_url,
       link_type: :external_advert_link,
-      link_subject: anon(vacancy.id),
+      link_subject: vacancy.id,
       **kwargs,
     )
   end
@@ -83,7 +83,7 @@ module LinksHelper
       vacancy.application_link,
       "aria-label": t("jobs.aria_labels.apply_link"),
       link_type: :get_more_information,
-      link_subject: anon(vacancy.id),
+      link_subject: vacancy.id,
       **kwargs,
     )
   end
@@ -93,7 +93,7 @@ module LinksHelper
       t("vacancies.listing.schools.view_ofsted_report"),
       ofsted_report(organisation),
       link_type: :ofsted_report,
-      link_subject: anon(vacancy&.id),
+      link_subject: vacancy&.id,
       **kwargs,
     )
   end
@@ -105,7 +105,7 @@ module LinksHelper
       subject: t("jobs.contact_email_subject", job: vacancy.job_title),
       body: t("jobs.contact_email_body", url: job_url(vacancy)),
       link_type: :contact_email,
-      link_subject: anon(vacancy.id),
+      link_subject: vacancy.id,
       tracked_link_text: anon(vacancy.contact_email),
       **kwargs,
     )
@@ -118,7 +118,7 @@ module LinksHelper
       subject: t("jobs.contact_email_subject", job: vacancy.job_title),
       body: t("jobs.contact_email_body", url: job_url(vacancy)),
       link_type: :application_email,
-      link_subject: anon(vacancy.id),
+      link_subject: vacancy.id,
       tracked_link_text: anon(vacancy.application_email),
       **kwargs,
     )
@@ -129,7 +129,7 @@ module LinksHelper
       text,
       url,
       link_type: :school_website_from_map,
-      link_subject: anon(vacancy_id),
+      link_subject: vacancy_id,
       **kwargs,
     )
   end
@@ -139,7 +139,7 @@ module LinksHelper
       vacancy.job_title,
       job_path(vacancy),
       link_type: :vacancy_visited_from_list,
-      link_subject: anon(vacancy.id),
+      link_subject: vacancy.id,
       **kwargs,
     )
   end
@@ -149,7 +149,7 @@ module LinksHelper
       vacancy.job_title,
       job_path(vacancy),
       link_type: :similar_job,
-      link_subject: anon(vacancy.id),
+      link_subject: vacancy.id,
       **kwargs,
     )
   end
@@ -159,7 +159,7 @@ module LinksHelper
       t("publishers.vacancies.build.documents.accessibility_link_text"),
       "https://www.gov.uk/guidance/publishing-accessible-documents#writing-accessible-documents",
       link_type: :document_accessibility_guidance,
-      link_subject: anon(vacancy.id),
+      link_subject: vacancy.id,
       **kwargs,
     )
   end
