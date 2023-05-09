@@ -12,6 +12,7 @@ RSpec.describe ApplicationRecord do
                     "email" => StringAnonymiser.new(model.email).to_s,
                     "given_name" => StringAnonymiser.new(model.given_name).to_s,
                     "family_name" => StringAnonymiser.new(model.family_name).to_s,
+                    "acknowledged_candidate_profiles_interstitial" => true,
                     "accepted_terms_at" => model.accepted_terms_at.to_formatted_s(:iso8601))
       end
 

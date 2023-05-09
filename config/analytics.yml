@@ -81,6 +81,13 @@ shared:
     - vacancy_id
     - close_account_reason
     - close_account_reason_comment
+  invitation_to_applies:
+    - id
+    - jobseeker_id
+    - vacancy_id
+    - invited_by_id
+    - created_at
+    - updated_at
   job_applications:
     - id
     - status
@@ -120,6 +127,14 @@ shared:
     - country
     - email_address
     - withdrawn_by_closing_account
+  job_preferences_locations:
+    - id
+    - job_preferences_id
+    - name
+    - radius
+    - area
+    - created_at
+    - updated_at
   jobseeker_profiles:
     - id
     - created_at
@@ -129,6 +144,13 @@ shared:
     - qualified_teacher_status
     - qualified_teacher_status_year
     - active
+    - requested_hidden_profile
+  jobseeker_profile_excluded_organisations:
+    - id
+    - jobseeker_profile_id
+    - organisation_id
+    - created_at
+    - updated_at
   jobseekers:
     - id
     - email
@@ -222,6 +244,7 @@ shared:
     - id
     - oid
     - accepted_terms_at
+    - acknowledged_candidate_profiles_interstitial
     - email
     - last_activity_at
     - family_name

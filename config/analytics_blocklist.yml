@@ -51,6 +51,10 @@
   - organisation_ciphertext
   - email_ciphertext
   - phone_number_ciphertext
+  :personal_details:
+  - first_name_ciphertext
+  - last_name_ciphertext
+  - phone_number_ciphertext
   :notifications:
   - params
   :notes:
@@ -67,11 +71,6 @@
   - geopoint
   - created_at
   - updated_at
-  :jobseeker_profiles:
-  - first_name
-  - last_name
-  - phone_number_provided
-  - phone_number
   :job_applications:
   - qualified_teacher_status_details
   - disability
@@ -120,14 +119,14 @@
   - created_at
   - updated_at
   - status
-  :qualifications:
-  - finished_studying_details_ciphertext
   :vacancies:
   - readable_job_location
   - readable_phases
   - searchable_content
   - google_index_removed
   - expired_vacancy_feedback_email_sent_at
+  :qualifications:
+  - finished_studying_details_ciphertext
   :feedbacks:
   - comment
   - other_unsubscribe_reason_comment
@@ -152,21 +151,19 @@
   - last_sign_in_ip_ciphertext
   - last_sign_in_ip
   - current_sign_in_ip
-  :organisations:
-  - gias_data_hash
-  - slug
-  - searchable_content
   :job_preferences:
   - id
-  - jobseeker_id
-  - jobseeker_profile_id
   - roles
   - phases
   - key_stages
   - subjects
   - working_patterns
-  - locations
-  - builder_completed
   - completed_steps
+  - builder_completed
   - created_at
   - updated_at
+  - jobseeker_profile_id
+  :organisations:
+  - gias_data_hash
+  - slug
+  - searchable_content

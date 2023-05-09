@@ -21,6 +21,9 @@ shared:
     - publisher_id
     - subscription_id
     - vacancy_id
+  invitation_to_applies:
+    - jobseeker_id
+    - invited_by_id
   job_applications:
     - id
     - jobseeker_id
@@ -41,6 +44,12 @@ shared:
     - rejection_reasons
     - gaps_in_employment_details
     - email_address
+  jobseeker_profiles:
+    - id
+    - jobseeker_id
+  jobseeker_profile_excluded_organisations:
+    - jobseeker_profile_id
+    - organisation_id
   jobseekers:
     - id
     - email
