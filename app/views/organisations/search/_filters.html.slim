@@ -1,6 +1,47 @@
+ruby:
+  filter_types = [
+    {
+      legend: t("organisations.filters.education_phase"),
+      key: :education_phase,
+      selected: @search_form.education_phase,
+      options: @search_form.education_phase_options,
+      value_method: :first,
+      selected_method: :last,
+    },
+    {
+      legend: t("organisations.filters.key_stage"),
+      key: :key_stage,
+      selected: @search_form.key_stage,
+      options: @search_form.key_stage_options,
+      value_method: :first,
+      selected_method: :last,
+      },
+    {
+      legend: t("organisations.filters.special_school"),
+      key: :special_school,
+      selected: @search_form.special_school,
+      options: [["1", t("organisations.filters.special_school")]],
+      value_method: :first,
+      selected_method: :last,
+    },
+    {
+      legend: t("organisations.filters.job_availability.label"),
+      key: :job_availability,
+      selected: @search_form.job_availability,
+      options: @search_form.job_availability_options,
+      value_method: :first,
+      selected_method: :last,
+    },
+  ]
+
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
-  options: { heading_text: "Filter", remove_filter_links: false },
+  filters: { total_count: @school_search.total_filters },
+  clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: organisations_path(@school_search.clear_filters_params) },
+  options: { heading_text: "Filter", remove_filter_links: true },
   html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
+    - filters_component.remove_filter_links do |rb|
+      - filter_types.each do |filter_type|
+        - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :organisations_path, params: @school_search.active_criteria }))
     - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:education_phase, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("organisations.filters.education_phase") }, hint: nil)
     - filters_component.with_group key: "key_stage", component: f.govuk_collection_check_boxes(:key_stage, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("organisations.filters.key_stage") }, hint: nil)
     - filters_component.with_group key: "special_school", component: f.govuk_collection_check_boxes(:special_school, [["1", t("organisations.filters.special_school")]], :first, :last, small: true, legend: { text: t("organisations.filters.special_school") })

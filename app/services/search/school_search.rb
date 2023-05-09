@@ -35,6 +35,15 @@ class Search::SchoolSearch
     schools.count
   end
 
+  def total_filters
+    filter_counts = %i[education_phase key_stage special_school job_availability].map { |filter| search_criteria[filter]&.count || 0 }
+    filter_counts.sum
+  end
+
+  def clear_filters_params
+    active_criteria.merge({ education_phase: [], key_stage: [], special_school: [], job_availability: [] })
+  end
+
   private
 
   def scope
@@ -44,7 +53,7 @@ class Search::SchoolSearch
     scope = scope.search_by_location(*location) if location.present?
     scope = scope.where(phase: education_phase) if education_phase
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
-    scope = scope.where("organisations.gias_data->>'SpecialClasses (code)' = ?", "1") if @search_criteria[:special_school]
+    scope = scope.where("organisations.gias_data->>'SpecialClasses (code)' = ?", "1") if special_school?
 
     apply_job_availability_filter(scope)
   end
@@ -69,13 +78,19 @@ class Search::SchoolSearch
     School::PHASE_TO_KEY_STAGES_MAPPINGS.select { |_, v| @search_criteria[:key_stage].intersect?(v.map(&:to_s)) }.map(&:first).map(&:to_s)
   end
 
+  def special_school?
+    return unless @search_criteria.key?(:special_school)
+
+    @search_criteria[:special_school].first == "1"
+  end
+
   def apply_job_availability_filter(scope)
     return scope unless @search_criteria.key?(:job_availability)
 
     vacancy_ids = Vacancy.live.select(:id)
     organisation_ids = OrganisationVacancy.where(vacancy_id: vacancy_ids).select(:organisation_id)
 
-    if @search_criteria[:job_availability]
+    if @search_criteria[:job_availability].first == "true"
       scope.where(id: organisation_ids)
     else
       scope.where.not(id: organisation_ids)

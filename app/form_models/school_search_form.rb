@@ -15,8 +15,6 @@ class SchoolSearchForm
       .transform_values { |value| value.is_a?(Array) ? value.filter_map(&:presence).presence : value.presence }
       .compact
 
-    attrs[:special_school] = true if attrs.key?(:special_school)
-
     if attrs.key?(:location)
       self.radius = Search::RadiusBuilder.new(attrs[:location], attrs[:radius]).radius.to_s
       attrs[:location] = [attrs[:location], radius]
@@ -25,7 +23,7 @@ class SchoolSearchForm
     end
 
     if attrs[:job_availability]&.one?
-      attrs[:job_availability] = attrs[:job_availability].first == "true"
+      attrs[:job_availability] = attrs[:job_availability].first == "true" ? ["true"] : ["false"]
     else
       attrs.delete(:job_availability)
     end
