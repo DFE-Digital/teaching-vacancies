@@ -37,4 +37,21 @@ class ApplicationMailer < Mail::Notify::Mailer
   def template
     Rails.configuration.app_role == "sandbox" ? NOTIFY_SANDBOX_TEMPLATE : NOTIFY_PRODUCTION_TEMPLATE
   end
+
+  def dfe_analytics_custom_data
+    {}
+  end
+
+  def dfe_analytics_event_data
+    dfe_analytics_base_data.merge(dfe_analytics_custom_data)
+  end
+
+  def dfe_analytics_base_data
+    {
+      uid: uid,
+      notify_template: template,
+      email_identifier: StringAnonymiser.new(to).to_s,
+
+    }
+  end
 end

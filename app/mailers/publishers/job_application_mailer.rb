@@ -18,6 +18,7 @@ class Publishers::JobApplicationMailer < Publishers::BaseMailer
   def email_event_data
     { vacancies_job_applications: vacancies_job_applications }
   end
+  alias dfe_analytics_custom_data email_event_data
 
   def vacancies_job_applications
     @vacancies.each_with_object({}) do |vacancy, hash|

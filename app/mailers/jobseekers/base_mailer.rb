@@ -9,7 +9,7 @@ class Jobseekers::BaseMailer < ApplicationMailer
     @dfe_analytics_email_event ||= DfE::Analytics::Event.new
       .with_type(email_event_type)
       .with_user(@jobseeker)
-      .with_data(email_event_data)
+      .with_data(dfe_analytics_event_data)
   end
 
   def ab_tests
