@@ -22,7 +22,7 @@ class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
   private
 
   def email_event_data
-    { subscription_identifier: StringAnonymiser.new(subscription.id) }
+    { subscription_identifier: StringAnonymiser.new(subscription.id).to_s }
   end
   alias dfe_analytics_custom_data email_event_data
 

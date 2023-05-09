@@ -82,7 +82,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
         .with_response_details(response)
         .with_user(current_publisher)
         .with_data(
-          vacancy_id: StringAnonymiser.new(vacancy.id),
+          vacancy_id: StringAnonymiser.new(vacancy.id).to_s,
           document_type: "supporting_document",
           name: name,
           size: size,
@@ -97,7 +97,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     fail_safe do
       request_event.trigger(
         event_type,
-        vacancy_id: StringAnonymiser.new(vacancy.id),
+        vacancy_id: StringAnonymiser.new(vacancy.id).to_s,
         document_type: "supporting_document",
         name: name,
         size: size,
