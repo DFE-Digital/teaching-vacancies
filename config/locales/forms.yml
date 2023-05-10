@@ -293,6 +293,12 @@ en:
         user_participation_response_options:
           interested: 'Yes'
           uninterested: 'No'
+        rating:
+          highly_satisfied: Highly satisfied
+          somewhat_satisfied: Somewhat satisfied
+          neither_satisfied_or_unsatisfied: Neither satisfied nor dissatisfied
+          somewhat_dissatisfied: Somewhat dissatisfied
+          highly_dissatisfied: Highly dissatisfied
 
       jobseeker:
         email: Email address
@@ -756,6 +762,7 @@ en:
         report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
         visit_purpose: What did you come to Teaching Vacancies to do?
         user_participation_response: Would you like to participate in our research?
+        rating: How satisfied are you with using Teaching Vacancies?
 
       jobseekers_job_alert_further_feedback_form:
         user_participation_response: Would you like to participate in our research?
