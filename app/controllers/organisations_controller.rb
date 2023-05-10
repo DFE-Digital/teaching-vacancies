@@ -1,4 +1,6 @@
 class OrganisationsController < ApplicationController
+  before_action :strip_empty_filter_checkboxes, only: %i[index]
+
   def show
     organisation
   end
@@ -20,5 +22,9 @@ class OrganisationsController < ApplicationController
 
   def organisation
     @organisation ||= Organisation.friendly.find(params[:id] || params[:organisation_id])
+  end
+
+  def strip_empty_filter_checkboxes
+    strip_empty_checkboxes(%i[education_phase key_stage special_school job_availability]) unless params[:skip_strip_checkboxes]
   end
 end
