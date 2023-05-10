@@ -17,7 +17,7 @@
     "accessible-autocomplete": "^2.0.4",
     "axios": "^1.4.0",
     "classlist-polyfill": "^1.2.0",
-    "core-js": "^3.30.1",
+    "core-js": "^3.30.2",
     "dompurify": "^3.0.2",
     "govuk-frontend": "^4.6.0",
     "leaflet": "^1.9.3",
