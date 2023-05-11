@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Giving general feedback for the service", recaptcha: true do
   let(:comment) { "Keep going!" }
   let(:email) { "test@example.com" }
-  let(:teacher) { "teacher" }
+  let(:occupation) { "teacher" }
   let(:visit_purpose_comment) { "testing" }
 
   context "when all required fields are complete" do
@@ -16,6 +16,7 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
       expect { click_button I18n.t("buttons.submit_feedback") }.to change {
         Feedback.where(comment: comment,
                        email: email,
+                       occupation: occupation,
                        feedback_type: "general",
                        rating: "highly_satisfied",
                        recaptcha_score: 0.9,
@@ -69,6 +70,6 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
 
     choose name: "general_feedback_form[user_participation_response]", option: "interested"
     fill_in "email", with: email
-    fill_in "occupation", with: email
+    fill_in "occupation", with: occupation
   end
 end
