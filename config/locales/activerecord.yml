@@ -33,6 +33,8 @@ en:
   unsubscribe_feedback_errors: &unsubscribe_feedback_errors
     email:
       blank: Enter your email address
+    occupation:
+      blank: Enter your occupation
     other_unsubscribe_reason_comment:
       blank: Tell us why you want to unsubscribe
     unsubscribe_reason:
