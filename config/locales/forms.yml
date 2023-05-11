@@ -296,7 +296,7 @@ en:
         rating:
           highly_satisfied: Highly satisfied
           somewhat_satisfied: Somewhat satisfied
-          neither_satisfied_or_unsatisfied: Neither satisfied nor dissatisfied
+          neither: Neither satisfied nor dissatisfied
           somewhat_dissatisfied: Somewhat dissatisfied
           highly_dissatisfied: Highly dissatisfied
 

@@ -26,7 +26,7 @@
       = f.govuk_radio_buttons_fieldset(:rating, legend: { size: "m" }) do
         = f.govuk_radio_button :rating, :highly_satisfied, label: { text: t("helpers.label.general_feedback_form.rating.highly_satisfied") }, link_errors: true
         = f.govuk_radio_button :rating, :somewhat_satisfied, label: { text: t("helpers.label.general_feedback_form.rating.somewhat_satisfied") }
-        = f.govuk_radio_button :rating, :neither_satisfied_or_unsatisfied, label: { text: t("helpers.label.general_feedback_form.rating.neither_satisfied_or_unsatisfied") }
+        = f.govuk_radio_button :rating, :neither, label: { text: t("helpers.label.general_feedback_form.rating.neither") }
         = f.govuk_radio_button :rating, :somewhat_dissatisfied, label: { text: t("helpers.label.general_feedback_form.rating.somewhat_dissatisfied") }
         = f.govuk_radio_button :rating, :highly_dissatisfied, label: { text: t("helpers.label.general_feedback_form.rating.highly_dissatisfied") }
       end
