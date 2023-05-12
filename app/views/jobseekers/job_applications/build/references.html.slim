@@ -13,7 +13,7 @@
     - if job_application.references.any?
       - job_application.references.each do |reference|
         = render DetailComponent.new title: reference.name do |detail|
-          - detail.body do
+          - detail.with_body do
             = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
               - attributes = %w[job_title organisation relationship email phone_number]
               - attributes.each do |attribute|
@@ -22,8 +22,8 @@
                     - row.key text: t("jobseekers.job_applications.references.#{attribute}")
                     - row.value text: reference[attribute]
 
-          - detail.action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, reference), class: "govuk-link--no-visited-state"
-          - detail.action govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, reference), method: :delete
+          - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, reference), class: "govuk-link--no-visited-state"
+          - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, reference), method: :delete
 
       = govuk_button_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_reference_path(job_application)
     - else

@@ -24,8 +24,8 @@
 
             - if application.status.in?(%w[reviewed shortlisted submitted])
               - if application.reviewed? || application.submitted?
-                - row.action text: t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
-              - row.action text: t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
+                - row.with_action text: t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
+              - row.with_action text: t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
 
     - elsif !vacancy.within_data_access_period?
       = govuk_inset_text do

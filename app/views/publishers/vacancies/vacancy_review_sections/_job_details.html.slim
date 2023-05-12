@@ -9,7 +9,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       ul.govuk-list.govuk-list--spaced
         = vacancy_job_locations(vacancy)
     - unless vacancy.legacy_draft? || current_organisation.school?
-      - row.action text: t("buttons.change"),
+      - row.with_action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :job_location, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("publishers.vacancies.steps.job_location")
 
@@ -19,7 +19,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.value
       = t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_role}") if vacancy.job_role?
     - unless vacancy.legacy_draft?
-      - row.action text: t("buttons.change"),
+      - row.with_action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :job_role, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("publishers.vacancies.steps.job_role")
 
@@ -29,7 +29,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
     - row.value
       = vacancy.job_title
     - unless vacancy.legacy_draft?
-      - row.action text: t("buttons.change"),
+      - row.with_action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :job_title, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.job_title")
 
@@ -40,7 +40,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.readable_key_stages
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :key_stages, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.key_stage", count: vacancy.key_stages.count)
 
@@ -51,7 +51,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.subjects.any? ? vacancy.readable_subjects : t("jobs.not_defined")
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :subjects, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.subjects", count: vacancy.subjects.count)
 
@@ -62,7 +62,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.contract_type_with_duration
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :contract_type, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.contract_type")
 
@@ -74,7 +74,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.value
           = vacancy.readable_working_patterns
         - unless vacancy.legacy_draft?
-          - row.action text: t("buttons.change"),
+          - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.working_patterns")
 
@@ -84,7 +84,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.value
           = vacancy.working_patterns_details? ? vacancy.working_patterns_details : t("jobs.not_defined")
         - unless vacancy.legacy_draft?
-          - row.action text: t("buttons.change"),
+          - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.working_patterns")
 
@@ -95,7 +95,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.value
             ul.govuk-list.govuk-list--spaced = vacancy_working_patterns(vacancy)
         - unless vacancy.legacy_draft?
-          - row.action text: t("buttons.change"),
+          - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :working_patterns, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.working_patterns")
 
@@ -118,7 +118,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
               div => "#{t('jobs.pay_scale')}:"
               = vacancy.pay_scale
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :pay_package, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.salary_details")
 
@@ -130,7 +130,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.benefits? ? "Yes" : "No"
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :pay_package, "back_to_#{action_name}": "true"),
                       visually_hidden_text: t("jobs.benefits")
 
@@ -142,6 +142,6 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = vacancy.benefits_details
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :pay_package),
                       visually_hidden_text: t("jobs.benefits_details")

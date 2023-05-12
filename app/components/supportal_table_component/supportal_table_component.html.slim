@@ -4,7 +4,7 @@
       - @columns.each do |(header, _, type)|
         - row.cell(header: true, text: header, classes: ("column-width--#{type}" if type))
 
-  - table.body do |body|
+  - table.with_body do |body|
     - @entries.each do |entry|
       - body.row do |row|
         - @columns.each do |(_, value_block, _)|

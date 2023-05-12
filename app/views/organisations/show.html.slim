@@ -13,7 +13,7 @@
 
 - if @organisation.school_group?
     = tabs(html_attributes: { "aria-label": "organisation menu", class: "organisation-navigation" }) do |tabs|
-      - tabs.navigation_item text: t("organisations.show.tabs.organisation"), link: organisation_path(@organisation)
-      - tabs.navigation_item text: t("organisations.show.tabs.schools"), link: organisation_schools_path(@organisation)
+      - tabs.with_navigation_item text: t("organisations.show.tabs.organisation"), link: organisation_path(@organisation)
+      - tabs.with_navigation_item text: t("organisations.show.tabs.schools"), link: organisation_schools_path(@organisation)
 
 = render "organisation", preview: false, organisation: @organisation

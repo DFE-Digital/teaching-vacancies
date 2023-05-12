@@ -19,15 +19,15 @@ ruby:
       end
 
       summary_list.row do |row|
-        row.key text: t(".#{attribute}")
-        row.value text: value
-        row.action(text: t("buttons.change"), href: edit_personal_details_jobseekers_profile_path(step: step_name))
+        row.with_key text: t(".#{attribute}")
+        row.with_value text: value
+        row.with_action(text: t("buttons.change"), href: edit_personal_details_jobseekers_profile_path(step: step_name))
       end
     end
 
     summary_list.row do |row|
-      row.key text: t(".email")
-      row.value text: (current_jobseeker.email +
+      row.with_key text: t(".email")
+      row.with_value text: (current_jobseeker.email +
                        govuk_inset_text(text: t("helpers.label.personal_details_form.change_email_html",
                                               link: govuk_link_to(t("helpers.label.personal_details_form.change_email_link_text"),
                                                     jobseekers_account_path)),

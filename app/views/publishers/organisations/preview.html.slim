@@ -17,7 +17,7 @@
 
 - if @organisation.school_group?
   = tabs(html_attributes: { "aria-label": "organisation menu", class: "organisation-navigation" }) do |tabs|
-    - tabs.navigation_item text: t("organisations.show.tabs.organisation"), link: publishers_organisation_preview_path(@organisation)
-    - tabs.navigation_item text: t("organisations.show.tabs.schools"), link: publishers_organisation_schools_preview_path(@organisation)
+    - tabs.with_navigation_item text: t("organisations.show.tabs.organisation"), link: publishers_organisation_preview_path(@organisation)
+    - tabs.with_navigation_item text: t("organisations.show.tabs.schools"), link: publishers_organisation_schools_preview_path(@organisation)
 
 = render "organisations/organisation", preview: true, organisation: @organisation

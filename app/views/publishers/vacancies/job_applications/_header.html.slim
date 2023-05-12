@@ -14,5 +14,5 @@ h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
   = publisher_job_application_status_tag(job_application.status)
 
 = tabs do |tabs|
-  - tabs.navigation_item text: t(".tabs.application"), link: organisation_job_job_application_path(vacancy.id, job_application)
-  - tabs.navigation_item text: t(".tabs.notes"), link: organisation_job_job_application_notes_path(vacancy.id, job_application), active: controller_name == "notes"
+  - tabs.with_navigation_item text: t(".tabs.application"), link: organisation_job_job_application_path(vacancy.id, job_application)
+  - tabs.with_navigation_item text: t(".tabs.notes"), link: organisation_job_job_application_notes_path(vacancy.id, job_application), active: controller_name == "notes"

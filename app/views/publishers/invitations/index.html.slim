@@ -12,7 +12,7 @@
           - row.cell(header: true, text: "Invited by")
           - row.cell(header: true, text: "Date")
 
-      - table.body do |body|
+      - table.with_body do |body|
         - @invitations.each do |invitation|
           - body.row do |row|
             - row.cell(text: invitation.vacancy.job_title)

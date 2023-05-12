@@ -43,9 +43,9 @@ ruby:
       end
 
       summary_list.row do |row|
-        row.key text: t(".#{attribute}", count:)
-        row.value text: value.presence || options[:blank]
-        row.action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name))
+        row.with_key text: t(".#{attribute}", count:)
+        row.with_value text: value.presence || options[:blank]
+        row.with_action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name))
       end
     end
   end

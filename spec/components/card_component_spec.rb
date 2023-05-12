@@ -13,7 +13,7 @@ RSpec.describe CardComponent, type: :component do
       render_inline(described_class.new) do |card|
         card.header { tag.h2 "Hello" }
         card.body { tag.p "World!" }
-        card.action_item(link: tag.a("Click this", href: "/test-url"))
+        card.with_action_item(link: tag.a("Click this", href: "/test-url"))
       end
     end
 

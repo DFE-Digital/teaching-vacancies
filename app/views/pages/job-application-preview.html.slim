@@ -18,15 +18,15 @@
 
     .anchor-link-list
       = render NavigationListComponent.new title: "Application sections" do |navigation|
-        - navigation.anchor text: "Personal details", href: "#personal_details_summary"
-        - navigation.anchor text: "Professional status", href: "#professional_status_summary"
-        - navigation.anchor text: "Education and qualifications", href: "#qualifications_summary"
-        - navigation.anchor text: "Current role and employment history", href: "#employment_history_summary"
-        - navigation.anchor text: "Personal statement", href: "#personal_statement_summary"
-        - navigation.anchor text: "References", href: "#references_summary"
-        - navigation.anchor text: "Equal opportunities and recruitment monitoring", href: "#equal_opportunities_summary"
-        - navigation.anchor text: "Ask for support if you have a disability or other needs", href: "#ask_for_support_summary"
-        - navigation.anchor text: "Declarations", href: "#declarations_summary"
+        - navigation.with_anchor text: "Personal details", href: "#personal_details_summary"
+        - navigation.with_anchor text: "Professional status", href: "#professional_status_summary"
+        - navigation.with_anchor text: "Education and qualifications", href: "#qualifications_summary"
+        - navigation.with_anchor text: "Current role and employment history", href: "#employment_history_summary"
+        - navigation.with_anchor text: "Personal statement", href: "#personal_statement_summary"
+        - navigation.with_anchor text: "References", href: "#references_summary"
+        - navigation.with_anchor text: "Equal opportunities and recruitment monitoring", href: "#equal_opportunities_summary"
+        - navigation.with_anchor text: "Ask for support if you have a disability or other needs", href: "#ask_for_support_summary"
+        - navigation.with_anchor text: "Declarations", href: "#declarations_summary"
 
     h2.govuk-heading-m#personal_details_summary class="govuk-!-margin-top-8" Personal Details
 

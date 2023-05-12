@@ -47,11 +47,11 @@ ruby:
   clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: jobs_path(vacancies_search.clear_filters_params) },
   options: { heading_text: "Filter", remove_filter_links: true },
   html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
-    - filters_component.remove_filter_links do |rb|
+    - filters_component.with_remove_filter_links do |rb|
       - filter_types.each do |filter_type|
-        - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }))
-    - filters_component.group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil)
+        - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }))
+    - filters_component.with_group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil)
     = render "shared/subjects_filter", filters_component: filters_component, f: f
-    - filters_component.group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, form.ect_status_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
-    - filters_component.group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
-    - filters_component.group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, form.working_pattern_options, :first, :last, small: true, legend: { text: t("jobs.filters.working_patterns") }, hint: nil)
+    - filters_component.with_group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, form.ect_status_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
+    - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
+    - filters_component.with_group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, form.working_pattern_options, :first, :last, small: true, legend: { text: t("jobs.filters.working_patterns") }, hint: nil)

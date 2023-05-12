@@ -1,75 +1,75 @@
 = govuk_summary_list do |summary_list|
   - summary_list.row do |row|
-    - row.key text: t(".name.label")
-    - row.value text: organisation.name
+    - row.with_key text: t(".name.label")
+    - row.with_value text: organisation.name
 
   - unless organisation.local_authority?
     - summary_list.row do |row|
-      - row.key text: t(".address.label")
-      - row.value text: full_address(organisation)
+      - row.with_key text: t(".address.label")
+      - row.with_value text: full_address(organisation)
 
   - if organisation.school?
     - summary_list.row do |row|
-      - row.key text: t(".type.label")
-      - row.value text: organisation.school_type
+      - row.with_key text: t(".type.label")
+      - row.with_value text: organisation.school_type
 
     - if organisation.phase.present?
       - summary_list.row do |row|
-        - row.key text: t(".phase.label")
-        - row.value text: t(".phase.values.#{organisation.phase}")
+        - row.with_key text: t(".phase.label")
+        - row.with_value text: t(".phase.values.#{organisation.phase}")
 
     - summary_list.row do |row|
-      - row.key text: t(".school_age.label")
-      - row.value text: age_range(organisation)
+      - row.with_key text: t(".school_age.label")
+      - row.with_value text: age_range(organisation)
 
     - if (text = number_of_pupils(organisation))
       - summary_list.row do |row|
-        - row.key text: t(".size.label")
-        - row.value text: text
+        - row.with_key text: t(".size.label")
+        - row.with_value text: text
 
   - summary_list.row(html_attributes: { id: "email" }) do |row|
-    - row.key text: t(".email.label")
+    - row.with_key text: t(".email.label")
     - row.with_value do
       - link = govuk_mail_to(organisation.email, organisation.email, class: "wordwrap") if organisation.email.present?
       = required_profile_info(value: link, missing_prompt: t(".email.missing_prompt"))
-    - row.action text: t("buttons.change"), href: edit_publishers_organisation_email_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_email_path(organisation), classes: "govuk-link--no-visited-state"
 
   - summary_list.row(html_attributes: { id: "website" }) do |row|
-    - row.key text: t(".website.label")
+    - row.with_key text: t(".website.label")
     - row.with_value do
       - link = open_in_new_tab_link_to(organisation.url, organisation.url, class: "wordwrap") if organisation.url.present?
       = required_profile_info(value: link, missing_prompt: t(".website.missing_prompt"))
-    - row.action text: t("buttons.change"), href: edit_publishers_organisation_website_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_website_path(organisation), classes: "govuk-link--no-visited-state"
 
   - summary_list.row(html_attributes: { id: "description" }) do |row|
-    - row.key text: t(".description.label.#{organisation.school? ? :school : :organisation}")
+    - row.with_key text: t(".description.label.#{organisation.school? ? :school : :organisation}")
     - row.with_value do
       = required_profile_info(value: truncate(organisation.description, length: 130), missing_prompt: t(".description.missing_prompt.#{organisation.school? ? :school : :organisation}"))
-    - row.action text: t("buttons.change"), href: edit_publishers_organisation_description_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_description_path(organisation), classes: "govuk-link--no-visited-state"
 
   - summary_list.row(html_attributes: { id: "safeguarding_information" }) do |row|
-    - row.key text: t(".safeguarding_information.label")
+    - row.with_key text: t(".safeguarding_information.label")
     - row.with_value do
       = required_profile_info(value: truncate(organisation.safeguarding_information, length: 130), missing_prompt: t(".safeguarding_information.missing_prompt"))
-    - row.action text: t("buttons.change"), href: edit_publishers_organisation_safeguarding_information_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_safeguarding_information_path(organisation), classes: "govuk-link--no-visited-state"
 
   - summary_list.row(html_attributes: { id: "logo" }) do |row|
-    - row.key text: t(".logo.label")
+    - row.with_key text: t(".logo.label")
     - row.with_value classes: "vertical-align-top" do
       = required_profile_image(image: @organisation.logo,
                                missing_prompt: t(".logo.missing_prompt.#{organisation.school? ? :school : :organisation}"),
                                alt_text: t(".logo.alt_text", organisation_name: @organisation.name))
-    - row.action text: t("buttons.change"), href: edit_publishers_organisation_logo_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_logo_path(organisation), classes: "govuk-link--no-visited-state"
 
   - summary_list.row(html_attributes: { id: "photo" }) do |row|
-    - row.key text: t(".photo.label")
+    - row.with_key text: t(".photo.label")
     - row.with_value classes: "vertical-align-top" do
       = required_profile_image(image: @organisation.photo,
                                missing_prompt: t(".photo.missing_prompt.#{organisation.school? ? :school : :organisation}"),
                                alt_text: t(".photo.alt_text", organisation_name: @organisation.name))
-    - row.action text: t("buttons.change"), href: edit_publishers_organisation_photo_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_photo_path(organisation), classes: "govuk-link--no-visited-state"
 
   - if organisation.has_ofsted_report?
     - summary_list.row do |row|
-      - row.key text: t(".ofsted_report.label")
-      - row.value text: ofsted_report_link(organisation, class: "wordwrap")
+      - row.with_key text: t(".ofsted_report.label")
+      - row.with_value text: ofsted_report_link(organisation, class: "wordwrap")

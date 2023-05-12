@@ -11,8 +11,8 @@ RSpec.describe TabsComponent, type: :component do
   context "when navigation items are defined" do
     subject! do
       render_inline(described_class.new(**kwargs)) do |tabs|
-        tabs.navigation_item(text: "A dashboard item", link: "/item", active: true)
-        tabs.navigation_item(text: "Another dashboard item", link: "/another-item", active: false)
+        tabs.with_navigation_item(text: "A dashboard item", link: "/item", active: true)
+        tabs.with_navigation_item(text: "Another dashboard item", link: "/another-item", active: false)
       end
     end
 

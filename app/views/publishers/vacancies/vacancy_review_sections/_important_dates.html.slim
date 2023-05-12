@@ -9,7 +9,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = format_date(vacancy.publish_on)
       - unless vacancy.legacy_draft? || vacancy.listed?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :important_dates, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.publication_date")
 
@@ -20,7 +20,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.value
         = format_time_to_datetime_at(vacancy.expires_at)
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :important_dates, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.application_deadline")
 
@@ -39,6 +39,6 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - else
           = t("jobs.not_defined")
       - unless vacancy.legacy_draft?
-        - row.action text: t("buttons.change"),
+        - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :start_date, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.starts_on")
