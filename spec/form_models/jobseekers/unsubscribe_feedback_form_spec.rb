@@ -8,7 +8,7 @@ RSpec.describe Jobseekers::UnsubscribeFeedbackForm, type: :model do
       comment: "Found a job mate",
       email: "email@example.com",
       unsubscribe_reason: "job_found",
-      user_participation_response: "interested",
+      user_participation_response: user_participation_response,
     }
   end
 
