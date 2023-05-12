@@ -35,6 +35,7 @@ en:
       blank: Enter your email address
     occupation:
       blank: Enter your occupation
+      too_long: Occupation must not be more than 30 characters
     other_unsubscribe_reason_comment:
       blank: Tell us why you want to unsubscribe
     unsubscribe_reason:
@@ -56,6 +57,7 @@ en:
       inclusion: Please indicate if you'd like to participate in user research
     occupation:
       blank: Enter your occupation
+      too_long: Occupation must not be more than 30 characters
   general_feedback_errors: &general_feedback_errors
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
@@ -63,6 +65,7 @@ en:
       blank: Enter your email address
     occupation:
       blank: Enter your occupation
+      too_long: Occupation must not be more than 30 characters
     comment:
       blank: Enter your feedback
       too_long: Feedback must not be more than 1,200 characters
@@ -94,6 +97,7 @@ en:
       blank: Enter your email address
     occupation:
       blank: Enter your occupation
+      too_long: Occupation must not be more than 30 characters
     rating:
       inclusion: Choose how satisfied you are with the job listing process
     report_a_problem:
