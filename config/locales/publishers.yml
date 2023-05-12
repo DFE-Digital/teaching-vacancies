@@ -603,8 +603,10 @@ en:
         cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft jobs.
       summary:
         date_posted: Your job listing will be published on %{date}.
-        feedback_link_html: <a href="%{url}" class="govuk-link">Give feedback about this service</a> (takes 30 seconds).
-        give_feedback: Give feedback
+        feedback:
+          heading: Have time to share some feedback?
+          description: >-
+            Your feedback can help us improve the service to better support you as well as schools around England.
         heading:
           published: Job listing published
           scheduled: Job listing scheduled
@@ -615,14 +617,6 @@ en:
         preview_listing: preview the job listing
         view_listing: view the job listing
         you_can: "You can:"
-      feedbacks:
-        new:
-          description: >-
-            Your feedback can help us improve the service to better support you as well as schools around England.
-          heading: Give feedback
-          page_title: Feedback
-          success: The job listing has been completed
-          view_jobs: View your job listings
       statistics:
         show:
           application_data: Application data

@@ -1,16 +1,13 @@
 class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::BaseController
-  def new
-    @feedback_form = Publishers::JobListing::FeedbackForm.new
-  end
-
   def create
+    @vacancy = VacancyPresenter.new(Vacancy.published.find(params[:job_id]))
     @feedback_form = Publishers::JobListing::FeedbackForm.new(feedback_form_params)
 
     if @feedback_form.valid?
       @feedback = Feedback.create(feedback_attributes)
       redirect_to organisation_jobs_with_type_path(:published), success: t("messages.jobs.feedback.success_html")
     else
-      render "publishers/vacancies/feedbacks/new"
+      render "publishers/vacancies/summary"
     end
   end
 
@@ -21,6 +18,6 @@ class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::BaseCo
   end
 
   def feedback_attributes
-    feedback_form_params.except("report_a_problem").merge(feedback_type: "vacancy_publisher", publisher_id: current_publisher&.id, vacancy_id: vacancy.id)
+    feedback_form_params.except("report_a_problem").merge(feedback_type: "vacancy_publisher", publisher_id: current_publisher&.id, vacancy_id: @vacancy.id)
   end
 end

@@ -19,5 +19,23 @@
       li = govuk_link_to t(".make_changes"), organisation_job_path(@vacancy.id)
       li = govuk_link_to t(".manage_jobs"), organisation_jobs_with_type_path(:published)
 
-    h2.govuk-heading-m = t(".give_feedback")
-    p.govuk-body = t(".feedback_link_html", url: new_organisation_job_feedback_path(@vacancy.id))
+    .divider-bottom
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h2.govuk-heading-m = t(".feedback.heading")
+    p.govuk-body = t(".feedback.description")
+
+    = form_for @feedback_form, url: organisation_job_feedback_path(@vacancy.id) do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_collection_radio_buttons :rating, Feedback.ratings.keys, :to_s
+
+      = f.govuk_text_area :comment, label: { size: "s" }, rows: 10
+
+      = f.govuk_radio_buttons_fieldset(:user_participation_response, legend: { size: "s" }) do
+        = f.govuk_radio_button :user_participation_response, :interested, link_errors: true do
+          = f.govuk_email_field :email, value: (@feedback_form.email.presence || current_publisher.email), required: true
+        = f.govuk_radio_button :user_participation_response, :uninterested
+
+      = f.govuk_submit t("buttons.submit_feedback")

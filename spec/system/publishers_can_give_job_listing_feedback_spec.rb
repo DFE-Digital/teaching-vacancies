@@ -22,12 +22,10 @@ RSpec.describe "Publishers can give job listing feedback" do
     let(:vacancy) { create(:vacancy, :published, organisations: [organisation], publisher: publisher) }
 
     it "submits blank feedback, renders error and then submits feedback successfully" do
-      visit new_organisation_job_feedback_path(vacancy.id)
       click_on I18n.t("buttons.submit_feedback")
 
       expect(page).to have_content("There is a problem")
 
-      choose name: "publishers_job_listing_feedback_form[report_a_problem]", option: "yes"
       choose I18n.t("helpers.label.publishers_job_listing_feedback_form.rating_options.somewhat_satisfied")
       choose name: "publishers_job_listing_feedback_form[user_participation_response]", option: "interested"
       fill_in "publishers_job_listing_feedback_form[comment]", with: comment
