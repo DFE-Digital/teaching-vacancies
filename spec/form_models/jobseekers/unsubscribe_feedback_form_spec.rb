@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::UnsubscribeFeedbackForm, type: :model do
   subject { described_class.new(params) }
-  let(:user_participation_response) {"interested"}
+  let(:user_participation_response) { "interested" }
   let(:params) do
     {
       comment: "Found a job mate",
@@ -44,5 +44,4 @@ RSpec.describe Jobseekers::UnsubscribeFeedbackForm, type: :model do
     it { is_expected.not_to validate_presence_of(:email) }
     it { is_expected.not_to validate_presence_of(:occupation) }
   end
-
 end

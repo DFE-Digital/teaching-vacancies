@@ -18,7 +18,6 @@ RSpec.describe Jobseekers::JobAlertFurtherFeedbackForm, type: :model do
                   .in_array(Feedback.user_participation_responses.keys)
   }
 
-
   context "when the user_participation_response == 'interested'" do
     it { is_expected.to validate_presence_of(:occupation) }
     it { is_expected.to validate_presence_of(:email) }

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::AccountFeedbackForm, type: :model do
   subject { described_class.new(params) }
-  let(:user_participation_response) {"interested"}
+  let(:user_participation_response) { "interested" }
   let(:params) do
     {
       comment: "Fancy",

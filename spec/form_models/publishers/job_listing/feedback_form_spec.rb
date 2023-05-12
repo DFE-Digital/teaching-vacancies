@@ -31,5 +31,4 @@ RSpec.describe Publishers::JobListing::FeedbackForm, type: :model do
     it { is_expected.not_to validate_presence_of(:email) }
     it { is_expected.not_to validate_presence_of(:occupation) }
   end
-
 end
