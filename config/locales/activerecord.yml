@@ -52,6 +52,8 @@ en:
       inclusion: Select yes if you want to report a problem or request support
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
+    occupation:
+      blank: Enter your occupation
   general_feedback_errors: &general_feedback_errors
     user_participation_response:
       inclusion: Please indicate if you'd like to participate in user research
