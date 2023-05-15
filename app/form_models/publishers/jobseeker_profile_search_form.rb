@@ -10,6 +10,7 @@ class Publishers::JobseekerProfileSearchForm
   attribute :education_phases
   attribute :key_stages
   attribute :subjects
+  attribute :right_to_work_in_uk
 
   def school_options
     current_organisation.schools.map { |school| [school.id, school.name] }
@@ -33,5 +34,9 @@ class Publishers::JobseekerProfileSearchForm
 
   def key_stage_options
     %w[early_years ks1 ks2 ks3 ks4 ks5].map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.key_stage_options")] }
+  end
+
+  def right_to_work_in_uk_options
+    [["true", "Does have the right to work in the UK"], ["false", "Does not have the right to work in the UK"]]
   end
 end
