@@ -22,7 +22,7 @@ class GeneralFeedbacksController < ApplicationController
 
   def general_feedback_form_params
     params.require(:general_feedback_form)
-          .permit(:comment, :email, :report_a_problem, :user_participation_response, :visit_purpose, :rating, :visit_purpose_comment)
+          .permit(:comment, :email, :report_a_problem, :user_participation_response, :visit_purpose, :rating, :visit_purpose_comment, :occupation)
   end
 
   def feedback_attributes

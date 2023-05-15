@@ -57,6 +57,8 @@ en:
       inclusion: Please indicate if you'd like to participate in user research
     email:
       blank: Enter your email address
+    occupation:
+      blank: Enter your occupation
     comment:
       blank: Enter your feedback
       too_long: Feedback must not be more than 1,200 characters

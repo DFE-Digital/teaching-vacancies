@@ -115,6 +115,8 @@ en:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
+        occupation: >-
+          We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
         visit_purpose_comment: >-
           Please tell us what you came here to do. Do not include any information that could identify you personally
           (such as your name or the name of your school).
@@ -299,6 +301,7 @@ en:
           neither: Neither satisfied nor dissatisfied
           somewhat_dissatisfied: Somewhat dissatisfied
           highly_dissatisfied: Highly dissatisfied
+        occupation: What is your occupation?
 
       jobseeker:
         email: Email address
