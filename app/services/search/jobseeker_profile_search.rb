@@ -1,4 +1,6 @@
 class Search::JobseekerProfileSearch
+  attr_reader :filters
+
   def initialize(filters)
     @filters = filters
     @current_organisation = filters[:current_organisation]
@@ -20,9 +22,22 @@ class Search::JobseekerProfileSearch
     scope
   end
 
+  def total_count
+    jobseeker_profiles.count
+  end
+
+  def total_filters
+    filter_counts = %i[qualified_teacher_status roles working_patterns education_phases key_stages subjects].map { |filter| @filters[filter]&.count || 0 }
+    filter_counts.sum
+  end
+
+  def clear_filters_params
+    @filters.merge({ qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: [] })
+  end
+
   private
 
-  attr_reader :filters, :current_organisation
+  attr_reader :current_organisation
 
   def location_preferences_ids_matching_location_search
     return location_preferences_containing_school(current_organisation) if current_organisation.school?
