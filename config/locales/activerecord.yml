@@ -92,6 +92,8 @@ en:
   publisher_job_listing_feedback_form: &publisher_job_listing_feedback_form_errors
     email:
       blank: Enter your email address
+    occupation:
+      blank: Enter your occupation
     rating:
       inclusion: Choose how satisfied you are with the job listing process
     report_a_problem:
