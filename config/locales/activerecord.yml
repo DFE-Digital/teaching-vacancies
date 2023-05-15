@@ -67,6 +67,8 @@ en:
     visit_purpose_comment:
       blank: Enter the reason for your visit
       too_long: Purpose of visit must not be more than 1,200 characters
+    rating:
+      inclusion: Select how satisfied or dissatisfied you are
   jobseekers_job_alert_further_feedback_form: &job_alert_further_feedback_form_errors
     comment:
       blank: Tell us about the relevancy of your job alerts

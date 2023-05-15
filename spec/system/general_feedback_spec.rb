@@ -16,6 +16,7 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
         Feedback.where(comment: comment,
                        email: email,
                        feedback_type: "general",
+                       rating: "highly_satisfied",
                        recaptcha_score: 0.9,
                        user_participation_response: "interested",
                        visit_purpose: "other_purpose",
@@ -60,6 +61,7 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
   def fill_in_general_feedback
     choose name: "general_feedback_form[report_a_problem]", option: "yes"
     choose I18n.t("helpers.label.general_feedback_form.visit_purpose_options.other_purpose")
+    choose I18n.t("helpers.label.general_feedback_form.rating.highly_satisfied")
 
     fill_in "general_feedback_form[visit_purpose_comment]", with: visit_purpose_comment
     fill_in "general_feedback_form[comment]", with: comment

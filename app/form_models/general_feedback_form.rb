@@ -1,5 +1,5 @@
 class GeneralFeedbackForm < BaseForm
-  attr_accessor :comment, :email, :report_a_problem, :user_participation_response, :visit_purpose, :visit_purpose_comment
+  attr_accessor :comment, :email, :report_a_problem, :user_participation_response, :visit_purpose, :visit_purpose_comment, :rating
 
   validates :report_a_problem, inclusion: { in: %w[yes no] }
   validates :comment, presence: true, length: { maximum: 1200 }
@@ -9,4 +9,5 @@ class GeneralFeedbackForm < BaseForm
   validates :visit_purpose, inclusion: { in: Feedback.visit_purposes.keys }
   validates :visit_purpose_comment, presence: true, if: -> { visit_purpose == "other_purpose" }
   validates :visit_purpose_comment, length: { maximum: 1200 }
+  validates :rating, inclusion: { in: Feedback.ratings.keys }
 end

@@ -29,6 +29,7 @@ RSpec.describe GeneralFeedbackForm, type: :model do
   }
   it { is_expected.to validate_inclusion_of(:visit_purpose).in_array(Feedback.visit_purposes.keys) }
   it { is_expected.to validate_length_of(:visit_purpose_comment).is_at_most(1200) }
+  it { is_expected.to validate_inclusion_of(:rating).in_array(Feedback.ratings.keys) }
 
   describe "#visit_purpose_comment" do
     context "when the visit purpose is not 'other_purpose'" do
