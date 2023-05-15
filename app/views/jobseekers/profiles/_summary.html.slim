@@ -1,10 +1,4 @@
-- case profile.qualified_teacher_status
-  - when "on_track"
-    p class="govuk-!-margin-bottom-3" = "On track to receive QTS"
-  - when "yes"
-    p class="govuk-!-margin-bottom-3" = "QTS awarded in #{profile.qualified_teacher_status_year}."
-  - when "no"
-    p class="govuk-!-margin-bottom-3" = "Does not have QTS"
+p class="govuk-!-margin-bottom-3"= jobseeker_status(profile)
 
 - if (job_preferences = profile.job_preferences).present?
   h2.govuk-heading-m class="govuk-!-margin-bottom-5"
