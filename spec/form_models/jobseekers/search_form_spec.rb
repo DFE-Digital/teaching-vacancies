@@ -57,52 +57,52 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
   end
 
   describe "#set_filters_from_keyword" do
-    let(:params) { { keyword: keyword, previous_keyword: previous_keyword, landing_page: landing_page, subjects: subjects } }
+    let(:params) { { keyword: keyword, previous_keyword: previous_keyword, landing_page: landing_page, phases: phases } }
 
     context "when landing_page is not present" do
-      let(:keyword) { "math" }
+      let(:keyword) { "biology" }
       let(:previous_keyword) { "" }
       let(:landing_page) { "" }
-      let(:subjects) { %w[Mathematics Statistics] }
+      let(:phases) { [] }
 
       it "sets the filters from the keyword" do
-        expect(subject.subjects).to eq %w[Mathematics Statistics]
+        expect(subject.phases).to eq %w[secondary sixth_form_or_college]
       end
     end
 
     context "when landing_page is present" do
-      let(:keyword) { "math" }
+      let(:keyword) { "biology" }
       let(:previous_keyword) { "" }
       let(:landing_page) { "landing_page" }
-      let(:subjects) { %w[Computing] }
+      let(:phases) { %w[middle_school] }
 
       it "does not set the filters from the keyword" do
-        expect(subject.subjects).to eq %w[Computing]
+        expect(subject.phases).to eq %w[middle_school]
       end
     end
 
     context "when keyword is the same as previous_keyword" do
-      let(:keyword) { "math" }
-      let(:previous_keyword) { "math" }
+      let(:keyword) { "biology" }
+      let(:previous_keyword) { "biology" }
       let(:landing_page) { "" }
-      let(:subjects) { %w[Computing] }
+      let(:phases) { %w[middle_school] }
 
       it "does not set the filters from the keyword" do
-        expect(subject.subjects).to eq %w[Computing]
+        expect(subject.phases).to eq %w[middle_school]
       end
     end
   end
 
   describe "#unset_filters_from_previous_keyword" do
-    let(:params) { { keyword: keyword, previous_keyword: previous_keyword, subjects: subjects } }
+    let(:params) { { keyword: keyword, previous_keyword: previous_keyword, phases: phases } }
 
     context "when keyword is blank and previous_keyword is present" do
       let(:keyword) { "" }
-      let(:previous_keyword) { "maths" }
-      let(:subjects) { %w[Mathematics Statistics] }
+      let(:previous_keyword) { "biology" }
+      let(:phases) { %w[secondary sixth_form_or_college] }
 
       it "unsets the filters set from the previous keyword" do
-        expect(subject.subjects).to eq []
+        expect(subject.phases).to eq []
       end
     end
   end
