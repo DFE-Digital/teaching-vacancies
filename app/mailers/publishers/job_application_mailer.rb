@@ -18,11 +18,23 @@ class Publishers::JobApplicationMailer < Publishers::BaseMailer
   def email_event_data
     { vacancies_job_applications: vacancies_job_applications }
   end
-  alias dfe_analytics_custom_data email_event_data
+
+  def dfe_analytics_custom_data
+    { vacancies_job_applications: dfe_analytics_vacancies_job_applications }
+  end
 
   def vacancies_job_applications
     @vacancies.each_with_object({}) do |vacancy, hash|
       hash[StringAnonymiser.new(vacancy.id).to_s] =
+        vacancy.job_applications.submitted_yesterday.pluck(:id).map do |job_application_id|
+          StringAnonymiser.new(job_application_id).to_s
+        end
+    end
+  end
+
+  def dfe_analytics_vacancies_job_applications
+    @vacancies.each_with_object({}) do |vacancy, hash|
+      hash[DfE::Analytics.anonymise(vacancy.id)] =
         vacancy.job_applications.submitted_yesterday.pluck(:id).map do |job_application_id|
           DfE::Analytics.anonymise(job_application_id)
         end

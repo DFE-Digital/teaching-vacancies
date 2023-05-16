@@ -105,15 +105,17 @@ class SubscriptionsController < ApplicationController
   def trigger_subscription_event(type, subscription)
     event_data = {
       autopopulated: session.delete(:subscription_autopopulated),
-      email_identifier: DfE::Analytics.anonymise(subscription.email),
+      email_identifier: StringAnonymiser.new(subscription.email).to_s,
       frequency: subscription.frequency,
       recaptcha_score: subscription.recaptcha_score,
       search_criteria: subscription.search_criteria,
       subscription_identifier: subscription.id,
     }
 
+    dfe_analytics_event_data = event_data.merge(email_identifier: DfE::Analytics.anonymise(subscription.email))
+
     request_event.trigger(type, event_data)
-    trigger_dfe_analytics_event(type, event_data)
+    trigger_dfe_analytics_event(type, dfe_analytics_event_data)
   end
 
   def email
