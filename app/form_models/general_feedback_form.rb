@@ -10,5 +10,5 @@ class GeneralFeedbackForm < BaseForm
   validates :visit_purpose_comment, presence: true, if: -> { visit_purpose == "other_purpose" }
   validates :visit_purpose_comment, length: { maximum: 1200 }
   validates :rating, inclusion: { in: Feedback.ratings.keys }
-  validates :occupation, presence: true, length: { maximum: 30 }, if: -> { user_participation_response == "interested" }
+  validates :occupation, presence: true, if: -> { user_participation_response == "interested" }
 end
