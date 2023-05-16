@@ -753,7 +753,7 @@ en:
 
     legend:
       general_feedback_form:
-        report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
+        report_a_problem: Do you need to report a problem or request support with using Teaching Vacancies?
         visit_purpose: What did you come to Teaching Vacancies to do?
         user_participation_response: Would you like to participate in our research?
 
@@ -762,7 +762,7 @@ en:
 
       jobseekers_account_feedback_form:
         rating: How satisfied are you with your experience of using Teaching Vacancies?
-        report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
+        report_a_problem: Do you need to report a problem or request support with using Teaching Vacancies?
         user_participation_response: Would you like to participate in our research?
 
       jobseekers_close_account_feedback_form:
@@ -867,7 +867,7 @@ en:
         starts_on_html: Date job starts (optional<span class='govuk-visually-hidden'> field</span>)</span>
       publishers_job_listing_feedback_form:
         rating: How satisfied are you with the job listing process on Teaching Vacancies?
-        report_a_problem: Do you need to report a problem, or request support with using Teaching Vacancies?
+        report_a_problem: Do you need to report a problem or request support with using Teaching Vacancies?
         user_participation_response: Would you like to participate in our research?
       publishers_job_listing_how_to_receive_applications_form:
         receive_applications: How do you want to receive applications?
