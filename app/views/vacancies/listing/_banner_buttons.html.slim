@@ -31,4 +31,4 @@
         href: saved_job ? jobseekers_saved_job_path(vacancy.id, saved_job) : new_jobseekers_saved_job_path(vacancy.id),
         icon: saved_job ? "saved" : "save",
         method: saved_job ? :delete : :get,
-        params: { click_event: "vacancy_save_to_account_clicked", click_event_data: { vacancy_id: StringAnonymiser.new(vacancy.id) } }
+        params: { click_event: "vacancy_save_to_account_clicked", click_event_data: { vacancy_id: DfE::Analytics.anonymise(vacancy.id) } }
