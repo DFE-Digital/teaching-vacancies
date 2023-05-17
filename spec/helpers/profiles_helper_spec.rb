@@ -2,9 +2,8 @@ require "rails_helper"
 
 RSpec.describe ProfilesHelper do
   describe "#jobseeker_status" do
-    let(:profile) { double('profile') }
-    let(:personal_details) { double('personal_details') }
-
+    let(:profile) { double("profile") }
+    let(:personal_details) { double("personal_details") }
 
     before do
       allow(profile).to receive(:personal_details).and_return(personal_details)

@@ -13,25 +13,29 @@ module ProfilesHelper
   end
 
   def jobseeker_status(profile)
+    return qualified_teacher_status(profile) unless right_to_work_status_string(profile)
+
     "#{qualified_teacher_status(profile)} #{right_to_work_status_string(profile)}"
   end
 
-private
+  private
 
   def qualified_teacher_status(profile)
     case profile.qualified_teacher_status
-      when "on_track"
-        "On track to receive QTS."
-      when "yes"
-        "QTS awarded in #{profile.qualified_teacher_status_year}."
-      when "no"
-        "Does not have QTS."
-      else
-        ""
+    when "on_track"
+      "On track to receive QTS."
+    when "yes"
+      "QTS awarded in #{profile.qualified_teacher_status_year}."
+    when "no"
+      "Does not have QTS."
+    else
+      ""
     end
   end
 
   def right_to_work_status_string(profile)
+    return if profile.personal_details.right_to_work_in_uk.nil?
+
     profile.personal_details.right_to_work_in_uk ? "Has the right to work in the UK." : "Does not have the right to work in the UK."
   end
 end
