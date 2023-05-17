@@ -4,15 +4,17 @@ RSpec.describe ApplicationRecord do
   describe "#event_data" do
     context "when model is included in analytics.yml and has fields to anonymise" do
       let(:model) { build(:publisher) }
+      let(:analytics_fields) do
+        %i[id last_activity_at family_name given_name acknowledged_candidate_profiles_interstitial created_at updated_at]
+      end
 
       let(:anonymised_data) do
-        model.slice(:id, :last_activity_at, :family_name, :given_name, :created_at, :updated_at)
+        model.slice(*analytics_fields)
              .merge("table_name" => "publishers",
                     "oid" => StringAnonymiser.new(model.oid).to_s,
                     "email" => StringAnonymiser.new(model.email).to_s,
                     "given_name" => StringAnonymiser.new(model.given_name).to_s,
                     "family_name" => StringAnonymiser.new(model.family_name).to_s,
-                    "acknowledged_candidate_profiles_interstitial" => true,
                     "accepted_terms_at" => model.accepted_terms_at.to_formatted_s(:iso8601))
       end
 
