@@ -86,6 +86,9 @@ en:
   jobseekers_job_application_feedback_form: &jobseekers_job_application_feedback_form_errors
     email:
       blank: Enter your email address
+    occupation:
+      blank: Enter your occupation
+      too_long: Occupation must not be more than 30 characters
     rating:
       inclusion: Choose how satisfied you are with the application process
     comment:
