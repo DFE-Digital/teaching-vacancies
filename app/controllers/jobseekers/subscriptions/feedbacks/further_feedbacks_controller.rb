@@ -19,7 +19,7 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
   private
 
   def further_feedback_form_params
-    params.require(:jobseekers_job_alert_further_feedback_form).permit(:comment, :email, :user_participation_response)
+    params.require(:jobseekers_job_alert_further_feedback_form).permit(:comment, :email, :user_participation_response, :occupation)
   end
 
   def update_feedback

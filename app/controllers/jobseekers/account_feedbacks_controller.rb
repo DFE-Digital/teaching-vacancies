@@ -17,7 +17,7 @@ class Jobseekers::AccountFeedbacksController < Jobseekers::BaseController
   private
 
   def account_feedback_form_params
-    params.require(:jobseekers_account_feedback_form).permit(:comment, :email, :origin, :rating, :report_a_problem, :user_participation_response)
+    params.require(:jobseekers_account_feedback_form).permit(:comment, :email, :origin, :rating, :report_a_problem, :user_participation_response, :occupation)
   end
 
   def feedback_attributes

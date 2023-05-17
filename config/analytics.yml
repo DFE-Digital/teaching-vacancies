@@ -81,6 +81,7 @@ shared:
     - vacancy_id
     - close_account_reason
     - close_account_reason_comment
+    - occupation
   invitation_to_applies:
     - id
     - jobseeker_id
