@@ -32,9 +32,9 @@ class DocumentsController < ApplicationController
       .with_response_details(response)
       .with_user(current_user)
       .with_data(
-        vacancy_id: DfE::Analytics.anonymise(vacancy.id),
+        vacancy_id: vacancy.id,
         document_type: application_form? ? :application_form : :supporting_document,
-        document_id: DfE::Analytics.anonymise(file.id),
+        document_id: file.id,
         filename: file.filename,
       )
 

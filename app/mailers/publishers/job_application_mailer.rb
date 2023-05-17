@@ -34,10 +34,7 @@ class Publishers::JobApplicationMailer < Publishers::BaseMailer
 
   def dfe_analytics_vacancies_job_applications
     @vacancies.each_with_object({}) do |vacancy, hash|
-      hash[DfE::Analytics.anonymise(vacancy.id)] =
-        vacancy.job_applications.submitted_yesterday.pluck(:id).map do |job_application_id|
-          DfE::Analytics.anonymise(job_application_id)
-        end
+      hash[vacancy.id] = vacancy.job_applications.submitted_yesterday.pluck(:id)
     end
   end
 end

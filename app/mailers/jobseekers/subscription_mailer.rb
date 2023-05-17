@@ -26,7 +26,7 @@ class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
   end
 
   def dfe_analytics_custom_data
-    { subscription_identifier: DfE::Analytics.anonymise(subscription.id) }
+    { subscription_identifier: subscription.id }
   end
 
   def email_event_prefix

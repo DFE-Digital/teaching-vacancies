@@ -59,7 +59,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   def send_dfe_analytics_event
     fail_safe do
       event_data = {
-        vacancy_id: DfE::Analytics.anonymise(vacancy.id),
+        vacancy_id: vacancy.id,
         document_type: "application_form",
         name: vacancy.application_form.filename,
         size: vacancy.application_form.byte_size,
