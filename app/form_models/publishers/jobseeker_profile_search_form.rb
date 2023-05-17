@@ -37,6 +37,6 @@ class Publishers::JobseekerProfileSearchForm
   end
 
   def right_to_work_in_uk_options
-    [["true", "Does have the right to work in the UK"], ["false", "Does not have the right to work in the UK"]]
+    %w[true false].map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.right_to_work_in_uk_options")] }
   end
 end

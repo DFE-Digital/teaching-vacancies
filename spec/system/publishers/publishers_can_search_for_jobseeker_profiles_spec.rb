@@ -54,7 +54,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         within ".filters-component" do
           check I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time")
           check I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5")
-          check I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.yes")
+          check I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true")
         end
 
         within ".filters-component" do
@@ -66,19 +66,19 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to_not have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
-        expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.yes"))
+        expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
       end
 
       it "will allow publisher to clear a filter" do
         click_link I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5")
-        click_link I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.yes")
+        click_link I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true")
 
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
-        expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.yes"))
+        expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
       end
 
       it "will allow publisher to clear all filters" do
@@ -89,7 +89,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
-        expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.yes"))
+        expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
       end
     end
   end
