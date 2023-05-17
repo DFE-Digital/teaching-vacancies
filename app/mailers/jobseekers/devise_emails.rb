@@ -75,4 +75,13 @@ module Jobseekers::DeviseEmails
       {}
     end
   end
+
+  def dfe_analytics_custom_data
+    case action_name
+    when "confirmation_instructions"
+      @jobseeker.pending_reconfirmation? ? { previous_email_identifier: DfE::Analytics.anonymise(@jobseeker.email) } : {}
+    else
+      {}
+    end
+  end
 end

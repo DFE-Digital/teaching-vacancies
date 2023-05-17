@@ -112,8 +112,10 @@ class SubscriptionsController < ApplicationController
       subscription_identifier: subscription.id,
     }
 
+    dfe_analytics_event_data = event_data.merge(email_identifier: DfE::Analytics.anonymise(subscription.email))
+
     request_event.trigger(type, event_data)
-    trigger_dfe_analytics_event(type, event_data)
+    trigger_dfe_analytics_event(type, dfe_analytics_event_data)
   end
 
   def email

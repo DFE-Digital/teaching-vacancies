@@ -31,7 +31,7 @@ class AuthenticationController < ApplicationController
       .with_response_details(response)
       .with_user(current_jobseeker)
       .with_data(
-        email_identifier: StringAnonymiser.new(params.dig(:jobseeker, :email)).to_s,
+        email_identifier: DfE::Analytics.anonymise(params.dig(:jobseeker, :email)),
         success: success_or_failure == :success,
         errors: errors,
       )
@@ -52,7 +52,7 @@ class AuthenticationController < ApplicationController
       .with_request_details(request)
       .with_response_details(response)
       .with_user(current_publisher)
-      .with_data(user_anonymised_publisher_id: StringAnonymiser.new(publisher_oid).to_s, sign_in_type: sign_in_type)
+      .with_data(user_anonymised_publisher_id: DfE::Analytics.anonymise(publisher_oid), sign_in_type: sign_in_type)
 
     DfE::Analytics::SendEvents.do([event])
 
@@ -77,7 +77,7 @@ class AuthenticationController < ApplicationController
       .with_request_details(request)
       .with_response_details(response)
       .with_user(current_user)
-      .with_data(user_anonymised_id: StringAnonymiser.new(oid).to_s, sign_in_type: sign_in_type)
+      .with_data(user_anonymised_id: DfE::Analytics.anonymise(oid), sign_in_type: sign_in_type)
 
     DfE::Analytics::SendEvents.do([event])
 

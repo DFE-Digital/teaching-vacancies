@@ -33,7 +33,10 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   def email_event_data
     { subscription_identifier: StringAnonymiser.new(subscription.id).to_s, subscription_frequency: subscription.frequency }
   end
-  alias dfe_analytics_custom_data email_event_data
+
+  def dfe_analytics_custom_data
+    { subscription_identifier: DfE::Analytics.anonymise(subscription.id), subscription_frequency: subscription.frequency }
+  end
 
   def email_event_prefix
     "jobseeker_subscription"

@@ -82,7 +82,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
         .with_response_details(response)
         .with_user(current_publisher)
         .with_data(
-          vacancy_id: StringAnonymiser.new(vacancy.id).to_s,
+          vacancy_id: DfE::Analytics.anonymise(vacancy.id),
           document_type: "supporting_document",
           name: name,
           size: size,
