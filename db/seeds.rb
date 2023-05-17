@@ -13,7 +13,7 @@ bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
 
-# Users
+# Team users
 users = [
   { email: "alex.lee@education.gov.uk", family_name: "Alex", given_name: "Lee" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
@@ -32,6 +32,7 @@ users = [
 users.each do |user|
   Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la], **user)
   SupportUser.create(user)
+  FactoryBot.create(:jobseeker, email: user[:email], password: "password")
 end
 
 # Vacancies at Bexleyheath school
