@@ -47,7 +47,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     fail_safe do
       request_event.trigger(
         event_type,
-        vacancy_id: StringAnonymiser.new(vacancy.id),
+        vacancy_id: vacancy.id,
         document_type: "application_form",
         name: vacancy.application_form.filename,
         size: vacancy.application_form.byte_size,

@@ -44,9 +44,9 @@ class DocumentsController < ApplicationController
   def send_event
     fail_safe do
       request_event.trigger(:vacancy_document_downloaded,
-                            vacancy_id: StringAnonymiser.new(vacancy.id),
+                            vacancy_id: vacancy.id,
                             document_type: application_form? ? :application_form : :supporting_document,
-                            document_id: StringAnonymiser.new(file.id),
+                            document_id: file.id,
                             filename: file.filename)
     end
   end

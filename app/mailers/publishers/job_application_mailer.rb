@@ -20,19 +20,10 @@ class Publishers::JobApplicationMailer < Publishers::BaseMailer
   end
 
   def dfe_analytics_custom_data
-    { vacancies_job_applications: dfe_analytics_vacancies_job_applications }
+    { vacancies_job_applications: vacancies_job_applications }
   end
 
   def vacancies_job_applications
-    @vacancies.each_with_object({}) do |vacancy, hash|
-      hash[StringAnonymiser.new(vacancy.id).to_s] =
-        vacancy.job_applications.submitted_yesterday.pluck(:id).map do |job_application_id|
-          StringAnonymiser.new(job_application_id).to_s
-        end
-    end
-  end
-
-  def dfe_analytics_vacancies_job_applications
     @vacancies.each_with_object({}) do |vacancy, hash|
       hash[vacancy.id] = vacancy.job_applications.submitted_yesterday.pluck(:id)
     end

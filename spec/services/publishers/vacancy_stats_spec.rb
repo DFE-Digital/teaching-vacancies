@@ -8,7 +8,7 @@ RSpec.describe Publishers::VacancyStats do
 
   before do
     allow(Google::Cloud::Bigquery).to receive(:new).and_return(big_query)
-    allow(StringAnonymiser).to receive(:new).with(vacancy.id).and_return("anonymous-id")
+    allow(vacancy).to receive(:id).and_return("id")
   end
 
   describe "#number_of_unique_views" do
@@ -17,7 +17,7 @@ RSpec.describe Publishers::VacancyStats do
       <<~SQL
         SELECT number_of_unique_vacancy_views
         FROM `test_dataset.vacancies_published`
-        WHERE id="anonymous-id"
+        WHERE id="id"
         AND publish_on = "1999-12-31"
       SQL
     end

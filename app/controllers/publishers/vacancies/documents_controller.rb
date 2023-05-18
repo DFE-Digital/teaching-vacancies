@@ -97,7 +97,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     fail_safe do
       request_event.trigger(
         event_type,
-        vacancy_id: StringAnonymiser.new(vacancy.id).to_s,
+        vacancy_id: vacancy.id,
         document_type: "supporting_document",
         name: name,
         size: size,

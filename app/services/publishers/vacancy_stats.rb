@@ -21,7 +21,7 @@ class Publishers::VacancyStats
         sql = <<~SQL
           SELECT #{field}
           FROM `#{Rails.configuration.big_query_dataset}.#{TABLE_NAME}`
-          WHERE id="#{StringAnonymiser.new(vacancy.id)}"
+          WHERE id="#{vacancy.id}"
           AND publish_on = "#{vacancy.publish_on.iso8601}"
         SQL
 

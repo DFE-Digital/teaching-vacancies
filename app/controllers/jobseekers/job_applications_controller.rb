@@ -8,7 +8,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   helper_method :employments, :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
 
   def new
-    request_event.trigger(:vacancy_apply_clicked, vacancy_id: StringAnonymiser.new(vacancy.id))
+    request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
     send_dfe_analytics_event
 
     return unless quick_apply?
