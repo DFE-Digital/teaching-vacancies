@@ -2,12 +2,11 @@ require "rails_helper"
 
 RSpec.describe ProfilesHelper do
   describe "#jobseeker_status" do
-    let(:profile) { double("profile") }
-    let(:personal_details) { double("personal_details") }
+    let(:profile) { instance_double("profile") }
+    let(:personal_details) { instance_double("personal_details", right_to_work_in_uk: right_to_work_in_uk) }
 
     before do
       allow(profile).to receive(:personal_details).and_return(personal_details)
-      allow(personal_details).to receive(:right_to_work_in_uk).and_return(right_to_work_in_uk)
     end
 
     context "when profile right_to_work_in_uk == true" do
