@@ -32,9 +32,6 @@ shared:
     - rejection_reasons
     - gaps_in_employment_details
     - email_address
-  job_preferences_locations:
-    - name
-    - area
   jobseeker_profiles:
     - id
     - jobseeker_id
