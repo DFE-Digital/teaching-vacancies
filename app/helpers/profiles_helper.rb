@@ -13,7 +13,7 @@ module ProfilesHelper
   end
 
   def jobseeker_status(profile)
-    [qualified_teacher_status_string(profile), right_to_work_status_string(profile)].compact.join(' ')
+    [qualified_teacher_status_string(profile), right_to_work_status_string(profile)].compact.join(" ")
   end
 
   private
