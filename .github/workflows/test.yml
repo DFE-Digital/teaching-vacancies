@@ -65,7 +65,7 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Run tests
-        run: bundle exec rspec --format documentation ${{ matrix.test_params.params }}
+        run: bundle exec rspec ${{ matrix.test_params.params }}
 
   frontend-tests:
     name: Run frontend JS unit tests
