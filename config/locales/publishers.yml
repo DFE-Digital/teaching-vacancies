@@ -102,6 +102,7 @@ en:
         preferred_roles: "Preferred roles"
         preferred_working_patterns: "Preferred working patterns"
         qualified_teacher_status: "Qualified teaching status (QTS)"
+        right_to_work_in_uk: "Right to work in the UK"
         qts_options:
           "no": Does not have QTS
           on_track: On track to receive QTS
@@ -118,6 +119,9 @@ en:
         working_pattern_options:
           full_time: "Full time"
           part_time: "Part time"
+        right_to_work_in_uk_options:
+          "true": "Does have the right to work in the UK"
+          "false": "Does not have the right to work in the UK"
 
     invitations:
       index:
