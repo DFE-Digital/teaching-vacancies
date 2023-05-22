@@ -38,7 +38,7 @@ class ErrorsController < ApplicationController
     @form = params[:form_name]
     Sentry.with_scope do |scope|
       scope.set_tags("form.name": @form)
-      Sentry.capture_message("Invalid recaptcha")
+      Sentry.capture_message("Invalid recaptcha", level: :warning)
     end
 
     respond_to do |format|
