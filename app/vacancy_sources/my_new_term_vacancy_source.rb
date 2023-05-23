@@ -54,8 +54,8 @@ class MyNewTermVacancySource
       subjects: item["subjects"].presence,
       working_patterns: item["workingPatterns"].presence,
       contract_type: item["contractType"]&.first,
-      phases: [item["phase"].presence&.parameterize(separator: "_")],
-      key_stages: item["keyStages"].presence,
+      phases: phases_for(item),
+      key_stages: key_stages_for(item),
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
@@ -76,9 +76,13 @@ class MyNewTermVacancySource
   def job_role(item)
     item["jobRole"].presence
     &.gsub("headteacher", "senior_leader")
+    &.gsub("headteacher_principal", "senior_leader")
     &.gsub("head_of_year", "middle_leader")
+    &.gsub("assistant_headteacher_principal", "middle_leader")
+    &.gsub("deputy_headteacher_principal", "middle_leader")
     &.gsub("learning_support", "education_support")
     &.gsub("other_support", "education_support")
+    &.gsub("science_technician", "other_education_role")
     &.gsub(/\s+/, "")
   end
 
@@ -86,6 +90,23 @@ class MyNewTermVacancySource
     return unless item["ectSuitable"].presence
 
     item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
+  end
+
+  def key_stages_for(item)
+    item["keyStages"].presence&.map do |key_stage|
+      key_stage&.gsub("key_stage_1", "ks1")
+      &.gsub("key_stage_2", "ks2")
+      &.gsub("key_stage_3", "ks3")
+      &.gsub("key_stage_4", "ks4")
+      &.gsub("key_stage_5", "ks5")
+      &.gsub(/\s+/, "")
+    end
+  end
+
+  def phases_for(item)
+    item["phase"].presence
+    &.gsub("all_through", "through")
+    &.gsub(/\s+/, "")
   end
 
   def results
