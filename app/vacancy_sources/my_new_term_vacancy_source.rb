@@ -77,6 +77,7 @@ class MyNewTermVacancySource
     item["jobRole"].presence
     &.gsub("headteacher", "senior_leader")
     &.gsub("headteacher_principal", "senior_leader")
+    &.gsub("deputy_headteacher_principal", "senior_leader")
     &.gsub("head_of_year", "middle_leader")
     &.gsub("assistant_headteacher_principal", "middle_leader")
     &.gsub("deputy_headteacher_principal", "middle_leader")
