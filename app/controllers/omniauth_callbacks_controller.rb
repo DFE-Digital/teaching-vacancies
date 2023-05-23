@@ -154,7 +154,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         )
       end
 
-      Sentry.capture_message("User failed to sign in with DfE Sign In")
+      Sentry.capture_message("User failed to sign in with DfE Sign In", level: :warning)
     end
   end
 end
