@@ -27,7 +27,7 @@ RSpec.describe "Documents" do
       it "triggers an event" do
         expect { request }.to have_triggered_event(:supporting_document_created)
                        .with_data(
-                         vacancy_id: anonymised_form_of(vacancy.id),
+                         vacancy_id: vacancy.id,
                          document_type: "supporting_document",
                          name: "blank_job_spec.pdf",
                          size: 28_527,
@@ -115,7 +115,7 @@ RSpec.describe "Documents" do
     it "triggers an event" do
       expect { request }.to have_triggered_event(:supporting_document_deleted)
                         .with_data(
-                          vacancy_id: anonymised_form_of(vacancy.id),
+                          vacancy_id: vacancy.id,
                           document_type: "supporting_document",
                           name: "blank_job_spec.pdf",
                           size: 28_527,

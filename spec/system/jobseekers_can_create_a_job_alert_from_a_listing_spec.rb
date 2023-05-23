@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   scenario "can click on the first link to create a job alert using data from the vacancy" do
     expect { click_on I18n.t("jobs.alert.similar.terse") }
       .to have_triggered_event(:vacancy_create_job_alert_clicked)
-      .and_data(vacancy_id: anonymised_form_of(vacancy.id))
+      .and_data(vacancy_id: vacancy.id)
 
     expect(page).to have_content(I18n.t("subscriptions.new.title"))
     and_the_search_criteria_are_populated
@@ -38,7 +38,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   scenario "can click on the second link to create a job alert using data from the vacancy" do
     expect { click_on I18n.t("jobs.alert.similar.verbose.link_text") }
       .to have_triggered_event(:vacancy_create_job_alert_clicked)
-      .and_data(vacancy_id: anonymised_form_of(vacancy.id))
+      .and_data(vacancy_id: vacancy.id)
     expect(page).to have_content(I18n.t("subscriptions.new.title"))
     and_the_search_criteria_are_populated
   end
