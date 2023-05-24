@@ -49,13 +49,6 @@ class Search::VacancySearch
     @vacancies ||= scope
   end
 
-  def markers
-    @markers ||= Marker.search_by_location(location, radius)
-                       .where(vacancy_id: scope.pluck(:id))
-                       .pluck(:vacancy_id, :organisation_id, :geopoint)
-                       .map { |marker| marker_for_map(*marker) }
-  end
-
   def total_count
     vacancies.count
   end
@@ -70,13 +63,5 @@ class Search::VacancySearch
     scope = scope.search_by_full_text(keyword) if keyword.present?
     scope = scope.reorder(sort.by => sort.order) if sort&.by_db_column?
     scope
-  end
-
-  def marker_for_map(vacancy_id, organisation_id, geopoint)
-    {
-      id: vacancy_id,
-      parent_id: organisation_id,
-      geopoint: RGeo::GeoJSON.encode(geopoint)&.to_json,
-    }
   end
 end
