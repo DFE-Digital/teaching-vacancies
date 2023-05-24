@@ -20,7 +20,7 @@
     "core-js": "^3.30.2",
     "dompurify": "^3.0.3",
     "govuk-frontend": "^4.6.0",
-    "leaflet": "^1.9.3",
+    "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
     "rails-ujs": "^5.2.8"
