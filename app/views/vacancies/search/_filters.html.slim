@@ -9,6 +9,14 @@ ruby:
       selected_method: :last,
     },
     {
+      legend: t("jobs.filters.phases"),
+      key: :phases,
+      selected: form.phases,
+      options: form.phase_options,
+      value_method: :first,
+      selected_method: :last,
+    },
+    {
       legend: t("jobs.filters.subject"),
       key: :subjects,
       selected: form.subjects,
@@ -21,14 +29,6 @@ ruby:
       key: :ect_statuses,
       selected: form.ect_statuses,
       options: form.ect_status_options,
-      value_method: :first,
-      selected_method: :last,
-    },
-    {
-      legend: t("jobs.filters.phases"),
-      key: :phases,
-      selected: form.phases,
-      options: form.phase_options,
       value_method: :first,
       selected_method: :last,
     },
@@ -51,7 +51,7 @@ ruby:
       - filter_types.each do |filter_type|
         - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }))
     - filters_component.with_group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil)
+    - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
     = render "shared/subjects_filter", filters_component: filters_component, f: f
     - filters_component.with_group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, form.ect_status_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
-    - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
     - filters_component.with_group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, form.working_pattern_options, :first, :last, small: true, legend: { text: t("jobs.filters.working_patterns") }, hint: nil)
