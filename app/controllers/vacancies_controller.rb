@@ -1,14 +1,10 @@
 class VacanciesController < ApplicationController
-  MAX_TOTAL_RESULTS_FOR_MAP = 500
-
   before_action :set_landing_page, only: %i[index]
   after_action :trigger_search_performed_event, only: %i[index]
 
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
     @pagy, @vacancies = pagy(@vacancies_search.vacancies)
-
-    @show_map = @vacancies_search.location && @vacancies_search.total_count <= MAX_TOTAL_RESULTS_FOR_MAP
   end
 
   def show
