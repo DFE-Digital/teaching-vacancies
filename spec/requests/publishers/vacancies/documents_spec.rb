@@ -155,25 +155,25 @@ RSpec.describe "Documents" do
       }
     end
 
-    context "when the form is valid" do
+    context "when upload_additional_document is false" do
       let(:upload_additional_document) { "false" }
 
       context "when upload_additional_document is false" do
-        it "redirects to the new documents form" do
-          expect(request).to redirect_to(organisation_job_path(vacancy.id))
-        end
-      end
-
-      context "when upload_additional_document is true" do
-        let(:upload_additional_document) { "true" }
-
         it "redirects to the next step" do
-          expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
+          expect(request).to redirect_to(organisation_job_path(vacancy.id))
         end
       end
     end
 
-    context "when the form is invalid" do
+    context "when upload_additional_document is true" do
+      let(:upload_additional_document) { "true" }
+
+      it "redirects to the new documents form" do
+        expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
+      end
+    end
+
+    context "when upload_additional_document is not set" do
       let(:upload_additional_document) { nil }
 
       it "renders the documents index page" do
