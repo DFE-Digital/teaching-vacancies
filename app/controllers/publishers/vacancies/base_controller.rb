@@ -37,15 +37,19 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     )
   end
 
+  def redirect_to_job_summary
+    if vacancy.published?
+      redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
+    else
+      redirect_to organisation_job_review_path(vacancy.id)
+    end
+  end
+
   def redirect_to_next_step
     if save_and_finish_later?
       redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
     elsif all_steps_valid?
-      if vacancy.published?
-        redirect_to organisation_job_path(vacancy.id), success: t("publishers.vacancies.show.success")
-      else
-        redirect_to organisation_job_review_path(vacancy.id)
-      end
+      redirect_to_job_summary
     else
       redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
     end

@@ -29,12 +29,12 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def confirm
-    if confirmation_form.valid?
-      return redirect_to_next_step unless uploading_more_documents?
+    return render :index unless confirmation_form.valid?
 
+    if uploading_more_documents?
       redirect_to new_organisation_job_document_path(vacancy.id)
     else
-      render :index
+      redirect_to_job_summary
     end
   end
 
