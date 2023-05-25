@@ -38,6 +38,6 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyFor
     return unless vacancy.include_additional_documents
     return if documents.present?
 
-    errors.add(:documents, :blank) unless vacancy.supporting_documents.any?
+    errors.add(:documents, :blank)
   end
 end
