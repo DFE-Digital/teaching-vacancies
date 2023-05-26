@@ -68,10 +68,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   def after_document_delete_path
     if vacancy.supporting_documents.none?
-      organisation_job_build_path(vacancy.id,
-                                  :include_additional_documents,
-                                  back_to_review: params[:back_to_review],
-                                  back_to_show: params[:back_to_show])
+      new_organisation_job_document_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show])
     else
       organisation_job_documents_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show])
     end
