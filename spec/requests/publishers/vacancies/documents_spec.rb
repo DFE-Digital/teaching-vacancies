@@ -133,7 +133,7 @@ RSpec.describe "Documents" do
 
     context "when there are no longer any documents attached to the vacancy" do
       it "redirects to the new documents form" do
-        expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
+        expect(request).to redirect_to(organisation_job_build_path(vacancy.id, :include_additional_documents))
       end
     end
 
