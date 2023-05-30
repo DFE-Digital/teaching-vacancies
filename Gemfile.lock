@@ -126,7 +126,7 @@ GEM
     benchmark (0.2.1)
     bindata (2.4.15)
     bindex (0.8.1)
-    brakeman (5.4.1)
+    brakeman (6.0.0)
     breasal (0.0.1)
     builder (3.2.4)
     byebug (11.1.3)
