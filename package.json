@@ -29,7 +29,7 @@
     "@babel/core": "^7.21.8",
     "@babel/preset-env": "^7.22.4",
     "concurrently": "^8.0.1",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.1.1",
     "esbuild": "^0.17.19",
     "esbuild-plugin-babel": "^0.2.3",
     "eslint": "^8.41.0",
