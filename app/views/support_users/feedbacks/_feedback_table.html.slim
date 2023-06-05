@@ -3,6 +3,7 @@
   - t.tags("Source") { |f| source_for(f) }
   - t.tags("Who") { |f| who(f) }
   - t.text("Contact email") { |f| contact_email_for(f) }
+  - t.text("CSAT") { |f| t("helpers.label.general_feedback_form.rating.#{f.rating}") if f.rating }
   - t.text "Comment", :comment
   - t.column("Category") do |f|
     - capture do
