@@ -1,6 +1,6 @@
 class GeneralFeedbacksController < ApplicationController
   def new
-    @user_type = current_user.try(:class)
+    @user_type = current_user&.class
     @general_feedback_form = GeneralFeedbackForm.new
   end
 
@@ -9,7 +9,7 @@ class GeneralFeedbacksController < ApplicationController
     @feedback = Feedback.new(feedback_attributes)
 
     if @general_feedback_form.invalid?
-      @user_type = current_user.try(:class)
+      @user_type = current_user&.class
       render :new
     elsif recaptcha_is_invalid?
       redirect_to invalid_recaptcha_path(form_name: @general_feedback_form.class.name.underscore.humanize)
