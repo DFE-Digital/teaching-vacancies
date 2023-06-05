@@ -70,13 +70,19 @@ RSpec.shared_examples "a successful search" do
 end
 
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
+  let(:academy_1) { create(:school) }
+  let(:academy_2) { create(:school) }
+  let(:free_school_1) { create(:school) }
+  let(:free_school_2) { create(:school) }
+  let(:local_authority_school_1) { create(:school, gias_data: {"EstablishmentTypeGroup (code)" => "4"}) }
+  let(:local_authority_school_2) { create(:school, gias_data: {"EstablishmentTypeGroup (name)" => "Local authority maintained schools"}) }
   let(:school) { create(:school) }
   let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
-  let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: [], organisations: [school]) }
-  let!(:job2) { create(:vacancy, :past_publish, :teacher, job_title: "PE Teacher", subjects: [], organisations: [school]) }
-  let!(:job3) { create(:vacancy, :past_publish, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [school]) }
-  let!(:job4) { create(:vacancy, :past_publish, :teacher, job_title: "Geography Teacher", subjects: [], organisations: [school]) }
+  let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: [], organisations: [academy_1]) }
+  let!(:job2) { create(:vacancy, :past_publish, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy_2]) }
+  let!(:job3) { create(:vacancy, :past_publish, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school_1]) }
+  let!(:job4) { create(:vacancy, :past_publish, :teacher, job_title: "Geography Teacher", subjects: [], organisations: [free_school_2]) }
   let!(:expired_job) { create(:vacancy, :expired, :teacher, job_title: "Maths Teacher", subjects: [], organisations: [school]) }
   let(:per_page) { 2 }
 
@@ -100,5 +106,73 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     end
 
     it_behaves_like "a successful search"
+  end
+
+  context "jobseekers can use the organisation type filter to search for jobs" do
+    let(:local_authority_school_1) { create(:school) }
+    let(:local_authority_school_2) { create(:school) }
+    let!(:job5) { create(:vacancy, :past_publish, :teacher, job_title: "History Teacher", subjects: [], organisations: [local_authority_school_1]) }
+    let!(:job6) { create(:vacancy, :past_publish, :teacher, job_title: "Biology Teacher", subjects: [], organisations: [local_authority_school_2]) }
+
+    before do
+      academy_1.update(gias_data: academy_1.gias_data.merge!({"EstablishmentTypeGroup (code)" => "10"}))
+      academy_2.update(gias_data: academy_2.gias_data.merge!({"EstablishmentTypeGroup (name)" => "Academies"}))
+      free_school_1.update(gias_data: free_school_1.gias_data.merge!({"EstablishmentTypeGroup (code)" => "11"}))
+      free_school_2.update(gias_data: free_school_2.gias_data.merge!({"EstablishmentTypeGroup (name)" => "Free Schools"}))
+      local_authority_school_1.update(gias_data: local_authority_school_1.gias_data.merge!({"EstablishmentTypeGroup (code)" => "4"}))
+      local_authority_school_2.update(gias_data: local_authority_school_2.gias_data.merge!({"EstablishmentTypeGroup (name)" => "Local authority maintained schools"}))
+    end
+
+    context "when academy is selected" do
+      it "only shows vacancies from academies" do
+        visit jobs_path
+        check "Academy"
+        click_on I18n.t("buttons.search")
+        
+        expect(page).to have_content(job1.job_title)
+        expect(page).to have_content(job2.job_title)
+        expect(page).to have_content(job3.job_title)
+        expect(page).to have_content(job4.job_title)
+        expect(page).not_to have_content(maths_job1.job_title)
+        expect(page).not_to have_content(maths_job2.job_title)
+        expect(page).not_to have_content(job5.job_title)
+        expect(page).not_to have_content(job6.job_title)
+      end
+    end
+
+    context "when local authority is selected" do
+      it "only shows vacancies from local authorities" do
+        visit jobs_path
+        check "Local authority maintained schools"
+        click_on I18n.t("buttons.search")
+
+        expect(page).not_to have_content(job1.job_title)
+        expect(page).not_to have_content(job2.job_title)
+        expect(page).not_to have_content(job3.job_title)
+        expect(page).not_to have_content(job4.job_title)
+        expect(page).not_to have_content(maths_job1.job_title)
+        expect(page).not_to have_content(maths_job2.job_title)
+        expect(page).to have_content(job5.job_title)
+        expect(page).to have_content(job6.job_title)
+      end
+    end  
+
+    context "when both local authority and academy are selected" do
+      it "shows vacancies from both local authorities and academies" do
+        visit jobs_path
+        check "Academy"
+        check "Local authority maintained schools"
+        click_on I18n.t("buttons.search")
+
+        expect(page).to have_content(job1.job_title)
+        expect(page).to have_content(job2.job_title)
+        expect(page).to have_content(job3.job_title)
+        expect(page).to have_content(job4.job_title)
+        expect(page).not_to have_content(maths_job1.job_title)
+        expect(page).not_to have_content(maths_job2.job_title)
+        expect(page).to have_content(job5.job_title)
+        expect(page).to have_content(job6.job_title)
+      end
+    end
   end
 end
