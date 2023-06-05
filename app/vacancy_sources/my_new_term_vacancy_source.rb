@@ -63,14 +63,22 @@ class MyNewTermVacancySource
   end
 
   def organisation_fields(item)
-    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"])
-    schools = multi_academy_trust&.schools&.where(urn: item["schoolUrns"]) || Organisation.where(urn: item["schoolUrns"]) || []
+    schools = find_schools(item)
+    first_school = schools.first
 
     {
       organisations: schools,
-      readable_job_location: schools.first&.name,
-      about_school: schools.first&.description,
+      readable_job_location: first_school&.name,
+      about_school: first_school&.description,
     }
+  end
+
+  def find_schools(item)
+    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"])
+
+    multi_academy_trust&.schools&.where(urn: item["schoolUrns"]).presence ||
+      Organisation.where(urn: item["schoolUrns"]).presence ||
+      Array(multi_academy_trust)
   end
 
   def job_role(item)
