@@ -90,7 +90,9 @@ class Jobseekers::SearchForm
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{option}")]
     end
-    @organisation_type_options = [["academy", "Academy"], ["local_authority", "Local authority maintained schools"]]
+    @organisation_type_options = ["academy", "local_authority"].map do |option|
+      [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.#{option}")]
+    end
   end
 
   def set_total_filters
