@@ -37,12 +37,12 @@ class VacancyFilterQuery < ApplicationQuery
     establishment_code_filter = []
     establishment_name_filter = []
 
-    if filters[:organisation_types].include?("academy")
+    if filters[:organisation_types].include?("Academy")
       %w[10 11].each { |code| establishment_code_filter << code }
       ["Academies", "Free Schools"].each { |name| establishment_name_filter << name }
     end
 
-    if filters[:organisation_types].include?("local_authority")
+    if filters[:organisation_types].include?("Local authority maintained schools")
       establishment_code_filter << "4"
       establishment_name_filter << "Local authority maintained schools"
     end
