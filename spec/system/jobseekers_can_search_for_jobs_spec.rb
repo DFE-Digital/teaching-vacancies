@@ -118,7 +118,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
         click_on I18n.t("buttons.search")
 
-        expect_page_to_show_jobs([job1, job2, job3, job4,])
+        expect_page_to_show_jobs([job1, job2, job3, job4])
         expect_page_not_to_show_jobs([maths_job1, maths_job2, job5, job6])
       end
     end

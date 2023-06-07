@@ -106,12 +106,12 @@ class Jobseekers::SearchForm
       OpenStruct.new(
         value: "academy",
         name: I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy"),
-        description: 'includes free schools'
+        description: "includes free schools",
       ),
       OpenStruct.new(
         value: "local_authority",
         name: I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority"),
-      )
+      ),
     ]
   end
 end
