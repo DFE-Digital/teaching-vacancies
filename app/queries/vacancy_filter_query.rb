@@ -52,16 +52,6 @@ class VacancyFilterQuery < ApplicationQuery
 
   private
 
-  def organisation_type_filter_selected?(filters)
-    filters[:organisation_types].present?
-  end
-
-  def both_are_selected?(filters)
-    filters[:organisation_types].try(:length) == 2
-  end
-
-  def establishment_type_group_codes_selected(filters); end
-
   def job_roles(filter)
     filter&.map { |job_role| job_role == "sen_specialist" ? "sendco" : job_role }
           &.map { |job_role| job_role == "leadership" ? "senior_leader" : job_role }
