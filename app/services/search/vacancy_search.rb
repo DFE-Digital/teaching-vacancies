@@ -64,23 +64,4 @@ class Search::VacancySearch
     scope = scope.reorder(sort.by => sort.order) if sort&.by_db_column?
     scope
   end
-
-  def add_organisation_type_filters(filters, built_scope)
-    return built_scope unless filters[:organisation_types].present?
-
-    establishment_code_filter = []
-    establishment_name_filter = []
-
-    if filters[:organisation_types].include?("academy")
-      %w[10 11].each { |code| establishment_code_filter << code }
-      ["Academies", "Free Schools"].each { |name| establishment_name_filter << name }
-    end
-
-    if filters[:organisation_types].include?("local_authority")
-      establishment_code_filter << "4"
-      establishment_name_filter << "Local authority maintained schools"
-    end
-
-    built_scope.joins(organisation_vacancies: :organisation).where("(gias_data->>'EstablishmentTypeGroup (code)' IN (?) OR gias_data->>'EstablishmentTypeGroup (name)' IN (?))", establishment_code_filter, establishment_name_filter)
-  end
 end
