@@ -44,7 +44,7 @@ class Jobseekers::SearchForm
       subjects: @subjects,
       phases: @phases,
       working_patterns: @working_patterns,
-      organisation_types: @organisation_types
+      organisation_types: @organisation_types,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 
@@ -90,7 +90,7 @@ class Jobseekers::SearchForm
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{option}")]
     end
-    @organisation_type_options = ["academy", "local_authority"].map do |option|
+    @organisation_type_options = %w[academy local_authority].map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.#{option}")]
     end
   end
