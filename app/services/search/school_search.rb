@@ -37,7 +37,7 @@ class Search::SchoolSearch
   end
 
   def total_filters
-    filter_counts = %i[education_phase key_stage special_school job_availability].map { |filter| search_criteria[filter]&.count || 0 }
+    filter_counts = %i[education_phase key_stage special_school job_availability organisation_types].map { |filter| search_criteria[filter]&.count || 0 }
     filter_counts.sum
   end
 
