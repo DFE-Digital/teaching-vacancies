@@ -5,15 +5,15 @@ RSpec.describe "Searching on the schools page" do
   let(:secondary_special_school) { create(:school, name: "Cambridge", gias_data: { "SpecialClasses (code)" => "1" }) }
   let(:primary_school) { create(:school, name: "St Peters", phase: "primary") }
 
-  let(:academy_school_1) { create(:school, name: "Academy1", gias_data: { "EstablishmentTypeGroup (name)" => "Academies" }) }
-  let(:academy_school_2) { create(:school, name: "Academy2", gias_data: { "EstablishmentTypeGroup (code)" => "10" }) }
-  let(:free_school_1) { create(:school, name: "Free school 1", gias_data: { "EstablishmentTypeGroup (name)" => "Free schools" }) }
-  let(:free_school_2) { create(:school, name: "Free school 1", gias_data: { "EstablishmentTypeGroup (code)" => "11" }) }
-  let(:local_authority_school_1) { create(:school, name: "Local authority school 1", gias_data: { "EstablishmentTypeGroup (name)" => "Local authority maintained schools" }) }
-  let(:local_authority_school_2) { create(:school, name: "Local authority school 2", gias_data: { "EstablishmentTypeGroup (code)" => "4" }) }
+  let(:academy_school1) { create(:school, name: "Academy1", gias_data: { "EstablishmentTypeGroup (name)" => "Academies" }) }
+  let(:academy_school2) { create(:school, name: "Academy2", gias_data: { "EstablishmentTypeGroup (code)" => "10" }) }
+  let(:free_school1) { create(:school, name: "Free school 1", gias_data: { "EstablishmentTypeGroup (name)" => "Free schools" }) }
+  let(:free_school2) { create(:school, name: "Free school 1", gias_data: { "EstablishmentTypeGroup (code)" => "11" }) }
+  let(:local_authority_school1) { create(:school, name: "Local authority school 1", gias_data: { "EstablishmentTypeGroup (name)" => "Local authority maintained schools" }) }
+  let(:local_authority_school2) { create(:school, name: "Local authority school 2", gias_data: { "EstablishmentTypeGroup (code)" => "4" }) }
 
   before do
-    [secondary_school, secondary_special_school, primary_school, academy_school_1, academy_school_2, free_school_1, free_school_2, local_authority_school_1, local_authority_school_2].each do |school|
+    [secondary_school, secondary_special_school, primary_school, academy_school1, academy_school2, free_school1, free_school2, local_authority_school1, local_authority_school2].each do |school|
       create(:publisher, organisations: [school])
       create(:vacancy, organisations: [school])
     end
@@ -76,16 +76,16 @@ RSpec.describe "Searching on the schools page" do
       check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
       click_on I18n.t("buttons.search")
 
-      expect_page_to_show_schools([academy_school_1, academy_school_2, free_school_1, free_school_2])
-      expect_page_not_to_show_schools([local_authority_school_1, local_authority_school_2, secondary_school, secondary_special_school, primary_school])
+      expect_page_to_show_schools([academy_school1, academy_school2, free_school1, free_school2])
+      expect_page_not_to_show_schools([local_authority_school1, local_authority_school2, secondary_school, secondary_special_school, primary_school])
     end
 
     it "allows user to filter by local authorities" do
       check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
       click_on I18n.t("buttons.search")
 
-      expect_page_to_show_schools([local_authority_school_1, local_authority_school_2])
-      expect_page_not_to_show_schools([academy_school_1, academy_school_2, free_school_1, free_school_2, secondary_school, secondary_special_school, primary_school])
+      expect_page_to_show_schools([local_authority_school1, local_authority_school2])
+      expect_page_not_to_show_schools([academy_school1, academy_school2, free_school1, free_school2, secondary_school, secondary_special_school, primary_school])
     end
 
     it "allows user to filter by both academies and local authorities" do
@@ -93,7 +93,7 @@ RSpec.describe "Searching on the schools page" do
       check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
       click_on I18n.t("buttons.search")
 
-      expect_page_to_show_schools([local_authority_school_1, local_authority_school_2, academy_school_1, academy_school_2, free_school_1, free_school_2])
+      expect_page_to_show_schools([local_authority_school1, local_authority_school2, academy_school1, academy_school2, free_school1, free_school2])
       expect_page_not_to_show_schools([secondary_school, secondary_special_school, primary_school])
     end
   end
