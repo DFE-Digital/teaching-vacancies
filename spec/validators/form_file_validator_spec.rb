@@ -4,10 +4,10 @@ RSpec.describe FormFileValidator do
   describe "#validate_each" do
     before { allow_any_instance_of(described_class).to receive(:validating_files_after_form_submission?).and_return(true) }
 
-    context "when the form's file type is :document" do
+    context "when the form's file type is a document" do
       let(:subject) { described_class.new(attributes: [attribute]) }
-      let(:form_with_documents) { Publishers::JobListing::DocumentsForm.new(documents: [uploaded_document]) }
-      let(:attribute) { :documents }
+      let(:form_with_documents) { Publishers::JobListing::DocumentsForm.new(supporting_documents: [uploaded_document]) }
+      let(:attribute) { :supporting_documents }
       let(:uploaded_document) { fixture_file_upload("blank_job_spec.pdf", "application/pdf") }
 
       before { allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true) }
@@ -34,7 +34,7 @@ RSpec.describe FormFileValidator do
         end
 
         it "adds an error to the form object for the documents field" do
-          expect(form_with_documents.errors.full_messages_for(:documents)).to include("The selected file must be smaller than 5 MB")
+          expect(form_with_documents.errors.full_messages_for(attribute)).to include("The selected file must be smaller than 5 MB")
         end
       end
 
@@ -46,7 +46,7 @@ RSpec.describe FormFileValidator do
         before { subject.validate_each(form_with_documents, attribute, invalid_document) }
 
         it "adds an error to the form object for the documents field" do
-          expect(form_with_documents.errors.full_messages_for(:documents)).to include(error_message)
+          expect(form_with_documents.errors.full_messages_for(attribute)).to include(error_message)
         end
       end
 
@@ -59,12 +59,12 @@ RSpec.describe FormFileValidator do
         end
 
         it "adds an error to the form object for the documents field" do
-          expect(form_with_documents.errors.full_messages_for(:documents)).to include(error_message)
+          expect(form_with_documents.errors.full_messages_for(attribute)).to include(error_message)
         end
       end
     end
 
-    context "when the form's file type is :image" do
+    context "when the form's file type is an image" do
       let(:subject) { described_class.new(attributes: [attribute]) }
       let(:form_with_image) { Publishers::Organisation::LogoForm.new(logo: uploaded_image) }
       let(:attribute) { :logo }

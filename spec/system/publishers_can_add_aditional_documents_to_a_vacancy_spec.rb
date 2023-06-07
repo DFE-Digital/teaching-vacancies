@@ -53,7 +53,7 @@ RSpec.describe "Publishers can add aditional documents to a vacancy" do
   end
 
   def add_document
-    page.attach_file("publishers_job_listing_documents_form[documents][]",
+    page.attach_file("publishers_job_listing_documents_form[supporting_documents][]",
                      Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
     click_on I18n.t("buttons.save_and_continue")
   end

@@ -20,7 +20,7 @@ RSpec.describe "Documents" do
     context "when the form is valid" do
       let(:request) do
         post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { documents: [fixture_file_upload("blank_job_spec.pdf", "application/pdf")] },
+          publishers_job_listing_documents_form: { supporting_documents: [fixture_file_upload("blank_job_spec.pdf", "application/pdf")] },
         }
       end
 
@@ -67,7 +67,7 @@ RSpec.describe "Documents" do
 
       before do
         post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { documents: [file] },
+          publishers_job_listing_documents_form: { supporting_documents: [file] },
         }
       end
 

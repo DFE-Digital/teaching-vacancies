@@ -5,7 +5,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   def create
     if documents_form.valid?
-      documents_form.documents.each do |document|
+      documents_form.supporting_documents.each do |document|
         vacancy.supporting_documents.attach(document)
         send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
         send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
@@ -50,7 +50,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   def documents_form_params
     (params[:publishers_job_listing_documents_form] || params)
-      .permit(documents: [])
+      .permit(supporting_documents: [])
       .merge(completed_steps: completed_steps)
   end
 

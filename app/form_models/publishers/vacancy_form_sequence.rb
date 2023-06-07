@@ -63,8 +63,6 @@ class Publishers::VacancyFormSequence < FormSequence
   end
 
   def not_validatable_steps
-    %i[subjects review].tap do |steps|
-      steps << :documents if @vacancy.supporting_documents.any?
-    end
+    %i[subjects review].freeze
   end
 end

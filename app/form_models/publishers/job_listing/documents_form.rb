@@ -1,11 +1,11 @@
 class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyForm
-  validates :documents, form_file: true
+  validates :supporting_documents, form_file: true
   validate :document_presence
 
-  attr_accessor :documents
+  attr_accessor :supporting_documents
 
   def self.fields
-    []
+    [:supporting_documents]
   end
 
   def self.optional?
@@ -36,8 +36,8 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyFor
 
   def document_presence
     return unless vacancy.include_additional_documents
-    return if documents.present?
+    return if supporting_documents.present?
 
-    errors.add(:documents, :blank)
+    errors.add(:supporting_documents, :blank)
   end
 end
