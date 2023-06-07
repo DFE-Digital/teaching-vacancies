@@ -47,7 +47,7 @@ class VacancyFilterQuery < ApplicationQuery
       establishment_name_filter << "Local authority maintained schools"
     end
 
-    built_scope.joins(organisation_vacancies: :organisation).where("(gias_data->>'EstablishmentTypeGroup (code)' IN (?) OR gias_data->>'EstablishmentTypeGroup (name)' IN (?))", establishment_code_filter, establishment_name_filter)
+    built_scope.joins(organisation_vacancies: :organisation).where("(gias_data->>'EstablishmentTypeGroup (code)' IN (?) OR gias_data->>'EstablishmentTypeGroup (name)' IN (?))", establishment_code_filter, establishment_name_filter).distinct
   end
 
   private
