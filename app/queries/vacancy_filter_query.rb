@@ -38,7 +38,7 @@ class VacancyFilterQuery < ApplicationQuery
     establishment_name_filter = []
 
     if filters[:organisation_types].include?("academy")
-      ["10", "11"].each { |code| establishment_code_filter << code }
+      %w[10 11].each { |code| establishment_code_filter << code }
       ["Academies", "Free Schools"].each { |name| establishment_name_filter << name }
     end
 
@@ -46,7 +46,7 @@ class VacancyFilterQuery < ApplicationQuery
       establishment_code_filter << "4"
       establishment_name_filter << "Local authority maintained schools"
     end
-  
+
     built_scope.joins(organisation_vacancies: :organisation).where("(gias_data->>'EstablishmentTypeGroup (code)' IN (?) OR gias_data->>'EstablishmentTypeGroup (name)' IN (?))", establishment_code_filter, establishment_name_filter)
   end
 
@@ -60,8 +60,7 @@ class VacancyFilterQuery < ApplicationQuery
     filters[:organisation_types].try(:length) == 2
   end
 
-  def establishment_type_group_codes_selected(filters)
-  end
+  def establishment_type_group_codes_selected(filters); end
 
   def job_roles(filter)
     filter&.map { |job_role| job_role == "sen_specialist" ? "sendco" : job_role }

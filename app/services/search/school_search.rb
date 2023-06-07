@@ -2,13 +2,14 @@ class Search::SchoolSearch
   extend Forwardable
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :name, :location, :radius
+  attr_reader :search_criteria, :name, :location, :radius, :organisation_types
 
   def initialize(search_criteria, scope: Organisation.all)
     @search_criteria = search_criteria
     @name = search_criteria[:name]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
+    @organisation_types = search_criteria[:organisation_types]
     @scope = scope
   end
 
@@ -41,7 +42,7 @@ class Search::SchoolSearch
   end
 
   def clear_filters_params
-    active_criteria.merge({ education_phase: [], key_stage: [], special_school: [], job_availability: [] })
+    active_criteria.merge({ education_phase: [], key_stage: [], special_school: [], job_availability: [], organisation_type: [] })
   end
 
   private
@@ -54,7 +55,7 @@ class Search::SchoolSearch
     scope = scope.where(phase: education_phase) if education_phase
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
     scope = scope.where("organisations.gias_data->>'SpecialClasses (code)' = ?", "1") if special_school?
-
+    scope = apply_organisation_type_filter(scope)
     apply_job_availability_filter(scope)
   end
 
@@ -95,5 +96,24 @@ class Search::SchoolSearch
     else
       scope.where.not(id: organisation_ids)
     end
+  end
+
+  def apply_organisation_type_filter(scope)
+    return scope unless organisation_types.present?
+
+    establishment_code_filter = []
+    establishment_name_filter = []
+
+    if organisation_types.include?("academy")
+      %w[10 11].each { |code| establishment_code_filter << code }
+      ["Academies", "Free Schools"].each { |name| establishment_name_filter << name }
+    end
+
+    if organisation_types.include?("local_authority")
+      establishment_code_filter << "4"
+      establishment_name_filter << "Local authority maintained schools"
+    end
+
+    scope.where("(gias_data->>'EstablishmentTypeGroup (code)' IN (?) OR gias_data->>'EstablishmentTypeGroup (name)' IN (?))", establishment_code_filter, establishment_name_filter)
   end
 end
