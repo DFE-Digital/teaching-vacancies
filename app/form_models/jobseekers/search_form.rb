@@ -94,7 +94,7 @@ class Jobseekers::SearchForm
   end
 
   def set_total_filters
-    @total_filters = [@job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @working_patterns&.count].compact.sum
+    @total_filters = [@job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @working_patterns&.count, @organisation_types&.count].compact.sum
   end
 
   def set_radius(radius_param)
