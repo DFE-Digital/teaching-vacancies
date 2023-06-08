@@ -104,7 +104,7 @@ class Search::SchoolSearch
     selected_school_types = []
 
     if organisation_types.include?("Academy")
-      ["Academy", "Academies", "Free schools", "Free school"].each {|school_type| selected_school_types << school_type}
+      ["Academy", "Academies", "Free schools", "Free school"].each { |school_type| selected_school_types << school_type }
     end
 
     if organisation_types.include?("Local authority maintained schools")
