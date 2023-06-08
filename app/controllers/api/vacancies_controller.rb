@@ -22,6 +22,15 @@ class Api::VacanciesController < Api::ApplicationController
   end
 
   def trigger_api_queried_event(event_data = {})
+    event = DfE::Analytics::Event.new
+      .with_type(:api_queried)
+      .with_request_details(request)
+      .with_response_details(response)
+      .with_user(current_user)
+      .with_data(event_data)
+
+    DfE::Analytics::SendEvents.do([event])
+
     request_event.trigger(:api_queried, event_data)
   end
 end
