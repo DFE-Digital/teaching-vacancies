@@ -34,20 +34,17 @@ class VacancyFilterQuery < ApplicationQuery
   def add_organisation_type_filters(filters, built_scope)
     return built_scope unless filters[:organisation_types].present?
 
-    establishment_code_filter = []
-    establishment_name_filter = []
+    selected_school_types = []
 
     if filters[:organisation_types].include?("Academy")
-      %w[10 11].each { |code| establishment_code_filter << code }
-      ["Academies", "Free Schools"].each { |name| establishment_name_filter << name }
+      ["Academy", "Academies", "Free schools", "Free school"].each {|school_type| selected_school_types << school_type}
     end
 
     if filters[:organisation_types].include?("Local authority maintained schools")
-      establishment_code_filter << "4"
-      establishment_name_filter << "Local authority maintained schools"
+      selected_school_types << "Local authority maintained schools"
     end
 
-    built_scope.joins(organisation_vacancies: :organisation).where("(gias_data->>'EstablishmentTypeGroup (code)' IN (?) OR gias_data->>'EstablishmentTypeGroup (name)' IN (?))", establishment_code_filter, establishment_name_filter).distinct
+    built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: selected_school_types })
   end
 
   private
