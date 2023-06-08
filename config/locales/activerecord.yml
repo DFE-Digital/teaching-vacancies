@@ -290,7 +290,7 @@ en:
     include_additional_documents:
       inclusion: Select yes if want to upload additional documents
   documents_errors: &documents_errors
-    documents:
+    supporting_documents:
       blank: Select an additional document
   documents_confirmation_errors: &documents_confirmation_errors
     upload_additional_document:

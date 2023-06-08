@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::DocumentsForm do
-  let(:documents_form) { described_class.new(vacancy: vacancy, documents: [document]) }
+  let(:documents_form) { described_class.new(vacancy: vacancy, supporting_documents: [document]) }
   let(:vacancy) { create(:vacancy) }
-  let(:attribute) { :documents }
+  let(:attribute) { :supporting_documents }
   let(:document) { File.open(Rails.root.join("spec/fixtures/files/blank_job_spec.pdf")) }
 
   it "runs the validations in the form file validator" do

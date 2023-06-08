@@ -8,7 +8,7 @@
       - if params["back_to_#{action_name}"]
         = f.hidden_field "back_to_#{action_name}", value: "true"
 
-      = f.govuk_file_field :documents,
+      = f.govuk_file_field :supporting_documents,
         label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
         hint: { text: t("helpers.hint.publishers_job_listing_documents_form.documents") },
         accept: ".doc, .docx, .pdf",

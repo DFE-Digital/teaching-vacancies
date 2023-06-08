@@ -20,7 +20,7 @@ RSpec.describe "Documents" do
     context "when the form is valid" do
       let(:request) do
         post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { documents: [fixture_file_upload("blank_job_spec.pdf", "application/pdf")] },
+          publishers_job_listing_documents_form: { supporting_documents: [fixture_file_upload("blank_job_spec.pdf", "application/pdf")] },
         }
       end
 
@@ -67,7 +67,7 @@ RSpec.describe "Documents" do
 
       before do
         post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { documents: [file] },
+          publishers_job_listing_documents_form: { supporting_documents: [file] },
         }
       end
 
@@ -133,7 +133,7 @@ RSpec.describe "Documents" do
 
     context "when there are no longer any documents attached to the vacancy" do
       it "redirects to the new documents form" do
-        expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
+        expect(request).to redirect_to(organisation_job_build_path(vacancy.id, :include_additional_documents))
       end
     end
 
@@ -155,25 +155,25 @@ RSpec.describe "Documents" do
       }
     end
 
-    context "when the form is valid" do
+    context "when upload_additional_document is false" do
       let(:upload_additional_document) { "false" }
 
       context "when upload_additional_document is false" do
-        it "redirects to the new documents form" do
-          expect(request).to redirect_to(organisation_job_path(vacancy.id))
-        end
-      end
-
-      context "when upload_additional_document is true" do
-        let(:upload_additional_document) { "true" }
-
         it "redirects to the next step" do
-          expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
+          expect(request).to redirect_to(organisation_job_path(vacancy.id))
         end
       end
     end
 
-    context "when the form is invalid" do
+    context "when upload_additional_document is true" do
+      let(:upload_additional_document) { "true" }
+
+      it "redirects to the new documents form" do
+        expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
+      end
+    end
+
+    context "when upload_additional_document is not set" do
       let(:upload_additional_document) { nil }
 
       it "renders the documents index page" do
