@@ -70,12 +70,11 @@ RSpec.shared_examples "a successful search" do
 end
 
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
-  let(:academy1) { create(:school, gias_data: { "EstablishmentTypeGroup (code)" => "10" }) }
-  let(:academy2) { create(:school, gias_data: { "EstablishmentTypeGroup (name)" => "Academies" }) }
-  let(:free_school1) { create(:school, gias_data: { "EstablishmentTypeGroup (code)" => "11" }) }
-  let(:free_school2) { create(:school, gias_data: { "EstablishmentTypeGroup (name)" => "Free Schools" }) }
-  let(:local_authority_school1) { create(:school, gias_data: { "EstablishmentTypeGroup (code)" => "4" }) }
-  let(:local_authority_school2) { create(:school, gias_data: { "EstablishmentTypeGroup (name)" => "Local authority maintained schools" }) }
+  let(:academy1) { create(:school, school_type: "Academies") }
+  let(:academy2) { create(:school, school_type: "Academy") }
+  let(:free_school1) { create(:school, school_type: "Free schools" ) }
+  let(:free_school2) { create(:school,  school_type: "Free school") }
+  let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
   let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
@@ -110,7 +109,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
   context "jobseekers can use the organisation type filter to search for jobs" do
     let!(:job5) { create(:vacancy, :past_publish, :teacher, job_title: "History Teacher", subjects: [], organisations: [local_authority_school1]) }
-    let!(:job6) { create(:vacancy, :past_publish, :teacher, job_title: "Biology Teacher", subjects: [], organisations: [local_authority_school2]) }
 
     context "when academy is selected" do
       it "only shows vacancies from academies" do
@@ -119,7 +117,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([job1, job2, job3, job4])
-        expect_page_not_to_show_jobs([maths_job1, maths_job2, job5, job6])
+        expect_page_not_to_show_jobs([maths_job1, maths_job2, job5])
       end
     end
 
@@ -129,7 +127,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
         click_on I18n.t("buttons.search")
 
-        expect_page_to_show_jobs([job5, job6])
+        expect_page_to_show_jobs([job5])
         expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
       end
     end
@@ -141,7 +139,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
         click_on I18n.t("buttons.search")
 
-        expect_page_to_show_jobs([job1, job2, job3, job4, job5, job6])
+        expect_page_to_show_jobs([job1, job2, job3, job4, job5])
         expect_page_not_to_show_jobs([maths_job1, maths_job2])
       end
     end

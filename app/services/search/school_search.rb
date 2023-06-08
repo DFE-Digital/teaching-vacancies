@@ -101,19 +101,16 @@ class Search::SchoolSearch
   def apply_organisation_type_filter(scope)
     return scope unless organisation_types.present?
 
-    establishment_code_filter = []
-    establishment_name_filter = []
+    selected_school_types = []
 
     if organisation_types.include?("Academy")
-      %w[10 11].each { |code| establishment_code_filter << code }
-      ["Academies", "Free Schools"].each { |name| establishment_name_filter << name }
+      ["Academy", "Academies", "Free schools", "Free school"].each {|school_type| selected_school_types << school_type}
     end
 
     if organisation_types.include?("Local authority maintained schools")
-      establishment_code_filter << "4"
-      establishment_name_filter << "Local authority maintained schools"
+      selected_school_types << "Local authority maintained schools"
     end
 
-    scope.where("(gias_data->>'EstablishmentTypeGroup (code)' IN (?) OR gias_data->>'EstablishmentTypeGroup (name)' IN (?))", establishment_code_filter, establishment_name_filter)
+    scope.where(school_type: selected_school_types)
   end
 end
