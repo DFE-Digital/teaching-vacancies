@@ -48,7 +48,7 @@ RSpec.describe Jobseekers::AlertMailer do
       email_identifier: anonymised_form_of(email),
       user_anonymised_jobseeker_id: user_anonymised_jobseeker_id,
       user_anonymised_publisher_id: nil,
-      subscription_identifier: anonymised_form_of(subscription.id),
+      subscription_identifier: subscription.id,
       subscription_frequency: frequency,
       uid: "a_unique_identifier",
     }

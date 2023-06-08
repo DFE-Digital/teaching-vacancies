@@ -6,6 +6,7 @@ RSpec.describe GeneralFeedbackForm, type: :model do
   let(:user_participation_response) { "interested" }
   let(:visit_purpose) { "find_teaching_job" }
   let(:visit_purpose_comment) { nil }
+  let(:user_type) { nil }
   let(:params) do
     {
       comment: "Fancy",
@@ -14,14 +15,12 @@ RSpec.describe GeneralFeedbackForm, type: :model do
       user_participation_response: user_participation_response,
       visit_purpose: visit_purpose,
       visit_purpose_comment: visit_purpose_comment,
+      user_type: user_type,
     }
   end
 
   it { is_expected.to validate_presence_of(:comment) }
   it { is_expected.to validate_length_of(:comment).is_at_most(1200) }
-  it { is_expected.to validate_presence_of(:email) }
-  it { is_expected.to allow_value("email@example.com").for(:email) }
-  it { is_expected.to_not allow_value("invalid@email@com").for(:email) }
   it { is_expected.to validate_inclusion_of(:report_a_problem).in_array(%w[yes no]) }
   it {
     is_expected.to validate_inclusion_of(:user_participation_response)
@@ -41,5 +40,31 @@ RSpec.describe GeneralFeedbackForm, type: :model do
 
       it { is_expected.to validate_presence_of(:visit_purpose_comment) }
     end
+  end
+
+  context "when the user_participation_response == 'interested'" do
+    it { is_expected.to validate_presence_of(:occupation) }
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to allow_value("email@example.com").for(:email) }
+    it { is_expected.to_not allow_value("invalid@email@com").for(:email) }
+  end
+
+  context "when the user_participation_response != 'interested'" do
+    let(:user_participation_response) { "uninterested" }
+
+    it { is_expected.not_to validate_presence_of(:occupation) }
+
+    it { is_expected.not_to validate_presence_of(:email) }
+  end
+
+  context "when user_type is 'Publisher'" do
+    let(:user_type) { "Publisher" }
+
+    it { is_expected.not_to validate_inclusion_of(:visit_purpose).in_array(Feedback.visit_purposes.keys) }
+  end
+
+  context "when user_type is not 'Publisher'" do
+    it { is_expected.to validate_inclusion_of(:visit_purpose).in_array(Feedback.visit_purposes.keys) }
+    it { is_expected.to validate_length_of(:visit_purpose_comment).is_at_most(1200) }
   end
 end

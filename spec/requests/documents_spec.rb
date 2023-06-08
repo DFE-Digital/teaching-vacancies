@@ -17,9 +17,9 @@ RSpec.describe "Documents" do
         expect { get job_document_path(vacancy, document.id) }
           .to have_triggered_event(:vacancy_document_downloaded)
           .and_data(
-            vacancy_id: anonymised_form_of(vacancy.id),
+            vacancy_id: vacancy.id,
             document_type: "supporting_document",
-            document_id: anonymised_form_of(document.id),
+            document_id: document.id,
             filename: document.filename,
           )
       end
@@ -42,9 +42,9 @@ RSpec.describe "Documents" do
         expect { get job_document_path(vacancy, document.id) }
           .to have_triggered_event(:vacancy_document_downloaded)
           .and_data(
-            vacancy_id: anonymised_form_of(vacancy.id),
+            vacancy_id: vacancy.id,
             document_type: "application_form",
-            document_id: anonymised_form_of(document.id),
+            document_id: document.id,
             filename: document.filename,
           )
       end

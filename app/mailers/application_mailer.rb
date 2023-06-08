@@ -50,8 +50,7 @@ class ApplicationMailer < Mail::Notify::Mailer
     {
       uid: uid,
       notify_template: template,
-      email_identifier: StringAnonymiser.new(to).to_s,
-
+      email_identifier: DfE::Analytics.anonymise(to),
     }
   end
 end

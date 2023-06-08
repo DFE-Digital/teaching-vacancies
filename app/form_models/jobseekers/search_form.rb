@@ -58,12 +58,11 @@ class Jobseekers::SearchForm
     # Do not apply filters on landing pages, even if they have a keyword set (as landing pages
     # should always be 100% manually configured) OR if the user changes the filters *without*
     # changing their keywords, do not override their decision
-    return if @keyword.blank? || @landing_page || @previous_keyword == @keyword
+    return if @keyword.blank? || @landing_page.present? || @previous_keyword == @keyword
 
     @filters_from_keyword = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@keyword)
     return unless @filters_from_keyword
 
-    @subjects += filters_from_keyword["subjects"]
     @job_roles += filters_from_keyword["job_roles"]
     @ect_statuses += filters_from_keyword["ect_statuses"]
     @phases += filters_from_keyword["phases"]
@@ -76,7 +75,6 @@ class Jobseekers::SearchForm
     previous_filters = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@previous_keyword)
     return unless previous_filters
 
-    @subjects -= previous_filters["subjects"]
     @job_roles -= previous_filters["job_roles"]
     @ect_statuses -= previous_filters["ect_statuses"]
     @phases -= previous_filters["phases"]

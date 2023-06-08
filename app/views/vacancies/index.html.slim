@@ -1,5 +1,4 @@
 - content_for :skip_links do
-  = govuk_skip_link(href: "#map-results", text: t("jobs.skip_link_map"))
   = govuk_skip_link(href: "#search-results", text: t("jobs.skip_link_list"))
 
 - content_for :breadcrumbs do
@@ -25,14 +24,6 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
     .govuk-grid-column-two-thirds-at-desktop
       = render "vacancies/search/fields_and_button", f: f, form: @form
       = render "vacancies/search/open_filters_button", form: @form
-
-      - if @show_map
-        #map-results
-          = map(markers: @vacancies_search.markers,
-                polygon: @vacancies_search.location_search.geojson_polygon,
-                point: @vacancies_search.location_search.geojson_point,
-                radius: @vacancies_search.location_search.radius_in_meters,
-                marker: { type: "vacancy", tracking: { link: "vacancy_visited_from_map", marker: "vacancy_popup_opened_from_map" } })
 
       = govuk_inset_text(text: t("vacancies.international_teacher_advice.text_html",
                                  link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_search_results)))

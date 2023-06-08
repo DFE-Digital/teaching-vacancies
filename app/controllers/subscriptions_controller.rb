@@ -85,7 +85,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def trigger_create_job_alert_clicked_event
-    request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: StringAnonymiser.new(vacancy_id))
+    request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: vacancy_id)
     trigger_dfe_analytics_event(:vacancy_create_job_alert_clicked, { vacancy_id: vacancy_id })
   end
 
@@ -112,8 +112,10 @@ class SubscriptionsController < ApplicationController
       subscription_identifier: subscription.id,
     }
 
+    dfe_analytics_event_data = event_data.merge(email_identifier: DfE::Analytics.anonymise(subscription.email))
+
     request_event.trigger(type, event_data)
-    trigger_dfe_analytics_event(type, event_data)
+    trigger_dfe_analytics_event(type, dfe_analytics_event_data)
   end
 
   def email

@@ -28,7 +28,7 @@ RSpec.describe "Errors" do
 
   describe "GET #invalid_recaptcha" do
     it "sends the error to Sentry" do
-      expect(Sentry).to receive(:capture_message).with("Invalid recaptcha")
+      expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", { level: :warning })
 
       get invalid_recaptcha_path, params: { form_name: "this form" }
     end

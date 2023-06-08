@@ -30,7 +30,6 @@ RSpec.shared_examples "a successful search" do
     let(:keyword) { "Maths Teacher" }
 
     it "adds the expected filters" do
-      expect(page).to have_css("a", text: "Remove this filter Mathematics")
       expect(page).to have_css("a", text: "Remove this filter Teacher")
     end
 
@@ -56,17 +55,15 @@ RSpec.shared_examples "a successful search" do
       before { click_on I18n.t("shared.filter_group.clear_all_filters") }
 
       it "displays no remove filter links" do
-        expect(page).to_not have_css("a", text: "Remove this filter Mathematics")
         expect(page).to_not have_css("a", text: "Remove this filter Teacher")
       end
     end
 
     context "when removing a filter" do
-      before { click_on "Remove this filter Mathematics" }
+      before { click_on "Remove this filter Teacher" }
 
       it "removes the filter" do
-        expect(page).to_not have_css("a", text: "Remove this filter Mathematics")
-        expect(page).to have_css("a", text: "Remove this filter Teacher")
+        expect(page).to_not have_css("a", text: "Remove this filter Teacher")
       end
     end
   end

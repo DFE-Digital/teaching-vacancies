@@ -9,6 +9,7 @@ class Search::JobseekerProfileSearch
   def jobseeker_profiles # rubocop:disable Metrics/AbcSize
     scope = JobseekerProfile
       .includes(:job_preferences)
+      .includes(:personal_details)
       .active.not_hidden_from(current_organisation)
       .where(job_preferences: { id: location_preferences_ids_matching_location_search })
 
@@ -18,6 +19,7 @@ class Search::JobseekerProfileSearch
     scope = scope.where("job_preferences.phases && ARRAY[?]::varchar[]", filters[:education_phases]) if filters[:education_phases].present?
     scope = scope.where("job_preferences.key_stages && ARRAY[?]::varchar[]", filters[:key_stages]) if filters[:key_stages].present?
     scope = scope.where("job_preferences.subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
+    scope = scope.where("personal_details.right_to_work_in_uk = ?", right_to_work_in_uk) if one_option_selected_for_right_to_work_in_uk?
 
     scope
   end
@@ -27,17 +29,25 @@ class Search::JobseekerProfileSearch
   end
 
   def total_filters
-    filter_counts = %i[qualified_teacher_status roles working_patterns education_phases key_stages subjects].map { |filter| @filters[filter]&.count || 0 }
+    filter_counts = %i[qualified_teacher_status roles working_patterns education_phases key_stages subjects right_to_work_in_uk].map { |filter| @filters[filter]&.count || 0 }
     filter_counts.sum
   end
 
   def clear_filters_params
-    @filters.merge({ qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: [] })
+    @filters.merge({ qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: [], right_to_work_in_uk: [] })
   end
 
   private
 
   attr_reader :current_organisation
+
+  def one_option_selected_for_right_to_work_in_uk?
+    filters[:right_to_work_in_uk].present? && filters[:right_to_work_in_uk].count == 1
+  end
+
+  def right_to_work_in_uk
+    filters[:right_to_work_in_uk].first == "true"
+  end
 
   def location_preferences_ids_matching_location_search
     return location_preferences_containing_school(current_organisation) if current_organisation.school?

@@ -59,7 +59,7 @@ class ImportFromVacancySourcesJob < ApplicationJob
         vacancy.attributes,
       )
 
-      Sentry.capture_message("Vacancy failed to import")
+      Sentry.capture_message("Vacancy failed to import", level: :warning)
     end
   end
 end

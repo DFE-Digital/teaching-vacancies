@@ -31,7 +31,7 @@ RSpec.describe "Job applications" do
       context "when the job is live" do
         it "triggers a `vacancy_apply_clicked` event" do
           expect { get new_jobseekers_job_job_application_path(vacancy.id) }
-            .to have_triggered_event(:vacancy_apply_clicked).with_data(vacancy_id: anonymised_form_of(vacancy.id))
+            .to have_triggered_event(:vacancy_apply_clicked).with_data(vacancy_id: vacancy.id)
         end
 
         context "when a job application for the job already exists" do

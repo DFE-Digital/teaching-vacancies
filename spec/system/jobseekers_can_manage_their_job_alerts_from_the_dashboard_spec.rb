@@ -62,6 +62,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
           click_on I18n.t("buttons.unsubscribe")
           choose I18n.t("helpers.label.jobseekers_unsubscribe_feedback_form.unsubscribe_reason_options.job_found")
           choose name: "jobseekers_unsubscribe_feedback_form[user_participation_response]", option: "interested"
+          fill_in "jobseekers_unsubscribe_feedback_form[occupation]", with: "teacher"
           click_button I18n.t("buttons.submit_feedback")
 
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.subscriptions.index.page_title"))

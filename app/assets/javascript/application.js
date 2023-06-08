@@ -34,6 +34,7 @@ Sentry.init({
   release: window.sentryConfig.release,
   integrations: [],
   tracesSampleRate: 0, // Disable tracing (performance monitoring, doesn't impact errors)
+  ignoreErrors: [/'Object\.prototype\.hasOwnProperty\.call\(o,"telephone"\)'/],
 });
 
 const application = Application.start();

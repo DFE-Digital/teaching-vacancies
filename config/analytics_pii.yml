@@ -1,38 +1,26 @@
 # This file lists the attributes which should be anonymised when exported.
 # If an attribute is not listed in analytics.yml, it will not exported, even if it is listed here.
 shared:
-  documents:
-    - id
-    - vacancy_id
-  equal_opportunities_reports:
-    - id
-    - vacancy_id
   employments:
-    - id
     - organisation
     - job_title
     - main_duties
-    - job_application_id
+    - jobseeker_profile_id
   feedbacks:
-    - id
     - email
-    - job_application_id
     - jobseeker_id
     - publisher_id
-    - subscription_id
-    - vacancy_id
   invitation_to_applies:
     - jobseeker_id
     - invited_by_id
   job_applications:
-    - id
     - jobseeker_id
-    - vacancy_id
     - first_name
     - last_name
     - previous_names
     - street_address
     - city
+    - country
     - postcode
     - phone_number
     - teacher_reference_number
@@ -47,36 +35,19 @@ shared:
   jobseeker_profiles:
     - id
     - jobseeker_id
+    - about_you
   jobseeker_profile_excluded_organisations:
     - jobseeker_profile_id
-    - organisation_id
   jobseekers:
     - id
     - email
     - unconfirmed_email
-  local_authority_publisher_schools:
-    - id
-    - publisher_preference_id
-    - school_id
-  location_polygons:
-    - id
   notifications:
-    - id
     - recipient_id
   organisations:
-    - id
-  organisation_publisher_preferences:
-    - id
-    - organisation_id
-    - publisher_preference_id
+    - email
   organisation_publishers:
-    - id
-    - organisation_id
     - publisher_id
-  organisation_vacancies:
-    - id
-    - organisation_id
-    - vacancy_id
   publishers:
     - id
     - oid
@@ -84,37 +55,29 @@ shared:
     - family_name
     - given_name
   publisher_preferences:
-    - id
     - publisher_id
-    - organisation_id
   qualifications:
-    - id
     - finished_studying_details
-    - job_application_id
-  qualification_results:
-    - id
-    - qualification_id
+    - institution
+    - jobseeker_profile_id
   references:
-    - id
     - name
     - job_title
     - organisation
     - email
     - phone_number
-    - job_application_id
   saved_jobs:
-    - id
     - jobseeker_id
-    - vacancy_id
-  school_group_memberships:
-    - id
-    - school_id
-    - school_group_id
   subscriptions:
-    - id
     - email
   vacancies:
-    - id
+    - application_email
     - contact_email
+    - contact_number
     - publisher_id
-    - publisher_organisation_id
+  personal_details:
+    - jobseeker_profile_id
+    - first_name
+    - last_name
+    - phone_number
+

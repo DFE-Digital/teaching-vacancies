@@ -14,7 +14,7 @@ class Publishers::Vacancies::FeedbacksController < Publishers::Vacancies::BaseCo
   private
 
   def feedback_form_params
-    params.require(:publishers_job_listing_feedback_form).permit(:comment, :email, :rating, :report_a_problem, :user_participation_response)
+    params.require(:publishers_job_listing_feedback_form).permit(:comment, :email, :rating, :report_a_problem, :user_participation_response, :occupation)
   end
 
   def feedback_attributes

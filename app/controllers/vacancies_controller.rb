@@ -1,14 +1,10 @@
 class VacanciesController < ApplicationController
-  MAX_TOTAL_RESULTS_FOR_MAP = 500
-
   before_action :set_landing_page, only: %i[index]
   after_action :trigger_search_performed_event, only: %i[index]
 
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
     @pagy, @vacancies = pagy(@vacancies_search.vacancies)
-
-    @show_map = @vacancies_search.location && @vacancies_search.total_count <= MAX_TOTAL_RESULTS_FOR_MAP
   end
 
   def show
@@ -54,7 +50,7 @@ class VacanciesController < ApplicationController
   def trigger_search_performed_event
     fail_safe do
       vacancy_ids = @vacancies_search.vacancies.map(&:id)
-      polygon_id = StringAnonymiser.new(@vacancies_search.location_search.polygon.id).to_s if @vacancies_search.location_search.polygon
+      polygon_id = DfE::Analytics.anonymise(@vacancies_search.location_search.polygon.id) if @vacancies_search.location_search.polygon
 
       event_data = {
         search_criteria: form.to_hash,
