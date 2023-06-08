@@ -37,14 +37,14 @@ class VacancyFilterQuery < ApplicationQuery
     selected_school_types = []
 
     if filters[:organisation_types].include?("Academy")
-      ["Academy", "Academies", "Free schools", "Free school"].each {|school_type| selected_school_types << school_type}
+      ["Academy", "Academies", "Free schools", "Free school"].each { |school_type| selected_school_types << school_type }
     end
 
     if filters[:organisation_types].include?("Local authority maintained schools")
       selected_school_types << "Local authority maintained schools"
     end
 
-    built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: selected_school_types })
+    built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: selected_school_types }).distinct
   end
 
   private
