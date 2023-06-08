@@ -72,8 +72,8 @@ end
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:academy1) { create(:school, school_type: "Academies") }
   let(:academy2) { create(:school, school_type: "Academy") }
-  let(:free_school1) { create(:school, school_type: "Free schools" ) }
-  let(:free_school2) { create(:school,  school_type: "Free school") }
+  let(:free_school1) { create(:school, school_type: "Free schools") }
+  let(:free_school2) { create(:school, school_type: "Free school") }
   let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
   let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
