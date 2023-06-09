@@ -37,7 +37,7 @@ class VacancyFilterQuery < ApplicationQuery
     selected_school_types = []
 
     if filters[:organisation_types].include?("Academy")
-      ["Academy", "Academies", "Free schools", "Free school"].each { |school_type| selected_school_types << school_type }
+      selected_school_types.push("Academy", "Academies", "Free schools", "Free school")
     end
 
     if filters[:organisation_types].include?("Local authority maintained schools")
