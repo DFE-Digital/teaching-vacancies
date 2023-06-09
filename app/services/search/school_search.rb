@@ -42,7 +42,7 @@ class Search::SchoolSearch
   end
 
   def clear_filters_params
-    active_criteria.merge({ education_phase: [], key_stage: [], special_school: [], job_availability: [], organisation_type: [] })
+    active_criteria.merge({ education_phase: [], key_stage: [], special_school: [], job_availability: [], organisation_types: [] })
   end
 
   private
