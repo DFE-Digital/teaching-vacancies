@@ -369,6 +369,18 @@ en:
         employment_history_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
+      jobseekers_job_preferences_form:
+        role_options:
+          education_support: Learning support, cover supervisor or tutor
+          head_of_year: Head of year or phase
+          head_of_department: Head of department or curriculum
+          headteacher: Headteacher
+          headteacher_assistant: Assistant headteacher
+          headteacher_deputy: Deputy headteacher
+          higher_level_teaching_assistant: HLTA (higher level teaching assistant)
+          sendco: SENDCo (special educational needs and disabilities coordinator)
+          teacher: Teacher
+          teaching_assistant: Teaching assistant
       jobseekers_qualifications_shared_labels: &jobseekers_qualifications_shared_labels
         category_options:
           gcse: GCSEs

@@ -4,7 +4,8 @@ module Jobseekers
   class JobPreferencesForm
     include Multistep::Form
 
-    ROLES = %i[teacher senior_leader middle_leader teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
+    ROLES = %i[teacher head_of_year head_of_department headteacher_assistant headteacher_deputy headteacher
+               teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
     PHASES = %i[nursery primary middle secondary through].freeze
     WORKING_PATTERNS = %i[full_time part_time].freeze
 
@@ -22,7 +23,7 @@ module Jobseekers
       validate :validate_roles
 
       def options
-        ROLES.to_h { |opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{opt}")] }
+        ROLES.to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.role_options.#{opt}")] }
       end
 
       def validate_roles
