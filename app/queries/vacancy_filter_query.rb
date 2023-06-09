@@ -31,6 +31,8 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope
   end
 
+  private
+
   def add_organisation_type_filters(filters, built_scope)
     return built_scope unless filters[:organisation_types].present?
 
@@ -46,8 +48,6 @@ class VacancyFilterQuery < ApplicationQuery
 
     built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: selected_school_types }).distinct
   end
-
-  private
 
   def job_roles(filter)
     filter&.map { |job_role| job_role == "sen_specialist" ? "sendco" : job_role }
