@@ -56,7 +56,7 @@ class Search::SchoolSearch
     scope = scope.where(phase: education_phase) if education_phase
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
     scope = apply_organisation_type_filter(scope)
-    scope = apply_special_school_filter(scope)
+    scope = apply_school_type_filter(scope)
     apply_job_availability_filter(scope)
   end
 
@@ -108,10 +108,20 @@ class Search::SchoolSearch
 
     scope.where(school_type: selected_school_types)
   end
+  
+  def apply_school_type_filter(scope)
+    scope = apply_special_school_filter(scope)
+    apply_faith_school_filter(scope)
+  end
 
   def apply_special_school_filter(scope)
-    return scope unless school_types.present?
-
+    return scope unless school_types.present? && school_types.include?("special_school")
+    
     scope.where(school_type: ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter",  "Academy special sponsor led", "Free schools special"])
+  end
+
+  def apply_faith_school_filter(scope)
+    return scope unless school_types.present? && school_types.include?("faith_school")
+    scope.where("gias_data -> 'ReligiousCharacter (name)' IS NOT NULL")
   end
 end

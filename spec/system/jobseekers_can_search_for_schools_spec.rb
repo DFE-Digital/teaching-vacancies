@@ -8,7 +8,7 @@ RSpec.describe "Searching on the schools page" do
   let(:free_school1) { create(:school, name: "Free school 1", school_type: "Free schools") }
   let(:free_school2) { create(:school, name: "Free school 1", school_type: "Free school") }
   let(:local_authority_school) { create(:school, name: "Local authority school 1", school_type: "Local authority maintained schools") }
-  let(:faith_school) { create(:school, name: "Faith school", gias_data: {"ReligiousCharacter (name)" => "anything"}) }
+  let(:faith_school) { create(:school, name: "Religious", gias_data: {"ReligiousCharacter (name)" => "anything"}) }
   let(:special_school1) { create(:school, name: "Community special school", school_type: "Community special school") }
   let(:special_school2) { create(:school, name: "Foundation special school", school_type: "Foundation special school") }
   let(:special_school3) { create(:school, name: "Non-maintained special school", school_type: "Non-maintained special school") }
@@ -18,7 +18,7 @@ RSpec.describe "Searching on the schools page" do
 
 
   before do
-    [secondary_school, primary_school, academy_school1, academy_school2, free_school1, free_school2, local_authority_school,special_school1, special_school2,special_school3, special_school4, special_school5, special_school6].each do |school|
+    [secondary_school, primary_school, academy_school1, academy_school2, free_school1, free_school2, local_authority_school, faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6].each do |school|
       create(:publisher, organisations: [school])
       create(:vacancy, organisations: [school])
     end
@@ -110,6 +110,14 @@ RSpec.describe "Searching on the schools page" do
 
       expect_page_to_show_schools([special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
       expect_page_not_to_show_schools([local_authority_school, secondary_school, primary_school])
+    end
+
+    it "allows users to filter by faith schools" do
+      check "Faith school"
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_schools([faith_school])
+      expect_page_not_to_show_schools([local_authority_school, secondary_school, primary_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
     end
   end
 

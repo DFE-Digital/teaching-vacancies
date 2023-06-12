@@ -169,13 +169,15 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
     let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
     let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
+    let(:faith_school) { create(:school, name: "Religious", gias_data: {"ReligiousCharacter (name)" => "anything"}) }
 
     let!(:special_job1) { create(:vacancy, :past_publish, :teacher, job_title: "AAAA", subjects: [], organisations: [special_school1]) }
-    let!(:special_job2) { create(:vacancy, :past_publish, :teacher, job_title: "BBBB", subjects: [], organisations: [special_school1]) }
-    let!(:special_job3) { create(:vacancy, :past_publish, :teacher, job_title: "CCCC", subjects: [], organisations: [special_school1]) }
-    let!(:special_job4) { create(:vacancy, :past_publish, :teacher, job_title: "DDDD", subjects: [], organisations: [special_school1]) }
-    let!(:special_job5) { create(:vacancy, :past_publish, :teacher, job_title: "EEEE", subjects: [], organisations: [special_school1]) }
-    let!(:special_job6) { create(:vacancy, :past_publish, :teacher, job_title: "FFFF", subjects: [], organisations: [special_school1]) }
+    let!(:special_job2) { create(:vacancy, :past_publish, :teacher, job_title: "BBBB", subjects: [], organisations: [special_school2]) }
+    let!(:special_job3) { create(:vacancy, :past_publish, :teacher, job_title: "CCCC", subjects: [], organisations: [special_school3]) }
+    let!(:special_job4) { create(:vacancy, :past_publish, :teacher, job_title: "DDDD", subjects: [], organisations: [special_school4]) }
+    let!(:special_job5) { create(:vacancy, :past_publish, :teacher, job_title: "EEEE", subjects: [], organisations: [special_school5]) }
+    let!(:special_job6) { create(:vacancy, :past_publish, :teacher, job_title: "FFFF", subjects: [], organisations: [special_school6]) }
+    let!(:faith_job) { create(:vacancy, :past_publish, :teacher, job_title: "religious", subjects: [], organisations: [faith_school]) }
 
     it "allows user to filter by special schools" do
       visit jobs_path
@@ -184,6 +186,15 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
       expect_page_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6])
       expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
+    end
+
+    it "allows user to filter by faith schools" do
+      visit jobs_path
+      check "Faith school"
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_jobs([faith_job])
+      expect_page_not_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6, job1, job2, job3, job4, maths_job1, maths_job2])
     end
   end
 
