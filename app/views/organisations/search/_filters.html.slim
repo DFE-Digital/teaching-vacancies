@@ -49,7 +49,7 @@ ruby:
       selected_method: :last,
     },
   ]
-  
+
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
   filters: { total_count: @school_search.total_filters },
   clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: organisations_path(@school_search.clear_filters_params) },

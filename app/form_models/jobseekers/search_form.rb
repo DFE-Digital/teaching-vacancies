@@ -5,7 +5,7 @@ class Jobseekers::SearchForm
               :location, :radius,
               :organisation_slug,
               :job_roles, :ect_statuses, :organisation_types, :organisation_type_options, :subjects, :phases, :working_patterns,
-              :job_role_options, :ect_status_options,
+              :job_role_options, :ect_status_options, :school_types, :school_type_options,
               :phase_options, :working_pattern_options,
               :filters_from_keyword, :total_filters, :sort
 
@@ -22,6 +22,7 @@ class Jobseekers::SearchForm
     @working_patterns = params[:working_patterns] || []
     @organisation_slug = params[:organisation_slug]
     @organisation_types = params[:organisation_types] || []
+    @school_types = params[:school_types] || []
     @sort = Search::VacancySort.new(keyword: keyword).update(sort_by: params[:sort_by])
 
     set_filters_from_keyword
@@ -45,6 +46,7 @@ class Jobseekers::SearchForm
       phases: @phases,
       working_patterns: @working_patterns,
       organisation_types: @organisation_types,
+      school_types: @school_types
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 
@@ -91,10 +93,11 @@ class Jobseekers::SearchForm
       [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{option}")]
     end
     set_organisation_type_options
+    @school_type_options = ["faith_school", "special_school"].map { |school_type| [school_type, I18n.t("organisations.filters.#{school_type}")] }
   end
 
   def set_total_filters
-    @total_filters = [@job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @working_patterns&.count, @organisation_types&.count].compact.sum
+    @total_filters = [@job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
   end
 
   def set_radius(radius_param)
