@@ -2,17 +2,23 @@ require "rails_helper"
 
 RSpec.describe "Searching on the schools page" do
   let(:secondary_school) { create(:school, name: "Oxford") }
-  let(:secondary_special_school) { create(:school, name: "Cambridge", gias_data: { "SpecialClasses (code)" => "1" }) }
   let(:primary_school) { create(:school, name: "St Peters", phase: "primary") }
-
   let(:academy_school1) { create(:school, name: "Academy1", school_type: "Academies") }
   let(:academy_school2) { create(:school, name: "Academy2", school_type: "Academy") }
   let(:free_school1) { create(:school, name: "Free school 1", school_type: "Free schools") }
   let(:free_school2) { create(:school, name: "Free school 1", school_type: "Free school") }
   let(:local_authority_school) { create(:school, name: "Local authority school 1", school_type: "Local authority maintained schools") }
+  let(:faith_school) { create(:school, name: "Faith school", gias_data: {"ReligiousCharacter (name)" => "anything"}) }
+  let(:special_school1) { create(:school, name: "Community special school", school_type: "Community special school") }
+  let(:special_school2) { create(:school, name: "Foundation special school", school_type: "Foundation special school") }
+  let(:special_school3) { create(:school, name: "Non-maintained special school", school_type: "Non-maintained special school") }
+  let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
+  let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
+  let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
+
 
   before do
-    [secondary_school, secondary_special_school, primary_school, academy_school1, academy_school2, free_school1, free_school2, local_authority_school].each do |school|
+    [secondary_school, primary_school, academy_school1, academy_school2, free_school1, free_school2, local_authority_school,special_school1, special_school2,special_school3, special_school4, special_school5, special_school6].each do |school|
       create(:publisher, organisations: [school])
       create(:vacancy, organisations: [school])
     end
@@ -94,6 +100,16 @@ RSpec.describe "Searching on the schools page" do
 
       expect_page_to_show_schools([local_authority_school, academy_school1, academy_school2, free_school1, free_school2])
       expect_page_not_to_show_schools([secondary_school, secondary_special_school, primary_school])
+    end
+  end
+
+  context "when filtering by school type" do
+    it "allows user to filter by special schools" do
+      check "Special school"
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_schools([special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
+      expect_page_not_to_show_schools([local_authority_school, secondary_school, primary_school])
     end
   end
 
