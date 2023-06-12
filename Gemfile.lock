@@ -174,7 +174,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.5)
+    faraday (2.7.6)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-follow_redirects (0.3.0)
@@ -207,7 +207,7 @@ GEM
       retriable (>= 2.0, < 4.a)
       rexml
       webrick
-    google-apis-drive_v3 (0.40.0)
+    google-apis-drive_v3 (0.41.0)
       google-apis-core (>= 0.11.0, < 2.a)
     google-apis-indexing_v3 (0.13.0)
       google-apis-core (>= 0.11.0, < 2.a)
@@ -274,7 +274,7 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    jwt (2.7.0)
+    jwt (2.7.1)
     kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
