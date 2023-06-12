@@ -10,6 +10,7 @@ class SchoolSearchForm
   attribute :special_school, default: []
   attribute :job_availability, default: []
   attribute :organisation_types, default: []
+  attribute :school_types, default: []
 
   def to_h
     attrs = attributes.symbolize_keys
@@ -49,6 +50,10 @@ class SchoolSearchForm
       [I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy"), "includes free schools"],
       [I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority"), nil],
     ]
+  end
+
+  def school_types_options
+    ["faith_school", "special_school"].map { |school_type| [school_type, I18n.t("organisations.filters.#{school_type}")] }
   end
 
   def assign_attributes(new_attributes)

@@ -41,6 +41,7 @@ en:
       phases: Education phase
       working_patterns: Working pattern
       organisation_type: Organisation type
+      school_type: School type
 
     education_phase_options:
       middle: Middle
