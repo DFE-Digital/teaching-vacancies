@@ -30,7 +30,7 @@ class VacanciesController < ApplicationController
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
     params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by,
-                  job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], organisation_types: [])
+                  job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], organisation_types: [], school_types: [])
   end
 
   def set_landing_page
