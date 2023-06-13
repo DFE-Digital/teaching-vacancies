@@ -25,7 +25,7 @@ class VacanciesController < ApplicationController
   def search_params
     return @landing_page.criteria if @landing_page
 
-    strip_empty_checkboxes(%i[job_roles ect_statuses subjects phases working_patterns organisation_types]) unless params[:skip_strip_checkboxes]
+    strip_empty_checkboxes(%i[job_roles ect_statuses subjects phases working_patterns organisation_types school_types]) unless params[:skip_strip_checkboxes]
     %w[job_roles subjects phases working_patterns organisation_types].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
