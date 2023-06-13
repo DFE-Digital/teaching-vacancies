@@ -5,13 +5,17 @@ RSpec.describe "Searching on the schools page" do
   let(:secondary_special_school) { create(:school, name: "Cambridge", gias_data: { "SpecialClasses (code)" => "1" }) }
   let(:primary_school) { create(:school, name: "St Peters", phase: "primary") }
 
+  let(:academy_school1) { create(:school, name: "Academy1", school_type: "Academies") }
+  let(:academy_school2) { create(:school, name: "Academy2", school_type: "Academy") }
+  let(:free_school1) { create(:school, name: "Free school 1", school_type: "Free schools") }
+  let(:free_school2) { create(:school, name: "Free school 1", school_type: "Free school") }
+  let(:local_authority_school) { create(:school, name: "Local authority school 1", school_type: "Local authority maintained schools") }
+
   before do
-    create(:publisher, organisations: [secondary_school])
-    create(:publisher, organisations: [secondary_special_school])
-    create(:publisher, organisations: [primary_school])
-    create(:vacancy, organisations: [secondary_school])
-    create(:vacancy, organisations: [secondary_special_school])
-    create(:vacancy, organisations: [primary_school])
+    [secondary_school, secondary_special_school, primary_school, academy_school1, academy_school2, free_school1, free_school2, local_authority_school].each do |school|
+      create(:publisher, organisations: [school])
+      create(:vacancy, organisations: [school])
+    end
     visit organisations_path
   end
 
@@ -30,9 +34,7 @@ RSpec.describe "Searching on the schools page" do
 
   context "when filters are selected" do
     before do
-      expect(page).to have_link secondary_special_school.name
-      expect(page).to have_link secondary_school.name
-      expect(page).to have_link primary_school.name
+      expect_page_to_show_schools([secondary_special_school, secondary_school, primary_school])
 
       check I18n.t("organisations.search.results.phases.secondary")
       check I18n.t("organisations.filters.special_school")
@@ -61,12 +63,49 @@ RSpec.describe "Searching on the schools page" do
     it "allows jobseeker to clear all filters" do
       click_link "Clear filters"
 
-      expect(page).to have_link secondary_special_school.name
-      expect(page).to have_link secondary_school.name
-      expect(page).to have_link primary_school.name
+      expect_page_to_show_schools([secondary_special_school, secondary_school, primary_school])
 
       expect(page).not_to have_link(I18n.t("organisations.search.results.phases.secondary"))
       expect(page).not_to have_link(I18n.t("organisations.filters.special_school"))
+    end
+  end
+
+  context "when filtering by organisation type" do
+    it "allows user to filter by academies" do
+      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_schools([academy_school1, academy_school2, free_school1, free_school2])
+      expect_page_not_to_show_schools([local_authority_school, secondary_school, secondary_special_school, primary_school])
+    end
+
+    it "allows user to filter by local authorities" do
+      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_schools([local_authority_school])
+      expect_page_not_to_show_schools([academy_school1, academy_school2, free_school1, free_school2, secondary_school, secondary_special_school, primary_school])
+    end
+
+    it "allows user to filter by both academies and local authorities" do
+      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
+      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_schools([local_authority_school, academy_school1, academy_school2, free_school1, free_school2])
+      expect_page_not_to_show_schools([secondary_school, secondary_special_school, primary_school])
+    end
+  end
+
+  def expect_page_to_show_schools(schools)
+    schools.each do |school|
+      expect(page).to have_link school.name
+    end
+  end
+
+  def expect_page_not_to_show_schools(schools)
+    schools.each do |school|
+      expect(page).not_to have_link school.name
     end
   end
 end

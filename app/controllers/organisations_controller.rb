@@ -25,6 +25,6 @@ class OrganisationsController < ApplicationController
   end
 
   def strip_empty_filter_checkboxes
-    strip_empty_checkboxes(%i[education_phase key_stage special_school job_availability]) unless params[:skip_strip_checkboxes]
+    strip_empty_checkboxes(%i[education_phase key_stage special_school job_availability organisation_types]) unless params[:skip_strip_checkboxes]
   end
 end

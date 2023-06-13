@@ -22,7 +22,7 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = built_scope.ect_suitable if filters[:ect_statuses]&.include?("ect_suitable") || filters[:job_roles]&.include?("ect_suitable")
     # TODO: Remove this scope when we do not have any more live SEND responsible jobs
     built_scope = built_scope.where(":job_roles = ANY (job_roles)", job_roles: 2) if filters[:job_roles]&.include?("send_responsible")
-
+    built_scope = add_organisation_type_filters(filters, built_scope)
     working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
     built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
 
@@ -32,6 +32,22 @@ class VacancyFilterQuery < ApplicationQuery
   end
 
   private
+
+  def add_organisation_type_filters(filters, built_scope)
+    return built_scope unless filters[:organisation_types].present?
+
+    selected_school_types = []
+
+    if filters[:organisation_types].include?("Academy")
+      selected_school_types.push("Academy", "Academies", "Free schools", "Free school")
+    end
+
+    if filters[:organisation_types].include?("Local authority maintained schools")
+      selected_school_types << "Local authority maintained schools"
+    end
+
+    built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: selected_school_types }).distinct
+  end
 
   def job_roles(filter)
     filter&.map { |job_role| job_role == "sen_specialist" ? "sendco" : job_role }
