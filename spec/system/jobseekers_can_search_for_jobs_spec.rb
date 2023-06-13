@@ -76,12 +76,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:free_school2) { create(:school, school_type: "Free school") }
   let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
-  let(:special_school1) { create(:school, name: "Community special school", school_type: "Community special school") }
-  let(:special_school2) { create(:school, name: "Foundation special school", school_type: "Foundation special school") }
-  let(:special_school3) { create(:school, name: "Non-maintained special school", school_type: "Non-maintained special school") }
-  let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
-  let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
-  let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
+  
   let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: [], organisations: [academy1]) }
@@ -174,7 +169,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6])
-      expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
+      expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, faith_job])
     end
 
     it "allows user to filter by faith schools" do
@@ -184,6 +179,16 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
       expect_page_to_show_jobs([faith_job])
       expect_page_not_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6, job1, job2, job3, job4, maths_job1, maths_job2])
+    end
+
+    it "allows users to filter by both faith and special schools" do
+      visit jobs_path
+      check "Faith school"
+      check "Special school"
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6, faith_job])
+      expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
     end
   end
 
