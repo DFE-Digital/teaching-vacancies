@@ -53,15 +53,14 @@ class VacancyFilterQuery < ApplicationQuery
   def add_school_type_filters(filters, built_scope)
     return built_scope unless filters[:school_types].present?
 
-    special_school_types = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"]
-
     if filters[:school_types].include?("faith_school") && filters[:school_types].include?("special_school")
-      return built_scope.joins(organisation_vacancies: :organisation).where("organisations.school_type IN (?) OR organisations.gias_data -> 'ReligiousCharacter (name)' IS NOT NULL", special_school_types).distinct
+      return built_scope.joins(organisation_vacancies: :organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
+                                                                     .or(built_scope.where("organisations.school_type IN (?)", Organisation::SPECIAL_SCHOOL_TYPES)).distinct
     end
 
-    return built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: special_school_types }).distinct if filters[:school_types].include?("special_school")
+    return built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: Organisation::SPECIAL_SCHOOL_TYPES }).distinct if filters[:school_types].include?("special_school")
 
-    built_scope.joins(organisation_vacancies: :organisation).where("organisations.gias_data -> 'ReligiousCharacter (name)' IS NOT NULL").distinct
+    built_scope.joins(organisation_vacancies: :organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).distinct
   end
 
   def job_roles(filter)

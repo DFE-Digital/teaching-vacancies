@@ -112,12 +112,12 @@ class Search::SchoolSearch
   def apply_school_type_filter(scope)
     return scope unless school_types.present?
 
-    special_school_types = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"]
+    if school_types.include?("special_school") && school_types.include?("faith_school")
+      return scope.where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).or(scope.where(school_type: Organisation::SPECIAL_SCHOOL_TYPES))
+    end
 
-    return scope.where("school_type IN (?) OR gias_data -> 'ReligiousCharacter (name)' IS NOT NULL", special_school_types) if school_types.include?("special_school") && school_types.include?("faith_school")
+    return scope.where(school_type: Organisation::SPECIAL_SCHOOL_TYPES) if school_types.include?("special_school")
 
-    return scope.where(school_type: special_school_types) if school_types.include?("special_school")
-
-    scope.where("gias_data -> 'ReligiousCharacter (name)' IS NOT NULL")
+    scope.where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
   end
 end
