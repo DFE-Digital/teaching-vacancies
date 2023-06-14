@@ -53,7 +53,7 @@ class SchoolSearchForm
   end
 
   def school_types_options
-    ["faith_school", "special_school"].map { |school_type| [school_type, I18n.t("organisations.filters.#{school_type}")] }
+    %w[faith_school special_school].map { |school_type| [school_type, I18n.t("organisations.filters.#{school_type}")] }
   end
 
   def assign_attributes(new_attributes)

@@ -113,11 +113,11 @@ class Search::SchoolSearch
     return scope unless school_types.present?
 
     special_school_types = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"]
-    
+
     return scope.where("school_type IN (?) OR gias_data -> 'ReligiousCharacter (name)' IS NOT NULL", special_school_types) if school_types.include?("special_school") && school_types.include?("faith_school")
 
     return scope.where(school_type: special_school_types) if school_types.include?("special_school")
-      
+
     scope.where("gias_data -> 'ReligiousCharacter (name)' IS NOT NULL")
   end
 end

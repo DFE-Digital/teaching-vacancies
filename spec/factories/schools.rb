@@ -1,6 +1,5 @@
 FactoryBot.define do
   ofsted_ratings = ["Outstanding", "Good", "Requires Improvement", "Inadequate"].freeze
-  religious_characters = ["Church of England", "Roman Catholic", "None", "Does not apply"].freeze
 
   factory :school do
     address { Faker::Address.street_name.delete("'") }

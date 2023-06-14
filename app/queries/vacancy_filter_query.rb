@@ -54,7 +54,7 @@ class VacancyFilterQuery < ApplicationQuery
     return built_scope unless filters[:school_types].present?
 
     special_school_types = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"]
-    
+
     if filters[:school_types].include?("faith_school") && filters[:school_types].include?("special_school")
       return built_scope.joins(organisation_vacancies: :organisation).where("organisations.school_type IN (?) OR organisations.gias_data -> 'ReligiousCharacter (name)' IS NOT NULL", special_school_types).distinct
     end

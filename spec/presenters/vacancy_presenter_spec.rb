@@ -402,7 +402,7 @@ RSpec.describe VacancyPresenter do
                     publisher_organisation: publisher_organisation,
                     publisher: publisher)
     end
-    let(:school) { build(:school) }
+    let(:school) { build(:school, gias_data: { "ReligiousCharacter (name)" => "Church of England" }) }
     let(:organisations) { [school] }
     let(:publisher_organisation) { school }
     let(:publisher) { build_stubbed(:publisher) }

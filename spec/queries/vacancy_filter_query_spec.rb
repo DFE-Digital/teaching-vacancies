@@ -12,7 +12,7 @@ RSpec.describe VacancyFilterQuery do
   let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
   let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
   let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
-  let(:faith_school) { create(:school, name: "Religious", gias_data: {"ReligiousCharacter (name)" => "anything"}) }
+  let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
 
   let!(:vacancy1) { create(:vacancy, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[secondary], job_role: "teacher", ect_status: "ect_suitable", organisations: [academy]) }
   let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[sixth_form_or_college], job_role: "teacher", ect_status: "ect_unsuitable", organisations: [free_school]) }
@@ -37,7 +37,7 @@ RSpec.describe VacancyFilterQuery do
         job_roles: %w[teacher],
         ect_statuses: %w[ect_suitable],
         from_date: 5.days.ago,
-        to_date: Date.today
+        to_date: Date.today,
       }
       expect(subject.call(filters)).to contain_exactly(vacancy1)
     end
@@ -64,7 +64,7 @@ RSpec.describe VacancyFilterQuery do
       context "when organisation_types is empty" do
         it "will return vacancies associated with all schools" do
           filters = {}
-          expect(subject.call(filters)).to contain_exactly(vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, special_vacancy1, special_vacancy2, 
+          expect(subject.call(filters)).to contain_exactly(vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, special_vacancy1, special_vacancy2,
                                                            special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy)
         end
       end
@@ -102,7 +102,7 @@ RSpec.describe VacancyFilterQuery do
       context "when organisation_types includes 'special_school' and 'faith_school" do
         it "will return vacancies associated with both faith schools and special schools" do
           filters = {
-            school_types: ["special_school", "faith_school"],
+            school_types: %w[special_school faith_school],
           }
           expect(subject.call(filters)).to contain_exactly(special_vacancy1, special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy)
         end
