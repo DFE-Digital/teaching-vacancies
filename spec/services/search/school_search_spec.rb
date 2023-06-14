@@ -93,6 +93,9 @@ RSpec.describe Search::SchoolSearch do
     let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
     let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
     let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
+    let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
+    let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
+    let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
     let!(:other_school) { create(:school, name: "other", school_type: "Something else") }
 
     context "when school_types == ['faith_school']" do
@@ -113,7 +116,7 @@ RSpec.describe Search::SchoolSearch do
 
     context "when school_types is empty" do
       it "will return all schools" do
-        expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school, other_school)
+        expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school, other_school, non_faith_school1, non_faith_school2, non_faith_school3)
       end
     end
 

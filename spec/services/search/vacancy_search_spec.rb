@@ -15,7 +15,7 @@ RSpec.describe Search::VacancySearch do
       working_patterns: working_patterns,
       subjects: subjects,
       organisation_types: organisation_types,
-      school_types: school_types
+      school_types: school_types,
     }.compact
   end
 
@@ -88,7 +88,7 @@ RSpec.describe Search::VacancySearch do
     let(:organisation_types) { ["faith_school"] }
 
     it "clears selected filters " do
-      expect(subject.active_criteria).to eq({ location: location, organisation_types: organisation_types, organisation_slug: organisation_slug, ect_statuses: ect_statuses, job_roles: job_roles, keyword: keyword, phases: phases, radius: 10, subjects: subjects, working_patterns: working_patterns, organisation_types: organisation_types })
+      expect(subject.active_criteria).to eq({ location: location, organisation_types: organisation_types, organisation_slug: organisation_slug, ect_statuses: ect_statuses, job_roles: job_roles, keyword: keyword, phases: phases, radius: 10, subjects: subjects, working_patterns: working_patterns, school_types: school_types })
       expect(subject.clear_filters_params).to eq({ keyword: keyword, location: location, radius: 10, organisation_slug: organisation_slug, job_roles: [], ect_statuses: [], phases: [], working_patterns: [], subjects: [], organisation_types: [], school_types: [], previous_keyword: keyword, skip_strip_checkboxes: true })
     end
   end

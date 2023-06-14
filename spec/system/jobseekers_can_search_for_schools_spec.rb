@@ -103,6 +103,9 @@ RSpec.describe "Searching on the schools page" do
 
   context "when filtering by school type" do
     let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
+    let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
+    let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
+    let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
     let(:special_school2) { create(:school, name: "Foundation special school", school_type: "Foundation special school") }
     let(:special_school3) { create(:school, name: "Non-maintained special school", school_type: "Non-maintained special school") }
     let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
@@ -110,7 +113,7 @@ RSpec.describe "Searching on the schools page" do
     let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
 
     before do
-      [faith_school, special_school2, special_school3, special_school4, special_school5, special_school6].each do |school|
+      [faith_school, special_school2, special_school3, special_school4, special_school5, special_school6, non_faith_school1, non_faith_school2, non_faith_school3].each do |school|
         create(:publisher, organisations: [school])
         create(:vacancy, organisations: [school])
       end
@@ -122,7 +125,7 @@ RSpec.describe "Searching on the schools page" do
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
-      expect_page_not_to_show_schools([secondary_school, primary_school, faith_school])
+      expect_page_not_to_show_schools([secondary_school, primary_school, faith_school, non_faith_school1, non_faith_school2, non_faith_school3])
     end
 
     it "allows users to filter by faith schools" do
@@ -130,7 +133,8 @@ RSpec.describe "Searching on the schools page" do
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([faith_school])
-      expect_page_not_to_show_schools([secondary_school, primary_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
+      expect_page_not_to_show_schools([secondary_school, primary_school, special_school1, special_school2, special_school3, special_school4, special_school5,
+                                       special_school6, non_faith_school1, non_faith_school2, non_faith_school3])
     end
 
     it "allows users to filter by faith schools AND special schools" do
@@ -139,7 +143,18 @@ RSpec.describe "Searching on the schools page" do
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
-      expect_page_not_to_show_schools([secondary_school, primary_school])
+      expect_page_not_to_show_schools([secondary_school, primary_school, non_faith_school1, non_faith_school2, non_faith_school3])
+    end
+
+    it "shows all schools if neither filter is selected" do
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_schools([faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6,
+                                   secondary_school, primary_school, non_faith_school1])
+
+      click_link "2"
+
+      expect_page_to_show_schools([non_faith_school2, non_faith_school3])
     end
   end
 
