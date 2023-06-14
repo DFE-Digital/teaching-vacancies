@@ -15,15 +15,7 @@ ruby:
       options: @search_form.key_stage_options,
       value_method: :first,
       selected_method: :last,
-    },
-    {
-      legend: t("jobs.filters.organisation_type"),
-      key: :organisation_types,
-      selected: @search_form.organisation_types,
-      options: @search_form.organisation_type_options,
-      value_method: :first,
-      selected_method: :first,
-    },
+      },
     {
       legend: t("organisations.filters.special_school"),
       key: :special_school,
@@ -52,6 +44,5 @@ ruby:
         - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :organisations_path, params: @school_search.active_criteria }))
     - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:education_phase, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("organisations.filters.education_phase") }, hint: nil)
     - filters_component.with_group key: "key_stage", component: f.govuk_collection_check_boxes(:key_stage, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("organisations.filters.key_stage") }, hint: nil)
-    - filters_component.with_group key: "organisation_types", component: f.govuk_collection_check_boxes(:organisation_types, f.object.organisation_type_options, :first, :first, :last, small: true, legend: { text: t("jobs.filters.organisation_type") }, hint: nil)
     - filters_component.with_group key: "special_school", component: f.govuk_collection_check_boxes(:special_school, [["1", t("organisations.filters.special_school")]], :first, :last, small: true, legend: { text: t("organisations.filters.special_school") })
     - filters_component.with_group key: "job_availability", component: f.govuk_collection_check_boxes(:job_availability, f.object.job_availability_options, :first, :last, small: true, legend: { text: t("organisations.filters.job_availability.label") })

@@ -33,14 +33,6 @@ ruby:
       selected_method: :last,
     },
     {
-      legend: t("jobs.filters.organisation_type"),
-      key: :organisation_types,
-      selected: form.organisation_types,
-      options: form.organisation_type_options,
-      value_method: :first,
-      selected_method: :first,
-    },
-    {
       legend: t("jobs.filters.working_patterns"),
       key: :working_patterns,
       selected: form.working_patterns,
@@ -62,5 +54,4 @@ ruby:
     - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
     = render "shared/subjects_filter", filters_component: filters_component, f: f
     - filters_component.with_group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, form.ect_status_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
-    - filters_component.with_group key: "organisation_types", component: f.govuk_collection_check_boxes(:organisation_types, form.organisation_type_options, :first, :first, :last, small: true, legend: { text: t("jobs.filters.organisation_type") }, hint: nil)
     - filters_component.with_group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, form.working_pattern_options, :first, :last, small: true, legend: { text: t("jobs.filters.working_patterns") }, hint: nil)

@@ -70,18 +70,13 @@ RSpec.shared_examples "a successful search" do
 end
 
 RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
-  let(:academy1) { create(:school, school_type: "Academies") }
-  let(:academy2) { create(:school, school_type: "Academy") }
-  let(:free_school1) { create(:school, school_type: "Free schools") }
-  let(:free_school2) { create(:school, school_type: "Free school") }
-  let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
   let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
-  let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: [], organisations: [academy1]) }
-  let!(:job2) { create(:vacancy, :past_publish, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy2]) }
-  let!(:job3) { create(:vacancy, :past_publish, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1]) }
-  let!(:job4) { create(:vacancy, :past_publish, :teacher, job_title: "Geography Teacher", subjects: [], organisations: [free_school2]) }
+  let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: [], organisations: [school]) }
+  let!(:job2) { create(:vacancy, :past_publish, :teacher, job_title: "PE Teacher", subjects: [], organisations: [school]) }
+  let!(:job3) { create(:vacancy, :past_publish, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [school]) }
+  let!(:job4) { create(:vacancy, :past_publish, :teacher, job_title: "Geography Teacher", subjects: [], organisations: [school]) }
   let!(:expired_job) { create(:vacancy, :expired, :teacher, job_title: "Maths Teacher", subjects: [], organisations: [school]) }
   let(:per_page) { 2 }
 
@@ -105,55 +100,5 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     end
 
     it_behaves_like "a successful search"
-  end
-
-  context "jobseekers can use the organisation type filter to search for jobs" do
-    let!(:job5) { create(:vacancy, :past_publish, :teacher, job_title: "History Teacher", subjects: [], organisations: [local_authority_school1]) }
-
-    context "when academy is selected" do
-      it "only shows vacancies from academies" do
-        visit jobs_path
-        check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
-        click_on I18n.t("buttons.search")
-
-        expect_page_to_show_jobs([job1, job2, job3, job4])
-        expect_page_not_to_show_jobs([maths_job1, maths_job2, job5])
-      end
-    end
-
-    context "when local authority is selected" do
-      it "only shows vacancies from local authorities" do
-        visit jobs_path
-        check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
-        click_on I18n.t("buttons.search")
-
-        expect_page_to_show_jobs([job5])
-        expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
-      end
-    end
-
-    context "when both local authority and academy are selected" do
-      it "shows vacancies from both local authorities and academies" do
-        visit jobs_path
-        check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
-        check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
-        click_on I18n.t("buttons.search")
-
-        expect_page_to_show_jobs([job1, job2, job3, job4, job5])
-        expect_page_not_to_show_jobs([maths_job1, maths_job2])
-      end
-    end
-  end
-
-  def expect_page_to_show_jobs(jobs)
-    jobs.each do |job|
-      expect(page).to have_link job.job_title
-    end
-  end
-
-  def expect_page_not_to_show_jobs(jobs)
-    jobs.each do |job|
-      expect(page).not_to have_link job.job_title
-    end
   end
 end

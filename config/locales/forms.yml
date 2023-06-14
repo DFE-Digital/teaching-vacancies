@@ -746,9 +746,6 @@ en:
       publishers_job_listing_working_patterns_form:
         full_time_details: Details
         part_time_details: Details
-        organisation_type_options:
-          academy: Academy
-          local_authority: Local authority maintained schools
         working_patterns_options:
           flexible: Flexible
           full_time: Full time

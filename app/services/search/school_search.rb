@@ -2,14 +2,13 @@ class Search::SchoolSearch
   extend Forwardable
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :name, :location, :radius, :organisation_types
+  attr_reader :search_criteria, :name, :location, :radius
 
   def initialize(search_criteria, scope: Organisation.all)
     @search_criteria = search_criteria
     @name = search_criteria[:name]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
-    @organisation_types = search_criteria[:organisation_types]
     @scope = scope
   end
 
@@ -37,12 +36,12 @@ class Search::SchoolSearch
   end
 
   def total_filters
-    filter_counts = %i[education_phase key_stage special_school job_availability organisation_types].map { |filter| search_criteria[filter]&.count || 0 }
+    filter_counts = %i[education_phase key_stage special_school job_availability].map { |filter| search_criteria[filter]&.count || 0 }
     filter_counts.sum
   end
 
   def clear_filters_params
-    active_criteria.merge({ education_phase: [], key_stage: [], special_school: [], job_availability: [], organisation_types: [] })
+    active_criteria.merge({ education_phase: [], key_stage: [], special_school: [], job_availability: [] })
   end
 
   private
@@ -55,7 +54,7 @@ class Search::SchoolSearch
     scope = scope.where(phase: education_phase) if education_phase
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
     scope = scope.where("organisations.gias_data->>'SpecialClasses (code)' = ?", "1") if special_school?
-    scope = apply_organisation_type_filter(scope)
+
     apply_job_availability_filter(scope)
   end
 
@@ -96,21 +95,5 @@ class Search::SchoolSearch
     else
       scope.where.not(id: organisation_ids)
     end
-  end
-
-  def apply_organisation_type_filter(scope)
-    return scope unless organisation_types.present?
-
-    selected_school_types = []
-
-    if organisation_types.include?("Academy")
-      selected_school_types.push("Academy", "Academies", "Free schools", "Free school")
-    end
-
-    if organisation_types.include?("Local authority maintained schools")
-      selected_school_types << "Local authority maintained schools"
-    end
-
-    scope.where(school_type: selected_school_types)
   end
 end
