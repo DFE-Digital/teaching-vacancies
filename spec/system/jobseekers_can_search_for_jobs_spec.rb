@@ -76,7 +76,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:free_school2) { create(:school, school_type: "Free school") }
   let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
-  
+
   let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: [], organisations: [academy1]) }
@@ -153,7 +153,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
     let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
     let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
-    let(:faith_school) { create(:school, name: "Religious", gias_data: {"ReligiousCharacter (name)" => "anything"}) }
+    let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
 
     let!(:special_job1) { create(:vacancy, :past_publish, :teacher, job_title: "AAAA", subjects: [], organisations: [special_school1]) }
     let!(:special_job2) { create(:vacancy, :past_publish, :teacher, job_title: "BBBB", subjects: [], organisations: [special_school2]) }
@@ -165,7 +165,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
     it "allows user to filter by special schools" do
       visit jobs_path
-      check "Special school"
+      check I18n.t("organisations.filters.special_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6])
@@ -174,7 +174,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
     it "allows user to filter by faith schools" do
       visit jobs_path
-      check "Faith school"
+      check I18n.t("organisations.filters.faith_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_jobs([faith_job])
@@ -183,8 +183,8 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
     it "allows users to filter by both faith and special schools" do
       visit jobs_path
-      check "Faith school"
-      check "Special school"
+      check I18n.t("organisations.filters.faith_school")
+      check I18n.t("organisations.filters.special_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6, faith_job])

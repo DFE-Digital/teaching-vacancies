@@ -5,7 +5,6 @@ RSpec.describe "Searching on the schools page" do
   let(:primary_school) { create(:school, name: "St Peters", phase: "primary") }
   let(:special_school1) { create(:school, name: "Community special school", school_type: "Community special school") }
 
-
   before do
     [secondary_school, primary_school, special_school1].each do |school|
       create(:publisher, organisations: [school])
@@ -34,7 +33,7 @@ RSpec.describe "Searching on the schools page" do
 
       click_on I18n.t("buttons.search")
 
-      expect_page_to_show_schools([special_school1,])
+      expect_page_to_show_schools([special_school1])
       expect_page_not_to_show_schools([secondary_school, primary_school])
 
       expect(page).to have_link(I18n.t("organisations.search.results.phases.secondary"))
@@ -103,7 +102,7 @@ RSpec.describe "Searching on the schools page" do
   end
 
   context "when filtering by school type" do
-    let(:faith_school) { create(:school, name: "Religious", gias_data: {"ReligiousCharacter (name)" => "anything"}) }
+    let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
     let(:special_school2) { create(:school, name: "Foundation special school", school_type: "Foundation special school") }
     let(:special_school3) { create(:school, name: "Non-maintained special school", school_type: "Non-maintained special school") }
     let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
@@ -119,7 +118,7 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows user to filter by special schools" do
-      check "Special school"
+      check I18n.t("organisations.filters.special_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
@@ -127,7 +126,7 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows users to filter by faith schools" do
-      check "Faith school"
+      check I18n.t("organisations.filters.faith_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([faith_school])
@@ -135,8 +134,8 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows users to filter by faith schools AND special schools" do
-      check "Faith school"
-      check "Special school"
+      check I18n.t("organisations.filters.faith_school")
+      check I18n.t("organisations.filters.special_school")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6])
