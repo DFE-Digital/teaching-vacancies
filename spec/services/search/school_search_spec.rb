@@ -9,16 +9,16 @@ RSpec.describe Search::SchoolSearch do
       location: ([location, radius] if location.present?),
       organisation_types: organisation_types,
       key_stage: key_stage,
-      special_school: special_school,
       job_availability: job_availability,
+      school_types: school_types
     }.compact
   end
 
   let(:name) { nil }
   let(:location) { nil }
   let(:organisation_types) { nil }
+  let(:school_types) { nil }
   let(:key_stage) { nil }
-  let(:special_school) { nil }
   let(:job_availability) { nil }
   let(:radius) { 10 }
 
@@ -85,17 +85,57 @@ RSpec.describe Search::SchoolSearch do
     end
   end
 
+  context "when school_types are given" do
+    let(:special_school1) { create(:school, name: "Community special school", school_type: "Community special school") }
+    let(:special_school2) { create(:school, name: "Foundation special school", school_type: "Foundation special school") }
+    let(:special_school3) { create(:school, name: "Non-maintained special school", school_type: "Non-maintained special school") }
+    let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
+    let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
+    let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
+    let(:faith_school) { create(:school, name: "Religious", gias_data: {"ReligiousCharacter (name)" => "anything"}) }
+    let!(:other_school) { create(:school, name: "other", school_type: "Something else") }
+
+    context "when school_types == ['faith_school']" do
+      let(:school_types) { ["faith_school"] }
+
+      it "will return faith schools" do
+        expect(subject.organisations).to contain_exactly(faith_school)
+      end
+    end
+
+    context "when school_types == ['special_school']" do
+      let(:school_types) { ["special_school"] }
+
+      it "will return special schools" do
+        expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6)
+      end
+    end
+
+    context "when school_types is empty" do
+      it "will return all schools" do
+        expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school, other_school)
+      end
+    end
+
+    context "when school_types includes both 'faith_school' and 'special_school'" do
+      let(:school_types) { ["faith_school", "special_school"] }
+      it "will return special schools and faith schools" do
+        expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school)
+      end
+    end
+  end
+
   context "when clearing filters" do
     let(:name) { "Bexleyheath Academy" }
     let(:location) { "Sevenoaks" }
     let(:organisation_types) { ["Academy"] }
     let(:key_stage) { ["ks2"] }
-    let(:special_school) { "1" }
     let(:job_availability) { "true" }
+    let(:school_types) { ["special_school"] }
 
     it "clears selected filters " do
-      expect(subject.active_criteria).to eq({ location: ["Sevenoaks", 10], name: name, organisation_types: organisation_types, job_availability: job_availability, key_stage: key_stage, special_school: special_school })
-      expect(subject.clear_filters_params).to eq({ location: ["Sevenoaks", 10], name: name, organisation_types: [], education_phase: [], key_stage: [], special_school: [], job_availability: [] })
+      expect(subject.active_criteria).to eq({ location: ["Sevenoaks", 10], name: name, organisation_types: organisation_types, job_availability: job_availability, key_stage: key_stage, school_types: school_types })
+      expect(subject.clear_filters_params).to eq({ location: ["Sevenoaks", 10], name: name, organisation_types: [], education_phase: [], key_stage: [], job_availability: [], school_types: [] })
     end
   end
 end
