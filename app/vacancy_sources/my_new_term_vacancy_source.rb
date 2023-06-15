@@ -56,8 +56,6 @@ class MyNewTermVacancySource
       contract_type: item["contractType"]&.first,
       phases: phases_for(item),
       key_stages: key_stages_for(item),
-
-      # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
     }.merge(organisation_fields(item))
   end
