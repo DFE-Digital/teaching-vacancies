@@ -35,18 +35,20 @@ class VacancyFilterQuery < ApplicationQuery
 
   def add_organisation_type_filters(filters, built_scope)
     return built_scope unless filters[:organisation_types].present?
-
+  
     selected_school_types = []
-
+  
     if filters[:organisation_types].include?("Academy")
       selected_school_types.push("Academy", "Academies", "Free schools", "Free school")
     end
-
+  
     if filters[:organisation_types].include?("Local authority maintained schools")
       selected_school_types << "Local authority maintained schools"
     end
-
-    built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: selected_school_types }).distinct
+  
+    subquery = OrganisationVacancy.joins(:organisation).where(organisations: { school_type: selected_school_types }).select(:vacancy_id)
+  
+    built_scope.joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: subquery })
   end
 
   def job_roles(filter)
