@@ -78,7 +78,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:school) { create(:school) }
   let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
-  let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: [], organisations: [academy1]) }
+  let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary]) }
   let!(:job2) { create(:vacancy, :past_publish, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy2]) }
   let!(:job3) { create(:vacancy, :past_publish, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1]) }
   let!(:job4) { create(:vacancy, :past_publish, :teacher, job_title: "Geography Teacher", subjects: [], organisations: [free_school2]) }
@@ -141,6 +141,24 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         expect_page_to_show_jobs([job1, job2, job3, job4, job5])
         expect_page_not_to_show_jobs([maths_job1, maths_job2])
+      end
+    end
+
+    context "when used in conjunction with a search term" do
+      # testing this unusual edge case around removing auto-populated search terms because it was raising exceptions for us in the past.
+      it "returns the correct vacancies even after removing auto-populated search terms" do
+        visit jobs_path
+        fill_in "Keyword", with: "Physics teacher"
+        check "Academy"
+
+        click_on I18n.t("buttons.search")
+
+        click_link "Remove this filter Teacher"
+        click_link "Remove this filter Head of year, department, curriculum or phase"
+        click_on I18n.t("buttons.search")
+
+        expect_page_to_show_jobs([job1])
+        expect_page_not_to_show_jobs([job2, job3, job4, job5, maths_job1, maths_job2])
       end
     end
   end
