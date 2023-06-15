@@ -175,9 +175,9 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let!(:special_job4) { create(:vacancy, :past_publish, :teacher, job_title: "DDDD", subjects: [], organisations: [special_school4]) }
     let!(:special_job5) { create(:vacancy, :past_publish, :teacher, job_title: "EEEE", subjects: [], organisations: [special_school5]) }
     let!(:special_job6) { create(:vacancy, :past_publish, :teacher, job_title: "FFFF", subjects: [], organisations: [special_school6]) }
-    let!(:faith_job) { create(:vacancy, :past_publish, :teacher, job_title: "religious", subjects: [], organisations: [faith_school]) }
+    let!(:faith_job) { create(:vacancy, :past_publish, :teacher, job_title: "Maths Teacher 3", subjects: ["Mathematics"], organisations: [faith_school], phases: %w[secondary]) }
     let!(:non_faith_job1) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith1", subjects: [], organisations: [non_faith_school1]) }
-    let!(:non_faith_job2) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith2", subjects: [], organisations: [non_faith_school2]) }
+    let!(:non_faith_job2) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith2",subjects: [], organisations: [non_faith_school2]) }
     let!(:non_faith_job3) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3]) }
 
     it "allows user to filter by special schools" do
@@ -206,6 +206,24 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
       expect_page_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6, faith_job])
       expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
+    end
+
+    context "when used in conjunction with a search term" do
+      # testing this unusual edge case around removing auto-populated search terms because it was raising exceptions for us in the past.
+      it "returns the correct vacancies even after removing auto-populated search terms" do
+        visit jobs_path
+        fill_in "Keyword", with: "Maths teacher"
+        check I18n.t("organisations.filters.faith_school")
+
+        click_on I18n.t("buttons.search")
+
+        click_link "Remove this filter Teacher"
+        click_link "Remove this filter Head of year, department, curriculum or phase"
+        click_on I18n.t("buttons.search")
+
+        expect_page_to_show_jobs([faith_job])
+        expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, special_job1, special_job2, special_job3, special_job4, special_job5, special_job6])
+      end
     end
   end
 

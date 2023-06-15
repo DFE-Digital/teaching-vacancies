@@ -53,14 +53,19 @@ class VacancyFilterQuery < ApplicationQuery
   def add_school_type_filters(filters, built_scope)
     return built_scope unless filters[:school_types].present?
 
+    subquery = school_type_filters_subquery(filters)
+
+    built_scope.joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: subquery })
+  end
+
+  def school_type_filters_subquery(filters)
     if filters[:school_types].include?("faith_school") && filters[:school_types].include?("special_school")
-      return built_scope.joins(organisation_vacancies: :organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
-                                                                     .or(built_scope.where("organisations.school_type IN (?)", Organisation::SPECIAL_SCHOOL_TYPES)).distinct
+      return OrganisationVacancy.joins(:organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
+                                                                             .or(OrganisationVacancy.where("organisations.school_type IN (?)", Organisation::SPECIAL_SCHOOL_TYPES)).select(:vacancy_id)
     end
 
-    return built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: Organisation::SPECIAL_SCHOOL_TYPES }).distinct if filters[:school_types].include?("special_school")
-
-    built_scope.joins(organisation_vacancies: :organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).distinct
+    return OrganisationVacancy.joins(:organisation).where(organisations: { school_type: Organisation::SPECIAL_SCHOOL_TYPES } ).select(:vacancy_id) if filters[:school_types].include?("special_school")
+    OrganisationVacancy.joins(:organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).select(:vacancy_id)
   end
 
   def job_roles(filter)
