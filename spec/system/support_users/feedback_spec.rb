@@ -32,7 +32,7 @@ RSpec.describe "Feedback supportal section" do
       :feedback,
       feedback_type: :job_alert,
       comment: "Some job alert feedback text",
-      occupation: "Teacher"
+      occupation: "Teacher",
     )
   end
 
@@ -41,7 +41,7 @@ RSpec.describe "Feedback supportal section" do
       :feedback,
       feedback_type: :general,
       comment: "Some other feedback text",
-      occupation: "Student"
+      occupation: "Student",
     )
   end
 
@@ -85,23 +85,27 @@ RSpec.describe "Feedback supportal section" do
       end
     end
 
-    it "shows occupation of the user filling out the feedback" do
-      within('table.govuk-table') do
-        within('tbody.govuk-table__body') do
-          within('tr:first-child') do
-            occupation = find('td:nth-child(6)').text
-            expect(occupation).to eq('dev')
-          end
-        end
-      end
-    end
+    it "shows feedback tables" do
+      within("table.govuk-table") do
+        within("tbody.govuk-table__body") do
+          within("tr:first-child") do
+            timestamp = find("td:nth-child(1)").text
+            source = find("td:nth-child(2)").text
+            who = find("td:nth-child(3)").text
+            feedback_type = find("td:nth-child(4)").text
+            contact_email = find("td:nth-child(5)").text
+            occupation = find("td:nth-child(6)").text
+            csat = find("td:nth-child(7)").text
+            comment = find("td:nth-child(8)").text
 
-    it "shows type of feedback" do
-      within('table.govuk-table') do
-        within('tbody.govuk-table__body') do
-          within('tr:first-child') do
-            occupation = find('td:nth-child(4)').text
-            expect(occupation).to eq('dev')
+            expect(timestamp).to eq(other_feedback.created_at.to_s)
+            expect(source).to eq("Identified")
+            expect(who).to eq("Jobseeker")
+            expect(occupation).to eq(other_feedback.occupation)
+            expect(contact_email).to eq(other_feedback.email)
+            expect(feedback_type).to eq(other_feedback.feedback_type)
+            expect(csat).to eq(t("helpers.label.general_feedback_form.rating.#{other_feedback.rating}"))
+            expect(comment).to eq(other_feedback.comment)
           end
         end
       end
