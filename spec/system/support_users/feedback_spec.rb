@@ -32,7 +32,7 @@ RSpec.describe "Feedback supportal section" do
       :feedback,
       feedback_type: :job_alert,
       comment: "Some job alert feedback text",
-      occupation: "Teacher"
+      occupation: "Teacher",
     )
   end
 
@@ -44,7 +44,7 @@ RSpec.describe "Feedback supportal section" do
       occupation: "Student",
       rating: "highly_satisfied",
       email: "faketestingemail@someemail.com",
-      user_participation_response: "interested"
+      user_participation_response: "interested",
     )
   end
 
@@ -89,18 +89,18 @@ RSpec.describe "Feedback supportal section" do
     end
 
     it "shows feedback table" do
-      within('table.govuk-table') do
-        within('tbody.govuk-table__body') do
-          within('tr:first-child') do
-            timestamp = find('td:nth-child(1)').text
-            source = find('td:nth-child(2)').text
-            who = find('td:nth-child(3)').text
-            feedback_type = find('td:nth-child(4)').text
-            contact_email = find('td:nth-child(5)').text
-            occupation = find('td:nth-child(6)').text
-            csat = find('td:nth-child(7)').text
-            comment = find('td:nth-child(8)').text
-            
+      within("table.govuk-table") do
+        within("tbody.govuk-table__body") do
+          within("tr:first-child") do
+            timestamp = find("td:nth-child(1)").text
+            source = find("td:nth-child(2)").text
+            who = find("td:nth-child(3)").text
+            feedback_type = find("td:nth-child(4)").text
+            contact_email = find("td:nth-child(5)").text
+            occupation = find("td:nth-child(6)").text
+            csat = find("td:nth-child(7)").text
+            comment = find("td:nth-child(8)").text
+
             expect(timestamp).to eq(other_feedback.created_at.to_s)
             expect(source).to eq("Identified")
             expect(who).to eq("Jobseeker")
