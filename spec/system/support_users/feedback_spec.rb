@@ -32,6 +32,7 @@ RSpec.describe "Feedback supportal section" do
       :feedback,
       feedback_type: :job_alert,
       comment: "Some job alert feedback text",
+      occupation: "Teacher"
     )
   end
 
@@ -40,6 +41,7 @@ RSpec.describe "Feedback supportal section" do
       :feedback,
       feedback_type: :general,
       comment: "Some other feedback text",
+      occupation: "Student"
     )
   end
 
@@ -80,6 +82,28 @@ RSpec.describe "Feedback supportal section" do
 
       within ".supportal-table-component--formatting" do
         expect(page).to have_text("Some other feedback text")
+      end
+    end
+
+    it "shows occupation of the user filling out the feedback" do
+      within('table.govuk-table') do
+        within('tbody.govuk-table__body') do
+          within('tr:first-child') do
+            occupation = find('td:nth-child(6)').text
+            expect(occupation).to eq('dev')
+          end
+        end
+      end
+    end
+
+    it "shows type of feedback" do
+      within('table.govuk-table') do
+        within('tbody.govuk-table__body') do
+          within('tr:first-child') do
+            occupation = find('td:nth-child(4)').text
+            expect(occupation).to eq('dev')
+          end
+        end
       end
     end
   end
