@@ -64,7 +64,8 @@ class VacancyFilterQuery < ApplicationQuery
                                                                              .or(OrganisationVacancy.where("organisations.school_type IN (?)", Organisation::SPECIAL_SCHOOL_TYPES)).select(:vacancy_id)
     end
 
-    return OrganisationVacancy.joins(:organisation).where(organisations: { school_type: Organisation::SPECIAL_SCHOOL_TYPES } ).select(:vacancy_id) if filters[:school_types].include?("special_school")
+    return OrganisationVacancy.joins(:organisation).where(organisations: { school_type: Organisation::SPECIAL_SCHOOL_TYPES }).select(:vacancy_id) if filters[:school_types].include?("special_school")
+
     OrganisationVacancy.joins(:organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).select(:vacancy_id)
   end
 

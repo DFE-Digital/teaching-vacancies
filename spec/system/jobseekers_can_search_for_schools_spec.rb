@@ -28,6 +28,8 @@ RSpec.describe "Searching on the schools page" do
 
   context "when filters are selected" do
     before do
+      expect_page_to_show_schools([special_school1, secondary_school, primary_school])
+
       check I18n.t("organisations.search.results.phases.secondary")
       check I18n.t("organisations.filters.special_school")
 

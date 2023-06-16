@@ -177,7 +177,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let!(:special_job6) { create(:vacancy, :past_publish, :teacher, job_title: "FFFF", subjects: [], organisations: [special_school6]) }
     let!(:faith_job) { create(:vacancy, :past_publish, :teacher, job_title: "Maths Teacher 3", subjects: ["Mathematics"], organisations: [faith_school], phases: %w[secondary]) }
     let!(:non_faith_job1) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith1", subjects: [], organisations: [non_faith_school1]) }
-    let!(:non_faith_job2) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith2",subjects: [], organisations: [non_faith_school2]) }
+    let!(:non_faith_job2) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith2", subjects: [], organisations: [non_faith_school2]) }
     let!(:non_faith_job3) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3]) }
 
     it "allows user to filter by special schools" do

@@ -97,7 +97,7 @@ RSpec.describe VacancyFilterQuery do
       end
 
       context "when school_types = ['special_school']" do
-        it "will return vacancies associated with faith schools" do
+        it "will return vacancies associated with special schools" do
           filters = {
             school_types: ["special_school"],
           }
