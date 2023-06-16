@@ -13,7 +13,7 @@ class JobPreferences < ApplicationRecord
 
     def call
       scope
-      .where(job_role: roles)
+        .where(job_role: roles)
         .where("phases <@ ARRAY[?]::int[]", Vacancy.phases.values_at(*job_preferences.phases))
         .then { |scope| apply_key_stages(scope) }
         .then { |scope| apply_subjects(scope) }
