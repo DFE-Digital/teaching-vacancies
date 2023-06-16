@@ -20,7 +20,7 @@ FactoryBot.define do
     association :jobseeker_profile
 
     trait :with_locations do
-      locations { [build(:job_preferences_locations, name: Faker::Address.postcode, radius: Faker::Number.between(from: 1, to: 200), jobseeker_profile: instance)] }
+      locations { [build(:job_preferences_location, name: Faker::Address.postcode, radius: Faker::Number.between(from: 1, to: 200), job_preferences: instance)] }
     end
   end
 end
