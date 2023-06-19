@@ -27,11 +27,11 @@ namespace :db do # rubocop:disable Metrics/BlockLength
     # Senior leader got split into 3 new roles.
     JobPreferences.where("'senior_leader' = ANY(roles)")
                   .update_all("roles = array_cat(array_remove(roles, 'senior_leader'),
-                                                 '{headteacher, headteacher_deputy, headteacher_assistant}')")
+                                                 '{headteacher, deputy_headteacher, assistant_headteacher}')")
     # Middle leader got split into 2 new roles.
     JobPreferences.where("'middle_leader' = ANY(roles)")
                   .update_all("roles = array_cat(array_remove(roles, 'middle_leader'),
-                                                '{head_of_year, head_of_department}')")
+                                                '{head_of_year_or_phase, head_of_department_or_curriculum}')")
   end
 
   desc "Asynchronously import organisations from GIAS and seed the database"

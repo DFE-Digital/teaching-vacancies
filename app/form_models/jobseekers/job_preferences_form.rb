@@ -4,8 +4,8 @@ module Jobseekers
   class JobPreferencesForm
     include Multistep::Form
 
-    ROLES = %i[teacher head_of_year head_of_department headteacher_assistant headteacher_deputy headteacher
-               teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
+    ROLES = %i[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher deputy_headteacher
+               headteacher teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
     PHASES = %i[nursery primary middle secondary through].freeze
     WORKING_PATTERNS = %i[full_time part_time].freeze
 

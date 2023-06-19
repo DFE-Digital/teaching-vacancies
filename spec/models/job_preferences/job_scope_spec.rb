@@ -45,7 +45,7 @@ RSpec.describe JobPreferences::JobScope do
 
   let(:job_preferences) do
     build_stubbed(:job_preferences,
-                  roles: %w[teacher teaching_assistant head_of_year headteacher],
+                  roles: %w[teacher teaching_assistant head_of_year_or_phase headteacher],
                   phases: %w[primary secondary],
                   working_patterns: %w[part_time full_time],
                   key_stages: %w[ks1 ks2])
@@ -62,7 +62,7 @@ RSpec.describe JobPreferences::JobScope do
       expect(job_scope.call).to contain_exactly(vacancy1, vacancy2)
     end
 
-    %w[head_of_year head_of_department].each do |granular_role|
+    %w[head_of_year_or_phase head_of_department_or_curriculum].each do |granular_role|
       context "with a jobseeker '#{granular_role}' role split from 'middle_leader' role" do
         let(:jobseeker_roles) { ["teacher", granular_role] }
 
@@ -72,7 +72,7 @@ RSpec.describe JobPreferences::JobScope do
       end
     end
 
-    %w[headteacher headteacher_deputy headteacher_assistant].each do |granular_role|
+    %w[headteacher deputy_headteacher assistant_headteacher].each do |granular_role|
       context "with a jobseeker '#{granular_role}' role split from 'senior_leader' role" do
         let(:jobseeker_roles) { ["teacher", granular_role] }
 

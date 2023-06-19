@@ -2,8 +2,8 @@ class JobPreferences < ApplicationRecord
   class JobScope
     # TODO: Delete mapping once there are no more vacancies using "senior_leader" and "middle_leader" roles.
     ROLE_MAPPINGS = {
-      "senior_leader" => %w[headteacher headteacher_deputy headteacher_assistant],
-      "middle_leader" => %w[head_of_year head_of_department],
+      "senior_leader" => %w[headteacher deputy_headteacher assistant_headteacher],
+      "middle_leader" => %w[head_of_year_or_phase head_of_department_or_curriculum],
     }.freeze
 
     def initialize(scope, job_preferences)
@@ -29,18 +29,18 @@ class JobPreferences < ApplicationRecord
     #
     # Vacancies at the moment still use the generic "senior_leader" and "middle_leader" roles.
     # Jobseeker preferences split those roles into more granular roles:
-    # - "headteacher" => "headteacher", "headteacher_deputy", "headteacher_assistant"
-    # - "middle_leader" => "head_of_year", "head_of_department"
+    # - "headteacher" => "headteacher", "deputy_headteacher", "assistant_headteacher"
+    # - "middle_leader" => "head_of_year_or_phase", "head_of_department_or_curriculum"
     #
     # This method ensures that vacancies using the old generic roles are matched with jobseekers with granular roles
     #
     # If any of the granular roles is present in the Jobseeker preferences, we add the generic role in the vacancy search.
     #
     # EG:
-    # - Jobseeker role preferences: ["headteacher", "headteacher_assistant"]
-    # - Method output: ["headteacher", "headteacher_assistant", "senior_leader"]
+    # - Jobseeker role preferences: ["headteacher", "assistant_headteacher"]
+    # - Method output: ["headteacher", "assistant_headteacher", "senior_leader"]
     # - Vacancies with role "senior_leader" will be returned.
-    # - When vacancies are migrated to the new granular roles, vacancies wih roles "headteacher" and/or "headteacher_assistant"
+    # - When vacancies are migrated to the new granular roles, vacancies wih roles "headteacher" and/or "assistant_headteacher"
     #   will be returned.
     def roles
       job_preferences.roles.tap do |roles|

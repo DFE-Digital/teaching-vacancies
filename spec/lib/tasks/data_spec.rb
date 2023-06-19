@@ -17,7 +17,7 @@ RSpec.describe "data.rake" do
       expect { task.invoke }
         .to change { job_preferences.reload.roles }
         .from(roles)
-        .to(%w[teacher sendco headteacher headteacher_deputy headteacher_assistant])
+        .to(%w[teacher sendco headteacher deputy_headteacher assistant_headteacher])
     end
 
     it "replaces any appearance of 'middle_leader' role with two different roles" do
@@ -27,7 +27,7 @@ RSpec.describe "data.rake" do
       expect { task.invoke }
         .to change { job_preferences.reload.roles }
         .from(roles)
-        .to(%w[teacher head_of_year head_of_department])
+        .to(%w[teacher head_of_year_or_phase head_of_department_or_curriculum])
     end
 
     it "does not change other roles" do

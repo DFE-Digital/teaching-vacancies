@@ -12,8 +12,8 @@ class Publishers::JobseekerProfileSearchForm
   attribute :subjects
   attribute :right_to_work_in_uk
 
-  ROLES = %w[teacher head_of_year head_of_department headteacher_assistant headteacher_deputy headteacher
-             teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
+  ROLES = %w[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher deputy_headteacher
+             headteacher teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
 
   def school_options
     current_organisation.schools.map { |school| [school.id, school.name] }

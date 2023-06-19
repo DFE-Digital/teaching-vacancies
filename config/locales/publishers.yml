@@ -109,10 +109,10 @@ en:
           "yes": Awarded QTS
         role_options:
           teacher: Teacher
-          head_of_year: Head of year or phase
-          head_of_department: Head of department or curriculum
-          headteacher_assistant: Assistant headteacher
-          headteacher_deputy: Deputy headteacher
+          head_of_year_or_phase: Head of year or phase
+          head_of_department_or_curriculum: Head of department or curriculum
+          assistant_headteacher: Assistant headteacher
+          deputy_headteacher: Deputy headteacher
           headteacher: Headteacher
           teaching_assistant: Teaching assistant
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
