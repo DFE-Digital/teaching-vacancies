@@ -75,13 +75,14 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:free_school1) { create(:school, school_type: "Free schools") }
   let(:free_school2) { create(:school, school_type: "Free school") }
   let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
+  let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
   let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary]) }
   let!(:job2) { create(:vacancy, :past_publish, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy2]) }
   let!(:job3) { create(:vacancy, :past_publish, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1]) }
-  let!(:job4) { create(:vacancy, :past_publish, :teacher, job_title: "Geography Teacher", subjects: [], organisations: [free_school2]) }
+  let!(:job4) { create(:vacancy, :past_publish, :teacher, job_title: "Geography Teacher", subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2]) }
   let!(:expired_job) { create(:vacancy, :expired, :teacher, job_title: "Maths Teacher", subjects: [], organisations: [school]) }
   let(:per_page) { 2 }
 
@@ -108,7 +109,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   end
 
   context "jobseekers can use the organisation type filter to search for jobs" do
-    let!(:job5) { create(:vacancy, :past_publish, :teacher, job_title: "History Teacher", subjects: [], organisations: [local_authority_school1]) }
+    let!(:job5) { create(:vacancy, :past_publish, :teacher, job_title: "History Teacher", subjects: [], publisher_organisation: local_authority_school1, organisations: [local_authority_school1, local_authority_school2]) }
 
     context "when academy is selected" do
       it "only shows vacancies from academies" do
@@ -165,7 +166,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
   def expect_page_to_show_jobs(jobs)
     jobs.each do |job|
-      expect(page).to have_link job.job_title
+      expect(page).to have_link(job.job_title, count: 1)
     end
   end
 
