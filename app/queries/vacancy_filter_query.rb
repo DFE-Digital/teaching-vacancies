@@ -53,20 +53,21 @@ class VacancyFilterQuery < ApplicationQuery
   def add_school_type_filters(filters, built_scope)
     return built_scope unless filters[:school_types].present?
 
-    subquery = school_type_filters_subquery(filters)
+    vacancy_ids = school_type_filters_subquery(filters[:school_types])
 
-    built_scope.joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: subquery })
+    built_scope.where(id: vacancy_ids)
   end
 
-  def school_type_filters_subquery(filters)
-    if filters[:school_types].include?("faith_school") && filters[:school_types].include?("special_school")
-      return OrganisationVacancy.joins(:organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
-                                                                             .or(OrganisationVacancy.where("organisations.school_type IN (?)", Organisation::SPECIAL_SCHOOL_TYPES)).select(:vacancy_id)
+  def school_type_filters_subquery(school_types)
+    special_schools_query = OrganisationVacancy.where(organisations: { school_type: Organisation::SPECIAL_SCHOOL_TYPES })
+    query = OrganisationVacancy
+    if school_types.include?("faith_school")
+      query = query.where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
+      query = query.or(special_schools_query) if school_types.include?("special_school")
+    elsif school_types.include?("special_school")
+      query = special_schools_query
     end
-
-    return OrganisationVacancy.joins(:organisation).where(organisations: { school_type: Organisation::SPECIAL_SCHOOL_TYPES }).select(:vacancy_id) if filters[:school_types].include?("special_school")
-
-    OrganisationVacancy.joins(:organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).select(:vacancy_id)
+    query.joins(:organisation).select(:vacancy_id)
   end
 
   def job_roles(filter)

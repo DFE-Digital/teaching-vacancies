@@ -165,6 +165,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
     let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
     let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
+    let(:faith_school2) { create(:school, name: "ABCDEF", gias_data: { "ReligiousCharacter (name)" => "somethingelse" }) }
     let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
     let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
     let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
@@ -175,7 +176,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let!(:special_job4) { create(:vacancy, :past_publish, :teacher, job_title: "DDDD", subjects: [], organisations: [special_school4]) }
     let!(:special_job5) { create(:vacancy, :past_publish, :teacher, job_title: "EEEE", subjects: [], organisations: [special_school5]) }
     let!(:special_job6) { create(:vacancy, :past_publish, :teacher, job_title: "FFFF", subjects: [], organisations: [special_school6]) }
-    let!(:faith_job) { create(:vacancy, :past_publish, :teacher, job_title: "Maths Teacher 3", subjects: ["Mathematics"], organisations: [faith_school], phases: %w[secondary]) }
+    let!(:faith_job) { create(:vacancy, :past_publish, :teacher, job_title: "religious", subjects: ["Physics"], publisher_organisation: faith_school, organisations: [faith_school, faith_school2], phases: %w[secondary]) }
     let!(:non_faith_job1) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith1", subjects: [], organisations: [non_faith_school1]) }
     let!(:non_faith_job2) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith2", subjects: [], organisations: [non_faith_school2]) }
     let!(:non_faith_job3) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3]) }
@@ -212,7 +213,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       # testing this unusual edge case around removing auto-populated search terms because it was raising exceptions for us in the past.
       it "returns the correct vacancies even after removing auto-populated search terms" do
         visit jobs_path
-        fill_in "Keyword", with: "Maths teacher"
+        fill_in "Keyword", with: "Physics teacher"
         check I18n.t("organisations.filters.faith_school")
 
         click_on I18n.t("buttons.search")

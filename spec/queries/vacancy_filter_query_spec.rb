@@ -13,6 +13,7 @@ RSpec.describe VacancyFilterQuery do
   let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
   let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
   let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
+  let(:faith_school2) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "somethingelse" }) }
   let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
   let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
   let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
@@ -29,7 +30,7 @@ RSpec.describe VacancyFilterQuery do
   let!(:special_vacancy4) { create(:vacancy, job_title: "Vacancy 10", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, organisations: [special_school4]) }
   let!(:special_vacancy5) { create(:vacancy, job_title: "Vacancy 11", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, organisations: [special_school5]) }
   let!(:special_vacancy6) { create(:vacancy, job_title: "Vacancy 12", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, organisations: [special_school6]) }
-  let!(:faith_vacancy) { create(:vacancy, job_title: "Vacancy 13", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, organisations: [faith_school]) }
+  let!(:faith_vacancy) { create(:vacancy, job_title: "Vacancy 13", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, publisher_organisation: faith_school, organisations: [faith_school, faith_school2]) }
   let!(:non_faith_vacancy1) { create(:vacancy, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, organisations: [non_faith_school1]) }
   let!(:non_faith_vacancy2) { create(:vacancy, job_title: "Vacancy 15", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, organisations: [non_faith_school2]) }
   let!(:non_faith_vacancy3) { create(:vacancy, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, organisations: [non_faith_school3]) }

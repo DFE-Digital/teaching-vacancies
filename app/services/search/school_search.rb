@@ -113,11 +113,14 @@ class Search::SchoolSearch
     return scope unless school_types.present?
 
     if school_types.include?("special_school") && school_types.include?("faith_school")
-      return scope.where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).or(scope.where(school_type: Organisation::SPECIAL_SCHOOL_TYPES))
+      scope.where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
+           .or(scope.where(school_type: Organisation::SPECIAL_SCHOOL_TYPES))
+    elsif school_types.include?("special_school")
+      scope.where(school_type: Organisation::SPECIAL_SCHOOL_TYPES)
+    elsif school_types.include?("faith_school")
+      scope.where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
+    else
+      scope
     end
-
-    return scope.where(school_type: Organisation::SPECIAL_SCHOOL_TYPES) if school_types.include?("special_school")
-
-    scope.where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
   end
 end
