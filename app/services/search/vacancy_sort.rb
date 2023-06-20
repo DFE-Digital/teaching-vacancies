@@ -5,7 +5,6 @@ class Search::VacancySort < RecordSort
   end
 
   def options
-    # Do not allow relevance sort order when no keywords are given as it makes no sense
     [publish_on_desc_option]
   end
 
