@@ -26,13 +26,6 @@
   - id
   - blob_id
   - variation_digest
-  :active_storage_attachments:
-  - id
-  - name
-  - record_type
-  - record_id
-  - blob_id
-  - created_at
   :active_storage_blobs:
   - id
   - key
