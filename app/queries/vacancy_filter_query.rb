@@ -46,9 +46,9 @@ class VacancyFilterQuery < ApplicationQuery
       selected_school_types << "Local authority maintained schools"
     end
 
-    subquery = OrganisationVacancy.joins(:organisation).where(organisations: { school_type: selected_school_types }).select(:vacancy_id)
+    vacancy_ids = OrganisationVacancy.joins(:organisation).where(organisations: { school_type: selected_school_types }).pluck(:vacancy_id)
 
-    built_scope.joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: subquery })
+    built_scope.where(id: vacancy_ids)
   end
 
   def job_roles(filter)

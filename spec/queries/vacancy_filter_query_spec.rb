@@ -11,7 +11,7 @@ RSpec.describe VacancyFilterQuery do
   let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "sendco", ect_status: nil, organisations: [local_authority_school]) }
   let!(:vacancy4) { create(:vacancy, job_title: "Vacancy 4", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil) }
   let!(:vacancy5) { create(:vacancy, job_title: "Vacancy 5", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, organisations: [academies]) }
-  let!(:vacancy6) { create(:vacancy, job_title: "Vacancy 6", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, organisations: [free_schools]) }
+  let!(:vacancy6) { create(:vacancy, job_title: "Vacancy 6", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "teacher", ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
 
   describe "#call" do
     it "queries based on the given filters" do
