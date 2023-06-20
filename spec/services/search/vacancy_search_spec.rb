@@ -30,9 +30,7 @@ RSpec.describe Search::VacancySearch do
   let(:working_patterns) { nil }
   let(:subjects) { nil }
   let(:organisation_types) { nil }
-
   let(:school) { create(:school) }
-
   let(:scope) { double("scope", count: 870) }
 
   before do
