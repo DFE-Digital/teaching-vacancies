@@ -1,6 +1,6 @@
 class ImportFromVacancySourcesJob < ApplicationJob
   SOURCES = [
-    VacancySource::Source::Every
+    VacancySource::Source::Every,
     VacancySource::Source::Fusion,
     VacancySource::Source::MyNewTerm,
     VacancySource::Source::UnitedLearning,
