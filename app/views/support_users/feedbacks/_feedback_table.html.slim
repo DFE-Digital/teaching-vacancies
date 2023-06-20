@@ -2,7 +2,9 @@
   - t.datetime "Timestamp", :created_at
   - t.tags("Source") { |f| source_for(f) }
   - t.tags("Who") { |f| who(f) }
+  - t.text "Type", :feedback_type
   - t.text("Contact email") { |f| contact_email_for(f) }
+  - t.text "Occupation", :occupation
   - t.text("CSAT") { |f| t("helpers.label.general_feedback_form.rating.#{f.rating}") if f.rating }
   - t.text "Comment", :comment
   - t.column("Category") do |f|
