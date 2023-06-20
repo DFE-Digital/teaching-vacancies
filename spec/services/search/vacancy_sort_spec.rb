@@ -20,9 +20,7 @@ RSpec.describe Search::VacancySort do
       context "and a keyword is specified" do
         let(:keyword) { "maths" }
 
-        it "sorts by relevance" do
-          expect(subject.sort_by).to eq("relevance")
-        end
+        it_behaves_like "sorts by publish_on"
       end
 
       context "and a keyword is NOT specified" do
@@ -34,9 +32,7 @@ RSpec.describe Search::VacancySort do
       let(:sort_by) { "worst_listing" }
       let(:keyword) { "maths" }
 
-      it "sorts by relevance" do
-        expect(subject.sort_by).to eq("relevance")
-      end
+      it_behaves_like "sorts by publish_on"
     end
   end
 
@@ -69,7 +65,7 @@ RSpec.describe Search::VacancySort do
       let(:sort_by) { "relevance" }
       let(:keyword) { "test" }
 
-      it { is_expected.not_to be_by_db_column }
+      it { is_expected.to be_by_db_column }
     end
 
     context "when sorting by publish_on" do
