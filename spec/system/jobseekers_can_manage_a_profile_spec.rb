@@ -604,6 +604,151 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
+  describe "job preferences" do
+    let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
+
+    before { visit jobseekers_profile_path }
+
+    it "allows the jobseeker to fill in their job preferences" do
+      click_link("Add job preferences")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
+      expect(page).to have_css("h3", text: "Job preferencesRoles")
+
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
+      expect(page).to have_css("h2", text: "There is a problem")
+
+      check "Teacher"
+      check "Head of year or phase"
+      check "Assistant headteacher"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
+      expect(page).to have_css("h3", text: "Job preferencesPhases")
+
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
+      expect(page).to have_css("h2", text: "There is a problem")
+
+      check "Secondary"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:key_stages))
+      expect(page).to have_css("h3", text: "Job preferencesKey stages")
+
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:key_stages))
+      expect(page).to have_css("h2", text: "There is a problem")
+
+      check "Key stage 3"
+      check "Key stage 4"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:subjects))
+      expect(page).to have_css("h3", text: "Job preferencesSubjects (optional)")
+
+      # Can move forward without selecting any subject
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:working_patterns))
+      expect(page).to have_css("h3", text: "Job preferencesWorking patterns")
+
+      # Fill in the Subjects
+      click_link "Back"
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:subjects))
+      expect(page).to have_css("h3", text: "Job preferencesSubjects (optional)")
+
+      check "Mathematics"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:working_patterns))
+      expect(page).to have_css("h3", text: "Job preferencesWorking patterns")
+
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:working_patterns))
+
+      check "Full time"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_css("h1", text: "Job preferencesLocation")
+
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_css("h2", text: "There is a problem")
+
+      fill_in "Location", with: "London"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_css("h2", text: "There is a problem")
+
+      choose "1 mile"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
+      expect(page).to have_css("h1", text: "Job preferencesLocations")
+      expect(page).to have_content("London (1 mile)")
+
+      click_link "Change"
+      expect(page).to have_css("h1", text: "Job preferencesLocation")
+      expect(page).to have_field("Location", with: "London")
+      expect(page).to have_checked_field("1 mile")
+
+      choose "5 miles"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
+      expect(page).to have_css("h1", text: "Job preferencesLocations")
+      expect(page).to have_content("London (5 miles)")
+
+      click_link "Delete"
+      expect(page).to have_css("h1", text: "Delete locationConfirm that you want to delete London (5 miles)")
+      click_on "Delete this location"
+
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_content("Location deleted")
+      expect(page).to have_css("h1", text: "Job preferencesLocation")
+
+      fill_in "Location", with: "London"
+      choose "1 mile"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
+      expect(page).to have_css("h1", text: "Job preferencesLocations")
+      expect(page).to have_content("London (1 mile)")
+      expect(page).to have_css("h3", text: "Do you want to add another location?")
+
+      click_on I18n.t("buttons.save_and_continue")
+      expect(page).to have_css("h2", text: "There is a problem")
+
+      choose "Yes"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
+      expect(page).to have_css("h1", text: "Job preferencesLocation")
+
+      fill_in "Location", with: "Manchester"
+      choose "10 miles"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
+      expect(page).to have_css("h1", text: "Job preferencesLocations")
+      expect(page).to have_content("London (1 mile)")
+      expect(page).to have_content("Manchester (10 miles)")
+      expect(page).to have_css("h3", text: "Do you want to add another location?")
+
+      choose "No"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(jobseekers_job_preferences_step_path(:review))
+      expect(page).to have_css("h1", text: "Job preferences")
+      expect(page).to have_css("dd", text: "TeacherHead of year or phaseAssistant headteacher")
+      expect(page).to have_css("dd", text: "Secondary")
+      expect(page).to have_css("dd", text: "Key stage 3, Key stage 4")
+      expect(page).to have_css("dd", text: "Mathematics")
+      expect(page).to have_css("dd", text: "Full time")
+      expect(page).to have_css("dd", text: "London (1 mile)Manchester (10 miles)")
+
+      click_on I18n.t("buttons.return_to_profile")
+      expect(current_path).to eq(jobseekers_profile_path)
+      expect(page).to have_css("h1", text: "Your profile")
+      expect(page).to have_css("dd", text: "TeacherHead of year or phaseAssistant headteacher")
+      expect(page).to have_css("dd", text: "Secondary")
+      expect(page).to have_css("dd", text: "Key stage 3, Key stage 4")
+      expect(page).to have_css("dd", text: "Mathematics")
+      expect(page).to have_css("dd", text: "Full time")
+      expect(page).to have_css("dd", text: "London (1 mile)Manchester (10 miles)")
+    end
+  end
+
   private
 
   def add_jobseeker_profile_employment
