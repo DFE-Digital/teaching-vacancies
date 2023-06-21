@@ -1,0 +1,103 @@
+en:
+  cookies_preferences:
+    banner:
+      aria:
+        label: Cookies banner
+      body:
+        - We use some essential cookies to make this service work.
+        - We’d like to set additional cookies to understand how you use this service and help us improve it.
+        - We also use cookies set by other sites to help us deliver content from their services.
+      buttons:
+        accept: Accept analytics cookies
+        reject: Reject analytics cookies
+        view: View cookies
+      heading: Cookies on Teaching Vacancies
+    form:
+      analytics:
+        legend: Cookies that measure website use
+        hint:
+          intro: "We use Google Analytics to measure how you user the service. These cookies collect information about:"
+          list:
+            - the pages you visit
+            - how long you spend on each page
+            - how you got to the service
+            - what you select while using the service
+            - any errors you see while using the service
+          anonymity: >-
+            We anonymise any personally identifiable information,
+            like your IP address or your postcode before we share it with Google.
+          table:
+            header:
+              name: Name
+              purpose: Purpose
+              expires: Expires
+            first:
+              name: _ga
+              purpose: Used to distinguish anonymous users
+              expires: 2 years
+            second:
+              name: _gid
+              purpose: Used to distinguish anonymous users
+              expires: 24 hours
+            third:
+              name: _gat
+              purpose: Used to manage the rate at which page view requests are made
+              expires: 1 minute
+        options:
+          consent: Use cookies that measure my website use
+          no_consent: Do not use cookies that measure my website use
+      marketing:
+        legend: Cookies that help with our communications and marketing
+        hint:
+          intro: >-
+            These cookies do things like remember your preferences to personalise your experience of using the service.
+          table:
+            header:
+              name: Name
+              purpose: Purpose
+              expires: Expires
+            first:
+              name: _gcl_aw, _gcl_dc, _gcl_au and _gac
+              purpose: Used to distinguish anonymous users
+              expires: 90 days
+            second:
+              name: IDE, ANID, DSID, FLC, AID, TAID and exchange_uid
+              purpose: Used to distinguish which adverts for Teaching Vacancies users have seen and selected
+              expires: 13 months
+        options:
+          consent: Use cookies that help with communications and marketing
+          no_consent: Do not use cookies that help with communications and marketing
+      essential:
+        heading: Strictly necessary cookies
+        intro: >-
+          These essential cookies do things like store information about your time on the service and remember your
+          cookie settings.
+        needed: Essential cookies always need to be on.
+        table:
+          header:
+            name: Name
+            purpose: Purpose
+            expires: Expires
+          first:
+            name: _teachingvacancies_session
+            purpose: Stores encrypted information about your time on the service
+            expires: When you close your browser
+          second:
+            name: consented-to-analytics-cookies
+            purpose: Saves your analytics cookies consent settings
+            expires: 6 months
+          third:
+            name: consented-to-marketing-cookies
+            purpose: Saves your marketing cookies consent settings
+            expires: 6 months
+    new:
+      body:
+        top:
+          definition: Cookies are files saved in your phone, tablet or computer when you visit a websire or use a digital service.
+          usage: We use cookies to collect and store information about how you use the Teaching Vacancies service.
+        intro: We use 3 types of cookie. You can choose which cookies you're happy for us to use.
+      heading: Cookies on Teaching Vacancies
+      subheading: Cookie settings
+      title: Cookies
+      page_description: Find out what cookies Teaching Vacancies stores on your computer and what they are for.
+    success: You've set your cookie preferences.

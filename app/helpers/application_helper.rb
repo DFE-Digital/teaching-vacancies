@@ -38,8 +38,9 @@ module ApplicationHelper
     }
   end
 
+  # TODO: Clarify before merging if this still depends on analytics cookies and where to check marketing cookies.
   def include_google_tag_manager?
-    cookies["consented-to-cookies"] == "yes" && Rails.configuration.app_role.production?
+    cookies["consented-to-analytics-cookies"] == "yes" && Rails.configuration.app_role.production?
   end
 
   def phase_banner_text

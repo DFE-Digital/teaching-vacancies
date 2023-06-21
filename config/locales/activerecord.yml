@@ -1,7 +1,9 @@
 en:
   cookies_preferences_errors: &cookies_preferences_errors
-    cookies_consent:
-      inclusion: Please select an option
+    cookies_analytics_consent:
+      inclusion: Please select an option for the analytics cookies
+    cookies_marketing_consent:
+      inclusion: Please select an option for the marketing cookies
   email_errors: &email_errors
     email:
       blank: Enter an email address in the correct format, like name@example.com

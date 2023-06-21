@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   private
 
   def cookies_preference_set?
-    cookies["consented-to-cookies"].present?
+    cookies["consented-to-analytics-cookies"].present? && cookies["consented-to-marketing-cookies"].present?
   end
   helper_method :cookies_preference_set?
 
