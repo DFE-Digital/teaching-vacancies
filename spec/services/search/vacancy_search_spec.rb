@@ -30,9 +30,7 @@ RSpec.describe Search::VacancySearch do
   let(:working_patterns) { nil }
   let(:subjects) { nil }
   let(:organisation_types) { nil }
-
   let(:school) { create(:school) }
-
   let(:scope) { double("scope", count: 870) }
 
   before do
@@ -44,6 +42,7 @@ RSpec.describe Search::VacancySearch do
     allow(scope).to receive(:search_by_filter).and_return(scope)
     allow(scope).to receive(:search_by_full_text).with("maths teacher").and_return(scope)
     allow(scope).to receive(:where).with(id: vacancy_ids).and_return(scope)
+    allow(scope).to receive(:reorder).with({ "publish_on" => "desc" }).and_return(scope)
   end
 
   describe "performing search" do
