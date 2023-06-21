@@ -61,6 +61,8 @@ class VacancyFilterQuery < ApplicationQuery
       built_scope.joins(organisation_vacancies: :organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).distinct
     elsif school_types.include?("special_school")
       built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: Organisation::SPECIAL_SCHOOL_TYPES }).distinct
+    else
+      built_scope
     end
   end
 
