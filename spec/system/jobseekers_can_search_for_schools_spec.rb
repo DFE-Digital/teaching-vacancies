@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Searching on the schools page" do
   let(:secondary_school) { create(:school, name: "Oxford") }
   let(:primary_school) { create(:school, name: "St Peters", phase: "primary") }
-  let(:special_school1) { create(:school, name: "Community special school", school_type: "Community special school") }
+  let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school") }
 
   before do
     [secondary_school, primary_school, special_school1].each do |school|
@@ -108,11 +108,11 @@ RSpec.describe "Searching on the schools page" do
     let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
     let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
     let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
-    let(:special_school2) { create(:school, name: "Foundation special school", school_type: "Foundation special school") }
-    let(:special_school3) { create(:school, name: "Non-maintained special school", school_type: "Non-maintained special school") }
-    let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
-    let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
-    let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
+    let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school") }
+    let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school") }
+    let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }
+    let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led") }
+    let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special") }
 
     before do
       [faith_school, special_school2, special_school3, special_school4, special_school5, special_school6, non_faith_school1, non_faith_school2, non_faith_school3].each do |school|
