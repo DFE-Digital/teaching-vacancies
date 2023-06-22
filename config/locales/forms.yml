@@ -371,7 +371,7 @@ en:
           true: Yes, I've completed this section
       jobseekers_job_preferences_form:
         role_options:
-          education_support: Learning support, cover supervisor or tutor
+          education_support: Learning support or cover supervisor
           head_of_year_or_phase: Head of year or phase
           head_of_department_or_curriculum: Head of department or curriculum
           headteacher: Headteacher
@@ -718,7 +718,7 @@ en:
         job_role_options:
           ect_suitable: Suitable for early career teachers
           ect_suitable_hidden_prefix: Only show results
-          education_support: Learning support, cover supervisor or tutor
+          education_support: Learning support or cover supervisor
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
           leadership: Senior leader
           middle_leader: Head of year, department, curriculum or phase
