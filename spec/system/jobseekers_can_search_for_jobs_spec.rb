@@ -69,6 +69,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
+
   let!(:maths_job1) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:maths_job2) { create(:vacancy, :past_publish, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
   let!(:job1) { create(:vacancy, :past_publish, :teacher, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary]) }
@@ -152,6 +153,77 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         expect_page_to_show_jobs([job1])
         expect_page_not_to_show_jobs([job2, job3, job4, job5, maths_job1, maths_job2])
+      end
+    end
+  end
+
+  context "when filtering by school type" do
+    let(:special_school1) { create(:school, name: "Community special school", school_type: "Community special school") }
+    let(:special_school2) { create(:school, name: "Foundation special school", school_type: "Foundation special school") }
+    let(:special_school3) { create(:school, name: "Non-maintained special school", school_type: "Non-maintained special school") }
+    let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
+    let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
+    let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
+    let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
+    let(:faith_school2) { create(:school, name: "ABCDEF", gias_data: { "ReligiousCharacter (name)" => "somethingelse" }) }
+    let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
+    let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
+    let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
+
+    let!(:special_job1) { create(:vacancy, :past_publish, :teacher, job_title: "AAAA", subjects: [], organisations: [special_school1]) }
+    let!(:special_job2) { create(:vacancy, :past_publish, :teacher, job_title: "BBBB", subjects: [], organisations: [special_school2]) }
+    let!(:special_job3) { create(:vacancy, :past_publish, :teacher, job_title: "CCCC", subjects: [], organisations: [special_school3]) }
+    let!(:special_job4) { create(:vacancy, :past_publish, :teacher, job_title: "DDDD", subjects: [], organisations: [special_school4]) }
+    let!(:special_job5) { create(:vacancy, :past_publish, :teacher, job_title: "EEEE", subjects: [], organisations: [special_school5]) }
+    let!(:special_job6) { create(:vacancy, :past_publish, :teacher, job_title: "FFFF", subjects: [], organisations: [special_school6]) }
+    let!(:faith_job) { create(:vacancy, :past_publish, :teacher, job_title: "religious", subjects: ["Physics"], publisher_organisation: faith_school, organisations: [faith_school, faith_school2], phases: %w[secondary]) }
+    let!(:non_faith_job1) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith1", subjects: [], organisations: [non_faith_school1]) }
+    let!(:non_faith_job2) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith2", subjects: [], organisations: [non_faith_school2]) }
+    let!(:non_faith_job3) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3]) }
+
+    it "allows user to filter by special schools" do
+      visit jobs_path
+      check I18n.t("organisations.filters.special_school")
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6])
+      expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, faith_job, non_faith_job1, non_faith_job2, non_faith_job3])
+    end
+
+    it "allows user to filter by faith schools" do
+      visit jobs_path
+      check I18n.t("organisations.filters.faith_school")
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_jobs([faith_job])
+      expect_page_not_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6, job1, job2, job3, job4, maths_job1, maths_job2, non_faith_job1, non_faith_job2, non_faith_job3])
+    end
+
+    it "allows users to filter by both faith and special schools" do
+      visit jobs_path
+      check I18n.t("organisations.filters.faith_school")
+      check I18n.t("organisations.filters.special_school")
+      click_on I18n.t("buttons.search")
+
+      expect_page_to_show_jobs([special_job1, special_job2, special_job3, special_job4, special_job5, special_job6, faith_job])
+      expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
+    end
+
+    context "when used in conjunction with a search term" do
+      # testing this unusual edge case around removing auto-populated search terms because it was raising exceptions for us in the past.
+      it "returns the correct vacancies even after removing auto-populated search terms" do
+        visit jobs_path
+        fill_in "Keyword", with: "Physics teacher"
+        check I18n.t("organisations.filters.faith_school")
+
+        click_on I18n.t("buttons.search")
+
+        click_link "Remove this filter Teacher"
+        click_link "Remove this filter Head of year, department, curriculum or phase"
+        click_on I18n.t("buttons.search")
+
+        expect_page_to_show_jobs([faith_job])
+        expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, special_job1, special_job2, special_job3, special_job4, special_job5, special_job6])
       end
     end
   end

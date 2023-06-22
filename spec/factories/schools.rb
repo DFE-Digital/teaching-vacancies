@@ -1,6 +1,5 @@
 FactoryBot.define do
   ofsted_ratings = ["Outstanding", "Good", "Requires Improvement", "Inadequate"].freeze
-  religious_characters = ["Church of England", "Roman Catholic", "None", "Does not apply"].freeze
 
   factory :school do
     address { Faker::Address.street_name.delete("'") }
@@ -19,7 +18,6 @@ FactoryBot.define do
         NumberOfPupils: Faker::Number.number(digits: 3),
         "OfstedRating (name)": factory_sample(ofsted_ratings),
         OpenDate: Faker::Date.between(from: 10_000.days.ago, to: 1000.days.ago),
-        "ReligiousCharacter (name)": factory_sample(religious_characters),
         SchoolCapacity: Faker::Number.number(digits: 4),
         TelephoneNum: Faker::Number.number(digits: 11).to_s,
         "Trusts (name)": "#{Faker::Company.name.delete("'")} Trust",
