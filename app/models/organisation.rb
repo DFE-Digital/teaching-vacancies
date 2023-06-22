@@ -8,6 +8,7 @@ class Organisation < ApplicationRecord
 
   SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
   NON_FAITH_RELIGIOUS_CHARACTER_TYPES = ["", "None", "Does not apply", "null"].freeze
+  OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES = ["Further education", "Other independent school", "Miscellaneous", "Special post 16 institution", "Other independent special school", "Higher education institutions", "Welsh establishment"].freeze
 
   friendly_id :slug_candidates, use: :slugged
 
@@ -46,7 +47,9 @@ class Organisation < ApplicationRecord
       .or(where(id: SchoolGroupMembership.select(:school_id).where(school_group_id: registered_organisations)))
   end)
 
-  scope :visible_to_jobseekers, -> { schools.not_closed.or(Organisation.trusts).registered_for_service }
+  scope :not_out_of_scope, -> { where.not(detailed_school_type: Organisation::OUT_OF_SCOPE_DETAILED_SCHOOL_TYPES) }
+
+  scope :visible_to_jobseekers, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts).registered_for_service }
 
   alias_attribute :data, :gias_data
 
