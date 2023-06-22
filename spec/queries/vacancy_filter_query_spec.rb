@@ -6,12 +6,12 @@ RSpec.describe VacancyFilterQuery do
   let(:free_school) { create(:school, name: "Freeschool1", school_type: "Free schools") }
   let(:free_schools) { create(:school, name: "Freeschool2", school_type: "Free school") }
   let(:local_authority_school) { create(:school, name: "local authority", school_type: "Local authority maintained schools") }
-  let(:special_school1) { create(:school, name: "Community special school", school_type: "Community special school") }
-  let(:special_school2) { create(:school, name: "Foundation special school", school_type: "Foundation special school") }
-  let(:special_school3) { create(:school, name: "Non-maintained special school", school_type: "Non-maintained special school") }
-  let(:special_school4) { create(:school, name: "Academy special converter", school_type: "Academy special converter") }
-  let(:special_school5) { create(:school, name: "Academy special sponsor led", school_type: "Academy special sponsor led") }
-  let(:special_school6) { create(:school, name: "Non-maintained special school", school_type: "Free schools special") }
+  let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school") }
+  let(:special_school2) { create(:school, name: "Foundation special school", detailed_school_type: "Foundation special school") }
+  let(:special_school3) { create(:school, name: "Non-maintained special school", detailed_school_type: "Non-maintained special school") }
+  let(:special_school4) { create(:school, name: "Academy special converter", detailed_school_type: "Academy special converter") }
+  let(:special_school5) { create(:school, name: "Academy special sponsor led", detailed_school_type: "Academy special sponsor led") }
+  let(:special_school6) { create(:school, name: "Non-maintained special school", detailed_school_type: "Free schools special") }
   let(:faith_school) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "anything" }) }
   let(:faith_school2) { create(:school, name: "Religious", gias_data: { "ReligiousCharacter (name)" => "somethingelse" }) }
   let(:non_faith_school1) { create(:school, name: "nonfaith1", gias_data: { "ReligiousCharacter (name)" => "" }) }
