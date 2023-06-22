@@ -8,8 +8,8 @@ en:
         - We’d like to set additional cookies to understand how you use this service and help us improve it.
         - We also use cookies set by other sites to help us deliver content from their services.
       buttons:
-        accept: Accept analytics cookies
-        reject: Reject analytics cookies
+        accept: Accept additional cookies
+        reject: Reject additional cookies
         view: View cookies
       heading: Cookies on Teaching Vacancies
     form:

@@ -32,6 +32,11 @@ RSpec.describe "Cookies consent" do
         click_on I18n.t("cookies_preferences.banner.buttons.view")
       end
 
+      scenario "defaults to reject non essential cookies" do
+        expect(find("#cookies-preferences-form-cookies-analytics-consent-no-field")).to be_checked
+        expect(find("#cookies-preferences-form-cookies-marketing-consent-no-field")).to be_checked
+      end
+
       scenario "can consent to only analytics cookies" do
         find("#cookies-preferences-form-cookies-analytics-consent-yes-field").click
         find("#cookies-preferences-form-cookies-marketing-consent-no-field").click
@@ -83,14 +88,6 @@ RSpec.describe "Cookies consent" do
         expect(find("#cookies-preferences-form-cookies-analytics-consent-no-field")).to be_checked
         expect(find("#cookies-preferences-form-cookies-marketing-consent-no-field")).to be_checked
       end
-
-      scenario "renders errors if no option selected" do
-        click_on I18n.t("buttons.save_changes")
-
-        expect(page).to have_current_path(cookies_preferences_path)
-        expect(page).to have_content(I18n.t("cookies_preferences_errors.cookies_analytics_consent.inclusion"))
-        expect(page).to have_content(I18n.t("cookies_preferences_errors.cookies_marketing_consent.inclusion"))
-      end
     end
   end
 
@@ -111,6 +108,11 @@ RSpec.describe "Cookies consent" do
     before do
       visit jobs_path
       click_on I18n.t("cookies_preferences.banner.buttons.view")
+    end
+
+    scenario "defaults to reject non essential cookies" do
+      expect(find("#cookies-preferences-form-cookies-analytics-consent-no-field")).to be_checked
+      expect(find("#cookies-preferences-form-cookies-marketing-consent-no-field")).to be_checked
     end
 
     scenario "can consent to only analytics cookies" do
@@ -163,14 +165,6 @@ RSpec.describe "Cookies consent" do
       visit cookies_preferences_path
       expect(find("#cookies-preferences-form-cookies-analytics-consent-no-field")).to be_checked
       expect(find("#cookies-preferences-form-cookies-marketing-consent-no-field")).to be_checked
-    end
-
-    scenario "renders errors if no option selected" do
-      click_on I18n.t("buttons.save_changes")
-
-      expect(page).to have_current_path(cookies_preferences_path)
-      expect(page).to have_content(I18n.t("cookies_preferences_errors.cookies_analytics_consent.inclusion"))
-      expect(page).to have_content(I18n.t("cookies_preferences_errors.cookies_marketing_consent.inclusion"))
     end
   end
 
