@@ -2,7 +2,7 @@ class Search::SchoolSearch
   extend Forwardable
   def_delegators :location_search, :point_coordinates
 
-  attr_reader :search_criteria, :name, :location, :radius, :organisation_types, :school_types
+  attr_reader :search_criteria, :name, :location, :radius, :organisation_types
 
   def initialize(search_criteria, scope: Organisation.all)
     @search_criteria = search_criteria
@@ -10,7 +10,6 @@ class Search::SchoolSearch
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
     @organisation_types = search_criteria[:organisation_types]
-    @school_types = search_criteria[:school_types]
     @scope = scope
   end
 
@@ -38,12 +37,12 @@ class Search::SchoolSearch
   end
 
   def total_filters
-    filter_counts = %i[education_phase key_stage special_school job_availability organisation_types school_types].map { |filter| search_criteria[filter]&.count || 0 }
+    filter_counts = %i[education_phase key_stage special_school job_availability organisation_types].map { |filter| search_criteria[filter]&.count || 0 }
     filter_counts.sum
   end
 
   def clear_filters_params
-    active_criteria.merge({ education_phase: [], key_stage: [], job_availability: [], organisation_types: [], school_types: [] })
+    active_criteria.merge({ education_phase: [], key_stage: [], special_school: [], job_availability: [], organisation_types: [] })
   end
 
   private
@@ -55,8 +54,8 @@ class Search::SchoolSearch
     scope = scope.search_by_location(*location) if location.present?
     scope = scope.where(phase: education_phase) if education_phase
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
+    scope = scope.where("organisations.gias_data->>'SpecialClasses (code)' = ?", "1") if special_school?
     scope = apply_organisation_type_filter(scope)
-    scope = apply_school_type_filter(scope)
     apply_job_availability_filter(scope)
   end
 
@@ -78,6 +77,12 @@ class Search::SchoolSearch
     return unless @search_criteria.key?(:key_stage)
 
     School::PHASE_TO_KEY_STAGES_MAPPINGS.select { |_, v| @search_criteria[:key_stage].intersect?(v.map(&:to_s)) }.map(&:first).map(&:to_s)
+  end
+
+  def special_school?
+    return unless @search_criteria.key?(:special_school)
+
+    @search_criteria[:special_school].first == "1"
   end
 
   def apply_job_availability_filter(scope)
@@ -107,20 +112,5 @@ class Search::SchoolSearch
     end
 
     scope.where(school_type: selected_school_types)
-  end
-
-  def apply_school_type_filter(scope)
-    return scope unless school_types.present?
-
-    if school_types.include?("special_school") && school_types.include?("faith_school")
-      scope.where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
-           .or(scope.where(school_type: Organisation::SPECIAL_SCHOOL_TYPES))
-    elsif school_types.include?("special_school")
-      scope.where(school_type: Organisation::SPECIAL_SCHOOL_TYPES)
-    elsif school_types.include?("faith_school")
-      scope.where.not("gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
-    else
-      scope
-    end
   end
 end

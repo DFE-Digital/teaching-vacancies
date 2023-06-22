@@ -7,8 +7,6 @@ en:
       education_phase: Phase of education
       key_stage: Key stage
       special_school: Special school
-      faith_school: Faith school
-      school_type: School type
       job_availability:
         label: Job availability
         options:

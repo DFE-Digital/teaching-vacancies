@@ -23,7 +23,6 @@ class VacancyFilterQuery < ApplicationQuery
     # TODO: Remove this scope when we do not have any more live SEND responsible jobs
     built_scope = built_scope.where(":job_roles = ANY (job_roles)", job_roles: 2) if filters[:job_roles]&.include?("send_responsible")
     built_scope = add_organisation_type_filters(filters, built_scope)
-    built_scope = add_school_type_filters(filters, built_scope)
     working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
     built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
 
@@ -48,22 +47,6 @@ class VacancyFilterQuery < ApplicationQuery
     end
 
     built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: selected_school_types }).distinct
-  end
-
-  def add_school_type_filters(filters, built_scope)
-    school_types = filters[:school_types]
-    return built_scope unless school_types.present?
-
-    if school_types.include?("faith_school") && school_types.include?("special_school")
-      built_scope.joins(organisation_vacancies: :organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
-                                                              .or(built_scope.where("organisations.school_type IN (?)", Organisation::SPECIAL_SCHOOL_TYPES)).distinct
-    elsif school_types.include?("faith_school")
-      built_scope.joins(organisation_vacancies: :organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).distinct
-    elsif school_types.include?("special_school")
-      built_scope.joins(organisation_vacancies: :organisation).where(organisations: { school_type: Organisation::SPECIAL_SCHOOL_TYPES }).distinct
-    else
-      built_scope
-    end
   end
 
   def job_roles(filter)

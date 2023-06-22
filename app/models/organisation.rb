@@ -6,9 +6,6 @@ class Organisation < ApplicationRecord
   include PgSearch::Model
   extend FriendlyId
 
-  SPECIAL_SCHOOL_TYPES = ["Community special school", "Foundation special school", "Non-maintained special school", "Academy special converter", "Academy special sponsor led", "Free schools special"].freeze
-  NON_FAITH_RELIGIOUS_CHARACTER_TYPES = ["", "None", "Does not apply", "null"].freeze
-
   friendly_id :slug_candidates, use: :slugged
 
   has_one_attached :logo, service: :amazon_s3_images_and_logos
