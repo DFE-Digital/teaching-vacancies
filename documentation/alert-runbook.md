@@ -1,5 +1,10 @@
 # Alert Runbook
 
+These alerts are related to the service servers and raised by Prometheus in the [#twd_tv_dev](https://ukgovernmentdfe.slack.com/archives/CP987RP6J) Slack channel.
+
+Alerts are defined/configured in [this configuration file](../terraform/monitoring/config/alert.rules.yml).
+
+
 ## ProdRequestsFailuresElevated
 
 Alerts when `teaching-vacancies-production` app has a rate of more than 10% of requests failing for a 5-minute period.
