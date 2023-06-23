@@ -1,4 +1,5 @@
 # Service accounts
+**Note: Following guidance is outdated. We do not use Google accounts anymore, as we have moved to Microsoft Outlook.**
 
 Automated tasks should not be run by a human user for security reasons. Also the automation may break once the user leaves DfE and their credentials
 are revoked.
