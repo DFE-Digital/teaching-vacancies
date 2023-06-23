@@ -161,16 +161,16 @@ RSpec.describe Organisation do
 
   describe ".visible_to_jobseekers" do
     let!(:publisher) { create(:publisher, organisations: [trust, open_school, closed_school, out_of_scope_school1, out_of_scope_school2, out_of_scope_school3, out_of_scope_school4, out_of_scope_school5, out_of_scope_school6, out_of_scope_school7]) }
-    let!(:open_school) { create(:school, name: "1", establishment_status: "Open", detailed_school_type: "Primary school") }
-    let!(:closed_school) { create(:school, name: "2", establishment_status: "Closed", detailed_school_type: "Secondary school") }
-    let(:trust) { Organisation.create(type: "SchoolGroup", name: "Trust", name: "3", uid: "1") }
-    let!(:out_of_scope_school1) { create(:school, name: "4", establishment_status: "Open", detailed_school_type: "Further education") }
-    let!(:out_of_scope_school2) { create(:school, name: "5", establishment_status: "Open", detailed_school_type: "Other independent school") }
-    let!(:out_of_scope_school3) { create(:school, name: "6", establishment_status: "Open", detailed_school_type: "Miscellaneous") }
-    let!(:out_of_scope_school4) { create(:school, name: "7", establishment_status: "Open", detailed_school_type: "Special post 16 institution") }
-    let!(:out_of_scope_school5) { create(:school, name: "8", establishment_status: "Open", detailed_school_type: "Other independent special school") }
-    let!(:out_of_scope_school6) { create(:school, name: "9", establishment_status: "Open", detailed_school_type: "Higher education institutions") }
-    let!(:out_of_scope_school7) { create(:school, name: "10", establishment_status: "Open", detailed_school_type: "Welsh establishment") }
+    let!(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
+    let!(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school") }
+    let(:trust) { Organisation.create(type: "SchoolGroup", name: "Trust", uid: "1") }
+    let!(:out_of_scope_school1) { create(:school, establishment_status: "Open", detailed_school_type: "Further education") }
+    let!(:out_of_scope_school2) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent school") }
+    let!(:out_of_scope_school3) { create(:school, establishment_status: "Open", detailed_school_type: "Miscellaneous") }
+    let!(:out_of_scope_school4) { create(:school, establishment_status: "Open", detailed_school_type: "Special post 16 institution") }
+    let!(:out_of_scope_school5) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent special school") }
+    let!(:out_of_scope_school6) { create(:school, establishment_status: "Open", detailed_school_type: "Higher education institutions") }
+    let!(:out_of_scope_school7) { create(:school, establishment_status: "Open", detailed_school_type: "Welsh establishment") }
 
     it "returns open schools that are not out of scope" do
       expect(Organisation.visible_to_jobseekers).to include(open_school)
