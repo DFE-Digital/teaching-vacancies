@@ -16,7 +16,7 @@ en:
       analytics:
         legend: Cookies that measure website use
         hint:
-          intro: "We use Google Analytics to measure how you user the service. These cookies collect information about:"
+          intro: "We use Google Analytics to measure how you use the service. These cookies collect information about:"
           list:
             - the pages you visit
             - how long you spend on each page
@@ -93,7 +93,7 @@ en:
     new:
       body:
         top:
-          definition: Cookies are files saved in your phone, tablet or computer when you visit a websire or use a digital service.
+          definition: Cookies are files saved in your phone, tablet or computer when you visit a website or use a digital service.
           usage: We use cookies to collect and store information about how you use the Teaching Vacancies service.
         intro: We use 3 types of cookie. You can choose which cookies you're happy for us to use.
       heading: Cookies on Teaching Vacancies
