@@ -41,10 +41,10 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def cookies_preference_set?
-    cookies["consented-to-analytics-cookies"].present? && cookies["consented-to-marketing-cookies"].present?
+  def show_cookies_banner?
+    cookies["consented-to-analytics-cookies"].blank? || cookies["consented-to-marketing-cookies"].blank?
   end
-  helper_method :cookies_preference_set?
+  helper_method :show_cookies_banner?
 
   def utm_parameters
     params.permit(:utm_source, :utm_medium, :utm_campaign, :utm_term, :utm_content)

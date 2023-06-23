@@ -29,8 +29,8 @@ class CookiesPreferencesController < ApplicationController
     end
   end
 
-  def cookies_preference_set?
-    true
+  def show_cookies_banner?
+    false
   end
 
   private

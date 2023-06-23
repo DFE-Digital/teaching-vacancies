@@ -1,32 +1,51 @@
 require "rails_helper"
 
 RSpec.describe "Cookies banner" do
-  let(:cookies_preference_set) { false }
-
-  before do
-    allow_any_instance_of(ApplicationController).to receive(:cookies_preference_set?).and_return(cookies_preference_set)
+  def set_cookie(name, value)
+    headers = {}
+    Rack::Utils.set_cookie_header!(headers, name, value)
+    cookie_string = headers["Set-Cookie"]
+    Capybara.current_session.driver.browser.set_cookie cookie_string
   end
 
-  scenario "displays cookies banner" do
-    visit root_path
-    within ".cookies-banner-component" do
-      expect(page).to have_content(I18n.t("cookies_preferences.banner.heading"))
+  context "when the user has not set their cookies preferences" do
+    scenario "displays cookies banner" do
+      visit root_path
+      within ".cookies-banner-component" do
+        expect(page).to have_content(I18n.t("cookies_preferences.banner.heading"))
+      end
+    end
+
+    context "when visiting cookies_preferences page" do
+      scenario "does not display cookies banner" do
+        visit cookies_preferences_path
+        expect(page).to_not have_css(".cookies-banner-component")
+      end
     end
   end
 
-  context "when visiting cookies_preferences page" do
-    scenario "does not display cookies banner" do
-      visit cookies_preferences_path
-      expect(page).to_not have_css(".cookies-banner-component")
+  context "when user has set all their cookies preferences" do
+    before do
+      set_cookie("consented-to-analytics-cookies", "yes")
+      set_cookie("consented-to-marketing-cookies", "no")
     end
-  end
-
-  context "when cookies_preference_set? is true" do
-    let(:cookies_preference_set) { true }
 
     scenario "does not display cookies banner" do
       visit root_path
       expect(page).to_not have_css(".cookies-banner-component")
+    end
+  end
+
+  context "when user has only partially set their cookies preferences" do
+    before do
+      set_cookie("consented-to-analytics-cookies", "yes")
+    end
+
+    scenario "displays cookies banner" do
+      visit root_path
+      within ".cookies-banner-component" do
+        expect(page).to have_content(I18n.t("cookies_preferences.banner.heading"))
+      end
     end
   end
 end
