@@ -15,7 +15,7 @@ A team member with approver rights in [DfE Sign-in test environment](https://tes
 * Southampton (local authority)
 * Weydon School (school)
 
-This user will be avaiolable for [Teaching Vacancies QA environment site](https://qa.teaching-vacancies.service.gov.uk/) and local development.
+This user will be available for [Teaching Vacancies QA environment site](https://qa.teaching-vacancies.service.gov.uk/) and local development.
 
 ### Production Support user:
 A team member with approver rights in [DfE Sign-in production environment](https://services.signin.education.gov.uk/) invites the new developer to Teaching Vacancies support team.
