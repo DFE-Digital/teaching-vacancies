@@ -6,12 +6,21 @@ Any developer of the current team can sign in the [Teaching vacancies AWS consol
 
 ## DfE Sign-in
 
-A team member with approver rights in [DfE Sign-in test environment](https://test-interactions.signin.education.gov.uk) invites the new developer to the following organisations:
+### Hiring staff user in test environment:
+
+A team member with approver rights in [DfE Sign-in test environment](https://test-interactions.signin.education.gov.uk) invites the new developer to the following organisations as a hiring staff user:
 
 * Bexleyheath Academy (school)
 * WEYDON MULTI ACADEMY TRUST (trust)
 * Southampton (local authority)
+* Weydon School (school)
 
+This user will be available for [Teaching Vacancies QA environment site](https://qa.teaching-vacancies.service.gov.uk/) and local development.
+
+### Production Support user:
+A team member with approver rights in [DfE Sign-in production environment](https://services.signin.education.gov.uk/) invites the new developer to Teaching Vacancies support team.
+
+This user allows the developer to visit the [Teaching Vacancies production support dashboard](https://teaching-vacancies.service.gov.uk/support-users), that provides access to the [production user feedback](https://teaching-vacancies.service.gov.uk/support-users/feedback/general) and [sidekiq](https://teaching-vacancies.service.gov.uk/sidekiq) dashboards.
 ## GitHub
 
 `#digital-tools-support` will add the new team member to the [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams). We have three teams:
@@ -33,13 +42,16 @@ The new developer will be added to [teaching-vacancies-developers](https://githu
 * teaching-vacancies-monitoring
 * teaching-vacancies-review
 
-## Google groups
+## Sentry
 
-If the developer is allowed to reset the password of the various service account, they must be added as member of the relevant Google groups as
-member. To be able to add and remove member, they may be added as owner.
+Developer will need to request access to our Sentry `teaching-vacancies` organisation through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal/). 
+## Logit.io
+Developer will need to request access to Logit.io `TWD` account `Teaching Vacancies` stack for Kibana & Grafana access. 
 
-See [service accounts](service_accounts.md) for the list of groups.
+The access request can be raised through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal/)
 
+## Status Cake
+Developer will need to request account access to Status Cake for `DfEStatusCake` workspace through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal/).
 ## Zendesk
 
 Someone on the support team can add developers to Zendesk as and when needed (as there are limited seats available).
@@ -48,7 +60,7 @@ Someone on the support team can add developers to Zendesk as and when needed (as
 
 Any team member can invite the new developer to the following services:
 
-* Google Analytics
 * GOV.UK Notify
-* Sentry
-* Skylight
+* Skylight (Access through Github user with access to TV project).
+* Google Analytics
+* Google BigQ Looker studio
