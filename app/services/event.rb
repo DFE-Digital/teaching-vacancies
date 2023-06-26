@@ -25,6 +25,25 @@ class Event
     end
   end
 
+  def trigger_for_dfe_analytics(event_type, event_data = {})
+    fail_safe do
+      event_data = base_data.merge(
+        type: event_type,
+        occurred_at: occurred_at(event_data),
+        data: data.push(*event_data.map { |key, value| { key: key.to_s, value: formatted_value(value) } }),
+      )
+
+      dfe_analytics_event = DfE::Analytics::Event.new
+        .with_type(event_type)
+        .with_data(event_data)
+        .with_request_details(request)
+        .with_response_details(response)
+        .with_user(current_jobseeker)
+
+      DfE::Analytics::SendEvents.do([dfe_analytics_event])
+    end
+  end
+
   private
 
   ##

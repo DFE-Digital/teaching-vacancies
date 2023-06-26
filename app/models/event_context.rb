@@ -18,6 +18,12 @@ class EventContext < ActiveSupport::CurrentAttributes
     event.trigger(event_type, data)
   end
 
+  def trigger_for_dfe_analytics(event_type, event_data = {})
+    return if events_suppressed
+
+    event.trigger_for_dfe_analytics(event_type, event_data)
+  end
+
   private
 
   def event

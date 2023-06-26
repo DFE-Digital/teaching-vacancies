@@ -17,15 +17,8 @@ class BaseForm
   end
 
   def send_errors_to_big_query
-    event = DfE::Analytics::Event.new
-      .with_type(:form_validation_failed)
-      .with_request_details(request)
-      .with_response_details(response)
-      .with_data(event_data)
-
-    DfE::Analytics::SendEvents.do([event])
-
     EventContext.trigger_event(:form_validation_failed, event_data) if errors.any?
+    EventContext.trigger_for_dfe_analytics(:form_validation_failed, event_data) if errors.any?
   end
 
   private
