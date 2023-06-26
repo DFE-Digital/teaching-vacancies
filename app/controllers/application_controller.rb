@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   before_action :redirect_to_canonical_domain, :set_headers
   before_action :trigger_click_event, if: -> { click_event_param.present? }
   before_action { EventContext.request_event = request_event }
+  before_action { EventContext.dfe_analytics_request_event = dfe_analytics_request_event }
   before_action :set_paper_trail_whodunnit
 
   after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
@@ -88,6 +89,10 @@ class ApplicationController < ActionController::Base
 
   def request_event
     RequestEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
+  end
+
+  def dfe_analytics_request_event
+    DfeAnalyticsRequestEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
   end
 
   def trigger_page_visited_event

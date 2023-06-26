@@ -17,8 +17,10 @@ class BaseForm
   end
 
   def send_errors_to_big_query
-    EventContext.trigger_event(:form_validation_failed, event_data) if errors.any?
-    EventContext.trigger_for_dfe_analytics(:form_validation_failed, event_data) if errors.any?
+    return if errors.none?
+
+    EventContext.trigger_event(:form_validation_failed, event_data)
+    EventContext.trigger_for_dfe_analytics(:form_validation_failed, event_data)
   end
 
   private
