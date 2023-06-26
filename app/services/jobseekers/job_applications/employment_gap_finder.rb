@@ -39,7 +39,7 @@ class Jobseekers::JobApplications::EmploymentGapFinder
   end
 
   def next_employment_started_within_threshold?(employment, threshold)
-    return unless (next_start = next_employment_start(employment))
+    return false unless (next_start = next_employment_start(employment))
 
     next_start <= employment.ended_on + threshold
   end

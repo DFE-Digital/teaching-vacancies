@@ -52,8 +52,8 @@ class Publishers::VacancyFormSequence < FormSequence
   end
 
   def next_incomplete_step_subjects?
-    return unless @vacancy.allow_subjects?
-    return if @vacancy.completed_steps.include?("subjects")
+    return false unless @vacancy.allow_subjects?
+    return false if @vacancy.completed_steps.include?("subjects")
 
     @vacancy.completed_steps.last == if @vacancy.allow_key_stages?
                                        "key_stages"
