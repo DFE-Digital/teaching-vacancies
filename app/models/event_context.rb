@@ -20,6 +20,7 @@ class EventContext < ActiveSupport::CurrentAttributes
 
   def trigger_for_dfe_analytics(event_type, event_data = {})
     return if events_suppressed
+    return if event.class != RequestEvent
 
     event.trigger_for_dfe_analytics(event_type, event_data)
   end
