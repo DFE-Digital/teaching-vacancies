@@ -158,4 +158,34 @@ RSpec.describe Organisation do
       end
     end
   end
+
+  describe ".visible_to_jobseekers" do
+    let!(:publisher) { create(:publisher, organisations: [trust, open_school, closed_school, out_of_scope_school1, out_of_scope_school2, out_of_scope_school3, out_of_scope_school4, out_of_scope_school5, out_of_scope_school6, out_of_scope_school7]) }
+    let!(:open_school) { create(:school, establishment_status: "Open", detailed_school_type: "Primary school") }
+    let!(:closed_school) { create(:school, establishment_status: "Closed", detailed_school_type: "Secondary school") }
+    let(:trust) { Organisation.create(type: "SchoolGroup", name: "Trust", uid: "1") }
+    let!(:out_of_scope_school1) { create(:school, establishment_status: "Open", detailed_school_type: "Further education") }
+    let!(:out_of_scope_school2) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent school") }
+    let!(:out_of_scope_school3) { create(:school, establishment_status: "Open", detailed_school_type: "Miscellaneous") }
+    let!(:out_of_scope_school4) { create(:school, establishment_status: "Open", detailed_school_type: "Special post 16 institution") }
+    let!(:out_of_scope_school5) { create(:school, establishment_status: "Open", detailed_school_type: "Other independent special school") }
+    let!(:out_of_scope_school6) { create(:school, establishment_status: "Open", detailed_school_type: "Higher education institutions") }
+    let!(:out_of_scope_school7) { create(:school, establishment_status: "Open", detailed_school_type: "Welsh establishment") }
+
+    it "returns open schools that are not out of scope" do
+      expect(Organisation.visible_to_jobseekers).to include(open_school)
+    end
+
+    it "excludes closed schools" do
+      expect(Organisation.visible_to_jobseekers).not_to include(closed_school)
+    end
+
+    it "includes trusts" do
+      expect(Organisation.visible_to_jobseekers).to include(trust)
+    end
+
+    it "excludes schools that are out of scope" do
+      expect(Organisation.visible_to_jobseekers).not_to include(out_of_scope_school1, out_of_scope_school2, out_of_scope_school3, out_of_scope_school4, out_of_scope_school5, out_of_scope_school6, out_of_scope_school7)
+    end
+  end
 end
