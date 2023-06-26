@@ -174,7 +174,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.6)
+    faraday (2.7.7)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-follow_redirects (0.3.0)
@@ -650,7 +650,7 @@ GEM
       nokogiri (~> 1.8)
     yard (0.9.34)
     zeitwerk (2.6.8)
-    zendesk_api (2.0.1)
+    zendesk_api (3.0.0)
       faraday (> 2.0.0)
       faraday-multipart
       hashie (>= 3.5.2, < 6.0.0)
