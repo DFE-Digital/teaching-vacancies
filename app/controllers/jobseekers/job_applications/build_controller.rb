@@ -91,7 +91,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def step_incomplete?
-    return unless step.in? %i[qualifications employment_history]
+    return false unless step.in? %i[qualifications employment_history]
 
     form_params["#{step}_section_completed"] == "false"
   end
