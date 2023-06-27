@@ -26,6 +26,8 @@ RSpec.describe "Jobseekers can sign up to an account" do
       expect(page).to have_content I18n.t("jobseekers.registrations.check_your_email.title")
 
       click_on I18n.t("jobseekers.registrations.check_your_email.resend_link")
+      expect(page).to have_content I18n.t("jobseekers.registrations.check_your_email.resent_email_confirmation")
+
       visit first_link_from_last_mail
       click_on "Confirm"
 

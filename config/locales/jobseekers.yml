@@ -473,6 +473,7 @@ en:
         resend_link: resend the email
         restart_link: provide another email address
         title: Check your email
+        resent_email_confirmation: Email has been resent
       confirm_destroy:
         feedback_title: Tell us why you are closing your account
         page_title: Close account
