@@ -15,13 +15,14 @@ en:
       confirmation:
         page_title: Account created
         apply_for_jobs_link_text: search and apply for teaching jobs
-        apply_for_jobs: You can %{link_text}.
+        apply_for_jobs: You can now %{apply_for_jobs_link_text} or %{create_a_profile_link_text}.
+        create_a_profile_link_text: create a profile
         create_profile:
           functionality_guidance: >-
             When you turn on your profile it will be only be visible to hiring staff in schools and trusts.
             They can get in touch by email to invite you apply for roles.
           heading: Create a profile
-          lead_in: "With a profile, you can:"
+          lead_in: "A profile will let you:"
           prefill: apply for roles more quickly by pre-filling your information
           share_your_qualifications: share your qualifications and experience with schools
           specify_jobs: specify the types of teaching jobs you’re looking for
@@ -462,7 +463,7 @@ en:
         title: Reset your password
     registrations:
       check_your_email:
-        description: "You should have received a link by email. Follow the link to confirm your email address. The link will expire in 24 hours"
+        description: You should have received a link by email. Follow the link to confirm your email address. The link will expire in 24 hours.
         having_trouble_html: Still having trouble? %{mail_to} to our support team.
         instructions_html: If it does not arrive in 5 minutes, check your junk folder or %{resend_link}.
         report_it: Report it
