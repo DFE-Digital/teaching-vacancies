@@ -24,6 +24,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   def resend_instructions
     @resource = Jobseeker.find(session[:jobseeker_id])
     @resource.send_confirmation_instructions
+    flash[:success] = t("jobseekers.registrations.check_your_email.resent_email_confirmation")
     render :check_your_email
   end
 
