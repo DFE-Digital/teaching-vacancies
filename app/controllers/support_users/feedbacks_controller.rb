@@ -1,11 +1,13 @@
 class SupportUsers::FeedbacksController < SupportUsers::BaseController
   include SupportUsers::SatisfactionRatingTypes
 
+  before_action :set_reporting_period, except: [:recategorize]
+
   def general
     @feedbacks = Feedback
       .with_comments_or_contactable
       .order(created_at: :desc)
-      .where(created_at: reporting_period.date_range)
+      .where(created_at: @reporting_period.date_range)
 
     @categories = Feedback::NON_JOB_ALERT_CATEGORIES
     @categories_for_select = @categories.invert
@@ -15,7 +17,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     @feedbacks = Feedback
       .job_alerts
       .order(created_at: :desc)
-      .where(created_at: reporting_period.date_range)
+      .where(created_at: @reporting_period.date_range)
 
     @categories = Feedback::JOB_ALERT_CATEGORIES
     @categories_for_select = @categories.invert
@@ -35,11 +37,14 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
         &.update(category: category)
     end
 
+    reporting_period_params = { reporting_period: { from: params[:reporting_period_from],
+                                                    to: params[:reporting_period_to] } }
+
     case params[:tab]
     when "job_alerts"
-      redirect_to support_users_feedback_job_alerts_path(reporting_period: params[:reporting_period])
+      redirect_to support_users_feedback_job_alerts_path(reporting_period_params)
     else
-      redirect_to support_users_feedback_general_path(reporting_period: params[:reporting_period])
+      redirect_to support_users_feedback_general_path(reporting_period_params)
     end
   end
 
@@ -104,8 +109,11 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     end
   end
 
-  def reporting_period
-    FeedbackReportingPeriod.for(params[:reporting_period].presence || Date.today)
+  def set_reporting_period
+    @reporting_period = FeedbackReportingPeriod.new(
+      from: reporting_period_params&.fetch(:from) || Date.today.at_beginning_of_month,
+      to: reporting_period_params&.fetch(:to) || Date.today,
+    )
   end
 
   def reporting_period_summary(reporting_period, feedback_type:, grouping_key:)
@@ -116,4 +124,8 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   end
 
   helper_method :reporting_period_summary
+
+  def reporting_period_params
+    params.permit(reporting_period: %i[from to])[:reporting_period]
+  end
 end
