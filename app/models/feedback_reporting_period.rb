@@ -4,23 +4,17 @@ class FeedbackReportingPeriod
   def self.for(dateish)
     date = parse_date(dateish)
 
-    date = date.prev_day until date.tuesday?
-
-    new(
-      from: date,
-      to: date + 6.days,
-    )
+    new(from: date.at_beginning_of_month, to: date.at_end_of_month)
   end
 
   def self.all
     first_feedback = Feedback.order(:created_at).first
-
     return [] if first_feedback.nil?
 
     first_period = self.for(first_feedback.created_at)
 
-    first_period.from.step(Date.today, 7).map do |tuesday|
-      self.for(tuesday)
+    first_period.from.step(Date.today.at_end_of_month, 31).map do |begining_of_month|
+      self.for(begining_of_month)
     end
   end
 

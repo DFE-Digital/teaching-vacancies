@@ -22,7 +22,7 @@ RSpec.shared_examples "has a satisfaction rating table" do |data_testid, number_
   end
 
   def testid_for(time)
-    [time.to_date.beginning_of_week(:tuesday), time.to_date.end_of_week(:tuesday)].map(&:to_s).join(" -> ")
+    [time.to_date.beginning_of_month, time.to_date.end_of_month].map(&:to_s).join(" -> ")
   end
 end
 

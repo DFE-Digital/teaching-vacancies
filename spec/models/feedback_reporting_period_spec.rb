@@ -1,18 +1,18 @@
 require "rails_helper"
 
 RSpec.describe FeedbackReportingPeriod do
-  let!(:oldest_feedback) { create(:feedback, created_at: "2022-01-09") } # Sunday
-  let!(:newest_feedback) { create(:feedback, created_at: "2022-03-23") } # Wednesday
+  let!(:oldest_feedback) { create(:feedback, created_at: "2022-01-09") }
+  let!(:newest_feedback) { create(:feedback, created_at: "2022-03-23") }
 
   describe ".all" do
     subject(:all_periods) { described_class.all }
 
-    it "returns inclusive two-week periods from the oldest to the newest feedback, starting on Tuesdays and ending on Mondays" do
-      expect(all_periods.first)
-        .to eq(described_class.new(from: "2022-01-04", to: "2022-01-10"))
-
-      expect(all_periods.last).to eq(described_class.for(Date.today))
-      expect(all_periods.count).to eq(((all_periods.first.from...all_periods.last.from).count / 7) + 1)
+    it "returns inclusive one per month periods from the oldest feedback to the current month" do
+      travel_to(Time.zone.local(2022, 6, 10, 10, 4, 3)) do
+        expect(all_periods.first).to eq(described_class.new(from: "2022-01-01", to: "2022-01-31"))
+        expect(all_periods.last).to eq(described_class.new(from: "2022-06-01", to: "2022-06-30"))
+        expect(all_periods.count).to eq(6)
+      end
     end
 
     context "when there is no feedback" do
@@ -33,23 +33,23 @@ RSpec.describe FeedbackReportingPeriod do
   end
 
   describe ".for(date)" do
-    it "returns a two-week Tueday-starting range that includes the given date" do
-      expect(described_class.for("2022-01-09"))
-        .to eq(described_class.new(from: "2022-01-04", to: "2022-01-10"))
+    it "returns the calendar month date range that includes the given date" do
+      expect(described_class.for("2022-02-09"))
+        .to eq(described_class.new(from: "2022-02-01", to: "2022-02-28"))
     end
 
     it "accepts a date, a datetime, a time or a string for its values" do
       expect(described_class.for("2022-01-09"))
-        .to eq(described_class.new(from: "2022-01-04", to: "2022-01-10"))
+        .to eq(described_class.new(from: "2022-01-01", to: "2022-01-31"))
 
       expect(described_class.for(Date.new(2022, 1, 9)))
-        .to eq(described_class.new(from: "2022-01-04", to: "2022-01-10"))
+        .to eq(described_class.new(from: "2022-01-01", to: "2022-01-31"))
 
       expect(described_class.for(DateTime.new(2022, 1, 9, 10, 3)))
-        .to eq(described_class.new(from: "2022-01-04", to: "2022-01-10"))
+        .to eq(described_class.new(from: "2022-01-01", to: "2022-01-31"))
 
       expect(described_class.for(Time.new(2022, 1, 9, 10, 3)))
-        .to eq(described_class.new(from: "2022-01-04", to: "2022-01-10"))
+        .to eq(described_class.new(from: "2022-01-01", to: "2022-01-31"))
     end
   end
 
