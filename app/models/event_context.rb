@@ -1,5 +1,6 @@
 class EventContext < ActiveSupport::CurrentAttributes
   attribute :request_event
+  attribute :dfe_analytics_request_event
   attribute :events_suppressed
 
   # Stop sending events in the current context for the duration of a block
@@ -16,6 +17,12 @@ class EventContext < ActiveSupport::CurrentAttributes
     return if events_suppressed
 
     event.trigger(event_type, data)
+  end
+
+  def trigger_for_dfe_analytics(event_type, event_data = {})
+    return if dfe_analytics_request_event.nil?
+
+    dfe_analytics_request_event.trigger_for_dfe_analytics(event_type, event_data)
   end
 
   private
