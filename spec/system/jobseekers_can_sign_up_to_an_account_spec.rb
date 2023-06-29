@@ -27,9 +27,8 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
       click_on I18n.t("jobseekers.registrations.check_your_email.resend_link")
       expect(page).to have_content I18n.t("jobseekers.registrations.check_your_email.resent_email_confirmation")
-
+ 
       visit first_link_from_last_mail
-      click_on "Confirm"
 
       expect(current_path).to eq(confirmation_jobseekers_account_path)
     end
@@ -54,13 +53,38 @@ RSpec.describe "Jobseekers can sign up to an account" do
       end
     end
 
+    context "when the user attempts to sign in without confirming their email" do
+      it "does not allow user to sign in and shows the relevant error message" do
+        login_as(jobseeker, scope: :jobseeker)
+        expect(page).to have_content "You need to confirm your email address to sign in. You should have received a link by email. If the link has expired, you can resend the email"
+        click_link "resend the email"
+        expect(current_path).to eq(jobseekers_check_your_email_path)
+        confirm_email_address
+        expect(current_path).to eq(confirmation_jobseekers_account_path)
+      end
+    end
+
     context "when the confirmation token is invalid" do
       context "when the confirmation period has expired" do
-        before { travel_to 15.days.from_now }
+        before { travel_to 25.hours.from_now }
+
+        context "when jobseeker tries to confirm their email" do
+          before do
+            confirm_email_address
+          end
+
+          it 'informs user that the link has expired and allows them to resend email and confirm their email' do
+            expect(page).to have_content('Link has expired')
+            expect { click_on "Resend email" }.to change { delivered_emails.count }.by(1)
+            expect(current_path).to eq(jobseekers_check_your_email_path)
+            confirm_email_address
+            expect(current_path).to eq(confirmation_jobseekers_account_path)
+          end
+        end
 
         context "when the confirmation email is resent" do
           it "resends confirmation email and redirects to check your email page" do
-            expect { resend_confirmation_email }.to change { delivered_emails.count }.by(1)
+            expect { confirm_email_address }.to change { delivered_emails.count }.by(1)
             expect(current_path).to eq(jobseekers_check_your_email_path)
           end
         end
