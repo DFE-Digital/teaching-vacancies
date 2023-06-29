@@ -54,13 +54,15 @@ class VacancyFilterQuery < ApplicationQuery
     school_types = filters[:school_types]
     return built_scope unless school_types.present?
 
+    built_scope = built_scope.joins(organisation_vacancies: :organisation)
+
     if school_types.include?("faith_school") && school_types.include?("special_school")
-      built_scope.joins(organisation_vacancies: :organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
-                                                              .or(built_scope.where("organisations.detailed_school_type IN (?)", Organisation::SPECIAL_SCHOOL_TYPES)).distinct
+      built_scope.where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
+                 .or(built_scope.where("organisations.detailed_school_type IN (?)", Organisation::SPECIAL_SCHOOL_TYPES)).distinct
     elsif school_types.include?("faith_school")
-      built_scope.joins(organisation_vacancies: :organisation).where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).distinct
+      built_scope.where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).distinct
     elsif school_types.include?("special_school")
-      built_scope.joins(organisation_vacancies: :organisation).where(organisations: { detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES }).distinct
+      built_scope.where(organisations: { detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES }).distinct
     else
       built_scope
     end
