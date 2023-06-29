@@ -36,8 +36,8 @@ en:
       survey_text: Take our quick survey about your experience of using Teaching Vacancies
     confirmations:
       new:
-        description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
-        title: Your request is no longer valid
+        description: We need to email another link to %{email} so you can activate your account.
+        title: Link has expired
       show:
         confirm: Confirm
         title: Confirm your email address
