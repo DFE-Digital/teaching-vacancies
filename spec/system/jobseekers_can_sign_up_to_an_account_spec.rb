@@ -86,8 +86,8 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
         context "when the confirmation email is resent" do
           it "resends confirmation email and redirects to check your email page" do
-            expect { confirm_email_address }.to change { delivered_emails.count }.by(1)
-            expect(current_path).to eq(jobseekers_check_your_email_path)
+            expect { click_on "resend the email" }.to change { delivered_emails.count }.by(1)
+            expect(page).to have_content "Email has been resent"
           end
         end
       end
