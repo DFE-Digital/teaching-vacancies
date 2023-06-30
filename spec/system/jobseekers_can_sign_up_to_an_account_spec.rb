@@ -55,10 +55,12 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
     context "when the user attempts to sign in without confirming their email" do
       it "does not allow user to sign in and shows the relevant error message" do
-        login_as(jobseeker, scope: :jobseeker)
+        within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
+        click_on I18n.t("buttons.sign_in_jobseeker")
+        sign_in_jobseeker
         expect(page).to have_content "You need to confirm your email address to sign in. You should have received a link by email. If the link has expired, you can resend the email"
         click_link "resend the email"
-        expect(current_path).to eq(jobseekers_check_your_email_path)
+        expect(page).to have_content "Email has been resent"
         confirm_email_address
         expect(current_path).to eq(confirmation_jobseekers_account_path)
       end
