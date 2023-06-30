@@ -29,7 +29,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   end
 
   def recategorize
-    params.fetch(:feedbacks).each do |feedback_params|
+    params.fetch(:feedbacks, []).each do |feedback_params|
       next if (category = feedback_params[:category]).blank?
 
       Feedback
