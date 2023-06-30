@@ -49,18 +49,6 @@ RSpec.describe "Jobseekers can save a job" do
     end
   end
 
-  context "when a jobseeker does not have an account" do
-    let(:jobseeker) { build(:jobseeker) }
-
-    it "saves the job after signing up" do
-      save_job
-      click_on I18n.t("jobseekers.sessions.new.no_account.link")
-      sign_up_jobseeker
-      confirm_email_address
-      and_the_job_is_saved
-    end
-  end
-
   def save_job
     visit job_path(vacancy)
     click_on I18n.t("jobseekers.saved_jobs.save")

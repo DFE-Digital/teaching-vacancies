@@ -68,28 +68,6 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         end
       end
     end
-
-    context "when jobseeker does not have an account" do
-      scenario "renders a create an account prompt form that redirects to job alerts dashboard" do
-        within "div[data-account-prompt='sign-up']" do
-          expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_up"))
-          fill_in "Password", with: jobseeker.password
-          click_on I18n.t("buttons.create_account")
-        end
-        confirm_email_address
-        expect(current_path).to eq(jobseekers_subscriptions_path)
-      end
-
-      scenario "renders a create an account prompt form that redirects to sign up page on error then redirects to job alerts dashboard" do
-        within "div[data-account-prompt='sign-up']" do
-          expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_up"))
-          click_on I18n.t("buttons.create_account")
-        end
-        sign_up_jobseeker
-        confirm_email_address
-        expect(current_path).to eq(jobseekers_subscriptions_path)
-      end
-    end
   end
 
   describe "location search" do

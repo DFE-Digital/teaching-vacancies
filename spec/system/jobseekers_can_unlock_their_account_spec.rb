@@ -47,6 +47,8 @@ RSpec.describe "Jobseekers can unlock their account" do
 
         confirm_email_address
 
+        click_button "Confirm"
+
         expect(jobseeker.reload).not_to be_access_locked
 
         expect(current_path).to eq(jobseeker_session_path)

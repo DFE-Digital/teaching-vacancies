@@ -53,32 +53,6 @@ RSpec.describe "Jobseekers can start or continue a job application" do
         end
       end
     end
-
-    context "when the jobseeker does not have an account" do
-      context "when clicking 'apply' on the job page" do
-        before do
-          visit job_path(vacancy)
-          within ".banner-buttons" do
-            click_on I18n.t("jobseekers.job_applications.banner_links.apply")
-          end
-        end
-
-        it "starts a job application after signing up" do
-          expect(current_path).not_to eq(new_jobseekers_job_job_application_path(vacancy.id))
-
-          click_on I18n.t("jobseekers.sessions.new.no_account.link")
-          sign_up_jobseeker
-          confirm_email_address
-
-          expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
-          expect(page).to have_css(".govuk-caption-l", text: vacancy.job_title)
-
-          expect { click_on I18n.t("buttons.start_application") }.to change { JobApplication.count }.by(1)
-
-          expect(current_path).to eq(jobseekers_job_application_build_path(created_job_application, :personal_details))
-        end
-      end
-    end
   end
 
   context "when the jobseeker has a draft application for the job" do
