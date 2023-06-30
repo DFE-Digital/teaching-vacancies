@@ -2,6 +2,6 @@
   - next unless variant.in? t("banners").keys.map(&:to_s)
   = govuk_notification_banner title_text: t("banners.#{variant}"), classes: "govuk-notification-banner--#{variant} govuk-!-margin-top-3 govuk-!-margin-bottom-0" do |notification_banner|
     - if message == t("devise.failure.unconfirmed")
-      - notification_banner.with_heading(text: t("devise.failure.unconfirmed"), link_text: "resend the email", link_href: jobseekers_resend_instructions_url)
+      - notification_banner.with_heading(text: t("devise.failure.unconfirmed"), link_text: t("devise.failure.unconfirmed_link_text"), link_href: jobseekers_resend_instructions_url)
     - else
       - notification_banner.with_heading(text: message)

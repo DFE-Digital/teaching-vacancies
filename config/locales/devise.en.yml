@@ -18,6 +18,7 @@ en:
         You need to confirm your email address to sign in. You should have received a link by email.
 
         If the link has expired, you can
+      unconfirmed_link_text: resend the email
 
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
