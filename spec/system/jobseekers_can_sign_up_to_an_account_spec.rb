@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
       click_on I18n.t("jobseekers.registrations.check_your_email.resend_link")
       expect(page).to have_content I18n.t("jobseekers.registrations.check_your_email.resent_email_confirmation")
- 
+
       visit first_link_from_last_mail
 
       expect(current_path).to eq(confirmation_jobseekers_account_path)
@@ -75,8 +75,8 @@ RSpec.describe "Jobseekers can sign up to an account" do
             confirm_email_address
           end
 
-          it 'informs user that the link has expired and allows them to resend email and confirm their email' do
-            expect(page).to have_content('Link has expired')
+          it "informs user that the link has expired and allows them to resend email and confirm their email" do
+            expect(page).to have_content("Link has expired")
             expect { click_on "Resend email" }.to change { delivered_emails.count }.by(1)
             expect(current_path).to eq(jobseekers_check_your_email_path)
             confirm_email_address

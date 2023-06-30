@@ -3,6 +3,5 @@
   = govuk_notification_banner title_text: t("banners.#{variant}"), classes: "govuk-notification-banner--#{variant} govuk-!-margin-top-3 govuk-!-margin-bottom-0" do |notification_banner|
     - if message == t("devise.failure.unconfirmed")
       - notification_banner.with_heading(text: t("devise.failure.unconfirmed"), link_text: "resend the email", link_href: jobseekers_resend_instructions_url)
-    - else 
+    - else
       - notification_banner.with_heading(text: message)
-

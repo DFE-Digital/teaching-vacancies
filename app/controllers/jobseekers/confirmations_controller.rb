@@ -5,7 +5,7 @@ class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
 
   protected
 
-  def after_confirmation_path_for(resource_name, resource)
+  def after_confirmation_path_for(_resource_name, resource)
     sign_in(resource)
     request_event.trigger(:jobseeker_email_confirmed)
     flash.delete(:notice)
