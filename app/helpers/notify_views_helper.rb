@@ -12,9 +12,9 @@ module NotifyViewsHelper
     notify_link(url)
   end
 
-  def email_confirmation_link(token, confirmation_type)
+  def email_confirmation_url(token)
     url = jobseeker_confirmation_url(confirmation_token: token, **utm_params)
-    notify_link(url, t("#{confirmation_type}.link"))
+    notify_link(url)
   end
 
   def expired_vacancy_feedback_link(vacancy)
