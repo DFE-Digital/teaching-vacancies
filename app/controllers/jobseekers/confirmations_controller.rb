@@ -1,8 +1,4 @@
 class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
-  def show
-    super
-  end
-
   protected
 
   def after_confirmation_path_for(_resource_name, resource)
