@@ -18,7 +18,6 @@ users = [
   { email: "alex.lee@education.gov.uk", family_name: "Alex", given_name: "Lee" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
   { email: "brandon1.chan@education.gov.uk", family_name: "Chan", given_name: "Brandon" },
-  { email: "ben.mitchell@education.gov.uk", family_name: "Mitchell", given_name: "Ben" },
   { email: "colin.saliceti@education.gov.uk", family_name: "Saliceti", given_name: "Colin" },
   { email: "danielle.dean@education.gov.uk", family_name: "Danielle", given_name: "Dean" },
   { email: "davide.dippolito@education.gov.uk", family_name: "Dippolito", given_name: "Davide" },
@@ -27,6 +26,7 @@ users = [
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
   { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "stephanie.maskery@education.gov.uk", family_name: "Maskery", given_name: "Stephanie" },
+  { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
 ]
 
 users.each do |user|
