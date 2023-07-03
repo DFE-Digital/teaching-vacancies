@@ -22,7 +22,7 @@ RSpec.shared_examples "has a satisfaction rating table" do |data_testid, number_
   end
 
   def testid_for(time)
-    [time.to_date.beginning_of_week(:tuesday), time.to_date.end_of_week(:tuesday)].map(&:to_s).join(" -> ")
+    [time.to_date.beginning_of_month, time.to_date.end_of_month].map(&:to_s).join(" -> ")
   end
 end
 
@@ -254,9 +254,12 @@ RSpec.describe "Feedback supportal section" do
       expect(page).not_to have_text(old_other_feedback.comment)
       expect(page).not_to have_text(older_other_feedback.comment)
 
-      select "2022-03-15 -> 2022-03-21", from: "reporting_period"
+      fill_in "From", with: "2022-03-15"
+      fill_in "To", with: "2022-03-21"
       click_on "Go"
 
+      expect(page).to have_field("From", with: "2022-03-15")
+      expect(page).to have_field("To", with: "2022-03-21")
       expect(page).not_to have_text(other_feedback.comment)
       expect(page).to have_text(old_other_feedback.comment)
       expect(page).not_to have_text(older_other_feedback.comment)
@@ -267,15 +270,20 @@ RSpec.describe "Feedback supportal section" do
       expect(page).to have_text(old_job_alert_feedback.comment)
       expect(page).not_to have_text(older_job_alert_feedback.comment)
 
-      select "2022-01-04 -> 2022-01-10", from: "reporting_period"
+      fill_in "From", with: "2022-01-04"
+      fill_in "To", with: "2022-01-10"
       click_on "Go"
 
+      expect(page).to have_field("From", with: "2022-01-04")
+      expect(page).to have_field("To", with: "2022-01-10")
       expect(page).not_to have_text(job_alert_feedback.comment)
       expect(page).not_to have_text(old_job_alert_feedback.comment)
       expect(page).to have_text(older_job_alert_feedback.comment)
 
       click_on "General"
 
+      expect(page).to have_field("From", with: "2022-01-04")
+      expect(page).to have_field("To", with: "2022-01-10")
       expect(page).not_to have_text(other_feedback.comment)
       expect(page).not_to have_text(old_other_feedback.comment)
       expect(page).to have_text(older_other_feedback.comment)

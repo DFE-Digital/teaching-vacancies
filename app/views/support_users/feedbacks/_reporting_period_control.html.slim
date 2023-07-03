@@ -1,3 +1,20 @@
-= form_tag url_for, method: "get" do
-  = select_tag :reporting_period, options_for_select(FeedbackReportingPeriod.all.reverse.map { |rp| [rp.to_s, rp.from.strftime("%F")] }, params[:reporting_period]), class: "govuk-select govuk-!-margin-right-2"
-  button.govuk-button.govuk-button--secondary = "Go"
+.govuk-form-group
+  = form_tag url_for, method: "get" do
+    fieldset class="govuk-fieldset govuk-!-margin-bottom-0"
+      div class="govuk-form-group govuk-!-display-inline-block govuk-!-margin-right-2"
+        label class="govuk-label" for="reporting-period-from" From
+        = date_field(:reporting_period,
+                     :from,
+                     max: Date.today,
+                     class: "govuk-input govuk-input--width-10",
+                     id: "reporting-period-from",
+                     value: @reporting_period.from)
+      div class="govuk-form-group govuk-!-display-inline-block"
+        label class="govuk-label" for="reporting-period-to" To
+        = date_field(:reporting_period,
+                     :to,
+                     max: Date.today,
+                     class: "govuk-input govuk-input--width-10",
+                     id: "reporting-period-to",
+                     value: @reporting_period.to)
+    button class="govuk-button govuk-button--secondary" = "Go"
