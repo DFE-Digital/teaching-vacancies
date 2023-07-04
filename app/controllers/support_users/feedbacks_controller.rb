@@ -111,8 +111,8 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
   def set_reporting_period
     @reporting_period = FeedbackReportingPeriod.new(
-      from: reporting_period_params&.fetch(:from) || Date.today.at_beginning_of_month,
-      to: reporting_period_params&.fetch(:to) || Date.today,
+      from: reporting_period_params&.fetch(:from).presence || Date.today.at_beginning_of_month,
+      to: reporting_period_params&.fetch(:to).presence || Date.today,
     )
   end
 
