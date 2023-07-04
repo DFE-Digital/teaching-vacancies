@@ -16,8 +16,7 @@ en:
       unauthenticated: You need to sign in or create an account before continuing.
       unconfirmed: >-
         You need to confirm your email address to sign in. You should have received a link by email.
-
-        If the link has expired, you can
+      unconfirmed_body: If the link has expired you can %{link}
       unconfirmed_link_text: resend the email
 
     omniauth_callbacks:
