@@ -58,7 +58,8 @@ RSpec.describe "Jobseekers can sign up to an account" do
         within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
         click_on I18n.t("buttons.sign_in_jobseeker")
         sign_in_jobseeker
-        expect(page).to have_content "You need to confirm your email address to sign in. You should have received a link by email. If the link has expired, you can resend the email"
+        expect(page).to have_content "You need to confirm your email address to sign in. You should have received a link by email."
+        expect(page).to have_content "If the link has expired, you can resend the email"
         click_link "resend the email"
         expect(page).to have_content "Email has been resent"
         confirm_email_address
