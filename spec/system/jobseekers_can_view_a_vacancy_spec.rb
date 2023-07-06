@@ -86,6 +86,18 @@ RSpec.describe "Viewing a single published vacancy" do
                                                            deadline: format_date(vacancy.expires_at, :date_only_shorthand)))
       end
     end
+
+    scenario "jobseeker sees a tag on jobs that allow to apply through Teaching Vacancies" do
+      visit job_path(vacancy)
+      expect(page).to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+    end
+
+    scenario "jobseeker does not see a tag on jobs that don't allow to apply through Teaching Vacancies" do
+      vacancy_without_apply = create(:vacancy, :published, :no_tv_applications, organisations: [school])
+
+      visit job_path(vacancy_without_apply)
+      expect(page).not_to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+    end
   end
 
   context "when the vacancy status is draft" do
