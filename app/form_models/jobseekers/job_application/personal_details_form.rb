@@ -2,7 +2,7 @@ class Jobseekers::JobApplication::PersonalDetailsForm < Jobseekers::JobApplicati
   include ActiveModel::Model
 
   def self.fields
-    %i[city country email_address first_name last_name national_insurance_number phone_number previous_names postcode street_address teacher_reference_number]
+    %i[city country email_address first_name last_name national_insurance_number phone_number previous_names postcode street_address right_to_work_in_uk teacher_reference_number]
   end
   attr_accessor(*fields)
 
@@ -13,4 +13,5 @@ class Jobseekers::JobApplication::PersonalDetailsForm < Jobseekers::JobApplicati
   validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,13}\z/ }
   validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true
   validates :email_address, email_address: true
+  validates :right_to_work_in_uk, inclusion: { in: %w[yes no] }
 end
