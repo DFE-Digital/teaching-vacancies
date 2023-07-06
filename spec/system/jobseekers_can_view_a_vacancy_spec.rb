@@ -98,6 +98,36 @@ RSpec.describe "Viewing a single published vacancy" do
       visit job_path(vacancy_without_apply)
       expect(page).not_to have_css("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
     end
+
+    context "with similar jobs listed" do
+      let(:similar_job_tv_application) { create(:vacancy, :published, organisations: [school]) }
+      let(:similar_job_no_tv_application) { create(:vacancy, :published, :no_tv_applications, organisations: [school]) }
+      let(:similar_jobs_stub) do
+        instance_double(Search::SimilarJobs, similar_jobs: [similar_job_tv_application, similar_job_no_tv_application])
+      end
+
+      before do
+        allow(Search::SimilarJobs).to receive(:new).with(vacancy).and_return(similar_jobs_stub)
+      end
+
+      scenario "jobseeker sees similar jobs to the vacancy listing" do
+        visit job_path(vacancy)
+        within(".similar-jobs") do
+          expect(page).to have_link(similar_job_tv_application.job_title, href: job_path(similar_job_tv_application))
+          expect(page).to have_link(similar_job_no_tv_application.job_title, href: job_path(similar_job_no_tv_application))
+        end
+      end
+
+      scenario "jobseeker sees a tag on similar jobs that allow to apply through Teaching Vacancies" do
+        visit job_path(vacancy)
+        within(".similar-jobs") do
+          expect(page.find("p", text: similar_job_tv_application.job_title))
+            .to have_sibling("p", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+          expect(page.find("p", text: similar_job_no_tv_application.job_title))
+            .not_to have_sibling("p", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+        end
+      end
+    end
   end
 
   context "when the vacancy status is draft" do
