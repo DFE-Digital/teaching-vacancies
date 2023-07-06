@@ -8,6 +8,7 @@
         .header-with-logo-title
           h2.govuk-heading-m class="govuk-!-margin-bottom-0"
             = results_link(vacancy, class: "view-vacancy-link")
+            =< govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
           p.govuk-body.address class="govuk-!-margin-bottom-0"
             = vacancy_full_job_location(vacancy)
 

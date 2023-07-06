@@ -30,6 +30,18 @@ RSpec.describe "Jobseekers can view all the jobs" do
     end
   end
 
+  it "jobseekers can distinguish between the listed jobs that allow to apply through Teaching Vacancies and the ones who don't" do
+    job_without_apply = create(:vacancy, :no_tv_applications, :past_publish, expires_at: 2.years.from_now, organisations: [school])
+    visit jobs_path
+
+    published_jobs.each do |job|
+      expect(page.find("h2 a", text: job.job_title))
+        .to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+    end
+    expect(page.find("h2 a", text: job_without_apply.job_title))
+      .not_to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+  end
+
   describe "pagination" do
     shared_examples "jobseekers can view jobs and navigate between pages" do
       scenario "jobseekers can view jobs and navigate between pages" do
