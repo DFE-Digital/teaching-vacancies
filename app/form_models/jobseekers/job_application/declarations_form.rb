@@ -6,6 +6,6 @@ class Jobseekers::JobApplication::DeclarationsForm < Jobseekers::JobApplication:
   end
   attr_accessor(*fields)
 
-  validates :close_relationships, :right_to_work_in_uk, inclusion: { in: %w[yes no] }
+  validates :close_relationships, inclusion: { in: %w[yes no] }
   validates :close_relationships_details, presence: true, if: -> { close_relationships == "yes" }
 end

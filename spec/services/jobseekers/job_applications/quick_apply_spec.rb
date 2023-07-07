@@ -95,7 +95,6 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     it "does not copy declarations attributes" do
       expect(subject.close_relationships).to be_blank
       expect(subject.close_relationships_details).to be_blank
-      expect(subject.right_to_work_in_uk).to be_blank
     end
 
     it "does not copy equal opportunities attributes" do

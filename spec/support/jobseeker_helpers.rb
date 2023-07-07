@@ -46,7 +46,6 @@ module JobseekerHelpers
   def fill_in_declarations
     choose "Yes", name: "jobseekers_job_application_declarations_form[close_relationships]"
     fill_in "Please give details", with: "Some details of the relationship"
-    choose "Yes", name: "jobseekers_job_application_declarations_form[right_to_work_in_uk]"
   end
 
   def fill_in_employment_history
@@ -87,6 +86,7 @@ module JobseekerHelpers
     fill_in "Country", with: "United Kingdom"
     fill_in "Phone number", with: "01234 123456"
     fill_in "Email address", with: "jobseeker@example.com"
+    choose "Yes"
     fill_in "Teacher reference number", with: "1234567"
     fill_in "National Insurance number", with: "AB 12 12 12 A"
   end

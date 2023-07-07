@@ -476,8 +476,6 @@ en:
               inclusion: Select yes if you have a close relationship with people within the organisation
             close_relationships_details:
               blank: Give details about any close relationships with people within the organisation
-            right_to_work_in_uk:
-              inclusion: Select yes if you have the right to work in the UK
         jobseekers/job_application/employment_history_form:
           attributes:
             employment_history_section_completed:
@@ -527,6 +525,8 @@ en:
               blank: Enter your building and street
             teacher_reference_number:
               invalid: Enter a teacher reference number in the correct format
+            right_to_work_in_uk: 
+              inclusion: Select yes if you have the right to work in the UK
         jobseekers/job_application/personal_statement_form:
           attributes:
             personal_statement:
