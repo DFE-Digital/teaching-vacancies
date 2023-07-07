@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   private
 
   def show_cookies_banner?
-    cookies["consented-to-analytics-cookies"].blank? || cookies["consented-to-marketing-cookies"].blank?
+    cookies["consented-to-additional-cookies"].blank?
   end
   helper_method :show_cookies_banner?
 

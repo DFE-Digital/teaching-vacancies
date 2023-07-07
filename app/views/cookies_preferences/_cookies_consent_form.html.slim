@@ -1,60 +1,50 @@
 = form_for @cookies_preferences_form, url: create_cookies_preferences_path do |f|
   = f.govuk_error_summary
-
-  - analytics_hint_html = capture do
-      - scope = "cookies_preferences.form.analytics.hint"
-      p.govuk-body = t("intro", scope:)
-      ul.govuk-list.govuk-list--bullet
-        - t("list", scope:).each do |list_text|
-          li = list_text
-      p.govuk-body = t("anonymity", scope:)
-
-      - scope = "cookies_preferences.form.analytics.hint.table"
-      table.govuk-table
-        thead.govuk-table__head
-          th.govuk-table__header = t("header.name", scope:)
-          th.govuk-table__header = t("header.purpose", scope:)
-          th.govuk-table__header = t("header.expires", scope:)
-        - %w[first second third].each do |row|
-          tr.govuk-table__row
-            td.govuk-table__cell = t("#{row}.name", scope:)
-            td.govuk-table__cell = t("#{row}.purpose", scope:)
-            td.govuk-table__cell = t("#{row}.expires", scope:)
-
   - scope = "cookies_preferences.form.analytics"
-  = f.govuk_collection_radio_buttons :cookies_analytics_consent,
+  h3.govuk-heading-m = t("heading", scope:)
+  p.govuk-body = t("intro", scope:)
+  ul.govuk-list.govuk-list--bullet
+    - t("list", scope:).each do |list_text|
+      li = list_text
+  p.govuk-body = t("anonymity", scope:)
+
+  - scope = "cookies_preferences.form.analytics.table"
+  table.govuk-table
+    thead.govuk-table__head
+      th.govuk-table__header = t("header.name", scope:)
+      th.govuk-table__header = t("header.purpose", scope:)
+      th.govuk-table__header = t("header.expires", scope:)
+    - %w[first second third].each do |row|
+      tr.govuk-table__row
+        td.govuk-table__cell = t("#{row}.name", scope:)
+        td.govuk-table__cell = t("#{row}.purpose", scope:)
+        td.govuk-table__cell = t("#{row}.expires", scope:)
+
+  - scope = "cookies_preferences.form.marketing"
+  h3.govuk-heading-m = t("heading", scope:)
+  p.govuk-body = t("intro", scope:)
+
+  - scope = "cookies_preferences.form.marketing.table"
+  table.govuk-table
+    thead.govuk-table__head
+      th.govuk-table__header = t("header.name", scope:)
+      th.govuk-table__header = t("header.purpose", scope:)
+      th.govuk-table__header = t("header.expires", scope:)
+    - %w[first second].each do |row|
+      tr.govuk-table__row
+        td.govuk-table__cell = t("#{row}.name", scope:)
+        td.govuk-table__cell = t("#{row}.purpose", scope:)
+        td.govuk-table__cell = t("#{row}.expires", scope:)
+
+  - scope = "cookies_preferences.form"
+  = f.govuk_collection_radio_buttons :cookies_consent,
     [["yes", t("options.consent", scope:)], ["no", t("options.no_consent", scope:)]],
     :first,
     :last,
-    legend: { text: t("legend", scope:), size: "m" },
-    hint: { text: analytics_hint_html.html_safe }
-
-  - scope = "cookies_preferences.form.marketing"
-  - marketing_hint_html = capture do
-      p.govuk-body = t("hint.intro", scope:)
-
-      - scope = "cookies_preferences.form.marketing.hint.table"
-      table.govuk-table
-        thead.govuk-table__head
-          th.govuk-table__header = t("header.name", scope:)
-          th.govuk-table__header = t("header.purpose", scope:)
-          th.govuk-table__header = t("header.expires", scope:)
-        - %w[first second].each do |row|
-          tr.govuk-table__row
-            td.govuk-table__cell = t("#{row}.name", scope:)
-            td.govuk-table__cell = t("#{row}.purpose", scope:)
-            td.govuk-table__cell = t("#{row}.expires", scope:)
-
-  - scope = "cookies_preferences.form.marketing"
-  = f.govuk_collection_radio_buttons :cookies_marketing_consent,
-    [["yes", t("options.consent", scope:)], ["no", t("options.no_consent", scope:)]],
-    :first,
-    :last,
-    legend: { text: t("legend", scope:), size: "m" },
-    hint: { text: marketing_hint_html.html_safe }
+    legend: { text: t("legend", scope:), size: "m" }
 
   - scope = "cookies_preferences.form.essential"
-  h3.govuk-heading-m = t("heading", scope:)
+  h2.govuk-heading-l = t("heading", scope:)
   p.govuk-body = t("intro", scope:)
 
   table.govuk-table
@@ -62,7 +52,7 @@
       th.govuk-table__header = t("table.header.name", scope:)
       th.govuk-table__header = t("table.header.purpose", scope:)
       th.govuk-table__header = t("table.header.expires", scope:)
-    - %w[first second third].each do |row|
+    - %w[first second].each do |row|
       tr.govuk-table__row
         td.govuk-table__cell = t("table.#{row}.name", scope:)
         td.govuk-table__cell = t("table.#{row}.purpose", scope:)

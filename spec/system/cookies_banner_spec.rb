@@ -9,7 +9,7 @@ RSpec.describe "Cookies banner" do
   end
 
   context "when the user has not set their cookies preferences" do
-    scenario "displays cookies banner" do
+    scenario "displays the cookies banner" do
       visit root_path
       within ".cookies-banner-component" do
         expect(page).to have_content(I18n.t("cookies_preferences.banner.heading"))
@@ -17,31 +17,30 @@ RSpec.describe "Cookies banner" do
     end
 
     context "when visiting cookies_preferences page" do
-      scenario "does not display cookies banner" do
+      scenario "does not display the cookies banner" do
         visit cookies_preferences_path
         expect(page).to_not have_css(".cookies-banner-component")
       end
     end
   end
 
-  context "when user has set all their cookies preferences" do
+  context "when user has set their cookies preferences" do
     before do
-      set_cookie("consented-to-analytics-cookies", "yes")
-      set_cookie("consented-to-marketing-cookies", "no")
+      set_cookie("consented-to-additional-cookies", "yes")
     end
 
-    scenario "does not display cookies banner" do
+    scenario "does not display the cookies banner" do
       visit root_path
       expect(page).to_not have_css(".cookies-banner-component")
     end
   end
 
-  context "when user has only partially set their cookies preferences" do
+  context "when user has a non valid cookie set" do
     before do
-      set_cookie("consented-to-analytics-cookies", "yes")
+      set_cookie("consented-to-cookies", "yes")
     end
 
-    scenario "displays cookies banner" do
+    scenario "displays the cookies banner" do
       visit root_path
       within ".cookies-banner-component" do
         expect(page).to have_content(I18n.t("cookies_preferences.banner.heading"))
