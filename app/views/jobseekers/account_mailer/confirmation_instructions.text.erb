@@ -1,10 +1,6 @@
-# <%= t("#{@confirmation_type}.heading") %>
+<%= t(".body") %>
 
-<%= t("#{@confirmation_type}.intro") %>
-
-# <%= t(".what_to_do") %>
-
-<%= email_confirmation_link(@token, @confirmation_type) %>
+<%= email_confirmation_url(@token) %>
 
 ---
 

@@ -36,7 +36,7 @@ RSpec.describe Jobseekers::AccountMailer do
       it "sends confirmation_instructions email" do
         expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.reconfirmation.subject"))
         expect(mail.to).to eq(["unconfirmed@example.net"])
-        expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.reconfirmation.heading"))
+        expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.body"))
                                  .and include(jobseeker_confirmation_path(confirmation_token: token))
       end
 
@@ -52,7 +52,7 @@ RSpec.describe Jobseekers::AccountMailer do
       it "sends a `jobseeker_confirmation_instructions` email" do
         expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.subject"))
         expect(mail.to).to eq(["test@example.net"])
-        expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.heading"))
+        expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.body"))
                                  .and include(jobseeker_confirmation_path(confirmation_token: token))
       end
 
@@ -62,12 +62,12 @@ RSpec.describe Jobseekers::AccountMailer do
     end
 
     context "when the jobseeker is being reminded to confirm" do
-      let(:jobseeker) { create(:jobseeker, email: "test@example.net", confirmation_token: token, unconfirmed_email: "test@example.net", confirmed_at: nil, confirmation_sent_at: 5.days.ago) }
+      let(:jobseeker) { create(:jobseeker, email: "test@example.net", confirmation_token: token, unconfirmed_email: "test@example.net", confirmed_at: nil, confirmation_sent_at: 18.hours.ago) }
 
       it "sends a `jobseeker_confirmation_instructions` email" do
         expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.reminder.subject"))
         expect(mail.to).to eq(["test@example.net"])
-        expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.reminder.heading"))
+        expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.body"))
                                  .and include(jobseeker_confirmation_path(confirmation_token: token))
       end
 

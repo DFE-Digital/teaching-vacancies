@@ -2,12 +2,11 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = govuk_panel title_text: t(".page_title")
+    h2.govuk-heading-l = t(".page_title")
 
     p.govuk-body
-      = t(".apply_for_jobs", link_text: govuk_link_to(t(".apply_for_jobs_link_text"), jobs_path)).html_safe
+      = t(".apply_for_jobs", apply_for_jobs_link_text: govuk_link_to(t(".apply_for_jobs_link_text"), jobs_path), create_a_profile_link_text: govuk_link_to(t(".create_a_profile_link_text"), jobseekers_profile_path)).html_safe
 
-    h2.govuk-heading-m = t(".create_profile.heading")
     p.govuk-body = t(".create_profile.lead_in")
     ul.govuk-list.govuk-list--bullet
       li = t(".create_profile.share_your_qualifications")

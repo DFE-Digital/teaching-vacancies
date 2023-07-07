@@ -18,6 +18,7 @@ en:
         delete: If you want us to delete your data, please email %{mail_to}
         subject: Your Teaching Vacancies account has been closed
       confirmation_instructions:
+        body: "Confirm that you want to create a Teaching Vacancies account:"
         heading: Verify your email to create an account with Teaching Vacancies
         intro: You have requested to create an account with this email address.
         link: Verify email and create account
