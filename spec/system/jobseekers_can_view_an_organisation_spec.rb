@@ -31,9 +31,9 @@ RSpec.describe "Viewing an organisation" do
   end
 
   it "flags the jobs that allow applications through Teaching Vacancies" do
-    expect(page.find("h3 a", text: vacancy.job_title))
+    expect(page.find("h3 span", text: vacancy.job_title))
       .to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
-    expect(page.find("h3 a", text: vacancy_without_apply.job_title))
+    expect(page.find("h3 span", text: vacancy_without_apply.job_title))
       .not_to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
   end
 
@@ -82,9 +82,9 @@ RSpec.describe "Viewing an organisation" do
     end
 
     it "flags the jobs that allow applications through Teaching Vacancies" do
-      expect(page.find("h3 a", text: vacancy.job_title))
+      expect(page.find("h3 span", text: vacancy.job_title))
         .to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
-      expect(page.find("h3 a", text: vacancy_without_apply.job_title))
+      expect(page.find("h3 span", text: vacancy_without_apply.job_title))
         .not_to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
     end
 
