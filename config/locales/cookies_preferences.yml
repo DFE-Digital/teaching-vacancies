@@ -4,7 +4,6 @@ en:
       aria:
         label: Cookies banner
       body:
-        - We use some essential cookies to make this service work.
         - We’d like to set additional cookies to understand how you use this service and help us improve it.
         - We also use cookies set by other sites to help us deliver content from their services.
       buttons:
