@@ -2,7 +2,3 @@
   - s.row do |row|
     - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation_name)
     - row.value text: job_application_close_relationships_info(job_application)
-
-  - s.row do |row|
-    - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk")
-    - row.value text: job_application.right_to_work_in_uk.humanize

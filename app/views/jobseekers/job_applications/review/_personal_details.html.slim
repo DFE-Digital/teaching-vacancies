@@ -23,6 +23,10 @@
   - s.row do |row|
     - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.email_address")
     - row.value text: job_application.email
+  
+  - s.row do |row|
+    - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk")
+    - row.value text: job_application.right_to_work_in_uk.humanize
 
   - if job_application.teacher_reference_number? || jobseeker?
     - s.row do |row|
