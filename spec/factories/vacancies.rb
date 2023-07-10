@@ -5,15 +5,22 @@ FactoryBot.define do
       "PROGRESS LEADER (HEAD OF DEPARTMENT)",
       "Tutor of Music (Part time, permanent)",
       "Tutor of Maths MPS",
-      "Tutor of PE (male)", "Games Design Tutor", "Team Leader of Maths", "KEY STAGE 2 Tutor",
-      "Lead in Health and Social Care", "Director of Learning - Science"
+      "Tutor of PE (male)",
+      "Games Design Tutor",
+      "Team Leader of Maths",
+      "KEY STAGE 2 Tutor",
+      "Lead in Health and Social Care",
+      "Director of Learning - Science",
     ].freeze
 
     salaries = [
       "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
-      "£6,084 to £6,084 per year (full time equivalent)", "Main pay range 2 to Upper pay range 3, £30,113 to £44,541",
-      "Main pay range 1 to Upper pay range 3, £30,480 to £49,571", "MPR / UPR",
-      "MPS/UPS", "£25,543 to £41,635 per year (full time equivalent)"
+      "£6,084 to £6,084 per year (full time equivalent)",
+      "Main pay range 2 to Upper pay range 3, £30,113 to £44,541",
+      "Main pay range 1 to Upper pay range 3, £30,480 to £49,571",
+      "MPR / UPR",
+      "MPS/UPS",
+      "£25,543 to £41,635 per year (full time equivalent)",
     ].freeze
 
     publisher
@@ -37,7 +44,7 @@ FactoryBot.define do
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
-    job_title { factory_sample(job_titles) }
+    sequence :job_title, job_titles.cycle
     listed_elsewhere { nil }
     job_role { factory_sample(Vacancy.job_roles.keys) }
     ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_role == "teacher" }

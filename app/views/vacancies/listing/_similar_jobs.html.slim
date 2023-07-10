@@ -5,6 +5,9 @@
       - similar_jobs.each do |vacancy|
         .similar-jobs__job class="govuk-grid-column-one-half"
           p.govuk-body class="govuk-!-margin-bottom-1" = similar_job_link(vacancy)
+          - if vacancy.enable_job_applications?
+            p.govuk-body class="govuk-!-margin-bottom-1"
+              = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green")
           p.govuk-body class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold"
             = vacancy.organisation_name
           p.govuk-body class=" govuk-!-margin-bottom-0"

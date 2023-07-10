@@ -575,6 +575,7 @@ en:
         link: help you understand your next steps
         text_html: If you're interested in teaching or training to teach in England as an international citizen, we can %{link}.
     listing:
+      enable_job_applications_tag: "Quick Apply"
       schools:
         address: Address
         age_range: Age range

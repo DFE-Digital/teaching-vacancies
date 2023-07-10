@@ -6,6 +6,8 @@
     .header-with-logo-logo
       = image_tag(vacancy.organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: vacancy.organisation.name))
   .header-with-logo-title
+    - if vacancy.enable_job_applications?
+      div class="govuk-!-margin-bottom-2" = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green")
     h1.govuk-heading-xl class="govuk-!-margin-bottom-2"
       = vacancy.job_title
     span.govuk-caption-l class="govuk-!-margin-top-0"

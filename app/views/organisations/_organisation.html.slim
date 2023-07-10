@@ -93,7 +93,8 @@
 
       - organisation.vacancies.live.each do |vacancy|
         h3.govuk-heading-s class="govuk-!-margin-bottom-0"
-          = results_link(vacancy, class: "view-vacancy-link")
+          span class="govuk-!-margin-right-2" = results_link(vacancy, class: "view-vacancy-link")
+          = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
 
         = govuk_summary_list(classes: "govuk-summary-list--no-border") do |summary_list|
           - summary_list.row do |row|
