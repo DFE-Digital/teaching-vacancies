@@ -1,7 +1,7 @@
 # <%= t(".summary.#{subscription.frequency}", count: @vacancies.count) %>
 
 ---
-<%- @vacancies.each_with_index do |vacancy, index| %>
+<%- @vacancies.each do |vacancy| %>
   <%= show_link(vacancy) %>
   <%= vacancy_location_with_organisation_link(vacancy) %>
 
