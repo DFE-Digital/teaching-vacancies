@@ -200,5 +200,9 @@ FactoryBot.define do
       external_reference { "J3D1" }
       external_advert_url { "https://example.com/jobs/123" }
     end
+
+    trait :non_sequential_job_title do
+      job_title { factory_sample(job_titles) }
+    end
   end
 end
