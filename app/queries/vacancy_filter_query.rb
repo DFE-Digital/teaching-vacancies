@@ -23,6 +23,7 @@ class VacancyFilterQuery < ApplicationQuery
     # TODO: Remove this scope when we do not have any more live SEND responsible jobs
     built_scope = built_scope.where(":job_roles = ANY (job_roles)", job_roles: 2) if filters[:job_roles]&.include?("send_responsible")
     built_scope = add_organisation_type_filters(filters, built_scope)
+    built_scope = built_scope.quick_apply if filters[:quick_apply]
     built_scope = add_school_type_filters(filters, built_scope)
     working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
     built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?

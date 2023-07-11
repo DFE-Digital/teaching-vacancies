@@ -1,13 +1,29 @@
 class Jobseekers::SearchForm
   include ActiveModel::Model
 
-  attr_reader :keyword, :previous_keyword,
-              :location, :radius,
+  attr_reader :ect_status_options,
+              :ect_statuses,
+              :filters_from_keyword,
+              :job_role_options,
+              :job_roles,
+              :keyword,
+              :location,
               :organisation_slug,
-              :job_roles, :ect_statuses, :organisation_types, :organisation_type_options, :subjects, :phases, :working_patterns,
-              :job_role_options, :ect_status_options, :school_types, :school_type_options,
-              :phase_options, :working_pattern_options,
-              :filters_from_keyword, :total_filters, :sort
+              :organisation_type_options,
+              :organisation_types,
+              :phase_options,
+              :phases,
+              :previous_keyword,
+              :quick_apply,
+              :quick_apply_options,
+              :radius,
+              :school_type_options,
+              :school_types,
+              :sort,
+              :subjects,
+              :total_filters,
+              :working_pattern_options,
+              :working_patterns
 
   def initialize(params = {})
     strip_trailing_whitespaces_from_params(params)
@@ -31,6 +47,7 @@ class Jobseekers::SearchForm
       ect_statuses: @ect_statuses,
       subjects: @subjects,
       phases: @phases,
+      quick_apply: @quick_apply,
       working_patterns: @working_patterns,
       organisation_types: @organisation_types,
       school_types: @school_types,
@@ -76,6 +93,7 @@ class Jobseekers::SearchForm
     @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{option}")] }
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
+    set_quick_apply_options
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
       [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{option}")]
     end
@@ -92,6 +110,7 @@ class Jobseekers::SearchForm
     @ect_statuses = params[:ect_statuses] || []
     @subjects = params[:subjects] || []
     @phases = params[:phases] || []
+    @quick_apply = params[:quick_apply] || []
     @working_patterns = params[:working_patterns] || []
     @organisation_slug = params[:organisation_slug]
     @organisation_types = params[:organisation_types] || []
@@ -99,7 +118,7 @@ class Jobseekers::SearchForm
   end
 
   def set_total_filters
-    @total_filters = [@job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
+    @total_filters = [@job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @quick_apply&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
   end
 
   def set_radius(radius_param)
@@ -112,4 +131,16 @@ class Jobseekers::SearchForm
       [I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority"), nil],
     ]
   end
+
+  # rubocop:disable Style/OpenStructUse
+  def set_quick_apply_options
+    @quick_apply_options = [
+      OpenStruct.new(
+        value: "quick_apply",
+        text: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply"),
+        hint: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply_hint"),
+      ),
+    ]
+  end
+  # rubocop:enable Style/OpenStructUse
 end
