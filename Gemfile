@@ -23,7 +23,7 @@ gem "array_enum"
 gem "aws-sdk-s3", require: false
 gem "breasal"
 gem "devise"
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.10.0"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", ref: "29a98c259d689a7a8f84c0712323f866bd809e2c"
 gem "factory_bot_rails"
 gem "faker"
 gem "friendly_id"
