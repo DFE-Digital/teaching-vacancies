@@ -82,6 +82,7 @@ shared:
     - close_account_reason
     - close_account_reason_comment
     - occupation
+    - origin_path
   invitation_to_applies:
     - id
     - jobseeker_id

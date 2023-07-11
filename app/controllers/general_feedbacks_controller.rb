@@ -1,7 +1,7 @@
 class GeneralFeedbacksController < ApplicationController
   def new
-    @user_type = current_user&.class
-    @general_feedback_form = GeneralFeedbackForm.new
+    origin_path = URI.parse(request.referrer).path if request.referrer.present?
+    @general_feedback_form = GeneralFeedbackForm.new(user_type: current_user&.class, origin_path:)
   end
 
   def create
@@ -9,7 +9,6 @@ class GeneralFeedbacksController < ApplicationController
     @feedback = Feedback.new(feedback_attributes)
 
     if @general_feedback_form.invalid?
-      @user_type = current_user&.class
       render :new
     elsif recaptcha_is_invalid?
       redirect_to invalid_recaptcha_path(form_name: @general_feedback_form.class.name.underscore.humanize)
@@ -24,7 +23,16 @@ class GeneralFeedbacksController < ApplicationController
 
   def general_feedback_form_params
     params.require(:general_feedback_form)
-          .permit(:comment, :email, :report_a_problem, :user_participation_response, :visit_purpose, :rating, :visit_purpose_comment, :occupation, :user_type)
+          .permit(:comment,
+                  :email,
+                  :report_a_problem,
+                  :user_participation_response,
+                  :visit_purpose,
+                  :rating,
+                  :visit_purpose_comment,
+                  :occupation,
+                  :user_type,
+                  :origin_path)
   end
 
   def feedback_attributes

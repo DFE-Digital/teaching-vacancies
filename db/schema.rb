@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_11_113514) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_10_104904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -165,6 +165,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_11_113514) do
     t.text "close_account_reason_comment"
     t.string "category"
     t.text "occupation"
+    t.string "origin_path"
     t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id"
   end
 

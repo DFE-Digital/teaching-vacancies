@@ -45,6 +45,7 @@ RSpec.describe "Feedback supportal section" do
       rating: "highly_satisfied",
       email: "faketestingemail@someemail.com",
       user_participation_response: "interested",
+      origin_path: "/jobs",
     )
   end
 
@@ -96,10 +97,11 @@ RSpec.describe "Feedback supportal section" do
             source = find("td:nth-child(2)").text
             who = find("td:nth-child(3)").text
             feedback_type = find("td:nth-child(4)").text
-            contact_email = find("td:nth-child(5)").text
-            occupation = find("td:nth-child(6)").text
-            csat = find("td:nth-child(7)").text
-            comment = find("td:nth-child(8)").text
+            origin = find("td:nth-child(5)").text
+            contact_email = find("td:nth-child(6)").text
+            occupation = find("td:nth-child(7)").text
+            csat = find("td:nth-child(8)").text
+            comment = find("td:nth-child(9)").text
 
             expect(timestamp).to eq(other_feedback.created_at.to_s)
             expect(source).to eq("Identified")
@@ -107,6 +109,7 @@ RSpec.describe "Feedback supportal section" do
             expect(occupation).to eq(other_feedback.occupation)
             expect(contact_email).to eq(other_feedback.email)
             expect(feedback_type).to eq(other_feedback.feedback_type)
+            expect(origin).to eq(other_feedback.origin_path)
             expect(csat).to eq(I18n.t("helpers.label.general_feedback_form.rating.#{other_feedback.rating}"))
             expect(comment).to eq(other_feedback.comment)
           end
