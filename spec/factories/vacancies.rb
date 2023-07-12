@@ -1,18 +1,22 @@
 FactoryBot.define do
-  factory :vacancy do
-    job_titles = [
-      "Tutor of Science",
-      "PROGRESS LEADER (HEAD OF DEPARTMENT)",
-      "Tutor of Music (Part time, permanent)",
-      "Tutor of Maths MPS",
-      "Tutor of PE (male)",
-      "Games Design Tutor",
-      "Team Leader of Maths",
-      "KEY STAGE 2 Tutor",
-      "Lead in Health and Social Care",
-      "Director of Learning - Science",
-    ].freeze
+  job_titles = [
+    "Tutor of Science",
+    "PROGRESS LEADER (HEAD OF DEPARTMENT)",
+    "Tutor of Music (Part time, permanent)",
+    "Tutor of Maths MPS",
+    "Tutor of PE (male)",
+    "Games Design Tutor",
+    "Team Leader of Maths",
+    "KEY STAGE 2 Tutor",
+    "Lead in Health and Social Care",
+    "Director of Learning - Science",
+  ].freeze
 
+  sequence :job_title do |n|
+    "#{job_titles.sample} #{n}"
+  end
+
+  factory :vacancy do
     salaries = [
       "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
       "£6,084 to £6,084 per year (full time equivalent)",
@@ -44,7 +48,7 @@ FactoryBot.define do
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
-    sequence :job_title, job_titles.cycle
+    job_title { Rails.env.production? ? factory_sample(job_titles) : generate(:job_title) }
     listed_elsewhere { nil }
     job_role { factory_sample(Vacancy.job_roles.keys) }
     ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_role == "teacher" }
@@ -199,10 +203,6 @@ FactoryBot.define do
       external_source { "may_the_feed_be_with_you" }
       external_reference { "J3D1" }
       external_advert_url { "https://example.com/jobs/123" }
-    end
-
-    trait :non_sequential_job_title do
-      job_title { factory_sample(job_titles) }
     end
   end
 end
