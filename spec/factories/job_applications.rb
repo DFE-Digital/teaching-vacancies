@@ -233,7 +233,5 @@ FactoryBot.define do
         association(:qualification, :category_gcse),
       ]
     end
-
-    association :vacancy, factory: %i[vacancy non_sequential_job_title]
   end
 end
