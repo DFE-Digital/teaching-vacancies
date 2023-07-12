@@ -103,6 +103,7 @@ en:
             one: A new job matching your search criteria was listed in the last week
             other: "%{count} new jobs matching your search criteria were listed in the last week"
         title: This job alert
+        quick_apply: You can use quick apply for this job which allows you to apply simply and quickly using your profile.
         unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         unsubscribe_link_text: Unsubscribe here
         working_pattern: "Working pattern: %{working_pattern}"
