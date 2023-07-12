@@ -5,6 +5,14 @@ LOCAL_BRANCH		:=$$(git rev-parse --abbrev-ref HEAD)
 LOCAL_SHA			:=$$(git rev-parse HEAD)
 LOCAL_TAG			:=dev-$(LOCAL_BRANCH)-$(LOCAL_SHA)
 
+TERRAFILE_VERSION=0.8
+ARM_TEMPLATE_TAG=1.1.6
+RG_TAGS={"Product" : "Teaching vacancies"}
+REGION=UK South
+SERVICE_NAME=teaching-vacancies
+SERVICE_SHORT=tv
+DOCKER_REPOSITORY=ghcr.io/dfe-digital/teaching-vacancies
+
 ##@ Query parameter store to display environment variables. Requires AWS credentials
 
 .PHONY: install-fetch-config
@@ -51,6 +59,11 @@ review: ## review # Requires `pr_id=NNNN`
 		$(eval export TF_VAR_environment=$(env))
 		$(eval var_file=review)
 		$(eval backend_config=-backend-config="key=review/$(env).tfstate")
+
+
+.PHONY: review_aks
+review_aks:
+	$(eval include global_config/review_aks.sh)
 
 .PHONY: staging
 staging: ## staging
@@ -212,6 +225,26 @@ set-restore-variables:
 	$(eval export TF_VAR_paas_db_backup_before_point_in_time=$(SNAPSHOT_TIME))
 	echo "Restoring teaching-vacancies from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
 
+composed-variables:
+	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
+	$(eval STORAGE_ACCOUNT_NAME=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}sa)
+
+set-azure-account:
+	[ "${SKIP_AZURE_LOGIN}" != "true" ] && az account set -s ${AZURE_SUBSCRIPTION} || true
+
+set-what-if:
+	$(eval WHAT_IF=--what-if)
+
+arm-deployment: composed-variables set-azure-account
+	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
+		-l "${REGION}" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
+		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
+			"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=terraform-state" \
+			"enableKVPurgeProtection=${KV_PURGE_PROTECTION}" \
+			${WHAT_IF}
+
+deploy-arm-resources: arm-deployment
+validate-arm-resources: set-what-if arm-deployment
 
 ##@ Help
 
