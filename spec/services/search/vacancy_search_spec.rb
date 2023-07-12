@@ -13,6 +13,7 @@ RSpec.describe Search::VacancySearch do
       ect_statuses: ect_statuses,
       phases: phases,
       working_patterns: working_patterns,
+      quick_apply: quick_apply,
       subjects: subjects,
       organisation_types: organisation_types,
       school_types: school_types,
@@ -31,6 +32,7 @@ RSpec.describe Search::VacancySearch do
   let(:working_patterns) { nil }
   let(:subjects) { nil }
   let(:organisation_types) { nil }
+  let(:quick_apply) { nil }
   let(:school_types) { nil }
   let(:school) { create(:school) }
   let(:scope) { double("scope", count: 870) }
@@ -82,13 +84,14 @@ RSpec.describe Search::VacancySearch do
     let(:ect_statuses) { ["ect_suitable"] }
     let(:phases) { ["ks1"] }
     let(:working_patterns) { ["full_time"] }
+    let(:quick_apply) { ["quick_apply"] }
     let(:subjects) { ["Maths"] }
     let(:organisation_types) { ["Academy"] }
     let(:school_types) { ["faith_school"] }
 
     it "clears selected filters " do
-      expect(subject.active_criteria).to eq({ location: location, organisation_types: organisation_types, organisation_slug: organisation_slug, ect_statuses: ect_statuses, job_roles: job_roles, keyword: keyword, phases: phases, radius: 10, subjects: subjects, working_patterns: working_patterns, school_types: school_types })
-      expect(subject.clear_filters_params).to eq({ keyword: keyword, location: location, radius: 10, organisation_slug: organisation_slug, job_roles: [], ect_statuses: [], phases: [], working_patterns: [], subjects: [], organisation_types: [], school_types: [], previous_keyword: keyword, skip_strip_checkboxes: true })
+      expect(subject.active_criteria).to eq({ location: location, organisation_types: organisation_types, organisation_slug: organisation_slug, ect_statuses: ect_statuses, job_roles: job_roles, keyword: keyword, phases: phases, radius: 10, subjects: subjects, working_patterns: working_patterns, quick_apply: quick_apply, school_types: school_types })
+      expect(subject.clear_filters_params).to eq({ keyword: keyword, location: location, radius: 10, organisation_slug: organisation_slug, job_roles: [], ect_statuses: [], phases: [], working_patterns: [], quick_apply: [], subjects: [], organisation_types: [], school_types: [], previous_keyword: keyword, skip_strip_checkboxes: true })
     end
   end
 end

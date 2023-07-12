@@ -39,6 +39,7 @@ en:
       send_responsible_only: With SEND responsibilities
       subject: Subject
       phases: Education phase
+      quick_apply: Application method
       working_patterns: Working pattern
       organisation_type: Organisation type
       school_type: School type

@@ -627,6 +627,8 @@ en:
           other: Another email address
         other_application_email: Email address
       publishers_job_listing_applying_for_the_job_form:
+        quick_apply: Only show quick apply jobs
+        quick_apply_hint: Apply for jobs simply and quickly using your profile
         enable_job_applications_options:
           false: "No"
           true: "Yes"

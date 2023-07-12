@@ -66,6 +66,7 @@ class Vacancy < ApplicationRecord
   scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
   scope :live, (-> { listed.applicable })
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
+  scope :quick_apply, (-> { where(enable_job_applications: true) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
 
   scope :internal, (-> { where(external_source: nil) })
