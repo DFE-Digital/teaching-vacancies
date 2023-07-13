@@ -36,6 +36,11 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   def satisfaction_ratings
     @satisfaction_rating_type = SATISFACTION_RATING_TYPES.find { |type| type[:feedback_type] == params[:satisfaction_rating_type]&.to_sym } || SATISFACTION_RATING_TYPES.first
     @satisfaction_ratings ||= SATISFACTION_RATING_TYPES
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data  download_satisfaction_ratings_csv(feedback_type: params[:satisfaction_rating_type], grouping_key:  @satisfaction_rating_type[:grouping_key]), filename: "#{params[:satisfaction_rating_type]}-#{Date.today}.csv"}
+    end
   end
 
   def recategorize
@@ -76,6 +81,29 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
       @feedbacks.each do |feedback|
         csv << [feedback.created_at, feedback.relevant_to_user, feedback.comment, (feedback.search_criteria || {}).keys, (feedback.search_criteria || {})["keyword"],(feedback.search_criteria || {})["location"], (feedback.search_criteria || {})["radius"], feedback.category]
+      end
+    end
+  end
+
+
+  def download_satisfaction_ratings_csv(feedback_type:, grouping_key:)
+    headings = @satisfaction_rating_type[:feedback_responses].map do |feedback_response|
+      t(".#{@satisfaction_rating_type[:feedback_type]}.table_headings.#{feedback_response}")
+    end
+    headings.prepend("Reporting period")
+    
+    csv_data = CSV.generate do |csv|
+      csv << headings
+      FeedbackReportingPeriod.all.last(52).reverse_each do |period|
+        results = reporting_period_summary(period, feedback_type: @satisfaction_rating_type[:feedback_type], grouping_key: @satisfaction_rating_type[:grouping_key])
+        rows = @satisfaction_rating_type[:feedback_responses].map do |response|
+          if results[response] == nil
+            "0"
+          else
+            results[response]
+          end
+        end
+        csv << rows.prepend(period.to_s)
       end
     end
   end

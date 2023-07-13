@@ -22,3 +22,5 @@
         - row.cell(header: true, text: period.to_s)
         - @satisfaction_rating_type[:feedback_responses].each do |feedback_response|
           - row.cell(text: results[feedback_response])
+
+= link_to "Download #{@satisfaction_rating_type[:feedback_type]} reports", support_users_feedback_satisfaction_ratings_path(format: :csv, satisfaction_rating_type: @satisfaction_rating_type[:feedback_type])

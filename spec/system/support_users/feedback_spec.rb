@@ -205,21 +205,65 @@ RSpec.describe "Feedback supportal section" do
     context "'Job alert unsubscribe - reason given' table" do
       before { click_on "Job alert unsubscribe" }
       include_examples "has a satisfaction rating table", "job-alert-unsubscribe-reason", 4
+
+      it "allows user to download data" do
+        download_cache_path = Rails.root.join("tmp/unsubscribe_reports.csv").to_s
+        click_link "Download unsubscribe reports"
+        File.write(download_cache_path, page.body)
+        spreadsheet = Roo::Spreadsheet.open(download_cache_path)
+        expect(spreadsheet.row(1)).to eq  ["Reporting period", "Job found", "Circumstances change", "Not relevant", "Other reason"]
+        expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0",]
+        expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4",]
+        File.delete(download_cache_path)
+      end
     end
 
     context "'Satisfaction rating - jobseekers' table" do
       before { click_on "Jobseeker" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-jobseekers", 5
+
+      it "allows user to download data" do
+        download_cache_path = Rails.root.join("tmp/unsubscribe_reports.csv").to_s
+        click_link "Download jobseeker_account reports"
+        File.write(download_cache_path, page.body)
+        spreadsheet = Roo::Spreadsheet.open(download_cache_path)
+        expect(spreadsheet.row(1)).to eq  ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
+        expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
+        expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
+        File.delete(download_cache_path)
+      end
     end
 
     context "'Satisfaction rating - hiring staff' table" do
       before { click_on "Hiring staff" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-hiring-staff", 5
+
+      it "allows user to download data" do
+        download_cache_path = Rails.root.join("tmp/unsubscribe_reports.csv").to_s
+        click_link "Download vacancy_publisher reports"
+        File.write(download_cache_path, page.body)
+        spreadsheet = Roo::Spreadsheet.open(download_cache_path)
+        expect(spreadsheet.row(1)).to eq  ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
+        expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
+        expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
+        File.delete(download_cache_path)
+      end
     end
 
     context "'Satisfaction rating - job alerts' table" do
       before { click_on "Job alert relevance" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-job-alerts", 2
+
+      it "allows user to download data" do
+        download_cache_path = Rails.root.join("tmp/unsubscribe_reports.csv").to_s
+        click_link "Download job_alert reports"
+        File.write(download_cache_path, page.body)
+        spreadsheet = Roo::Spreadsheet.open(download_cache_path)
+        expect(spreadsheet.row(1)).to eq  ["Reporting period", "Relevant", "Not relevant"]
+        expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0"]
+        expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2"]
+        File.delete(download_cache_path)
+      end
     end
 
     context "'Satisfaction rating - job application' table" do
