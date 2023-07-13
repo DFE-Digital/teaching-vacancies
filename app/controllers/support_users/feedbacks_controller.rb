@@ -11,6 +11,11 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
     @categories = Feedback::NON_JOB_ALERT_CATEGORIES
     @categories_for_select = @categories.invert
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data download_general_csv(@feedbacks), filename: "general-feedback-#{Date.today}.csv"}
+    end
   end
 
   def job_alerts
@@ -49,6 +54,16 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   end
 
   private
+
+  def download_general_csv(feedbacks)
+    csv_data = CSV.generate do |csv|
+      csv << ['Created at', 'Source', 'Who', 'Type', 'Contact email', 'Occupation', 'CSAT', 'Comment', 'Category']
+
+      @feedbacks.each do |feedback|
+        csv << [feedback.created_at, source_for(feedback), who(feedback), feedback.feedback_type, contact_email_for(feedback), feedback.occupation, feedback.rating, feedback.comment, feedback.category]
+      end
+    end
+  end
 
   def source_for(feedback)
     identified_or_authenticated(feedback)

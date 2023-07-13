@@ -89,6 +89,16 @@ RSpec.describe "Feedback supportal section" do
       end
     end
 
+    it "allows user to download data" do
+      download_cache_path = Rails.root.join("tmp/general-feedback.csv").to_s
+      click_link "Download general feedback report"
+      File.write(download_cache_path, page.body)
+      spreadsheet = Roo::Spreadsheet.open(download_cache_path)
+      expect(spreadsheet.row(1)).to eq ["Created at", "Source", "Who", "Type", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
+      expect(spreadsheet.row(2)).to eq [feedback.created_at, source_for(feedback), who(feedback), feedback.feedback_type, contact_email_for(feedback), feedback.occupation, feedback.rating, feedback.comment, feedback.category]
+      File.delete(download_cache_path)
+    end
+
     it "shows feedback table" do
       within("table.govuk-table") do
         within("tbody.govuk-table__body") do
