@@ -109,6 +109,7 @@ group :test do
   gem "climate_control"
   gem "fastimage"
   gem "rack_session_access"
+  gem "roo"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "timecop"
