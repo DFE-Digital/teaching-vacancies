@@ -153,6 +153,16 @@ RSpec.describe "Feedback supportal section" do
         expect(page).to have_text("Some job alert feedback text")
       end
     end
+
+    it "allows user to download data" do
+      download_cache_path = Rails.root.join("tmp/job-alerts-feedback.csv").to_s
+      click_link "Download job alerts feedback report"
+      File.write(download_cache_path, page.body)
+      spreadsheet = Roo::Spreadsheet.open(download_cache_path)
+      expect(spreadsheet.row(1)).to eq  ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
+      expect(spreadsheet.row(2)).to eq [job_alert_feedback.created_at.to_s, job_alert_feedback.relevant_to_user, job_alert_feedback.comment,"[]", nil, nil, nil, nil, job_alert_feedback.category]
+      File.delete(download_cache_path)
+    end
   end
 
   describe "Satisfaction ratings" do

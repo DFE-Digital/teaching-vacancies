@@ -26,6 +26,11 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
     @categories = Feedback::JOB_ALERT_CATEGORIES
     @categories_for_select = @categories.invert
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data download_job_alerts_csv(@feedbacks), filename: "job-alerts-feedback-#{Date.today}.csv"}
+    end
   end
 
   def satisfaction_ratings
@@ -61,6 +66,16 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
       @feedbacks.each do |feedback|
         csv << [feedback.created_at, source_for(feedback), who(feedback), feedback.feedback_type, contact_email_for(feedback), feedback.occupation, feedback.rating, feedback.comment, feedback.category]
+      end
+    end
+  end
+
+  def download_job_alerts_csv(feedbacks)
+    csv_data = CSV.generate do |csv|
+      csv << ['Timestamp', 'Relevant?', 'Comment', 'Criteria', 'Keyword', 'Location', 'Radius', 'Working patterns', 'Category']
+
+      @feedbacks.each do |feedback|
+        csv << [feedback.created_at, feedback.relevant_to_user, feedback.comment, (feedback.search_criteria || {}).keys, (feedback.search_criteria || {})["keyword"],(feedback.search_criteria || {})["location"], (feedback.search_criteria || {})["radius"], feedback.category]
       end
     end
   end
