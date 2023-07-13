@@ -157,8 +157,8 @@ RSpec.describe "Feedback supportal section" do
     it "allows user to download data" do
       click_link "Download job alerts feedback report"
       simulate_csv_download
-      expect(spreadsheet.row(1)).to eq  ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
-      expect(spreadsheet.row(2)).to eq [job_alert_feedback.created_at.to_s, job_alert_feedback.relevant_to_user, job_alert_feedback.comment,"[]", nil, nil, nil, nil, job_alert_feedback.category]
+      expect(spreadsheet.row(1)).to eq ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
+      expect(spreadsheet.row(2)).to eq [job_alert_feedback.created_at.to_s, job_alert_feedback.relevant_to_user, job_alert_feedback.comment, "[]", nil, nil, nil, nil, job_alert_feedback.category]
       File.delete(download_path)
     end
   end
@@ -207,9 +207,9 @@ RSpec.describe "Feedback supportal section" do
       it "allows user to download data" do
         click_link "Download unsubscribe reports"
         simulate_csv_download
-        expect(spreadsheet.row(1)).to eq  ["Reporting period", "Job found", "Circumstances change", "Not relevant", "Other reason"]
-        expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0",]
-        expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4",]
+        expect(spreadsheet.row(1)).to eq ["Reporting period", "Job found", "Circumstances change", "Not relevant", "Other reason"]
+        expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0"]
+        expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4"]
         File.delete(download_path)
       end
     end
@@ -221,7 +221,7 @@ RSpec.describe "Feedback supportal section" do
       it "allows user to download data" do
         click_link "Download jobseeker_account reports"
         simulate_csv_download
-        expect(spreadsheet.row(1)).to eq  ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
+        expect(spreadsheet.row(1)).to eq ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
         expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
         expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
         File.delete(download_path)
@@ -235,7 +235,7 @@ RSpec.describe "Feedback supportal section" do
       it "allows user to download data" do
         click_link "Download vacancy_publisher reports"
         simulate_csv_download
-        expect(spreadsheet.row(1)).to eq  ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
+        expect(spreadsheet.row(1)).to eq ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
         expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
         expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
         File.delete(download_path)
@@ -249,7 +249,7 @@ RSpec.describe "Feedback supportal section" do
       it "allows user to download data" do
         click_link "Download job_alert reports"
         simulate_csv_download
-        expect(spreadsheet.row(1)).to eq  ["Reporting period", "Relevant", "Not relevant"]
+        expect(spreadsheet.row(1)).to eq ["Reporting period", "Relevant", "Not relevant"]
         expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0"]
         expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2"]
         File.delete(download_path)
@@ -263,7 +263,7 @@ RSpec.describe "Feedback supportal section" do
       it "allows user to download data" do
         click_link "Download application reports"
         simulate_csv_download
-        expect(spreadsheet.row(1)).to eq  ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
+        expect(spreadsheet.row(1)).to eq ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
         expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
         expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
         File.delete(download_path)
