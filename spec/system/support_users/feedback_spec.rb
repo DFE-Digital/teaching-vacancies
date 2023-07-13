@@ -156,7 +156,7 @@ RSpec.describe "Feedback supportal section" do
 
     it "allows user to download data" do
       click_link "Download job alerts feedback report"
-      File.write(download_path, page.body)
+      simulate_csv_download
       expect(spreadsheet.row(1)).to eq  ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
       expect(spreadsheet.row(2)).to eq [job_alert_feedback.created_at.to_s, job_alert_feedback.relevant_to_user, job_alert_feedback.comment,"[]", nil, nil, nil, nil, job_alert_feedback.category]
       File.delete(download_path)
@@ -206,7 +206,7 @@ RSpec.describe "Feedback supportal section" do
 
       it "allows user to download data" do
         click_link "Download unsubscribe reports"
-        File.write(download_path, page.body)
+        simulate_csv_download
         expect(spreadsheet.row(1)).to eq  ["Reporting period", "Job found", "Circumstances change", "Not relevant", "Other reason"]
         expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0",]
         expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4",]
@@ -220,7 +220,7 @@ RSpec.describe "Feedback supportal section" do
 
       it "allows user to download data" do
         click_link "Download jobseeker_account reports"
-        File.write(download_path, page.body)
+        simulate_csv_download
         expect(spreadsheet.row(1)).to eq  ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
         expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
         expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
@@ -234,7 +234,7 @@ RSpec.describe "Feedback supportal section" do
 
       it "allows user to download data" do
         click_link "Download vacancy_publisher reports"
-        File.write(download_path, page.body)
+        simulate_csv_download
         expect(spreadsheet.row(1)).to eq  ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
         expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
         expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
@@ -248,7 +248,7 @@ RSpec.describe "Feedback supportal section" do
 
       it "allows user to download data" do
         click_link "Download job_alert reports"
-        File.write(download_path, page.body)
+        simulate_csv_download
         expect(spreadsheet.row(1)).to eq  ["Reporting period", "Relevant", "Not relevant"]
         expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0"]
         expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2"]
@@ -262,7 +262,7 @@ RSpec.describe "Feedback supportal section" do
 
       it "allows user to download data" do
         click_link "Download application reports"
-        File.write(download_path, page.body)
+        simulate_csv_download
         expect(spreadsheet.row(1)).to eq  ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
         expect(spreadsheet.row(2)).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
         expect(spreadsheet.row(3)).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
@@ -354,5 +354,9 @@ RSpec.describe "Feedback supportal section" do
       expect(page).not_to have_text(old_other_feedback.comment)
       expect(page).to have_text(older_other_feedback.comment)
     end
+  end
+
+  def simulate_csv_download
+    File.write(download_path, page.body)
   end
 end
