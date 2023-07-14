@@ -3,7 +3,8 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     = form_for @general_feedback_form, url: feedback_path do |f|
-      = f.hidden_field :user_type, value: @user_type
+      = f.hidden_field :user_type, value: @general_feedback_form.user_type
+      = f.hidden_field :origin_path, value: @general_feedback_form.origin_path
       = f.govuk_error_summary
 
       h1.govuk-heading-xl = t(".heading")

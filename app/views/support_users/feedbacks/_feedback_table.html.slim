@@ -3,6 +3,7 @@
   - t.tags("Source") { |f| source_for(f) }
   - t.tags("Who") { |f| who(f) }
   - t.text "Type", :feedback_type
+  - t.text "Originated from", :origin_path
   - t.text("Contact email") { |f| contact_email_for(f) }
   - t.text "Occupation", :occupation
   - t.text("CSAT") { |f| t("helpers.label.general_feedback_form.rating.#{f.rating}") if f.rating }

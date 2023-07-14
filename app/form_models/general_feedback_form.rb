@@ -1,5 +1,14 @@
 class GeneralFeedbackForm < BaseForm
-  attr_accessor :comment, :email, :report_a_problem, :user_participation_response, :visit_purpose, :visit_purpose_comment, :rating, :occupation, :user_type
+  attr_accessor :comment,
+                :email,
+                :report_a_problem,
+                :user_participation_response,
+                :visit_purpose,
+                :visit_purpose_comment,
+                :rating,
+                :occupation,
+                :user_type,
+                :origin_path
 
   validates :report_a_problem, inclusion: { in: %w[yes no] }
   validates :comment, presence: true, length: { maximum: 1200 }

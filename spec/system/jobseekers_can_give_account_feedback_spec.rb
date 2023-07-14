@@ -20,7 +20,13 @@ RSpec.describe "Jobseekers can give account feedback" do
     fill_in "jobseekers_account_feedback_form[occupation]", with: occupation
 
     expect { click_button I18n.t("buttons.submit") }.to change {
-      jobseeker.feedbacks.where(comment: comment, email: jobseeker.email, rating: "somewhat_satisfied", feedback_type: "jobseeker_account", user_participation_response: "interested", occupation: occupation).count
+      jobseeker.feedbacks.where(comment: comment,
+                                email: jobseeker.email,
+                                rating: "somewhat_satisfied",
+                                feedback_type: "jobseeker_account",
+                                user_participation_response: "interested",
+                                occupation: occupation,
+                                origin_path: jobseekers_account_path).count
     }.by(1)
     expect(current_path).to eq(jobseekers_account_path)
     expect(page).to have_content(I18n.t("jobseekers.account_feedbacks.create.success"))

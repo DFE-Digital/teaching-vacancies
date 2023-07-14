@@ -1,5 +1,5 @@
 class Jobseekers::AccountFeedbackForm < BaseForm
-  attr_accessor :comment, :email, :origin, :rating, :report_a_problem, :user_participation_response, :occupation
+  attr_accessor :comment, :email, :origin_path, :rating, :report_a_problem, :user_participation_response, :occupation
 
   validates :report_a_problem, inclusion: { in: %w[yes no] }
   validates :comment, length: { maximum: 1200 }, if: -> { comment.present? }
