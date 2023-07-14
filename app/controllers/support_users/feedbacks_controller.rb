@@ -1,3 +1,5 @@
+require "csv"
+
 class SupportUsers::FeedbacksController < SupportUsers::BaseController
   include SupportUsers::SatisfactionRatingTypes
 
@@ -14,7 +16,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
     respond_to do |format|
       format.html
-      format.csv { send_data general_feedback_csv(@feedbacks), filename: "general-feedback-#{Date.today}.csv" }
+      format.csv { feedback_csv("general") }
     end
   end
 
@@ -66,6 +68,12 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   end
 
   private
+
+  def feedback_csv(type)
+    response.headers["Content-Type"] = "text/csv"
+    response.headers["Content-Disposition"] = "attachment; filename=#{type}-feedback-#{Date.today}.csv"
+    render type
+  end
 
   def general_feedback_csv(feedbacks)
     generate_csv(feedbacks, "general")
