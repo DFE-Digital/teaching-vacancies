@@ -16,11 +16,10 @@
         - row.cell(header: true, text: t(".#{@satisfaction_rating_type[:feedback_type]}.table_headings.#{feedback_response}"))
 
   - table.with_body do |body|
-    - FeedbackReportingPeriod.all.last(52).reverse_each do |period|
-      - results = reporting_period_summary(period, feedback_type: @satisfaction_rating_type[:feedback_type], grouping_key: @satisfaction_rating_type[:grouping_key])
-      - body.row html_attributes: { "data-testid": period.to_s } do |row|
-        - row.cell(header: true, text: period.to_s)
+    - @summaries.each do |summary|
+      - body.row html_attributes: { "data-testid": summary[:period].to_s } do |row|
+        - row.cell(header: true, text: summary[:period].to_s)
         - @satisfaction_rating_type[:feedback_responses].each do |feedback_response|
-          - row.cell(text: results[feedback_response])
+          - row.cell(text: summary.dig(:results, feedback_response))
 
 = link_to "Download #{@satisfaction_rating_type[:feedback_type]} reports", support_users_feedback_satisfaction_ratings_path(format: :csv, satisfaction_rating_type: @satisfaction_rating_type[:feedback_type])

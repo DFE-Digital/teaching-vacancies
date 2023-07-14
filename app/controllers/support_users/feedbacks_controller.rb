@@ -36,10 +36,12 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   def satisfaction_ratings
     @satisfaction_rating_type = SATISFACTION_RATING_TYPES.find { |type| type[:feedback_type] == params[:satisfaction_rating_type]&.to_sym } || SATISFACTION_RATING_TYPES.first
     @satisfaction_ratings ||= SATISFACTION_RATING_TYPES
+    @summaries = satisfaction_rating_summaries(feedback_type: @satisfaction_rating_type[:feedback_type],
+                                               grouping_key: @satisfaction_rating_type[:grouping_key])
 
     respond_to do |format|
       format.html
-      format.csv { send_data satisfaction_ratings_csv(feedback_type: params[:satisfaction_rating_type], grouping_key: @satisfaction_rating_type[:grouping_key]), filename: "#{params[:satisfaction_rating_type]}-#{Date.today}.csv" }
+      format.csv { send_data satisfaction_ratings_csv(@summaries), filename: "#{params[:satisfaction_rating_type]}-#{Date.today}.csv" }
     end
   end
 
@@ -73,13 +75,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     generate_csv(feedbacks, "job_alerts")
   end
 
-  def satisfaction_ratings_csv(feedback_type:, grouping_key:)
-    summaries = FeedbackReportingPeriod.all.last(52).reverse_each.map do |period|
-      {
-        period: period,
-        results: reporting_period_summary(period, feedback_type: feedback_type, grouping_key: grouping_key),
-      }
-    end
+  def satisfaction_ratings_csv(summaries)
     generate_csv(summaries, "satisfaction_ratings")
   end
 
@@ -182,14 +178,14 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
     )
   end
 
-  def reporting_period_summary(reporting_period, feedback_type:, grouping_key:)
-    Feedback.where(
-      feedback_type: feedback_type,
-      created_at: reporting_period.date_range,
-    ).group(grouping_key).count
+  def satisfaction_rating_summaries(feedback_type:, grouping_key:)
+    FeedbackReportingPeriod.all.last(52).reverse_each.map do |period|
+      {
+        period: period,
+        results: Feedback.where(feedback_type: feedback_type, created_at: period.date_range).group(grouping_key).count,
+      }
+    end
   end
-
-  helper_method :reporting_period_summary
 
   def reporting_period_params
     params.permit(reporting_period: %i[from to])[:reporting_period]
