@@ -43,6 +43,45 @@ RSpec.describe UnitedLearningVacancySource do
       expect(vacancy.publish_on).to eq(Date.today)
     end
 
+    describe "job roles mapping" do
+      let(:item_stub) { instance_double(UnitedLearningVacancySource::FeedItem, :[] => "") }
+
+      before do
+        allow(item_stub).to receive(:[]).with("Job_roles").and_return(source_role)
+        allow(UnitedLearningVacancySource::FeedItem).to receive(:new).and_return(item_stub)
+      end
+
+      [nil, "", " "].each do |role|
+        context "when the source role is '#{role}'" do
+          let(:source_role) { role }
+
+          it "the vacancy role is null" do
+            expect(vacancy.job_role).to eq(nil)
+          end
+        end
+      end
+
+      %w[leadership headteacher deputy_headteacher assistant_headteacher].each do |role|
+        context "when the source role is '#{role}'" do
+          let(:source_role) { role }
+
+          it "maps the source role to 'senior_leader' in the vacancy" do
+            expect(vacancy.job_role).to eq("senior_leader")
+          end
+        end
+      end
+
+      %w[head_of_year_or_phase head_of_department_or_curriculum].each do |role|
+        context "when the source role is '#{role}'" do
+          let(:source_role) { role }
+
+          it "maps the source role to 'middle_leader' in the vacancy" do
+            expect(vacancy.job_role).to eq("middle_leader")
+          end
+        end
+      end
+    end
+
     context "when the same vacancy has been imported previously" do
       let!(:existing_vacancy) do
         create(

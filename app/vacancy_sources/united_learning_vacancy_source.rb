@@ -55,7 +55,7 @@ class UnitedLearningVacancySource
       external_advert_url: item["link", root: true],
 
       # New structured fields
-      job_role: item["Job_roles"].presence&.gsub("leadership", "senior_leader")&.gsub(/\s+/, ""),
+      job_role: job_role_for(item),
       ect_status: ect_status_for(item),
       subjects: item["Subjects"].presence&.split(","),
       working_patterns: item["Working_patterns"].presence&.split(","),
@@ -66,6 +66,14 @@ class UnitedLearningVacancySource
       organisations: organisations_for(item),
       about_school: organisations_for(item).first&.description,
     }
+  end
+
+  def job_role_for(item)
+    return if item["Job_roles"].blank?
+
+    item["Job_roles"].gsub(/leadership|deputy_headteacher|assistant_headteacher|headteacher/, "senior_leader")
+                     .gsub(/head_of_year_or_phase|head_of_department_or_curriculum/, "middle_leader")
+                     .gsub(/\s+/, "")
   end
 
   def ect_status_for(item)
