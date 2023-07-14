@@ -94,8 +94,8 @@ RSpec.describe "Feedback supportal section" do
     it "allows user to download data" do
       click_link "Download general feedback report"
       File.write(download_path, page.body)
-      expect(spreadsheet.row(1)).to eq ["Created at", "Source", "Who", "Type", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
-      expect(spreadsheet.row(2)).to eq [other_feedback.created_at.to_s, "identified", "jobseeker", other_feedback.feedback_type, other_feedback.email, other_feedback.occupation, other_feedback.rating, other_feedback.comment, other_feedback.category]
+      expect(spreadsheet.row(1)).to eq ["Created at", "Source", "Who", "Type", "Origin path", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
+      expect(spreadsheet.row(2)).to eq [other_feedback.created_at.to_s, "identified", "jobseeker", other_feedback.feedback_type, other_feedback.origin_path, other_feedback.email, other_feedback.occupation, other_feedback.rating, other_feedback.comment, other_feedback.category]
       File.delete(download_path)
     end
 

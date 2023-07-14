@@ -96,7 +96,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   def headings(feedback_category)
     case feedback_category
     when "general"
-      ["Created at", "Source", "Who", "Type", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
+      ["Created at", "Source", "Who", "Type", "Origin path", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
     when "job_alerts"
       ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
     when "satisfaction_ratings"
@@ -107,7 +107,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
   def row(feedback_category, feedback)
     case feedback_category
     when "general"
-      [feedback.created_at, source_for(feedback), who(feedback), feedback.feedback_type, contact_email_for(feedback), feedback.occupation, feedback.rating, feedback.comment, feedback.category]
+      [feedback.created_at, source_for(feedback), who(feedback), feedback.feedback_type, feedback.origin_path, contact_email_for(feedback), feedback.occupation, feedback.rating, feedback.comment, feedback.category]
     when "job_alerts"
       search_criteria = feedback.search_criteria || {}
       [feedback.created_at, feedback.relevant_to_user, feedback.comment, search_criteria.keys, search_criteria["keyword"], search_criteria["location"], search_criteria["radius"], feedback.category]
