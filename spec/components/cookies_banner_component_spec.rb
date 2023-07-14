@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe CookiesBannerComponent, type: :component do
   let(:preferences_path) { "/pp" }
-  let(:create_path) { "/cp" }
+  let(:accept_path) { "/cp" }
   let(:reject_path) { "/rp" }
 
-  let(:kwargs) { { create_path: create_path, reject_path: reject_path, preferences_path: preferences_path } }
+  let(:kwargs) { { accept_path: accept_path, reject_path: reject_path, preferences_path: preferences_path } }
 
   let!(:inline_component) { render_inline(described_class.new(**kwargs)) }
 
@@ -14,7 +14,7 @@ RSpec.describe CookiesBannerComponent, type: :component do
 
   it "renders 3 actions for user" do
     expect(inline_component.css(".button_to").count).to eq(2)
-    expect(inline_component.css(".button_to:first-child").attribute("action").value).to eq(create_path)
+    expect(inline_component.css(".button_to:first-child").attribute("action").value).to eq(accept_path)
     expect(inline_component.css(".button_to:nth-child(2)").attribute("action").value).to eq(reject_path)
 
     expect(inline_component.css(".govuk-link").count).to eq(1)

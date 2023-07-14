@@ -13,7 +13,7 @@ module.exports = async (browserContext, scenario, consent = true) => {
 
   if (consent) {
     cookies.push({
-      "name": "consented-to-cookies",
+      "name": "consented-to-additional-cookies",
       "value": "yes",
       "domain": url.host,
       "path": "/",

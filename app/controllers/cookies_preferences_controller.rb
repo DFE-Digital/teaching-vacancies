@@ -2,23 +2,24 @@ class CookiesPreferencesController < ApplicationController
   before_action :set_previous_url_in_session
 
   def new
-    @cookies_preferences_form = CookiesPreferencesForm.new({ cookies_consent: cookies["consented-to-cookies"] })
+    @cookies_preferences_form = CookiesPreferencesForm.new(cookies_consent: cookies["consented-to-additional-cookies"])
   end
 
   def create
     @cookies_preferences_form = CookiesPreferencesForm.new(cookies_preferences_params)
 
     if @cookies_preferences_form.valid?
-      cookies["consented-to-cookies"] = { value: @cookies_preferences_form.cookies_consent, expires: 6.months.from_now }
+      cookies["consented-to-additional-cookies"] = { value: @cookies_preferences_form.cookies_consent,
+                                                     expires: 6.months.from_now }
 
-      redirect_to session[:previous_url] unless params[:no_redirect]
+      redirect_to(session[:previous_url], success: I18n.t("cookies_preferences.success")) unless params[:no_redirect]
     else
       render :new
     end
   end
 
-  def cookies_preference_set?
-    true
+  def show_cookies_banner?
+    false
   end
 
   private

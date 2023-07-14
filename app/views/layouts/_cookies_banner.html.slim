@@ -1,4 +1,4 @@
-- unless cookies_preference_set?
-  = render(CookiesBannerComponent.new(create_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters),
+- if show_cookies_banner?
+  = render(CookiesBannerComponent.new(accept_path: create_cookies_preferences_path(cookies_consent: "yes", **utm_parameters),
                                       reject_path: create_cookies_preferences_path(cookies_consent: "no", **utm_parameters),
                                       preferences_path: cookies_preferences_path(**utm_parameters)))
