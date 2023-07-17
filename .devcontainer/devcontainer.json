@@ -30,7 +30,9 @@
         "rebornix.Ruby",
         "redhat.vscode-yaml",
         "sianglim.slim",
-        "LoranKloeze.ruby-rubocop-revived"
+        "LoranKloeze.ruby-rubocop-revived",
+        "waderyan.gitblame",
+        "eamodio.gitlens"
       ],
       "settings": {
         // Get highlighting for local env files
