@@ -5,7 +5,8 @@ RSpec.describe MyNewTermVacancySource do
   let(:api) { MyNewTermVacancySource.new }
   let(:successful_auth_response) { { access_token: "valid_access_token" } }
   let(:response) { double("AuthenticationResponse", code: 200, body: successful_auth_response.to_json) }
-  let(:job_listings_response) { double("JobListingResponse", code: 200, body: file_fixture("vacancy_sources/my_new_term.json").read) }
+  let(:job_listings_response_body) { file_fixture("vacancy_sources/my_new_term.json").read }
+  let(:job_listings_response) { double("JobListingResponse", code: 200, body: job_listings_response_body) }
 
   let!(:school1) { create(:school, name: "Test School", urn: "123456", phase: :primary) }
 
@@ -67,6 +68,50 @@ RSpec.describe MyNewTermVacancySource do
       it "sets important dates" do
         expect(vacancy.expires_at).to eq(Time.zone.parse("2023-02-10T23:59:00+00:00"))
         expect(vacancy.publish_on).to eq(Date.today)
+      end
+
+      describe "job roles mapping" do
+        let(:job_listings_response_body) { super().gsub("teacher", source_role) }
+
+        ["null", "", " "].each do |role|
+          context "when the source role is '#{role}'" do
+            let(:source_role) { role }
+
+            it "the vacancy role is null" do
+              expect(vacancy.job_role).to eq(nil)
+            end
+          end
+        end
+
+        %w[headteacher headteacher_principal deputy_headteacher_principal deputy_headteacher assistant_headteacher assistant_headteacher_principal].each do |role|
+          context "when the source role is '#{role}'" do
+            let(:source_role) { role }
+
+            it "maps the source role to 'senior_leader' in the vacancy" do
+              expect(vacancy.job_role).to eq("senior_leader")
+            end
+          end
+        end
+
+        %w[head_of_year_or_phase head_of_department_or_curriculum head_of_year].each do |role|
+          context "when the source role is '#{role}'" do
+            let(:source_role) { role }
+
+            it "maps the source role to 'middle_leader' in the vacancy" do
+              expect(vacancy.job_role).to eq("middle_leader")
+            end
+          end
+        end
+
+        %w[learning_support other_support science_technician].each do |role|
+          context "when the source role is '#{role}'" do
+            let(:source_role) { role }
+
+            it "maps the source role to 'education_support' in the vacancy" do
+              expect(vacancy.job_role).to eq("education_support")
+            end
+          end
+        end
       end
     end
   end
