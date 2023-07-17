@@ -1,6 +1,6 @@
 require "csv"
 
-class SupportUsers::FeedbacksController < SupportUsers::BaseController  
+class SupportUsers::FeedbacksController < SupportUsers::BaseController
   include SupportUsers::SatisfactionRatingTypes
 
   before_action :set_reporting_period, except: [:recategorize]
@@ -43,7 +43,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
     respond_to do |format|
       format.html
-      format.csv { feedback_csv('satisfaction_ratings', params[:satisfaction_rating_type]) }
+      format.csv { feedback_csv("satisfaction_ratings") }
     end
   end
 
@@ -69,8 +69,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
   private
 
-  def feedback_csv(type, satisfaction_rating_type=nil)
-    file_name = satisfaction_rating_type || type
+  def feedback_csv(type)
     response.headers["Content-Type"] = "text/csv"
     response.headers["Content-Disposition"] = "attachment; filename=#{type}-feedback-#{Date.today}.csv"
     render type
