@@ -80,11 +80,13 @@ class FusionVacancySource
   end
 
   def job_role(item)
-    item["jobRole"].presence
-      &.gsub("headteacher", "senior_leader")
-      &.gsub("head_of_year", "middle_leader")
-      &.gsub("learning_support", "education_support")
-      &.gsub(/\s+/, "")
+    return if item["jobRole"].blank?
+
+    item["jobRole"]
+      .gsub(/deputy_headteacher|assistant_headteacher|headteacher/, "senior_leader")
+      .gsub(/head_of_year_or_phase|head_of_department_or_curriculum|head_of_year/, "middle_leader")
+      .gsub("learning_support", "education_support")
+      .gsub(/\s+/, "")
   end
 
   def ect_status_for(item)
