@@ -1,4 +1,6 @@
-class SupportUsers::FeedbacksController < SupportUsers::BaseController
+require "csv"
+
+class SupportUsers::FeedbacksController < SupportUsers::BaseController  
   include SupportUsers::SatisfactionRatingTypes
 
   before_action :set_reporting_period, except: [:recategorize]
@@ -14,7 +16,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
     respond_to do |format|
       format.html
-      format.csv { send_data general_feedback_csv(@feedbacks), filename: "general-feedback-#{Date.today}.csv" }
+      format.csv { feedback_csv("general") }
     end
   end
 
@@ -29,7 +31,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
     respond_to do |format|
       format.html
-      format.csv { send_data job_alerts_feedback_csv(@feedbacks), filename: "job-alerts-feedback-#{Date.today}.csv" }
+      format.csv { feedback_csv("job_alerts") }
     end
   end
 
@@ -41,7 +43,7 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
     respond_to do |format|
       format.html
-      format.csv { send_data satisfaction_ratings_csv(@summaries), filename: "#{params[:satisfaction_rating_type]}-#{Date.today}.csv" }
+      format.csv { feedback_csv('satisfaction_ratings', params[:satisfaction_rating_type]) }
     end
   end
 
@@ -67,49 +69,11 @@ class SupportUsers::FeedbacksController < SupportUsers::BaseController
 
   private
 
-  def general_feedback_csv(feedbacks)
-    generate_csv(feedbacks, "general")
-  end
-
-  def job_alerts_feedback_csv(feedbacks)
-    generate_csv(feedbacks, "job_alerts")
-  end
-
-  def satisfaction_ratings_csv(summaries)
-    generate_csv(summaries, "satisfaction_ratings")
-  end
-
-  def generate_csv(feedbacks, feedback_category)
-    CSV.generate do |csv|
-      csv << headings(feedback_category)
-
-      feedbacks.each do |feedback|
-        csv << row(feedback_category, feedback)
-      end
-    end
-  end
-
-  def headings(feedback_category)
-    case feedback_category
-    when "general"
-      ["Created at", "Source", "Who", "Type", "Origin path", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
-    when "job_alerts"
-      ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
-    when "satisfaction_ratings"
-      @satisfaction_rating_type[:feedback_responses].map { |response| t(".#{@satisfaction_rating_type[:feedback_type]}.table_headings.#{response}") }.prepend("Reporting period")
-    end
-  end
-
-  def row(feedback_category, feedback)
-    case feedback_category
-    when "general"
-      [feedback.created_at, source_for(feedback), who(feedback), feedback.feedback_type, feedback.origin_path, contact_email_for(feedback), feedback.occupation, feedback.rating, feedback.comment, feedback.category]
-    when "job_alerts"
-      search_criteria = feedback.search_criteria || {}
-      [feedback.created_at, feedback.relevant_to_user, feedback.comment, search_criteria.keys, search_criteria["keyword"], search_criteria["location"], search_criteria["radius"], feedback.category]
-    when "satisfaction_ratings"
-      @satisfaction_rating_type[:feedback_responses].map { |response| feedback[:results][response] || "0" }.prepend(feedback[:period].to_s)
-    end
+  def feedback_csv(type, satisfaction_rating_type=nil)
+    file_name = satisfaction_rating_type || type
+    response.headers["Content-Type"] = "text/csv"
+    response.headers["Content-Disposition"] = "attachment; filename=#{type}-feedback-#{Date.today}.csv"
+    render type
   end
 
   def source_for(feedback)

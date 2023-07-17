@@ -1,0 +1,4 @@
+- headers = @satisfaction_rating_type[:feedback_responses].map { |response| t(".#{@satisfaction_rating_type[:feedback_type]}.table_headings.#{response}") }.prepend("Reporting period")
+= CSV.generate_line(headers)
+- @summaries.each do |summary|
+  = CSV.generate_line(@satisfaction_rating_type[:feedback_responses].map { |response| summary[:results][response] || "0" }.prepend(summary[:period].to_s)).html_safe
