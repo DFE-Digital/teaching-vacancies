@@ -2,7 +2,7 @@ namespace :vacancies do
   desc "Remove old working patterns from vacancies"
   task remove_working_patterns: :environment do
     # these are the working_patterns that we want to remove
-    old_patterns = [Vacancy.working_patterns[:flexible], Vacancy.working_patterns[:job_share], Vacancy.working_patterns[:term_time]]
+    old_patterns = [101, 102, 104]
     # query to find vacancies where at least one of the old working patterns is included in the working_patterns
     vacancies = Vacancy.where("working_patterns && ARRAY[?]::integer[]", old_patterns)
 
