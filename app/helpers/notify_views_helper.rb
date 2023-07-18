@@ -96,7 +96,7 @@ module NotifyViewsHelper
 
   def support_user_fallback_sign_in_link(signed_id)
     url = support_users_fallback_session_url(signed_id)
-    notify_link(url, t(".link"))
+    notify_link(url)
   end
 
   def unlock_account_link(token)
