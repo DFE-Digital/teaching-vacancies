@@ -80,17 +80,13 @@ class MyNewTermVacancySource
   end
 
   def job_role(item)
-    item["jobRole"].presence
-    &.gsub("headteacher", "senior_leader")
-    &.gsub("headteacher_principal", "senior_leader")
-    &.gsub("deputy_headteacher_principal", "senior_leader")
-    &.gsub("head_of_year", "middle_leader")
-    &.gsub("assistant_headteacher_principal", "middle_leader")
-    &.gsub("deputy_headteacher_principal", "middle_leader")
-    &.gsub("learning_support", "education_support")
-    &.gsub("other_support", "education_support")
-    &.gsub("science_technician", "other_education_role")
-    &.gsub(/\s+/, "")
+    return if item["jobRole"].blank?
+
+    item["jobRole"]
+     .gsub(/deputy_headteacher_principal|assistant_headteacher_principal|headteacher_principal|deputy_headteacher|assistant_headteacher|headteacher/, "senior_leader")
+     .gsub(/head_of_year_or_phase|head_of_department_or_curriculum|head_of_year/, "middle_leader")
+     .gsub(/learning_support|other_support|science_technician/, "education_support")
+     .gsub(/\s+/, "")
   end
 
   def ect_status_for(item)
