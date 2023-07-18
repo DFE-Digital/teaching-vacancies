@@ -186,7 +186,7 @@ RSpec.describe VacanciesHelper do
 
     context "when the attribute is an array enum" do
       let(:attribute) { "working_patterns" }
-      let(:new_value) { [0, 100, 104] }
+      let(:new_value) { [0, 100] }
 
       it "returns the correct pluralised translation" do
         expect(subject).to eq(I18n.t("publishers.activity_log.#{attribute}", new_value: new_value.to_sentence,
