@@ -48,7 +48,6 @@ RSpec.describe "Feedback supportal section" do
       origin_path: "/jobs",
     )
   end
-  let(:download_path) { Rails.root.join("tmp/test_download.csv").to_s }
   let(:csv) { CSV.parse(page.body) }
 
   before do
