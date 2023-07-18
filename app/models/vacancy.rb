@@ -26,7 +26,6 @@ class Vacancy < ApplicationRecord
   }.freeze
 
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
-  # Legacy vacancies can have these working_pattern options too: { compressed_hours: 102, staggered_hours: 103 }
   array_enum working_patterns: { full_time: 0, part_time: 100 }
   array_enum phases: { nursery: 0, primary: 1, middle: 2, secondary: 3, sixth_form_or_college: 4, through: 5 }
 
