@@ -8,3 +8,5 @@
 
 .govuk-grid-row
   .govuk-grid-column-full = render "tables"
+
+= link_to "Download general feedback report", support_users_feedback_general_path(format: :csv, reporting_period_from: @reporting_period.from.to_s, reporting_period_to: @reporting_period.to.to_s)

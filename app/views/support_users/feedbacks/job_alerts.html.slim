@@ -3,3 +3,5 @@
 = render "tabs"
 = render "reporting_period_control"
 = render "tables", table_name: "job_alerts_feedback_table"
+
+= link_to "Download job alerts feedback report", support_users_feedback_job_alerts_path(format: :csv, reporting_period_from: @reporting_period.from.to_s, reporting_period_to: @reporting_period.to.to_s)

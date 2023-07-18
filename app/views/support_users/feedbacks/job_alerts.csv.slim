@@ -1,0 +1,13 @@
+- headers = ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
+= CSV.generate_line headers
+- @feedbacks.each do |feedback|
+  - search_criteria = feedback.search_criteria || {}
+  = CSV.generate_line([feedback.created_at,
+                       feedback.relevant_to_user,
+                       feedback.comment,
+                       search_criteria.keys,
+                       search_criteria["keyword"],
+                       search_criteria["location"],
+                       search_criteria["radius"],
+                       feedback.rating,
+                       feedback.category]).html_safe

@@ -1,0 +1,13 @@
+- headers = ["Created at", "Source", "Who", "Type", "Origin path", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
+= CSV.generate_line headers
+- @feedbacks.each do |feedback|
+  = CSV.generate_line([feedback.created_at,
+                       source_for(feedback),
+                       who(feedback),
+                       feedback.feedback_type,
+                       feedback.origin_path,
+                       contact_email_for(feedback),
+                       feedback.occupation,
+                       feedback.rating,
+                       feedback.comment,
+                       feedback.category]).html_safe

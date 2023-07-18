@@ -48,6 +48,7 @@ RSpec.describe "Feedback supportal section" do
       origin_path: "/jobs",
     )
   end
+  let(:csv) { CSV.parse(page.body) }
 
   before do
     OmniAuth.config.test_mode = true
@@ -87,6 +88,12 @@ RSpec.describe "Feedback supportal section" do
       within ".supportal-table-component--formatting" do
         expect(page).to have_text("Some other feedback text")
       end
+    end
+
+    it "allows user to download data" do
+      click_link "Download general feedback report"
+      expect(csv.first).to eq ["Created at", "Source", "Who", "Type", "Origin path", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
+      expect(csv.second).to eq [other_feedback.created_at.to_s, "identified", "jobseeker", other_feedback.feedback_type, other_feedback.origin_path, other_feedback.email, other_feedback.occupation, other_feedback.rating, other_feedback.comment, other_feedback.category]
     end
 
     it "shows feedback table" do
@@ -143,6 +150,12 @@ RSpec.describe "Feedback supportal section" do
         expect(page).to have_text("Some job alert feedback text")
       end
     end
+
+    it "allows user to download data" do
+      click_link "Download job alerts feedback report"
+      expect(csv.first).to eq ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
+      expect(csv.second).to eq [job_alert_feedback.created_at.to_s, job_alert_feedback.relevant_to_user, job_alert_feedback.comment, "[]", nil, nil, nil, nil, job_alert_feedback.category]
+    end
   end
 
   describe "Satisfaction ratings" do
@@ -185,26 +198,66 @@ RSpec.describe "Feedback supportal section" do
     context "'Job alert unsubscribe - reason given' table" do
       before { click_on "Job alert unsubscribe" }
       include_examples "has a satisfaction rating table", "job-alert-unsubscribe-reason", 4
+
+      it "allows user to download data" do
+        click_link "Download unsubscribe reports"
+
+        expect(csv.first).to eq ["Reporting period", "Job found", "Circumstances change", "Not relevant", "Other reason"]
+        expect(csv.second).to eq [testid_for(Date.today), "0", "0", "0", "0"]
+        expect(csv.third).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4"]
+      end
     end
 
     context "'Satisfaction rating - jobseekers' table" do
       before { click_on "Jobseeker" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-jobseekers", 5
+
+      it "allows user to download data" do
+        click_link "Download jobseeker_account reports"
+
+        expect(csv.first).to eq ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
+        expect(csv.second).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
+        expect(csv.third).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
+      end
     end
 
     context "'Satisfaction rating - hiring staff' table" do
       before { click_on "Hiring staff" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-hiring-staff", 5
+
+      it "allows user to download data" do
+        click_link "Download vacancy_publisher reports"
+
+        expect(csv.first).to eq ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
+        expect(csv.second).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
+        expect(csv.third).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
+      end
     end
 
     context "'Satisfaction rating - job alerts' table" do
       before { click_on "Job alert relevance" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-job-alerts", 2
+
+      it "allows user to download data" do
+        click_link "Download job_alert reports"
+
+        expect(csv.first).to eq ["Reporting period", "Relevant", "Not relevant"]
+        expect(csv.second).to eq [testid_for(Date.today), "0", "0"]
+        expect(csv.third).to eq [testid_for(Date.today - 1.month), "1", "2"]
+      end
     end
 
     context "'Satisfaction rating - job application' table" do
       before { click_on "Job applications" }
       include_examples "has a satisfaction rating table", "satisfaction-rating-job-application", 5
+
+      it "allows user to download data" do
+        click_link "Download application reports"
+
+        expect(csv.first).to eq ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
+        expect(csv.second).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
+        expect(csv.third).to eq [testid_for(Date.today - 1.month), "1", "2", "3", "4", "5"]
+      end
     end
 
     context "'Close account reason' table" do
