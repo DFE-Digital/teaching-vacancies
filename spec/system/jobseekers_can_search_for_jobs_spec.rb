@@ -163,7 +163,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         click_on I18n.t("buttons.search")
 
         click_link "Remove this filter Teacher"
-        click_link "Remove this filter Head of year, department, curriculum or phase"
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([job1])
@@ -234,7 +233,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         click_on I18n.t("buttons.search")
 
         click_link "Remove this filter Teacher"
-        click_link "Remove this filter Head of year, department, curriculum or phase"
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([faith_job])
