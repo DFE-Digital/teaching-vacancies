@@ -79,19 +79,19 @@
   subjects:
     - Design and technology
 "early career teacher":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "early career teachers":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "early years":
   phases:
     - primary
 "ect":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "ects":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "english":
   subjects:
@@ -324,16 +324,16 @@
   subjects:
     - Music
 "newly qualified teacher":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "newly qualified teachers":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "nqt":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "nqts":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "numeracy":
   phases:
@@ -537,16 +537,16 @@
   subjects:
     - Statistics
 "suitable for ect":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "suitable for ects":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "suitable for nqt":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "suitable for nqts":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "support":
   job_roles:
