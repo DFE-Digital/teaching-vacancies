@@ -2,6 +2,7 @@
 "16-19":
   phases:
     - sixth_form_or_college
+    - secondary
 "accounting teacher":
   phases:
     - secondary
@@ -455,13 +456,13 @@
     - secondary
 "sen":
   job_roles:
-    - send_responsible
+    - sendco
 "senco":
   job_roles:
     - sendco
 "send":
   job_roles:
-    - send_responsible
+    - sendco
 "sendco":
   job_roles:
     - sendco
@@ -516,7 +517,7 @@
     - Spanish
 "special educational needs":
   job_roles:
-    - send_responsible
+    - sendco
 "special educational needs co-ordinator":
   job_roles:
     - sendco
@@ -562,11 +563,9 @@
 "teach":
   job_roles:
     - teacher
-    - middle_leader
 "teacher":
   job_roles:
     - teacher
-    - middle_leader
 "teacher of accounting":
   phases:
     - secondary
@@ -582,11 +581,9 @@
 "teachers":
   job_roles:
     - teacher
-    - middle_leader
 "teaching":
   job_roles:
     - teacher
-    - middle_leader
 "teaching assistant":
   job_roles:
     - teaching_assistant
