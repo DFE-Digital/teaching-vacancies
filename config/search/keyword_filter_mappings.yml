@@ -2,6 +2,7 @@
 "16-19":
   phases:
     - sixth_form_or_college
+    - secondary
 "accounting teacher":
   phases:
     - secondary
@@ -78,19 +79,19 @@
   subjects:
     - Design and technology
 "early career teacher":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "early career teachers":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "early years":
   phases:
     - primary
 "ect":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "ects":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "english":
   subjects:
@@ -323,16 +324,16 @@
   subjects:
     - Music
 "newly qualified teacher":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "newly qualified teachers":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "nqt":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "nqts":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "numeracy":
   phases:
@@ -455,13 +456,13 @@
     - secondary
 "sen":
   job_roles:
-    - send_responsible
+    - sendco
 "senco":
   job_roles:
     - sendco
 "send":
   job_roles:
-    - send_responsible
+    - sendco
 "sendco":
   job_roles:
     - sendco
@@ -516,7 +517,7 @@
     - Spanish
 "special educational needs":
   job_roles:
-    - send_responsible
+    - sendco
 "special educational needs co-ordinator":
   job_roles:
     - sendco
@@ -536,16 +537,16 @@
   subjects:
     - Statistics
 "suitable for ect":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "suitable for ects":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "suitable for nqt":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "suitable for nqts":
-  job_roles:
+  ect_statuses:
     - ect_suitable
 "support":
   job_roles:
@@ -562,11 +563,9 @@
 "teach":
   job_roles:
     - teacher
-    - middle_leader
 "teacher":
   job_roles:
     - teacher
-    - middle_leader
 "teacher of accounting":
   phases:
     - secondary
@@ -582,11 +581,9 @@
 "teachers":
   job_roles:
     - teacher
-    - middle_leader
 "teaching":
   job_roles:
     - teacher
-    - middle_leader
 "teaching assistant":
   job_roles:
     - teaching_assistant
