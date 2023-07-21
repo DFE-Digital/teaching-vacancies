@@ -42,6 +42,8 @@ class VacancySource::Parser::StartDate
     @start_date = @input # Records the original value if something goes wrong during the parsing.
   end
 
+  # Removes the time part from a datetime string
+  # EG: "2023-09-04T12:00:00" => "2023-09-04"
   def remove_time(date)
     time = date.match(REGEXP_TIME).try(:[], 0)
     return date unless time
@@ -49,7 +51,8 @@ class VacancySource::Parser::StartDate
     date.gsub(time, "").strip
   end
 
-  # Turns "04-09-2023" into "2023-09-04"
+  # Reverses the order of the year and the day in a date string when the year is at the end
+  # EG: "04-09-2023" => "2023-09-04"
   def year_first(date)
     return date unless date.match?(REGEXP_DATE_YEAR_END)
 
@@ -58,6 +61,7 @@ class VacancySource::Parser::StartDate
   end
 
   # Identifies the separator symbol used in the date ('-', '/' or '.')
+  # EG: "04-09-2023" => "-"
   def separator(date)
     date.match(%r{[-\/\.]}).try(:[], 0)
   end
