@@ -17,13 +17,13 @@ class VacancySource::Parser::StartDate
   TYPE_SPECIFIC = "specific_date".freeze
   TYPE_OTHER = "other".freeze
 
-  attr_reader :input, :type, :start_date
+  attr_reader :input, :type, :date
 
   def initialize(date)
     @input = date
     return if date.blank?
 
-    parse_start_date(date)
+    parse_date(date)
   end
 
   def specific?
@@ -32,18 +32,18 @@ class VacancySource::Parser::StartDate
 
   private
 
-  def parse_start_date(date)
+  def parse_date(date)
     date.strip!
     if date.match?(REGEXP_DATETIME_ONLY)
       @type = TYPE_SPECIFIC
-      @start_date = Date.parse(year_first(remove_time(date))).to_s
+      @date = Date.parse(year_first(remove_time(date))).to_s
     else
       @type = TYPE_OTHER
-      @start_date = date
+      @date = date
     end
   rescue Date::Error
     @type = TYPE_OTHER
-    @start_date = @input # Records the original value if something goes wrong during the parsing.
+    @date = @input # Records the original value if something goes wrong during the parsing.
   end
 
   # Removes the time part from a datetime string

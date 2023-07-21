@@ -4,17 +4,17 @@ RSpec.describe VacancySource::Parser::StartDate do
   describe "#new" do
     it "doesnt't parse a null value" do
       start_date = described_class.new(nil)
-      expect(start_date).to have_attributes(input: nil, type: nil, start_date: nil)
+      expect(start_date).to have_attributes(input: nil, type: nil, date: nil)
     end
 
     it "doesnt't parse an empty string" do
       start_date = described_class.new("")
-      expect(start_date).to have_attributes(input: "", type: nil, start_date: nil)
+      expect(start_date).to have_attributes(input: "", type: nil, date: nil)
     end
 
     it "doesnt't parse an empty string with spaces" do
       start_date = described_class.new("   ")
-      expect(start_date).to have_attributes(input: "   ", type: nil, start_date: nil)
+      expect(start_date).to have_attributes(input: "   ", type: nil, date: nil)
     end
 
     exact_dates = ["04-09-2023", "4-9-23", "04-09-23", "4-09-2023", "04-9-2023", " 04-09-2023 ",
@@ -29,7 +29,7 @@ RSpec.describe VacancySource::Parser::StartDate do
     exact_dates.each do |date|
       it "parses '#{date}' as type 'specific_date' with value '2023-09-04'" do
         start_date = described_class.new(date)
-        expect(start_date).to have_attributes(input: date, type: "specific_date", start_date: "2023-09-04")
+        expect(start_date).to have_attributes(input: date, type: "specific_date", date: "2023-09-04")
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe VacancySource::Parser::StartDate do
     freetext_dates.each do |date|
       it "parses '#{date}' as type 'other' without modifying the given date" do
         start_date = described_class.new(date)
-        expect(start_date).to have_attributes(input: date, type: "other", start_date: date)
+        expect(start_date).to have_attributes(input: date, type: "other", date: date)
       end
     end
   end
