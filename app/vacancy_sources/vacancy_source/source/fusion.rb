@@ -1,4 +1,6 @@
 class VacancySource::Source::Fusion
+  include VacancySource::Parser
+
   FEED_URL = ENV.fetch("VACANCY_SOURCE_FUSION_FEED_URL").freeze
   SOURCE_NAME = "fusion".freeze
 
@@ -53,6 +55,7 @@ class VacancySource::Source::Fusion
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
     }.merge(organisation_fields(item))
+     .merge(start_date_fields(item))
   end
 
   def organisation_fields(item)
@@ -61,6 +64,17 @@ class VacancySource::Source::Fusion
       readable_job_location: main_organisation(item)&.name,
       about_school: main_organisation(item)&.description,
     }
+  end
+
+  def start_date_fields(item)
+    return {} if item["startDate"].blank?
+
+    parsed_date = StartDate.new(item["startDate"])
+    if parsed_date.specific?
+      { starts_on: parsed_date.date, start_date_type: parsed_date.type }
+    else
+      { other_start_date_details: parsed_date.date, start_date_type: parsed_date.type }
+    end
   end
 
   def schools_for(item)
