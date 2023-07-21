@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe MyNewTermVacancySource do
+RSpec.describe VacancySource::Source::MyNewTerm do
   let(:api_key) { "test-api-key" }
-  let(:api) { MyNewTermVacancySource.new }
+  let(:api) { described_class.new }
   let(:successful_auth_response) { { access_token: "valid_access_token" } }
   let(:response) { double("AuthenticationResponse", code: 200, body: successful_auth_response.to_json) }
   let(:job_listings_response_body) { file_fixture("vacancy_sources/my_new_term.json").read }
@@ -12,15 +12,15 @@ RSpec.describe MyNewTermVacancySource do
 
   describe "successfully authenticated requests" do
     before do
-      allow(MyNewTermVacancySource)
+      allow(described_class)
         .to receive(:get)
-        .with("#{MyNewTermVacancySource::BASE_URI}/auth/#{api_key}")
+        .with("#{described_class::BASE_URI}/auth/#{api_key}")
         .and_return(response)
 
-      allow(MyNewTermVacancySource)
+      allow(described_class)
         .to receive(:get)
         .with(
-          "#{MyNewTermVacancySource::BASE_URI}/job-listings",
+          "#{described_class::BASE_URI}/job-listings",
           headers: { "Authorization" => "Bearer valid_access_token", "Content-Type" => "application/json" },
           query: {},
         )

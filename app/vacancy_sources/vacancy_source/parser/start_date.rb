@@ -1,5 +1,5 @@
 # Parses, when possible, the start date values coming from the external vacancy sources
-class VacancySourceStartDate
+class VacancySource::Parser::StartDate
   # EG: "04-09-2023", "4-9-23", "04/09/2023", "4/9/23", "04.09.2023"
   REGEXP_DATE_YEAR_END = %r{\d{1,2}[-\/\.]\d{1,2}[-\/\.][2-9]\d{1,3}}
   # EG: "2023-09-04", "23-9-4", "2023/09/04", "23/9/4", "2023.09.04"

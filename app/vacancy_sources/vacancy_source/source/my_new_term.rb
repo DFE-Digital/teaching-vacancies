@@ -1,6 +1,6 @@
 require "httparty"
 
-class MyNewTermVacancySource
+class VacancySource::Source::MyNewTerm
   include HTTParty
   include Enumerable
 
