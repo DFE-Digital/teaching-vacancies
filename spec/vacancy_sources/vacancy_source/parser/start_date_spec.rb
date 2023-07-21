@@ -46,4 +46,18 @@ RSpec.describe VacancySource::Parser::StartDate do
       end
     end
   end
+
+  describe "#specific?" do
+    it "returns true when the start date is a specific date" do
+      expect(described_class.new("04-09-2023")).to be_specific
+    end
+
+    it "returns false when the start date is a freetext" do
+      expect(described_class.new("ASAP")).not_to be_specific
+    end
+
+    it "returns false when there is no start date" do
+      expect(described_class.new(nil)).not_to be_specific
+    end
+  end
 end

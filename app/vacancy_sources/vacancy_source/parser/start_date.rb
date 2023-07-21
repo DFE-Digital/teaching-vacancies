@@ -26,6 +26,10 @@ class VacancySource::Parser::StartDate
     parse_start_date(date)
   end
 
+  def specific?
+    type == TYPE_SPECIFIC
+  end
+
   private
 
   def parse_start_date(date)
