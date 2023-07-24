@@ -26,7 +26,7 @@ class Vacancy < ApplicationRecord
   }.freeze
 
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
-  array_enum working_patterns: { full_time: 0, part_time: 100 }
+  array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }
   array_enum phases: { nursery: 0, primary: 1, middle: 2, secondary: 3, sixth_form_or_college: 4, through: 5 }
 
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
