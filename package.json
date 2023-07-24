@@ -30,7 +30,7 @@
     "@babel/preset-env": "^7.22.9",
     "concurrently": "^8.2.0",
     "dotenv": "^16.3.1",
-    "esbuild": "^0.18.11",
+    "esbuild": "^0.18.16",
     "esbuild-plugin-babel": "^0.2.3",
     "eslint": "^8.45.0",
     "eslint-config-airbnb-base": "^15.0.0",
