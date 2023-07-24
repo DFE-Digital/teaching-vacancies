@@ -3,38 +3,17 @@ AlertRun:
   subscription:
     ColumnPresenceChecker:
       enabled: false
-    ForeignKeyChecker:
-      enabled: false
 EmergencyLoginKey:
   publisher:
     ColumnPresenceChecker:
-      enabled: false
-Employment:
-  jobseeker_profile:
-    ForeignKeyChecker:
       enabled: false
 FailedImportedVacancy:
   source:
     NullConstraintChecker:
       enabled: false
 Feedback:
-  job_application:
-    ForeignKeyChecker:
-      enabled: false
-  jobseeker:
-    ForeignKeyChecker:
-      enabled: false
-  publisher:
-    ForeignKeyChecker:
-      enabled: false
   relevant_to_user:
     ThreeStateBooleanChecker:
-      enabled: false
-  subscription:
-    ForeignKeyChecker:
-      enabled: false
-  vacancy:
-    ForeignKeyChecker:
       enabled: false
 InvitationToApply:
   invited_by:
@@ -42,8 +21,6 @@ InvitationToApply:
       enabled: false
   jobseeker:
     ColumnPresenceChecker:
-      enabled: false
-    ForeignKeyChecker:
       enabled: false
   vacancy:
     ColumnPresenceChecker:
@@ -57,8 +34,6 @@ JobApplication:
       enabled: false
   jobseeker:
     ColumnPresenceChecker:
-      enabled: false
-    ForeignKeyChecker:
       enabled: false
   qualifications_section_completed:
     ThreeStateBooleanChecker:
@@ -119,12 +94,8 @@ LocalAuthorityPublisherSchool:
   publisher_preference:
     ColumnPresenceChecker:
       enabled: false
-    ForeignKeyChecker:
-      enabled: false
   school:
     ColumnPresenceChecker:
-      enabled: false
-    ForeignKeyChecker:
       enabled: false
 LocationPolygon:
   name:
@@ -154,23 +125,15 @@ OrganisationPublisher:
   organisation:
     ColumnPresenceChecker:
       enabled: false
-    ForeignKeyChecker:
-      enabled: false
   publisher:
     ColumnPresenceChecker:
-      enabled: false
-    ForeignKeyChecker:
       enabled: false
 OrganisationPublisherPreference:
   organisation:
     ColumnPresenceChecker:
       enabled: false
-    ForeignKeyChecker:
-      enabled: false
   publisher_preference:
     ColumnPresenceChecker:
-      enabled: false
-    ForeignKeyChecker:
       enabled: false
 OrganisationVacancy:
   index_organisation_vacancies_on_organisation_id_and_vacancy_id:
@@ -182,12 +145,8 @@ OrganisationVacancy:
   organisation:
     ColumnPresenceChecker:
       enabled: false
-    ForeignKeyChecker:
-      enabled: false
   vacancy:
     ColumnPresenceChecker:
-      enabled: false
-    ForeignKeyChecker:
       enabled: false
 PersonalDetails:
   phone_number_provided:
@@ -213,8 +172,6 @@ PublisherPreference:
   organisation:
     ColumnPresenceChecker:
       enabled: false
-    ForeignKeyChecker:
-      enabled: false
   organisation_publisher_preferences:
     MissingIndexChecker:
       enabled: false
@@ -224,9 +181,6 @@ PublisherPreference:
 Qualification:
   finished_studying:
     ThreeStateBooleanChecker:
-      enabled: false
-  jobseeker_profile:
-    ForeignKeyChecker:
       enabled: false
   qualification_results:
     ForeignKeyCascadeChecker:
@@ -238,8 +192,6 @@ SavedJob:
   vacancy:
     ColumnPresenceChecker:
       enabled: false
-    ForeignKeyChecker:
-      enabled: false
 SchoolGroupMembership:
   do_not_delete:
     ThreeStateBooleanChecker:
@@ -250,12 +202,8 @@ SchoolGroupMembership:
   school:
     ColumnPresenceChecker:
       enabled: false
-    ForeignKeyChecker:
-      enabled: false
   school_group:
     ColumnPresenceChecker:
-      enabled: false
-    ForeignKeyChecker:
       enabled: false
 Subscription:
   active:
