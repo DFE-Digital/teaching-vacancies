@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
-    "@babel/preset-env": "^7.22.7",
+    "@babel/preset-env": "^7.22.9",
     "concurrently": "^8.2.0",
     "dotenv": "^16.3.1",
     "esbuild": "^0.18.11",
