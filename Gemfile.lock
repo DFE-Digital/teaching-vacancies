@@ -346,6 +346,8 @@ GEM
     omniauth_openid_connect (0.7.1)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 2.2)
+    online_migrations (0.7.3)
+      activerecord (>= 4.2)
     openid_connect (2.2.0)
       activemodel
       attr_required (>= 1.0.0)
@@ -716,6 +718,7 @@ DEPENDENCIES
   omniauth
   omniauth-rails_csrf_protection (~> 1.0)
   omniauth_openid_connect
+  online_migrations
   paper_trail
   paper_trail-globalid
   parallel_tests
