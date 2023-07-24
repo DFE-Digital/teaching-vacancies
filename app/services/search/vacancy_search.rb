@@ -50,7 +50,7 @@ class Search::VacancySearch
   end
 
   def total_count
-    vacancies.count
+    @total_count ||= vacancies.count
   end
 
   private
