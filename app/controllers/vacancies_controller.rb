@@ -4,7 +4,7 @@ class VacanciesController < ApplicationController
 
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
-    @pagy, @vacancies = pagy(@vacancies_search.vacancies)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
   end
 
   def show
