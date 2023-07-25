@@ -42,7 +42,7 @@ class Search::VacancySearch
   end
 
   def organisation
-    Organisation.find_by(slug: organisation_slug) if organisation_slug
+    @organisation ||= Organisation.find_by(slug: organisation_slug) if organisation_slug
   end
 
   def vacancies
