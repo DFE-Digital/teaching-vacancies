@@ -36,7 +36,7 @@ class Search::VacancySearch
   end
 
   def wider_search_suggestions
-    return unless vacancies.empty? && search_criteria[:location].present?
+    return unless total_count.zero? && search_criteria[:location].present?
 
     Search::WiderSuggestionsBuilder.new(search_criteria).suggestions
   end
