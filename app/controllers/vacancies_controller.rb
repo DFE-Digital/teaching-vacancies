@@ -56,7 +56,7 @@ class VacanciesController < ApplicationController
         search_criteria: form.to_hash,
         sort_by: form.sort.by,
         page: params[:page] || 1,
-        total_count: @vacancies_search.total_count,
+        total_count: vacancy_ids.size,
         vacancies_on_page: vacancy_ids,
         location_polygon_used: polygon_id,
         landing_page: params[:landing_page_slug],
