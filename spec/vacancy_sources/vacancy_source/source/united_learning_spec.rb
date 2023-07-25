@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe UnitedLearningVacancySource do
+RSpec.describe VacancySource::Source::UnitedLearning do
   let!(:school) { create(:school, name: "Test School", urn: "136636", phase: :secondary) }
   let!(:school_group) { create(:school_group, name: "United Learning", uid: "5143", schools: [school]) }
 
@@ -44,11 +44,11 @@ RSpec.describe UnitedLearningVacancySource do
     end
 
     describe "job roles mapping" do
-      let(:item_stub) { instance_double(UnitedLearningVacancySource::FeedItem, :[] => "") }
+      let(:item_stub) { instance_double(described_class::FeedItem, :[] => "") }
 
       before do
         allow(item_stub).to receive(:[]).with("Job_roles").and_return(source_role)
-        allow(UnitedLearningVacancySource::FeedItem).to receive(:new).and_return(item_stub)
+        allow(described_class::FeedItem).to receive(:new).and_return(item_stub)
       end
 
       [nil, "", " "].each do |role|

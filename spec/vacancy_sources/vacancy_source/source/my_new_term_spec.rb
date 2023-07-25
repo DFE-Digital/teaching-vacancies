@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe MyNewTermVacancySource do
+RSpec.describe VacancySource::Source::MyNewTerm do
   let(:api_key) { "test-api-key" }
-  let(:api) { MyNewTermVacancySource.new }
+  let(:api) { described_class.new }
   let(:successful_auth_response) { { access_token: "valid_access_token" } }
   let(:response) { double("AuthenticationResponse", code: 200, body: successful_auth_response.to_json) }
   let(:job_listings_response_body) { file_fixture("vacancy_sources/my_new_term.json").read }
@@ -12,15 +12,15 @@ RSpec.describe MyNewTermVacancySource do
 
   describe "successfully authenticated requests" do
     before do
-      allow(MyNewTermVacancySource)
+      allow(described_class)
         .to receive(:get)
-        .with("#{MyNewTermVacancySource::BASE_URI}/auth/#{api_key}")
+        .with("#{described_class::BASE_URI}/auth/#{api_key}")
         .and_return(response)
 
-      allow(MyNewTermVacancySource)
+      allow(described_class)
         .to receive(:get)
         .with(
-          "#{MyNewTermVacancySource::BASE_URI}/job-listings",
+          "#{described_class::BASE_URI}/job-listings",
           headers: { "Authorization" => "Bearer valid_access_token", "Content-Type" => "application/json" },
           query: {},
         )
@@ -110,6 +110,75 @@ RSpec.describe MyNewTermVacancySource do
             it "maps the source role to 'education_support' in the vacancy" do
               expect(vacancy.job_role).to eq("education_support")
             end
+          end
+        end
+      end
+
+      describe "start date mapping" do
+        let(:fixture_date) { "ASAP" }
+
+        context "when the start date contains a specific date" do
+          let(:job_listings_response_body) { super().gsub(fixture_date, "2022-11-21") }
+
+          it "stores the specific start date" do
+            expect(vacancy.starts_on.to_s).to eq "2022-11-21"
+            expect(vacancy.start_date_type).to eq "specific_date"
+          end
+        end
+
+        context "when the start date is blank" do
+          let(:job_listings_response_body) { super().gsub(fixture_date, "") }
+
+          it "doesn't store a start date" do
+            expect(vacancy.starts_on).to be_nil
+            expect(vacancy.start_date_type).to eq nil
+          end
+        end
+
+        context "when the start date is not present" do
+          let(:job_listings_response_body) { super().gsub(/"#{fixture_date}"/, "null") }
+
+          it "doesn't store a start date" do
+            expect(vacancy.starts_on).to be_nil
+            expect(vacancy.start_date_type).to eq nil
+          end
+        end
+
+        context "when the start date is a date with extra data" do
+          let(:job_listings_response_body) { super().gsub(fixture_date, "2022-11-21 or later") }
+
+          it "stores it as other start date details" do
+            expect(vacancy.starts_on).to be_nil
+            expect(vacancy.other_start_date_details).to eq("2022-11-21 or later")
+            expect(vacancy.start_date_type).to eq "other"
+          end
+        end
+
+        context "when the start date comes as a specific datetime" do
+          let(:job_listings_response_body) { super().gsub(fixture_date, "2023-11-21T00:00:00") }
+
+          it "stores it parsed as a specific date" do
+            expect(vacancy.starts_on.to_s).to eq("2023-11-21")
+            expect(vacancy.start_date_type).to eq "specific_date"
+          end
+        end
+
+        context "when the start date comes as a specific date in a different format" do
+          let(:job_listings_response_body) { super().gsub(fixture_date, "21.11.23") }
+
+          it "stores it parsed as a specific date" do
+            expect(vacancy.starts_on.to_s).to eq("2023-11-21")
+            expect(vacancy.start_date_type).to eq "specific_date"
+          end
+        end
+
+        context "when the start date is a text" do
+          let(:job_listings_response_body) { super().gsub(fixture_date, "TBC") }
+
+          it "stores it as other start date details" do
+            expect(vacancy.starts_on).to be_nil
+            expect(vacancy.other_start_date_details).to eq("TBC")
+            expect(vacancy.start_date_type).to eq "other"
           end
         end
       end

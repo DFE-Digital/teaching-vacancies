@@ -1,8 +1,9 @@
 require "httparty"
 
-class MyNewTermVacancySource
+class VacancySource::Source::MyNewTerm
   include HTTParty
   include Enumerable
+  include VacancySource::Parser
 
   BASE_URI = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_FEED_URL").freeze
   API_KEY = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_API_KEY").freeze
@@ -58,6 +59,7 @@ class MyNewTermVacancySource
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
     }.merge(organisation_fields(item))
+     .merge(start_date_fields(item))
   end
 
   def organisation_fields(item)
@@ -69,6 +71,17 @@ class MyNewTermVacancySource
       readable_job_location: first_school&.name,
       about_school: first_school&.description,
     }
+  end
+
+  def start_date_fields(item)
+    return {} if item["startDate"].blank?
+
+    parsed_date = StartDate.new(item["startDate"])
+    if parsed_date.specific?
+      { starts_on: parsed_date.date, start_date_type: parsed_date.type }
+    else
+      { other_start_date_details: parsed_date.date, start_date_type: parsed_date.type }
+    end
   end
 
   def find_schools(item)

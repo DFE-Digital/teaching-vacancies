@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe FusionVacancySource do
+RSpec.describe VacancySource::Source::Fusion do
   let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
   let!(:school_group) { create(:school_group, name: "E-ACT", uid: "12345", schools: schools) }
   let(:schools) { [school1] }
@@ -96,6 +96,71 @@ RSpec.describe FusionVacancySource do
           it "maps the source role to 'education_support' in the vacancy" do
             expect(vacancy.job_role).to eq("education_support")
           end
+        end
+      end
+    end
+
+    describe "start date mapping" do
+      let(:fixture_date) { "2022-11-21T00:00:00" }
+
+      it "stores the specific start date" do
+        expect(vacancy.starts_on.to_s).to eq "2022-11-21"
+        expect(vacancy.start_date_type).to eq "specific_date"
+      end
+
+      context "when the start date is blank" do
+        let(:response_body) { super().gsub(fixture_date, "") }
+
+        it "doesn't store a start date" do
+          expect(vacancy.starts_on).to be_nil
+          expect(vacancy.start_date_type).to eq nil
+        end
+      end
+
+      context "when the start date is not present" do
+        let(:response_body) { super().gsub(/"#{fixture_date}"/, "null") }
+
+        it "doesn't store a start date" do
+          expect(vacancy.starts_on).to be_nil
+          expect(vacancy.start_date_type).to eq nil
+        end
+      end
+
+      context "when the start date is a date with extra data" do
+        let(:response_body) { super().gsub(fixture_date, "2022-11-21 or later") }
+
+        it "stores it as other start date details" do
+          expect(vacancy.starts_on).to be_nil
+          expect(vacancy.other_start_date_details).to eq("2022-11-21 or later")
+          expect(vacancy.start_date_type).to eq "other"
+        end
+      end
+
+      context "when the start date comes as a specific datetime" do
+        let(:response_body) { super().gsub(fixture_date, "2023-11-21T00:00:00") }
+
+        it "stores it parsed as a specific date" do
+          expect(vacancy.starts_on.to_s).to eq("2023-11-21")
+          expect(vacancy.start_date_type).to eq "specific_date"
+        end
+      end
+
+      context "when the start date comes as a specific date in a different format" do
+        let(:response_body) { super().gsub(fixture_date, "21.11.23") }
+
+        it "stores it parsed as a specific date" do
+          expect(vacancy.starts_on.to_s).to eq("2023-11-21")
+          expect(vacancy.start_date_type).to eq "specific_date"
+        end
+      end
+
+      context "when the start date is a text" do
+        let(:response_body) { super().gsub(fixture_date, "TBC") }
+
+        it "stores it as other start date details" do
+          expect(vacancy.starts_on).to be_nil
+          expect(vacancy.other_start_date_details).to eq("TBC")
+          expect(vacancy.start_date_type).to eq "other"
         end
       end
     end

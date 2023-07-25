@@ -1,8 +1,8 @@
-class FusionVacancySource
-  FEED_URL = ENV.fetch("VACANCY_SOURCE_FUSION_FEED_URL").freeze
-  SOURCE_NAME = "fusion".freeze
+class VacancySource::Source::Every
+  FEED_URL = ENV.fetch("VACANCY_SOURCE_EVERY_FEED_URL").freeze
+  SOURCE_NAME = "every".freeze
 
-  class FusionImportError < StandardError; end
+  class EveryImportError < StandardError; end
 
   include Enumerable
 
@@ -80,13 +80,11 @@ class FusionVacancySource
   end
 
   def job_role(item)
-    return if item["jobRole"].blank?
-
-    item["jobRole"]
-      .gsub(/deputy_headteacher|assistant_headteacher|headteacher/, "senior_leader")
-      .gsub(/head_of_year_or_phase|head_of_department_or_curriculum|head_of_year/, "middle_leader")
-      .gsub("learning_support", "education_support")
-      .gsub(/\s+/, "")
+    item["jobRole"].presence
+      &.gsub("headteacher", "senior_leader")
+      &.gsub("head_of_year", "middle_leader")
+      &.gsub("learning_support", "education_support")
+      &.gsub(/\s+/, "")
   end
 
   def ect_status_for(item)
@@ -104,12 +102,12 @@ class FusionVacancySource
     raise HTTParty::ResponseError, error_message unless response.success?
 
     parsed_response = JSON.parse(response.body)
-    raise FusionImportError, error_message if parsed_response["error"]
+    raise EveryImportError, error_message + parsed_response["error"] if parsed_response["error"]
 
     parsed_response
   end
 
   def error_message
-    "Something went wrong with Fusion Import"
+    "Something went wrong with Fusion Import. Response:"
   end
 end
