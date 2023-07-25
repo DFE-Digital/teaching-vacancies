@@ -49,7 +49,7 @@ class VacanciesController < ApplicationController
 
   def trigger_search_performed_event
     fail_safe do
-      vacancy_ids = @vacancies_search.vacancies.pluck(:id)
+      vacancy_ids = @vacancies_search.vacancies.unscope(:order).pluck(:id)
       polygon_id = DfE::Analytics.anonymise(@vacancies_search.location_search.polygon.id) if @vacancies_search.location_search.polygon
 
       event_data = {
