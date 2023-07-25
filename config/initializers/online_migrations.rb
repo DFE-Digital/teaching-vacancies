@@ -1,6 +1,6 @@
 OnlineMigrations.configure do |config|
   # Configure the migration version starting after which checks are performed.
-  # config.start_after = 20230710104904
+  config.start_after = 20230710104904 # rubocop:disable Style/NumericLiterals
 
   # Set the version of the production database so the right checks are run in development.
   config.target_version = 12
