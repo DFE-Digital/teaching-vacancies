@@ -1,7 +1,10 @@
 class ImportFromVacancySourcesJob < ApplicationJob
-  SOURCES = [VacancySource::Source::UnitedLearning,
-             VacancySource::Source::Fusion,
-             VacancySource::Source::MyNewTerm].freeze
+  SOURCES = [
+    VacancySource::Source::UnitedLearning,
+    VacancySource::Source::Fusion,
+    VacancySource::Source::MyNewTerm,
+    VacancySource::Source::Ventrus,
+  ].freeze
 
   queue_as :default
 
