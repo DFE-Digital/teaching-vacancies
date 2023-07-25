@@ -24,9 +24,9 @@ class Search::SimilarJobs
       Search::VacancySearch
         .new(criteria)
         .vacancies
+        .excluding(vacancy)
         .limit(NUMBER_OF_SIMILAR_JOBS * 3) # Fetch more than we need in case some expire while being cached
-        .reject { |job| job.id == vacancy.id }
-        .map(&:id)
+        .pluck(:id)
     end
   end
 end
