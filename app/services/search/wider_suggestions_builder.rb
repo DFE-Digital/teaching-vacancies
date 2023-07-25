@@ -15,16 +15,15 @@ class Search::WiderSuggestionsBuilder
   end
 
   def suggestions
-    RADIUS_OPTIONS
-      .select { |r| r > initial_radius }
-      .map { |radius| [radius.to_s, wider_results(radius)] }
-      .uniq(&:second)
-      .reject { |options| options.second.zero? }
+    @suggestions ||= RADIUS_OPTIONS.select { |r| r > initial_radius }
+                                   .map { |radius| [radius.to_s, wider_results_count(radius)] }
+                                   .uniq(&:second)
+                                   .reject { |options| options.second.zero? }
   end
 
   private
 
-  def wider_results(radius)
+  def wider_results_count(radius)
     Search::VacancySearch.new(search_criteria.merge(radius: radius)).total_count
   end
 end
