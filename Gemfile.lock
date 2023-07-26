@@ -63,8 +63,6 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
-    active_record_doctor (1.11.0)
-      activerecord (>= 4.2.0)
     activejob (7.0.4.3)
       activesupport (= 7.0.4.3)
       globalid (>= 0.3.6)
@@ -150,8 +148,6 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.2.0)
       railties (>= 6.0.0)
-    database_consistency (1.7.18)
-      activerecord (>= 3.2)
     date (3.3.3)
     declarative (0.0.20)
     devise (4.9.2)
@@ -672,7 +668,6 @@ PLATFORMS
 DEPENDENCIES
   actionmailer (~> 7.0.3)
   actionpack (~> 7.0.3)
-  active_record_doctor
   activejob (~> 7.0.3)
   activemodel (~> 7.0.3)
   activerecord (~> 7.0.3)
@@ -692,7 +687,6 @@ DEPENDENCIES
   capybara
   climate_control
   cssbundling-rails
-  database_consistency
   devise
   dfe-analytics!
   dotenv-rails
