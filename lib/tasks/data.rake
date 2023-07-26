@@ -91,6 +91,11 @@ namespace :db do # rubocop:disable Metrics/BlockLength
   task delete_alert_runs_for_deleted_subscriptions: :environment do
     AlertRun.left_joins(:subscription).where(subscription: { id: nil }).delete_all
   end
+
+  task delete_feedbacks_for_deleted_associations: :environment do
+    Feedback.left_joins(:jobseeker).where.not(jobseeker_id: nil).where(jobseeker: { id: nil }).delete_all
+    Feedback.left_joins(:subscription).where.not(subscription_id: nil).where(subscription: { id: nil }).delete_all
+  end
 end
 
 namespace :dsi do
