@@ -76,8 +76,10 @@ gem "xml-sitemap"
 gem "zendesk_api"
 
 group :development do
+  gem "active_record_doctor"
   gem "amazing_print" # optional dependency of `rails_semantic_logger`
   gem "aws-sdk-ssm"
+  gem "database_consistency", require: false
   gem "listen"
   gem "solargraph"
   gem "spring"
