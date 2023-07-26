@@ -1,0 +1,251 @@
+---
+AlertRun:
+  subscription:
+    ColumnPresenceChecker:
+      enabled: false
+EmergencyLoginKey:
+  publisher:
+    ColumnPresenceChecker:
+      enabled: false
+FailedImportedVacancy:
+  source:
+    NullConstraintChecker:
+      enabled: false
+Feedback:
+  relevant_to_user:
+    ThreeStateBooleanChecker:
+      enabled: false
+InvitationToApply:
+  invited_by:
+    ColumnPresenceChecker:
+      enabled: false
+  jobseeker:
+    ColumnPresenceChecker:
+      enabled: false
+  vacancy:
+    ColumnPresenceChecker:
+      enabled: false
+JobApplication:
+  employment_history_section_completed:
+    ThreeStateBooleanChecker:
+      enabled: false
+  feedbacks:
+    MissingIndexChecker:
+      enabled: false
+  jobseeker:
+    ColumnPresenceChecker:
+      enabled: false
+  qualifications_section_completed:
+    ThreeStateBooleanChecker:
+      enabled: false
+  vacancy:
+    ColumnPresenceChecker:
+      enabled: false
+JobPreferences:
+  jobseeker_profile:
+    ColumnPresenceChecker:
+      enabled: false
+JobPreferences::Location:
+  area:
+    NullConstraintChecker:
+      enabled: false
+  name:
+    NullConstraintChecker:
+      enabled: false
+  radius:
+    NullConstraintChecker:
+      enabled: false
+Jobseeker:
+  email:
+    ColumnPresenceChecker:
+      enabled: false
+  feedbacks:
+    MissingIndexChecker:
+      enabled: false
+  index_jobseekers_on_confirmation_token:
+    UniqueIndexChecker:
+      enabled: false
+  index_jobseekers_on_reset_password_token:
+    UniqueIndexChecker:
+      enabled: false
+  index_jobseekers_on_unlock_token:
+    UniqueIndexChecker:
+      enabled: false
+  job_applications:
+    MissingIndexChecker:
+      enabled: false
+  jobseeker_profile:
+    MissingIndexChecker:
+      enabled: false
+JobseekerProfile:
+  job_preferences:
+    MissingIndexChecker:
+      enabled: false
+  jobseeker:
+    ColumnPresenceChecker:
+      enabled: false
+  personal_details:
+    MissingIndexChecker:
+      enabled: false
+  requested_hidden_profile:
+    ThreeStateBooleanChecker:
+      enabled: false
+LocalAuthorityPublisherSchool:
+  publisher_preference:
+    ColumnPresenceChecker:
+      enabled: false
+  school:
+    ColumnPresenceChecker:
+      enabled: false
+LocationPolygon:
+  name:
+    NullConstraintChecker:
+      enabled: false
+Notification:
+  type:
+    NullConstraintChecker:
+      enabled: false
+Organisation:
+  index_organisations_on_local_authority_code:
+    UniqueIndexChecker:
+      enabled: false
+  index_organisations_on_slug:
+    UniqueIndexChecker:
+      enabled: false
+  index_organisations_on_uid:
+    UniqueIndexChecker:
+      enabled: false
+  index_organisations_on_urn:
+    UniqueIndexChecker:
+      enabled: false
+  organisation_publishers:
+    MissingIndexChecker:
+      enabled: false
+OrganisationPublisher:
+  organisation:
+    ColumnPresenceChecker:
+      enabled: false
+  publisher:
+    ColumnPresenceChecker:
+      enabled: false
+OrganisationPublisherPreference:
+  organisation:
+    ColumnPresenceChecker:
+      enabled: false
+  publisher_preference:
+    ColumnPresenceChecker:
+      enabled: false
+OrganisationVacancy:
+  index_organisation_vacancies_on_organisation_id_and_vacancy_id:
+    UniqueIndexChecker:
+      enabled: false
+  index_organisation_vacancies_on_vacancy_id_and_organisation_id:
+    UniqueIndexChecker:
+      enabled: false
+  organisation:
+    ColumnPresenceChecker:
+      enabled: false
+  vacancy:
+    ColumnPresenceChecker:
+      enabled: false
+PersonalDetails:
+  phone_number_provided:
+    ThreeStateBooleanChecker:
+      enabled: false
+  right_to_work_in_uk:
+    ThreeStateBooleanChecker:
+      enabled: false
+Publisher:
+  feedbacks:
+    MissingIndexChecker:
+      enabled: false
+  index_publishers_on_oid:
+    UniqueIndexChecker:
+      enabled: false
+  organisation_publishers:
+    MissingIndexChecker:
+      enabled: false
+PublisherPreference:
+  local_authority_publisher_schools:
+    MissingIndexChecker:
+      enabled: false
+  organisation:
+    ColumnPresenceChecker:
+      enabled: false
+  organisation_publisher_preferences:
+    MissingIndexChecker:
+      enabled: false
+  publisher:
+    ColumnPresenceChecker:
+      enabled: false
+Qualification:
+  finished_studying:
+    ThreeStateBooleanChecker:
+      enabled: false
+  qualification_results:
+    ForeignKeyCascadeChecker:
+      enabled: false
+SavedJob:
+  jobseeker:
+    ColumnPresenceChecker:
+      enabled: false
+  vacancy:
+    ColumnPresenceChecker:
+      enabled: false
+SchoolGroupMembership:
+  do_not_delete:
+    ThreeStateBooleanChecker:
+      enabled: false
+  index_school_group_memberships_on_school_id_and_school_group_id:
+    UniqueIndexChecker:
+      enabled: false
+  school:
+    ColumnPresenceChecker:
+      enabled: false
+  school_group:
+    ColumnPresenceChecker:
+      enabled: false
+Subscription:
+  active:
+    ThreeStateBooleanChecker:
+      enabled: false
+  feedbacks:
+    MissingIndexChecker:
+      enabled: false
+Vacancy:
+  benefits:
+    ThreeStateBooleanChecker:
+      enabled: false
+  contact_number_provided:
+    ThreeStateBooleanChecker:
+      enabled: false
+  enable_job_applications:
+    ThreeStateBooleanChecker:
+      enabled: false
+  equal_opportunities_report:
+    MissingIndexChecker:
+      enabled: false
+  further_details_provided:
+    ThreeStateBooleanChecker:
+      enabled: false
+  google_index_removed:
+    ThreeStateBooleanChecker:
+      enabled: false
+  include_additional_documents:
+    ThreeStateBooleanChecker:
+      enabled: false
+  safeguarding_information_provided:
+    ThreeStateBooleanChecker:
+      enabled: false
+  saved_jobs:
+    MissingIndexChecker:
+      enabled: false
+  school_visits:
+    ThreeStateBooleanChecker:
+      enabled: false
+  slugs:
+    MissingIndexChecker:
+      enabled: false
+  starts_asap:
+    ThreeStateBooleanChecker:
+      enabled: false

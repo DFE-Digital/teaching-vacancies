@@ -1,0 +1,7 @@
+ActiveRecordDoctor.configure do
+  # Global settings affect all detectors.
+  global :ignore_tables, []
+
+  # Detector-specific settings affect only one specific detector.
+  detector :missing_foreign_keys, ignore_columns: ["alert_runs.job_id", "sessions.session_id"]
+end
