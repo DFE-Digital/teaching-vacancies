@@ -5,6 +5,7 @@ class VacanciesController < ApplicationController
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
     @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
+    set_coordinates
   end
 
   def show
@@ -77,5 +78,10 @@ class VacanciesController < ApplicationController
       .with_data(event_data)
 
     DfE::Analytics::SendEvents.do([event])
+  end
+  
+  def set_coordinates
+    return unless form.to_hash[:location]
+    @search_coordinates = Geocoding.new(form.to_hash[:location]).coordinates
   end
 end
