@@ -86,6 +86,11 @@ namespace :db do # rubocop:disable Metrics/BlockLength
                        school_visits: v.school_visits_details.present?)
     end
   end
+
+  desc "Delete alert runs belonging to deleted subscriptions"
+  task delete_alert_runs_for_deleted_subscriptions: :environment do
+    AlertRun.left_joins(:subscription).where(subscription: { id: nil }).delete_all
+  end
 end
 
 namespace :dsi do
