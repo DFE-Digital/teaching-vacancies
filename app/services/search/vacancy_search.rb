@@ -36,13 +36,13 @@ class Search::VacancySearch
   end
 
   def wider_search_suggestions
-    return unless vacancies.empty? && search_criteria[:location].present?
+    return unless total_count.zero? && search_criteria[:location].present?
 
-    Search::WiderSuggestionsBuilder.new(search_criteria).suggestions
+    @wider_search_suggestions ||= Search::WiderSuggestionsBuilder.new(search_criteria).suggestions
   end
 
   def organisation
-    Organisation.find_by(slug: organisation_slug) if organisation_slug
+    @organisation ||= Organisation.find_by(slug: organisation_slug) if organisation_slug
   end
 
   def vacancies
@@ -50,7 +50,7 @@ class Search::VacancySearch
   end
 
   def total_count
-    vacancies.count
+    @total_count ||= vacancies.count
   end
 
   private

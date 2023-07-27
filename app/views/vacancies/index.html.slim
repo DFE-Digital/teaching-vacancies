@@ -9,7 +9,8 @@
 h1 class="govuk-heading-l" role="heading" aria-level="1"
   = t("jobs.search_result_heading", count: number_with_delimiter(@vacancies_search.total_count))
 
-- if @vacancies_search.active_criteria? && @vacancies.count.positive?
+- any_vacancies = @vacancies_search.total_count.positive?
+- if @vacancies_search.active_criteria? && any_vacancies
   p = t("subscriptions.link.help_text_html", link: govuk_link_to(t("subscriptions.link.text"), new_subscription_path(search_criteria: @vacancies_search.active_criteria, coordinates_present: @vacancies_search.point_coordinates.present?)))
 
 = form_for @form, as: "", url: jobs_path, method: :get, html: { data: { controller: "form" }, role: "search" } do |f|
@@ -28,7 +29,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       = govuk_inset_text(text: t("vacancies.international_teacher_advice.text_html",
                                  link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_search_results)))
       #search-results
-        - if @vacancies.any?
+        - if any_vacancies
           = render "vacancies/search/results", vacancies: @vacancies
         - elsif @vacancies_search.organisation_slug
           = render "vacancies/search/no_results_organisation", organisation_name: @vacancies_search.organisation.name
@@ -37,5 +38,5 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
         - else
           = render "vacancies/search/no_results"
       = govuk_pagination(pagy: @pagy)
-      - if @vacancies.any?
+      - if any_vacancies
         = render "vacancies/search/stats"

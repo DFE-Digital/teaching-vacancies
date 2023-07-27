@@ -4,7 +4,7 @@ class VacanciesController < ApplicationController
 
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
-    @pagy, @vacancies = pagy(@vacancies_search.vacancies)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
   end
 
   def show
@@ -49,7 +49,7 @@ class VacanciesController < ApplicationController
 
   def trigger_search_performed_event
     fail_safe do
-      vacancy_ids = @vacancies_search.vacancies.map(&:id)
+      vacancy_ids = @vacancies.pluck(:id)
       polygon_id = DfE::Analytics.anonymise(@vacancies_search.location_search.polygon.id) if @vacancies_search.location_search.polygon
 
       event_data = {
