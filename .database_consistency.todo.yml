@@ -29,9 +29,6 @@ JobApplication:
   employment_history_section_completed:
     ThreeStateBooleanChecker:
       enabled: false
-  feedbacks:
-    MissingIndexChecker:
-      enabled: false
   jobseeker:
     ColumnPresenceChecker:
       enabled: false
@@ -59,9 +56,6 @@ Jobseeker:
   email:
     ColumnPresenceChecker:
       enabled: false
-  feedbacks:
-    MissingIndexChecker:
-      enabled: false
   index_jobseekers_on_confirmation_token:
     UniqueIndexChecker:
       enabled: false
@@ -71,21 +65,9 @@ Jobseeker:
   index_jobseekers_on_unlock_token:
     UniqueIndexChecker:
       enabled: false
-  job_applications:
-    MissingIndexChecker:
-      enabled: false
-  jobseeker_profile:
-    MissingIndexChecker:
-      enabled: false
 JobseekerProfile:
-  job_preferences:
-    MissingIndexChecker:
-      enabled: false
   jobseeker:
     ColumnPresenceChecker:
-      enabled: false
-  personal_details:
-    MissingIndexChecker:
       enabled: false
   requested_hidden_profile:
     ThreeStateBooleanChecker:
@@ -117,9 +99,6 @@ Organisation:
       enabled: false
   index_organisations_on_urn:
     UniqueIndexChecker:
-      enabled: false
-  organisation_publishers:
-    MissingIndexChecker:
       enabled: false
 OrganisationPublisher:
   organisation:
@@ -156,24 +135,12 @@ PersonalDetails:
     ThreeStateBooleanChecker:
       enabled: false
 Publisher:
-  feedbacks:
-    MissingIndexChecker:
-      enabled: false
   index_publishers_on_oid:
     UniqueIndexChecker:
       enabled: false
-  organisation_publishers:
-    MissingIndexChecker:
-      enabled: false
 PublisherPreference:
-  local_authority_publisher_schools:
-    MissingIndexChecker:
-      enabled: false
   organisation:
     ColumnPresenceChecker:
-      enabled: false
-  organisation_publisher_preferences:
-    MissingIndexChecker:
       enabled: false
   publisher:
     ColumnPresenceChecker:
@@ -209,9 +176,6 @@ Subscription:
   active:
     ThreeStateBooleanChecker:
       enabled: false
-  feedbacks:
-    MissingIndexChecker:
-      enabled: false
 Vacancy:
   benefits:
     ThreeStateBooleanChecker:
@@ -221,9 +185,6 @@ Vacancy:
       enabled: false
   enable_job_applications:
     ThreeStateBooleanChecker:
-      enabled: false
-  equal_opportunities_report:
-    MissingIndexChecker:
       enabled: false
   further_details_provided:
     ThreeStateBooleanChecker:
@@ -237,14 +198,8 @@ Vacancy:
   safeguarding_information_provided:
     ThreeStateBooleanChecker:
       enabled: false
-  saved_jobs:
-    MissingIndexChecker:
-      enabled: false
   school_visits:
     ThreeStateBooleanChecker:
-      enabled: false
-  slugs:
-    MissingIndexChecker:
       enabled: false
   starts_asap:
     ThreeStateBooleanChecker:
