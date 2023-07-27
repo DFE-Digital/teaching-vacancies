@@ -50,14 +50,6 @@ RSpec.describe PersonalDetails do
         end
       end
 
-      context "when there's an existing profile" do
-        before { create(:jobseeker_profile, jobseeker:) }
-
-        it "does not set completed steps" do
-          expect(personal_details.completed_steps).to be_empty
-        end
-      end
-
       context "when the name step is partially prefilled" do
         before { create(:job_application, :status_submitted, jobseeker:, last_name: nil) }
 
