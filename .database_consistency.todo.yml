@@ -1,12 +1,4 @@
 ---
-AlertRun:
-  subscription:
-    ColumnPresenceChecker:
-      enabled: false
-EmergencyLoginKey:
-  publisher:
-    ColumnPresenceChecker:
-      enabled: false
 FailedImportedVacancy:
   source:
     NullConstraintChecker:
@@ -15,32 +7,12 @@ Feedback:
   relevant_to_user:
     ThreeStateBooleanChecker:
       enabled: false
-InvitationToApply:
-  invited_by:
-    ColumnPresenceChecker:
-      enabled: false
-  jobseeker:
-    ColumnPresenceChecker:
-      enabled: false
-  vacancy:
-    ColumnPresenceChecker:
-      enabled: false
 JobApplication:
   employment_history_section_completed:
     ThreeStateBooleanChecker:
       enabled: false
-  jobseeker:
-    ColumnPresenceChecker:
-      enabled: false
   qualifications_section_completed:
     ThreeStateBooleanChecker:
-      enabled: false
-  vacancy:
-    ColumnPresenceChecker:
-      enabled: false
-JobPreferences:
-  jobseeker_profile:
-    ColumnPresenceChecker:
       enabled: false
 JobPreferences::Location:
   area:
@@ -52,23 +24,9 @@ JobPreferences::Location:
   radius:
     NullConstraintChecker:
       enabled: false
-Jobseeker:
-  email:
-    ColumnPresenceChecker:
-      enabled: false
 JobseekerProfile:
-  jobseeker:
-    ColumnPresenceChecker:
-      enabled: false
   requested_hidden_profile:
     ThreeStateBooleanChecker:
-      enabled: false
-LocalAuthorityPublisherSchool:
-  publisher_preference:
-    ColumnPresenceChecker:
-      enabled: false
-  school:
-    ColumnPresenceChecker:
       enabled: false
 LocationPolygon:
   name:
@@ -78,40 +36,12 @@ Notification:
   type:
     NullConstraintChecker:
       enabled: false
-OrganisationPublisher:
-  organisation:
-    ColumnPresenceChecker:
-      enabled: false
-  publisher:
-    ColumnPresenceChecker:
-      enabled: false
-OrganisationPublisherPreference:
-  organisation:
-    ColumnPresenceChecker:
-      enabled: false
-  publisher_preference:
-    ColumnPresenceChecker:
-      enabled: false
-OrganisationVacancy:
-  organisation:
-    ColumnPresenceChecker:
-      enabled: false
-  vacancy:
-    ColumnPresenceChecker:
-      enabled: false
 PersonalDetails:
   phone_number_provided:
     ThreeStateBooleanChecker:
       enabled: false
   right_to_work_in_uk:
     ThreeStateBooleanChecker:
-      enabled: false
-PublisherPreference:
-  organisation:
-    ColumnPresenceChecker:
-      enabled: false
-  publisher:
-    ColumnPresenceChecker:
       enabled: false
 Qualification:
   finished_studying:
@@ -120,22 +50,9 @@ Qualification:
   qualification_results:
     ForeignKeyCascadeChecker:
       enabled: false
-SavedJob:
-  jobseeker:
-    ColumnPresenceChecker:
-      enabled: false
-  vacancy:
-    ColumnPresenceChecker:
-      enabled: false
 SchoolGroupMembership:
   do_not_delete:
     ThreeStateBooleanChecker:
-      enabled: false
-  school:
-    ColumnPresenceChecker:
-      enabled: false
-  school_group:
-    ColumnPresenceChecker:
       enabled: false
 Subscription:
   active:

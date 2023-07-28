@@ -6,7 +6,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
   let(:current_step) { :job_role }
 
   let(:vacancy) { build_stubbed(:vacancy, :draft, :teacher) }
-  let(:organisation) { build_stubbed(:school) }
+  let(:organisation) { build(:school) }
 
   describe "#step_groups" do
     let(:all_possible_step_groups) { %i[job_details important_dates application_process about_the_role review] }
