@@ -56,15 +56,6 @@ Jobseeker:
   email:
     ColumnPresenceChecker:
       enabled: false
-  index_jobseekers_on_confirmation_token:
-    UniqueIndexChecker:
-      enabled: false
-  index_jobseekers_on_reset_password_token:
-    UniqueIndexChecker:
-      enabled: false
-  index_jobseekers_on_unlock_token:
-    UniqueIndexChecker:
-      enabled: false
 JobseekerProfile:
   jobseeker:
     ColumnPresenceChecker:
@@ -87,19 +78,6 @@ Notification:
   type:
     NullConstraintChecker:
       enabled: false
-Organisation:
-  index_organisations_on_local_authority_code:
-    UniqueIndexChecker:
-      enabled: false
-  index_organisations_on_slug:
-    UniqueIndexChecker:
-      enabled: false
-  index_organisations_on_uid:
-    UniqueIndexChecker:
-      enabled: false
-  index_organisations_on_urn:
-    UniqueIndexChecker:
-      enabled: false
 OrganisationPublisher:
   organisation:
     ColumnPresenceChecker:
@@ -115,12 +93,6 @@ OrganisationPublisherPreference:
     ColumnPresenceChecker:
       enabled: false
 OrganisationVacancy:
-  index_organisation_vacancies_on_organisation_id_and_vacancy_id:
-    UniqueIndexChecker:
-      enabled: false
-  index_organisation_vacancies_on_vacancy_id_and_organisation_id:
-    UniqueIndexChecker:
-      enabled: false
   organisation:
     ColumnPresenceChecker:
       enabled: false
@@ -133,10 +105,6 @@ PersonalDetails:
       enabled: false
   right_to_work_in_uk:
     ThreeStateBooleanChecker:
-      enabled: false
-Publisher:
-  index_publishers_on_oid:
-    UniqueIndexChecker:
       enabled: false
 PublisherPreference:
   organisation:
@@ -162,9 +130,6 @@ SavedJob:
 SchoolGroupMembership:
   do_not_delete:
     ThreeStateBooleanChecker:
-      enabled: false
-  index_school_group_memberships_on_school_id_and_school_group_id:
-    UniqueIndexChecker:
       enabled: false
   school:
     ColumnPresenceChecker:

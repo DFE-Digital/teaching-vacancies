@@ -33,6 +33,8 @@ class JobseekerProfile < ApplicationRecord
 
   enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2 }
 
+  validates :jobseeker, uniqueness: true
+
   def self.copy_attributes(record, previous_application)
     record.assign_attributes(
       employments: previous_application.employments.map(&:duplicate),
