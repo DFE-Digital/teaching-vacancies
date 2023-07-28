@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -128,7 +128,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.integer "age_forty_to_forty_nine", default: 0, null: false
     t.integer "age_fifty_to_fifty_nine", default: 0, null: false
     t.integer "age_sixty_and_over", default: 0, null: false
-    t.index ["vacancy_id"], name: "index_equal_opportunities_reports_on_vacancy_id"
+    t.index ["vacancy_id"], name: "index_equal_opportunities_reports_vacancy_id", unique: true
   end
 
   create_table "failed_imported_vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -166,6 +166,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.string "category"
     t.text "occupation"
     t.string "origin_path"
+    t.index ["job_application_id"], name: "index_feedbacks_job_application_id"
+    t.index ["jobseeker_id"], name: "index_feedbacks_jobseeker_id"
+    t.index ["publisher_id"], name: "index_feedbacks_publisher_id"
+    t.index ["subscription_id"], name: "index_feedbacks_subscription_id"
     t.index ["vacancy_id"], name: "index_feedbacks_on_vacancy_id"
   end
 
@@ -177,6 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.datetime "created_at", precision: nil
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id", "sluggable_type"], name: "index_friendly_id_slugs_sluggable_id_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
@@ -244,6 +249,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.integer "in_progress_steps", default: [], null: false, array: true
     t.boolean "employment_history_section_completed"
     t.boolean "qualifications_section_completed"
+    t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
 
@@ -258,7 +264,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "jobseeker_profile_id"
-    t.index ["jobseeker_profile_id"], name: "index_job_preferences_on_jobseeker_profile_id"
+    t.index ["jobseeker_profile_id"], name: "index_job_preferences_jobseeker_profile_id", unique: true
   end
 
   create_table "job_preferences_locations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -290,7 +296,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.string "qualified_teacher_status_year"
     t.boolean "active", default: false, null: false
     t.boolean "requested_hidden_profile"
-    t.index ["jobseeker_id"], name: "index_jobseeker_profiles_on_jobseeker_id"
+    t.index ["jobseeker_id"], name: "index_jobseeker_profiles_jobseeker_id", unique: true
   end
 
   create_table "jobseekers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -324,6 +330,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.uuid "school_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["publisher_preference_id"], name: "index_local_authority_publisher_schools_publisher_preference_id"
   end
 
   create_table "location_polygons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -374,6 +381,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.uuid "publisher_preference_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["publisher_preference_id"], name: "index_organisation_publisher_preferences_publisher_preference_i"
   end
 
   create_table "organisation_publishers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -381,6 +389,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.uuid "publisher_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_organisation_publishers_organisation_id"
+    t.index ["publisher_id"], name: "index_organisation_publishers_publisher_id"
   end
 
   create_table "organisation_vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -445,7 +455,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.text "last_name_ciphertext"
     t.text "phone_number_ciphertext"
     t.boolean "right_to_work_in_uk"
-    t.index ["jobseeker_profile_id"], name: "index_personal_details_on_jobseeker_profile_id"
+    t.index ["jobseeker_profile_id"], name: "index_personal_details_jobseeker_profile_id", unique: true
   end
 
   create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -518,6 +528,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_180478) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jobseeker_id"], name: "index_saved_jobs_on_jobseeker_id"
+    t.index ["vacancy_id"], name: "index_saved_jobs_vacancy_id"
   end
 
   create_table "school_group_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
