@@ -641,6 +641,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
     t.boolean "further_details_provided"
     t.string "further_details"
     t.boolean "include_additional_documents"
+    t.float "latitude"
+    t.float "longitude"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["publish_on"], name: "index_vacancies_on_publish_on"
