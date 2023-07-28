@@ -7,6 +7,8 @@ class PersonalDetails < ApplicationRecord
 
   has_encrypted :first_name, :last_name, :phone_number
 
+  validates :jobseeker_profile, uniqueness: true
+
   def self.attributes_to_copy
     %w[
       first_name
