@@ -8,6 +8,12 @@ ActiveStorage::Blob:
 ActiveStorage::VariantRecord:
   enabled: false
 
+DatabaseConsistencyCheckers:
+  # Disable the whole rule since is something that we especifically need (unaswered boolean questions for users) in
+  #  multiple fields
+  ThreeStateBooleanChecker:
+    enabled: false
+
 # Ignore missing uniqueness validations on IDs coming from GIAS DB
 # as there is a on_duplicate_key_update in place to deal with conflicts during the import.
 SchoolGroupMembership:
