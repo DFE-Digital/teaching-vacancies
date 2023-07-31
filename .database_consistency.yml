@@ -1,3 +1,5 @@
+#  https://github.com/djezzzl/database_consistency/wiki/configuration
+
 # Ignore false positive from Rails' ActionText and ActiveStorage
 ActionText::RichText:
   enabled: false
