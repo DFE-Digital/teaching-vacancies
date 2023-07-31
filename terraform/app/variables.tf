@@ -72,7 +72,7 @@ variable "paas_logging_service_binding_enable" {
 }
 
 variable "paas_postgres_service_plan" {
-  default = "tiny-unencrypted-11"
+  default = "tiny-unencrypted-12"
 }
 
 variable "paas_redis_cache_service_plan" {
