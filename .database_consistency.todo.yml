@@ -1,5 +1,0 @@
----
-Qualification:
-  qualification_results:
-    ForeignKeyCascadeChecker:
-      enabled: false

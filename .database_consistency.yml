@@ -10,7 +10,12 @@ ActiveStorage::Blob:
 ActiveStorage::VariantRecord:
   enabled: false
 
+# Disable rules for the whole service
 DatabaseConsistencyCheckers:
+  # This would require to add specific DB deletion strategy for foreign keys to match the ActiveRecord association
+  # deletion strategy. I think this is an overkill. But we can revisit it in the future if we want to.
+  ForeignKeyCascadeChecker:
+    enabled: false
   # Disable the whole rule since is something that we especifically need (unaswered boolean questions for users) in
   #  multiple fields
   ThreeStateBooleanChecker:
