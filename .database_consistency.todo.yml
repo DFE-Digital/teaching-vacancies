@@ -1,8 +1,4 @@
 ---
-FailedImportedVacancy:
-  source:
-    NullConstraintChecker:
-      enabled: false
 Feedback:
   relevant_to_user:
     ThreeStateBooleanChecker:
@@ -14,27 +10,9 @@ JobApplication:
   qualifications_section_completed:
     ThreeStateBooleanChecker:
       enabled: false
-JobPreferences::Location:
-  area:
-    NullConstraintChecker:
-      enabled: false
-  name:
-    NullConstraintChecker:
-      enabled: false
-  radius:
-    NullConstraintChecker:
-      enabled: false
 JobseekerProfile:
   requested_hidden_profile:
     ThreeStateBooleanChecker:
-      enabled: false
-LocationPolygon:
-  name:
-    NullConstraintChecker:
-      enabled: false
-Notification:
-  type:
-    NullConstraintChecker:
       enabled: false
 PersonalDetails:
   phone_number_provided:
