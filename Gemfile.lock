@@ -318,7 +318,7 @@ GEM
     mini_magick (4.12.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.2)
-    minitest (5.18.1)
+    minitest (5.19.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.3.0)
@@ -350,7 +350,7 @@ GEM
     omniauth_openid_connect (0.7.1)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 2.2)
-    online_migrations (0.7.3)
+    online_migrations (0.8.0)
       activerecord (>= 4.2)
     openid_connect (2.2.0)
       activemodel
