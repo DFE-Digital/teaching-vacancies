@@ -2,7 +2,7 @@
   - vacancies.each do |vacancy|
     .search-results__item
       .header-with-logo
-        - if vacancy.organisation.logo.attached?
+        - if vacancy.organisation && vacancy.organisation.logo.attached?
           .header-with-logo-logo--search-result
             = image_tag(vacancy.organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: vacancy.organisation.name))
         .header-with-logo-title
@@ -40,7 +40,7 @@
           - row.key text: t("jobs.expires_at"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
           - row.value text: format_time_to_datetime_at(vacancy.expires_at), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
-        - if @search_coordinates && vacancy.geolocation
+        - if @search_coordinates && vacancy.geolocation && vacancy.geolocation.class != RGeo::Geographic::SphericalMultiPointImpl
           - summary_list.row do |row|
             - row.key text: t("distance"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
             - row.value text:"#{Geocoder::Calculations.distance_between(@search_coordinates, [vacancy.geolocation.latitude, vacancy.geolocation.longitude]).floor} miles", classes: "govuk-body-s govuk-!-padding-bottom-0"
