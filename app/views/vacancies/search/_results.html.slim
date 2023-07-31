@@ -40,7 +40,9 @@
           - row.key text: t("jobs.expires_at"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
           - row.value text: format_time_to_datetime_at(vacancy.expires_at), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
-        - if @search_coordinates && vacancy.geolocation && vacancy.geolocation.class != RGeo::Geographic::SphericalMultiPointImpl
+        - if @search_coordinates && vacancy.geolocation
+          - latitude = vacancy.geolocation.class == RGeo::Geographic::SphericalMultiPointImpl ? vacancy.geolocation.first.latitude : vacancy.geolocation.latitude
+          - longitude = vacancy.geolocation.class == RGeo::Geographic::SphericalMultiPointImpl ? vacancy.geolocation.first.longitude : vacancy.geolocation.longitude
           - summary_list.row do |row|
             - row.key text: t("distance"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.value text:"#{Geocoder::Calculations.distance_between(@search_coordinates, [vacancy.geolocation.latitude, vacancy.geolocation.longitude]).floor} miles", classes: "govuk-body-s govuk-!-padding-bottom-0"
+            - row.value text:"#{Geocoder::Calculations.distance_between(@search_coordinates, [latitude, longitude]).floor} miles", classes: "govuk-body-s govuk-!-padding-bottom-0"
