@@ -14,15 +14,6 @@ class LocationQuery < ApplicationQuery
 
     if normalised_query.blank? || NATIONWIDE_LOCATIONS.include?(normalised_query)
       scope
-    elsif LocationPolygon.contain?(normalised_query)
-      polygon = LocationPolygon.with_name(normalised_query)
-
-      scope
-        .joins("
-          INNER JOIN location_polygons
-          ON ST_DWithin(#{field_name}, location_polygons.area, #{radius})
-        ")
-        .where("location_polygons.id = ?", polygon.id)
     else
       coordinates = Geocoding.new(normalised_query).coordinates
 
@@ -31,8 +22,10 @@ class LocationQuery < ApplicationQuery
       return scope.none if coordinates == [0, 0]
 
       point = "POINT(#{coordinates.second} #{coordinates.first})"
+      point_sql = Arel.sql(point)
 
       scope.where("ST_DWithin(#{field_name}, ?, ?)", point, radius)
+           .order(Arel.sql("ST_Distance(#{field_name}, '#{point_sql}')"))
     end
   end
 end
