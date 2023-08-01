@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_28_122552) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -49,7 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   end
 
   create_table "alert_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "subscription_id"
+    t.uuid "subscription_id", null: false
     t.date "run_on"
     t.string "job_id"
     t.datetime "created_at", precision: nil, null: false
@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "not_valid_after", precision: nil, null: false
-    t.uuid "publisher_id"
+    t.uuid "publisher_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["publisher_id"], name: "index_emergency_login_keys_on_publisher_id"
@@ -187,9 +187,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   end
 
   create_table "invitation_to_applies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "jobseeker_id"
-    t.uuid "vacancy_id"
-    t.uuid "invited_by_id"
+    t.uuid "jobseeker_id", null: false
+    t.uuid "vacancy_id", null: false
+    t.uuid "invited_by_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["invited_by_id"], name: "index_invitation_to_applies_on_invited_by_id"
@@ -201,8 +201,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "jobseeker_id"
-    t.uuid "vacancy_id"
+    t.uuid "jobseeker_id", null: false
+    t.uuid "vacancy_id", null: false
     t.integer "completed_steps", default: [], null: false, array: true
     t.datetime "submitted_at", precision: nil
     t.datetime "draft_at", precision: nil
@@ -263,7 +263,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
     t.boolean "builder_completed", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "jobseeker_profile_id"
+    t.uuid "jobseeker_profile_id", null: false
     t.index ["jobseeker_profile_id"], name: "index_job_preferences_jobseeker_profile_id", unique: true
   end
 
@@ -290,7 +290,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   create_table "jobseeker_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "jobseeker_id"
+    t.uuid "jobseeker_id", null: false
     t.string "about_you"
     t.integer "qualified_teacher_status"
     t.string "qualified_teacher_status_year"
@@ -326,8 +326,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   end
 
   create_table "local_authority_publisher_schools", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "publisher_preference_id"
-    t.uuid "school_id"
+    t.uuid "publisher_preference_id", null: false
+    t.uuid "school_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["publisher_preference_id"], name: "index_local_authority_publisher_schools_publisher_preference_id"
@@ -377,16 +377,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   end
 
   create_table "organisation_publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "organisation_id"
-    t.uuid "publisher_preference_id"
+    t.uuid "organisation_id", null: false
+    t.uuid "publisher_preference_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["publisher_preference_id"], name: "index_organisation_publisher_preferences_publisher_preference_i"
   end
 
   create_table "organisation_publishers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "organisation_id"
-    t.uuid "publisher_id"
+    t.uuid "organisation_id", null: false
+    t.uuid "publisher_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organisation_id"], name: "index_organisation_publishers_organisation_id"
@@ -394,8 +394,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   end
 
   create_table "organisation_vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "organisation_id"
-    t.uuid "vacancy_id"
+    t.uuid "organisation_id", null: false
+    t.uuid "vacancy_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["organisation_id", "vacancy_id"], name: "index_organisation_vacancies_on_organisation_id_and_vacancy_id", unique: true
@@ -459,8 +459,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   end
 
   create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "publisher_id"
-    t.uuid "organisation_id"
+    t.uuid "publisher_id", null: false
+    t.uuid "organisation_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["organisation_id"], name: "index_publisher_preferences_on_organisation_id"
@@ -523,8 +523,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   end
 
   create_table "saved_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "jobseeker_id"
-    t.uuid "vacancy_id"
+    t.uuid "jobseeker_id", null: false
+    t.uuid "vacancy_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["jobseeker_id"], name: "index_saved_jobs_on_jobseeker_id"
@@ -532,8 +532,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_115029) do
   end
 
   create_table "school_group_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "school_id"
-    t.uuid "school_group_id"
+    t.uuid "school_id", null: false
+    t.uuid "school_group_id", null: false
     t.boolean "do_not_delete"
     t.datetime "created_at"
     t.datetime "updated_at"
