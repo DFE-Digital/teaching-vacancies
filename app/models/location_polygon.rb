@@ -1,6 +1,8 @@
 class LocationPolygon < ApplicationRecord
   extend DistanceHelper
 
+  validates :name, presence: true
+
   # Scope that expands any polygons returned by subsequent scopes by the provided radius
   # by overriding the `area` attribute with a buffered version of itself
   #

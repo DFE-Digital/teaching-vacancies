@@ -1,3 +1,5 @@
+#  https://github.com/djezzzl/database_consistency/wiki/configuration
+
 # Ignore false positive from Rails' ActionText and ActiveStorage
 ActionText::RichText:
   enabled: false
@@ -7,6 +9,17 @@ ActiveStorage::Blob:
   enabled: false
 ActiveStorage::VariantRecord:
   enabled: false
+
+# Disable rules for the whole service
+DatabaseConsistencyCheckers:
+  # This would require to add specific DB deletion strategy for foreign keys to match the ActiveRecord association
+  # deletion strategy. I think this is an overkill. But we can revisit it in the future if we want to.
+  ForeignKeyCascadeChecker:
+    enabled: false
+  # Disable the whole rule since is something that we especifically need (unaswered boolean questions for users) in
+  #  multiple fields
+  ThreeStateBooleanChecker:
+    enabled: false
 
 # Ignore missing uniqueness validations on IDs coming from GIAS DB
 # as there is a on_duplicate_key_update in place to deal with conflicts during the import.
