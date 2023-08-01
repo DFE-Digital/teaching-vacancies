@@ -1,5 +1,8 @@
 #  https://github.com/djezzzl/database_consistency/wiki/configuration
 
+DatabaseConsistencySettings:
+  color: true # Brings color tags to console output.
+
 # Ignore false positive from Rails' ActionText and ActiveStorage
 ActionText::RichText:
   enabled: false
