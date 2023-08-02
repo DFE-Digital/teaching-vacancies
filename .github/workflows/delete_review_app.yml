@@ -10,6 +10,11 @@ on:
       - 'terraform/common/**'
       - 'terraform/monitoring/**'
       - '**.md'
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull Request number to delete (EG: 1234 for review-pr-1234)'
+        required: true
 
 concurrency: workflow-Build-and-deploy-${{ github.ref }}
 
@@ -18,17 +23,18 @@ env:
 
 jobs:
   delete-review-app:
-    if: contains(github.event.pull_request.labels.*.name, 'deploy')
-    name: Delete review app after deploy
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name == 'workflow_dispatch'
+    name: Delete review app
     runs-on: ubuntu-20.04
 
     steps:
     - name: Set environment variables
       run: |
-        ENVIRONMENT=review-pr-${{ github.event.number }}
+        PR_NUMBER = ${{ github.event.inputs.pr_number || github.event.number }}
+        ENVIRONMENT=review-pr-${PR_NUMBER}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
-        echo "LINK_TO_PR=https://github.com/${GITHUB_REPOSITORY}/pull/${{ github.event.number }}" >> $GITHUB_ENV
+        echo "LINK_TO_PR=https://github.com/${GITHUB_REPOSITORY}/pull/${PR_NUMBER}" >> $GITHUB_ENV
         echo "LINK_TO_APP=https://teaching-vacancies-${ENVIRONMENT}.london.cloudapps.digital" >> $GITHUB_ENV
 
     - name: Configure AWS credentials
@@ -56,7 +62,7 @@ jobs:
 
     - name: check review status
       run: |
-        HTTP_CODE=$(curl -o/dev/null -s -w "%{http_code}" https://teaching-vacancies-review-pr-${{ github.event.number }}.london.cloudapps.digital)
+        HTTP_CODE=$(curl -o/dev/null -s -w "%{http_code}" https://teaching-vacancies-review-pr-${PR_NUMBER}.london.cloudapps.digital)
         echo "HTTP_CODE=$HTTP_CODE"  >> $GITHUB_ENV
 
     - name: Exit whole workflow if wait was not successful and review app is not up
@@ -92,12 +98,12 @@ jobs:
     - name: Terraform destroy (on PR closed)
       run: |
         export TF_VAR_environment=${{env.ENVIRONMENT}}
-        terraform init -reconfigure -input=false -backend-config="key=review/review-pr-${{ github.event.number }}.tfstate"
+        terraform init -reconfigure -input=false -backend-config="key=review/review-pr-${PR_NUMBER}.tfstate"
         terraform destroy -var-file ../workspace-variables/review.tfvars.json -auto-approve
       working-directory: terraform/app
 
     - name: Delete Terraform Statefile
-      run: ./bin/delete-state-file ${{ github.event.number }}
+      run: ./bin/delete-state-file ${PR_NUMBER}
 
     - name: Post sticky pull request comment
       uses: marocchino/sticky-pull-request-comment@v2
@@ -114,7 +120,7 @@ jobs:
         SLACK_ICON_EMOJI: ':cry:'
         SLACK_TITLE: Delete review app failure
         SLACK_MESSAGE: |
-          Failed deletion of review app PR ${{ github.event.number }}
+          Failed deletion of review app PR ${PR_NUMBER}
           See: <${{ env.LINK_TO_RUN }}|Workflow run> - <${{ env.LINK_TO_PR }}|Pull request> - <${{ env.LINK_TO_APP }}|Review app>
           <!channel>
         SLACK_WEBHOOK: ${{env.SLACK_WEBHOOK}}
