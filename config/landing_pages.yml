@@ -152,19 +152,10 @@ shared:
       - Spanish
 
   ### Working patterns
-  flexible-working-jobs-in-schools:
-    working_patterns:
-      - part_time
   full-time-school-jobs:
     working_patterns:
       - full_time
   part-time-school-jobs:
-    working_patterns:
-      - part_time
-  school-job-shares:
-    working_patterns:
-      - part_time
-  school-term-time-jobs:
     working_patterns:
       - part_time
 
