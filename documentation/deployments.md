@@ -122,6 +122,8 @@ There is also a corresponding GitHub Action workflow - .github/workflows/recreat
 In usual circumstances, the review apps lifecycle will be handled via GitHub Actions:
 - destruction via the [destroy.yml](.github/workflows/destroy.yml) workflow on PR close
 
+This workflow can be triggered manually, passing the PR number corresponding to the review app to remove.
+
 ### Remove review app - Terraform via Makefile
 
 We can use the Makefile to destroy a review app, by passing a `CONFIRM_DESTROY=true` plus changing the action to `review-destroy`:
