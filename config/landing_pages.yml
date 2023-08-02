@@ -158,6 +158,15 @@ shared:
   part-time-school-jobs:
     working_patterns:
       - part_time
+  school-job-shares:
+    working_patterns:
+      - part_time
+  school-term-time-jobs:
+    working_patterns:
+      - part_time
+  flexible-working-jobs-in-schools:
+    working_patterns:
+      - part_time
 
 ####################################################################################################
 # The data below is only used in automated tests, make sure you add your landing pages to the
