@@ -65,3 +65,45 @@ jobs:
         run: |
           set -eux
           terraform fmt -check -recursive terraform
+
+  db-lint:
+    name: Run Database consistency checks
+
+    runs-on: ubuntu-20.04
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgis://postgres:postgres@localhost:5432/tvs_test
+
+    services:
+      postgres:
+        image: postgis/postgis:12-3.1-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+        with:
+          skip-node: true
+
+      - name: Set up test database
+        run: bin/rails db:create db:schema:load
+
+      - name: Run Database Consistency check
+        run: bundle exec database_consistency
+
+      - name: Upload error file
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: database_consistency_errors
+          path: database_consistency_*
+          retention-days: 5

@@ -76,10 +76,8 @@ gem "xml-sitemap"
 gem "zendesk_api"
 
 group :development do
-  gem "active_record_doctor"
   gem "amazing_print" # optional dependency of `rails_semantic_logger`
   gem "aws-sdk-ssm"
-  gem "database_consistency", require: false
   gem "listen"
   gem "solargraph"
   gem "spring"
@@ -92,6 +90,7 @@ end
 group :development, :test do
   gem "brakeman"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "database_consistency", require: false
   gem "dotenv-rails"
   gem "launchy", "~> 2.5"
   gem "parallel_tests"
