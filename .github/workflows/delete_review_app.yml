@@ -30,7 +30,7 @@ jobs:
     steps:
     - name: Set environment variables
       run: |
-        PR_NUMBER = ${{ github.event.inputs.pr_number || github.event.number }}
+        PR_NUMBER=${{ github.event.inputs.pr_number || github.event.number }}
         ENVIRONMENT=review-pr-${PR_NUMBER}
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
