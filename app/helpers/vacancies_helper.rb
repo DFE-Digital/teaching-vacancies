@@ -110,7 +110,7 @@ module VacanciesHelper
                         end
 
     {
-      "#{t("breadcrumbs.home")}": root_path,
+      "#{t('breadcrumbs.home')}": root_path,
       **parent_breadcrumb,
     }
   end

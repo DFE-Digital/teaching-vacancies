@@ -31,8 +31,8 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
     "Jobseekers::JobApplication::#{form_class_name}".constantize
   end
 
-  def error_path(**params)
-    jobseekers_job_application_build_path(@job_application, @name, **params) if @job_application.persisted?
+  def error_path(**)
+    jobseekers_job_application_build_path(@job_application, @name, **) if @job_application.persisted?
   end
 
   def error_link_text

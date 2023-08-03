@@ -4,8 +4,8 @@ class Authorisation
     support_user: ENV.fetch("DFE_SIGN_IN_SUPPORT_USER_ROLE_ID"),
   }.freeze
 
-  def initialize(dsi_client: nil, **kwargs)
-    @dsi_client = dsi_client || DSIClient.new(**kwargs)
+  def initialize(dsi_client: nil, **)
+    @dsi_client = dsi_client || DSIClient.new(**)
   end
 
   def authorised_publisher?
