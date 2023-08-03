@@ -28,6 +28,9 @@ class Vacancy < ApplicationRecord
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
   array_enum working_patterns: { full_time: 0, part_time: 100 }
   array_enum phases: { nursery: 0, primary: 1, middle: 2, secondary: 3, sixth_form_or_college: 4, through: 5 }
+  array_enum job_roles: { teacher: 0, headteacher: 1, deputy_headteacher: 2, assistant_headteacher: 3,
+                          head_of_year_or_phase: 4, head_of_department_or_curriculum: 5, teaching_assistant: 6,
+                          higher_level_teaching_assistant: 7, education_support: 8, sendco: 9 }
 
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
   enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
