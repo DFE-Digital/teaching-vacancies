@@ -1,5 +1,5 @@
 - content_for :breadcrumbs do
-  = govuk_breadcrumbs breadcrumbs: { "#{t("jobs.dashboard.published.tab_heading")}": organisation_jobs_with_type_path(:published),
+  = govuk_breadcrumbs breadcrumbs: { "#{t('jobs.dashboard.published.tab_heading')}": organisation_jobs_with_type_path(:published),
                                      "#{vacancy.job_title}": organisation_job_job_applications_path(vacancy.id),
                                      "#{job_application.name}": "" }
 
