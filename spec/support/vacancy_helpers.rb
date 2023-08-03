@@ -296,8 +296,8 @@ module VacancyHelpers
     }
   end
 
-  def create_published_vacancy(*args, **kwargs)
-    build(:vacancy, :past_publish, *args, **kwargs).tap do |vacancy|
+  def create_published_vacancy(*, **)
+    build(:vacancy, :past_publish, *, **).tap do |vacancy|
       yield vacancy if block_given?
       vacancy.save(validate: false) # Validation prevents publishing on a past date
     end

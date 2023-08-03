@@ -2,8 +2,8 @@ module ProfileSection
   extend ActiveSupport::Concern
 
   class_methods do # rubocop:disable Metrics/BlockLength
-    def prepare(**init_by, &block)
-      find_or_initialize_by(**init_by).tap do |record|
+    def prepare(**, &block)
+      find_or_initialize_by(**).tap do |record|
         if record.new_record?
           if (previous_application = jobseeker(record).job_applications.last)
             copy_attributes(record, previous_application)
