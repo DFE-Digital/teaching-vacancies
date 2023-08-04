@@ -1,4 +1,4 @@
-CONFIG=review_aks
+CONFIG=review
 var_file=${CONFIG}
 CONFIG_SHORT=rv
 AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test

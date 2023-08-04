@@ -51,11 +51,13 @@ docker-compose.env
 *.tfstate.backup
 .terraform/environment
 terraform.tfplan
-terraform.tfstate
 terraform.tfstate.d/
 ./*.tfstate
 .terraform/
 .terraform.tfstate.lock.info
+terraform/aks/vendor
+terraform/domains/environment_domains/vendor
+terraform.tfstate*
 tokens
 
 # ENV files
@@ -66,6 +68,7 @@ dotenv*
 !dotenv*.gpg
 **/**/cf-vars*.yml
 terraform/workspace-variables/my_app_env.yml
+terraform/aks/vendor
 .env.local
 # See https://github.com/bkeepers/dotenv#frequently-answered-questions for dotenv-rails env files and whether they should be in .gitignore
 
@@ -96,3 +99,7 @@ dump.rdb
 
 # Visual Studio Code
 .vscode
+.idea
+
+# devops files
+bin/terrafile

@@ -51,6 +51,38 @@ dev: ## dev
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 
+bin/terrafile: ## Install terrafile to manage terraform modules
+	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
+		| tar xz -C ./bin terrafile
+
+.PHONY: set-key-vault-names
+set-key-vault-names:
+	$(eval KEY_VAULT_APPLICATION_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-app-kv)
+	$(eval KEY_VAULT_INFRASTRUCTURE_NAME=$(AZURE_RESOURCE_PREFIX)-$(SERVICE_SHORT)-$(CONFIG_SHORT)-inf-kv)
+
+terraform-init-aks: composed-variables bin/terrafile set-azure-account
+	$(if ${IMAGE_TAG}, , $(eval IMAGE_TAG=master))
+
+	./bin/terrafile -p terraform/aks/vendor/modules -f terraform/aks/config/$(CONFIG)_Terrafile
+	terraform -chdir=terraform/aks init -upgrade -reconfigure \
+		-backend-config=resource_group_name=${RESOURCE_GROUP_NAME} \
+		-backend-config=storage_account_name=${STORAGE_ACCOUNT_NAME} \
+		-backend-config=key=${ENVIRONMENT}.tfstate
+
+	$(eval export TF_VAR_azure_resource_prefix=${AZURE_RESOURCE_PREFIX})
+	$(eval export TF_VAR_config_short=${CONFIG_SHORT})
+	$(eval export TF_VAR_service_name=${SERVICE_NAME})
+	$(eval export TF_VAR_service_short=${SERVICE_SHORT})
+
+terraform-plan-aks: terraform-init-aks
+	terraform -chdir=terraform/aks plan -var-file "config/${CONFIG}.tfvars.json"
+
+terraform-apply-aks: terraform-init-aks
+	terraform -chdir=terraform/aks apply -var-file "config/${CONFIG}.tfvars.json" ${AUTO_APPROVE}
+
+terraform-destroy-aks: terraform-init-aks
+	terraform -chdir=terraform/aks destroy -var-file=config/${CONFIG}.tfvars.json ${AUTO_APPROVE}
+
 .PHONY: review
 review: ## review # Requires `pr_id=NNNN`
 		$(if $(pr_id), , $(error Missing environment variable "pr_id"))
@@ -60,10 +92,12 @@ review: ## review # Requires `pr_id=NNNN`
 		$(eval var_file=review)
 		$(eval backend_config=-backend-config="key=review/$(env).tfstate")
 
-
 .PHONY: review_aks
 review_aks:
-	$(eval include global_config/review_aks.sh)
+	$(eval include global_config/review.sh)
+	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
+	$(eval ENVIRONMENT=review-pr-$(pr_id))
+	$(eval export TF_VAR_environment=$(ENVIRONMENT))
 
 .PHONY: staging
 staging: ## staging
@@ -235,11 +269,12 @@ set-azure-account:
 set-what-if:
 	$(eval WHAT_IF=--what-if)
 
-arm-deployment: composed-variables set-azure-account
+arm-deployment: composed-variables set-azure-account set-key-vault-names
 	az deployment sub create --name "resourcedeploy-tsc-$(shell date +%Y%m%d%H%M%S)" \
 		-l "${REGION}" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_GROUP_NAME}" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${STORAGE_ACCOUNT_NAME}" "tfStorageContainerName=terraform-state" \
+			keyVaultNames='("${KEY_VAULT_APPLICATION_NAME}", "${KEY_VAULT_INFRASTRUCTURE_NAME}")' \
 			"enableKVPurgeProtection=${KV_PURGE_PROTECTION}" \
 			${WHAT_IF}
 
