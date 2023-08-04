@@ -26,8 +26,6 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       = render "vacancies/search/fields_and_button", f: f, form: @form
       = render "vacancies/search/open_filters_button", form: @form
 
-      = govuk_inset_text(text: t("vacancies.international_teacher_advice.text_html",
-                                 link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_search_results)))
       #search-results
         - if any_vacancies
           = render "vacancies/search/results", vacancies: @vacancies
