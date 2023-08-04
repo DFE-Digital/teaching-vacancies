@@ -14,7 +14,11 @@ Rack::Attack.throttled_responder = lambda do |_request|
 end
 
 # Throttle general requests by IP
-Rack::Attack.throttle("requests by remote ip", limit: 10, period: 4, &:remote_ip)
+Rack::Attack.throttle("requests by remote ip per 4 secs", limit: 10, period: 4, &:remote_ip) # Allow 10 requests in 4 seconds (2.5 req/sec)
+Rack::Attack.throttle("requests by remote ip per minute", limit: 105, period: 60, &:remote_ip) # Allow 105 requests in 1 minute (1.75 req/sec over 1 minute)
+Rack::Attack.throttle("requests by remote ip per 10 minutes", limit: 900, period: 600, &:remote_ip) # Allow 900 requests in 10 minutes (1.5 req/sec over 10 minutes)
+Rack::Attack.throttle("requests by remote ip per hour", limit: 4500, period: 3600, &:remote_ip) # Allow 4500 requests in 1 hour (1.25 req/sec over an hour)
+Rack::Attack.throttle("requests by remote ip per 12 hours", limit: 43_200, period: 43_200, &:remote_ip) # Allow 43200 requests in 12 hours (1 req/sec over 12 hours)
 
 # Throttle login/password reset attempts for jobseekers by IP
 Rack::Attack.throttle("limit jobseeker logins/password resets by IP", limit: 5, period: 60) do |request|
