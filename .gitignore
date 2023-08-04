@@ -59,6 +59,7 @@ terraform/aks/vendor
 terraform/domains/environment_domains/vendor
 terraform.tfstate*
 tokens
+bin/terrafile
 
 # ENV files
 .env*
