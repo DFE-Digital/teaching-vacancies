@@ -5,6 +5,11 @@ class Rack::Attack
       @remote_ip ||= (env["action_dispatch.remote_ip"] || ip).to_s
     end
   end
+
+  BLOCKED_IPS = ENV.fetch("RACK_ATTACK_BLOCKED_IPS", "").split(",").map(&:strip).freeze # Array of IPs to block
+  blocklist("block all request from a banned list of remote IPs") do |request|
+    BLOCKED_IPS.include?(request.remote_ip)
+  end
 end
 
 # Override response to return 204 No Content (instead of 429) so our monitoring doesn't count it
