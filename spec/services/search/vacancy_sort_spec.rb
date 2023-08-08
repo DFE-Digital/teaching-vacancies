@@ -46,6 +46,18 @@ RSpec.describe Search::VacancySort do
         expect(subject.options.map(&:sort_by)).not_to include("relevance")
       end
     end
+
+    context 'when the sort option `expires_at` is selected' do
+      let(:sort_by) { "expires_at" }
+
+      it "sorts by publish_on" do
+        expect(subject.sort_by).to eq("expires_at")
+      end
+  
+      it "has order 'desc'" do
+        expect(subject.order).to eq("asc")
+      end
+    end
   end
 
   context "when a valid non-default sort strategy is specified" do

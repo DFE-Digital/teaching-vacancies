@@ -70,13 +70,13 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
 
-  let!(:maths_job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
-  let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary]) }
-  let!(:job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary]) }
-  let!(:job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy2]) }
-  let!(:job3) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1]) }
-  let!(:job4) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Geography Teacher", subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2]) }
-  let!(:expired_job) { create(:vacancy, :expired, :teacher, job_title: "Maths Teacher", subjects: [], organisations: [school]) }
+  let!(:maths_job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 1) }
+  let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 3) }
+  let!(:job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary], expires_at: Date.current + 2) }
+  let!(:job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy2], expires_at: Date.current + 5) }
+  let!(:job3) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1], expires_at: Date.current + 4) }
+  let!(:job4) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Geography Teacher", subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2], expires_at: Date.current + 6) }
+  let!(:expired_job) { create(:vacancy, :expired, :teacher, job_title: "Maths Teacher", subjects: [], organisations: [school], expires_at: Date.current + 7) }
   let(:per_page) { 2 }
 
   context "when searching using the mobile search fields" do
@@ -113,6 +113,19 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         expect_page_to_show_jobs([quick_apply_job])
         expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
       end
+    end
+  end
+
+  context "jobseekers can sort jobs by closing date" do
+    it "lists the most jobs with the earliest closing date first" do
+      visit jobs_path
+      select "Closing date", :from => "sort-by-field"
+      click_button "Sort"
+      expect("Maths 1").to appear_before("Physics Teacher")
+      expect("Physics Teacher").to appear_before("Maths Teacher 2")
+      expect("Maths Teacher 2").to appear_before("Chemistry Teacher")
+      expect("Chemistry Teacher").to appear_before("PE Teacher")
+      expect("PE Teacher").to appear_before("Geography Teacher")
     end
   end
 
