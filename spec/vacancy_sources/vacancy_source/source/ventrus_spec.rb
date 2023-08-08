@@ -15,7 +15,7 @@ RSpec.describe VacancySource::Source::Ventrus do
     let(:expected_vacancy) do
       {
         job_title: "Teaching Assistant",
-        job_advert: "This is a random advert text with HTML",
+        job_advert: "<p>This is a random advert text <br> with HTML</p>",
         salary: "£21,575 - £22,369",
         job_role: job_role,
         key_stages: ["ks2"],

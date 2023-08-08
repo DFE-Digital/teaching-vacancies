@@ -45,7 +45,7 @@ class VacancySource::Source::Ventrus
   def attributes_for(item)
     {
       job_title: item["Vacancy_title"],
-      job_advert: ActionView::Base.full_sanitizer.sanitize(item["Advert_text"]),
+      job_advert: Rails::Html::WhiteListSanitizer.new.sanitize(item["Advert_text"], tags: %w[p br]),
       salary: item["Salary"],
       expires_at: Time.zone.parse(item["Expiry_date"]),
       external_advert_url: item["link", root: true],

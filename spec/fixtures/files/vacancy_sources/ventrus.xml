@@ -15,7 +15,7 @@
                     <VacancyPublishInfoID>3191462</VacancyPublishInfoID>
                     <Vacancy_title>Teaching Assistant</Vacancy_title>
                     <Salary>£21,575 - £22,369</Salary>
-                    <Advert_text><![CDATA[<p><strong>This is a random advert text </strong>with HTML</p>]]></Advert_text>
+                    <Advert_text><![CDATA[<p><strong>This is a random advert text </strong><br> with HTML</p>]]></Advert_text>
                     <Vacancy_ID>PIL915213</Vacancy_ID>
                     <Expiry_date>01/09/2023 12:00:00</Expiry_date>
                     <vContractType>Permanent</vContractType>
