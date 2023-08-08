@@ -1,4 +1,6 @@
 class VacancySource::Source::Broadbean
+  include VacancySource::Parser
+
   FEED_URL = ENV.fetch("VACANCY_SOURCE_BROADBEAN_FEED_URL").freeze
   BROADBEAN_TRUST_UID = "".freeze
   SOURCE_NAME = "broadbean".freeze
@@ -59,6 +61,18 @@ class VacancySource::Source::Broadbean
       contract_type: item["contractType"].presence,
       phases: phases_for(item),
     }.merge(organisation_fields(item))
+     .merge(start_date_fields(item))
+  end
+
+  def start_date_fields(item)
+    return {} if item["startDate"].blank?
+
+    parsed_date = StartDate.new(item["startDate"])
+    if parsed_date.specific?
+      { starts_on: parsed_date.date, start_date_type: parsed_date.type }
+    else
+      { other_start_date_details: parsed_date.date, start_date_type: parsed_date.type }
+    end
   end
 
   def job_role_for(item)
