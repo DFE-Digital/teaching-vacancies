@@ -123,7 +123,7 @@ en:
         ascending: date to be published (oldest)
         descending: date to be published (soonest)
       publish_on:
-        descending: newest job listing
+        descending: Newest job
       submit: Sort
       updated_at:
         descending: date last updated (most recent)

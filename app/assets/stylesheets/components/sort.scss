@@ -34,3 +34,17 @@
     }
   }
 }
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sort-container {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+}
+
+.inline-sort-label {
+  padding-right: 3px;
+}
