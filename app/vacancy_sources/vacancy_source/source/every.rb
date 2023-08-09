@@ -1,4 +1,6 @@
 class VacancySource::Source::Every
+  include VacancySource::Parser
+
   FEED_URL = ENV.fetch("VACANCY_SOURCE_EVERY_FEED_URL").freeze
   SOURCE_NAME = "every".freeze
 
@@ -53,6 +55,18 @@ class VacancySource::Source::Every
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
     }.merge(organisation_fields(item))
+     .merge(start_date_fields(item))
+  end
+
+  def start_date_fields(item)
+    return {} if item["startDate"].blank?
+
+    parsed_date = StartDate.new(item["startDate"])
+    if parsed_date.specific?
+      { starts_on: parsed_date.date, start_date_type: parsed_date.type }
+    else
+      { other_start_date_details: parsed_date.date, start_date_type: parsed_date.type }
+    end
   end
 
   def organisation_fields(item)
