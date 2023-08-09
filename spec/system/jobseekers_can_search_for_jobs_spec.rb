@@ -76,7 +76,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let!(:job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy2], expires_at: Date.current + 5) }
   let!(:job3) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1], expires_at: Date.current + 4) }
   let!(:job4) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Geography Teacher", subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2], expires_at: Date.current + 6) }
-  let!(:expired_job) { create(:vacancy, :expired, :teacher, job_title: "Maths Teacher", subjects: [], organisations: [school], expires_at: Date.current + 7) }
+  let!(:expired_job) { create(:vacancy, :expired, :teacher, job_title: "Maths Teacher", subjects: [], organisations: [school]) }
   let(:per_page) { 2 }
 
   context "when searching using the mobile search fields" do
