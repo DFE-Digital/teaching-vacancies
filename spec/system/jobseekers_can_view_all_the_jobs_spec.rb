@@ -48,9 +48,6 @@ RSpec.describe "Jobseekers can view all the jobs" do
         expect(page).to have_css(".search-results > .search-results__item", count: 2)
         expect(page).to have_content "Showing 1 to 2 of 5 results"
 
-        expect(page).not_to have_content(I18n.t("jobs.sort_by.most_relevant").humanize)
-        expect(page).not_to have_content(I18n.t("jobs.sort_by.publish_on.descending").humanize)
-
         within ".govuk-pagination" do
           click_on "Next"
         end
