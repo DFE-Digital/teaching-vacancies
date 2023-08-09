@@ -9,9 +9,9 @@ class ImportFromVacancySourcesJob < ApplicationJob
   queue_as :default
 
   def perform
-    # return if DisableExpensiveJobs.enabled?
+    return if DisableExpensiveJobs.enabled?
 
-    [VacancySource::Source::Ventrus].each do |source_klass|
+    SOURCES.each do |source_klass|
       import_start_time = Time.zone.now
 
       source_klass.new.each do |vacancy|
