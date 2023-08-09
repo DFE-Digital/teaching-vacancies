@@ -16,8 +16,9 @@
                 label: { text: t("jobs.sort_by.label"), class: "inline-sort-label" },
                 form_group: { classes: "govuk-!-margin-bottom-4 sort-container" },
                 data: { action: "change->form#submitListener" }
+
               <noscript>
-                = f.govuk_submit t("jobs.sort_by.submit")
+                = f.govuk_submit t("jobs.sort_by.submit"), secondary: true
               </noscript>
 
         .govuk-grid-row
