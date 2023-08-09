@@ -47,13 +47,13 @@ RSpec.describe Search::VacancySort do
       end
     end
 
-    context 'when the sort option `expires_at` is selected' do
+    context "when the sort option `expires_at` is selected" do
       let(:sort_by) { "expires_at" }
 
       it "sorts by publish_on" do
         expect(subject.sort_by).to eq("expires_at")
       end
-  
+
       it "has order 'desc'" do
         expect(subject.order).to eq("asc")
       end
