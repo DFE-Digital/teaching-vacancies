@@ -117,7 +117,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   end
 
   context "jobseekers can sort jobs by closing date" do
-    it "lists the most jobs with the earliest closing date first" do
+    it "lists the jobs with the earliest closing date first" do
       visit jobs_path
       select "Closing date", :from => "sort-by-field"
       click_button "Sort"

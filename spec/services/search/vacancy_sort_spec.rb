@@ -54,7 +54,7 @@ RSpec.describe Search::VacancySort do
         expect(subject.sort_by).to eq("expires_at")
       end
 
-      it "has order 'desc'" do
+      it "has order 'asc'" do
         expect(subject.order).to eq("asc")
       end
     end
