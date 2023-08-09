@@ -575,4 +575,25 @@ RSpec.describe Vacancy do
       expect(subject.publish_on).to eq(nil)
     end
   end
+
+  describe "job_roles set from job_role" do
+    {
+      teacher: %w[teacher],
+      senior_leader: %w[headteacher deputy_headteacher assistant_headteacher],
+      middle_leader: %w[head_of_year_or_phase head_of_department_or_curriculum],
+      teaching_assistant: %w[teaching_assistant],
+      higher_level_teaching_assistant: %w[higher_level_teaching_assistant],
+      education_support: %w[education_support],
+      sendco: %w[sendco],
+    }.each do |role, roles|
+      it "creating a vacancy with job_role '#{role}' sets its job_roles to '#{roles}'" do
+        expect(create(:vacancy, job_role: role).job_roles).to eq(roles)
+      end
+
+      it "updating a vacancy job_role to '#{role}' sets its job_roles to '#{roles}'" do
+        vacancy = create(:vacancy, job_role: nil, job_roles: [])
+        expect { vacancy.update(job_role: role) }.to change { vacancy.reload.job_roles }.from([]).to(roles)
+      end
+    end
+  end
 end

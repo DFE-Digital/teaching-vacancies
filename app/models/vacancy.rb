@@ -1,5 +1,6 @@
 require "geocoding"
 
+# rubocop:disable Metrics/ClassLength
 class Vacancy < ApplicationRecord
   extend FriendlyId
   extend ArrayEnum
@@ -23,6 +24,17 @@ class Vacancy < ApplicationRecord
     secondary: %i[ks3 ks4 ks5],
     sixth_form_or_college: %i[ks5],
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
+  }.freeze
+
+  JOB_ROLE_TO_JOB_ROLES_MAPPINGS = {
+    nil => [],
+    "teacher" => ["teacher"],
+    "senior_leader" => %w[headteacher deputy_headteacher assistant_headteacher],
+    "middle_leader" => %w[head_of_year_or_phase head_of_department_or_curriculum],
+    "teaching_assistant" => ["teaching_assistant"],
+    "higher_level_teaching_assistant" => ["higher_level_teaching_assistant"],
+    "education_support" => ["education_support"],
+    "sendco" => ["sendco"],
   }.freeze
 
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
@@ -88,6 +100,7 @@ class Vacancy < ApplicationRecord
                   if: proc { |vacancy| vacancy.listed? }
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
+  before_save :on_job_role_set_job_roles
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -231,6 +244,12 @@ class Vacancy < ApplicationRecord
     [:job_title, %i[job_title organisation_name], %i[job_title location]]
   end
 
+  def on_job_role_set_job_roles
+    return unless job_role_changed?
+
+    self.job_roles = JOB_ROLE_TO_JOB_ROLES_MAPPINGS[job_role]
+  end
+
   def on_expired_vacancy_feedback_submitted_update_stats_updated_at
     return unless listed_elsewhere_changed? && hired_status_changed?
 
@@ -257,3 +276,4 @@ class Vacancy < ApplicationRecord
     reset_markers if persisted? && (listed? || pending?)
   end
 end
+# rubocop:enable Metrics/ClassLength
