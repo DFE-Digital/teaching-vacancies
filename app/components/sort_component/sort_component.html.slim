@@ -3,7 +3,7 @@
         - sort_by_value = sort.options.find { |option| option.by == sort.by }.display_name.downcase
         - sorted_by_string = t("jobs.sort_by.jobs_page_label", sort_by_value: sort_by_value)
 
-        div class="container"
+        div class="sort-container"
           div class="left"
             h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = sorted_by_string
 
@@ -14,7 +14,7 @@
                 :by,
                 :display_name,
                 label: { text: t("jobs.sort_by.label"), class: "inline-sort-label" },
-                form_group: { classes: "govuk-!-margin-bottom-4 sort-container" },
+                form_group: { classes: "govuk-!-margin-bottom-4 sort-form-container" },
                 data: { action: "change->form#submitListener" }
 
               <noscript>
