@@ -1,7 +1,7 @@
   = tag.div(**html_attributes) do
     - if jobs_page
         - sort_by_value = sort.options.find { |option| option.by == sort.by }.display_name.downcase
-        - sorted_by_string = jobs_page ? t("jobs.sort_by.jobs_page_label", sort_by_value: sort_by_value) : t("jobs.sort_by.label")
+        - sorted_by_string = t("jobs.sort_by.jobs_page_label", sort_by_value: sort_by_value)
 
         div class="container"
           div class="left"

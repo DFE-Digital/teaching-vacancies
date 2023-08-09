@@ -19,8 +19,4 @@ class Search::VacancySort < RecordSort
   def closing_date_asc_option
     SortOption.new("expires_at", I18n.t("jobs.sort_by.expires_at.ascending.vacancy.jobseeker"), "asc")
   end
-
-  def some_other_one
-    SortOption.new("salary", "asc")
-  end
 end
