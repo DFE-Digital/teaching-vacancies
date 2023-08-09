@@ -96,6 +96,23 @@ namespace :db do # rubocop:disable Metrics/BlockLength
     Feedback.left_joins(:jobseeker).where.not(jobseeker_id: nil).where(jobseeker: { id: nil }).delete_all
     Feedback.left_joins(:subscription).where.not(subscription_id: nil).where(subscription: { id: nil }).delete_all
   end
+
+  desc "Set vacancies job roles array from job_role"
+  task set_job_roles_from_job_role: :environment do
+    # Based on Vacancy job_role/job_roles enum values
+    # Using numeral value of the array enum in the DB as update_columns doesn't have access to array_enum strings.
+    mappings = {
+      nil => [],
+      "teacher" => [0],
+      "senior_leader" => [1, 2, 3],
+      "middle_leader" => [4, 5],
+      "teaching_assistant" => [6],
+      "higher_level_teaching_assistant" => [7],
+      "education_support" => [8],
+      "sendco" => [9],
+    }
+    Vacancy.find_each { |v| v.update_columns(job_roles: mappings[v.job_role]) }
+  end
 end
 
 namespace :dsi do

@@ -36,4 +36,32 @@ RSpec.describe "data.rake" do
       expect { task.invoke }.not_to(change { job_preferences.reload.roles })
     end
   end
+
+  describe ".set_job_roles_from_job_role" do
+    subject(:task) { Rake::Task["db:set_job_roles_from_job_role"] }
+
+    after { task.reenable }
+
+    {
+      teacher: %w[teacher],
+      senior_leader: %w[headteacher deputy_headteacher assistant_headteacher],
+      middle_leader: %w[head_of_year_or_phase head_of_department_or_curriculum],
+      teaching_assistant: %w[teaching_assistant],
+      higher_level_teaching_assistant: %w[higher_level_teaching_assistant],
+      education_support: %w[education_support],
+      sendco: %w[sendco],
+    }.each do |role, roles|
+      it "sets job_roles to '#{roles}' from '#{role}' job_role" do
+        vacancy = create(:vacancy, job_role: role)
+        vacancy.update_column(:job_roles, []) # To reproduce existing vacancies without job_roles set.
+        expect { task.invoke }.to change { vacancy.reload.job_roles }.from([]).to(roles)
+      end
+    end
+
+    it "does not set job roles for a vacancy without job role" do
+      Vacancy.skip_callback(:save, :before, :on_job_role_set_job_roles)
+      vacancy = create(:vacancy, job_role: nil)
+      expect { task.invoke }.not_to change { vacancy.reload.job_roles }.from([])
+    end
+  end
 end
