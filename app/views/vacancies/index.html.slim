@@ -38,7 +38,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
           .govuk-grid-row
             .govuk-grid-column-full
               hr class="govuk-section-break govuk-section-break--s govuk-section-break--visible govuk-!-margin-bottom-3"
-               
+
           = render "vacancies/search/results", vacancies: @vacancies
         - elsif @vacancies_search.organisation_slug
           = render "vacancies/search/no_results_organisation", organisation_name: @vacancies_search.organisation.name
