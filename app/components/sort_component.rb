@@ -14,7 +14,7 @@ class SortComponent < ApplicationComponent
     @url_params = url_params
     @path = path
     @sort = sort
-    @display_type = sort.count > 4 ? "dropdown" : display_type
+    @display_type = set_display_type(display_type)
   end
 
   def render?
@@ -23,6 +23,14 @@ class SortComponent < ApplicationComponent
 
   def sort_form
     SortForm.new(sort.by)
+  end
+
+  def set_display_type(display_type)
+    if display_type == "inline-select"
+      "inline-select"
+    else
+      sort.count > 4 ? "dropdown" : "links"
+    end
   end
 
   private
