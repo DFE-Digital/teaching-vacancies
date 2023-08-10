@@ -28,7 +28,17 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
 
       #search-results
         - if any_vacancies
-          = render "vacancies/search/sort", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies, job_page: true
+          div class="sort-container"
+            div class="left"
+              - sort_by_value = @vacancies_search.sort.options.find { |option| option.by == @vacancies_search.sort.by }.display_name.downcase
+              - sorted_by_string = t("jobs.sort_by.jobs_page_label", sort_by_value: sort_by_value)
+              h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = sorted_by_string
+            div class="right"
+              = render "vacancies/search/sort", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies, display: "inline-dropdown"
+          .govuk-grid-row
+            .govuk-grid-column-full
+              hr class="govuk-section-break govuk-section-break--s govuk-section-break--visible govuk-!-margin-bottom-3"
+               
           = render "vacancies/search/results", vacancies: @vacancies
         - elsif @vacancies_search.organisation_slug
           = render "vacancies/search/no_results_organisation", organisation_name: @vacancies_search.organisation.name

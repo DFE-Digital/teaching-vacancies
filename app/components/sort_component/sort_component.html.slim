@@ -1,31 +1,20 @@
   = tag.div(**html_attributes) do
-    - if jobs_page
-        - sort_by_value = sort.options.find { |option| option.by == sort.by }.display_name.downcase
-        - sorted_by_string = t("jobs.sort_by.jobs_page_label", sort_by_value: sort_by_value)
+    - case display_type
+    - when "inline-select"
+      = form_for sort_form, as: "", url: path.call(url_params), method: :get, data: { controller: "form", "hide-submit": true } do |f|
+        = f.govuk_collection_select :sort_by,
+          sort,
+          :by,
+          :display_name,
+          label: { text: t("jobs.sort_by.label"), class: "govuk-!-padding-right-1" },
+          form_group: { classes: "govuk-!-margin-bottom-4 sort-form-container" },
+          data: { action: "change->form#submitListener" },
+          classes: "min-width-auto"
 
-        div class="sort-container"
-          div class="left"
-            h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = sorted_by_string
-
-          div class="right"
-            = form_for sort_form, as: "", url: path.call(url_params), method: :get, data: { controller: "form", "hide-submit": true } do |f|
-              = f.govuk_collection_select :sort_by,
-                sort,
-                :by,
-                :display_name,
-                label: { text: t("jobs.sort_by.label"), class: "inline-sort-label" },
-                form_group: { classes: "govuk-!-margin-bottom-4 sort-form-container" },
-                data: { action: "change->form#submitListener" }
-
-              <noscript>
-                = f.govuk_submit t("jobs.sort_by.submit"), secondary: true, style: "display:inline-flex"
-              </noscript>
-
-        .govuk-grid-row
-          .govuk-grid-column-full
-            hr class="govuk-section-break govuk-section-break--s govuk-section-break--visible govuk-!-margin-bottom-3"
-
-    - elsif sort.count > 4
+        <noscript>
+          = f.govuk_submit t("jobs.sort_by.submit"), class: "govuk-!-margin-left-1 govuk-!-padding-top-0", secondary: true
+        </noscript>
+    - when "dropdown"
       = form_for sort_form, as: "", url: path.call(url_params), method: :get, data: { controller: "form", "hide-submit": true } do |f|
         = f.govuk_collection_select :sort_by,
           sort,

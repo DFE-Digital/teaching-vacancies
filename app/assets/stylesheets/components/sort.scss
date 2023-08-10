@@ -36,8 +36,11 @@
 }
 
 .sort-container {
-  display: flex;
   justify-content: space-between;
+
+  @include govuk-media-query($from: tablet) {
+    display: flex;
+  }
 }
 
 .sort-form-container {
@@ -45,6 +48,6 @@
   align-items: center;
 }
 
-.inline-sort-label {
-  padding-right: 3px;
+.min-width-auto {
+  min-width: auto;
 }
