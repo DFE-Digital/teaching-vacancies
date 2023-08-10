@@ -49,4 +49,3 @@ class SortComponent < ApplicationComponent
     %w[sort-component]
   end
 end
-

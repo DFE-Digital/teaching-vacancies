@@ -63,7 +63,7 @@ RSpec.describe SortComponent, type: :component do
       let(:number_of_sorting_options) { 5 }
 
       it "display_type is 'dropdown'" do
-        expect(described_class.new(**kwargs).display_type).to eq 'dropdown'
+        expect(described_class.new(**kwargs).display_type).to eq "dropdown"
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.describe SortComponent, type: :component do
       let(:number_of_sorting_options) { 3 }
 
       it "display_type is 'links'" do
-        expect(described_class.new(**kwargs).display_type).to eq 'links'
+        expect(described_class.new(**kwargs).display_type).to eq "links"
       end
     end
   end
@@ -82,7 +82,7 @@ RSpec.describe SortComponent, type: :component do
       let(:number_of_sorting_options) { 5 }
 
       it "display_type is 'dropdown'" do
-        expect(described_class.new(**kwargs).display_type).to eq 'dropdown'
+        expect(described_class.new(**kwargs).display_type).to eq "dropdown"
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.describe SortComponent, type: :component do
       let(:number_of_sorting_options) { 3 }
 
       it "display_type is 'links" do
-        expect(described_class.new(**kwargs).display_type).to eq 'links'
+        expect(described_class.new(**kwargs).display_type).to eq "links"
       end
     end
   end
@@ -101,7 +101,7 @@ RSpec.describe SortComponent, type: :component do
       let(:number_of_sorting_options) { 5 }
 
       it "display_type is 'inline-select'" do
-        expect(described_class.new(**kwargs).display_type).to eq 'inline-select'
+        expect(described_class.new(**kwargs).display_type).to eq "inline-select"
       end
     end
 
@@ -109,7 +109,7 @@ RSpec.describe SortComponent, type: :component do
       let(:number_of_sorting_options) { 3 }
 
       it "display_type is 'inline-select" do
-        expect(described_class.new(**kwargs).display_type).to eq 'inline-select'
+        expect(described_class.new(**kwargs).display_type).to eq "inline-select"
       end
     end
   end
