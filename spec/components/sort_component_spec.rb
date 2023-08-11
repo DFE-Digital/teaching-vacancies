@@ -20,8 +20,9 @@ RSpec.describe SortComponent, type: :component do
   end
   let(:number_of_sorting_options) { 2 }
   let(:active_sort_option) { sort.options.first }
+  let(:display_type) { nil }
 
-  let(:kwargs) { { path: path, sort: sort, url_params: url_params } }
+  let(:kwargs) { { path: path, sort: sort, url_params: url_params, display_type: display_type } }
 
   before do
     sort.update(sort_by: active_sort_option)
@@ -54,6 +55,62 @@ RSpec.describe SortComponent, type: :component do
     it "does not make the current sort option into a link" do
       expect(page).to have_content("Sorting algorithm number 1")
       expect(page).not_to have_link("Sorting algorithm number 1", href: path.call(url_params.merge(sort_by: "sort_by_1")))
+    end
+  end
+
+  context "when no display_type is passed" do
+    context "when there are more than four sorting options available" do
+      let(:number_of_sorting_options) { 5 }
+
+      it "display_type is 'dropdown'" do
+        expect(described_class.new(**kwargs).display_type).to eq "dropdown"
+      end
+    end
+
+    context "when there are four or less sorting options available" do
+      let(:number_of_sorting_options) { 3 }
+
+      it "display_type is 'links'" do
+        expect(described_class.new(**kwargs).display_type).to eq "links"
+      end
+    end
+  end
+
+  context "when display_type is 'links'" do
+    let(:display_type) { "links" }
+    context "when there are more than four sorting options available" do
+      let(:number_of_sorting_options) { 5 }
+
+      it "display_type is 'dropdown'" do
+        expect(described_class.new(**kwargs).display_type).to eq "dropdown"
+      end
+    end
+
+    context "when there are four or less sorting options available" do
+      let(:number_of_sorting_options) { 3 }
+
+      it "display_type is 'links" do
+        expect(described_class.new(**kwargs).display_type).to eq "links"
+      end
+    end
+  end
+
+  context "when display_type is 'inline-select'" do
+    let(:display_type) { "inline-select" }
+    context "when there are more than four sorting options available" do
+      let(:number_of_sorting_options) { 5 }
+
+      it "display_type is 'inline-select'" do
+        expect(described_class.new(**kwargs).display_type).to eq "inline-select"
+      end
+    end
+
+    context "when there are four or less sorting options available" do
+      let(:number_of_sorting_options) { 3 }
+
+      it "display_type is 'inline-select" do
+        expect(described_class.new(**kwargs).display_type).to eq "inline-select"
+      end
     end
   end
 

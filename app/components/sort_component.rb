@@ -1,19 +1,20 @@
 # When there are only two sorting options, these should be presented as links, not
 # options in a drop-down. This component manages that display logic, among other things.
 class SortComponent < ApplicationComponent
-  attr_reader :url_params, :path, :sort
+  attr_reader :url_params, :path, :sort, :display_type
 
   # @param [Method] path The helper method which generates the destination path for the links or forms
   # @param [RecordSort, Object] sort An instance of a subclass of RecordSort or something implementing
   #                                  same interface as a RecordSort.
   # @param [Hash{Symbol => Object}] url_params Any necessary query parameters for the destination path
-  def initialize(path:, sort:, url_params: {}, classes: [], html_attributes: {})
+  def initialize(path:, sort:, url_params: {}, classes: [], html_attributes: {}, display_type: nil)
     super(classes: classes, html_attributes: html_attributes)
 
     # TODO: Add an attribute to control whether the form uses form#submitListener (to decrease interdependency)
     @url_params = url_params
     @path = path
     @sort = sort
+    @display_type = set_display_type(display_type)
   end
 
   def render?
@@ -22,6 +23,14 @@ class SortComponent < ApplicationComponent
 
   def sort_form
     SortForm.new(sort.by)
+  end
+
+  def set_display_type(display_type)
+    if display_type == "inline-select"
+      "inline-select"
+    else
+      sort.count > 4 ? "dropdown" : "links"
+    end
   end
 
   private

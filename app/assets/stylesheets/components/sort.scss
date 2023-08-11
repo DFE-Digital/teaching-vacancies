@@ -34,3 +34,20 @@
     }
   }
 }
+
+.sort-container {
+  justify-content: space-between;
+
+  @include govuk-media-query($from: tablet) {
+    display: flex;
+  }
+}
+
+.sort-form-container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.min-width-auto {
+  min-width: auto;
+}

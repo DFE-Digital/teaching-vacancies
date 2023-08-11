@@ -1,22 +1,37 @@
-= tag.div(**html_attributes) do
-  - if sort.count > 4
-    = form_for sort_form, as: "", url: path.call(url_params), method: :get, data: { controller: "form", "hide-submit": true } do |f|
-      = f.govuk_collection_select :sort_by,
-        sort,
-        :by,
-        :display_name,
-        label: { text: t("jobs.sort_by.label"), size: "s", class: "govuk-label inline govuk-!-margin-right-2" },
-        form_group: { classes: "govuk-!-margin-bottom-2" },
-        data: { action: "change->form#submitListener" }
+  = tag.div(**html_attributes) do
+    - case display_type
+    - when "inline-select"
+      = form_for sort_form, as: "", url: path.call(url_params), method: :get, data: { controller: "form", "hide-submit": true } do |f|
+        = f.govuk_collection_select :sort_by,
+          sort,
+          :by,
+          :display_name,
+          label: { text: t("jobs.sort_by.label"), class: "govuk-!-padding-right-1" },
+          form_group: { classes: "govuk-!-margin-bottom-4 sort-form-container" },
+          data: { action: "change->form#submitListener" },
+          classes: "min-width-auto"
 
-      = f.govuk_submit t("jobs.sort_by.submit")
-  - else
-    nav.govuk-body
-      span class="govuk-!-font-weight-bold" = "#{t('jobs.sort_by.label')}:"
-      ul.sort-component__list
-        - sort.each do |option|
-          li.sort-component__list-item
-            - if option.by == sort.by
-              = option.display_name.humanize
-            - else
-              = govuk_link_to(safe_join([tag.span("#{t('jobs.sort_by.label')} ", class: "govuk-visually-hidden"), option.display_name.humanize]), path.call(url_params.merge(sort_by: option.by)))
+        <noscript>
+          = f.govuk_submit t("jobs.sort_by.submit"), class: "govuk-!-margin-left-1 govuk-!-padding-top-0", secondary: true
+        </noscript>
+    - when "dropdown"
+      = form_for sort_form, as: "", url: path.call(url_params), method: :get, data: { controller: "form", "hide-submit": true } do |f|
+        = f.govuk_collection_select :sort_by,
+          sort,
+          :by,
+          :display_name,
+          label: { text: t("jobs.sort_by.label"), size: "m", class: "govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" },
+          form_group: { classes: "govuk-!-margin-bottom-2" },
+          data: { action: "change->form#submitListener" }
+
+        = f.govuk_submit t("jobs.sort_by.submit")
+    - when "links"
+      nav.govuk-body
+        span class="govuk-!-font-weight-bold" = "#{t('jobs.sort_by.label')}:"
+        ul.sort-component__list
+          - sort.each do |option|
+            li.sort-component__list-item
+              - if option.by == sort.by
+                = option.display_name.humanize
+              - else
+                = govuk_link_to(safe_join([tag.span("#{t('jobs.sort_by.label')} ", class: "govuk-visually-hidden"), option.display_name.humanize]), path.call(url_params.merge(sort_by: option.by)))

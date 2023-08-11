@@ -102,7 +102,7 @@ en:
         ascending:
           saved_job: application deadline (soonest)
           vacancy:
-            jobseeker: least time to apply
+            jobseeker: Closing date
             publisher: closing date (soonest)
         descending:
           vacancy:
@@ -114,6 +114,7 @@ en:
         ascending: job title (A to Z)
         descending: job title (Z to A)
       label: Sort by
+      jobs_page_label: Sorted by %{sort_by_value}
       location:
         ascending: location (A to Z)
         descending: location (Z to A)
@@ -122,7 +123,7 @@ en:
         ascending: date to be published (oldest)
         descending: date to be published (soonest)
       publish_on:
-        descending: newest job listing
+        descending: Newest job
       submit: Sort
       updated_at:
         descending: date last updated (most recent)
