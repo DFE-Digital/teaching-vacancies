@@ -7,7 +7,7 @@ class SortComponent < ApplicationComponent
   # @param [RecordSort, Object] sort An instance of a subclass of RecordSort or something implementing
   #                                  same interface as a RecordSort.
   # @param [Hash{Symbol => Object}] url_params Any necessary query parameters for the destination path
-  def initialize(path:, sort:, url_params: {}, classes: [], html_attributes: {}, display_type: "links")
+  def initialize(path:, sort:, url_params: {}, classes: [], html_attributes: {}, display_type:)
     super(classes: classes, html_attributes: html_attributes)
 
     # TODO: Add an attribute to control whether the form uses form#submitListener (to decrease interdependency)

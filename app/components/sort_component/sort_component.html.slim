@@ -25,7 +25,7 @@
           data: { action: "change->form#submitListener" }
 
         = f.govuk_submit t("jobs.sort_by.submit")
-    - else
+    - when "links"
       nav.govuk-body
         span class="govuk-!-font-weight-bold" = "#{t('jobs.sort_by.label')}:"
         ul.sort-component__list
