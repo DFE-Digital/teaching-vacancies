@@ -2,4 +2,4 @@
   - content_for :page_title_prefix, landing_page.title
   - content_for :page_description, landing_page.meta_description
 - else
-  - content_for :page_title_prefix, t(".title", count: params[:page].to_i, heading: t("jobs.search_result_heading", count: number_with_delimiter(@vacancies_search.total_count)))
+  - content_for :page_title_prefix, t(".title", count: params[:page].to_i, heading: t("jobs.search_result_heading.sorted_by_#{@vacancies_search.sort.by}", count: number_with_delimiter(@vacancies_search.total_count)))
