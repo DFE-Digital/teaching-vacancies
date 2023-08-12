@@ -66,11 +66,6 @@ en:
       title: "SEND Coordinator (SENDCo) Jobs"
       heading: "%{count} SENDCo jobs"
       meta_description: "Find the latest special educational needs co-ordinator (SENDCo) jobs in schools near you. Apply for full time and part time vacancies."
-    send-responsible-jobs:
-      name: "SEND responsibilities"
-      title: "School Jobs with SEND Responsibilities"
-      heading: "%{count} school jobs with SEND responsibilities"
-      meta_description: "Find jobs in schools for SEND teachers and LSAs with responsibilities for looking after children with special educational needs and disabilities."
     teacher-jobs:
       name: "Teacher"
       title: "Teacher Jobs"

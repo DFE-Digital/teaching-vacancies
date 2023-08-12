@@ -23,8 +23,6 @@ get "teaching-jobs-for-teaching-assistant", to: redirect("teaching-assistant-job
 get "teaching-jobs-for-education_support", to: redirect("education-support-jobs")
 get "teaching-jobs-for-education-support", to: redirect("education-support-jobs")
 get "teaching-jobs-for-sendco", to: redirect("sendco-jobs")
-get "teaching-jobs-for-send_responsible", to: redirect("send-responsible-jobs")
-get "teaching-jobs-for-send-responsible", to: redirect("send-responsible-jobs")
 get "teaching-jobs-for-ect_suitable", to: redirect("ect-suitable-jobs")
 get "teaching-jobs-for-ect-suitable", to: redirect("ect-suitable-jobs")
 

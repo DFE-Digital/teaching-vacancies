@@ -17,9 +17,6 @@ shared:
   # criteria is correct and doesn't break the search engine).
 
   ### Job roles
-  send-responsible-jobs:
-    job_roles:
-      - send_responsible
   ect-suitable-jobs:
     ect_statuses:
       - ect_suitable

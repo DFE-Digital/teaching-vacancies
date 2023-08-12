@@ -20,8 +20,6 @@ class VacancyFilterQuery < ApplicationQuery
     # General filters
     built_scope = built_scope.where(job_role: job_roles(filters[:job_roles])) if job_roles(filters[:job_roles]).present?
     built_scope = built_scope.ect_suitable if filters[:ect_statuses]&.include?("ect_suitable") || filters[:job_roles]&.include?("ect_suitable")
-    # TODO: Remove this scope when we do not have any more live SEND responsible jobs
-    built_scope = built_scope.where(":job_roles = ANY (job_roles)", job_roles: 2) if filters[:job_roles]&.include?("send_responsible")
     built_scope = add_organisation_type_filters(filters, built_scope)
     built_scope = built_scope.quick_apply if filters[:quick_apply]
     built_scope = add_school_type_filters(filters, built_scope)
@@ -71,7 +69,7 @@ class VacancyFilterQuery < ApplicationQuery
 
   def job_roles(filter)
     filter&.map { |job_role| job_role == "leadership" ? "senior_leader" : job_role }
-          &.reject { |job_role| job_role.in? %w[ect_suitable send_responsible] }
+          &.reject { |job_role| job_role == "ect_suitable" }
   end
 
   def phases(filter)
