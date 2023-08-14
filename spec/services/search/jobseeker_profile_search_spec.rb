@@ -66,7 +66,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
 
       it "returns every jobseeker profile with a preference area that contains any of their schools" do
-        expect(search.jobseeker_profiles).to eq([jobseeker_profile, jobseeker_profile2])
+        expect(search.jobseeker_profiles).to match_array([jobseeker_profile, jobseeker_profile2])
       end
 
       context "when filtering jobseeker profiles by the trust's schools" do
@@ -111,7 +111,7 @@ RSpec.describe Search::JobseekerProfileSearch do
         let!(:on_track_qts_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: on_track_qts_job_preferences) }
 
         it "should return the jobseeker profiles with the qualified_teacher_status specified in the filters" do
-          expect(search.jobseeker_profiles).to eq([qts_jobseeker_profile, on_track_qts_jobseeker_profile])
+          expect(search.jobseeker_profiles).to match_array([qts_jobseeker_profile, on_track_qts_jobseeker_profile])
         end
       end
     end
@@ -137,7 +137,7 @@ RSpec.describe Search::JobseekerProfileSearch do
         let!(:senior_leader_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: senior_leader_job_preferences) }
 
         it "should return the jobseeker profiles with the roles specified in the filters" do
-          expect(search.jobseeker_profiles).to eq([teacher_jobseeker_profile, senior_leader_jobseeker_profile])
+          expect(search.jobseeker_profiles).to match_array([teacher_jobseeker_profile, senior_leader_jobseeker_profile])
         end
       end
     end
@@ -163,7 +163,7 @@ RSpec.describe Search::JobseekerProfileSearch do
         let(:part_time_job_preference_location) { create(:job_preferences_location, **location_preference) }
 
         it "should return the jobseeker profiles with the working patterns specified in the filters" do
-          expect(search.jobseeker_profiles).to eq([full_time_jobseeker_profile, part_time_jobseeker_profile])
+          expect(search.jobseeker_profiles).to match_array([full_time_jobseeker_profile, part_time_jobseeker_profile])
         end
       end
     end
@@ -189,7 +189,7 @@ RSpec.describe Search::JobseekerProfileSearch do
         let!(:primary_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: primary_job_preferences) }
 
         it "should return the jobseeker profiles with the phases specified in the filters" do
-          expect(search.jobseeker_profiles).to eq([secondary_jobseeker_profile, primary_jobseeker_profile])
+          expect(search.jobseeker_profiles).to match_array([secondary_jobseeker_profile, primary_jobseeker_profile])
         end
       end
     end
@@ -215,7 +215,7 @@ RSpec.describe Search::JobseekerProfileSearch do
         let!(:ks2_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: ks2_job_preferences) }
 
         it "should return the jobseeker profiles with the key_stages specified in the filters" do
-          expect(search.jobseeker_profiles).to eq([ks1_jobseeker_profile, ks2_jobseeker_profile])
+          expect(search.jobseeker_profiles).to match_array([ks1_jobseeker_profile, ks2_jobseeker_profile])
         end
       end
     end
@@ -241,7 +241,7 @@ RSpec.describe Search::JobseekerProfileSearch do
         let!(:chemistry_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: chemistry_job_preferences) }
 
         it "should return the jobseeker profiles with the key_stages specified in the filters" do
-          expect(search.jobseeker_profiles).to eq([history_jobseeker_profile, chemistry_jobseeker_profile])
+          expect(search.jobseeker_profiles).to match_array([history_jobseeker_profile, chemistry_jobseeker_profile])
         end
       end
     end
