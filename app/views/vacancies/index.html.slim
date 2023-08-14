@@ -7,7 +7,7 @@
 = render "vacancies/search/page_title_and_description", landing_page: @landing_page
 
 h1 class="govuk-heading-l" role="heading" aria-level="1"
-  = t("jobs.search_result_heading.sorted_by_#{@vacancies_search.sort.by}", count: number_with_delimiter(@vacancies_search.total_count))
+  = t("jobs.search_result_heading", count: number_with_delimiter(@vacancies_search.total_count))
 
 - any_vacancies = @vacancies_search.total_count.positive?
 - if @vacancies_search.active_criteria? && any_vacancies
