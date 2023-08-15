@@ -22,18 +22,6 @@ namespace :db do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  desc "Replaces removed jobseeker job preferences roles with all the roles they were split into"
-  task split_jobseeker_job_preferences_roles: :environment do
-    # Senior leader got split into 3 new roles.
-    JobPreferences.where("'senior_leader' = ANY(roles)")
-                  .update_all("roles = array_cat(array_remove(roles, 'senior_leader'),
-                                                 '{headteacher, deputy_headteacher, assistant_headteacher}')")
-    # Middle leader got split into 2 new roles.
-    JobPreferences.where("'middle_leader' = ANY(roles)")
-                  .update_all("roles = array_cat(array_remove(roles, 'middle_leader'),
-                                                '{head_of_year_or_phase, head_of_department_or_curriculum}')")
-  end
-
   desc "Asynchronously import organisations from GIAS and seed the database"
   task async_seed: :environment do
     SeedDatabaseJob.perform_later
@@ -85,33 +73,6 @@ namespace :db do # rubocop:disable Metrics/BlockLength
                        include_additional_documents: v.supporting_documents.attachments&.any?,
                        school_visits: v.school_visits_details.present?)
     end
-  end
-
-  desc "Delete alert runs belonging to deleted subscriptions"
-  task delete_alert_runs_for_deleted_subscriptions: :environment do
-    AlertRun.left_joins(:subscription).where(subscription: { id: nil }).delete_all
-  end
-
-  task delete_feedbacks_for_deleted_associations: :environment do
-    Feedback.left_joins(:jobseeker).where.not(jobseeker_id: nil).where(jobseeker: { id: nil }).delete_all
-    Feedback.left_joins(:subscription).where.not(subscription_id: nil).where(subscription: { id: nil }).delete_all
-  end
-
-  desc "Set vacancies job roles array from job_role"
-  task set_job_roles_from_job_role: :environment do
-    # Based on Vacancy job_role/job_roles enum values
-    # Using numeral value of the array enum in the DB as update_columns doesn't have access to array_enum strings.
-    mappings = {
-      nil => [],
-      "teacher" => [0],
-      "senior_leader" => [1, 2, 3],
-      "middle_leader" => [4, 5],
-      "teaching_assistant" => [6],
-      "higher_level_teaching_assistant" => [7],
-      "education_support" => [8],
-      "sendco" => [9],
-    }
-    Vacancy.find_each { |v| v.update_columns(job_roles: mappings[v.job_role]) }
   end
 end
 
