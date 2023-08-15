@@ -48,6 +48,30 @@ RSpec.describe "Feedback supportal section" do
       origin_path: "/jobs",
     )
   end
+
+  let!(:old_general_feedback) do
+    create(
+      :feedback,
+      feedback_type: :general,
+      comment: "Some other feedback text",
+      occupation: "Student",
+      rating: "highly_satisfied",
+      email: "faketestingemail@someemail.com",
+      user_participation_response: "interested",
+      origin_path: "/jobs",
+      created_at: "2022-03-16 10:00"
+    )
+  end
+
+  let!(:old_job_alert_feedback) do
+    create(
+      :feedback,
+      feedback_type: :job_alert,
+      comment: "Some job alert feedback text",
+      occupation: "Teacher",
+      created_at: "2022-03-17 10:00"
+    )
+  end
   let(:csv) { CSV.parse(page.body) }
 
   before do
@@ -94,6 +118,15 @@ RSpec.describe "Feedback supportal section" do
       click_link "Download general feedback report"
       expect(csv.first).to eq ["Created at", "Source", "Who", "Type", "Origin path", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
       expect(csv.second).to eq [other_feedback.created_at.to_s, "identified", "jobseeker", other_feedback.feedback_type, other_feedback.origin_path, other_feedback.email, other_feedback.occupation, other_feedback.rating, other_feedback.comment, other_feedback.category]
+    end
+
+    it "allows user to download data for a specific date range" do
+      fill_in "From", with: "2022-03-15"
+      fill_in "To", with: "2022-03-21"
+      click_on "Go"
+      click_link "Download general feedback report"
+      expect(csv.first).to eq ["Created at", "Source", "Who", "Type", "Origin path", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
+      expect(csv.second).to eq [old_general_feedback.created_at.to_s, "identified", "jobseeker", old_general_feedback.feedback_type, old_general_feedback.origin_path, old_general_feedback.email, old_general_feedback.occupation, old_general_feedback.rating, old_general_feedback.comment, old_general_feedback.category]
     end
 
     it "shows feedback table" do
@@ -155,6 +188,15 @@ RSpec.describe "Feedback supportal section" do
       click_link "Download job alerts feedback report"
       expect(csv.first).to eq ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
       expect(csv.second).to eq [job_alert_feedback.created_at.to_s, job_alert_feedback.relevant_to_user, job_alert_feedback.comment, "[]", nil, nil, nil, nil, job_alert_feedback.category]
+    end
+
+    it "allows user to download data for a specific date range" do
+      fill_in "From", with: "2022-03-15"
+      fill_in "To", with: "2022-03-21"
+      click_on "Go"
+      click_link "Download job alerts feedback report"
+      expect(csv.first).to eq ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
+      expect(csv.second).to eq [old_job_alert_feedback.created_at.to_s, old_job_alert_feedback.relevant_to_user, old_job_alert_feedback.comment, "[]", nil, nil, nil, nil, old_job_alert_feedback.category]
     end
   end
 
