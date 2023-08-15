@@ -238,6 +238,17 @@ class Vacancy < ApplicationRecord
     contact_email? && contact_email != current_publisher.email
   end
 
+  def distance_in_miles_to(search_coordinates)
+    if geolocation.class == RGeo::Geographic::SphericalMultiPointImpl
+      distances = geolocation.map do |geolocation|
+                    Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+                  end
+      distances.sort.first
+    else
+      Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+    end
+  end
+
   private
 
   def slug_candidates

@@ -39,3 +39,8 @@
         - summary_list.row do |row|
           - row.key text: t("jobs.expires_at"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
           - row.value text: format_time_to_datetime_at(vacancy.expires_at), classes: "govuk-body-s govuk-!-padding-bottom-0"
+
+        - if @search_coordinates && vacancy.geolocation
+            - summary_list.row do |row|
+              - row.key text: t("distance"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+              - row.value text:"#{vacancy.distance_in_miles_to(@search_coordinates).floor} miles", classes: "govuk-body-s govuk-!-padding-bottom-0"
