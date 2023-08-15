@@ -53,13 +53,13 @@ RSpec.describe "Feedback supportal section" do
     create(
       :feedback,
       feedback_type: :general,
-      comment: "Some other feedback text",
+      comment: "Highly satisfactory",
       occupation: "Student",
       rating: "highly_satisfied",
       email: "faketestingemail@someemail.com",
       user_participation_response: "interested",
       origin_path: "/jobs",
-      created_at: "2022-03-16 10:00"
+      created_at: "2022-03-16 10:00",
     )
   end
 
@@ -67,9 +67,9 @@ RSpec.describe "Feedback supportal section" do
     create(
       :feedback,
       feedback_type: :job_alert,
-      comment: "Some job alert feedback text",
+      comment: "Oh wow!",
       occupation: "Teacher",
-      created_at: "2022-03-17 10:00"
+      created_at: "2022-03-17 10:00",
     )
   end
   let(:csv) { CSV.parse(page.body) }
