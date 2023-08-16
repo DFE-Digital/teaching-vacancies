@@ -155,7 +155,6 @@ jobs:
         run: echo "MATRIX_ENVIRONMENTS={\"environment\":[\"review\"]}" >> $GITHUB_ENV
 
       - name: Scan ${{ env.DOCKER_REPOSITORY }}:${{ env.DOCKER_IMAGE_TAG }} image
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           docker run -t -e "SNYK_TOKEN=${{ env.SNYK_TOKEN }}" \
             -v "/var/run/docker.sock:/var/run/docker.sock" \
