@@ -171,7 +171,7 @@ RSpec.describe VacancySource::Source::Broadbean do
     end
 
     context "when multiple school" do
-      let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+      let(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
       let(:schools) { [school1, school2] }
 
       it "assigns the vacancy job location to the central trust" do
