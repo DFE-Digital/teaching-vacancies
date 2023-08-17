@@ -11,7 +11,7 @@ RSpec.describe "Inviting Jobseekers to apply for vacancies", type: :system do
            subjects: %w[english maths],
            working_patterns: %w[full_time])
   end
-  let!(:location_preference) { create(:job_preferences_location, name: "London", radius: 100, job_preferences: job_preferences) }
+  let!(:location_preference) { create(:job_preferences_location, name: "London", radius: 200, job_preferences: job_preferences) }
   let!(:jobseeker_profile) { create(:jobseeker_profile, :completed, job_preferences:) }
 
   let!(:organisation) { create(:school, geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(0.2861, 51.7094)) }
