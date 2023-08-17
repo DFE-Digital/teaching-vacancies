@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:a10="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Ventrus Multi Academy Trust RSS Feed</title>
+        <link>https://ventrus.current-vacancies.com/RSSFeeds/Vacancies/VENTRUSMUL?feedID=BF7A3AA9DA7C4B3E90C3FE8664CB6EFB</link>
+        <description>Ventrus Multi Academy Trust RSS Feed</description>
+        <item>
+            <link>http://testurl.com</link>
+            <title>Teaching Assistant</title>
+            <a10:updated>2023-08-04T10:16:07Z</a10:updated>
+            <a10:content type="text/xml">
+                <Vacancy>
+                    <VacancyID>915213</VacancyID>
+                    <vTitle>Teaching Assistant</vTitle>
+                    <VacancyPublishInfoID>3191462</VacancyPublishInfoID>
+                    <Vacancy_title>Teaching Assistant</Vacancy_title>
+                    <Salary>£21,575 - £22,369</Salary>
+                    <Advert_text><![CDATA[<p><strong>This is a random advert text </strong><br> with HTML</p>]]></Advert_text>
+                    <Vacancy_ID>PIL915213</Vacancy_ID>
+                    <Expiry_date>01/09/2023 12:00:00</Expiry_date>
+                    <vContractType>Permanent</vContractType>
+                    <Job_Location>Barnstaple,_Devon</Job_Location>
+                    <ECT_Suitable>True</ECT_Suitable>
+                    <Job_Roles>teaching_assistant</Job_Roles>
+                    <Key_Stage>ks2</Key_Stage>
+                    <Phase_>secondary</Phase_>
+                    <SEND_Responsible>no</SEND_Responsible>
+                    <URN>111111</URN>
+                    <Working_Patterns>part_time</Working_Patterns>
+                    <Contract_Type>permanent</Contract_Type>
+                    <TrustUID></TrustUID>
+                    <Documents>
+                        <document>
+                            <name><![CDATA[JD Grade C Generalist TA Secondary (App 2) Updated 15.12.2020.pdf]]></name>
+                            <extension>12</extension>
+                            <size>760447</size>
+                            <url><![CDATA[https://ventrus.current-vacancies.com/Jobs/DownloadDocument/1115402?cid=1711&pubid=3191462]]></url>
+                        </document>
+                    </Documents>
+                </Vacancy>
+            </a10:content>
+        </item>
+    </channel>
+</rss>
