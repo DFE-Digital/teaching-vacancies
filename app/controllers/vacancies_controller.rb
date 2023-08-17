@@ -85,14 +85,4 @@ class VacanciesController < ApplicationController
     return unless form.to_hash[:location]
     @search_coordinates = Geocoding.new(form.to_hash[:location]).coordinates
   end
-
-  def closest_school
-  end
-
-  # def distance_to_location
-  #   if geolocation.class == RGeo::Geographic::SphericalMultiPointImpl
-  #   else
-  #     Geocoder::Calculations.distance_between(@search_coordinates, [latitude, longitude]).floor
-  #   end
-  # end
 end
