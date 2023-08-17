@@ -83,6 +83,7 @@ class VacanciesController < ApplicationController
 
   def set_search_coordinates
     return unless form.to_hash[:location]
+
     @search_coordinates = Geocoding.new(form.to_hash[:location]).coordinates
   end
 end

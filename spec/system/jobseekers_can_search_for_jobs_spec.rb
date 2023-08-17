@@ -141,18 +141,18 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   context "when jobseekers search after entering a location" do
     it "shows distance between school and their location" do
       visit jobs_path
-      fill_in 'location-field', with: 'Birmingham'
+      fill_in "location-field", with: "Birmingham"
       select "200 miles", from: "radius-field"
       click_on I18n.t("buttons.search")
 
-      within('.search-results__item', text: 'Maths 1') do
-        distance_text = find('dt', text: 'Distance from location').sibling('dd').text
-        expect(distance_text).to eq('81 miles')
+      within(".search-results__item", text: "Maths 1") do
+        distance_text = find("dt", text: "Distance from location").sibling("dd").text
+        expect(distance_text).to eq("81 miles")
       end
-      
-      within('.search-results__item', text: 'Maths Teacher 2') do
-        distance_text = find('dt', text: 'Distance from location').sibling('dd').text
-        expect(distance_text).to eq('160 miles')
+
+      within(".search-results__item", text: "Maths Teacher 2") do
+        distance_text = find("dt", text: "Distance from location").sibling("dd").text
+        expect(distance_text).to eq("160 miles")
       end
     end
   end

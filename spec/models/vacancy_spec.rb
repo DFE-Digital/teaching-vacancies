@@ -562,7 +562,7 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe '#distance_in_miles_to' do
+  describe "#distance_in_miles_to" do
     let(:test_coordinates) { Geocoding.new("Stonehenge").coordinates }
     subject { create(:vacancy, organisations: organisations) }
 
@@ -575,7 +575,7 @@ RSpec.describe Vacancy do
       let(:miles_from_manchester_to_stonehenge) { 159 }
       let(:miles_from_canary_wharf_to_stonehenge) { 81 }
 
-      it "returns distance to the nearest school for a given location" do  
+      it "returns distance to the nearest school for a given location" do
         expect(subject.distance_in_miles_to(test_coordinates).floor).to eq miles_from_canary_wharf_to_stonehenge
       end
     end
