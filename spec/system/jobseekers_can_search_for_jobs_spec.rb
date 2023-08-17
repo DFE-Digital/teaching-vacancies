@@ -70,8 +70,8 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
 
-  let!(:maths_job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 1) }
-  let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 3) }
+  let!(:maths_job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 1, geolocation: "POINT(-0.019501 51.504949)") }
+  let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 3, geolocation: "POINT(-2.2374 53.4810)") }
   let!(:job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary], expires_at: Date.current + 2) }
   let!(:job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy2], expires_at: Date.current + 5) }
   let!(:job3) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1], expires_at: Date.current + 4) }
@@ -126,6 +126,34 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       expect("Maths Teacher 2").to appear_before("Chemistry Teacher")
       expect("Chemistry Teacher").to appear_before("PE Teacher")
       expect("PE Teacher").to appear_before("Geography Teacher")
+    end
+  end
+
+  context "when jobseekers search without entering a location" do
+    it "does not show any measure of distance" do
+      visit jobs_path
+      fill_in "Keyword", with: "teacher"
+      click_on I18n.t("buttons.search")
+      expect(page).not_to have_content "Distance from location"
+    end
+  end
+
+  context "when jobseekers search after entering a location" do
+    it "shows distance between school and their location" do
+      visit jobs_path
+      fill_in 'location-field', with: 'Birmingham'
+      select "200 miles", from: "radius-field"
+      click_on I18n.t("buttons.search")
+
+      within('.search-results__item', text: 'Maths 1') do
+        distance_text = find('dt', text: 'Distance from location').sibling('dd').text
+        expect(distance_text).to eq('81 miles')
+      end
+      
+      within('.search-results__item', text: 'Maths Teacher 2') do
+        distance_text = find('dt', text: 'Distance from location').sibling('dd').text
+        expect(distance_text).to eq('160 miles')
+      end
     end
   end
 

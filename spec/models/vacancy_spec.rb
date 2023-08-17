@@ -563,8 +563,10 @@ RSpec.describe Vacancy do
   end
 
   describe '#distance_in_miles_to' do
+    let(:test_coordinates) { Geocoding.new("Stonehenge").coordinates }
+    subject { create(:vacancy, organisations: organisations) }
+
     context "when vacancy has multiple geolocations" do
-      subject { create(:vacancy, organisations: organisations) }
       let(:glasgow_school) { create(:school, geopoint: "POINT(-4.2542 55.8628)") }
       let(:manchester_school) { create(:school, geopoint: "POINT(-2.2374 53.4810)") }
       let(:canary_wharf_school) { create(:school, geopoint: "POINT(-0.019501 51.504949)") }
@@ -573,19 +575,16 @@ RSpec.describe Vacancy do
       let(:miles_from_manchester_to_stonehenge) { 159 }
       let(:miles_from_canary_wharf_to_stonehenge) { 81 }
 
-      it "returns distance to the nearest school for a given location" do
-        test_coordinates = Geocoding.new("Stonehenge").coordinates
-  
+      it "returns distance to the nearest school for a given location" do  
         expect(subject.distance_in_miles_to(test_coordinates).floor).to eq miles_from_canary_wharf_to_stonehenge
       end
     end
 
     context "when vacancy has one geolocation" do
-      subject { create(:vacancy, organisations: [create(:school, geopoint: "POINT(-2.983333 53.400002)")]) }
+      let(:organisations) { [create(:school, geopoint: "POINT(-2.983333 53.400002)")] }
       let(:miles_from_liverpool_to_stonehenge) { 161 }
 
       it "returns the distance to given location" do
-        test_coordinates =  Geocoding.new("Stonehenge").coordinates
         expect(subject.distance_in_miles_to(test_coordinates).floor).to eq miles_from_liverpool_to_stonehenge
       end
     end

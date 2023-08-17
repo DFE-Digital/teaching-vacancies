@@ -239,17 +239,18 @@ class Vacancy < ApplicationRecord
   end
 
   def distance_in_miles_to(search_coordinates)
-    if geolocation.class == RGeo::Geographic::SphericalMultiPointImpl
-      distances = geolocation.map do |geolocation|
-                    Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
-                  end
-      distances.sort.first
+    if geolocation.is_a? RGeo::Geographic::SphericalMultiPointImpl
+      geolocation.map { |geolocation| calculate_distance(search_coordinates, geolocation) }.min
     else
-      Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+      calculate_distance(search_coordinates, geolocation)
     end
   end
 
   private
+
+  def calculate_distance(search_coordinates, geolocation)
+    Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+  end
 
   def slug_candidates
     [:job_title, %i[job_title organisation_name], %i[job_title location]]
