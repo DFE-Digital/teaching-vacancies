@@ -192,6 +192,7 @@ en:
       other: Will consider %{patterns}
     contract_type: Contract type
     distance: Distance from location
+    distance_from_location: "%{distance} miles"
 
     actual_salary: Actual salary
     annual_salary: Full-time equivalent salary
