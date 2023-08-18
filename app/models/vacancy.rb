@@ -240,6 +240,7 @@ class Vacancy < ApplicationRecord
 
   def distance_in_miles_to(search_coordinates)
     if geolocation.is_a? RGeo::Geographic::SphericalMultiPointImpl
+      # if there are multiple geolocations then return the distance to the nearest one to the given search location
       geolocation.map { |geolocation| calculate_distance(search_coordinates, geolocation) }.min
     else
       calculate_distance(search_coordinates, geolocation)
