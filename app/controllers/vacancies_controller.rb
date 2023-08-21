@@ -6,7 +6,7 @@ class VacanciesController < ApplicationController
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
     @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
 
-    set_search_coordinates
+    set_search_coordinates unless do_not_show_distance?
   end
 
   def show
@@ -82,8 +82,11 @@ class VacanciesController < ApplicationController
   end
 
   def set_search_coordinates
-    return unless form.to_hash[:location]
-
     @search_coordinates = Geocoding.new(form.to_hash[:location]).coordinates
+  end
+
+  def do_not_show_distance?
+    normalised_query = form.to_hash[:location]&.strip&.downcase
+    normalised_query.nil? || LocationQuery::NATIONWIDE_LOCATIONS.include?(normalised_query) || LocationPolygon.contain?(normalised_query)
   end
 end
