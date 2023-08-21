@@ -464,7 +464,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rbs (2.8.2)
-    recaptcha (5.14.0)
+    recaptcha (5.15.0)
     redis (4.8.1)
     regexp_parser (2.8.1)
     representable (3.2.0)
