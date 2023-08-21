@@ -1,5 +1,22 @@
 # This file lists all the attributes to be exported, including those to be anonymised.
 shared:
+  :active_storage_attachments:
+    - id
+    - name
+    - record_type
+    - record_id
+    - blob_id
+    - created_at
+  :active_storage_blobs:
+    - id
+    - key
+    - filename
+    - content_type
+    - metadata
+    - service_name
+    - byte_size
+    - checksum
+    - created_at
   employments:
     - id
     - employment_type
@@ -171,6 +188,18 @@ shared:
     - created_at
     - updated_at
     - account_closed_on
+  job_preferences:
+    - id
+    - roles
+    - phases
+    - key_stages
+    - subjects
+    - working_patterns
+    - completed_steps
+    - builder_completed
+    - created_at
+    - updated_at
+    - jobseeker_profile_id
   local_authority_publisher_schools:
     - id
     - publisher_preference_id
