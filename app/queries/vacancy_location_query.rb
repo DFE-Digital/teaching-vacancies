@@ -3,7 +3,7 @@ class VacancyLocationQuery < LocationQuery
     @scope = scope
   end
 
-  def call(...)
-    super("vacancies.geolocation", ...)
+  def call(*args)
+    super("vacancies.geolocation", *args)
   end
 end

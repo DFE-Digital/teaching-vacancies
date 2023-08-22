@@ -10,8 +10,7 @@ class Search::VacancySearch
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
     @organisation_slug = search_criteria[:organisation_slug]
-
-    @sort = sort || Search::VacancySort.new(keyword: keyword)
+    @sort = sort || Search::VacancySort.new(keyword: keyword, location: location)
   end
 
   def active_criteria
@@ -58,7 +57,8 @@ class Search::VacancySearch
   def scope
     scope = Vacancy.live.includes(:organisations)
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
-    scope = scope.search_by_location(location, radius) if location
+    sort_by_distance = sort.by == 'distance'
+    scope = scope.search_by_location(location, radius, sort_by_distance) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
     scope = scope.reorder(sort.by => sort.order) if sort&.by_db_column? && !location
