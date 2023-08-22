@@ -23,6 +23,7 @@ class LocationQuery < ApplicationQuery
           ON ST_DWithin(#{field_name}, location_polygons.area, #{radius})
         ")
         .where("location_polygons.id = ?", polygon.id)
+        .order(Arel.sql("ST_Distance(#{field_name}, ST_Centroid(location_polygons.area))"))
     else
       coordinates = Geocoding.new(normalised_query).coordinates
 
@@ -33,6 +34,7 @@ class LocationQuery < ApplicationQuery
       point = "POINT(#{coordinates.second} #{coordinates.first})"
 
       scope.where("ST_DWithin(#{field_name}, ?, ?)", point, radius)
+           .order(Arel.sql("ST_Distance(#{field_name}, '#{point}')"))
     end
   end
 end
