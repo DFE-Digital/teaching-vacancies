@@ -61,7 +61,7 @@ class Search::VacancySearch
     scope = scope.search_by_location(location, radius) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
-    scope = scope.reorder(sort.by => sort.order) if sort&.by_db_column?
+    scope = scope.reorder(sort.by => sort.order) if sort&.by_db_column? && !location
     scope
   end
 end
