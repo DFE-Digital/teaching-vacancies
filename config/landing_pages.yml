@@ -17,21 +17,30 @@ shared:
   # criteria is correct and doesn't break the search engine).
 
   ### Job roles
+  assistant-headteacher-jobs:
+    job_roles:
+      - assistant_headteacher
+  deputy-headteacher-jobs:
+    job_roles:
+      - deputy_headteacher
   ect-suitable-jobs:
     ect_statuses:
       - ect_suitable
   education-support-jobs:
     job_roles:
       - education_support
+  head-of-year-or-phase-jobs:
+    job_roles:
+      - head_of_year_or_phase
+  head-of-department-or-curriculum-jobs:
+    job_roles:
+      - head_of_department_or_curriculum
+  headteacher-jobs:
+    job_roles:
+      - headteacher
   higher-level-teaching-assistant-jobs:
     job_roles:
-      - higher-level-teaching-assistant-jobs
-  senior-leader-jobs:
-    job_roles:
-      - senior_leader
-  middle-leader-jobs:
-    job_roles:
-      - middle_leader
+      - higher_level_teaching_assistant
   sendco-jobs:
     job_roles:
       - sendco

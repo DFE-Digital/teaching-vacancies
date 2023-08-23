@@ -26,23 +26,17 @@ class Vacancy < ApplicationRecord
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
   }.freeze
 
-  JOB_ROLE_TO_JOB_ROLES_MAPPINGS = {
-    nil => [],
-    "teacher" => ["teacher"],
-    "senior_leader" => %w[headteacher deputy_headteacher assistant_headteacher],
-    "middle_leader" => %w[head_of_year_or_phase head_of_department_or_curriculum],
-    "teaching_assistant" => ["teaching_assistant"],
-    "higher_level_teaching_assistant" => ["higher_level_teaching_assistant"],
-    "education_support" => ["education_support"],
-    "sendco" => ["sendco"],
-  }.freeze
+  JOB_ROLES = { "teacher" => 0, "headteacher" => 1, "deputy_headteacher" => 2, "assistant_headteacher" => 3,
+                "head_of_year_or_phase" => 4, "head_of_department_or_curriculum" => 5, "teaching_assistant" => 6,
+                "higher_level_teaching_assistant" => 7, "education_support" => 8, "sendco" => 9 }.freeze
+
+  MIDDLE_LEADER_JOB_ROLES = %w[head_of_year_or_phase head_of_department_or_curriculum].freeze
+  SENIOR_LEADER_JOB_ROLES = %w[headteacher deputy_headteacher assistant_headteacher].freeze
 
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
   array_enum working_patterns: { full_time: 0, part_time: 100 }
   array_enum phases: { nursery: 0, primary: 1, middle: 2, secondary: 3, sixth_form_or_college: 4, through: 5 }
-  array_enum job_roles: { teacher: 0, headteacher: 1, deputy_headteacher: 2, assistant_headteacher: 3,
-                          head_of_year_or_phase: 4, head_of_department_or_curriculum: 5, teaching_assistant: 6,
-                          higher_level_teaching_assistant: 7, education_support: 8, sendco: 9 }
+  array_enum job_roles: JOB_ROLES
 
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
   enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
@@ -100,7 +94,7 @@ class Vacancy < ApplicationRecord
                   if: proc { |vacancy| vacancy.listed? }
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
-  before_save :on_job_role_set_job_roles
+  before_save :on_job_roles_set_job_role
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -115,6 +109,11 @@ class Vacancy < ApplicationRecord
       working_patterns: working_patterns,
     }
   end
+
+  # We have 'enum job_role' and 'array_enum job_roles'.
+  # Both provide the 'Vacancy.job_roles' class method, and the 'enum job_role' enum list takes over.
+  # When calling 'Vacancy.job_roles' we want to get the list of 'array_enum job_roles' instead, hence this method override.
+  def self.job_roles = JOB_ROLES
 
   def external?
     external_source.present?
@@ -176,8 +175,11 @@ class Vacancy < ApplicationRecord
   end
 
   def allow_key_stages?
-    phases.any? { |phase| phase.in? %w[primary middle secondary through] } &&
-      job_role.in?(%w[teacher senior_leader middle_leader teaching_assistant])
+    allowed_phases = %w[primary middle secondary through]
+    allowed_roles = %w[teacher headteacher deputy_headteacher assistant_headteacher
+                       head_of_year_or_phase head_of_department_or_curriculum teaching_assistant]
+
+    phases.intersect?(allowed_phases) && job_roles.intersect?(allowed_roles)
   end
 
   def allow_phase_to_be_set?
@@ -257,10 +259,17 @@ class Vacancy < ApplicationRecord
     [:job_title, %i[job_title organisation_name], %i[job_title location]]
   end
 
-  def on_job_role_set_job_roles
-    return unless job_role_changed?
+  def on_job_roles_set_job_role
+    return unless job_roles_changed?
 
-    self.job_roles = JOB_ROLE_TO_JOB_ROLES_MAPPINGS[job_role]
+    # job_roles contain an individual role unless middle or senior leader roles that may contain all their options
+    self.job_role = if job_roles.intersect? SENIOR_LEADER_JOB_ROLES
+                      "senior_leader"
+                    elsif job_roles.intersect? MIDDLE_LEADER_JOB_ROLES
+                      "middle_leader"
+                    else
+                      job_roles.first
+                    end
   end
 
   def on_expired_vacancy_feedback_submitted_update_stats_updated_at

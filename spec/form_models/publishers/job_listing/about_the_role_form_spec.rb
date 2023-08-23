@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   subject { described_class.new(params, vacancy) }
 
-  let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher") }
+  let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"]) }
   let(:organisation) { build_stubbed(:school) }
   let(:params) { {} }
 
@@ -18,7 +18,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
     context "when the vacancy's job_advert is present" do
       context "when skills_and_experience is nil " do
         let(:params) { { skills_and_experience: nil } }
-        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", job_advert: "Test") }
+        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
 
         it "is valid" do
           expect(subject.errors.added?(*error)).to be false
@@ -27,7 +27,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
 
       context "when skills_and_experience exceeds the maxiumum words " do
         let(:params) { { skills_and_experience: Faker::Lorem.sentence(word_count: 151) } }
-        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", job_advert: "Test") }
+        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
 
         it "is valid" do
           expect(subject.errors.added?(*error)).to be false
@@ -79,7 +79,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
     context "when the vacancy's about_school is present" do
       context "when school_offer is nil" do
         let(:params) { { school_offer: nil } }
-        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", about_school: "Test") }
+        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], about_school: "Test") }
 
         it "is valid" do
           expect(subject.errors.added?(*error)).to be false
@@ -88,7 +88,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
 
       context "when school_offer exceeds the maximum words" do
         let(:params) { { school_offer: Faker::Lorem.sentence(word_count: 151) } }
-        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", about_school: "Test") }
+        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], about_school: "Test") }
 
         it "is valid" do
           expect(subject.errors.added?(*error)).to be false
@@ -136,7 +136,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
 
   describe "safeguarding_information" do
     context "when safeguarding_information is already present on the vacancy" do
-      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", safeguarding_information: "safeguarding") }
+      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], safeguarding_information: "safeguarding") }
 
       context "when safeguarding_information_provided is false" do
         let(:error) { %i[safeguarding_information blank] }
@@ -171,7 +171,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
         end
 
         context "when either job_advert or about_school is present" do
-          let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", about_school: "Test") }
+          let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], about_school: "Test") }
           let(:safeguarding_information) { nil }
 
           it "does not fail validation" do
@@ -220,7 +220,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       it { is_expected.to validate_presence_of(:further_details) }
 
       context "when either job_advert or about_school is present" do
-        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", about_school: "Test") }
+        let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], about_school: "Test") }
 
         it { is_expected.not_to validate_presence_of(:further_details) }
       end
@@ -243,7 +243,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   describe "job_advert" do
     context "when job_advert ony contains bullet points" do
       let(:error) { %i[job_advert blank] }
-      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_role: "teacher", job_advert: "Test") }
+      let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
       let(:params) { { job_advert: "<editor-content><ul><li><br></li></ul></editor-content>" } }
 
       it "fails validation" do

@@ -471,10 +471,10 @@ RSpec.describe Vacancy do
     end
 
     context "when role is changed from teacher to sendo" do
-      subject { create(:vacancy, job_role: :teacher, key_stages: %w[ks2]) }
+      subject { create(:vacancy, job_roles: ["teacher"], key_stages: %w[ks2]) }
 
       before do
-        subject.assign_attributes(job_role: :sendco)
+        subject.assign_attributes(job_roles: ["sendco"])
         subject.save
       end
 
@@ -600,23 +600,26 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "job_roles set from job_role" do
+  describe "legacy job_role set from new job_roles" do
     {
-      teacher: %w[teacher],
-      senior_leader: %w[headteacher deputy_headteacher assistant_headteacher],
-      middle_leader: %w[head_of_year_or_phase head_of_department_or_curriculum],
-      teaching_assistant: %w[teaching_assistant],
-      higher_level_teaching_assistant: %w[higher_level_teaching_assistant],
-      education_support: %w[education_support],
-      sendco: %w[sendco],
-    }.each do |role, roles|
-      it "creating a vacancy with job_role '#{role}' sets its job_roles to '#{roles}'" do
-        expect(create(:vacancy, job_role: role).job_roles).to eq(roles)
+      "teacher" => "teacher",
+      "headteacher" => "senior_leader",
+      "deputy_headteacher" => "senior_leader",
+      "assistant_headteacher" => "senior_leader",
+      "head_of_year_or_phase" => "middle_leader",
+      "head_of_department_or_curriculum" => "middle_leader",
+      "teaching_assistant" => "teaching_assistant",
+      "higher_level_teaching_assistant" => "higher_level_teaching_assistant",
+      "education_support" => "education_support",
+      "sendco" => "sendco",
+    }.each do |new_role, legacy_role|
+      it "creating a vacancy with job_roles '[#{new_role}]' sets its legacy job_role to '#{legacy_role}'" do
+        expect(create(:vacancy, job_roles: [new_role]).job_role).to eq(legacy_role)
       end
 
-      it "updating a vacancy job_role to '#{role}' sets its job_roles to '#{roles}'" do
+      it "updating a vacancy job_roles to ['#{new_role}]' sets its legacy job_role to '#{legacy_role}'" do
         vacancy = create(:vacancy, job_role: nil, job_roles: [])
-        expect { vacancy.update(job_role: role) }.to change { vacancy.reload.job_roles }.from([]).to(roles)
+        expect { vacancy.update(job_roles: [new_role]) }.to change { vacancy.reload.job_role }.from(nil).to(legacy_role)
       end
     end
   end

@@ -57,7 +57,7 @@ module Resettable
   end
 
   def reset_ect_status
-    return unless job_role_changed? && job_role != "teacher"
+    return unless job_roles_changed? && job_roles.exclude?("teacher")
 
     self.ect_status = nil
   end

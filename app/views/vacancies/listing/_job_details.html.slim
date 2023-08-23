@@ -5,7 +5,7 @@ section#job-details class="govuk-!-margin-bottom-5"
     - summary_list.row do |row|
       - row.key do
         h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.job_role")
-      - row.value text: linked_job_role_and_ect_status(vacancy)
+      - row.value text: linked_job_roles_and_ect_status(vacancy)
 
     - if vacancy.allow_key_stages? && vacancy.key_stages.any?
       - summary_list.row do |row|

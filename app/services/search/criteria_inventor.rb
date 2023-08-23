@@ -12,7 +12,7 @@ class Search::CriteriaInventor
       radius: (location.present? ? DEFAULT_RADIUS_IN_MILES.to_s : nil),
       working_patterns: [],
       phases: @vacancy.phases,
-      job_roles: [@vacancy.job_role],
+      job_roles: @vacancy.job_roles,
       ect_statuses: [@vacancy.ect_status],
       subjects: subjects,
     }.delete_if { |_k, v| v.blank? }
@@ -28,6 +28,8 @@ class Search::CriteriaInventor
   end
 
   def subjects
-    @vacancy.subjects if @vacancy.job_role.in?(%w[teacher middle_leader])
+    return unless @vacancy.job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum])
+
+    @vacancy.subjects
   end
 end

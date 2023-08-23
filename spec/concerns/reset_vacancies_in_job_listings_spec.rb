@@ -49,9 +49,9 @@ RSpec.describe Resettable do
   end
 
   context "when changing education support" do
-    subject(:update_education_support) { vacancy.update(job_role: "education_support") }
+    subject(:update_education_support) { vacancy.update(job_roles: ["education_support"]) }
 
-    let(:vacancy) { build(:vacancy, phases: %w[primary], job_role: "teacher", key_stages: %w[ks1]) }
+    let(:vacancy) { build(:vacancy, phases: %w[primary], job_roles: ["teacher"], key_stages: %w[ks1]) }
     let(:previous_key_stages) { vacancy.key_stages }
 
     it "resets key stages" do
@@ -90,9 +90,9 @@ RSpec.describe Resettable do
   end
 
   context "when changing job role" do
-    subject(:update_job_role) { vacancy.update(job_role: "education_support") }
+    subject(:update_job_role) { vacancy.update(job_roles: ["education_support"]) }
 
-    let(:vacancy) { build(:vacancy, job_role: "teacher") }
+    let(:vacancy) { build(:vacancy, job_roles: ["teacher"]) }
     let(:previous_ect_status) { vacancy.ect_status }
 
     it "resets the ect status" do

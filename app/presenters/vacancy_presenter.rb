@@ -47,8 +47,10 @@ class VacancyPresenter < BasePresenter
     ].compact
   end
 
-  def readable_job_role
-    I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_role}") if job_role
+  def readable_job_roles
+    model.job_roles&.map { |job_role|
+      I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_role}")
+    }&.join(", ")
   end
 
   def readable_ect_status

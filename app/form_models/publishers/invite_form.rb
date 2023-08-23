@@ -16,7 +16,7 @@ module Publishers
 
       def job_options
         @job_options ||= multistep.applicable_jobs.map do |job|
-          Option.new(job.id, job.job_title, I18n.t(job.job_role, scope: "helpers.label.publishers_job_listing_job_role_form.job_role_options"))
+          Option.new(job.id, job.job_title, I18n.t(job.job_roles.first, scope: "helpers.label.publishers_job_listing_job_role_form.job_role_options"))
         end
       end
     end

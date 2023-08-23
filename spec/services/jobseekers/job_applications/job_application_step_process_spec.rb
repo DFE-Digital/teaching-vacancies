@@ -16,7 +16,7 @@ RSpec.describe Jobseekers::JobApplications::JobApplicationStepProcess do
     end
 
     context "when vacancy job role is teacher" do
-      let(:vacancy) { build_stubbed(:vacancy, :teacher, :ect_suitable) }
+      let(:vacancy) { build_stubbed(:vacancy, :ect_suitable, job_roles: ["teacher"]) }
 
       it "has the expected step groups" do
         expect(subject.step_groups.keys).to eq(all_possible_step_groups)
@@ -24,7 +24,7 @@ RSpec.describe Jobseekers::JobApplications::JobApplicationStepProcess do
     end
 
     context "when vacancy job role is education_support" do
-      let(:vacancy) { build_stubbed(:vacancy, :education_support) }
+      let(:vacancy) { build_stubbed(:vacancy, job_roles: ["education_support"]) }
 
       it "has the expected step groups" do
         expect(subject.steps).to eq(all_possible_step_groups - %i[professional_status])

@@ -18,7 +18,7 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = built_scope.where("vacancies.subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
 
     # General filters
-    built_scope = built_scope.where(job_role: job_roles(filters[:job_roles])) if job_roles(filters[:job_roles]).present?
+    built_scope = built_scope.with_any_of_job_roles(filters[:job_roles]) if job_roles(filters[:job_roles]).present?
     built_scope = built_scope.ect_suitable if filters[:ect_statuses]&.include?("ect_suitable") || filters[:job_roles]&.include?("ect_suitable")
     built_scope = add_organisation_type_filters(filters, built_scope)
     built_scope = built_scope.quick_apply if filters[:quick_apply]

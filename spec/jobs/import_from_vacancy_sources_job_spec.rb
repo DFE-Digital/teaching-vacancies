@@ -25,7 +25,7 @@ RSpec.describe ImportFromVacancySourcesJob do
     context "when a new valid vacancy comes through" do
       let(:vacancies_from_source) { [vacancy] }
       let(:vacancy) do
-        build(:vacancy, :published, :external, phases: %w[secondary], job_role: "teaching_assistant", organisations: [school])
+        build(:vacancy, :published, :external, phases: %w[secondary], job_roles: ["teaching_assistant"], organisations: [school])
       end
 
       it "saves the vacancy" do
@@ -112,7 +112,7 @@ RSpec.describe ImportFromVacancySourcesJob do
           "job_advert" => "Aut repellat vel. Nesciunt exercitationem et. Numquam a corrupti. Et minus hic. Perspiciatis dolor neque. Sit est nemo. Ut ex officiis. Illum et mollitia. Quia qui qui. Debitis totam odio. Consequatur eum iste. Aut ex et. Quo explicabo quae. Aut id laborum. Occaecati quod sit. Laudantium ipsum placeat. Et sed nesciunt. Ut iste maxime. Ea repudiandae rem. Qui fugit adipisci. Vero fugiat dolor. Nesciunt eum et. Molestias nulla facere. Aliquid dolore assumenda. Aut repudiandae iusto. Quia aut maxime. Consequatur voluptates facere. Facere eius asperiores. Fugiat occaecati assumenda. Maiores consequatur architecto. Perferendis sint ut. Est odio dolorem. Aliquid fugiat iusto. Eaque fugiat voluptas. Eos velit assumenda. Nesciunt minus quia. Cupiditate vero dolor. Quos temporibus consequuntur. Vel cupiditate eos. Dolore dolores repellat. Ex ipsam consequuntur. Dolores harum voluptatem. Temporibus neque quis. Vero soluta sunt. Voluptas laboriosam modi. Quod ut nostrum. Veniam voluptatem et. Explicabo necessitatibus ex. Ut architecto placeat. Neque velit et.",
           "job_location" => nil,
           "job_role" => "teacher",
-          "job_roles" => [],
+          "job_roles" => ["teacher"],
           "job_title" => "",
           "key_stages" => [],
           "latest_start_date" => nil,

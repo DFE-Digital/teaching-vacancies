@@ -1,5 +1,5 @@
 class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::VacancyForm
-  validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_role == "teacher" }
+  validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
   validate :job_advert_presence, if: -> { vacancy.job_advert.present? }
   validate :about_school_presence, if: -> { vacancy.about_school.present? }
   validate :skills_and_experience_presence, unless: -> { vacancy.job_advert.present? }

@@ -24,7 +24,7 @@
           p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information", organisation: vacancy.organisation.school? ? "school" : "organisation")
           p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information_link"), edit_publishers_organisation_safeguarding_information_path(vacancy.organisation, vacancy_id: vacancy.id)
 
-      - if vacancy.job_role == "teacher"
+      - if vacancy.job_roles.include? "teacher"
         = f.govuk_collection_radio_buttons :ect_status,
           Vacancy.ect_statuses.keys,
           :to_s,

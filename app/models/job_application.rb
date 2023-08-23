@@ -63,7 +63,8 @@ class JobApplication < ApplicationRecord
   end
 
   def ask_professional_status?
-    vacancy.job_role.in? %w[teacher senior_leader middle_leader]
+    vacancy.job_roles.intersect?(%w[teacher headteacher deputy_headteacher assistant_headteacher
+                                    head_of_year_or_phase head_of_department_or_curriculum])
   end
 
   def deadline_passed?

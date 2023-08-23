@@ -56,8 +56,8 @@ RSpec.describe "Job applications build" do
           before { patch(organisation_job_build_path(vacancy.id, :job_role, params)) }
 
           context "when the new job_role can be ect_suitable" do
-            let(:vacancy) { create(:vacancy, :published, job_role: "senior_leader", organisations: [school_one]) }
-            let(:params) { { publishers_job_listing_job_role_form: { job_role: "teacher" } } }
+            let(:vacancy) { create(:vacancy, :published, job_roles: ["headteacher"], organisations: [school_one]) }
+            let(:params) { { publishers_job_listing_job_role_form: { job_roles: "teacher" } } }
 
             it "redirects to the about_the_role step" do
               expect(response).to redirect_to(organisation_job_build_path(vacancy.id, :about_the_role))
@@ -65,8 +65,8 @@ RSpec.describe "Job applications build" do
           end
 
           context "when the the education_phase and the new job_role allows key_stages to be set" do
-            let(:vacancy) { create(:vacancy, :published, phases: %w[primary], job_role: "sendco", organisations: [school_one]) }
-            let(:params) { { publishers_job_listing_job_role_form: { job_role: "teacher" } } }
+            let(:vacancy) { create(:vacancy, :published, phases: %w[primary], job_roles: ["sendco"], organisations: [school_one]) }
+            let(:params) { { publishers_job_listing_job_role_form: { job_roles: "teacher" } } }
 
             it "redirects to the key_stages step" do
               expect(response).to redirect_to(organisation_job_build_path(vacancy.id, :key_stages))

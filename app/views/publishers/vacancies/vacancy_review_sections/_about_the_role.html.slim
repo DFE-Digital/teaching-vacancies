@@ -3,7 +3,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
 
 = govuk_summary_list(html_attributes: { id: "about_the_role" }) do |summary_list|
 
-  - if vacancy.job_role == "teacher" && !vacancy.ect_status.nil?
+  - if vacancy.job_roles.include?("teacher") && !vacancy.ect_status.nil?
     - summary_list.row(html_attributes: { id: "ect_status" }) do |row|
       - row.key
         = t("jobs.ect_status")

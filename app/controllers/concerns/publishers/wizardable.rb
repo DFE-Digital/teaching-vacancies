@@ -22,7 +22,7 @@ module Publishers::Wizardable
 
   def job_role_params(params)
     params.require(:publishers_job_listing_job_role_form)
-          .permit(:job_role)
+          .permit(:job_roles)
           .merge(completed_steps: completed_steps)
   end
 
