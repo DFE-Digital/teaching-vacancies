@@ -92,6 +92,8 @@ review: ## review # Requires `pr_id=NNNN`
 		$(eval var_file=review)
 		$(eval backend_config=-backend-config="key=review/$(env).tfstate")
 
+		$(eval include global_config/review.sh)
+
 .PHONY: review_aks
 review_aks:
 	$(eval include global_config/review.sh)
@@ -171,8 +173,15 @@ ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
 
 .PHONY: terraform-app-init
-terraform-app-init:
-		terraform -chdir=terraform/app init -reconfigure -input=false $(backend_config)
+terraform-app-init: bin/terrafile set-azure-account
+	./bin/terrafile -p terraform/app/vendor/modules -f terraform/workspace-variables/$(var_file)_Terrafile
+	terraform -chdir=terraform/app init -reconfigure -input=false $(backend_config)
+
+	$(eval export TF_VAR_azure_resource_prefix=${AZURE_RESOURCE_PREFIX})
+	$(eval export TF_VAR_config_short=${CONFIG_SHORT})
+	$(eval export TF_VAR_service_name=${SERVICE_NAME})
+	$(eval export TF_VAR_service_short=${SERVICE_SHORT})
+
 
 .PHONY: terraform-app-plan
 terraform-app-plan: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-app-plan
