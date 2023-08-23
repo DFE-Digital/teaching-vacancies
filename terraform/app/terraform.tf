@@ -94,6 +94,13 @@ module "paas" {
   db_backup_before_point_in_time               = var.paas_db_backup_before_point_in_time
   documents_s3_bucket_force_destroy            = var.documents_s3_bucket_force_destroy
   schools_images_logos_s3_bucket_force_destroy = var.schools_images_logos_s3_bucket_force_destroy
+  # AKS
+  namespace                     = var.namespace
+  azure_resource_prefix         = var.azure_resource_prefix
+  config_short                  = var.config_short
+  service_short                 = var.service_short
+  deploy_azure_backing_services = var.deploy_azure_backing_services
+  cluster                       = var.cluster
 }
 
 module "statuscake" {
