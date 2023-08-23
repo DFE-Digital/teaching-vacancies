@@ -132,6 +132,35 @@ variable "statuscake_alerts" {
   default     = {}
 }
 
+# AKS
+variable "cluster" {
+  description = "AKS cluster where this app is deployed. Either 'test' or 'production'"
+}
+variable "enable_monitoring" {
+  default     = false
+  description = "Enable monitoring and alerting"
+}
+variable "deploy_azure_backing_services" {
+  default     = true
+  description = "Deploy real Azure backing services like databases, as opposed to containers inside of AKS"
+}
+variable "azure_enable_backup_storage" {
+  default     = true
+  description = "Create storage account for database backup"
+}
+variable "namespace" {
+  description = "AKS namespace where this app is deployed"
+}
+variable "azure_resource_prefix" {
+  description = "Standard resource prefix. Usually s189t01 (test) or s189p01 (production)"
+}
+variable "config_short" {
+  description = "Short name of the environment configuration, e.g. dv, st, pd..."
+}
+variable "service_short" {
+  description = "Short name to identify the service. Up to 6 charcters."
+}
+
 locals {
   paas_api_url         = "https://api.london.cloud.service.gov.uk"
   paas_app_env_values  = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
