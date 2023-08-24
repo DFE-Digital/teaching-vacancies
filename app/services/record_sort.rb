@@ -33,7 +33,7 @@ class RecordSort
                default_sort_option
              end
 
-    @sort_by = option.by
+    @sort_by = option.by == "published_on_non_default" ? "published_on" : option.by
     @order = option.order
 
     self
