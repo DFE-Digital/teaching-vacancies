@@ -1,10 +1,13 @@
-.landing-page-links
+  .landing-page-links
   = govuk_accordion do |accordion|
     - accordion.with_section(heading_text: t(".jobs_by_school_type_and_role")) do
       = landing_page_link_group title: t(".job_roles"), classes: "govuk-grid-column-one-third" do |group|
         - group.with_landing_page "teacher-jobs"
-        - group.with_landing_page "senior-leader-jobs"
-        - group.with_landing_page "middle-leader-jobs"
+        - group.with_landing_page "assistant-headteacher-jobs"
+        - group.with_landing_page "deputy-headteacher-jobs"
+        - group.with_landing_page "headteacher-jobs"
+        - group.with_landing_page "head-of-year-or-phase-jobs"
+        - group.with_landing_page "head-of-department-or-curriculum-jobs"
         - group.with_landing_page "higher-level-teaching-assistant-jobs"
         - group.with_landing_page "teaching-assistant-jobs"
         - group.with_landing_page "sendco-jobs"
