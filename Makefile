@@ -107,6 +107,7 @@ staging: ## staging
 		$(eval space=teaching-vacancies-staging)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
+		$(eval include global_config/staging.sh)
 
 .PHONY: production
 production: ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
