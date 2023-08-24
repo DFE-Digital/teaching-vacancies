@@ -13,6 +13,7 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
   # A) Display the existing vacancy role selection as a radio button (by defaulting to the first role in the array).
   # B) Save the selection as an array (by mapping the value into an array).
 
+  # incoming param is an array when loading the form from the DB values. It is a string when submitted by user selection.
   def job_roles
     params[:job_roles].is_a?(Array) ? params[:job_roles].first : params[:job_roles]
   end
