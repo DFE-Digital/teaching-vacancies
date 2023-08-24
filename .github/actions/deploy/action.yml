@@ -17,6 +17,9 @@ inputs:
   aws-secret-access-key:
     description: AWS-KEY
     required: true
+  azure-credentials:
+    description: Service principal secret to access the azure subscription
+    required: true
 
 
 runs:
@@ -35,6 +38,10 @@ runs:
         role-to-assume: Deployments
         role-duration-seconds: 3600
         role-skip-session-tagging: true
+
+    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+      with:
+        azure-credentials: ${{ inputs.azure-credentials }}
 
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v2
