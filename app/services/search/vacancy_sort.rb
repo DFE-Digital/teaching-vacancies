@@ -7,7 +7,7 @@ class Search::VacancySort < RecordSort
 
   def options
     if location
-      [distance_option, publish_on_desc_option, closing_date_asc_option]
+      [distance_option, publish_on_non_default_desc_option, closing_date_asc_option]
     else
       [publish_on_desc_option, closing_date_asc_option]
     end
@@ -35,5 +35,9 @@ class Search::VacancySort < RecordSort
 
   def distance_option
     SortOption.new("distance", "Distance", "asc")
+  end
+
+  def publish_on_non_default_desc_option
+    SortOption.new("publish_on_non_default", I18n.t("jobs.sort_by.publish_on.descending"), "desc")
   end
 end
