@@ -19,7 +19,7 @@ RSpec.describe Search::JobseekerProfileSearch do
         let(:location_in_london) { [51.5072, -0.1275] }
         let(:london_jobseeker_profile) { create(:jobseeker_profile) }
         let(:london_job_preferences) { create(:job_preferences, jobseeker_profile: london_jobseeker_profile) }
-        let!(:london_location_preference) { create(:job_preferences_location, name: "London", radius: 100, job_preferences: london_job_preferences) }
+        let!(:london_location_preference) { create(:job_preferences_location, name: "London", radius: 200, job_preferences: london_job_preferences) }
 
         let(:location_in_manchester) { [53.4807, -2.2426] }
         let(:manchester_jobseeker_profile) { create(:jobseeker_profile) }

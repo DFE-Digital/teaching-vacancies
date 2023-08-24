@@ -238,7 +238,20 @@ class Vacancy < ApplicationRecord
     contact_email? && contact_email != current_publisher.email
   end
 
+  def distance_in_miles_to(search_coordinates)
+    if geolocation.is_a? RGeo::Geographic::SphericalMultiPointImpl
+      # if there are multiple geolocations then return the distance to the nearest one to the given search location
+      geolocation.map { |geolocation| calculate_distance(search_coordinates, geolocation) }.min
+    else
+      calculate_distance(search_coordinates, geolocation)
+    end
+  end
+
   private
+
+  def calculate_distance(search_coordinates, geolocation)
+    Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
+  end
 
   def slug_candidates
     [:job_title, %i[job_title organisation_name], %i[job_title location]]

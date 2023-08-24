@@ -5,6 +5,8 @@ class VacanciesController < ApplicationController
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
     @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
+
+    set_search_coordinates unless do_not_show_distance?
   end
 
   def show
@@ -77,5 +79,17 @@ class VacanciesController < ApplicationController
       .with_data(event_data)
 
     DfE::Analytics::SendEvents.do([event])
+  end
+
+  def set_search_coordinates
+    @search_coordinates = Geocoding.new(form.to_hash[:location]).coordinates
+  end
+
+  def do_not_show_distance?
+    # We don't want to show distance if the user searches for a nationwide location such as "England" or if they search for a location we have a polygon for.
+    # This is because the coordinates Google (or other providers) use for London (for example) could be miles away from the location of the school, even if the school is
+    # actually in London which could potentially confuse jobseekers.
+    normalised_query = form.to_hash[:location]&.strip&.downcase
+    normalised_query.nil? || LocationQuery::NATIONWIDE_LOCATIONS.include?(normalised_query) || LocationPolygon.contain?(normalised_query)
   end
 end
