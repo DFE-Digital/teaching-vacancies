@@ -24,7 +24,7 @@ jobs:
 
       - name: Slack notification
         if: steps.smoke-test.conclusion != 'success'
-        uses: rtCamp/action-slack-notify@v2.2.0
+        uses: rtCamp/action-slack-notify@v2.2.1
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_COLOR: 'red'
