@@ -89,7 +89,9 @@ en:
     search_result_heading: "Jobs (%{count})"
     search_result_title:
       sorted_by_publish_on: "Jobs (%{count}) sorted by newest"
+      sorted_by_publish_on_non_default: "Jobs (%{count}) sorted by newest"
       sorted_by_expires_at: "Jobs (%{count}) sorted by closing date"
+      sorted_by_distance: "Jobs (%{count}) sorted by distance"
 
     legacy_job_alert:
       link: Receive a job alert
