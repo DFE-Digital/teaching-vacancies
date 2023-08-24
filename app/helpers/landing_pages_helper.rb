@@ -22,7 +22,7 @@ module LandingPagesHelper
     tag.ul class: "govuk-list" do
       safe_join(
         vacancy.job_roles.map { |role| tag.li(linked_job_role(role)) }
-          .push(tag.li(linked_ect_status(vacancy))),
+                         .push(tag.li(linked_ect_status(vacancy))),
       )
     end
   end
