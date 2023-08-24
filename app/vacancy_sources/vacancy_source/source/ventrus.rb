@@ -50,7 +50,7 @@ class VacancySource::Source::Ventrus
       expires_at: Time.zone.parse(item["Expiry_date"]),
       external_advert_url: item["link", root: true],
 
-      job_role: job_role_for(item),
+      job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       key_stages: item["Key_Stage"].presence&.split(","),
       # subjects: item["Subjects"].presence&.split(","),
@@ -85,14 +85,20 @@ class VacancySource::Source::Ventrus
       Array(multi_academy_trust)
   end
 
-  def job_role_for(item)
-    return if item["Job_Roles"].blank?
+  def job_roles_for(item)
+    role = item["Job_Roles"]&.strip
+    return [] if role.blank?
 
-    item["Job_Roles"]
-    .gsub(/deputy_headteacher_principal|assistant_headteacher_principal|headteacher_principal|deputy_headteacher|assistant_headteacher|headteacher/, "senior_leader")
-    .gsub(/head_of_year_or_phase|head_of_department_or_curriculum|head_of_year/, "middle_leader")
-    .gsub(/learning_support|other_support|science_technician/, "education_support")
-    .gsub(/\s+/, "")
+    # Translate legacy senior/middle leader into all the granular roles split from them
+    return Vacancy::SENIOR_LEADER_JOB_ROLES if role.include? "senior_leader"
+    return Vacancy::MIDDLE_LEADER_JOB_ROLES if role.include? "middle_leader"
+
+    Array.wrap(role.gsub("deputy_headteacher_principal", "deputy_headteacher")
+                   .gsub("assistant_headteacher_principal", "assistant_headteacher")
+                   .gsub("headteacher_principal", "headteacher")
+                   .gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
+                   .gsub(/learning_support|other_support|science_technician/, "education_support")
+                   .gsub(/\s+/, ""))
   end
 
   def phases_for(item)

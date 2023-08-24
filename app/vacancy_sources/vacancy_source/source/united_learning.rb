@@ -55,7 +55,7 @@ class VacancySource::Source::UnitedLearning
       external_advert_url: item["link", root: true],
 
       # New structured fields
-      job_role: job_role_for(item),
+      job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["Subjects"].presence&.split(","),
       working_patterns: item["Working_patterns"].presence&.split(","),
@@ -68,12 +68,15 @@ class VacancySource::Source::UnitedLearning
     }
   end
 
-  def job_role_for(item)
-    return if item["Job_roles"].blank?
+  def job_roles_for(item)
+    role = item["Job_roles"]&.strip
+    return [] if role.blank?
 
-    item["Job_roles"].gsub(/leadership|deputy_headteacher|assistant_headteacher|headteacher/, "senior_leader")
-                     .gsub(/head_of_year_or_phase|head_of_department_or_curriculum/, "middle_leader")
-                     .gsub(/\s+/, "")
+    # Translate legacy senior/middle leader into all the granular roles split from them
+    return Vacancy::SENIOR_LEADER_JOB_ROLES if %w[senior_leader leadership].any? { |r| role.include? r }
+    return Vacancy::MIDDLE_LEADER_JOB_ROLES if role.include? "middle_leader"
+
+    Array.wrap(role.gsub(/\s+/, ""))
   end
 
   def ect_status_for(item)
