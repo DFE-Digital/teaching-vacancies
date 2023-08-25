@@ -49,20 +49,27 @@ class Search::VacancySearch
   end
 
   def total_count
-    @total_count ||= vacancies.count
+    @total_count ||= vacancies.count(:id)
   end
 
   private
 
   def scope
     sort_by_distance = sort.by == 'distance'
-    
     scope = Vacancy.live.includes(:organisations)
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
     scope = scope.search_by_location(location, radius, sort_by_distance) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
-    scope = scope.reorder(sort.by => sort.order) if sort&.by_db_column? && !location
+    scope = scope.reorder(sort_by => sort.order) if sort&.by_db_column? && !sort_by_distance
     scope
+  end
+
+  def sort_by
+    if sort.by == "publish_on_non_default"
+      "publish_on"
+    else
+      sort.by
+    end
   end
 end
