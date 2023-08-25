@@ -27,7 +27,7 @@ class ImportFromVacancySourcesJob < ApplicationJob
 
       PaperTrail.request(whodunnit: "Import from external source") do
         if vacancy.save
-          Rails.logger.info("Imported vacancy #{vacancy.id} from feed #{source_name}")
+          log("Imported vacancy #{vacancy.id} from feed #{source_name}")
         else
           failure = create_failed_imported_vacancy(source_name, vacancy)
           errors[failure.external_reference] = failure.import_errors
@@ -40,7 +40,7 @@ class ImportFromVacancySourcesJob < ApplicationJob
 
   def mark_removed_vacancies_from_source(source_name, import_start_time)
     Vacancy.live.where(external_source: source_name, updated_at: (...import_start_time)).find_each do |v|
-      Rails.logger.info("Set vacancy #{v.id} as removed from external system")
+      log("Set vacancy #{v.id} as removed from external system")
       v.update_attribute(:status, :removed_from_external_system)
     end
   end
@@ -49,7 +49,7 @@ class ImportFromVacancySourcesJob < ApplicationJob
     failed_imported_vacancy = FailedImportedVacancy.find_by(external_reference: vacancy.external_reference)
 
     if failed_imported_vacancy.present?
-      Rails.logger.info("FailedImportedVacancy for #{vacancy.external_reference} from #{source_name} already exists.")
+      log("FailedImportedVacancy for #{vacancy.external_reference} from #{source_name} already exists.")
       failed_imported_vacancy
     else
       FailedImportedVacancy.create(source: source_name,
@@ -74,5 +74,9 @@ class ImportFromVacancySourcesJob < ApplicationJob
                              level: :warning,
                              fingerprint: ["{{ tags.source }}"]) # Groups all the sentry messages for each source
     end
+  end
+
+  def log(message)
+    Rails.logger.info("[ImportFromVacancySourcesJob] #{message}")
   end
 end
