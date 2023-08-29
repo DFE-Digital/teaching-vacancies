@@ -8,7 +8,7 @@ class LocationQuery < ApplicationQuery
 
   private
 
-  def call(field_name, location_query, radius_in_miles, sort_by_distance)
+  def call(field_name, location_query, radius_in_miles, sort_by_distance = false)
     normalised_query = location_query&.strip&.downcase
     radius = convert_miles_to_metres(radius_in_miles.to_i)
 
