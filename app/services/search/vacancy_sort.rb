@@ -6,7 +6,7 @@ class Search::VacancySort < RecordSort
   end
 
   def options
-    if location
+    if location.present?
       [distance_option, publish_on_non_default_desc_option, closing_date_asc_option]
     else
       [publish_on_desc_option, closing_date_asc_option]
@@ -14,7 +14,7 @@ class Search::VacancySort < RecordSort
   end
 
   def default_sort_option
-    if location
+    if location.present?
       distance_option
     else
       publish_on_desc_option
