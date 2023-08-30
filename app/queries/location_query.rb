@@ -39,8 +39,10 @@ class LocationQuery < ApplicationQuery
       INNER JOIN location_polygons
       ON ST_DWithin(#{field_name}, location_polygons.area, #{radius})
     ").where("location_polygons.id = ?", polygon.id)
-    
+
     sort_by_polygon_distance(field_name) if sort_by_distance
+
+    scope
   end
 
   def handle_coordinates(field_name, query, radius, sort_by_distance)
@@ -54,6 +56,8 @@ class LocationQuery < ApplicationQuery
     @scope = scope.where("ST_DWithin(#{field_name}, ?, ?)", point, radius)
 
     sort_by_coordinates_distance(field_name, point) if sort_by_distance
+    
+    scope
   end
 
   def sort_by_polygon_distance(field_name)
