@@ -55,14 +55,13 @@ class Search::VacancySearch
   private
 
   def scope
-    sort_by_distance = sort.by == 'distance'
+    sort_by_distance = sort.by == "distance"
     scope = Vacancy.live.includes(:organisations)
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
-    scope = scope.search_by_location(location, radius, sort_by_distance) if location
+    scope = scope.search_by_location(location, radius, sort_by_distance: sort_by_distance) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
-    scope = order_scope(scope, sort_by_distance)
-    scope
+    order_scope(scope, sort_by_distance)
   end
 
   def sort_by
@@ -79,6 +78,6 @@ class Search::VacancySearch
     # only re-order the query if sort is a valid db column
     return scope unless sort&.by_db_column?
 
-    scope = scope.reorder(sort_by => sort.order)
+    scope.reorder(sort_by => sort.order)
   end
 end

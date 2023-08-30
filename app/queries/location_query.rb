@@ -8,7 +8,7 @@ class LocationQuery < ApplicationQuery
 
   private
 
-  def call(field_name, location_query, radius_in_miles, sort_by_distance = false)
+  def call(field_name, location_query, radius_in_miles, sort_by_distance: false)
     normalised_query = normalise_query(location_query)
     radius = convert_miles_to_metres(radius_in_miles.to_i)
 
@@ -47,7 +47,7 @@ class LocationQuery < ApplicationQuery
 
   def handle_coordinates(field_name, query, radius, sort_by_distance)
     coordinates = Geocoding.new(query).coordinates
-    
+
     # TODO: Geocoding class currently returns this on error, it should probably raise a
     # suitable error instead. Refactor later!
     return scope.none if coordinates == [0, 0]
@@ -56,7 +56,7 @@ class LocationQuery < ApplicationQuery
     @scope = scope.where("ST_DWithin(#{field_name}, ?, ?)", point, radius)
 
     sort_by_coordinates_distance(field_name, point) if sort_by_distance
-    
+
     scope
   end
 
