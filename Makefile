@@ -123,6 +123,7 @@ qa: ## qa
 		$(eval space=teaching-vacancies-dev)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
+		$(eval include global_config/qa.sh)
 
 .PHONY: sandbox
 sandbox: ## sandbox
