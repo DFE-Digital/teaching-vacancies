@@ -42,8 +42,6 @@ class RecordSort
   def by_db_column?
     # JobApplication.last_name is a virtual attribute
     # Search::VacancySort allows sorting by 'relevance' which is neither a db column nor a virtual attribute
-    return true if sort_by == "publish_on_non_default"
-
     sort_by.in?(record_class.column_names)
   end
 

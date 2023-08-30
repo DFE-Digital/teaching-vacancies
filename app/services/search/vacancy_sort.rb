@@ -21,6 +21,12 @@ class Search::VacancySort < RecordSort
     end
   end
 
+  def by_db_column?
+    return true if sort_by == "publish_on_non_default"
+
+    super
+  end
+
   private
 
   attr_reader :keyword, :location
