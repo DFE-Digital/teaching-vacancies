@@ -37,6 +37,7 @@ class LocationQuery < ApplicationQuery
       point = "POINT(#{coordinates.second} #{coordinates.first})"
 
       query = scope.where("ST_DWithin(#{field_name}, ?, ?)", point, radius)
+      
       if sort_by_distance
         query = query.select("vacancies.*, ST_Distance(#{field_name}, '#{point}') AS distance")
                      .order(Arel.sql("ST_Distance(#{field_name}, '#{point}')"))

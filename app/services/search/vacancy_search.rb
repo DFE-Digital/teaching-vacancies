@@ -61,7 +61,7 @@ class Search::VacancySearch
     scope = scope.search_by_location(location, radius, sort_by_distance) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
-    scope = scope.reorder(sort_by => sort.order) if sort&.by_db_column? && !sort_by_distance
+    scope = order_scope(scope, sort_by_distance)
     scope
   end
 
@@ -71,5 +71,14 @@ class Search::VacancySearch
     else
       sort.by
     end
+  end
+
+  def order_scope(scope, sort_by_distance)
+    # if sort_by_distance is true then the sorting is handled by the search_by_filter method so we do not re-order here.
+    return scope if sort_by_distance
+    # only re-order the query if sort is a valid db column
+    return scope unless sort&.by_db_column?
+
+    scope = scope.reorder(sort_by => sort.order)
   end
 end
