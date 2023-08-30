@@ -120,5 +120,11 @@ RSpec.describe Search::VacancySort do
 
       it { is_expected.to be_by_db_column }
     end
+
+    context "when sorting by publish_on" do
+      let(:sort_by) { "publish_on_non_default" }
+
+      it { is_expected.to be_by_db_column }
+    end
   end
 end
