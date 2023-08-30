@@ -174,6 +174,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       end
 
       it "does not show distance measurements" do
+        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations) { nil }
         fill_in "location-field", with: "London"
         click_on I18n.t("buttons.search")
         expect_page_to_show_jobs([maths_job1])
