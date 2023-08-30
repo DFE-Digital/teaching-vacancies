@@ -120,7 +120,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       visit jobs_path
       select "Closing date", :from => "sort-by-field"
       click_button "Sort"
-      expect(page).to have_select('sort_by', selected: 'Closing date')
+      expect(page).to have_select("sort_by", selected: "Closing date")
       expect("Maths 1").to appear_before("Physics Teacher")
       expect("Physics Teacher").to appear_before("Maths Teacher 2")
       expect("Maths Teacher 2").to appear_before("Chemistry Teacher")
@@ -220,23 +220,23 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       end
 
       it "orders by distance by default" do
-        expect(page).to have_select('sort_by', selected: 'Distance')
+        expect(page).to have_select("sort_by", selected: "Distance")
         expect("Physics Teacher").to appear_before("Maths 1")
         expect("Maths 1").to appear_before("Maths Teacher 2")
       end
 
       it "jobseekers can then choose to sort by different sort option", js: true do
-        expect(page).to have_select('sort_by', selected: 'Distance')
+        expect(page).to have_select("sort_by", selected: "Distance")
 
         select "Closing date", :from => "sort-by-field"
 
         expect("Maths 1").to appear_before("Physics Teacher")
         expect("Physics Teacher").to appear_before("Maths Teacher 2")
-        expect(page).to have_select('sort_by', selected: 'Closing date')
+        expect(page).to have_select("sort_by", selected: "Closing date")
 
         select "Newest job", :from => "sort-by-field"
 
-        expect(page).to have_select('sort_by', selected: 'Newest job')
+        expect(page).to have_select("sort_by", selected: "Newest job")
         expect("Maths 1").to appear_before("Maths Teacher 2")
         expect("Maths Teacher 2").to appear_before("Physics Teacher")
       end

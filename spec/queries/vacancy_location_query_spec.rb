@@ -37,7 +37,7 @@ RSpec.describe VacancyLocationQuery do
 
       before do
         expect(default_scope).to receive(:joins).with(
-          /\s*INNER JOIN location_polygons\s*ON\s*ST_DWithin\(vacancies.geolocation, location_polygons.area, 67578\)\s*/i
+          /\s*INNER JOIN location_polygons\s*ON\s*ST_DWithin\(vacancies.geolocation, location_polygons.area, 67578\)\s*/i,
         ).and_return(join_scope)
 
         expect(join_scope).to receive(:where).with("location_polygons.id = ?", location_polygon.id).and_return(where_scope)
