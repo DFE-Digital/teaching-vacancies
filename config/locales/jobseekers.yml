@@ -603,8 +603,8 @@ en:
         work:
           caption: Personal details
           hint:
-            text: There is %{link} if you qualified outside the UK.
-            link: guidance for working as a teacher in England (link opens in a new tab)
+            text: If you are a non-UK citizen you will need a visa or immigration status which allows you to work as a teacher in England. Learn more about %{link}
+            link: teaching in England as a non-UK citizen.
           learn_more:
             other_routes_to_qts: other routes to QTS
             qualifications_and_experience: the qualifications and experience you’ll need
@@ -615,7 +615,7 @@ en:
           options:
             false: "No"
             true: "Yes"
-          page_title: Do you have the right to work in the UK?
+          page_title: Do you currently have the right to work in the UK?
           schools_cannot_give_advice:
             text: "Schools cannot give you advice about becoming a teacher in England. However, you can visit %{link} to learn more about:"
             link: Teach in England if you trained overseas (link opens in new tab)
