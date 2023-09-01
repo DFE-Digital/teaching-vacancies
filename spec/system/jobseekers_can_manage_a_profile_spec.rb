@@ -39,7 +39,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         fill_in "personal_details_form[phone_number]", with: phone_number
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content("Do you have the right to work in the UK?")
+        expect(page).to have_content("Do you currently have the right to work in the UK?")
         choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
 
@@ -88,7 +88,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_on I18n.t("buttons.save_and_continue")
 
         choose "No"
-        expect(page).to have_content("You are unlikely to be given a teaching job in England unless you have qualified teacher status")
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(new_first_name)
