@@ -20,7 +20,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
   end
 
   context "when a publisher has vacancies that expired between 2 and 6 weeks ago" do
-    let(:first_vacancy_in_email) { Vacancy.order(:expires_at).first }
+    let!(:first_vacancy_in_email) { create(:vacancy, :published, publisher: publisher, expires_at: 5.weeks.ago) }
 
     before do
       create_list(:vacancy, 5, :published, publisher: publisher, expires_at: 4.weeks.ago)
