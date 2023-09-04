@@ -180,6 +180,7 @@ jobs:
 
   deploy:
     name: Deploy app
+    environment: ${{ matrix.environment }}
     strategy:
       max-parallel: 1
       # Creates a variable 'environment' from the build job output 'matrix_environments'
@@ -241,6 +242,7 @@ jobs:
         pr_id: ${{ github.event.number }}
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Notify twd_tv_dev channel on ${{ env.ENVIRONMENT }} deployment failure
       if: steps.deploy_app_to_env.conclusion != 'success'
