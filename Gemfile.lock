@@ -148,7 +148,7 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.2.0)
       railties (>= 6.0.0)
-    database_consistency (1.7.19)
+    database_consistency (1.7.20)
       activerecord (>= 3.2)
     date (3.3.3)
     declarative (0.0.20)
