@@ -56,6 +56,7 @@ terraform.tfstate.d/
 .terraform/
 .terraform.tfstate.lock.info
 terraform/aks/vendor
+terraform/app/vendor/
 terraform/domains/environment_domains/vendor
 terraform.tfstate*
 tokens

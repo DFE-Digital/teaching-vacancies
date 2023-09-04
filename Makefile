@@ -91,13 +91,7 @@ review: ## review # Requires `pr_id=NNNN`
 		$(eval export TF_VAR_environment=$(env))
 		$(eval var_file=review)
 		$(eval backend_config=-backend-config="key=review/$(env).tfstate")
-
-.PHONY: review_aks
-review_aks:
-	$(eval include global_config/review.sh)
-	$(if $(pr_id), , $(error Missing environment variable "pr_id"))
-	$(eval ENVIRONMENT=review-pr-$(pr_id))
-	$(eval export TF_VAR_environment=$(ENVIRONMENT))
+		$(eval include global_config/review.sh)
 
 .PHONY: staging
 staging: ## staging
@@ -105,6 +99,7 @@ staging: ## staging
 		$(eval space=teaching-vacancies-staging)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
+		$(eval include global_config/staging.sh)
 
 .PHONY: production
 production: ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
@@ -113,6 +108,7 @@ production: ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
 		$(eval space=teaching-vacancies-production)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
+		$(eval include global_config/production.sh)
 
 .PHONY: qa
 qa: ## qa
@@ -120,6 +116,7 @@ qa: ## qa
 		$(eval space=teaching-vacancies-dev)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
+		$(eval include global_config/qa.sh)
 
 .PHONY: sandbox
 sandbox: ## sandbox
@@ -127,6 +124,7 @@ sandbox: ## sandbox
 		$(eval space=teaching-vacancies-production)
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
+		$(eval include global_config/sandbox.sh)
 
 ##@ Docker - build, tag, and push an image from local code. Requires Docker CLI
 
@@ -171,8 +169,15 @@ ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
 
 .PHONY: terraform-app-init
-terraform-app-init:
-		terraform -chdir=terraform/app init -reconfigure -input=false $(backend_config)
+terraform-app-init: bin/terrafile set-azure-account
+	./bin/terrafile -p terraform/app/vendor/modules -f terraform/workspace-variables/$(var_file)_Terrafile
+	terraform -chdir=terraform/app init -reconfigure -input=false $(backend_config)
+
+	$(eval export TF_VAR_azure_resource_prefix=${AZURE_RESOURCE_PREFIX})
+	$(eval export TF_VAR_config_short=${CONFIG_SHORT})
+	$(eval export TF_VAR_service_name=${SERVICE_NAME})
+	$(eval export TF_VAR_service_short=${SERVICE_SHORT})
+
 
 .PHONY: terraform-app-plan
 terraform-app-plan: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-app-plan
