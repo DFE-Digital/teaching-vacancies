@@ -1,0 +1,14 @@
+- content_for :page_title_prefix, page_title_prefix(step_process, form)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for form, url: wizard_path(current_step), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_radio_buttons_fieldset :visa_sponsorship_available, legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } do
+        = f.govuk_radio_button :visa_sponsorship_available, "true", link_errors: true, label: { text: 'Yes' }
+          p = t("publishers.vacancies.job_applications.visa_sponsorship.yes_hint")
+        = f.govuk_radio_button :visa_sponsorship_available, "false", label: { text: 'No' }
+          p = t("publishers.vacancies.job_applications.visa_sponsorship.no_hint")
+
+      = render "publishers/vacancies/vacancy_form_partials/submit", f: f

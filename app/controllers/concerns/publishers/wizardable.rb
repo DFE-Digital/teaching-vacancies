@@ -113,6 +113,15 @@ module Publishers::Wizardable
     end.merge(completed_steps: completed_steps, current_organisation: current_organisation)
   end
 
+  def visa_sponsorship_params(params)
+    if params[:publishers_job_listing_visa_sponsorship_form]
+      params.require(:publishers_job_listing_visa_sponsorship_form)
+            .permit(:visa_sponsorship_available)
+    else
+      {}
+    end.merge(completed_steps: completed_steps, current_organisation: current_organisation)
+  end
+
   def contact_details_params(params)
     params.require(:publishers_job_listing_contact_details_form)
           .permit(:contact_email, :other_contact_email, :contact_number, :contact_number_provided)
