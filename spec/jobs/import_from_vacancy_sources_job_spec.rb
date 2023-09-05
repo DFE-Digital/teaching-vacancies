@@ -148,7 +148,7 @@ RSpec.describe ImportFromVacancySourcesJob do
           "updated_at" => nil,
           "working_patterns" => ["full_time"],
           "working_patterns_details" => nil,
-          "visa_sponsorship_available" => false
+          "visa_sponsorship_available" => false,
         )
       end
 
