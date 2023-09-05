@@ -102,6 +102,9 @@ variable "azure_enable_backup_storage" {
   default     = true
   description = "Create storage account for database backup"
 }
+variable "enable_monitoring" {
+  description = "Enable monitoring and alerting"
+}
 
 # AKS
 variable "namespace" {

@@ -100,6 +100,7 @@ module "paas" {
   config_short                  = var.config_short
   service_short                 = var.service_short
   deploy_azure_backing_services = var.deploy_azure_backing_services
+  enable_monitoring             = var.enable_monitoring
   cluster                       = var.cluster
 }
 
