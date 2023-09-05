@@ -26,6 +26,7 @@ jobs:
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name == 'workflow_dispatch'
     name: Delete review app
     runs-on: ubuntu-20.04
+    environment: review
 
     steps:
     - name: Set environment variables
@@ -96,12 +97,13 @@ jobs:
       with:
         terraform_version: 1.5.1
 
+    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+      with:
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: Terraform destroy (on PR closed)
       run: |
-        export TF_VAR_environment=${{env.ENVIRONMENT}}
-        terraform init -reconfigure -input=false -backend-config="key=review/review-pr-${{env.PR_NUMBER}}.tfstate"
-        terraform destroy -var-file ../workspace-variables/review.tfvars.json -auto-approve
-      working-directory: terraform/app
+        make review ci terraform-app-destroy pr_id=${{env.PR_NUMBER}}
 
     - name: Delete Terraform Statefile
       run: ./bin/delete-state-file ${{env.PR_NUMBER}}

@@ -167,6 +167,7 @@ check-terraform-variables:
 ci:	## Run in automation environment
 	$(eval export disable_passcode=true)
 	$(eval export AUTO_APPROVE=-auto-approve)
+	$(eval export SKIP_AZURE_LOGIN=true)
 
 .PHONY: terraform-app-init
 terraform-app-init: bin/terrafile set-azure-account
@@ -188,7 +189,7 @@ terraform-app-apply: terraform-app-init check-terraform-variables ## make passco
 		terraform -chdir=terraform/app apply -input=false -var-file ../workspace-variables/$(var_file).tfvars.json -auto-approve
 
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
-	terraform -chdir=terraform/app destroy -var-file ../workspace-variables/${var_file}.tfvars.json
+	terraform -chdir=terraform/app destroy -var-file ../workspace-variables/${var_file}.tfvars.json ${AUTO_APPROVE}
 
 terraform-app-database-replace: terraform-app-init check-terraform-variables
 	@if [[ "$(CONFIRM_REPLACE)" != "YES" ]]; then echo "Please enter "CONFIRM_REPLACE=YES" to run workflow"; exit 1; fi
