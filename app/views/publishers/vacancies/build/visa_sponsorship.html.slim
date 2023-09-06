@@ -6,9 +6,9 @@
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :visa_sponsorship_available, legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } do
-        = f.govuk_radio_button :visa_sponsorship_available, "true", link_errors: true, label: { text: 'Yes' }
+        = f.govuk_radio_button :visa_sponsorship_available, "true", link_errors: true
           p = t("publishers.vacancies.job_applications.visa_sponsorship.yes_hint")
-        = f.govuk_radio_button :visa_sponsorship_available, "false", label: { text: 'No' }
+        = f.govuk_radio_button :visa_sponsorship_available, "false"
           p = t("publishers.vacancies.job_applications.visa_sponsorship.no_hint")
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

@@ -8,7 +8,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
   context "when a single school" do
-    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1], visa_sponsorship_available: false) }
+    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
 
     before do
       visit organisation_jobs_with_type_path
@@ -42,7 +42,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   end
 
   context "when a school group" do
-    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1], visa_sponsorship_available: false) }
+    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
     let(:another_primary_school) { create(:school, name: "Another primary school", phase: "primary") }
     let(:trust) { create(:trust, schools: [primary_school, another_primary_school]) }
     let(:organisation) { trust }
