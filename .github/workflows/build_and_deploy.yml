@@ -43,7 +43,7 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: Checkout Code
 
       - name: Configure AWS credentials
@@ -190,7 +190,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       name: Checkout Code
 
     - name: Configure AWS credentials
@@ -296,7 +296,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         name: Checkout Code
 
       - name: Set environment variables from build output
