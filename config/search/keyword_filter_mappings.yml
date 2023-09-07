@@ -14,7 +14,13 @@
     - Art and design
 "assistant head":
   job_roles:
-    - senior_leader
+    - assistant_headteacher
+"assistant headteacher":
+  job_roles:
+    - assistant_headteacher
+"assistant head teacher":
+  job_roles:
+    - assistant_headteacher
 "biology":
   phases:
     - secondary
@@ -29,7 +35,7 @@
     - Business studies
 "ceo":
   job_roles:
-    - senior_leader
+    - headteacher
 "chemistry":
   phases:
     - secondary
@@ -64,7 +70,16 @@
     - Dance
 "deputy":
   job_roles:
-    - senior_leader
+    - deputy_headteacher
+"deputy head":
+  job_roles:
+    - deputy_headteacher
+"deputy headteacher":
+  job_roles:
+    - deputy_headteacher
+"deputy head teacher":
+  job_roles:
+    - deputy_headteacher
 "design":
   phases:
     - secondary
@@ -135,36 +150,39 @@
 "greek":
   subjects:
     - Classics
+"head":
+  job_roles:
+    - headteacher
 "head of english":
   job_roles:
-    - middle_leader
+    - head_of_department_or_curriculum
 "head of history":
   job_roles:
-    - middle_leader
+    - head_of_department_or_curriculum
 "head of maths":
   job_roles:
-    - middle_leader
+    - head_of_department_or_curriculum
 "head of mfl":
   job_roles:
-    - middle_leader
+    - head_of_department_or_curriculum
 "head of school":
   job_roles:
-    - senior_leader
+    - headteacher
 "head of science":
   job_roles:
-    - middle_leader
+    - head_of_department_or_curriculum
 "head of sixth form":
   job_roles:
-    - middle_leader
+    - head_of_year_or_phase
 "head of year":
   job_roles:
-    - middle_leader
+    - head_of_year_or_phase
 "head teacher":
   job_roles:
-    - senior_leader
+    - headteacher
 "headteacher":
   job_roles:
-    - senior_leader
+    - headteacher
 "health":
   subjects:
     - Health and social care
@@ -255,12 +273,18 @@
     - Law
 "leader":
   job_roles:
-    - middle_leader
-    - senior_leader
+    - headteacher
+    - deputy_headteacher
+    - assistant_headteacher
+    - head_of_year_or_phase
+    - head_of_department_or_curriculum
 "leadership":
   job_roles:
-    - middle_leader
-    - senior_leader
+    - headteacher
+    - deputy_headteacher
+    - assistant_headteacher
+    - head_of_year_or_phase
+    - head_of_department_or_curriculum
 "learning support assistant":
   job_roles:
     - teaching_assistant
@@ -310,10 +334,12 @@
     - Mandarin
 "middle leader":
   job_roles:
-    - middle_leader
+    - head_of_year_or_phase
+    - head_of_department_or_curriculum
 "middle leadership":
   job_roles:
-    - middle_leader
+    - head_of_year_or_phase
+    - head_of_department_or_curriculum
 "middle school":
   phases:
     - middle
@@ -354,7 +380,7 @@
     - Drama
 "phase leader":
   job_roles:
-    - middle_leader
+    - head_of_year_or_phase
 "philosophy":
   phases:
     - secondary
@@ -396,7 +422,7 @@
     - primary
 "principal":
   job_roles:
-    - senior_leader
+    - headteacher
 "product":
   phases:
     - secondary
@@ -468,13 +494,19 @@
     - sendco
 "senior leader":
   job_roles:
-    - senior_leader
+    - headteacher
+    - deputy_headteacher
+    - assistant_headteacher
 "senior leadership":
   job_roles:
-    - senior_leader
+    - headteacher
+    - deputy_headteacher
+    - assistant_headteacher
 "senior leadership team":
   job_roles:
-    - senior_leader
+    - headteacher
+    - deputy_headteacher
+    - assistant_headteacher
 "sex education":
   subjects:
     - Relationships and sex education
@@ -484,7 +516,9 @@
     - secondary
 "slt":
   job_roles:
-    - senior_leader
+    - headteacher
+    - deputy_headteacher
+    - assistant_headteacher
 "social care":
   phases:
     - secondary
@@ -601,4 +635,5 @@
     - Drama
 "tlr":
   job_roles:
-    - middle_leader
+    - head_of_year_or_phase
+    - head_of_department_or_curriculum
