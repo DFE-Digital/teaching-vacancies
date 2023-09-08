@@ -57,6 +57,7 @@ class VacancySource::Source::Ventrus
       working_patterns: item["Working_Patterns"].presence&.split(","),
       contract_type: item["Contract_Type"].presence,
       phases: phases_for(item),
+      visa_sponsorship_available: false,
     }.merge(organisation_fields(item))
   end
 

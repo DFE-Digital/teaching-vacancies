@@ -65,6 +65,7 @@ class VacancySource::Source::UnitedLearning
       phases: [organisations_for(item).first&.readable_phase],
       organisations: organisations_for(item),
       about_school: organisations_for(item).first&.description,
+      visa_sponsorship_available: false,
     }
   end
 
