@@ -95,13 +95,25 @@ module "paas" {
   documents_s3_bucket_force_destroy            = var.documents_s3_bucket_force_destroy
   schools_images_logos_s3_bucket_force_destroy = var.schools_images_logos_s3_bucket_force_destroy
   # AKS
-  namespace                     = var.namespace
-  azure_resource_prefix         = var.azure_resource_prefix
-  config_short                  = var.config_short
-  service_short                 = var.service_short
-  deploy_azure_backing_services = var.deploy_azure_backing_services
-  enable_monitoring             = var.enable_monitoring
-  cluster                       = var.cluster
+  namespace                         = var.namespace
+  azure_resource_prefix             = var.azure_resource_prefix
+  config_short                      = var.config_short
+  service_short                     = var.service_short
+  deploy_azure_backing_services     = var.deploy_azure_backing_services
+  enable_monitoring                 = var.enable_monitoring
+  cluster                           = var.cluster
+  aks_web_app_start_command         = var.aks_web_app_start_command
+  enable_postgres_ssl               = var.enable_postgres_ssl
+  postgres_flexible_server_sku      = var.postgres_flexible_server_sku
+  postgres_enable_high_availability = var.postgres_enable_high_availability
+  redis_cache_capacity              = var.redis_cache_capacity
+  redis_cache_family                = var.redis_cache_family
+  redis_cache_sku_name              = var.redis_cache_sku_name
+  redis_queue_capacity              = var.redis_queue_capacity
+  redis_queue_family                = var.redis_queue_family
+  redis_queue_sku_name              = var.redis_queue_sku_name
+  add_database_name_suffix          = var.add_database_name_suffix
+  azure_enable_backup_storage       = var.azure_enable_backup_storage
 }
 
 module "statuscake" {
