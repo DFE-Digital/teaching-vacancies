@@ -214,5 +214,5 @@ locals {
     try(var.app_env_values["DOMAIN"], local.web_app_aks_domain)
   )
 
-  database_name_suffix = var.add_database_name_suffix ? "${var.environment}" : ""
+  database_name_suffix = var.add_database_name_suffix ? "${var.environment}" : null
 }
