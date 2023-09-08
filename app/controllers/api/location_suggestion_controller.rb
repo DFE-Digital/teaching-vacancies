@@ -24,6 +24,7 @@ class Api::LocationSuggestionController < Api::ApplicationController
 
   def check_valid_params
     return render(json: { error: "Missing location input" }, status: :bad_request) if location.nil?
-    return render(json: { error: "Insufficient location input" }, status: :bad_request) if location.length < 3
+
+    render(json: { error: "Insufficient location input" }, status: :bad_request) if location.length < 3
   end
 end
