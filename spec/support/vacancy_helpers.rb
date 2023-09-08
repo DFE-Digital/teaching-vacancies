@@ -106,6 +106,10 @@ module VacancyHelpers
     choose I18n.t("helpers.label.publishers_job_listing_school_visits_form.school_visits_options.#{vacancy.school_visits}")
   end
 
+  def fill_in_visa_sponsorship_form_fields(vacancy)
+    choose I18n.t("helpers.label.publishers_job_listing_visa_sponsorship_form.visa_sponsorship_available_options.#{vacancy.visa_sponsorship_available}")
+  end
+
   def fill_in_contact_details_form_fields(vacancy)
     choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_email_options.other")
     fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: vacancy.contact_email
