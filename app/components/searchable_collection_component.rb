@@ -17,13 +17,13 @@ class SearchableCollectionComponent < ApplicationComponent
   end
 
   def scrollable_class
-    return "searchable-collection-component--scrollable" if scrollable
+    "searchable-collection-component--scrollable" if scrollable
   end
 
   def border_class
     return nil unless border
 
-    return "searchable-collection-component--border" if searchable?
+    "searchable-collection-component--border" if searchable?
   end
 
   private
