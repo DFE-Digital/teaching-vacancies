@@ -13,5 +13,13 @@ terraform {
       source  = "StatusCakeDev/statuscake"
       version = "2.0.4"
     }
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.70.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "2.23.0"
+    }
   }
 }

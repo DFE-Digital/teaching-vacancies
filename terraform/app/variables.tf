@@ -105,6 +105,9 @@ variable "paas_web_app_memory" {
 variable "paas_web_app_start_command" {
   default = "bundle exec rake cf:on_first_instance db:migrate && rails s"
 }
+variable "aks_web_app_start_command" {
+  default = ["/bin/sh", "-c", "bundle exec rake db:migrate && rails s"]
+}
 
 variable "paas_worker_app_deployment_strategy" {
   default = "blue-green-v2"
@@ -159,6 +162,46 @@ variable "config_short" {
 }
 variable "service_short" {
   description = "Short name to identify the service. Up to 6 charcters."
+}
+variable "enable_postgres_ssl" {
+  default     = true
+  description = "Enforce SSL connection from the client side"
+}
+variable "postgres_flexible_server_sku" {
+  default     = "B_Standard_B1ms"
+  description = "Postgres database instance type"
+}
+variable "postgres_enable_high_availability" {
+  default     = false
+  description = "Deploy postgres as a cluster across multiple availability zones"
+}
+variable "redis_cache_capacity" {
+  default     = 1
+  description = "The size of the Redis cache to deploy e.g. 1 for P1"
+}
+variable "redis_cache_family" {
+  default     = "C"
+  description = "The SKU family/pricing group to use. e.g. P for P1"
+}
+variable "redis_cache_sku_name" {
+  default     = "Standard"
+  description = "The SKU of Redis to use. Possible values are Basic, Standard and Premium."
+}
+variable "redis_queue_capacity" {
+  default     = 1
+  description = "The size of the Redis cache to deploy e.g. 1 for P1"
+}
+variable "redis_queue_family" {
+  default     = "C"
+  description = "The SKU family/pricing group to use. e.g. P for P1"
+}
+variable "redis_queue_sku_name" {
+  default     = "Standard"
+  description = "The SKU of Redis to use. Possible values are Basic, Standard and Premium."
+}
+variable "add_database_name_suffix" {
+  default     = false
+  description = "Add optional suffix to the postgres instance name to differentiate between environments"
 }
 
 locals {
