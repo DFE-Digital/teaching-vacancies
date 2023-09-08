@@ -58,6 +58,7 @@ class VacancySource::Source::MyNewTerm
       phases: phases_for(item),
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
+      visa_sponsorship_available: false,
     }.merge(organisation_fields(item))
      .merge(start_date_fields(item))
   end

@@ -51,6 +51,7 @@ class VacancySource::Source::Fusion
       contract_type: item["contractType"].presence,
       phases: item["phase"].presence&.parameterize(separator: "_"),
       key_stages: item["keyStages"].presence&.split(","),
+      visa_sponsorship_available: false,
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,

@@ -30,6 +30,7 @@ RSpec.describe VacancySource::Source::UnitedLearning do
       expect(vacancy.working_patterns).to eq(%w[full_time])
       expect(vacancy.contract_type).to eq("permanent")
       expect(vacancy.phases).to eq(%w[secondary])
+      expect(vacancy.visa_sponsorship_available).to eq false
 
       expect(vacancy.organisations.first).to eq(school)
 
