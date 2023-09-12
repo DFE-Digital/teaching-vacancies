@@ -1,7 +1,7 @@
 class VacancySource::Source::Ark
   include VacancySource::Parser
 
-  FEED_URL = ENV.fetch("VACANCY_SOURCE_VENTRUS_FEED_URL").freeze
+  FEED_URL = ENV.fetch("VACANCY_SOURCE_ARK_FEED_URL").freeze
   SOURCE_NAME = "ark".freeze
   TRUST_UID = "4243".freeze
 
