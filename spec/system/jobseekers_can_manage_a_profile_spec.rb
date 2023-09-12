@@ -48,7 +48,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).to have_content(first_name)
         expect(page).to have_content(last_name)
         expect(page).to have_content(phone_number)
-        expect(page).to have_content("Do you have the right to work in the UK?Yes")
+        expect(page).to have_content("Do you currently have the right to work in the UK?Yes")
       end
 
       it "does not display a notice to inform the user about prefilling" do
@@ -94,7 +94,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).to have_content(new_last_name)
         expect(page).to have_content("Do you want to provide a phone number?No")
         expect(page).not_to have_content(old_phone_number)
-        expect(page).to have_content("Do you have the right to work in the UK?No")
+        expect(page).to have_content("Do you currently have the right to work in the UK?No")
       end
     end
   end
