@@ -69,10 +69,9 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:local_authority_school1) { create(:school, school_type: "Local authority maintained schools") }
   let(:local_authority_school2) { create(:school, school_type: "Local authority maintained schools") }
   let(:school) { create(:school) }
-
   let!(:maths_job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 1, geolocation: "POINT(-0.019501 51.504949)") }
-  let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 3, geolocation: "POINT(-2.2374 53.4810)") }
-  let!(:job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary], expires_at: Date.current + 2) }
+  let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 3, geolocation: "POINT(-1.8964 52.4820)") }
+  let!(:job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 3, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary], expires_at: Date.current + 2, geolocation: "POINT(-0.1273 51.4994)") }
   let!(:job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy2], expires_at: Date.current + 5) }
   let!(:job3) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1], expires_at: Date.current + 4) }
   let!(:job4) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Geography Teacher", subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2], expires_at: Date.current + 6) }
@@ -121,6 +120,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       visit jobs_path
       select "Closing date", :from => "sort-by-field"
       click_button "Sort"
+      expect(page).to have_select("sort_by", selected: "Closing date")
       expect("Maths 1").to appear_before("Physics Teacher")
       expect("Physics Teacher").to appear_before("Maths Teacher 2")
       expect("Maths Teacher 2").to appear_before("Chemistry Teacher")
@@ -174,6 +174,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       end
 
       it "does not show distance measurements" do
+        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations) { nil }
         fill_in "location-field", with: "London"
         click_on I18n.t("buttons.search")
         expect_page_to_show_jobs([maths_job1])
@@ -192,10 +193,20 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     end
 
     context "when jobseekers search is not a country or an existing location polygon" do
-      it "shows distance between school and their location" do
+      before do
+        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations) { nil }
         fill_in "location-field", with: "Birmingham"
         select "200 miles", from: "radius-field"
         click_on I18n.t("buttons.search")
+      end
+
+      it "shows distance between school and their location" do
+        expect(page).to have_content "Jobs in or near Birmingham"
+
+        within(".search-results__item", text: "Physics Teacher") do
+          distance_text = find("dt", text: "Distance from location").sibling("dd").text
+          expect(distance_text).to eq("76.6 miles")
+        end
 
         within(".search-results__item", text: "Maths 1") do
           distance_text = find("dt", text: "Distance from location").sibling("dd").text
@@ -204,8 +215,30 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         within(".search-results__item", text: "Maths Teacher 2") do
           distance_text = find("dt", text: "Distance from location").sibling("dd").text
-          expect(distance_text).to eq("160.0 miles")
+          expect(distance_text).to eq("90.1 miles")
         end
+      end
+
+      it "orders by distance by default" do
+        expect(page).to have_select("sort_by", selected: "Distance")
+        expect("Physics Teacher").to appear_before("Maths 1")
+        expect("Maths 1").to appear_before("Maths Teacher 2")
+      end
+
+      it "jobseekers can then choose to sort by different sort option", js: true do
+        expect(page).to have_select("sort_by", selected: "Distance")
+
+        select "Closing date", :from => "sort-by-field"
+
+        expect("Maths 1").to appear_before("Physics Teacher")
+        expect("Physics Teacher").to appear_before("Maths Teacher 2")
+        expect(page).to have_select("sort_by", selected: "Closing date")
+
+        select "Newest job", :from => "sort-by-field"
+
+        expect(page).to have_select("sort_by", selected: "Newest job")
+        expect("Maths 1").to appear_before("Maths Teacher 2")
+        expect("Maths Teacher 2").to appear_before("Physics Teacher")
       end
     end
   end
