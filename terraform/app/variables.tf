@@ -120,7 +120,6 @@ variable "paas_worker_app_instances" {
 variable "paas_worker_app_memory" {
   default = 1024
 }
-
 variable "paas_restore_from_db_guid" {
   default = ""
 }
@@ -202,6 +201,12 @@ variable "redis_queue_sku_name" {
 variable "add_database_name_suffix" {
   default     = false
   description = "Add optional suffix to the postgres instance name to differentiate between environments"
+}
+variable "aks_worker_app_instances" {
+  default = 1
+}
+variable "aks_worker_app_memory" {
+  default = "1Gi"
 }
 
 locals {

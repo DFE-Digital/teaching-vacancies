@@ -45,3 +45,23 @@ module "web_application" {
   command      = var.aks_web_app_start_command
   probe_path   = "/check"
 }
+
+module "worker_application" {
+  source = "../../vendor/modules/aks//aks/application"
+
+  name   = "worker"
+  is_web = false
+
+  namespace    = var.namespace
+  environment  = var.environment
+  service_name = var.service_name
+
+  cluster_configuration_map  = module.cluster_data.configuration_map
+  kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
+  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
+
+  docker_image = var.app_docker_image
+  command      = ["/bin/sh", "-c", "bundle exec sidekiq -C config/sidekiq.yml"]
+  max_memory   = var.aks_worker_app_memory
+  replicas     = var.aks_worker_app_instances
+}
