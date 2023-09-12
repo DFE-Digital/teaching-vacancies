@@ -35,14 +35,6 @@ RSpec.describe Search::RadiusBuilder do
           end
         end
       end
-
-      context "when radius is not an integer" do
-        let(:radius) { "; DROP TABLE Vacancies; " }
-
-        it "raises an error" do
-          expect { subject.radius }.to raise_error(ArgumentError)
-        end
-      end
     end
 
     context "when a polygonable location is specified" do

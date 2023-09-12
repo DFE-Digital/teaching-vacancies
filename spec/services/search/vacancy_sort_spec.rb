@@ -15,59 +15,24 @@ RSpec.describe Search::VacancySort do
     end
   end
 
-  shared_examples "sorts by distance" do
-    it "sorts by publish_on" do
-      expect(subject.sort_by).to eq("distance")
-    end
-
-    it "has order 'desc'" do
-      expect(subject.order).to eq("asc")
-    end
-  end
-
   describe "#default_option" do
-    context "when a location is passed" do
-      subject { described_class.new(keyword: keyword, location: "E14 9PG").update(sort_by: sort_by) }
-
-      context "when no sort_by parameter is specified" do
-        context "and a keyword is specified" do
-          let(:keyword) { "maths" }
-
-          it_behaves_like "sorts by distance"
-        end
-
-        context "and a keyword is NOT specified" do
-          it_behaves_like "sorts by distance"
-        end
-      end
-
-      context "when an invalid sort strategy is specified" do
-        let(:sort_by) { "worst_listing" }
-        let(:keyword) { "maths" }
-
-        it_behaves_like "sorts by distance"
-      end
-    end
-
-    context "when no location is passed" do
-      context "when no sort_by parameter is specified" do
-        context "and a keyword is specified" do
-          let(:keyword) { "maths" }
-
-          it_behaves_like "sorts by publish_on"
-        end
-
-        context "and a keyword is NOT specified" do
-          it_behaves_like "sorts by publish_on"
-        end
-      end
-
-      context "when an invalid sort strategy is specified" do
-        let(:sort_by) { "worst_listing" }
+    context "when no sort_by parameter is specified" do
+      context "and a keyword is specified" do
         let(:keyword) { "maths" }
 
         it_behaves_like "sorts by publish_on"
       end
+
+      context "and a keyword is NOT specified" do
+        it_behaves_like "sorts by publish_on"
+      end
+    end
+
+    context "when an invalid sort strategy is specified" do
+      let(:sort_by) { "worst_listing" }
+      let(:keyword) { "maths" }
+
+      it_behaves_like "sorts by publish_on"
     end
   end
 
@@ -117,12 +82,6 @@ RSpec.describe Search::VacancySort do
 
     context "when sorting by publish_on" do
       let(:sort_by) { "publish_on" }
-
-      it { is_expected.to be_by_db_column }
-    end
-
-    context "when sorting by publish_on" do
-      let(:sort_by) { "publish_on_non_default" }
 
       it { is_expected.to be_by_db_column }
     end

@@ -35,8 +35,6 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
               h2 class="govuk-heading-m govuk-!-margin-bottom-3 govuk-!-margin-top-1" = sorted_by_string
             div class="right"
               = render "vacancies/search/sort", form: @form, vacancies_search: @vacancies_search, vacancies: @vacancies, display: "inline-dropdown"
-          - if @vacancies_search.location
-            p = "Jobs in or near #{@vacancies_search.location}"
           .govuk-grid-row
             .govuk-grid-column-full
               hr class="govuk-section-break govuk-section-break--s govuk-section-break--visible govuk-!-margin-bottom-3"
