@@ -58,6 +58,6 @@ class Api::MarkersController < Api::ApplicationController
   end
 
   def check_valid_params
-    return render(json: { error: "Missing params" }, status: :bad_request) unless params[:parent_id] && params[:marker_type]
+    render(json: { error: "Missing params" }, status: :bad_request) unless params[:parent_id] && params[:marker_type]
   end
 end

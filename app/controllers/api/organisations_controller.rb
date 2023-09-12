@@ -23,6 +23,7 @@ class Api::OrganisationsController < Api::ApplicationController
 
   def check_valid_params
     return render(json: { error: "Missing query" }, status: :bad_request) if query.nil?
-    return render(json: { error: "Insufficient query" }, status: :bad_request) if query.length < 3
+
+    render(json: { error: "Insufficient query" }, status: :bad_request) if query.length < 3
   end
 end

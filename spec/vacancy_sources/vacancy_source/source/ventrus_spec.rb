@@ -22,6 +22,7 @@ RSpec.describe VacancySource::Source::Ventrus do
         working_patterns: %w[part_time],
         contract_type: "permanent",
         phases: %w[secondary],
+        visa_sponsorship_available: false,
       }
     end
 

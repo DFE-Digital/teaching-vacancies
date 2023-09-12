@@ -67,6 +67,8 @@ variable "web_app_memory" {
 
 variable "web_app_start_command" {
 }
+variable "aks_web_app_start_command" {
+}
 
 variable "worker_app_deployment_strategy" {
 }
@@ -127,7 +129,30 @@ variable "cluster" {
   description = "AKS cluster where this app is deployed. Either 'test' or 'production'"
 }
 
+variable "statuscake_alerts" {
+  type    = map(any)
+  default = {}
+}
+
+variable "enable_postgres_ssl" {
+  default     = true
+  description = "Enforce SSL connection from the client side"
+}
+variable "app_name" { default = null }
+
+variable "postgres_flexible_server_sku" {}
+variable "postgres_enable_high_availability" {}
+variable "redis_cache_capacity" {}
+variable "redis_cache_family" {}
+variable "redis_cache_sku_name" {}
+variable "redis_queue_capacity" {}
+variable "redis_queue_family" {}
+variable "redis_queue_sku_name" {}
+variable "add_database_name_suffix" {}
+
 locals {
+  postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
+
   app_env_api_keys = merge(
     yamldecode(data.aws_ssm_parameter.app_env_api_key_big_query.value),
     yamldecode(data.aws_ssm_parameter.app_env_api_key_google.value)
@@ -180,5 +205,14 @@ locals {
   postgres_extensions  = { enable_extensions = ["pgcrypto", "fuzzystrmatch", "plpgsql", "pg_trgm", "postgis"] }
   postgres_json_params = merge(local.postgres_backup_restore_params, local.postgres_extensions)
 
+  # AKS
+  # Use the AKS ingress domain by default. Override with the DOMAIN variable is present
+  # The TEMP_DOMAIN variable takes precedence during the migration from PaaS to AKS
+  web_app_aks_domain = "teaching-vacancies-${var.environment}.${module.cluster_data.ingress_domain}"
+  web_app_domain = try(
+    var.app_env_values["TEMP_DOMAIN"],
+    try(var.app_env_values["DOMAIN"], local.web_app_aks_domain)
+  )
 
+  database_name_suffix = var.add_database_name_suffix ? "${var.environment}" : null
 }

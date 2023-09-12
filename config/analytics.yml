@@ -407,6 +407,7 @@ shared:
     - further_details_provided
     - further_details
     - include_additional_documents
+    - visa_sponsorship_available
   failed_imported_vacancies:
     - id
     - import_errors

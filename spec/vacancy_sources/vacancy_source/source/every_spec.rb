@@ -21,6 +21,7 @@ RSpec.describe VacancySource::Source::Every do
       working_patterns: %w[full_time],
       contract_type: "fixed_term",
       phases: %w[primary],
+      visa_sponsorship_available: false,
     }
   end
 

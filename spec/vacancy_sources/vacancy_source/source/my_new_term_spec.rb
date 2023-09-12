@@ -41,6 +41,7 @@ RSpec.describe VacancySource::Source::MyNewTerm do
           contract_type: "permanent",
           phases: %w[primary],
           subjects: %w[Geography],
+          visa_sponsorship_available: false,
         }
       end
 
