@@ -69,34 +69,30 @@ variable "web_app_start_command" {
 }
 variable "aks_web_app_start_command" {
 }
-
 variable "worker_app_deployment_strategy" {
 }
-
 variable "worker_app_instances" {
   default = 1
 }
-
+variable "aks_worker_app_instances" {
+}
 variable "worker_app_memory" {
   default = 512
 }
-
+variable "aks_worker_app_memory" {
+}
 variable "route53_zones" {
   type = list(any)
 }
-
 variable "route53_a_records" {
   type = list(any)
 }
-
 variable "hostname_domain_map" {
   type = map(any)
 }
-
 variable "restore_from_db_guid" {
 
 }
-
 variable "db_backup_before_point_in_time" {
 
 }
@@ -128,17 +124,14 @@ variable "deploy_azure_backing_services" {
 variable "cluster" {
   description = "AKS cluster where this app is deployed. Either 'test' or 'production'"
 }
-
 variable "statuscake_alerts" {
   type    = map(any)
   default = {}
 }
-
 variable "enable_postgres_ssl" {
   default     = true
   description = "Enforce SSL connection from the client side"
 }
-variable "app_name" { default = null }
 
 variable "postgres_flexible_server_sku" {}
 variable "postgres_enable_high_availability" {}

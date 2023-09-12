@@ -103,6 +103,8 @@ module "paas" {
   enable_monitoring                 = var.enable_monitoring
   cluster                           = var.cluster
   aks_web_app_start_command         = var.aks_web_app_start_command
+  aks_worker_app_instances          = var.aks_worker_app_instances
+  aks_worker_app_memory             = var.aks_worker_app_memory
   enable_postgres_ssl               = var.enable_postgres_ssl
   postgres_flexible_server_sku      = var.postgres_flexible_server_sku
   postgres_enable_high_availability = var.postgres_enable_high_availability
@@ -114,8 +116,8 @@ module "paas" {
   redis_queue_sku_name              = var.redis_queue_sku_name
   add_database_name_suffix          = var.add_database_name_suffix
   azure_enable_backup_storage       = var.azure_enable_backup_storage
+  statuscake_alerts                 = var.statuscake_alerts
 }
-
 module "statuscake" {
   source = "./modules/statuscake"
 
