@@ -131,12 +131,5 @@ RSpec.describe VacancyFilterQuery do
       }
       expect(subject.call(filters)).to contain_exactly(vacancy2)
     end
-
-    it "transforms legacy job role filters to new ones" do
-      filters = {
-        job_roles: %w[sen_specialist],
-      }
-      expect(subject.call(filters)).to contain_exactly(vacancy3)
-    end
   end
 end

@@ -99,7 +99,7 @@
         = govuk_summary_list(classes: "govuk-summary-list--no-border") do |summary_list|
           - summary_list.row do |row|
             - row.key text: t("organisations.show.vacancy.job_role"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.value text: vacancy.job_role.humanize, classes: "govuk-body-s govuk-!-padding-bottom-0"
+            - row.value text: humanize_array(vacancy.job_roles), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
           - summary_list.row do |row|
             - row.key text: t("organisations.show.vacancy.full_time_equivalent_salary"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"

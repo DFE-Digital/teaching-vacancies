@@ -18,21 +18,21 @@ module LandingPagesHelper
     end
   end
 
-  def linked_job_role_and_ect_status(vacancy)
+  def linked_job_roles_and_ect_status(vacancy)
     tag.ul class: "govuk-list" do
-      safe_join [
-        tag.li(linked_job_role(vacancy)),
-        tag.li(linked_ect_status(vacancy)),
-      ]
+      safe_join(
+        vacancy.job_roles.map { |role| tag.li(linked_job_role(role)) }
+                         .push(tag.li(linked_ect_status(vacancy))),
+      )
     end
   end
 
-  def linked_job_role(vacancy)
-    landing_page_link_or_text({ job_roles: [vacancy.job_role] }, vacancy.job_role&.humanize)
+  def linked_job_role(role)
+    landing_page_link_or_text({ job_roles: [role] }, role&.humanize)
   end
 
   def linked_ect_status(vacancy)
-    return unless vacancy.teacher? && vacancy.ect_suitable?
+    return unless vacancy.job_roles.include?("teacher") && vacancy.ect_suitable?
 
     landing_page_link_or_text({ ect_statuses: [vacancy.ect_status] }, vacancy.ect_status.humanize)
   end

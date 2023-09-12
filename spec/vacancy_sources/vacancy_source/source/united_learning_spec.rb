@@ -24,7 +24,7 @@ RSpec.describe VacancySource::Source::UnitedLearning do
       expect(vacancy.job_advert).to eq("Lorem ipsum dolor sit amet")
       expect(vacancy.salary).to eq("PT/EPT + TLR 2B")
 
-      expect(vacancy.job_role).to eq("teacher")
+      expect(vacancy.job_roles).to eq(["teacher"])
       expect(vacancy.ect_status).to eq("ect_suitable")
       expect(vacancy.subjects).to eq(%w[Geography])
       expect(vacancy.working_patterns).to eq(%w[full_time])
@@ -52,33 +52,31 @@ RSpec.describe VacancySource::Source::UnitedLearning do
         allow(described_class::FeedItem).to receive(:new).and_return(item_stub)
       end
 
-      [nil, "", " "].each do |role|
+      ["null", "", " "].each do |role|
         context "when the source role is '#{role}'" do
           let(:source_role) { role }
 
-          it "the vacancy role is null" do
-            expect(vacancy.job_role).to eq(nil)
+          it "the vacancy roles are empty" do
+            expect(vacancy.job_roles).to eq([])
           end
         end
       end
 
-      %w[leadership headteacher deputy_headteacher assistant_headteacher].each do |role|
+      %w[senior_leader leadership].each do |role|
         context "when the source role is '#{role}'" do
           let(:source_role) { role }
 
-          it "maps the source role to 'senior_leader' in the vacancy" do
-            expect(vacancy.job_role).to eq("senior_leader")
+          it "maps the source role to '[headteacher, assistant_headteacher, deputy_headteacher]' in the vacancy" do
+            expect(vacancy.job_roles).to contain_exactly("headteacher", "assistant_headteacher", "deputy_headteacher")
           end
         end
       end
 
-      %w[head_of_year_or_phase head_of_department_or_curriculum].each do |role|
-        context "when the source role is '#{role}'" do
-          let(:source_role) { role }
+      context "when the source role is 'middle_leader'" do
+        let(:source_role) { "middle_leader" }
 
-          it "maps the source role to 'middle_leader' in the vacancy" do
-            expect(vacancy.job_role).to eq("middle_leader")
-          end
+        it "maps the source role to '[head_of_year_or_phase, head_of_department_or_curriculum]' in the vacancy" do
+          expect(vacancy.job_roles).to contain_exactly("head_of_year_or_phase", "head_of_department_or_curriculum")
         end
       end
     end

@@ -130,14 +130,14 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
 
       context "searching using multiple roles" do
-        let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], roles: %w[teacher senior_leader], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
+        let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], roles: %w[teacher headteacher], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
 
-        let(:senior_leader_jobseeker_profile) { create(:jobseeker_profile) }
-        let(:senior_leader_job_preferences) { create(:job_preferences, roles: %w[senior_leader], jobseeker_profile: senior_leader_jobseeker_profile) }
-        let!(:senior_leader_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: senior_leader_job_preferences) }
+        let(:headteacher_jobseeker_profile) { create(:jobseeker_profile) }
+        let(:headteacher_job_preferences) { create(:job_preferences, roles: %w[headteacher], jobseeker_profile: headteacher_jobseeker_profile) }
+        let!(:headteacher_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: headteacher_job_preferences) }
 
         it "should return the jobseeker profiles with the roles specified in the filters" do
-          expect(search.jobseeker_profiles).to match_array([teacher_jobseeker_profile, senior_leader_jobseeker_profile])
+          expect(search.jobseeker_profiles).to match_array([teacher_jobseeker_profile, headteacher_jobseeker_profile])
         end
       end
     end

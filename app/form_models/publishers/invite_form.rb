@@ -15,9 +15,14 @@ module Publishers
       validates :job_ids, presence: { message: :what }
 
       def job_options
-        @job_options ||= multistep.applicable_jobs.map do |job|
-          Option.new(job.id, job.job_title, I18n.t(job.job_role, scope: "helpers.label.publishers_job_listing_job_role_form.job_role_options"))
-        end
+        @job_options ||= multistep.applicable_jobs.map { |job| new_option(job) }
+      end
+
+      def new_option(job)
+        hint = job.job_roles.map { |role|
+          I18n.t(role, scope: "helpers.label.publishers_job_listing_job_role_form.job_role_options")
+        }.join(", ")
+        Option.new(job.id, job.job_title, hint)
       end
     end
 

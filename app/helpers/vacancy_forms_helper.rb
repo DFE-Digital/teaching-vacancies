@@ -10,15 +10,16 @@ module VacancyFormsHelper
   end
 
   def vacancy_job_title_form_hint_text(vacancy)
-    t("helpers.hint.publishers_job_listing_job_title_form.job_title.#{vacancy.job_role}") unless vacancy.job_role.in?(%w[teacher senior_leader middle_leader])
-
-    case vacancy.job_role
+    first_role = vacancy.job_roles.first
+    case first_role
     when "teacher"
       teacher_job_title_hint_text(vacancy)
-    when "senior_leader"
+    when "headteacher", "deputy_headteacher", "assistant_headteacher"
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.senior_leader")
-    when "middle_leader"
+    when "head_of_year_or_phase", "head_of_department_or_curriculum"
       middle_leader_job_title_hint_text(vacancy)
+    else
+      t("helpers.hint.publishers_job_listing_job_title_form.job_title.#{first_role}")
     end
   end
 

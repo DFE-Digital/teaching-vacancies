@@ -16,15 +16,13 @@ get "sign-up-for-NQT-job-alerts", to: redirect("/sign-up-for-ECT-job-alerts")
 # Legacy landing pages
 ## Job roles
 get "teaching-jobs-for-teacher", to: redirect("teacher-jobs")
-get "teaching-jobs-for-leadership", to: redirect("senior-leader-jobs")
-get "leadership-jobs", to: redirect("senior-leader-jobs")
+get "teaching-jobs-for-leadership", to: redirect("headteacher-jobs")
+get "leadership-jobs", to: redirect("headteacher-jobs")
 get "teaching-jobs-for-teaching_assistant", to: redirect("teaching-assistant-jobs")
 get "teaching-jobs-for-teaching-assistant", to: redirect("teaching-assistant-jobs")
 get "teaching-jobs-for-education_support", to: redirect("education-support-jobs")
 get "teaching-jobs-for-education-support", to: redirect("education-support-jobs")
 get "teaching-jobs-for-sendco", to: redirect("sendco-jobs")
-get "teaching-jobs-for-send_responsible", to: redirect("send-responsible-jobs")
-get "teaching-jobs-for-send-responsible", to: redirect("send-responsible-jobs")
 get "teaching-jobs-for-ect_suitable", to: redirect("ect-suitable-jobs")
 get "teaching-jobs-for-ect-suitable", to: redirect("ect-suitable-jobs")
 

@@ -20,7 +20,7 @@ RSpec.describe VacancySource::Source::Fusion do
         job_title: "Class Teacher",
         job_advert: "Lorem Ipsum dolor sit amet",
         salary: "£25,714.00 to £41,604.00",
-        job_role: "teacher",
+        job_roles: ["teacher"],
         key_stages: %w[ks1 ks2],
         working_patterns: %w[full_time],
         contract_type: "fixed_term",
@@ -64,39 +64,43 @@ RSpec.describe VacancySource::Source::Fusion do
         context "when the source role is '#{role}'" do
           let(:source_role) { role }
 
-          it "the vacancy role is null" do
-            expect(vacancy.job_role).to eq(nil)
+          it "the vacancy roles are empty" do
+            expect(vacancy.job_roles).to eq([])
           end
         end
       end
 
-      %w[headteacher deputy_headteacher assistant_headteacher].each do |role|
+      context "when the source role is 'senior_leader'" do
+        let(:source_role) { "senior_leader" }
+
+        it "maps the source role to '[headteacher, assistant_headteacher, deputy_headteacher]' in the vacancy" do
+          expect(vacancy.job_roles).to contain_exactly("headteacher", "assistant_headteacher", "deputy_headteacher")
+        end
+      end
+
+      context "when the source role is 'middle_leader'" do
+        let(:source_role) { "middle_leader" }
+
+        it "maps the source role to '[head_of_year_or_phase, head_of_department_or_curriculum]' in the vacancy" do
+          expect(vacancy.job_roles).to contain_exactly("head_of_year_or_phase", "head_of_department_or_curriculum")
+        end
+      end
+
+      %w[head_of_year head_of_year_or_phase].each do |role|
         context "when the source role is '#{role}'" do
           let(:source_role) { role }
 
-          it "maps the source role to 'senior_leader' in the vacancy" do
-            expect(vacancy.job_role).to eq("senior_leader")
+          it "maps the source role to '[head_of_year_or_phase]' in the vacancy" do
+            expect(vacancy.job_roles).to eq(["head_of_year_or_phase"])
           end
         end
       end
 
-      %w[head_of_year head_of_year_or_phase head_of_department_or_curriculum].each do |role|
-        context "when the source role is '#{role}'" do
-          let(:source_role) { role }
+      context "when the source role is 'learning_support'" do
+        let(:source_role) { "learning_support" }
 
-          it "maps the source role to 'middle_leader' in the vacancy" do
-            expect(vacancy.job_role).to eq("middle_leader")
-          end
-        end
-      end
-
-      %w[learning_support].each do |role|
-        context "when the source role is '#{role}'" do
-          let(:source_role) { role }
-
-          it "maps the source role to 'education_support' in the vacancy" do
-            expect(vacancy.job_role).to eq("education_support")
-          end
+        it "maps the source role to 'education_support' in the vacancy" do
+          expect(vacancy.job_roles).to eq(["education_support"])
         end
       end
     end

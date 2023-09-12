@@ -9,14 +9,14 @@ RSpec.describe Search::CriteriaInventor do
   let(:working_patterns) { %w[full_time part_time] }
   let(:subjects) { %w[English Maths] }
   let(:job_title) { "A wonderful job" }
-  let(:job_role) { "teacher" }
+  let(:job_roles) { ["teacher"] }
   let(:associated_orgs) { [school] }
   let(:vacancy) do
     create(:vacancy, organisations: associated_orgs,
                      working_patterns: working_patterns,
                      subjects: subjects,
                      job_title: job_title,
-                     job_role: job_role,
+                     job_roles: job_roles,
                      phases: phases)
   end
 
@@ -74,14 +74,14 @@ RSpec.describe Search::CriteriaInventor do
     end
 
     describe "job_roles" do
-      it "sets the job_roles with the job role of the vacancy" do
-        expect(subject.criteria[:job_roles]).to eq([job_role])
+      it "sets the job_roles with the job roles of the vacancy" do
+        expect(subject.criteria[:job_roles]).to eq(job_roles)
       end
     end
 
     describe "subjects" do
       context "when the job listing has teacher or middle_leader as job role" do
-        let(:job_roles) { "teacher" }
+        let(:job_roles) { %w[teacher] }
         let(:subjects) { %w[Science] }
 
         it "sets the subjects from the job listing" do
@@ -90,7 +90,7 @@ RSpec.describe Search::CriteriaInventor do
       end
 
       context "when the job listing's job role is neither teacher or middle_leader" do
-        let(:job_role) { "senior_leader" }
+        let(:job_roles) { %w[headteacher] }
         let(:subjects) { %w[Science] }
 
         it "does not set the subjects" do

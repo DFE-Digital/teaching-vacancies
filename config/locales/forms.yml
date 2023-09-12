@@ -281,9 +281,12 @@ en:
         working_patterns_options:
           full_time_education_support: Usually at least 36.5 hours a week
           full_time_higher_level_teaching_assistant: Usually at least 36.5 hours a week
-          full_time_middle_leader: Usually at least 27.5 hours a week
+          full_time_head_of_year_or_phase: Usually at least 27.5 hours a week
+          full_time_head_of_department_or_curriculum: Usually at least 27.5 hours a week
           full_time_sendco: ""
-          full_time_senior_leader: Usually at least 27.5 hours a week
+          full_time_headteacher: Usually at least 27.5 hours a week
+          full_time_deputy_headteacher: Usually at least 27.5 hours a week
+          full_time_assistant_headteacher: Usually at least 27.5 hours a week
           full_time_teaching_assistant: Usually at least 36.5 hours a week
           full_time_teacher: Usually at least 27.5 hours a week
 
@@ -717,19 +720,23 @@ en:
         starts_asap_options:
           "true": As soon as possible
       publishers_job_listing_job_role_form:
-        job_role_options:
+        job_role_options: &job_role_options
+          assistant_headteacher: Assistant headteacher
+          deputy_headteacher: Deputy headteacher
           ect_suitable: Suitable for early career teachers
           ect_suitable_hidden_prefix: Only show results
           education_support: Learning support or cover supervisor
+          head_of_department_or_curriculum: Head of department or curriculum
+          head_of_year_or_phase: Head of year or phase
+          headteacher: Headteacher
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
           leadership: Senior leader
-          middle_leader: Head of year, department, curriculum or phase
-          sen_specialist: Special Educational Needs and Disability Coordinator (SENDCo)
           send_responsible: Special Educational Needs and Disability Coordinator (SENDCo)
           sendco: SENDCo (special educational needs and disabilities coordinator)
-          senior_leader: Headteacher, deputy or assistant headteacher
           teacher: Teacher
           teaching_assistant: Teaching assistant
+        job_roles_options:
+          <<: *job_role_options
       publishers_job_listing_key_stages_form:
         key_stages_options:
           early_years: Early years

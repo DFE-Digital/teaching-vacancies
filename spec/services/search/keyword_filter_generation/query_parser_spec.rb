@@ -9,14 +9,14 @@ RSpec.describe Search::KeywordFilterGeneration::QueryParser do
       .and_return({
         "foo" => { phases: ["sixth_form_or_college"] },
         "bar" => { subjects: ["French"] },
-        "baz" => { job_roles: %w[senior_leader sendco] },
+        "baz" => { job_roles: %w[headteacher sendco] },
       })
   end
 
   describe ".filters_from_query" do
     it "turns a query into filters" do
       expect(described_class.filters_from_query("baz bar quux"))
-        .to eq({ job_roles: %w[senior_leader sendco], :subjects => %w[French] })
+        .to eq({ job_roles: %w[headteacher sendco], :subjects => %w[French] })
     end
   end
 end

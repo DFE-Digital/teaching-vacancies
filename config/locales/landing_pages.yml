@@ -36,6 +36,31 @@ en:
     #      - meta_description: The HTML <meta> and Open Graph description
 
     ### Job roles
+    assistant-headteacher-jobs:
+      name: "Assistant headteacher"
+      title: "Assistant Headteacher Jobs"
+      heading: "%{count} assistant headteacher jobs"
+      meta_description: "Discover assistant headteacher jobs in primary and secondary schools near you."
+    deputy-headteacher-jobs:
+      name: "Deputy headteacher"
+      title: "Deputy Headteacher Jobs"
+      heading: "%{count} deputy headteacher jobs"
+      meta_description: "Discover deputy headteacher jobs in primary and secondary schools near you."
+    head-of-year-or-phase-jobs:
+      name: "Head of year or phase"
+      title: "Head of Year & Phase Jobs"
+      heading: "%{count} head of year or phase jobs"
+      meta_description: "Search for head of year or phase jobs in schools near you. Set up email alerts so you don't miss out on the latest vacancies for subject leads."
+    head-of-department-or-curriculum-jobs:
+      name: "Head of department or curriculum"
+      title: "Head of Department & Curriculum Jobs"
+      heading: "%{count} head of department or curriculum jobs"
+      meta_description: "Search for head of department or curriculum jobs in schools near you. Set up email alerts so you don't miss out on the latest vacancies for subject leads."
+    headteacher-jobs:
+      name: "Headteacher"
+      title: "Headteacher Jobs"
+      heading: "%{count} headteacher jobs"
+      meta_description: "Discover headteacher jobs in primary and secondary schools near you."
     higher-level-teaching-assistant-jobs:
       name: "HLTA (higher level teaching assistant)"
       title: "HLTA (higher level teaching assistant) Jobs"
@@ -51,26 +76,11 @@ en:
       title: "Education & School Support Jobs"
       heading: "%{count} education and school support jobs"
       meta_description: "Find jobs for LSAs, HR managers, finance officers, admin assistants, cover supervisors and other non-teaching vacancies in schools near you."
-    senior-leader-jobs:
-      name: "Headteacher, deputy or assistant headteacher"
-      title: "Headteacher & School Leadership Jobs"
-      heading: "%{count} headteacher and school leadership jobs"
-      meta_description: "Discover headteacher jobs, assistant and deputy head vacancies, and senior school leadership roles in primary and secondary schools near you."
-    middle-leader-jobs:
-      name: "Head of year, department, curriculum or phase"
-      title: "Head of year & Department Head Jobs"
-      heading: "%{count} middle leader and department head jobs"
-      meta_description: "Search for middle leader and department head jobs in schools near you. Set up email alerts so you don't miss out on the latest vacancies for subject leads."
     sendco-jobs:
       name: "SENDCo (special educational needs and disabilities coordinator)"
       title: "SEND Coordinator (SENDCo) Jobs"
       heading: "%{count} SENDCo jobs"
       meta_description: "Find the latest special educational needs co-ordinator (SENDCo) jobs in schools near you. Apply for full time and part time vacancies."
-    send-responsible-jobs:
-      name: "SEND responsibilities"
-      title: "School Jobs with SEND Responsibilities"
-      heading: "%{count} school jobs with SEND responsibilities"
-      meta_description: "Find jobs in schools for SEND teachers and LSAs with responsibilities for looking after children with special educational needs and disabilities."
     teacher-jobs:
       name: "Teacher"
       title: "Teacher Jobs"

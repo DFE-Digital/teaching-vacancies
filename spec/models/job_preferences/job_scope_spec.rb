@@ -6,7 +6,7 @@ RSpec.describe JobPreferences::JobScope do
   let!(:vacancy1) do
     create(:vacancy,
            :published,
-           job_role: "teacher",
+           job_roles: ["teacher"],
            phases: %w[primary secondary],
            key_stages: nil,
            subjects: %w[Spanish French],
@@ -16,7 +16,7 @@ RSpec.describe JobPreferences::JobScope do
   let!(:vacancy2) do
     create(:vacancy,
            :published,
-           job_role: "teaching_assistant",
+           job_roles: ["teaching_assistant"],
            phases: %w[primary secondary],
            key_stages: %w[ks1],
            subjects: %w[Mathematics],
@@ -26,7 +26,7 @@ RSpec.describe JobPreferences::JobScope do
   let!(:vacancy3) do
     create(:vacancy,
            :published,
-           job_role: "senior_leader",
+           job_roles: ["headteacher"],
            phases: %w[primary],
            key_stages: %w[ks2],
            subjects: [],
@@ -36,7 +36,7 @@ RSpec.describe JobPreferences::JobScope do
   let!(:vacancy4) do
     create(:vacancy,
            :published,
-           job_role: "middle_leader",
+           job_roles: ["head_of_year_or_phase"],
            phases: %w[secondary],
            key_stages: %w[ks1 ks2],
            subjects: %w[Mathematics French Spanish],
@@ -54,32 +54,12 @@ RSpec.describe JobPreferences::JobScope do
   subject(:job_scope) { described_class.new(original_scope, job_preferences) }
 
   describe "roles scope" do
-    let(:jobseeker_roles) { %w[teacher teaching_assistant] }
+    let(:jobseeker_roles) { %w[teacher head_of_year_or_phase] }
 
     before { job_preferences.roles = jobseeker_roles }
 
     it "returns vacancies with a role matching any of the jobseeker roles" do
-      expect(job_scope.call).to contain_exactly(vacancy1, vacancy2)
-    end
-
-    %w[head_of_year_or_phase head_of_department_or_curriculum].each do |granular_role|
-      context "with a jobseeker '#{granular_role}' role split from 'middle_leader' role" do
-        let(:jobseeker_roles) { ["teacher", granular_role] }
-
-        it "returns vacancies with 'middle_leader' role" do
-          expect(job_scope.call).to contain_exactly(vacancy1, vacancy4)
-        end
-      end
-    end
-
-    %w[headteacher deputy_headteacher assistant_headteacher].each do |granular_role|
-      context "with a jobseeker '#{granular_role}' role split from 'senior_leader' role" do
-        let(:jobseeker_roles) { ["teacher", granular_role] }
-
-        it "returns vacancies with 'senior_leader' role" do
-          expect(job_scope.call).to contain_exactly(vacancy1, vacancy3)
-        end
-      end
+      expect(job_scope.call).to contain_exactly(vacancy1, vacancy4)
     end
 
     context "with jobseeker roles that don't match any vacancy roles" do

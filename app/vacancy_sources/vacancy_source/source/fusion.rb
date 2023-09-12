@@ -44,7 +44,7 @@ class VacancySource::Source::Fusion
       salary: item["salary"],
       expires_at: Time.zone.parse(item["expiresAt"]),
       external_advert_url: item["advertUrl"],
-      job_role: job_role(item),
+      job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence&.split(","),
       working_patterns: item["workingPatterns"].presence&.split(","),
@@ -94,14 +94,17 @@ class VacancySource::Source::Fusion
     schools_for(item).one? ? schools_for(item).first : multi_academy_trust(item)
   end
 
-  def job_role(item)
-    return if item["jobRole"].blank?
+  def job_roles_for(item)
+    role = item["jobRole"]&.strip
+    return [] if role.blank?
 
-    item["jobRole"]
-      .gsub(/deputy_headteacher|assistant_headteacher|headteacher/, "senior_leader")
-      .gsub(/head_of_year_or_phase|head_of_department_or_curriculum|head_of_year/, "middle_leader")
-      .gsub("learning_support", "education_support")
-      .gsub(/\s+/, "")
+    # Translate legacy senior/middle leader into all the granular roles split from them
+    return Vacancy::SENIOR_LEADER_JOB_ROLES if role.include? "senior_leader"
+    return Vacancy::MIDDLE_LEADER_JOB_ROLES if role.include? "middle_leader"
+
+    Array.wrap(role.gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
+                   .gsub("learning_support", "education_support")
+                   .gsub(/\s+/, ""))
   end
 
   def ect_status_for(item)

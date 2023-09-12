@@ -118,9 +118,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def publisher_has_used_feature?
-    current_publisher.vacancies.where(enable_job_applications: true).any? do |vacancy|
-      vacancy.job_role == "education_support"
-    end
+    current_publisher.vacancies.where(enable_job_applications: true).with_job_roles("education_support").any?
   end
 
   def statistics_params

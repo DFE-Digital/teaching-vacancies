@@ -12,5 +12,5 @@
           = vacancy_activity_log_item(attribute, diff.last, organisation_type_basic(vacancy.organisation))
 
       p.govuk-body-s class="govuk-!-margin-top-1"
-        | By #{version.actor.papertrail_display_name} on #{version.created_at}
+        | By #{version.actor&.papertrail_display_name.presence || "system"} on #{version.created_at}
       hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible

@@ -21,7 +21,7 @@ RSpec.describe "Inviting Jobseekers to apply for vacancies", type: :system do
            :published,
            organisations: publisher.organisations,
            publisher: publisher,
-           job_role: "senior_leader",
+           job_roles: %w[headteacher],
            phases: job_preferences.phases,
            key_stages: job_preferences.key_stages,
            subjects: job_preferences.subjects,

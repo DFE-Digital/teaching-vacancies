@@ -128,8 +128,8 @@ en:
       inclusion: Select yes if you want to provide a phone number
 
   # Publishers journey
-  job_role_errors: &job_role_errors
-    job_role:
+  job_roles_errors: &job_roles_errors
+    job_roles:
       inclusion: Select a job role
       blank: Select a job role
   job_location_errors: &job_location_errors
@@ -360,7 +360,7 @@ en:
         # Publishers journey
         publishers/job_listing/job_role_form:
           attributes:
-            <<: *job_role_errors
+            <<: *job_roles_errors
         publishers/job_listing/job_location_form:
           attributes:
             <<: *job_location_errors
@@ -723,7 +723,7 @@ en:
               too_short: Enter a password that is at least 8 characters long
         vacancy:
           attributes:
-            <<: *job_role_errors
+            <<: *job_roles_errors
             <<: *job_location_errors
             <<: *working_patterns_errors
             <<: *pay_package_errors
