@@ -1,7 +1,7 @@
 class VacancySource::Source::Ark
   include VacancySource::Parser
 
-  FEED_URL = "https://arkcareers.engageats.co.uk/customvacanciesfeed.ashx"
+  FEED_URL = ENV.fetch("VACANCY_SOURCE_VENTRUS_FEED_URL").freeze
   SOURCE_NAME = "ark".freeze
   TRUST_UID = "4243".freeze
 
@@ -109,9 +109,9 @@ class VacancySource::Source::Ark
     .gsub(/Principal|Head of School|Executive Principal|Associate Principal|Vice Principal|Assistant Principal/, "senior_leader")
     .gsub(/Head of Department|Head of Year|Head of Phase/, "middle_leader")
     .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
-    .gsub(/HigherLevelteaching_assistant/, "higher_level_teaching_assistant")
-    .gsub(/SEN\/Inclusion Support|Pastoral|Technician/, "education_support")
-    .gsub(/SEN\/Inclusionteacher/, "sendco")
+    .gsub("HigherLevelteaching_assistant", "higher_level_teaching_assistant")
+    .gsub(%r{SEN/Inclusion Support|Pastoral|Technician}, "education_support")
+    .gsub("SEN/Inclusionteacher", "sendco")
     .gsub(/\s+/, "")
   end
 
@@ -123,20 +123,20 @@ class VacancySource::Source::Ark
 
   def working_patterns_for(item)
     item.fetch_by_attribute("category", "domain", "Working Pattern")
-    .gsub(/Full Time/, "full_time")
-    .gsub(/Part Time/, "part_time")
+    .gsub("Full Time", "full_time")
+    .gsub("Part Time", "part_time")
   end
 
   def contract_type_for(item)
     item.fetch_by_attribute("category", "domain", "Contract Type")
-    .gsub(/Permanent/, "permanent")
-    .gsub(/Fixed Term/, "fixed_term")
+    .gsub("Permanent", "permanent")
+    .gsub("Fixed Term", "fixed_term")
   end
 
   def phases_for(item)
     item.fetch_by_attribute("category", "domain", "Phase")
-    .gsub(/Primary/, "primary")
-    .gsub(/Secondary/, "secondary")
+    .gsub("Primary", "primary")
+    .gsub("Secondary", "secondary")
     &.gsub("All-through", "through")
     &.gsub(/\s+/, "")
   end
@@ -157,8 +157,8 @@ class VacancySource::Source::Ark
     urn = item.supp_value
 
     multi_academy_trust&.schools&.where(urn: urn).presence ||
-    Organisation.where(urn: urn).presence ||
-    Array(multi_academy_trust)
+      Organisation.where(urn: urn).presence ||
+      Array(multi_academy_trust)
   end
 
   def items
