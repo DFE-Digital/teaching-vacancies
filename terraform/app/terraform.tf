@@ -116,8 +116,8 @@ module "paas" {
   redis_queue_sku_name              = var.redis_queue_sku_name
   add_database_name_suffix          = var.add_database_name_suffix
   azure_enable_backup_storage       = var.azure_enable_backup_storage
-  statuscake_alerts                 = var.statuscake_alerts
 }
+
 module "statuscake" {
   source = "./modules/statuscake"
 
