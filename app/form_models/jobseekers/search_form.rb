@@ -28,7 +28,7 @@ class Jobseekers::SearchForm
   def initialize(params = {})
     strip_trailing_whitespaces_from_params(params)
     set_filter_variables(params)
-    @sort = Search::VacancySort.new(keyword: keyword, location: location).update(sort_by: params[:sort_by])
+    @sort = Search::VacancySort.new(keyword: keyword).update(sort_by: params[:sort_by])
     set_filters_from_keyword
     unset_filters_from_previous_keyword
     set_radius(params[:radius])
