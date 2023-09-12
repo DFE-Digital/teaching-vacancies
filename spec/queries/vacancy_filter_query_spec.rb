@@ -22,8 +22,8 @@ RSpec.describe VacancyFilterQuery do
   let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[sixth_form_or_college], job_roles: ["teacher"], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true) }
   let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "sendco", ect_status: nil, organisations: [local_authority_school], enable_job_applications: true) }
   let!(:vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 4", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil) }
-  let!(:vacancy5) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 5", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [academies]) }
-  let!(:vacancy6) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 6", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:vacancy5) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 5", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["head_of_year_or_phase"], ect_status: nil, organisations: [academies]) }
+  let!(:vacancy6) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 6", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["head_of_department_or_curriculum"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:vacancy7) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 7", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["headteacher"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:vacancy8) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 8", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["assistant_headteacher"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:vacancy9) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 9", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["deputy_headteacher"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
@@ -139,11 +139,27 @@ RSpec.describe VacancyFilterQuery do
       expect(subject.call(filters)).to contain_exactly(vacancy2)
     end
 
-    it "maps removed leadership job role to all senior leadership roles" do
-      filters = {
-        job_roles: %w[leadership],
-      }
-      expect(subject.call(filters)).to contain_exactly(vacancy7, vacancy8, vacancy9)
+    describe "legacy roles mapping" do
+      it "transforms 'leadership' to all senior leadership roles" do
+        filters = {
+          job_roles: %w[leadership],
+        }
+        expect(subject.call(filters)).to contain_exactly(vacancy7, vacancy8, vacancy9)
+      end
+
+      it "transforms 'senior_leader' to all senior leadership roles" do
+        filters = {
+          job_roles: %w[senior_leader],
+        }
+        expect(subject.call(filters)).to contain_exactly(vacancy7, vacancy8, vacancy9)
+      end
+
+      it "transforms 'middle_leader' to all middle leadership roles" do
+        filters = {
+          job_roles: %w[middle_leader],
+        }
+        expect(subject.call(filters)).to contain_exactly(vacancy5, vacancy6)
+      end
     end
   end
 end
