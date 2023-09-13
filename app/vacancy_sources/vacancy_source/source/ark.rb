@@ -69,7 +69,7 @@ class VacancySource::Source::Ark
       expires_at: item["endDate"].presence && Time.zone.parse(item["endDate"]),
       external_advert_url: item["link"],
 
-      job_role: job_role_for(item),
+      job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence&.split(","),
       working_patterns: working_patterns_for(item),
@@ -103,16 +103,17 @@ class VacancySource::Source::Ark
     end
   end
 
-  def job_role_for(item)
-    item.fetch_by_attribute("category", "domain", "Role Type")
-    .gsub(/Teacher|Cover Support Teacher|TLRs|Lead Practitioner/, "teacher")
-    .gsub(/Principal|Head of School|Executive Principal|Associate Principal|Vice Principal|Assistant Principal/, "senior_leader")
-    .gsub(/Head of Department|Head of Year|Head of Phase/, "middle_leader")
-    .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
-    .gsub("HigherLevelteaching_assistant", "higher_level_teaching_assistant")
-    .gsub(%r{SEN/Inclusion Support|Pastoral|Technician}, "education_support")
-    .gsub("SEN/Inclusionteacher", "sendco")
-    .gsub(/\s+/, "")
+  def job_roles_for(item)
+    role = item.fetch_by_attribute("category", "domain", "Role Type")
+
+    Array.wrap(role.gsub(/Teacher|Cover Support Teacher|TLRs|Lead Practitioner/, "teacher")
+              .gsub(/Principal|Head of School|Executive Principal|Associate Principal|Vice Principal|Assistant Principal/, "senior_leader")
+              .gsub(/Head of Department|Head of Year|Head of Phase/, "middle_leader")
+              .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
+              .gsub("HigherLevelteaching_assistant", "higher_level_teaching_assistant")
+              .gsub(%r{SEN/Inclusion Support|Pastoral|Technician}, "education_support")
+              .gsub("SEN/Inclusionteacher", "sendco")
+              .gsub(/\s+/, ""))
   end
 
   def ect_status_for(item)

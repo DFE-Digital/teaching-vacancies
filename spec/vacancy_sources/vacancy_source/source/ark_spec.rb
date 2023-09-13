@@ -17,7 +17,7 @@ RSpec.describe VacancySource::Source::Ark do
         job_title: "Tutor Fellow (Primary or Secondary)",
         job_advert: "A one year programme that prepares you to enter teacher training, in primary or secondary.",
         salary: "From £24,454",
-        job_role: job_role,
+        job_roles: [job_role],
         key_stages: [],
         working_patterns: %w[full_time],
         contract_type: "fixed_term",
