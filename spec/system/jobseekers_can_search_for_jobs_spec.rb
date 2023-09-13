@@ -145,6 +145,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
     context "when jobseekers location an existing location polygon" do
       before do
+        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations) { nil }
         create(:location_polygon,
                name: "london",
                area: "POLYGON ((0.158291728375839 51.5119627532759, 0.127173319842768 51.519443883052, 0.096790065242576 51.515151184378, 0.0700073133548945 51.4992831652932, 0.0244415427050767 51.4983072825101,
@@ -174,7 +175,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       end
 
       it "does not show distance measurements" do
-        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations) { nil }
         fill_in "location-field", with: "London"
         click_on I18n.t("buttons.search")
         expect_page_to_show_jobs([maths_job1])
@@ -194,7 +194,6 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
     context "when jobseekers search is not a country or an existing location polygon" do
       before do
-        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations) { nil }
         fill_in "location-field", with: "Birmingham"
         select "200 miles", from: "radius-field"
         click_on I18n.t("buttons.search")
@@ -280,11 +279,13 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       end
     end
 
-    context "when used in conjunction with a search term" do
+    context "when used in conjunction with a search term and location" do
       # testing this unusual edge case around removing auto-populated search terms because it was raising exceptions for us in the past.
       it "returns the correct vacancies even after removing auto-populated search terms" do
         visit jobs_path
         fill_in "Keyword", with: "Physics teacher"
+        fill_in "location-field", with: "Birmingham"
+        select "200 miles", from: "radius-field"
         check "Academy"
 
         click_on I18n.t("buttons.search")
