@@ -103,7 +103,7 @@ variable "paas_web_app_memory" {
 }
 
 variable "paas_web_app_start_command" {
-  default = "bundle exec rake cf:on_first_instance db:migrate && rails s"
+  default = "bundle exec rake db:migrate:ignore_concurrent_migration_exceptions && rails s"
 }
 variable "aks_web_app_start_command" {
   default = ["/bin/sh", "-c", "bundle exec rake db:migrate && rails s"]
