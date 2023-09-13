@@ -108,6 +108,7 @@
   - searchable_content
   - google_index_removed
   - expired_vacancy_feedback_email_sent_at
+  - second_new_test_migration
   :qualifications:
   - finished_studying_details_ciphertext
   :feedbacks:
