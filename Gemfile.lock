@@ -214,7 +214,7 @@ GEM
       google-apis-core (>= 0.11.0, < 2.a)
     google-apis-indexing_v3 (0.13.0)
       google-apis-core (>= 0.11.0, < 2.a)
-    google-cloud-bigquery (1.43.1)
+    google-cloud-bigquery (1.44.1)
       concurrent-ruby (~> 1.0)
       google-apis-bigquery_v2 (~> 0.1)
       google-cloud-core (~> 1.6)
