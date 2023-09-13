@@ -72,8 +72,6 @@ class VacancyFilterQuery < ApplicationQuery
   # Keeps compatibility with legacy job roles filters that have been removed but they are still used by users.
   # EG: Bookmarked results page for a search with the old job roles filters.
   # EG2: Job alerts with the old job roles filters.
-  # Without mapping, the legacy values would trigger an exception due to the value not being in the defined list of job
-  # roles.
   def job_roles(filter)
     filter&.flat_map { |job_role|
       case job_role
@@ -81,7 +79,7 @@ class VacancyFilterQuery < ApplicationQuery
       when "middle_leader" then Vacancy::MIDDLE_LEADER_JOB_ROLES
       else job_role
       end
-    }&.reject { |job_role| Vacancy.job_roles.exclude? job_role }
+    }&.reject { |job_role| Vacancy.job_roles.exclude? job_role } # Avoids exceptions raised by ArrayEnum when the job role is not valid
   end
 
   def phases(filter)
