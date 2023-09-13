@@ -54,7 +54,7 @@ COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
 EXPOSE 3000
-CMD bundle exec rails db:migrate && bundle exec rails s
+CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && bundle exec rails s
 ```
 
 - Name the stage `production` so that it can be built individually
@@ -63,7 +63,7 @@ CMD bundle exec rails db:migrate && bundle exec rails s
     - `/usr/local/bundle/`
 - Listen on port 3000
 - Run two Ruby bundle commands:
-    - `bundle exec rails db:migrate`
+    - `bundle exec rails db:migrate:ignore_concurrent_migration_exceptions`
     - `bundle exec rails s`
 
 ## Build a Docker image
