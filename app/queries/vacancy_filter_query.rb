@@ -81,7 +81,7 @@ class VacancyFilterQuery < ApplicationQuery
       when "middle_leader" then Vacancy::MIDDLE_LEADER_JOB_ROLES
       else job_role
       end
-    }&.reject { |job_role| job_role == "ect_suitable" }
+    }&.reject { |job_role| Vacancy.job_roles.exclude? job_role }
   end
 
   def phases(filter)

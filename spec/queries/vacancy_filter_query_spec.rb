@@ -139,26 +139,37 @@ RSpec.describe VacancyFilterQuery do
       expect(subject.call(filters)).to contain_exactly(vacancy2)
     end
 
-    describe "legacy roles mapping" do
-      it "transforms 'leadership' to all senior leadership roles" do
+    describe "roles mapping" do
+      it "transforms legacy 'leadership' to all senior leadership roles" do
         filters = {
           job_roles: %w[leadership],
         }
         expect(subject.call(filters)).to contain_exactly(vacancy7, vacancy8, vacancy9)
       end
 
-      it "transforms 'senior_leader' to all senior leadership roles" do
+      it "transforms legacy 'senior_leader' to all senior leadership roles" do
         filters = {
           job_roles: %w[senior_leader],
         }
         expect(subject.call(filters)).to contain_exactly(vacancy7, vacancy8, vacancy9)
       end
 
-      it "transforms 'middle_leader' to all middle leadership roles" do
+      it "transforms legacy 'middle_leader' to all middle leadership roles" do
         filters = {
           job_roles: %w[middle_leader],
         }
         expect(subject.call(filters)).to contain_exactly(vacancy5, vacancy6)
+      end
+
+      it "doesn't filter by role if it is not included in current job roles list" do
+        filters = {
+          job_roles: %w[non_valid_role],
+        }
+        expect(subject.call(filters)).to contain_exactly(
+          vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
+          special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
+          non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3
+        )
       end
     end
   end
