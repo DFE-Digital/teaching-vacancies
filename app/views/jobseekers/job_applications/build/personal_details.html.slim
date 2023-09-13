@@ -24,17 +24,10 @@
       = f.govuk_email_field :email_address, value: (form.email_address.presence || job_application.email), label: { size: "s" }, width: "one-half", aria: { required: true }
       = f.govuk_radio_buttons_fieldset :right_to_work_in_uk,
         legend: { text: t("jobseekers.profiles.personal_details.work.page_title"), size: "s" },
-        hint: { text: t("jobseekers.profiles.personal_details.work.hint.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.hint.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas", target: "_blank")).html_safe } do
+        hint: { text: t("jobseekers.profiles.personal_details.work.hint.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.hint.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe } do
 
         = f.govuk_radio_button :right_to_work_in_uk, "yes", label: { text: t("jobseekers.profiles.personal_details.work.options.true") }, link_errors: true
         = f.govuk_radio_button :right_to_work_in_uk, "no", label: { text: t("jobseekers.profiles.personal_details.work.options.false") }
-          p = t("jobseekers.profiles.personal_details.work.unlikely_unless_have_qts")
-          p = t("jobseekers.profiles.personal_details.work.may_be_able_to_apply_for_qts.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.may_be_able_to_apply_for_qts.link"), "https://apply-for-qts-in-england.education.gov.uk/eligibility/start", target: "_blank")).html_safe
-          p = t("jobseekers.profiles.personal_details.work.schools_cannot_give_advice.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.schools_cannot_give_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas", target: "_blank")).html_safe
-          ul.govuk-list.govuk-list--bullet
-            li = t("jobseekers.profiles.personal_details.work.learn_more.qualifications_and_experience")
-            li = t("jobseekers.profiles.personal_details.work.learn_more.visas")
-            li = t("jobseekers.profiles.personal_details.work.learn_more.other_routes_to_qts")
 
       = f.govuk_text_field :teacher_reference_number, hint: { text: t("helpers.hint.jobseekers_job_application_personal_details_form.teacher_reference_number_html") }, label: { size: "s" }, width: "one-half"
       = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half"
