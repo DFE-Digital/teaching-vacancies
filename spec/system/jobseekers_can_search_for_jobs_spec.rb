@@ -311,16 +311,16 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
     let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
 
-    let!(:special_job1) { create(:vacancy, :past_publish, :teacher, job_title: "AAAA", subjects: [], organisations: [special_school1]) }
-    let!(:special_job2) { create(:vacancy, :past_publish, :teacher, job_title: "BBBB", subjects: [], organisations: [special_school2]) }
-    let!(:special_job3) { create(:vacancy, :past_publish, :teacher, job_title: "CCCC", subjects: [], organisations: [special_school3]) }
-    let!(:special_job4) { create(:vacancy, :past_publish, :teacher, job_title: "DDDD", subjects: [], organisations: [special_school4]) }
-    let!(:special_job5) { create(:vacancy, :past_publish, :teacher, job_title: "EEEE", subjects: [], organisations: [special_school5]) }
-    let!(:special_job6) { create(:vacancy, :past_publish, :teacher, job_title: "FFFF", subjects: [], organisations: [special_school6]) }
-    let!(:faith_job) { create(:vacancy, :past_publish, :teacher, job_title: "religious", subjects: ["Physics"], publisher_organisation: faith_school, organisations: [faith_school, faith_school2], phases: %w[secondary]) }
-    let!(:non_faith_job1) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith1", subjects: [], organisations: [non_faith_school1]) }
-    let!(:non_faith_job2) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith2", subjects: [], organisations: [non_faith_school2]) }
-    let!(:non_faith_job3) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3]) }
+    let!(:special_job1) { create(:vacancy, :past_publish, :teacher, job_title: "AAAA", subjects: [], organisations: [special_school1], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:special_job2) { create(:vacancy, :past_publish, :teacher, job_title: "BBBB", subjects: [], organisations: [special_school2], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:special_job3) { create(:vacancy, :past_publish, :teacher, job_title: "CCCC", subjects: [], organisations: [special_school3], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:special_job4) { create(:vacancy, :past_publish, :teacher, job_title: "DDDD", subjects: [], organisations: [special_school4], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:special_job5) { create(:vacancy, :past_publish, :teacher, job_title: "EEEE", subjects: [], organisations: [special_school5], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:special_job6) { create(:vacancy, :past_publish, :teacher, job_title: "FFFF", subjects: [], organisations: [special_school6], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:faith_job) { create(:vacancy, :past_publish, :teacher, job_title: "religious", subjects: ["Physics"], publisher_organisation: faith_school, organisations: [faith_school, faith_school2], phases: %w[secondary], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:non_faith_job1) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith1", subjects: [], organisations: [non_faith_school1], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:non_faith_job2) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith2", subjects: [], organisations: [non_faith_school2], geolocation: "POINT(-0.019501 51.504949)") }
+    let!(:non_faith_job3) { create(:vacancy, :past_publish, :teacher, job_title: "nonfaith3", subjects: [], organisations: [non_faith_school3], geolocation: "POINT(-0.019501 51.504949)") }
 
     it "allows user to filter by special schools" do
       visit jobs_path
@@ -355,6 +355,8 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       it "returns the correct vacancies even after removing auto-populated search terms" do
         visit jobs_path
         fill_in "Keyword", with: "Physics teacher"
+        fill_in "location-field", with: "Birmingham"
+        select "200 miles", from: "radius-field"
         check I18n.t("organisations.filters.faith_school")
 
         click_on I18n.t("buttons.search")
