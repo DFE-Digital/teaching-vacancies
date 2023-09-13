@@ -657,7 +657,7 @@ GEM
       nokogiri (~> 1.8)
     yard (0.9.34)
     zeitwerk (2.6.11)
-    zendesk_api (3.0.4)
+    zendesk_api (3.0.5)
       faraday (> 2.0.0)
       faraday-multipart
       hashie (>= 3.5.2, < 6.0.0)
