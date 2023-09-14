@@ -479,6 +479,8 @@ en:
     international_teacher_advice:
         link: help you understand your next steps
         text_html: If you're interested in teaching or training to teach in England as an international citizen, we can %{link}.
+    sponsorship_available: Skilled worker sponsorship is available for this job.
+    sponsorship_unavailable: Skilled worker sponsorship is not available for this job.
     listing:
       enable_job_applications_tag: "Quick Apply"
       schools:

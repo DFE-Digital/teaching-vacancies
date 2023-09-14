@@ -44,3 +44,7 @@
             - summary_list.row do |row|
               - row.key text: t("jobs.distance"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
               - row.value text: t("jobs.distance_from_location", distance: vacancy.distance_in_miles_to(@search_coordinates).round(1)), classes: "govuk-body-s govuk-!-padding-bottom-0"
+
+        - summary_list.row do |row|
+          - row.key text: t("jobs.visa_sponsorship_row_title"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+          - row.value text: t("jobs.visa_sponsorship_#{vacancy.visa_sponsorship_available ? "available" : "unavailable"}"), classes: "govuk-body-s govuk-!-padding-bottom-0"

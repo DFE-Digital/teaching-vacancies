@@ -7,6 +7,11 @@ section#job-details class="govuk-!-margin-bottom-5"
         h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.job_role")
       - row.value text: linked_job_roles_and_ect_status(vacancy)
 
+    - summary_list.row do |row|
+      - row.key do
+        h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.visa_sponsorship_row_title")
+      - row.value text: t("jobs.visa_sponsorship_#{vacancy.visa_sponsorship_available ? "available" : "unavailable"}")
+
     - if vacancy.allow_key_stages? && vacancy.key_stages.any?
       - summary_list.row do |row|
         - row.key do
@@ -83,14 +88,17 @@ section#job-details class="govuk-!-margin-bottom-5"
 
     - if vacancy.enable_job_applications?
       p.govuk-body = t("jobseekers.job_applications.applying_for_the_job_paragraph")
+      = govuk_inset_text text: t("vacancies.#{vacancy.visa_sponsorship_available ? "sponsorship_available" : "sponsorship_unavailable"}")
       = govuk_button_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(vacancy.id)
 
     - elsif vacancy.receive_applications == "website"
       p.govuk-body = t("jobs.apply_via_website")
+      = govuk_inset_text text: t("vacancies.#{vacancy.visa_sponsorship_available ? "sponsorship_available" : "sponsorship_unavailable"}")
       = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
 
     - elsif vacancy.receive_applications == "email"
       p.govuk-body = t("jobs.apply_via_email_html", email: application_email_link(vacancy))
+      = govuk_inset_text text: t("vacancies.#{vacancy.visa_sponsorship_available ? "sponsorship_available" : "sponsorship_unavailable"}")
       = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
 
     - else
@@ -100,15 +108,19 @@ section#job-details class="govuk-!-margin-bottom-5"
       - if vacancy.external?
         h4.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
         p = t("jobs.external.notice")
+        = govuk_inset_text text: t("vacancies.#{vacancy.visa_sponsorship_available ? "sponsorship_available" : "sponsorship_unavailable"}")
         = external_advert_link vacancy, class: "govuk-!-margin-bottom-5"
 
       - if vacancy.application_link.present? && vacancy.application_form.present?
+        = govuk_inset_text text: t("vacancies.#{vacancy.visa_sponsorship_available ? "sponsorship_available" : "sponsorship_unavailable"}")
         = apply_link(vacancy, class: "govuk-button--secondary govuk-!-margin-bottom-5")
         br
         = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id), class: "govuk-button--secondary"
       - elsif vacancy.application_link.present?
+        = govuk_inset_text text: t("vacancies.#{vacancy.visa_sponsorship_available ? "sponsorship_available" : "sponsorship_unavailable"}")
         = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
       - elsif vacancy.application_form.present?
+        = govuk_inset_text text: t("vacancies.#{vacancy.visa_sponsorship_available ? "sponsorship_available" : "sponsorship_unavailable"}")
         = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
   - else
     = govuk_inset_text text: t("jobs.expired_listing.notification"), classes: "govuk-!-font-weight-bold"
