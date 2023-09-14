@@ -122,6 +122,14 @@ RSpec.describe "Creating a vacancy" do
 
       fill_in_school_visits_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
+
+      click_on I18n.t("buttons.save_and_continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
+
+      fill_in_visa_sponsorship_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contact_details))
 
       click_on I18n.t("buttons.save_and_continue")
@@ -200,6 +208,9 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.save_and_continue")
 
       fill_in_school_visits_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
+      fill_in_visa_sponsorship_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       fill_in_contact_details_form_fields(vacancy)

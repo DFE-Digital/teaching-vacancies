@@ -65,6 +65,7 @@ FactoryBot.define do
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
     # TODO: Working Patterns: Remove call to #reject once all vacancies with legacy working patterns have expired
     working_patterns { factory_rand_sample(Vacancy.working_patterns.keys.reject { |working_pattern| working_pattern.in?(%w[flexible job_share term_time]) }, 1..2) }
+    visa_sponsorship_available { false }
 
     after(:build) do |v|
       v.full_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("full_time")
