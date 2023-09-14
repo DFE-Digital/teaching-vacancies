@@ -66,4 +66,4 @@ ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
 EXPOSE 3000
-CMD bundle exec rails db:migrate && bundle exec rails s
+CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && bundle exec rails s

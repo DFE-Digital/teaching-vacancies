@@ -85,7 +85,7 @@ Occasionally we see `terraform plan` output like this
 ```
 # module.paas.cloudfoundry_app.web_app will be updated in-place
   ~ resource "cloudfoundry_app" "web_app" {
-        command                    = "bundle exec rake cf:on_first_instance db:migrate && rails s"
+        command                    = "bundle exec rake db:migrate:ignore_concurrent_migration_exceptions && rails s"
         disk_quota                 = 1024
         docker_image               = "dfedigital/teaching-vacancies:dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714"
         enable_ssh                 = true
