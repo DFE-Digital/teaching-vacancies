@@ -545,7 +545,7 @@ en:
           yes_hint: This will help jobseekers who are looking for sponsorship to find your job more easily.
           no_hint: This will tell jobseekers on your job listing that you cannot offer sponsorship for this role.
           hint: If you're not already a sponsor you can %{link}
-          link_text: apply to become a licensed worker sponsor (opens in new tab)
+          link_text: apply to become a licensed worker sponsor (opens in new tab).
       live:
         notice: You can only view active jobs
       review:
