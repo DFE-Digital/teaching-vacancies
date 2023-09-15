@@ -14,12 +14,6 @@ on:
           - review
           - staging
           - production
-      aws-access-key-id:
-        description: AWS-ID
-        required: true
-      aws-secret-access-key:
-        description: AWS-KEY
-        required: true
 
 env:
   BACKUP_ARTIFACT_NAME: ${{ inputs.environment }}-backup
