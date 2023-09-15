@@ -83,7 +83,7 @@ jobs:
       runs-on: ubuntu-latest
       needs: backup
 
-      environment: ${{ env.ENVIRONMENT_NAME }}
+      environment: ${{ inputs.environment }}
 
       steps:
       - uses: actions/checkout@v4
