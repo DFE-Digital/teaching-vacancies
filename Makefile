@@ -201,6 +201,12 @@ terraform-monitoring-plan: terraform-monitoring-init ## make passcode=MyPasscode
 terraform-monitoring-apply: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-apply
 		terraform -chdir=terraform/monitoring apply -input=false -auto-approve
 
+
+##@ install konduit
+bin/konduit.sh:
+	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
+		&& chmod +x bin/konduit.sh
+
 ##@ rails console. Ability to rail console to apps on PaaS
 
 console: ## make qa console
