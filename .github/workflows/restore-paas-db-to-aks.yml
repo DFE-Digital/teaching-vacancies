@@ -25,10 +25,13 @@ env:
   BACKUP_ARTIFACT_NAME: ${{ inputs.environment }}-backup
   ENVIRONMENT_NAME: ${{ inputs.environment }}
 
-
 jobs:
   backup:
     name: Backup from PAAS
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
 
     - uses: DFE-Digital/github-actions/install-postgres-client@master
 
@@ -85,8 +88,6 @@ jobs:
       name: Restore to AKS
       runs-on: ubuntu-latest
       needs: backup
-
-      environment: ${{ env.ENVIRONMENT_NAME }}
 
       steps:
       - uses: actions/checkout@v4
