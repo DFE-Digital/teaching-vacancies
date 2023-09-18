@@ -2,7 +2,6 @@ class VacancySource::Source::Broadbean
   include VacancySource::Parser
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_BROADBEAN_FEED_URL").freeze
-  BROADBEAN_TRUST_UID = "".freeze
   SOURCE_NAME = "broadbean".freeze
 
   # Helper class for less verbose handling of items in the feed
