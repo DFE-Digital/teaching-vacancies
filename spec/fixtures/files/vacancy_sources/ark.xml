@@ -23,7 +23,7 @@
       <category domain="Contract Type">Fixed Term</category>
       <category domain="Working Pattern">Full Time</category>
       <atom:content type="html" mode="escaped" xml:lang="en">Some text</atom:content>
-      <engAts:jobdescription>Some description</engAts:jobdescription>
+      <engAts:jobdescription>A one year programme that prepares you to enter teacher training, in primary or secondary.</engAts:jobdescription>
       <engAts:vacancyid>Solomon-1143</engAts:vacancyid>
       <engAts:salaryRangeFrom>£24,454</engAts:salaryRangeFrom>
       <engAts:salaryRangeTo/>

@@ -64,9 +64,9 @@ class VacancySource::Source::Ark
   def attributes_for(item)
     {
       job_title: item["title"],
-      job_advert: item["description"],
+      job_advert: item["jobdescription", "engAts"],
       salary: salary_range_for(item),
-      expires_at: item["endDate"].presence && Time.zone.parse(item["endDate"]),
+      expires_at: item["endDate"].presence && Time.zone.parse(item["endDate"]).utc,
       external_advert_url: item["link"],
 
       job_roles: job_roles_for(item),
