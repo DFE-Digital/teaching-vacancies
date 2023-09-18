@@ -1,0 +1,18 @@
+name: Copy PAAS databases to AKS
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 11 * * *' # 02:00 UTC
+
+jobs:
+  restore_db:
+    name: Restore DB
+    strategy:
+      matrix:
+        environment: [qa]
+      max-parallel: 1
+    uses: ./.github/workflows/restore-paas-db-to-aks.yml
+    with:
+      environment: ${{ matrix.environment }}
+    secrets: inherit
