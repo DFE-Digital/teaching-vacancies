@@ -54,7 +54,7 @@ class VacancySource::Source::Broadbean
       external_advert_url: item["advertUrl"],
 
       # New structured fields
-      job_role: job_role_for(item),
+      job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence&.split(","),
       working_patterns: item["workingPatterns"].presence&.split(","),
@@ -75,14 +75,20 @@ class VacancySource::Source::Broadbean
     end
   end
 
-  def job_role_for(item)
-    return if item["jobRole"].blank?
+  def job_roles_for(item)
+    role = item["jobRole"]&.strip
+    return [] if role.blank?
 
-    item["jobRole"]
-    .gsub(/deputy_headteacher_principal|assistant_headteacher_principal|headteacher_principal|deputy_headteacher|assistant_headteacher|headteacher/, "senior_leader")
-    .gsub(/head_of_year_or_phase|head_of_department_or_curriculum|head_of_year/, "middle_leader")
-    .gsub(/learning_support|other_support|science_technician/, "education_support")
-    .gsub(/\s+/, "")
+    # Translate legacy senior/middle leader into all the granular roles split from them
+    return Vacancy::SENIOR_LEADER_JOB_ROLES if role.include? "senior_leader"
+    return Vacancy::MIDDLE_LEADER_JOB_ROLES if role.include? "middle_leader"
+
+    Array.wrap(role.gsub("deputy_headteacher_principal", "deputy_headteacher")
+                   .gsub("assistant_headteacher_principal", "assistant_headteacher")
+                   .gsub("headteacher_principal", "headteacher")
+                   .gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
+                   .gsub(/learning_support|other_support|science_technician/, "education_support")
+                   .gsub(/\s+/, ""))
   end
 
   def ect_status_for(item)
