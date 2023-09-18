@@ -3,14 +3,13 @@
 h1 class="govuk-heading-l" role="heading" aria-level="1"
   = t("publishers.jobseeker_profiles.search_result_heading", count: number_with_delimiter(@pagy.count))
 
-p = t("publishers.jobseeker_profiles.available_to_travel_text")
-
 .govuk-grid-row
   .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
     = form_for @form, as: "", url: url_for, method: "get", html: { data: { controller: "form" }, role: "search" } do |f|
       = render "publishers/jobseeker_profiles/search/filters", f: f, form: @form, jobseeker_profile_search: @jobseeker_profile_search
 
   .govuk-grid-column-two-thirds-at-desktop
+    p = t("publishers.jobseeker_profiles.available_to_travel_text")
     - if @jobseeker_profiles.any?
       p = t("publishers.jobseeker_profiles.sort_result_text")
       #search-results
