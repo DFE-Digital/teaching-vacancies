@@ -21,11 +21,6 @@ ruby:
       map_values: ->(value, step) { step.options[value] },
       join_with: ", ",
     },
-    locations: {
-      if: ->(form) { form.locations.any? },
-      map_values: ->((_, value), _) { "#{value[:location]} (#{t('jobs.search.number_of_miles', count: value[:radius].to_i)})" },
-      join_with: "</br>",
-    },
   }
 
   list = govuk_summary_list do |summary_list|
