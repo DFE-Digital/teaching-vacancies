@@ -227,6 +227,8 @@ module VacancyHelpers
     vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.readable_job_roles)
+    sponsorship_text = vacancy.visa_sponsorship_available ? "Yes, visa sponsorship available" : "No, visa sponsorship not available"
+    expect(page).to have_content(sponsorship_text)
     vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
     expect(page).to have_content(vacancy.readable_working_patterns)
@@ -255,6 +257,8 @@ module VacancyHelpers
     expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents")) if vacancy.supporting_documents.any?
 
     if vacancy.enable_job_applications?
+      sponsorship_inset_text = vacancy.visa_sponsorship_available ? "Skilled worker visa sponsorship is available for this job." : "Skilled worker visa sponsorship is not available for this job."
+      expect(page).to have_content sponsorship_inset_text
       expect(page).to have_link(I18n.t("jobseekers.job_applications.apply"), href: new_jobseekers_job_job_application_path(vacancy.id))
     else
       expect(page).to have_content(I18n.t("jobs.apply_via_website"))
