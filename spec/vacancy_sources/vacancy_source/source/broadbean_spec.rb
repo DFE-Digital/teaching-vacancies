@@ -26,7 +26,7 @@ RSpec.describe VacancySource::Source::Broadbean do
     end
 
     before do
-      expect(HTTParty).to receive(:get).with("http://example.com/feed.xml", verify: false).and_return(response)
+      expect(HTTParty).to receive(:get).with("http://example.com/feed.xml").and_return(response)
     end
 
     it "has the correct number of vacancies" do

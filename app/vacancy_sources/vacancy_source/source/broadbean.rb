@@ -121,6 +121,6 @@ class VacancySource::Source::Broadbean
   end
 
   def feed
-    @feed ||= Nokogiri::XML(HTTParty.get(FEED_URL, verify: false).body)
+    @feed ||= Nokogiri::XML(HTTParty.get(FEED_URL).body)
   end
 end
