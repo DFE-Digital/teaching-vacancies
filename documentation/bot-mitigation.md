@@ -5,6 +5,8 @@ Currently there are several forms on the service that can be accessed and submit
 
 Google's recaptcha v3 was implemented on these forms in order to start obtaining recaptcha 'scores' which would help identify suspicious requests.
 
+[Link to our recaptcha settings](https://www.google.com/u/2/recaptcha/admin/site/674609893)
+
 ## Why
 This version of the recaptcha does not obstruct the user (or bot) in any way and as a result we still receive some spam. Notably this results in bots creating job alert subscriptions.
 
