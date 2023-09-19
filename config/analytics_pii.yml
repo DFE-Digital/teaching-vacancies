@@ -42,6 +42,8 @@ shared:
     - id
     - email
     - unconfirmed_email
+  job_preferences:
+    - jobseeker_profile_id
   notifications:
     - recipient_id
   organisations:
