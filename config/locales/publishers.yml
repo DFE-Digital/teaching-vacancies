@@ -63,7 +63,12 @@ en:
     job_listing_process_changed_draft_banner:
       heading_html: "You cannot make changes to this draft job listing. %{create_new_link} or %{contact_support_link}."
     jobseeker_profiles:
-      available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."
+      trusts:
+        available_to_travel_text:
+          selected_locations: "These candidates are willing to travel to your selected school locations."
+          all_locations:  "These candidates are willing to travel to a locations that's near at least one of your schools."
+      non_trusts:
+        available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."
       index:
         no_results:
           heading: No candidates found

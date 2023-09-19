@@ -10,6 +10,10 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
 
   .govuk-grid-column-two-thirds-at-desktop
     p.govuk-body-l = t("publishers.jobseeker_profiles.available_to_travel_text")
+    - if current_organisation.trust?
+      p.govuk-body-l = t("publishers.jobseeker_profiles.trusts.available_to_travel_text.#{@form.locations.present? ? "selected_locations" : "all_locations"}")
+    - else
+      p.govuk-body-l = t("publishers.jobseeker_profiles.non_trusts.available_to_travel_text")
     - if @jobseeker_profiles.any?
       p = t("publishers.jobseeker_profiles.sort_result_text")
       #search-results
