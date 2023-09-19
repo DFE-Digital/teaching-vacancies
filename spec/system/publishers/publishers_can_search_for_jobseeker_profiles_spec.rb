@@ -23,8 +23,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
   describe "Visiting the publisher's jobseeker profiles start page" do
     before { login_publisher(publisher:, organisation:) }
-    context "when user is not a MAT" do
-    end
+
     it "will display all jobseeker profiles with location preference areas containing the school" do
       visit publishers_jobseeker_profiles_path
 
@@ -100,14 +99,14 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   end
 
   context "when organisation is a trust" do
-    before do 
+    before do
       login_publisher(publisher: trust_publisher, organisation: trust)
       visit publishers_jobseeker_profiles_path
     end
 
     context "when no locations are selected in the filters" do
       it "shows text explaining that the candidates are willing travel to one of more of the locations" do
-        expect(page).to have_selector('p', text: "These candidates are willing to travel to a locations that's near at least one of your schools.")
+        expect(page).to have_selector("p", text: "These candidates are willing to travel to a locations that's near at least one of your schools.")
       end
     end
 
@@ -115,19 +114,19 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
       it "shows text explaining that the candidates are willing travel to selected locations" do
         check "Oxford"
         click_button "Apply filters"
-        expect(page).to have_selector('p', text: "These candidates are willing to travel to your selected school locations.")
+        expect(page).to have_selector("p", text: "These candidates are willing to travel to your selected school locations.")
       end
     end
   end
 
   context "when organisation is not a trust" do
-    before do 
+    before do
       login_publisher(publisher:, organisation:)
       visit publishers_jobseeker_profiles_path
     end
 
     it "shows text explaining that the candidates are willing to travel to the school" do
-      expect(page).to have_selector('p', text: "These candidates are willing to travel to a location that’s near to your school.")
+      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school.")
     end
   end
 end
