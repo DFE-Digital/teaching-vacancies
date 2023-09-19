@@ -60,7 +60,9 @@ Someone on the support team can add developers to Zendesk as and when needed (as
 
 Any team member can invite the new developer to the following services:
 
-* GOV.UK Notify
+* [GOV.UK Notify](https://www.notifications.service.gov.uk/services/786d369d-11d1-4c7e-9a11-ef06aab2978b)
 * Skylight (Access through Github user with access to TV project).
 * Google Analytics
-* Google BigQ Looker studio
+* [Google Tag Manager](https://tagmanager.google.com/?authuser=2#/container/accounts/4702787029/containers/12903245/workspaces/103)
+* [Google BigQ Looker studio](https://lookerstudio.google.com/u/2/reporting/1X_lrbWUn7Nw5LZnRWynJKtalYg6-L4Oi)
+* [Google reCAPTCHA](https://www.google.com/u/2/recaptcha/admin/site/674609893)
