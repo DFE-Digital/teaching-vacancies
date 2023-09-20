@@ -9,7 +9,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       = render "publishers/jobseeker_profiles/search/filters", f: f, form: @form, jobseeker_profile_search: @jobseeker_profile_search
 
   .govuk-grid-column-two-thirds-at-desktop
-    p = t("publishers.jobseeker_profiles.available_to_travel_text")
+    p.govuk-body-l = t("publishers.jobseeker_profiles.available_to_travel_text")
     - if @jobseeker_profiles.any?
       p = t("publishers.jobseeker_profiles.sort_result_text")
       #search-results
