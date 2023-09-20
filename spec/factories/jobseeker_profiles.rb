@@ -15,6 +15,10 @@ FactoryBot.define do
       job_preferences { build(:job_preferences, jobseeker_profile: instance) }
     end
 
+    trait :with_location_preferences do
+      job_preferences { build(:job_preferences, :with_locations, jobseeker_profile: instance) }
+    end
+
     trait :with_qualifications do
       qualifications { [build(:qualification, jobseeker_profile: instance)] }
     end
