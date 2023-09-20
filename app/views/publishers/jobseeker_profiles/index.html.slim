@@ -9,7 +9,6 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       = render "publishers/jobseeker_profiles/search/filters", f: f, form: @form, jobseeker_profile_search: @jobseeker_profile_search
 
   .govuk-grid-column-two-thirds-at-desktop
-    p.govuk-body-l = t("publishers.jobseeker_profiles.available_to_travel_text")
     - if current_organisation.trust?
       p.govuk-body-l = t("publishers.jobseeker_profiles.trusts.available_to_travel_text.#{@form.locations.present? ? "selected_locations" : "all_locations"}")
     - else
