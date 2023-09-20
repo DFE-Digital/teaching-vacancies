@@ -711,7 +711,6 @@ RSpec.describe "Jobseekers can manage their profile" do
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_css("h2", text: "There is a problem")
 
-      
       choose "Yes"
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
