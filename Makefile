@@ -45,7 +45,7 @@ local: ## local # Same values as the deployed dev environment, adapted for local
 		$(eval local_filter=| sed -e '/APP_ROLE=/d' -e '/RAILS_ENV=/d')
 
 .PHONY: dev
-dev: ## dev
+dev: test-cluster ## dev
 		$(eval env=dev)
 		$(eval space=teaching-vacancies-dev)
 		$(eval var_file=$(env))
@@ -56,7 +56,7 @@ bin/terrafile: ## Install terrafile to manage terraform modules
 		| tar xz -C ./bin terrafile
 
 .PHONY: review
-review: ## review # Requires `pr_id=NNNN`
+review: test-cluster ## review # Requires `pr_id=NNNN`
 		$(if $(pr_id), , $(error Missing environment variable "pr_id"))
 		$(eval env=review-pr-$(pr_id))
 		$(eval space=teaching-vacancies-review)
@@ -66,7 +66,7 @@ review: ## review # Requires `pr_id=NNNN`
 		$(eval include global_config/review.sh)
 
 .PHONY: staging
-staging: ## staging
+staging: test-cluster ## staging
 		$(eval env=staging)
 		$(eval space=teaching-vacancies-staging)
 		$(eval var_file=$(env))
@@ -74,7 +74,7 @@ staging: ## staging
 		$(eval include global_config/staging.sh)
 
 .PHONY: production
-production: ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
+production: production-cluster ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
 		@if [[ "$(CONFIRM_PRODUCTION)" != YES ]]; then echo "Please enter "CONFIRM_PRODUCTION=YES" to run workflow"; exit 1; fi
 		$(eval env=production)
 		$(eval space=teaching-vacancies-production)
@@ -83,7 +83,7 @@ production: ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
 		$(eval include global_config/production.sh)
 
 .PHONY: qa
-qa: ## qa
+qa: test-cluster ## qa
 		$(eval env=qa)
 		$(eval space=teaching-vacancies-dev)
 		$(eval var_file=$(env))
@@ -248,9 +248,6 @@ composed-variables:
 	$(eval STORAGE_ACCOUNT_NAME=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}sa)
 	$(eval KEYVAULT_NAMES='("${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-app-kv", "${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv")')
 
-set-azure-account:
-	[ "${SKIP_AZURE_LOGIN}" != "true" ] && az account set -s ${AZURE_SUBSCRIPTION} || true
-
 set-what-if:
 	$(eval WHAT_IF=--what-if)
 
@@ -268,6 +265,24 @@ arm-deployment: composed-variables set-azure-account
 deploy-arm-resources: arm-deployment
 
 validate-arm-resources: set-what-if arm-deployment
+
+##@ Azure AKS cluster commands 
+
+set-azure-account:
+	[ "${SKIP_AZURE_LOGIN}" != "true" ] && az account set -s ${AZURE_SUBSCRIPTION} || true
+
+production-cluster:
+	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189p01-tsc-pd-rg)
+	$(eval CLUSTER_NAME=s189p01-tsc-production-aks)
+  $(eval AZURE_SUBSCRIPTION=s189-teacher-services-cloud-production)
+
+test-cluster:
+	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189t01-tsc-ts-rg)
+	$(eval CLUSTER_NAME=s189t01-tsc-test-aks)
+  $(eval AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test)
+
+get-cluster-credentials: set-azure-account
+	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
 
 ##@ Help
 
