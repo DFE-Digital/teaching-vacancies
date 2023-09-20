@@ -23,6 +23,7 @@ RSpec.describe VacancySource::Source::Ark do
         contract_type: "fixed_term",
         phases: %w[through],
         visa_sponsorship_available: nil,
+        expires_at: Time.zone.parse("2023-09-26T09:00:00"),
       }
     end
 
