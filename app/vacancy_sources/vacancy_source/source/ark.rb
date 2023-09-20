@@ -47,9 +47,6 @@ class VacancySource::Source::Ark
 
       # An external vacancy is by definition always published
       v.status = :published
-      # Consider publish_on date to be the first time we saw this vacancy come through
-      # (i.e. today, unless it already has a publish on date set)
-      v.publish_on ||= Date.today
 
       begin
         v.assign_attributes(attributes_for(item))
@@ -74,6 +71,7 @@ class VacancySource::Source::Ark
       working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       phases: phases_for(item),
+      publish_on: publish_on_for(item),
     }.merge(organisation_fields(item))
     .merge(start_date_fields(item))
   end
@@ -85,6 +83,16 @@ class VacancySource::Source::Ark
     return if item["endDate"].blank?
 
     Time.zone.parse(item["endDate"].gsub(/[A-Z]+\z/, ""))
+  end
+
+  # Consider publish_on date to be the first time we saw this vacancy come through
+  # (i.e. today, unless it already has a publish on date set)
+  def publish_on_for(item)
+    if item["pubDate"].present?
+      Date.parse(item["pubDate"])
+    else
+      Date.today
+    end
   end
 
   def salary_range_for(item)
@@ -101,9 +109,9 @@ class VacancySource::Source::Ark
   end
 
   def start_date_fields(item)
-    return {} if item["pubDate"].blank?
+    return {} if item["startDate"].blank?
 
-    parsed_date = StartDate.new(item["pubDate"])
+    parsed_date = StartDate.new(item["startDate"])
     if parsed_date.specific?
       { starts_on: parsed_date.date, start_date_type: parsed_date.type }
     else
