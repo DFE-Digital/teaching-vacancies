@@ -63,7 +63,7 @@ class VacancySource::Source::Ark
       job_title: item["title"],
       job_advert: item["jobdescription", "engAts"],
       salary: salary_range_for(item),
-      expires_at: expires_at_for(item),
+      expires_at: Time.zone.parse(item["endDate"]),
       external_advert_url: item["link"],
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
@@ -74,15 +74,6 @@ class VacancySource::Source::Ark
       publish_on: publish_on_for(item),
     }.merge(organisation_fields(item))
     .merge(start_date_fields(item))
-  end
-
-  # Removes any timezone specified in the feed. As many times they send the wrong timezone, causing our parsing to 
-  # translate it to a different time according to GMT/BST time.
-  # EG: incoming '9:00:00Z' was getting stored as '10:00:00 +0100' when they specified '9AM' in the advert text.
-  def expires_at_for(item)
-    return if item["endDate"].blank?
-
-    Time.zone.parse(item["endDate"].gsub(/[A-Z]+\z/, ""))
   end
 
   # Consider publish_on date to be the first time we saw this vacancy come through
