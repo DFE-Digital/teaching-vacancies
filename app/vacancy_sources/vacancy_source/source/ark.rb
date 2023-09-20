@@ -113,14 +113,17 @@ class VacancySource::Source::Ark
   def job_roles_for(item)
     role = item.fetch_by_attribute("category", "domain", "Role Type")
 
-    Array.wrap(role.gsub(/Teacher|Cover Support Teacher|TLRs|Lead Practitioner/, "teacher")
-              .gsub(/Principal|Head of School|Executive Principal|Associate Principal|Vice Principal|Assistant Principal/, "senior_leader")
-              .gsub(/Head of Department|Head of Year|Head of Phase/, "middle_leader")
-              .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
-              .gsub("HigherLevelteaching_assistant", "higher_level_teaching_assistant")
-              .gsub(%r{SEN/Inclusion Support|Pastoral|Technician}, "education_support")
-              .gsub("SEN/Inclusionteacher", "sendco")
-              .gsub(/\s+/, ""))
+    Array.wrap(role.strip
+      .gsub(/^Teacher$|Cover Support Teacher|TLRs|Lead Practitioner|Trainee Teacher|Peripatetic Music/, "teacher")
+      .gsub(/^Principal$|Head of School|Associate Principal|Executive Principal/, "headteacher")
+      .gsub("Vice Principal", "deputy_headteacher")
+      .gsub("Assistant Principal", "assistant_headteacher")
+      .gsub("Head of Department", "head_of_department_or_curriculum")
+      .gsub(/Head of Year|Head of Phase/, "head_of_year_or_phase")
+      .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
+      .gsub(%r{SEN/Inclusion Support|Pastoral|Technician|Librarian}, "education_support")
+      .gsub("SEN/Inclusion Teacher", "sendco")
+      .gsub(/\s+/, ""))
   end
 
   def ect_status_for(item)
