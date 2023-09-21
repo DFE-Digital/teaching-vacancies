@@ -225,6 +225,28 @@ RSpec.describe VacancySource::Source::Ark do
       end
     end
 
+    describe "contract type mapping" do
+      let(:response_body) { super().gsub("Fixed Term", contract_type) }
+
+      context "when the contract type is 'Permanent'" do
+        let(:contract_type) { "Permanent" }
+
+        it "maps the source contract type to 'permanent' in the vacancy" do
+          expect(vacancy.contract_type).to eq("permanent")
+        end
+      end
+
+      ["Casual", "Fixed Term"].each do |pattern|
+        context "when the contract type is '#{pattern}'" do
+          let(:contract_type) { pattern }
+
+          it "maps the source contract type to 'fixed_term' in the vacancy" do
+            expect(vacancy.contract_type).to eq("fixed_term")
+          end
+        end
+      end
+    end
+
     context "when the same vacancy has been imported previously" do
       let!(:existing_vacancy) do
         create(

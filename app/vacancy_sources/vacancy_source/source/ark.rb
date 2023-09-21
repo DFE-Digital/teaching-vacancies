@@ -141,7 +141,7 @@ class VacancySource::Source::Ark
   def contract_type_for(item)
     item.fetch_by_attribute("category", "domain", "Contract Type")
     .gsub("Permanent", "permanent")
-    .gsub("Fixed Term", "fixed_term")
+    .gsub(/Fixed Term|Casual/, "fixed_term")
   end
 
   def phases_for(item)
