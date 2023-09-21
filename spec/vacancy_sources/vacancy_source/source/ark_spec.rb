@@ -166,11 +166,13 @@ RSpec.describe VacancySource::Source::Ark do
         end
       end
 
-      context "when the source role is 'Head of Department'" do
-        let(:job_role) { "Head of Department" }
+      ["Head of Department", "HeadofDept"].each do |role|
+        context "when the source role is '#{role}'" do
+          let(:job_role) { role }
 
-        it "maps the source role to '[head_of_department_or_curriculum]' in the vacancy" do
-          expect(vacancy.job_roles).to eq(["head_of_department_or_curriculum"])
+          it "maps the source role to '[head_of_department_or_curriculum]' in the vacancy" do
+            expect(vacancy.job_roles).to eq(["head_of_department_or_curriculum"])
+          end
         end
       end
 

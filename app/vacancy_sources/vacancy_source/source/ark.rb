@@ -118,7 +118,7 @@ class VacancySource::Source::Ark
       .gsub(/^Principal$|Head of School|Associate Principal|Executive Principal/, "headteacher")
       .gsub("Vice Principal", "deputy_headteacher")
       .gsub("Assistant Principal", "assistant_headteacher")
-      .gsub("Head of Department", "head_of_department_or_curriculum")
+      .gsub(/Head of Department|HeadofDept/, "head_of_department_or_curriculum")
       .gsub(/Head of Year|Head of Phase/, "head_of_year_or_phase")
       .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
       .gsub(%r{SEN/Inclusion Support|Pastoral|Technician|Librarian}, "education_support")
