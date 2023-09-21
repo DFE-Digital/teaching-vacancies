@@ -60,16 +60,24 @@ class VacancySource::Source::Ark
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Style/GuardClause
   def validate_enums(vacancy, attributes)
     attributes[:job_roles].each do |role|
       vacancy.errors.add(:job_roles, "'#{role}' is not a valid job role") if role.present? && Vacancy.job_roles.exclude?(role)
     end
-    
-    vacancy.errors.add(:working_patterns, "'#{attributes[:working_patterns]}' is not a valid working pattern") if attributes[:working_patterns].present? && Vacancy.working_patterns.exclude?(attributes[:working_patterns])
-    vacancy.errors.add(:phases, "'#{attributes[:phases]}' is not a valid phase") if attributes[:phases].present? && Vacancy.phases.exclude?(attributes[:phases])
-    vacancy.errors.add(:contract_type, "'#{attributes[:contract_type]}' is not a valid contract type") if attributes[:contract_type].present? && Vacancy.contract_types.exclude?(attributes[:contract_type])
+    if attributes[:working_patterns].present? && Vacancy.working_patterns.exclude?(attributes[:working_patterns])
+      vacancy.errors.add(:working_patterns, "'#{attributes[:working_patterns]}' is not a valid working pattern")
+    end
+    if attributes[:phases].present? && Vacancy.phases.exclude?(attributes[:phases])
+      vacancy.errors.add(:phases, "'#{attributes[:phases]}' is not a valid phase")
+    end
+    if attributes[:contract_type].present? && Vacancy.contract_types.exclude?(attributes[:contract_type])
+      vacancy.errors.add(:contract_type, "'#{attributes[:contract_type]}' is not a valid contract type")
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Style/GuardClause
 
   def attributes_for(item)
     {
