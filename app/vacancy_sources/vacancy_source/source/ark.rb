@@ -146,10 +146,11 @@ class VacancySource::Source::Ark
 
   def phases_for(item)
     item.fetch_by_attribute("category", "domain", "Phase")
+    .gsub("Nursery", "nursery")
     .gsub("Primary", "primary")
     .gsub("Secondary", "secondary")
-    &.gsub("All-through", "through")
-    &.gsub(/\s+/, "")
+    .gsub("All-through", "through")
+    .gsub(/\s+/, "")
   end
 
   def organisation_fields(item)

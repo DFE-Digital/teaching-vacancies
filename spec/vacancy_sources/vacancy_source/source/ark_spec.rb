@@ -247,6 +247,42 @@ RSpec.describe VacancySource::Source::Ark do
       end
     end
 
+    describe "phases mapping" do
+      let(:response_body) { super().gsub("All-through", phase) }
+
+      context "when the phase is 'Nursery'" do
+        let(:phase) { "Nursery" }
+
+        it "maps the source phase to '[nursery]' in the vacancy" do
+          expect(vacancy.phases).to eq(["nursery"])
+        end
+      end
+
+      context "when the phase is 'Primary'" do
+        let(:phase) { "Primary" }
+
+        it "maps the source phase to '[primary]' in the vacancy" do
+          expect(vacancy.phases).to eq(["primary"])
+        end
+      end
+
+      context "when the phase is 'Secondary'" do
+        let(:phase) { "Secondary" }
+
+        it "maps the source phase to '[Secondary]' in the vacancy" do
+          expect(vacancy.phases).to eq(["secondary"])
+        end
+      end
+
+      context "when the phase is 'All-through'" do
+        let(:phase) { "All-through" }
+
+        it "maps the source phase to '[through]' in the vacancy" do
+          expect(vacancy.phases).to eq(["through"])
+        end
+      end
+    end
+
     context "when the same vacancy has been imported previously" do
       let!(:existing_vacancy) do
         create(
