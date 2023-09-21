@@ -8,7 +8,7 @@ DFE_SIGN_IN_REGISTRATION_URL: https://profile.signin.education.gov.uk/register
 DFE_SIGN_IN_URL: https://api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: false
 DOMAIN: teaching-vacancies.service.gov.uk
-TEMP_DOMAIN: teaching-vacancies-production.teacherservices.cloud
+TEMP_DOMAIN: www2.teaching-vacancies.service.gov.uk
 ENFORCE_LOCAL_AUTHORITY_ALLOWLIST: true
 GOOGLE_TAG_MANAGER_CONTAINER_ID: GTM-P5L2QHV
 MALLOC_ARENA_MAX: 2

@@ -8,7 +8,7 @@ DFE_SIGN_IN_REGISTRATION_URL: https://test-profile.signin.education.gov.uk/regis
 DFE_SIGN_IN_URL: https://test-api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: true
 DOMAIN: qa.teaching-vacancies.service.gov.uk
-TEMP_DOMAIN: teaching-vacancies-qa.test.teacherservices.cloud
+TEMP_DOMAIN: qa2.teaching-vacancies.service.gov.uk
 ENFORCE_LOCAL_AUTHORITY_ALLOWLIST: false
 RAILS_ENV: production
 RAILS_LOG_TO_STDOUT: true

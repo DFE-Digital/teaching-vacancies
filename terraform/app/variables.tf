@@ -17,6 +17,16 @@ variable "distribution_list" {
   default = {}
 }
 
+variable "distribution_list_aks" {
+  description = "Define Cloudfront distributions for AKS environment with the attributes below"
+  type = map(object({
+    offline_bucket_domain_name    = string
+    offline_bucket_origin_path    = string
+    cloudfront_origin_domain_name = string
+  }))
+  default = {}
+}
+
 variable "enable_cloudfront_compress" {
   default = true
 }
@@ -210,14 +220,17 @@ variable "aks_worker_app_memory" {
 }
 
 locals {
-  paas_api_url         = "https://api.london.cloud.service.gov.uk"
-  paas_app_env_values  = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
-  infra_secrets        = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
-  is_production        = var.environment == "production"
-  route53_a_records    = local.is_production ? var.route53_zones : []
-  route53_cname_record = local.is_production ? "www" : var.environment
-  service_name         = "teaching-vacancies"
-  service_abbreviation = "tv"
+  paas_api_url               = "https://api.london.cloud.service.gov.uk"
+  paas_app_env_values        = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
+  infra_secrets              = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
+  is_production              = var.environment == "production"
+  route53_a_records          = local.is_production ? var.route53_zones : []
+  route53_a_records_aks      = []
+  route53_cname_record       = local.is_production ? "www" : var.environment
+  route53_cname_record_aks   = local.is_production ? "www2" : "${var.environment}2"
+  web_external_hostnames_aks = [for zone in var.route53_zones : "${local.route53_cname_record_aks}.${zone}"]
+  service_name               = "teaching-vacancies"
+  service_abbreviation       = "tv"
   hostname_domain_map = {
     for zone in var.route53_zones :
     "${local.route53_cname_record}.${zone}" => {

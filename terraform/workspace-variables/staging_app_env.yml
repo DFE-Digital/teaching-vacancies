@@ -8,7 +8,7 @@ DFE_SIGN_IN_REGISTRATION_URL: https://pp-profile.signin.education.gov.uk/registe
 DFE_SIGN_IN_URL: https://pp-api.signin.education.gov.uk
 DISABLE_EXPENSIVE_JOBS: true
 DOMAIN: staging.teaching-vacancies.service.gov.uk
-TEMP_DOMAIN: teaching-vacancies-staging.test.teacherservices.cloud
+TEMP_DOMAIN: staging2.teaching-vacancies.service.gov.uk
 ENFORCE_LOCAL_AUTHORITY_ALLOWLIST: false
 MALLOC_ARENA_MAX: 2
 RAILS_ENV: production

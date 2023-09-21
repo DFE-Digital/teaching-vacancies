@@ -41,9 +41,10 @@ module "web_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image = var.app_docker_image
-  command      = var.aks_web_app_start_command
-  probe_path   = "/check"
+  docker_image           = var.app_docker_image
+  command                = var.aks_web_app_start_command
+  probe_path             = "/check"
+  web_external_hostnames = var.web_external_hostnames_aks
 }
 
 module "worker_application" {
