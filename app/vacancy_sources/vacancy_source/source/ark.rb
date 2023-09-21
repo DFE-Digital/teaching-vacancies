@@ -135,7 +135,7 @@ class VacancySource::Source::Ark
   def working_patterns_for(item)
     item.fetch_by_attribute("category", "domain", "Working Pattern")
     .gsub("Full Time", "full_time")
-    .gsub("Part Time", "part_time")
+    .gsub(/Part Time|Casual|Flexible|Term Time/, "part_time")
   end
 
   def contract_type_for(item)

@@ -203,6 +203,28 @@ RSpec.describe VacancySource::Source::Ark do
       end
     end
 
+    describe "working patterns mapping" do
+      let(:response_body) { super().gsub("Full Time", working_pattern) }
+
+      context "when the working pattern is 'Full Time'" do
+        let(:working_pattern) { "Full Time" }
+
+        it "maps the source working pattern to '[full_time]' in the vacancy" do
+          expect(vacancy.working_patterns).to eq(["full_time"])
+        end
+      end
+
+      ["Casual", "Flexible", "Term Time", "Part Time"].each do |pattern|
+        context "when the working pattern is '#{pattern}'" do
+          let(:working_pattern) { pattern }
+
+          it "maps the source working pattern to '[part_time]' in the vacancy" do
+            expect(vacancy.working_patterns).to eq(["part_time"])
+          end
+        end
+      end
+    end
+
     context "when the same vacancy has been imported previously" do
       let!(:existing_vacancy) do
         create(
