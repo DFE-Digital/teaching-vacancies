@@ -63,7 +63,7 @@ class VacancySource::Source::Ark
       job_title: item["title"],
       job_advert: item["jobdescription", "engAts"],
       salary: salary_range_for(item),
-      expires_at: Time.zone.parse(item["endDate"]),
+      expires_at: (Time.zone.parse(item["endDate"]) if item["endDate"].present?),
       external_advert_url: item["link"],
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
