@@ -90,6 +90,9 @@ variable "route53_a_records" {
 variable "hostname_domain_map" {
   type = map(any)
 }
+variable "web_external_hostnames_aks" {
+  type = list(string)
+}
 variable "restore_from_db_guid" {
 
 }

@@ -51,6 +51,24 @@ module "cloudfront" {
   }
 }
 
+module "cloudfront_aks" {
+  source                        = "./modules/cloudfront"
+  for_each                      = var.distribution_list_aks
+  environment                   = var.environment
+  enable_cloudfront_compress    = var.enable_cloudfront_compress
+  service_name                  = local.service_name
+  cloudfront_origin_domain_name = each.value.cloudfront_origin_domain_name
+  offline_bucket_domain_name    = each.value.offline_bucket_domain_name
+  offline_bucket_origin_path    = each.value.offline_bucket_origin_path
+  route53_zones                 = var.route53_zones
+  is_production                 = local.is_production
+  route53_a_records             = local.route53_a_records_aks
+  route53_cname_record          = local.route53_cname_record_aks
+  providers = {
+    aws.aws_us_east_1 = aws.aws_us_east_1
+  }
+}
+
 module "cloudwatch" {
   source            = "./modules/cloudwatch"
   for_each          = var.channel_list
@@ -116,6 +134,7 @@ module "paas" {
   redis_queue_sku_name              = var.redis_queue_sku_name
   add_database_name_suffix          = var.add_database_name_suffix
   azure_enable_backup_storage       = var.azure_enable_backup_storage
+  web_external_hostnames_aks        = local.web_external_hostnames_aks
 }
 
 module "statuscake" {
