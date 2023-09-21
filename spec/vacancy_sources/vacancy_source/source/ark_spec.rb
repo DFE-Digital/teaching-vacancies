@@ -166,7 +166,7 @@ RSpec.describe VacancySource::Source::Ark do
         end
       end
 
-      ["Head of Department", "HeadofDept"].each do |role|
+      ["Head of Department", "Head of Dept"].each do |role|
         context "when the source role is '#{role}'" do
           let(:job_role) { role }
 
