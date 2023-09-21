@@ -106,7 +106,7 @@ jobs:
             password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push docker image from builder target
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           build-args: |
             BUILDKIT_INLINE_CACHE=1
@@ -121,7 +121,7 @@ jobs:
           target: builder
 
       - name: Build and push docker image from production target
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           build-args: |
             BUILDKIT_INLINE_CACHE=1
