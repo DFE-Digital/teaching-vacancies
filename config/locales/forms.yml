@@ -384,6 +384,13 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
           teacher: Teacher
           teaching_assistant: Teaching assistant
+        key_stages_options:
+          early_years: Early years (ages 0 to 5)
+          ks1: Key stage 1 (ages 5 to 7)
+          ks2: Key stage 2 (ages 7 to 11)
+          ks3: Key stage 3 (ages 11 to 14)
+          ks4: Key stage 4 (ages 14 to 16)
+          ks5: Key stage 5 (ages 16 to 18)
       jobseekers_qualifications_shared_labels: &jobseekers_qualifications_shared_labels
         category_options:
           gcse: GCSEs
