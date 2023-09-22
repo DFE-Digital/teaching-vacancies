@@ -44,6 +44,14 @@ RSpec.describe VacancySource::Source::UnitedLearning do
       expect(vacancy.publish_on).to eq(Date.today)
     end
 
+    context "whente there is no school matching the source URN" do
+      let!(:school) { create(:school, name: "Test School", urn: "wrong_urn", phase: :secondary) }
+
+      it "the vacancy does not has any associated organisation" do
+        expect(vacancy.organisations).to be_empty
+      end
+    end
+
     describe "mappings" do
       let(:item_stub) { instance_double(described_class::FeedItem, :[] => "") }
 

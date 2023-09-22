@@ -61,9 +61,18 @@ class VacancySource::Source::UnitedLearning
       working_patterns: item["Working_patterns"].presence&.split(","),
       contract_type: item["Contract_type"].presence,
       phases: phase_for(item),
-      organisations: organisations_for(item),
-      about_school: organisations_for(item).first&.description,
       visa_sponsorship_available: false,
+    }.merge(organisation_fields(item))
+  end
+
+  def organisation_fields(item)
+    # TODO: What about central office/multiple school vacancies?
+    organisation = school_group.schools.find_by(urn: item["URN"])
+    return {} if organisation.blank?
+
+    {
+      organisations: [organisation],
+      about_school: organisation.description,
     }
   end
 
@@ -82,11 +91,6 @@ class VacancySource::Source::UnitedLearning
     return unless item["ect_suitable"].presence
 
     item["ect_suitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
-  end
-
-  def organisations_for(item)
-    # TODO: What about central office/multiple school vacancies?
-    [school_group.schools.find_by(urn: item["URN"])]
   end
 
   def school_group
