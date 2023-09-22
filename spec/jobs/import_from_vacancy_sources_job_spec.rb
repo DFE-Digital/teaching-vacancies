@@ -160,6 +160,7 @@ RSpec.describe ImportFromVacancySourcesJob do
         expect(vacancy).to_not be_valid
         expect(Vacancy.count).to eq(0)
         expect(FailedImportedVacancy.count).to eq(1)
+        expect(FailedImportedVacancy.first.import_errors).to eq(["base:[blah]"])
       end
     end
 

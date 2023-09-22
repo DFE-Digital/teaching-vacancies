@@ -4,7 +4,7 @@ RSpec.describe VacancySource::Source::Broadbean do
   let(:response_body) { file_fixture("vacancy_sources/broadbean.xml").read }
   let(:response) { double("BroadbeanHttpResponse", success?: true, body: response_body) }
 
-  let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
+  let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary, created_at: 1.week.ago) }
   let!(:school_group) { create(:school_group, name: "E-ACT", uid: "12345", schools: schools) }
   let(:schools) { [school1] }
 
