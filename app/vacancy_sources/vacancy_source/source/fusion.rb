@@ -49,7 +49,7 @@ class VacancySource::Source::Fusion
       subjects: item["subjects"].presence&.split(","),
       working_patterns: item["workingPatterns"].presence&.split(","),
       contract_type: item["contractType"].presence,
-      phases: item["phase"].presence&.parameterize(separator: "_"),
+      phases: phase_for(item),
       key_stages: item["keyStages"].presence&.split(","),
       visa_sponsorship_available: false,
 
@@ -111,6 +111,15 @@ class VacancySource::Source::Fusion
     return unless item["ect_suitable"].presence
 
     item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
+  end
+
+  def phase_for(item)
+    return if item["phase"].blank?
+
+    item["phase"].strip
+                 .parameterize(separator: "_")
+                 .gsub("through_school", "through")
+                 .gsub(/16-19|16_19/, "sixth_form_or_college")
   end
 
   def results
