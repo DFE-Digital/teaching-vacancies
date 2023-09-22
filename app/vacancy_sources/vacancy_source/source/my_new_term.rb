@@ -55,7 +55,7 @@ class VacancySource::Source::MyNewTerm
       subjects: item["subjects"].presence,
       working_patterns: item["workingPatterns"].presence,
       contract_type: item["contractType"]&.first,
-      phases: phases_for(item),
+      phases: phase_for(item),
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
       visa_sponsorship_available: false,
@@ -126,10 +126,12 @@ class VacancySource::Source::MyNewTerm
     end
   end
 
-  def phases_for(item)
-    item["phase"].presence
-    &.gsub("all_through", "through")
-    &.gsub(/\s+/, "")
+  def phase_for(item)
+    return if item["phase"].blank?
+
+    item["phase"].strip
+                 .gsub(/all_through|through_school/, "through")
+                 .gsub(/16-19|16_19/, "sixth_form_or_college")
   end
 
   def results

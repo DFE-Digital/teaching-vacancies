@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe VacancySource::Source::UnitedLearning do
   let!(:school) { create(:school, name: "Test School", urn: "136636", phase: :secondary) }
-  let!(:school_group) { create(:school_group, name: "United Learning", uid: "5143", schools: [school]) }
+  let!(:school_group) { create(:school_group, name: "United Learning", uid: described_class::UNITED_LEARNING_TRUST_UID, schools: [school]) }
 
   describe "enumeration" do
     before do
@@ -44,39 +44,87 @@ RSpec.describe VacancySource::Source::UnitedLearning do
       expect(vacancy.publish_on).to eq(Date.today)
     end
 
-    describe "job roles mapping" do
+    describe "mappings" do
       let(:item_stub) { instance_double(described_class::FeedItem, :[] => "") }
 
       before do
-        allow(item_stub).to receive(:[]).with("Job_roles").and_return(source_role)
+        allow(item_stub).to receive(:[]).with("Job_roles").and_return("teacher")
+        allow(item_stub).to receive(:[]).with("Phase").and_return("Secondary")
+        allow(item_stub).to receive(:[]).with("URN").and_return(school.urn)
         allow(described_class::FeedItem).to receive(:new).and_return(item_stub)
       end
 
-      ["null", "", " "].each do |role|
-        context "when the source role is '#{role}'" do
-          let(:source_role) { role }
+      describe "job roles mapping" do
+        before do
+          allow(item_stub).to receive(:[]).with("Job_roles").and_return(source_role)
+        end
 
-          it "the vacancy roles are empty" do
-            expect(vacancy.job_roles).to eq([])
+        ["null", "", " "].each do |role|
+          context "when the source role is '#{role}'" do
+            let(:source_role) { role }
+
+            it "the vacancy roles are empty" do
+              expect(vacancy.job_roles).to eq([])
+            end
+          end
+        end
+
+        %w[senior_leader leadership].each do |role|
+          context "when the source role is '#{role}'" do
+            let(:source_role) { role }
+
+            it "maps the source role to '[headteacher, assistant_headteacher, deputy_headteacher]' in the vacancy" do
+              expect(vacancy.job_roles).to contain_exactly("headteacher", "assistant_headteacher", "deputy_headteacher")
+            end
+          end
+        end
+
+        context "when the source role is 'middle_leader'" do
+          let(:source_role) { "middle_leader" }
+
+          it "maps the source role to '[head_of_year_or_phase, head_of_department_or_curriculum]' in the vacancy" do
+            expect(vacancy.job_roles).to contain_exactly("head_of_year_or_phase", "head_of_department_or_curriculum")
           end
         end
       end
 
-      %w[senior_leader leadership].each do |role|
-        context "when the source role is '#{role}'" do
-          let(:source_role) { role }
+      describe "phase mapping" do
+        before do
+          allow(item_stub).to receive(:[]).with("Phase").and_return(phase)
+        end
 
-          it "maps the source role to '[headteacher, assistant_headteacher, deputy_headteacher]' in the vacancy" do
-            expect(vacancy.job_roles).to contain_exactly("headteacher", "assistant_headteacher", "deputy_headteacher")
+        %w[16-19 16_19].each do |phase|
+          context "when the phase is '#{phase}'" do
+            let(:phase) { phase }
+
+            it "maps the phase to '[sixth_form_or_college]' in the vacancy" do
+              expect(vacancy.phases).to eq(["sixth_form_or_college"])
+            end
           end
         end
-      end
 
-      context "when the source role is 'middle_leader'" do
-        let(:source_role) { "middle_leader" }
+        context "when the phase is 'Primary'" do
+          let(:phase) { "Primary" }
 
-        it "maps the source role to '[head_of_year_or_phase, head_of_department_or_curriculum]' in the vacancy" do
-          expect(vacancy.job_roles).to contain_exactly("head_of_year_or_phase", "head_of_department_or_curriculum")
+          it "maps the phase to '[primary]' in the vacancy" do
+            expect(vacancy.phases).to eq(["primary"])
+          end
+        end
+
+        context "when the phase is 'Secondary'" do
+          let(:phase) { "Secondary" }
+
+          it "maps the phase to '[secondary]' in the vacancy" do
+            expect(vacancy.phases).to eq(["secondary"])
+          end
+        end
+
+        context "when the phase is 'through_school'" do
+          let(:phase) { "through_school" }
+
+          it "maps the phase to '[through]' in the vacancy" do
+            expect(vacancy.phases).to eq(["through"])
+          end
         end
       end
     end

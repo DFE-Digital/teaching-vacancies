@@ -56,7 +56,7 @@ class VacancySource::Source::Ventrus
       # subjects: item["Subjects"].presence&.split(","),
       working_patterns: item["Working_Patterns"].presence&.split(","),
       contract_type: item["Contract_Type"].presence,
-      phases: phases_for(item),
+      phases: phase_for(item),
       visa_sponsorship_available: false,
     }.merge(organisation_fields(item))
   end
@@ -102,8 +102,13 @@ class VacancySource::Source::Ventrus
                    .gsub(/\s+/, ""))
   end
 
-  def phases_for(item)
-    Array(item["Phase_"]).presence
+  def phase_for(item)
+    return if item["Phase_"].blank?
+
+    item["Phase_"].strip
+                 .parameterize(separator: "_")
+                 .gsub("through_school", "through")
+                 .gsub(/16-19|16_19/, "sixth_form_or_college")
   end
 
   def items

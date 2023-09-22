@@ -60,9 +60,7 @@ class VacancySource::Source::UnitedLearning
       subjects: item["Subjects"].presence&.split(","),
       working_patterns: item["Working_patterns"].presence&.split(","),
       contract_type: item["Contract_type"].presence,
-      # TODO: This is coming through unexpectedly in the feed - the parameterize call can be removed
-      #       when the correct values are coming through
-      phases: [organisations_for(item).first&.readable_phase],
+      phases: phase_for(item),
       organisations: organisations_for(item),
       about_school: organisations_for(item).first&.description,
       visa_sponsorship_available: false,
@@ -93,6 +91,15 @@ class VacancySource::Source::UnitedLearning
 
   def school_group
     @school_group ||= SchoolGroup.find_by(uid: UNITED_LEARNING_TRUST_UID)
+  end
+
+  def phase_for(item)
+    return if item["Phase"].blank?
+
+    item["Phase"].strip
+                 .parameterize(separator: "_")
+                 .gsub("through_school", "through")
+                 .gsub(/16-19|16_19/, "sixth_form_or_college")
   end
 
   def feed
