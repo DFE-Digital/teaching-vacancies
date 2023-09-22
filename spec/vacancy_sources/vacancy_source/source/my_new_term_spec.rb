@@ -227,6 +227,30 @@ RSpec.describe VacancySource::Source::MyNewTerm do
           end
         end
       end
+
+      describe "phase mapping" do
+        let(:job_listings_response_body) { super().gsub("primary", phase) }
+
+        %w[16-19 16_19].each do |phase|
+          context "when the phase is '#{phase}'" do
+            let(:phase) { phase }
+
+            it "maps the phase to '[sixth_form_or_college]' in the vacancy" do
+              expect(vacancy.phases).to eq(["sixth_form_or_college"])
+            end
+          end
+        end
+
+        %w[through_school all_through].each do |phase|
+          context "when the phase is '#{phase}'" do
+            let(:phase) { phase }
+
+            it "maps the phase to '[through]' in the vacancy" do
+              expect(vacancy.phases).to eq(["through"])
+            end
+          end
+        end
+      end
     end
   end
 end
