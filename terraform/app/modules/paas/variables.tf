@@ -209,6 +209,10 @@ locals {
     var.app_env_values["TEMP_DOMAIN"],
     try(var.app_env_values["DOMAIN"], local.web_app_aks_domain)
   )
+  web_app_dfe_sign_in_redirect_url = try(
+    var.app_env_values["TEMP_DFE_SIGN_IN_REDIRECT_URL"],
+    var.app_env_values["DFE_SIGN_IN_REDIRECT_URL"],
+  )
 
   database_name_suffix = var.add_database_name_suffix ? "${var.environment}" : null
 }
