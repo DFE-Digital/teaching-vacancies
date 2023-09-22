@@ -65,7 +65,8 @@ en:
     jobseeker_profiles:
       trusts:
         available_to_travel_text:
-          selected_locations: "These candidates are willing to travel to your selected school locations."
+          single_selected_location: "These candidates are willing to travel to your selected school location."
+          selected_locations: "These candidates are willing to travel to at least one of your selected school locations."
           all_locations:  "These candidates are willing to travel to a location that's near to at least one of your schools."
       non_trusts:
         available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."

@@ -106,15 +106,24 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
     context "when no locations are selected in the filters" do
       it "shows text explaining that the candidates are willing travel to one of more of the locations" do
-        expect(page).to have_selector("p", text: "These candidates are willing to travel to a locations that's near at least one of your schools.")
+        expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that's near to at least one of your schools.")
       end
     end
 
-    context "when locations are selected in the filters" do
-      it "shows text explaining that the candidates are willing travel to selected locations" do
+    context "when 1 location is selected in the filters" do
+      it "shows text explaining that the candidates are willing travel to the selected location" do
         check "Oxford"
         click_button "Apply filters"
-        expect(page).to have_selector("p", text: "These candidates are willing to travel to your selected school locations.")
+        expect(page).to have_selector("p", text: "These candidates are willing to travel to your selected school location.")
+      end
+    end
+
+    context "when multiple locations are selected in the filters" do
+      it "shows text explaining that the candidates are willing travel to at least one of the selected locations" do
+        check "Oxford"
+        check "Cambridge"
+        click_button "Apply filters"
+        expect(page).to have_selector("p", text: "These candidates are willing to travel to at least one of your selected school locations.")
       end
     end
   end

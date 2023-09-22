@@ -10,9 +10,15 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
 
   .govuk-grid-column-two-thirds-at-desktop
     - if current_organisation.trust?
-      p.govuk-body-l = t("publishers.jobseeker_profiles.trusts.available_to_travel_text.#{@form.locations.present? ? 'selected_locations' : 'all_locations'}")
+      - if @form.locations.blank?
+        p.govuk-body-l = t("publishers.jobseeker_profiles.trusts.available_to_travel_text.all_locations")
+      - elsif @form.locations.count > 1
+        p.govuk-body-l = t("publishers.jobseeker_profiles.trusts.available_to_travel_text.selected_locations")
+      - else 
+        p.govuk-body-l = t("publishers.jobseeker_profiles.trusts.available_to_travel_text.single_selected_location")
     - else
       p.govuk-body-l = t("publishers.jobseeker_profiles.non_trusts.available_to_travel_text")
+
     - if @jobseeker_profiles.any?
       p = t("publishers.jobseeker_profiles.sort_result_text")
       #search-results
