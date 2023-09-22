@@ -58,7 +58,7 @@ class VacancySource::Source::Broadbean
       subjects: item["subjects"].presence&.split(","),
       working_patterns: item["workingPatterns"].presence&.split(","),
       contract_type: item["contractType"].presence,
-      phases: phases_for(item),
+      phases: phase_for(item),
     }.merge(organisation_fields(item))
      .merge(start_date_fields(item))
   end
@@ -96,10 +96,12 @@ class VacancySource::Source::Broadbean
     item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
   end
 
-  def phases_for(item)
-    item["phase"].presence
-    &.gsub("all_through", "through")
-    &.gsub(/\s+/, "")
+  def phase_for(item)
+    return if item["phase"].blank?
+
+    item["phase"].strip
+                 .gsub(/all_through|through_school/, "through")
+                 .gsub(/16-19|16_19/, "sixth_form_or_college")
   end
 
   def organisation_fields(item)
