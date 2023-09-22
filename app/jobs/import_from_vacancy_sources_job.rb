@@ -28,7 +28,10 @@ class ImportFromVacancySourcesJob < ApplicationJob
       total_count += 1
 
       PaperTrail.request(whodunnit: "Import from external source") do
-        if vacancy.save
+        # Only attempt to save if there are no errors coming from the source parsing.
+        # If we save a vacancy that had custom errors, they get removed with the saving validation and we will miss
+        # valuable error debugging information.
+        if vacancy.errors.none? && vacancy.save
           log(source_name, "Imported vacancy #{vacancy.id}.")
         else
           failure = create_failed_imported_vacancy(source_name, vacancy)
