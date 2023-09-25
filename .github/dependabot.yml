@@ -21,7 +21,17 @@ updates:
       # Our current Redis service instance is 5.0.6. This will be upgraded when we migrate from GOVuk PaaS to AKS.
       - dependency-name: "redis"
         update-types: ["version-update:semver-major"]
-
+    groups:
+      gem-dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "govuk"
+          - "noticed"
+        
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -46,3 +56,14 @@ updates:
       interval: "weekly"
       day: "wednesday"
     open-pull-requests-limit: 10
+    groups:
+      npm-dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "govuk"
+          - "jest"
+
