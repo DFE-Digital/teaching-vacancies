@@ -212,6 +212,11 @@ locals {
   web_app_dfe_sign_in_redirect_url = try(
     var.app_env_values["TEMP_DFE_SIGN_IN_REDIRECT_URL"],
     var.app_env_values["DFE_SIGN_IN_REDIRECT_URL"],
+    null
+  )
+  dfe_sign_in_map = (local.web_app_dfe_sign_in_redirect_url != null ?
+    { DFE_SIGN_IN_REDIRECT_URL = local.web_app_dfe_sign_in_redirect_url } :
+    {}
   )
 
   database_name_suffix = var.add_database_name_suffix ? "${var.environment}" : null

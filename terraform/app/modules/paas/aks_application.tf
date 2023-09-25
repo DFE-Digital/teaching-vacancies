@@ -13,11 +13,12 @@ module "application_configuration" {
   config_variables = merge(
     var.app_env_values,
     {
-      ENVIRONMENT_NAME         = var.environment
-      PGSSLMODE                = local.postgres_ssl_mode
-      DOMAIN                   = local.web_app_domain
-      DFE_SIGN_IN_REDIRECT_URL = local.web_app_dfe_sign_in_redirect_url
-  })
+      ENVIRONMENT_NAME = var.environment
+      PGSSLMODE        = local.postgres_ssl_mode
+      DOMAIN           = local.web_app_domain
+    },
+    local.dfe_sign_in_map
+  )
   secret_variables = merge({
     REDIS_URL    = module.redis-cache.url
     DATABASE_URL = module.postgres.url
