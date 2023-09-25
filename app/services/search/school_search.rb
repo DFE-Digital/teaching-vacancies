@@ -71,13 +71,15 @@ class Search::SchoolSearch
   def education_phase
     return unless @search_criteria.key?(:education_phase)
 
-    School::READABLE_PHASE_MAPPINGS.select { |_, v| @search_criteria[:education_phase].include? v }.map(&:first).map(&:to_s)
+    School::READABLE_PHASE_MAPPINGS.select { |_, v| @search_criteria[:education_phase].include? v }
+                                   .map { |m| m.first.to_s }
   end
 
   def key_stage_phases
     return unless @search_criteria.key?(:key_stage)
 
-    School::PHASE_TO_KEY_STAGES_MAPPINGS.select { |_, v| @search_criteria[:key_stage].intersect?(v.map(&:to_s)) }.map(&:first).map(&:to_s)
+    School::PHASE_TO_KEY_STAGES_MAPPINGS.select { |_, v| @search_criteria[:key_stage].intersect?(v.map(&:to_s)) }
+                                        .map { |m| m.first.to_s }
   end
 
   def apply_job_availability_filter(scope)
