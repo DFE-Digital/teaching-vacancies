@@ -5,9 +5,9 @@ ons_cities = YAML.load_file(base_path.join("ons_cities.yml"))
 ons_counties_and_unitary_authorities = YAML.load_file(base_path.join("ons_counties_and_unitary_authorities.yml"))
 ons_regions = YAML.load_file(base_path.join("ons_regions.yml"))
 
-DOWNCASE_ONS_CITIES = ons_cities.map(&:first).map(&:downcase).freeze
-DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES = ons_counties_and_unitary_authorities.map(&:first).map(&:downcase).freeze
-DOWNCASE_ONS_REGIONS = ons_regions.map(&:first).map(&:downcase).freeze
+DOWNCASE_ONS_CITIES = ons_cities.map { |c| c.first.downcase }.freeze
+DOWNCASE_ONS_COUNTIES_AND_UNITARY_AUTHORITIES = ons_counties_and_unitary_authorities.map { |c| c.first.downcase }.freeze
+DOWNCASE_ONS_REGIONS = ons_regions.map { |r| r.first.downcase }.freeze
 
 composite_locations = YAML.load_file(base_path.join("composite_locations.yml")).freeze
 DOWNCASE_COMPOSITE_LOCATIONS = composite_locations.transform_keys(&:downcase).freeze
