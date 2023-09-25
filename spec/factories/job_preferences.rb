@@ -3,7 +3,7 @@ FactoryBot.define do
     roles { factory_rand_sample(Vacancy.job_roles.keys, 1..Vacancy.job_roles.keys.count) }
     phases { factory_rand_sample(Vacancy.phases.keys, 1..Vacancy.phases.keys.count) }
     key_stages { key_stages_for_phases }
-    subjects { factory_rand_sample(SUBJECT_OPTIONS.map(&:first), 1..3) }
+    subjects { ["English", "Maths"] }
     working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
     builder_completed { true }
     completed_steps do

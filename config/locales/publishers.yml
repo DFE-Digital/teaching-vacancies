@@ -80,6 +80,9 @@ en:
       preferred_working_patterns:
         one: Preferred working pattern
         other: Preferred working patterns
+      preferred_subjects:
+        one: Preferred subject
+        other: Preferred subjects
       search_result_heading: "Candidate profiles (%{count})"
       sort_result_text: "Ordered by most recently updated."
       filters:

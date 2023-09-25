@@ -22,6 +22,10 @@ class JobPreferences < ApplicationRecord
     working_patterns.map(&:humanize).join(", ")
   end
 
+  def all_subjects
+    subjects.map(&:humanize).join(", ")
+  end
+
   def complete?
     to_multistep.completed?
   end
