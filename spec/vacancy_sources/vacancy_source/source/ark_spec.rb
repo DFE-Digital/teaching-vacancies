@@ -53,7 +53,7 @@ RSpec.describe VacancySource::Source::Ark do
       expect(vacancy.organisations.first).to eq(school1)
 
       expect(vacancy.external_source).to eq("ark")
-      expect(vacancy.external_advert_url).to eq("http://testurl.com")
+      expect(vacancy.external_advert_url).to eq("https://testurl.com/ApplicationForm.aspx?enc=mEgrBL4XQK0==")
       expect(vacancy.external_reference).to eq("Solomon-1143")
 
       expect(vacancy.organisations).to eq(schools)
