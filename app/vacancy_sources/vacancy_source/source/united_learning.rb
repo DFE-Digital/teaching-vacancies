@@ -58,7 +58,7 @@ class VacancySource::Source::UnitedLearning
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["Subjects"].presence&.split(","),
-      working_patterns: item["Working_patterns"].presence&.split(","),
+      working_patterns: working_patterns_for(item),
       contract_type: item["Contract_type"].presence,
       phases: phase_for(item),
       visa_sponsorship_available: false,
@@ -85,6 +85,17 @@ class VacancySource::Source::UnitedLearning
     return Vacancy::MIDDLE_LEADER_JOB_ROLES if role.include? "middle_leader"
 
     Array.wrap(role.gsub(/\s+/, ""))
+  end
+
+  def working_patterns_for(item)
+    return [] if item["Working_patterns"].blank?
+
+    item["Working_patterns"].gsub("flexible", "part_time")
+                            .gsub("term_time", "part_time")
+                            .gsub("job_share", "part_time")
+                            .delete(" ")
+                            .split(",")
+                            .uniq
   end
 
   def ect_status_for(item)
