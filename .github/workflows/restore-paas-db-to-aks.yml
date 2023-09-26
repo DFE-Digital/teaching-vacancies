@@ -45,20 +45,33 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
-    - name: Get CF_USERNAME From ParameterStore
-      id: get-cf-username
+    - name: Get CF_USERNAME for PROD From ParameterStore
       uses: marvinpinto/action-inject-ssm-secrets@latest
+      if: inputs.environment == 'production'
+      with:
+        ssm_parameter: /teaching-vacancies/github_action/infra/cf_username_prod
+        env_variable_name: CF_USERNAME
+
+    - name: Get CF_PASSWORD for PROD From ParameterStore
+      uses: marvinpinto/action-inject-ssm-secrets@latest
+      if: inputs.environment == 'production'
+      with:
+        ssm_parameter: /teaching-vacancies/github_action/infra/cf_password_prod
+        env_variable_name: CF_PASSWORD
+
+    - name: Get CF_USERNAME From ParameterStore
+      uses: marvinpinto/action-inject-ssm-secrets@latest
+      if: inputs.environment != 'production'
       with:
         ssm_parameter: /teaching-vacancies/github_action/infra/cf_username_non_prod
         env_variable_name: CF_USERNAME
 
     - name: Get CF_PASSWORD From ParameterStore
-      id: get-cf-password
       uses: marvinpinto/action-inject-ssm-secrets@latest
+      if: inputs.environment != 'production'
       with:
         ssm_parameter: /teaching-vacancies/github_action/infra/cf_password_non_prod
         env_variable_name: CF_PASSWORD
-
 
     - uses: DFE-Digital/github-actions/setup-cf-cli@master
       with:
