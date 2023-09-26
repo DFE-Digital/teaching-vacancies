@@ -9,16 +9,16 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:trust) { create(:trust, schools: [school_oxford, school_cambridge], geopoint: "POINT (-0.108267 51.506438)") }
 
   let!(:jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: job_preferences) }
-  let(:job_preferences) { create(:job_preferences, roles: %w[teacher], key_stages: %w[ks1], working_patterns: %w[full_time], locations: [location_preference_containing_school]) }
+  let(:job_preferences) { create(:job_preferences, roles: %w[teacher], key_stages: %w[ks1], working_patterns: %w[full_time], locations: [location_preference_containing_school], subjects: ["English"]) }
   let(:location_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 
   let!(:part_time_jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: part_time_job_preferences) }
-  let(:part_time_job_preferences) { create(:job_preferences, roles: %w[teacher], key_stages: %w[ks1], working_patterns: %w[part_time], locations: [part_time_preference_containing_school]) }
+  let(:part_time_job_preferences) { create(:job_preferences, roles: %w[teacher], key_stages: %w[ks1], working_patterns: %w[part_time], locations: [part_time_preference_containing_school], subjects: ["Physics"]) }
   let(:part_time_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 
   let!(:no_right_to_work_in_uk_profile) { create(:jobseeker_profile, personal_details: personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: no_right_to_work_in_uk_preferences) }
   let(:personal_details) { create(:personal_details, right_to_work_in_uk: false) }
-  let(:no_right_to_work_in_uk_preferences) { create(:job_preferences, roles: %w[teacher], key_stages: %w[ks1], working_patterns: %w[part_time], locations: [no_right_to_work_in_uk_containing_school]) }
+  let(:no_right_to_work_in_uk_preferences) { create(:job_preferences, roles: %w[teacher], key_stages: %w[ks1], working_patterns: %w[part_time], locations: [no_right_to_work_in_uk_containing_school], subjects: ["Geography"]) }
   let(:no_right_to_work_in_uk_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 
   describe "Visiting the publisher's jobseeker profiles start page" do
@@ -33,6 +33,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_content(jobseeker_profile.job_preferences.roles.first.humanize)
         expect(page).to have_content(jobseeker_profile.job_preferences.key_stages.first.humanize)
         expect(page).to have_content(jobseeker_profile.job_preferences.working_patterns.first.humanize)
+        expect(page).to have_content(jobseeker_profile.job_preferences.subjects.first.humanize)
       end
     end
 

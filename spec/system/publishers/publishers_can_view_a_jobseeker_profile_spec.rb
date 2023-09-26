@@ -13,6 +13,7 @@ RSpec.describe "Jobseeker profiles", type: :system do
     expect(page).to have_content(jobseeker_profile.jobseeker.email)
     expect(page).to have_content(jobseeker_profile.qualified_teacher_status_year)
     expect(page).to have_content(jobseeker_profile.about_you)
+    expect(page).to have_content(jobseeker_profile.job_preferences.subjects.map(&:humanize).join(", "))
     expect(page).not_to have_content("Location")
   end
 end

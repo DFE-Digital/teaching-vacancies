@@ -21,3 +21,7 @@
           - summary_list.row do |row|
             - row.key text: t("publishers.jobseeker_profiles.preferred_working_patterns", count: preferences.working_patterns.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
             - row.value text: jobseeker_profile.job_preferences.all_working_patterns, classes: "govuk-body-s govuk-!-padding-bottom-0"
+
+          - summary_list.row do |row|
+            - row.key text: t("publishers.jobseeker_profiles.preferred_subjects", count: preferences.subjects.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.value text: jobseeker_profile.job_preferences.all_subjects, classes: "govuk-body-s govuk-!-padding-bottom-0"
