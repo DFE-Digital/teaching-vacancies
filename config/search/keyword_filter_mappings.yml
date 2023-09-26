@@ -150,9 +150,6 @@
 "greek":
   subjects:
     - Classics
-"head":
-  job_roles:
-    - headteacher
 "head of english":
   job_roles:
     - head_of_department_or_curriculum
@@ -171,7 +168,16 @@
 "head of science":
   job_roles:
     - head_of_department_or_curriculum
+"head of":
+  job_roles:
+    - head_of_department_or_curriculum
 "head of sixth form":
+  job_roles:
+    - head_of_year_or_phase
+"head of key stage":
+  job_roles:
+    - head_of_year_or_phase
+"head of ks":
   job_roles:
     - head_of_year_or_phase
 "head of year":
