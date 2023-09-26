@@ -1,0 +1,53 @@
+# Azure Kubernetes Service (AKS)
+
+Teaching Vacancies is hosted on [Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/).
+
+### Installing the Azure Client and Kubectl
+1. Install the [Azure Client](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+2. Install `kubectl`
+    ```
+    az aks install-cli
+    ```
+
+## Accessing AKS Test cluster
+
+1. Activate your access for our Test cluster (`s189-teacher-services-cloud-test`) through [Azure Privileged Identity Management (PIM) request](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/#privileged-identity-management-pim-requests) in the [Azure Portal](https://portal.azure.com.mcas.ms/).
+
+2. Login into the testing tenant using the Azure Cli. This will launch your browser for the login.
+
+    ```
+    az login --tenant 9c7d9dd3-840c-4b3f-818e-552865082e16
+    ```
+
+3. From Teaching Vacancies root directory, get the credentials for cluster.
+
+    ```
+    make test-cluster get-cluster-credentials
+    ```
+
+## Opening a console in a Review App
+
+Once you have the correct credentials, you can execute `kubectl` commands over the authenticated cluster.
+
+To list the application pods in the cluster:
+
+```
+kubectl -n tv-development get pods
+```
+
+To open a console in the particular pod:
+
+```
+kubectl -n tv-development exec -ti teaching-vacancies-review-example -- /bin/sh
+```
+
+## Executing commands in a Review App
+
+```
+kubectl -n tv-development exec teaching-vacancies-review-example -- ps aux
+```
+
+## Other documentation
+
+- [Infra Team Developer onboarding into AKS](https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/developer-onboarding.md#developer-onboarding). This has extended info on our AKS setup and commands.
+- [Azure AKS Client reference](https://learn.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest)
