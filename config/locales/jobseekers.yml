@@ -273,6 +273,16 @@ en:
           into a %{profile_link} so schools can contact you about relevant roles.
         profile_link_text: candidate profile
         title: Application
+      about_your_application:
+        title: About your application
+        warning:
+          text: This role cannot offer a sponsorship visa.
+          paragraph_1: It is unlikely you will be considered for this job as it is not offering skilled worker visa sponsorship to non-UK citizens.
+          paragraph_2:
+            text: Learn more about %{link}
+            link: teaching in England as a non-UK citizen (opens in new tab).
+          search_for_jobs: Search for other jobs
+          continue: Continue application
       new_quick_apply:
         assistance:
           content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
@@ -606,6 +616,16 @@ en:
           hint:
             text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work as a teacher in England. Learn more about %{link}
             link: teaching in England as a non-UK citizen (opens in new tab).
+            no_visa:
+              text: There is %{link} if you qualified outside the UK.
+              link: guidance for working as a teacher in England (link opens in new tab)
+          warning:
+            text: This role cannot offer a sponsorship visa.
+            paragraph_1: It is unlikely you will be considered for this job as it is not offering skilled worker visa sponsorship to non-UK citizens.
+            paragraph_2:
+              text: Learn more about %{link}
+              link: teaching in England as a non-UK citizen (opens in new tab).
+            search_for_jobs: Search for other jobs
           learn_more:
             other_routes_to_qts: other routes to QTS
             qualifications_and_experience: the qualifications and experience you’ll need

@@ -48,7 +48,7 @@ RSpec.describe "Job applications" do
 
           it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
             expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
-              .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(new_vacancy.id))
+              .to redirect_to(about_your_application_jobseekers_job_job_application_path(new_vacancy.id))
           end
         end
 

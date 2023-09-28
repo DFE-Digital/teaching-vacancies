@@ -13,7 +13,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     return unless quick_apply?
 
-    redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+    redirect_to about_your_application_jobseekers_job_job_application_path(vacancy.id)
   end
 
   def create
@@ -24,6 +24,14 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def review
     session[:back_to_review] = (session[:back_to_review] || []).push(job_application.id).uniq
   end
+
+  # rubocop:disable Style/GuardClause
+  def about_your_application
+    if profile.nil? || profile&.personal_details&.right_to_work_in_uk?
+      redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+    end
+  end
+  # rubocop:enable Style/GuardClause
 
   def new_quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
