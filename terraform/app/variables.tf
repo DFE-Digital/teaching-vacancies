@@ -218,23 +218,32 @@ variable "aks_worker_app_instances" {
 variable "aks_worker_app_memory" {
   default = "1Gi"
 }
+variable "paas_route53_a_records" {
+  default = []
+}
+variable "aks_route53_a_records" {
+  default = []
+}
+variable "paas_route53_cname_record" {
+  default = "not-in-use"
+}
+variable "aks_route53_cname_record" {
+  default = "not-in-use"
+}
+
 
 locals {
   paas_api_url               = "https://api.london.cloud.service.gov.uk"
   paas_app_env_values        = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets              = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
   is_production              = var.environment == "production"
-  route53_a_records          = local.is_production ? var.route53_zones : []
-  route53_a_records_aks      = []
-  route53_cname_record       = local.is_production ? "www" : var.environment
-  route53_cname_record_aks   = local.is_production ? "www2" : "${var.environment}2"
-  web_external_hostnames_aks = [for zone in var.route53_zones : "${local.route53_cname_record_aks}.${zone}"]
+  web_external_hostnames_aks = [for zone in var.route53_zones : "${var.aks_route53_cname_record}.${zone}"]
   service_name               = "teaching-vacancies"
   service_abbreviation       = "tv"
   hostname_domain_map = {
     for zone in var.route53_zones :
-    "${local.route53_cname_record}.${zone}" => {
-      hostname = local.route53_cname_record
+    "${var.paas_route53_cname_record}.${zone}" => {
+      hostname = var.paas_route53_cname_record
       domain   = zone
     }
   }
