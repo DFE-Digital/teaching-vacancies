@@ -44,8 +44,8 @@ module "cloudfront" {
   offline_bucket_origin_path    = each.value.offline_bucket_origin_path
   route53_zones                 = var.route53_zones
   is_production                 = local.is_production
-  route53_a_records             = local.route53_a_records
-  route53_cname_record          = local.route53_cname_record
+  route53_a_records             = var.paas_route53_a_records
+  route53_cname_record          = var.paas_route53_cname_record
   providers = {
     aws.aws_us_east_1 = aws.aws_us_east_1
   }
@@ -62,8 +62,8 @@ module "cloudfront_aks" {
   offline_bucket_origin_path    = each.value.offline_bucket_origin_path
   route53_zones                 = var.route53_zones
   is_production                 = local.is_production
-  route53_a_records             = local.route53_a_records_aks
-  route53_cname_record          = local.route53_cname_record_aks
+  route53_a_records             = var.aks_route53_a_records
+  route53_cname_record          = var.aks_route53_cname_record
   providers = {
     aws.aws_us_east_1 = aws.aws_us_east_1
   }
@@ -106,7 +106,7 @@ module "paas" {
   worker_app_instances                         = var.paas_worker_app_instances
   worker_app_memory                            = var.paas_worker_app_memory
   route53_zones                                = var.route53_zones
-  route53_a_records                            = local.route53_a_records
+  route53_a_records                            = var.paas_route53_a_records
   hostname_domain_map                          = local.hostname_domain_map
   restore_from_db_guid                         = var.paas_restore_from_db_guid
   db_backup_before_point_in_time               = var.paas_db_backup_before_point_in_time
