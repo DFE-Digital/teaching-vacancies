@@ -6,6 +6,9 @@
           - row.key text: t("jobseekers.employments.organisation")
           - row.value text: employment.organisation
         - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
+          - row.key text: t("jobseekers.employments.subjects")
+          - row.value text: employment.subjects
+        - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
           - row.key text: t("jobseekers.employments.started_on")
           - row.value text: employment.started_on.to_formatted_s(:month_year)
         - summary_list.row do |row|

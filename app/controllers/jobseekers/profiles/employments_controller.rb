@@ -44,7 +44,7 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
     when "new"
       {}
     when "edit"
-      employment.slice(:organisation, :job_title, :started_on, :current_role, :ended_on, :main_duties)
+      employment.slice(:organisation, :job_title, :started_on, :current_role, :ended_on, :main_duties, :subjects)
     when "create", "update"
       employment_form_params
     end
@@ -56,7 +56,7 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
 
   def employment_form_params
     params.require(:jobseekers_profile_employment_form)
-          .permit(:organisation, :job_title, :started_on, :current_role, :ended_on, :main_duties)
+          .permit(:organisation, :job_title, :started_on, :current_role, :ended_on, :main_duties, :subjects)
           .merge("started_on(3i)" => "1", "ended_on(3i)" => "1")
   end
 end

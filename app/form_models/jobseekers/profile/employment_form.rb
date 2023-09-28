@@ -3,7 +3,7 @@ class Jobseekers::Profile::EmploymentForm < BaseForm
   include DateAttributeAssignment
 
   def self.fields
-    %i[organisation job_title main_duties current_role jobseeker_profile_id]
+    %i[organisation job_title main_duties current_role jobseeker_profile_id subjects]
   end
   attr_accessor(*fields)
 
