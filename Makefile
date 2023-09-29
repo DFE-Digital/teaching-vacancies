@@ -284,6 +284,33 @@ test-cluster:
 get-cluster-credentials: set-azure-account
 	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
 
+define get_app_first_pod
+  $(if $(env), , $(error Missing <env>. Usage: "make <env> command"))
+	$(eval POD_NAME=$(shell kubectl -n $(AZURE_NAMESPACE) get pods | grep -- teaching-vacancies-$(env)-[0-9] | awk '{print $$1}'))
+endef
+
+# make review pr_id=5432 ssh
+# make qa ssh
+.PHONY: ssh
+ssh:
+	$(call get_app_first_pod)
+	kubectl -n $(AZURE_NAMESPACE) exec -ti $(POD_NAME) -- sh
+
+# make review pr_id=5432 railsc
+# make qa railsc
+.PHONY: railsc
+railsc:
+	$(call get_app_first_pod)
+	kubectl -n $(AZURE_NAMESPACE) exec -ti $(POD_NAME) -- rails c
+
+# make qa rake task=audit:email_addresses
+# make review pr_id=5432 rake task=audit:email_addresses
+.PHONY: rake
+rake:
+	$(if $(task), , $(error Missing <task>. Usage: "make <env> rake task=<namespace:task>"))
+	$(call get_app_first_pod)
+	kubectl -n $(AZURE_NAMESPACE) exec -ti $(POD_NAME) -- bundle exec rake $(task)
+
 ##@ Help
 
 .PHONY: help
