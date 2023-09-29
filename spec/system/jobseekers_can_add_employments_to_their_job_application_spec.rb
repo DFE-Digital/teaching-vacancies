@@ -22,6 +22,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
     expect(page).to have_content("The Best Teacher")
+    expect(page).to have_content("English KS1")
   end
 
   it "allows jobseekers to add employment history" do

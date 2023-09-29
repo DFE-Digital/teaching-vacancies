@@ -30,6 +30,7 @@ RSpec.describe "Jobseekers can prefill applications" do
       expect(page).to have_content(profile.qualified_teacher_status_year)
       expect(page).to have_content(profile.qualifications.first.institution)
       expect(page).to have_content(profile.employments.first.job_title)
+      expect(page).to have_content(profile.employments.first.subjects)
     end
 
     context "and the jobseeker has a previous application" do
