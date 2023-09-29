@@ -65,6 +65,23 @@ RSpec.describe VacancySource::Source::Every do
     end
   end
 
+  context "when the school doesn't belong to a school group" do
+    let(:response_body) { file_fixture("vacancy_sources/every_without_trust.json").read }
+    let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+
+    it "the vacancy is valid" do
+      expect(vacancy).to be_valid
+    end
+
+    it "assigns the vacancy to the school" do
+      expect(vacancy.organisations).to eq([school2])
+    end
+
+    it "assigns the vacancy job location to the school" do
+      expect(vacancy.readable_job_location).to eq(school2.name)
+    end
+  end
+
   context "when the same vacancy has been imported previously" do
     let!(:existing_vacancy) do
       create(
