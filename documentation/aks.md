@@ -67,6 +67,12 @@ make review pr_id=5432 rake task=audit:email_addresses
 make qa/staging/production rake task=audit:email_addresses
 ```
 
+#### Tailing application logs
+```
+make qa logs
+make review pr_id=5432 logs
+```
+
 ### The kubectl way
 
 #### To list the deployments (apps) in the cluster:

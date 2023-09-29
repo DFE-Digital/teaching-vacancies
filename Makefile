@@ -310,6 +310,13 @@ rake:
 	$(if $(task), , $(error Missing <task>. Usage: "make <env> rake task=<namespace:task>"))
 	kubectl -n $(azure_namespace) exec -ti deployment/teaching-vacancies-$(env) -- bundle exec rake $(task)
 
+# make qa logs
+# make review pr_id=5432 logs
+.PHONY: logs
+logs:
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> logs"))
+	kubectl -n $(azure_namespace) logs -f deployment/teaching-vacancies-$(env)
+
 ##@ Help
 
 .PHONY: help
