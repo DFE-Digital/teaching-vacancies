@@ -69,24 +69,35 @@ make qa/staging/production rake task=audit:email_addresses
 
 ### The kubectl way
 
-#### Opening a console in a Review App
+#### To list the deployments (apps) in the cluster:
+```
+kubectl -n tv-development get deployments
+```
 
-To list the application pods in the cluster:
+#### To list the application pods (running instances) in the cluster:
 
 ```
 kubectl -n tv-development get pods
 ```
 
+#### Opening a console in a Review App
+
+To open a console for an app deployment (on its first pod):
+
+```
+kubectl -n tv-development exec -ti deployment/teaching-vacancies-review-pr-xxxx -- /bin/sh
+```
+
 To open a console in the particular pod:
 
 ```
-kubectl -n tv-development exec -ti teaching-vacancies-review-example -- /bin/sh
+kubectl -n tv-development exec -ti teaching-vacancies-review-pr-xxxx-podid -- /bin/sh
 ```
 
 #### Executing commands in a Review App
 
 ```
-kubectl -n tv-development exec teaching-vacancies-review-example -- ps aux
+kubectl -n tv-development exec deployment/teaching-vacancies-review-pr-xxxx -- ps aux
 ```
 
 ## Other documentation
