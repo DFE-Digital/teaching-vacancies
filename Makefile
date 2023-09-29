@@ -64,6 +64,7 @@ review: test-cluster ## review # Requires `pr_id=NNNN`
 		$(eval var_file=review)
 		$(eval backend_config=-backend-config="key=review/$(env).tfstate")
 		$(eval include global_config/review.sh)
+		$(eval azure_namespace=$(shell jq '.namespace' terraform/workspace-variables/$(var_file).tfvars.json))
 
 .PHONY: staging
 staging: test-cluster ## staging
@@ -72,6 +73,7 @@ staging: test-cluster ## staging
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 		$(eval include global_config/staging.sh)
+		$(eval azure_namespace=$(shell jq '.namespace' terraform/workspace-variables/$(var_file).tfvars.json))
 
 .PHONY: production
 production: production-cluster ## production # Requires `CONFIRM_PRODUCTION=YES` to be present
@@ -81,6 +83,7 @@ production: production-cluster ## production # Requires `CONFIRM_PRODUCTION=YES`
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 		$(eval include global_config/production.sh)
+		$(eval azure_namespace=$(shell jq '.namespace' terraform/workspace-variables/$(var_file).tfvars.json))
 
 .PHONY: qa
 qa: test-cluster ## qa
@@ -89,6 +92,7 @@ qa: test-cluster ## qa
 		$(eval var_file=$(env))
 		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
 		$(eval include global_config/qa.sh)
+		$(eval azure_namespace=$(shell jq '.namespace' terraform/workspace-variables/$(var_file).tfvars.json))
 
 .PHONY: sandbox
 sandbox: ## sandbox
@@ -283,6 +287,35 @@ test-cluster:
 
 get-cluster-credentials: set-azure-account
 	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
+
+# make review pr_id=5432 shell
+# make qa shell
+.PHONY: shell
+shell:
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> shell"))
+	kubectl -n $(azure_namespace) exec -ti deployment/teaching-vacancies-$(env) -- sh
+
+# make review pr_id=5432 railsc
+# make qa railsc
+.PHONY: railsc
+railsc:
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> railsc"))
+	kubectl -n $(azure_namespace) exec -ti deployment/teaching-vacancies-$(env) -- rails c
+
+# make qa rake task=audit:email_addresses
+# make review pr_id=5432 rake task=audit:email_addresses
+.PHONY: rake
+rake:
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> rake task=<namespace:task>"))
+	$(if $(task), , $(error Missing <task>. Usage: "make <env> rake task=<namespace:task>"))
+	kubectl -n $(azure_namespace) exec -ti deployment/teaching-vacancies-$(env) -- bundle exec rake $(task)
+
+# make qa logs
+# make review pr_id=5432 logs
+.PHONY: logs
+logs:
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> logs"))
+	kubectl -n $(azure_namespace) logs -f deployment/teaching-vacancies-$(env)
 
 ##@ Help
 
