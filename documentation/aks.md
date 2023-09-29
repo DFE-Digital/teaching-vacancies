@@ -57,8 +57,8 @@ make qa/staging/production railsc
 
 #### Opening a shell
 ```
-make review pr_id=5432 ssh
-make qa/staging/production ssh
+make review pr_id=5432 shell
+make qa/staging/production shell
 ```
 
 #### Running a rake task

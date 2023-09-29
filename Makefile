@@ -289,10 +289,10 @@ define get_app_first_pod
 	$(eval POD_NAME=$(shell kubectl -n $(AZURE_NAMESPACE) get pods | grep -- teaching-vacancies-$(env)-[0-9] | awk '{print $$1}'))
 endef
 
-# make review pr_id=5432 ssh
-# make qa ssh
-.PHONY: ssh
-ssh:
+# make review pr_id=5432 shell
+# make qa shell
+.PHONY: shell
+shell:
 	$(call get_app_first_pod)
 	kubectl -n $(AZURE_NAMESPACE) exec -ti $(POD_NAME) -- sh
 
