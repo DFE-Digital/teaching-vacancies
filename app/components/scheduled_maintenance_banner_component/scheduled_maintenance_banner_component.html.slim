@@ -1,0 +1,5 @@
+.scheduled-maintenance-banner-component
+  .govuk-width-container
+    .govuk-tag.govuk-tag--maintenance class="govuk-!-font-weight-bold"
+      = t("scheduled_maintenance_banner_component.tag")
+    = t("scheduled_maintenance_banner_component.text", date: @date, start_time: @start_time, end_time: @end_time)
