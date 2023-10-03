@@ -1,0 +1,18 @@
+@import 'base';
+
+.scheduled-maintenance-banner-component {
+  @include govuk-font(16);
+
+  background-color: $govuk-brand-colour;
+  background-size: govuk-spacing(9) govuk-spacing(9);
+
+  padding: govuk-spacing(2);
+  color: govuk-colour('white');
+
+  .govuk-tag {
+    background-color: govuk-colour('white');
+    color: govuk-shade($govuk-brand-colour, 25);
+
+    margin-right: govuk-spacing(2);
+  }
+}

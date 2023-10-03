@@ -299,6 +299,10 @@ en:
         at_multiple_schools: Arranging a visit to one of the schools
         central_office: Arranging a visit to %{organisation}
 
+  scheduled_maintenance_banner_component:
+    tag: Scheduled maintenance
+    text: The service will be undergoing a maintenance update on %{date} between %{start_time} and %{end_time}.
+
   shared:
     filter_group:
       clear_all_filters: Clear filters

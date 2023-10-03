@@ -14,6 +14,7 @@ html.govuk-template.app-html-class lang="en"
     = render "layouts/add_js_enabled_class_to_body"
     = render "layouts/skip_links"
     = render EnvironmentBannerComponent.new
+    = render ScheduledMaintenanceBannerComponent.new(date: "5th October 2023", start_time: "8:00", end_time: "9:30")
     = render "layouts/header"
     .govuk-width-container
       = render "layouts/phase_banner"
