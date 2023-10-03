@@ -17,7 +17,8 @@ module "application_configuration" {
       PGSSLMODE        = local.postgres_ssl_mode
       DOMAIN           = local.web_app_domain
     },
-    local.dfe_sign_in_map
+    local.dfe_sign_in_map,
+    local.disable_emails_map
   )
   secret_variables = merge({
     REDIS_URL    = module.redis-cache.url
