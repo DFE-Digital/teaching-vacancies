@@ -53,7 +53,7 @@ module TeachingVacancies
     config.action_mailer.notify_settings = {
       api_key: ENV.fetch("NOTIFY_KEY", nil),
     }
-    config.action_mailer.perform_deliveries = ENV.fetch("DISABLE_EMAILS", false) ? false : true
+    config.action_mailer.perform_deliveries = ENV.fetch("DISABLE_EMAILS", nil) != "true"
 
     config.active_storage.routes_prefix = "/attachments"
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
