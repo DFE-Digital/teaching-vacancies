@@ -30,7 +30,30 @@ Teaching Vacancies service environments use 2 AKS clusters:
 
 1. Activate your access for our Test cluster (`s189-teacher-services-cloud-test`) through [Azure Privileged Identity Management (PIM) request](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/#privileged-identity-management-pim-requests) in the [Azure Portal](https://portal.azure.com.mcas.ms/).
 
-2. Login into the testing tenant using the Azure Cli. This will launch your browser for the login.
+2. Login into the tenant using the Azure Cli. This will launch your browser for the login.
+
+    ```
+    az login --tenant 9c7d9dd3-840c-4b3f-818e-552865082e16
+    ```
+
+3. From Teaching Vacancies root directory, get the credentials for the environment.
+    ```
+    make review get-cluster-credentials
+    ```
+
+    ```
+    make qa get-cluster-credentials
+    ```
+
+    ```
+    make staging get-cluster-credentials
+    ```
+
+## Accessing AKS Production cluster
+
+1. Request access for our Production cluster (`s189-teacher-services-cloud-production`) through [Azure Privileged Identity Management (PIM) request](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/#privileged-identity-management-pim-requests) in the [Azure Portal](https://portal.azure.com.mcas.ms/). You will receive an email when your request has been approved by a member of the infra team.
+
+2. Login into the tenant using the Azure Cli. This will launch your browser for the login.
 
     ```
     az login --tenant 9c7d9dd3-840c-4b3f-818e-552865082e16
@@ -39,8 +62,9 @@ Teaching Vacancies service environments use 2 AKS clusters:
 3. From Teaching Vacancies root directory, get the credentials for cluster.
 
     ```
-    make test-cluster get-cluster-credentials
+    make production get-cluster-credentials CONFIRM_PRODUCTION=YES
     ```
+
 Once you have the correct credentials, you can execute `kubectl` commands over the authenticated cluster.
 
 ## Accessing/Executing commands over our services

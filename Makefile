@@ -278,12 +278,10 @@ set-azure-account:
 production-cluster:
 	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189p01-tsc-pd-rg)
 	$(eval CLUSTER_NAME=s189p01-tsc-production-aks)
-  $(eval AZURE_SUBSCRIPTION=s189-teacher-services-cloud-production)
 
 test-cluster:
 	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189t01-tsc-ts-rg)
 	$(eval CLUSTER_NAME=s189t01-tsc-test-aks)
-  $(eval AZURE_SUBSCRIPTION=s189-teacher-services-cloud-test)
 
 get-cluster-credentials: set-azure-account
 	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
