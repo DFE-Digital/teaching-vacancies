@@ -122,6 +122,7 @@ module "paas" {
   cluster                           = var.cluster
   aks_web_app_start_command         = var.aks_web_app_start_command
   aks_worker_app_instances          = var.aks_worker_app_instances
+  aks_web_app_instances             = var.aks_web_app_instances
   aks_worker_app_memory             = var.aks_worker_app_memory
   enable_postgres_ssl               = var.enable_postgres_ssl
   postgres_flexible_server_sku      = var.postgres_flexible_server_sku
