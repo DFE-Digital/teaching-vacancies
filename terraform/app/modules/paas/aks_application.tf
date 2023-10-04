@@ -18,7 +18,8 @@ module "application_configuration" {
       DOMAIN           = local.web_app_domain
     },
     local.dfe_sign_in_map,
-    local.disable_emails_map
+    local.disable_emails_map,
+    local.disable_analytics_map
   )
   secret_variables = merge({
     REDIS_URL    = module.redis-cache.url
