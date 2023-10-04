@@ -225,5 +225,10 @@ locals {
     {}
   )
 
+  disable_analytics_map = (contains(keys(var.app_env_values), "TEMP_BIGQUERY_DATASET") ?
+    { BIGQUERY_DATASET = var.app_env_values["TEMP_BIGQUERY_DATASET"] } :
+    {}
+  )
+
   database_name_suffix = var.add_database_name_suffix ? "${var.environment}" : null
 }
