@@ -218,6 +218,10 @@ locals {
     { DFE_SIGN_IN_REDIRECT_URL = local.web_app_dfe_sign_in_redirect_url } :
     {}
   )
+  disable_emails_map = (contains(keys(var.app_env_values), "TEMP_DISABLE_EMAILS") ?
+    { DISABLE_EMAILS = var.app_env_values["TEMP_DISABLE_EMAILS"] } :
+    {}
+  )
 
   database_name_suffix = var.add_database_name_suffix ? "${var.environment}" : null
 }
