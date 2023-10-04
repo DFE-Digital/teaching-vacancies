@@ -60,7 +60,9 @@ variable "web_app_deployment_strategy" {
 variable "web_app_instances" {
   default = 1
 }
-
+variable "aks_web_app_instances" {
+  default = 1
+}
 variable "web_app_memory" {
   default = 512
 }

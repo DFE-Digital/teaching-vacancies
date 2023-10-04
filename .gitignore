@@ -105,3 +105,4 @@ dump.rdb
 
 # devops files
 bin/terrafile
+bin/konduit.sh

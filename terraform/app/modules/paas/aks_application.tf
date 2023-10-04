@@ -48,6 +48,7 @@ module "web_application" {
   command                = var.aks_web_app_start_command
   probe_path             = "/check"
   web_external_hostnames = var.web_external_hostnames_aks
+  replicas               = var.aks_web_app_instances
 }
 
 module "worker_application" {
