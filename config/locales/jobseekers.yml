@@ -47,6 +47,7 @@ en:
       main_duties: Main duties
       organisation: School or employer
       started_on: Start date
+      subjects: Subjects and key stages taught (optional)
     forced_login:
       create_account: create an account
       job_application_html: You need to login or %{account_creation_link} with Teaching Vacancies to apply for this job.

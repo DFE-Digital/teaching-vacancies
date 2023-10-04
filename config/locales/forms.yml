@@ -563,6 +563,7 @@ en:
         job_title: Role
         main_duties: Main duties
         organisation: Name of school or employer
+        subjects: Subjects and key stages taught (optional)
       jobseekers_sign_in_form:
         email: Email address
         password: Password
