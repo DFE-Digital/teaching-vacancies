@@ -240,7 +240,7 @@ locals {
   paas_app_env_values        = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets              = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
   is_production              = var.environment == "production"
-  web_external_hostnames_aks = [for zone in var.route53_zones : "${var.aks_route53_cname_record}.${zone}"]
+  web_external_hostnames_aks = concat([for zone in var.route53_zones : "${var.aks_route53_cname_record}.${zone}"], var.aks_route53_a_records)
   service_name               = "teaching-vacancies"
   service_abbreviation       = "tv"
   hostname_domain_map = {
