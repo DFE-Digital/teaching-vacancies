@@ -7,14 +7,6 @@ GIT
       google-cloud-bigquery (~> 1.38)
       request_store_rails (~> 2)
 
-GIT
-  remote: https://github.com/rails/spring-watcher-listen.git
-  revision: 996d29e8f9b38fb642dd6b496ed600e941bd7de1
-  specs:
-    spring-watcher-listen (2.1.0)
-      listen (>= 2.7, < 4.0)
-      spring (>= 4)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -189,7 +181,7 @@ GEM
       multipart-post (~> 2)
     faraday-net_http (3.0.2)
     fastimage (2.2.7)
-    ffi (1.15.5)
+    ffi (1.16.3)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
       rake
@@ -496,7 +488,7 @@ GEM
     rspec-expectations (3.12.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
-    rspec-mocks (3.12.5)
+    rspec-mocks (3.12.6)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-rails (6.0.3)
@@ -507,7 +499,7 @@ GEM
       rspec-expectations (~> 3.12)
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
-    rspec-support (3.12.0)
+    rspec-support (3.12.1)
     rubocop (1.56.4)
       base64 (~> 0.1.1)
       json (~> 2.3)
@@ -603,6 +595,9 @@ GEM
     spring (4.1.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
+    spring-watcher-listen (2.1.0)
+      listen (>= 2.7, < 4.0)
+      spring (>= 4)
     swd (2.0.2)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
@@ -747,7 +742,7 @@ DEPENDENCIES
   recaptcha
   redis
   rgeo-geojson
-  rspec-rails (>= 6.0.0rc)
+  rspec-rails
   rubocop-performance
   rubocop-rails
   rubocop-rspec
@@ -765,7 +760,7 @@ DEPENDENCIES
   solargraph
   spring
   spring-commands-rspec
-  spring-watcher-listen!
+  spring-watcher-listen
   timecop
   tzinfo-data
   validate_url

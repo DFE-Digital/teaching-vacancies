@@ -82,8 +82,7 @@ group :development do
   gem "solargraph"
   gem "spring"
   gem "spring-commands-rspec"
-  # TODO: Pinned until Spring >= 3 compatible version released
-  gem "spring-watcher-listen", github: "rails/spring-watcher-listen"
+  gem "spring-watcher-listen"
   gem "web-console"
 end
 
@@ -99,7 +98,7 @@ group :development, :test do
   gem "pry-rails"
   gem "rack-mini-profiler", require: false
   gem "rails-controller-testing"
-  gem "rspec-rails", ">= 6.0.0rc" # TODO: Unpin when 6.0 final is out
+  gem "rspec-rails"
   gem "rubocop-performance"
   gem "rubocop-rails"
   gem "rubocop-rspec"
