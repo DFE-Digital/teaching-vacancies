@@ -103,7 +103,6 @@ module "paas" {
   web_app_memory                               = var.paas_web_app_memory
   web_app_start_command                        = var.paas_web_app_start_command
   worker_app_deployment_strategy               = var.paas_worker_app_deployment_strategy
-  worker_app_instances                         = var.paas_worker_app_instances
   worker_app_memory                            = var.paas_worker_app_memory
   route53_zones                                = var.route53_zones
   route53_a_records                            = var.paas_route53_a_records

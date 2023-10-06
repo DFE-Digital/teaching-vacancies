@@ -73,9 +73,6 @@ variable "aks_web_app_start_command" {
 }
 variable "worker_app_deployment_strategy" {
 }
-variable "worker_app_instances" {
-  default = 1
-}
 variable "aks_worker_app_instances" {
 }
 variable "worker_app_memory" {
