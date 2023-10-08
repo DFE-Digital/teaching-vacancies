@@ -73,8 +73,6 @@ module "paas" {
   service_name                                 = local.service_name
   service_abbreviation                         = local.service_abbreviation
   postgres_service_plan                        = var.paas_postgres_service_plan
-  redis_cache_service_plan                     = var.paas_redis_cache_service_plan
-  redis_queue_service_plan                     = var.paas_redis_queue_service_plan
   space_name                                   = var.paas_space_name
   route53_zones                                = var.route53_zones
   restore_from_db_guid                         = var.paas_restore_from_db_guid
