@@ -72,11 +72,8 @@ module "paas" {
   parameter_store_environment                  = var.parameter_store_environment
   service_name                                 = local.service_name
   service_abbreviation                         = local.service_abbreviation
-  postgres_service_plan                        = var.paas_postgres_service_plan
   space_name                                   = var.paas_space_name
   route53_zones                                = var.route53_zones
-  restore_from_db_guid                         = var.paas_restore_from_db_guid
-  db_backup_before_point_in_time               = var.paas_db_backup_before_point_in_time
   documents_s3_bucket_force_destroy            = var.documents_s3_bucket_force_destroy
   schools_images_logos_s3_bucket_force_destroy = var.schools_images_logos_s3_bucket_force_destroy
   # AKS
