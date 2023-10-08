@@ -7,22 +7,9 @@ variable "app_docker_image" {
 variable "app_env_values" {
 }
 
-variable "docker_username" {
-}
-
-variable "docker_password" {
-}
-
-variable "logging_url" {
-}
-
 variable "parameter_store_environment" {
   default = "dev"
 }
-
-variable "postgres_service_plan" {
-}
-
 
 variable "documents_s3_bucket_force_destroy" {
   default = false
@@ -34,32 +21,27 @@ variable "schools_images_logos_s3_bucket_force_destroy" {
 
 variable "service_name" {
 }
+
 variable "service_abbreviation" {
-}
-variable "space_name" {
 }
 
 variable "aks_web_app_instances" {
   default = 1
 }
+
 variable "aks_web_app_start_command" {
 }
+
 variable "aks_worker_app_instances" {
 }
+
 variable "aks_worker_app_memory" {
 }
-variable "route53_zones" {
-  type = list(any)
-}
+
 variable "web_external_hostnames_aks" {
   type = list(string)
 }
-variable "restore_from_db_guid" {
 
-}
-variable "db_backup_before_point_in_time" {
-
-}
 variable "azure_enable_backup_storage" {
   default     = true
   description = "Create storage account for database backup"
@@ -133,13 +115,9 @@ locals {
     local.app_env_documents_bucket_credentials,
     local.app_env_schools_images_logos_s3_bucket_credentials,
     local.app_env_domain,
-    local.postgres_instance_service_key,
     var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars.json will overwrite app_env_domain
   )
 
-  postgres_instance_service_key = { DATABASE_URL = cloudfoundry_service_key.postgres_instance_service_key.credentials.uri }
-  logging_service_name          = "${var.service_name}-logging-${var.environment}"
-  postgres_service_name         = "${var.service_name}-postgres-${var.environment}"
   # S3 bucket name uses abbreviation so we don't run into 63 character bucket name limit
   documents_s3_bucket_name            = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-documents-${var.environment}"
   schools_images_logos_s3_bucket_name = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-images-logos-${var.environment}"
@@ -147,12 +125,7 @@ locals {
   worker_app_start_command            = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name                     = "${var.service_name}-worker-${var.environment}"
 
-  postgres_backup_restore_params = var.restore_from_db_guid != "" ? {
-    restore_from_point_in_time_of     = var.restore_from_db_guid
-    restore_from_point_in_time_before = var.db_backup_before_point_in_time
-  } : {}
-  postgres_extensions  = { enable_extensions = ["pgcrypto", "fuzzystrmatch", "plpgsql", "pg_trgm", "postgis"] }
-  postgres_json_params = merge(local.postgres_backup_restore_params, local.postgres_extensions)
+  postgres_extensions = { enable_extensions = ["pgcrypto", "fuzzystrmatch", "plpgsql", "pg_trgm", "postgis"] }
 
   # AKS
   # Use the AKS ingress domain by default. Override with the DOMAIN variable is present

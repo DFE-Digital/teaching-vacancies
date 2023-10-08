@@ -44,13 +44,6 @@ local: ## local # Same values as the deployed dev environment, adapted for local
 		$(eval local_override=-d file:terraform/workspace-variables/local_app_env.yml -d file:terraform/workspace-variables/my_app_env.yml)
 		$(eval local_filter=| sed -e '/APP_ROLE=/d' -e '/RAILS_ENV=/d')
 
-.PHONY: dev
-dev: test-cluster ## dev
-		$(eval env=dev)
-		$(eval space=teaching-vacancies-dev)
-		$(eval var_file=$(env))
-		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
-
 bin/terrafile: ## Install terrafile to manage terraform modules
 	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
 		| tar xz -C ./bin terrafile
@@ -94,14 +87,6 @@ qa: test-cluster ## qa
 		$(eval include global_config/qa.sh)
 		$(eval azure_namespace=$(shell jq '.namespace' terraform/workspace-variables/$(var_file).tfvars.json))
 
-.PHONY: sandbox
-sandbox: ## sandbox
-		$(eval env=sandbox)
-		$(eval space=teaching-vacancies-production)
-		$(eval var_file=$(env))
-		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
-		$(eval include global_config/sandbox.sh)
-
 ##@ Docker - build, tag, and push an image from local code. Requires Docker CLI
 
 .PHONY: build-local-image
@@ -136,12 +121,9 @@ deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPassco
 .PHONY: check-terraform-variables
 check-terraform-variables:
 		$(if $(tag), , $(eval export tag=main))
-		$(eval export TF_VAR_paas_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
-		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+
 
 ci:	## Run in automation environment
-	$(eval export disable_passcode=true)
 	$(eval export AUTO_APPROVE=-auto-approve)
 	$(eval export SKIP_AZURE_LOGIN=true)
 
@@ -167,14 +149,6 @@ terraform-app-apply: terraform-app-init check-terraform-variables ## make passco
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 	terraform -chdir=terraform/app destroy -var-file ../workspace-variables/${var_file}.tfvars.json ${AUTO_APPROVE}
 
-terraform-app-database-replace: terraform-app-init check-terraform-variables
-	@if [[ "$(CONFIRM_REPLACE)" != "YES" ]]; then echo "Please enter "CONFIRM_REPLACE=YES" to run workflow"; exit 1; fi
-	terraform -chdir=terraform/app apply \
-		-replace="module.paas.cloudfoundry_service_instance.postgres_instance" \
-		-replace="module.paas.cloudfoundry_app.web_app" \
-		-replace="module.paas.cloudfoundry_app.worker_app" \
-		-var-file ../workspace-variables/${var_file}.tfvars.json -auto-approve
-
 ##@ terraform/common code. Requires privileged IAM account to run
 
 .PHONY: terraform-common-init
@@ -193,8 +167,6 @@ terraform-common-apply: terraform-common-init ## make terraform-common-apply
 
 .PHONY: terraform-monitoring-init
 terraform-monitoring-init:
-		$(if $(passcode), , $(error Missing environment variable "passcode"))
-		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		terraform -chdir=terraform/monitoring init -upgrade=true -reconfigure -input=false
 
 .PHONY: terraform-monitoring-plan
@@ -212,40 +184,6 @@ bin/konduit.sh:
 		&& chmod +x bin/konduit.sh
 
 ##@ rails console. Ability to rail console to apps on PaaS
-
-console: ## make qa console
-	cf target -s ${space}
-	cf ssh teaching-vacancies-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
-
-get-postgres-instance-guid: ## Gets the postgres service instance's guid make dev passcode=xxxxx get-postgres-instance-guid
-	cf target -s ${space} 1> /dev/null
-	$(eval export DB_INSTANCE_GUID=$(shell cf service teaching-vacancies-postgres-${env} --guid))
-	@echo The guid for the database is: ${DB_INSTANCE_GUID}
-
-rename-postgres-service: ## make dev rename-postgres-service
-	cf target -s ${space} 1> /dev/null
-	cf rename-service teaching-vacancies-postgres-${env} teaching-vacancies-postgres-${env}-old
-
-remove-postgres-tf-state: terraform-app-init ## make dev remove-postgres-tf-state
-	terraform -chdir=terraform/app state rm module.paas.cloudfoundry_service_instance.postgres_instance
-
-restore-postgres: set-restore-variables terraform-app-apply ##  make dev DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" passcode=xxxxx restore-postgres
-
-restore-data-from-backup: terraform-app-apply # make review recreate-lost-postgres-instance pr_id=xxxx passcode=xxxx tag=xxx
-	@if [[ "$(CONFIRM_RESTORE)" != YES ]]; then echo "Please enter "CONFIRM_RESTORE=YES" to run workflow"; exit 1; fi
-	$(eval export CF_DESTINATION_ENVIRONMENT=${env})
-	$(eval export CF_SPACE_NAME=teaching-vacancies-${CF_DESTINATION_ENVIRONMENT})
-	$(eval export BACKUP_TYPE=full)
-	$(eval export BACKUP_FILENAME=$(shell date +%F))
-	bin/download-db-backup
-	bin/restore-db
-
-set-restore-variables:
-	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${space} get-postgres-instance-guid`))
-	$(if $(SNAPSHOT_TIME), , $(error can only run with BEFORE_TIME, eg SNAPSHOT_TIME="2021-09-14 16:00:00"))
-	$(eval export TF_VAR_paas_restore_from_db_guid=$(DB_INSTANCE_GUID))
-	$(eval export TF_VAR_paas_db_backup_before_point_in_time=$(SNAPSHOT_TIME))
-	echo "Restoring teaching-vacancies from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
 
 composed-variables:
 	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
