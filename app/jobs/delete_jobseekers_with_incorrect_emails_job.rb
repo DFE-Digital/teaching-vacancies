@@ -6,6 +6,6 @@ class DeleteJobseekersWithIncorrectEmailsJob < ApplicationJob
 
     failed_email_addresses = client.get_notifications(template_type: "email", status: "permanent-failure").collection.map(&:email_address)
 
-    Jobseeker.where(email: failed_email_adresses, confirmed_at: nil).destroy_all
+    Jobseeker.where(email: failed_email_addresses, confirmed_at: nil).destroy_all
   end
 end
