@@ -26,6 +26,7 @@ RSpec.describe "Sidekiq configuration" do
       Sentry::SendEventJob
       SetOrganisationSlugsJob
       SetOrganisationSlugsOfBatchJob
+      DeleteJobseekersWithIncorrectEmails
     ]
   end
 
