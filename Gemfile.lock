@@ -65,7 +65,7 @@ GEM
       activesupport (= 7.0.4.3)
     activerecord-import (1.5.0)
       activerecord (>= 4.2)
-    activerecord-postgis-adapter (8.0.2)
+    activerecord-postgis-adapter (8.0.3)
       activerecord (~> 7.0.0)
       rgeo-activerecord (~> 7.0.0)
     activerecord-session_store (2.1.0)
