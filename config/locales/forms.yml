@@ -494,6 +494,8 @@ en:
           on_track: I'm on track to receive my QTS
           "yes": "Yes"
         qualified_teacher_status_year: Year QTS was awarded
+        hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}.
+        link_text: how to get QTS
       jobseekers_job_application_qualifications_form:
         qualifications_section_completed_options:
           false: No, I'll come back to it later
