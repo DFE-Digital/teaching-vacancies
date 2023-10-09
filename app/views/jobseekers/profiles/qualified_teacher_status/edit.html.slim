@@ -8,7 +8,7 @@
     = form_for form, url: jobseekers_profile_qualified_teacher_status_path, method: "patch" do |f|
       = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :qualified_teacher_status, hint: -> { tag.p(t("helpers.label.jobseekers_job_application_professional_status_form.hint", link: govuk_link_to(t("helpers.label.jobseekers_job_application_professional_status_form.link_text"), "https://apply-for-qts-in-england.education.gov.uk/eligibility/start", target: "_blank")).html_safe) }, legend: { size: "l", tag: "h1" } do
+      = f.govuk_radio_buttons_fieldset :qualified_teacher_status, hint: -> { tag.p(t("helpers.label.jobseekers_job_application_professional_status_form.hint", link: govuk_link_to(t("helpers.label.jobseekers_job_application_professional_status_form.link_text"), "https://www.gov.uk/guidance/qualified-teacher-status-qts", target: "_blank")).html_safe) }, legend: { size: "l", tag: "h1" } do
         = f.govuk_radio_button :qualified_teacher_status, "yes", link_errors: true
           = f.govuk_text_field :qualified_teacher_status_year
 
