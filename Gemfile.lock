@@ -207,7 +207,7 @@ GEM
       webrick
     google-apis-drive_v3 (0.44.0)
       google-apis-core (>= 0.11.0, < 2.a)
-    google-apis-indexing_v3 (0.13.0)
+    google-apis-indexing_v3 (0.14.0)
       google-apis-core (>= 0.11.0, < 2.a)
     google-cloud-bigquery (1.45.0)
       concurrent-ruby (~> 1.0)
@@ -368,7 +368,7 @@ GEM
       globalid
       paper_trail (>= 3.0.0)
     parallel (1.23.0)
-    parallel_tests (4.2.2)
+    parallel_tests (4.3.0)
       parallel
     parser (3.2.2.3)
       ast (~> 2.4.1)
@@ -551,7 +551,7 @@ GEM
       sidekiq (>= 3.0)
     shoulda-matchers (5.3.0)
       activesupport (>= 5.2.0)
-    sidekiq (6.5.10)
+    sidekiq (6.5.11)
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
