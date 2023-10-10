@@ -17,7 +17,7 @@ class Jobseeker < ApplicationRecord
   has_many :saved_jobs, dependent: :destroy
   has_one :jobseeker_profile
 
-  validates :email, presence: true
+  validates :email, presence: true, email_address: true
 
   after_update :update_subscription_emails
 

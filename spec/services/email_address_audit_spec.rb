@@ -18,13 +18,17 @@ RSpec.describe EmailAddressAudit do
 
   let!(:invalid_records) do
     [
-      create(:feedback, email: "test@example"),
-      create(:job_application, email_address: "test@example"),
-      create(:jobseeker, email: "test@example"),
-      create(:publisher, email: "test@example"),
-      create(:subscription, email: "test@example"),
-      create(:vacancy, contact_email: "test@example"),
+      create_invalid_record(:feedback, email: "test@example"),
+      create_invalid_record(:job_application, email_address: "test@example"),
+      create_invalid_record(:jobseeker, email: "test@example"),
+      create_invalid_record(:publisher, email: "test@example"),
+      create_invalid_record(:subscription, email: "test@example"),
+      create_invalid_record(:vacancy, contact_email: "test@example"),
     ]
+  end
+
+  def create_invalid_record(factory_name, attributes = {})
+    build(factory_name, attributes).tap { |record| record.save(validate: false) }
   end
 
   it "builds a report on the number of invalid email addresses per class" do
