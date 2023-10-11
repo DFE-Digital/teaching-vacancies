@@ -69,7 +69,6 @@
                                alt_text: t(".photo.alt_text", organisation_name: @organisation.name))
     - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_photo_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t(".photo.label")
 
-
   - if organisation.has_ofsted_report?
     - summary_list.row do |row|
       - row.with_key text: t(".ofsted_report.label")
