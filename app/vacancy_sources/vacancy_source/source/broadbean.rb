@@ -118,7 +118,7 @@ class VacancySource::Source::Broadbean
   def find_schools(item)
     multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"])
 
-    multi_academy_trust&.schools&.where(urn: item["schoolUrns"].split(",")).presence ||
+    multi_academy_trust&.schools&.where(urn: item["schoolUrns"].split(","))&.order(:created_at).presence ||
       Organisation.where(urn: item["schoolUrns"].split(",")).presence ||
       Array(multi_academy_trust)
   end
