@@ -7,15 +7,6 @@ variable "environment" {}
 
 # CloudFront
 
-variable "distribution_list" {
-  description = "Define Cloudfront distributions with the attributes below"
-  type = map(object({
-    offline_bucket_domain_name    = string
-    offline_bucket_origin_path    = string
-    cloudfront_origin_domain_name = string
-  }))
-  default = {}
-}
 
 variable "distribution_list_aks" {
   description = "Define Cloudfront distributions for AKS environment with the attributes below"
@@ -60,25 +51,12 @@ variable "schools_images_logos_s3_bucket_force_destroy" {
 variable "paas_app_docker_image" {
   default = "ghcr.io/dfe-digital/teaching-vacancies:placeholder"
 }
-
-variable "paas_app_start_timeout" {
-  default = 300
-}
-
-variable "paas_app_stopped" {
-  default = false
-}
-
 variable "app_environment" {
   default = "dev"
 }
 
 variable "parameter_store_environment" {
   default = "dev"
-}
-
-variable "paas_logging_service_binding_enable" {
-  default = true
 }
 
 variable "paas_postgres_service_plan" {
@@ -103,28 +81,8 @@ variable "paas_sso_passcode" {
 variable "paas_web_app_deployment_strategy" {
   default = "blue-green-v2"
 }
-
-variable "paas_web_app_instances" {
-  default = 1
-}
-
-variable "paas_web_app_memory" {
-  default = 1024
-}
-
-variable "paas_web_app_start_command" {
-  default = "bundle exec rake db:migrate:ignore_concurrent_migration_exceptions && rails s"
-}
 variable "aks_web_app_start_command" {
   default = ["/bin/sh", "-c", "bundle exec rake db:migrate:ignore_concurrent_migration_exceptions && rails s"]
-}
-
-variable "paas_worker_app_deployment_strategy" {
-  default = "blue-green-v2"
-}
-
-variable "paas_worker_app_instances" {
-  default = 1
 }
 
 variable "paas_worker_app_memory" {
@@ -221,15 +179,11 @@ variable "aks_worker_app_instances" {
 variable "aks_worker_app_memory" {
   default = "1Gi"
 }
-variable "paas_route53_a_records" {
-  default = []
-}
+
 variable "aks_route53_a_records" {
   default = []
 }
-variable "paas_route53_cname_record" {
-  default = "not-in-use"
-}
+
 variable "aks_route53_cname_record" {
   default = "not-in-use"
 }
@@ -243,11 +197,4 @@ locals {
   web_external_hostnames_aks = concat([for zone in var.route53_zones : "${var.aks_route53_cname_record}.${zone}"], var.aks_route53_a_records)
   service_name               = "teaching-vacancies"
   service_abbreviation       = "tv"
-  hostname_domain_map = {
-    for zone in var.route53_zones :
-    "${var.paas_route53_cname_record}.${zone}" => {
-      hostname = var.paas_route53_cname_record
-      domain   = zone
-    }
-  }
 }
