@@ -32,26 +32,26 @@
     - row.with_value do
       - link = govuk_mail_to(organisation.email, organisation.email, class: "wordwrap") if organisation.email.present?
       = required_profile_info(value: link, missing_prompt: t(".email.missing_prompt"))
-    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_email_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_email_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t(".email.label")
 
   - summary_list.row(html_attributes: { id: "website" }) do |row|
     - row.with_key text: t(".website.label")
     - row.with_value do
       - link = open_in_new_tab_link_to(organisation.url, organisation.url, class: "wordwrap") if organisation.url.present?
       = required_profile_info(value: link, missing_prompt: t(".website.missing_prompt"))
-    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_website_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_website_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t(".website.label")
 
   - summary_list.row(html_attributes: { id: "description" }) do |row|
     - row.with_key text: t(".description.label.#{organisation.school? ? :school : :organisation}")
     - row.with_value do
       = required_profile_info(value: truncate(organisation.description, length: 130), missing_prompt: t(".description.missing_prompt.#{organisation.school? ? :school : :organisation}"))
-    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_description_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_description_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t(".description.label.#{organisation.school? ? :school : :organisation}")
 
   - summary_list.row(html_attributes: { id: "safeguarding_information" }) do |row|
     - row.with_key text: t(".safeguarding_information.label")
     - row.with_value do
       = required_profile_info(value: truncate(organisation.safeguarding_information, length: 130), missing_prompt: t(".safeguarding_information.missing_prompt"))
-    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_safeguarding_information_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_safeguarding_information_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t(".safeguarding_information.label")
 
   - summary_list.row(html_attributes: { id: "logo" }) do |row|
     - row.with_key text: t(".logo.label")
@@ -59,7 +59,7 @@
       = required_profile_image(image: @organisation.logo,
                                missing_prompt: t(".logo.missing_prompt.#{organisation.school? ? :school : :organisation}"),
                                alt_text: t(".logo.alt_text", organisation_name: @organisation.name))
-    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_logo_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_logo_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t(".logo.label")
 
   - summary_list.row(html_attributes: { id: "photo" }) do |row|
     - row.with_key text: t(".photo.label")
@@ -67,7 +67,7 @@
       = required_profile_image(image: @organisation.photo,
                                missing_prompt: t(".photo.missing_prompt.#{organisation.school? ? :school : :organisation}"),
                                alt_text: t(".photo.alt_text", organisation_name: @organisation.name))
-    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_photo_path(organisation), classes: "govuk-link--no-visited-state"
+    - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_photo_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t(".photo.label")
 
   - if organisation.has_ofsted_report?
     - summary_list.row do |row|
