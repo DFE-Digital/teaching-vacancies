@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<channel>
+  <title>ATS Integration RSS Feed</title>
+  <link>https://example.com</link>
+  <description>Ats integration RSS Feed</description>
+  <item>
+    <reference><![CDATA[coventrycc/TP/123/1234]]></reference>
+    <advertUrl><![CDATA[https://jobs.test.gov.uk/members/?j=1234]]></adverturl>
+    <publishOn>2023-06-06 00:00:00</publishOn>
+    <expiresAt>2023-07-05 00:00:00</expiresAt>
+    <jobTitle><![CDATA[Teacher (SEN) - Castle Wood School]]></jobTitle>
+    <jobAdvert><![CDATA[&lt;b&gt;What is the job role?&lt;/b&gt;&lt;br/&gt;&lt;p&gt;Castle Wood is an outstanding special school.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;]]></jobAdvert>
+    <salary><![CDATA[TMS and UPS with SEN allowance]]></salary>
+    <additionalAllowances><![CDATA[TMS and UPS with SEN allowance]]></additionalAllowances>
+    <startDate>2023-06-06 00:00:00</startDate>
+    <schoolUrns><![CDATA[111111]]></schoolUrns>
+    <trustUID><![CDATA[]]></trustUID>
+    <jobRole><![CDATA[sendco]]></jobRole>
+    <ectSuitable><![CDATA[false]]></ectSuitable>
+    <workingPatterns><![CDATA[part_time]]></workingPatterns>
+    <contractType><![CDATA[fixed_term]]></contractType>
+    <phase><![CDATA[primary]]></phase>
+    <keyStages><![CDATA[ks3]]></keyStages>
+    <subjects><![CDATA[]]></subjects>
+  </item>
+</channel>
