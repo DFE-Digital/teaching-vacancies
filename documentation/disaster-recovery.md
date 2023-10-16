@@ -1,5 +1,5 @@
 # Disaster recovery
-
+**[OUTDATED] This document is outdated  since we no longer use Gov.UK PaaS hosting. It needs to be updated with the Azure AKS process once we get the information.**
 
 This documentation covers two scenarios
 

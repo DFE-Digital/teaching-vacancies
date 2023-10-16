@@ -1,4 +1,5 @@
 # Terraform
+**Outdated:** We no longer use GovUK PaaS, but Azure AKS. We need to clarify how to upgrade these commands.
 
 ## `terraform plan` via the Makefile
 

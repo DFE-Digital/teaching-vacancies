@@ -1,4 +1,6 @@
 # Simulate Data Loss Disaster
+**Outdated:** This process is no longer valid, since we have migrated from PaaS/CloudFoundry to Azure/Kubernetes.
+We need to upgrade this information once we learn how to simulate and recover from data loss with Azure AKS.
 
 To simulate disaster recovery, do the following:
 

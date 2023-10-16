@@ -1,233 +1,177 @@
 # Hosting
 
-Teaching Vacancies is hosted on [GOV.UK PaaS](https://docs.cloud.service.gov.uk/).
+Teaching Vacancies is hosted on [Azure Cloud Infrastructure Platform (CIP)](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/), with the services running as an [Azure Kubernetes Service](https://learn.microsoft.com/en-us/azure/aks/).
 
 ## Environments
 
-| Environment | URL                                                                                                    | Code branch | CI/CD workflow      | Gov.UK PaaS space             |
-| ----------- | ------------------------------------------------------------------------------------------------------ | ----------- | ------------------- | ----------------------------- |
-| Production  | [https://teaching-vacancies.service.gov.uk](https://teaching-vacancies.service.gov.uk)                 | `main`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-production |
-| Staging     | [https://staging.teaching-vacancies.service.gov.uk](https://staging.teaching-vacancies.service.gov.uk) | `main`    | [deploy.yml](../.github/workflows/deploy.yml)        | teaching-vacancies-staging    |
-| Dev         | [https://dev.teaching-vacancies.service.gov.uk](https://dev.teaching-vacancies.service.gov.uk)         | `dev`       | [deploy_branch.yml](../.github/workflows/deploy_branch.yml) | teaching-vacancies-dev        |
-| QA          | [https://qa.teaching-vacancies.service.gov.uk](https://qa.teaching-vacancies.service.gov.uk)           | `qa`        | [deploy_branch.yml](../.github/workflows/deploy_branch.yml) | teaching-vacancies-dev        |
-| Prototype   | [https://teaching-vacancies-prototype.london.cloudapps.digital](https://teaching-vacancies-prototype.london.cloudapps.digital/) |   |    | teaching-vacancies-prototype |
+| Environment | URL                                                                                                    | Code branch | CI/CD workflow      | AKS Cluster             | AKS Namespace |
+| ----------- | ------------------------------------------------------------------------------------------------------ | ----------- | ------------------- | ----------------------------- | ------------------- |
+| Production  | [https://teaching-vacancies.service.gov.uk](https://teaching-vacancies.service.gov.uk)                 | `main`      | [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-production | tv-production
+| Staging     | [https://staging.teaching-vacancies.service.gov.uk](https://staging.teaching-vacancies.service.gov.uk) | `main`      | [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-test    | tv-staging
+| QA          | [https://qa.teaching-vacancies.service.gov.uk](https://qa.teaching-vacancies.service.gov.uk)           | `main`      | [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-test        | tv-development
+| Review      | `https://teaching-vacancies-review-pr-xxxx.test.teacherservices.cloud`                                 | multiple    | [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml) | s189-teacher-services-cloud-test        | tv-development
 
-Plus all the ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like [https://teaching-vacancies-review-pr-2667.london.cloudapps.digital](https://teaching-vacancies-review-pr-2667.london.cloudapps.digital)
+Ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like `https://teaching-vacancies-review-pr-6441.test.teacherservices.cloud`
 
-The Dev and QA environments have [integration with DSI](./dsi-integration.md). They are "user-deployable", in that developers can [deploy](./deployments.md) via:
-- [pushing code to the `dev` or `qa` branches](./deployments.md#build-and-deploy-to-dev---github-actions)
-- [Makefile commands](./deployments.md#build-and-deploy-to-an-environment---makefile)
+The QA and Staging environments have [integration with DSI](./dsi-integration.md).
 
 The Staging environment is a pre-production environment, to identify issues with code before it's promoted to Production.
 On merging a Pull Request, the same code is deployed first to Staging, and after a successful smoke test, to Production.
-## Gov.UK PaaS organisation and permission model
 
-An [organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations)
-> represents a group of users, applications and environments. Each org shares the same resource, quota and custom domain.
-Teaching Vacancies is in the [dfe organisation](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#organisations)
+QA environment contains the same code branch as Staging and Production environments, and is used by multiple members of the team for general testing about a production-like environment.
 
-An org is divided into one or more [spaces](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#spaces). A space is a shared location for developing, deploying and running apps and backing services.
+## Deployments
+Detailed information about our deployment process in [this link](./deployments.md).
 
-Teaching Vacancies has 6 spaces:
-- teaching-vacancies-dev
-- teaching-vacancies-monitoring
-- teaching-vacancies-production
-- teaching-vacancies-prototype
-- teaching-vacancies-review
-- teaching-vacancies-staging
+## Azure Kubernetes Service (AKS) organisation and permission model
 
-During [onboarding](./onboarding.md) you will have been granted access to selected spaces and [roles](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#users-and-user-roles):
+Teaching Vacancies members have access to three different Azure Subscriptions. Each subscription gives access to a [Kubernetes cluster](https://learn.microsoft.com/en-us/azure/aks/concepts-clusters-workloads#kubernetes-cluster-architecture) with the same name.
 
-By default, you will have the `SpaceDeveloper` role in the:
-- `Sandbox` space
-- `teaching-vacancies-dev` space
+Each of the Kubernetes clusters is divided into [namespaces](https://learn.microsoft.com/en-us/azure/aks/concepts-clusters-workloads#namespaces).
 
-Senior developers, Tech Leads, and DevOps have the `SpaceManager` role in all required spaces.
+Each namespace hosts one/multiple different environments for Teaching Vacancies service.
 
-- Space developer - can deploy, run and manage apps, and create and bind services. This is the default role for any user who is not assigned a manager role.
-- Space manager - grants user roles within a space and can change space properties using the command line. A space manager cannot deploy, run, or manage apps or services.
-- Space auditor - can view apps, users and resources used within a space using the command line, but cannot edit them. This role is useful for viewing app data without modifying it.
-- Billing manager - create and manage billing account and payment information
+| Cluster     | Name                                    | Access                                                  |
+|-------------|-----------------------------------------|---------------------------------------------------------|
+| Development | s189-teacher-services-cloud-development | Permanently granted                                     |
+| Test        | s189-teacher-services-cloud-test        | Up to 8 hours. Self approved on Azure PIM               |
+| Production  | s189-teacher-services-cloud-production  | Up to 8 hours. Subject to manager approval on Azure PIM |
 
-## Logging on and changing role
+Teaching Vacancies application environments are hosted in the following clusters/namespaces:
 
-- [Enable Google SSO for Gov.UK PaaS](https://docs.cloud.service.gov.uk/get_started.html#use-single-sign-on)
-- Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
-- Once you've selected a space, you should see your user ID (between `API version` and `org: dfe`)
-- Add your user ID and name to [this SSO Confluence page](https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/1935048705/Single+sign-on+SSO) so that it's easier to identify you.
-- A colleague with the `Space manager` role can [set or unset the Space developer role](#setunset-spacedeveloper-role) as required.
+| App environment | Kubernetes Cluster                     | Kubernetes Namespace |
+|-----------------|----------------------------------------|----------------------|
+| Review          | s189-teacher-services-cloud-test       | tv-development       |
+| QA              | s189-teacher-services-cloud-test       | tv-development       |
+| Staging         | s189-teacher-services-cloud-test       | tv-staging           |
+| Production      | s189-teacher-services-cloud-production | tv-production        |
 
-## Install Cloud Foundry CLI on Mac
 
-```bash
-brew install cloudfoundry/tap/cf-cli@7
+During [onboarding](./onboarding.md) you will have been granted access to selected Azure resources and roles:
+
+By default, you will have the `Reader` role in the:
+- `s189-teacher-services-cloud-test` subscription.
+- `s189-teacher-services-cloud-production` subscription.
+
+You will have to request temporal (up to 8 hours per request) access to `s189-Contributor and Key Vault editor` role on either subscription to access/manage their hosted environments running Teaching Vacancies apps:
+
+- For `test` subscription the role will me automatically self-granted on request.
+- For `production` subscription the role requires a manager approval,
+
+Senior developers, Tech Leads, and DevOps have the `Manager` role in all required subscriptions.
+
+Managers are able to approve other users role requests, but aren´t able to self-approve their own role requests.
+
+## Logging on Azure Platform and changing role
+1. Request your access for the `s189-Contributor and Key Vault editor` role on the desired subscription through a [Azure Privileged Identity Management (PIM) request](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/#privileged-identity-management-pim-requests) in the [Azure Portal](https://portal.azure.com.mcas.ms/).
+2. The request will be self approved for the test subscription, or will need to be approved by a manager for the production subscription.
+
+## Installing the Azure Client and Kubectl
+1. Install the [Azure Client](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+2. Install `kubectl`
+    ```
+    az aks install-cli
+    ```
+
+## Login from Azure Console
+- You will need [access](#logging-on-azure-platform-and-changing-role) to the `s189-Contributor and Key Vault editor` role in the desired subscription hosting the environment you want access to.
+- Login into the tenant using the Azure Cli. This will launch your browser for the login.
+    ```
+    az login --tenant 9c7d9dd3-840c-4b3f-818e-552865082e16
+    ```
+- [OPTIONAL] From Teaching Vacancies root directory, get the credentials for the environment.
+    - Only needed if you're going to execute `kubectl` commands directly. `make env command` shortcuts in our makefile will execute this step automatically.
+    - For `test` cluster environments (`review`, `qa`, `staging`):
+      ```
+      make qa get-cluster-credentials
+      ```
+    - For `production` environment:
+      ```
+      make production get-cluster-credentials CONFIRM_PRODUCTION=YES
+      ```
+
+## Makefile shortcuts for kubernetes commands
+
+We have added a series of [Makefile](/Makefile) definitions to speed up common Rails developer commands over any of our environments:
+
+If the environment has multiple pods running the web/application. The command will be executed over the first listed pod.
+
+### Opening a Rails Console
+```
+make review pr_id=5432 railsc
+```
+```
+make qa/staging rails c
+```
+```
+make production railsc CONFIRM_PRODUCTION=YES
 ```
 
-## Login
-
-```bash
-CF_API_ENDPOINT=https://api.london.cloud.service.gov.uk
-CF_ORG=dfe
+### Opening a shell
+```
+make review pr_id=5432 shell
+```
+```
+make qa/staging shell
+```
+```
+make production shell CONFIRM_PRODUCTION=YES
 ```
 
-Set `CF_SPACE` to environment(space) you want to deal with, e.g. `teaching-vacancies-dev`
-```bash
-CF_SPACE=teaching-vacancies-dev
+### Running a rake task
+```
+make review pr_id=5432 rake task=audit:email_addresses
+```
+```
+make qa/staging rake task=audit:email_addresses
+```
+```
+make production rake task=audit:email_addresses CONFIRM_PRODUCTION=YES
 ```
 
-For convenience and for security reasons we recommend to use SSO to login:
-
-```bash
-cf login --sso -a $CF_API_ENDPOINT -o $CF_ORG -s $CF_SPACE
+### Tailing application logs
+```
+make review pr_id=5432 logs
+```
+```
+make qa/staging logs
+```
+```
+make production logs CONFIRM_PRODUCTION=YES
 ```
 
-If you need to login with a service account to access production environment:
+## Kubernetes commands
+Executing commands with `kubectl` tool.
 
-```bash
-cf login -a $CF_API_ENDPOINT -u $CF_USERNAME_PROD -p $CF_PASSWORD_PROD -o $CF_ORG -s $CF_SPACE
+### Listing the deployments (apps) in the cluster:
+```
+kubectl -n tv-development get deployments
 ```
 
-## Check space users
+### Listing the application pods (running instances) in the cluster:
 
-```bash
-cf space-users $CF_ORG $CF_SPACE
+```
+kubectl -n tv-development get pods
 ```
 
-## Check organization users
+### Opening a console in a Review App
 
-```bash
-cf org-users $CF_ORG -a
+To open a console for an app deployment (on its first pod):
+
+```
+kubectl -n tv-development exec -ti deployment/teaching-vacancies-review-pr-xxxx -- /bin/sh
 ```
 
-## Set/unset SpaceDeveloper role
+To open a console in the particular pod:
 
-```bash
-cf set-space-role USER_ID $CF_ORG $CF_SPACE SpaceDeveloper
-cf unset-space-role USER_ID $CF_ORG $CF_SPACE SpaceDeveloper
+```
+kubectl -n tv-development exec -ti teaching-vacancies-review-pr-xxxx-podid -- /bin/sh
 ```
 
-- If you have the `SpaceManager` role, note that the safest option is to remove yourself from the Space Developer role when not using it
+### Executing commands in a Review App
 
-## Check running apps
-
-```bash
-cf apps
 ```
-
-There should be 2 apps (more in the case of review apps space):
-
-- webapp: it has a route to serve requests from users
-- worker: it subscribe to redis to run asynchronous jobs
-
-## Check running services
-
-```bash
-cf services
-```
-
-## Check app health and status
-
-```bash
-cf app <app_name>
-```
-
-## Check environment variables
-
-```bash
-cf env <app_name>
-```
-
-## Set environment variable
-
-Environment variables are stored in AWS SSM Parameter store and in the repository. Terraform sets them automatically when it deploys the applications to GOV.UK PaaS.
-
-Should you wish to override an individual variable directly:
-
-```bash
-cf set-env <app_name> ENV_VAR_NAME env_var_value
-cf restart <app_name> --strategy rolling
-```
-
-Remember to restart the app, using `--strategy rolling` if you wish to avoid downtime.
-In the case of changing environment variables used only by the app, `restart` is sufficient and `restage` is unnecessary:
-
-```bash
-cf restart <app_name> --strategy rolling
-```
-
-## SSH into app
-
-```bash
-cf ssh <app_name>
-```
-
-## Access Rails console
-
-```bash
-cf ssh <app_name>
-cd /app
-/usr/local/bin/bundle exec rails console
-```
-
-```Makefile
-make <env> console e.g. make qa console
-```
-## Run task
-
-```bash
-cf run-task <app_name> -c "rails task:name"
-```
-## CI/CD with GitHub Actions
-
-Tests run every time is pushed on a branch.
-
-## Maintenance windows for GOV.UK PaaS Postgres and Redis services
-
-From [Redis maintenance times](https://docs.cloud.service.gov.uk/deploying_services/redis/#redis-maintenance-times)
-
-> Every Redis service has a maintenance window of Sunday 11pm to Monday 1:30am UTC every week.
-
-From [PostgreSQL maintenance times](https://docs.cloud.service.gov.uk/deploying_services/postgresql/#postgresql-maintenance-times):
-
-> Each PostgreSQL service you create will have a randomly-assigned weekly 30 minute maintenance window, during which there may be brief downtime. Select a high availability (HA) plan to minimise this downtime. Minor version upgrades (for example from 9.4.1 to 9.4.2) are applied during this maintenance window.
->
-> Window start times will vary from 22:00 to 06:00 UTC.
-
-Discussed with Product Owner
-
-- Redis - leave as Sunday 23:00 to Monday 01:30
-- Postgres staging - set as Tuesday 23:16 to Tuesday 23:46
-- Postgres production - set as Wednesday 23:16 to Wednesday 23:46
-
-With the intention being:
-- maintenance overnight on Sunday, Tuesday, Wednesday mean any issues can be remediated on working days (Monday, Wednesday, Thursday)
-- this avoid Tuesday as sprint ceremonies day, and Friday when fewer people are working
-- staging happens a day before production, so that we can detect failures in the lower environment first
-
-We set these with the CloudFoundry CLI commands, opting for the safer option of applying this configuration change during a maintenance window:
-```
-cf update-service teaching-vacancies-postgres-staging -p small-11 -c '{"apply_at_maintenance_window": true, "preferred_maintenance_window": "tue:23:16-tue:23:46"}'
-cf update-service teaching-vacancies-postgres-production -p medium-ha-11 -c '{"apply_at_maintenance_window": true, "preferred_maintenance_window": "wed:23:16-wed:23:46"}'
-```
-
-## Backup/Restore GOV.UK PaaS Postgres service database
-
-Install Conduit plugin
-
-```bash
-cf install-plugin conduit
-```
-
-### Backup
-
-```bash
-cf conduit $CF_POSTGRES_SERVICE_ORIGIN -- pg_dump -x --no-owner -c -f backup.sql
-```
-
-### Restore
-
-```bash
-cf conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
+kubectl -n tv-development exec deployment/teaching-vacancies-review-pr-xxxx -- ps aux
 ```
 
 ## Set up a new environment
@@ -249,7 +193,7 @@ cf conduit $CF_POSTGRES_SERVICE_TARGET -- psql < backup.sql
   ```shell
   make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
   ```
-- If you want to have a deployment triggered by a push to a branch, add a trigger to [deploy_branch.yml](../.github/workflows/deploy_branch.yml)
+- If you want to have a deployment triggered by a push to a branch, add a trigger to [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml)
 ```
 on:
   push:
@@ -258,3 +202,10 @@ on:
       - <env>
 ```
 - Optionally, [refresh the database](database-backups.md) with a sanitised copy of the production data
+
+
+
+## Other documentation
+
+- [Infra Team Developer onboarding into AKS](https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/developer-onboarding.md#developer-onboarding). This has extended info on our AKS setup and commands.
+- [Azure AKS Client reference](https://learn.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest)

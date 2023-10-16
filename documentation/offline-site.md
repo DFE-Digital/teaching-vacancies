@@ -28,7 +28,7 @@ The [sync-offline](../bin/sync-offline) script:
 
 - uses the AWS CLI to synchronise with the offline site S3 bucket
 
-The GitHub Action [deploy](../.github/workflows/deploy.yml) workflow includes these steps:
+The GitHub Action [build_and_deploy](../.github/workflows/build_and_deploy.yml) workflow includes these steps:
 - runs the regenerate-offline script
 - runs the sync-offline script
 
@@ -48,6 +48,7 @@ RELEASE=3.11.0
 - When the change is merged, the new version will be synchronised
 
 ## How to test
+**Outdated:** We no longer use CF/Paas. This section needs to be updated with AKS/kubectl commands. 
 
 - Check the underlying page [in the S3 bucket](https://530003481352-offline-site.s3.eu-west-2.amazonaws.com/teaching-vacancies-offline/index.html)
 - Check the page when served [through the site](https://dev.teaching-vacancies.service.gov.uk/teaching-vacancies-offline/index.html)

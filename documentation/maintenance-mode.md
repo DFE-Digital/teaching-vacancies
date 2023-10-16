@@ -11,16 +11,34 @@ When enabled, all requests of all types will be routed to the maintenance page (
 
 ### Enable Maintenance mode
 
-Login to PaaS: `cf login --sso`
+- Login to AKS: 
+  ```bash
+  az login --tenant 9c7d9dd3-840c-4b3f-818e-552865082e16
+  ```
 
-set maintenance mode environment variable: `cf set-env teaching-vacancies-dev MAINTENANCE_MODE 1`
+- Set maintenance mode environment variable: 
+  ```bash
+  kubectl  -n tv-production set env  deployment/teaching-vacancies-production MAINTENANCE_MODE=1
+  ```
 
-restage app: cf restage: `cf restage teaching-vacancies-dev`
+- The pods will get automatically restarted with the new value. 
 
+- Check that the page is in maintenance mode.
+
+### Disable Maintenance mode
+
+- To disable maintenance mode, set the environment variable value to 0
+  ```bash
+  kubectl  -n tv-production set env  deployment/teaching-vacancies-production MAINTENANCE_MODE=0
+  ```
+
+- The pods will get automatically restarted with the new value. 
+
+- Check that the page is no longer in maintenance mode.
 
 ### Let users know a for future maintenance
 
-We can let users know in advance about a future maintenance period for the service through the 
+We can let users know in advance about a future maintenance period for the service through the
 [Scheduled Maintenance Banner Component](/app/components/scheduled_maintenance_banner_component.rb).
 
 Rendering this component above the header layout in the [application layout](/app/views/layouts/application.html.slim) will
