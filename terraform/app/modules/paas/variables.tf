@@ -107,6 +107,7 @@ variable "azure_enable_backup_storage" {
 }
 variable "enable_monitoring" {
   description = "Enable monitoring and alerting"
+  default     = false
 }
 
 # AKS
