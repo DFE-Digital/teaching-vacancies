@@ -29,12 +29,6 @@ resource "cloudfoundry_service_instance" "redis_queue_instance" {
   json_params  = "{\"maxmemory_policy\": \"noeviction\"}"
 }
 
-resource "cloudfoundry_user_provided_service" "logging" {
-  name             = local.logging_service_name
-  space            = data.cloudfoundry_space.space.id
-  syslog_drain_url = var.logging_url
-}
-
 resource "aws_s3_bucket" "documents_s3_bucket" {
   bucket        = local.documents_s3_bucket_name
   force_destroy = var.documents_s3_bucket_force_destroy
@@ -125,90 +119,4 @@ resource "aws_iam_user_policy_attachment" "attachment" {
 resource "aws_iam_user_policy_attachment" "attachment_images_logos" {
   user       = aws_iam_user.schools_images_logos_s3_bucket_user.name
   policy_arn = aws_iam_policy.schools_images_logos_s3_bucket_policy.arn
-}
-
-resource "cloudfoundry_app" "web_app" {
-  name                       = local.web_app_name
-  command                    = var.web_app_start_command
-  docker_image               = var.app_docker_image
-  health_check_type          = "http"
-  health_check_http_endpoint = "/check"
-  health_check_timeout       = 60
-  instances                  = var.web_app_instances
-  memory                     = var.web_app_memory
-  routes {
-    route = cloudfoundry_route.web_app_route.id
-  }
-  dynamic "routes" {
-    for_each = cloudfoundry_route.web_app_route_cloudfront_apex
-    content {
-      route = routes.value["id"]
-    }
-  }
-  dynamic "routes" {
-    for_each = cloudfoundry_route.web_app_route_cloudfront_subdomain
-    content {
-      route = routes.value["id"]
-    }
-  }
-  docker_credentials = {
-    username = var.docker_username
-    password = var.docker_password
-  }
-  space    = data.cloudfoundry_space.space.id
-  stopped  = var.app_stopped
-  strategy = var.web_app_deployment_strategy
-  timeout  = var.app_start_timeout
-  dynamic "service_binding" {
-    for_each = local.app_service_bindings
-    content {
-      service_instance = service_binding.value
-    }
-  }
-  environment = local.app_environment
-}
-
-resource "cloudfoundry_route" "web_app_route" {
-  domain   = data.cloudfoundry_domain.cloudapps_digital.id
-  space    = data.cloudfoundry_space.space.id
-  hostname = local.web_app_name
-}
-
-
-resource "cloudfoundry_route" "web_app_route_cloudfront_apex" {
-  for_each = toset(var.route53_a_records)
-  domain   = data.cloudfoundry_domain.cloudfront[each.key].id
-  space    = data.cloudfoundry_space.space.id
-}
-
-resource "cloudfoundry_route" "web_app_route_cloudfront_subdomain" {
-  for_each = var.hostname_domain_map
-  domain   = data.cloudfoundry_domain.cloudfront[each.value["domain"]].id
-  space    = data.cloudfoundry_space.space.id
-  hostname = each.value["hostname"]
-}
-
-resource "cloudfoundry_app" "worker_app" {
-  name                 = local.worker_app_name
-  command              = local.worker_app_start_command
-  docker_image         = var.app_docker_image
-  health_check_type    = "process"
-  health_check_timeout = 10
-  instances            = var.worker_app_instances
-  memory               = var.worker_app_memory
-  space                = data.cloudfoundry_space.space.id
-  stopped              = var.app_stopped
-  strategy             = var.worker_app_deployment_strategy
-  timeout              = var.app_start_timeout
-  dynamic "service_binding" {
-    for_each = local.app_service_bindings
-    content {
-      service_instance = service_binding.value
-    }
-  }
-  docker_credentials = {
-    username = var.docker_username
-    password = var.docker_password
-  }
-  environment = local.app_environment
 }

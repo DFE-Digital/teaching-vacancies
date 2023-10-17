@@ -7,21 +7,10 @@ variable "app_docker_image" {
 variable "app_env_values" {
 }
 
-variable "app_start_timeout" {
-  default = 300
-}
-
-variable "app_stopped" {
-  default = false
-}
-
 variable "docker_username" {
 }
 
 variable "docker_password" {
-}
-
-variable "logging_service_binding_enable" {
 }
 
 variable "logging_url" {
@@ -54,43 +43,17 @@ variable "service_abbreviation" {
 variable "space_name" {
 }
 
-variable "web_app_deployment_strategy" {
-}
-
-variable "web_app_instances" {
-  default = 1
-}
 variable "aks_web_app_instances" {
   default = 1
 }
-variable "web_app_memory" {
-  default = 512
-}
-
-variable "web_app_start_command" {
-}
 variable "aks_web_app_start_command" {
 }
-variable "worker_app_deployment_strategy" {
-}
-variable "worker_app_instances" {
-  default = 1
-}
 variable "aks_worker_app_instances" {
-}
-variable "worker_app_memory" {
-  default = 512
 }
 variable "aks_worker_app_memory" {
 }
 variable "route53_zones" {
   type = list(any)
-}
-variable "route53_a_records" {
-  type = list(any)
-}
-variable "hostname_domain_map" {
-  type = map(any)
 }
 variable "web_external_hostnames_aks" {
   type = list(string)
@@ -183,13 +146,10 @@ locals {
   ]
 
   postgres_instance_service_key = { DATABASE_URL = cloudfoundry_service_key.postgres_instance_service_key.credentials.uri }
-
-  app_user_provided_service_bindings = var.logging_service_binding_enable ? [cloudfoundry_user_provided_service.logging.id] : []
-  app_service_bindings               = concat(local.app_cloudfoundry_service_instances, local.app_user_provided_service_bindings)
-  logging_service_name               = "${var.service_name}-logging-${var.environment}"
-  postgres_service_name              = "${var.service_name}-postgres-${var.environment}"
-  redis_cache_service_name           = "${var.service_name}-redis-cache-${var.environment}"
-  redis_queue_service_name           = "${var.service_name}-redis-queue-${var.environment}"
+  logging_service_name          = "${var.service_name}-logging-${var.environment}"
+  postgres_service_name         = "${var.service_name}-postgres-${var.environment}"
+  redis_cache_service_name      = "${var.service_name}-redis-cache-${var.environment}"
+  redis_queue_service_name      = "${var.service_name}-redis-queue-${var.environment}"
   # S3 bucket name uses abbreviation so we don't run into 63 character bucket name limit
   documents_s3_bucket_name            = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-documents-${var.environment}"
   schools_images_logos_s3_bucket_name = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-images-logos-${var.environment}"
