@@ -33,7 +33,3 @@ data "cloudfoundry_domain" "cloudfront" {
 data "cloudfoundry_service" "postgres" {
   name = "postgres"
 }
-
-data "cloudfoundry_service" "redis" {
-  name = "redis"
-}

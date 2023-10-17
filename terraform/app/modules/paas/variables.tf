@@ -23,10 +23,6 @@ variable "parameter_store_environment" {
 variable "postgres_service_plan" {
 }
 
-variable "redis_cache_service_plan" {
-}
-variable "redis_queue_service_plan" {
-}
 
 variable "documents_s3_bucket_force_destroy" {
   default = false
@@ -140,16 +136,10 @@ locals {
     local.postgres_instance_service_key,
     var.app_env_values #Because of merge order, if present, the value of DOMAIN in .tfvars.json will overwrite app_env_domain
   )
-  app_cloudfoundry_service_instances = [
-    cloudfoundry_service_instance.redis_cache_instance.id,
-    cloudfoundry_service_instance.redis_queue_instance.id,
-  ]
 
   postgres_instance_service_key = { DATABASE_URL = cloudfoundry_service_key.postgres_instance_service_key.credentials.uri }
   logging_service_name          = "${var.service_name}-logging-${var.environment}"
   postgres_service_name         = "${var.service_name}-postgres-${var.environment}"
-  redis_cache_service_name      = "${var.service_name}-redis-cache-${var.environment}"
-  redis_queue_service_name      = "${var.service_name}-redis-queue-${var.environment}"
   # S3 bucket name uses abbreviation so we don't run into 63 character bucket name limit
   documents_s3_bucket_name            = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-documents-${var.environment}"
   schools_images_logos_s3_bucket_name = "${data.aws_caller_identity.current.account_id}-${var.service_abbreviation}-attachments-images-logos-${var.environment}"

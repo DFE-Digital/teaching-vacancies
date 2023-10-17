@@ -15,20 +15,6 @@ resource "cloudfoundry_service_key" "postgres_instance_service_key" {
   service_instance = cloudfoundry_service_instance.postgres_instance.id
 }
 
-resource "cloudfoundry_service_instance" "redis_cache_instance" {
-  name         = local.redis_cache_service_name
-  space        = data.cloudfoundry_space.space.id
-  service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_cache_service_plan]
-  json_params  = "{\"maxmemory_policy\": \"allkeys-lru\"}"
-}
-
-resource "cloudfoundry_service_instance" "redis_queue_instance" {
-  name         = local.redis_queue_service_name
-  space        = data.cloudfoundry_space.space.id
-  service_plan = data.cloudfoundry_service.redis.service_plans[var.redis_queue_service_plan]
-  json_params  = "{\"maxmemory_policy\": \"noeviction\"}"
-}
-
 resource "aws_s3_bucket" "documents_s3_bucket" {
   bucket        = local.documents_s3_bucket_name
   force_destroy = var.documents_s3_bucket_force_destroy
