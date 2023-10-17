@@ -284,26 +284,27 @@ test-cluster:
 	$(eval CLUSTER_NAME=s189t01-tsc-test-aks)
 
 get-cluster-credentials: set-azure-account
+	$(if $(env), , $(error Missing <env>. Usage: "make <env> get-cluster-credentials"))
 	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
 
 # make review pr_id=5432 shell
 # make qa shell
 .PHONY: shell
-shell:
+shell: get-cluster-credentials
 	$(if $(env), , $(error Missing <env>. Usage: "make <env> shell"))
 	kubectl -n $(azure_namespace) exec -ti deployment/teaching-vacancies-$(env) -- sh
 
 # make review pr_id=5432 railsc
 # make qa railsc
 .PHONY: railsc
-railsc:
+railsc: get-cluster-credentials
 	$(if $(env), , $(error Missing <env>. Usage: "make <env> railsc"))
 	kubectl -n $(azure_namespace) exec -ti deployment/teaching-vacancies-$(env) -- rails c
 
 # make qa rake task=audit:email_addresses
 # make review pr_id=5432 rake task=audit:email_addresses
 .PHONY: rake
-rake:
+rake: get-cluster-credentials
 	$(if $(env), , $(error Missing <env>. Usage: "make <env> rake task=<namespace:task>"))
 	$(if $(task), , $(error Missing <task>. Usage: "make <env> rake task=<namespace:task>"))
 	kubectl -n $(azure_namespace) exec -ti deployment/teaching-vacancies-$(env) -- bundle exec rake $(task)
@@ -311,7 +312,7 @@ rake:
 # make qa logs
 # make review pr_id=5432 logs
 .PHONY: logs
-logs:
+logs: get-cluster-credentials
 	$(if $(env), , $(error Missing <env>. Usage: "make <env> logs"))
 	kubectl -n $(azure_namespace) logs -f deployment/teaching-vacancies-$(env)
 
