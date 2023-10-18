@@ -15,10 +15,4 @@ module "prometheus_all" {
   grafana_google_client_secret = local.secrets.grafana_google_client_secret
   grafana_anonymous_auth       = true
   enable_prometheus_yearly     = true
-  redis_services = [
-    "${local.service_name}-production/${local.service_name}-redis-queue-production",
-    "${local.service_name}-production/${local.service_name}-redis-cache-production",
-    "${local.service_name}-staging/${local.service_name}-redis-queue-staging",
-    "${local.service_name}-staging/${local.service_name}-redis-cache-staging"
-  ]
 }
