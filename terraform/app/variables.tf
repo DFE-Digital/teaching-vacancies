@@ -59,10 +59,6 @@ variable "parameter_store_environment" {
   default = "dev"
 }
 
-variable "paas_postgres_service_plan" {
-  default = "tiny-unencrypted-12"
-}
-
 variable "paas_space_name" {
 }
 
@@ -79,13 +75,6 @@ variable "aks_web_app_start_command" {
 
 variable "paas_worker_app_memory" {
   default = 1024
-}
-variable "paas_restore_from_db_guid" {
-  default = ""
-}
-
-variable "paas_db_backup_before_point_in_time" {
-  default = ""
 }
 
 # Statuscake

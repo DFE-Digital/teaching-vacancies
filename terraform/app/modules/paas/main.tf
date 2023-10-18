@@ -1,20 +1,3 @@
-resource "cloudfoundry_service_instance" "postgres_instance" {
-  name         = local.postgres_service_name
-  space        = data.cloudfoundry_space.space.id
-  service_plan = data.cloudfoundry_service.postgres.service_plans[var.postgres_service_plan]
-  json_params  = jsonencode(local.postgres_json_params)
-  timeouts {
-    create = "30m"
-    delete = "30m"
-    update = "60m"
-  }
-}
-
-resource "cloudfoundry_service_key" "postgres_instance_service_key" {
-  name             = "postgres_instance_service_key-${var.environment}"
-  service_instance = cloudfoundry_service_instance.postgres_instance.id
-}
-
 resource "aws_s3_bucket" "documents_s3_bucket" {
   bucket        = local.documents_s3_bucket_name
   force_destroy = var.documents_s3_bucket_force_destroy

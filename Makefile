@@ -167,14 +167,6 @@ terraform-app-apply: terraform-app-init check-terraform-variables ## make passco
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 	terraform -chdir=terraform/app destroy -var-file ../workspace-variables/${var_file}.tfvars.json ${AUTO_APPROVE}
 
-terraform-app-database-replace: terraform-app-init check-terraform-variables
-	@if [[ "$(CONFIRM_REPLACE)" != "YES" ]]; then echo "Please enter "CONFIRM_REPLACE=YES" to run workflow"; exit 1; fi
-	terraform -chdir=terraform/app apply \
-		-replace="module.paas.cloudfoundry_service_instance.postgres_instance" \
-		-replace="module.paas.cloudfoundry_app.web_app" \
-		-replace="module.paas.cloudfoundry_app.worker_app" \
-		-var-file ../workspace-variables/${var_file}.tfvars.json -auto-approve
-
 ##@ terraform/common code. Requires privileged IAM account to run
 
 .PHONY: terraform-common-init
@@ -216,36 +208,6 @@ bin/konduit.sh:
 console: ## make qa console
 	cf target -s ${space}
 	cf ssh teaching-vacancies-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
-
-get-postgres-instance-guid: ## Gets the postgres service instance's guid make dev passcode=xxxxx get-postgres-instance-guid
-	cf target -s ${space} 1> /dev/null
-	$(eval export DB_INSTANCE_GUID=$(shell cf service teaching-vacancies-postgres-${env} --guid))
-	@echo The guid for the database is: ${DB_INSTANCE_GUID}
-
-rename-postgres-service: ## make dev rename-postgres-service
-	cf target -s ${space} 1> /dev/null
-	cf rename-service teaching-vacancies-postgres-${env} teaching-vacancies-postgres-${env}-old
-
-remove-postgres-tf-state: terraform-app-init ## make dev remove-postgres-tf-state
-	terraform -chdir=terraform/app state rm module.paas.cloudfoundry_service_instance.postgres_instance
-
-restore-postgres: set-restore-variables terraform-app-apply ##  make dev DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" passcode=xxxxx restore-postgres
-
-restore-data-from-backup: terraform-app-apply # make review recreate-lost-postgres-instance pr_id=xxxx passcode=xxxx tag=xxx
-	@if [[ "$(CONFIRM_RESTORE)" != YES ]]; then echo "Please enter "CONFIRM_RESTORE=YES" to run workflow"; exit 1; fi
-	$(eval export CF_DESTINATION_ENVIRONMENT=${env})
-	$(eval export CF_SPACE_NAME=teaching-vacancies-${CF_DESTINATION_ENVIRONMENT})
-	$(eval export BACKUP_TYPE=full)
-	$(eval export BACKUP_FILENAME=$(shell date +%F))
-	bin/download-db-backup
-	bin/restore-db
-
-set-restore-variables:
-	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${space} get-postgres-instance-guid`))
-	$(if $(SNAPSHOT_TIME), , $(error can only run with BEFORE_TIME, eg SNAPSHOT_TIME="2021-09-14 16:00:00"))
-	$(eval export TF_VAR_paas_restore_from_db_guid=$(DB_INSTANCE_GUID))
-	$(eval export TF_VAR_paas_db_backup_before_point_in_time=$(SNAPSHOT_TIME))
-	echo "Restoring teaching-vacancies from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
 
 composed-variables:
 	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
