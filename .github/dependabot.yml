@@ -6,21 +6,6 @@ updates:
       interval: "weekly"
       day: "monday"
     open-pull-requests-limit: 10
-    ignore:
-      # TODO: Remove this ignore config once moved to a Redis v6.2+ instance in AKS.
-      # The version is currently pinned to <7. We're unable to upgrade sidekiq as it requires out Redis service
-      # instance to be 6.2+ https://github.com/sidekiq/sidekiq/blob/main/docs/7.0-Upgrade.md#version-support.
-      # Our current Redis service instance is 5.0.6. This will be upgraded when we migrate from GOVuk PaaS to AKS.
-      - dependency-name: "sidekiq"
-        update-types: ["version-update:semver-major"]
-
-      # TODO: Remove this ignore config once moved to a Redis v6.2+ instance in AKS.
-      # The version is currently pinned to <5 by sidekiq (version 6.5.8).
-      # It seems this pin is removed by later sidekiq versions, but we're unable to upgrade sidekiq as it requires out
-      # Redis service instance to be 6.2+ https://github.com/sidekiq/sidekiq/blob/main/docs/7.0-Upgrade.md#version-support.
-      # Our current Redis service instance is 5.0.6. This will be upgraded when we migrate from GOVuk PaaS to AKS.
-      - dependency-name: "redis"
-        update-types: ["version-update:semver-major"]
     groups:
       gem-dependencies:
         update-types:
