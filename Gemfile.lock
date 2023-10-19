@@ -463,10 +463,6 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
-    rails_semantic_logger (4.12.0)
-      rack
-      railties (>= 5.1)
-      semantic_logger (~> 4.13)
     railties (7.1.1)
       actionpack (= 7.1.1)
       activesupport (= 7.1.1)
@@ -568,8 +564,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    semantic_logger (4.14.0)
-      concurrent-ruby (~> 1.0)
     sentry-rails (5.12.0)
       railties (>= 5.0)
       sentry-ruby (~> 5.12.0)
@@ -762,7 +756,6 @@ DEPENDENCIES
   rack_session_access
   rails (~> 7.1.1)
   rails-controller-testing
-  rails_semantic_logger
   recaptcha
   redis
   rgeo-geojson
