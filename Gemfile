@@ -2,18 +2,11 @@ source "https://rubygems.org"
 
 ruby "3.2.2"
 
-RAILS_VERSION = "~> 7.0.3".freeze
-gem "actionmailer", RAILS_VERSION
-gem "actionpack", RAILS_VERSION
-gem "activejob", RAILS_VERSION
-gem "activemodel", RAILS_VERSION
-gem "activerecord", RAILS_VERSION
-gem "activestorage", RAILS_VERSION
-gem "activesupport", RAILS_VERSION
+RAILS_VERSION = "~> 7.1.1".freeze
+gem "rails", RAILS_VERSION
 gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "propshaft"
-gem "railties", RAILS_VERSION
 
 gem "activerecord-import"
 gem "activerecord-postgis-adapter"
