@@ -339,7 +339,7 @@ GEM
     net-smtp (0.4.0)
       net-protocol
     nio4r (2.5.9)
-    nokogiri (1.15.4-x86_64-darwin)
+    nokogiri (1.15.4)
       racc (~> 1.4)
     noticed (1.6.3)
       http (>= 4.0.0)
@@ -695,7 +695,7 @@ GEM
       multipart-post (~> 2.0)
 
 PLATFORMS
-  x86_64-darwin-20
+  ruby
 
 DEPENDENCIES
   activerecord-import
