@@ -2,7 +2,7 @@ name: smoke-test action
 description: smoke test application
 
 inputs:
-  paas_environment:
+  aks_environment:
     description: Environment
     required: true
   event_name:
@@ -21,13 +21,13 @@ runs:
     - name: set environment (scheduled smoke test)
       shell: bash
       if: ${{ inputs.event_name == 'schedule' }}
-      run: echo "PAAS_ENVIRONMENT=production" >> $GITHUB_ENV
+      run: echo "AKS_ENVIRONMENT=production" >> $GITHUB_ENV
 
     - name: set environment
       shell: bash
       if: ${{ inputs.event_name != 'schedule' }}
       run: |
-        echo "PAAS_ENVIRONMENT=${{ inputs.paas_environment }}" >> $GITHUB_ENV
+        echo "AKS_ENVIRONMENT=${{ inputs.aks_environment }}" >> $GITHUB_ENV
 
     - name: Run deployment smoke test
       shell: bash
@@ -35,4 +35,4 @@ runs:
 
     - name: print environment
       shell: bash
-      run: echo ${{ env.PAAS_ENVIRONMENT}}
+      run: echo ${{ env.AKS_ENVIRONMENT}}

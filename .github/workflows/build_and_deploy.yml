@@ -262,7 +262,7 @@ jobs:
       id: smoke-test
       uses: ./.github/actions/smoke-test/
       with:
-        paas_environment: ${{ env.ENVIRONMENT }}
+        aks_environment: ${{ env.ENVIRONMENT }}
         event_name: ${{ github.event_name }}
 
     - name: Exit whole workflow if ${{ env.ENVIRONMENT }} smoke test was not successful
