@@ -37,7 +37,7 @@ jobs:
         echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
         echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
         echo "LINK_TO_PR=https://github.com/${GITHUB_REPOSITORY}/pull/${PR_NUMBER}" >> $GITHUB_ENV
-        echo "LINK_TO_APP=https://teaching-vacancies-${ENVIRONMENT}.london.cloudapps.digital" >> $GITHUB_ENV
+        echo "LINK_TO_APP=https://teaching-vacancies-${ENVIRONMENT}.test.teacherservices.cloud" >> $GITHUB_ENV
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -64,7 +64,7 @@ jobs:
 
     - name: check review status
       run: |
-        HTTP_CODE=$(curl -o/dev/null -s -w "%{http_code}" https://teaching-vacancies-review-pr-${{env.PR_NUMBER}}.london.cloudapps.digital)
+        HTTP_CODE=$(curl -o/dev/null -s -w "%{http_code}" https://teaching-vacancies-review-pr-${{env.PR_NUMBER}}.test.teacherservices.cloud)
         echo "HTTP_CODE=$HTTP_CODE"  >> $GITHUB_ENV
 
     - name: Exit whole workflow if wait was not successful and review app is not up

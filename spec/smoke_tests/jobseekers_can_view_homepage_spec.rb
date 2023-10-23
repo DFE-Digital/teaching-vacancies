@@ -2,7 +2,7 @@ require "capybara/rspec"
 require "i18n_helper"
 require "yaml"
 
-CLOUDAPPS_DOMAIN = "london.cloudapps.digital".freeze
+CLOUD_DOMAIN = "test.teacherservices.cloud".freeze
 
 RSpec.describe "Page availability", js: true, smoke_test: true do
   after do |example|
@@ -12,11 +12,11 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
 
   context "Jobseeker visits vacancy page" do
     let(:smoke_test_domain) do
-      paas_environment = ENV.fetch("PAAS_ENVIRONMENT")
+      aks_environment = ENV.fetch("AKS_ENVIRONMENT")
       begin
-        YAML.load_file("#{__dir__}/../../terraform/workspace-variables/#{paas_environment}_app_env.yml")["DOMAIN"]
+        YAML.load_file("#{__dir__}/../../terraform/workspace-variables/#{aks_environment}_app_env.yml")["DOMAIN"]
       rescue Errno::ENOENT
-        "teaching-vacancies-#{paas_environment}.#{CLOUDAPPS_DOMAIN}"
+        "teaching-vacancies-#{aks_environment}.#{CLOUD_DOMAIN}"
       end
     end
     let(:page) { Capybara::Session.new(:selenium_chrome_headless) }

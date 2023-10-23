@@ -11,6 +11,7 @@ variable "parameter_store_environment" {
   default = "dev"
 }
 
+
 variable "documents_s3_bucket_force_destroy" {
   default = false
 }

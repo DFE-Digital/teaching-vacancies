@@ -63,7 +63,6 @@ variable "aks_web_app_start_command" {
   default = ["/bin/sh", "-c", "bundle exec rake db:migrate:ignore_concurrent_migration_exceptions && rails s"]
 }
 
-
 # Statuscake
 variable "statuscake_alerts" {
   description = "Define Statuscake alerts with the attributes below"

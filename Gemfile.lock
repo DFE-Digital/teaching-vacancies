@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: efcd939fecbc64574a3e1d5d5efef7e14b65f39f
-  tag: v1.11.0
+  revision: 3ff7fa4f30a1250ac36a36d37c1f88087a3a0096
+  tag: v1.11.1
   specs:
-    dfe-analytics (1.11.0)
+    dfe-analytics (1.11.1)
       google-cloud-bigquery (~> 1.38)
       request_store_rails (~> 2)
 
@@ -96,8 +96,8 @@ GEM
     ast (2.4.2)
     attr_required (1.0.1)
     aws-eventstream (1.2.0)
-    aws-partitions (1.830.0)
-    aws-sdk-core (3.184.0)
+    aws-partitions (1.839.0)
+    aws-sdk-core (3.185.1)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.5)
@@ -109,7 +109,7 @@ GEM
       aws-sdk-core (~> 3, >= 3.181.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.6)
-    aws-sdk-ssm (1.158.0)
+    aws-sdk-ssm (1.159.0)
       aws-sdk-core (~> 3, >= 3.184.0)
       aws-sigv4 (~> 1.1)
     aws-sigv4 (1.6.0)
@@ -361,7 +361,7 @@ GEM
     os (1.1.4)
     pagy (5.10.1)
       activesupport
-    paper_trail (15.0.0)
+    paper_trail (15.1.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
     paper_trail-globalid (0.2.0)

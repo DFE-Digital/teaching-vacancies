@@ -11,3 +11,4 @@ data "aws_ssm_parameter" "app_env_api_key_google" {
 data "aws_ssm_parameter" "app_env_secrets" {
   name = "/${var.service_name}/${var.parameter_store_environment}/app/secrets"
 }
+
