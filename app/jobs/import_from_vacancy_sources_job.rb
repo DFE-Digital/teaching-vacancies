@@ -5,6 +5,7 @@ class ImportFromVacancySourcesJob < ApplicationJob
     VacancySource::Source::Fusion,
     VacancySource::Source::MyNewTerm,
     VacancySource::Source::UnitedLearning,
+    VacancySource::Source::VacancyPoster,
     VacancySource::Source::Ventrus,
   ].freeze
 
