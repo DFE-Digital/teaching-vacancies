@@ -79,8 +79,8 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     it "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)
-
-      click_on I18n.t("buttons.add_another_break")
+      expect(page).to have_content "You have a break in your work history (4 months)"
+      click_on I18n.t("buttons.add_reason_for_break")
 
       expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_1i", with: "2021")
       expect(page).to have_field("jobseekers_job_application_details_break_form_started_on_2i", with: "2")
