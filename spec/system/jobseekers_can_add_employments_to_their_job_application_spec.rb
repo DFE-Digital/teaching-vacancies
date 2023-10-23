@@ -65,7 +65,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     oldest_job = find("h3", text: "Oldest job").path
     middle_job = find("h3", text: "Old job").path
     newest_job = find("h3", text: "The Best Teacher").path
-  
+
     expect(newest_job).to be < middle_job
     expect(newest_job).to be < oldest_job
     expect(middle_job).to be < oldest_job

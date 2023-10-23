@@ -12,7 +12,7 @@
     p.govuk-body = t(".description2")
 
     - if employments.any?
-      - employments.reverse.each_with_index do |employment, index|
+      - employments.reverse_each do |employment|
         - if employment.job?
           = render DetailComponent.new title: employment.job_title do |detail|
             - detail.with_body do
