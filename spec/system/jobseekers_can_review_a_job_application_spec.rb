@@ -40,6 +40,8 @@ RSpec.describe "Jobseekers can review a job application" do
         expect(page).to have_content(employment.current_role.humanize)
         expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year))
       end
+
+      expect_work_history_to_be_ordered_most_recent_first
     end
 
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.employment_history.heading") do
@@ -87,5 +89,13 @@ RSpec.describe "Jobseekers can review a job application" do
       expect(page).to have_content(job_application.close_relationships_details)
       expect(page).to have_content(job_application.right_to_work_in_uk.humanize)
     end
+  end
+
+  def expect_work_history_to_be_ordered_most_recent_first
+    start_dates = all(".govuk-summary-list__row dt", text: "Start date").map { |dt| dt.find("+ dd").text }
+      
+    parsed_dates = start_dates.map { |date| Date.strptime(date, "%B %Y") }
+
+    expect(parsed_dates).to eq parsed_dates.sort.reverse
   end
 end

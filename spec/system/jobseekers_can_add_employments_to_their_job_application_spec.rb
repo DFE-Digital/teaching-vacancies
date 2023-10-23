@@ -40,6 +40,37 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     expect(page).to have_content(Date.new(2020, 0o7, 1).to_formatted_s(:month_year))
   end
 
+  it "displays employment history from newest to oldest job" do
+    visit jobseekers_job_application_build_path(job_application, :employment_history)
+
+    click_on I18n.t("buttons.add_job")
+    validates_step_complete(button: I18n.t("buttons.save_employment"))
+
+    fill_in_employment_history(job_title: "Old job")
+
+    click_on I18n.t("buttons.save_employment")
+
+    all(:link, "Add another job").first.click
+
+    fill_in_employment_history(job_title: "Oldest job", start_month: "09", start_year: "2015", end_month: "06", end_year: "2019")
+
+    click_on I18n.t("buttons.save_employment")
+
+    all(:link, "Add another job").first.click
+
+    fill_in_current_role
+
+    click_on I18n.t("buttons.save_employment")
+
+    oldest_job = find("h3", text: "Oldest job").path
+    middle_job = find("h3", text: "Old job").path
+    newest_job = find("h3", text: "The Best Teacher").path
+  
+    expect(newest_job).to be < middle_job
+    expect(newest_job).to be < oldest_job
+    expect(middle_job).to be < oldest_job
+  end
+
   context "managing employment history gaps" do
     before do
       create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))

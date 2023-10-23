@@ -13,6 +13,8 @@ RSpec.describe "Publishers can view a job application" do
   it "shows the timeline" do
     visit organisation_job_job_application_path(vacancy.id, job_application)
 
+    expect_work_history_to_be_ordered_most_recent_first
+
     click_on I18n.t("buttons.shortlist")
     fill_in "publishers_job_application_update_status_form[further_instructions]", with: "Some further instructions"
     click_on I18n.t("buttons.shortlist")
@@ -98,5 +100,13 @@ RSpec.describe "Publishers can view a job application" do
         expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
       end
     end
+  end
+
+  def expect_work_history_to_be_ordered_most_recent_first
+    start_dates = all(".govuk-summary-list__row dt", text: "Start date").map { |dt| dt.find("+ dd").text }
+      
+    parsed_dates = start_dates.map { |date| Date.strptime(date, "%B %Y") }
+
+    expect(parsed_dates).to eq parsed_dates.sort.reverse
   end
 end
