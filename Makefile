@@ -44,13 +44,6 @@ local: ## local # Same values as the deployed dev environment, adapted for local
 		$(eval local_override=-d file:terraform/workspace-variables/local_app_env.yml -d file:terraform/workspace-variables/my_app_env.yml)
 		$(eval local_filter=| sed -e '/APP_ROLE=/d' -e '/RAILS_ENV=/d')
 
-.PHONY: dev
-dev: test-cluster ## dev
-		$(eval env=dev)
-		$(eval space=teaching-vacancies-dev)
-		$(eval var_file=$(env))
-		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
-
 bin/terrafile: ## Install terrafile to manage terraform modules
 	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
 		| tar xz -C ./bin terrafile
@@ -94,14 +87,6 @@ qa: test-cluster ## qa
 		$(eval include global_config/qa.sh)
 		$(eval azure_namespace=$(shell jq '.namespace' terraform/workspace-variables/$(var_file).tfvars.json))
 
-.PHONY: sandbox
-sandbox: ## sandbox
-		$(eval env=sandbox)
-		$(eval space=teaching-vacancies-production)
-		$(eval var_file=$(env))
-		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
-		$(eval include global_config/sandbox.sh)
-
 ##@ Docker - build, tag, and push an image from local code. Requires Docker CLI
 
 .PHONY: build-local-image
@@ -136,12 +121,9 @@ deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPassco
 .PHONY: check-terraform-variables
 check-terraform-variables:
 		$(if $(tag), , $(eval export tag=main))
-		$(eval export TF_VAR_paas_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
-		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+
 
 ci:	## Run in automation environment
-	$(eval export disable_passcode=true)
 	$(eval export AUTO_APPROVE=-auto-approve)
 	$(eval export SKIP_AZURE_LOGIN=true)
 
@@ -185,8 +167,6 @@ terraform-common-apply: terraform-common-init ## make terraform-common-apply
 
 .PHONY: terraform-monitoring-init
 terraform-monitoring-init:
-		$(if $(passcode), , $(error Missing environment variable "passcode"))
-		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		terraform -chdir=terraform/monitoring init -upgrade=true -reconfigure -input=false
 
 .PHONY: terraform-monitoring-plan
@@ -204,10 +184,6 @@ bin/konduit.sh:
 		&& chmod +x bin/konduit.sh
 
 ##@ rails console. Ability to rail console to apps on PaaS
-
-console: ## make qa console
-	cf target -s ${space}
-	cf ssh teaching-vacancies-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
 
 composed-variables:
 	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)

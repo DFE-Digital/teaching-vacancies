@@ -7,15 +7,6 @@ variable "app_docker_image" {
 variable "app_env_values" {
 }
 
-variable "docker_username" {
-}
-
-variable "docker_password" {
-}
-
-variable "logging_url" {
-}
-
 variable "parameter_store_environment" {
   default = "dev"
 }
@@ -31,23 +22,23 @@ variable "schools_images_logos_s3_bucket_force_destroy" {
 
 variable "service_name" {
 }
+
 variable "service_abbreviation" {
-}
-variable "space_name" {
 }
 
 variable "aks_web_app_instances" {
   default = 1
 }
+
 variable "aks_web_app_start_command" {
 }
+
 variable "aks_worker_app_instances" {
 }
+
 variable "aks_worker_app_memory" {
 }
-variable "route53_zones" {
-  type = list(any)
-}
+
 variable "web_external_hostnames_aks" {
   type = list(string)
 }

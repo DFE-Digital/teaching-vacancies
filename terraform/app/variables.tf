@@ -48,7 +48,7 @@ variable "schools_images_logos_s3_bucket_force_destroy" {
 
 # Gov.UK PaaS
 
-variable "paas_app_docker_image" {
+variable "app_docker_image" {
   default = "ghcr.io/dfe-digital/teaching-vacancies:placeholder"
 }
 variable "app_environment" {
@@ -59,22 +59,8 @@ variable "parameter_store_environment" {
   default = "dev"
 }
 
-variable "paas_space_name" {
-}
-
-variable "paas_sso_passcode" {
-  default = ""
-}
-
-variable "paas_web_app_deployment_strategy" {
-  default = "blue-green-v2"
-}
 variable "aks_web_app_start_command" {
   default = ["/bin/sh", "-c", "bundle exec rake db:migrate:ignore_concurrent_migration_exceptions && rails s"]
-}
-
-variable "paas_worker_app_memory" {
-  default = 1024
 }
 
 # Statuscake
@@ -172,7 +158,7 @@ variable "aks_route53_cname_record" {
 
 locals {
   paas_api_url               = "https://api.london.cloud.service.gov.uk"
-  paas_app_env_values        = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
+  app_env_values             = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets              = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
   is_production              = var.environment == "production"
   web_external_hostnames_aks = concat([for zone in var.route53_zones : "${var.aks_route53_cname_record}.${zone}"], var.aks_route53_a_records)
