@@ -55,7 +55,7 @@ class Jobseekers::JobApplications::EmploymentGapFinder
   def gap_end_date(employment)
     return unless (next_start = next_employment_start(employment))
 
-    next_start - 1.day
+    next_start
   end
 
   def adjusted_end_date(employment)
