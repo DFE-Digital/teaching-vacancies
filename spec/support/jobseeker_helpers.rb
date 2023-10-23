@@ -144,4 +144,12 @@ module JobseekerHelpers
     choose "No", name: "jobseekers_qualifications_other_form[finished_studying]"
     fill_in "Please give details", with: "I expect to finish next year"
   end
+
+  def expect_work_history_to_be_ordered_most_recent_first
+    start_dates = all(".govuk-summary-list__row dt", text: "Start date").map { |dt| dt.find("+ dd").text }
+
+    parsed_dates = start_dates.map { |date| Date.strptime(date, "%B %Y") }
+
+    expect(parsed_dates).to eq parsed_dates.sort.reverse
+  end
 end

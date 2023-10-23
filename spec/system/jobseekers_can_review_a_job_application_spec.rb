@@ -90,12 +90,4 @@ RSpec.describe "Jobseekers can review a job application" do
       expect(page).to have_content(job_application.right_to_work_in_uk.humanize)
     end
   end
-
-  def expect_work_history_to_be_ordered_most_recent_first
-    start_dates = all(".govuk-summary-list__row dt", text: "Start date").map { |dt| dt.find("+ dd").text }
-      
-    parsed_dates = start_dates.map { |date| Date.strptime(date, "%B %Y") }
-
-    expect(parsed_dates).to eq parsed_dates.sort.reverse
-  end
 end
