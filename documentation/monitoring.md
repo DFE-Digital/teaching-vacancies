@@ -47,11 +47,16 @@ The stack is comprised of 4 apps in the Gov.UK `teaching-vacancies-monitoring` s
 
 - [Uptime check including test history](https://app.statuscake.com/UptimeStatus.php?tid=5636370) against `https://teaching-vacancies.service.gov.uk/check`
 
-### PaaS
+### AKS
 
-- [Check the Gov.UK PaaS `teaching-vacancies-production` space](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e/spaces/ebce88e9-8d3e-424b-8da3-c8dc0072b900/applications)
+- Check the Teaching Vacancies `s189-teacher-services-cloud-production` [subscription resources](https://portal.azure.com/)
 
-### Logit
+### Logs
+
+- Azure logs can be accessed/queried from the Azure Long resources `s189p01-tv-pd-rg` under `s189-teacher-services-cloud-production` subscription.
+
+
+**Outdated:** For the moment, AKS logs are not sent to Logit. There are plans to change this in the future.
 
 PaaS logs are drained to logit. There are customised alerts on Logit, which monitors and alerts on various events.
 
@@ -61,4 +66,4 @@ PaaS logs are drained to logit. There are customised alerts on Logit, which moni
 ### Billing
 
 - [Billing & Cost Management Dashboard](https://console.aws.amazon.com/billing/home#/) for which you'll need to first assume the AWS role [Billing Manager](https://console.aws.amazon.com/iam/home?region=eu-west-2#/roles/BillingManager)
-- [PaaS statements](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e/statements) for which you'll need to be added to the Billing Role by `#digital-tools-support`
+- [Hosting Billing](https://portal.azure.com/?feature.msaljs=true#view/Microsoft_Azure_Billing/SubscriptionsBladeV1) accessed through the DFE Platform Identity subscriptions in Azure.

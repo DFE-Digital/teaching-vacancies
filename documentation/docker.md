@@ -15,7 +15,7 @@ It's worth a quick reminder that Containers are created from Images. [Docker's o
 > First of all, you can name a stage that starts with a `FROM` command with `AS stagename` and use `--from=stagename` option in a `COPY` command to copy files from that stage.
 - Images created from the `builder` stage are ~357 MB in size
 - Images created from the `production` stage are ~83 MB in size
-- The (Docker) production _stage_ should not be confused with the (Gov.UK PaaS) production _environment_
+- The (Docker) production _stage_ should not be confused with the (AKS) production _environment_
 
 For both stages, we:
 
@@ -136,12 +136,12 @@ build-local-image:
 - Tag it with `TAG`
 - Push the image to the Docker Hub repository, with both tags
 
-## Run a Docker container on Gov.UK PaaS
+## Run a Docker container on Azure AKS
 
-The GitHub Action workflow [deploy.yml](../.github/workflows/deploy.yml):
+The GitHub Action workflow [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml):
 - builds and tags a Docker image
 - pushes the Docker image to the Docker Hub repository
-- sets the Terraform variable `paas_app_docker_image` to the image tag
+- sets the Terraform variable `app_docker_image` to the image tag
 - uses `terraform apply` to update the `staging` environment to use a container based off the tagged image
 - runs a smoke test to check the recent update has not broken the `staging` environment
 - uses `terraform apply` to update the `production` environment to use a container based off the tagged image
@@ -285,4 +285,4 @@ To view the docker images stored on GitHub's container registry, you need to go 
 
 ### Docker image scan
 
-As part of the CI/CD, we conduct a Docker security scan using `snyk`, by invoking Snyk's docker image: `snyk/snyk-cli:docker`. This allows us a deep image inspection and vulnerability scan. When a vulnerability is detected while scanning, this breaks breaks CI/CD build. The vulnerability detected by `snyk`would need to be fixed before a successfully build can be completed. In order to limit-rate our scans, `snyk` scan is only invoked when a commit is merged to the `main` branch.
+As part of the CI/CD, we conduct a Docker security scan using `snyk`, by invoking Snyk's docker image: `snyk/snyk-cli:docker`. This allows us a deep image inspection and vulnerability scan. When a vulnerability is detected while scanning, this breaks breaks CI/CD build. The vulnerability detected by `snyk`would need to be fixed before a successfully build can be completed.

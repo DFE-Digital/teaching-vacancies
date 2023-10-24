@@ -1,4 +1,5 @@
 # Infrastructure diagrams
+## [Outdated] Diagrams are not visible anymore. Need to regenerate them.
 
 ## CI/CD deployment pipeline
 

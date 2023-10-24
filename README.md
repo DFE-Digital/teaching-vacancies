@@ -69,7 +69,6 @@ bar, using the VS Code "Run task" option, or the Rails convention `bin/dev` scri
 * [Onboarding](/documentation/onboarding.md)
 * [Search](/documentation/search.md)
 * [Disaster Recovery](/documentation/disaster-recovery.md)
-* [Azure Kubernetes Service (AKS)](/documentation/aks.md)
 
 ---
 

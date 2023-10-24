@@ -33,14 +33,15 @@ Plus
 
 The new developer will be added to [teaching-vacancies-developers](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies-developers)
 
-## GOV.UK PaaS
+## DFE Azure Platform Identity
 
-`#digital-tools-support` will add the new developer to the [dfe organisation](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e) inside the following spaces:
+You will need to request a Azure CID through the [Service Portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=51b0b9c5db1ff7809402e1aa4b96197d&referrer=recent_items) following [these instructions](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/#onboarding-users).
 
-* teaching-vacancies-dev
-* teaching-vacancies-staging
-* teaching-vacancies-monitoring
-* teaching-vacancies-review
+Once having access, contact the Teacher Services Infrastructure team and request access to the following s189 subscriptions:
+
+* s189-teacher-services-cloud-development
+* s189-teacher-services-cloud-test
+* s189-teacher-services-cloud-production
 
 ## Sentry
 

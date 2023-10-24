@@ -1,5 +1,7 @@
 # PostgreSQL Database Backups
 
+**[OUTDATED] This document is outdated  since we no longer use Gov.UK PaaS hosting. It needs to be updated with the Azure AKS process once we get the information.**
+
 ## Gov.UK PaaS automated backups
 
 From the [Gov.UK PaaS PostgreSQL page](https://docs.cloud.service.gov.uk/deploying_services/postgresql/):
