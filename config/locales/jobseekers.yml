@@ -276,7 +276,7 @@ en:
       about_your_application:
         title: About your application
         warning:
-          text: This role cannot offer a sponsorship visa.
+          text: This role cannot offer sponsorship visa.
           paragraph_1: It is unlikely you will be considered for this job as it is not offering skilled worker visa sponsorship to non-UK citizens.
           paragraph_2:
             text: Learn more about %{link}
