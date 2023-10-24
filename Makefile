@@ -126,6 +126,7 @@ check-terraform-variables:
 		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 
 
+
 ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
 	$(eval export SKIP_AZURE_LOGIN=true)
