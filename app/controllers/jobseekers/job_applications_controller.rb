@@ -27,7 +27,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   # rubocop:disable Style/GuardClause
   def about_your_application
-    if profile.nil? || profile&.personal_details&.right_to_work_in_uk?
+    if profile.nil? || profile&.personal_details&.right_to_work_in_uk? || vacancy.visa_sponsorship_available?
       redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
     end
   end
