@@ -48,7 +48,7 @@ variable "schools_images_logos_s3_bucket_force_destroy" {
 
 # Gov.UK PaaS
 
-variable "app_docker_image" {
+variable "paas_app_docker_image" {
   default = "ghcr.io/dfe-digital/teaching-vacancies:placeholder"
 }
 variable "app_environment" {
@@ -62,7 +62,9 @@ variable "parameter_store_environment" {
 variable "aks_web_app_start_command" {
   default = ["/bin/sh", "-c", "bundle exec rake db:migrate:ignore_concurrent_migration_exceptions && rails s"]
 }
-
+variable "paas_sso_passcode" {
+  default = ""
+}
 # Statuscake
 variable "statuscake_alerts" {
   description = "Define Statuscake alerts with the attributes below"

@@ -121,7 +121,10 @@ deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPassco
 .PHONY: check-terraform-variables
 check-terraform-variables:
 		$(if $(tag), , $(eval export tag=main))
-		$(eval export TF_VAR_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
+		$(eval export TF_VAR_paas_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
+		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
+		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+
 
 
 ci:	## Run in automation environment
@@ -168,6 +171,8 @@ terraform-common-apply: terraform-common-init ## make terraform-common-apply
 
 .PHONY: terraform-monitoring-init
 terraform-monitoring-init:
+		$(if $(passcode), , $(error Missing environment variable "passcode"))
+		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
 		terraform -chdir=terraform/monitoring init -upgrade=true -reconfigure -input=false
 
 .PHONY: terraform-monitoring-plan
