@@ -122,8 +122,7 @@ deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPassco
 check-terraform-variables:
 		$(if $(tag), , $(eval export tag=main))
 		$(eval export TF_VAR_paas_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
-		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+
 
 
 
