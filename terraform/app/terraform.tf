@@ -8,6 +8,14 @@ For SSO authentication
 */
 
 
+provider "cloudfoundry" {
+  store_tokens_path = "./tokens"
+  api_url           = local.paas_api_url
+  user              = var.paas_sso_passcode == "" ? local.infra_secrets.cf_username : null
+  password          = var.paas_sso_passcode == "" ? local.infra_secrets.cf_password : null
+  sso_passcode      = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
+}
+
 provider "statuscake" {
   api_token = local.infra_secrets.statuscake_apikey
 }
@@ -57,7 +65,7 @@ module "cloudwatch" {
 module "paas" {
   source                                       = "./modules/paas"
   environment                                  = var.environment
-  app_docker_image                             = var.app_docker_image
+  app_docker_image                             = var.paas_app_docker_image
   app_env_values                               = local.app_env_values
   parameter_store_environment                  = var.parameter_store_environment
   service_name                                 = local.service_name
