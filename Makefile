@@ -121,6 +121,7 @@ deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPassco
 .PHONY: check-terraform-variables
 check-terraform-variables:
 		$(if $(tag), , $(eval export tag=main))
+		$(eval export TF_VAR_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
 
 
 ci:	## Run in automation environment
