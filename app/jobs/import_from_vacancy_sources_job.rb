@@ -1,5 +1,6 @@
 class ImportFromVacancySourcesJob < ApplicationJob
   SOURCES = [
+    VacancySource::Source::Ark,
     VacancySource::Source::Broadbean,
     VacancySource::Source::Every,
     VacancySource::Source::Fusion,
