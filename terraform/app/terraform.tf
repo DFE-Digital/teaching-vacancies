@@ -65,7 +65,7 @@ module "cloudwatch" {
 module "paas" {
   source                                       = "./modules/paas"
   environment                                  = var.environment
-  app_docker_image                             = var.paas_app_docker_image
+  app_docker_image                             = var.app_docker_image
   app_env_values                               = local.app_env_values
   parameter_store_environment                  = var.parameter_store_environment
   service_name                                 = local.service_name

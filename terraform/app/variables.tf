@@ -48,7 +48,7 @@ variable "schools_images_logos_s3_bucket_force_destroy" {
 
 # Gov.UK PaaS
 
-variable "paas_app_docker_image" {
+variable "app_docker_image" {
   default = "ghcr.io/dfe-digital/teaching-vacancies:placeholder"
 }
 variable "app_environment" {
