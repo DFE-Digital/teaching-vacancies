@@ -49,15 +49,15 @@ module JobseekerHelpers
     fill_in "Please give details", with: "Some details of the relationship"
   end
 
-  def fill_in_employment_history
+  def fill_in_employment_history(job_title: "The Best Teacher", start_month: "09", start_year: "2019", end_month: "07", end_year: "2020")
     fill_in "School or other organisation", with: "The Best School"
-    fill_in "Job title", with: "The Best Teacher"
+    fill_in "Job title", with: job_title
     fill_in "Main duties", with: "Some details about what the main duties were"
-    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: "2019"
-    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: "09"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: start_year
+    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: start_month
     choose "No", name: "jobseekers_job_application_details_employment_form[current_role]"
-    fill_in "jobseekers_job_application_details_employment_form[ended_on(1i)]", with: "2020"
-    fill_in "jobseekers_job_application_details_employment_form[ended_on(2i)]", with: "07"
+    fill_in "jobseekers_job_application_details_employment_form[ended_on(1i)]", with: end_year
+    fill_in "jobseekers_job_application_details_employment_form[ended_on(2i)]", with: end_month
   end
 
   def fill_in_break_in_employment
@@ -143,5 +143,13 @@ module JobseekerHelpers
     fill_in "School, college, university or other organisation", with: "Teachers Academy"
     choose "No", name: "jobseekers_qualifications_other_form[finished_studying]"
     fill_in "Please give details", with: "I expect to finish next year"
+  end
+
+  def expect_work_history_to_be_ordered_most_recent_first
+    start_dates = all(".govuk-summary-list__row dt", text: "Start date").map { |dt| dt.find("+ dd").text }
+
+    parsed_dates = start_dates.map { |date| Date.strptime(date, "%B %Y") }
+
+    expect(parsed_dates).to eq parsed_dates.sort.reverse
   end
 end

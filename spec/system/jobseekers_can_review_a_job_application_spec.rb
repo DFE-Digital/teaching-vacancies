@@ -40,6 +40,8 @@ RSpec.describe "Jobseekers can review a job application" do
         expect(page).to have_content(employment.current_role.humanize)
         expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year))
       end
+
+      expect_work_history_to_be_ordered_most_recent_first
     end
 
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.employment_history.heading") do

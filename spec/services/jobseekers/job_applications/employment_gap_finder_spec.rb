@@ -98,7 +98,7 @@ RSpec.describe Jobseekers::JobApplications::EmploymentGapFinder do
         expect(gaps).to eq(
           employments.first => {
             started_on: employments.first.ended_on + 1.day,
-            ended_on: employments.second.started_on - 1.day,
+            ended_on: employments.second.started_on,
           },
         )
       end
@@ -171,7 +171,7 @@ RSpec.describe Jobseekers::JobApplications::EmploymentGapFinder do
         expect(gaps).to eq(
           employments.first => {
             started_on: employments.first.ended_on + 1.day,
-            ended_on: employments.second.started_on - 1.day,
+            ended_on: employments.second.started_on,
           },
           employments.second => {
             started_on: employments.second.ended_on + 1.day,

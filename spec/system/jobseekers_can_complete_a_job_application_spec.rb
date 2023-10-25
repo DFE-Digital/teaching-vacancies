@@ -43,7 +43,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     expect(page).to have_content("There is a problem")
     fill_in_employment_history
     click_on I18n.t("buttons.save_employment")
-    click_on I18n.t("buttons.add_another_break")
+    click_on I18n.t("buttons.add_reason_for_break")
     fill_in_break_in_employment
     click_on I18n.t("buttons.continue")
     choose I18n.t("helpers.label.jobseekers_job_application_employment_history_form.employment_history_section_completed_options.true")

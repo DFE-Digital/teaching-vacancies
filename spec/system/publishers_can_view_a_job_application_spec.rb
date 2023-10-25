@@ -13,6 +13,8 @@ RSpec.describe "Publishers can view a job application" do
   it "shows the timeline" do
     visit organisation_job_job_application_path(vacancy.id, job_application)
 
+    expect_work_history_to_be_ordered_most_recent_first
+
     click_on I18n.t("buttons.shortlist")
     fill_in "publishers_job_application_update_status_form[further_instructions]", with: "Some further instructions"
     click_on I18n.t("buttons.shortlist")

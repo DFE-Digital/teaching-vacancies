@@ -44,7 +44,7 @@ dl.govuk-summary-list
 
 - if profile.employments.any?
   h2.govuk-heading-m = t(".work_history")
-  - profile.employments.order(:started_on).each do |employment|
+  - profile.employments.order(:started_on).reverse_each do |employment|
     h3.govuk-heading-s class="govuk-!-padding-bottom-3"
       = employment.organisation
       p class="govuk-!-margin-bottom-0" = employment.job_title
