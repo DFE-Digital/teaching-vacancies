@@ -1,7 +1,8 @@
-# TODO: Remove procps-ng and libwebp from this list once we upgrade to alpine > v3.18
-# The packages are defined here with a hardcoded version to resolve a vulnerability in the procps-ng, libwebpand cups
-# packages coming with Alpine v3.18.
-ARG PROD_PACKAGES="imagemagick libxml2 libxslt libpq tzdata shared-mime-info procps-ng=4.0.4-r0 libwebp=1.3.2-r0 cups=2.4.7-r0"
+ # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with 
+ # Alpine v3.18.
+ # TODO: Regularly check in the alpine ruby "3.2.2-alpine3.18" images for its latest upgraded packages so we can remove
+ # the hardcoded versions below when they have been updated in the alpine ruby image.
+ARG PROD_PACKAGES="imagemagick libxml2 libxslt libpq tzdata shared-mime-info libwebp=1.3.2-r0 openssl=3.1.4-r0"
 
 FROM ruby:3.2.2-alpine3.18 AS builder
 
