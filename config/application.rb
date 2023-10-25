@@ -69,8 +69,8 @@ module TeachingVacancies
     else
       redis_url = ENV.fetch("REDIS_URL", "redis://localhost:6379")
 
-      config.redis_queue_url = "#{redis_url}/0"
-      config.redis_cache_url = "#{redis_url}/1"
+      config.redis_queue_url = redis_url
+      config.redis_cache_url = redis_url.gsub(/0$/, "1")
     end
 
     config.app_role = ActiveSupport::StringInquirer.new(ENV.fetch("APP_ROLE", "unknown"))
