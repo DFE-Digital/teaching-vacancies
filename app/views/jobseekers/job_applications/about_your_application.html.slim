@@ -1,0 +1,13 @@
+- content_for :page_title_prefix, t(".title")
+
+span.govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
+h2.govuk-heading-xl = t("jobseekers.job_applications.about_your_application.title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_warning_text(text: t("jobseekers.job_applications.about_your_application.warning.text"))
+    p.govuk-body = t("jobseekers.job_applications.about_your_application.warning.paragraph_1")
+    p.govuk-body = t("jobseekers.job_applications.about_your_application.warning.paragraph_2.text", link: govuk_link_to(t("jobseekers.job_applications.about_your_application.warning.paragraph_2.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe
+    .govuk-button-group
+      = link_to t("jobseekers.job_applications.about_your_application.warning.search_for_jobs"), jobs_path, class: "govuk-button govuk-button"
+      = link_to t("jobseekers.job_applications.about_your_application.warning.continue"), new_quick_apply_jobseekers_job_job_application_path(vacancy.id), class: "govuk-button govuk-button--secondary"

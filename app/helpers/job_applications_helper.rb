@@ -109,4 +109,18 @@ module JobApplicationsHelper
   def job_application_step_in_progress?(job_application, step)
     job_application.in_progress_steps.include?(step.to_s)
   end
+
+  def radio_button_legend_hint
+    if vacancy.visa_sponsorship_available?
+      {
+        text: "jobseekers.profiles.personal_details.work.hint.text",
+        link: "jobseekers.profiles.personal_details.work.hint.link",
+      }
+    else
+      {
+        text: "jobseekers.profiles.personal_details.work.hint.no_visa.text",
+        link: "jobseekers.profiles.personal_details.work.hint.no_visa.link",
+      }
+    end
+  end
 end

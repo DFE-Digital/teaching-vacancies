@@ -77,7 +77,7 @@ module VacancyHelpers
     fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: vacancy.expires_at.month
     fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: vacancy.expires_at.year
 
-    choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
+    choose "3pm", name: "publishers_job_listing_important_dates_form[expiry_time]"
   end
 
   def fill_in_start_date_form_fields(vacancy)

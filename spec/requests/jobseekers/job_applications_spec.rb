@@ -42,13 +42,28 @@ RSpec.describe "Job applications" do
           end
         end
 
-        context "when a non-draft job application already exists" do
-          let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        context "when a non-draft job application already exists and the user does not have right to work in UK" do
+          let(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+          let!(:personal_details) { create(:personal_details, right_to_work_in_uk: false, jobseeker_profile: jobseeker_profile) }
+          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
           let(:new_vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
-          it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
-            expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
+          context "when the user has the right to work in UK" do
+            let!(:personal_details) { create(:personal_details, right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
+
+            it "redirects to `about_your_application_jobseekers_job_job_application_path`" do
+              expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
+              .to redirect_to(about_your_application_jobseekers_job_job_application_path(new_vacancy.id))
+            end
+          end
+
+          context "when the user has right to work in UK" do
+            let!(:personal_details) { create(:personal_details, right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
+
+            it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
+              expect(get(about_your_application_jobseekers_job_job_application_path(new_vacancy.id)))
               .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(new_vacancy.id))
+            end
           end
         end
 
