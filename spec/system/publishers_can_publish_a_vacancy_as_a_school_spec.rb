@@ -261,7 +261,7 @@ RSpec.describe "Creating a vacancy" do
         fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: expiry_date.day
         fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: expiry_date.month
         fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: expiry_date.year
-        choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
+        choose "8am", name: "publishers_job_listing_important_dates_form[expiry_time]"
 
         click_on I18n.t("buttons.save_and_continue")
 
