@@ -45,9 +45,9 @@ RSpec.describe "Jobseekers can unlock their account" do
           delivered_emails.count
         }.by(1)
 
-        confirm_email_address
-
-        click_button "Confirm"
+        visit first_link_from_last_mail
+        expect(page).to have_css("h1", text: I18n.t("jobseekers.unlocks.show.title"))
+        click_button I18n.t("jobseekers.unlocks.show.confirm")
 
         expect(jobseeker.reload).not_to be_access_locked
 

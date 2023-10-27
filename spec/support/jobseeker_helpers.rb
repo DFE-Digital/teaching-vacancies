@@ -1,6 +1,8 @@
 module JobseekerHelpers
   def confirm_email_address
     visit first_link_from_last_mail
+    expect(page).to have_css("h1", text: I18n.t("jobseekers.confirmations.show.title"))
+    click_on I18n.t("jobseekers.confirmations.show.confirm")
   end
 
   def sign_up_jobseeker(email: jobseeker.email, password: jobseeker.password)
