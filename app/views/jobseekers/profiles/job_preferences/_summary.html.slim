@@ -42,7 +42,7 @@ ruby:
         value = value.join(options[:join_with].html_safe).html_safe
       end
 
-      summary_list.row do |row|
+      summary_list.with_row do |row|
         row.with_key text: t(".#{attribute}", count:)
         row.with_value text: value.presence || options[:blank]
         row.with_action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name))

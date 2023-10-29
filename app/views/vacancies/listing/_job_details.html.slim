@@ -2,62 +2,62 @@ section#job-details class="govuk-!-margin-bottom-5"
   h2.govuk-heading-l.heading--border-bottom = t("vacancies.show.job_details")
 
   = govuk_summary_list actions: false do |summary_list|
-    - summary_list.row do |row|
-      - row.key do
+    - summary_list.with_row do |row|
+      - row.with_key do
         h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.job_role")
-      - row.value text: linked_job_roles_and_ect_status(vacancy)
+      - row.with_value text: linked_job_roles_and_ect_status(vacancy)
 
-    - summary_list.row do |row|
-      - row.key do
+    - summary_list.with_row do |row|
+      - row.with_key do
         h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.visa_sponsorship_row_title")
-      - row.value text: t("jobs.visa_sponsorship_#{vacancy.visa_sponsorship_available ? 'available' : 'unavailable'}")
+      - row.with_value text: t("jobs.visa_sponsorship_#{vacancy.visa_sponsorship_available ? 'available' : 'unavailable'}")
 
     - if vacancy.allow_key_stages? && vacancy.key_stages.any?
-      - summary_list.row do |row|
-        - row.key do
+      - summary_list.with_row do |row|
+        - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.key_stage", count: vacancy.key_stages.count)
-        - row.value text: vacancy.readable_key_stages
+        - row.with_value text: vacancy.readable_key_stages
 
     - if vacancy.allow_subjects? && vacancy.subjects&.any?
-      - summary_list.row do |row|
-        - row.key do
+      - summary_list.with_row do |row|
+        - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.subjects", count: vacancy.subjects.count)
-        - row.value text: linked_subjects(vacancy)
+        - row.with_value text: linked_subjects(vacancy)
 
-    - summary_list.row do |row|
-      - row.key do
+    - summary_list.with_row do |row|
+      - row.with_key do
         h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.working_patterns")
-      - row.value text: linked_working_patterns(vacancy)
+      - row.with_value text: linked_working_patterns(vacancy)
 
     - if vacancy.contract_type
-      - summary_list.row do |row|
-        - row.key do
+      - summary_list.with_row do |row|
+        - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.contract_type")
-        - row.value text: vacancy.contract_type_with_duration
+        - row.with_value text: vacancy.contract_type_with_duration
 
     - if vacancy.salary?
-      - summary_list.row do |row|
-        - row.key do
+      - summary_list.with_row do |row|
+        - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.annual_salary")
-        - row.value text: vacancy.salary
+        - row.with_value text: vacancy.salary
 
     - if vacancy.actual_salary?
-      - summary_list.row do |row|
-        - row.key do
+      - summary_list.with_row do |row|
+        - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.actual_salary")
-        - row.value text: vacancy.actual_salary
+        - row.with_value text: vacancy.actual_salary
 
     - if vacancy.pay_scale?
-      - summary_list.row do |row|
-        - row.key do
+      - summary_list.with_row do |row|
+        - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.pay_scale")
-        - row.value text: vacancy.pay_scale
+        - row.with_value text: vacancy.pay_scale
 
     - if vacancy.benefits_details.present?
-      - summary_list.row do |row|
-        - row.key do
+      - summary_list.with_row do |row|
+        - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.benefits_details")
-        - row.value text: vacancy.benefits_details
+        - row.with_value text: vacancy.benefits_details
 
   - if vacancy.skills_and_experience.present?
     h2.govuk-heading-m = t("jobs.skills_and_experience.jobseeker")

@@ -56,7 +56,7 @@ ruby:
         options: { heading_text: "Filter", remove_filter_links: true },
         html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
         - if current_organisation.trust?
-          - filters_component.group key: "location", component: searchable_collection(collection: f.govuk_collection_check_boxes(:locations,
+          - filters_component.with_group key: "location", component: searchable_collection(collection: f.govuk_collection_check_boxes(:locations,
             f.object.school_options,
             :first, :last,
             small: true, legend: { text: t("publishers.jobseeker_profiles.filters.schools") }),

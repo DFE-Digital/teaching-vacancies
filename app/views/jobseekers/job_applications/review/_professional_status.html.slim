@@ -1,8 +1,8 @@
 - r.with_section :professional_status do |s|
-  - s.row do |row|
-    - row.key text: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status")
-    - row.value text: job_application_qualified_teacher_status_info(job_application)
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status")
+    - row.with_value text: job_application_qualified_teacher_status_info(job_application)
 
-  - s.row do |row|
-    - row.key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
-    - row.value text: job_application.statutory_induction_complete.humanize
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
+    - row.with_value text: job_application.statutory_induction_complete.humanize

@@ -7,7 +7,7 @@ class ReviewComponent::Section < ApplicationComponent
   renders_one :heading, ReviewComponent::Section::Heading
   renders_many :field_div_sets, ->(f = nil, form: nil) { render_divs_for_fields(f || form) }
 
-  delegate :row, to: :@list
+  delegate :with_row, to: :@list
 
   def initialize(record, name:, id: nil, forms: [], **kwargs)
     super(**kwargs)
