@@ -8,61 +8,61 @@
                     (preview ? publishers_organisation_preview_path(organisation.trust) : organisation_path(organisation.trust))))
 
     = govuk_summary_list(html_attributes: { id: "profile_summary" }) do |summary_list|
-      - summary_list.row do |row|
-        - row.key
+      - summary_list.with_row do |row|
+        - row.with_key
           = t("organisations.show.summary.name")
-        - row.value
+        - row.with_value
           = organisation.name
 
       - if organisation.postcode?
-        - summary_list.row do |row|
-          - row.key
+        - summary_list.with_row do |row|
+          - row.with_key
             = t("organisations.show.summary.address")
-          - row.value
+          - row.with_value
             = full_address(organisation)
 
-      - summary_list.row do |row|
-        - row.key
+      - summary_list.with_row do |row|
+        - row.with_key
           - if organisation.school?
             = t("organisations.school_type")
           - else
             = t("organisations.other_type")
-        - row.value
+        - row.with_value
           = organisation_type(organisation)
 
       - if organisation.phase?
-        - summary_list.row do |row|
-          - row.key
+        - summary_list.with_row do |row|
+          - row.with_key
             = t("organisations.show.summary.education_phase")
-          - row.value
+          - row.with_value
             = organisation.phase.humanize
 
       - if organisation.minimum_age? && organisation.maximum_age?
-        - summary_list.row do |row|
-          - row.key
+        - summary_list.with_row do |row|
+          - row.with_key
             = t("organisations.show.summary.age_range")
-          - row.value
+          - row.with_value
             = age_range(organisation)
 
       - if organisation.school? && school_has_school_size_data?(organisation)
-        - summary_list.row do |row|
-          - row.key
+        - summary_list.with_row do |row|
+          - row.with_key
             = t("organisations.show.summary.size")
-          - row.value
+          - row.with_value
             = school_size(organisation)
 
       - if organisation.email?
-        - summary_list.row do |row|
-          - row.key
+        - summary_list.with_row do |row|
+          - row.with_key
             = t("organisations.show.summary.email_address")
-          - row.value
+          - row.with_value
             = govuk_mail_to(organisation.email, organisation.email)
 
       - if organisation.url?
-        - summary_list.row do |row|
-          - row.key
+        - summary_list.with_row do |row|
+          - row.with_key
             = t("organisations.show.summary.website_address")
-          - row.value
+          - row.with_value
             = open_in_new_tab_link_to(organisation.url, organisation.url)
 
     - if organisation.description?
@@ -97,21 +97,21 @@
           = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
 
         = govuk_summary_list(classes: "govuk-summary-list--no-border") do |summary_list|
-          - summary_list.row do |row|
-            - row.key text: t("organisations.show.vacancy.job_role"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.value text: humanize_array(vacancy.job_roles), classes: "govuk-body-s govuk-!-padding-bottom-0"
+          - summary_list.with_row do |row|
+            - row.with_key text: t("organisations.show.vacancy.job_role"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.with_value text: humanize_array(vacancy.job_roles), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
-          - summary_list.row do |row|
-            - row.key text: t("organisations.show.vacancy.full_time_equivalent_salary"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.value text: vacancy.salary, classes: "govuk-body-s govuk-!-padding-bottom-0"
+          - summary_list.with_row do |row|
+            - row.with_key text: t("organisations.show.vacancy.full_time_equivalent_salary"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.with_value text: vacancy.salary, classes: "govuk-body-s govuk-!-padding-bottom-0"
 
-          - summary_list.row do |row|
-            - row.key text: t("organisations.show.vacancy.actual_salary"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.value text: vacancy.actual_salary, classes: "govuk-body-s govuk-!-padding-bottom-0"
+          - summary_list.with_row do |row|
+            - row.with_key text: t("organisations.show.vacancy.actual_salary"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.with_value text: vacancy.actual_salary, classes: "govuk-body-s govuk-!-padding-bottom-0"
 
-          - summary_list.row do |row|
-            - row.key text: t("organisations.show.vacancy.working_pattern"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.value text: vacancy_working_patterns(vacancy), classes: "govuk-body-s govuk-!-padding-bottom-0 govuk-list"
+          - summary_list.with_row do |row|
+            - row.with_key text: t("organisations.show.vacancy.working_pattern"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.with_value text: vacancy_working_patterns(vacancy), classes: "govuk-body-s govuk-!-padding-bottom-0 govuk-list"
 
         hr.govuk-section-break.govuk-section-break--m.govuk-section-break--visible
 

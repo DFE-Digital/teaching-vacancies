@@ -1,39 +1,39 @@
 - r.with_section :personal_details do |s|
-  - s.row do |row|
-    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.first_name")
-    - row.value text: job_application.first_name
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.first_name")
+    - row.with_value text: job_application.first_name
 
-  - s.row do |row|
-    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.last_name")
-    - row.value text: job_application.last_name
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.last_name")
+    - row.with_value text: job_application.last_name
 
   - if job_application.previous_names? || jobseeker?
-    - s.row do |row|
-      - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_review")
-      - row.value text: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
+    - s.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.previous_names_review")
+      - row.with_value text: job_application.previous_names.presence || t("jobseekers.job_applications.not_defined")
 
-  - s.row do |row|
-    - row.key text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address")
-    - row.value text: safe_join([tag.div(job_application.street_address), tag.div(job_application.city), tag.div(job_application.postcode), tag.div(job_application.country)])
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.legend.jobseekers_job_application_personal_details_form.your_address")
+    - row.with_value text: safe_join([tag.div(job_application.street_address), tag.div(job_application.city), tag.div(job_application.postcode), tag.div(job_application.country)])
 
-  - s.row do |row|
-    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number")
-    - row.value text: job_application.phone_number
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.phone_number")
+    - row.with_value text: job_application.phone_number
 
-  - s.row do |row|
-    - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.email_address")
-    - row.value text: job_application.email
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.email_address")
+    - row.with_value text: job_application.email
 
-  - s.row do |row|
-    - row.key text: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk")
-    - row.value text: job_application.right_to_work_in_uk.humanize
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk")
+    - row.with_value text: job_application.right_to_work_in_uk.humanize
 
   - if job_application.teacher_reference_number? || jobseeker?
-    - s.row do |row|
-      - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review")
-      - row.value text: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
+    - s.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review")
+      - row.with_value text: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
 
   - if job_application.national_insurance_number? || jobseeker?
-    - s.row do |row|
-      - row.key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review")
-      - row.value text: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")
+    - s.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review")
+      - row.with_value text: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")

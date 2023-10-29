@@ -13,7 +13,7 @@
 
       = govuk_summary_list(classes: "locations-summary-list") do |summary_list|
         = @form.locations.each.with_index do |(id, location), index|
-          - summary_list.row do |row|
+          - summary_list.with_row do |row|
             - row.with_key text: "Location #{index + 1}"
             - row.with_value text: "#{location[:location]} (#{t 'jobs.search.number_of_miles', count: location[:radius].to_i})"
             - row.with_action(text: t("buttons.change"), href: { action: :update_location, id: id })

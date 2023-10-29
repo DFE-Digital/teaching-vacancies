@@ -18,9 +18,9 @@
               - attributes = %w[job_title organisation relationship email phone_number]
               - attributes.each do |attribute|
                 - if reference[attribute].present?
-                  - summary_list.row do |row|
-                    - row.key text: t("jobseekers.job_applications.references.#{attribute}")
-                    - row.value text: reference[attribute]
+                  - summary_list.with_row do |row|
+                    - row.with_key text: t("jobseekers.job_applications.references.#{attribute}")
+                    - row.with_value text: reference[attribute]
 
           - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, reference), class: "govuk-link--no-visited-state"
           - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, reference), method: :delete
