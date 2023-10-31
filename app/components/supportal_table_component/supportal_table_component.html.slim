@@ -1,11 +1,11 @@
 = govuk_table(classes: classes, html_attributes: html_attributes) do |table|
-  - table.head do |head|
-    - head.row do |row|
+  - table.with_head do |head|
+    - head.with_row do |row|
       - @columns.each do |(header, _, type)|
-        - row.cell(header: true, text: header, classes: ("column-width--#{type}" if type))
+        - row.with_cell(header: true, text: header, classes: ("column-width--#{type}" if type))
 
   - table.with_body do |body|
     - @entries.each do |entry|
-      - body.row do |row|
+      - body.with_row do |row|
         - @columns.each do |(_, value_block, _)|
-          - row.cell(text: value_block.call(entry))
+          - row.with_cell(text: value_block.call(entry))
