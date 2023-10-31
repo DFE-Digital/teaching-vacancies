@@ -10,11 +10,15 @@ class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
   # link for security checks. That security check was consuming the user token and then redirecting the user to a
   # invalid link page.
   def show
-    if request.method == "POST" # When submitting confirmation from #show view.
-      super # Calls original Devise method to attempt to confirm the user.
-    else # When landing on the confirmation page from the email link.
-      user = Jobseeker.find_by(confirmation_token: params[:confirmation_token])
-      not_found unless user.present? # Doesn't allow the user to view the confirmation page unless landing with a valid token.
+    # When submitting confirmation from #show view calls Devise method to attempt to confirm the user.
+    return super if request.method == "POST"
+
+    # When landing on the confirmation page from the email link.
+    if (user = Jobseeker.find_by(confirmation_token: params[:confirmation_token]))
+      # Doesn't allow to view the confirmation page if the user is already confirmed.
+      user.confirmed? ? render(:already_confirmed) : render(:show)
+    else
+      not_found # Doesn't allow to view the confirmation page unless landing with a valid token.
     end
   end
 

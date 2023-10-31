@@ -50,6 +50,14 @@ RSpec.describe "Jobseekers can sign up to an account" do
         expect(page).to have_link(I18n.t("jobseekers.accounts.confirmation.create_profile.heading"), href: jobseekers_profile_path)
         expect(page).not_to have_content(I18n.t("devise.confirmations.confirmed"))
       end
+
+      it "shows an error when trying to visit the confirmation link after a successfull confirmation" do
+        confirm_email_address
+        visit first_link_from_last_mail
+
+        expect(page).to have_css("h1", text: I18n.t("jobseekers.confirmations.already_confirmed.title"))
+        expect(page).to have_content(I18n.t("jobseekers.confirmations.already_confirmed.description"))
+      end
     end
 
     context "when the user attempts to sign in without confirming their email" do
