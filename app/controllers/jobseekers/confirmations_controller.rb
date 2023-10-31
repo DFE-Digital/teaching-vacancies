@@ -15,8 +15,7 @@ class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
 
     # When landing on the confirmation page from the email link.
     if (user = Jobseeker.find_by(confirmation_token: params[:confirmation_token]))
-      # Doesn't allow to view the confirmation page if the user is already confirmed.
-      user.confirmed? ? render(:already_confirmed) : render(:show)
+      user.needs_email_confirmation? ? render(:show) : render(:already_confirmed)
     else
       not_found # Doesn't allow to view the confirmation page unless landing with a valid token.
     end
