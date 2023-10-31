@@ -120,13 +120,10 @@ RSpec.describe "Feedback supportal section" do
       expect(csv.second).to eq [other_feedback.created_at.to_s, "identified", "jobseeker", other_feedback.feedback_type, other_feedback.origin_path, other_feedback.email, other_feedback.occupation, other_feedback.rating, other_feedback.comment, other_feedback.category]
       created_at_dates = csv.map(&:first).drop(1)
 
-      are_all_created_at_dates_after_target = created_at_dates.all? do |date|
-        date_parsed = Date.strptime(date.split.first, "%Y-%m-%d")
-        Date.current.beginning_of_month
-        date_parsed < Date.current.end_of_month
+      created_at_dates.each do |date|
+        expect(Date.strptime(date.split.first, "%Y-%m-%d"))
+          .to be_between(Date.current.beginning_of_month, Date.current.end_of_month)
       end
-
-      expect(are_all_created_at_dates_after_target).to eq(true)
     end
 
     it "allows user to download data for a specific date range" do
@@ -138,13 +135,10 @@ RSpec.describe "Feedback supportal section" do
       expect(csv.second).to eq [old_general_feedback.created_at.to_s, "identified", "jobseeker", old_general_feedback.feedback_type, old_general_feedback.origin_path, old_general_feedback.email, old_general_feedback.occupation, old_general_feedback.rating, old_general_feedback.comment, old_general_feedback.category]
 
       created_at_dates = csv.map(&:first).drop(1)
-      are_all_created_at_dates_after_target = created_at_dates.all? do |date|
-        date_parsed = Date.strptime(date.split.first, "%Y-%m-%d")
-        Date.new(2022, 3, 15)
-        date_parsed < Date.new(2022, 3, 21)
+      created_at_dates.each do |date|
+        expect(Date.strptime(date.split.first, "%Y-%m-%d"))
+          .to be_between(Date.new(2022, 3, 15), Date.new(2022, 3, 21))
       end
-
-      expect(are_all_created_at_dates_after_target).to eq(true)
     end
 
     it "shows feedback table" do
@@ -208,13 +202,10 @@ RSpec.describe "Feedback supportal section" do
       expect(csv.second).to eq [job_alert_feedback.created_at.to_s, job_alert_feedback.relevant_to_user, job_alert_feedback.comment, "[]", nil, nil, nil, nil, job_alert_feedback.category]
 
       created_at_dates = csv.map(&:first).drop(1)
-      are_all_created_at_dates_after_target = created_at_dates.all? do |date|
-        date_parsed = Date.strptime(date.split.first, "%Y-%m-%d")
-        Date.current.beginning_of_month
-        date_parsed < Date.current.end_of_month
+      created_at_dates.each do |date|
+        expect(Date.strptime(date.split.first, "%Y-%m-%d"))
+          .to be_between(Date.current.beginning_of_month, Date.current.end_of_month)
       end
-
-      expect(are_all_created_at_dates_after_target).to eq(true)
     end
 
     it "allows user to download data for a specific date range" do
@@ -226,13 +217,10 @@ RSpec.describe "Feedback supportal section" do
       expect(csv.second).to eq [old_job_alert_feedback.created_at.to_s, old_job_alert_feedback.relevant_to_user, old_job_alert_feedback.comment, "[]", nil, nil, nil, nil, old_job_alert_feedback.category]
 
       created_at_dates = csv.map(&:first).drop(1)
-      are_all_created_at_dates_after_target = created_at_dates.all? do |date|
-        date_parsed = Date.strptime(date.split.first, "%Y-%m-%d")
-        Date.new(2022, 3, 15)
-        date_parsed < Date.new(2022, 3, 21)
+      created_at_dates.each do |date|
+        expect(Date.strptime(date.split.first, "%Y-%m-%d"))
+          .to be_between(Date.new(2022, 3, 15), Date.new(2022, 3, 21))
       end
-
-      expect(are_all_created_at_dates_after_target).to eq(true)
     end
   end
 
