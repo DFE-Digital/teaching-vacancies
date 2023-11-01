@@ -2,22 +2,16 @@ class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
   # Overriden Devise method.
   #
   # Introduces a middle step to confirm the user account after following the email confirmation link.
-  #
-  # Instead of being directly confirmed when following the link, the users will be queried to press a 'Confirm' button
-  # that will trigger the user confirmation.
-  #
-  # This solves issues with some email cloud providers (Outlook) introducing a security messure that proxies any https
-  # link for security checks. That security check was consuming the user token and then redirecting the user to a
-  # invalid link page.
+  # This resolves issues with some email cloud providers (Outlook) security checks consuming the confirmation token and
+  # and then redirecting the user to the page, causing the user to land at a "link expired" error page.
   def show
-    # When submitting confirmation from #show view calls Devise method to attempt to confirm the user.
-    return super if request.method == "POST"
+    return super if request.method == "POST" # When clicking "Confirm" on the confirmation page, handles it to Devise.
 
     # When landing on the confirmation page from the email link.
     if (user = Jobseeker.find_by(confirmation_token: params[:confirmation_token]))
       user.needs_email_confirmation? ? render(:show) : render(:already_confirmed)
     else
-      not_found # Doesn't allow to view the confirmation page unless landing with a valid token.
+      not_found
     end
   end
 
