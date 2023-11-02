@@ -31,7 +31,7 @@ RSpec.describe ValidatableSummaryListComponent, type: :component do
         error_path: error_path,
         **row_kwargs,
       )
-    list.row(attribute, **row_kwargs)
+    list.with_row(attribute, **row_kwargs)
 
     attribute = "b"
     row_kwargs = { b: 2 }
@@ -43,6 +43,6 @@ RSpec.describe ValidatableSummaryListComponent, type: :component do
         error_path: error_path,
         **row_kwargs,
       )
-    list.row(attribute, **row_kwargs)
+    list.with_row(attribute, **row_kwargs)
   end
 end
