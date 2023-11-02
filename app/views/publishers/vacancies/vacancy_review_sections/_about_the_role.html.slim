@@ -114,7 +114,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     visually_hidden_text: t("jobs.further_details")
 
   - unless vacancy.include_additional_documents.nil?
-    - summary_list.row(html_attributes: { id: "include_additional_documents" }) do |row|
+    - summary_list.with_row(html_attributes: { id: "include_additional_documents" }) do |row|
       - row.with_key
         = t("jobs.include_additional_documents")
       - row.with_value

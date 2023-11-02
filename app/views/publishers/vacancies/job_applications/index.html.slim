@@ -12,11 +12,11 @@
     - if job_applications.any? && vacancy.within_data_access_period?
       = govuk_summary_list do |summary_list|
         - sorted_job_applications.each do |application|
-          - summary_list.row classes: "application-#{application.status}" do |row|
-            - row.key do
+          - summary_list.with_row classes: "application-#{application.status}" do |row|
+            - row.with_key do
               = job_application_view_applicant(vacancy, application)
 
-            - row.value do
+            - row.with_value do
               = publisher_job_application_status_tag(application.status)
               dl
                 dt = "#{t('.received')}:"

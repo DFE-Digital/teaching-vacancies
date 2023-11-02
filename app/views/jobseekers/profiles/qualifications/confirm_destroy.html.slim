@@ -16,28 +16,28 @@
     = form_for form, url: jobseekers_profile_qualification_path(params[:qualification_id]), method: :delete do |f|
       = govuk_summary_list do |summary_list|
         - if secondary?
-          - summary_list.row do |row|
-            - row.key text: "Type"
-            - row.value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
-          - summary_list.row do |row|
-            - row.key text: "Institution"
-            - row.value text: qualification.institution
-          - summary_list.row do |row|
-            - row.key text: "Year awarded"
-            - row.value text: qualification.year
-          - summary_list.row do |row|
-            - row.key text: t("jobseekers.qualifications.subjects_and_grades")
-            - row.value text: safe_join(qualification.qualification_results.map { |res| tag.div("#{res.subject} – #{res.grade}", class: "govuk-body govuk-!-margin-bottom-1") })
+          - summary_list.with_row do |row|
+            - row.with_key text: "Type"
+            - row.with_value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
+          - summary_list.with_row do |row|
+            - row.with_key text: "Institution"
+            - row.with_value text: qualification.institution
+          - summary_list.with_row do |row|
+            - row.with_key text: "Year awarded"
+            - row.with_value text: qualification.year
+          - summary_list.with_row do |row|
+            - row.with_key text: t("jobseekers.qualifications.subjects_and_grades")
+            - row.with_value text: safe_join(qualification.qualification_results.map { |res| tag.div("#{res.subject} – #{res.grade}", class: "govuk-body govuk-!-margin-bottom-1") })
         - else
-          - summary_list.row do |row|
-            - row.key text: "Type"
-            - row.value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
-          - summary_list.row do |row|
-            - row.key text: "Subject"
-            - row.value text: qualification.subject
-          - summary_list.row do |row|
-            - row.key text: "Grade"
-            - row.value text: qualification.grade
+          - summary_list.with_row do |row|
+            - row.with_key text: "Type"
+            - row.with_value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
+          - summary_list.with_row do |row|
+            - row.with_key text: "Subject"
+            - row.with_value text: qualification.subject
+          - summary_list.with_row do |row|
+            - row.with_key text: "Grade"
+            - row.with_value text: qualification.grade
 
       - if secondary?
         = f.govuk_submit t(".secondary.caption")
