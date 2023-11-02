@@ -45,7 +45,7 @@ RSpec.describe DetailComponent, type: :component do
     subject! do
       render_inline(described_class.new(title: title)) do |detail|
         detail.body { tag.p "Hello!" }
-        detail.action tag.a "Click this"
+        detail.with_action tag.a "Click this"
       end
     end
 
