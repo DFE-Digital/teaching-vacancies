@@ -23,7 +23,7 @@ RSpec.describe FiltersComponent, type: :component do
   context "when there are selected filters" do
     subject! do
       render_inline(described_class.new(**kwargs)) do |c|
-        c.remove_filter_links do |rb|
+        c.with_remove_filter_links do |rb|
           rb.with_group(key: "group_two", legend: "Group 2", options: [%w[filter_1 FILTER1], %w[filter_2 FILTER2]], value_method: :first, selected_method: :last, selected: %w[filter_2], remove_filter_link: { url_helper: :root_path })
         end
         c.with_group key: "group_one", component: form.govuk_collection_check_boxes(:group_one, [%w[filter_1 FILTER1], %w[filter_2 FILTER2]], :first, :last, small: true, legend: { text: "Group 1" }, hint: nil)
@@ -48,7 +48,7 @@ RSpec.describe FiltersComponent, type: :component do
 
     subject! do
       render_inline(described_class.new(**kwargs)) do |c|
-        c.remove_filter_links do |rb|
+        c.with_remove_filter_links do |rb|
           filter_types.each do |_filter_type|
             rb.with_group(selected: [], options: [%w[filter_1 FILTER1], %w[filter_2 FILTER2]])
           end
