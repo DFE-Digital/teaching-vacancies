@@ -29,8 +29,8 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
 
   context "if sections are provided" do
     before do
-      component.section(:references)
-      component.section(:declarations)
+      component.with_section(:references)
+      component.with_section(:declarations)
       component.above { "<p id='above'>Above</p>".html_safe }
       component.below { "<p id='below'>Below</p>".html_safe }
 

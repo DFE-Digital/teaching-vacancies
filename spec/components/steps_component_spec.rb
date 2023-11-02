@@ -34,7 +34,7 @@ RSpec.describe StepsComponent, type: :component do
       context "when current and completed are false" do
         subject! do
           render_inline(described_class.new) do |steps|
-            steps.step(label: label)
+            steps.with_step(label: label)
           end
         end
 
@@ -50,7 +50,7 @@ RSpec.describe StepsComponent, type: :component do
       context "when current is true and completed is false" do
         subject! do
           render_inline(described_class.new) do |steps|
-            steps.step(label: label, current: true, completed: false)
+            steps.with_step(label: label, current: true, completed: false)
           end
         end
 
@@ -66,7 +66,7 @@ RSpec.describe StepsComponent, type: :component do
       context "when current is false and completed is true" do
         subject! do
           render_inline(described_class.new) do |steps|
-            steps.step(label: "Step", current: false, completed: true)
+            steps.with_step(label: "Step", current: false, completed: true)
           end
         end
 
@@ -82,7 +82,7 @@ RSpec.describe StepsComponent, type: :component do
       context "when current and completed are true" do
         subject! do
           render_inline(described_class.new) do |steps|
-            steps.step(label: "Step", current: true, completed: true)
+            steps.with_step(label: "Step", current: true, completed: true)
           end
         end
 
