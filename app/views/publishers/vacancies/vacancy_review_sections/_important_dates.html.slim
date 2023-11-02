@@ -3,10 +3,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
 
 = govuk_summary_list(html_attributes: { id: "important_dates" }) do |summary_list|
   - unless vacancy.publish_on.nil?
-    - summary_list.row(html_attributes: { id: "publish_on" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "publish_on" }) do |row|
+      - row.with_key
         = t("jobs.publication_date")
-      - row.value
+      - row.with_value
         = format_date(vacancy.publish_on)
       - unless vacancy.legacy_draft? || vacancy.listed?
         - row.with_action text: t("buttons.change"),
@@ -14,10 +14,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     visually_hidden_text: t("jobs.publication_date")
 
   - unless vacancy.expires_at.nil?
-    - summary_list.row(html_attributes: { id: "expires_at" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "expires_at" }) do |row|
+      - row.with_key
         = t("jobs.application_deadline")
-      - row.value
+      - row.with_value
         = format_time_to_datetime_at(vacancy.expires_at)
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
@@ -25,10 +25,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     visually_hidden_text: t("jobs.application_deadline")
 
   - unless vacancy.start_date_type.nil?
-    - summary_list.row(html_attributes: { id: "start_date" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "start_date" }) do |row|
+      - row.with_key
         = t("jobs.starts_on")
-      - row.value
+      - row.with_value
         - case vacancy.start_date_type
         - when "specific_date"
           = format_date(vacancy.starts_on)

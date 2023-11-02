@@ -7,7 +7,7 @@
     span.govuk-caption-l = t(".caption", name: @form.jobseeker_name)
     h1.govuk-heading-l = t(".header")
     = govuk_summary_list do |summary|
-      - summary.row do |row|
+      - summary.with_row do |row|
         - row.with_key text: t(".summary.jobs")
         - row.with_value text: @form.selected_jobs.map(&:job_title).map { |title| "".html_safe + title }.join("<br/>").html_safe
         - row.with_action text: t("buttons.change"), href: { action: :edit, step: @form.class.delegated_attributes["job_ids"] }

@@ -3,10 +3,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
 
 = govuk_summary_list(html_attributes: { id: "application_process" }) do |summary_list|
   - unless current_organisation.group_type == "local_authority" && vacancy.enable_job_applications.nil?
-    - summary_list.row(html_attributes: { id: "enable_job_applications" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "enable_job_applications" }) do |row|
+      - row.with_key
         = t("jobs.enable_job_applications")
-      - row.value
+      - row.with_value
         = vacancy.enable_job_applications ? "Yes" : "No"
       - unless vacancy.published? || vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
@@ -14,10 +14,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     visually_hidden_text: t("jobs.enable_job_applications")
 
     - if vacancy.personal_statement_guidance.present?
-      - summary_list.row do |row|
-        - row.key
+      - summary_list.with_row do |row|
+        - row.with_key
           = t("jobs.personal_statement_guidance")
-        - row.value
+        - row.with_value
           = vacancy.personal_statement_guidance
         - unless vacancy.published? || vacancy.legacy_draft?
           - row.with_action text: t("buttons.change"),
@@ -25,10 +25,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                       visually_hidden_text: t("jobs.personal_statement_guidance")
 
     - if vacancy.how_to_apply.present?
-      - summary_list.row do |row|
-        - row.key
+      - summary_list.with_row do |row|
+        - row.with_ey
           = t("jobs.how_to_apply")
-        - row.value
+        - row.with_value
           = vacancy.how_to_apply
         - unless vacancy.legacy?
           - row.with_action text: t("buttons.change"),
@@ -37,10 +37,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
 
   - if vacancy.enable_job_applications == false
     - unless vacancy.receive_applications.nil?
-      - summary_list.row(html_attributes: { id: "receive_applications" }) do |row|
-        - row.key
+      - summary_list.with_row(html_attributes: { id: "receive_applications" }) do |row|
+        - row.with_key
           = t("jobs.how_to_receive_applications")
-        - row.value
+        - row.with_value
           = t("helpers.label.publishers_job_listing_how_to_receive_applications_form.receive_applications_options.#{vacancy.receive_applications}")
         - unless vacancy.legacy_draft?
           - row.with_action text: t("buttons.change"),
@@ -49,10 +49,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
 
       - if vacancy.receive_applications == "email"
         - if vacancy.application_form.attachments&.any?
-          - summary_list.row(html_attributes: { id: "application_form" }) do |row|
-            - row.key
+          - summary_list.with_row(html_attributes: { id: "application_form" }) do |row|
+            - row.with_key
               = t("jobs.application_form")
-            - row.value
+            - row.with_value
               = govuk_link_to("#{vacancy.application_form.filename}, #{number_to_human_size(vacancy.application_form.byte_size)}", job_document_path(vacancy, vacancy.application_form.id))
             - unless vacancy.legacy_draft?
               - row.with_action text: t("buttons.change"),
@@ -60,10 +60,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                             visually_hidden_text: t("jobs.application_form")
 
         - unless vacancy.application_email.nil?
-          - summary_list.row(html_attributes: { id: "application_email" }) do |row|
-            - row.key
+          - summary_list.with_row(html_attributes: { id: "application_email" }) do |row|
+            - row.with_key
               = t("jobs.application_email")
-            - row.value
+            - row.with_value
               = vacancy.application_email
             - unless vacancy.legacy_draft?
               - row.with_action text: t("buttons.change"),
@@ -71,10 +71,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                             visually_hidden_text: t("jobs.application_email")
 
     - if vacancy.receive_applications == "website" && !vacancy.application_link.nil?
-      - summary_list.row(html_attributes: { id: "application_link" }) do |row|
-        - row.key
+      - summary_list.with_row(html_attributes: { id: "application_link" }) do |row|
+        - row.with_key
           = t("jobs.application_link")
-        - row.value
+        - row.with_value
           = vacancy.application_link
         - unless vacancy.legacy_draft?
           - row.with_action text: t("buttons.change"),
@@ -82,10 +82,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                         visually_hidden_text: t("jobs.application_link")
 
   - unless vacancy.school_visits.nil?
-    - summary_list.row(html_attributes: { id: "school_visits" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "school_visits" }) do |row|
+      - row.with_key
         = t("jobs.school_visits")
-      - row.value
+      - row.with_value
         = vacancy.school_visits || vacancy.school_visits_details.present? ? "Yes" : "No"
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
@@ -93,10 +93,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                       visually_hidden_text: t("jobs.school_visits")
 
   - unless vacancy.visa_sponsorship_available.nil?
-    - summary_list.row(html_attributes: { id: "visa_sponsorship_available" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "visa_sponsorship_available" }) do |row|
+      - row.with_key
         = t("jobs.visa_sponsorship")
-      - row.value
+      - row.with_value
         = vacancy.visa_sponsorship_available ? "Yes" : "No"
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
@@ -104,10 +104,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                       visually_hidden_text: t("jobs.visa_sponsorship")
 
   - unless vacancy.school_visits_details.blank?
-    - summary_list.row(html_attributes: { id: "school_visits_details" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "school_visits_details" }) do |row|
+      - row.with_key
         = "School visits details"
-      - row.value
+      - row.with_value
         = vacancy.school_visits_details
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
@@ -115,10 +115,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                       visually_hidden_text: "School visits details"
 
   - unless vacancy.contact_email.nil?
-    - summary_list.row(html_attributes: { id: "contact_email" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "contact_email" }) do |row|
+      - row.with_key
         = t("jobs.contact_email")
-      - row.value
+      - row.with_value
         = vacancy.contact_email
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
@@ -126,10 +126,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                       visually_hidden_text: t("jobs.contact_email")
 
   - unless vacancy.contact_number_provided.nil?
-    - summary_list.row(html_attributes: { id: "contact_number_provided" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "contact_number_provided" }) do |row|
+      - row.with_key
         = t("jobs.contact_number_provided")
-      - row.value
+      - row.with_value
         = vacancy.contact_number_provided? || vacancy.contact_number.present? ? "Yes" : "No"
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
@@ -137,10 +137,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     visually_hidden_text: t("jobs.contact_number_provided")
 
   - unless vacancy.contact_number.blank?
-    - summary_list.row(html_attributes: { id: "contact_number" }) do |row|
-      - row.key
+    - summary_list.with_row(html_attributes: { id: "contact_number" }) do |row|
+      - row.with_key
         = t("jobs.contact_number")
-      - row.value
+      - row.with_value
         = vacancy.contact_number
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
