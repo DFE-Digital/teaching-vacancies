@@ -10,9 +10,10 @@ jobs:
   sync:
     name: Backup production database
     runs-on: ubuntu-20.04
+    environment: production
     services:
       postgres:
-        image: postgres:11.6-alpine
+        image: postgres:14.9-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -34,38 +35,35 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
-    - name: Get CF_USERNAME From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
-      with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/cf_username_prod
-        env_variable_name: CF_USERNAME_PROD
-
-    - name: Get CF_PASSWORD From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
-      with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/cf_password_prod
-        env_variable_name: CF_PASSWORD
-
     - name: Get SLACK_WEBHOOK From ParameterStore
       uses: marvinpinto/action-inject-ssm-secrets@latest
       with:
         ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
         env_variable_name: SLACK_WEBHOOK
 
-    - name: Setup cf cli
-      uses: DFE-Digital/github-actions/setup-cf-cli@master
-      with:
-        CF_USERNAME: ${{env.CF_USERNAME_PROD}}
-        CF_PASSWORD: ${{env.CF_PASSWORD}}
-        CF_SPACE_NAME: teaching-vacancies-production
-        INSTALL_CONDUIT: true
-
     - name: Install postgres client
       uses: DFE-Digital/github-actions/install-postgres-client@master
+      with:
+        version: 14
 
-    - name: Dump production database to file
-      shell: bash
-      run: bin/dump-db
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: "v1.26.1"
+
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: K8 setup for staging
+      run: |
+        az aks get-credentials -g s189p01-tsc-pd-rg -n s189p01-tsc-production-aks
+        make bin/konduit.sh
+
+    - name: Backup production DB
+      run: |
+        bin/konduit.sh teaching-vacancies-production -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f full.sql
+        tar -cvzf full.tar.gz full.sql
 
     - name: Upload backup to S3
       run: bin/upload-db-backup
