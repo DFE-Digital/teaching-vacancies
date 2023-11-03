@@ -5,8 +5,8 @@ export default class extends Controller {
   static targets = ['source'];
 
   copy() {
-    this.sourceTarget.select();
-    document.execCommand('copy');
+    let text = this.sourceTarget.value ? this.sourceTarget.value : this.sourceTarget.text;
+    navigator.clipboard.writeText(text);
     triggerEvent(
       'copied_to_clipboard',
       {
