@@ -124,7 +124,7 @@ end
 RSpec.describe VacancyPresenter do
   subject { described_class.new(vacancy) }
 
-  let(:vacancy) { build(:vacancy) }
+  let(:vacancy) { build_stubbed(:vacancy) }
 
   describe "#about_school" do
     it_behaves_like "a fields that outputs the correct HTML", :about_school
@@ -136,6 +136,20 @@ RSpec.describe VacancyPresenter do
 
   describe "#benefits_details" do
     it_behaves_like "a fields that outputs the correct HTML", :benefits_details
+  end
+
+  describe "#job_advert" do
+    it "adds line breaks and paragraphs to plain text adverts" do
+      vacancy.job_advert = "This is an example job advert without HTML.\n\nThe advert includes:\nFirst line.\nSecond line."
+      expect(subject.job_advert).to eq(
+        "<p>This is an example job advert without HTML.</p>\n\n<p>The advert includes:\n<br />First line.\n<br />Second line.</p>",
+      )
+    end
+
+    it "does not modify HTML adverts" do
+      vacancy.job_advert = "<p>This is an example job advert with HTML.</p><p>The advert includes:<br />First line.<br />Second line.</p>"
+      expect(subject.job_advert).to eq(vacancy.job_advert)
+    end
   end
 
   # TODO: Working Patterns: Remove this test once all vacancies with legacy working patterns & working_pattern_details have expired
