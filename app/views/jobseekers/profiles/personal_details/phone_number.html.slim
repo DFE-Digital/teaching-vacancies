@@ -13,7 +13,7 @@
           = f.govuk_text_field :phone_number, label: { class: "govuk-label govuk-label--s" }
         = f.govuk_radio_button :phone_number_provided, "false"
 
-      = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5"
+      = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
 
     .govuk-button-group
       = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

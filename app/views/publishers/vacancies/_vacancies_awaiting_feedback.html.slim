@@ -29,4 +29,4 @@ p.govuk-body#awaiting_feedback_intro class="govuk-!-margin-bottom-4" = t("jobs.m
             class: %w[govuk-!-width-full],
             form: vacancy.id
 
-          = f.govuk_submit safe_join([t("buttons.submit"), tag.span(t("helpers.label.publishers_vacancy_statistics_form.submit_hidden_text", job_title: vacancy.job_title), class: "govuk-visually-hidden")]), classes: "govuk-button govuk-!-margin-top-0", form: vacancy.id
+          = f.govuk_submit safe_join([t("buttons.submit"), tag.span(t("helpers.label.publishers_vacancy_statistics_form.submit_hidden_text", job_title: vacancy.job_title), class: "govuk-visually-hidden")]), class: "govuk-button govuk-!-margin-top-0", form: vacancy.id

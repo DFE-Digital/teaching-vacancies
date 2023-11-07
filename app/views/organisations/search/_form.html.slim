@@ -10,8 +10,8 @@
   = f.govuk_collection_select :radius, radius_filter_options, :last, :first,
     label: { text: t("jobs.search.within_radius"), size: "s" },
     data: { "change-submit": "false" },
-    form_group: { classes: "location-search__radius" },
+    form_group: { class: "location-search__radius" },
     options: { selected: search_form.radius || Search::RadiusBuilder::DEFAULT_BUFFER_FOR_POLYGON_SEARCHES }
 
   .search-results-controls__submit
-    = f.govuk_submit t("buttons.search"), classes: "govuk-button govuk-!-margin-bottom-0"
+    = f.govuk_submit t("buttons.search"), class: "govuk-button govuk-!-margin-bottom-0"
