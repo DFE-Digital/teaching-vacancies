@@ -28,7 +28,7 @@
         = f.govuk_collection_radio_buttons :ect_status,
           Vacancy.ect_statuses.keys,
           :to_s,
-          classes: ["ect-status-radios"],
+          class: ["ect-status-radios"],
           legend: { size: "m", tag: nil }
 
       - if vacancy.job_advert.present?
