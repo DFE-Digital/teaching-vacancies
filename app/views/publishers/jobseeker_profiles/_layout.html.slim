@@ -18,8 +18,4 @@
               data-clipboard-target="button"
               class="js-action govuk-button govuk-button--secondary govuk-!-margin-bottom-2 clipboard-copy"]
           | Copy email
-    = tabs do |tabs|
-      - tabs.with_navigation_item text: "Profile", link: publishers_jobseeker_profile_path(profile)
-      - tabs.with_navigation_item text: "Invitations to apply", link: publishers_invitations_path(profile)
-
     = yield
