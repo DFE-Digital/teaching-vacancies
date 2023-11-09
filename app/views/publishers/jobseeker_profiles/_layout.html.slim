@@ -7,12 +7,15 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = profile.full_name
     .govuk-button-group data-controller="clipboard" data-clipboard-success-content-value="email address copied"
-      = mail_to(profile.email,
-                target: "_blank",
-                class: "govuk-link govuk-button govuk-!-margin-bottom-6",
-                "data-clipboard-target" => "source",
-                "data-description" => "profile-email",
-                "data-subject" => StringAnonymiser.new(profile.id).to_s)
+      = tracked_mail_to(profile.email,
+                        target: "_blank",
+                        class: "govuk-link govuk-button govuk-!-margin-bottom-6",
+                        link_type: :publisher_contact_jobseeker_email,
+                        link_subject: current_organisation.id,
+                        tracked_link_text: anon(profile.id),
+                        "data-clipboard-target" => "source",
+                        "data-description" => "profile-email",
+                        "data-subject" => anon(profile.id))
       button[data-action="clipboard#copy"
             data-clipboard-target="button"
             class="js-action govuk-button govuk-button--secondary govuk-!-margin-bottom-2 clipboard-copy"]
