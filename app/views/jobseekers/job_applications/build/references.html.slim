@@ -13,8 +13,8 @@
     - if job_application.references.any?
       - job_application.references.each do |reference|
         = render DetailComponent.new title: reference.name do |detail|
-          - detail.with_body do
-            = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
+          - detail.body do
+            = govuk_summary_list class: "govuk-!-margin-bottom-0" do |summary_list|
               - attributes = %w[job_title organisation relationship email phone_number]
               - attributes.each do |attribute|
                 - if reference[attribute].present?

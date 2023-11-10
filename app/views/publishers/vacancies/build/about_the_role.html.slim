@@ -58,7 +58,7 @@
                       label: { text: t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information"), classes: ["govuk-label", "govuk-label--s", "govuk-!-margin-bottom-2", "govuk-!-font-weight-bold"], id: "safeguarding-information-label" })
             = f.govuk_radio_button :safeguarding_information_provided, "false", link_errors: true
 
-        = f.govuk_radio_buttons_fieldset :further_details_provided, legend: { size: "m", tag: nil }, classes: ["further-details-provided-radios"] do
+        = f.govuk_radio_buttons_fieldset :further_details_provided, legend: { size: "m", tag: nil }, class: ["further-details-provided-radios"] do
           = f.govuk_radio_button :further_details_provided, "true" do
             = editor(form_input: f.govuk_text_area(:further_details),
                      value: form.further_details,
