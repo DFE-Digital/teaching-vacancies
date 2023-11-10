@@ -14,7 +14,7 @@
     <workingPatterns>part_time</workingPatterns>
     <contractType>parental_leave_cover</contractType>
     <phase>primary</phase>
-    <schoolUrns>111111,222222</schoolUrns>
+    <schoolUrns></schoolUrns>
     <trustUID>12345</trustUID>
   </item>
 </items>
