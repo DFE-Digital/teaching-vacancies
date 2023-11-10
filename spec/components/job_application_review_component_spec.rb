@@ -31,8 +31,8 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
     before do
       component.with_section(:references)
       component.with_section(:declarations)
-      component.above { "<p id='above'>Above</p>".html_safe }
-      component.below { "<p id='below'>Below</p>".html_safe }
+      component.with_above { "<p id='above'>Above</p>".html_safe }
+      component.with_below { "<p id='below'>Below</p>".html_safe }
 
       render_inline(component)
     end

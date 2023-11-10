@@ -4,7 +4,7 @@ RSpec.shared_examples ReviewComponent do
 
   context "if a header is provided" do
     before do
-      component.header do
+      component.with_header do
         "<p>A header</p>".html_safe
       end
 
@@ -18,7 +18,7 @@ RSpec.shared_examples ReviewComponent do
 
   context "if an 'above' area is provided" do
     before do
-      component.above do
+      component.with_above do
         "<p>Above</p>".html_safe
       end
 
