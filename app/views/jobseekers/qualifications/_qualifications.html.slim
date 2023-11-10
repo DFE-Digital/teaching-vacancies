@@ -1,8 +1,8 @@
 - qualifications_sort_and_group(qualifications).each_value do |qualification_group|
   - qualification_group.each do |qualification|
     = render DetailComponent.new title: qualification.name do |detail|
-      - detail.body do
-        = govuk_summary_list class: "govuk-!-margin-bottom-0" do |summary_list|
+      - detail.with_body do
+        = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
           - if qualification.secondary?
             - summary_list.with_row do |row|
               - row.with_key text: t("jobseekers.profiles.qualifications.subjects_and_grades")

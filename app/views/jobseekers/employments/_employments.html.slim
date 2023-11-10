@@ -1,24 +1,24 @@
 - employments.sort_by { |e| e.current_role? ? Float::INFINITY : e.started_on }.reverse_each do |employment|
   = render DetailComponent.new(title: employment.job_title) do |detail_component|
-    - detail_component.body do
-      = govuk_summary_list(class: "govuk-!-margin-bottom-0") do |summary_list|
-        - summary_list.with_row(class: "govuk-summary-list__row--no-actions") do |row|
+    - detail_component.with_body do
+      = govuk_summary_list(classes: "govuk-!-margin-bottom-0") do |summary_list|
+        - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
           - row.with_key text: t("jobseekers.employments.organisation")
           - row.with_value text: employment.organisation
-        - summary_list.with_row(class: "govuk-summary-list__row--no-actions") do |row|
+        - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
           - row.with_key text: t("jobseekers.employments.subjects")
           - row.with_value text: employment.subjects
-        - summary_list.with_row(class: "govuk-summary-list__row--no-actions") do |row|
+        - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
           - row.with_key text: t("jobseekers.employments.started_on")
           - row.with_value text: employment.started_on.to_formatted_s(:month_year)
         - summary_list.with_row do |row|
           - row.with_key text: t("jobseekers.employments.current_role")
           - row.with_value text: employment.current_role.humanize
         - if employment.current_role == "no"
-          - summary_list.with_row(class: "govuk-summary-list__row--no-actions") do |row|
+          - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
             - row.with_key text: t("jobseekers.employments.ended_on")
             - row.with_value text: employment.ended_on.to_formatted_s(:month_year)
-        - summary_list.with_row(class: "govuk-summary-list__row--no-actions") do |row|
+        - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
           - row.with_key text: t("jobseekers.employments.main_duties")
           - row.with_value text: employment.main_duties
     - detail_component.with_action govuk_link_to(t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_profile_work_history_path(employment))

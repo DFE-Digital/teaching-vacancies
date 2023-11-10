@@ -15,8 +15,8 @@
       - employments.reverse_each do |employment|
         - if employment.job?
           = render DetailComponent.new title: employment.job_title do |detail|
-            - detail.body do
-              = govuk_summary_list class: "govuk-!-margin-bottom-0" do |summary_list|
+            - detail.with_body do
+              = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
                 - summary_list.with_row do |row|
                   - row.with_key text: t("jobseekers.job_applications.employments.organisation")
                   - row.with_value text: employment.organisation.presence
