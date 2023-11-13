@@ -13,6 +13,7 @@
                         link_type: :publisher_contact_jobseeker_email,
                         link_subject: current_organisation.id,
                         tracked_link_text: DfE::Analytics.anonymise(profile.id),
+                        tracked_link_href: DfE::Analytics.anonymise("mailto:#{profile.email}"),
                         "data-clipboard-target" => "source",
                         "data-description" => "profile-email",
                         "data-subject" => DfE::Analytics.anonymise(profile.id))

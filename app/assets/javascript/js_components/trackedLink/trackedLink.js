@@ -36,13 +36,20 @@ export default class extends Controller {
       trackedLinkText = this.linkTarget.innerText;
     }
 
+    let trackedLinkHref;
+    if (this.linkTarget.dataset.trackedLinkHref) {
+      trackedLinkHref = this.linkTarget.dataset.trackedLinkHref;
+    } else {
+      trackedLinkHref = this.linkTarget.href;
+    }
+
     triggerEvent(
       EVENT_TYPE,
       {
         link_type: this.linkTarget.dataset.linkType,
         link_subject: this.linkTarget.dataset.linkSubject,
         text: trackedLinkText,
-        href: this.linkTarget.href,
+        href: trackedLinkHref,
         mouse_button: e.button,
       },
     ).then(() => {
