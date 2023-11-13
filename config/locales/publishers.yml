@@ -134,12 +134,6 @@ en:
         right_to_work_in_uk_options:
           "true": "Does have the right to work in the UK"
           "false": "Does not have the right to work in the UK"
-
-    invitations:
-      index:
-        no_invitations:
-          school: This user has not been invited to apply to any roles at your school.
-          organisation: This user has not been invited to apply to any roles at your organisation.
     login_keys:
       new:
         notice: >-

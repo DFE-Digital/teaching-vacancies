@@ -246,5 +246,42 @@ RSpec.describe VacancySource::Source::Broadbean do
         expect(vacancy.readable_job_location).to eq(school1.name)
       end
     end
+
+    context "when the vacancy belongs to the central trust office instead of a particular/multiple school" do
+      let(:response_body) { file_fixture("vacancy_sources/broadbean_without_schools.xml").read }
+
+      before do
+        create(:school_group, name: "Wrong Trust", uid: "54321", schools: [])
+      end
+
+      it "the vacancy is valid" do
+        expect(vacancy).to be_valid
+      end
+
+      it "assigns the vacancy to the school group" do
+        expect(vacancy.organisations).to contain_exactly(school_group)
+      end
+
+      it "assigns the vacancy job location to the school group" do
+        expect(vacancy.readable_job_location).to eq(school_group.name)
+      end
+    end
+
+    context "when the school doesn't belong to a school group" do
+      let(:response_body) { file_fixture("vacancy_sources/broadbean_without_trust.xml").read }
+      let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+
+      it "the vacancy is valid" do
+        expect(vacancy).to be_valid
+      end
+
+      it "assigns the vacancy to the school" do
+        expect(vacancy.organisations).to contain_exactly(school2)
+      end
+
+      it "assigns the vacancy job location to the school" do
+        expect(vacancy.readable_job_location).to eq(school2.name)
+      end
+    end
   end
 end

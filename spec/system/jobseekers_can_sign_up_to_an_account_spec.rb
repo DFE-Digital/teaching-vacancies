@@ -28,8 +28,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       click_on I18n.t("jobseekers.registrations.check_your_email.resend_link")
       expect(page).to have_content I18n.t("jobseekers.registrations.check_your_email.resent_email_confirmation")
 
-      visit first_link_from_last_mail
-
+      confirm_email_address
       expect(current_path).to eq(confirmation_jobseekers_account_path)
     end
   end
@@ -51,6 +50,14 @@ RSpec.describe "Jobseekers can sign up to an account" do
         expect(page).to have_link(I18n.t("jobseekers.accounts.confirmation.create_profile.heading"), href: jobseekers_profile_path)
         expect(page).not_to have_content(I18n.t("devise.confirmations.confirmed"))
       end
+
+      it "shows an error when trying to visit the confirmation link after a successfull confirmation" do
+        confirm_email_address
+        visit first_link_from_last_mail
+
+        expect(page).to have_css("h1", text: I18n.t("jobseekers.confirmations.already_confirmed.title"))
+        expect(page).to have_content(I18n.t("jobseekers.confirmations.already_confirmed.description"))
+      end
     end
 
     context "when the user attempts to sign in without confirming their email" do
@@ -67,30 +74,35 @@ RSpec.describe "Jobseekers can sign up to an account" do
       end
     end
 
-    context "when the confirmation token is invalid" do
-      context "when the confirmation period has expired" do
-        before { travel_to 25.hours.from_now }
+    context "when the existing confirmation period has expired" do
+      before { travel_to 25.hours.from_now }
 
-        context "when jobseeker tries to confirm their email" do
-          before do
-            confirm_email_address
-          end
-
-          it "informs user that the link has expired and allows them to resend email and confirm their email" do
-            expect(page).to have_content("Link has expired")
-            expect { click_on "Resend email" }.to change { delivered_emails.count }.by(1)
-            expect(current_path).to eq(jobseekers_check_your_email_path)
-            confirm_email_address
-            expect(current_path).to eq(confirmation_jobseekers_account_path)
-          end
+      context "when jobseeker tries to confirm their email" do
+        before do
+          confirm_email_address
         end
 
-        context "when the confirmation email is resent" do
-          it "resends confirmation email and redirects to check your email page" do
-            expect { click_on "resend the email" }.to change { delivered_emails.count }.by(1)
-            expect(page).to have_content "Email has been resent"
-          end
+        it "informs user that the link has expired and allows them to resend email and confirm their email" do
+          expect(page).to have_content("Link has expired")
+          expect { click_on "Resend email" }.to change { delivered_emails.count }.by(1)
+          expect(current_path).to eq(jobseekers_check_your_email_path)
+          confirm_email_address
+          expect(current_path).to eq(confirmation_jobseekers_account_path)
         end
+      end
+
+      context "when the confirmation email is resent" do
+        it "resends confirmation email and redirects to check your email page" do
+          expect { click_on "resend the email" }.to change { delivered_emails.count }.by(1)
+          expect(page).to have_content "Email has been resent"
+        end
+      end
+    end
+
+    context "when the confirmation token does not exist" do
+      it "takes the user to the 'not found' page" do
+        visit jobseeker_confirmation_path(confirmation_token: "fooBar")
+        expect(page).to have_content("Page not found")
       end
     end
   end

@@ -100,13 +100,6 @@ shared:
     - close_account_reason_comment
     - occupation
     - origin_path
-  invitation_to_applies:
-    - id
-    - jobseeker_id
-    - vacancy_id
-    - invited_by_id
-    - created_at
-    - updated_at
   job_applications:
     - id
     - status

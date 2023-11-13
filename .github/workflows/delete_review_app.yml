@@ -93,7 +93,7 @@ jobs:
           && echo Data in /teaching-vacancies/dev looks valid
 
     - name: Terraform pin version
-      uses: hashicorp/setup-terraform@v2
+      uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: 1.5.1
 

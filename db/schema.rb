@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_09_165757) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -184,17 +184,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
     t.index ["sluggable_id", "sluggable_type"], name: "index_friendly_id_slugs_sluggable_id_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
-  end
-
-  create_table "invitation_to_applies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "jobseeker_id", null: false
-    t.uuid "vacancy_id", null: false
-    t.uuid "invited_by_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["invited_by_id"], name: "index_invitation_to_applies_on_invited_by_id"
-    t.index ["jobseeker_id"], name: "index_invitation_to_applies_on_jobseeker_id"
-    t.index ["vacancy_id"], name: "index_invitation_to_applies_on_vacancy_id"
   end
 
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -675,9 +664,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
   add_foreign_key "feedbacks", "publishers"
   add_foreign_key "feedbacks", "subscriptions"
   add_foreign_key "feedbacks", "vacancies"
-  add_foreign_key "invitation_to_applies", "jobseekers"
-  add_foreign_key "invitation_to_applies", "publishers", column: "invited_by_id"
-  add_foreign_key "invitation_to_applies", "vacancies"
   add_foreign_key "job_applications", "jobseekers"
   add_foreign_key "job_applications", "vacancies"
   add_foreign_key "job_preferences", "jobseeker_profiles"

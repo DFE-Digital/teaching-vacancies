@@ -19,6 +19,13 @@ class VacancyPresenter < BasePresenter
     simple_format(fix_bullet_points(model.benefits_details)) if model.benefits_details.present?
   end
 
+  def job_advert
+    return if model.job_advert.blank?
+
+    # Basic HTML formatting of text if it is not already HTML
+    model.job_advert.strip.starts_with?("<") ? model.job_advert : simple_format(model.job_advert)
+  end
+
   # TODO: Working Patterns: Remove this once all vacancies with legacy working patterns & working_pattern_details have expired
   def readable_working_patterns
     model.working_patterns.map { |working_pattern|
