@@ -184,20 +184,6 @@ en:
         unsubscribe_link_text: Unsubscribe here
 
   publishers:
-    invitations_mailer:
-      invite_to_apply:
-        get_support:
-          body: Get support, report a problem or give feedback at %{link}
-          heading: Get support
-        greeting: Dear %{jobseeker_name}
-        invitation:
-          one: "%{publisher_name} at %{organisation_name} has reviewed your profile. They'd like to invite you to apply for a role:"
-          other: "%{publisher_name} at %{organisation_name} has reviewed your profile. They'd like to invite you to apply for these roles:"
-        subject:
-          one: You have been invited to apply for a role
-          other: You have been invited to apply for these roles
-        vacancy_link: "%{job_title} %{link}"
-
     job_application_data_expiry_mailer:
       job_application_data_expiry:
         expiry: In line with our data retention policy, you will not be able to view candidates’ applications for %{job_title} after %{expiration_date}.
