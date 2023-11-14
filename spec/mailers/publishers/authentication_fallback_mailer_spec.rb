@@ -29,15 +29,5 @@ RSpec.describe Publishers::AuthenticationFallbackMailer do
     it "triggers a `publisher_sign_in_fallback` email event" do
       expect { mail.deliver_now }.to have_triggered_event(:publisher_sign_in_fallback).with_data(expected_data)
     end
-
-    context "from Sandbox environment" do
-      let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
-
-      before { allow(Rails.configuration).to receive(:app_role).and_return("sandbox") }
-
-      it "triggers a `publisher_sign_in_fallback` email event" do
-        expect { mail.deliver_now }.to have_triggered_event(:publisher_sign_in_fallback).with_data(expected_data)
-      end
-    end
   end
 end

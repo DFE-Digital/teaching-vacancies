@@ -160,18 +160,6 @@ RSpec.describe Jobseekers::AlertMailer do
       end
     end
 
-    context "from Sandbox environment" do
-      let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
-      let(:jobseeker) { create(:jobseeker, email: email) }
-      let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
-
-      before { allow(Rails.configuration).to receive(:app_role).and_return("sandbox") }
-
-      it "triggers a `publisher_sign_in_fallback` email event" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
-      end
-    end
-
     context "when the subscriber has a jobseeker account that has a profile" do
       let(:jobseeker) { create(:jobseeker, email: email) }
       let!(:profile) { create(:jobseeker_profile, :completed, jobseeker_id: jobseeker.id) }

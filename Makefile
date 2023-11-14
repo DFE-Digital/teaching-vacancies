@@ -116,7 +116,7 @@ plan-local-image: push-local-image terraform-app-plan## make passcode=MyPasscode
 .PHONY: deploy-local-image
 deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPasscode <env> deploy-local-image # Requires active Docker Hub session (`docker login`)
 
-##@ Plan or apply changes to dev, review, staging, sandbox or production. Requires Terraform CLI
+##@ Plan or apply changes to, review, staging or production. Requires Terraform CLI
 
 .PHONY: check-terraform-variables
 check-terraform-variables:

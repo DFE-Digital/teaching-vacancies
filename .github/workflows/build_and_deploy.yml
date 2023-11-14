@@ -3,8 +3,7 @@ name: Build and deploy
 on:
   push:
     branches:
-    - main
-    - dev     # Push to branch other than main deploys directly to environment with the same name. ie 'dev' branch deploys to 'dev' environment
+    - main # Push to branch other than main deploys directly to environment with the same name. ie 'dev' branch deploys to 'dev' environment
     paths-ignore:
     - 'bigquery/**'
     - 'documentation/**'
