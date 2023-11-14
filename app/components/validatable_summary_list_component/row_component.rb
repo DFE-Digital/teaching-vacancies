@@ -14,7 +14,7 @@ class ValidatableSummaryListComponent::RowComponent < GovukComponent::SummaryLis
 
   def before_render
     @translated_label = t("jobs.#{attribute}") unless @options[:label]
-    @translated_text = t("jobs.not_defined")
+    @translated_text = t("jobs.not_defined") unless @options[:text]
   end
 
   def error_component
