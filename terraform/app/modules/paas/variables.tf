@@ -90,6 +90,7 @@ variable "redis_queue_capacity" {}
 variable "redis_queue_family" {}
 variable "redis_queue_sku_name" {}
 variable "add_database_name_suffix" {}
+variable "azure_maintenance_window" {}
 
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
