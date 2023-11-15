@@ -8,6 +8,8 @@ class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
     return super if request.method == "POST" # When clicking "Confirm" on the confirmation page, handles it to Devise.
 
     # When landing on the confirmation page from the email link.
+    return not_found unless params[:confirmation_token].present?
+
     if (user = Jobseeker.find_by(confirmation_token: params[:confirmation_token]))
       user.needs_email_confirmation? ? render(:show) : render(:already_confirmed)
     else

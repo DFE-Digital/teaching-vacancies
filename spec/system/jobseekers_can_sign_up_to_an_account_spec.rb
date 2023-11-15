@@ -105,5 +105,14 @@ RSpec.describe "Jobseekers can sign up to an account" do
         expect(page).to have_content("Page not found")
       end
     end
+
+    context "without confirmation token with existing confirmed users" do
+      let!(:other_confirmed_jobseeker) { create(:jobseeker, confirmation_token: nil) }
+
+      it "takes the user to the 'not found' page" do
+        visit jobseeker_confirmation_path
+        expect(page).to have_content("Page not found")
+      end
+    end
   end
 end
