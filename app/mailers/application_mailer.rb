@@ -35,7 +35,7 @@ class ApplicationMailer < Mail::Notify::Mailer
   end
 
   def template
-    Rails.configuration.app_role == "sandbox" ? NOTIFY_SANDBOX_TEMPLATE : NOTIFY_PRODUCTION_TEMPLATE
+    NOTIFY_PRODUCTION_TEMPLATE
   end
 
   def dfe_analytics_custom_data

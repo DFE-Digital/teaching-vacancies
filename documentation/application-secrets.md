@@ -2,16 +2,16 @@
 
 The application requires sensitive configuration which may be specific to each environment. It is stored securely in AWS SSM parameter store.
 
-To read the whole application configuration of an environment (e.g. dev), run:
+To read the whole application configuration of an environment (e.g. qa), run:
 
 ```
-% aws-vault exec SecretEditor -- make dev print-env
+% aws-vault exec SecretEditor -- make qa print-env
 ```
 
-To edit the application secrets of an environment (e.g. dev), run:
+To edit the application secrets of an environment (e.g. qa), run:
 
 ```
-% aws-vault exec SecretEditor -- make dev edit-app-secrets
+% aws-vault exec SecretEditor -- make qa edit-app-secrets
 ```
 
 You will have the opportunity to verify and confirm before pushing the change. All the secrets are versioned, so in case of issue, a previous version can be restored.

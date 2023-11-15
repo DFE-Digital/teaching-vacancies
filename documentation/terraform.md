@@ -22,11 +22,6 @@ which you need to substitute for `MyPasscode` in the `passcode` variable.
 
 ---
 
-Dev
-```
-make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 dev terraform-app-plan
-```
-
 Production
 ```
 make passcode=MyPasscode CONFIRM_PRODUCTION=true tag=47fd1475376bbfa16a773693133569b794408995 production terraform-app-plan
