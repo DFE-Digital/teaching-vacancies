@@ -12,10 +12,10 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@sentry/browser": "7.77.0",
+    "@sentry/browser": "7.80.1",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.4",
-    "axios": "^1.6.0",
+    "axios": "^1.6.2",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.33.2",
     "dompurify": "^3.0.6",
@@ -26,8 +26,8 @@
     "rails-ujs": "^5.2.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.2",
+    "@babel/core": "^7.23.3",
+    "@babel/preset-env": "^7.23.3",
     "concurrently": "^8.2.2",
     "dotenv": "^16.3.1",
     "esbuild": "^0.19.5",
