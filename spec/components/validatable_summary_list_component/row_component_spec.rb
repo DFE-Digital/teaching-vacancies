@@ -62,6 +62,10 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
   end
 
   describe "#label" do
+    before do
+      render_inline(row)
+    end
+
     context "when a label is provided" do
       let(:options) do
         {
@@ -126,6 +130,10 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
   end
 
   describe "#build_text" do
+    before do
+      render_inline(row)
+    end
+
     context "when the attribute is a boolean" do
       let(:attribute) { :benefits }
 

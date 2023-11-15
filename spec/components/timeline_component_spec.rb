@@ -10,7 +10,7 @@ RSpec.describe TimelineComponent, type: :component do
 
   describe "heading" do
     context "when heading slot is defined" do
-      subject! { render_inline(described_class.new) { |timeline| timeline.heading(title: "A title") } }
+      subject! { render_inline(described_class.new) { |timeline| timeline.with_heading(title: "A title") } }
 
       it "renders heading" do
         expect(page).to have_css(".timeline-component") do |timeline|
@@ -32,8 +32,8 @@ RSpec.describe TimelineComponent, type: :component do
     context "when item slots are defined" do
       subject! do
         render_inline(described_class.new) do |timeline|
-          timeline.item(key: "Item 1", value: "The first thing")
-          timeline.item(key: "Item 2", value: "The second thing")
+          timeline.with_item(key: "Item 1", value: "The first thing")
+          timeline.with_item(key: "Item 2", value: "The second thing")
         end
       end
 

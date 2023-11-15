@@ -3,5 +3,5 @@
 .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete"
   = f.govuk_text_field :location,
     label: { text: label_text, size: "s" },
-    form_group: { classes: %w[location-finder__input govuk-!-margin-bottom-0] },
+    form_group: { class: %w[location-finder__input govuk-!-margin-bottom-0] },
     data: { coordinates: @vacancies_search&.point_coordinates || @point_coordinates }

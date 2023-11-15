@@ -19,7 +19,7 @@ section#school-overview
     h4.govuk-heading-m = t(".schools.school_details")
     = govuk_accordion do |accordion|
       - vacancy.organisations.select(&:school?).each do |organisation|
-        - accordion.section heading_text: organisation.name do
+        - accordion.with_section heading_text: organisation.name do
           = render "vacancies/listing/school", organisation: organisation, vacancy: vacancy, contact_details: false
 
   - if vacancy.school_visits?

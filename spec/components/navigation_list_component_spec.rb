@@ -30,8 +30,8 @@ RSpec.describe NavigationListComponent, type: :component do
   context "when anchors are defined" do
     subject! do
       render_inline(described_class.new(**kwargs)) do |navigation|
-        navigation.anchor(text: "A link", href: "#to-this-place")
-        navigation.anchor(text: "Another link", href: "#to-this-other-place")
+        navigation.with_anchor(text: "A link", href: "#to-this-place")
+        navigation.with_anchor(text: "Another link", href: "#to-this-other-place")
       end
     end
 

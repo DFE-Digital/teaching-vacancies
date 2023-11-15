@@ -69,26 +69,26 @@
     .govuk-section-break.govuk-section-break--visible
 
     = govuk_summary_list do |summary_list|
-      - summary_list.row do |row|
-        - row.key text: "GCSEs, AS levels, A levels"
-        - row.value
+      - summary_list.with_row do |row|
+        - row.with_key text: "GCSEs, AS levels, A levels"
+        - row.with_value
           ul.govuk-list.govuk-list--bullet
             li School, college or organisation
             li Subjects and grade"
             li Year the qualifications were awarded
 
-      - summary_list.row do |row|
-        - row.key text: "Other UK qualification"
-        - row.value
+      - summary_list.with_row do |row|
+        - row.with_key text: "Other UK qualification"
+        - row.with_value
           ul.govuk-list.govuk-list--bullet
             li Type of qualification
             li School, college, or organisation
             li Subjects and grades
             li Year the qualifications were awarded
 
-      - summary_list.row do |row|
-        - row.key text: "Undergraduate and postgraduate degrees"
-        - row.value
+      - summary_list.with_row do |row|
+        - row.with_key text: "Undergraduate and postgraduate degrees"
+        - row.with_value
           ul.govuk-list.govuk-list--bullet
             li Subject
             li Awarding body
@@ -98,9 +98,9 @@
               |    year of the qualification. If they have not, they are asked to give
               |   further details."
 
-      - summary_list.row do |row|
-        - row.key text: "Any other qualification"
-        - row.value
+      - summary_list.with_row do |row|
+        - row.with_key text: "Any other qualification"
+        - row.with_value
           ul.govuk-list.govuk-list--bullet
             li Name of the qualification or course
             li Subject

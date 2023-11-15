@@ -13,7 +13,7 @@
 
         = f.govuk_text_field :last_name, label: { size: "m" }
 
-        = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5"
+        = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
 
     .govuk-button-group
       = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

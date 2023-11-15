@@ -60,7 +60,7 @@
         = govuk_summary_list do |summary_list|
           - vacancies.each do |vacancy|
             - summary_list.with_row do |row|
-              - row.key do
+              - row.with_key do
                 - if vacancy.external?
                   = vacancy.job_title
                   p class="govuk-!-margin-bottom-1"
@@ -70,7 +70,7 @@
                 - if organisation.school_group?
                   p.govuk-body-s = vacancy_job_location_summary(vacancy)
 
-              - row.value do
+              - row.with_value do
                 - case @selected_type
                 - when "published"
                   div class="govuk-!-margin-bottom-1"

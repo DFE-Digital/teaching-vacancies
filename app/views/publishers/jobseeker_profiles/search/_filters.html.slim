@@ -56,13 +56,13 @@ ruby:
         options: { heading_text: "Filter", remove_filter_links: true },
         html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
         - if current_organisation.trust?
-          - filters_component.group key: "location", component: searchable_collection(collection: f.govuk_collection_check_boxes(:locations,
+          - filters_component.with_group key: "location", component: searchable_collection(collection: f.govuk_collection_check_boxes(:locations,
             f.object.school_options,
             :first, :last,
             small: true, legend: { text: t("publishers.jobseeker_profiles.filters.schools") }),
             collection_count: f.object.school_options.count,
             options: { scrollable: true })
-        - filters_component.remove_filter_links do |rb|
+        - filters_component.with_remove_filter_links do |rb|
           - filter_types.each do |filter_type|
             - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :publishers_jobseeker_profiles_path, params: @jobseeker_profile_search.filters }))
         - filters_component.with_group key: "right_to_work_in_uk", component: f.govuk_collection_check_boxes(:right_to_work_in_uk, f.object.right_to_work_in_uk_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.right_to_work_in_uk") }, hint: nil)

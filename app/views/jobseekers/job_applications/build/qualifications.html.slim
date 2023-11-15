@@ -19,19 +19,19 @@
             - detail.with_body do
               = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
                 - if qualification.secondary?
-                  - summary_list.row do |row|
-                    - row.key text: t("jobseekers.job_applications.qualifications.subjects_and_grades")
-                    - row.value text: safe_join(qualification.qualification_results.map { |res| tag.div("#{res.subject} – #{res.grade}", class: "govuk-body govuk-!-margin-bottom-1") })
+                  - summary_list.with_row do |row|
+                    - row.with_key text: t("jobseekers.job_applications.qualifications.subjects_and_grades")
+                    - row.with_value text: safe_join(qualification.qualification_results.map { |res| tag.div("#{res.subject} – #{res.grade}", class: "govuk-body govuk-!-margin-bottom-1") })
 
                 - qualification.display_attributes.each do |attribute|
-                  - summary_list.row do |row|
-                    - row.key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
-                    - row.value text: qualification[attribute]
+                  - summary_list.with_row do |row|
+                    - row.with_key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
+                    - row.with_value text: qualification[attribute]
 
                 - unless qualification.finished_studying.nil?
-                  - summary_list.row do |row|
-                    - row.key text: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying")
-                    - row.value text: safe_join([tag.div(t("helpers.label.jobseekers_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}"), class: "govuk-body"), tag.div(qualification.finished_studying_details.presence, class: "govuk-body")])
+                  - summary_list.with_row do |row|
+                    - row.with_key text: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying")
+                    - row.with_value text: safe_join([tag.div(t("helpers.label.jobseekers_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}"), class: "govuk-body"), tag.div(qualification.finished_studying_details.presence, class: "govuk-body")])
 
             - if qualification.secondary?
               - detail.with_action govuk_link_to t("buttons.add_another_subject"), edit_jobseekers_job_application_qualification_path(job_application, qualification, new_subject: true), class: "govuk-link--no-visited-state"

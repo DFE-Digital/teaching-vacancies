@@ -2,24 +2,24 @@
   = render DetailComponent.new(title: employment.job_title) do |detail_component|
     - detail_component.with_body do
       = govuk_summary_list(classes: "govuk-!-margin-bottom-0") do |summary_list|
-        - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
-          - row.key text: t("jobseekers.employments.organisation")
-          - row.value text: employment.organisation
-        - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
-          - row.key text: t("jobseekers.employments.subjects")
-          - row.value text: employment.subjects
-        - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
-          - row.key text: t("jobseekers.employments.started_on")
-          - row.value text: employment.started_on.to_formatted_s(:month_year)
-        - summary_list.row do |row|
-          - row.key text: t("jobseekers.employments.current_role")
-          - row.value text: employment.current_role.humanize
+        - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
+          - row.with_key text: t("jobseekers.employments.organisation")
+          - row.with_value text: employment.organisation
+        - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
+          - row.with_key text: t("jobseekers.employments.subjects")
+          - row.with_value text: employment.subjects
+        - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
+          - row.with_key text: t("jobseekers.employments.started_on")
+          - row.with_value text: employment.started_on.to_formatted_s(:month_year)
+        - summary_list.with_row do |row|
+          - row.with_key text: t("jobseekers.employments.current_role")
+          - row.with_value text: employment.current_role.humanize
         - if employment.current_role == "no"
-          - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
-            - row.key text: t("jobseekers.employments.ended_on")
-            - row.value text: employment.ended_on.to_formatted_s(:month_year)
-        - summary_list.row(classes: "govuk-summary-list__row--no-actions") do |row|
-          - row.key text: t("jobseekers.employments.main_duties")
-          - row.value text: employment.main_duties
+          - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
+            - row.with_key text: t("jobseekers.employments.ended_on")
+            - row.with_value text: employment.ended_on.to_formatted_s(:month_year)
+        - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
+          - row.with_key text: t("jobseekers.employments.main_duties")
+          - row.with_value text: employment.main_duties
     - detail_component.with_action govuk_link_to(t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_profile_work_history_path(employment))
     - detail_component.with_action govuk_link_to(t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_profile_work_history_path(employment), method: :delete)

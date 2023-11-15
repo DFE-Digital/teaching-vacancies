@@ -23,7 +23,7 @@
 
       = govuk_summary_list do |summary_list|
         - current_organisation.schools.not_closed.order(:name).partition(&:profile_complete?).reverse.flatten.each do |school|
-          - summary_list.row do |row|
+          - summary_list.with_row do |row|
             - row.with_value do
               - if school.profile_complete?
                 .govuk-heading-s class="govuk-!-margin-bottom-2 govuk-!-margin-top-2"

@@ -44,8 +44,8 @@ RSpec.describe DetailComponent, type: :component do
   context "when body and actions slots are defined" do
     subject! do
       render_inline(described_class.new(title: title)) do |detail|
-        detail.body { tag.p "Hello!" }
-        detail.action tag.a "Click this"
+        detail.with_body { tag.p "Hello!" }
+        detail.with_action tag.a "Click this"
       end
     end
 
