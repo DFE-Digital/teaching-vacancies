@@ -157,6 +157,8 @@ variable "aks_route53_cname_record" {
   default = "not-in-use"
 }
 
+variable "azure_maintenance_window" { default = null }
+
 
 locals {
   paas_api_url               = "https://api.london.cloud.service.gov.uk"
