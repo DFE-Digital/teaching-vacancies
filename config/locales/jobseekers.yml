@@ -38,7 +38,10 @@ en:
       already_confirmed:
         description: Your email address has already been confirmed.
         title: Email already confirmed
-      new:
+      new_with_email:
+        description: We need to email another link so you can activate your account.
+        title: Resend confirmation
+      new_hidden_email:
         description: We need to email another link to %{email} so you can activate your account.
         title: Link has expired
       show:

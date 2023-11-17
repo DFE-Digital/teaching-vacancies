@@ -18,14 +18,18 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
 
   def check_your_email
     flash.delete(:notice)
-    @resource = Jobseeker.find(session[:jobseeker_id])
+    @resource = Jobseeker.find_by(id: session[:jobseeker_id])
   end
 
   def resend_instructions
-    @resource = Jobseeker.find(session[:jobseeker_id])
-    @resource.send_confirmation_instructions
-    flash[:success] = t("jobseekers.registrations.check_your_email.resent_email_confirmation")
-    render :check_your_email
+    if session[:jobseeker_id].blank?
+      redirect_to new_jobseeker_confirmation_path
+    else
+      @resource = Jobseeker.find(session[:jobseeker_id])
+      @resource.send_confirmation_instructions
+      flash[:success] = t("jobseekers.registrations.check_your_email.resent_email_confirmation")
+      render :check_your_email
+    end
   end
 
   protected
