@@ -82,7 +82,8 @@ JobApplication.statuses.count.times { |i| Jobseeker.create(email: "jobseeker#{i}
 Vacancy.listed.each do |vacancy|
   statuses = JobApplication.statuses.keys
   Jobseeker.where.not(email: "jobseeker@example.com").each do |jobseeker|
-    application_status = statuses.delete(statuses.sample)
+    # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
+    application_status = statuses.delete(statuses.sample) || JobApplication.statuses.keys.sample
     FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
   end
 end
