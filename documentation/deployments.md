@@ -26,6 +26,16 @@ Perform the following to trigger a deployment a review app
 - attach a `deploy` label
 - Docker image and tag used to deploy the `review app` is based on the review app's `branch` and `sha` e.g teva-1234:commit_sha
 
+### Review app databases
+By default, review apps use a simple postgis container deployed to AKS, as opposed to real Azure database flexible servers as it's cheaper and much faster to deploy.
+
+To use the Azure database temporarily in a review app, you can change the following parameters to `true` in `terraform/workspace-variables/review.tfvars.json` on the branch (do not commit this hange to main, remove it before merging):
+
+```json
+"deploy_azure_backing_services": true,
+"enable_postgres_ssl": true,
+"add_database_name_suffix": true,
+```
 
 ### Merge and concurrency deployment management
 When there are multiple merges, this could lead to race conditions. To mitigate this, the `turnstyle` action prevents two or more instances of the same workflow from running concurrently.
