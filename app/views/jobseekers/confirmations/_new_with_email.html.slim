@@ -1,0 +1,11 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".title")
+    p.govuk-body = t(".description")
+
+    = form_for resource, url: jobseeker_confirmation_path, method: :post do |f|
+      = f.govuk_error_summary
+      = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds", required: true
+      = f.govuk_submit t("buttons.resend_email"), class: "govuk-!-margin-bottom-0"
