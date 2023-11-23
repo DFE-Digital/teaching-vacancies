@@ -26,7 +26,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
 
     - if vacancy.how_to_apply.present?
       - summary_list.with_row do |row|
-        - row.with_ey
+        - row.with_key
           = t("jobs.how_to_apply")
         - row.with_value
           = vacancy.how_to_apply
