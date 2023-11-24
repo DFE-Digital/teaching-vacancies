@@ -27,7 +27,7 @@ RSpec.describe VacancySource::Source::MyNewTerm do
         .and_return(job_listings_response)
     end
 
-    context "with a single school vacancy" do
+    context "with a single school vacancies" do
       let(:vacancy) { subject.first }
 
       let(:expected_vacancy) do
@@ -41,12 +41,16 @@ RSpec.describe VacancySource::Source::MyNewTerm do
           contract_type: "permanent",
           phases: %w[primary],
           subjects: %w[Geography],
-          visa_sponsorship_available: false,
+          visa_sponsorship_available: true,
         }
       end
 
       it "has the correct number of vacancies" do
-        expect(subject.count).to eq(1)
+        expect(subject.count).to eq(2)
+      end
+
+      it "has correct values for visa_sponsorship_available fields" do
+        expect(subject.map(&:visa_sponsorship_available)).to eq [true, false]
       end
 
       it "yield a newly built vacancy the correct vacancy information" do

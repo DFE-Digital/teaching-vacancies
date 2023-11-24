@@ -58,7 +58,7 @@ class VacancySource::Source::MyNewTerm
       phases: phase_for(item),
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
-      visa_sponsorship_available: false,
+      visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(item))
      .merge(start_date_fields(item))
   end
@@ -113,6 +113,10 @@ class VacancySource::Source::MyNewTerm
     return unless item["ectSuitable"].presence
 
     item["ectSuitable"] == true ? "ect_suitable" : "ect_unsuitable"
+  end
+
+  def visa_sponsorship_available_for(item)
+    item["visaSponsorshipAvailable"] == true
   end
 
   def key_stages_for(item)

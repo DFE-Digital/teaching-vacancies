@@ -34,6 +34,39 @@
         ],
         "subjects": [
           "Geography"
+        ],
+        "visaSponsorshipAvailable": true
+      },
+      {
+        "reference": "561c8f63-c105-4142-ba14-4c345118e46b2",
+        "advertUrl": "https://www.example.co.uk/jobs/URN/EDV-2023-MNT-12345",
+        "publishOn": "2023-01-15",
+        "expiresAt": "2023-02-10T23:59:00+00:00",
+        "jobTitle": "Head of Geography",
+        "jobAdvert": "Lorem ipsum dolor sit amet",
+        "salary": "£24,000 - £50,000 Annually",
+        "additionalAllowances": "TLR2a",
+        "startDate": "ASAP",
+        "schoolUrns": [
+          "123456"
+        ],
+        "trustUID": null,
+        "jobRole": "teacher",
+        "ectSuitable": false,
+        "workingPatterns": [
+          "full_time",
+          "part_time"
+        ],
+        "contractType": [
+          "permanent"
+        ],
+        "phase": "primary",
+        "keyStages": [
+          "ks2",
+          "ks3"
+        ],
+        "subjects": [
+          "Geography"
         ]
       }
     ]
