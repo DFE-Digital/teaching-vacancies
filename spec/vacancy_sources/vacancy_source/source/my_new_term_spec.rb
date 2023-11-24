@@ -46,7 +46,11 @@ RSpec.describe VacancySource::Source::MyNewTerm do
       end
 
       it "has the correct number of vacancies" do
-        expect(subject.count).to eq(1)
+        expect(subject.count).to eq(2)
+      end
+
+      it "has correct values for visa_sponsorship_available fields" do
+        expect(subject.map(&:visa_sponsorship_available)).to eq [true, false]
       end
 
       it "yield a newly built vacancy the correct vacancy information" do
