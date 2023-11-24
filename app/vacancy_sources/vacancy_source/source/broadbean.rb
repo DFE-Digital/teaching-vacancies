@@ -59,6 +59,7 @@ class VacancySource::Source::Broadbean
       working_patterns: item["workingPatterns"].presence&.split(","),
       contract_type: item["contractType"].presence,
       phases: phase_for(item),
+      visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(item))
      .merge(start_date_fields(item))
   end
@@ -102,6 +103,10 @@ class VacancySource::Source::Broadbean
     item["phase"].strip
                  .gsub(/all_through|through_school/, "through")
                  .gsub(/16-19|16_19/, "sixth_form_or_college")
+  end
+
+  def visa_sponsorship_available_for(item)
+    item["visaSponsorshipAvailable"] == "true"
   end
 
   def organisation_fields(item)
