@@ -30,7 +30,7 @@ RSpec.describe VacancySource::Source::UnitedLearning do
       expect(vacancy.working_patterns).to eq(%w[full_time])
       expect(vacancy.contract_type).to eq("permanent")
       expect(vacancy.phases).to eq(%w[secondary])
-      expect(vacancy.visa_sponsorship_available).to eq false
+      expect(vacancy.visa_sponsorship_available).to eq true
 
       expect(vacancy.organisations.first).to eq(school)
 
@@ -212,6 +212,18 @@ RSpec.describe VacancySource::Source::UnitedLearning do
 
         expect(vacancy.job_title).to eq("Head of Geography")
       end
+    end
+  end
+
+  context "when visa_sponsorship_available field is not supplied" do
+    before do
+      expect(HTTParty).to receive(:get).with("http://example.com/feed.xml").and_return(file_fixture("vacancy_sources/united_learning_without_visa_sponsorship_available.xml").read)
+    end
+
+    let(:vacancy) { subject.first }
+
+    it "defaults visa_sponsorship_available to false" do
+      expect(vacancy.visa_sponsorship_available).to eq false
     end
   end
 
