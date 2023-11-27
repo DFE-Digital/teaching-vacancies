@@ -82,10 +82,14 @@ RSpec.describe VacancySource::Source::Every do
     end
   end
 
-  context "when visa_sponsorship_available is not supplied" do
-    let(:response_body) { file_fixture("vacancy_sources/every_without_visa_sponsorship_available.json").read }
+  context "when visa_sponsorship_available is not provided" do
+    let(:response_body) do
+      hash = JSON.parse(super())
+      hash["result"].first.delete("visaSponsorshipAvailable")
+      hash.to_json
+    end
 
-    it "defaults visa_sponsorship_available to false" do
+    it "sets visa_sponsorship_available to false" do
       expect(vacancy.visa_sponsorship_available).to eq false
     end
   end
