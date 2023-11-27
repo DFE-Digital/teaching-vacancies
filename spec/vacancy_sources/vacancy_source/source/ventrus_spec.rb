@@ -190,7 +190,7 @@ RSpec.describe VacancySource::Source::Ventrus do
 
     context "when visa_sponsorship_available field is not supplied" do
       let(:response_body) { file_fixture("vacancy_sources/ventrus_without_visa_sponsorship_available.xml").read }
-  
+
       it "defaults visa_sponsorship_available to false" do
         expect(vacancy.visa_sponsorship_available).to eq false
       end

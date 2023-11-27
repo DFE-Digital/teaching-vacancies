@@ -22,7 +22,7 @@ RSpec.describe VacancySource::Source::Broadbean do
         working_patterns: %w[part_time],
         contract_type: "parental_leave_cover",
         phases: %w[primary],
-        visa_sponsorship_available: true
+        visa_sponsorship_available: true,
       }
     end
 

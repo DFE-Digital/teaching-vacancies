@@ -77,7 +77,7 @@ RSpec.describe VacancySource::Source::MyNewTerm do
           hash["data"]["jobs"].first.delete("visaSponsorshipAvailable")
           hash.to_json
         end
-  
+
         it "sets visa_sponsorship_available to false" do
           expect(vacancy.visa_sponsorship_available).to eq false
         end
