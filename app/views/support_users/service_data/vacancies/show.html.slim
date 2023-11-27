@@ -1,0 +1,12 @@
+- title = @vacancy.job_title || @vacancy.slug
+- content_for :page_title_prefix, title
+
+h1.govuk-heading-l = title
+
+= render DetailComponent.new title: title do |detail|
+  - detail.with_body do
+    = govuk_summary_list do |summary_list|
+      - Vacancy.column_names.each do |column_name|
+        - summary_list.with_row do |row|
+          - row.with_key text: column_name.humanize
+          - row.with_value text: @vacancy.send(column_name)

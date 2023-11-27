@@ -6,6 +6,8 @@ en:
       user_feedback_heading: User feedback
       user_feedback_link: View user feedback
       development_tools_heading: Developer tools
+      service_data_heading: Service data
+      service_data_link: View service data
       sidekiq_link: View Sidekiq dashboard
     feedbacks:
       general:

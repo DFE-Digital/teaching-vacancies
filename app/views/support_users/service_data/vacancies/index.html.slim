@@ -1,0 +1,10 @@
+- content_for :page_title_prefix, "Service Vacancies"
+
+h1.govuk-heading-l = "Service Vacancies"
+= supportal_table(entries: @vacancies, classes: (["supportal-table-component--#{type}"] if local_assigns[:type])) do |t|
+  - t.column "Job Title" do |vacancy|
+    - capture do
+      = govuk_link_to(vacancy.job_title || vacancy.slug, support_users_service_data_vacancy_path(vacancy))
+  - t.tags "Status", :status
+  - t.tags("Source") { |v| v.external_source.presence || "Internal" }
+  - t.datetime "Created", :created_at

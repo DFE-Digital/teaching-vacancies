@@ -207,6 +207,10 @@ Rails.application.routes.draw do
     get "feedback/satisfaction-ratings", to: "feedbacks#satisfaction_ratings"
 
     post "feedback/recategorize", to: "feedbacks#recategorize"
+
+    namespace :service_data, path: "service-data" do
+      resources :vacancies, only: %i[index show]
+    end
   end
 
   devise_for :support_users
