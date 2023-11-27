@@ -27,7 +27,7 @@ RSpec.describe VacancySource::Source::MyNewTerm do
         .and_return(job_listings_response)
     end
 
-    context "with a single school vacancies" do
+    context "with a single school vacancy" do
       let(:vacancy) { subject.first }
 
       let(:expected_vacancy) do
