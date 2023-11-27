@@ -46,11 +46,7 @@ RSpec.describe VacancySource::Source::MyNewTerm do
       end
 
       it "has the correct number of vacancies" do
-        expect(subject.count).to eq(2)
-      end
-
-      it "has correct values for visa_sponsorship_available fields" do
-        expect(subject.map(&:visa_sponsorship_available)).to eq [true, false]
+        expect(subject.count).to eq(1)
       end
 
       it "yield a newly built vacancy the correct vacancy information" do
@@ -73,6 +69,18 @@ RSpec.describe VacancySource::Source::MyNewTerm do
       it "sets important dates" do
         expect(vacancy.expires_at).to eq(Time.zone.parse("2023-02-10T23:59:00+00:00"))
         expect(vacancy.publish_on).to eq(Date.today)
+      end
+
+      context "when visa_sponsorship_available is not provided" do
+        let(:job_listings_response_body) do
+          hash = JSON.parse(super())
+          hash["data"]["jobs"].first.delete("visaSponsorshipAvailable")
+          hash.to_json
+        end
+  
+        it "sets visa_sponsorship_available to false" do
+          expect(vacancy.visa_sponsorship_available).to eq false
+        end
       end
 
       describe "job roles mapping" do
