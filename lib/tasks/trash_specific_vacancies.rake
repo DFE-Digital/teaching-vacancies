@@ -10,7 +10,7 @@ namespace :vacancies do
     ]
 
     Vacancy.where(external_reference: external_references_to_trash).each do |vacancy|
-      vacancy.update(status: "trashed")
+      vacancy.update!(status: "trashed")
     end
   end
 end
