@@ -20,7 +20,7 @@ class VacancySource::Source::MyNewTerm
 
   def each
     results.each do |result|
-      external_references_to_exclude = ["10e5719e-6685-46e6-9393-e231ff905fd8", "807ea98e-07c2-4e7d-a2a2-75ad471fba3d", "098bb02b-86ef-4a19-a148-b959213a3e33", "a94c389e-030d-4244-b42d-4ee804d2859c", "5430a89c-c838-4bad-8732-7eb73e9d6533"]
+      external_references_to_exclude = %w[10e5719e-6685-46e6-9393-e231ff905fd8 807ea98e-07c2-4e7d-a2a2-75ad471fba3d 098bb02b-86ef-4a19-a148-b959213a3e33 a94c389e-030d-4244-b42d-4ee804d2859c 5430a89c-c838-4bad-8732-7eb73e9d6533]
       next if external_references_to_exclude.include?(result["external_reference"])
 
       v = Vacancy.find_or_initialize_by(
