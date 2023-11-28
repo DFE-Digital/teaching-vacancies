@@ -52,7 +52,7 @@ services:
       - "6379:6379"
 
   selenium-chrome:
-    image: selenium/standalone-chrome:95.0
+    image: selenium/standalone-chrome:119.0
     shm_size: 2G
     ports:
       - "7900:7900"
