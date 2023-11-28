@@ -154,7 +154,7 @@ class VacancySource::Source::Ark
   end
 
   def visa_sponsorship_available_for(item)
-    item["visaSponsorshipAvailable"] == "true"
+    item["engAts:visaSponsorshipAvailable"] == "true"
   end
 
   def organisation_fields(item)
