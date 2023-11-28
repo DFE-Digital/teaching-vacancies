@@ -33,7 +33,9 @@
         "waderyan.gitblame",
         "eamodio.gitlens",
         "sleistner.vscode-fileutils",
-        "Shopify.ruby-extensions-pack"
+        "Shopify.ruby-extensions-pack",
+        "GitHub.copilot",
+        "donjayamanne.git-extension-pack"
 	],
       "settings": {
         // Get highlighting for local env files
