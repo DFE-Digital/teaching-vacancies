@@ -27,14 +27,14 @@
         "kaiwood.endwise",
         "mtxr.sqltools",
         "mtxr.sqltools-driver-pg",
-        "rebornix.Ruby",
         "redhat.vscode-yaml",
         "sianglim.slim",
         "LoranKloeze.ruby-rubocop-revived",
         "waderyan.gitblame",
         "eamodio.gitlens",
-        "sleistner.vscode-fileutils"
-      ],
+        "sleistner.vscode-fileutils",
+        "Shopify.ruby-extensions-pack"
+	],
       "settings": {
         // Get highlighting for local env files
         "files.associations": {
