@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@sentry/browser": "7.81.1",
+    "@sentry/browser": "7.83.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^2.0.4",
     "axios": "^1.6.2",
@@ -30,7 +30,7 @@
     "@babel/preset-env": "^7.23.3",
     "concurrently": "^8.2.2",
     "dotenv": "^16.3.1",
-    "esbuild": "^0.19.7",
+    "esbuild": "^0.19.8",
     "esbuild-plugin-babel": "^0.2.3",
     "eslint": "^8.54.0",
     "eslint-config-airbnb-base": "^15.0.0",
