@@ -22,7 +22,7 @@ RSpec.describe VacancySource::Source::Ventrus do
         working_patterns: %w[part_time],
         contract_type: "permanent",
         phases: %w[secondary],
-        visa_sponsorship_available: false,
+        visa_sponsorship_available: true,
       }
     end
 
@@ -185,6 +185,14 @@ RSpec.describe VacancySource::Source::Ventrus do
 
       it "assigns the vacancy job location to the central trust" do
         expect(vacancy.readable_job_location).to eq(school1.name)
+      end
+    end
+
+    context "when visa_sponsorship_available field is not supplied" do
+      let(:response_body) { file_fixture("vacancy_sources/ventrus_without_visa_sponsorship_available.xml").read }
+
+      it "defaults visa_sponsorship_available to false" do
+        expect(vacancy.visa_sponsorship_available).to eq false
       end
     end
   end

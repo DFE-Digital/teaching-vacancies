@@ -41,7 +41,7 @@ RSpec.describe VacancySource::Source::MyNewTerm do
           contract_type: "permanent",
           phases: %w[primary],
           subjects: %w[Geography],
-          visa_sponsorship_available: false,
+          visa_sponsorship_available: true,
         }
       end
 
@@ -69,6 +69,18 @@ RSpec.describe VacancySource::Source::MyNewTerm do
       it "sets important dates" do
         expect(vacancy.expires_at).to eq(Time.zone.parse("2023-02-10T23:59:00+00:00"))
         expect(vacancy.publish_on).to eq(Date.today)
+      end
+
+      context "when visa_sponsorship_available is not provided" do
+        let(:job_listings_response_body) do
+          hash = JSON.parse(super())
+          hash["data"]["jobs"].first.delete("visaSponsorshipAvailable")
+          hash.to_json
+        end
+
+        it "sets visa_sponsorship_available to false" do
+          expect(vacancy.visa_sponsorship_available).to eq false
+        end
       end
 
       describe "job roles mapping" do

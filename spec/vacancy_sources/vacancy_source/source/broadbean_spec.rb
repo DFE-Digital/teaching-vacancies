@@ -22,6 +22,7 @@ RSpec.describe VacancySource::Source::Broadbean do
         working_patterns: %w[part_time],
         contract_type: "parental_leave_cover",
         phases: %w[primary],
+        visa_sponsorship_available: true,
       }
     end
 
@@ -281,6 +282,14 @@ RSpec.describe VacancySource::Source::Broadbean do
 
       it "assigns the vacancy job location to the school" do
         expect(vacancy.readable_job_location).to eq(school2.name)
+      end
+    end
+
+    context "when visa_sponsorship_available field is not supplied" do
+      let(:response_body) { file_fixture("vacancy_sources/broadbean_without_visa_sponsorship_available.xml").read }
+
+      it "defaults visa_sponsorship_available to false" do
+        expect(vacancy.visa_sponsorship_available).to eq false
       end
     end
   end

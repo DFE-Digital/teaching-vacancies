@@ -21,7 +21,7 @@ RSpec.describe VacancySource::Source::Every do
       working_patterns: %w[full_time],
       contract_type: "fixed_term",
       phases: %w[primary],
-      visa_sponsorship_available: false,
+      visa_sponsorship_available: true,
     }
   end
 
@@ -79,6 +79,18 @@ RSpec.describe VacancySource::Source::Every do
 
     it "assigns the vacancy job location to the school" do
       expect(vacancy.readable_job_location).to eq(school2.name)
+    end
+  end
+
+  context "when visa_sponsorship_available is not provided" do
+    let(:response_body) do
+      hash = JSON.parse(super())
+      hash["result"].first.delete("visaSponsorshipAvailable")
+      hash.to_json
+    end
+
+    it "sets visa_sponsorship_available to false" do
+      expect(vacancy.visa_sponsorship_available).to eq false
     end
   end
 

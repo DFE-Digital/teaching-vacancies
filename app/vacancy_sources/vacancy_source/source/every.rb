@@ -51,7 +51,7 @@ class VacancySource::Source::Every
       contract_type: item["contractType"].presence,
       phases: phase_for(item),
       key_stages: item["keyStages"].presence&.split(","),
-      visa_sponsorship_available: false,
+      visa_sponsorship_available: visa_sponsorship_available_for(item),
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
@@ -84,6 +84,10 @@ class VacancySource::Source::Every
     else
       Organisation.where(urn: item["schoolUrns"])
     end.to_a
+  end
+
+  def visa_sponsorship_available_for(item)
+    item["visaSponsorshipAvailable"] == true
   end
 
   def multi_academy_trust(item)

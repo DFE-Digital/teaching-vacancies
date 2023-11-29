@@ -57,7 +57,7 @@ class VacancySource::Source::Ventrus
       working_patterns: item["Working_Patterns"].presence&.split(","),
       contract_type: item["Contract_Type"].presence,
       phases: phase_for(item),
-      visa_sponsorship_available: false,
+      visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(item))
   end
 
@@ -109,6 +109,10 @@ class VacancySource::Source::Ventrus
                  .parameterize(separator: "_")
                  .gsub("through_school", "through")
                  .gsub(/16-19|16_19/, "sixth_form_or_college")
+  end
+
+  def visa_sponsorship_available_for(item)
+    item["Visa_Sponsorship_Available"] == "true"
   end
 
   def items

@@ -22,9 +22,9 @@ RSpec.describe VacancySource::Source::Ark do
         working_patterns: %w[full_time],
         contract_type: "fixed_term",
         phases: %w[through],
-        visa_sponsorship_available: nil,
         expires_at: Time.zone.parse("2023-10-12T12:00:00"),
         publish_on: Date.parse("2021-03-09"),
+        visa_sponsorship_available: true,
       }
     end
 
@@ -312,6 +312,14 @@ RSpec.describe VacancySource::Source::Ark do
 
       it "assigns the vacancy job location to the central trust" do
         expect(vacancy.readable_job_location).to eq(school1.name)
+      end
+    end
+
+    context "when visa_sponsorship_available field is not supplied" do
+      let(:response_body) { file_fixture("vacancy_sources/ark_without_visa_sponsorship_available.xml").read }
+
+      it "defaults visa_sponsorship_available to false" do
+        expect(vacancy.visa_sponsorship_available).to eq false
       end
     end
   end

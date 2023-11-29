@@ -72,6 +72,7 @@ class VacancySource::Source::Ark
       contract_type: contract_type_for(item),
       phases: phases_for(item),
       publish_on: publish_on_for(item),
+      visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(item))
     .merge(start_date_fields(item))
   end
@@ -150,6 +151,10 @@ class VacancySource::Source::Ark
     .gsub("Secondary", "secondary")
     .gsub("All-through", "through")
     .gsub(/\s+/, "")
+  end
+
+  def visa_sponsorship_available_for(item)
+    item["engAts:visaSponsorshipAvailable"] == "true"
   end
 
   def organisation_fields(item)
