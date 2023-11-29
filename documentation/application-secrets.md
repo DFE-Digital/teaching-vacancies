@@ -30,7 +30,7 @@ They need to be in an encrypted and base64 encoded format. There currently isn't
 1. Run a terraform plan to ensure everything has been done correctly (You should not have any changes required for the lambda resource).
 
 ### SECRET_KEY_BASE
-The secret_key_base is used as the input secret to the application's key generator, which in turn is used to create all MessageVerifiers/MessageEncryptors, including the ones that sign and encrypt cookies.
+The secret_key_base is used as the input secret to the application's key generator, which in turn is used to create all MessageVerifiers/MessageEncryptors, including the ones that sign and encrypt cookies. If you change this key, all old signed cookies will become invalid!
 In order to generate a new secret key:
 1. Run the `rails secret` task from the repo, it will generate a new secret key
 1. You need to generate a different key per environment
