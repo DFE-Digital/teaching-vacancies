@@ -13,7 +13,7 @@ namespace :vacancies do
       "Special post 16 institution",
       "Other independent special school",
       "Higher education institutions",
-      "Welsh establishment"
+      "Welsh establishment",
     ].freeze
 
     Vacancy.joins(:organisation_vacancies)

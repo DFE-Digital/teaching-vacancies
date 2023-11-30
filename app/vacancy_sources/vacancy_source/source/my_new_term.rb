@@ -20,7 +20,7 @@ class VacancySource::Source::MyNewTerm
     "Special post 16 institution",
     "Other independent special school",
     "Higher education institutions",
-    "Welsh establishment"
+    "Welsh establishment",
   ].freeze
 
   def self.source_name
