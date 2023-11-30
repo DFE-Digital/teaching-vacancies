@@ -1,6 +1,6 @@
 namespace :vacancies do
-  desc "Trash vacancies with specific external references"
-  task trash_specific: :environment do
+  desc "Trash vacancies belonging to non-accepted school types"
+  task trash_non_accepted_school_types: :environment do
     detailed_school_types_to_trash = [
       "Further education",
       "Other independent school",
