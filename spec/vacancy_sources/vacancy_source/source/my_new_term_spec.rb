@@ -61,7 +61,7 @@ RSpec.describe VacancySource::Source::MyNewTerm do
       end
 
       it "assigns the vacancy to the correct school and organisation" do
-        expect(vacancy.organisations.first).to eq(school1)
+        expect(vacancy.organisations.first).to eq(in_scope_school)
 
         expect(vacancy.external_source).to eq("my_new_term")
         expect(vacancy.external_advert_url).to eq("https://www.example.co.uk/jobs/URN/EDV-2023-MNT-12345")

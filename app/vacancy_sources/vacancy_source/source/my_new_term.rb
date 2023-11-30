@@ -49,7 +49,7 @@ class VacancySource::Source::MyNewTerm
       v.publish_on ||= Date.today
 
       begin
-        v.assign_attributes(attributes_for(result))
+        v.assign_attributes(attributes_for(result, schools))
       rescue ArgumentError => e
         v.errors.add(:base, e)
       end
