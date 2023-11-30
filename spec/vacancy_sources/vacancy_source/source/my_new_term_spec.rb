@@ -7,6 +7,8 @@ RSpec.describe VacancySource::Source::MyNewTerm do
   let(:response) { double("AuthenticationResponse", code: 200, body: successful_auth_response.to_json) }
   let(:job_listings_response_body) { file_fixture("vacancy_sources/my_new_term.json").read }
   let(:job_listings_response) { double("JobListingResponse", code: 200, body: job_listings_response_body) }
+  let!(:in_scope_school) { create(:school, urn: "111111") }
+  let!(:out_of_scope_school) { create(:school, detailed_school_type: "Other independent school", urn: "000000") }
 
   let!(:school1) { create(:school, name: "Test School", urn: "123456", phase: :primary) }
 
@@ -80,6 +82,18 @@ RSpec.describe VacancySource::Source::MyNewTerm do
 
         it "sets visa_sponsorship_available to false" do
           expect(vacancy.visa_sponsorship_available).to eq false
+        end
+      end
+
+      context "when associated with an out of scope school" do
+        let(:job_listings_response_body) do
+          hash = JSON.parse(super())
+          hash["data"]["jobs"].first["schoolUrns"] = [out_of_scope_school.urn]
+          hash.to_json
+        end
+
+        it "does not import vacancy" do
+          expect(subject.count).to eq(0)
         end
       end
 
