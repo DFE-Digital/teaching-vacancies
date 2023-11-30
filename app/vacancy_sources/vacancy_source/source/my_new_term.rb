@@ -8,12 +8,19 @@ class VacancySource::Source::MyNewTerm
   BASE_URI = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_FEED_URL").freeze
   API_KEY = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_API_KEY").freeze
   SOURCE_NAME = "my_new_term".freeze
-  EXTERNAL_REFERENCES_TO_EXCLUDE = %w[
-    10e5719e-6685-46e6-9393-e231ff905fd8
-    807ea98e-07c2-4e7d-a2a2-75ad471fba3d
-    098bb02b-86ef-4a19-a148-b959213a3e33
-    a94c389e-030d-4244-b42d-4ee804d2859c
-    5430a89c-c838-4bad-8732-7eb73e9d6533
+  EXCLUDED_DETAILED_SCHOOL_TYPES = [
+    "Further education",
+    "Other independent school",
+    "Online provider",
+    "British schools overseas",
+    "Institution funded by other government department",
+    "Miscellaneous",
+    "Offshore schools",
+    "Service children’s education",
+    "Special post 16 institution",
+    "Other independent special school",
+    "Higher education institutions",
+    "Welsh establishment",
   ].freeze
 
   def self.source_name
@@ -27,7 +34,8 @@ class VacancySource::Source::MyNewTerm
 
   def each
     results.each do |result|
-      next if EXTERNAL_REFERENCES_TO_EXCLUDE.include?(result["reference"])
+      schools = find_schools(result)
+      next if vacancy_listed_at_excluded_school_type?(schools)
 
       v = Vacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
@@ -41,7 +49,7 @@ class VacancySource::Source::MyNewTerm
       v.publish_on ||= Date.today
 
       begin
-        v.assign_attributes(attributes_for(result))
+        v.assign_attributes(attributes_for(result, schools))
       rescue ArgumentError => e
         v.errors.add(:base, e)
       end
@@ -52,7 +60,11 @@ class VacancySource::Source::MyNewTerm
 
   private
 
-  def attributes_for(item)
+  def vacancy_listed_at_excluded_school_type?(schools)
+    (schools.map(&:detailed_school_type) & EXCLUDED_DETAILED_SCHOOL_TYPES).present?
+  end
+
+  def attributes_for(item, schools)
     {
       job_title: item["jobTitle"],
       job_advert: item["jobAdvert"],
@@ -68,12 +80,11 @@ class VacancySource::Source::MyNewTerm
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
       visa_sponsorship_available: visa_sponsorship_available_for(item),
-    }.merge(organisation_fields(item))
+    }.merge(organisation_fields(schools))
      .merge(start_date_fields(item))
   end
 
-  def organisation_fields(item)
-    schools = find_schools(item)
+  def organisation_fields(schools)
     first_school = schools.first
 
     {
