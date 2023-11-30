@@ -20,7 +20,7 @@ class MessageEncryptor
   end
 
   def secret
-    salt = Rails.application.secrets.secret_key_base
+    salt = Rails.application.secret_key_base
     len = ActiveSupport::MessageEncryptor.key_len
     @secret ||= ActiveSupport::KeyGenerator.new(salt).generate_key(salt, len)
   end
