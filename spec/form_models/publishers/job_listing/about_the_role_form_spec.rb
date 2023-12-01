@@ -58,19 +58,6 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
         expect(subject.errors.messages[:skills_and_experience]).to include(I18n.t("about_the_role_errors.skills_and_experience.blank"))
       end
     end
-
-    context "when skills_and_experience is over 300 words" do
-      let(:error) { %i[skills_and_experience length] }
-      let(:params) { { skills_and_experience: Faker::Lorem.sentence(word_count: 301) } }
-
-      it "fails validation" do
-        expect(subject.errors.added?(*error)).to be true
-      end
-
-      it "has the correct error message" do
-        expect(subject.errors.messages[:skills_and_experience]).to include(I18n.t("about_the_role_errors.skills_and_experience.length"))
-      end
-    end
   end
 
   describe "school_offer" do
@@ -117,19 +104,6 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
 
       it "has the correct error message" do
         expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"))
-      end
-    end
-
-    context "when school_offer is over 300 words" do
-      let(:error) { [:school_offer, :length, { organisation: "school" }] }
-      let(:params) { { school_offer: Faker::Lorem.sentence(word_count: 301) } }
-
-      it "fails validation" do
-        expect(subject.errors.added?(*error)).to be true
-      end
-
-      it "has the correct error message" do
-        expect(subject.errors.messages[:school_offer]).to include(I18n.t("about_the_role_errors.school_offer.length", organisation: "school"))
       end
     end
   end
