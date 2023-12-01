@@ -3,9 +3,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validate :job_advert_presence, if: -> { vacancy.job_advert.present? }
   validate :about_school_presence, if: -> { vacancy.about_school.present? }
   validate :skills_and_experience_presence, unless: -> { vacancy.job_advert.present? }
-  validate :skills_and_experience_does_not_exceed_maximum_words, unless: -> { vacancy.job_advert.present? }
   validate :school_offer_presence, unless: -> { vacancy.about_school.present? }
-  validate :school_offer_does_not_exceed_maximum_words, unless: -> { vacancy.about_school.present? }
   validates :safeguarding_information_provided, inclusion: { in: [true, false, "true", "false"] }, if: -> { vacancy.safeguarding_information.present? }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validate :safeguarding_information_presence, if: -> { vacancy.safeguarding_information.present? && safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
@@ -46,18 +44,10 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     errors.add(:school_offer, :blank, organisation: organisation_type)
   end
 
-  def school_offer_does_not_exceed_maximum_words
-    errors.add(:school_offer, :length, organisation: organisation_type.downcase) if number_of_words_exceeds_permitted_length?(300, school_offer)
-  end
-
   def skills_and_experience_presence
     return if remove_html_tags(skills_and_experience).present?
 
     errors.add(:skills_and_experience, :blank)
-  end
-
-  def skills_and_experience_does_not_exceed_maximum_words
-    errors.add(:skills_and_experience, :length) if number_of_words_exceeds_permitted_length?(300, skills_and_experience)
   end
 
   def safeguarding_information_presence
