@@ -78,8 +78,10 @@ class Organisation < ApplicationRecord
   end
 
   def schools_outside_local_authority
-    if local_authority_code
-      school_urns = Rails.configuration.local_authorities_extra_schools&.dig(local_authority_code.to_s)
+    local_authorities_extra_schools = Rails.configuration.local_authorities_extra_schools.to_h.transform_keys(&:to_s)
+
+    if local_authority_code && local_authorities_extra_schools
+      school_urns = local_authorities_extra_schools[local_authority_code]
       School.where(urn: school_urns)
     else
       School.none
