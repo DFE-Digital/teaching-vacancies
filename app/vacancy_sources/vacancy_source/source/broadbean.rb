@@ -3,6 +3,20 @@ class VacancySource::Source::Broadbean
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_BROADBEAN_FEED_URL").freeze
   SOURCE_NAME = "broadbean".freeze
+  EXCLUDED_DETAILED_SCHOOL_TYPES = [
+    "Further education",
+    "Other independent school",
+    "Online provider",
+    "British schools overseas",
+    "Institution funded by other government department",
+    "Miscellaneous",
+    "Offshore schools",
+    "Service children’s education",
+    "Special post 16 institution",
+    "Other independent special school",
+    "Higher education institutions",
+    "Welsh establishment",
+  ].freeze
 
   # Helper class for less verbose handling of items in the feed
   class FeedItem
@@ -23,6 +37,9 @@ class VacancySource::Source::Broadbean
 
   def each
     items.each do |item|
+      schools = find_schools(item)
+      next if vacancy_listed_at_excluded_school_type?(schools)
+
       v = Vacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: item["reference"],
@@ -35,7 +52,7 @@ class VacancySource::Source::Broadbean
       v.publish_on ||= Date.today
 
       begin
-        v.assign_attributes(attributes_for(item))
+        v.assign_attributes(attributes_for(item, schools))
       rescue ArgumentError => e
         v.errors.add(:base, e)
       end
@@ -44,7 +61,7 @@ class VacancySource::Source::Broadbean
     end
   end
 
-  def attributes_for(item)
+  def attributes_for(item, schools)
     {
       job_title: item["jobTitle"],
       job_advert: item["jobAdvert"],
@@ -60,7 +77,7 @@ class VacancySource::Source::Broadbean
       contract_type: item["contractType"].presence,
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
-    }.merge(organisation_fields(item))
+    }.merge(organisation_fields(schools))
      .merge(start_date_fields(item))
   end
 
@@ -109,8 +126,7 @@ class VacancySource::Source::Broadbean
     item["visaSponsorshipAvailable"] == "true"
   end
 
-  def organisation_fields(item)
-    schools = find_schools(item)
+  def organisation_fields(schools)
     first_school = schools.first
 
     {
@@ -118,6 +134,10 @@ class VacancySource::Source::Broadbean
       readable_job_location: first_school&.name,
       about_school: first_school&.description,
     }
+  end
+
+  def vacancy_listed_at_excluded_school_type?(schools)
+    (schools.map(&:detailed_school_type) & EXCLUDED_DETAILED_SCHOOL_TYPES).present?
   end
 
   def find_schools(item)
