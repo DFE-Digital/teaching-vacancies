@@ -2,6 +2,20 @@ class VacancySource::Source::Ventrus
   FEED_URL = ENV.fetch("VACANCY_SOURCE_VENTRUS_FEED_URL").freeze
   VENTRUS_TRUST_UID = "4243".freeze
   SOURCE_NAME = "ventrus".freeze
+  EXCLUDED_DETAILED_SCHOOL_TYPES = [
+    "Further education",
+    "Other independent school",
+    "Online provider",
+    "British schools overseas",
+    "Institution funded by other government department",
+    "Miscellaneous",
+    "Offshore schools",
+    "Service children’s education",
+    "Special post 16 institution",
+    "Other independent special school",
+    "Higher education institutions",
+    "Welsh establishment",
+  ].freeze
 
   class FeedItem
     def initialize(xml_node)
@@ -21,6 +35,9 @@ class VacancySource::Source::Ventrus
 
   def each
     items.each do |item|
+      schools = find_schools(item)
+      next if vacancy_listed_at_excluded_school_type?(schools)
+
       v = Vacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: item["VacancyID"],
@@ -33,7 +50,7 @@ class VacancySource::Source::Ventrus
       v.publish_on ||= Date.today
 
       begin
-        v.assign_attributes(attributes_for(item))
+        v.assign_attributes(attributes_for(item, schools))
       rescue ArgumentError => e
         v.errors.add(:base, e)
       end
@@ -42,7 +59,11 @@ class VacancySource::Source::Ventrus
     end
   end
 
-  def attributes_for(item)
+  def vacancy_listed_at_excluded_school_type?(schools)
+    (schools.map(&:detailed_school_type) & EXCLUDED_DETAILED_SCHOOL_TYPES).present?
+  end
+
+  def attributes_for(item, schools)
     {
       job_title: item["Vacancy_title"],
       job_advert: Rails::Html::WhiteListSanitizer.new.sanitize(item["Advert_text"], tags: %w[p br]),
@@ -58,7 +79,7 @@ class VacancySource::Source::Ventrus
       contract_type: item["Contract_Type"].presence,
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
-    }.merge(organisation_fields(item))
+    }.merge(organisation_fields(schools))
   end
 
   def ect_status_for(item)
@@ -67,8 +88,7 @@ class VacancySource::Source::Ventrus
     item["ECT_Suitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
   end
 
-  def organisation_fields(item)
-    schools = find_schools(item)
+  def organisation_fields(schools)
     first_school = schools.first
 
     {
