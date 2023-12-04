@@ -295,7 +295,9 @@ RSpec.describe VacancySource::Source::Broadbean do
     end
 
     context "when vacancy is for an out of scope school" do
-      let(:response_body) { file_fixture("vacancy_sources/broadbean_with_out_of_scope_school.xml").read }
+      before do
+        school1.update(detailed_school_type: "Other independent school")
+      end
 
       it "does not import vacancy" do
         expect(subject.count).to eq(0)
