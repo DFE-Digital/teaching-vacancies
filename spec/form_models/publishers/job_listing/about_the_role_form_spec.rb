@@ -198,19 +198,6 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
 
         it { is_expected.not_to validate_presence_of(:further_details) }
       end
-
-      context "when further_details is over 300 words" do
-        let(:error) { %i[further_details length] }
-        let(:params) { { further_details: Faker::Lorem.sentence(word_count: 301), further_details_provided: "true" } }
-
-        it "fails validation" do
-          expect(subject.errors.added?(*error)).to be true
-        end
-
-        it "has the correct error message" do
-          expect(subject.errors.messages[:further_details]).to include(I18n.t("about_the_role_errors.further_details.length"))
-        end
-      end
     end
   end
 

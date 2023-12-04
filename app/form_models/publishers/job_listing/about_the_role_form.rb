@@ -9,7 +9,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validates :further_details_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validate :further_details_presence, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
-  validate :further_details_does_not_exceed_maximum_words, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
 
   def self.fields
     %i[
@@ -64,10 +63,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     return if remove_html_tags(further_details).present?
 
     errors.add(:further_details, :blank)
-  end
-
-  def further_details_does_not_exceed_maximum_words
-    errors.add(:further_details, :length) if number_of_words_exceeds_permitted_length?(300, further_details)
   end
 
   def about_school_presence
