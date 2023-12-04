@@ -28,7 +28,6 @@ class VacancySource::Source::Fusion
 
   def each
     results.each do |result|
-
       schools = schools_for(result)
       next if vacancy_listed_at_excluded_school_type?(schools)
 

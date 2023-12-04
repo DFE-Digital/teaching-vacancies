@@ -36,7 +36,6 @@ class VacancySource::Source::UnitedLearning
 
   def each
     items.each do |item|
-
       school = school_group.schools.find_by(urn: item["URN"])
       next if vacancy_listed_at_excluded_school_type?(school)
 

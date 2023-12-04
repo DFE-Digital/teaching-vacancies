@@ -239,7 +239,7 @@ RSpec.describe VacancySource::Source::Fusion do
       before do
         school1.update(detailed_school_type: "Other independent school")
       end
-  
+
       it "does not import vacancy" do
         expect(subject.count).to eq(0)
       end
