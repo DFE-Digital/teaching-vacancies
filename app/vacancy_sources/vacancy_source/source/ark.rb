@@ -62,10 +62,6 @@ class VacancySource::Source::Ark
     end
   end
 
-  def vacancy_listed_at_excluded_school_type?(schools)
-    (schools.map(&:detailed_school_type) & EXCLUDED_DETAILED_SCHOOL_TYPES).present?
-  end
-
   def attributes_for(item, schools)
     {
       job_title: item["title"],
