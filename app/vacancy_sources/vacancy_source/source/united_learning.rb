@@ -1,21 +1,9 @@
 class VacancySource::Source::UnitedLearning
+  include VacancySourceShared
+  
   FEED_URL = ENV.fetch("VACANCY_SOURCE_UNITED_LEARNING_FEED_URL").freeze
   UNITED_LEARNING_TRUST_UID = "5143".freeze
   SOURCE_NAME = "united_learning".freeze
-  EXCLUDED_DETAILED_SCHOOL_TYPES = [
-    "Further education",
-    "Other independent school",
-    "Online provider",
-    "British schools overseas",
-    "Institution funded by other government department",
-    "Miscellaneous",
-    "Offshore schools",
-    "Service children’s education",
-    "Special post 16 institution",
-    "Other independent special school",
-    "Higher education institutions",
-    "Welsh establishment",
-  ].freeze
 
   # Helper class for less verbose handling of items in the feed
   class FeedItem

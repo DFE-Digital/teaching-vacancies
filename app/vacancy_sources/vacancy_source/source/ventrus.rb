@@ -1,21 +1,9 @@
 class VacancySource::Source::Ventrus
+  include VacancySourceShared
+
   FEED_URL = ENV.fetch("VACANCY_SOURCE_VENTRUS_FEED_URL").freeze
   VENTRUS_TRUST_UID = "4243".freeze
   SOURCE_NAME = "ventrus".freeze
-  EXCLUDED_DETAILED_SCHOOL_TYPES = [
-    "Further education",
-    "Other independent school",
-    "Online provider",
-    "British schools overseas",
-    "Institution funded by other government department",
-    "Miscellaneous",
-    "Offshore schools",
-    "Service children’s education",
-    "Special post 16 institution",
-    "Other independent special school",
-    "Higher education institutions",
-    "Welsh establishment",
-  ].freeze
 
   class FeedItem
     def initialize(xml_node)
@@ -57,10 +45,6 @@ class VacancySource::Source::Ventrus
 
       yield v
     end
-  end
-
-  def vacancy_listed_at_excluded_school_type?(schools)
-    (schools.map(&:detailed_school_type) & EXCLUDED_DETAILED_SCHOOL_TYPES).present?
   end
 
   def attributes_for(item, schools)

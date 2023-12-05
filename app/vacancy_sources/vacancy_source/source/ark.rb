@@ -1,23 +1,10 @@
 class VacancySource::Source::Ark
   include VacancySource::Parser
+  include VacancySourceShared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_ARK_FEED_URL").freeze
   SOURCE_NAME = "ark".freeze
   TRUST_UID = "4243".freeze
-  EXCLUDED_DETAILED_SCHOOL_TYPES = [
-    "Further education",
-    "Other independent school",
-    "Online provider",
-    "British schools overseas",
-    "Institution funded by other government department",
-    "Miscellaneous",
-    "Offshore schools",
-    "Service children’s education",
-    "Special post 16 institution",
-    "Other independent special school",
-    "Higher education institutions",
-    "Welsh establishment",
-  ].freeze
 
   # Helper class for less verbose handling of items in the feed
   class FeedItem

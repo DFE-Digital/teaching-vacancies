@@ -1,22 +1,9 @@
 class VacancySource::Source::Every
   include VacancySource::Parser
+  include VacancySourceShared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_EVERY_FEED_URL").freeze
   SOURCE_NAME = "every".freeze
-  EXCLUDED_DETAILED_SCHOOL_TYPES = [
-    "Further education",
-    "Other independent school",
-    "Online provider",
-    "British schools overseas",
-    "Institution funded by other government department",
-    "Miscellaneous",
-    "Offshore schools",
-    "Service children’s education",
-    "Special post 16 institution",
-    "Other independent special school",
-    "Higher education institutions",
-    "Welsh establishment",
-  ].freeze
 
   class EveryImportError < StandardError; end
 
@@ -93,10 +80,6 @@ class VacancySource::Source::Every
       readable_job_location: main_organisation(item)&.name,
       about_school: main_organisation(item)&.description,
     }
-  end
-
-  def vacancy_listed_at_excluded_school_type?(schools)
-    (schools.map(&:detailed_school_type) & EXCLUDED_DETAILED_SCHOOL_TYPES).present?
   end
 
   def schools_for(item)

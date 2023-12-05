@@ -4,24 +4,11 @@ class VacancySource::Source::MyNewTerm
   include HTTParty
   include Enumerable
   include VacancySource::Parser
+  include VacancySourceShared
 
   BASE_URI = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_FEED_URL").freeze
   API_KEY = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_API_KEY").freeze
   SOURCE_NAME = "my_new_term".freeze
-  EXCLUDED_DETAILED_SCHOOL_TYPES = [
-    "Further education",
-    "Other independent school",
-    "Online provider",
-    "British schools overseas",
-    "Institution funded by other government department",
-    "Miscellaneous",
-    "Offshore schools",
-    "Service children’s education",
-    "Special post 16 institution",
-    "Other independent special school",
-    "Higher education institutions",
-    "Welsh establishment",
-  ].freeze
 
   def self.source_name
     SOURCE_NAME
@@ -59,10 +46,6 @@ class VacancySource::Source::MyNewTerm
   end
 
   private
-
-  def vacancy_listed_at_excluded_school_type?(schools)
-    (schools.map(&:detailed_school_type) & EXCLUDED_DETAILED_SCHOOL_TYPES).present?
-  end
 
   def attributes_for(item, schools)
     {
