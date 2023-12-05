@@ -1,5 +1,6 @@
 class VacancySource::Source::Every
   include VacancySource::Parser
+  include VacancySourceShared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_EVERY_FEED_URL").freeze
   SOURCE_NAME = "every".freeze
@@ -14,6 +15,9 @@ class VacancySource::Source::Every
 
   def each
     results.each do |result|
+      schools = schools_for(result)
+      next if vacancy_listed_at_excluded_school_type?(schools)
+
       v = Vacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: result["reference"],
@@ -26,7 +30,7 @@ class VacancySource::Source::Every
       v.publish_on ||= Date.today
 
       begin
-        v.assign_attributes(attributes_for(result))
+        v.assign_attributes(attributes_for(result, schools))
       rescue ArgumentError => e
         v.errors.add(:base, e)
       end
@@ -37,7 +41,7 @@ class VacancySource::Source::Every
 
   private
 
-  def attributes_for(item)
+  def attributes_for(item, schools)
     {
       job_title: item["jobTitle"],
       job_advert: item["jobAdvert"],
@@ -55,7 +59,7 @@ class VacancySource::Source::Every
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
-    }.merge(organisation_fields(item))
+    }.merge(organisation_fields(item, schools))
      .merge(start_date_fields(item))
   end
 
@@ -70,9 +74,9 @@ class VacancySource::Source::Every
     end
   end
 
-  def organisation_fields(item)
+  def organisation_fields(item, schools)
     {
-      organisations: schools_for(item),
+      organisations: schools,
       readable_job_location: main_organisation(item)&.name,
       about_school: main_organisation(item)&.description,
     }

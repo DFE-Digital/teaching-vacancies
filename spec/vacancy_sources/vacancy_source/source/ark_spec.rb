@@ -322,5 +322,15 @@ RSpec.describe VacancySource::Source::Ark do
         expect(vacancy.visa_sponsorship_available).to eq false
       end
     end
+
+    context "when school associated with vacancy is of excluded type" do
+      before do
+        school1.update(detailed_school_type: "Other independent school")
+      end
+
+      it "does not import vacancy" do
+        expect(subject.count).to eq(0)
+      end
+    end
   end
 end

@@ -16,6 +16,16 @@ RSpec.describe VacancySource::Source::UnitedLearning do
       expect(subject.count).to eq(1)
     end
 
+    context "when school associated with vacancy is of excluded type" do
+      before do
+        school.update(detailed_school_type: "Other independent school")
+      end
+
+      it "does not import vacancy" do
+        expect(subject.count).to eq(0)
+      end
+    end
+
     it "yield a newly built vacancy the correct vacancy information" do
       expect(vacancy).not_to be_persisted
       expect(vacancy).to be_changed
