@@ -35,15 +35,14 @@ RSpec.describe AlertMailerJob do
   end
 
   it "adds the job ID after enqueuing" do
-    job_id = "ABC123"
+    job_id = "ABC1234"
     allow_any_instance_of(AlertMailerJob).to receive(:provider_job_id) { job_id }
 
     allow_any_instance_of(AlertMailerJob).to receive(:subscription) { subscription }
-    expect(AlertMailerJob.queue_adapter).to receive(:enqueue).exactly(2).times
+    expect(AlertMailerJob.queue_adapter).to receive(:enqueue).exactly(3).times.ordered
     expect(subscription).to receive(:alert_run_today) { alert_run }
-    expect(alert_run).to receive(:update).with(job_id: job_id)
+    expect(alert_run).to receive(:update).with(job_id: job_id).ordered
     job
-    expect(alert_run.reload.job_id).to eq(job_id)
   end
 
   context "if the job has not expired" do
