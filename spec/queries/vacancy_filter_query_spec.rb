@@ -55,9 +55,9 @@ RSpec.describe VacancyFilterQuery do
     context "when visa_sponsorship_available is selected" do
       it "will return vacancies that offer visa sponsorships" do
         filters = {
-            visa_sponsorship_availability: ["true"],
-          }
-        
+          visa_sponsorship_availability: ["true"],
+        }
+
         expect(subject.call(filters).count).to eq 2
         expect(subject.call(filters)).to contain_exactly(vacancy1, non_faith_vacancy3)
       end

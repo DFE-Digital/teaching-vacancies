@@ -53,7 +53,7 @@ class Jobseekers::SearchForm
       working_patterns: @working_patterns,
       organisation_types: @organisation_types,
       school_types: @school_types,
-      visa_sponsorship_availability: @visa_sponsorship_availability
+      visa_sponsorship_availability: @visa_sponsorship_availability,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 
