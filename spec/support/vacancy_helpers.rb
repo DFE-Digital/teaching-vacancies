@@ -227,7 +227,7 @@ module VacancyHelpers
     vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.readable_job_roles)
-    sponsorship_text = vacancy.visa_sponsorship_available ? "Yes, visa sponsorship available" : "No, visa sponsorship not available"
+    sponsorship_text = vacancy.visa_sponsorship_available ? "Skilled Worker visa can be sponsored" : "Visas cannot be sponsored"
     expect(page).to have_content(sponsorship_text)
     vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
