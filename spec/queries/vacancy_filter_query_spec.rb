@@ -18,7 +18,7 @@ RSpec.describe VacancyFilterQuery do
   let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
   let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
 
-  let!(:vacancy1) { create(:vacancy, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[secondary], job_roles: ["teacher"], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true) }
+  let!(:vacancy1) { create(:vacancy, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[secondary], job_roles: ["teacher"], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true) }
   let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[sixth_form_or_college], job_roles: ["teacher"], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true) }
   let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_role: "sendco", ect_status: nil, organisations: [local_authority_school], enable_job_applications: true) }
   let!(:vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 4", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil) }
@@ -36,7 +36,7 @@ RSpec.describe VacancyFilterQuery do
   let!(:faith_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 13", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, publisher_organisation: faith_school, organisations: [faith_school, faith_school2]) }
   let!(:non_faith_vacancy1) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school1]) }
   let!(:non_faith_vacancy2) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 15", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school2]) }
-  let!(:non_faith_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school3]) }
+  let!(:non_faith_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school3], visa_sponsorship_available: true) }
 
   describe "#call" do
     it "queries based on the given filters" do
@@ -52,12 +52,24 @@ RSpec.describe VacancyFilterQuery do
       expect(subject.call(filters)).to contain_exactly(vacancy1)
     end
 
+    context "when visa_sponsorship_available is selected" do
+      it "will return vacancies that offer visa sponsorships" do
+        filters = {
+            visa_sponsorship_availability: ["true"],
+          }
+        
+        expect(subject.call(filters).count).to eq 2
+        expect(subject.call(filters)).to contain_exactly(vacancy1, non_faith_vacancy3)
+      end
+    end
+
     context "when organisation_types filter is selected" do
       context "when organisation_types == ['Academy']" do
         it "will return vacancies associated with academies and free schools" do
           filters = {
             organisation_types: ["Academy"],
           }
+          expect(subject.call(filters).count).to eq 7
           expect(subject.call(filters))
             .to contain_exactly(vacancy1, vacancy2, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9)
         end

@@ -64,21 +64,22 @@ class Vacancy < ApplicationRecord
 
   delegate :name, to: :organisation, prefix: true, allow_nil: true
 
-  scope :active, -> { where(status: %i[published draft]) }
-  scope :applicable, -> { where("expires_at >= ?", Time.current) }
-  scope :awaiting_feedback, -> { expired.where(listed_elsewhere: nil, hired_status: nil) }
-  scope :expired, -> { published.where("expires_at < ?", Time.current) }
-  scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
-  scope :expires_within_data_access_period, -> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) }
-  scope :in_organisation_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct }
-  scope :listed, -> { published.where("publish_on <= ?", Date.current) }
-  scope :live, -> { listed.applicable }
-  scope :pending, -> { published.where("publish_on > ?", Date.current) }
-  scope :quick_apply, -> { where(enable_job_applications: true) }
-  scope :published_on_count, ->(date) { published.where(publish_on: date.all_day).count }
+  scope :active, (-> { where(status: %i[published draft]) })
+  scope :applicable, (-> { where("expires_at >= ?", Time.current) })
+  scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
+  scope :expired, (-> { published.where("expires_at < ?", Time.current) })
+  scope :expired_yesterday, (-> { where("DATE(expires_at) = ?", 1.day.ago.to_date) })
+  scope :expires_within_data_access_period, (-> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) })
+  scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct })
+  scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
+  scope :live, (-> { listed.applicable })
+  scope :pending, (-> { published.where("publish_on > ?", Date.current) })
+  scope :quick_apply, (-> { where(enable_job_applications: true) })
+  scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
+  scope :visa_sponsorship_available, (-> { where(visa_sponsorship_available: true) })
 
-  scope :internal, -> { where(external_source: nil) }
-  scope :external, -> { where.not(external_source: nil) }
+  scope :internal, (-> { where(external_source: nil) })
+  scope :external, (-> { where.not(external_source: nil) })
 
   scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
