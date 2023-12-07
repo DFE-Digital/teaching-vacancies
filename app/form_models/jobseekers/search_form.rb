@@ -70,7 +70,7 @@ class Jobseekers::SearchForm
     # should always be 100% manually configured) OR if the user changes the filters *without*
     # changing their keywords, do not override their decision
     return if @keyword.blank? || @landing_page.present? || @previous_keyword == @keyword
-
+    
     @filters_from_keyword = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@keyword)
     return unless @filters_from_keyword
 
@@ -78,6 +78,7 @@ class Jobseekers::SearchForm
     @ect_statuses += filters_from_keyword["ect_statuses"]
     @phases += filters_from_keyword["phases"]
     @working_patterns += filters_from_keyword["working_patterns"]
+    @visa_sponsorship_availability += filters_from_keyword["visa_sponsorship_availability"]
   end
 
   def unset_filters_from_previous_keyword
@@ -90,6 +91,7 @@ class Jobseekers::SearchForm
     @ect_statuses -= previous_filters["ect_statuses"]
     @phases -= previous_filters["phases"]
     @working_patterns -= previous_filters["working_patterns"]
+    @visa_sponsorship_availability += filters_from_keyword["visa_sponsorship_availability"]
   end
 
   def set_facet_options
