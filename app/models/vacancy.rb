@@ -76,6 +76,7 @@ class Vacancy < ApplicationRecord
   scope :pending, (-> { published.where("publish_on > ?", Date.current) })
   scope :quick_apply, (-> { where(enable_job_applications: true) })
   scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
+  scope :visa_sponsorship_available, (-> { where(visa_sponsorship_available: true) })
 
   scope :internal, (-> { where(external_source: nil) })
   scope :external, (-> { where.not(external_source: nil) })
