@@ -1,5 +1,7 @@
 class ConvertNqtJobRoleToSuitableForNqtOnVacancies < ActiveRecord::Migration[5.2]
   def change
-    Vacancy.where("'Suitable for NQTs' = ANY (job_roles)").update_all(suitable_for_nqt: "yes")
+    ActiveRecord::Base.connection.execute(
+    "UPDATE vacancies SET suitable_for_nqt = 'yes' WHERE 'Suitable for NQTs' = ANY(job_roles)"
+    )
   end
 end
