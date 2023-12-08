@@ -17,7 +17,7 @@ RSpec.describe Search::VacancySearch do
       subjects: subjects,
       organisation_types: organisation_types,
       school_types: school_types,
-      visa_sponsorship_availability: visa_sponsorship_availability
+      visa_sponsorship_availability: visa_sponsorship_availability,
     }.compact
   end
 
