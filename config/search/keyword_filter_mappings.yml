@@ -11,7 +11,7 @@
     - "true"
 "sponsorship":
   visa_sponsorship_availability:
-    - true
+    - "true"
 "accounting teacher":
   phases:
     - secondary
