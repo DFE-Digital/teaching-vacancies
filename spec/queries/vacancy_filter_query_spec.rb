@@ -58,7 +58,6 @@ RSpec.describe VacancyFilterQuery do
           visa_sponsorship_availability: ["true"],
         }
 
-        expect(subject.call(filters).count).to eq 2
         expect(subject.call(filters)).to contain_exactly(vacancy1, non_faith_vacancy3)
       end
     end
@@ -69,7 +68,6 @@ RSpec.describe VacancyFilterQuery do
           filters = {
             organisation_types: ["Academy"],
           }
-          expect(subject.call(filters).count).to eq 7
           expect(subject.call(filters))
             .to contain_exactly(vacancy1, vacancy2, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9)
         end
