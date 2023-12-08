@@ -47,3 +47,22 @@ jobs:
           urls=($(curl https://qa.teaching-vacancies.service.gov.uk/sitemap.xml | sitemap-urls))
           # Runs axe against each url from the sitemap
           axe $(for url in "${urls[@]}"; do echo $url, ; done;) --exit
+  lighthouse:
+    name: Lighthouse tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Prepare application environment
+        uses: ./.github/actions/prepare-app-env
+        with:
+          skip-ruby: true
+      - run: npm install
+      - name: run Lighthouse Performance, Accessibility, Best Practices, SEO, and PWA tests
+        run: |
+          npm install -g @lhci/cli
+          lhci autorun \
+            --collect.url=https://qa.teaching-vacancies.service.gov.uk \
+            --collect.url=https://qa.teaching-vacancies.service.gov.uk/jobs \
+            --collect.url=https://qa.teaching-vacancies.service.gov.uk/schools \
