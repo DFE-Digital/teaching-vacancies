@@ -21,6 +21,8 @@
           li.govuk-footer__list-item
             = link_to t("footer.search_teaching_vacancies"), root_url, class: "govuk-footer__link"
           li.govuk-footer__list-item
+            = link_to t("footer.return_to_teaching"), "https://teaching-vacancies.campaign.gov.uk/return-to-teaching/", class: "govuk-footer__link"
+          li.govuk-footer__list-item
             = tracked_link_to(t("footer.international_teacher_advice_link_text"), "https://getintoteaching.education.gov.uk/non-uk-teachers", class: "govuk-footer__link", link_type: :international_teacher_advice_link_footer)
           li.govuk-footer__list-item
             - if jobseeker_signed_in?
