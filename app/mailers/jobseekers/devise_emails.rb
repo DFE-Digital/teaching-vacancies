@@ -55,9 +55,9 @@ module Jobseekers::DeviseEmails
 
     # Some of these are required for the event data
     @jobseeker = jobseeker
-    @subject = (subject || t(".subject"))
+    @subject = subject || t(".subject")
     @template = template
-    @to = (to || jobseeker.email)
+    @to = to || jobseeker.email
     @token = token
 
     view_mail(
