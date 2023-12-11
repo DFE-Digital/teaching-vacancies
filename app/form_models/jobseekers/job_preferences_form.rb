@@ -112,7 +112,7 @@ module Jobseekers
     end
 
     def locations=(values)
-      super values.transform_values(&:symbolize_keys)
+      super(values.transform_values(&:symbolize_keys))
     end
 
     def next_step(current_step: nil, **)

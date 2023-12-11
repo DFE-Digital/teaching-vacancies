@@ -23,7 +23,7 @@ class ApplicationMailer < Mail::Notify::Mailer
   end
 
   def email_event_type
-    "#{email_event_prefix}_#{action_name}".to_sym
+    :"#{email_event_prefix}_#{action_name}"
   end
 
   def uid

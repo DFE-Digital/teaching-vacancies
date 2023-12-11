@@ -6,7 +6,7 @@ class Subscription < ApplicationRecord
   has_many :alert_runs, dependent: :destroy
   has_many :feedbacks, dependent: :destroy, inverse_of: :subscription
 
-  scope :active, (-> { where(active: true) })
+  scope :active, -> { where(active: true) }
 
   before_create :fix_wrong_email
 

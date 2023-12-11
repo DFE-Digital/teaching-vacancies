@@ -79,7 +79,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def strip_checkbox_params
     return unless STRIP_CHECKBOXES.key?(step)
 
-    strip_empty_checkboxes(STRIP_CHECKBOXES[step], "publishers_job_listing_#{step}_form".to_sym)
+    strip_empty_checkboxes(STRIP_CHECKBOXES[step], :"publishers_job_listing_#{step}_form")
   end
 
   def update_vacancy

@@ -24,7 +24,7 @@ class SupportalTableComponent < ApplicationComponent
   end
 
   def column(header, method_name = nil, type: nil, &block)
-    value_block = (block || ->(entry) { entry.public_send(method_name) })
+    value_block = block || ->(entry) { entry.public_send(method_name) }
 
     @columns << [header, Formatter.new(value_block, type, self), type]
   end
