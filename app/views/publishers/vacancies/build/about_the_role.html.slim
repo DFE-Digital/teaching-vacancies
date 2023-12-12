@@ -10,7 +10,7 @@
       - if vacancy.organisation&.description.present?
         p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.description", organisation: vacancy.organisation.school? ? "school" : "organisation")
         = govuk_details(summary_text: t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.description_summary_text", organisation: vacancy.organisation.school? ? "school" : "organisation")) do
-          = vacancy.organisation.description
+          = simple_format(vacancy.organisation.description)
       - else
         p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_description", organisation: vacancy.organisation.school? ? "school" : "organisation")
         p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_description_link.#{vacancy.organisation.school? ? 'school' : 'organisation'}"), edit_publishers_organisation_description_path(vacancy.organisation, vacancy_id: vacancy.id)
@@ -19,7 +19,7 @@
         - if vacancy.organisation&.safeguarding_information.present?
           p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.safeguarding_information", organisation: vacancy.organisation.school? ? "school" : "organisation")
           = govuk_details(summary_text: t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.safeguarding_information_summary_text")) do
-            = vacancy.organisation&.safeguarding_information
+            = simple_format(vacancy.organisation&.safeguarding_information)
         - else
           p.govuk-body = t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information", organisation: vacancy.organisation.school? ? "school" : "organisation")
           p = govuk_link_to t("helpers.label.publishers_job_listing_about_the_role_form.school_profile.no_safeguarding_information_link"), edit_publishers_organisation_safeguarding_information_path(vacancy.organisation, vacancy_id: vacancy.id)

@@ -72,12 +72,11 @@
                     alt: t("publishers.organisations.organisation.photo.alt_text", organisation_name: @organisation.name),
                     class: "contained-image govuk-!-margin-bottom-5")
       p.govuk-body
-        = organisation.description
+        = simple_format(organisation.description)
 
     - if organisation.safeguarding_information?
       h2.govuk-heading-m = t("organisations.show.summary.safeguarding_information")
-      p.govuk-body = organisation.safeguarding_information
-
+      p.govuk-body = simple_format(organisation.safeguarding_information)
 - if organisation.geopoint?
   .govuk-grid-row class="govuk-!-margin-bottom-7"
     .govuk-grid-column-two-thirds
