@@ -54,6 +54,10 @@ class VacancyPresenter < BasePresenter
     ].compact
   end
 
+  def readable_visa_sponsorship_availability
+    ["visa sponsorship"] if model.visa_sponsorship_available
+  end
+
   def readable_job_roles
     model.job_roles&.map { |job_role|
       I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_role}")

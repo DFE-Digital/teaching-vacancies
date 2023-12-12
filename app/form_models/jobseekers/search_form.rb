@@ -22,6 +22,8 @@ class Jobseekers::SearchForm
               :sort,
               :subjects,
               :total_filters,
+              :visa_sponsorship_availability,
+              :visa_sponsorship_availability_options,
               :working_pattern_options,
               :working_patterns
 
@@ -51,6 +53,7 @@ class Jobseekers::SearchForm
       working_patterns: @working_patterns,
       organisation_types: @organisation_types,
       school_types: @school_types,
+      visa_sponsorship_availability: @visa_sponsorship_availability,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 
@@ -75,6 +78,7 @@ class Jobseekers::SearchForm
     @ect_statuses += filters_from_keyword["ect_statuses"]
     @phases += filters_from_keyword["phases"]
     @working_patterns += filters_from_keyword["working_patterns"]
+    @visa_sponsorship_availability += filters_from_keyword["visa_sponsorship_availability"]
   end
 
   def unset_filters_from_previous_keyword
@@ -87,9 +91,11 @@ class Jobseekers::SearchForm
     @ect_statuses -= previous_filters["ect_statuses"]
     @phases -= previous_filters["phases"]
     @working_patterns -= previous_filters["working_patterns"]
+    @visa_sponsorship_availability -= previous_filters["visa_sponsorship_availability"]
   end
 
   def set_facet_options
+    @visa_sponsorship_availability_options = [["true", I18n.t("jobs.filters.visa_sponsorship_availability.option")]]
     @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{option}")] }
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
@@ -106,6 +112,7 @@ class Jobseekers::SearchForm
     @previous_keyword = params[:previous_keyword]
     @landing_page = params[:landing_page]
     @location = params[:location]
+    @visa_sponsorship_availability = params[:visa_sponsorship_availability] || []
     @job_roles = params[:job_roles] || []
     @ect_statuses = params[:ect_statuses] || []
     @subjects = params[:subjects] || []
@@ -118,7 +125,7 @@ class Jobseekers::SearchForm
   end
 
   def set_total_filters
-    @total_filters = [@job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @quick_apply&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
+    @total_filters = [@visa_sponsorship_availability&.count, @job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @quick_apply&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
   end
 
   def set_radius(radius_param)
