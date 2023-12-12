@@ -55,7 +55,6 @@ class VacancyPresenter < BasePresenter
   end
 
   def readable_visa_sponsorship_availability
-    # note will need to update the searchable_content
     ["visa sponsorship"] if model.visa_sponsorship_available
   end
 
