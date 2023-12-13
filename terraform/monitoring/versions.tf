@@ -7,7 +7,7 @@ terraform {
     }
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.45.0"
+      version = "5.29.0"
     }
     cloudfoundry = {
       source  = "cloudfoundry-community/cloudfoundry"

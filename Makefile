@@ -130,7 +130,7 @@ ci:	## Run in automation environment
 .PHONY: terraform-app-init
 terraform-app-init: bin/terrafile set-azure-account
 	./bin/terrafile -p terraform/app/vendor/modules -f terraform/workspace-variables/$(var_file)_Terrafile
-	terraform -chdir=terraform/app init -reconfigure -input=false $(backend_config)
+	terraform -chdir=terraform/app init -upgrade -reconfigure -input=false $(backend_config)
 
 	$(eval export TF_VAR_azure_resource_prefix=${AZURE_RESOURCE_PREFIX})
 	$(eval export TF_VAR_config_short=${CONFIG_SHORT})
@@ -153,7 +153,7 @@ terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 
 .PHONY: terraform-common-init
 terraform-common-init:
-		terraform -chdir=terraform/common init -reconfigure -input=false
+		terraform -chdir=terraform/common init -upgrade -reconfigure -input=false
 
 .PHONY: terraform-common-plan
 terraform-common-plan: terraform-common-init ## make terraform-common-plan
