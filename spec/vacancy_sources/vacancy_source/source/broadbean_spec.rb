@@ -240,11 +240,15 @@ RSpec.describe VacancySource::Source::Broadbean do
       end
     end
 
-    context "when multiple school" do
+    context "when the vacancy is associated with multiple schools from a trust" do
       let(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
       let(:schools) { [school1, school2].sort_by(&:created_at) }
 
-      it "assigns the vacancy job location to the central trust" do
+      it "assigns the vacancy to both schools" do
+        expect(vacancy.organisations).to contain_exactly(school1, school2)
+      end
+
+      it "assigns the vacancy job location to the first school from the group" do
         expect(vacancy.readable_job_location).to eq(school1.name)
       end
     end
