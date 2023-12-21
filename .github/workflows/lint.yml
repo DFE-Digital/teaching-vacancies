@@ -102,7 +102,7 @@ jobs:
 
       - name: Upload error file
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: database_consistency_errors
           path: database_consistency_*
