@@ -319,23 +319,6 @@ jobs:
           ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
           env_variable_name: SLACK_WEBHOOK
 
-      - name: Get GIT_HUB_SERVICE_ACCOUNT_TOKEN From ParameterStore
-        uses: marvinpinto/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /teaching-vacancies/github_action/infra/git_hub_service_account_token
-          env_variable_name: GIT_HUB_SERVICE_ACCOUNT_TOKEN
-
-      - name: Terraform pin version
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.2.8
-
-      - name: Deploy monitoring
-        run: |
-          terraform init -upgrade=true -reconfigure -input=false
-          terraform apply -input=false -auto-approve
-        working-directory: terraform/monitoring
-
       - name: Download and extract Gov.UK frontend archive
         run: bin/regenerate-offline
 

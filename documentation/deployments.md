@@ -14,7 +14,7 @@ Once the PR has been merged to main or a `deploy` tag applied to Review app, the
 - Pushes the image to GitHub packages, after it has been scanned by `Snyk` for vulnerabilities
 - Calls the [deploy_app.yml](../.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the appropriate environment.
 - Runs a smoke test against the deployed environment
-- If deployment (push) is to the main branch, performs `Post Deployment` step e.g. deploy terraform/monitoring module, which is responsible for deploying Prometheus, influxDB and Grafana.
+- If deployment (push) is to the main branch, performs `Post Deployment`
 - Sends a Slack notification to the `#twd_tv_dev` channel - success or failure.
 
 ### Build and deploy to review - GitHub Actions
