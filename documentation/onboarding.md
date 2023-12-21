@@ -45,9 +45,9 @@ Once having access, contact the Teacher Services Infrastructure team and request
 
 ## Sentry
 
-Developer will need to request access to our Sentry `teaching-vacancies` organisation through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal/). 
+Developer will need to request access to our Sentry `teaching-vacancies` organisation through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal/).
 ## Logit.io
-Developer will need to request access to Logit.io `TWD` account `Teaching Vacancies` stack for Kibana & Grafana access. 
+Developer will need to request access to Logit.io `TWD` account `Teaching Vacancies` stack for Kibana access.
 
 The access request can be raised through the [DfE Service portal](https://dfe.service-now.com.mcas.ms/serviceportal/)
 

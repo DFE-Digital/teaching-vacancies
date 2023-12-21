@@ -163,23 +163,6 @@ terraform-common-plan: terraform-common-init ## make terraform-common-plan
 terraform-common-apply: terraform-common-init ## make terraform-common-apply
 		terraform -chdir=terraform/common apply
 
-##@ terraform/monitoring. Deploys grafana, prometheus monitoring on Gov.UK PaaS
-
-.PHONY: terraform-monitoring-init
-terraform-monitoring-init:
-		$(if $(passcode), , $(error Missing environment variable "passcode"))
-		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		terraform -chdir=terraform/monitoring init -upgrade=true -reconfigure -input=false
-
-.PHONY: terraform-monitoring-plan
-terraform-monitoring-plan: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-plan
-		terraform -chdir=terraform/monitoring plan -input=false
-
-.PHONY: terraform-monitoring-apply
-terraform-monitoring-apply: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-apply
-		terraform -chdir=terraform/monitoring apply -input=false -auto-approve
-
-
 ##@ install konduit
 bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
