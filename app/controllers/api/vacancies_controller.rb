@@ -30,7 +30,5 @@ class Api::VacanciesController < Api::ApplicationController
       .with_data(event_data)
 
     DfE::Analytics::SendEvents.do([event])
-
-    request_event.trigger(:api_queried, event_data)
   end
 end

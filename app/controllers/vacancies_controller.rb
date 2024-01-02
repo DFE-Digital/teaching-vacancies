@@ -65,7 +65,6 @@ class VacanciesController < ApplicationController
         filters_set_from_keywords: form.filters_from_keyword.present?,
       }
 
-      request_event.trigger(:search_performed, event_data)
       trigger_dfe_analytics_event(:search_performed, event_data)
     end
   end
