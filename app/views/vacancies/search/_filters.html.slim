@@ -1,6 +1,14 @@
 ruby:
   filter_types = [
     {
+      legend: t("jobs.filters.visa_sponsorship_availability.legend"),
+      key: :visa_sponsorship_availability,
+      selected: form.visa_sponsorship_availability,
+      options: form.visa_sponsorship_availability_options,
+      value_method: :first,
+      selected_method: :last,
+    },
+    {
       legend: t("jobs.filters.job_roles"),
       key: :job_roles,
       selected: form.job_roles,
@@ -74,6 +82,7 @@ ruby:
     - filters_component.with_remove_filter_links do |rb|
       - filter_types.each do |filter_type|
         - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }))
+    - filters_component.with_group key: "visa_sponsorship_availability", component: f.govuk_collection_check_boxes(:visa_sponsorship_availability, form.visa_sponsorship_availability_options, :first, :last, small: true, legend: { text: t("jobs.filters.visa_sponsorship_availability.legend") }, hint: nil)
     - filters_component.with_group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil)
     - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
     = render "shared/subjects_filter", filters_component: filters_component, f: f

@@ -268,4 +268,14 @@ RSpec.describe VacancySource::Source::Every do
       end
     end
   end
+
+  context "when school associated with vacancy is of excluded type" do
+    before do
+      school1.update(detailed_school_type: "Other independent school")
+    end
+
+    it "does not import vacancy" do
+      expect(subject.count).to eq(0)
+    end
+  end
 end

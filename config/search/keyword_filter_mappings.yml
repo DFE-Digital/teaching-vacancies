@@ -3,6 +3,15 @@
   phases:
     - sixth_form_or_college
     - secondary
+"visa":
+  visa_sponsorship_availability:
+    - "true"
+"visa sponsorship":
+  visa_sponsorship_availability:
+    - "true"
+"sponsorship":
+  visa_sponsorship_availability:
+    - "true"
 "accounting teacher":
   phases:
     - secondary

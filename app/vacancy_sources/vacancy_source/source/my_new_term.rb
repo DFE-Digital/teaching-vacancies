@@ -4,24 +4,11 @@ class VacancySource::Source::MyNewTerm
   include HTTParty
   include Enumerable
   include VacancySource::Parser
+  include VacancySourceShared
 
   BASE_URI = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_FEED_URL").freeze
   API_KEY = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_API_KEY").freeze
   SOURCE_NAME = "my_new_term".freeze
-  EXCLUDED_DETAILED_SCHOOL_TYPES = [
-    "Further education",
-    "Other independent school",
-    "Online provider",
-    "British schools overseas",
-    "Institution funded by other government department",
-    "Miscellaneous",
-    "Offshore schools",
-    "Service children’s education",
-    "Special post 16 institution",
-    "Other independent special school",
-    "Higher education institutions",
-    "Welsh establishment",
-  ].freeze
 
   def self.source_name
     SOURCE_NAME
@@ -59,10 +46,6 @@ class VacancySource::Source::MyNewTerm
   end
 
   private
-
-  def vacancy_listed_at_excluded_school_type?(schools)
-    (schools.map(&:detailed_school_type) & EXCLUDED_DETAILED_SCHOOL_TYPES).present?
-  end
 
   def attributes_for(item, schools)
     {
@@ -107,10 +90,14 @@ class VacancySource::Source::MyNewTerm
 
   def find_schools(item)
     multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"])
+    school_urns = item["schoolUrns"]&.split(",")
 
-    multi_academy_trust&.schools&.where(urn: item["schoolUrns"]).presence ||
-      Organisation.where(urn: item["schoolUrns"]).presence ||
-      Array(multi_academy_trust)
+    return [] if multi_academy_trust.blank? && school_urns.blank?
+    return Organisation.where(urn: school_urns) if multi_academy_trust.blank?
+    return Array(multi_academy_trust) if school_urns.blank?
+
+    # When having both trust and schools, only return the schools that are in the trust if any. Otherwise, return the trust itself.
+    multi_academy_trust.schools.where(urn: school_urns).order(:created_at).presence || Array(multi_academy_trust)
   end
 
   def job_roles_for(item)

@@ -27,7 +27,7 @@ RSpec.describe "Application sitemap" do
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end
 
-      Rails.application.config.landing_pages.each do |landing_page, _|
+      Rails.application.config.landing_pages.each_key do |landing_page|
         url = landing_page_url(landing_page, protocol: "https")
         expect(nodes.search("loc:contains('#{url}')").map(&:text)).to include(url)
       end

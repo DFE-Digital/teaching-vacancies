@@ -71,9 +71,9 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   let(:school) { create(:school) }
   let!(:maths_job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 1, geolocation: "POINT(-0.019501 51.504949)") }
   let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 3, geolocation: "POINT(-1.8964 52.4820)") }
-  let!(:job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 3, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary], expires_at: Date.current + 2, geolocation: "POINT(-0.1273 51.4994)") }
+  let!(:job1) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, publish_on: Date.current - 3, job_title: "Physics Teacher", subjects: ["Physics"], organisations: [academy1], phases: %w[secondary], expires_at: Date.current + 2, geolocation: "POINT(-0.1273 51.4994)", visa_sponsorship_available: true) }
   let!(:job2) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "PE Teacher", subjects: [], organisations: [academy2], expires_at: Date.current + 5) }
-  let!(:job3) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1], expires_at: Date.current + 4) }
+  let!(:job3) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Chemistry Teacher", subjects: [], organisations: [free_school1], expires_at: Date.current + 4, visa_sponsorship_available: true) }
   let!(:job4) { create(:vacancy, :past_publish, :no_tv_applications, :teacher, job_title: "Geography Teacher", subjects: [], publisher_organisation: free_school1, organisations: [free_school1, free_school2], expires_at: Date.current + 6) }
   let!(:expired_job) { create(:vacancy, :expired, :teacher, job_title: "Maths Teacher", subjects: [], organisations: [school]) }
   let(:per_page) { 2 }
@@ -239,6 +239,19 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         expect(page).to have_select("sort_by", selected: "Newest job")
         expect("Maths 1").to appear_before("Maths Teacher 2")
         expect("Maths Teacher 2").to appear_before("Physics Teacher")
+      end
+    end
+  end
+
+  context "jobseekers can use the visa sponsorship filter to search for jobs" do
+    context "when visa sponsorship available is selected" do
+      it "only shows jobs that offer visa sponsorship" do
+        visit jobs_path
+        check I18n.t("jobs.filters.visa_sponsorship_availability.option")
+        click_on I18n.t("buttons.search")
+
+        expect_page_to_show_jobs([job1, job3])
+        expect_page_not_to_show_jobs([maths_job1, maths_job2, job2, job4])
       end
     end
   end

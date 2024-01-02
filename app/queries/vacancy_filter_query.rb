@@ -18,6 +18,7 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = built_scope.where("vacancies.subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
 
     # General filters
+    built_scope = built_scope.visa_sponsorship_available if filters[:visa_sponsorship_availability]
     if (filter_job_roles = job_roles(filters[:job_roles]).presence)
       built_scope = built_scope.with_any_of_job_roles(filter_job_roles)
     end

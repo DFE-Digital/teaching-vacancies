@@ -74,7 +74,7 @@ RSpec.describe Publishers::VacancyFormSequence do
           before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
           it "returns a hash containing invalid forms for each dependent step" do
-            validated_forms.each { |_, form| expect(form).to be_invalid }
+            validated_forms.each_value { |form| expect(form).to be_invalid }
           end
         end
 
@@ -82,7 +82,7 @@ RSpec.describe Publishers::VacancyFormSequence do
           let(:vacancy) { create(:vacancy, :published, phases: %w[secondary], key_stages: %w[ks3], organisations: [organisation]) }
 
           it "returns a hash containing valid forms for each dependent step" do
-            validated_forms.each { |_, form| expect(form).to be_valid }
+            validated_forms.each_value { |form| expect(form).to be_valid }
           end
         end
       end

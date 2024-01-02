@@ -21,7 +21,7 @@
         = f.govuk_text_field :postcode, width: "one-third"
         = f.govuk_text_field :country, width: "one-third"
       = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }
-      = f.govuk_email_field :email_address, value: (form.email_address.presence || job_application.email), label: { size: "s" }, width: "one-half", aria: { required: true }
+      = f.govuk_email_field :email_address, value: form.email_address.presence || job_application.email, label: { size: "s" }, width: "one-half", aria: { required: true }
       = f.govuk_radio_buttons_fieldset :right_to_work_in_uk,
         legend: { text: t("jobseekers.profiles.personal_details.work.page_title"), size: "s" },
         hint: { text: t(radio_button_legend_hint[:text], link: govuk_link_to(t(radio_button_legend_hint[:link]), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe } do

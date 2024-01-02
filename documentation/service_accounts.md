@@ -22,6 +22,3 @@ Historically we've used the simple Google account teachingjobs@digital.education
     - *SpaceDeveloper* on production space to deploy the application
 - twd-tv-paas-non-prod@digital.education.gov.uk
     - *SpaceDeveloper* on all non production spaces to deploy the application
-- teaching-vacancies-monitoring@digital.education.gov.uk
-    - *SpaceAuditor* on all spaces for monitoring to scrape paas metrics
-    - *BillingManager* on dfe organisation foir monitoring to scrape BillingManager metrics

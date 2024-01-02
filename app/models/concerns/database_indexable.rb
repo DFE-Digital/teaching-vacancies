@@ -39,6 +39,7 @@ module DatabaseIndexable
         organisations.map(&:local_authority_within).reject(&:blank?).uniq,
         organisations.map(&:county).reject(&:blank?).uniq,
         organisations.map(&:region).reject(&:blank?).uniq,
+        VacancyPresenter.new(self).readable_visa_sponsorship_availability,
       ],
     ).tsvector
   end

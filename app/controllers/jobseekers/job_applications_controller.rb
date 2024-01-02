@@ -207,8 +207,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       last_name: profile.personal_details.last_name,
       phone_number: profile.personal_details.phone_number,
       qualifications: profile.qualifications.map(&:duplicate),
-      qualified_teacher_status_year: (profile.qualified_teacher_status_year || ""),
-      qualified_teacher_status: (profile.qualified_teacher_status || ""),
+      qualified_teacher_status_year: profile.qualified_teacher_status_year || "",
+      qualified_teacher_status: profile.qualified_teacher_status || "",
       right_to_work_in_uk: profile_right_to_work,
     )
 

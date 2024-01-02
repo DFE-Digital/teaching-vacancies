@@ -82,6 +82,7 @@ en:
     hiring_guides: Hiring guides
     search_teaching_vacancies: Find a job
     service_support: Get support
+    return_to_teaching: Return to teaching
 
   general_feedbacks:
     create:
@@ -483,8 +484,8 @@ en:
     international_teacher_advice:
         link: help you understand your next steps
         text_html: If you're interested in teaching or training to teach in England as an international citizen, we can %{link}.
-    sponsorship_available: Skilled worker visa sponsorship is available for this job.
-    sponsorship_unavailable: Skilled worker visa sponsorship is not available for this job.
+    sponsorship_available: Skilled Worker visas can be sponsored.
+    sponsorship_unavailable: Visas cannot be sponsored.
     listing:
       enable_job_applications_tag: "Quick Apply"
       schools:

@@ -5,6 +5,7 @@ RSpec.describe VacancySource::Source::Broadbean do
   let(:response) { double("BroadbeanHttpResponse", success?: true, body: response_body) }
 
   let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary, created_at: 1.week.ago) }
+  let!(:out_of_scope_school) { create(:school, name: "Out of scope", urn: "999999", detailed_school_type: "Other independent school") }
   let!(:school_group) { create(:school_group, name: "E-ACT", uid: "12345", schools: schools) }
   let(:schools) { [school1] }
 
@@ -239,11 +240,15 @@ RSpec.describe VacancySource::Source::Broadbean do
       end
     end
 
-    context "when multiple school" do
+    context "when the vacancy is associated with multiple schools from a trust" do
       let(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
       let(:schools) { [school1, school2].sort_by(&:created_at) }
 
-      it "assigns the vacancy job location to the central trust" do
+      it "assigns the vacancy to both schools" do
+        expect(vacancy.organisations).to contain_exactly(school1, school2)
+      end
+
+      it "assigns the vacancy job location to the first school from the group" do
         expect(vacancy.readable_job_location).to eq(school1.name)
       end
     end
@@ -290,6 +295,16 @@ RSpec.describe VacancySource::Source::Broadbean do
 
       it "defaults visa_sponsorship_available to false" do
         expect(vacancy.visa_sponsorship_available).to eq false
+      end
+    end
+
+    context "when vacancy is for an out of scope school" do
+      before do
+        school1.update(detailed_school_type: "Other independent school")
+      end
+
+      it "does not import vacancy" do
+        expect(subject.count).to eq(0)
       end
     end
   end

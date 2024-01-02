@@ -40,6 +40,9 @@ en:
       working_patterns: Working pattern
       organisation_type: Organisation type
       school_type: School type
+      visa_sponsorship_availability:
+        legend: Visa sponsorship
+        option: Only show jobs with visa sponsorship 
 
     education_phase_options:
       middle: Middle
@@ -222,8 +225,8 @@ en:
     expires_at: Closing date
     time_at: at
     visa_sponsorship_row_title: Visa sponsorship
-    visa_sponsorship_available: Yes, visa sponsorship available
-    visa_sponsorship_unavailable: No, visa sponsorship not available
+    visa_sponsorship_available: Skilled Worker visas can be sponsored
+    visa_sponsorship_unavailable: Visas cannot be sponsored
     supporting_documents: Supporting documents
     supporting_documents_accessibility: If you need these documents in an accessible format, please contact the school.
     no_files_message: No files selected

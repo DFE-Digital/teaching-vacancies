@@ -34,7 +34,7 @@ class Organisation < ApplicationRecord
     point = "POINT(#{coordinates&.second} #{coordinates&.first})"
     where("ST_DWithin(geopoint, ?, ?)", point, radius) if coordinates && radius
   }
-  scope :in_vacancy_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct })
+  scope :in_vacancy_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct }
 
   scope :search_by_location, OrganisationLocationQuery
   pg_search_scope :search_by_name,
