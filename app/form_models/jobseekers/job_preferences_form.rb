@@ -128,9 +128,18 @@ module Jobseekers
       attribute :radius
 
       validates :location, :radius, presence: true
+      validate :location_within_united_kingdom
 
       def radius_options
         [0, 1, 5, 10, 15, 20, 25, 50, 100, 200].map { |radius| [radius, I18n.t("jobs.search.number_of_miles", count: radius)] }
+      end
+
+      private
+
+      def location_within_united_kingdom
+        unless Geocoder.search(location).map(&:country).include?("United Kingdom")
+          errors.add(:location, 'Location is not within United Kingdom')
+        end
       end
     end
 
