@@ -10,8 +10,8 @@ class Jobseekers::SubscriptionForm < BaseForm
   validates :frequency, presence: true
 
   validate :unique_job_alert
-  validate :location_and_one_other_criterion_selected, unless: :organisation_slug
   validate :location_within_united_kingdom
+  validate :location_and_one_other_criterion_selected, unless: :organisation_slug
 
   def initialize(params = {}) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     search_criteria = params[:search_criteria]&.symbolize_keys || {}
@@ -82,7 +82,7 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   def location_within_united_kingdom
     unless Geocoder.search(location).map(&:country).include?("United Kingdom")
-      errors.add(:location, 'Location is not within United Kingdom')
+      errors.add(:location,  I18n.t("subscriptions.errors.location.blank"))
     end
   end
 end
