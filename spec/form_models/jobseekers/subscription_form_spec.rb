@@ -205,7 +205,7 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
 
       it "validates location_and_one_other_criterion_selected" do
         expect(subject).not_to be_valid
-        expect(subject.errors.messages[:base]).to include("Enter a city, county or postcode in the UK")
+        expect(subject.errors.messages[:location]).to include("Enter a city, county or postcode in the UK")
       end
     end
   end
