@@ -44,7 +44,7 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
 
       fill_in_general_feedback
       click_on I18n.t("buttons.submit_feedback")
-      expect(page).to have_current_path(invalid_recaptcha_path(form_name: "General feedback form"))
+      expect(page).to have_current_path(invalid_recaptcha_path(form_name: "General feedback form", recaptcha_score: 0.9))
     end
   end
 

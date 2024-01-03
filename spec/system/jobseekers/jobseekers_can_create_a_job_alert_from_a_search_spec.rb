@@ -18,7 +18,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         visit new_subscription_path(search_criteria: { keyword: "test", location: "London" })
         fill_in_subscription_fields
         click_on I18n.t("buttons.subscribe")
-        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Subscription"))
+        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Subscription", recaptcha_score: 0.9))
       end
     end
   end

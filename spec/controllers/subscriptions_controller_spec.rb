@@ -76,7 +76,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
         context "and subscription form is valid" do
           it "redirects to invalid_recaptcha_path" do
             subject
-            expect(response).to redirect_to(invalid_recaptcha_path(form_name: "Subscription"))
+            expect(response).to redirect_to(invalid_recaptcha_path(form_name: "Subscription", recaptcha_score: 0.9))
           end
 
           it "does not save the Subscription record" do
