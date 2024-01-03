@@ -9,7 +9,8 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
     if @feedback_form.invalid?
       render :new
     elsif recaptcha_is_invalid?
-      redirect_to invalid_recaptcha_path(form_name: @feedback_form.class.name.gsub("::", "").underscore.humanize)
+      redirect_to invalid_recaptcha_path(form_name: @feedback_form.class.name.gsub("::", "").underscore.humanize,
+                                         recaptcha_score: recaptcha_reply["score"])
     else
       update_feedback
       redirect_to root_path, success: t(".success")

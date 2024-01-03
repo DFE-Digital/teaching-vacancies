@@ -90,7 +90,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
 
         context "and the form is valid" do
           scenario "redirects to invalid_recaptcha path" do
-            expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Jobseekers job alert further feedback form"))
+            expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Jobseekers job alert further feedback form", recaptcha_score: 0.9))
           end
         end
 

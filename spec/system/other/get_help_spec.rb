@@ -76,7 +76,7 @@ RSpec.describe "Requesting support", recaptcha: true, vcr: true, zendesk: true d
 
         click_on "Send message"
 
-        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Support request form"))
+        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Support request form", recaptcha_score: 0.9))
       end
     end
 
