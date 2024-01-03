@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include DfE::Analytics::Requests
 
-  SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
+  SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.1 # Default 0.5.Temporally set to 0.1 due to very high false positive rate on the last day.
   VALID_CLICK_EVENT_TYPES = %w[vacancy_save_to_account_clicked].freeze
 
   add_flash_types :success, :warning
