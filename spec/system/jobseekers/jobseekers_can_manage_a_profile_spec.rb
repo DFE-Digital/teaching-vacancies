@@ -5,6 +5,13 @@ RSpec.describe "Jobseekers can manage their profile" do
 
   before do
     login_as(jobseeker, scope: :jobseeker)
+    allow(Geocoder).to receive(:search) do |location|
+      if location == "London" || location == "Manchester"
+        [double(country: "United Kingdom")]
+      else
+        [double(country: "United States")]
+      end
+    end
   end
 
   it "allows the jobseeker to navigate to their profile" do
@@ -699,6 +706,12 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:location))
       expect(page).to have_content("Location deleted")
       expect(page).to have_css("h1", text: "Job preferencesLocation")
+
+      fill_in "Location", with: "San Francisco"
+      choose "1 mile"
+      click_on I18n.t("buttons.save_and_continue")
+      expect(page).to have_css("h2", text: "There is a problem")
+      expect(page).to have_content("Enter a city, county or postcode in the UK")
 
       fill_in "Location", with: "London"
       choose "1 mile"

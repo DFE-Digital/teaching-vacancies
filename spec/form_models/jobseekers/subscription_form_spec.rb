@@ -175,6 +175,11 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
     context "when location and no other field are selected" do
       let(:params) { { location: "Anywhere but a polygon" } }
 
+      before do
+        mock_response = [double(country: "United Kingdom")]
+        allow(Geocoder).to receive(:search).and_return(mock_response)
+      end
+
       it "validates location_and_one_other_criterion_selected" do
         expect(subject).not_to be_valid
         expect(subject.errors.messages[:base]).to include(I18n.t("subscriptions.errors.no_location_and_other_criterion_selected"))
@@ -187,6 +192,20 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
       it "validates location_and_one_other_criterion_selected" do
         expect(subject).not_to be_valid
         expect(subject.errors.messages[:base]).to include(I18n.t("subscriptions.errors.no_location_and_other_criterion_selected"))
+      end
+    end
+
+    context "when location outside of the UK is entered" do
+      let(:params) { { keyword: "Maths" } }
+
+      before do
+        mock_response = [double(country: "Ecuador")]
+        allow(Geocoder).to receive(:search).and_return(mock_response)
+      end
+
+      it "validates location_and_one_other_criterion_selected" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.messages[:base]).to include("Enter a city, county or postcode in the UK")
       end
     end
   end
