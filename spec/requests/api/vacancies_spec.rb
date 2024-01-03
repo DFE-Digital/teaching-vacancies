@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Api::Vacancies" do
   let(:json) { JSON.parse(response.body, symbolize_names: true) }
@@ -120,9 +121,8 @@ RSpec.describe "Api::Vacancies" do
     end
 
     it "still monitors API usage if the request is for an entity that is not found" do
-      expect {
-        get api_job_path("slug-that-does-not-exist", api_version: 1), params: { format: :json }
-      }.to have_triggered_event(:api_queried).with_data({ not_found: "true" })
+      get api_job_path("slug-that-does-not-exist", api_version: 1), params: { format: :json }
+      expect(:api_queried).to have_been_enqueued_as_analytics_events
     end
 
     context "sets headers" do
@@ -142,7 +142,8 @@ RSpec.describe "Api::Vacancies" do
     end
 
     it "triggers an api_queried event" do
-      expect { subject }.to have_triggered_event(:api_queried)
+      subject
+      expect(:api_queried).to have_been_enqueued_as_analytics_events
     end
 
     it "never redirects to latest url" do

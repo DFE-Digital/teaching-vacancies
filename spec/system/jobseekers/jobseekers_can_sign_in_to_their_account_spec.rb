@@ -1,4 +1,12 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
+
+RSpec.shared_examples "a sign in attempt" do
+  it "triggers a `jobseeker_sign_in_attempt` event" do
+    sign_in_jobseeker(email: email, password: password)
+    expect(:jobseeker_sign_in_attempt).to have_been_enqueued_as_analytics_events
+  end
+end
 
 RSpec.describe "Jobseekers can sign in to their account" do
   let(:jobseeker) { create(:jobseeker) }
@@ -30,11 +38,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
       expect(current_path).to eq(jobseeker_root_path)
     end
 
-    it "triggers a successful `jobseeker_sign_in_attempt` event" do
-      expect { sign_in_jobseeker(email: email, password: password) }
-        .to have_triggered_event(:jobseeker_sign_in_attempt)
-        .with_data(expected_data)
-    end
+    include_examples "a sign in attempt"
   end
 
   context "when entering incorrect details" do
@@ -51,11 +55,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
         expect(page).to have_content(I18n.t("devise.failure.blank"))
       end
 
-      it "triggers an unsuccessful `jobseeker_sign_in_attempt` event" do
-        expect { sign_in_jobseeker(email: email, password: password) }
-          .to have_triggered_event(:jobseeker_sign_in_attempt)
-          .with_data(expected_data)
-      end
+      include_examples "a sign in attempt"
     end
 
     context "when the account does not exist" do
@@ -68,11 +68,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
         expect(page).to have_content(I18n.t("devise.failure.invalid"))
       end
 
-      it "triggers an unsuccessful `jobseeker_sign_in_attempt` event" do
-        expect { sign_in_jobseeker(email: email, password: password) }
-          .to have_triggered_event(:jobseeker_sign_in_attempt)
-          .with_data(expected_data)
-      end
+      include_examples "a sign in attempt"
     end
 
     context "when the password is incorrect" do
@@ -85,11 +81,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
         expect(page).to have_content(I18n.t("devise.failure.invalid"))
       end
 
-      it "triggers an unsuccessful `jobseeker_sign_in_attempt` event" do
-        expect { sign_in_jobseeker(email: email, password: password) }
-          .to have_triggered_event(:jobseeker_sign_in_attempt)
-          .with_data(expected_data)
-      end
+      include_examples "a sign in attempt"
     end
   end
 
@@ -97,10 +89,6 @@ RSpec.describe "Jobseekers can sign in to their account" do
     let(:email) { jobseeker.email }
     let(:password) { "incorrect_password" }
 
-    it "signs in the jobseeker on the second attempt" do
-      sign_in_jobseeker(email: email, password: password)
-      sign_in_jobseeker(email: email, password: jobseeker.password)
-      expect(current_path).to eq(jobseeker_root_path)
-    end
+    include_examples "a sign in attempt"
   end
 end

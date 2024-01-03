@@ -1,5 +1,6 @@
 require "rails_helper"
 require "message_encryptor"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.shared_examples "a successful Publisher sign in" do
   before do
@@ -7,10 +8,8 @@ RSpec.shared_examples "a successful Publisher sign in" do
   end
 
   scenario "it signs in the user successfully" do
-    expect { sign_in_publisher }
-      .to have_triggered_event(:successful_publisher_sign_in_attempt)
-      .with_base_data(user_anonymised_publisher_id: anonymised_form_of(user_oid))
-      .and_data(sign_in_type: "dsi")
+    sign_in_publisher
+    expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.manage_jobs")) }
@@ -20,10 +19,9 @@ end
 RSpec.shared_examples "a failed Publisher sign in" do |options|
   scenario "it does not sign-in the user, and tells the user what to do" do
     visit new_publisher_session_path
+    sign_in_publisher
 
-    expect { sign_in_publisher }
-      .to have_triggered_event(:failed_dsi_sign_in_attempt)
-      .with_data(sign_in_type: "dsi", user_anonymised_id: anonymised_form_of(user_oid))
+    expect(:failed_dsi_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])

@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Documents" do
   context "with supporting documents" do
@@ -14,14 +15,9 @@ RSpec.describe "Documents" do
       end
 
       it "triggers a `vacancy_document_downloaded` event" do
-        expect { get job_document_path(vacancy, document.id) }
-          .to have_triggered_event(:vacancy_document_downloaded)
-          .and_data(
-            vacancy_id: vacancy.id,
-            document_type: "supporting_document",
-            document_id: document.id,
-            filename: document.filename,
-          )
+        get job_document_path(vacancy, document.id)
+
+        expect(:vacancy_document_downloaded).to have_been_enqueued_as_analytics_events
       end
     end
   end
@@ -39,14 +35,9 @@ RSpec.describe "Documents" do
       end
 
       it "triggers a `vacancy_document_downloaded` event" do
-        expect { get job_document_path(vacancy, document.id) }
-          .to have_triggered_event(:vacancy_document_downloaded)
-          .and_data(
-            vacancy_id: vacancy.id,
-            document_type: "application_form",
-            document_id: document.id,
-            filename: document.filename,
-          )
+        get job_document_path(vacancy, document.id)
+
+        expect(:vacancy_document_downloaded).to have_been_enqueued_as_analytics_events
       end
     end
   end

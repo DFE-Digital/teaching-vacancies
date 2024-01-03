@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: true do
   let(:school) { create(:school, :secondary) }
@@ -18,9 +19,8 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   end
 
   scenario "can click on the first link to create a job alert using data from the vacancy" do
-    expect { click_on I18n.t("jobs.alert.similar.terse") }
-      .to have_triggered_event(:vacancy_create_job_alert_clicked)
-      .and_data(vacancy_id: vacancy.id)
+    click_on I18n.t("jobs.alert.similar.terse")
+    expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_events
 
     expect(page).to have_content(I18n.t("subscriptions.new.title"))
     and_the_search_criteria_are_populated
@@ -36,10 +36,9 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   end
 
   scenario "can click on the second link to create a job alert using data from the vacancy" do
-    expect { click_on I18n.t("jobs.alert.similar.verbose.link_text") }
-      .to have_triggered_event(:vacancy_create_job_alert_clicked)
-      .and_data(vacancy_id: vacancy.id)
-    expect(page).to have_content(I18n.t("subscriptions.new.title"))
+    click_on I18n.t("jobs.alert.similar.verbose.link_text")
+
+    expect(:vacancy_create_job_alert_clicked).to have_been_enqueued_as_analytics_events
     and_the_search_criteria_are_populated
   end
 

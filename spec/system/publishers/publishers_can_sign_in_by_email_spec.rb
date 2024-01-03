@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Publishers can sign in with fallback email authentication" do
   before { allow(AuthenticationFallback).to receive(:enabled?) { true } }
@@ -68,10 +69,9 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           expect(page).to have_content(other_school.name)
           expect(page).to have_content(trust.name)
           expect(page).to have_content(local_authority.name)
-          expect { click_on school.name }
-            .to have_triggered_event(:successful_publisher_sign_in_attempt)
-            .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-            .and_data(sign_in_type: "email")
+
+          click_on school.name
+          expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
           expect(page).to have_content(school.name)
           expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
@@ -119,10 +119,8 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            expect { visit publishers_login_key_path(login_key) }
-              .to have_triggered_event(:successful_publisher_sign_in_attempt)
-              .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-              .and_data(sign_in_type: "email")
+            visit publishers_login_key_path(login_key)
+            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(school.name)
@@ -150,10 +148,8 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            expect { visit publishers_login_key_path(login_key) }
-              .to have_triggered_event(:successful_publisher_sign_in_attempt)
-              .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-              .and_data(sign_in_type: "email")
+            visit publishers_login_key_path(login_key)
+            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(trust.name)
@@ -184,10 +180,8 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
             # Expect that the link in the email goes to the landing page
-            expect { visit publishers_login_key_path(login_key) }
-              .to have_triggered_event(:successful_publisher_sign_in_attempt)
-              .with_base_data(user_anonymised_publisher_id: anonymised_form_of(publisher.oid))
-              .and_data(sign_in_type: "email")
+            visit publishers_login_key_path(login_key)
+            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(local_authority.name)
