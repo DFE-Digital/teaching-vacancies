@@ -137,9 +137,9 @@ module Jobseekers
       private
 
       def location_within_united_kingdom
-        unless Geocoder.search(location).map(&:country).include?("United Kingdom")
-          errors.add(:location, I18n.t('activemodel.errors.models.jobseekers/job_preferences_form/location_form.attributes.location.blank'))
-        end
+        return if Geocoder.search(location).map(&:country).include?("United Kingdom")
+
+        errors.add(:location, I18n.t("activemodel.errors.models.jobseekers/job_preferences_form/location_form.attributes.location.blank"))
       end
     end
 

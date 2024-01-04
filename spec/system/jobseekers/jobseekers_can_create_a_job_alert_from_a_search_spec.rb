@@ -7,7 +7,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   let(:search_with_polygons?) { false }
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
-  
+
   before do
     mock_response = [double(country: "United Kingdom")]
     allow(Geocoder).to receive(:search).and_return(mock_response)

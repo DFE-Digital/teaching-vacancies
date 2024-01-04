@@ -6,7 +6,7 @@ RSpec.describe "Jobseekers can manage their profile" do
   before do
     login_as(jobseeker, scope: :jobseeker)
     allow(Geocoder).to receive(:search) do |location|
-      if location == "London" || location == "Manchester"
+      if %w[London Manchester].include?(location)
         [double(country: "United Kingdom")]
       else
         [double(country: "United States")]

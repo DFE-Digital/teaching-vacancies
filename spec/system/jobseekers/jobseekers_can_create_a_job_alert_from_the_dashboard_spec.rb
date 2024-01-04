@@ -10,7 +10,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
   end
 
   context "when the jobseeker has no job alerts" do
-    before do 
+    before do
       mock_response = [double(country: "United Kingdom")]
       allow(Geocoder).to receive(:search).and_return(mock_response)
       visit jobseekers_subscriptions_path
