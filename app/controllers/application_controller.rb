@@ -83,8 +83,9 @@ class ApplicationController < ActionController::Base
 
   # https://github.com/ambethia/recaptcha#verify_recaptcha
   # https://github.com/ambethia/recaptcha#recaptcha_reply
-  def recaptcha_is_invalid?(model = nil)
-    !verify_recaptcha(model: model, action: controller_name, minimum_score: SUSPICIOUS_RECAPTCHA_THRESHOLD) && recaptcha_reply
+  def recaptcha_is_invalid?(_model = nil)
+    # temporarily ignore recaptcha scores until we can verify that issues with high recaptcha failure rate are fixed.
+    false
   end
 
   def request_event
