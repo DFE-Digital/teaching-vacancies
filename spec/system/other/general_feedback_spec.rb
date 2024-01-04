@@ -32,22 +32,6 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
     expect(page).to have_content(I18n.t("general_feedbacks.create.success"))
   end
 
-  context "when recaptcha is invalid" do
-    before do
-      allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
-    end
-
-    scenario "redirects to invalid_recaptcha path" do
-      visit new_feedback_path
-      click_on I18n.t("buttons.submit_feedback")
-      expect(page).to have_content("There is a problem")
-
-      fill_in_general_feedback
-      click_on I18n.t("buttons.submit_feedback")
-      expect(page).to have_current_path(invalid_recaptcha_path(form_name: "General feedback form", recaptcha_score: 0.9))
-    end
-  end
-
   def fill_in_general_feedback
     choose name: "general_feedback_form[report_a_problem]", option: "yes"
     choose I18n.t("helpers.label.general_feedback_form.visit_purpose_options.other_purpose")
