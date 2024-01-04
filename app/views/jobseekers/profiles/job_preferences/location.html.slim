@@ -13,7 +13,7 @@
       .govuk-form-group.autocomplete data-source="getLocationSuggestions" data-controller="autocomplete"
         = f.govuk_text_field :location,
           label: { text: "Location", size: "m" },
-          hint: { text: t('activemodel.location.hint') },
+          hint: { text: t("activemodel.location.hint") },
           form_group: { classes: %w[location-finder__input govuk-!-margin-bottom-0] }
 
       = f.govuk_collection_radio_buttons :radius, f.object.radius_options, :first, :last, legend: { text: "Search radius", size: "m" }
