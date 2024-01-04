@@ -1,6 +1,5 @@
 class DocumentsController < ApplicationController
   def show
-    send_event
     send_custom_event
     redirect_to file, status: :moved_permanently
   end
@@ -39,15 +38,5 @@ class DocumentsController < ApplicationController
       )
 
     DfE::Analytics::SendEvents.do([event])
-  end
-
-  def send_event
-    fail_safe do
-      request_event.trigger(:vacancy_document_downloaded,
-                            vacancy_id: vacancy.id,
-                            document_type: application_form? ? :application_form : :supporting_document,
-                            document_id: file.id,
-                            filename: file.filename)
-    end
   end
 end

@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Documents" do
   include ActionDispatch::TestProcess::FixtureFile
@@ -25,14 +26,8 @@ RSpec.describe "Documents" do
       end
 
       it "triggers an event" do
-        expect { request }.to have_triggered_event(:supporting_document_created)
-                       .with_data(
-                         vacancy_id: vacancy.id,
-                         document_type: "supporting_document",
-                         name: "blank_job_spec.pdf",
-                         size: 28_527,
-                         content_type: "application/pdf",
-                       )
+        request
+        expect(:supporting_document_created).to have_been_enqueued_as_analytics_events
       end
 
       it "renders the index page" do
@@ -51,10 +46,6 @@ RSpec.describe "Documents" do
         post organisation_job_documents_path(vacancy.id), params: {
           publishers_job_listing_documents_form: { documents: [fixture_file_upload("mime_types/invalid_plain_text_file.txt")] },
         }
-      end
-
-      it "does not trigger an event" do
-        expect { request }.to_not have_triggered_event(:supporting_document_created)
       end
 
       it "renders the new page" do
@@ -113,14 +104,8 @@ RSpec.describe "Documents" do
     let(:request) { delete organisation_job_document_path(id: document.id, job_id: vacancy.id) }
 
     it "triggers an event" do
-      expect { request }.to have_triggered_event(:supporting_document_deleted)
-                        .with_data(
-                          vacancy_id: vacancy.id,
-                          document_type: "supporting_document",
-                          name: "blank_job_spec.pdf",
-                          size: 28_527,
-                          content_type: "application/pdf",
-                        )
+      request
+      expect(:supporting_document_deleted).to have_been_enqueued_as_analytics_events
     end
 
     it "removes the document" do

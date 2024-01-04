@@ -9,7 +9,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     if authorisation.authorised_support_user?
       sign_in_support_user
-      trigger_successful_support_user_sign_in_event(:dsi)
       redirect_to after_sign_in_path_for(:support_user)
     elsif authorisation.authorised_publisher?
       sign_in_publisher(organisation_from_request)

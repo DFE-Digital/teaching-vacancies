@@ -7,7 +7,6 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     if documents_form.valid?
       documents_form.supporting_documents.each do |document|
         vacancy.supporting_documents.attach(document)
-        send_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
         send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
       end
 
@@ -22,7 +21,6 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   def destroy
     document = vacancy.supporting_documents.find(params[:id])
     document.purge_later
-    send_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
     send_dfe_analytics_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
 
     redirect_to after_document_delete_path, flash: { success: t("jobs.file_delete_success_message", filename: document.filename) }
@@ -93,19 +91,6 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
         )
 
       DfE::Analytics::SendEvents.do([event])
-    end
-  end
-
-  def send_event(event_type, name, size, content_type)
-    fail_safe do
-      request_event.trigger(
-        event_type,
-        vacancy_id: vacancy.id,
-        document_type: "supporting_document",
-        name: name,
-        size: size,
-        content_type: content_type,
-      )
     end
   end
 end
