@@ -15,6 +15,8 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   end
 
   before do
+    mock_response = [double(country: "United Kingdom")]
+    allow(Geocoder).to receive(:search).and_return(mock_response)
     visit job_path(vacancy)
   end
 

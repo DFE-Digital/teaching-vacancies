@@ -20,9 +20,12 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
       end
 
       context "when editing a job alert" do
-        before { create(:location_polygon, name: "london") }
-
-        before { click_on I18n.t("jobseekers.subscriptions.index.link_manage") }
+        before do 
+          create(:location_polygon, name: "london")
+          mock_response = [double(country: "United Kingdom")]
+          allow(Geocoder).to receive(:search).and_return(mock_response)
+          click_on I18n.t("jobseekers.subscriptions.index.link_manage")
+        end
 
         it "edits the job alert and redirects to the dashboard" do
           fill_in "jobseekers_subscription_form[location]", with: "London"
