@@ -81,8 +81,8 @@ class Jobseekers::SubscriptionForm < BaseForm
   end
 
   def location_within_united_kingdom
-    unless Geocoder.search(location).map(&:country).include?("United Kingdom")
-      errors.add(:location,  I18n.t("subscriptions.errors.location.blank"))
-    end
+    return if Geocoder.search(location).map(&:country).include?("United Kingdom")
+
+    errors.add(:location, I18n.t("subscriptions.errors.location.blank"))
   end
 end
