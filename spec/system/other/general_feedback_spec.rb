@@ -22,7 +22,7 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
                      occupation: occupation,
                      feedback_type: "general",
                      rating: "highly_satisfied",
-                    #  recaptcha_score: 0.9,
+                     #  recaptcha_score: 0.9,
                      user_participation_response: "interested",
                      visit_purpose: "other_purpose",
                      visit_purpose_comment: visit_purpose_comment,
