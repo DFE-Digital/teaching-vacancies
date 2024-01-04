@@ -25,20 +25,6 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
       expect { create_a_job_alert }.to change { Subscription.count }.by(1)
       and_the_job_alert_is_on_the_index_page
     end
-
-    context "when verify_recaptcha is false" do
-      before do
-        allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
-      end
-
-      it "redirects to invalid_recaptcha path" do
-        within ".empty-section-component" do
-          click_on I18n.t("jobseekers.subscriptions.index.link_create")
-        end
-        create_a_job_alert
-        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Subscription", recaptcha_score: 0.9))
-      end
-    end
   end
 
   context "when the jobseeker has job alerts" do

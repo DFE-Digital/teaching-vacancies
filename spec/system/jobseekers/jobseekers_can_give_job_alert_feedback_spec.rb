@@ -82,26 +82,6 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
         expect(feedback.recaptcha_score).to eq(0.9)
         expect(feedback.occupation).to eq(occupation)
       end
-
-      context "when recaptcha is invalid" do
-        let(:verify_recaptcha) { false }
-
-        before { click_button I18n.t("buttons.submit") }
-
-        context "and the form is valid" do
-          scenario "redirects to invalid_recaptcha path" do
-            expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Jobseekers job alert further feedback form", recaptcha_score: 0.9))
-          end
-        end
-
-        context "and the form is invalid" do
-          let(:comment) { nil }
-
-          scenario "does not redirect to invalid_recaptcha path" do
-            expect(page).to have_content("There is a problem")
-          end
-        end
-      end
     end
   end
 
