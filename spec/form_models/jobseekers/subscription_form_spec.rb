@@ -191,14 +191,14 @@ RSpec.describe Jobseekers::SubscriptionForm, type: :model do
     end
 
     context "when location outside of the UK is entered" do
-      let(:params) { { keyword: "Maths" } }
+      let(:params) { { keyword: "Maths", location: "Ecuador" } }
 
       before do
         mock_response = [double(country: "Ecuador")]
         allow(Geocoder).to receive(:search).and_return(mock_response)
       end
 
-      it "validates location_and_one_other_criterion_selected" do
+      it "validates that the location is not within the uk" do
         expect(subject).not_to be_valid
         expect(subject.errors.messages[:location]).to include("Enter a city, county or postcode in the UK")
       end
