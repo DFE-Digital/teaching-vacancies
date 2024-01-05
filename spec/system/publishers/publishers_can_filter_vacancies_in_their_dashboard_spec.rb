@@ -91,7 +91,9 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
     let(:local_authorities_extra_schools) { { local_authority1.local_authority_code.to_i => [school3.urn] } }
     let!(:school3) { create(:school) }
     let(:school4) { create(:school, name: "Closed school", establishment_status: "Closed") }
-    let(:school5) { create(:school, name: "University", gias_data: { "TypeOfEstablishment (code)" => "29" }) }
+    let(:school5) do
+      create(:school, name: "University", gias_data: { "TypeOfEstablishment (code)" => "29" }, detailed_school_type: "Higher education institutions")
+    end
 
     before do
       login_publisher(publisher: publisher, organisation: local_authority1)
