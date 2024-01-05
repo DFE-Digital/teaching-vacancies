@@ -4,11 +4,6 @@ require "dfe/analytics/rspec/matchers"
 RSpec.describe "Subscriptions" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
-  before do
-    mock_response = [double(country: "United Kingdom")]
-    allow(Geocoder).to receive(:search).and_return(mock_response)
-  end
-
   describe "GET #new" do
     context "with search criteria pre-populated" do
       it "sets subscription_autopopulated in the session so we can track it with subscription events" do

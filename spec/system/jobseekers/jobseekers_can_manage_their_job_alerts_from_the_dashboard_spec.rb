@@ -22,8 +22,6 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
       context "when editing a job alert" do
         before do
           create(:location_polygon, name: "london")
-          mock_response = [double(country: "United Kingdom")]
-          allow(Geocoder).to receive(:search).and_return(mock_response)
           click_on I18n.t("jobseekers.subscriptions.index.link_manage")
         end
 

@@ -9,8 +9,6 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
   let(:subscription) { create(:subscription, email: jobseeker.email, frequency: frequency, search_criteria: search_criteria) }
 
   before do
-    mock_response = [double(country: "United Kingdom")]
-    allow(Geocoder).to receive(:search).and_return(mock_response)
     login_as(jobseeker, scope: :jobseeker) if jobseeker_signed_in?
     visit edit_subscription_path(token)
   end
