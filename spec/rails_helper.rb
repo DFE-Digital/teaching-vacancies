@@ -51,6 +51,9 @@ RSpec.configure do |config|
     allow(Google::Cloud::Bigquery).to receive(:new).and_return(
       double("BigQuery", dataset: double("BigQuery dataset", table: double.as_null_object)),
     )
+
+    mock_response = [double(country: "United Kingdom")]
+    allow(Geocoder).to receive(:search).and_return(mock_response)
   end
 
   config.before(:each, type: :system) do
@@ -62,9 +65,6 @@ RSpec.configure do |config|
       Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
       Capybara.server_port = 3000
     end
-
-    mock_response = [double(country: "United Kingdom")]
-    allow(Geocoder).to receive(:search).and_return(mock_response)
   end
 
   config.before(:each, recaptcha: true) do
@@ -80,6 +80,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each, geocode: true) do
+    allow(Geocoder).to receive(:search).and_call_original
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
 
