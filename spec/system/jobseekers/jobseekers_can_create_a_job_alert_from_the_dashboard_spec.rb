@@ -10,9 +10,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
   end
 
   context "when the jobseeker has no job alerts" do
-    before do
-      visit jobseekers_subscriptions_path
-    end
+    before { visit jobseekers_subscriptions_path }
 
     it "displays the no job alerts notification component" do
       expect(page).to have_content(I18n.t("jobseekers.subscriptions.index.zero_subscriptions_title"))
@@ -32,9 +30,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
   context "when the jobseeker has job alerts" do
     let!(:created_subscription) { create(:subscription, email: jobseeker.email) }
 
-    before do
-      visit jobseekers_subscriptions_path
-    end
+    before { visit jobseekers_subscriptions_path }
 
     it "displays the create job alert button" do
       expect(page).to have_content(I18n.t("jobseekers.subscriptions.index.button_create"))
