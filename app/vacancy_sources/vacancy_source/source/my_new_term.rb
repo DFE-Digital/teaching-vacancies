@@ -4,7 +4,7 @@ class VacancySource::Source::MyNewTerm
   include HTTParty
   include Enumerable
   include VacancySource::Parser
-  include VacancySourceShared
+  include VacancySource::Shared
 
   BASE_URI = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_FEED_URL").freeze
   API_KEY = ENV.fetch("VACANCY_SOURCE_MY_NEW_TERM_API_KEY").freeze

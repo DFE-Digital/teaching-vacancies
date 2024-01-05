@@ -1,6 +1,6 @@
 class VacancySource::Source::Every
   include VacancySource::Parser
-  include VacancySourceShared
+  include VacancySource::Shared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_EVERY_FEED_URL").freeze
   SOURCE_NAME = "every".freeze

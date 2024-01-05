@@ -1,5 +1,5 @@
 class VacancySource::Source::UnitedLearning
-  include VacancySourceShared
+  include VacancySource::Shared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_UNITED_LEARNING_FEED_URL").freeze
   UNITED_LEARNING_TRUST_UID = "5143".freeze
@@ -25,7 +25,7 @@ class VacancySource::Source::UnitedLearning
   def each
     items.each do |item|
       school = school_group.schools.find_by(urn: item["URN"])
-      next if vacancy_listed_at_excluded_school_type?(school)
+      next if vacancy_listed_at_excluded_school_type?([school])
 
       v = Vacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
@@ -49,10 +49,6 @@ class VacancySource::Source::UnitedLearning
   end
 
   private
-
-  def vacancy_listed_at_excluded_school_type?(school)
-    EXCLUDED_DETAILED_SCHOOL_TYPES.include?(school.detailed_school_type) if school
-  end
 
   def attributes_for(item)
     {
