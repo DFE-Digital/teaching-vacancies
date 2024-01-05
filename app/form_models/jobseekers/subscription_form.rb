@@ -8,9 +8,9 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   validates :email, presence: true, email_address: true
   validates :frequency, presence: true
+  validates :location, within_united_kingdom: true
 
   validate :unique_job_alert
-  validate :location_within_united_kingdom
   validate :location_and_one_other_criterion_selected, unless: :organisation_slug
 
   def initialize(params = {}) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
@@ -78,11 +78,5 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   def set_radius(radius_param)
     @radius = Search::RadiusBuilder.new(location, radius_param).radius.to_s
-  end
-
-  def location_within_united_kingdom
-    return if Geocoder.search(location).map(&:country).include?("United Kingdom")
-
-    errors.add(:location, I18n.t("subscriptions.errors.location.blank"))
   end
 end
