@@ -67,15 +67,6 @@ module Jobseekers::DeviseEmails
     )
   end
 
-  def email_event_data
-    case action_name
-    when "confirmation_instructions"
-      @jobseeker.pending_reconfirmation? ? { previous_email_identifier: StringAnonymiser.new(@jobseeker.email).to_s } : {}
-    else
-      {}
-    end
-  end
-
   def dfe_analytics_custom_data
     case action_name
     when "confirmation_instructions"

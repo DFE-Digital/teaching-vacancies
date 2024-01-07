@@ -21,10 +21,6 @@ class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
 
   private
 
-  def email_event_data
-    { subscription_identifier: subscription.id }
-  end
-
   def dfe_analytics_custom_data
     { subscription_identifier: subscription.id }
   end
