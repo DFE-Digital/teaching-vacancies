@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
   include DatesHelper
@@ -34,7 +35,8 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
     end
 
     it "triggers a `publisher_prompt_for_feedback` email event" do
-      expect { mail.deliver_now }.to have_triggered_event(:publisher_prompt_for_feedback).with_data(expected_data)
+      mail.deliver_now
+      expect(:publisher_prompt_for_feedback).to have_been_enqueued_as_analytics_events
     end
   end
 end

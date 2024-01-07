@@ -1,10 +1,6 @@
 class Publishers::BaseMailer < ApplicationMailer
   private
 
-  def email_event
-    @email_event ||= EmailEvent.new(template, to, uid, publisher: @publisher)
-  end
-
   def dfe_analytics_email_event
     @dfe_analytics_email_event ||= DfE::Analytics::Event.new
       .with_type(email_event_type)

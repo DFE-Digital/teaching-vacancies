@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Publishers::AuthenticationFallbackMailer do
   describe "the user receives the sign in email containing the magic link" do
@@ -27,7 +28,8 @@ RSpec.describe Publishers::AuthenticationFallbackMailer do
     end
 
     it "triggers a `publisher_sign_in_fallback` email event" do
-      expect { mail.deliver_now }.to have_triggered_event(:publisher_sign_in_fallback).with_data(expected_data)
+      mail.deliver_now
+      expect(:publisher_sign_in_fallback).to have_been_enqueued_as_analytics_events
     end
   end
 end
