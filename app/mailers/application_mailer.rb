@@ -4,22 +4,14 @@ class ApplicationMailer < Mail::Notify::Mailer
 
   helper_method :uid, :utm_campaign
 
-  after_action :trigger_email_event, :trigger_dfe_analytics_email_event
+  after_action :trigger_dfe_analytics_email_event
 
   private
 
   attr_reader :to
 
-  def trigger_email_event
-    email_event.trigger(email_event_type, email_event_data)
-  end
-
   def trigger_dfe_analytics_email_event
     DfE::Analytics::SendEvents.do([dfe_analytics_email_event])
-  end
-
-  def email_event_data
-    {}
   end
 
   def email_event_type

@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Jobseekers::AccountMailer do
   let(:jobseeker) { create(:jobseeker, email: email) }
@@ -23,6 +24,11 @@ RSpec.describe Jobseekers::AccountMailer do
       expect(mail.to).to eq(["test@example.net"])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.account_closed.heading"))
     end
+
+    it "triggers a `jobseeker_account_closed` email event" do
+      mail.deliver_now
+      expect(:jobseeker_account_closed).to have_been_enqueued_as_analytics_events
+    end
   end
 
   describe "#confirmation_instructions" do
@@ -41,8 +47,8 @@ RSpec.describe Jobseekers::AccountMailer do
       end
 
       it "triggers a `jobseeker_confirmation_instructions` email event" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_confirmation_instructions)
-          .with_data(expected_data).and_data(previous_email_identifier: anonymised_form_of("test@example.net"))
+        mail.deliver_now
+        expect(:jobseeker_confirmation_instructions).to have_been_enqueued_as_analytics_events
       end
     end
 
@@ -57,7 +63,8 @@ RSpec.describe Jobseekers::AccountMailer do
       end
 
       it "triggers a `jobseeker_confirmation_instructions` email event" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_confirmation_instructions).with_data(expected_data)
+        mail.deliver_now
+        expect(:jobseeker_confirmation_instructions).to have_been_enqueued_as_analytics_events
       end
     end
 
@@ -72,7 +79,8 @@ RSpec.describe Jobseekers::AccountMailer do
       end
 
       it "triggers a `jobseeker_confirmation_instructions` email event" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_confirmation_instructions).with_data(expected_data)
+        mail.deliver_now
+        expect(:jobseeker_confirmation_instructions).to have_been_enqueued_as_analytics_events
       end
     end
   end
@@ -88,7 +96,8 @@ RSpec.describe Jobseekers::AccountMailer do
     end
 
     it "triggers a `jobseeker_email_changed` email event" do
-      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_email_changed).with_data(expected_data)
+      mail.deliver_now
+      expect(:jobseeker_email_changed).to have_been_enqueued_as_analytics_events
     end
   end
 
@@ -105,6 +114,11 @@ RSpec.describe Jobseekers::AccountMailer do
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.reactivate", date: 2.weeks.from_now.to_date.to_formatted_s(:day_month)))
       expect(mail.body.encoded).to include(new_jobseeker_session_path)
     end
+
+    it "triggers a `jobseeker_inactive_account` email event" do
+      mail.deliver_now
+      expect(:jobseeker_inactive_account).to have_been_enqueued_as_analytics_events
+    end
   end
 
   describe "#reset_password_instructions" do
@@ -119,7 +133,8 @@ RSpec.describe Jobseekers::AccountMailer do
     end
 
     it "triggers a `jobseeker_reset_passwords_instructions` email event" do
-      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_reset_password_instructions).with_data(expected_data)
+      mail.deliver_now
+      expect(:jobseeker_reset_password_instructions).to have_been_enqueued_as_analytics_events
     end
   end
 
@@ -135,7 +150,8 @@ RSpec.describe Jobseekers::AccountMailer do
     end
 
     it "triggers a `jobseeker_unlock_instructions` email event" do
-      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_unlock_instructions).with_data(expected_data)
+      mail.deliver_now
+      expect(:jobseeker_unlock_instructions).to have_been_enqueued_as_analytics_events
     end
   end
 end

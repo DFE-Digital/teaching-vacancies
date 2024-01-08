@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Publishers::JobApplicationDataExpiryMailer do
   let(:email) { "test@example.com" }
@@ -22,6 +23,11 @@ RSpec.describe Publishers::JobApplicationDataExpiryMailer do
                                                                                                                                        expiration_date: vacancy_data_expiration_date))
       expect(mail.body.to_s).to include(page_url("privacy-policy"))
                             .and include(organisation_job_job_applications_url(vacancy.id))
+    end
+
+    it "triggers a `publisher_job_application_data_expiry` email event" do
+      mail.deliver_now
+      expect(:publisher_job_application_data_expiry).to have_been_enqueued_as_analytics_events
     end
   end
 end
