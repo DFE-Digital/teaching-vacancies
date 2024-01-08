@@ -12,7 +12,6 @@ class Api::EventsController < Api::ApplicationController
     return bad_request unless EVENT_ALLOWLIST.key?(type)
 
     data = event_params[:data].to_h.slice(*EVENT_ALLOWLIST[type])
-    frontend_event.trigger(type, data)
     send_dfe_analytics_event(type, data)
 
     head :no_content
@@ -22,10 +21,6 @@ class Api::EventsController < Api::ApplicationController
 
   def event_params
     params.require(:event).permit(:type, data: {})
-  end
-
-  def frontend_event
-    FrontendEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
   end
 
   def bad_request
