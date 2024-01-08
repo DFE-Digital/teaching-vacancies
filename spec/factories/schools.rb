@@ -24,6 +24,7 @@ FactoryBot.define do
         "TypeOfEstablishment (code)": "02",
       }
     end
+    detailed_school_type { "Voluntary aided school" }
     minimum_age { 11 }
     maximum_age { 18 }
     name { Faker::Educator.secondary_school.strip.delete("'") }

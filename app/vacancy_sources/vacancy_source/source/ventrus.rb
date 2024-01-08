@@ -1,5 +1,5 @@
 class VacancySource::Source::Ventrus
-  include VacancySourceShared
+  include VacancySource::Shared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_VENTRUS_FEED_URL").freeze
   VENTRUS_TRUST_UID = "4243".freeze

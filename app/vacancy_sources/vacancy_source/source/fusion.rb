@@ -1,6 +1,6 @@
 class VacancySource::Source::Fusion
   include VacancySource::Parser
-  include VacancySourceShared
+  include VacancySource::Shared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_FUSION_FEED_URL").freeze
   SOURCE_NAME = "fusion".freeze
