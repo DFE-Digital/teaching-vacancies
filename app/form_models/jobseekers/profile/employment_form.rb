@@ -3,13 +3,13 @@ class Jobseekers::Profile::EmploymentForm < BaseForm
   include DateAttributeAssignment
 
   def self.fields
-    %i[organisation job_title main_duties current_role jobseeker_profile_id subjects]
+    %i[organisation job_title main_duties current_role jobseeker_profile_id subjects reason_for_leaving]
   end
   attr_accessor(*fields)
 
   attr_reader :started_on, :ended_on
 
-  validates :organisation, :job_title, :main_duties, presence: true
+  validates :organisation, :job_title, :main_duties, :reason_for_leaving, presence: true
   validates :started_on, date: { before: :today }
   validates :current_role, inclusion: { in: %w[yes no] }
   validates :ended_on, date: { before: :today, after: :started_on }, if: -> { current_role == "no" }

@@ -54,6 +54,7 @@ en:
       organisation: School or employer
       started_on: Start date
       subjects: Subjects and key stages taught (optional)
+      reason_for_leaving: Reason for leaving
     forced_login:
       create_account: create an account
       job_application_html: You need to login or %{account_creation_link} with Teaching Vacancies to apply for this job.
@@ -220,6 +221,7 @@ en:
         ended_on: End date
         job_title: Job title
         main_duties: Main duties
+        reason_for_leaving: Reason for leaving role
         new:
           caption: Current role and employment history
           heading: Add a role

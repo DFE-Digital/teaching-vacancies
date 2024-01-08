@@ -191,6 +191,7 @@ en:
         main_duties: List all the responsibilities this role involved
         organisation_name: If you worked for yourself, enter ‘self-employed’
         started_on: For example, %{date}
+        reason_for_leaving: Please specify why you have decided to leave this role.
 
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
@@ -564,6 +565,7 @@ en:
           "yes": "Yes"
         job_title: Role
         main_duties: Main duties
+        reason_for_leaving: Reason for leaving role
         organisation: Name of school or employer
         subjects: Subjects and key stages taught (optional)
       jobseekers_sign_in_form:
