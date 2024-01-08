@@ -12,6 +12,7 @@ RSpec.describe "Jobseeker profile employments" do
   let(:ended_on_year) { "2002" }
   let(:main_duties) { "Scoring goals" }
   let(:days) { { "started_on(3i)": "1", "ended_on(3i)": "1" } }
+  let(:reason_for_leaving) { "relocating" }
   let(:params) do
     {
       jobseekers_profile_employment_form: {
@@ -23,6 +24,7 @@ RSpec.describe "Jobseeker profile employments" do
         "ended_on(2i)": ended_on_month,
         "ended_on(1i)": ended_on_year,
         main_duties: main_duties,
+        reason_for_leaving: reason_for_leaving
       }.merge(days),
     }
   end

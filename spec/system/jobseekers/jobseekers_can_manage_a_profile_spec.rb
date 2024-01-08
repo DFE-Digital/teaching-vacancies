@@ -234,6 +234,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile) }
       let(:new_employer) { "NASA" }
       let(:new_job_role) { "Chief ET locator" }
+      let(:new_reason_for_leaving) { "Relocating" }
 
       it "successfully changes the employment record" do
         visit jobseekers_profile_path
@@ -244,6 +245,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: new_employer
         fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: new_job_role
+        fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: new_reason_for_leaving
 
         click_on I18n.t("buttons.save_and_continue")
 
