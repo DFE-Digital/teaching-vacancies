@@ -102,13 +102,15 @@ en:
           title: Declarations — Application
         employment_history:
           break: Break in work history
-          description1: >-
-            Add details of all jobs you have had since you left full time education. This should include all teaching
-            roles, as well as any other jobs you have had. You can also include voluntary work if it is relevant to your
-            application.
-          description2: >-
-            Schools need a complete picture of your work history, including time out of the workplace, in order to
-            safeguard children.
+          description:
+            opening: >-
+              Add details of all jobs you have had since you left full-time education. This should include:
+            jobs_bullets:
+              - all teaching roles
+              - any other jobs you've had
+              - voluntary work, if it's relevant to your application
+            closing: >-
+              You will need to explain any gaps in your work history and the reason you left each role.
           gap_with_duration: You have a break in your work history (%{duration})
           heading: Work history
           no_employments: No employment specified
