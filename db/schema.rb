@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_09_165757) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_05_161119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_165757) do
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
     t.uuid "jobseeker_profile_id"
+    t.text "reason_for_leaving"
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_employments_on_jobseeker_profile_id"
   end
