@@ -127,7 +127,8 @@ module Jobseekers
       attribute :location
       attribute :radius
 
-      validates :location, :radius, presence: true
+      validates :location, presence: true, within_united_kingdom: true
+      validates :radius, presence: true
 
       def radius_options
         [0, 1, 5, 10, 15, 20, 25, 50, 100, 200].map { |radius| [radius, I18n.t("jobs.search.number_of_miles", count: radius)] }

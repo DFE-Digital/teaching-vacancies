@@ -389,6 +389,8 @@ en:
       description: You can change the search criteria you have used by amending the keywords, location or filters before you create your alert.
       organisation_link_html: This alert will only send you emails about %{organisation_landing_page_link}.
       title: Create your job alert
+      location:
+        hint: Teaching Vacancies advertises school roles in England. Enter a UK city, county or postcode to look for roles near you.
     unsubscribe:
       confirmation: Are you sure you want to unsubscribe?
       guidance:

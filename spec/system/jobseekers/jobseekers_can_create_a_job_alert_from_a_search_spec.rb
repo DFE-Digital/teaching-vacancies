@@ -82,7 +82,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       end
     end
 
-    context "when a point location search is carried out" do
+    context "when a point location within the UK search is carried out" do
       let(:search_with_polygons?) { false }
       let(:location) { "SW1A 1AA" }
 
@@ -110,6 +110,27 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
 
           expect(page).to have_content(I18n.t("jobs.search.number_of_miles", count: Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES))
         end
+      end
+    end
+
+    context "when a point location outside the UK search is carried out" do
+      let(:search_with_polygons?) { false }
+      let(:location) { "Dublin" }
+
+      before do
+        mock_response = [double(country: "Ireland")]
+        allow(Geocoder).to receive(:search).and_return(mock_response)
+      end
+
+      scenario "does not creates a job alert" do
+        expect(page).to have_content(I18n.t("subscriptions.new.title"))
+        and_the_search_criteria_are_populated
+
+        fill_in_subscription_fields
+
+        click_on I18n.t("buttons.subscribe")
+        expect(page).to have_content("There is a problem")
+        expect(page).to have_content("Enter a city, county or postcode in the UK")
       end
     end
   end

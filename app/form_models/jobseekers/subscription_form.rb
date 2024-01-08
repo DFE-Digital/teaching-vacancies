@@ -8,6 +8,7 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   validates :email, presence: true, email_address: true
   validates :frequency, presence: true
+  validates :location, within_united_kingdom: true
 
   validate :unique_job_alert
   validate :location_and_one_other_criterion_selected, unless: :organisation_slug
