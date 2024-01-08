@@ -24,7 +24,7 @@ RSpec.describe "Jobseeker profile employments" do
         "ended_on(2i)": ended_on_month,
         "ended_on(1i)": ended_on_year,
         main_duties: main_duties,
-        reason_for_leaving: reason_for_leaving
+        reason_for_leaving: reason_for_leaving,
       }.merge(days),
     }
   end
