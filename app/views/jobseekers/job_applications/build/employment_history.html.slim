@@ -8,8 +8,11 @@
       = render "caption"
     h2.govuk-heading-l = t(".heading")
 
-    p.govuk-body = t(".description1")
-    p.govuk-body = t(".description2")
+    p.govuk-body = t(".description.opening")
+    ul.govuk-list.govuk-list--bullet
+      - t(".description.jobs_bullets").each do |job_bullet|
+        li = job_bullet
+    p.govuk-body = t(".description.closing")
 
     - if employments.any?
       - employments.reverse_each do |employment|
