@@ -3,10 +3,6 @@ class Api::ApplicationController < ApplicationController
 
   private
 
-  def request_event
-    ApiRequestEvent.new(request, response, session)
-  end
-
   def set_headers
     response.set_header("X-Robots-Tag", "noarchive")
     response.charset = "utf-8"
@@ -16,3 +12,4 @@ class Api::ApplicationController < ApplicationController
     not_found unless request.format.json?
   end
 end
+q
