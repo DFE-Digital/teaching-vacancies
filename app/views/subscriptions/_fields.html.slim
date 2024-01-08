@@ -2,7 +2,7 @@
 - unless @organisation
   .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete"
     = f.govuk_text_field :location,
-      label: { text: t("jobs.search.location"), size: "s" },
+      label: { text: t("jobs.location"), size: "s" },
       hint: { text: t("subscriptions.new.location.hint") },
       form_group: { class: %w[location-finder__input govuk-!-margin-bottom-0] },
       data: { coordinates: @vacancies_search&.point_coordinates || @point_coordinates }
