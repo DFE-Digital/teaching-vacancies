@@ -11,12 +11,6 @@ RSpec.describe ApplicationController do
     routes.draw { get "test_action" => "anonymous#test_action" }
   end
 
-  describe "page_visited events" do
-    it "triggers a `page_visited` event on a request" do
-      expect { get :test_action }.to have_triggered_event(:page_visited).with_request_data
-    end
-  end
-
   describe "click_event events" do
     let(:params) do
       { click_event: "vacancy_save_to_account_clicked", click_event_data: { vacancy_id: "more_data" } }

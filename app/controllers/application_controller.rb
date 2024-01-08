@@ -18,8 +18,6 @@ class ApplicationController < ActionController::Base
   before_action { EventContext.dfe_analytics_request_event = dfe_analytics_request_event }
   before_action :set_paper_trail_whodunnit
 
-  after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
-
   helper GOVUKDesignSystemFormBuilder::BuilderHelper
 
   include AbTestable
@@ -94,10 +92,6 @@ class ApplicationController < ActionController::Base
 
   def dfe_analytics_request_event
     DfeAnalyticsRequestEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
-  end
-
-  def trigger_page_visited_event
-    request_event.trigger(:page_visited)
   end
 
   def trigger_click_event

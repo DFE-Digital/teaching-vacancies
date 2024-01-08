@@ -1,6 +1,4 @@
 class Api::ApplicationController < ApplicationController
-  skip_after_action :trigger_page_visited_event
-
   private
 
   def set_headers
@@ -12,4 +10,3 @@ class Api::ApplicationController < ApplicationController
     not_found unless request.format.json?
   end
 end
-q

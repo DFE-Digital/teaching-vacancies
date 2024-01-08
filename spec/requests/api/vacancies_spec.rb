@@ -137,10 +137,6 @@ RSpec.describe "Api::Vacancies" do
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
     end
 
-    it "does not trigger a page_visited event" do
-      expect { subject }.not_to have_triggered_event(:page_visited)
-    end
-
     it "triggers an api_queried event" do
       subject
       expect(:api_queried).to have_been_enqueued_as_analytics_events
