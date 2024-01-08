@@ -187,6 +187,22 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       before { visit jobseekers_profile_path }
 
+      it "raises errors for missing fields" do
+        click_link("Add roles")
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_css('ul.govuk-list.govuk-error-summary__list')
+
+        within 'ul.govuk-list.govuk-error-summary__list' do
+          expect(page).to have_link('Enter a school or other organisation', href: '#jobseekers-profile-employment-form-organisation-field-error')
+          expect(page).to have_link('Enter your job title', href: '#jobseekers-profile-employment-form-job-title-field-error')
+          expect(page).to have_link('Tell us briefly what your main duties were', href: '#jobseekers-profile-employment-form-main-duties-field-error')
+          expect(page).to have_link('Enter your reason for leaving the role', href: '#jobseekers-profile-employment-form-reason-for-leaving-field-error')
+          expect(page).to have_link('Enter a date in the correct format', href: '#jobseekers-profile-employment-form-started-on-field-error')
+          expect(page).to have_link('Select yes if this is your current role', href: '#jobseekers-profile-employment-form-current-role-field-error')
+        end
+      end
+
       it "associates an 'employment' with their jobseeker profile" do
         expect { add_jobseeker_profile_employment }.to change { profile.employments.count }.by(1)
       end
@@ -207,6 +223,7 @@ RSpec.describe "Jobseekers can manage their profile" do
             expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
             expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year)) unless employment.current_role == "yes"
             expect(page).to have_content(employment.main_duties)
+            expect(page).to have_content(employment.reason_for_leaving)
           end
         end
       end
@@ -759,6 +776,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     fill_in "jobseekers_profile_employment_form[started_on(2i)]", with: "09"
     choose "Yes", name: "jobseekers_profile_employment_form[current_role]"
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: "Goals and that"
+    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: "I hate it there"
 
     click_on I18n.t("buttons.save_and_continue")
   end
