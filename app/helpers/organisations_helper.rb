@@ -30,7 +30,7 @@ module OrganisationsHelper
       "ages #{organisation.minimum_age} to #{organisation.maximum_age}",
     ]
 
-    school_type_details.reject(&:blank?).reject { |str| str == I18n.t("schools.not_given") }.join(", ")
+    school_type_details.reject(&:blank?).reject { |str| str == I18n.t("vacancies.listing.schools.not_given") }.join(", ")
   end
 
   def organisation_types(organisations)
@@ -92,15 +92,11 @@ module OrganisationsHelper
   def number_of_pupils(school)
     return unless (number = school.gias_data["NumberOfPupils"])
 
-    I18n.t("vacancies.listing.schools.size.enrolled", pupils: pupils, number: number)
+    I18n.t("vacancies.listing.schools.size.enrolled", number: number)
   end
 
   def school_capacity(school)
     I18n.t("vacancies.listing.schools.size.up_to", capacity: school.gias_data["SchoolCapacity"])
-  end
-
-  def pupils
-    I18n.t("schools.size.pupils").pluralize
   end
 
   def missing_profile_information_notification(prompt)
