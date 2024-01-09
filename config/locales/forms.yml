@@ -188,7 +188,7 @@ en:
         last_name: Or family name
         phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
       jobseekers_profile_employment_form:
-        main_duties: Give a brief summary of your key responsibilities
+        main_duties: Give a brief summary of your key responsibilities.
         organisation_name: If you worked for yourself, enter ‘self-employed’
         started_on: For example, %{date}
         reason_for_leaving: If you're still in the role, give a brief summary of your reasons for wanting to leave.
