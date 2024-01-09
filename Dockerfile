@@ -1,10 +1,10 @@
  # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with 
  # Alpine v3.18.
- # TODO: Regularly check in the alpine ruby "3.2.2-alpine3.18" images for its latest upgraded packages so we can remove
+ # TODO: Regularly check in the alpine ruby "3.3.0-alpine3.18" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
 ARG PROD_PACKAGES="imagemagick=7.1.1.13-r1 libxml2 libxslt libpq tzdata shared-mime-info postgresql15=15.5-r0"
 
-FROM ruby:3.2.2-alpine3.18 AS builder
+FROM ruby:3.3.0-alpine3.18 AS builder
 
 WORKDIR /app
 
@@ -48,7 +48,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.2.2-alpine3.18 AS production
+FROM ruby:3.3.0-alpine3.18 AS production
 
 WORKDIR /app
 
