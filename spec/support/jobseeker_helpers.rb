@@ -40,6 +40,7 @@ module JobseekerHelpers
     fill_in "School or other organisation", with: "The Best School"
     fill_in "Job title", with: "The Best Teacher"
     fill_in "Main duties", with: "Some details about what the main duties were"
+    fill_in "Reason for leaving role", with: "It's complicated"
     fill_in "Subjects and key stages taught (optional field)", with: "English KS1"
     fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: "2019"
     fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: "09"
@@ -55,6 +56,7 @@ module JobseekerHelpers
     fill_in "School or other organisation", with: "The Best School"
     fill_in "Job title", with: job_title
     fill_in "Main duties", with: "Some details about what the main duties were"
+    fill_in "Reason for leaving role", with: "Just couldn't take it any longer"
     fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: start_year
     fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: start_month
     choose "No", name: "jobseekers_job_application_details_employment_form[current_role]"
