@@ -54,7 +54,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def form_params
-    send("#{step}_params", params)
+    send(:"#{step}_params", params)
   end
 
   def set_school_options

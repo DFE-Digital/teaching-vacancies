@@ -96,7 +96,7 @@ class JobApplication < ApplicationRecord
 
       if attr.ends_with?("_description")
         attr_name = attr.to_s.split("_").first
-        report.public_send("#{attr_name}_other_descriptions") << attr_value
+        report.public_send(:"#{attr_name}_other_descriptions") << attr_value
       else
         report.increment("#{attr}_#{attr_value}")
       end
