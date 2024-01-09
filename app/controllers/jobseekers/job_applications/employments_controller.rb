@@ -49,7 +49,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
     when "new"
       {}
     when "edit"
-      employment.slice(:organisation, :job_title, :subjects, :main_duties, :started_on, :current_role, :ended_on)
+      employment.slice(:organisation, :job_title, :subjects, :main_duties, :started_on, :current_role, :ended_on, :reason_for_leaving)
     when "create", "update"
       employment_params
     end
