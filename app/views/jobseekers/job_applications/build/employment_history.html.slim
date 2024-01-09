@@ -44,6 +44,10 @@
                   - row.with_key text: t("jobseekers.job_applications.employments.main_duties")
                   - row.with_value text: employment.main_duties
 
+                - summary_list.with_row do |row|
+                  - row.with_key text: t("jobseekers.job_applications.employments.reason_for_leaving")
+                  - row.with_value text: employment.reason_for_leaving
+
             - detail.with_action govuk_link_to t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_job_application_employment_path(job_application, employment), class: "govuk-link--no-visited-state"
             - detail.with_action govuk_link_to t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_job_application_employment_path(job_application, employment), method: :delete
 

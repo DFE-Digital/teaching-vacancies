@@ -36,7 +36,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
 
   def employment_params
     params.require(:jobseekers_job_application_details_employment_form)
-          .permit(:organisation, :job_title, :subjects, :main_duties, :started_on, :current_role, :ended_on)
+          .permit(:organisation, :job_title, :subjects, :main_duties, :started_on, :current_role, :ended_on, :reason_for_leaving)
           .merge("started_on(3i)" => "1", "ended_on(3i)" => "1")
   end
 

@@ -223,7 +223,7 @@ en:
         ended_on: End date
         job_title: Job title
         main_duties: Main duties
-        reason_for_leaving: Reason for leaving role
+        reason_for_leaving: Reason for leaving
         new:
           caption: Current role and employment history
           heading: Add a role
@@ -409,6 +409,7 @@ en:
           salary: Salary
           started_on: Start date
           subjects: Subjects and key stages taught
+          reason_for_leaving: Reason for leaving
         feedback: Feedback on your application
         heading: Application sections
         page_title: View application
