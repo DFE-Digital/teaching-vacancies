@@ -8,7 +8,7 @@ The [onboarding](../onboarding.md) document explains the process by which new te
 
 We use [Markdown](https://www.markdownguide.org/cheat-sheet) to write this file and the others in the [documentation](./documentation) directory.
 
-Go to [HackMD](https://hackmd.cloudapps.digital/) which is hosted on Gov.UK PaaS, and click `New guest note`. You can then learn Markdown while writing a document:
+Go to [Hedgedoc](https://hedgedoc.teacherservices.cloud/) which is hosted on AKS, and click `New guest note`. You can then learn Markdown while writing a document:
 - enter some text, highlight it
 - press `B` to make it bold
 - press `H` to create headings (press `H` again to change from an H1 to an H2 heading)

@@ -46,7 +46,7 @@ variable "schools_images_logos_s3_bucket_force_destroy" {
   default = false
 }
 
-# Gov.UK PaaS
+# AKS
 
 variable "app_docker_image" {
   default = "ghcr.io/dfe-digital/teaching-vacancies:placeholder"
@@ -62,9 +62,7 @@ variable "parameter_store_environment" {
 variable "aks_web_app_start_command" {
   default = ["/bin/sh", "-c", "bundle exec rake db:migrate:ignore_concurrent_migration_exceptions && rails s"]
 }
-variable "paas_sso_passcode" {
-  default = ""
-}
+
 # Statuscake
 variable "statuscake_alerts" {
   description = "Define Statuscake alerts with the attributes below"
@@ -161,7 +159,6 @@ variable "azure_maintenance_window" { default = null }
 
 
 locals {
-  paas_api_url               = "https://api.london.cloud.service.gov.uk"
   app_env_values             = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets              = yamldecode(data.aws_ssm_parameter.infra_secrets.value)
   is_production              = var.environment == "production"

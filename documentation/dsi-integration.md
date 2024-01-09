@@ -4,9 +4,10 @@ Hiring staff authenticate via the [DfE Sign-in](https://services.signin.educatio
 
 Different environments talk to different DfE Sign-in environments:
 
-- Local development, Dev(GOV.UK PaaS) -> Test DfE Sign-in
-- Staging(GOV.UK PaaS) -> Pre-production DfE Sign-in
-- Production (GOV.UK PaaS) -> Production DfE Sign-in
+- Local development -> Test DfE Sign-in
+- Staging AKS -> Pre-production DfE Sign-in
+- Production AKS -> Production DfE Sign-in
+- QA AKS -> Test DfE Sign-in
 
 Review apps use the magic link sent via email to authenticate.
 

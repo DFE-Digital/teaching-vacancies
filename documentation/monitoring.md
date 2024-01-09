@@ -31,12 +31,8 @@
 - Azure logs can be accessed/queried from the Azure Long resources `s189p01-tv-pd-rg` under `s189-teacher-services-cloud-production` subscription.
 
 
-**Outdated:** For the moment, AKS logs are not sent to Logit. There are plans to change this in the future.
+For the moment, AKS logs are not sent to Logit. There are plans to change this in the future.
 
-PaaS logs are drained to logit. There are customised alerts on Logit, which monitors and alerts on various events.
-
-`alert_on_no_logs_from_paas.yaml`: This monitors and alerts if no logs are being sent from PaaS to Teaching-Vacanices' Logit stack.
-`Throttled.yml`: This monitors and alerts if we have unusual amount of requests, which have been throttled.
 
 ### Billing
 

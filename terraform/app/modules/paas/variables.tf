@@ -131,7 +131,7 @@ locals {
 
   # AKS
   # Use the AKS ingress domain by default. Override with the DOMAIN variable is present
-  # The TEMP_DOMAIN variable takes precedence during the migration from PaaS to AKS
+  # The TEMP_DOMAIN variable takes precedence, in case of a migration to a new environment for instance
   web_app_aks_domain = "teaching-vacancies-${var.environment}.${module.cluster_data.ingress_domain}"
   web_app_domain = try(
     var.app_env_values["TEMP_DOMAIN"],
