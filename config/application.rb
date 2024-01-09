@@ -60,7 +60,7 @@ module TeachingVacancies
 
     config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info").to_sym
 
-    # Set up backing services through VCAP_SERVICES if running on Cloudfoundry (GOV.UK PaaS)
+    # Set up backing services through VCAP_SERVICES if running on AKS
     if ENV["VCAP_SERVICES"].present?
       vcap_services = VcapServices.new(ENV.fetch("VCAP_SERVICES", nil))
 

@@ -1,6 +1,6 @@
 # Parses a user's search query into a syntax tree which can later be transformed into an Arel AST
 #
-# We use a managed Postgres database through GOV.UK PaaS and it does not support custom synonym
+# We use a managed Postgres database  and it does not support custom synonym
 # dictionaries for full-text search (because we do not get filesystem access on the database
 # server which Postgres requires for loading dictionaries). This means we can't just add a
 # synonym dictionary/thesaurus to Postgres, use `websearch_to_tsquery`, and call it a day - instead

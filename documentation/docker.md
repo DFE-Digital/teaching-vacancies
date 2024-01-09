@@ -231,50 +231,20 @@ For images built off the `main` branch, we use the [SHA of the GitHub commit](ht
 
 The Docker images for Teaching Vacancies are stored in the GitHub's container registry [https://github.com/DFE-Digital/teaching-vacancies/](https://github.com/DFE-Digital/teaching-vacancies/pkgs/container/teaching-vacancies).
 
+### GitHub authentication
+Access and authentication to GitHub is via the default
+[GITHUB_TOKEN](https://github.com/DFE-Digital/teaching-vacancies/blob/main/.github/workflows/build_and_deploy.yml#L105). Follow link for further info about [authentication in github](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-in-a-github-actions-workflow)
 
-### GitHub Packages users
+An example of authentication via Github token is as below
 
-#### Individual end-user
-
-To use `docker` commands, either directly, or through the abstraction of the Makefile, you must first be logged in as a GitHub user.
-
-- You will require write access to GitHub packages [https://github.com/DFE-Digital/teaching-vacancies/](https://github.com/DFE-Digital/teaching-vacancies/pkgs/container/teaching-vacancies) repository. Ask in #digital-tools-support should you require it.
-- Log in to Log in to Github Packages (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
-
-#### The `twd-tv-ci` user:
-- is used as a service account, by GitHub Actions to pull and/or push images.
-- is registered with the email address `twd-tv-ci@digital.education.gov.uk`
-
-Credentials for `twd-tv-ci` for pulling images
-- are held in [AWS Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table), per-environment e.g. `/teaching-vacancies/dev/infra/secrets` as a pair of YAML lines:
 ```
-github_packages_username: NotARealUserName
-github_packages_token: NotRealToken
-```
-These are used within the Gov.UK PaaS web app and worker app [terraform](../terraform/app/modules/paas/main.tf), like so:
-```
-  docker_credentials = {
-    username = var.docker_username
-    password = var.docker_password
-  }
-```
-
-Credentials for `twd-tv-ci` for pulling and pushing images in workflows
-- entered into [GitHub Actions secrets](https://github.com/DFE-Digital/teaching-vacancies/settings/secrets/actions) repository secret:
-```
-GIT_HUB_SERVICE_ACCOUNT_TOKEN
-
-No username is required; but we use `${{ github.repository_owner }}` in the workflow.
-```
-These are used within GitHub workflows like [deploy.yml](../github/workflows/deploy.yml), like so:
-```
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1
-      with:
+  - name: Login to GitHub Container Registry
+    uses: docker/login-action@v3
+    with:
+        registry: ghcr.io
         username: ${{ github.repository_owner }}
-        password: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 ```
-The secrets can not be decrypted through the UI, but can be updated.
 
 ### GitHub container registry
 

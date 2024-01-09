@@ -39,7 +39,7 @@ postgres_flexible_server_sku      = "GP_Standard_D2ds_v4"
 postgres_enable_high_availability = true
 redis_queue_sku_name              = "Premium"
 aks_web_app_instances             = 8
-paas_worker_app_instances         = 4
+worker_app_instances              = 4
 aks_worker_app_memory             = "1.5Gi"
 ```
 
@@ -48,7 +48,7 @@ aks_worker_app_memory             = "1.5Gi"
 Scale out the number of instances by increasing:
 
 - `aks_web_app_instances`
-- `paas_worker_app_instances`
+- `worker_app_instances`
 
 Scale up the worker app memory by increasing:
 

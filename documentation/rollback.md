@@ -25,21 +25,10 @@ Bear in mind that if a migration fails, the current state of the database will b
 
 
 ### Restore nightly backup
-**[OUTDATED] This section is outdated  since we no longer use Gov.UK PaaS hosting. It needs to be updated with the Azure AKS process once we get the information.**
-
-Create a **new** database using the latest snapshot of the RDS instance. See [GDS paas documentation](https://docs.cloud.service.gov.uk/deploying_services/postgresql/#restoring-a-postgresql-service-snapshot). This is a self-service option.
+TBD
 
 ### Restore point-in-time backup
-**[OUTDATED] This section is outdated  since we no longer use Gov.UK PaaS hosting. It needs to be updated with the Azure AKS process once we get the information.**
-
-Create a **new** database using a point-in-time backup of the RDS instance. It uses a snapshot and transaction log, up to the desired time.
-See [GDS paas documentation](https://docs.cloud.service.gov.uk/deploying_services/postgresql/#restoring-a-postgresql-service-snapshot). This is a self-service option.
+TBD
 
 ### Restore from S3 backup
-**[OUTDATED] This section is outdated  since we no longer use Gov.UK PaaS hosting. It needs to be updated with the Azure AKS process once we get the information.**
-
-We keep our own nightly backups in S3. In case the RDS instance and all its backups are gone, we still have
-this option.
-* Recreate the empty database with terraform
-* Get the latest backup from S3 bucket `530003481352-tv-db-backups`. They are gzipped SQL files with the date in the file name.
-* Load the data into the new database. See: "Backup/Restore GOV.UK PaaS Postgres service database" in [GOV.UK PaaS](govuk-paas.md)
+TBD

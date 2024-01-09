@@ -39,7 +39,7 @@ class FooController < ApplicationController
 end
 ```
 
-We trigger a `page_visited` event for every successful HTTP request (except PaaS healthchecks and
+We trigger a `page_visited` event for every successful HTTP request (except  healthchecks and
 API calls), so every page view will result in at least one event, but may result in more if custom
 events are triggered.
 
@@ -72,7 +72,7 @@ end
 
 Note that this uses `array_including` behind the scenes, so you do not need to specify
 every single element of data included when the event is fired, only the ones you care
-about in any particular test. 
+about in any particular test.
 
 There is also a `with_request_data`/`and_request_data`  chain available in specs that
 have access to a request object to verify that [request events](#request-events) have
@@ -97,4 +97,4 @@ aggregate events based on pertaining to one user (but not who that user is speci
 collect raw user agent and IP address information for events that result from a user request,
 which we will handle according to our privacy policy.
 
-There is a `StringAnonymiser` service that can help you anonymise data consistently. 
+There is a `StringAnonymiser` service that can help you anonymise data consistently.

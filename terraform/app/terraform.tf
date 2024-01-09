@@ -7,15 +7,6 @@ For SSO authentication
 - store_tokens_path = /path/to/local/file
 */
 
-
-provider "cloudfoundry" {
-  store_tokens_path = "./tokens"
-  api_url           = local.paas_api_url
-  user              = var.paas_sso_passcode == "" ? local.infra_secrets.cf_username : null
-  password          = var.paas_sso_passcode == "" ? local.infra_secrets.cf_password : null
-  sso_passcode      = var.paas_sso_passcode != "" ? var.paas_sso_passcode : null
-}
-
 provider "statuscake" {
   api_token = local.infra_secrets.statuscake_apikey
 }
