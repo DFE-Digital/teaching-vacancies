@@ -142,6 +142,7 @@ en:
       jobseekers_job_application_details_employment_form:
         main_duties: A very brief summary
         organisation: For a non-teaching job, tell us the name of the organisation you worked at
+        reason_for_leaving: If you’re still in the role, give a brief summary of your reasons for wanting to leave.
       jobseekers_job_application_details_qualifications_degree_form:
         institution: Awarding body
         year: Year qualification was awarded
@@ -369,6 +370,7 @@ en:
         organisation: School or other organisation
         subjects_review: Subjects and key stages taught
         subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        reason_for_leaving: Reason for leaving role
       jobseekers_job_application_employment_history_form:
         employment_history_section_completed_options:
           false: No, I'll come back to it later
