@@ -33,6 +33,7 @@ shared:
     - created_at
     - updated_at
     - jobseeker_profile_id
+    - reason_for_leaving
   equal_opportunities_reports:
     - id
     - vacancy_id

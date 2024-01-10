@@ -188,9 +188,10 @@ en:
         last_name: Or family name
         phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
       jobseekers_profile_employment_form:
-        main_duties: List all the responsibilities this role involved
+        main_duties: Give a brief summary of your key responsibilities.
         organisation_name: If you worked for yourself, enter ‘self-employed’
         started_on: For example, %{date}
+        reason_for_leaving: If you're still in the role, give a brief summary of your reasons for wanting to leave.
 
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
@@ -564,6 +565,7 @@ en:
           "yes": "Yes"
         job_title: Role
         main_duties: Main duties
+        reason_for_leaving: Reason for leaving role
         organisation: Name of school or employer
         subjects: Subjects and key stages taught (optional)
       jobseekers_sign_in_form:

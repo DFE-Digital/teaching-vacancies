@@ -56,7 +56,7 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
 
   def employment_form_params
     params.require(:jobseekers_profile_employment_form)
-          .permit(:organisation, :job_title, :started_on, :current_role, :ended_on, :main_duties, :subjects)
+          .permit(:organisation, :job_title, :started_on, :current_role, :ended_on, :main_duties, :subjects, :reason_for_leaving)
           .merge("started_on(3i)" => "1", "ended_on(3i)" => "1")
   end
 end
