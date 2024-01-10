@@ -36,7 +36,7 @@
             - summary_list.with_row do |row|
               - row.with_key text: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on")
               - row.with_value text: employment.ended_on.to_formatted_s(:month_year)
-          
+
           - summary_list.with_row do |row|
             - row.with_key text: t("helpers.label.jobseekers_job_application_details_employment_form.reason_for_leaving")
             - row.with_value text: employment.reason_for_leaving
