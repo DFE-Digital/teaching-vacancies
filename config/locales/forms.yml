@@ -140,7 +140,7 @@ en:
       jobseekers_job_application_details_break_form:
         reason_for_break: "For example, 'I was unemployed', 'I had health issues' or 'I was caring for a child'"
       jobseekers_job_application_details_employment_form:
-        main_duties: A very brief summary
+        main_duties: Give a brief summary of your key responsibilities.
         organisation: For a non-teaching job, tell us the name of the organisation you worked at
         reason_for_leaving: If you’re still in the role, give a brief summary of your reasons for wanting to leave.
       jobseekers_job_application_details_qualifications_degree_form:
