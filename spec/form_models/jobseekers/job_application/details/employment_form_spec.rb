@@ -110,7 +110,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
     let(:params) do
       { organisation: "An organisation", job_title: "A job title", main_duties: "Some main duties",
         current_role: "no", "started_on(1i)" => "2019", "started_on(2i)" => "09", "started_on(3i)" => "01",
-        "ended_on(1i)" => "2020", "ended_on(2i)" => "07", "ended_on(3i)" => "30" }
+        "ended_on(1i)" => "2020", "ended_on(2i)" => "07", "ended_on(3i)" => "30", reason_for_leaving: "stress" }
     end
 
     it "is valid" do
