@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   include DfE::Analytics::Requests
 
   SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.1 # Default 0.5.Temporally set to 0.1 due to very high false positive rate on the last day.
-  VALID_CLICK_EVENT_TYPES = %w[vacancy_save_to_account_clicked].freeze
 
   add_flash_types :success, :warning
 
@@ -13,8 +12,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_sentry_user
   before_action :redirect_to_canonical_domain, :set_headers
-  before_action :trigger_click_event, if: -> { click_event_param.present? }
-  before_action { EventContext.request_event = request_event }
   before_action { EventContext.dfe_analytics_request_event = dfe_analytics_request_event }
   before_action :set_paper_trail_whodunnit
 
@@ -86,27 +83,8 @@ class ApplicationController < ActionController::Base
     false
   end
 
-  def request_event
-    RequestEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
-  end
-
   def dfe_analytics_request_event
     DfeAnalyticsRequestEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
-  end
-
-  def trigger_click_event
-    return unless VALID_CLICK_EVENT_TYPES.include?(click_event_param)
-
-    request_event.trigger(click_event_param.to_sym, click_event_data_params.to_h)
-  end
-
-  def click_event_param
-    params[:click_event]
-  end
-
-  def click_event_data_params
-    # Any params that might be present must be explicitly permitted in order to convert to hash
-    params[:click_event_data]&.permit(:vacancy_id)
   end
 
   def current_organisation

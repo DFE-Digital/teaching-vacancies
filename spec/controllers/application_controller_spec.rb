@@ -11,28 +11,6 @@ RSpec.describe ApplicationController do
     routes.draw { get "test_action" => "anonymous#test_action" }
   end
 
-  describe "click_event events" do
-    let(:params) do
-      { click_event: "vacancy_save_to_account_clicked", click_event_data: { vacancy_id: "more_data" } }
-    end
-
-    it "triggers a `click_event` event on a request" do
-      expect { get :test_action, params: params }
-        .to have_triggered_event(:vacancy_save_to_account_clicked)
-        .with_request_data.and_data(vacancy_id: "more_data")
-    end
-
-    context "with a non-existent click event type" do
-      let(:params) do
-        { click_event: "evil", click_event_data: { evil: "evil" } }
-      end
-
-      it "does not trigger a `click_event` event" do
-        expect { get :test_action, params: params }.not_to have_triggered_event(:evil)
-      end
-    end
-  end
-
   describe "sets headers" do
     it "robots are asked not to index or to follow" do
       get :test_action

@@ -139,10 +139,6 @@ RSpec.describe Organisation do
           .to change { subject.gias_data_hash }
           .to("b8fd12f77d3a2614bcead8ab94c786c11b1bf6f2fdeb2d3801f316466f0fe4ee")
       end
-
-      it "triggers an update event" do
-        expect { subject.refresh_gias_data_hash }.to have_triggered_event(:entity_updated)
-      end
     end
 
     context "when the gias_data has not changed" do
@@ -151,10 +147,6 @@ RSpec.describe Organisation do
       it "does not change the hash" do
         subject.refresh_gias_data_hash
         expect(subject.gias_data_hash_previously_was).to be_nil
-      end
-
-      it "does not trigger an update event" do
-        expect { subject.refresh_gias_data_hash }.not_to have_triggered_event(:entity_updated)
       end
     end
   end
