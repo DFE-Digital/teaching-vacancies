@@ -39,23 +39,7 @@ class Jobseekers::ConfirmationsController < Devise::ConfirmationsController
 
   def after_confirmation_path_for(_resource_name, resource)
     sign_in(resource)
-    send_dfe_analytics_event
     flash.delete(:notice)
     confirmation_jobseekers_account_path
-  end
-
-  private
-
-
-  def send_dfe_analytics_event
-    fail_safe do
-      event = DfE::Analytics::Event.new
-       .with_type(:jobseeker_email_confirmed)
-       .with_request_details(request)
-       .with_response_details(response)
-       .with_user(current_user)
-
-      DfE::Analytics::SendEvents.do([event])
-    end
   end
 end

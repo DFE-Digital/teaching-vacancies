@@ -11,7 +11,6 @@ RSpec.describe "Jobseekers can sign up to an account" do
       click_on I18n.t("buttons.create_account")
       expect(page).to have_content("There is a problem")
       sign_up_jobseeker
-      expect(:jobseeker_account_created).to have_been_enqueued_as_analytics_events
       expect(current_path).to eq(jobseekers_check_your_email_path)
     end
 
@@ -41,7 +40,6 @@ RSpec.describe "Jobseekers can sign up to an account" do
     context "when the confirmation token is valid" do
       it "confirms email, triggers email confirmed event and redirects to jobseeker account confirmation interstitial" do
         confirm_email_address
-        expect(:jobseeker_email_confirmed).to have_been_enqueued_as_analytics_events
         expect(current_path).to eq(confirmation_jobseekers_account_path)
         expect(page).to have_content(I18n.t("jobseekers.accounts.confirmation.page_title"))
         expect(page).to have_link(I18n.t("jobseekers.accounts.confirmation.apply_for_jobs_link_text"), href: jobs_path)

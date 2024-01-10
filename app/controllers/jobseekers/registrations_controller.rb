@@ -73,7 +73,6 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   end
 
   def after_inactive_sign_up_path_for(resource)
-    send_dfe_analytics_event
     session[:jobseeker_id] = resource.id
     jobseekers_check_your_email_path
   end
@@ -85,17 +84,5 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   def close_account_feedback_form_params
     params.require(:jobseekers_close_account_feedback_form)
           .permit(:close_account_reason, :close_account_reason_comment)
-  end
-
-  def send_dfe_analytics_event
-    fail_safe do
-      event = DfE::Analytics::Event.new
-       .with_type(:jobseeker_account_created)
-       .with_request_details(request)
-       .with_response_details(response)
-       .with_user(current_jobseeker)
-
-      DfE::Analytics::SendEvents.do([event])
-    end
   end
 end
