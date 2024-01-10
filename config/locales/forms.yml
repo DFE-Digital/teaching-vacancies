@@ -498,6 +498,7 @@ en:
           "yes": "Yes"
         qualified_teacher_status_year: Year QTS was awarded
         hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}.
+        completed_period_hint: New teachers before 2021 had to complete a 1 year statutory induction period. New teachers after 2021 have to complete a 2 year statutory induction period.
         link_text: how to get QTS
       jobseekers_job_application_qualifications_form:
         qualifications_section_completed_options:
@@ -867,7 +868,7 @@ en:
       jobseekers_job_application_personal_details_form:
         your_address: Your address
       jobseekers_job_application_professional_status_form:
-        statutory_induction_complete: Have you completed your statutory induction year?
+        statutory_induction_complete: Have you completed your statutory induction period?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
       jobseekers_job_application_qualifications_form:
         qualifications_section_completed: Have you completed this section?
