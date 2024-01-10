@@ -2,9 +2,7 @@
 # Represents events occurring within the application that we are interested in tracking.
 #
 # At a minimum, an event has a type and a timestamp at which it occurred. It may also have optional
-# metadata that describes what occurred in more detail. Events are asynchronously sent to our data
-# warehouse using a background job. An instance of `Event` can trigger an arbitrary number of
-# events (to allow for potentially expensive computation on initialization of subclasses).
+# metadata that describes what occurred in more detail.
 class Event
   TABLE_NAME = "events".freeze
 
