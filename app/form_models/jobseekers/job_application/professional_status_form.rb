@@ -7,7 +7,11 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
   attr_accessor(*fields)
 
   def statutory_induction_complete_options
-    [["yes", "Yes, I have completed a 1 or 2 year induction period"], ["no", "No"], ["on_track", "I'm on track to complete it"]]
+    [
+      ["yes", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.yes")], 
+      ["no", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.no")], 
+      ["on_track", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.on_track")]
+    ]
   end
 
   validates :qualified_teacher_status, inclusion: { in: %w[yes no on_track] }
