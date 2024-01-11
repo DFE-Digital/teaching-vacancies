@@ -25,24 +25,6 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     expect(page).to have_content("English KS1")
   end
 
-  it "allows jobseekers to add a current role" do
-    visit jobseekers_job_application_build_path(job_application, :professional_status)
-
-    expect(page).to have_content("No employment specified")
-
-    click_on I18n.t("buttons.add_job")
-    expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :employment_history))
-    validates_step_complete(button: I18n.t("buttons.save_employment"))
-
-    fill_in_current_role
-
-    click_on I18n.t("buttons.save_employment")
-
-    expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
-    expect(page).to have_content("The Best Teacher")
-    expect(page).to have_content("English KS1")
-  end
-
   it "allows jobseekers to add employment history" do
     visit jobseekers_job_application_build_path(job_application, :employment_history)
 
