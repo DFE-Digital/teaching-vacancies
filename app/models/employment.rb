@@ -17,6 +17,7 @@ class Employment < ApplicationRecord
       salary:,
       started_on:,
       subjects:,
+      reason_for_leaving:,
     )
   end
 
