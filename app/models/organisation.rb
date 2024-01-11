@@ -108,10 +108,6 @@ class Organisation < ApplicationRecord
     trust? || local_authority?
   end
 
-  # We bulk import organisations from GIAS, so cannot use ActiveRecord callbacks or rely on
-  # the `updated_at` field to trigger "entity updated" events for our data warehouse.
-  # Instead, we use a job to iterate over all organisations and call this method to recompute
-  # the `gias_data_hash` and update it if it has changed, which will trigger an update event.
   def refresh_gias_data_hash
     computed_hash = gias_data.presence && Digest::SHA256.hexdigest(gias_data.to_s)
     return if gias_data_hash == computed_hash

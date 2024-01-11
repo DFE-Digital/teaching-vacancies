@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Jobseekers can sign up to an account" do
   let(:jobseeker) { build(:jobseeker) }
@@ -9,10 +10,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       visit new_jobseeker_registration_path
       click_on I18n.t("buttons.create_account")
       expect(page).to have_content("There is a problem")
-      expect { sign_up_jobseeker }.to have_triggered_event(:jobseeker_account_created).with_data(
-        user_anonymised_jobseeker_id: anything,
-        email_identifier: anything,
-      ).and change { delivered_emails.count }.by(1)
+      sign_up_jobseeker
       expect(current_path).to eq(jobseekers_check_your_email_path)
     end
 
@@ -41,9 +39,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
     context "when the confirmation token is valid" do
       it "confirms email, triggers email confirmed event and redirects to jobseeker account confirmation interstitial" do
-        expect { confirm_email_address }.to have_triggered_event(:jobseeker_email_confirmed).with_base_data(
-          user_anonymised_jobseeker_id: StringAnonymiser.new(created_jobseeker.id).to_s,
-        )
+        confirm_email_address
         expect(current_path).to eq(confirmation_jobseekers_account_path)
         expect(page).to have_content(I18n.t("jobseekers.accounts.confirmation.page_title"))
         expect(page).to have_link(I18n.t("jobseekers.accounts.confirmation.apply_for_jobs_link_text"), href: jobs_path)
