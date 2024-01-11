@@ -6,7 +6,20 @@ en:
       user_feedback_heading: User feedback
       user_feedback_link: View user feedback
       development_tools_heading: Developer tools
+      service_data_heading: Service data
+      service_data_link: View service data
       sidekiq_link: View Sidekiq dashboard
+
+    fallback_sessions:
+      create:
+        check_spam_html: >-
+          If our email doesn’t arrive within 5 minutes, check your spam or junk folder, or %{try_again}.
+        title: Check your email
+        sent: >-
+          If you have access to the support dashboard, we’ve sent you an email.
+          Click on the link in the email to sign in and return to this service.
+          You do not need to keep this page open.
+
     feedbacks:
       general:
         title: General feedback
@@ -61,15 +74,11 @@ en:
 
     papertrail_display_name: "%{first_name} %{last_name} (DfE Teaching Vacancies team)"
 
-    fallback_sessions:
-      create:
-        check_spam_html: >-
-          If our email doesn’t arrive within 5 minutes, check your spam or junk folder, or %{try_again}.
-        title: Check your email
-        sent: >-
-          If you have access to the support dashboard, we’ve sent you an email.
-          Click on the link in the email to sign in and return to this service.
-          You do not need to keep this page open.
+    service_data:
+      index:
+        heading: Service data
+        jobseeker_profiles_link: Jobseeker profiles
+        title: Service data
 
     sessions:
       new:
