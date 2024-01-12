@@ -1,13 +1,13 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can add employments and breaks to their job application" do
+RSpec.describe "Jobseekers can add details about their qualified teacher status to a job application" do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
-  it "allows jobseekers to add a their professional status" do
+  it "allows jobseekers to add their professional status" do
     visit jobseekers_job_application_build_path(job_application, :professional_status)
 
     click_on "Save and continue"
