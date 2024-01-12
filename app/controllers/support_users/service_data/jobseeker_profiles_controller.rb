@@ -1,6 +1,7 @@
 class SupportUsers::ServiceData::JobseekerProfilesController < SupportUsers::ServiceData::BaseController
   def index
-    @jobseeker_profiles = JobseekerProfile.all.order(created_at: :desc)
+    jobseeker_profiles = JobseekerProfile.includes(:personal_details, :jobseeker).all.order(created_at: :desc)
+    @pagy, @jobseeker_profiles = pagy(jobseeker_profiles)
   end
 
   def show

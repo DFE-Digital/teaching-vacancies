@@ -7,3 +7,4 @@ h1.govuk-heading-l = "Service Jobseeker Profiles"
       = govuk_link_to(jobseeker_profile.id, support_users_service_data_jobseeker_profile_path(jobseeker_profile))
   - t.boolean "Active", :active
   - t.datetime "Created", :created_at
+= govuk_pagination(pagy: @pagy)
