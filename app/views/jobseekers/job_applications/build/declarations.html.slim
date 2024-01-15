@@ -7,7 +7,7 @@
     - if current_jobseeker.job_applications.not_draft.none?
       = render "caption"
     h2.govuk-heading-l = t(".heading")
-    - byebug
+
     p.govuk-body = t(".description1", link_text: govuk_link_to(t(".dbs_link_text"), "https://www.gov.uk/government/organisations/disclosure-and-barring-service")).html_safe
     p.govuk-body = t(".description2")
     p.govuk-body = t(".description3")
@@ -22,6 +22,11 @@
         = f.govuk_radio_button :close_relationships, :yes, link_errors: true do
           = f.govuk_text_field :close_relationships_details
         = f.govuk_radio_button :close_relationships, :no
+
+      = f.govuk_radio_buttons_fieldset :safeguarding_issue, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.safeguarding_issue", organisation: vacancy.organisation_name) } do
+        = f.govuk_radio_button :safeguarding_issue, :yes, link_errors: true, label: { text: "Yes, I want to share something" } do
+          = f.govuk_text_area :safeguarding_issue_details, label: { text: "Give any relevant information" }
+        = f.govuk_radio_button :safeguarding_issue, :no, label: { text: "No" }
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"

@@ -60,6 +60,16 @@ module JobApplicationsHelper
     end
   end
 
+  def job_application_safeguarding_issues_info(job_application)
+    case job_application.close_relationships
+    when "yes"
+      safe_join([tag.div("Yes", class: "govuk-body", id: "safeguarding_issue"),
+                 tag.p(job_application.safeguarding_issue_details, class: "govuk-body", id: "safeguarding_issue_details")])
+    when "no"
+      tag.div("No", class: "govuk-body", id: "safeguarding_issue")
+    end
+  end
+
   def job_application_status_tag(status)
     govuk_tag text: JOBSEEKER_STATUS_MAPPINGS[status.to_sym],
               colour: JOB_APPLICATION_STATUS_TAG_COLOURS[JOBSEEKER_STATUS_MAPPINGS[status.to_sym].parameterize.underscore.to_sym],
