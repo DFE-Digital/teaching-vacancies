@@ -133,6 +133,8 @@ FactoryBot.define do
     # Declarations
     close_relationships { "" }
     close_relationships_details { "" }
+    safeguarding_issue { "" }
+    safeguarding_issue_details { "" }
     right_to_work_in_uk { "" }
 
     completed_steps { [] }
