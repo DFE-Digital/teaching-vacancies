@@ -79,6 +79,9 @@ en:
         heading: Service data
         jobseeker_profiles_link: Jobseeker profiles
         title: Service data
+      jobseeker_profiles:
+        index:
+          title: Service Jobseeker Profiles
 
     sessions:
       new:

@@ -1,6 +1,6 @@
-- content_for :page_title_prefix, "Service Jobseeker Profiles"
+- content_for :page_title_prefix, t(".title")
 
-h1.govuk-heading-l = "Service Jobseeker Profiles"
+h1.govuk-heading-l = t(".title")
 = supportal_table(entries: @jobseeker_profiles) do |t|
   - t.column "Jobseeker" do |jobseeker_profile|
     - capture do
