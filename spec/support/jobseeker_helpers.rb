@@ -50,6 +50,8 @@ module JobseekerHelpers
   def fill_in_declarations
     choose "Yes", name: "jobseekers_job_application_declarations_form[close_relationships]"
     fill_in "Please give details", with: "Some details of the relationship"
+    choose "Yes, I want to share something"
+    fill_in "Give any relevant information", with: "Criminal record"
   end
 
   def fill_in_employment_history(job_title: "The Best Teacher", start_month: "09", start_year: "2019", end_month: "07", end_year: "2020")
