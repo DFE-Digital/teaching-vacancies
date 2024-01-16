@@ -1,0 +1,10 @@
+- if local_assigns[:object].present?
+  = render DetailComponent.new title: local_assigns[:title] do |detail|
+    - detail.with_body do
+      = govuk_summary_list do |summary_list|
+        - local_assigns[:object].class.column_names.each do |column_name|
+          - next if column_name.match?(/password|token/)
+          - column_name = column_name.remove("_ciphertext")
+          - summary_list.with_row do |row|
+            - row.with_key text: column_name.humanize
+            - row.with_value text: local_assigns[:object].send(column_name)&.to_s

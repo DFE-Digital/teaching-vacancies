@@ -1,0 +1,19 @@
+- personal_details = @jobseeker_profile.personal_details
+- jobseeker = @jobseeker_profile.jobseeker
+- title = personal_details&.first_name? ? "#{personal_details.first_name} #{personal_details.last_name} profile" : "#{jobseeker.email} profile"
+- content_for :page_title_prefix, title
+
+h1.govuk-heading-l = title
+
+= render "db_info", title: "Jobseeker", object: jobseeker
+= render "db_info", title: "Personal Details", object: personal_details
+= render "db_info", title: "Jobseeker Profile", object: @jobseeker_profile
+= render "db_info", title: "Job Preferences", object: @jobseeker_profile.job_preferences
+
+h2.govuk-heading-m = "Qualifications"
+- @jobseeker_profile.qualifications.each do |qualification|
+  = render "db_info", title: qualification.name, object: qualification
+
+h2.govuk-heading-m = "Work History"
+- @jobseeker_profile.employments.each do |employment|
+  = render "db_info", title: employment.job_title, object: employment
