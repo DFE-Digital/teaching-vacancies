@@ -14,7 +14,6 @@
     p.govuk-body = govuk_link_to(t(".description4"), "https://www.gov.uk/tell-employer-or-college-about-criminal-record")
     p.govuk-body = t(".description5", link_text: govuk_link_to(t(".keep_children_safe_link_text"), "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2")).html_safe
 
-
     = form_for form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
