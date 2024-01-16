@@ -31,8 +31,8 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
       expect(page).to have_link("Provide details about your safeguarding issue", href: "#jobseekers-job-application-declarations-form-safeguarding-issue-details-field-error")
     end
 
-    fill_in 'jobseekers_job_application_declarations_form[close_relationships_details]', with: 'My dad is the head teacher'
-    fill_in 'jobseekers_job_application_declarations_form[safeguarding_issue_details]', with: "I have a criminal record"
+    fill_in "jobseekers_job_application_declarations_form[close_relationships_details]", with: "My dad is the head teacher"
+    fill_in "jobseekers_job_application_declarations_form[safeguarding_issue_details]", with: "I have a criminal record"
 
     click_on "Save and continue"
 
