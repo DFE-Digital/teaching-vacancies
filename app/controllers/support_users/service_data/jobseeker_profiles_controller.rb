@@ -6,5 +6,6 @@ class SupportUsers::ServiceData::JobseekerProfilesController < SupportUsers::Ser
 
   def show
     @jobseeker_profile = JobseekerProfile.find(params[:id])
+    Rails.logger.info("[Service Data] #{current_user.email} accessed Profile ID #{@jobseeker_profile.id} at #{Time.current}")
   end
 end
