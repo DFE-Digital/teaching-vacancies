@@ -7,7 +7,7 @@ category_tags: apply
 ---
 ![3 teachers sat on sofas having an engaging and relaxed conversation in a canteen area of a school.](/content-assets/jobseeker-guides/write-a-great-teaching-job-application-800x300.jpg)
 
-Your personal statement is your first opportunity to show the school you’re a great fit for the job, and gets you closer to being shortlisted for an interview. The more you show how your skills and interests match the school’s ethos and values, the better. We've spoken to a range of teachers to get their top tips for success.
+Make a great first impression and get an interview for the teaching job you want with this advice from experienced teaching staff. We’ve spoken to experienced teachers to get their top tips for success.
 
 ## 1. Be professional, even with your email address
 Make sure you have a professional email address. Something like FirstName.SecondName@example.com is a good bet. Avoid using a humorous or childish email address you might have had when you were younger. 
