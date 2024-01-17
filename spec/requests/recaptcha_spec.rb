@@ -15,7 +15,7 @@ RSpec.describe "General feedback can interface with recaptcha", recaptcha: true 
     expect_any_instance_of(ApplicationController).to receive(:verify_recaptcha)
                       .with(model: nil,
                             action: "general_feedbacks",
-                            minimum_score: ApplicationController::SUSPICIOUS_RECAPTCHA_THRESHOLD)
+                            minimum_score: GeneralFeedbacksController::SUSPICIOUS_RECAPTCHA_THRESHOLD)
     post feedback_path, params: { general_feedback_form: attributes_for(:feedback) }
   end
 

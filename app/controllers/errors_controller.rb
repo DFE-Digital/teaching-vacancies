@@ -35,13 +35,6 @@ class ErrorsController < ApplicationController
   end
 
   def invalid_recaptcha
-    @form = params[:form_name]
-    @recaptcha_score = params[:recaptcha_score]
-    Sentry.with_scope do |scope|
-      scope.set_tags("form.name": @form, "recaptcha.score": @recaptcha_score)
-      Sentry.capture_message("Invalid recaptcha", level: :warning)
-    end
-
     respond_to do |format|
       format.html { render status: :unauthorized }
     end

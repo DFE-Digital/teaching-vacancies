@@ -67,16 +67,12 @@ RSpec.describe "Requesting support", recaptcha: true, vcr: true, zendesk: true d
     context "and the form is valid" do
       scenario "redirects to invalid_recaptcha path" do
         visit root_path
-
         click_on "Get help or report a problem"
-
         expect(page).to have_content("Get help")
 
         fill_in_required_fields
-
         click_on "Send message"
-
-        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Support request form", recaptcha_score: 0.9))
+        expect(page).to have_current_path(invalid_recaptcha_path)
       end
     end
 

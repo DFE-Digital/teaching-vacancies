@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include DfE::Analytics::Requests
 
-  SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
-
   add_flash_types :success, :warning
 
   protect_from_forgery with: :exception, except: :not_found
@@ -74,12 +72,6 @@ class ApplicationController < ActionController::Base
 
   def set_headers
     response.set_header("X-Robots-Tag", "noindex, nofollow")
-  end
-
-  # https://github.com/ambethia/recaptcha#verify_recaptcha
-  # https://github.com/ambethia/recaptcha#recaptcha_reply
-  def recaptcha_is_invalid?(model = nil)
-    !verify_recaptcha(model: model, action: controller_name, minimum_score: SUSPICIOUS_RECAPTCHA_THRESHOLD) && recaptcha_reply
   end
 
   def dfe_analytics_request_event

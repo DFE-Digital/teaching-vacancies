@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
           click_on I18n.t("jobseekers.subscriptions.index.link_create")
         end
         create_a_job_alert
-        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Subscription", recaptcha_score: 0.9))
+        expect(page).to have_current_path(invalid_recaptcha_path)
       end
     end
   end
