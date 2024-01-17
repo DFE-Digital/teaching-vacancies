@@ -110,6 +110,10 @@ en:
           description4: Learn more about when you need to tell someone about your criminal record.
           keep_children_safe_link_text: keeping children safe in education obligations.
           description5: Schools may also conduct their own online checks as part of their %{link_text}
+          safeguarding_issue:
+            "yes": "Yes, I want to share something"
+            hint: "Give any relevant information"
+            "no": "No"
         employment_history:
           break: Break in work history
           description:

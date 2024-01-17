@@ -23,9 +23,9 @@
         = f.govuk_radio_button :close_relationships, :no
 
       = f.govuk_radio_buttons_fieldset :safeguarding_issue, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.safeguarding_issue", organisation: vacancy.organisation_name) } do
-        = f.govuk_radio_button :safeguarding_issue, :yes, link_errors: true, label: { text: "Yes, I want to share something" } do
-          = f.govuk_text_area :safeguarding_issue_details, label: { text: "Give any relevant information" }
-        = f.govuk_radio_button :safeguarding_issue, :no, label: { text: "No" }
+        = f.govuk_radio_button :safeguarding_issue, :yes, link_errors: true, label: { text: t(".safeguarding_issue.yes") } do
+          = f.govuk_text_area :safeguarding_issue_details, label: { text: t(".safeguarding_issue.hint") }
+        = f.govuk_radio_button :safeguarding_issue, :no, label: { text: t(".safeguarding_issue.no") }
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
