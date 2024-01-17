@@ -1,6 +1,10 @@
 .posts_index,
 .posts_show {
   .post {
+    .govuk-button {
+      @extend .govuk-button;
+    }
+
     a {
       @extend .govuk-link;
     }
