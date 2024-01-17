@@ -27,4 +27,4 @@ Ideal referees are your current or most recent mentor, university tutor, or head
 At the heart of your application form is your personal statement. [Find out how to write a personal statement](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-write-teacher-personal-statement) that gives you the best chance to get an interview, where you can show in person what a great candidate you are. The more you show how your skills and interests match the school’s ethos, the better.
 
 ## Search for roles
-[Search for roles on Teaching Vacancies now.](https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=)
+<a href="https://teaching-vacancies.service.gov.uk/jobs" class="govuk-button">Search for a job using Teaching Vacancies</a>
