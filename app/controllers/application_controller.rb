@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include DfE::Analytics::Requests
 
-  SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.1 # Default 0.5.Temporally set to 0.1 due to very high false positive rate on the last day.
+  SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
 
   add_flash_types :success, :warning
 
@@ -78,9 +78,8 @@ class ApplicationController < ActionController::Base
 
   # https://github.com/ambethia/recaptcha#verify_recaptcha
   # https://github.com/ambethia/recaptcha#recaptcha_reply
-  def recaptcha_is_invalid?(_model = nil)
-    # temporarily ignore recaptcha scores until we can verify that issues with high recaptcha failure rate are fixed.
-    false
+  def recaptcha_is_invalid?(model = nil)
+    !verify_recaptcha(model: model, action: controller_name, minimum_score: SUSPICIOUS_RECAPTCHA_THRESHOLD) && recaptcha_reply
   end
 
   def dfe_analytics_request_event

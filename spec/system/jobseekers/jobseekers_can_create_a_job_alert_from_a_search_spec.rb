@@ -8,6 +8,21 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   let(:jobseeker_signed_in?) { false }
   let(:jobseeker) { build_stubbed(:jobseeker) }
 
+  describe "recaptcha" do
+    context "when verify_recaptcha is false" do
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
+      end
+
+      scenario "redirects to invalid_recaptcha path" do
+        visit new_subscription_path(search_criteria: { keyword: "test", location: "London" })
+        fill_in_subscription_fields
+        click_on I18n.t("buttons.subscribe")
+        expect(page).to have_current_path(invalid_recaptcha_path(form_name: "Subscription", recaptcha_score: 0.9))
+      end
+    end
+  end
+
   describe "job alert confirmation page" do
     before do
       login_as(jobseeker, scope: :jobseeker) if jobseeker_signed_in?
