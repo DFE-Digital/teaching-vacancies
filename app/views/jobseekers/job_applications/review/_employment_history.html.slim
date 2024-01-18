@@ -42,7 +42,9 @@
             - row.with_value text: employment.reason_for_leaving
 
       - elsif employment.break?
+        / maybe this too?
         = render "jobseekers/job_applications/explained_employment_break", employment: employment, index: index
 
       - if (gap = job_application.unexplained_employment_gaps[employment]).present?
+        / this is what we need.
         = render("jobseekers/job_applications/unexplained_employment_break", gap:, index:)

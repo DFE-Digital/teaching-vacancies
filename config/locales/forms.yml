@@ -137,7 +137,7 @@ en:
           You can find out whether you have the right to work in the UK on the
           <a href="https://www.gov.uk/" target="_blank" class="govuk-link">GOV.UK website (opens in new tab)</a>. You can apply for this role even if you do not have the
           right to work in the UK.
-      jobseekers_job_application_details_break_form:
+      jobseekers_break_form:
         reason_for_break: "For example, 'I was unemployed', 'I had health issues' or 'I was caring for a child'"
       jobseekers_job_application_details_employment_form:
         main_duties: Give a brief summary of your key responsibilities.
@@ -359,7 +359,7 @@ en:
         close_relationships_options:
           "no": "No"
           "yes": "Yes"
-      jobseekers_job_application_details_break_form:
+      jobseekers_break_form:
         reason_for_break: Enter reasons for break in work history
       jobseekers_job_application_details_employment_form:
         current_role_options:
@@ -851,7 +851,7 @@ en:
         gender: How would you describe your gender?
         orientation: How would you describe your sexual orientation?
         religion: What is your religion or belief?
-      jobseekers_job_application_details_break_form:
+      jobseekers_break_form:
         ended_on: End of break
         started_on: Start of break
       jobseekers_job_application_details_employment_form:
@@ -890,7 +890,6 @@ en:
         current_role: Are you still working in this role?
         ended_on: End date
         started_on: Start date
-
       jobseekers_subscription_form:
         frequency: When do you want to receive alerts?
       jobseekers_unsubscribe_feedback_form:
