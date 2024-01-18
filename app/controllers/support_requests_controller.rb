@@ -1,4 +1,6 @@
 class SupportRequestsController < ApplicationController
+  include RecaptchaChecking
+
   def new
     @form = SupportRequestForm.new
   end
@@ -9,8 +11,7 @@ class SupportRequestsController < ApplicationController
     if @form.invalid?
       render :new
     elsif recaptcha_is_invalid?
-      redirect_to invalid_recaptcha_path(form_name: @form.class.name.underscore.humanize,
-                                         recaptcha_score: recaptcha_reply["score"])
+      handle_invalid_recaptcha(form: @form, score: recaptcha_reply["score"])
     else
       Zendesk.create_request!(
         attachments: [@form.screenshot],
