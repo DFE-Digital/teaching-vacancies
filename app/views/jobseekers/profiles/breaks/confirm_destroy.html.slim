@@ -1,0 +1,11 @@
+- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = t(".caption")
+    h1.govuk-heading-xl = t(".heading")
+
+    = form_for form, url: jobseekers_profile_break_path(employment_break), method: :delete do |f|
+      = f.govuk_submit t("buttons.confirm_destroy"), class: "govuk-button--warning"
+
+    = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
