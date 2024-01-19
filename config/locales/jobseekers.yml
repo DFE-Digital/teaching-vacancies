@@ -48,6 +48,7 @@ en:
         confirm: Confirm
         title: Confirm your email address
     employments:
+      break: Break in work history
       current_role: Is this your current role?
       ended_on: End date
       main_duties: Main duties

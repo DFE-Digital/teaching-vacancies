@@ -29,15 +29,15 @@
       - detail_component.with_action govuk_link_to(t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_profile_work_history_path(employment), method: :delete)
   - elsif employment.break?
     = govuk_inset_text do
-      h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t(".break")
+      h2.govuk-heading-s class="govuk-!-margin-bottom-1" = t("jobseekers.employments.break")
       p.govuk-body class="govuk-!-margin-bottom-0" = employment.reason_for_break
       p.govuk-hint class="govuk-!-margin-top-0 govuk-!-margin-bottom-1" #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on.to_formatted_s(:month_year)}
       = govuk_link_to edit_jobseekers_profile_break_path(employment), class: "govuk-link--no-visited-state govuk-!-margin-right-3"
         = t("buttons.change")
-        span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
+        span.govuk-visually-hidden = " #{t("jobseekers.employments.break")} #{employment.started_on} to #{employment.ended_on}"
       = govuk_link_to jobseekers_profile_break_confirm_destroy_path(employment)
         = t("buttons.delete")
-        span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
+        span.govuk-visually-hidden = " #{t("jobseekers.employments.break")} #{employment.started_on} to #{employment.ended_on}"
 
   - gap = employment.jobseeker_profile.unexplained_employment_gaps[employment]
   - if gap.present?
