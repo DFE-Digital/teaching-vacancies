@@ -23,7 +23,7 @@
             - row.with_key text: t("jobseekers.employments.main_duties")
             - row.with_value text: employment.main_duties
           - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
-            - row.with_key text: t(t("jobseekers.employments.reason_for_leaving"))
+            - row.with_key text: t("jobseekers.employments.reason_for_leaving")
             - row.with_value text: employment.reason_for_leaving
       - detail_component.with_action govuk_link_to(t("buttons.change_hidden_text_html", hidden_text: employment.job_title), edit_jobseekers_profile_work_history_path(employment))
       - detail_component.with_action govuk_link_to(t("buttons.delete_hidden_text_html", hidden_text: employment.job_title), jobseekers_profile_work_history_path(employment), method: :delete)
