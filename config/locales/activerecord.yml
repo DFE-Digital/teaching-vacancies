@@ -576,7 +576,7 @@ en:
           attributes:
             withdraw_reason:
               inclusion: Select why you are withdrawing your application
-        jobseekers/job_application/details/break_form:
+        jobseekers/break_form:
           attributes:
             ended_on:
               after: End date must be after the start date
@@ -584,7 +584,7 @@ en:
               blank: Enter the date the break finished
               invalid: Enter a date in the correct format
             reason_for_break:
-              blank: Enter a reason for this break
+              blank: Enter a reason for this gap
             started_on:
               before: The date the break started must be in the past
               blank: Enter the date you started the break

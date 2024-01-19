@@ -360,7 +360,7 @@ en:
           "no": "No"
           "yes": "Yes"
       jobseekers_break_form:
-        reason_for_break: Enter reasons for break in work history
+        reason_for_break: Enter reasons for gap in work history
       jobseekers_job_application_details_employment_form:
         current_role_options:
           "no": "No"
@@ -852,8 +852,8 @@ en:
         orientation: How would you describe your sexual orientation?
         religion: What is your religion or belief?
       jobseekers_break_form:
-        ended_on: End of break
-        started_on: Start of break
+        ended_on: End of gap
+        started_on: Start of gap
       jobseekers_job_application_details_employment_form:
         current_role: Is this your current role?
         ended_on: End date

@@ -55,7 +55,7 @@ en:
       started_on: Start date
       subjects: Subjects and key stages taught (optional)
       reason_for_leaving: Reason for leaving
-      gap_with_duration: You have a break in your work history (%{duration})
+      gap_with_duration: You have a gap in your work history (%{duration})
     forced_login:
       create_account: create an account
       job_application_html: You need to login or %{account_creation_link} with Teaching Vacancies to apply for this job.
@@ -562,15 +562,15 @@ en:
         confirm_destroy:
           caption: Current role and employment history
           heading: Are you sure you want to delete this entry?
-          title: Confirm deletion of a break — Application
+          title: Confirm deletion of a gap — Profile
         edit:
           caption: Current role and employment history
           heading: Please tell us what you were doing over this period
-          title: Change the reason of a break — Application
+          title: Change the reason of a gap — Profile
         new:
           caption: Current role and employment history
           heading: Please tell us what you were doing over this period
-          title: Add a reason for break — Application
+          title: Add a reason for gap — Profile
       hide_profile:
         add:
           cannot_find_school: I cannot find the school I'm looking for

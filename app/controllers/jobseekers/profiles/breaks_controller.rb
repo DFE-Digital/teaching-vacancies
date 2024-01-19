@@ -11,7 +11,6 @@ class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
   end
 
   def update
-    pry
     if form.valid?
       employment_break.update(employment_break_params)
       redirect_to back_path
