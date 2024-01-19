@@ -67,11 +67,11 @@ module JobseekerHelpers
   end
 
   def fill_in_break_in_employment
-    fill_in "Enter reasons for break in work history", with: "Caring for a person"
-    fill_in "jobseekers_job_application_details_break_form[started_on(1i)]", with: "2020"
-    fill_in "jobseekers_job_application_details_break_form[started_on(2i)]", with: "08"
-    fill_in "jobseekers_job_application_details_break_form[ended_on(1i)]", with: "2020"
-    fill_in "jobseekers_job_application_details_break_form[ended_on(2i)]", with: "12"
+    fill_in "Enter reasons for gap in work history", with: "Caring for a person"
+    fill_in "jobseekers_break_form[started_on(1i)]", with: "2020"
+    fill_in "jobseekers_break_form[started_on(2i)]", with: "08"
+    fill_in "jobseekers_break_form[ended_on(1i)]", with: "2020"
+    fill_in "jobseekers_break_form[ended_on(2i)]", with: "12"
   end
 
   def fill_in_equal_opportunities

@@ -278,12 +278,17 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     context "if the jobseeker has a previous job application" do
+      include ActionView::Helpers::DateHelper
       let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
 
       it "prefills the form with the jobseeker's work history" do
         visit jobseekers_profile_path
         previous_application.employments.each do |employment|
-          expect(page).to have_content(employment.organisation)
+          if employment.job?
+            expect(page).to have_content(employment.organisation)
+          elsif employment.break?
+            expect(page).to have_content("You have a gap in your work history")
+          end
         end
       end
     end
