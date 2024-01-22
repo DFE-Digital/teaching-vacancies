@@ -245,15 +245,15 @@ RSpec.describe "Jobseekers can manage their profile" do
 
           click_button "Continue"
 
-          expect(page).to have_selector('.govuk-error-summary__list', text: 'Enter a reason for this gap')
+          expect(page).to have_selector(".govuk-error-summary__list", text: "Enter a reason for this gap")
 
           fill_in "jobseekers_break_form[reason_for_break]", with: "I was travelling"
 
           click_button "Continue"
 
-          expect(page).to have_css('.govuk-inset-text', text: 'Break in work history')
-          within('.govuk-inset-text') do
-            expect(page).to have_content('I was travelling')
+          expect(page).to have_css(".govuk-inset-text", text: "Break in work history")
+          within(".govuk-inset-text") do
+            expect(page).to have_content("I was travelling")
             expect(page).to have_content("#{Date::MONTHNAMES[Date.today.month]} #{(Date.today - 1.year).year} to #{Date::MONTHNAMES[Date.today.month]} #{Date.today.year}")
           end
         end
