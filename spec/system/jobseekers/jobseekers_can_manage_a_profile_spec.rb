@@ -252,10 +252,32 @@ RSpec.describe "Jobseekers can manage their profile" do
           click_button "Continue"
 
           expect(page).to have_css(".govuk-inset-text", text: "Gap in work history")
+
+          gap = Employment.find_by(employment_type: "break")
+
           within(".govuk-inset-text") do
             expect(page).to have_content("I was travelling")
-            expect(page).to have_content("#{Date::MONTHNAMES[Date.today.month]} #{(Date.today - 1.year).year} to #{Date::MONTHNAMES[Date.today.month]} #{Date.today.year}")
+            expect(page).to have_content("#{Date::MONTHNAMES[gap.started_on.month]} #{gap.started_on.year} to #{Date::MONTHNAMES[gap.ended_on.month]} #{gap.ended_on.year}")
           end
+
+          click_on "Change Gap in work history #{gap.started_on} to #{gap.ended_on}"
+
+          fill_in "Enter reasons for gap in work history", with: ""
+          click_on I18n.t("buttons.continue")
+
+          expect(page).to have_content("There is a problem")
+
+          fill_in "Enter reasons for gap in work history", with: "I was ill"
+          click_on I18n.t("buttons.continue")
+
+          expect(page).to have_content("I was ill")
+
+          click_on "Delete Gap in work history #{gap.started_on} to #{gap.ended_on}"
+          click_on I18n.t("buttons.confirm_destroy")
+
+          expect(page).not_to have_content("I was ill")
+          expect(page).to have_content "You have a gap in your work history (about 1 year)"
+          expect(page).to have_content "Add another job or add a reason for this gap"
         end
       end
     end
