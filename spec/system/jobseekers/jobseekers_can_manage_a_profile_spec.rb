@@ -240,8 +240,8 @@ RSpec.describe "Jobseekers can manage their profile" do
           click_link "Return to profile"
 
           expect(page).to have_content "You have a gap in your work history (about 1 year)"
-          expect(page).to have_content "Add another job or add a reason for this break"
-          click_link "add a reason for this break"
+          expect(page).to have_content "Add another job or add a reason for this gap"
+          click_link "add a reason for this gap"
 
           click_button "Continue"
 
@@ -251,7 +251,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
           click_button "Continue"
 
-          expect(page).to have_css(".govuk-inset-text", text: "Break in work history")
+          expect(page).to have_css(".govuk-inset-text", text: "Gap in work history")
           within(".govuk-inset-text") do
             expect(page).to have_content("I was travelling")
             expect(page).to have_content("#{Date::MONTHNAMES[Date.today.month]} #{(Date.today - 1.year).year} to #{Date::MONTHNAMES[Date.today.month]} #{Date.today.year}")

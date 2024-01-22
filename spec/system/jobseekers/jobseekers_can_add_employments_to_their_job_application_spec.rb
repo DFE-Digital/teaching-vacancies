@@ -79,7 +79,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     it "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)
-      expect(page).to have_content "You have a break in your work history (4 months)"
+      expect(page).to have_content "You have a gap in your work history (4 months)"
       click_on I18n.t("buttons.add_reason_for_break")
 
       expect(page).to have_field("jobseekers_break_form_started_on_1i", with: "2021")
@@ -97,7 +97,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       expect(page).to have_content("Travelling around the world")
       expect(page).to have_content("February 2021 to June 2021")
 
-      click_on "Change Break in work history 2021-02-01 to 2021-06-01"
+      click_on "Change Gap in work history 2021-02-01 to 2021-06-01"
 
       fill_in "Enter reasons for gap in work history", with: ""
       click_on I18n.t("buttons.continue")
@@ -109,7 +109,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
       expect(page).to have_content("Looking after my needy turtle")
 
-      click_on "Delete Break in work history 2021-02-01 to 2021-06-01"
+      click_on "Delete Gap in work history 2021-02-01 to 2021-06-01"
       click_on I18n.t("buttons.confirm_destroy")
 
       expect(page).not_to have_content("Looking after my needy turtle")
