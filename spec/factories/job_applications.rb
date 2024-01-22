@@ -55,6 +55,8 @@ FactoryBot.define do
     # Declarations
     close_relationships { "yes" }
     close_relationships_details { Faker::Lorem.paragraph(sentence_count: 1) }
+    safeguarding_issue { "yes" }
+    safeguarding_issue_details { Faker::Lorem.paragraph(sentence_count: 1) }
     right_to_work_in_uk { "yes" }
 
     completed_steps { JobApplication.completed_steps.keys }
@@ -131,6 +133,8 @@ FactoryBot.define do
     # Declarations
     close_relationships { "" }
     close_relationships_details { "" }
+    safeguarding_issue { "" }
+    safeguarding_issue_details { "" }
     right_to_work_in_uk { "" }
 
     completed_steps { [] }

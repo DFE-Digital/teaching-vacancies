@@ -8,8 +8,19 @@
       = render "caption"
     h2.govuk-heading-l = t(".heading")
 
+    p.govuk-body = t(".description1", link_text: govuk_link_to(t(".dbs_link_text"), "https://www.gov.uk/government/organisations/disclosure-and-barring-service")).html_safe
+    p.govuk-body = t(".description2")
+    p.govuk-body = t(".description3")
+    p.govuk-body = govuk_link_to(t(".description4"), "https://www.gov.uk/tell-employer-or-college-about-criminal-record")
+    p.govuk-body = t(".description5", link_text: govuk_link_to(t(".keep_children_safe_link_text"), "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2")).html_safe
+
     = form_for form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
+
+      = f.govuk_radio_buttons_fieldset :safeguarding_issue, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.safeguarding_issue", organisation: vacancy.organisation_name) } do
+        = f.govuk_radio_button :safeguarding_issue, :yes, link_errors: true, label: { text: t(".safeguarding_issue.yes") } do
+          = f.govuk_text_area :safeguarding_issue_details, label: { text: t(".safeguarding_issue.hint") }
+        = f.govuk_radio_button :safeguarding_issue, :no, label: { text: t(".safeguarding_issue.no") }
 
       = f.govuk_radio_buttons_fieldset :close_relationships, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation_name) } do
         = f.govuk_radio_button :close_relationships, :yes, link_errors: true do

@@ -140,6 +140,8 @@ shared:
     - country
     - email_address
     - withdrawn_by_closing_account
+    - safeguarding_issue
+    - safeguarding_issue_details
   job_preferences_locations:
     - id
     - job_preferences_id

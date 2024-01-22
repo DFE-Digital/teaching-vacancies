@@ -101,6 +101,19 @@ en:
           heading: Declarations
           step_title: Declarations
           title: Declarations — Application
+          dbs_link_text: Disclosure and Barring Service (DBS) check
+          description1: >-
+            You'll need to complete an enhanced %{link_text} if you're successful in this role. If you're outside the UK, you'll need to get a 
+            criminal record check from your home country.
+          description2: It's a criminal offence if you're barred by the DBS or court orders to apply for a role working with children.
+          description3: Not all convictions or police cautions on a criminal record will stop you from working in a school. But you will have to declare any convictions.
+          description4: Learn more about when you need to tell someone about your criminal record.
+          keep_children_safe_link_text: keeping children safe in education obligations.
+          description5: Schools may also conduct their own online checks as part of their %{link_text}
+          safeguarding_issue:
+            "yes": "Yes, I want to share something"
+            hint: "Give any relevant information"
+            "no": "No"
         employment_history:
           break: Break in work history
           description:

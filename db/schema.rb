@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_05_161119) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_12_164520) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -239,6 +239,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_161119) do
     t.integer "in_progress_steps", default: [], null: false, array: true
     t.boolean "employment_history_section_completed"
     t.boolean "qualifications_section_completed"
+    t.string "safeguarding_issue"
+    t.text "safeguarding_issue_details"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end

@@ -8,4 +8,12 @@ RSpec.describe Jobseekers::JobApplication::DeclarationsForm, type: :model do
 
     it { is_expected.to validate_presence_of(:close_relationships_details) }
   end
+
+  it { is_expected.to validate_inclusion_of(:safeguarding_issue).in_array(%w[yes no]) }
+
+  context "when safeguarding_issue is yes" do
+    before { allow(subject).to receive(:safeguarding_issue).and_return("yes") }
+
+    it { is_expected.to validate_presence_of(:safeguarding_issue_details) }
+  end
 end
