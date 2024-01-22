@@ -580,14 +580,14 @@ en:
           attributes:
             ended_on:
               after: End date must be after the start date
-              on_or_before: "The end of break can't be in the future"
-              blank: Enter the date the break finished
+              on_or_before: "The end of gap can't be in the future"
+              blank: Enter the date the gap finished
               invalid: Enter a date in the correct format
             reason_for_break:
               blank: Enter a reason for this gap
             started_on:
-              before: The date the break started must be in the past
-              blank: Enter the date you started the break
+              before: The date the gap started must be in the past
+              blank: Enter the date you started the gap
               invalid: Enter a date in the correct format
         jobseekers/job_application/details/employment_form:
           attributes:
