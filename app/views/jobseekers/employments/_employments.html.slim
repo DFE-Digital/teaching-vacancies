@@ -1,4 +1,4 @@
-- employments.sort_by { |e| e.current_role? ? Float::INFINITY : e.started_on }.reverse.each_with_index do |employment, index|
+- employments.sort_by { |e| e.current_role? ? Float::INFINITY : e.started_on }.reverse_each do |employment|
   - if employment.job?
     = render DetailComponent.new(title: employment.job_title) do |detail_component|
       - detail_component.with_body do
@@ -34,10 +34,10 @@
       p.govuk-hint class="govuk-!-margin-top-0 govuk-!-margin-bottom-1" #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on.to_formatted_s(:month_year)}
       = govuk_link_to edit_jobseekers_profile_break_path(employment), class: "govuk-link--no-visited-state govuk-!-margin-right-3"
         = t("buttons.change")
-        span.govuk-visually-hidden = " #{t("jobseekers.employments.break")} #{employment.started_on} to #{employment.ended_on}"
+        span.govuk-visually-hidden = " #{t('jobseekers.employments.break')} #{employment.started_on} to #{employment.ended_on}"
       = govuk_link_to jobseekers_profile_break_confirm_destroy_path(employment)
         = t("buttons.delete")
-        span.govuk-visually-hidden = " #{t("jobseekers.employments.break")} #{employment.started_on} to #{employment.ended_on}"
+        span.govuk-visually-hidden = " #{t('jobseekers.employments.break')} #{employment.started_on} to #{employment.ended_on}"
 
   - gap = employment.jobseeker_profile.unexplained_employment_gaps[employment]
   - if gap.present?
