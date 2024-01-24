@@ -37,7 +37,7 @@
     "eslint-plugin-import": "^2.29.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "29.7.0",
-    "jsdom": "^23.2.0",
+    "jsdom": "^24.0.0",
     "postcss": "^8.4.33",
     "sass": "^1.69.7",
     "stylelint": "^15.11.0",
