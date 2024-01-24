@@ -2,7 +2,7 @@
   - if vacancy.expired? && similar_jobs.present?
     - timeline.with_heading(title: t("jobs.expired_listing.timeline_heading_with_similar_jobs_link_html",
                        date: format_date(vacancy.expires_at, :date_only),
-                       similar_jobs_link: govuk_link_to(t("jobs.similar_jobs.anchor_link_text"), "#similar-jobs")))
+                       similar_jobs_link: govuk_link_to(t("jobs.similar_jobs.anchor_link_text"), "#similar-jobs", no_visited_state: true)))
   - elsif vacancy.expired?
     - timeline.with_heading(title: t("jobs.expired_listing.timeline_heading_html", date: format_date(vacancy.expires_at, :date_only)))
   - else
