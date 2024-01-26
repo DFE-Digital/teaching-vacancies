@@ -13,6 +13,13 @@
       - t(".description.jobs_bullets").each do |job_bullet|
         li = job_bullet
     p.govuk-body = t(".description.closing")
+    p.govuk-body 
+      = "If you had an gap between finishing full-time education and starting work that you have not explained then please "
+      = govuk_link_to "click here", new_jobseekers_job_application_break_path(job_application)
+      = " to give details about it"
+
+      = govuk_button_link_to "Add work history", new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
+      = govuk_button_link_to "Add gap in work history", new_jobseekers_job_application_break_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
 
     - if employments.any?
       - employments.reverse_each do |employment|
@@ -72,10 +79,6 @@
               = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_job_application_break_path(job_application, started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
 
       = govuk_button_link_to t(employments.job.none? ? "buttons.add_job" : "buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary"
-
-    - else
-      = render EmptySectionComponent.new title: t(".no_employments") do
-        = govuk_button_link_to t(employments.job.none? ? "buttons.add_job" : "buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-0"
 
     = form_for form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
