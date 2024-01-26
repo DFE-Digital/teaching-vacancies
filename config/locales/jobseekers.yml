@@ -120,11 +120,12 @@ en:
           break: Gap in work history
           description:
             opening: >-
-              Add details of all jobs you have had since you left full-time education. This should include:
+              Add details of all jobs or gaps in work history you have had since you left full-time education. This should include:
             jobs_bullets:
               - all teaching roles
               - any other jobs you've had
               - voluntary work, if it's relevant to your application
+              - gaps in your work history
             closing: >-
               You will need to explain any gaps in your work history and the reason you left each role.
           gap_with_duration: You have a gap in your work history (%{duration})
