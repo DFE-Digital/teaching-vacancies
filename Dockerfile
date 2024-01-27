@@ -2,7 +2,7 @@
  # Alpine v3.18.
  # TODO: Regularly check in the alpine ruby "3.3.0-alpine3.18" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
-ARG PROD_PACKAGES="imagemagick libxml2 libxslt libpq tzdata shared-mime-info openssl=3.1.4-r4"
+ARG PROD_PACKAGES="imagemagick libxml2 libxslt libpq tzdata shared-mime-info"
 
 FROM ruby:3.3.0-alpine3.18 AS builder
 

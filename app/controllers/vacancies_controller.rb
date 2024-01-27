@@ -4,7 +4,7 @@ class VacanciesController < ApplicationController
 
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
-    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
+    @pagy, @vacancies = pagy_countless(@vacancies_search.vacancies)
 
     set_search_coordinates unless do_not_show_distance?
   end
