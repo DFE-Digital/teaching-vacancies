@@ -15,7 +15,7 @@ end
 RSpec.describe ImportFromVacancySourceJob do
   before do
     FakeVacancySource.vacancies = vacancies_from_source
-    expect(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
+    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
   end
 
   subject(:import_from_vacancy_source_job) { described_class.perform_now(FakeVacancySource) }
@@ -38,6 +38,24 @@ RSpec.describe ImportFromVacancySourceJob do
           job_role: "teaching_assistant",
           job_roles: ["teaching_assistant"],
         )
+      end
+    end
+
+    context "when the vacancy has already been imported" do
+      let(:vacancies_from_source) { [vacancy] }
+      let(:vacancy) do
+        build(:vacancy, :published, :external, phases: %w[secondary], job_roles: ["teaching_assistant"], organisations: [school], external_source: "fake_source")
+      end
+
+      before { described_class.perform_now(FakeVacancySource) }
+
+      it "does not attempt to save the vacancy again" do
+        expect(vacancy).not_to receive(:save)
+        described_class.perform_now(FakeVacancySource)
+      end
+
+      it "the originally imported vacancy keeps its original status" do
+        expect { described_class.perform_now(FakeVacancySource) }.not_to(change { vacancy.reload.status })
       end
     end
 
@@ -183,8 +201,8 @@ RSpec.describe ImportFromVacancySourceJob do
 
       it "sets the vacancy to have the correct status" do
         expect { import_from_vacancy_source_job }
-          .to change { vacancy.reload.status }
-          .from("published").to("removed_from_external_system")
+          .to change { vacancy.reload.status }.from("published").to("removed_from_external_system")
+          .and(change { vacancy.reload.updated_at })
       end
     end
 
