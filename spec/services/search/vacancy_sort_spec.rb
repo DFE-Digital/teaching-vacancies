@@ -16,29 +16,6 @@ RSpec.describe Search::VacancySort do
   end
 
   describe "#default_option" do
-    xcontext "when a location is passed" do
-      subject { described_class.new(keyword: keyword, location: "E14 9PG").update(sort_by: sort_by) }
-
-      context "when no sort_by parameter is specified" do
-        context "and a keyword is specified" do
-          let(:keyword) { "maths" }
-
-          it_behaves_like "sorts by distance"
-        end
-
-        context "and a keyword is NOT specified" do
-          it_behaves_like "sorts by distance"
-        end
-      end
-
-      context "when an invalid sort strategy is specified" do
-        let(:sort_by) { "worst_listing" }
-        let(:keyword) { "maths" }
-
-        it_behaves_like "sorts by distance"
-      end
-    end
-
     context "when no location is passed" do
       context "when no sort_by parameter is specified" do
         context "and a keyword is specified" do
