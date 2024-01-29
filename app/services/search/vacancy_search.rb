@@ -55,7 +55,8 @@ class Search::VacancySearch
   private
 
   def scope
-    sort_by_distance = sort.by == "distance"
+    # sort_by_distance = sort.by == "distance"
+    sort_by_distance = false
     scope = Vacancy.live.includes(:organisations)
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
     scope = scope.search_by_location(location, radius, sort_by_distance: sort_by_distance) if location
