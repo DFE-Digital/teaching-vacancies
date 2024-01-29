@@ -15,16 +15,6 @@ RSpec.describe Search::VacancySort do
     end
   end
 
-  shared_examples "sorts by distance" do
-    xit "sorts by publish_on" do
-      expect(subject.sort_by).to eq("distance")
-    end
-
-    xit "has order 'desc'" do
-      expect(subject.order).to eq("asc")
-    end
-  end
-
   describe "#default_option" do
     xcontext "when a location is passed" do
       subject { described_class.new(keyword: keyword, location: "E14 9PG").update(sort_by: sort_by) }
