@@ -57,7 +57,7 @@ jobs:
 
     - name: K8 setup for staging
       run: |
-        az aks get-credentials -g s189p01-tsc-pd-rg -n s189p01-tsc-production-aks
+        make get-cluster-credentials CLUSTER_RESOURCE_GROUP_NAME=s189p01-tsc-pd-rg CLUSTER_NAME=s189p01-tsc-production-aks
         make bin/konduit.sh
 
     - name: Backup production DB

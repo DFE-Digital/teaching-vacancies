@@ -25,4 +25,12 @@ provider "kubernetes" {
   client_certificate     = module.cluster_data.kubernetes_client_certificate
   client_key             = module.cluster_data.kubernetes_client_key
   cluster_ca_certificate = module.cluster_data.kubernetes_cluster_ca_certificate
+  dynamic "exec" {
+    for_each = module.cluster_data.azure_RBAC_enabled ? [1] : []
+    content {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      command     = "kubelogin"
+      args        = module.cluster_data.kubelogin_args
+    }
+  }
 }
