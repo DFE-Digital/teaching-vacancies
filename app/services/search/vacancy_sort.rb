@@ -6,26 +6,27 @@ class Search::VacancySort < RecordSort
   end
 
   def options
-    if location.present?
-      [distance_option, publish_on_non_default_desc_option, closing_date_asc_option]
-    else
-      [publish_on_desc_option, closing_date_asc_option]
-    end
+    [publish_on_desc_option, closing_date_asc_option]
+    # if location.present?
+    #   [distance_option, publish_on_non_default_desc_option, closing_date_asc_option]
+    # else
+    #   [publish_on_desc_option, closing_date_asc_option]
+    # end
   end
 
-  def default_sort_option
-    if location.present?
-      distance_option
-    else
-      publish_on_desc_option
-    end
-  end
+  # def default_sort_option
+  #   if location.present?
+  #     distance_option
+  #   else
+  #     publish_on_desc_option
+  #   end
+  # end
 
-  def by_db_column?
-    return true if sort_by == "publish_on_non_default"
+  # def by_db_column?
+  #   return true if sort_by == "publish_on_non_default"
 
-    super
-  end
+  #   super
+  # end
 
   private
 

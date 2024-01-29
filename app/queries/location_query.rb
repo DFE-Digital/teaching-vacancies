@@ -40,7 +40,8 @@ class LocationQuery < ApplicationQuery
       ON ST_DWithin(#{field_name}, location_polygons.area, #{radius})
     ").where("location_polygons.id = ?", polygon.id)
 
-    sort_by_polygon_distance(field_name) if sort_by_distance
+    # commented out sorting by distance logic due to performance issues, testing to see if this is the culprit.
+    # sort_by_polygon_distance(field_name) if sort_by_distance
 
     scope
   end
@@ -55,7 +56,8 @@ class LocationQuery < ApplicationQuery
     point = "POINT(#{coordinates.second} #{coordinates.first})"
     @scope = scope.where("ST_DWithin(#{field_name}, ?, ?)", point, radius)
 
-    sort_by_coordinates_distance(field_name, point) if sort_by_distance
+    # commented out sorting by distance logic due to performance issues, testing to see if this is the culprit.
+    # sort_by_coordinates_distance(field_name, point) if sort_by_distance
 
     scope
   end
