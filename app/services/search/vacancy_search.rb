@@ -57,18 +57,16 @@ class Search::VacancySearch
   def scope
     scope = Vacancy.live.includes(:organisations)
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
-    scope = scope.search_by_location(location, radius, sort_by_distance: false) if location
+    scope = scope.search_by_location(location, radius) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
-    order_scope(scope, sort_by_distance)
+    order_scope(scope)
   end
 
-  def order_scope(scope, sort_by_distance)
-    # if sort_by_distance is true then the sorting is handled by the search_by_filter method so we do not re-order here.
-    return scope if sort_by_distance
+  def order_scope(scope)
     # only re-order the query if sort is a valid db column
     return scope unless sort&.by_db_column?
 
-    scope.reorder(sort_by => sort.order)
+    scope.reorder(sort.by => sort.order)
   end
 end

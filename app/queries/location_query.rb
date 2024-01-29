@@ -8,16 +8,16 @@ class LocationQuery < ApplicationQuery
 
   private
 
-  def call(field_name, location_query, radius_in_miles, sort_by_distance: false)
+  def call(field_name, location_query, radius_in_miles)
     normalised_query = normalise_query(location_query)
     radius = convert_miles_to_metres(radius_in_miles.to_i)
 
     return scope if normalised_query.blank? || nationwide_location?(normalised_query)
 
     if polygon_location?(normalised_query)
-      handle_polygon_location(field_name, normalised_query, radius, sort_by_distance)
+      handle_polygon_location(field_name, normalised_query, radius)
     else
-      handle_coordinates(field_name, normalised_query, radius, sort_by_distance)
+      handle_coordinates(field_name, normalised_query, radius)
     end
   end
 
@@ -33,7 +33,7 @@ class LocationQuery < ApplicationQuery
     LocationPolygon.contain?(query)
   end
 
-  def handle_polygon_location(field_name, query, radius, sort_by_distance)
+  def handle_polygon_location(field_name, query, radius)
     polygon = LocationPolygon.with_name(query)
     @scope = scope.joins("
       INNER JOIN location_polygons
@@ -43,7 +43,7 @@ class LocationQuery < ApplicationQuery
     scope
   end
 
-  def handle_coordinates(field_name, query, radius, sort_by_distance)
+  def handle_coordinates(field_name, query, radius)
     coordinates = Geocoding.new(query).coordinates
 
     # TODO: Geocoding class currently returns this on error, it should probably raise a
