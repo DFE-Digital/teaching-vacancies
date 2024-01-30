@@ -119,9 +119,7 @@ class VacancySource::Source::Every
   end
 
   def ect_status_for(item)
-    return unless item["ectSuitable"].presence
-
-    item["ectSuitable"].to_s == "true" ? "ect_suitable" : "ect_unsuitable"
+    item["ectSuitable"] == true ? "ect_suitable" : "ect_unsuitable"
   end
 
   def phase_for(item)

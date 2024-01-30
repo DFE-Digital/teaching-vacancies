@@ -252,6 +252,38 @@ RSpec.describe VacancySource::Source::MyNewTerm do
     end
   end
 
+  describe "ect suitability mapping" do
+    let(:job_listings_response_body) do
+      JSON.parse(super()).tap { |h|
+        h["data"]["jobs"].first["ectSuitable"] = ect_suitability
+      }.to_json
+    end
+
+    context "when the vacancy is suitable for an ECT" do
+      let(:ect_suitability) { true }
+
+      it "sets the vacancy as suitable for an ECT" do
+        expect(vacancy.ect_status).to eq("ect_suitable")
+      end
+    end
+
+    context "when the vacancy is not suitable for an ECT" do
+      let(:ect_suitability) { false }
+
+      it "sets the vacancy as not suitable for an ECT" do
+        expect(vacancy.ect_status).to eq("ect_unsuitable")
+      end
+    end
+
+    context "when the vacancy suitability for an ECT is not provided" do
+      let(:ect_suitability) { nil }
+
+      it "sets the vacancy as not suitable for an ECT" do
+        expect(vacancy.ect_status).to eq("ect_unsuitable")
+      end
+    end
+  end
+
   describe "vacancy organisation parsing" do
     let(:trust_uid) { school_group.uid }
     let(:school_urns) { [in_scope_school.urn] }

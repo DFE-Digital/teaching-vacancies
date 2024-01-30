@@ -104,8 +104,6 @@ class VacancySource::Source::UnitedLearning
   end
 
   def ect_status_for(item)
-    return unless item["ect_suitable"].presence
-
     item["ect_suitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
   end
 

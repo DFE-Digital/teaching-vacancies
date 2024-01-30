@@ -131,8 +131,6 @@ class VacancySource::Source::Ark
   end
 
   def ect_status_for(item)
-    return unless item["ectSuitable"].presence
-
     item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
   end
 

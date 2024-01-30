@@ -112,9 +112,7 @@ class VacancySource::Source::Fusion
   end
 
   def ect_status_for(item)
-    return unless item["ect_suitable"].presence
-
-    item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
+    item["ectSuitable"] == true ? "ect_suitable" : "ect_unsuitable"
   end
 
   def phase_for(item)

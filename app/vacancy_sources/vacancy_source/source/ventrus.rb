@@ -67,9 +67,10 @@ class VacancySource::Source::Ventrus
   end
 
   def ect_status_for(item)
-    return unless item["ECT_Suitable"].presence
-
-    item["ECT_Suitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
+    case item["ECT_Suitable"]
+    when "True", "true" then "ect_suitable"
+    else "ect_unsuitable"
+    end
   end
 
   def organisation_fields(schools)

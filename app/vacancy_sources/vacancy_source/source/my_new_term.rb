@@ -117,8 +117,6 @@ class VacancySource::Source::MyNewTerm
   end
 
   def ect_status_for(item)
-    return unless item["ectSuitable"].presence
-
     item["ectSuitable"] == true ? "ect_suitable" : "ect_unsuitable"
   end
 

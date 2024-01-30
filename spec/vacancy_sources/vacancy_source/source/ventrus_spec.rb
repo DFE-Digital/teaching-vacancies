@@ -23,6 +23,7 @@ RSpec.describe VacancySource::Source::Ventrus do
         contract_type: "permanent",
         phases: %w[secondary],
         visa_sponsorship_available: true,
+        ect_status: "ect_suitable",
       }
     end
 
