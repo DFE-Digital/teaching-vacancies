@@ -209,6 +209,7 @@ test-cluster:
 get-cluster-credentials: set-azure-account
 	$(if $(env), , $(error Missing <env>. Usage: "make <env> get-cluster-credentials"))
 	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
+	kubelogin convert-kubeconfig -l $(if ${GITHUB_ACTIONS},spn,azurecli)
 
 # make review pr_id=5432 shell
 # make qa shell

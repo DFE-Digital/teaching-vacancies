@@ -96,7 +96,7 @@ jobs:
       with:
         terraform_version: 1.5.1
 
-    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
         azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
