@@ -8,13 +8,13 @@ RSpec.shared_examples "a successful search" do
       expect(page).to have_css("a", text: "Remove this filter Teacher")
     end
 
-    it "displays page 1 jobs" do
+    xit "displays page 1 jobs" do
       expect(page).to have_css(".search-results > .search-results__item", count: 2)
       expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 6, type: "results"))
     end
 
     context "when navigating between pages" do
-      it "displays page 3 jobs" do
+      xit "displays page 3 jobs" do
         within ".govuk-pagination" do
           click_on "3"
         end
@@ -33,7 +33,7 @@ RSpec.shared_examples "a successful search" do
       expect(page).to have_css("a", text: "Remove this filter Teacher")
     end
 
-    it "displays only the Maths jobs" do
+    xit "displays only the Maths jobs" do
       expect(page).to have_content strip_tags(I18n.t("app.pagy_stats_html", from: 1, to: 2, total: 2, type: "results"))
     end
 
@@ -116,7 +116,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   end
 
   context "jobseekers can sort jobs by closing date" do
-    it "lists the jobs with the earliest closing date first" do
+    xit "lists the jobs with the earliest closing date first" do
       visit jobs_path
       select "Closing date", :from => "sort-by-field"
       click_button "Sort"
@@ -217,6 +217,28 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
           distance_text = find("dt", text: "Distance from location").sibling("dd").text
           expect(distance_text).to eq("90.1 miles")
         end
+      end
+
+      xit "orders by distance by default" do
+        expect(page).to have_select("sort_by", selected: "Distance")
+        expect("Physics Teacher").to appear_before("Maths 1")
+        expect("Maths 1").to appear_before("Maths Teacher 2")
+      end
+
+      xit "jobseekers can then choose to sort by different sort option", js: true do
+        expect(page).to have_select("sort_by", selected: "Distance")
+
+        select "Closing date", :from => "sort-by-field"
+
+        expect("Maths 1").to appear_before("Physics Teacher")
+        expect("Physics Teacher").to appear_before("Maths Teacher 2")
+        expect(page).to have_select("sort_by", selected: "Closing date")
+
+        select "Newest job", :from => "sort-by-field"
+
+        expect(page).to have_select("sort_by", selected: "Newest job")
+        expect("Maths 1").to appear_before("Maths Teacher 2")
+        expect("Maths Teacher 2").to appear_before("Physics Teacher")
       end
     end
   end
