@@ -59,7 +59,7 @@ class VacancySource::Source::Broadbean
       # New structured fields
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
-      subjects: item["subjects"].presence&.split(","),
+      subjects: item["subjects"].presence&.split(",") || [],
       working_patterns: item["workingPatterns"].presence&.split(","),
       contract_type: item["contractType"].presence,
       phases: phase_for(item),
