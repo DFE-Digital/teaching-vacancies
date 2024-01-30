@@ -62,7 +62,7 @@ class VacancySource::Source::UnitedLearning
       # New structured fields
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
-      subjects: item["Subjects"].presence&.split(","),
+      subjects: item["Subjects"].presence&.split(",") || [],
       working_patterns: working_patterns_for(item),
       contract_type: item["Contract_type"].presence,
       phases: phase_for(item),
@@ -104,8 +104,6 @@ class VacancySource::Source::UnitedLearning
   end
 
   def ect_status_for(item)
-    return unless item["ect_suitable"].presence
-
     item["ect_suitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
   end
 

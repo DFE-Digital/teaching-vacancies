@@ -269,6 +269,38 @@ RSpec.describe VacancySource::Source::Every do
     end
   end
 
+  describe "ect suitability mapping" do
+    let(:response_body) do
+      JSON.parse(super()).tap { |h|
+        h["result"].first["ectSuitable"] = ect_suitability
+      }.to_json
+    end
+
+    context "when the vacancy is suitable for an ECT" do
+      let(:ect_suitability) { true }
+
+      it "sets the vacancy as suitable for an ECT" do
+        expect(vacancy.ect_status).to eq("ect_suitable")
+      end
+    end
+
+    context "when the vacancy is not suitable for an ECT" do
+      let(:ect_suitability) { false }
+
+      it "sets the vacancy as not suitable for an ECT" do
+        expect(vacancy.ect_status).to eq("ect_unsuitable")
+      end
+    end
+
+    context "when the vacancy suitability for an ECT is not provided" do
+      let(:ect_suitability) { nil }
+
+      it "sets the vacancy as not suitable for an ECT" do
+        expect(vacancy.ect_status).to eq("ect_unsuitable")
+      end
+    end
+  end
+
   context "when school associated with vacancy is of excluded type" do
     before do
       school1.update(detailed_school_type: "Other independent school")

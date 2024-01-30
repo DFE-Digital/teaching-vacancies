@@ -71,7 +71,7 @@ class VacancySource::Source::Ark
       external_advert_url: item["advertUrl", "engAts"],
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
-      subjects: item["subjects"].presence&.split(","),
+      subjects: item["subjects"].presence&.split(",") || [],
       working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       phases: phases_for(item),
@@ -131,8 +131,6 @@ class VacancySource::Source::Ark
   end
 
   def ect_status_for(item)
-    return unless item["ectSuitable"].presence
-
     item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
   end
 

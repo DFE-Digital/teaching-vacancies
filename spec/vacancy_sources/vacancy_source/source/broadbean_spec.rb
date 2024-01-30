@@ -24,6 +24,7 @@ RSpec.describe VacancySource::Source::Broadbean do
         contract_type: "parental_leave_cover",
         phases: %w[primary],
         visa_sponsorship_available: true,
+        ect_status: "ect_suitable",
       }
     end
 

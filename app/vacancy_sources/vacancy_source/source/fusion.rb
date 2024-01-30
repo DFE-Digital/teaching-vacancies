@@ -50,7 +50,7 @@ class VacancySource::Source::Fusion
       external_advert_url: item["advertUrl"],
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
-      subjects: item["subjects"].presence&.split(","),
+      subjects: item["subjects"].presence&.split(",") || [],
       working_patterns: item["workingPatterns"].presence&.split(","),
       contract_type: item["contractType"].presence,
       phases: phase_for(item),
@@ -112,9 +112,7 @@ class VacancySource::Source::Fusion
   end
 
   def ect_status_for(item)
-    return unless item["ect_suitable"].presence
-
-    item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
+    item["ectSuitable"] == true ? "ect_suitable" : "ect_unsuitable"
   end
 
   def phase_for(item)

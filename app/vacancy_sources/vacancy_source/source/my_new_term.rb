@@ -56,7 +56,7 @@ class VacancySource::Source::MyNewTerm
       external_advert_url: item["advertUrl"],
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
-      subjects: item["subjects"].presence,
+      subjects: item["subjects"].presence || [],
       working_patterns: item["workingPatterns"].presence,
       contract_type: item["contractType"]&.first,
       phases: phase_for(item),
@@ -117,8 +117,6 @@ class VacancySource::Source::MyNewTerm
   end
 
   def ect_status_for(item)
-    return unless item["ectSuitable"].presence
-
     item["ectSuitable"] == true ? "ect_suitable" : "ect_unsuitable"
   end
 

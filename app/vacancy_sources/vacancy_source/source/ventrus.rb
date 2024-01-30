@@ -58,7 +58,7 @@ class VacancySource::Source::Ventrus
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       key_stages: item["Key_Stage"].presence&.split(","),
-      # subjects: item["Subjects"].presence&.split(","),
+      # subjects: item["Subjects"].presence&.split(",") || [], # Ventrus don't have subjects in their feed
       working_patterns: item["Working_Patterns"].presence&.split(","),
       contract_type: item["Contract_Type"].presence,
       phases: phase_for(item),
@@ -67,9 +67,10 @@ class VacancySource::Source::Ventrus
   end
 
   def ect_status_for(item)
-    return unless item["ECT_Suitable"].presence
-
-    item["ECT_Suitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
+    case item["ECT_Suitable"]
+    when "True", "true" then "ect_suitable"
+    else "ect_unsuitable"
+    end
   end
 
   def organisation_fields(schools)
