@@ -49,11 +49,11 @@ class VacancySource::Source::MyNewTerm
 
   def attributes_for(item, schools)
     {
-      job_title: item["jobTitle"],
-      job_advert: item["jobAdvert"],
-      salary: item["salary"],
+      job_title: item["jobTitle"]&.strip,
+      job_advert: item["jobAdvert"]&.strip,
+      salary: item["salary"]&.strip,
       expires_at: Time.zone.parse(item["expiresAt"]),
-      external_advert_url: item["advertUrl"],
+      external_advert_url: item["advertUrl"]&.strip,
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence || [],
