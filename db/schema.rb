@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_12_164520) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_31_115602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
@@ -635,6 +635,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_12_164520) do
     t.boolean "include_additional_documents"
     t.boolean "visa_sponsorship_available"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
+    t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
     t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
     t.index ["publish_on"], name: "index_vacancies_on_publish_on"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
