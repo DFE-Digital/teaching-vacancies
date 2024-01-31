@@ -21,9 +21,7 @@ class ImportFromVacancySourceJob < ApplicationJob
     @source_klass.new.each do |vacancy|
       @vacancies_count += 1
       @external_references << vacancy.external_reference
-
-      # Avoids unnecessary and expensive DB updates for vacancies that have not changed since they were imported.
-      next if vacancy.persisted? && !vacancy.changed?
+      next if existing_vacancy_unchanged?(vacancy)
 
       PaperTrail.request(whodunnit: "Import from external source") do
         # Only attempt to save if there are no errors coming from the source parsing.
@@ -37,6 +35,17 @@ class ImportFromVacancySourceJob < ApplicationJob
         end
       end
     end
+  end
+
+  # Avoids unnecessary and expensive DB updates for vacancies that have not changed since they were imported.
+  #
+  # Before checking for changes it calls a method that sets to 'nil' multiple invalid field values.
+  # This method is called as an AR callback on the vacancy before it is saved.
+  # Calling it here avoids 'changed?' returning true when, after being normalised by the callback and saved,
+  # the DB value wouldn't change.
+  def existing_vacancy_unchanged?(vacancy)
+    vacancy.reset_dependent_fields
+    vacancy.persisted? && !vacancy.changed?
   end
 
   def mark_removed_vacancies_from_source
