@@ -4,23 +4,24 @@ class ImportFromVacancySourceJob < ApplicationJob
   def perform(source_klass)
     return if DisableExpensiveJobs.enabled?
 
+    @source_klass = source_klass
     @source_name = source_klass.source_name
-    import_from_source(source_klass)
+    @vacancies_count = 0
+    @external_references = []
+    @errors = {}
+
+    import_from_source
+    report_validation_errors
+    mark_removed_vacancies_from_source
   end
 
   private
 
-  def import_from_source(source_klass)
-    total_count = 0
-    source_external_references = []
-    errors = {}
-
-    source_klass.new.each do |vacancy|
-      total_count += 1
-      source_external_references << vacancy.external_reference
-
-      # Avoids unnecessary and expensive DB updates for vacancies that have not changed since they were imported.
-      next if vacancy.persisted? && !vacancy.changed?
+  def import_from_source
+    @source_klass.new.each do |vacancy|
+      @vacancies_count += 1
+      @external_references << vacancy.external_reference
+      next if existing_vacancy_unchanged?(vacancy)
 
       PaperTrail.request(whodunnit: "Import from external source") do
         # Only attempt to save if there are no errors coming from the source parsing.
@@ -30,18 +31,27 @@ class ImportFromVacancySourceJob < ApplicationJob
           log("Imported vacancy #{vacancy.id}.")
         else
           failure = create_failed_imported_vacancy(vacancy)
-          errors[failure.external_reference] = failure.import_errors
+          @errors[failure.external_reference] = failure.import_errors
         end
       end
     end
-    report_validation_errors(total_count, errors)
-    mark_removed_vacancies_from_source(source_external_references)
   end
 
-  def mark_removed_vacancies_from_source(source_external_references)
+  # Avoids unnecessary and expensive DB updates for vacancies that have not changed since they were imported.
+  #
+  # Before checking for changes it calls a method that sets to 'nil' multiple invalid field values.
+  # This method is called as an AR callback on the vacancy before it is saved.
+  # Calling it here avoids 'changed?' returning true when, after being normalised by the callback and saved,
+  # the DB value wouldn't change.
+  def existing_vacancy_unchanged?(vacancy)
+    vacancy.reset_dependent_fields
+    vacancy.persisted? && !vacancy.changed?
+  end
+
+  def mark_removed_vacancies_from_source
     Vacancy.live
            .where(external_source: @source_name)
-           .where.not(external_reference: source_external_references)
+           .where.not(external_reference: @external_references)
            .update_all(status: :removed_from_external_system, updated_at: Time.zone.now)
   end
 
@@ -60,18 +70,18 @@ class ImportFromVacancySourceJob < ApplicationJob
     end
   end
 
-  def report_validation_errors(total_count, errors)
-    return if errors.none?
+  def report_validation_errors
+    return if @errors.none?
 
-    failed_percentage = ((errors.count.to_f / total_count) * 100).round(1)
+    failed_percentage = ((@errors.count.to_f / @vacancies_count) * 100).round(1)
     Sentry.with_scope do |scope|
       scope.set_tags(source: @source_name)
-      scope.set_context("Import failure rate", { vacancies_in_feed: total_count,
-                                                 failed_vacancies_to_import: errors.count,
+      scope.set_context("Import failure rate", { vacancies_in_feed: @vacancies_count,
+                                                 failed_vacancies_to_import: @errors.count,
                                                  failed_percentage: })
-      scope.set_context("Validation errors for each external source reference", errors.to_hash)
+      scope.set_context("Validation errors for each external source reference", @errors.to_hash)
 
-      log("#{errors.count} out of #{total_count} (#{failed_percentage}%) vacancies failed to import.")
+      log("#{@errors.count} out of #{@vacancies_count} (#{failed_percentage}%) vacancies failed to import.")
       Sentry.capture_message("#{@source_name} source: #{failed_percentage}% of vacancies failed to import",
                              level: :warning,
                              fingerprint: ["{{ tags.source }}"]) # Groups all the sentry messages for each source
