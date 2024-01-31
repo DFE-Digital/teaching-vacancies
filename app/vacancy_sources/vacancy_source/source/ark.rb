@@ -171,11 +171,14 @@ class VacancySource::Source::Ark
 
   def find_schools(item)
     multi_academy_trust = SchoolGroup.trusts.find_by(uid: TRUST_UID)
-    urn = item.supp_value
+    school_urn = item.supp_value
 
-    multi_academy_trust&.schools&.where(urn: urn).presence ||
-      Organisation.where(urn: urn).presence ||
-      Array(multi_academy_trust)
+    return [] if multi_academy_trust.blank? && school_urn.blank?
+    return Organisation.where(urn: school_urn) if multi_academy_trust.blank?
+    return Array(multi_academy_trust) if school_urn.blank?
+
+    # When having both trust and schools, only return the schools that are in the trust if any. Otherwise, return the trust itself.
+    multi_academy_trust.schools.where(urn: school_urn).order(:created_at).presence || Array(multi_academy_trust)
   end
 
   def items
