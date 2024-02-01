@@ -55,9 +55,13 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: K8 setup for staging
       run: |
-        make get-cluster-credentials CLUSTER_RESOURCE_GROUP_NAME=s189p01-tsc-pd-rg CLUSTER_NAME=s189p01-tsc-production-aks
+        make production get-cluster-credentials CONFIRM_PRODUCTION=YES
         make bin/konduit.sh
 
     - name: Backup production DB
