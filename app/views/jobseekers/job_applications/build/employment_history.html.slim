@@ -18,7 +18,7 @@
       = govuk_link_to "click here", new_jobseekers_job_application_break_path(job_application)
       = " to give details about it"
 
-      = govuk_button_link_to "Add work history", new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
+      = govuk_button_link_to "Add a job", new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
       = govuk_button_link_to "Add gap in work history", new_jobseekers_job_application_break_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
 
     - if employments.any?
