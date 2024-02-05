@@ -4,7 +4,7 @@ class VacancySource::Source::Ark
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_ARK_FEED_URL").freeze
   SOURCE_NAME = "ark".freeze
-  TRUST_UID = "4243".freeze
+  TRUST_UID = "2157".freeze
 
   # Helper class for less verbose handling of items in the feed
   class FeedItem
