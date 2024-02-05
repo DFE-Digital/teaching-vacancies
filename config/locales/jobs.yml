@@ -33,6 +33,9 @@ en:
     filters:
       job_filters: Job Filters
       job_roles: Job role
+      teaching_job_roles: Teaching
+      teaching_support_job_roles: Teaching support
+      non_teaching_support_job_roles: Non-teaching support
       ect_suitable: Suitable for early career teachers
       subject: Subject
       phases: Education phase

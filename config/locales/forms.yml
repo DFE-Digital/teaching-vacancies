@@ -756,6 +756,26 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
           teacher: Teacher
           teaching_assistant: Teaching assistant
+        teaching_job_role_options:
+          teacher: Teacher
+          head_of_year_or_phase: Head of year or phase
+          head_of_department_or_curriculum: Head of department or curriculum
+          assistant_headteacher: Assistant headteacher
+          deputy_headteacher: Deputy headteacher
+          headteacher: Headteacher
+          sendco: SENDCo (special educational needs and disabilities coordinator)
+        teaching_support_job_role_options:
+          teaching_assistant: Teaching assistant
+          higher_level_teaching_assistant: HLTA (higher level teaching assistant)
+          education_support: Learning support or cover supervisor
+          other_teaching_support: Other teaching support
+        non_teaching_support_job_role_options:
+          administration_hr_data_and_finance:  Administration, HR, data and finance
+          catering_cleaning_and_site_management: Catering, cleaning and site management
+          it_support: IT support
+          pastoral_health_and_welfare: Pastoral, health and welfare
+          other_leathership: Other leadership roles
+          other_support: Other support roles
         job_roles_options:
           <<: *job_role_options
       publishers_job_listing_key_stages_form:
