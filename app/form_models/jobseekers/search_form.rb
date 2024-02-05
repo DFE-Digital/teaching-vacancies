@@ -21,6 +21,12 @@ class Jobseekers::SearchForm
               :school_types,
               :sort,
               :subjects,
+              :teaching_job_roles,
+              :teaching_job_role_options,
+              :teaching_support_job_roles,
+              :teaching_support_job_role_options,
+              :non_teaching_support_job_roles,
+              :non_teaching_support_job_role_options,
               :total_filters,
               :visa_sponsorship_availability,
               :visa_sponsorship_availability_options,
@@ -38,6 +44,7 @@ class Jobseekers::SearchForm
     set_total_filters
   end
 
+  # rubocop:disable Metrics/MethodLength
   def to_hash
     {
       keyword: @keyword,
@@ -46,6 +53,9 @@ class Jobseekers::SearchForm
       radius: @radius,
       organisation_slug: @organisation_slug,
       job_roles: @job_roles,
+      teaching_job_roles: @teaching_job_roles,
+      teaching_support_job_roles: @teaching_support_job_roles,
+      non_teaching_support_job_roles: @non_teaching_support_job_roles,
       ect_statuses: @ect_statuses,
       subjects: @subjects,
       phases: @phases,
@@ -56,6 +66,7 @@ class Jobseekers::SearchForm
       visa_sponsorship_availability: @visa_sponsorship_availability,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
 
@@ -97,6 +108,9 @@ class Jobseekers::SearchForm
   def set_facet_options
     @visa_sponsorship_availability_options = [["true", I18n.t("jobs.filters.visa_sponsorship_availability.option")]]
     @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{option}")] }
+    @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
+    @teaching_support_job_role_options = Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
+    @non_teaching_support_job_role_options = Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
     set_quick_apply_options

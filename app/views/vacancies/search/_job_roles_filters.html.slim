@@ -1,0 +1,17 @@
+- roles = capture do
+  = govuk_details(summary_text: t("jobs.filters.job_roles"), open: true) do
+    = f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: nil, hint: nil)
+- teaching_job_roles = capture do
+  = govuk_details(summary_text: t("jobs.filters.teaching_job_roles"), open: true) do
+    = f.govuk_collection_check_boxes(:teaching_job_roles, form.teaching_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
+- teaching_support_job_roles = capture do
+  = govuk_details(summary_text: t("jobs.filters.teaching_support_job_roles"), open: true) do
+    = f.govuk_collection_check_boxes(:teaching_support_job_roles, form.teaching_support_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
+- non_teaching_support_job_roles = capture do
+  = govuk_details(summary_text: t("jobs.filters.non_teaching_support_job_roles"), open: true) do
+    = f.govuk_collection_check_boxes(:non_teaching_support_job_roles, form.non_teaching_support_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
+
+/ - filters_component.with_group key: "job_roles", component: roles
+- filters_component.with_group key: "teaching_job_roles", component: teaching_job_roles
+- filters_component.with_group key: "teaching_support_job_roles", component: teaching_support_job_roles
+- filters_component.with_group key: "non_teaching_support_job_roles", component: non_teaching_support_job_roles

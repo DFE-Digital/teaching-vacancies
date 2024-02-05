@@ -74,9 +74,6 @@ ruby:
     },
   ]
 
-- roles = capture do
-  = govuk_details(summary_text: t("jobs.filters.job_roles"), open: true) do
-    = f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: nil, hint: nil)
 = filters(submit_button: f.govuk_submit(t("buttons.apply_filters")),
   filters: { total_count: form.total_filters },
   clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: jobs_path(vacancies_search.clear_filters_params) },
@@ -86,7 +83,7 @@ ruby:
       - filter_types.each do |filter_type|
         - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }))
     - filters_component.with_group key: "visa_sponsorship_availability", component: f.govuk_collection_check_boxes(:visa_sponsorship_availability, form.visa_sponsorship_availability_options, :first, :last, small: true, legend: { text: t("jobs.filters.visa_sponsorship_availability.legend") }, hint: nil)
-    - filters_component.with_group key: "job_roles", component: roles
+    = render "/vacancies/search/job_roles_filters", filters_component: filters_component, f: f, form: form
     - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
     = render "shared/subjects_filter", filters_component: filters_component, f: f
     - filters_component.with_group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, form.ect_status_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
