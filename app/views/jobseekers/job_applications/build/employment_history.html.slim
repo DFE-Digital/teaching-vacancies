@@ -18,7 +18,6 @@
       = govuk_button_link_to t("buttons.add_gap"), new_jobseekers_job_application_break_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
       hr.govuk-section-break.govuk-section-break--visible
 
-
     - if employments.any?
       - employments.reverse_each do |employment|
         - if employment.job?
