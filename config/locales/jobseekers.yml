@@ -128,6 +128,9 @@ en:
               - gaps in your work history
             closing: >-
               You will need to explain any gaps in your work history and the reason you left each role.
+            gaps: >-
+              If you had a gap between finishing full-time education and starting work that you have not explained then please %{link} to give details about it
+            gaps_link_text: click here
           gap_with_duration: You have a gap in your work history (%{duration})
           heading: Work history
           no_employments: No employment specified
