@@ -1,12 +1,14 @@
 class VacanciesController < ApplicationController
   before_action :set_landing_page, only: %i[index]
-  after_action :trigger_search_performed_event, only: %i[index]
 
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
     @pagy, @vacancies = pagy_countless(@vacancies_search.vacancies)
 
     set_search_coordinates unless do_not_show_distance?
+    trigger_search_performed_event
+  rescue Pagy::OverflowError
+    redirect_to not_found_path
   end
 
   def show
