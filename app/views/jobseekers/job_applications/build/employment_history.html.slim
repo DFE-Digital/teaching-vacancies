@@ -15,7 +15,7 @@
     p.govuk-body = t(".description.closing")
     p.govuk-body
       = govuk_button_link_to t("buttons.add_work_history"), new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
-      = govuk_button_link_to t(employments.break.none? ? "buttons.add_gap" : "buttons.add_another_gap"), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
+      = govuk_button_link_to t("buttons.add_gap"), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
       hr
 
     - if employments.any?
