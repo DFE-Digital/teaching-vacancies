@@ -83,4 +83,8 @@ class JobseekerProfile < ApplicationRecord
   def hidden_from_any_organisations?
     requested_hidden_profile && excluded_organisations.any?
   end
+
+  def unexplained_employment_gaps
+    @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
+  end
 end

@@ -1,4 +1,4 @@
-class Jobseekers::JobApplication::Details::BreakForm
+class Jobseekers::BreakForm
   include ActiveModel::Model
   include ActiveRecord::AttributeAssignment
   include DateAttributeAssignment

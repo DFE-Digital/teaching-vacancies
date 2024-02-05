@@ -1,11 +1,11 @@
 class Jobseekers::JobApplications::EmploymentGapFinder
-  def initialize(job_application)
-    @job_application = job_application
+  def initialize(record)
+    @record = record
     @today = Time.zone.today
   end
 
   def significant_gaps(threshold: 3.months)
-    job_application.employments.each_with_object({}) do |employment, gaps|
+    record.employments.each_with_object({}) do |employment, gaps|
       next if employment.current_role?
       next if gap_to_today_is_less_than_threshold?(employment, threshold)
       next if overlapping_employment?(employment)
@@ -20,14 +20,14 @@ class Jobseekers::JobApplications::EmploymentGapFinder
 
   private
 
-  attr_reader :job_application, :today
+  attr_reader :record, :today
 
   def gap_to_today_is_less_than_threshold?(employment, threshold)
     employment.ended_on + threshold >= today
   end
 
   def overlapping_employment?(employment)
-    job_application.employments.any? do |other|
+    record.employments.any? do |other|
       next if employment == other
       next if other.started_on.nil?
 
@@ -45,7 +45,7 @@ class Jobseekers::JobApplications::EmploymentGapFinder
   end
 
   def next_employment_start(employment)
-    job_application.employments
+    record.employments
       .reject { |other| other == employment }
       .map(&:started_on)
       .select { |started_on| started_on >= employment.ended_on }

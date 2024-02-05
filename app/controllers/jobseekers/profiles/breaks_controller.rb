@@ -1,9 +1,9 @@
-class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
-  helper_method :back_path, :employment_break, :form, :job_application
+class Jobseekers::Profiles::BreaksController < Jobseekers::ProfilesController
+  helper_method :back_path, :employment_break, :form
 
   def create
     if form.valid?
-      job_application.employments.break.create(employment_break_params)
+      profile.employments.break.create(employment_break_params)
       redirect_to back_path
     else
       render :new
@@ -27,11 +27,11 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
   private
 
   def back_path
-    @back_path ||= jobseekers_job_application_build_path(job_application, :employment_history)
+    jobseekers_profile_path
   end
 
   def employment_break
-    job_application.employments.break.find(params[:id] || params[:break_id])
+    profile.employments.break.find(params[:id] || params[:break_id])
   end
 
   def employment_break_params
@@ -57,9 +57,5 @@ class Jobseekers::JobApplications::BreaksController < Jobseekers::BaseController
     when "create", "update"
       employment_break_params
     end
-  end
-
-  def job_application
-    @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
   end
 end

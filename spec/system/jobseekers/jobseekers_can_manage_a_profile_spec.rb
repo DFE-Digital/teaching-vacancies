@@ -223,6 +223,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         it "displays every employment history entry on the review page" do
           add_jobseeker_profile_employment
+          click_link "Return to profile"
 
           profile.employments.each do |employment|
             expect(page).to have_content(employment.organisation)
@@ -232,6 +233,51 @@ RSpec.describe "Jobseekers can manage their profile" do
             expect(page).to have_content(employment.main_duties)
             expect(page).to have_content(employment.reason_for_leaving)
           end
+        end
+
+        it "asks user to account for any gaps in employment" do
+          add_jobseeker_profile_employment_with_a_gap
+          click_link "Return to profile"
+
+          expect(page).to have_content "You have a gap in your work history (about 1 year)"
+          expect(page).to have_content "Add another job or add a reason for this gap"
+          click_link "add a reason for this gap"
+
+          click_button "Continue"
+
+          expect(page).to have_selector(".govuk-error-summary__list", text: "Enter a reason for this gap")
+
+          fill_in "jobseekers_break_form[reason_for_break]", with: "I was travelling"
+
+          click_button "Continue"
+
+          expect(page).to have_css(".govuk-inset-text", text: "Gap in work history")
+
+          gap = Employment.find_by(employment_type: "break")
+
+          within(".govuk-inset-text") do
+            expect(page).to have_content("I was travelling")
+            expect(page).to have_content("#{Date::MONTHNAMES[gap.started_on.month]} #{gap.started_on.year} to #{Date::MONTHNAMES[gap.ended_on.month]} #{gap.ended_on.year}")
+          end
+
+          click_on "Change Gap in work history #{gap.started_on} to #{gap.ended_on}"
+
+          fill_in "Enter reasons for gap in work history", with: ""
+          click_on I18n.t("buttons.continue")
+
+          expect(page).to have_content("There is a problem")
+
+          fill_in "Enter reasons for gap in work history", with: "I was ill"
+          click_on I18n.t("buttons.continue")
+
+          expect(page).to have_content("I was ill")
+
+          click_on "Delete Gap in work history #{gap.started_on} to #{gap.ended_on}"
+          click_on I18n.t("buttons.confirm_destroy")
+
+          expect(page).not_to have_content("I was ill")
+          expect(page).to have_content "You have a gap in your work history (about 1 year)"
+          expect(page).to have_content "Add another job or add a reason for this gap"
         end
       end
     end
@@ -283,7 +329,11 @@ RSpec.describe "Jobseekers can manage their profile" do
       it "prefills the form with the jobseeker's work history" do
         visit jobseekers_profile_path
         previous_application.employments.each do |employment|
-          expect(page).to have_content(employment.organisation)
+          if employment.job?
+            expect(page).to have_content(employment.organisation)
+          elsif employment.break?
+            expect(page).to have_content("You have a gap in your work history")
+          end
         end
       end
     end
@@ -790,6 +840,22 @@ RSpec.describe "Jobseekers can manage their profile" do
     fill_in "jobseekers_profile_employment_form[started_on(1i)]", with: "1991"
     fill_in "jobseekers_profile_employment_form[started_on(2i)]", with: "09"
     choose "Yes", name: "jobseekers_profile_employment_form[current_role]"
+    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: "Goals and that"
+    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: "I hate it there"
+
+    click_on I18n.t("buttons.save_and_continue")
+  end
+
+  def add_jobseeker_profile_employment_with_a_gap
+    click_link("Add roles")
+
+    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: "Arsenal"
+    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: "Number 9"
+    fill_in "jobseekers_profile_employment_form[started_on(1i)]", with: "1991"
+    fill_in "jobseekers_profile_employment_form[started_on(2i)]", with: "09"
+    choose "No", name: "jobseekers_profile_employment_form[current_role]"
+    fill_in "jobseekers_profile_employment_form[ended_on(1i)]", with: (Date.today - 1.year).year
+    fill_in "jobseekers_profile_employment_form[ended_on(2i)]", with: Date.today.month
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: "Goals and that"
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: "I hate it there"
 

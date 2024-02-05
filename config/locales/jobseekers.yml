@@ -48,6 +48,7 @@ en:
         confirm: Confirm
         title: Confirm your email address
     employments:
+      break: Gap in work history
       current_role: Is this your current role?
       ended_on: End date
       main_duties: Main duties
@@ -55,6 +56,7 @@ en:
       started_on: Start date
       subjects: Subjects and key stages taught (optional)
       reason_for_leaving: Reason for leaving
+      gap_with_duration: You have a gap in your work history (%{duration})
     forced_login:
       create_account: create an account
       job_application_html: You need to login or %{account_creation_link} with Teaching Vacancies to apply for this job.
@@ -115,7 +117,7 @@ en:
             hint: "Give any relevant information"
             "no": "No"
         employment_history:
-          break: Break in work history
+          break: Gap in work history
           description:
             opening: >-
               Add details of all jobs you have had since you left full-time education. This should include:
@@ -125,7 +127,7 @@ en:
               - voluntary work, if it's relevant to your application
             closing: >-
               You will need to explain any gaps in your work history and the reason you left each role.
-          gap_with_duration: You have a break in your work history (%{duration})
+          gap_with_duration: You have a gap in your work history (%{duration})
           heading: Work history
           no_employments: No employment specified
           step_title: Employment history
@@ -216,15 +218,15 @@ en:
         confirm_destroy:
           caption: Current role and employment history
           heading: Are you sure you want to delete this entry?
-          title: Confirm deletion of a break — Application
+          title: Confirm deletion of a gap — Application
         edit:
           caption: Current role and employment history
           heading: Please tell us what you were doing over this period
-          title: Change the reason of a break — Application
+          title: Change the reason of a gap — Application
         new:
           caption: Current role and employment history
           heading: Please tell us what you were doing over this period
-          title: Add a reason for break — Application
+          title: Add a reason for gap — Application
       employments:
         current_role: This is my current role
         destroy:
@@ -557,6 +559,19 @@ en:
       success_html: >-
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     profiles:
+      breaks:
+        confirm_destroy:
+          caption: Current role and employment history
+          heading: Are you sure you want to delete this entry?
+          title: Confirm deletion of a gap — Profile
+        edit:
+          caption: Current role and employment history
+          heading: Please tell us what you were doing over this period
+          title: Change the reason of a gap — Profile
+        new:
+          caption: Current role and employment history
+          heading: Please tell us what you were doing over this period
+          title: Add a reason for gap — Profile
       hide_profile:
         add:
           cannot_find_school: I cannot find the school I'm looking for

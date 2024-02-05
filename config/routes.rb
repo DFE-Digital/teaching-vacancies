@@ -98,6 +98,10 @@ Rails.application.routes.draw do
         get :confirm_destroy
       end
 
+      resources :breaks, only: %i[new create edit update destroy], controller: "profiles/breaks" do
+        get :confirm_destroy
+      end
+
       resource :hide_profile, only: %i[show], controller: "profiles/hide_profile" do
         post :confirm_hide
         get :add
