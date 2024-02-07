@@ -12,6 +12,8 @@ RSpec.describe Search::RadiusBuilder do
 
   describe "#initialize" do
     context "when a non-polygonable location is specified" do
+      before { allow(LocationPolygon).to receive(:with_name).with(location).and_return(nil) }
+
       context "when no radius is specified" do
         let(:radius) { nil }
 
@@ -46,7 +48,9 @@ RSpec.describe Search::RadiusBuilder do
     end
 
     context "when a polygonable location is specified" do
-      before { allow(LocationPolygon).to receive(:contain?).with(location).and_return(true) }
+      let(:polygon) { instance_double(LocationPolygon) }
+
+      before { allow(LocationPolygon).to receive(:with_name).with(location).and_return(polygon) }
 
       context "when no radius is specified" do
         let(:radius) { nil }

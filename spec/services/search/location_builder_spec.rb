@@ -16,7 +16,7 @@ RSpec.describe Search::LocationBuilder do
   let(:radius) { 10 }
   let(:expected_radius) { 1000 }
   let!(:location_polygon) { create(:location_polygon, name: "london") }
-  let(:radius_builder) { instance_double(Search::RadiusBuilder, radius: 1000) }
+  let(:radius_builder) { instance_double(Search::RadiusBuilder, radius: 1000, polygon: location_polygon) }
 
   before do
     allow(Search::RadiusBuilder).to receive(:new).with(location, radius).and_return(radius_builder)
@@ -42,6 +42,8 @@ RSpec.describe Search::LocationBuilder do
     context "when a non-polygonable location is specified" do
       let(:radius_in_metres) { expected_radius * 1_609 }
       let(:location) { point_location }
+
+      before { allow(radius_builder).to receive(:polygon).and_return(nil) }
 
       it "sets radius attribute, and location filter around the location" do
         expect(subject.polygon).to be_nil
