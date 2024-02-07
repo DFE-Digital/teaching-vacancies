@@ -9,7 +9,9 @@ RSpec.describe Search::VacancySearch do
       location: location,
       radius: radius,
       organisation_slug: organisation_slug,
-      job_roles: job_roles,
+      teaching_job_roles: teaching_job_roles,
+      teaching_support_job_roles: teaching_support_job_roles,
+      non_teaching_support_job_roles: non_teaching_support_job_roles,
       ect_statuses: ect_statuses,
       phases: phases,
       working_patterns: working_patterns,
@@ -27,7 +29,9 @@ RSpec.describe Search::VacancySearch do
   let(:sort) { Search::VacancySort.new(keyword: keyword) }
   let(:organisation_slug) { "test-slug" }
   let(:vacancy_ids) { ["test-id"] }
-  let(:job_roles) { nil }
+  let(:teaching_job_roles) { nil }
+  let(:teaching_support_job_roles) { nil }
+  let(:non_teaching_support_job_roles) { nil }
   let(:ect_statuses) { nil }
   let(:phases) { nil }
   let(:working_patterns) { nil }
@@ -85,7 +89,7 @@ RSpec.describe Search::VacancySearch do
   end
 
   context "when clearing filters" do
-    let(:job_roles) { ["teacher"] }
+    let(:teaching_job_roles) { ["teacher"] }
     let(:ect_statuses) { ["ect_suitable"] }
     let(:phases) { ["ks1"] }
     let(:working_patterns) { ["full_time"] }
@@ -96,8 +100,8 @@ RSpec.describe Search::VacancySearch do
     let(:visa_sponsorship_availability) { ["true"] }
 
     it "clears selected filters " do
-      expect(subject.active_criteria).to eq({ location: location, organisation_types: organisation_types, organisation_slug: organisation_slug, ect_statuses: ect_statuses, job_roles: job_roles, keyword: keyword, phases: phases, radius: 10, subjects: subjects, working_patterns: working_patterns, quick_apply: quick_apply, school_types: school_types, visa_sponsorship_availability: visa_sponsorship_availability })
-      expect(subject.clear_filters_params).to eq({ keyword: keyword, location: location, radius: 10, organisation_slug: organisation_slug, job_roles: [], ect_statuses: [], phases: [], working_patterns: [], quick_apply: [], subjects: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [], previous_keyword: keyword, skip_strip_checkboxes: true })
+      expect(subject.active_criteria).to eq({ location: location, organisation_types: organisation_types, organisation_slug: organisation_slug, ect_statuses: ect_statuses, teaching_job_roles: teaching_job_roles, keyword: keyword, phases: phases, radius: 10, subjects: subjects, working_patterns: working_patterns, quick_apply: quick_apply, school_types: school_types, visa_sponsorship_availability: visa_sponsorship_availability })
+      expect(subject.clear_filters_params).to eq({ keyword: keyword, location: location, radius: 10, organisation_slug: organisation_slug, teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [], ect_statuses: [], phases: [], working_patterns: [], quick_apply: [], subjects: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [], previous_keyword: keyword, skip_strip_checkboxes: true })
     end
   end
 end

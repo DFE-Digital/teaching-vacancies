@@ -19,9 +19,10 @@ class VacancyFilterQuery < ApplicationQuery
 
     # General filters
     built_scope = built_scope.visa_sponsorship_available if filters[:visa_sponsorship_availability]
-    if (filter_job_roles = job_roles(filters[:job_roles]).presence)
-      built_scope = built_scope.with_any_of_job_roles(filter_job_roles)
-    end
+
+    job_role_keys = %i[job_roles teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles]
+    built_scope = apply_job_roles(job_role_keys, built_scope, filters)
+
     built_scope = built_scope.ect_suitable if filters[:ect_statuses]&.include?("ect_suitable") || filters[:job_roles]&.include?("ect_suitable")
     built_scope = add_organisation_type_filters(filters, built_scope)
     built_scope = built_scope.quick_apply if filters[:quick_apply]
@@ -101,5 +102,14 @@ class VacancyFilterQuery < ApplicationQuery
 
     # These are no longer relevant and have no current equivalent
     working_patterns - %w[compressed_hours staggered_hours flexible term_time job_share]
+  end
+
+  def apply_job_roles(keys, built_scope, filters)
+    keys.each do |key|
+      if (filter_job_roles = job_roles(filters[key]).presence)
+        built_scope = built_scope.with_any_of_job_roles(filter_job_roles)
+      end
+    end
+    built_scope
   end
 end
