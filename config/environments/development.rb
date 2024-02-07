@@ -78,4 +78,6 @@ Rails.application.configure do
   config.action_view.annotate_rendered_view_with_filenames = true
 
   config.i18n.raise
+
+  config.log_file_size = 100.megabytes
 end
