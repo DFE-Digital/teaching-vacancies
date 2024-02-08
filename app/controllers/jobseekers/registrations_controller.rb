@@ -1,11 +1,13 @@
 class Jobseekers::RegistrationsController < Devise::RegistrationsController
-  helper_method :password_update?
+  helper_method :password_update?, :account_type_update?
 
   before_action :check_password_difference, only: %i[update]
   before_action :check_new_password_presence, only: %i[update]
   before_action :check_email_difference, only: %i[update]
   before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
   after_action :set_correct_update_message, only: %i[update]
+  
 
   def confirm_destroy
     @close_account_feedback_form = Jobseekers::CloseAccountFeedbackForm.new
@@ -52,7 +54,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   end
 
   def check_email_difference
-    return if password_update?
+    return if (password_update? || account_type_update?)
     return unless params[resource_name][:email].present?
     return unless params[resource_name][:email] == current_jobseeker.email
 
@@ -67,6 +69,10 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
 
   def password_update?
     params[:password_update] == "true" || params.dig(resource_name, :password)
+  end
+
+  def account_type_update?
+    params[:account_type_update] == "true" || params.dig(resource_name, :account_type)
   end
 
   def set_correct_update_message
@@ -86,7 +92,23 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
     params.require(:jobseekers_close_account_feedback_form)
           .permit(:close_account_reason, :close_account_reason_comment)
   end
+
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:account_type])
   end
+
+  def configure_account_update_params
+    devise_parameter_sanitizer.permit(:account_update, keys: [:account_type])
+  end
+
+  # def update_resource(resource, params)
+  #   if account_type_update?
+  #     pry
+  #     # Updating account_type or other fields without needing the current password
+  #     resource.update_without_password(params.merge(password: nil, password_confirmation: nil))
+  #   else
+  #     # Standard behavior for updating passwords
+  #     super
+  #   end
+  # end
 end
