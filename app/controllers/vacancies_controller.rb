@@ -54,7 +54,7 @@ class VacanciesController < ApplicationController
   def trigger_search_performed_event
     fail_safe do
       vacancy_ids = @vacancies.pluck(:id)
-      polygon_id = DfE::Analytics.anonymise(@vacancies_search.location_search.polygon.id) if @vacancies_search.location_search.polygon
+      polygon_id = DfE::Analytics.anonymise(@vacancies_search.polygon.id) if @vacancies_search.polygon
 
       event_data = {
         search_criteria: form.to_hash,
@@ -91,6 +91,6 @@ class VacanciesController < ApplicationController
     # This is because the coordinates Google (or other providers) use for London (for example) could be miles away from the location of the school, even if the school is
     # actually in London which could potentially confuse jobseekers.
     normalised_query = form.to_hash[:location]&.strip&.downcase
-    normalised_query.nil? || LocationQuery::NATIONWIDE_LOCATIONS.include?(normalised_query) || LocationPolygon.contain?(normalised_query)
+    normalised_query.nil? || LocationQuery::NATIONWIDE_LOCATIONS.include?(normalised_query) || @vacancies_search.polygon.present?
   end
 end

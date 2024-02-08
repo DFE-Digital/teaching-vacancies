@@ -8,21 +8,18 @@ class Search::LocationBuilder
   attr_reader :location, :location_filter, :polygon, :radius
 
   def initialize(location, radius)
+    @radius_builder = Search::RadiusBuilder.new(location, radius)
     @location = location
-    @radius = Search::RadiusBuilder.new(location, radius).radius
+    @radius = @radius_builder.radius
     @location_filter = {}
 
     if NATIONWIDE_LOCATIONS.include?(@location&.downcase)
       @location = nil
-    elsif search_with_polygons?
+    elsif @radius_builder.polygon.present?
       @polygon = LocationPolygon.buffered(@radius).with_name(location)
     elsif @location.present?
       @location_filter = build_location_filter
     end
-  end
-
-  def search_with_polygons?
-    location.present? && LocationPolygon.contain?(location)
   end
 
   def point_coordinates

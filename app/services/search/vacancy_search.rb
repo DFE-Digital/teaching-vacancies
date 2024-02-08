@@ -1,6 +1,6 @@
 class Search::VacancySearch
   extend Forwardable
-  def_delegators :location_search, :point_coordinates
+  def_delegators :location_search, :point_coordinates, :polygon
 
   attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort
 
@@ -58,7 +58,7 @@ class Search::VacancySearch
     sort_by_distance = sort.by == "distance"
     scope = Vacancy.live.includes(:organisations)
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
-    scope = scope.search_by_location(location, radius, sort_by_distance: sort_by_distance) if location
+    scope = scope.search_by_location(location, radius, polygon:, sort_by_distance:) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?
     scope = scope.search_by_full_text(keyword) if keyword.present?
     order_scope(scope, sort_by_distance)
