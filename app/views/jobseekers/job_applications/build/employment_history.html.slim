@@ -13,6 +13,7 @@
       - t(".description.jobs_bullets").each do |job_bullet|
         li = job_bullet
     p.govuk-body = t(".description.closing")
+    p.govuk-body = t(".description.reasons")
     p.govuk-body
       = govuk_button_link_to t("buttons.add_work_history"), new_jobseekers_job_application_employment_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
       = govuk_button_link_to t("buttons.add_gap"), new_jobseekers_job_application_break_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-10 employment-gap-buttons"
