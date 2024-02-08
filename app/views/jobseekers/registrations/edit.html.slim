@@ -9,6 +9,8 @@
 
       - if password_update?
         = render "edit_password", f: f
+      - elsif account_type_update?
+        = render "edit_account_type", f: f
       - else
         = render "edit_email", f: f
 
