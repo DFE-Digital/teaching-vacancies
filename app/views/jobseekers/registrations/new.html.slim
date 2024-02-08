@@ -14,6 +14,10 @@
 
       = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
       = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
+      = f.govuk_radio_buttons_fieldset(:account_type, legend: { size: "m" }) do
+        = f.govuk_radio_button :account_type, :teaching, label: { text: "Teaching, teaching support and teaching leadership jobs" }, hint: { text: "This includes all teacher, teaching assistant, learning support or cover supervisor, SEND and headteacher jobs"}, link_errors: true
+        = f.govuk_radio_button :account_type, :non_teaching, label: { text: "Non-teaching support jobs" }, hint: { text: "This includes all other school jobs, for example, administration, HR, data and finance jobs"}
+      end
 
       = f.govuk_submit t("buttons.create_account")
 

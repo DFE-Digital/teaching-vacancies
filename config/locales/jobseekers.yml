@@ -12,6 +12,7 @@ en:
           email: Email address
           password: Account password
           password_placeholder: "**************"
+          account_type: Account type
       confirmation:
         page_title: Account created
         apply_for_jobs_link_text: search and apply for teaching jobs
@@ -22,7 +23,7 @@ en:
             When you turn on your profile it will be only be visible to hiring staff in schools and trusts.
             They can get in touch by email to invite you apply for roles.
           heading: Create a profile
-          lead_in: "A profile will let you:"
+          lead_in: "Adding your details will let you:"
           prefill: apply for roles more quickly by pre-filling your information
           share_your_qualifications: share your qualifications and experience with schools
           specify_jobs: specify the types of teaching jobs you’re looking for
