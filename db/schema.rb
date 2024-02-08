@@ -76,11 +76,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_180737) do
     t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "employment_type", default: 0
-    t.text "reason_for_break", default: ""
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
+    t.integer "employment_type", default: 0
+    t.text "reason_for_break", default: ""
     t.uuid "jobseeker_profile_id"
     t.text "reason_for_leaving"
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
@@ -312,6 +312,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_180737) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
+    t.string "account_type"
     t.index ["confirmation_token"], name: "index_jobseekers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_jobseekers_on_reset_password_token", unique: true
@@ -697,7 +698,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_180737) do
   add_foreign_key "references", "job_applications"
   add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "saved_jobs", "vacancies"
-  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
+  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id", validate: false
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publishers"
