@@ -9,6 +9,7 @@ module JobseekerHelpers
     within(".new_jobseeker") do
       fill_in "Email address", with: email
       fill_in "Password", with: password
+      choose "Teaching, teaching support and teaching leadership jobs"
       click_on I18n.t("buttons.create_account")
     end
   end
