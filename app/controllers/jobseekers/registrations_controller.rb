@@ -4,6 +4,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   before_action :check_password_difference, only: %i[update]
   before_action :check_new_password_presence, only: %i[update]
   before_action :check_email_difference, only: %i[update]
+  before_action :configure_sign_up_params, only: [:create]
   after_action :set_correct_update_message, only: %i[update]
 
   def confirm_destroy
@@ -84,5 +85,8 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   def close_account_feedback_form_params
     params.require(:jobseekers_close_account_feedback_form)
           .permit(:close_account_reason, :close_account_reason_comment)
+  end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:account_type])
   end
 end
