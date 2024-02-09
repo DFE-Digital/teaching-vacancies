@@ -1,8 +1,10 @@
-- content_for :page_title_prefix, password_update? ? t(".edit_password_title") : t(".edit_email_title")
+
+- title = password_update? ? t(".edit_password_title") : account_type_update? ? t(".edit_account_type_title") : t(".edit_email_title")
+- content_for :page_title_prefix, title
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl = password_update? ? t(".edit_password_title") : t(".edit_email_title")
+    h1.govuk-heading-xl = title
 
     = form_for resource, url: jobseeker_registration_path, method: :patch do |f|
       = f.govuk_error_summary
