@@ -100,15 +100,4 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, keys: [:account_type])
   end
-
-  # def update_resource(resource, params)
-  #   if account_type_update?
-  #     pry
-  #     # Updating account_type or other fields without needing the current password
-  #     resource.update_without_password(params.merge(password: nil, password_confirmation: nil))
-  #   else
-  #     # Standard behavior for updating passwords
-  #     super
-  #   end
-  # end
 end
