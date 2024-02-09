@@ -3,12 +3,10 @@ class VacanciesController < ApplicationController
 
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
-    @pagy, @vacancies = pagy_countless(@vacancies_search.vacancies)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
 
     set_search_coordinates unless do_not_show_distance?
     trigger_search_performed_event
-  rescue Pagy::OverflowError
-    redirect_to not_found_path
   end
 
   def show

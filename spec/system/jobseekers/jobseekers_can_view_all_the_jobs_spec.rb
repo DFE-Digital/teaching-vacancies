@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
 
   describe "pagination" do
     shared_examples "jobseekers can view jobs and navigate between pages" do
-      xscenario "jobseekers can view jobs and navigate between pages" do
+      scenario "jobseekers can view jobs and navigate between pages" do
         expect(page).to have_css(".search-results > .search-results__item", count: 2)
         expect(page).to have_content "Showing 1 to 2 of 5 results"
 
