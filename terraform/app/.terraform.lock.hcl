@@ -1,29 +1,6 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/cloudfoundry-community/cloudfoundry" {
-  version     = "0.52.0"
-  constraints = ">= 0.13.0, ~> 0.14"
-  hashes = [
-    "h1:kxwBcvSgoaRuDza/RWATfD7k2a/4B331PPWIpHmV514=",
-    "zh:119e0d4c437804503305772ed742a43aa664295285120d05195e0e50d25d5ce4",
-    "zh:2cef42b4007a3bbbb9bbfb537376844bfdacbca67111a5b41f8859bdec1fe9d3",
-    "zh:32173f8e6d70a22e94fbb784a8e3f426c8b33238e2ef7a557bf42f0a06949351",
-    "zh:326635f19d82381459e47838338c2b951c0cf28f46c12bdb6d59f605ed029481",
-    "zh:50c74fe4aa0f63dc81dbc8c7e60f6e71bc13db3d40cfca8d34c44c948492dfe3",
-    "zh:58158b4d5fbd212eaa563f72c6877b97e8eac5e9c278f3f8b8b953a17fa37a97",
-    "zh:ab027fac4e4af53a8c4be069d07c4c80f2de95cb9d4154121a62750d340a94f0",
-    "zh:aec271570a7e4f610a3776b7ab754350aef907de9c6bb2019160131243565a90",
-    "zh:bd3df79dd9e5aeec27a1732c2d6be471df4896ba9b1602629769932a010de8a8",
-    "zh:c03383145a1104985844d52373722a3bf7550eb75f20fca3dd1d34e32be0f252",
-    "zh:c0fe431dfcb755c58e2e37704d22cfbd29e4d4ec2b1d45eb1e23121a3141f0ca",
-    "zh:d04bff09171a8a9a437a2a0f42d42585444cc093a67b04aa9b0725c8d0d222a3",
-    "zh:e880b8418415dbf380dca9a0abd52f3288aa5a1c9474955f8f8db23e5d33b7cd",
-    "zh:f5ad69340d5857d6be7316ac0c0eaf0f6bdfcd6ec5808939238036763a7cd906",
-    "zh:f60508dbae9e07257c48054c21c21b39dc1a1cbade5a39658c855b0cc47315f5",
-  ]
-}
-
 provider "registry.terraform.io/eppo/environment" {
   version     = "1.3.5"
   constraints = "1.3.5"
