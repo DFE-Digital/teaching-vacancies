@@ -37,7 +37,7 @@ RSpec.describe Search::VacancySearch do
   let(:school_types) { nil }
   let(:visa_sponsorship_availability) { nil }
   let(:school) { create(:school) }
-  let(:scope) { double("scope", count: 870) }
+  let(:scope) { double("scope", size: 870) }
   let(:polygon) { instance_double(LocationPolygon) }
   let(:location_builder) { instance_double(Search::LocationBuilder, polygon:) }
 
@@ -63,7 +63,7 @@ RSpec.describe Search::VacancySearch do
 
   describe "wider suggestions" do
     context "when results are returned" do
-      let(:scope) { double("scope", count: 870) }
+      let(:scope) { double("scope", size: 870) }
 
       it "does not offer suggestions" do
         expect(subject.wider_search_suggestions).to be_nil
@@ -71,7 +71,7 @@ RSpec.describe Search::VacancySearch do
     end
 
     context "when no results are returned" do
-      let(:scope) { double("scope", count: 0) }
+      let(:scope) { double("scope", size: 0) }
       let(:suggestions_builder) { double(suggestions: [1, 2, 3]) }
 
       before do

@@ -49,7 +49,7 @@ class Search::VacancySearch
   end
 
   def total_count
-    @total_count ||= vacancies.count(:id)
+    @total_count ||= vacancies.size
   end
 
   private
