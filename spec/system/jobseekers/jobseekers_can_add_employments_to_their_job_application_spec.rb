@@ -10,9 +10,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
   it "allows jobseekers to add a current role" do
     visit jobseekers_job_application_build_path(job_application, :employment_history)
 
-    expect(page).to have_content("No employment specified")
-
-    click_on I18n.t("buttons.add_job")
+    click_on I18n.t("buttons.add_work_history")
     expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :employment_history))
     validates_step_complete(button: I18n.t("buttons.save_employment"))
 
@@ -28,7 +26,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
   it "allows jobseekers to add employment history" do
     visit jobseekers_job_application_build_path(job_application, :employment_history)
 
-    click_on I18n.t("buttons.add_job")
+    click_on I18n.t("buttons.add_work_history")
     validates_step_complete(button: I18n.t("buttons.save_employment"))
 
     fill_in_employment_history
@@ -43,7 +41,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
   it "displays employment history from newest to oldest job" do
     visit jobseekers_job_application_build_path(job_application, :employment_history)
 
-    click_on I18n.t("buttons.add_job")
+    click_on I18n.t("buttons.add_work_history")
     validates_step_complete(button: I18n.t("buttons.save_employment"))
 
     fill_in_employment_history(job_title: "Old job")
