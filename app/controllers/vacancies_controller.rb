@@ -21,7 +21,6 @@ class VacanciesController < ApplicationController
   private
 
   def form
-    binding.pry
     @form ||= Jobseekers::SearchForm.new(search_params.merge(landing_page: @landing_page))
   end
 
