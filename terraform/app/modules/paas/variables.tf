@@ -127,7 +127,7 @@ locals {
   worker_app_start_command            = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name                     = "${var.service_name}-worker-${var.environment}"
 
-  postgres_extensions = { enable_extensions = ["pgcrypto", "fuzzystrmatch", "plpgsql", "pg_trgm", "postgis"] }
+  postgres_extensions = { enable_extensions = ["btree_gist", "pgcrypto", "fuzzystrmatch", "plpgsql", "pg_trgm", "postgis"] }
 
   # AKS
   # Use the AKS ingress domain by default. Override with the DOMAIN variable is present
