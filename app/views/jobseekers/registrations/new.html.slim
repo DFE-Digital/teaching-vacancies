@@ -15,8 +15,8 @@
       = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
       = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
       = f.govuk_radio_buttons_fieldset(:account_type, legend: { text: t(".labels.account_type"), size: "m" }) do
-        = f.govuk_radio_button :account_type, :teaching, label: { text: t(".labels.teaching") }, hint: { text: t(".hints.teaching")}, link_errors: true
-        = f.govuk_radio_button :account_type, :non_teaching, label: { text: t(".labels.non_teaching") }, hint: { text: t(".hints.non_teaching")}
+        = f.govuk_radio_button :account_type, :teaching, label: { text: t(".labels.teaching") }, hint: { text: t(".hints.teaching") }, link_errors: true
+        = f.govuk_radio_button :account_type, :non_teaching, label: { text: t(".labels.non_teaching") }, hint: { text: t(".hints.non_teaching") }
       end
 
       = f.govuk_submit t("buttons.create_account")
