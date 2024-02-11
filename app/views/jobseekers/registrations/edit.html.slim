@@ -1,5 +1,12 @@
+ruby:
+  title = if password_update?
+            t(".edit_password_title")
+          elsif account_type_update?
+            t(".edit_account_type_title")
+          else
+            t(".edit_email_title")
+          end
 
-- title = password_update? ? t(".edit_password_title") : account_type_update? ? t(".edit_account_type_title") : t(".edit_email_title")
 - content_for :page_title_prefix, title
 
 .govuk-grid-row
