@@ -7,7 +7,6 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   after_action :set_correct_update_message, only: %i[update]
-  
 
   def confirm_destroy
     @close_account_feedback_form = Jobseekers::CloseAccountFeedbackForm.new
@@ -54,7 +53,7 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
   end
 
   def check_email_difference
-    return if (password_update? || account_type_update?)
+    return if password_update? || account_type_update?
     return unless params[resource_name][:email].present?
     return unless params[resource_name][:email] == current_jobseeker.email
 
