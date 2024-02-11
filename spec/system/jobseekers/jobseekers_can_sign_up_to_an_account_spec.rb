@@ -11,10 +11,10 @@ RSpec.describe "Jobseekers can sign up to an account" do
       click_on I18n.t("buttons.create_account")
       expect(page).to have_content("There is a problem")
 
-      within('.govuk-error-summary__list') do
-        expect(page).to have_link('Enter your email address', href: '#jobseeker-email-field-error')
-        expect(page).to have_link('Enter your password', href: '#jobseeker-password-field-error')
-        expect(page).to have_link("Select what type of jobs you are looking for", href: '#jobseeker-account-type-field-error')
+      within(".govuk-error-summary__list") do
+        expect(page).to have_link("Enter your email address", href: "#jobseeker-email-field-error")
+        expect(page).to have_link("Enter your password", href: "#jobseeker-password-field-error")
+        expect(page).to have_link("Select what type of jobs you are looking for", href: "#jobseeker-account-type-field-error")
       end
 
       sign_up_jobseeker
