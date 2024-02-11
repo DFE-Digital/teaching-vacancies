@@ -541,6 +541,13 @@ en:
         title: Change password
       edit_account_type: 
         current_password: Password
+        labels:
+          account_type: What type of job are you looking for?
+          teaching: Teaching, teaching support and teaching leadership jobs
+          non_teaching: Non-teaching support jobs
+        hints:
+          teaching: Teaching, teaching support and teaching leadership jobs
+          non_teaching: Non-teaching support jobs
       new:
         description: Create an account to save and apply for jobs.
         sign_in:
@@ -548,6 +555,13 @@ en:
           link: sign in
           heading: Already have a jobseeker account?
         title: Create a jobseeker account
+        labels:
+          account_type: What type of job are you looking for?
+          teaching: Teaching, teaching support and teaching leadership jobs
+          non_teaching: Non-teaching support jobs
+        hints:
+          teaching: Teaching, teaching support and teaching leadership jobs
+          non_teaching: Non-teaching support jobs
     saved_jobs:
       destroy:
         success: Saved job removed
