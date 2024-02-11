@@ -14,7 +14,7 @@ h1.govuk-heading-l = t(".page_title")
         - row.with_key text: t(".summary_list.password")
         - row.with_value text: t(".summary_list.password_placeholder")
         - row.with_action(text: t("buttons.change"), href: edit_jobseeker_registration_path(password_update: true), visually_hidden_text: t(".summary_list.password"))
-      
+
       - summary_list.with_row(html_attributes: { id: "account_type" }) do |row|
         - row.with_key text: t(".summary_list.account_type")
         - row.with_value text: t(".summary_list.#{current_jobseeker.account_type}")
