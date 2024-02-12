@@ -70,3 +70,6 @@ Jobseeker:
   index_jobseekers_on_unlock_token:
     UniqueIndexChecker:
       enabled: false
+  account_type:
+    ColumnPresenceChecker:
+        enabled: false # currently there are null values in this field, can update this after running the rake task to backfill values.
