@@ -2,14 +2,14 @@
  # Alpine v3.18.
  # TODO: Regularly check in the alpine ruby "3.3.0-alpine3.18" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
-ARG PROD_PACKAGES="imagemagick libxml2 libxslt libpq tzdata shared-mime-info"
+ARG PROD_PACKAGES="imagemagick libxml2 libxslt libpq tzdata shared-mime-info postgresql15=15.6-r0"
 
 FROM ruby:3.3.0-alpine3.18 AS builder
 
 WORKDIR /app
 
 ARG PROD_PACKAGES
-ENV DEV_PACKAGES="gcc libc-dev make yarn postgresql13-dev build-base git"
+ENV DEV_PACKAGES="gcc libc-dev make yarn postgresql15-dev build-base git"
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
