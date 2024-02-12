@@ -26,6 +26,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       find(:xpath, "//a[@href='/jobseekers/sign_up']").click
       fill_in "jobseeker[email]", with: jobseeker.email
       fill_in "jobseeker[password]", with: "Jobseeker1234"
+      choose "Non-teaching support jobs"
       click_on I18n.t("buttons.create_account")
 
       expect(page).to have_content I18n.t("jobseekers.registrations.check_your_email.title")
