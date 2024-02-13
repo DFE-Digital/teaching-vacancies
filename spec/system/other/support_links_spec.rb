@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe "A visitor to the website can access the support links" do
   scenario "the privacy policy" do
     visit root_path
-    click_on "Privacy policy"
 
-    expect(page).to have_content("Privacy Notice: Teaching Vacancies")
+    privacy_notice_link = find_link("Privacy policy")
+    expect(privacy_notice_link[:href]).to eq("https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers")
   end
 
   scenario "the terms and conditions" do
