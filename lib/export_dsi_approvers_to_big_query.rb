@@ -31,9 +31,9 @@ class ExportDSIApproversToBigQuery < BaseDSIBigQueryExporter
 
   def insert_table_data(batch)
     dataset.insert TABLE_NAME, present_for_big_query(batch), autocreate: true do |schema|
-      schema.string "email", mode: :required
-      schema.string "family_name", mode: :required
-      schema.string "given_name", mode: :required
+      schema.string "email", mode: :required, policy_tags: [POLICY_TAG_MASKED]
+      schema.string "family_name", mode: :required, policy_tags: [POLICY_TAG_MASKED]
+      schema.string "given_name", mode: :required, policy_tags: [POLICY_TAG_MASKED]
       schema.integer "la_code", mode: :nullable
       schema.string "role_id", mode: :required
       schema.string "role_name", mode: :required

@@ -4,6 +4,8 @@ require "google/cloud/bigquery"
 class BaseDSIBigQueryExporter
   include DFESignIn
 
+  POLICY_TAG_MASKED = "projects/teacher-vacancy-service/locations/europe-west2/taxonomies/3297834668207407318/policyTags/6333608070544109307".freeze
+
   attr_reader :dataset
 
   def initialize(bigquery: Google::Cloud::Bigquery.new)

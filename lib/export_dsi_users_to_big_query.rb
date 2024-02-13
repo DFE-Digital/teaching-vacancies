@@ -33,9 +33,9 @@ class ExportDSIUsersToBigQuery < BaseDSIBigQueryExporter
   def insert_table_data(batch)
     dataset.insert TABLE_NAME, present_for_big_query(batch), autocreate: true do |schema|
       schema.timestamp "approval_datetime", mode: :nullable
-      schema.string "email", mode: :nullable
-      schema.string "family_name", mode: :nullable
-      schema.string "given_name", mode: :nullable
+      schema.string "email", mode: :nullable, policy_tags: [POLICY_TAG_MASKED]
+      schema.string "family_name", mode: :nullable, policy_tags: [POLICY_TAG_MASKED]
+      schema.string "given_name", mode: :nullable, policy_tags: [POLICY_TAG_MASKED]
       schema.integer "la_code", mode: :nullable
       schema.string "role", mode: :nullable
       schema.integer "school_urn", mode: :nullable
