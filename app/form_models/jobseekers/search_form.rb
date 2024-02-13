@@ -42,7 +42,6 @@ class Jobseekers::SearchForm
     set_total_filters
   end
 
-  # rubocop:disable Metrics/MethodLength
   def to_hash
     {
       keyword: @keyword,
@@ -63,7 +62,6 @@ class Jobseekers::SearchForm
       visa_sponsorship_availability: @visa_sponsorship_availability,
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
-  # rubocop:enable Metrics/MethodLength
 
   private
 

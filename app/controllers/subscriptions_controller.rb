@@ -124,7 +124,7 @@ class SubscriptionsController < ApplicationController
 
   def search_criteria_params
     params.require(:search_criteria)
-          .permit(:keyword, :location, :organisation_slug, :radius, job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
+          .permit(:keyword, :location, :organisation_slug, :radius, teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def subscription_params
