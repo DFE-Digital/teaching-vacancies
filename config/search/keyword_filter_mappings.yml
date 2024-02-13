@@ -625,10 +625,10 @@
   job_roles:
     - teaching_assistant
 "teach":
-  job_roles:
+  teaching_job_roles:
     - teacher
 "teacher":
-  job_roles:
+  teaching_job_roles:
     - teacher
 "teacher of accounting":
   phases:

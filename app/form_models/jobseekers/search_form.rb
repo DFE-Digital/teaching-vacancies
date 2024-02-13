@@ -4,8 +4,6 @@ class Jobseekers::SearchForm
   attr_reader :ect_status_options,
               :ect_statuses,
               :filters_from_keyword,
-              :job_role_options,
-              :job_roles,
               :keyword,
               :location,
               :organisation_slug,
@@ -52,7 +50,6 @@ class Jobseekers::SearchForm
       location: @location,
       radius: @radius,
       organisation_slug: @organisation_slug,
-      job_roles: @job_roles,
       teaching_job_roles: @teaching_job_roles,
       teaching_support_job_roles: @teaching_support_job_roles,
       non_teaching_support_job_roles: @non_teaching_support_job_roles,
@@ -85,7 +82,6 @@ class Jobseekers::SearchForm
     @filters_from_keyword = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@keyword)
     return unless @filters_from_keyword
 
-    @job_roles += filters_from_keyword["job_roles"]
     @teaching_job_roles += filters_from_keyword["teaching_job_roles"]
     @teaching_support_job_roles += filters_from_keyword["teaching_support_job_roles"]
     @non_teaching_support_job_roles += filters_from_keyword["non_teaching_support_job_roles"]
@@ -101,7 +97,6 @@ class Jobseekers::SearchForm
     previous_filters = Search::KeywordFilterGeneration::QueryParser.filters_from_query(@previous_keyword)
     return unless previous_filters
 
-    @job_roles -= previous_filters["job_roles"]
     @teaching_job_roles -= previous_filters["teaching_job_roles"]
     @teaching_support_job_roles -= previous_filters["teaching_support_job_roles"]
     @non_teaching_support_job_roles -= previous_filters["non_teaching_support_job_roles"]
@@ -113,7 +108,6 @@ class Jobseekers::SearchForm
 
   def set_facet_options
     @visa_sponsorship_availability_options = [["true", I18n.t("jobs.filters.visa_sponsorship_availability.option")]]
-    @job_role_options = Vacancy.job_roles.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{option}")] }
     @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
     @teaching_support_job_role_options = Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
     @non_teaching_support_job_role_options = Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
@@ -133,7 +127,6 @@ class Jobseekers::SearchForm
     @landing_page = params[:landing_page]
     @location = params[:location]
     @visa_sponsorship_availability = params[:visa_sponsorship_availability] || []
-    @job_roles = params[:job_roles] || []
     @teaching_job_roles = params[:teaching_job_roles] || []
     @teaching_support_job_roles = params[:teaching_support_job_roles] || []
     @non_teaching_support_job_roles = params[:non_teaching_support_job_roles] || []
@@ -148,7 +141,7 @@ class Jobseekers::SearchForm
   end
 
   def set_total_filters
-    @total_filters = [@visa_sponsorship_availability&.count, @job_roles&.count, @teaching_job_roles&.count, @teaching_support_job_roles&.count, @non_teaching_support_job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @quick_apply&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
+    @total_filters = [@visa_sponsorship_availability&.count, @teaching_job_roles&.count, @teaching_support_job_roles&.count, @non_teaching_support_job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @quick_apply&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
   end
 
   def set_radius(radius_param)
