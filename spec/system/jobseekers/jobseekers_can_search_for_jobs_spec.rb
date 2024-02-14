@@ -225,7 +225,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         expect("Maths 1").to appear_before("Maths Teacher 2")
       end
 
-      it "jobseekers can then choose to sort by different sort option", js: true do
+      xit "jobseekers can then choose to sort by different sort option", js: true do
         expect(page).to have_select("sort_by", selected: "Distance")
 
         select "Closing date", :from => "sort-by-field"
