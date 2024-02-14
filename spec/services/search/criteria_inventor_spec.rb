@@ -9,7 +9,7 @@ RSpec.describe Search::CriteriaInventor do
   let(:working_patterns) { %w[full_time part_time] }
   let(:subjects) { %w[English Maths] }
   let(:job_title) { "A wonderful job" }
-  let(:job_roles) { ["teacher"] }
+  let(:job_roles) { %w[teacher teaching_assistant administration_hr_data_and_finance] }
   let(:associated_orgs) { [school] }
   let(:vacancy) do
     create(:vacancy, organisations: associated_orgs,
@@ -73,9 +73,21 @@ RSpec.describe Search::CriteriaInventor do
       end
     end
 
-    describe "job_roles" do
+    describe "teaching_job_roles" do
       it "sets the job_roles with the job roles of the vacancy" do
-        expect(subject.criteria[:job_roles]).to eq(job_roles)
+        expect(subject.criteria[:teaching_job_roles]).to eq(["teacher"])
+      end
+    end
+
+    describe "teaching_support_job_roles" do
+      it "sets the job_roles with the job roles of the vacancy" do
+        expect(subject.criteria[:teaching_support_job_roles]).to eq(["teaching_assistant"])
+      end
+    end
+
+    describe "non_teaching_support_job_roles" do
+      it "sets the job_roles with the job roles of the vacancy" do
+        expect(subject.criteria[:non_teaching_support_job_roles]).to eq(["administration_hr_data_and_finance"])
       end
     end
 
