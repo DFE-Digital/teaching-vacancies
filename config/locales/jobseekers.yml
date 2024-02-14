@@ -546,8 +546,8 @@ en:
           teaching: Teaching, teaching support and teaching leadership jobs
           non_teaching: Non-teaching support jobs
         hints:
-          teaching: Teaching, teaching support and teaching leadership jobs
-          non_teaching: Non-teaching support jobs
+          teaching: This includes teacher, teaching assistant, learning support or cover supervisor, SEND and headteacher jobs.
+          non_teaching: This includes all other school jobs, for example, administration, HR, data and finance jobs.
       new:
         description: Create an account to save and apply for jobs.
         sign_in:
@@ -560,8 +560,8 @@ en:
           teaching: Teaching, teaching support and teaching leadership jobs
           non_teaching: Non-teaching support jobs
         hints:
-          teaching: Teaching, teaching support and teaching leadership jobs
-          non_teaching: Non-teaching support jobs
+          teaching: This includes teacher, teaching assistant, learning support or cover supervisor, SEND and headteacher jobs.
+          non_teaching: This includes all other school jobs, for example, administration, HR, data and finance jobs.
     saved_jobs:
       destroy:
         success: Saved job removed
