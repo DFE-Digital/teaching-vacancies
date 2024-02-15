@@ -41,7 +41,7 @@
 
         p.govuk-body
           = t(".confirmation.how_we_use_your_data.privacy_policy.description_html",
-              link_to: govuk_link_to(t(".confirmation.how_we_use_your_data.privacy_policy.link_text"), page_path("privacy-policy")))
+              link_to: govuk_link_to(t(".confirmation.how_we_use_your_data.privacy_policy.link_text"), "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers"))
 
         = f.govuk_check_boxes_fieldset :confirm_data_usage, multiple: false, legend: nil do
           = f.govuk_check_box :confirm_data_usage, "1", 0, multiple: false, link_errors: true

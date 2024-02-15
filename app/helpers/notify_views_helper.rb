@@ -65,7 +65,7 @@ module NotifyViewsHelper
   end
 
   def privacy_policy_link
-    url = page_url("privacy-policy", **utm_params)
+    url = "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers"
     notify_link(url, t(".privacy_policy_link"))
   end
 
