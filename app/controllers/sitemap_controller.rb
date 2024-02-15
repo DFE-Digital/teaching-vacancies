@@ -17,7 +17,6 @@ class SitemapController < ApplicationController
       end
 
       # Static pages
-      m.add page_path("privacy-policy"), period: "weekly"
       m.add page_path("terms-and-conditions"), period: "weekly"
       m.add page_path("cookies"), period: "weekly"
       m.add page_path("accessibility"), period: "weekly"
