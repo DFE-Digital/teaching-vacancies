@@ -7,6 +7,7 @@ class Jobseekers::SubscriptionForm < BaseForm
                 :teaching_job_roles,
                 :teaching_support_job_roles,
                 :non_teaching_support_job_roles,
+                :visa_sponsorship_availability,
                 :ect_statuses,
                 :subjects,
                 :phases,
@@ -14,6 +15,7 @@ class Jobseekers::SubscriptionForm < BaseForm
                 :teaching_job_role_options,
                 :teaching_support_job_role_options,
                 :non_teaching_support_job_role_options,
+                :visa_sponsorship_availability_options,
                 :ect_status_options,
                 :phase_options,
                 :working_pattern_options,
@@ -36,6 +38,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @teaching_job_roles = params[:teaching_job_roles]&.reject(&:blank?) || search_criteria[:teaching_job_roles] || []
     @teaching_support_job_roles = params[:teaching_support_job_roles]&.reject(&:blank?) || search_criteria[:teaching_support_job_roles] || []
     @non_teaching_support_job_roles = params[:non_teaching_support_job_roles]&.reject(&:blank?) || search_criteria[:non_teaching_support_job_roles] || []
+    @visa_sponsorship_availability = params[:visa_sponsorship_availability_options]&.reject(&:blank?) || search_criteria[:visa_sponsorship_availability]
     @ect_statuses = params[:ect_statuses]&.reject(&:blank?) || search_criteria[:ect_statuses] || []
     @subjects = params[:subjects]&.reject(&:blank?) || search_criteria[:subjects]
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
@@ -62,6 +65,7 @@ class Jobseekers::SubscriptionForm < BaseForm
       teaching_job_roles: teaching_job_roles,
       teaching_support_job_roles: teaching_support_job_roles,
       non_teaching_support_job_roles: non_teaching_support_job_roles,
+      visa_sponsorship_availability: visa_sponsorship_availability,
       ect_statuses: ect_statuses,
       subjects: subjects,
       phases: phases,
@@ -73,6 +77,7 @@ class Jobseekers::SubscriptionForm < BaseForm
   private
 
   def set_facet_options
+    @visa_sponsorship_availability_options =  [["true", I18n.t("jobs.filters.visa_sponsorship_availability.option")]]
     @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
     @teaching_support_job_role_options = Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
     @non_teaching_support_job_role_options = Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }

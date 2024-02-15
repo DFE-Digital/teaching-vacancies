@@ -17,6 +17,7 @@
       = render "/subscriptions/job_roles_fields", filters_component: filters_component, f: f, form: @form
       = render "shared/subjects_filter", filters_component: filters_component, f: f
       - filters_component.with_group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, @form.ect_status_options, :first, :last, small: false, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
+      - filters_component.with_group key: "visa_sponsorship_availability", component: f.govuk_collection_check_boxes(:visa_sponsorship_availability, @form.visa_sponsorship_availability_options, :first, :last, small: true, legend: { text: t("jobs.filters.visa_sponsorship_availability.legend") }, hint: nil)
       - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, @form.phase_options, :first, :last, small: false, legend: { text: t("jobs.filters.phases") }, hint: nil)
       - filters_component.with_group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, @form.working_pattern_options, :first, :last, small: false, legend: { text: t("jobs.filters.working_patterns") }, hint: nil)
 
