@@ -763,7 +763,7 @@ en:
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support
           pastoral_health_and_welfare: Pastoral, health and welfare
-          other_leathership: Other leadership roles
+          other_leadership: Other leadership roles
           other_support: Other support roles
         teaching_job_role_options:
           teacher: Teacher
@@ -783,7 +783,7 @@ en:
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support
           pastoral_health_and_welfare: Pastoral, health and welfare
-          other_leathership: Other leadership roles
+          other_leadership: Other leadership roles
           other_support: Other support roles
         job_roles_options:
           <<: *job_role_options
