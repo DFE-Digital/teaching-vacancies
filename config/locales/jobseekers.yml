@@ -731,7 +731,8 @@ en:
       about_you:
         edit:
           page_title: About You
-          page_description: "Write a statement about yourself. This will be visible on your profile. This may include information about:"
+          page_description: Describe your relevant skills, knowledge and experience. This will help schools see if you'd be a good fit for their role.
+          items_explanation: "If you're a teacher, this may include information about:"
           page_description_items:
             - "working with pupils"
             - "your teaching style and classroom management"
