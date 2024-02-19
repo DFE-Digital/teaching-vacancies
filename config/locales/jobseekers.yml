@@ -677,7 +677,7 @@ en:
         work:
           caption: Personal details
           hint:
-            text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work as a teacher in England. Learn more about %{link}
+            text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work in England. If you're looking for a teaching job, you can learn more about %{link}
             link: teaching in England as a non-UK citizen (opens in new tab).
             no_visa:
               text: There is %{link} if you qualified outside the UK.
