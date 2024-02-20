@@ -32,6 +32,7 @@ en:
 
     filters:
       job_filters: Job Filters
+      job_type: Job type
       job_roles: Job role
       teaching_job_roles: Teaching
       teaching_support_job_roles: Teaching support
