@@ -799,7 +799,7 @@ en:
           caption: Work history
           page_title: Add a role — Profile
           title: Role
-          hint_text: If you've had more than 1 role at the same employer, add each role separately.
+          hint_text: "If you've had more than 1 role at the same employer, add each role separately."
         review:
           add_role_button_text: Add role
           return_to_profile: Return to profile

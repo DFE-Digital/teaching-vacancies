@@ -496,6 +496,7 @@ en:
         qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>
         qualified_teacher_status_options:
           "no": "No"
+          on_track: I'm on track to receive my QTS
           non_teacher: I'm not looking for a teaching job
           "yes": "Yes"
         statutory_induction_complete_options:
