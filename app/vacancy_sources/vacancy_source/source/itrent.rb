@@ -166,7 +166,7 @@ class VacancySource::Source::Itrent
   end
 
   def feed
-    response = HTTParty.get(FEED_URL, headers: FEED_HEADERS, basic_auth: AUTH)
+    response = HTTParty.get(FEED_URL, headers: FEED_HEADERS, basic_auth: AUTH, verify: false)
     raise HTTParty::ResponseError, ERROR_MESSAGE unless response.success?
 
     parsed_response = JSON.parse(response.body)
@@ -177,7 +177,7 @@ class VacancySource::Source::Itrent
 
   def user_defined_fields(vacancy_ref)
     headers = UDF_HEADERS.merge("iTrent-Object-Ref" => vacancy_ref)
-    response = HTTParty.get(UDF_URL, headers:, basic_auth: AUTH)
+    response = HTTParty.get(UDF_URL, headers:, basic_auth: AUTH, verify: false)
     raise HTTParty::ResponseError, ERROR_MESSAGE unless response.success?
 
     JSON.parse(response.body)&.dig("itrent", "udfs")&.first
