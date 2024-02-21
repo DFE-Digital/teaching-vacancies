@@ -118,7 +118,12 @@
 
     &__group {
       border-bottom: 1px solid govuk-colour('mid-grey');
-      margin-bottom: govuk-spacing(5);
+      margin-bottom: govuk-spacing(4);
+      padding-bottom: govuk-spacing(2);
+
+        h3.govuk-fieldset__legend {
+          margin-bottom: govuk-spacing(3);
+        }
 
       .govuk-details {
         margin-bottom: govuk-spacing(0);
