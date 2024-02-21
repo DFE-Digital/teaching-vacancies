@@ -100,6 +100,6 @@ class VacancyFilterQuery < ApplicationQuery
     return nil unless working_patterns
 
     # These are no longer relevant and have no current equivalent
-    working_patterns - %w[compressed_hours staggered_hours flexible term_time job_share]
+    working_patterns - %w[compressed_hours staggered_hours]
   end
 end
