@@ -137,7 +137,27 @@
           font-weight: bold;
           text-decoration: none;
         }
+
+        &__summary::before {
+          content: url('/svg/icon-filter-details-closed.svg');
+          width: 30px;
+          height: 30px;
+          border-style: none;
+          clip-path: unset;
+          left: -5px;
+        }
       }
+
+      details[open] {
+        .govuk-details__summary::before {
+          content: url('/svg/icon-filter-details-expanded.svg');
+          width: 30px;
+          height: 30px;
+          border-style: none;
+          clip-path: unset;
+          left: -5px;
+        }
+      } 
 
       &:last-of-type {
         border-bottom: 0;
