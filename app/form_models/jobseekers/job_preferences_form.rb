@@ -49,8 +49,9 @@ module Jobseekers
 
       def options(phases: multistep.phases)
         school_types = School::READABLE_PHASE_MAPPINGS.select { |_, v| phases.include? v }.map(&:first)
-        School::PHASE_TO_KEY_STAGES_MAPPINGS.values_at(*school_types).flatten.uniq
-          .to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.key_stages_options.#{opt}")] }
+        options = School::PHASE_TO_KEY_STAGES_MAPPINGS.values_at(*school_types).flatten.uniq
+                    .to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.key_stages_options.#{opt}")] }
+        options.merge({ "non_teaching" => "I'm not looking for a teaching job" })
       end
 
       def invalidate?

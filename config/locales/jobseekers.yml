@@ -677,7 +677,7 @@ en:
         work:
           caption: Personal details
           hint:
-            text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work as a teacher in England. Learn more about %{link}
+            text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work in England. If you're looking for a teaching job, you can learn more about %{link}
             link: teaching in England as a non-UK citizen (opens in new tab).
             no_visa:
               text: There is %{link} if you qualified outside the UK.
@@ -731,7 +731,8 @@ en:
       about_you:
         edit:
           page_title: About You
-          page_description: "Write a statement about yourself. This will be visible on your profile. This may include information about:"
+          page_description: Describe your relevant skills, knowledge and experience. This will help schools see if you'd be a good fit for their role.
+          items_explanation: "If you're a teacher, this may include information about:"
           page_description_items:
             - "working with pupils"
             - "your teaching style and classroom management"
@@ -798,7 +799,7 @@ en:
           caption: Work history
           page_title: Add a role — Profile
           title: Role
-          hint_text: If you have had more than one role at the same school, add them all separately.
+          hint_text: "If you've had more than 1 role at the same employer, add each role separately."
         review:
           add_role_button_text: Add role
           return_to_profile: Return to profile
