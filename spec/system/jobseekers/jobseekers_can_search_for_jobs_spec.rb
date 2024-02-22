@@ -230,9 +230,9 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         select "Closing date", :from => "sort-by-field"
 
+        expect(page).to have_select("sort_by", selected: "Closing date")
         expect("Maths 1").to appear_before("Physics Teacher")
         expect("Physics Teacher").to appear_before("Maths Teacher 2")
-        expect(page).to have_select("sort_by", selected: "Closing date")
 
         select "Newest job", :from => "sort-by-field"
 

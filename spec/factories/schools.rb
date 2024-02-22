@@ -27,7 +27,7 @@ FactoryBot.define do
     detailed_school_type { "Voluntary aided school" }
     minimum_age { 11 }
     maximum_age { 18 }
-    name { Faker::Educator.secondary_school.strip.delete("'") }
+    sequence(:name) { |n| "#{Faker::Educator.secondary_school.strip.delete("'")} #{n}" }
     phase { :secondary }
     readable_phases { %w[secondary] }
     region { "South-East England" }
