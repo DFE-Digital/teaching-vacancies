@@ -46,7 +46,9 @@ en:
       school_type: School type
       visa_sponsorship_availability:
         legend: Visa sponsorship
-        option: Only show jobs with visa sponsorship 
+        option: Only show jobs with visa sponsorship
+        subscriptions: Only send alerts for jobs with visa sponsorship
+
 
     education_phase_options:
       middle: Middle
