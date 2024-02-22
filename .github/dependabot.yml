@@ -29,7 +29,7 @@ updates:
         patterns:
           - "*"
         exclude-patterns:
-          - "govuk"
+          - "govuk*"
           - "noticed"
 
   - package-ecosystem: "docker"
@@ -64,5 +64,4 @@ updates:
         patterns:
           - "*"
         exclude-patterns:
-          - "govuk"
-          - "jest"
+          - "govuk*"
