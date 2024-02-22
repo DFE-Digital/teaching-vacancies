@@ -129,6 +129,9 @@
 "film":
   subjects:
     - Media studies
+"flexible":
+  working_patterns:
+    - flexible
 "finance teacher":
   phases:
     - secondary
