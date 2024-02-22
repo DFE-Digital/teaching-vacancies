@@ -77,7 +77,7 @@ class Jobseekers::SubscriptionForm < BaseForm
   private
 
   def set_facet_options
-    @visa_sponsorship_availability_options =  [["true", I18n.t("jobs.filters.visa_sponsorship_availability.option")]]
+    @visa_sponsorship_availability_options =  [["true", I18n.t("jobs.filters.visa_sponsorship_availability.subscriptions")]]
     @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
     @teaching_support_job_role_options = Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
     @non_teaching_support_job_role_options = Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
