@@ -1,5 +1,5 @@
 require "geocoding"
-# testing seeds
+
 # rubocop:disable Metrics/ClassLength
 class Vacancy < ApplicationRecord
   extend FriendlyId
