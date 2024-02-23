@@ -32,7 +32,11 @@ en:
 
     filters:
       job_filters: Job Filters
+      job_type: Job type
       job_roles: Job role
+      teaching_job_roles: Teaching
+      teaching_support_job_roles: Teaching support
+      non_teaching_support_job_roles: Non-teaching support
       ect_suitable: Suitable for early career teachers
       subject: Subject
       phases: Education phase
@@ -42,7 +46,9 @@ en:
       school_type: School type
       visa_sponsorship_availability:
         legend: Visa sponsorship
-        option: Only show jobs with visa sponsorship 
+        option: Only show jobs with visa sponsorship
+        subscriptions: Only send alerts for jobs with visa sponsorship
+
 
     education_phase_options:
       middle: Middle
@@ -399,3 +405,7 @@ en:
       apply_link: Learn more about this role and how to apply for it (link opens external website in a new window)
       contact_email_link: Email link for job contact email — %{email}
       sort_by_link: Sort jobs by %{column} in %{order}ending order
+      filters:
+        teaching_job_roles: Teaching job roles
+        teaching_support_job_roles: Teaching support job roles
+        non_teaching_support_job_roles: Non-teaching support job roles

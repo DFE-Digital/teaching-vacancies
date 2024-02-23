@@ -44,7 +44,7 @@ RSpec.describe VacancyFilterQuery do
         subjects: %w[English Spanish],
         working_patterns: %w[full_time],
         phases: %w[secondary],
-        job_roles: %w[teacher],
+        teaching_job_roles: %w[teacher],
         ect_statuses: %w[ect_suitable],
         from_date: 5.days.ago,
         to_date: Date.today,
@@ -152,28 +152,28 @@ RSpec.describe VacancyFilterQuery do
     describe "roles mapping" do
       it "transforms legacy 'leadership' to all senior leadership roles" do
         filters = {
-          job_roles: %w[leadership],
+          teaching_job_roles: %w[leadership],
         }
         expect(subject.call(filters)).to contain_exactly(vacancy7, vacancy8, vacancy9)
       end
 
       it "transforms legacy 'senior_leader' to all senior leadership roles" do
         filters = {
-          job_roles: %w[senior_leader],
+          teaching_job_roles: %w[senior_leader],
         }
         expect(subject.call(filters)).to contain_exactly(vacancy7, vacancy8, vacancy9)
       end
 
       it "transforms legacy 'middle_leader' to all middle leadership roles" do
         filters = {
-          job_roles: %w[middle_leader],
+          teaching_job_roles: %w[middle_leader],
         }
         expect(subject.call(filters)).to contain_exactly(vacancy5, vacancy6)
       end
 
       it "doesn't filter by role if it is not included in current job roles list" do
         filters = {
-          job_roles: %w[non_valid_role],
+          teaching_job_roles: %w[non_valid_role],
         }
         expect(subject.call(filters)).to contain_exactly(
           vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
