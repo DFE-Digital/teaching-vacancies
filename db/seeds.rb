@@ -106,7 +106,6 @@ Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
     jobseeker_profile.qualifications.each do |qualification|
       vacancy_without_org_id = qualification.job_application.vacancy_id
       OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
-    end    
+    end
   end
 end
-
