@@ -16,8 +16,6 @@ on:
     - '.github/pull_request_template.md'
 
   pull_request:
-    branches:
-    - main
     types:
       - labeled
       - synchronize

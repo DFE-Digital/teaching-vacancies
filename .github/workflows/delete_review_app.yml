@@ -2,7 +2,6 @@ name: Delete review app
 
 on:
   pull_request:
-    branches: [ main ]
     types: [closed]
     paths-ignore:
       - 'bigquery/**'
