@@ -97,5 +97,15 @@ Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
     FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
       FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
     end
+    # :with_employment_history trait creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures
+    jobseeker_profile.employments.each do |employment|
+      vacancy_without_org_id = employment.job_application.vacancy_id
+      OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
+    end
+    # :with_qualifications trait also creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures.
+    jobseeker_profile.qualifications.each do |qualification|
+      vacancy_without_org_id = qualification.job_application.vacancy_id
+      OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
+    end
   end
 end
