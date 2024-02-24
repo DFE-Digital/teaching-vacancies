@@ -22,6 +22,18 @@ module Jobseekers
       validates :roles, presence: true
       validate :validate_roles
 
+      def teaching_job_roles_options
+        Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
+      end
+
+      def teaching_support_job_roles_options
+        Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
+      end
+
+      def non_teaching_support_job_roles_options
+        Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
+      end
+
       def options
         ROLES.to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.role_options.#{opt}")] }
       end
