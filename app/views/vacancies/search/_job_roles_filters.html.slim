@@ -1,4 +1,3 @@
-- byebug
 - teaching_job_roles = capture do
   = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.teaching_job_roles"), "aria-label": t("jobs.aria_labels.filters.teaching_job_roles"), title: t("jobs.filters.teaching_job_roles"))]), open: form.teaching_job_roles&.any?) do
     = f.govuk_collection_check_boxes(:teaching_job_roles, form.teaching_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
