@@ -24,11 +24,9 @@ class Search::JobseekerProfileSearch
   end
 
   def roles_filter
-    roles_filter = []
-    %i[teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles].each do |filter_type|
-      roles_filter += filters[filter_type] if filters[filter_type].present?
-    end
-    roles_filter
+    role_filters = %i[teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles]
+
+    role_filters.flat_map { |filter_type| filters[filter_type] }.compact
   end
 
   def total_count
