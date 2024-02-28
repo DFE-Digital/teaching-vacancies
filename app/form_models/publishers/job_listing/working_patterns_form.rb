@@ -1,13 +1,10 @@
 class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::VacancyForm
-  # TODO: Working Patterns: Remove call to #reject once all vacancies with legacy working patterns have expired
-  validates :working_patterns, presence: true, inclusion: { in: Vacancy.working_patterns.keys.reject { |working_pattern| working_pattern.in?(%w[flexible job_share term_time]) } }
-  validates :full_time_details, presence: true, if: -> { working_patterns&.include?("full_time") }
-  validates :part_time_details, presence: true, if: -> { working_patterns&.include?("part_time") }
-  validate :full_time_details_does_not_exceed_maximum_words, if: -> { working_patterns&.include?("full_time") }
-  validate :part_time_details_does_not_exceed_maximum_words, if: -> { working_patterns&.include?("part_time") }
+  validates :working_patterns, presence: true, inclusion: { in: Vacancy.working_patterns.keys }
+  validates :working_patterns_details, presence: true
+  validate :working_patterns_details_does_not_exceed_maximum_words
 
   def self.fields
-    %i[working_patterns full_time_details part_time_details]
+    %i[working_patterns working_patterns_details]
   end
   attr_accessor(*fields)
 
@@ -16,20 +13,14 @@ class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::Vaca
   end
 
   def params_to_save
-    {
-      working_patterns: working_patterns,
-      part_time_details: (part_time_details if working_patterns&.include?("part_time")),
-      full_time_details: (full_time_details if working_patterns&.include?("full_time")),
-    }
+    { working_patterns:, working_patterns_details: }
   end
 
   private
 
-  def full_time_details_does_not_exceed_maximum_words
-    errors.add(:full_time_details, :full_time_details_maximum_words, message: I18n.t("working_patterns_errors.full_time_details.maximum_words")) if full_time_details&.split&.length&.>(50)
-  end
+  def working_patterns_details_does_not_exceed_maximum_words
+    return unless working_patterns_details&.split&.length&.>(50)
 
-  def part_time_details_does_not_exceed_maximum_words
-    errors.add(:part_time_details, :part_time_details_maximum_words, message: I18n.t("working_patterns_errors.part_time_details.maximum_words")) if part_time_details&.split&.length&.>(50)
+    errors.add(:working_patterns_details, :working_patterns_details_maximum_words, message: I18n.t("working_patterns_errors.working_patterns_details.maximum_words"))
   end
 end
