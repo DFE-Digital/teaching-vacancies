@@ -13,7 +13,6 @@ class Search::JobseekerProfileSearch
       .active.not_hidden_from(current_organisation)
       .where(job_preferences: { id: location_preferences_ids_matching_location_search })
 
-
     scope = scope.where(qualified_teacher_status: filters[:qualified_teacher_status]) if filters[:qualified_teacher_status].present?
     scope = scope.where("job_preferences.roles && ARRAY[?]::varchar[]", roles_filter) if roles_filter.present?
     scope = scope.where("job_preferences.working_patterns && ARRAY[?]::varchar[]", filters[:working_patterns]) if filters[:working_patterns].present?
@@ -26,7 +25,7 @@ class Search::JobseekerProfileSearch
 
   def roles_filter
     roles_filter = []
-    [:teaching_job_roles, :teaching_support_job_roles, :non_teaching_support_job_roles].each do |filter_type|
+    %i[teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles].each do |filter_type|
       roles_filter += filters[filter_type] if filters[filter_type].present?
     end
     roles_filter

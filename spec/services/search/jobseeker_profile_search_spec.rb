@@ -117,7 +117,7 @@ RSpec.describe Search::JobseekerProfileSearch do
     end
 
     context "job_preferences roles" do
-      let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: [], non_teaching_support_job_roles: [], non_teaching_support_job_roles: %w[other_support], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
+      let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: %w[other_support], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
       let(:control_job_preferences_attrs) { { roles: %w[leader] } }
       let(:control_profile_attrs) { {} }
 
@@ -128,17 +128,17 @@ RSpec.describe Search::JobseekerProfileSearch do
       let!(:cleaning_staff_jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "no", job_preferences: cleaning_staff_job_preferences) }
       let(:cleaning_staff_job_preferences) { create(:job_preferences, roles: %w[catering_cleaning_and_site_management other_support], working_patterns: %w[full_time], locations: [cleaning_staff_location_preference_containing_school]) }
       let(:cleaning_staff_location_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
-    
+
       let!(:teaching_assistant_jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "no", job_preferences: teaching_assistant_job_preferences) }
       let(:teaching_assistant_job_preferences) { create(:job_preferences, roles: %w[teaching_assistant higher_level_teaching_assistant], working_patterns: %w[full_time], locations: [teaching_assistant_preference_containing_school]) }
-      let(:teaching_assistant_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }    
+      let(:teaching_assistant_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 
       it "should only return the jobseeker profiles with the roles specified in the filters" do
         expect(search.jobseeker_profiles).to eq([cleaning_staff_jobseeker_profile])
       end
 
       context "searching using multiple roles" do
-        let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: %w[teacher headteacher], non_teaching_support_job_roles: [], non_teaching_support_job_roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
+        let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: %w[teacher headteacher], teaching_support_job_roles: [], non_teaching_support_job_roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
 
         let(:headteacher_jobseeker_profile) { create(:jobseeker_profile) }
         let(:headteacher_job_preferences) { create(:job_preferences, roles: %w[headteacher], jobseeker_profile: headteacher_jobseeker_profile) }

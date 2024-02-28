@@ -28,7 +28,7 @@ class Publishers::JobseekerProfileSearchForm
 
   def non_teaching_support_job_role_options
     Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
-  end  
+  end
 
   def qts_options
     %w[yes on_track no].map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.qts_options")] }

@@ -29,7 +29,6 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:teaching_assistant_job_preferences) { create(:job_preferences, roles: %w[teaching_assistant higher_level_teaching_assistant], working_patterns: %w[full_time], locations: [teaching_assistant_preference_containing_school]) }
   let(:teaching_assistant_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 
-
   describe "Visiting the publisher's jobseeker profiles start page" do
     before { login_publisher(publisher:, organisation:) }
 
