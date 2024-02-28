@@ -14,4 +14,12 @@ namespace :vacancies do
       vacancy.update(working_patterns: new_working_patterns)
     end
   end
+
+  desc "Remove incorrectly copied legacy working patterns details from newer vacancies since legacy field was deprecated on 25th August 2022"
+  task remove_copied_legacy_working_patterns_details: :environment do
+    Vacancy.where("((full_time_details IS NOT NULL AND full_time_details != '') OR (part_time_details IS NOT NULL AND part_time_details != '')) " \
+                  "AND working_patterns_details IS NOT NULL " \
+                  "AND working_patterns_details != '' " \
+                  "AND created_at >= '2022-08-25'").update_all(working_patterns_details: nil)
+  end
 end

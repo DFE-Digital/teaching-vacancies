@@ -68,8 +68,8 @@ FactoryBot.define do
     visa_sponsorship_available { false }
 
     after(:build) do |v|
-      v.full_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("full_time")
-      v.part_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("part_time")
+      v.full_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("full_time") && v.full_time_details.blank?
+      v.part_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("part_time") && v.part_time_details.blank?
     end
 
     trait :legacy_vacancy do
