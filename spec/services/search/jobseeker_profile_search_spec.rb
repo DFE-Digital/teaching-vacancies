@@ -99,16 +99,36 @@ RSpec.describe Search::JobseekerProfileSearch do
       let(:qts_job_preferences) { create(:job_preferences, jobseeker_profile: qts_jobseeker_profile) }
       let!(:qts_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: qts_job_preferences) }
 
+      let(:no_qts_jobseeker_profile) { create(:jobseeker_profile, qualified_teacher_status: "no") }
+      let(:no_qts_job_preferences) { create(:job_preferences, jobseeker_profile: no_qts_jobseeker_profile) }
+      let!(:no_qts_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: no_qts_job_preferences) }
+
+      let(:nil_qts_jobseeker_profile) { create(:jobseeker_profile, qualified_teacher_status: nil) }
+      let(:nil_qts_job_preferences) { create(:job_preferences, jobseeker_profile: nil_qts_jobseeker_profile) }
+      let!(:nil_qts_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: nil_qts_job_preferences) }
+
+      let(:non_teacher_qts_jobseeker_profile) { create(:jobseeker_profile, qualified_teacher_status: "non_teacher") }
+      let(:non_teacher_qts_job_preferences) { create(:job_preferences, jobseeker_profile: non_teacher_qts_jobseeker_profile) }
+      let!(:non_teacher_qts_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: non_teacher_qts_job_preferences) }
+
+      let(:on_track_qts_jobseeker_profile) { create(:jobseeker_profile, qualified_teacher_status: "on_track") }
+      let(:on_track_qts_job_preferences) { create(:job_preferences, jobseeker_profile: on_track_qts_jobseeker_profile) }
+      let!(:on_track_qts_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: on_track_qts_job_preferences) }
+
       it "should return the jobseeker profiles with the qualified_teacher_status specified in the filters" do
         expect(search.jobseeker_profiles).to eq([qts_jobseeker_profile])
+      end
+      
+      context "when hiring staff selects 'Does not have QTS'" do
+        let(:filters) { { current_organisation: organisation, qualified_teacher_status: %w[no], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
+
+        it "returns jobseekers with who answered 'No', 'I'm not looking for a teaching role' or didn't answer the QTS question" do
+          expect(search.jobseeker_profiles).to match_array([no_qts_jobseeker_profile, nil_qts_jobseeker_profile, non_teacher_qts_jobseeker_profile])
+        end
       end
 
       context "searching using multiple QTS statuses" do
         let(:filters) { { current_organisation: organisation, qualified_teacher_status: %w[yes on_track], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
-
-        let(:on_track_qts_jobseeker_profile) { create(:jobseeker_profile, qualified_teacher_status: "on_track") }
-        let(:on_track_qts_job_preferences) { create(:job_preferences, jobseeker_profile: on_track_qts_jobseeker_profile) }
-        let!(:on_track_qts_job_preference_location) { create(:job_preferences_location, **location_preference, job_preferences: on_track_qts_job_preferences) }
 
         it "should return the jobseeker profiles with the qualified_teacher_status specified in the filters" do
           expect(search.jobseeker_profiles).to match_array([qts_jobseeker_profile, on_track_qts_jobseeker_profile])
