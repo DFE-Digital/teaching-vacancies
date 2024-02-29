@@ -8,6 +8,13 @@ module TaskExampleGroup
     let(:tasks) { Rake::Task }
 
     subject(:task) { tasks[task_name] }
+
+    after(:each) do
+      # Calling a rake task sets their invoked state to "already invoked" and causes further tests for the task to be
+      # skipped and tests to fail.
+      # Following line allows the task to be called again in the next test.
+      task.reenable
+    end
   end
 end
 
