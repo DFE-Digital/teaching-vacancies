@@ -22,6 +22,14 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
     t("jobs.create_job_caption", step: step_process.current_step_group_number, total: step_process.total_step_groups - 1)
   end
 
+  def sub_caption
+    step_process.current_step == :job_role ? "Select all that apply" : nil
+  end
+
+  def sub_caption_class
+    step_process.current_step == :job_role ? "govuk-!-margin-top-4 govuk-!-margin-bottom-4" : nil
+  end
+
   private
 
   attr_reader :vacancy, :copy, :step_process, :back_path

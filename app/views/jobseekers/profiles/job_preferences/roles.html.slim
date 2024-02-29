@@ -13,7 +13,6 @@
       span.govuk-caption-m class="govuk-!-margin-bottom-8"
         = "Select all that apply to set up your profile"
 
-
       = f.govuk_collection_check_boxes :roles, @step.teaching_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_job_roles"), size: "m" }
       = f.govuk_collection_check_boxes :roles, @step.teaching_support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_support_job_roles"), size: "m" }
       = f.govuk_collection_check_boxes :roles, @step.non_teaching_support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.non_teaching_support_job_roles"), size: "m" }

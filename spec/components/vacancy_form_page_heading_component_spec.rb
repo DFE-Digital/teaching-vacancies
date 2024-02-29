@@ -7,10 +7,11 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   let(:current_publisher_is_part_of_school_group?) { true }
   let(:previous_step) { :review }
   let(:back_path) { "/" }
+  let(:current_step) { :job_location }
   let(:steps) { %i[job_location job_role review] }
 
   let(:vacancy_step_process) do
-    instance_double(Publishers::Vacancies::VacancyStepProcess, current_step: "job_location",
+    instance_double(Publishers::Vacancies::VacancyStepProcess, current_step: current_step,
                                                                vacancy: vacancy,
                                                                organisation: organisation)
   end
@@ -46,6 +47,24 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   describe "#heading" do
     it "returns edit job title" do
       expect(page).to have_content(I18n.t("publishers.vacancies.steps.#{vacancy_step_process.current_step}"))
+    end
+  end
+
+  describe "#sub_caption" do
+    context "when current step is :job_role" do
+      let(:current_step) { :job_role }
+
+      it "returns 'Select all that apply'" do
+        expect(page).to have_content("Select all that apply")
+      end
+    end
+
+    context "when current step is not :job_role" do
+      let(:current_step) { :job_location }
+
+      it "returns nil" do
+        expect(page).not_to have_content("Select all that apply")
+      end
     end
   end
 end
