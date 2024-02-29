@@ -118,7 +118,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       it "should return the jobseeker profiles with the qualified_teacher_status specified in the filters" do
         expect(search.jobseeker_profiles).to eq([qts_jobseeker_profile])
       end
-      
+
       context "when hiring staff selects 'Does not have QTS'" do
         let(:filters) { { current_organisation: organisation, qualified_teacher_status: %w[no], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
 
