@@ -21,6 +21,14 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:no_right_to_work_in_uk_preferences) { create(:job_preferences, roles: %w[teacher], key_stages: %w[ks1], working_patterns: %w[part_time], locations: [no_right_to_work_in_uk_containing_school], subjects: ["Geography"]) }
   let(:no_right_to_work_in_uk_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 
+  let!(:cleaning_staff_jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "no", job_preferences: cleaning_staff_job_preferences) }
+  let(:cleaning_staff_job_preferences) { create(:job_preferences, roles: %w[catering_cleaning_and_site_management other_support], working_patterns: %w[full_time], locations: [cleaning_staff_location_preference_containing_school]) }
+  let(:cleaning_staff_location_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
+
+  let!(:teaching_assistant_jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "no", job_preferences: teaching_assistant_job_preferences) }
+  let(:teaching_assistant_job_preferences) { create(:job_preferences, roles: %w[teaching_assistant higher_level_teaching_assistant], working_patterns: %w[full_time], locations: [teaching_assistant_preference_containing_school]) }
+  let(:teaching_assistant_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
+
   describe "Visiting the publisher's jobseeker profiles start page" do
     before { login_publisher(publisher:, organisation:) }
 
@@ -69,6 +77,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to_not have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to_not have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
+        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
+        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
@@ -81,6 +91,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
+        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
+        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
@@ -92,9 +104,59 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
         expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
+      end
+    end
+
+    context "when role filters are selected" do
+      before do
+        visit publishers_jobseeker_profiles_path
+      end
+
+      it "will allow hiring staff to filter by jobseekers' preferred roles" do
+        within ".filters-component" do
+          find('span[title="Teaching support"]').click
+          check "HLTA (higher level teaching assistant)"
+          find('span[title="Non-teaching support"]').click
+          check "Catering, cleaning and site management"
+          click_on I18n.t("buttons.apply_filters")
+        end
+
+        expect(page).not_to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
+        expect(page).not_to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
+        expect(page).not_to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
+        expect(page).to have_link("Catering, cleaning and site management")
+        expect(page).to have_link("HLTA (higher level teaching assistant)")
+
+        click_link "HLTA (higher level teaching assistant)"
+
+        within ".filters-component" do
+          find('span[title="Teaching"]').click
+          check "Teacher"
+          click_on I18n.t("buttons.apply_filters")
+        end
+
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
+        expect(page).not_to have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
+        expect(page).to have_link("Catering, cleaning and site management")
+        expect(page).to have_link("Teacher")
+
+        click_link "Clear filters"
+
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
+        expect(page).to have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
       end
     end
   end
