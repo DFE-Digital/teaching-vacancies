@@ -152,11 +152,11 @@ RSpec.describe VacancySource::Source::UnitedLearning do
           allow(item_stub).to receive(:[]).with("Working_patterns").and_return(working_patterns)
         end
 
-        context "when the working patterns contain both part and full time" do
-          let(:working_patterns) { "part_time,full_time" }
+        context "when the working patterns contain multiple valid values" do
+          let(:working_patterns) { "part_time,full_time,job_share,flexible" }
 
-          it "records both working patterns in the vacancy" do
-            expect(vacancy.working_patterns).to contain_exactly("part_time", "full_time")
+          it "records them all in the vacancy" do
+            expect(vacancy.working_patterns).to contain_exactly("part_time", "full_time", "job_share", "flexible")
           end
         end
 
@@ -165,38 +165,6 @@ RSpec.describe VacancySource::Source::UnitedLearning do
 
           it "records both working patterns in the vacancy" do
             expect(vacancy.working_patterns).to contain_exactly("part_time", "full_time")
-          end
-        end
-
-        context "when the working patterns contain a legacy part time working pattern" do
-          let(:working_patterns) { "flexible" }
-
-          it "maps the working patterns to '[part_time]' in the vacancy" do
-            expect(vacancy.working_patterns).to eq(["part_time"])
-          end
-        end
-
-        context "when the working patterns contain multiple legacy part time working pattern" do
-          let(:working_patterns) { "flexible,term_time,job_share" }
-
-          it "maps the working patterns to a single '[part_time]' in the vacancy" do
-            expect(vacancy.working_patterns).to eq(["part_time"])
-          end
-        end
-
-        context "when the working patterns combine legacy and non legancy part_time working patterns" do
-          let(:working_patterns) { "part_time,flexible" }
-
-          it "maps the working patterns to a single '[part_time]' in the vacancy" do
-            expect(vacancy.working_patterns).to eq(["part_time"])
-          end
-        end
-
-        context "when the working patterns combine legacy and non legancy non part_time working patterns" do
-          let(:working_patterns) { "job_share, full_time" }
-
-          it "maps the working patterns to '[part_time, full_time]' in the vacancy" do
-            expect(vacancy.working_patterns).to eq(%w[part_time full_time])
           end
         end
       end
