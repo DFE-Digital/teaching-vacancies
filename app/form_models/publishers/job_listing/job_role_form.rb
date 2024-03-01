@@ -8,7 +8,7 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
 
   # The form is used for a "Choose one role" radio button selection.
   # The model/db contains the role in an array, given that some legacy vacancies with "senior_leader" and "middle_leader"
-  # got splitted into multiple job_roles for a single vacancy.
+  # got split into multiple job_roles for a single vacancy.
   # The following methods ensure that we can:
   # A) Display the existing vacancy role selection as a radio button (by defaulting to the first role in the array).
   # B) Save the selection as an array (by mapping the value into an array).

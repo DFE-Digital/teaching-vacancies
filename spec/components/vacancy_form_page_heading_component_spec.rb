@@ -16,7 +16,7 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
                                                                organisation: organisation)
   end
 
-  subject { described_class.new(vacancy, vacancy_step_process, back_path: back_path) }
+  subject { described_class.new(vacancy, vacancy_step_process, back_path: back_path, fieldset: false) }
 
   before do
     allow(subject).to receive(:current_organisation).and_return(organisation)
