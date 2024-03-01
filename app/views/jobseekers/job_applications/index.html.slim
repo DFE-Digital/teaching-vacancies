@@ -3,7 +3,7 @@
 - if current_jobseeker.job_applications.any?
   - content_for :skip_links do
     = govuk_skip_link(href: "#applications-results", text: t(".skip_link"))
-
+= render "jobseekers/visa_sponsorship_banner"
 h1.govuk-heading-l = t(".page_title_with_count", count: current_jobseeker.job_applications.count)
 
 .govuk-grid-row

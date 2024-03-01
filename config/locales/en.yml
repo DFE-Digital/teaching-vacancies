@@ -451,6 +451,11 @@ en:
       - specify the types of teaching jobs you're looking for
       - apply for roles more quickly by pre-filling your information
     link_to_profile: Create a profile to simplify your job search.
+  
+  visa_sponsorship_banner:
+    heading: You can now specify if you need visa sponsorship on your profile
+    body: You can %{link} on your profile.
+    link_text: update your answer about needing a visa sponsorship
 
   terms_and_conditions:
     intro_html: >-
