@@ -1,6 +1,5 @@
 class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::VacancyForm
   validates :working_patterns, presence: true, inclusion: { in: Vacancy.working_patterns.keys }
-  validates :working_patterns_details, presence: true
   validate :working_patterns_details_does_not_exceed_maximum_words
 
   def self.fields

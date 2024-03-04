@@ -16,8 +16,6 @@ RSpec.describe Publishers::JobListing::WorkingPatternsForm, type: :model do
   describe "#working_patterns_details" do
     let(:working_patterns_details) { Faker::Lorem.sentence(word_count: 50) }
 
-    it { is_expected.to validate_presence_of(:working_patterns_details) }
-
     context "when working_patterns_details exceeds the maximud allowed length" do
       let(:working_patterns_details) { Faker::Lorem.sentence(word_count: 51) }
 
