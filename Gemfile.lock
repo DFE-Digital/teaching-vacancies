@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 6c992b64df6909a4e5e82dc27e2237c8db915865
-  tag: v1.11.7
+  revision: 7f0bcd0a3e19910e6c1ff34c80fd61877f3a6389
+  tag: v1.12.0
   specs:
-    dfe-analytics (1.11.7)
+    dfe-analytics (1.12.0)
       google-cloud-bigquery (~> 1.38)
       request_store_rails (~> 2)
 
@@ -206,8 +206,8 @@ GEM
     geocoder (1.8.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-apis-bigquery_v2 (0.64.0)
-      google-apis-core (>= 0.12.0, < 2.a)
+    google-apis-bigquery_v2 (0.65.0)
+      google-apis-core (>= 0.14.0, < 2.a)
     google-apis-core (0.14.0)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 1.9)
@@ -288,7 +288,7 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    jwt (2.8.0)
+    jwt (2.8.1)
       base64
     kramdown (2.4.0)
       rexml
