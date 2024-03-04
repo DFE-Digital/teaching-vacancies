@@ -9,7 +9,7 @@ RSpec.describe "Landing page configuration" do
 
   specify "each configured landing page has a corresponding complete set of translations" do
     keys = %w[heading name meta_description title]
-    %w[full-time-school-jobs part-time-school-jobs].each do |lp|
+    Rails.application.config.landing_pages.each_key do |lp|
       keys.each do |key|
         i18n_key = "landing_pages.#{lp}.#{key}"
         expect(I18n.t(i18n_key, default: nil)).not_to be_nil, "Expected a translation for #{i18n_key} but found none"

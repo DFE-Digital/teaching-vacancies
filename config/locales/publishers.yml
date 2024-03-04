@@ -129,8 +129,11 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
         schools: Locations
         working_pattern_options:
-          full_time: "Full time"
-          part_time: "Part time"
+          flexible: Flexible
+          full_time: Full time
+          job_share: Job share
+          part_time: Part time
+          term_time: Term time
         right_to_work_in_uk_options:
           "true": "Does have the right to work in the UK"
           "false": "Does not have the right to work in the UK"

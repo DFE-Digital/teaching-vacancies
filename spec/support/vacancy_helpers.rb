@@ -46,8 +46,7 @@ module VacancyHelpers
       check Vacancy.human_attribute_name(working_pattern.to_s), name: "publishers_job_listing_working_patterns_form[working_patterns][]"
     end
 
-    fill_in "publishers_job_listing_working_patterns_form[full_time_details]", with: vacancy.full_time_details if vacancy.working_patterns.include?("full_time")
-    fill_in "publishers_job_listing_working_patterns_form[part_time_details]", with: vacancy.part_time_details if vacancy.working_patterns.include?("part_time")
+    fill_in "publishers_job_listing_working_patterns_form[working_patterns_details]", with: vacancy.working_patterns_details
   end
 
   def fill_in_pay_package_form_fields(vacancy)
@@ -177,11 +176,9 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.contract_type_with_duration)
 
     vacancy.working_patterns.each do |working_pattern|
-      expect(page).to have_content(working_pattern.humanize)
+      expect(page).to have_content(/#{working_pattern.humanize}/i)
     end
-
-    expect(page).to have_content(vacancy.full_time_details) if vacancy.working_patterns.include?("full_time")
-    expect(page).to have_content(vacancy.part_time_details) if vacancy.working_patterns.include?("part_time")
+    expect(page).to have_content(vacancy.working_patterns_details)
 
     expect(page).to have_content(vacancy.salary) if vacancy.salary_types.include?("full_time")
     expect(page).to have_content(vacancy.actual_salary) if vacancy.salary_types.include?("part_time")

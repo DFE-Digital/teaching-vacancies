@@ -152,7 +152,6 @@ RSpec.describe VacancyPresenter do
     end
   end
 
-  # TODO: Working Patterns: Remove this test once all vacancies with legacy working patterns & working_pattern_details have expired
   describe "#readable_working_patterns" do
     let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
 
@@ -163,14 +162,19 @@ RSpec.describe VacancyPresenter do
 
   describe "#readable_working_patterns_with_details" do
     let(:working_patterns) { %w[full_time part_time] }
-    let(:full_time_details) { "Some details" }
-    let(:part_time_details) { "Some other details" }
-    let(:vacancy) do
-      build_stubbed(:vacancy, working_patterns: working_patterns, full_time_details: full_time_details, part_time_details: part_time_details)
+    let(:working_patterns_details) { "Some details" }
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns:, working_patterns_details:) }
+
+    it "returns the working with details" do
+      expect(subject.readable_working_patterns_with_details).to eq("Full time, part time: Some details")
     end
 
-    it "returns the working with details for each working pattern" do
-      expect(subject.readable_working_patterns_with_details).to eq("Full time - Some details\nPart time - Some other details")
+    context "when there is no details" do
+      let(:working_patterns_details) { "" }
+
+      it "returns the working patterns" do
+        expect(subject.readable_working_patterns_with_details).to eq("Full time, part time")
+      end
     end
   end
 
