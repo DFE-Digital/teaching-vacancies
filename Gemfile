@@ -91,7 +91,7 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "database_consistency", require: false
   gem "dotenv-rails"
-  gem "launchy", "~> 2.5"
+  gem "launchy", "~> 3.0"
   gem "parallel_tests"
   gem "pry"
   gem "pry-byebug"
