@@ -417,7 +417,7 @@ en:
         declarations:
           close_relationships: Do you have any family or close relationship with people within %{organisation}
           heading: Declarations
-          right_to_work_in_uk: Do you currently have the right to work in the UK?2
+          right_to_work_in_uk: Do you currently have the right to work in the UK?
         employment_history:
           current_role: Is this your current role?
           ended_on: End date
