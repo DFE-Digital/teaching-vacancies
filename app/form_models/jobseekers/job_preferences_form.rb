@@ -5,7 +5,9 @@ module Jobseekers
     include Multistep::Form
 
     ROLES = %i[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher deputy_headteacher
-               headteacher teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
+               headteacher teaching_assistant higher_level_teaching_assistant education_support other_teaching_support
+               sendco administration_hr_data_and_finance catering_cleaning_and_site_management it_support
+               pastoral_health_and_welfare other_leadership other_support].freeze
     PHASES = %i[nursery primary middle secondary through].freeze
     WORKING_PATTERNS = %i[full_time part_time].freeze
 
