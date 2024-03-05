@@ -89,11 +89,3 @@ module "paas" {
   web_external_hostnames_aks        = local.web_external_hostnames_aks
   azure_maintenance_window          = var.azure_maintenance_window
 }
-
-module "statuscake" {
-  source = "./modules/statuscake"
-
-  environment       = var.environment
-  service_name      = local.service_name
-  statuscake_alerts = var.statuscake_alerts
-}

@@ -157,6 +157,20 @@ variable "aks_route53_cname_record" {
 
 variable "azure_maintenance_window" { default = null }
 
+variable "external_url" {
+  default     = null
+  description = "Healthcheck URL for StatusCake monitoring"
+}
+
+variable "statuscake_contact_groups" {
+  default     = []
+  description = "ID of the contact group in statuscake web UI"
+}
+
+variable "external_hostname" {
+  type    = string
+  default = null
+}
 
 locals {
   app_env_values             = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
@@ -165,4 +179,5 @@ locals {
   web_external_hostnames_aks = concat([for zone in var.route53_zones : "${var.aks_route53_cname_record}.${zone}"], var.aks_route53_a_records)
   service_name               = "teaching-vacancies"
   service_abbreviation       = "tv"
+  external_url               = var.external_hostname != null ? "https://#{var.external_hostname}" : null
 }
