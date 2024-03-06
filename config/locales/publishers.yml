@@ -132,8 +132,8 @@ en:
           full_time: "Full time"
           part_time: "Part time"
         right_to_work_in_uk_options:
-          "true": "Does have the right to work in the UK"
-          "false": "Does not have the right to work in the UK"
+          "true": "Does not need visa sponsorship"
+          "false": "Needs visa sponsorship"
     login_keys:
       new:
         notice: >-
