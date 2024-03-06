@@ -10,9 +10,8 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
 
     if @feedback_form.invalid?
       render :new
-    elsif recaptcha_is_invalid?
-      handle_invalid_recaptcha(form: @feedback_form, score: recaptcha_reply["score"])
     else
+      log_invalid_recaptcha(form: @feedback_form, score: recaptcha_reply["score"]) if recaptcha_is_invalid?
       update_feedback
       redirect_to root_path, success: t(".success")
     end

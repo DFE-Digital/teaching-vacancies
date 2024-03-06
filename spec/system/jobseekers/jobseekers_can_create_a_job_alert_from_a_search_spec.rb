@@ -14,11 +14,11 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
         allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
       end
 
-      scenario "redirects to invalid_recaptcha path" do
+      it "registers the recaptcha failure while still creating the job alert" do
         visit new_subscription_path(search_criteria: { keyword: "test", location: "London" })
         fill_in_subscription_fields
-        click_on I18n.t("buttons.subscribe")
-        expect(page).to have_current_path(invalid_recaptcha_path)
+        expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
+        expect { click_on I18n.t("buttons.subscribe") }.to change { Subscription.count }.by(1)
       end
     end
   end

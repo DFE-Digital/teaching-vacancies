@@ -73,40 +73,14 @@ RSpec.describe SubscriptionsController, recaptcha: true do
           allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
         end
 
-        context "and subscription form is valid" do
-          it "redirects to invalid_recaptcha_path" do
-            subject
-            expect(response).to redirect_to(invalid_recaptcha_path)
-          end
-
-          it "does not save the Subscription record" do
-            expect(subscription).not_to receive(:save)
-            subject
-          end
-
-          it "sends the recaptcha error to Sentry" do
-            expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
-            subject
-          end
+        it "sets the recaptcha score on the Subscription record" do
+          expect(subscription).to receive(:update).with(recaptcha_score: recaptcha_score)
+          subject
         end
 
-        context "and subscription is not valid" do
-          let(:subscription_form_valid?) { false }
-
-          it "does not save the Subscription record" do
-            expect(subscription).not_to receive(:save)
-            subject
-          end
-
-          it "renders :new" do
-            subject
-            expect(response).to render_template(:new)
-          end
-
-          it "doesn't send a recaptcha error to Sentry" do
-            expect(Sentry).not_to receive(:capture_message).with("Invalid recaptcha", level: :warning)
-            subject
-          end
+        it "sends the recaptcha error to Sentry" do
+          expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
+          subject
         end
       end
     end
