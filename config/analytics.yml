@@ -142,6 +142,7 @@ shared:
     - withdrawn_by_closing_account
     - safeguarding_issue
     - safeguarding_issue_details
+    - employment_gaps_present
   job_preferences_locations:
     - id
     - job_preferences_id

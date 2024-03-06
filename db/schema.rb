@@ -313,7 +313,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_162434) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
-    t.string "account_type"
     t.index ["confirmation_token"], name: "index_jobseekers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_jobseekers_on_reset_password_token", unique: true
