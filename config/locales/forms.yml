@@ -282,6 +282,7 @@ en:
             through: For example ‘Teacher of KS1’ or ‘Teacher of Maths’
           teaching_assistant: For example ‘Teaching assistant’
       publishers_job_listing_working_patterns_form:
+        working_patterns: Select all that apply.
         working_patterns_details: For example, 32.5 hours a week.
         working_patterns_options:
           full_time_education_support: Usually at least 36.5 hours a week
