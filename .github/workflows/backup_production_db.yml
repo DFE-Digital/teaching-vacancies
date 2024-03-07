@@ -51,7 +51,7 @@ jobs:
       with:
         version: "v1.26.1"
 
-    - uses: Azure/login@v1
+    - uses: Azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
