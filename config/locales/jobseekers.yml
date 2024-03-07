@@ -653,15 +653,15 @@ en:
           last_name: Last name
           phone_number: Phone number
           phone_number_provided: Do you want to provide a phone number?
-          right_to_work_in_uk: Do you currently have the right to work in the UK?
+          right_to_work_in_uk: Do you need a Skilled worker visa sponsorship?
         work:
           caption: Personal details
           hint:
-            text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work as a teacher in England. Learn more about %{link}
-            link: teaching in England as a non-UK citizen (opens in new tab).
+            text: You can %{link}
+            link: find out what visa you need if you're a non-UK citizen (link opens in new tab).
             no_visa:
-              text: There is %{link} if you qualified outside the UK.
-              link: guidance for working as a teacher in England (link opens in new tab)
+              text: You can %{link}
+              link: find out what visa you need if you're a non-UK citizen (link opens in new tab).
           warning:
             text: This role cannot offer visa sponsorship.
             paragraph_1: It is unlikely you will be considered for this job as it is not offering skilled worker visa sponsorship to non-UK citizens.
@@ -677,9 +677,9 @@ en:
             text: You may be able to apply for QTS – %{link}.
             link: check your eligibility (link opens in new tab)
           options:
-            false: "No"
-            true: "Yes"
-          page_title: Do you currently have the right to work in the UK?
+            false: "Yes, I will need to apply for a visa giving me the right to work in the UK"
+            true: "No, I already have the right to work in the UK"
+          page_title: Do you need Skilled work visa sponsorship?
           schools_cannot_give_advice:
             text: "Schools cannot give you advice about becoming a teacher in England. However, you can visit %{link} to learn more about:"
             link: Teach in England if you trained overseas (link opens in new tab)
