@@ -90,7 +90,7 @@
 
   - employment_gaps_present = job_application.unexplained_employment_gaps.present? || employments.any? { |emp| emp.break? }
 
-  = f.govuk_radio_buttons_fieldset(:employment_history_section_completed, legend: { size: 'm', text: 'Which department do you work in?' }) do
+  = f.govuk_radio_buttons_fieldset(:employment_history_section_completed, legend: { size: 'm', text: 'Have you completed this section?' }) do
     = f.govuk_radio_button :employment_history_section_completed, 'true', label: { text: "Yes, I've completed this section" }
     = f.govuk_radio_button :employment_history_section_completed, 'false', label: { text: "No, I'll come back to it later" }
   = f.hidden_field :employment_gaps_present, value: employment_gaps_present
