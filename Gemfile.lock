@@ -127,9 +127,15 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.20)
     benchmark (0.3.0)
+    better_errors (2.10.1)
+      erubi (>= 1.0.0)
+      rack (>= 0.9.0)
+      rouge (>= 1.0.0)
     bigdecimal (3.1.6)
     bindata (2.5.0)
     bindex (0.8.1)
+    binding_of_caller (1.0.0)
+      debug_inspector (>= 0.0.1)
     brakeman (6.1.2)
       racc
     breasal (0.0.1)
@@ -159,6 +165,7 @@ GEM
     database_consistency (1.7.23)
       activerecord (>= 3.2)
     date (3.3.4)
+    debug_inspector (1.2.0)
     declarative (0.0.20)
     devise (4.9.3)
       bcrypt (~> 3.0)
@@ -518,6 +525,7 @@ GEM
       rgeo (>= 1.0.0)
     rgeo-geojson (2.1.1)
       rgeo (>= 1.0.0)
+    rouge (4.2.0)
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.0)
@@ -716,6 +724,8 @@ DEPENDENCIES
   array_enum
   aws-sdk-s3
   aws-sdk-ssm
+  better_errors
+  binding_of_caller
   brakeman
   breasal
   byebug

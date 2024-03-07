@@ -78,6 +78,8 @@ gem "zendesk_api"
 group :development do
   gem "amazing_print" # optional dependency of `rails_semantic_logger`
   gem "aws-sdk-ssm"
+  gem "better_errors"
+  gem "binding_of_caller"
   gem "listen"
   gem "solargraph"
   gem "spring"
