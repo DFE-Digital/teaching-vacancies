@@ -1,0 +1,7 @@
+- content_for :page_title_prefix, t("publishers.temp_login.choose_organisation.denial.title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_notification_banner title_text: t("banners.important") do |banner|
+      - banner.with_heading text: t("publishers.temp_login.choose_organisation.denial.title")
+      = t("publishers.temp_login.choose_organisation.denial.#{failure}_html", try_again: govuk_link_to("try again", new_publisher_session_path))
