@@ -438,6 +438,10 @@ en:
               invalid: Enter a date in the correct format
               on_or_after: The closing date must be in the future
               on_or_before: The closing date must be less than two years in the future
+        publishers/login_keys/choose_organisation_form:
+          attributes:
+            organisation:
+              blank: Select the organisation you wish to sign with
         publishers/organisation/email_form:
           attributes:
             <<: *email_errors

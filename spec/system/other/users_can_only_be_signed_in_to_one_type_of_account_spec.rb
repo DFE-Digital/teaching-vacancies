@@ -56,6 +56,8 @@ RSpec.describe "Users can only be signed in to one type of account" do
         expect(page).to have_content(I18n.t("jobseekers.accounts.show.page_title"))
 
         visit publishers_login_key_path(login_key)
+        choose school.name
+        click_button I18n.t("buttons.sign_in")
         expect(page).to have_current_path(publisher_root_path)
 
         visit jobseekers_account_path

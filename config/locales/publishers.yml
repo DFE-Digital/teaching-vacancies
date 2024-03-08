@@ -360,7 +360,7 @@ en:
         heading: Choose your organisation
         page_title: Choose your organisation
         please_select: >-
-          You are associated with more than one organisation. Please select the one you wish to sign in with.
+          Please select the organisation you wish to sign in with.
       email:
         body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
         heading: Sign in to Teaching Vacancies
