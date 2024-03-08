@@ -9,7 +9,8 @@
                                        Vacancy.working_patterns.keys,
                                        :to_s,
                                        :to_s,
-                                       legend: -> { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: "govuk-heading-l") })
+                                       legend: -> { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: "govuk-heading-l") },
+                                       hint: -> { t("helpers.hint.publishers_job_listing_working_patterns_form.working_patterns") })
       = f.govuk_text_area(:working_patterns_details,
                           label: -> { tag.label(t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
                           hint: -> { t("helpers.hint.publishers_job_listing_working_patterns_form.working_patterns_details") },
