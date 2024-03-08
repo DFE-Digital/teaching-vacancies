@@ -71,9 +71,8 @@ class ImportFromVacancySourceJob < ApplicationJob
   end
 
   def report_validation_errors
-    return if @errors.none?
+    failed_percentage = @errors.any? ? ((@errors.count.to_f / @vacancies_count) * 100).round(1) : 0
 
-    failed_percentage = ((@errors.count.to_f / @vacancies_count) * 100).round(1)
     Sentry.with_scope do |scope|
       scope.set_tags(source: @source_name)
       scope.set_context("Import failure rate", { vacancies_in_feed: @vacancies_count,
