@@ -26,7 +26,7 @@
 
   - s.with_row do |row|
     - row.with_key text: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk")
-    - row.with_value text: job_application.right_to_work_in_uk == "yes" ? t("jobseekers.profiles.personal_details.work.options.true") : t("jobseekers.profiles.personal_details.work.options.false")
+    - row.with_value text: visa_sponsorship_needed_answer(job_application)
 
   - if job_application.teacher_reference_number? || jobseeker?
     - s.with_row do |row|
