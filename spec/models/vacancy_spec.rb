@@ -600,6 +600,7 @@ RSpec.describe Vacancy do
     end
   end
 
+  # This test is obsolete and should be removed as soon as we remove individual job roles
   describe "legacy job_role set from new job_roles" do
     {
       "teacher" => "teacher",
@@ -609,9 +610,9 @@ RSpec.describe Vacancy do
       "head_of_year_or_phase" => "middle_leader",
       "head_of_department_or_curriculum" => "middle_leader",
       "teaching_assistant" => "teaching_assistant",
-      "higher_level_teaching_assistant" => "higher_level_teaching_assistant",
-      "education_support" => "education_support",
-      "sendco" => "sendco",
+      "higher_level_teaching_assistant" => "teaching_assistant",
+      "education_support" => "teaching_assistant",
+      "sendco" => "teacher",
     }.each do |new_role, legacy_role|
       it "creating a vacancy with job_roles '[#{new_role}]' sets its legacy job_role to '#{legacy_role}'" do
         expect(create(:vacancy, job_roles: [new_role]).job_role).to eq(legacy_role)

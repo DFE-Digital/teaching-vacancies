@@ -278,6 +278,12 @@ class Vacancy < ApplicationRecord
                       "senior_leader"
                     elsif job_roles.intersect? MIDDLE_LEADER_JOB_ROLES
                       "middle_leader"
+                    elsif job_roles.intersect? TEACHING_JOB_ROLES
+                      "teacher"
+                    elsif job_roles.intersect? TEACHING_SUPPORT_JOB_ROLES
+                      "teaching_assistant"
+                    elsif job_roles.intersect? NON_TEACHING_SUPPORT_JOB_ROLES
+                      "other_support"
                     else
                       job_roles.first
                     end
