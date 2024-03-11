@@ -120,14 +120,6 @@ module JobApplicationsHelper
     job_application.in_progress_steps.include?(step.to_s)
   end
 
-  def visa_sponsorship_needed_answer
-    if job_application.right_to_work_in_uk == "yes"
-      t("jobseekers.profiles.personal_details.work.options.true")
-    elsif job_application.right_to_work_in_uk == "no"
-      t("jobseekers.profiles.personal_details.work.options.false")
-    end
-  end
-
   def radio_button_legend_hint
     if vacancy.visa_sponsorship_available?
       {
