@@ -121,9 +121,9 @@ module JobApplicationsHelper
   end
 
   def visa_sponsorship_available_answer
-    if job_application.right_to_work_in_uk
+    if job_application.right_to_work_in_uk == "yes"
       t("jobseekers.profiles.personal_details.work.options.true")
-    else
+    elsif job_application.right_to_work_in_uk == "no"
       t("jobseekers.profiles.personal_details.work.options.false")
     end
   end
