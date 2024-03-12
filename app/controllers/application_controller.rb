@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include DfE::Analytics::Requests
 
+  http_basic_authenticate_with name: ENV.fetch("HTTP_BASIC_USER", ""),
+                               password: ENV.fetch("HTTP_BASIC_PASSWORD", ""),
+                               if: -> { ENV["HTTP_BASIC_PASSWORD"].present? && request.path != "/check" }
+
   add_flash_types :success, :warning
 
   protect_from_forgery with: :exception, except: :not_found
