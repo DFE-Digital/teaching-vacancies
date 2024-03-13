@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    =  vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+    =  vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false, sub_caption: { text: "Select all that apply", class: "govuk-!-margin-top-4 govuk-!-margin-bottom-4" })
 
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary

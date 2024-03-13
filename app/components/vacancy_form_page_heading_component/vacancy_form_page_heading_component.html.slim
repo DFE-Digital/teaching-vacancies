@@ -11,5 +11,6 @@
     span.govuk-caption-l
       = caption
     = heading
-    span.govuk-caption-m class=sub_caption_class
-      = sub_caption
+    - if sub_caption.present?
+      span.govuk-caption-m class=sub_caption[:class]
+        = sub_caption[:text]

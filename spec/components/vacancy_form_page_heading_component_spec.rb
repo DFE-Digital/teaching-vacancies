@@ -49,22 +49,4 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
       expect(page).to have_content(I18n.t("publishers.vacancies.steps.#{vacancy_step_process.current_step}"))
     end
   end
-
-  describe "#sub_caption" do
-    context "when current step is :job_role" do
-      let(:current_step) { :job_role }
-
-      it "returns 'Select all that apply'" do
-        expect(page).to have_content("Select all that apply")
-      end
-    end
-
-    context "when current step is not :job_role" do
-      let(:current_step) { :job_location }
-
-      it "returns nil" do
-        expect(page).not_to have_content("Select all that apply")
-      end
-    end
-  end
 end

@@ -1,11 +1,13 @@
 class VacancyFormPageHeadingComponent < ViewComponent::Base
   delegate :current_organisation, to: :helpers
+  attr_reader :sub_caption
 
-  def initialize(vacancy, step_process, back_path:, fieldset: true)
+  def initialize(vacancy, step_process, back_path:, fieldset: true, sub_caption: {})
     @vacancy = vacancy
     @step_process = step_process
     @back_path = back_path
     @fieldset = fieldset
+    @sub_caption = sub_caption
   end
 
   def heading_class
@@ -20,14 +22,6 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
     return t("jobs.edit_job_caption", step: step_process.current_step_group_number, total: step_process.total_step_groups - 1) if vacancy.published?
 
     t("jobs.create_job_caption", step: step_process.current_step_group_number, total: step_process.total_step_groups - 1)
-  end
-
-  def sub_caption
-    step_process.current_step == :job_role ? "Select all that apply" : nil
-  end
-
-  def sub_caption_class
-    step_process.current_step == :job_role ? "govuk-!-margin-top-4 govuk-!-margin-bottom-4" : nil
   end
 
   private
