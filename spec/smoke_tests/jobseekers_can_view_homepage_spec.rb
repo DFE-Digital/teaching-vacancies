@@ -14,6 +14,8 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
 
   context "Jobseeker visits vacancy page" do
     let(:smoke_test_auth) do
+      # User/Pass defined on Github Env secrets (https://github.com/DFE-Digital/teaching-vacancies/settings/environments/)
+      # They need to match the ones defined in AWS Parameter Store.
       http_basic_user = ENV.fetch("HTTP_BASIC_USER", "")
       http_basic_password = ENV.fetch("HTTP_BASIC_PASSWORD", "")
       return unless http_basic_password.present?
@@ -33,6 +35,7 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
 
     it "ensures users can search and view a job vacancy page" do
       page.visit "#{base_url}/404" # you need to be on the domain to set the cookie
+      expect(page).to have_content("Page not found.")
 
       page.driver.browser.manage.add_cookie(name: "smoke_test", value: "1", domain: smoke_test_domain)
       page.driver.browser.manage.add_cookie(name: "consented-to-cookies", value: "no", domain: smoke_test_domain)
