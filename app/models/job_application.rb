@@ -21,6 +21,7 @@ class JobApplication < ApplicationRecord
     qualifications: 0,
     employment_history: 1,
     personal_details: 2,
+    professional_status: 3
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table

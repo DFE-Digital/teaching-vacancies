@@ -202,9 +202,9 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     application.assign_attributes(
       employments: profile.employments.map(&:duplicate),
-      first_name: profile.personal_details.first_name,
-      last_name: profile.personal_details.last_name,
-      phone_number: profile.personal_details.phone_number,
+      first_name: profile.personal_details.try(:first_name),
+      last_name: profile.personal_details.try(:last_name),
+      phone_number: profile.personal_details.try(:phone_number),
       qualifications: profile.qualifications.map(&:duplicate),
       qualified_teacher_status_year: profile.qualified_teacher_status_year || "",
       qualified_teacher_status: profile.qualified_teacher_status || "",
@@ -215,7 +215,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def profile_right_to_work
-    return "" if profile.personal_details.right_to_work_in_uk.nil?
+    return "" if profile.personal_details.try(:right_to_work_in_uk).nil?
 
     profile.personal_details.right_to_work_in_uk? ? "yes" : "no"
   end
@@ -226,12 +226,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     end
 
     if application.employments.any?
-      application.completed_steps += [:employment_history]
+      application.in_progress_steps += [:employment_history]
     end
 
-    return unless application.qualifications.any?
+    if application.qualified_teacher_status.present?
+      application.in_progress_steps += [:professional_status]
+    end
 
-    application.completed_steps += [:qualifications]
+    if application.qualifications.present?
+      application.in_progress_steps += [:qualifications]
+    end
   end
 
   def profile
