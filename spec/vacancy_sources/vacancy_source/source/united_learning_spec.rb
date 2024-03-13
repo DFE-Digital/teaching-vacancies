@@ -75,12 +75,12 @@ RSpec.describe VacancySource::Source::UnitedLearning do
 
       describe "job roles mapping" do
         before do
-          allow(item_stub).to receive(:[]).with("Job_roles").and_return(source_role)
+          allow(item_stub).to receive(:[]).with("Job_roles").and_return(source_roles.join(","))
         end
 
         ["null", "", " "].each do |role|
           context "when the source role is '#{role}'" do
-            let(:source_role) { role }
+            let(:source_roles) { [role] }
 
             it "the vacancy roles are empty" do
               expect(vacancy.job_roles).to eq([])
@@ -90,7 +90,7 @@ RSpec.describe VacancySource::Source::UnitedLearning do
 
         %w[senior_leader leadership].each do |role|
           context "when the source role is '#{role}'" do
-            let(:source_role) { role }
+            let(:source_roles) { [role] }
 
             it "maps the source role to '[headteacher, assistant_headteacher, deputy_headteacher]' in the vacancy" do
               expect(vacancy.job_roles).to contain_exactly("headteacher", "assistant_headteacher", "deputy_headteacher")
@@ -99,10 +99,18 @@ RSpec.describe VacancySource::Source::UnitedLearning do
         end
 
         context "when the source role is 'middle_leader'" do
-          let(:source_role) { "middle_leader" }
+          let(:source_roles) { ["middle_leader"] }
 
           it "maps the source role to '[head_of_year_or_phase, head_of_department_or_curriculum]' in the vacancy" do
             expect(vacancy.job_roles).to contain_exactly("head_of_year_or_phase", "head_of_department_or_curriculum")
+          end
+        end
+
+        context "when the source has multiple roles" do
+          let(:source_roles) { %w[teaching_assistant deputy_headteacher] }
+
+          it "maps the source roles to '[teaching_assistant, deputy_headteacher]' in the vacancy" do
+            expect(vacancy.job_roles).to eq(%w[teaching_assistant deputy_headteacher])
           end
         end
       end

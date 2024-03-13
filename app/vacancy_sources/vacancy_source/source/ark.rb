@@ -116,18 +116,21 @@ class VacancySource::Source::Ark
   end
 
   def job_roles_for(item)
-    role = item.fetch_by_attribute("category", "domain", "Role Type")
+    roles = item.fetch_by_attribute("category", "domain", "Role Type")&.strip&.split(",")
+    return [] if roles.blank?
 
-    Array.wrap(role.strip
-      .gsub(/^Teacher$|Cover Support Teacher|TLRs|Lead Practitioner|Trainee Teacher|Peripatetic Music/, "teacher")
-      .gsub(/^Principal$|Head of School|Associate Principal|Executive Principal/, "headteacher")
-      .gsub("Vice Principal", "deputy_headteacher")
-      .gsub("Assistant Principal", "assistant_headteacher")
-      .gsub(/Head of Department|Head of Dept/, "head_of_department_or_curriculum")
-      .gsub(/Head of Year|Head of Phase/, "head_of_year_or_phase")
-      .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
-      .gsub(%r{SEN/Inclusion Support|Pastoral|Technician|Librarian}, "education_support")
-      .gsub("SEN/Inclusion Teacher", "sendco"))
+    roles.flat_map do |role|
+      Array.wrap(role.strip
+        .gsub(/^Teacher$|Cover Support Teacher|TLRs|Lead Practitioner|Trainee Teacher|Peripatetic Music/, "teacher")
+        .gsub(/^Principal$|Head of School|Associate Principal|Executive Principal/, "headteacher")
+        .gsub("Vice Principal", "deputy_headteacher")
+        .gsub("Assistant Principal", "assistant_headteacher")
+        .gsub(/Head of Department|Head of Dept/, "head_of_department_or_curriculum")
+        .gsub(/Head of Year|Head of Phase/, "head_of_year_or_phase")
+        .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
+        .gsub(%r{SEN/Inclusion Support|Pastoral|Technician|Librarian}, "education_support")
+        .gsub("SEN/Inclusion Teacher", "sendco"))
+    end
   end
 
   def ect_status_for(item)
