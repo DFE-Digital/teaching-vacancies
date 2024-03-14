@@ -31,11 +31,11 @@ Each of the Kubernetes clusters is divided into [namespaces](https://learn.micro
 
 Each namespace hosts one/multiple different environments for Teaching Vacancies service.
 
-| Cluster     | Name                                    | Access                                                  |
-|-------------|-----------------------------------------|---------------------------------------------------------|
-| Development | s189-teacher-services-cloud-development | Permanently granted                                     |
-| Test        | s189-teacher-services-cloud-test        | Up to 8 hours. Self approved on Azure PIM               |
-| Production  | s189-teacher-services-cloud-production  | Up to 8 hours. Subject to manager approval on Azure PIM |
+| Cluster     | Name                                    | PIM role group                                | Access                                                  |
+|-------------|-----------------------------------------|-----------------------------------------------|---------------------------------------------------------|
+| Development | s189-teacher-services-cloud-development | s189-teacher-services-cloud-Delivery Team USR | Permanently granted                                     |
+| Test        | s189-teacher-services-cloud-test        | s189 AKS admin test PIM                       | Up to 8 hours. Self approved on Azure PIM               |
+| Production  | s189-teacher-services-cloud-production  | s189 AKS admin production PIM                 | Up to 8 hours. Subject to manager approval on Azure PIM |
 
 Teaching Vacancies application environments are hosted in the following clusters/namespaces:
 
@@ -53,7 +53,7 @@ By default, you will have the `Reader` role in the:
 - `s189-teacher-services-cloud-test` subscription.
 - `s189-teacher-services-cloud-production` subscription.
 
-You will have to request temporal (up to 8 hours per request) access to `s189-Contributor and Key Vault editor` role on either subscription to access/manage their hosted environments running Teaching Vacancies apps:
+You will have to request temporal (up to 8 hours per request) "Member" role on test (`s189 AKS admin test PIM`) and production (`s189 AKS admin production PIM`) to access/manage their hosted environments running Teaching Vacancies apps:
 
 - For `test` subscription the role will me automatically self-granted on request.
 - For `production` subscription the role requires a manager approval,
@@ -63,7 +63,7 @@ Senior developers, Tech Leads, and DevOps have the `Manager` role in all require
 Managers are able to approve other users role requests, but aren´t able to self-approve their own role requests.
 
 ## Logging on Azure Platform and changing role
-1. Request your access for the `s189-Contributor and Key Vault editor` role on the desired subscription through a [Azure Privileged Identity Management (PIM) request](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/#privileged-identity-management-pim-requests) in the [Azure Portal](https://portal.azure.com.mcas.ms/).
+1. Request your access for the `s189 AKS admin PIM` role on the desired subscription through a [Azure Privileged Identity Management (PIM) request](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/#privileged-identity-management-pim-requests) under `Groups` tab in the [Azure Portal](https://portal.azure.com.mcas.ms/).
 2. The request will be self approved for the test subscription, or will need to be approved by a manager for the production subscription.
 
 ## Installing the Azure Client and Kubectl
@@ -74,7 +74,7 @@ Managers are able to approve other users role requests, but aren´t able to self
     ```
 
 ## Login from Azure Console
-- You will need [access](#logging-on-azure-platform-and-changing-role) to the `s189-Contributor and Key Vault editor` role in the desired subscription hosting the environment you want access to.
+- You will need [access](#logging-on-azure-platform-and-changing-role) to the `s189 AKS admin PIM` role in the desired subscription hosting the environment you want access to.
 - Login into the tenant using the Azure Cli. This will launch your browser for the login.
     ```
     az login --tenant 9c7d9dd3-840c-4b3f-818e-552865082e16
