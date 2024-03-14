@@ -22,7 +22,7 @@ RSpec.describe StatusTagHelper do
         let(:steps) { [:personal_details] }
 
         it "returns 'complete' tag" do
-          expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.complete")))
+          expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.complete"), colour: "green"))
         end
       end
 
