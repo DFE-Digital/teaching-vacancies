@@ -31,6 +31,9 @@ runs:
 
     - name: Run deployment smoke test
       shell: bash
+      env:
+        HTTP_BASIC_USER: ${{ inputs.http_basic_user }}
+        HTTP_BASIC_PASSWORD: ${{ inputs.http_basic_password }}
       run:  bundle exec rspec spec/smoke_tests/jobseekers_can_view_homepage_spec.rb --tag smoke_test
 
     - name: print environment
