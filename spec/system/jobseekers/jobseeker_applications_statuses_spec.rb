@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers applications are prefilled with profile data" do
+RSpec.describe "Jobseekers applications statuses" do
   let!(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [school], visa_sponsorship_available: true) }
   let(:school) { create(:school) }
@@ -60,6 +60,54 @@ RSpec.describe "Jobseekers applications are prefilled with profile data" do
         expect(page).to have_css('#professional_status .review-component__section__heading__status', text: 'not started')
         expect(page).to have_css('#qualifications .review-component__section__heading__status', text: 'in progress')
         expect(page).to have_css('#employment_history .review-component__section__heading__status', text: 'in progress')
+      end
+
+      context "when the jobseeker completes a section" do
+        it "shows the section as complete" do
+          login_as(jobseeker, scope: :jobseeker)
+          visit job_path(vacancy)
+          within ".banner-buttons" do
+            click_on I18n.t("jobseekers.job_applications.banner_links.apply")
+          end
+
+          click_button "Start application"
+
+          within('#personal_details') do
+            click_link('Complete section')
+          end
+
+          fill_in_personal_details
+          click_on "Save"
+
+          expect(page).to have_css('#personal_details .review-component__section__heading__status', text: 'complete')
+
+          within('#professional_status') do
+            click_link('Complete section')
+          end
+
+          fill_in_professional_status
+          click_on "Save"
+
+          expect(page).to have_css('#professional_status .review-component__section__heading__status', text: 'complete')
+
+          within('#qualifications') do
+            click_link('Complete section')
+          end
+
+          choose "Yes, I've completed this section"
+          click_on "Save"
+
+          expect(page).to have_css('#qualifications .review-component__section__heading__status', text: 'complete')
+
+          within('#employment_history') do
+            click_link('Complete section')
+          end
+
+          choose "Yes, I've completed this section"
+          click_on "Save"
+
+          expect(page).to have_css('#employment_history .review-component__section__heading__status', text: 'complete')
+        end
       end
     end
   end
