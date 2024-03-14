@@ -233,9 +233,9 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       application.in_progress_steps += [:professional_status]
     end
 
-    if application.qualifications.present?
-      application.in_progress_steps += [:qualifications]
-    end
+    return unless application.qualifications.present?
+
+    application.in_progress_steps += [:qualifications]
   end
 
   def profile
