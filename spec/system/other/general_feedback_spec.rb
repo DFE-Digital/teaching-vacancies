@@ -37,14 +37,16 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
       allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
     end
 
-    scenario "redirects to invalid_recaptcha path" do
+    scenario "logs the invalid recaptcha while still recording the feedback" do
       visit new_feedback_path
       click_on I18n.t("buttons.submit_feedback")
       expect(page).to have_content("There is a problem")
 
       fill_in_general_feedback
-      click_on I18n.t("buttons.submit_feedback")
-      expect(page).to have_current_path(invalid_recaptcha_path)
+
+      expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
+      expect { click_button I18n.t("buttons.submit_feedback") }.to change(Feedback, :count).by(1)
+      expect(page).to have_content(I18n.t("general_feedbacks.create.success"))
     end
   end
 

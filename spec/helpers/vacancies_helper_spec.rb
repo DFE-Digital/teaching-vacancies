@@ -257,25 +257,19 @@ RSpec.describe VacanciesHelper do
   describe "#vacancy_working_patterns" do
     subject { vacancy_working_patterns(vacancy) }
 
-    # TODO: Working Patterns: Remove this context once all vacancies with legacy working patterns & working_pattern_details have expired
-    context "when the vacancy was created before the addition of full_time_details and part_time_details" do
-      before do
-        allow(vacancy).to receive(:full_time_details).and_return(nil)
-        allow(vacancy).to receive(:part_time_details).and_return(nil)
-      end
-
-      let(:vacancy) { build(:vacancy, working_patterns: %w[full_time]) }
+    context "when the vacancy does not contain working patterns details" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time flexible], working_patterns_details: nil) }
 
       it "returns a summary of the working patterns" do
-        expect(subject).to eq("Full time")
+        expect(subject).to eq("<li>Full time, flexible</li>")
       end
     end
 
-    context "when the vacancy was created after the addition of full_time_details and part_time_details" do
-      let(:vacancy) { build(:vacancy, working_patterns: %w[full_time part_time]) }
+    context "when the vacancy contains working patterns details" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: "Between 10 and 36 hours") }
 
       it "returns the working patterns with details for each working pattern" do
-        expect(subject).to eq("<li>Full time - #{vacancy.full_time_details}</li><li>Part time - #{vacancy.part_time_details}</li>")
+        expect(subject).to eq("<li>Full time, part time: Between 10 and 36 hours</li>")
       end
     end
   end

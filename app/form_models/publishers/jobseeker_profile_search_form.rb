@@ -35,7 +35,9 @@ class Publishers::JobseekerProfileSearchForm
   end
 
   def working_pattern_options
-    %w[full_time part_time].map { |i| [i, I18n.t(i, scope: "publishers.jobseeker_profiles.filters.working_pattern_options")] }
+    %w[full_time part_time flexible job_share term_time].map do |working_pattern|
+      [working_pattern, I18n.t(working_pattern, scope: "publishers.jobseeker_profiles.filters.working_pattern_options")]
+    end
   end
 
   def education_phase_options

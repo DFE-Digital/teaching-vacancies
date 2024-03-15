@@ -28,6 +28,12 @@ Rails.application.configure do
   # Allow Web Console from outside devcontainer
   config.web_console.permissions = "172.0.0.0/8" if ENV["DEVCONTAINER"].present?
 
+  # Allow better errors to be displayed when accessing Docker running apps
+  BetterErrors::Middleware.allow_ip! "10.0.0.0/8"
+  BetterErrors::Middleware.allow_ip! "172.24.0.1/12"
+  BetterErrors::Middleware.allow_ip! "172.16.0.0/12"
+  BetterErrors::Middleware.allow_ip! "192.168.0.0/16"
+
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true

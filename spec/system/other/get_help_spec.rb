@@ -64,27 +64,16 @@ RSpec.describe "Requesting support", recaptcha: true, vcr: true, zendesk: true d
       allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
     end
 
-    context "and the form is valid" do
-      scenario "redirects to invalid_recaptcha path" do
-        visit root_path
-        click_on "Get help or report a problem"
-        expect(page).to have_content("Get help")
+    scenario "logs the invalid recaptcha while still recording the support request" do
+      visit root_path
+      click_on "Get help or report a problem"
+      expect(page).to have_content("Get help")
 
-        fill_in_required_fields
-        click_on "Send message"
-        expect(page).to have_current_path(invalid_recaptcha_path)
-      end
-    end
+      fill_in_required_fields
 
-    context "and the form is invalid" do
-      scenario "does not redirect to invalid_recaptcha path" do
-        visit root_path
-
-        click_on "Get help or report a problem"
-        click_on "Send message"
-
-        expect(page).to have_content("There is a problem")
-      end
+      expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
+      click_on "Send message"
+      expect(page).to have_content(I18n.t("support_requests.create.success"))
     end
   end
 

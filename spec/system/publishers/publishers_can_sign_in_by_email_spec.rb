@@ -70,7 +70,9 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           expect(page).to have_content(trust.name)
           expect(page).to have_content(local_authority.name)
 
-          click_on school.name
+          choose school.name
+          click_button I18n.t("buttons.sign_in")
+
           expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
           expect(page).to have_content(school.name)
@@ -105,7 +107,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
       context "organisation is a School" do
         let(:organisations) { [school] }
 
-        it "can sign in and bypass choice of org" do
+        it "can sign in" do
           freeze_time do
             visit root_path
             within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
@@ -118,10 +120,16 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             click_on I18n.t("buttons.submit")
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
-            # Expect that the link in the email goes to the landing page
             visit publishers_login_key_path(login_key)
-            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
+            expect(page).to have_content("Choose your organisation")
+            expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
+            expect(page).to have_content(school.name)
+
+            choose school.name
+            click_button I18n.t("buttons.sign_in")
+
+            expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
             expect(page).not_to have_content("Choose your organisation")
             expect(page).to have_content(school.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
@@ -134,7 +142,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
         before { allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference)) }
 
-        it "can sign in and bypass choice of org" do
+        it "can sign in" do
           freeze_time do
             visit root_path
             within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
@@ -147,8 +155,15 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             click_on I18n.t("buttons.submit")
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
-            # Expect that the link in the email goes to the landing page
             visit publishers_login_key_path(login_key)
+
+            expect(page).to have_content("Choose your organisation")
+            expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
+            expect(page).to have_content(trust.name)
+
+            choose trust.name
+            click_button I18n.t("buttons.sign_in")
+
             expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
             expect(page).not_to have_content("Choose your organisation")
@@ -166,7 +181,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
         end
 
-        it "can sign in and bypass choice of org" do
+        it "can sign in" do
           freeze_time do
             visit root_path
             within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
@@ -179,8 +194,15 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             click_on I18n.t("buttons.submit")
             expect(page).to have_content(I18n.t("publishers.temp_login.check_your_email.sent"))
 
-            # Expect that the link in the email goes to the landing page
             visit publishers_login_key_path(login_key)
+
+            expect(page).to have_content("Choose your organisation")
+            expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
+            expect(page).to have_content(local_authority.name)
+
+            choose local_authority.name
+            click_button I18n.t("buttons.sign_in")
+
             expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
             expect(page).not_to have_content("Choose your organisation")

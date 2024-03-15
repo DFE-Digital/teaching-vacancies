@@ -21,9 +21,8 @@ class SubscriptionsController < ApplicationController
 
     if @form.invalid?
       render :new
-    elsif recaptcha_is_invalid?
-      handle_invalid_recaptcha(form: @form, score: recaptcha_reply["score"])
     else
+      log_invalid_recaptcha(form: @form, score: recaptcha_reply["score"]) if recaptcha_is_invalid?
       notify_new_subscription(subscription)
 
       if jobseeker_signed_in?

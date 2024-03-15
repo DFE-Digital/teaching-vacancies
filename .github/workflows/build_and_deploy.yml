@@ -261,6 +261,8 @@ jobs:
       with:
         aks_environment: ${{ env.ENVIRONMENT }}
         event_name: ${{ github.event_name }}
+        http_basic_user: ${{ secrets.HTTP_BASIC_USER }}
+        http_basic_password: ${{ secrets.HTTP_BASIC_PASSWORD }}
 
     - name: Exit whole workflow if ${{ env.ENVIRONMENT }} smoke test was not successful
       if: steps.smoke-test.conclusion != 'success'

@@ -14,6 +14,8 @@ h1.govuk-heading-l = t(".page_title")
 .govuk-grid-row
   .govuk-grid-column-full
     = render "candidiate_profiles_banner" unless profile_complete?
+    - if Date.today <= Date.new(2024, 4, 2)
+      = render "jobseekers/visa_sponsorship_banner"
     - if saved_jobs.any?
       #vacancy-results
         - saved_jobs.each do |saved_job|

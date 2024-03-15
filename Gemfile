@@ -23,7 +23,7 @@ gem "array_enum"
 gem "aws-sdk-s3", require: false
 gem "breasal"
 gem "devise"
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.11.7"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.12.1"
 gem "factory_bot_rails"
 gem "faker"
 gem "friendly_id"
@@ -78,6 +78,8 @@ gem "zendesk_api"
 group :development do
   gem "amazing_print" # optional dependency of `rails_semantic_logger`
   gem "aws-sdk-ssm"
+  gem "better_errors"
+  gem "binding_of_caller"
   gem "listen"
   gem "solargraph"
   gem "spring"
@@ -91,7 +93,7 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "database_consistency", require: false
   gem "dotenv-rails"
-  gem "launchy", "~> 2.5"
+  gem "launchy", "~> 3.0"
   gem "parallel_tests"
   gem "pry"
   gem "pry-byebug"

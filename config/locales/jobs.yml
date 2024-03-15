@@ -165,7 +165,6 @@ en:
     create_job_caption: Create a job listing - section %{step} of %{total}
 
     ect_status: Is this role suitable for an early career teacher (ECT)?
-    full_time_details: Full time - %{details}
     further_details: Further details about the role
     location: Location
     location_find_more_html:
@@ -176,7 +175,6 @@ en:
     job_role: Job role
     job_summary: "%{job_title} job summary"
     key_stage: Key stage
-    part_time_details: Part time - %{details}
     safeguarding_information:
       jobseeker: Commitment to safeguarding
       publisher: Information about your commitment to safeguarding
