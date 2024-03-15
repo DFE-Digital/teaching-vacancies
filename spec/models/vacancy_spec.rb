@@ -599,29 +599,4 @@ RSpec.describe Vacancy do
       expect(subject.publish_on).to eq(nil)
     end
   end
-
-  # This test is obsolete and should be removed as soon as we remove individual job roles
-  describe "legacy job_role set from new job_roles" do
-    {
-      "teacher" => "teacher",
-      "headteacher" => "senior_leader",
-      "deputy_headteacher" => "senior_leader",
-      "assistant_headteacher" => "senior_leader",
-      "head_of_year_or_phase" => "middle_leader",
-      "head_of_department_or_curriculum" => "middle_leader",
-      "teaching_assistant" => "teaching_assistant",
-      "higher_level_teaching_assistant" => "teaching_assistant",
-      "education_support" => "teaching_assistant",
-      "sendco" => "teacher",
-    }.each do |new_role, legacy_role|
-      it "creating a vacancy with job_roles '[#{new_role}]' sets its legacy job_role to '#{legacy_role}'" do
-        expect(create(:vacancy, job_roles: [new_role]).job_role).to eq(legacy_role)
-      end
-
-      it "updating a vacancy job_roles to ['#{new_role}]' sets its legacy job_role to '#{legacy_role}'" do
-        vacancy = create(:vacancy, job_role: nil, job_roles: [])
-        expect { vacancy.update(job_roles: [new_role]) }.to change { vacancy.reload.job_role }.from(nil).to(legacy_role)
-      end
-    end
-  end
 end

@@ -35,7 +35,6 @@ RSpec.describe ImportFromVacancySourceJob do
           id: vacancy.id,
           phases: %w[secondary],
           organisations: [school],
-          job_role: "teaching_assistant",
           job_roles: ["teaching_assistant"],
         )
       end
