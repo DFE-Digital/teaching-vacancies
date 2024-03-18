@@ -230,7 +230,7 @@ RSpec.describe VacancyFilterQuery do
         expect(subject.call(filters)).to contain_exactly(teaching_assistant_vacancy, catering_cleaning_and_site_management_vacancy)
 
         filters = {
-          teaching_job_roles: %w[teacher],
+          teaching_job_roles: %w[teacher catering_cleaning_and_site_management],
         }
         expect(subject.call(filters).count).to eq(14)
         expect(subject.call(filters)).to contain_exactly(
