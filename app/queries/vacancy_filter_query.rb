@@ -105,11 +105,14 @@ class VacancyFilterQuery < ApplicationQuery
   end
 
   def apply_job_roles(keys, built_scope, filters)
-    keys.each do |key|
-      if (filter_job_roles = job_roles(filters[key]).presence)
-        built_scope = built_scope.with_any_of_job_roles(filter_job_roles)
-      end
-    end
-    built_scope
+    string_roles = keys.flat_map { |key|
+      job_roles(filters[key])
+    }.compact
+
+    return built_scope if string_roles.blank?
+
+    roles = string_roles.map { |role| Vacancy::JOB_ROLES[role] }
+
+    built_scope.where("job_roles && ARRAY[?]::integer[]", roles)
   end
 end
