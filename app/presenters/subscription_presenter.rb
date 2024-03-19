@@ -5,8 +5,11 @@ class SubscriptionPresenter < BasePresenter
   SEARCH_CRITERIA_SORT_ORDER = %w[organisation_slug
                                   keyword
                                   location
-                                  job_roles
+                                  teaching_job_roles
+                                  teaching_support_job_roles
+                                  non_teaching_support_job_roles
                                   ect_statuses
+                                  visa_sponsorship_availability
                                   subjects
                                   phases
                                   working_patterns].freeze
@@ -28,8 +31,6 @@ class SubscriptionPresenter < BasePresenter
     case field
     when "location"
       render_location_filter(value, search_criteria["radius"])
-    when "job_roles"
-      render_job_roles_filter(value)
     when "ect_statuses"
       render_ect_statuses_filter(value)
     when "subjects"
@@ -40,6 +41,21 @@ class SubscriptionPresenter < BasePresenter
       render_phases_filter(value)
     when "organisation_slug"
       render_organisation_filter
+    when "visa_sponsorship_availability"
+      render_visas_filter(value)
+    else
+      job_roles_filter(field, value)
+    end
+  end
+
+  def job_roles_filter(field, value)
+    case field
+    when "teaching_job_roles"
+      render_teaching_job_roles_filter(value)
+    when "teaching_support_job_roles"
+      render_teaching_support_job_roles_filter(value)
+    when "non_teaching_support_job_roles"
+      render_non_teaching_support_job_roles_filter(value)
     else
       { "#{field}": value }
     end
@@ -55,8 +71,20 @@ class SubscriptionPresenter < BasePresenter
     end
   end
 
-  def render_job_roles_filter(value)
-    { job_role: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", ") }
+  def render_teaching_job_roles_filter(value)
+    { teaching_job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", ") }
+  end
+
+  def render_teaching_support_job_roles_filter(value)
+    { teaching_support_job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{role}") }.join(", ") }
+  end
+
+  def render_non_teaching_support_job_roles_filter(value)
+    { non_teaching_support_job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{role}") }.join(", ") }
+  end
+
+  def render_visas_filter(value)
+    { visa_sponsorship_availability: value.map { |option| I18n.t("helpers.label.publishers_job_listing_visa_sponsorship_form.visa_sponsorship_available_options.#{option}") }.join(", ") }
   end
 
   def render_ect_statuses_filter(value)
