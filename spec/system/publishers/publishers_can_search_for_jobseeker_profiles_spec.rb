@@ -7,9 +7,11 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:school_cambridge) { create(:school, name: "Cambridge", geopoint: "POINT (-0.108267 51.506438)") }
   let(:trust_publisher) { create(:publisher, organisations: [trust]) }
   let(:trust) { create(:trust, schools: [school_oxford, school_cambridge], geopoint: "POINT (-0.108267 51.506438)") }
-  let(:roles) { %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant 
-                    higher_level_teaching_assistant education_support sendco other_teaching_support administration_hr_data_and_finance
-                    catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ] }
+  let(:roles) do
+    %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
+        higher_level_teaching_assistant education_support sendco other_teaching_support administration_hr_data_and_finance
+        catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ]
+  end
 
   let!(:jobseeker_profile) { create(:jobseeker_profile, :with_personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: job_preferences) }
   let(:job_preferences) { create(:job_preferences, roles: roles, key_stages: %w[ks1], working_patterns: %w[full_time], locations: [location_preference_containing_school], subjects: ["English"]) }
@@ -49,7 +51,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
           "Other teaching support, Administration, HR, data and finance, " \
           "Catering, cleaning and site management, IT support, " \
           "Pastoral, health and welfare, Other leadership roles, " \
-          "Other support roles"
+          "Other support roles",
         )
         expect(page).to have_content(jobseeker_profile.job_preferences.key_stages.first.humanize)
         expect(page).to have_content(jobseeker_profile.job_preferences.working_patterns.first.humanize)
