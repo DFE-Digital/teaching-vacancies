@@ -57,9 +57,15 @@ RSpec.describe JobseekerProfile, type: :model do
         .to change { profile.reload.qualifications }.from([old_qualification]).to(new_qualifications)
     end
 
-    it "deletes the original qualifications" do
+    it "deletes the original profile qualifications" do
       profile.replace_qualifications!(new_qualifications)
       expect { old_qualification.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "does not delete qualifications unrelated to the profile" do
+      unrelated_qualification = create(:qualification)
+      profile.replace_qualifications!(new_qualifications)
+      expect { unrelated_qualification.reload }.not_to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
@@ -73,9 +79,15 @@ RSpec.describe JobseekerProfile, type: :model do
         .to change { profile.reload.employments }.from([old_employment]).to(new_employments)
     end
 
-    it "deletes the original employments" do
+    it "deletes the original profile employments" do
       profile.replace_employments!(new_employments)
       expect { old_employment.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "does not delete employments unrelated to the profile" do
+      unrelated_employment = create(:employment)
+      profile.replace_employments!(new_employments)
+      expect { unrelated_employment.reload }.not_to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

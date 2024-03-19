@@ -101,6 +101,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def update_jobseeker_profile!(job_application, form)
     profile = job_application.jobseeker.jobseeker_profile
+    return unless profile.present?
+
     profile.replace_qualifications!(job_application.qualifications.map(&:duplicate)) if form.update_profile_qualifications?
     profile.replace_employments!(job_application.employments.map(&:duplicate)) if form.update_profile_work_history?
   end
