@@ -46,4 +46,36 @@ RSpec.describe JobseekerProfile, type: :model do
       end
     end
   end
+
+  describe "#replace_qualifications!" do
+    let(:old_qualification) { create(:qualification) }
+    let(:new_qualifications) { create_list(:qualification, 2) }
+    let(:profile) { create(:jobseeker_profile, qualifications: [old_qualification]) }
+
+    it "replaces the qualifications" do
+      expect { profile.replace_qualifications!(new_qualifications) }
+        .to change { profile.reload.qualifications }.from([old_qualification]).to(new_qualifications)
+    end
+
+    it "deletes the original qualifications" do
+      profile.replace_qualifications!(new_qualifications)
+      expect { old_qualification.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe "#replace_employments!" do
+    let(:old_employment) { create(:employment) }
+    let(:new_employments) { create_list(:employment, 2) }
+    let(:profile) { create(:jobseeker_profile, employments: [old_employment]) }
+
+    it "replaces the employments" do
+      expect { profile.replace_employments!(new_employments) }
+        .to change { profile.reload.employments }.from([old_employment]).to(new_employments)
+    end
+
+    it "deletes the original employments" do
+      profile.replace_employments!(new_employments)
+      expect { old_employment.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end

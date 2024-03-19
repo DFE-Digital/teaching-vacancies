@@ -25,6 +25,13 @@
       = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
         = f.govuk_error_summary
 
+        = f.govuk_check_boxes_fieldset(:update_profile,
+                                       multiple: true,
+                                       legend: { text: t(".confirmation.update_your_profile.heading"), size: "m" },
+                                       hint: { text: t(".confirmation.update_your_profile.hint") }) do
+          = f.govuk_check_box :update_profile, "qualifications"
+          = f.govuk_check_box :update_profile, "work_history"
+
         h3.govuk-heading-m = t(".confirmation.heading")
 
         = f.govuk_check_boxes_fieldset :confirm_data_accurate, multiple: false, legend: nil do

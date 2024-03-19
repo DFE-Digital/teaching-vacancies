@@ -56,6 +56,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
     if review_form.valid? && all_steps_valid?
+      update_jobseeker_profile!(job_application, review_form)
       job_application.submit!
       @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
     else
@@ -97,6 +98,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   private
+
+  def update_jobseeker_profile!(job_application, form)
+    profile = job_application.jobseeker.jobseeker_profile
+    profile.replace_qualifications!(job_application.qualifications.map(&:duplicate)) if form.update_profile_qualifications?
+    profile.replace_employments!(job_application.employments.map(&:duplicate)) if form.update_profile_work_history?
+  end
 
   def all_steps_valid?
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
@@ -168,7 +175,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def review_form_params
-    params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage)
+    params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage, update_profile: [])
           .merge(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
   end
 
