@@ -513,6 +513,9 @@ en:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
       jobseekers_job_application_review_form:
+        update_profile_options:
+          qualifications: Update qualifications on profile
+          work_history: Update work history on profile
         confirm_data_accurate_options:
           "1": I confirm that the above information is accurate and complete
         confirm_data_usage_options:
