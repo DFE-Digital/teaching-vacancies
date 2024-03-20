@@ -40,9 +40,9 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
           .to eq(%w[personal_details professional_status references ask_for_support])
       end
 
-      it "sets in progress steps as qualifications and employment history" do
+      it "sets in progress steps as qualifications, employment history and professional status" do
         expect(subject.in_progress_steps)
-          .to eq(%w[qualifications employment_history])
+          .to eq(%w[qualifications employment_history professional_status])
       end
     end
 

@@ -1,7 +1,7 @@
 class Jobseekers::JobApplication::ReviewForm
   include ActiveModel::Model
 
-  attr_accessor :confirm_data_accurate, :confirm_data_usage, :completed_steps, :all_steps
+  attr_accessor :confirm_data_accurate, :confirm_data_usage, :update_profile, :completed_steps, :all_steps
 
   validates_acceptance_of :confirm_data_accurate, :confirm_data_usage,
                           acceptance: true,
@@ -17,5 +17,13 @@ class Jobseekers::JobApplication::ReviewForm
         I18n.t("activemodel.errors.models.jobseekers/job_application/review_form.attributes.#{step}.incomplete"),
       )
     end
+  end
+
+  def update_profile_qualifications?
+    update_profile&.include?("qualifications")
+  end
+
+  def update_profile_work_history?
+    update_profile&.include?("work_history")
   end
 end

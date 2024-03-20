@@ -47,11 +47,11 @@ jobs:
         version: 14
 
     - name: Install kubectl
-      uses: azure/setup-kubectl@v3
+      uses: azure/setup-kubectl@v4
       with:
         version: "v1.26.1"
 
-    - uses: Azure/login@v1
+    - uses: Azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 

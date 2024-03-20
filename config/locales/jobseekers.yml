@@ -388,6 +388,9 @@ en:
       review:
         confirmation:
           heading: Confirmation
+          update_your_profile:
+            heading: Do you want to update your profile?
+            hint: You can update your profile to match this application. This will replace the current information on your profile. Choose the sections you'd like to update.
           how_we_use_your_data:
             description: "When you submit your application, your data will be shared with:"
             heading: How your data is used
@@ -483,6 +486,8 @@ en:
           heading: What happens next
           shortlisted: >-
             If you are shortlisted for an interview %{organisation} will be in touch to let you know.
+          profile_update: >-
+            Your profile will match the information you supplied in your application if you chose to update it.
           view_applications: View your applications
         panel:
           body: We have sent an email confirmation to %{email}
