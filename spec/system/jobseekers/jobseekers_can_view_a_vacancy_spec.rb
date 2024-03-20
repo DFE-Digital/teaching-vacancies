@@ -6,9 +6,11 @@ RSpec.describe "Viewing a single published vacancy" do
   before { visit job_path(vacancy) }
 
   context "when the vacancy status is published" do
-    let(:vacancy) { create(:vacancy, :published, organisations: [school], job_roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
-    higher_level_teaching_assistant education_support sendco other_teaching_support administration_hr_data_and_finance
-    catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ]) }
+    let(:vacancy) do
+      create(:vacancy, :published, organisations: [school], job_roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
+                                                                           higher_level_teaching_assistant education_support sendco other_teaching_support administration_hr_data_and_finance
+                                                                           catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ])
+    end
 
     scenario "jobseekers can view the vacancy" do
       verify_vacancy_show_page_details(vacancy)
