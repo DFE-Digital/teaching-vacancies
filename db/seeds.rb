@@ -18,16 +18,16 @@ users = [
   { email: "alex.lee@education.gov.uk", family_name: "Alex", given_name: "Lee" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
   { email: "brandon1.chan@education.gov.uk", family_name: "Chan", given_name: "Brandon" },
+  { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
   { email: "colin.saliceti@education.gov.uk", family_name: "Saliceti", given_name: "Colin" },
   { email: "danielle.dean@education.gov.uk", family_name: "Danielle", given_name: "Dean" },
   { email: "davide.dippolito@education.gov.uk", family_name: "Dippolito", given_name: "Davide" },
-  { email: "georgina.watts@education.gov.uk", family_name: "Watts", given_name: "Georgina" },
+  { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "luke.anslow@education.gov.uk", family_name: "Anslow", given_name: "Luke" },
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
-  { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
-  { email: "stephanie.maskery@education.gov.uk", family_name: "Maskery", given_name: "Stephanie" },
-  { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
   { email: "matthew.jefford@education.gov.uk", family_name: "Jefford", given_name: "Matthew" },
+  { email: "stephanie.maskery@education.gov.uk", family_name: "Maskery", given_name: "Stephanie" },
+  { email: "yvonne.ridley@education.gov.uk", family_name: "Yvonne", given_name: "Ridley" },
 ]
 
 users.each do |user|
