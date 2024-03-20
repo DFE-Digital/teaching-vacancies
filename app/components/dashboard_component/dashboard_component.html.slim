@@ -1,5 +1,11 @@
 = tag.div(**html_attributes) do
   .govuk-grid-row
+    .govuk-grid-column-full
+      = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
+        - banner.with_heading(text: t("jobs.dashboard.non-teaching-roles-banner.heading"))
+        p.govuk-body = govuk_link_to(t("jobs.dashboard.non-teaching-roles-banner.link_text"), "/get-help-hiring/how-to-list-non-teaching-roles")
+
+  .govuk-grid-row
     .govuk-grid-column-three-quarters
       .help-guide--mobile.help-guide--border-bottom
         h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
