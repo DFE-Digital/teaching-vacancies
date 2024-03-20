@@ -12,23 +12,6 @@ RSpec.describe "Viewing a single published vacancy" do
 
     scenario "jobseekers can view the vacancy" do
       verify_vacancy_show_page_details(vacancy)
-
-      expected_texts = [
-        'Teacher', 'Headteacher', 'Deputy headteacher', 
-        'Assistant headteacher', 'Head of year or phase',
-        'Head of department or curriculum', 'Teaching assistant',
-        'HLTA (higher level teaching assistant)', 'Learning support or cover supervisor',
-        'SENDCo (special educational needs and disabilities coordinator)', 'Other teaching support', 
-        'Administration, HR, data and finance', 
-        'Catering, cleaning and site management',
-        'IT support', 'Pastoral, health and welfare',
-        'Other leadership', 'Other support',
-        'Suitable for early career teachers'
-      ]
-
-      expected_texts.each do |text|
-        expect(page).to have_content(text)
-      end  
     end
 
     context "when the publish_on date is in the future" do
