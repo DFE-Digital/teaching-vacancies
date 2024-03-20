@@ -12,7 +12,7 @@
         - if (preferences = jobseeker_profile.job_preferences).present?
           - summary_list.with_row do |row|
             - row.with_key text: t("publishers.jobseeker_profiles.preferred_roles", count: preferences.roles.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: jobseeker_profile.all_roles, classes: "govuk-body-s govuk-!-padding-bottom-0"
+            - row.with_value text: jobseeker_profile.job_preferences.roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", "), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
           - summary_list.with_row do |row|
             - row.with_key text: t("publishers.jobseeker_profiles.preferred_key_stages", count: preferences.key_stages.count), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
