@@ -90,7 +90,7 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   def location_and_one_other_criterion_selected
     errors.add(:base, I18n.t("subscriptions.errors.no_location_and_other_criterion_selected")) unless
-      location.present? && %i[keyword teaching_job_roles subjects phases working_patterns].any? { |criterion| public_send(criterion).present? }
+      location.present? && %i[keyword teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles subjects phases working_patterns].any? { |criterion| public_send(criterion).present? }
   end
 
   def unique_job_alert
