@@ -8,7 +8,7 @@ RSpec.describe "Jobseeker profiles", type: :system do
   before do
     jobseeker_profile.job_preferences.update(roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
                                                         higher_level_teaching_assistant education_support sendco other_teaching_support administration_hr_data_and_finance
-                                                        catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ])
+                                                        catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support senior_leader middle_leader])
   end
 
   scenario "A publisher can view a jobseeker's profile" do
@@ -28,7 +28,7 @@ RSpec.describe "Jobseeker profiles", type: :system do
       "Other teaching support, Administration, HR, data and finance, " \
       "Catering, cleaning and site management, IT support, " \
       "Pastoral, health and welfare, Other leadership roles, " \
-      "Other support roles",
+      "Other support roles", "Senior leader", "Middle leader"
     )
     expect(page).to have_content(jobseeker_profile.employments.first.subjects)
     expect(page).not_to have_content("Location")
