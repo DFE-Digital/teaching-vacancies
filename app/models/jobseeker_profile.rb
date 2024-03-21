@@ -31,7 +31,7 @@ class JobseekerProfile < ApplicationRecord
 
   delegate :first_name, :last_name, to: :personal_details, allow_nil: true
 
-  enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2 }
+  enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2, non_teacher: 3 }
 
   validates :jobseeker, uniqueness: true
 

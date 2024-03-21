@@ -1,14 +1,25 @@
-- content_for :page_title_prefix, password_update? ? t(".edit_password_title") : t(".edit_email_title")
+ruby:
+  title = if password_update?
+            t(".edit_password_title")
+          elsif account_type_update?
+            t(".edit_account_type_title")
+          else
+            t(".edit_email_title")
+          end
+
+- content_for :page_title_prefix, title
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl = password_update? ? t(".edit_password_title") : t(".edit_email_title")
+    h1.govuk-heading-xl = title
 
     = form_for resource, url: jobseeker_registration_path, method: :patch do |f|
       = f.govuk_error_summary
 
       - if password_update?
         = render "edit_password", f: f
+      - elsif account_type_update?
+        = render "edit_account_type", f: f
       - else
         = render "edit_email", f: f
 

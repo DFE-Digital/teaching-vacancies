@@ -28,10 +28,20 @@ class Vacancy < ApplicationRecord
 
   JOB_ROLES = { "teacher" => 0, "headteacher" => 1, "deputy_headteacher" => 2, "assistant_headteacher" => 3,
                 "head_of_year_or_phase" => 4, "head_of_department_or_curriculum" => 5, "teaching_assistant" => 6,
-                "higher_level_teaching_assistant" => 7, "education_support" => 8, "sendco" => 9 }.freeze
+                "higher_level_teaching_assistant" => 7, "education_support" => 8, "sendco" => 9,
+                "other_teaching_support" => 10, "administration_hr_data_and_finance" => 11,
+                "catering_cleaning_and_site_management" => 12, "it_support" => 13, "pastoral_health_and_welfare" => 14,
+                "other_leadership" => 15, "other_support" => 16 }.freeze
 
   MIDDLE_LEADER_JOB_ROLES = %w[head_of_year_or_phase head_of_department_or_curriculum].freeze
   SENIOR_LEADER_JOB_ROLES = %w[headteacher deputy_headteacher assistant_headteacher].freeze
+
+  TEACHING_JOB_ROLES = %w[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher
+                          deputy_headteacher headteacher sendco].freeze
+  TEACHING_SUPPORT_JOB_ROLES = %w[teaching_assistant higher_level_teaching_assistant education_support
+                                  other_teaching_support].freeze
+  NON_TEACHING_SUPPORT_JOB_ROLES = %w[administration_hr_data_and_finance catering_cleaning_and_site_management
+                                      it_support pastoral_health_and_welfare other_leadership other_support].freeze
 
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
   array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }
@@ -95,7 +105,6 @@ class Vacancy < ApplicationRecord
                   if: proc { |vacancy| vacancy.listed? }
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
-  before_save :on_job_roles_set_job_role
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -258,19 +267,6 @@ class Vacancy < ApplicationRecord
 
   def slug_candidates
     [:job_title, %i[job_title organisation_name], %i[job_title location]]
-  end
-
-  def on_job_roles_set_job_role
-    return unless job_roles_changed?
-
-    # job_roles contain an individual role unless middle or senior leader roles that may contain all their options
-    self.job_role = if job_roles.intersect? SENIOR_LEADER_JOB_ROLES
-                      "senior_leader"
-                    elsif job_roles.intersect? MIDDLE_LEADER_JOB_ROLES
-                      "middle_leader"
-                    else
-                      job_roles.first
-                    end
   end
 
   def on_expired_vacancy_feedback_submitted_update_stats_updated_at

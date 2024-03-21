@@ -20,13 +20,13 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
 
     describe "#options" do
       it "depend on the value of phases" do
-        expect(step.options).to be_empty
+        expect(step.options.keys).to eq %w[non_teaching]
 
         multistep.phases = %w[primary]
-        expect(step.options.keys).to eq %w[early_years ks1 ks2]
+        expect(step.options.keys).to eq %w[early_years ks1 ks2 non_teaching]
 
         multistep.phases = %w[nursery secondary]
-        expect(step.options.keys).to eq %w[early_years ks3 ks4 ks5]
+        expect(step.options.keys).to eq %w[early_years ks3 ks4 ks5 non_teaching]
       end
     end
 

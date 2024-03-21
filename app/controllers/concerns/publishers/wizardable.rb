@@ -21,8 +21,8 @@ module Publishers::Wizardable
   end
 
   def job_role_params(params)
-    params.require(:publishers_job_listing_job_role_form)
-          .permit(:job_roles)
+    params.fetch(:publishers_job_listing_job_role_form, {})
+          .permit(job_roles: [])
           .merge(completed_steps: completed_steps)
   end
 

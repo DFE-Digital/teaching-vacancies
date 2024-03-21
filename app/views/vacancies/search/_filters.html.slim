@@ -9,10 +9,26 @@ ruby:
       selected_method: :last,
     },
     {
-      legend: t("jobs.filters.job_roles"),
-      key: :job_roles,
-      selected: form.job_roles,
-      options: form.job_role_options,
+      legend: t("jobs.filters.teaching_job_roles"),
+      key: :teaching_job_roles,
+      selected: form.teaching_job_roles,
+      options: form.teaching_job_role_options,
+      value_method: :first,
+      selected_method: :last,
+    },
+    {
+      legend: t("jobs.filters.teaching_support_job_roles"),
+      key: :teaching_support_job_roles,
+      selected: form.teaching_support_job_roles,
+      options: form.teaching_support_job_role_options,
+      value_method: :first,
+      selected_method: :last,
+    },
+    {
+      legend: t("jobs.filters.non_teaching_support_job_roles"),
+      key: :non_teaching_support_job_roles,
+      selected: form.non_teaching_support_job_roles,
+      options: form.non_teaching_support_job_role_options,
       value_method: :first,
       selected_method: :last,
     },
@@ -83,7 +99,7 @@ ruby:
       - filter_types.each do |filter_type|
         - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }))
     - filters_component.with_group key: "visa_sponsorship_availability", component: f.govuk_collection_check_boxes(:visa_sponsorship_availability, form.visa_sponsorship_availability_options, :first, :last, small: true, legend: { text: t("jobs.filters.visa_sponsorship_availability.legend") }, hint: nil)
-    - filters_component.with_group key: "job_roles", component: f.govuk_collection_check_boxes(:job_roles, form.job_role_options, :first, :last, small: true, legend: { text: t("jobs.filters.job_roles") }, hint: nil)
+    = render "/vacancies/search/job_roles_filters", filters_component: filters_component, f: f, form: form
     - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:phases, form.phase_options, :first, :last, small: true, legend: { text: t("jobs.filters.phases") }, hint: nil)
     = render "shared/subjects_filter", filters_component: filters_component, f: f
     - filters_component.with_group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, form.ect_status_options, :first, :last, small: true, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)

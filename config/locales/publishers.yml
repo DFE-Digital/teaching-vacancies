@@ -595,7 +595,7 @@ en:
         view_live_listing_title: View the live job listing
       steps:
         job_details: Job details
-        job_role: Job role
+        job_role: What type of job is this?
         job_location: Locations where the job is based
         education_phases: Education phase
         job_title: Job title

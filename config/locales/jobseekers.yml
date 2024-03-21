@@ -12,6 +12,9 @@ en:
           email: Email address
           password: Account password
           password_placeholder: "**************"
+          account_type: Account type
+          teaching: "Teaching"
+          non_teaching: "Non-teaching"
       confirmation:
         page_title: Account created
         apply_for_jobs_link_text: search and apply for teaching jobs
@@ -529,6 +532,7 @@ en:
         success: Your account has been closed. If you want to reactivate your account at any point, you can just sign back in with your email address and current password.
       edit:
         edit_email_title: Update email address
+        edit_account_type_title: Update account type
         edit_password_title: Change password
       edit_email:
           current_password: Password
@@ -540,6 +544,15 @@ en:
         description: Password reset for %{email}
         new_password: New password
         title: Change password
+      edit_account_type: 
+        current_password: Password
+        labels:
+          account_type: What type of job are you looking for?
+          teaching: Teaching, teaching support and teaching leadership jobs
+          non_teaching: Non-teaching support jobs
+        hints:
+          teaching: This includes teacher, teaching assistant, learning support or cover supervisor, SEND and headteacher jobs.
+          non_teaching: This includes all other school jobs, for example, administration, HR, data and finance jobs.
       new:
         description: Create an account to save and apply for jobs.
         sign_in:
@@ -547,6 +560,13 @@ en:
           link: sign in
           heading: Already have a jobseeker account?
         title: Create a jobseeker account
+        labels:
+          account_type: What type of job are you looking for?
+          teaching: Teaching, teaching support and teaching leadership jobs
+          non_teaching: Non-teaching support jobs
+        hints:
+          teaching: This includes teacher, teaching assistant, learning support or cover supervisor, SEND and headteacher jobs.
+          non_teaching: This includes all other school jobs, for example, administration, HR, data and finance jobs.
     saved_jobs:
       destroy:
         success: Saved job removed
@@ -662,8 +682,8 @@ en:
         work:
           caption: Personal details
           hint:
-            text: You can %{link}
-            link: find out what visa you need if you're a non-UK citizen (link opens in new tab).
+            text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work in England. If you're looking for a teaching job, you can learn more about %{link}
+            link: teaching in England as a non-UK citizen (opens in new tab).
             no_visa:
               text: You can %{link}
               link: find out what visa you need if you're a non-UK citizen (link opens in new tab).
@@ -716,7 +736,8 @@ en:
       about_you:
         edit:
           page_title: About You
-          page_description: "Write a statement about yourself. This will be visible on your profile. This may include information about:"
+          page_description: Describe your relevant skills, knowledge and experience. This will help schools see if you'd be a good fit for their role.
+          items_explanation: "If you're a teacher, this may include information about:"
           page_description_items:
             - "working with pupils"
             - "your teaching style and classroom management"
@@ -783,7 +804,7 @@ en:
           caption: Work history
           page_title: Add a role — Profile
           title: Role
-          hint_text: If you have had more than one role at the same school, add them all separately.
+          hint_text: "If you've had more than 1 role at the same employer, add each role separately."
         review:
           add_role_button_text: Add role
           return_to_profile: Return to profile

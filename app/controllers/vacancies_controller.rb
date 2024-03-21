@@ -27,12 +27,11 @@ class VacanciesController < ApplicationController
   def search_params
     return @landing_page.criteria if @landing_page
 
-    strip_empty_checkboxes(%i[job_roles ect_statuses subjects phases quick_apply working_patterns organisation_types school_types visa_sponsorship_availability]) unless params[:skip_strip_checkboxes]
-    %w[job_roles subjects phases working_patterns quick_apply organisation_types].each do |facet|
+    strip_empty_checkboxes(%i[teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles ect_statuses subjects phases quick_apply working_patterns organisation_types school_types visa_sponsorship_availability]) unless params[:skip_strip_checkboxes]
+    %w[teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles subjects phases working_patterns quick_apply organisation_types].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by,
-                  job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], quick_apply: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [])
+    params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by, teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], quick_apply: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [])
   end
 
   def set_landing_page

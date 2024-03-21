@@ -1,0 +1,21 @@
+---
+order: 600
+title: How to list non-teaching roles
+meta_description: Find out how to list non-teaching roles for your school or trust on Teaching Vacancies. Recruit finance directors, business managers and more.
+date_posted: 19/03/2024
+category_tags: how-to
+---
+![3 teachers sat on sofas having an engaging and relaxed conversation in a canteen area of a school.](/content-assets/jobseeker-guides/write-a-great-teaching-job-application-800x300.jpg)
+
+You can use Teaching Vacancies to recruit for all roles in your school or trust.
+This includes roles such as a finance director, office support staff, site management and more.
+The job listing process is almost exactly the same for teaching and non-teaching roles.
+
+## Listing a non-teaching role
+  1. Select ‘create a job listing’ and choose whether your role is in teaching and leadership, teaching support, or non-teaching support.
+  2. Choose either a job title (for example, teaching assistant), or a job category (for example, administration, HR, data and finance). You can choose ‘other leadership roles’ or ‘other support roles’ if the categories don’t fit.
+
+## Leaving feedback
+You can leave feedback after you’ve created your job listing.
+We’ll also email you after the job listing has ended to ask how you filled your vacancy.
+We’re excited to support you with recruiting all roles in your school and look forward to welcoming new jobseekers to Teaching Vacancies.
