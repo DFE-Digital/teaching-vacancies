@@ -101,12 +101,7 @@ class VacancySource::Source::UnitedLearning
   def working_patterns_for(item)
     return [] if item["Working_patterns"].blank?
 
-    item["Working_patterns"].gsub("flexible", "part_time")
-                            .gsub("term_time", "part_time")
-                            .gsub("job_share", "part_time")
-                            .delete(" ")
-                            .split(",")
-                            .uniq
+    item["Working_patterns"].delete(" ").split(",").uniq
   end
 
   def ect_status_for(item)

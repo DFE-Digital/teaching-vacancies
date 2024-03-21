@@ -47,7 +47,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def in_progress_steps
-    %w[qualifications employment_history]
+    %w[qualifications employment_history professional_status]
   end
 
   def copy_qualifications

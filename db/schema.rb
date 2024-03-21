@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_09_180737) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_08_173633) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -428,7 +428,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_180737) do
     t.text "gias_data_hash"
     t.string "slug"
     t.string "email"
-    t.string "safeguarding_information"
+    t.string "safeguarding_information", default: "Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.\n\nOur recruitment process follows the keeping children safe in education guidance.\n\nOffers of employment may be subject to the following checks (where relevant):\nchildcare disqualification\nDisclosure and Barring Service (DBS)\nmedical\nonline and social media\nprohibition from teaching\nright to work\nsatisfactory references\nsuitability to work with children\n\nYou must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975."
     t.tsvector "searchable_content"
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true

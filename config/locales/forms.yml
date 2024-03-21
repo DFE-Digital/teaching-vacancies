@@ -282,6 +282,8 @@ en:
             through: For example ‘Teacher of KS1’ or ‘Teacher of Maths’
           teaching_assistant: For example ‘Teaching assistant’
       publishers_job_listing_working_patterns_form:
+        working_patterns: Select all that apply.
+        working_patterns_details: For example, 32.5 hours a week.
         working_patterns_options:
           full_time_education_support: Usually at least 36.5 hours a week
           full_time_higher_level_teaching_assistant: Usually at least 36.5 hours a week
@@ -512,6 +514,9 @@ en:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
       jobseekers_job_application_review_form:
+        update_profile_options:
+          qualifications: Update qualifications on profile
+          work_history: Update work history on profile
         confirm_data_accurate_options:
           "1": I confirm that the above information is accurate and complete
         confirm_data_usage_options:
@@ -819,8 +824,7 @@ en:
           false: "No"
           true: "Yes"
       publishers_job_listing_working_patterns_form:
-        full_time_details: Details
-        part_time_details: Details
+        working_patterns_details: Details of working hours (optional)
         organisation_type_options:
           academy: Academy
           local_authority: Local authority maintained schools
@@ -869,7 +873,7 @@ en:
         support_needed: Do you want to ask for support so that you can attend an interview?
       jobseekers_job_application_declarations_form:
         close_relationships: Do you have any family or close relationship with people within %{organisation}?
-        right_to_work_in_uk: Do you currently have the right to work in the UK?
+        right_to_work_in_uk: Do you need Skilled worker visa sponsorship?
         safeguarding_issue: Do you want to declare any safeguarding issues, such as a criminal record or professional misconduct?
       jobseekers_job_application_details_reference_form:
         phone_number: Phone number

@@ -31,12 +31,13 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
         allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
       end
 
-      it "redirects to invalid_recaptcha path" do
+      it "registers the recaptcha failure while still creating the job alert" do
         within ".empty-section-component" do
           click_on I18n.t("jobseekers.subscriptions.index.link_create")
         end
-        create_a_job_alert
-        expect(page).to have_current_path(invalid_recaptcha_path)
+        expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
+        expect { create_a_job_alert }.to change { Subscription.count }.by(1)
+        and_the_job_alert_is_on_the_index_page
       end
     end
   end

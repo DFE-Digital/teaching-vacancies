@@ -55,6 +55,20 @@ class JobseekerProfile < ApplicationRecord
     record.jobseeker
   end
 
+  def replace_qualifications!(new_qualifications)
+    transaction do
+      qualifications.destroy_all
+      update!(qualifications: new_qualifications)
+    end
+  end
+
+  def replace_employments!(new_employments)
+    transaction do
+      employments.destroy_all
+      update!(employments: new_employments)
+    end
+  end
+
   def deactivate!
     return unless active?
 

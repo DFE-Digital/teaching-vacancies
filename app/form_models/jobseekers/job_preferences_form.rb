@@ -7,7 +7,7 @@ module Jobseekers
     ROLES = %i[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher deputy_headteacher
                headteacher teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
     PHASES = %i[nursery primary middle secondary through].freeze
-    WORKING_PATTERNS = %i[full_time part_time].freeze
+    WORKING_PATTERNS = %i[full_time part_time flexible job_share term_time].freeze
 
     def self.from_record(record)
       new(

@@ -7,9 +7,9 @@ module CapybaraHelper
     end
   end
 
-  def within_row_for(text:, element: "label", &block)
+  def within_row_for(text:, element: "label", &)
     element = page.find(element, text: text).find(:xpath, "../..")
-    within(element, &block)
+    within(element, &)
   end
 
   def strip_tags(text)

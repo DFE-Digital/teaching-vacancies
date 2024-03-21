@@ -2,19 +2,12 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if @reason_for_failing_sign_in
-      = govuk_notification_banner title_text: t("banners.important") do |banner|
-        - banner.with_heading text: t("publishers.temp_login.choose_organisation.denial.title")
-        = t("publishers.temp_login.choose_organisation.denial.#{@reason_for_failing_sign_in}_html", try_again: govuk_link_to("try again", new_publisher_session_path))
-
-    - else
+    = form_for @form, url: consume_publishers_login_key_path(@login_key) do |f|
+      = f.govuk_error_summary
       h1.govuk-heading-l = t("publishers.temp_login.choose_organisation.heading")
 
-      p = t("publishers.temp_login.choose_organisation.please_select")
-
-      - @publisher.organisations.each do |organisation|
-        p
-          - if organisation.school?
-            = govuk_link_to(location(organisation), create_publisher_session_path(organisation_id: organisation.id))
-          - else
-            = govuk_link_to(organisation.name, create_publisher_session_path(organisation_id: organisation.id))
+      = f.govuk_radio_buttons_fieldset :organisation, legend: { text: t("publishers.temp_login.choose_organisation.please_select"), size: "m" } do
+        - @publisher.organisations.each_with_index do |organisation, index|
+          - text = organisation.school? ? location(organisation) : organisation.name
+          = f.govuk_radio_button(:organisation, organisation.id, label: { text: }, link_errors: index.zero?)
+      = f.govuk_submit t("buttons.sign_in")

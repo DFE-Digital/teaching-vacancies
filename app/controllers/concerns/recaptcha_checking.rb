@@ -10,11 +10,15 @@ module RecaptchaChecking
   end
 
   def handle_invalid_recaptcha(form: nil, score: nil)
+    log_invalid_recaptcha(form: form, score: score)
+    redirect_to invalid_recaptcha_path
+  end
+
+  def log_invalid_recaptcha(form: nil, score: nil)
     form_name = form.class.name.gsub("::", "").underscore.humanize if form.present?
     Sentry.with_scope do |scope|
       scope.set_tags("form.name": form_name, "recaptcha.score": score)
       Sentry.capture_message("Invalid recaptcha", level: :warning)
     end
-    redirect_to invalid_recaptcha_path
   end
 end

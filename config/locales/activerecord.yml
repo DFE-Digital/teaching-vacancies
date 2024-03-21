@@ -157,15 +157,12 @@ en:
     parental_leave_cover_contract_duration:
       blank: Enter the length of the maternity or parental leave cover contract
   working_patterns_errors: &working_patterns_errors
-    full_time_details:
-      blank: Enter full time details
-      maximum_words: Full time details must be 50 words or less
-    part_time_details:
-      blank: Enter part time details
-      maximum_words: Part time details must be 50 words or less
     working_patterns:
       blank: Select a working pattern
       inclusion: Select a working pattern
+    working_patterns_details:
+      blank: Enter working patterns details
+      maximum_words: Working patterns details must be 50 words or less
   pay_package_errors: &pay_package_errors
     actual_salary:
       blank: Enter actual salary
@@ -441,6 +438,10 @@ en:
               invalid: Enter a date in the correct format
               on_or_after: The closing date must be in the future
               on_or_before: The closing date must be less than two years in the future
+        publishers/login_keys/choose_organisation_form:
+          attributes:
+            organisation:
+              blank: Select the organisation you wish to sign with
         publishers/organisation/email_form:
           attributes:
             <<: *email_errors

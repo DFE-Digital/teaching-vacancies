@@ -3,6 +3,7 @@ class Publishers::LoginKeysController < ApplicationController
 
   before_action :redirect_signed_in_publishers, only: %i[new create show]
   before_action :redirect_for_dsi_authentication, only: %i[new create show]
+  before_action :check_login_key, only: %i[show consume]
 
   def new
     flash.now[:notice] = t(".notice")
@@ -14,21 +15,46 @@ class Publishers::LoginKeysController < ApplicationController
   end
 
   def show
-    login_key = EmergencyLoginKey.find_by(id: params[:id])
-    return @reason_for_failing_sign_in = "no_key" unless login_key
-    return @reason_for_failing_sign_in = "expired" if login_key.expired?
+    @publisher = Publisher.find(@login_key.publisher_id)
 
-    @publisher = Publisher.find(login_key.publisher_id)
-    login_key.destroy
-    session.update(publisher_id: @publisher.id)
+    if @publisher.organisations.none?
+      render(partial: "error", locals: { failure: "no_orgs" })
+    else
+      @form = Publishers::LoginKeys::ChooseOrganisationForm.new
+      render(:show)
+    end
+  end
 
-    return @reason_for_failing_sign_in = "no_orgs" if @publisher.organisations.none?
-    return if @publisher.organisations.many?
+  def consume
+    @publisher = Publisher.find(@login_key.publisher_id)
+    @form = Publishers::LoginKeys::ChooseOrganisationForm.new(choose_organisation_form_params)
 
-    redirect_to create_publisher_session_path(organisation_id: @publisher.organisations.first.id)
+    if @form.valid?
+      org = Organisation.find(@form.organisation)
+      @login_key.destroy
+      session.update(publisher_id: @publisher.id)
+      redirect_to create_publisher_session_path(organisation_id: org.id)
+    else
+      render(:show)
+    end
   end
 
   private
+
+  def choose_organisation_form_params
+    (params[:publishers_login_keys_choose_organisation_form] || params).permit(:organisation)
+  end
+
+  def check_login_key
+    @login_key = EmergencyLoginKey.find_by(id: params[:id])
+    failure = if @login_key.nil?
+                "no_key"
+              elsif @login_key.expired?
+                "expired"
+              end
+
+    (render(:error, locals: { failure: }) and return) if failure.present?
+  end
 
   def redirect_signed_in_publishers
     return unless publisher_signed_in? && current_organisation.present?

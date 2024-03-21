@@ -37,6 +37,8 @@ The new developer will be added to [teaching-vacancies-developers](https://githu
 
 You will need to request a Azure CID through the [Service Portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=51b0b9c5db1ff7809402e1aa4b96197d&referrer=recent_items) following [these instructions](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/#onboarding-users).
 
+Request your Lead Developer/Team Lead to add you to the [s189 TV delivery team members list](https://portal.azure.com/#view/Microsoft_AAD_IAM/GroupDetailsMenuBlade/~/Members/groupId/30d11bf0-ab94-477a-bef4-82793788a7b7/menuId/).
+
 Once having access, contact the Teacher Services Infrastructure team and request access to the following s189 subscriptions:
 
 * s189-teacher-services-cloud-development
