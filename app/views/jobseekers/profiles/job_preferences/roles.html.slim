@@ -7,6 +7,14 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = f.govuk_collection_check_boxes :roles, @step.options, :first, :last, legend: { size: "l" }, caption: { text: "Job preferences", size: "l" }
+      span.govuk-caption-l Job preferences
+      h1.govuk-heading-l class="govuk-!-margin-bottom-2"
+        | What roles are you interested in?
+      span.govuk-caption-m class="govuk-!-margin-bottom-8"
+        | Select all that apply to set up your profile
+
+      = f.govuk_collection_check_boxes :roles, @step.teaching_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_job_roles"), size: "m" }
+      = f.govuk_collection_check_boxes :roles, @step.teaching_support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_support_job_roles"), size: "m" }
+      = f.govuk_collection_check_boxes :roles, @step.non_teaching_support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.non_teaching_support_job_roles"), size: "m" }
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path

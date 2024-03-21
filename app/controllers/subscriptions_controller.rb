@@ -128,7 +128,7 @@ class SubscriptionsController < ApplicationController
 
   def subscription_params
     params.require(:jobseekers_subscription_form)
-          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, teaching_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
+          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [], visa_sponsorship_availability: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def token

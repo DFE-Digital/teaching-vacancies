@@ -5,7 +5,9 @@ module Jobseekers
     include Multistep::Form
 
     ROLES = %i[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher deputy_headteacher
-               headteacher teaching_assistant higher_level_teaching_assistant education_support sendco].freeze
+               headteacher teaching_assistant higher_level_teaching_assistant education_support other_teaching_support
+               sendco administration_hr_data_and_finance catering_cleaning_and_site_management it_support
+               pastoral_health_and_welfare other_leadership other_support].freeze
     PHASES = %i[nursery primary middle secondary through].freeze
     WORKING_PATTERNS = %i[full_time part_time flexible job_share term_time].freeze
 
@@ -21,6 +23,18 @@ module Jobseekers
 
       validates :roles, presence: true
       validate :validate_roles
+
+      def teaching_job_roles_options
+        Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
+      end
+
+      def teaching_support_job_roles_options
+        Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
+      end
+
+      def non_teaching_support_job_roles_options
+        Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
+      end
 
       def options
         ROLES.to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.role_options.#{opt}")] }

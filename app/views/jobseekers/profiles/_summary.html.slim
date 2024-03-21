@@ -8,7 +8,7 @@ p class="govuk-!-margin-bottom-3" = jobseeker_status(profile)
       - if (roles = job_preferences.roles).present?
         - summary_list.with_row do |row|
           - row.with_key text: t(".roles", count: roles.count)
-          - row.with_value text: humanize_array(roles)
+          - row.with_value text: job_preferences.roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", ")
       - if (phases = job_preferences.phases).present?
         - summary_list.with_row do |row|
           - row.with_key text: t(".education_phases", count: phases.count)

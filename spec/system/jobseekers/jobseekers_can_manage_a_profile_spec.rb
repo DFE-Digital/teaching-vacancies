@@ -697,13 +697,16 @@ RSpec.describe "Jobseekers can manage their profile" do
     it "allows the jobseeker to fill in their job preferences" do
       click_link("Add job preferences")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
-      expect(page).to have_css("h3", text: "Job preferencesRoles")
+      expect(page).to have_css("h1", text: "What roles are you interested in?")
+      expect(page).to have_css("h3", text: "Teaching")
+      expect(page).to have_css("h3", text: "Teaching support")
+      expect(page).to have_css("h3", text: "Non-teaching support")
 
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
       expect(page).to have_css("h2", text: "There is a problem")
 
-      check "Teacher"
+      all("label", text: "Teacher", exact_text: true)[0].sibling("input").set(true)
       check "Head of year or phase"
       check "Assistant headteacher"
       click_on I18n.t("buttons.save_and_continue")
@@ -843,7 +846,10 @@ RSpec.describe "Jobseekers can manage their profile" do
       it "changes the journey" do
         click_link("Add job preferences")
         expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
-        expect(page).to have_css("h3", text: "Job preferencesRoles")
+        expect(page).to have_css("h1", text: "What roles are you interested in?")
+        expect(page).to have_css("h3", text: "Teaching")
+        expect(page).to have_css("h3", text: "Teaching support")
+        expect(page).to have_css("h3", text: "Non-teaching support")
 
         # TODO: change when we have non-teaching roles
         check "Teacher"

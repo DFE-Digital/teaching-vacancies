@@ -12,7 +12,8 @@ module VacancyHelpers
   end
 
   def fill_in_job_role_form_fields(vacancy)
-    choose I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_role}")
+    checkbox_label = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_role}")
+    find("label", text: checkbox_label, visible: true).click
   end
 
   def fill_in_education_phases_form_fields(vacancy)
@@ -223,7 +224,10 @@ module VacancyHelpers
   def verify_vacancy_show_page_details(vacancy)
     vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.readable_job_roles)
+    readable_job_roles = vacancy.job_roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }
+    readable_job_roles.each do |role|
+      expect(page).to have_content(role)
+    end
     sponsorship_text = vacancy.visa_sponsorship_available ? "Skilled Worker visas can be sponsored" : "Visas cannot be sponsored"
     expect(page).to have_content(sponsorship_text)
     vacancy.subjects.each { |subject| expect(page).to have_content subject }

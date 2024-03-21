@@ -391,6 +391,13 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
           teacher: Teacher
           teaching_assistant: Teaching assistant
+          other_teaching_support: Other teaching support
+          administration_hr_data_and_finance: Administration, HR, data and finance
+          catering_cleaning_and_site_management: Catering, cleaning and site management
+          it_support: IT support
+          pastoral_health_and_welfare: Pastoral, health and welfare
+          other_leadership: Other leadership roles
+          other_support: Other support roles
         key_stages_options:
           early_years: Early years (ages 0 to 5)
           ks1: Key stage 1 (ages 5 to 7)

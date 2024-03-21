@@ -105,7 +105,6 @@ class Vacancy < ApplicationRecord
                   if: proc { |vacancy| vacancy.listed? }
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
-  before_save :on_job_roles_set_job_role
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
@@ -268,19 +267,6 @@ class Vacancy < ApplicationRecord
 
   def slug_candidates
     [:job_title, %i[job_title organisation_name], %i[job_title location]]
-  end
-
-  def on_job_roles_set_job_role
-    return unless job_roles_changed?
-
-    # job_roles contain an individual role unless middle or senior leader roles that may contain all their options
-    self.job_role = if job_roles.intersect? SENIOR_LEADER_JOB_ROLES
-                      "senior_leader"
-                    elsif job_roles.intersect? MIDDLE_LEADER_JOB_ROLES
-                      "middle_leader"
-                    else
-                      job_roles.first
-                    end
   end
 
   def on_expired_vacancy_feedback_submitted_update_stats_updated_at

@@ -7,15 +7,16 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   let(:current_publisher_is_part_of_school_group?) { true }
   let(:previous_step) { :review }
   let(:back_path) { "/" }
+  let(:current_step) { :job_location }
   let(:steps) { %i[job_location job_role review] }
 
   let(:vacancy_step_process) do
-    instance_double(Publishers::Vacancies::VacancyStepProcess, current_step: "job_location",
+    instance_double(Publishers::Vacancies::VacancyStepProcess, current_step: current_step,
                                                                vacancy: vacancy,
                                                                organisation: organisation)
   end
 
-  subject { described_class.new(vacancy, vacancy_step_process, back_path: back_path) }
+  subject { described_class.new(vacancy, vacancy_step_process, back_path: back_path, fieldset: false) }
 
   before do
     allow(subject).to receive(:current_organisation).and_return(organisation)
