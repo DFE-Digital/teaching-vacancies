@@ -5,6 +5,7 @@ class SubscriptionPresenter < BasePresenter
   SEARCH_CRITERIA_SORT_ORDER = %w[organisation_slug
                                   keyword
                                   location
+                                  job_roles
                                   teaching_job_roles
                                   teaching_support_job_roles
                                   non_teaching_support_job_roles
@@ -50,6 +51,8 @@ class SubscriptionPresenter < BasePresenter
 
   def job_roles_filter(field, value)
     case field
+    when "job_roles"
+      render_legacy_job_roles_filter(value)
     when "teaching_job_roles"
       render_teaching_job_roles_filter(value)
     when "teaching_support_job_roles"
@@ -69,6 +72,10 @@ class SubscriptionPresenter < BasePresenter
     elsif LocationPolygon.contain?(location)
       { location: I18n.t("subscriptions.location_in", location: location) }
     end
+  end
+
+  def render_legacy_job_roles_filter(value)
+    { job_role: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", ") }
   end
 
   def render_teaching_job_roles_filter(value)
