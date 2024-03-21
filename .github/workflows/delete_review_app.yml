@@ -13,6 +13,10 @@ on:
       pr_number:
         description: 'Pull Request number to delete (EG: 1234 for review-pr-1234)'
         required: true
+      skip_status_check:
+        description: 'Attempt deletion even if the review app status check fails'
+        required: false
+        type: boolean
 
 concurrency: workflow-Build-and-deploy-${{ github.ref }}
 
@@ -62,11 +66,11 @@ jobs:
 
     - name: check review status
       run: |
-        HTTP_CODE=$(curl -o/dev/null -s -w "%{http_code}" https://teaching-vacancies-review-pr-${{env.PR_NUMBER}}.test.teacherservices.cloud)
-        echo "HTTP_CODE=$HTTP_CODE"  >> $GITHUB_ENV
+        HTTP_CODE=$(curl -o/dev/null -s -w "%{http_code}" https://${{secrets.HTTP_BASIC_USER}}:${{secrets.HTTP_BASIC_PASSWORD}}@teaching-vacancies-review-pr-${{env.PR_NUMBER}}.test.teacherservices.cloud)
+        echo "HTTP_CODE=$HTTP_CODE" >> $GITHUB_ENV
 
     - name: Exit whole workflow if wait was not successful and review app is not up
-      if: steps.wait_for_deployment.outputs.conclusion != 'success' && env.HTTP_CODE != '200'
+      if: inputs.skip_status_check != true && steps.wait_for_deployment.outputs.conclusion != 'success' && env.HTTP_CODE != '200'
       run: exit 1
 
     - uses: actions/checkout@v4
@@ -114,7 +118,7 @@ jobs:
 
     - name: Send failure message to twd_tv_dev channel
       if: failure()
-      uses: rtCamp/action-slack-notify@v2.2.1
+      uses: rtCamp/action-slack-notify@v2.3.0
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment
