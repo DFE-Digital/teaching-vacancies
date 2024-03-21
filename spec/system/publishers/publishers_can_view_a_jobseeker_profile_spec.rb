@@ -28,7 +28,7 @@ RSpec.describe "Jobseeker profiles", type: :system do
       "Other teaching support, Administration, HR, data and finance, " \
       "Catering, cleaning and site management, IT support, " \
       "Pastoral, health and welfare, Other leadership roles, " \
-      "Other support roles", "Senior leader", "Middle leader"
+      "Other support roles, Senior leader, Middle leader",
     )
     expect(page).to have_content(jobseeker_profile.employments.first.subjects)
     expect(page).not_to have_content("Location")
