@@ -2,42 +2,81 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can view a job application" do
   let(:jobseeker) { create(:jobseeker) }
-  let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
     visit jobseekers_job_application_path(job_application)
   end
 
-  it "displays all the job application information" do
-    expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(job_application.status)
+  context "when the vacancy is for a teaching role" do
+    let(:vacancy) { create(:vacancy, organisations: [build(:school)], job_roles: ["teacher"]) }
 
-    within ".navigation-list-component", text: I18n.t("jobseekers.job_applications.show.application_sections") do
-      expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_details.heading"), href: "#personal_details")
-      expect(page).to have_link(I18n.t("jobseekers.job_applications.show.professional_status.heading"), href: "#professional_status")
-      expect(page).to have_link(I18n.t("jobseekers.job_applications.show.qualifications.heading"), href: "#qualifications")
-      expect(page).to have_link(I18n.t("jobseekers.job_applications.show.employment_history.heading"), href: "#employment_history")
-      expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_statement.heading"), href: "#personal_statement")
-      expect(page).to have_link(I18n.t("jobseekers.job_applications.show.references.heading"), href: "#references")
-      expect(page).to have_link(I18n.t("jobseekers.job_applications.show.ask_for_support.heading"), href: "#ask_for_support")
-      expect(page).to have_link(I18n.t("jobseekers.job_applications.show.declarations.heading"), href: "#declarations")
+    it "displays all the relevant job application information (including professional status data)" do
+      expect(page).to have_content(vacancy.job_title)
+      expect(page).to have_content(job_application.status)
+
+      within ".navigation-list-component", text: I18n.t("jobseekers.job_applications.show.application_sections") do
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_details.heading"), href: "#personal_details")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.professional_status.heading"), href: "#professional_status")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.qualifications.heading"), href: "#qualifications")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.employment_history.heading"), href: "#employment_history")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_statement.heading"), href: "#personal_statement")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.references.heading"), href: "#references")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.ask_for_support.heading"), href: "#ask_for_support")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.declarations.heading"), href: "#declarations")
+      end
+
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_details.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.professional_status.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.qualifications.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.employment_history.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_statement.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.references.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.ask_for_support.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.declarations.heading"))
+
+      expect_work_history_to_be_ordered_most_recent_first
+
+      within ".timeline-component__item", text: I18n.t("jobseekers.job_applications.status_timestamps.submitted") do
+        expect(page).to have_content("#{format_date(job_application.submitted_at.to_date)} at #{format_time(job_application.submitted_at)}")
+      end
     end
+  end
 
-    expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_details.heading"))
-    expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.professional_status.heading"))
-    expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.qualifications.heading"))
-    expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.employment_history.heading"))
-    expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_statement.heading"))
-    expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.references.heading"))
-    expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.ask_for_support.heading"))
-    expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.declarations.heading"))
+  context "when the vacancy is for a non-teaching role" do
+    let(:vacancy) { create(:vacancy, organisations: [build(:school)], job_roles: ["other_support"]) }
 
-    expect_work_history_to_be_ordered_most_recent_first
+    it "displays all the relevant job application information (does not include professional status data)" do
+      expect(page).to have_content(vacancy.job_title)
+      expect(page).to have_content(job_application.status)
 
-    within ".timeline-component__item", text: I18n.t("jobseekers.job_applications.status_timestamps.submitted") do
-      expect(page).to have_content("#{format_date(job_application.submitted_at.to_date)} at #{format_time(job_application.submitted_at)}")
+      within ".navigation-list-component", text: I18n.t("jobseekers.job_applications.show.application_sections") do
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_details.heading"), href: "#personal_details")
+        expect(page).not_to have_link(I18n.t("jobseekers.job_applications.show.professional_status.heading"), href: "#professional_status")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.qualifications.heading"), href: "#qualifications")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.employment_history.heading"), href: "#employment_history")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_statement.heading"), href: "#personal_statement")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.references.heading"), href: "#references")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.ask_for_support.heading"), href: "#ask_for_support")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.declarations.heading"), href: "#declarations")
+      end
+
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_details.heading"))
+      expect(page).not_to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.professional_status.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.qualifications.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.employment_history.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_statement.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.references.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.ask_for_support.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.declarations.heading"))
+
+      expect_work_history_to_be_ordered_most_recent_first
+
+      within ".timeline-component__item", text: I18n.t("jobseekers.job_applications.status_timestamps.submitted") do
+        expect(page).to have_content("#{format_date(job_application.submitted_at.to_date)} at #{format_time(job_application.submitted_at)}")
+      end
     end
   end
 
