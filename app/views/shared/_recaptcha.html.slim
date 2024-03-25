@@ -1,0 +1,8 @@
+- if @show_recaptcha # Recapcha v2(visible)
+  - id = local_assigns[:form].present? ? "#{local_assigns[:form].object_name.dasherize}-recaptcha-field-error" : "recaptcha-field-error"
+  .govuk-form-group.govuk-form-group--error
+    label.govuk-label.govuk-label--m for=id
+      = t("recaptcha.label")
+    = recaptcha_tags(nonce: request.content_security_policy_nonce, id:)
+- else # Recapcha v3(invisible)
+  = recaptcha_v3(action: controller_name, nonce: request.content_security_policy_nonce, site_key: ENV.fetch("RECAPTCHA_V3_SITE_KEY", ""))

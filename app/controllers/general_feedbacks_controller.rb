@@ -13,10 +13,10 @@ class GeneralFeedbacksController < ApplicationController
     if @general_feedback_form.invalid?
       render :new
     else
-      log_invalid_recaptcha(form: @general_feedback_form, score: recaptcha_reply["score"]) if recaptcha_is_invalid?
-      @feedback.recaptcha_score = recaptcha_reply&.dig("score")
-      @feedback.save
-      redirect_to root_path, success: t(".success")
+      recaptcha_protected(form: @general_feedback_form) do
+        @feedback.save
+        redirect_to root_path, success: t(".success")
+      end
     end
   end
 

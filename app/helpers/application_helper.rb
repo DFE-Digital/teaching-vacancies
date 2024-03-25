@@ -25,10 +25,6 @@ module ApplicationHelper
     end
   end
 
-  def recaptcha
-    recaptcha_v3(action: controller_name, nonce: request.content_security_policy_nonce)
-  end
-
   def footer_links
     [
       { text: "Cookies", href: cookies_preferences_path },

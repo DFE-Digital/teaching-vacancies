@@ -9,16 +9,18 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
   let(:jobseeker) { build_stubbed(:jobseeker) }
 
   describe "recaptcha" do
-    context "when verify_recaptcha is false" do
+    context "when recaptcha V3 check fails" do
       before do
         allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
       end
 
-      it "registers the recaptcha failure while still creating the job alert" do
+      it "requests the user to pass a recaptcha V2 check" do
         visit new_subscription_path(search_criteria: { keyword: "test", location: "London" })
         fill_in_subscription_fields
-        expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
-        expect { click_on I18n.t("buttons.subscribe") }.to change { Subscription.count }.by(1)
+        expect { click_on I18n.t("buttons.subscribe") }.not_to(change { Subscription.count })
+        expect(page).to have_content("There is a problem")
+        expect(page).to have_content(I18n.t("recaptcha.error"))
+        expect(page).to have_content(I18n.t("recaptcha.label"))
       end
     end
   end

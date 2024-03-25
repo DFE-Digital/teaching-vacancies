@@ -59,21 +59,22 @@ RSpec.describe "Requesting support", recaptcha: true, vcr: true, zendesk: true d
     end
   end
 
-  context "when recaptcha is invalid" do
+  context "when recaptcha V3 check fails" do
     before do
       allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
     end
 
-    scenario "logs the invalid recaptcha while still recording the support request" do
+    scenario "requests the user to pass a recaptcha V2 check" do
       visit root_path
       click_on "Get help or report a problem"
       expect(page).to have_content("Get help")
 
       fill_in_required_fields
 
-      expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
       click_on "Send message"
-      expect(page).to have_content(I18n.t("support_requests.create.success"))
+      expect(page).to have_content("There is a problem")
+      expect(page).to have_content(I18n.t("recaptcha.error"))
+      expect(page).to have_content(I18n.t("recaptcha.label"))
     end
   end
 

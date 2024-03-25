@@ -1036,3 +1036,7 @@ en:
           "23:59": 11:59pm
 
     placeholder:
+
+  recaptcha:
+    label: "Security check"
+    error: "Fill in the Security check"

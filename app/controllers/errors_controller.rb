@@ -33,10 +33,4 @@ class ErrorsController < ApplicationController
       format.json { render json: { error: "Internal server error" }, status: :internal_server_error }
     end
   end
-
-  def invalid_recaptcha
-    respond_to do |format|
-      format.html { render status: :unauthorized }
-    end
-  end
 end

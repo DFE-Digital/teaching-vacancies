@@ -22,15 +22,15 @@ class SubscriptionsController < ApplicationController
     if @form.invalid?
       render :new
     else
-      log_invalid_recaptcha(form: @form, score: recaptcha_reply["score"]) if recaptcha_is_invalid?
-      notify_new_subscription(subscription)
-
-      if jobseeker_signed_in?
-        redirect_to jobseekers_subscriptions_path, success: t(".success")
-      else
-        @jobseeker = Jobseeker.find_by(email: subscription.email)
-        store_return_location(jobseekers_subscriptions_path)
-        render :confirm
+      recaptcha_protected(form: @form) do
+        notify_new_subscription(subscription)
+        if jobseeker_signed_in?
+          redirect_to jobseekers_subscriptions_path, success: t(".success")
+        else
+          @jobseeker = Jobseeker.find_by(email: subscription.email)
+          store_return_location(jobseekers_subscriptions_path)
+          render :confirm
+        end
       end
     end
   end

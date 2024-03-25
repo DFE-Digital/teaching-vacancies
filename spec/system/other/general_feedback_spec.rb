@@ -22,7 +22,7 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
                      occupation: occupation,
                      feedback_type: "general",
                      rating: "highly_satisfied",
-                     recaptcha_score: 0.9,
+                     recaptcha_score: nil,
                      user_participation_response: "interested",
                      visit_purpose: "other_purpose",
                      visit_purpose_comment: visit_purpose_comment,
@@ -32,21 +32,22 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
     expect(page).to have_content(I18n.t("general_feedbacks.create.success"))
   end
 
-  context "when recaptcha is invalid" do
+  context "when recaptcha V3 check fails" do
     before do
       allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
     end
 
-    scenario "logs the invalid recaptcha while still recording the feedback" do
+    scenario "requests the user to pass a recaptcha V2 check" do
       visit new_feedback_path
       click_on I18n.t("buttons.submit_feedback")
       expect(page).to have_content("There is a problem")
 
       fill_in_general_feedback
 
-      expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
-      expect { click_button I18n.t("buttons.submit_feedback") }.to change(Feedback, :count).by(1)
-      expect(page).to have_content(I18n.t("general_feedbacks.create.success"))
+      expect { click_button I18n.t("buttons.submit_feedback") }.not_to change(Feedback, :count)
+      expect(page).to have_content("There is a problem")
+      expect(page).to have_content(I18n.t("recaptcha.error"))
+      expect(page).to have_content(I18n.t("recaptcha.label"))
     end
   end
 

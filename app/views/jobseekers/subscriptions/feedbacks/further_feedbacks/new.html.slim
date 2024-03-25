@@ -19,6 +19,6 @@
           = f.govuk_text_area :occupation, required: true, rows: 1
         = f.govuk_radio_button :user_participation_response, :uninterested
 
-      = recaptcha
+      = render "shared/recaptcha", form: f
 
       = f.govuk_submit t("buttons.submit"), class: "govuk-!-padding-left-8 govuk-!-padding-right-8"
