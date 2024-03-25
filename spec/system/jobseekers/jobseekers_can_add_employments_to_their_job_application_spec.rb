@@ -115,7 +115,8 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
   end
 
   context "when there is at least one role" do
-    let!(:employment) { create(:employment, organisation: "A school", job_application: job_application) }
+    let!(:employment) { create(:employment, organisation: "A school", job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01")) }
+    let!(:employment2) { create(:employment, organisation: "Some other place", job_application: job_application, started_on: Date.parse("2022-02-01"), current_role: "yes") }
 
     it "allows jobseekers to delete employment history" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)
@@ -141,6 +142,34 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
       expect(page).not_to have_content("A school")
       expect(page).to have_content("A different school")
+    end
+
+    context "when there are gaps in work history" do
+      it "will not allow the user to complete the employment history section until the gaps are explained" do
+        visit jobseekers_job_application_build_path(job_application, :employment_history)
+        expect(page).to have_content "You have a gap in your work history"
+        choose("Yes, I've completed this section")
+        click_button("Save and continue")
+
+        expect(page).to have_content("You must provide your full work history, including the reason for any gaps in employment")
+        expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history))
+
+        click_on I18n.t("buttons.add_reason_for_break")
+
+        expect(page).to have_field("jobseekers_break_form_started_on_1i", with: "2021")
+        expect(page).to have_field("jobseekers_break_form_started_on_2i", with: "2")
+        expect(page).to have_field("jobseekers_break_form_ended_on_1i", with: "2022")
+        expect(page).to have_field("jobseekers_break_form_ended_on_2i", with: "2")
+
+        fill_in "Enter reasons for gap in work history", with: "Travelling around the world"
+        click_on I18n.t("buttons.continue")
+
+        choose("Yes, I've completed this section")
+        click_button("Save and continue")
+
+        expect(page).not_to have_content("You must provide your full work history, including the reason for any gaps in employment")
+        expect(page).not_to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history))
+      end
     end
   end
 end

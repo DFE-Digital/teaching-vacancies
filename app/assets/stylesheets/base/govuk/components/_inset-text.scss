@@ -18,6 +18,14 @@
     }
   }
 
+  &--red {
+    border-left-color: govuk-colour('red');
+
+    .govuk-inset-text--header {
+      color: govuk-colour('red');
+    }
+  }
+
   &--narrow {
     border-left-width: 5px;
     padding-right: 0;
