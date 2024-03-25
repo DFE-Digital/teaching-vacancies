@@ -69,16 +69,19 @@
               span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
 
         - if (gap = job_application.unexplained_employment_gaps[employment]).present?
-          = govuk_inset_text classes: "govuk-inset-text--blue" do
+          = govuk_inset_text classes: "govuk-inset-text--red" do
             p.govuk-body class="govuk-!-margin-bottom-0" = t(".gap_with_duration", duration: distance_of_time_in_words(gap[:started_on], gap[:ended_on]))
             p.govuk-body
               = govuk_link_to t(employments.job.none? ? "buttons.add_job" : "buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application)
               = " or "
               = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_job_application_break_path(job_application, started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
 
+    - unexplained_employment_gaps_present = job_application.unexplained_employment_gaps.present?
+    
     = form_for form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
       = f.govuk_collection_radio_buttons :employment_history_section_completed, %w[true false], :to_s
+      = f.hidden_field :unexplained_employment_gaps_present, value: unexplained_employment_gaps_present
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
         span.govuk-caption-m

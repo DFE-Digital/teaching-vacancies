@@ -76,9 +76,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_08_173633) do
     t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "organisation_ciphertext"
     t.integer "employment_type", default: 0
     t.text "reason_for_break", default: ""
+    t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
     t.uuid "jobseeker_profile_id"
@@ -242,6 +242,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_08_173633) do
     t.boolean "qualifications_section_completed"
     t.string "safeguarding_issue"
     t.text "safeguarding_issue_details"
+    t.boolean "unexplained_employment_gaps_present"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
