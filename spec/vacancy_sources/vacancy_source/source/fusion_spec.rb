@@ -99,8 +99,8 @@ RSpec.describe VacancySource::Source::Fusion do
       context "when the source role is 'learning_support'" do
         let(:source_roles) { ["learning_support"] }
 
-        it "maps the source role to 'education_support' in the vacancy" do
-          expect(vacancy.job_roles).to eq(["education_support"])
+        it "maps the source role to 'other_support' in the vacancy" do
+          expect(vacancy.job_roles).to eq(["other_support"])
         end
       end
 

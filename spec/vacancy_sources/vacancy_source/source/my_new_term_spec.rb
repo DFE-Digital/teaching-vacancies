@@ -152,8 +152,8 @@ RSpec.describe VacancySource::Source::MyNewTerm do
       context "when the source role is '#{role}'" do
         let(:source_roles) { [role] }
 
-        it "maps the source role to '[education_support]' in the vacancy" do
-          expect(vacancy.job_roles).to eq(["education_support"])
+        it "maps the source role to '[other_support]' in the vacancy" do
+          expect(vacancy.job_roles).to eq(["other_support"])
         end
       end
     end

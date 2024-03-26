@@ -111,7 +111,7 @@ class VacancySource::Source::Fusion
         Vacancy::MIDDLE_LEADER_JOB_ROLES
       else
         Array.wrap(role.gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
-                       .gsub("learning_support", "education_support")
+                       .gsub("learning_support", "other_support")
                        .gsub(/\s+/, ""))
       end
     end

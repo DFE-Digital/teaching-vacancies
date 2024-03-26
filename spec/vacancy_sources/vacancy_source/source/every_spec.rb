@@ -172,7 +172,7 @@ RSpec.describe VacancySource::Source::Every do
         let(:job_roles) { [role] }
 
         it "maps the source roles to '[education_support]' in the vacancy" do
-          expect(vacancy.job_roles).to eq(["education_support"])
+          expect(vacancy.job_roles).to eq(["other_support"])
         end
       end
     end

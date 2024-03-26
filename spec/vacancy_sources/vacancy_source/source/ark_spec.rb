@@ -186,12 +186,28 @@ RSpec.describe VacancySource::Source::Ark do
         end
       end
 
-      ["SEN/Inclusion Support", "Pastoral", "Technician", "Librarian"].each do |role|
+      context "when the source role is 'Pastoral'" do
+        let(:job_roles) { ["Pastoral"] }
+
+        it "maps the source role to '[pastoral_health_and_welfare]' in the vacancy" do
+          expect(vacancy.job_roles).to eq(["pastoral_health_and_welfare"])
+        end
+      end
+
+      context "when the source role is 'Technician'" do
+        let(:job_roles) { ["Technician"] }
+
+        it "maps the source role to '[it_support]' in the vacancy" do
+          expect(vacancy.job_roles).to eq(["it_support"])
+        end
+      end
+
+      ["SEN/Inclusion Support", "Librarian"].each do |role|
         context "when the source role is '#{role}'" do
           let(:job_roles) { [role] }
 
-          it "maps the source role to '[education_support]' in the vacancy" do
-            expect(vacancy.job_roles).to eq(["education_support"])
+          it "maps the source role to '[other_support]' in the vacancy" do
+            expect(vacancy.job_roles).to eq(["other_support"])
           end
         end
       end

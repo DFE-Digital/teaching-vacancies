@@ -94,7 +94,7 @@ class VacancySource::Source::Broadbean
                        .gsub("assistant_headteacher_principal", "assistant_headteacher")
                        .gsub("headteacher_principal", "headteacher")
                        .gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
-                       .gsub(/learning_support|other_support|science_technician/, "education_support")
+                       .gsub(/learning_support|other_support|science_technician/, "other_support")
                        .gsub(/\s+/, ""))
       end
     end
