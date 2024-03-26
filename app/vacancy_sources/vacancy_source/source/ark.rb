@@ -129,8 +129,7 @@ class VacancySource::Source::Ark
         .gsub(/Head of Year|Head of Phase/, "head_of_year_or_phase")
         .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
         .gsub("Pastoral", "pastoral_health_and_welfare")
-        .gsub("Technician", "it_support")
-        .gsub(%r{SEN/Inclusion Support|Librarian}, "other_support")
+        .gsub(%r{SEN/Inclusion Support|Technician|Librarian}, "other_support")
         .gsub("SEN/Inclusion Teacher", "sendco"))
     end
   end
