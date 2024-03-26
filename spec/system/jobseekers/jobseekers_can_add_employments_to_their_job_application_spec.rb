@@ -116,12 +116,12 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
   context "when there is at least one role" do
     let!(:employment) { create(:employment, organisation: "A school", job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01")) }
-    let!(:employment2) { create(:employment, organisation: "Some other place", job_application: job_application, started_on: Date.parse("2022-02-01"), current_role: "yes") }
+    let!(:employment2) { create(:employment, job_title: "current role", organisation: "Some other place", job_application: job_application, started_on: Date.parse("2022-02-01"), current_role: "yes") }
 
     it "allows jobseekers to delete employment history" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)
 
-      click_on I18n.t("buttons.delete")
+      click_on "Delete Teacher"
 
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
       expect(page).to have_content(I18n.t("jobseekers.job_applications.employments.destroy.success"))
@@ -131,7 +131,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     it "allows jobseekers to edit employment history" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)
 
-      click_on I18n.t("buttons.change")
+      click_on "Change Teacher"
 
       fill_in "School or other organisation", with: ""
       validates_step_complete(button: I18n.t("buttons.save_employment"))
