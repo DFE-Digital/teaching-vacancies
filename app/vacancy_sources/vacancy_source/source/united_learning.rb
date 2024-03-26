@@ -82,14 +82,20 @@ class VacancySource::Source::UnitedLearning
   end
 
   def job_roles_for(item)
-    role = item["Job_roles"]&.strip
-    return [] if role.blank?
+    roles = item["Job_roles"]&.strip&.split(",")
+    return [] if roles.blank?
 
-    # Translate legacy senior/middle leader into all the granular roles split from them
-    return Vacancy::SENIOR_LEADER_JOB_ROLES if %w[senior_leader leadership].any? { |r| role.include? r }
-    return Vacancy::MIDDLE_LEADER_JOB_ROLES if role.include? "middle_leader"
+    senior_roles = %w[senior_leader leadership]
 
-    Array.wrap(role.gsub(/\s+/, ""))
+    roles.flat_map do |role|
+      if senior_roles.any?(role)
+        Vacancy::SENIOR_LEADER_JOB_ROLES
+      elsif role == "middle_leader"
+        Vacancy::MIDDLE_LEADER_JOB_ROLES
+      else
+        role.gsub(/\s+/, "")
+      end
+    end
   end
 
   def working_patterns_for(item)

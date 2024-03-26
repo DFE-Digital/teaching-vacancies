@@ -99,16 +99,22 @@ class VacancySource::Source::Fusion
   end
 
   def job_roles_for(item)
-    role = item["jobRole"]&.strip
-    return [] if role.blank?
+    roles = item["jobRole"]&.strip&.split(",")
+    return [] if roles.blank?
 
-    # Translate legacy senior/middle leader into all the granular roles split from them
-    return Vacancy::SENIOR_LEADER_JOB_ROLES if role.include? "senior_leader"
-    return Vacancy::MIDDLE_LEADER_JOB_ROLES if role.include? "middle_leader"
+    roles.flat_map do |role|
+      # Translate legacy senior/middle leader into all the granular roles split from them
 
-    Array.wrap(role.gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
-                   .gsub("learning_support", "education_support")
-                   .gsub(/\s+/, ""))
+      if role == "senior_leader"
+        Vacancy::SENIOR_LEADER_JOB_ROLES
+      elsif role == "middle_leader"
+        Vacancy::MIDDLE_LEADER_JOB_ROLES
+      else
+        Array.wrap(role.gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
+                       .gsub("learning_support", "other_support")
+                       .gsub(/\s+/, ""))
+      end
+    end
   end
 
   def ect_status_for(item)

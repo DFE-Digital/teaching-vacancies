@@ -10,14 +10,14 @@ RSpec.describe VacancySource::Source::Ark do
 
   describe "enumeration" do
     let(:vacancy) { subject.first }
-    let(:job_role) { "teaching_assistant" }
+    let(:job_roles) { %w[teaching_assistant] }
 
     let(:expected_vacancy) do
       {
         job_title: "Tutor Fellow (Primary or Secondary)",
         job_advert: "A one year programme that prepares you to enter teacher training, in primary or secondary.",
         salary: "From £24,454",
-        job_roles: [job_role],
+        job_roles: job_roles,
         key_stages: [],
         working_patterns: %w[full_time],
         contract_type: "fixed_term",
@@ -118,11 +118,11 @@ RSpec.describe VacancySource::Source::Ark do
     end
 
     describe "job roles mapping" do
-      let(:response_body) { super().gsub("Teaching Assistant", job_role) }
+      let(:response_body) { super().gsub("Teaching Assistant", job_roles.join(",")) }
 
       ["Teaching Assistant", "Cover Support Teaching Assistant"].each do |role|
         context "when the source role is '#{role}'" do
-          let(:job_role) { role }
+          let(:job_roles) { [role] }
 
           it "maps the source role to '[teaching_assistant]' in the vacancy" do
             expect(vacancy.job_roles).to eq(["teaching_assistant"])
@@ -132,7 +132,7 @@ RSpec.describe VacancySource::Source::Ark do
 
       ["Teacher", "Trainee Teacher", "Cover Support Teacher", "Peripatetic Music", "TLRs", "Lead Practitioner"].each do |role|
         context "when the source role is '#{role}'" do
-          let(:job_role) { role }
+          let(:job_roles) { [role] }
 
           it "maps the source role to '[teacher]' in the vacancy" do
             expect(vacancy.job_roles).to eq(["teacher"])
@@ -142,7 +142,7 @@ RSpec.describe VacancySource::Source::Ark do
 
       ["Principal", "Head of School", "Associate Principal", "Executive Principal"].each do |role|
         context "when the source role is '#{role}'" do
-          let(:job_role) { role }
+          let(:job_roles) { [role] }
 
           it "maps the source role to '[headteacher]' in the vacancy" do
             expect(vacancy.job_roles).to eq(["headteacher"])
@@ -151,7 +151,7 @@ RSpec.describe VacancySource::Source::Ark do
       end
 
       context "when the source role is 'Vice Principal'" do
-        let(:job_role) { "Vice Principal" }
+        let(:job_roles) { ["Vice Principal"] }
 
         it "maps the source role to '[deputy_headteacher]' in the vacancy" do
           expect(vacancy.job_roles).to eq(["deputy_headteacher"])
@@ -159,7 +159,7 @@ RSpec.describe VacancySource::Source::Ark do
       end
 
       context "when the source role is 'Assistant Principal'" do
-        let(:job_role) { "Assistant Principal" }
+        let(:job_roles) { ["Assistant Principal"] }
 
         it "maps the source role to '[assistant_headteacher]' in the vacancy" do
           expect(vacancy.job_roles).to eq(["assistant_headteacher"])
@@ -168,7 +168,7 @@ RSpec.describe VacancySource::Source::Ark do
 
       ["Head of Department", "Head of Dept"].each do |role|
         context "when the source role is '#{role}'" do
-          let(:job_role) { role }
+          let(:job_roles) { [role] }
 
           it "maps the source role to '[head_of_department_or_curriculum]' in the vacancy" do
             expect(vacancy.job_roles).to eq(["head_of_department_or_curriculum"])
@@ -178,7 +178,7 @@ RSpec.describe VacancySource::Source::Ark do
 
       ["Head of Phase", "Head of Year"].each do |role|
         context "when the source role is '#{role}'" do
-          let(:job_role) { role }
+          let(:job_roles) { [role] }
 
           it "maps the source role to '[head_of_year_or_phase]' in the vacancy" do
             expect(vacancy.job_roles).to eq(["head_of_year_or_phase"])
@@ -186,21 +186,37 @@ RSpec.describe VacancySource::Source::Ark do
         end
       end
 
-      ["SEN/Inclusion Support", "Pastoral", "Technician", "Librarian"].each do |role|
-        context "when the source role is '#{role}'" do
-          let(:job_role) { role }
+      context "when the source role is 'Pastoral'" do
+        let(:job_roles) { ["Pastoral"] }
 
-          it "maps the source role to '[education_support]' in the vacancy" do
-            expect(vacancy.job_roles).to eq(["education_support"])
+        it "maps the source role to '[pastoral_health_and_welfare]' in the vacancy" do
+          expect(vacancy.job_roles).to eq(["pastoral_health_and_welfare"])
+        end
+      end
+
+      ["SEN/Inclusion Support", "Technician", "Librarian"].each do |role|
+        context "when the source role is '#{role}'" do
+          let(:job_roles) { [role] }
+
+          it "maps the source role to '[other_support]' in the vacancy" do
+            expect(vacancy.job_roles).to eq(["other_support"])
           end
         end
       end
 
       context "when the source role is 'SEN/Inclusion Teacher'" do
-        let(:job_role) { "SEN/Inclusion Teacher" }
+        let(:job_roles) { ["SEN/Inclusion Teacher"] }
 
         it "maps the source role to '[sendco]' in the vacancy" do
           expect(vacancy.job_roles).to eq(["sendco"])
+        end
+      end
+
+      context "when the source has multiple roles" do
+        let(:job_roles) { %w[teaching_assistant deputy_headteacher] }
+
+        it "maps the source roles to '[teaching_assistant, deputy_headteacher]' in the vacancy" do
+          expect(vacancy.job_roles).to eq(%w[teaching_assistant deputy_headteacher])
         end
       end
     end
