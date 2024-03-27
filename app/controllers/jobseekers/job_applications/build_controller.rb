@@ -81,22 +81,24 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_params
-    if form.class == Jobseekers::JobApplication::EmploymentHistoryForm
-      update_params = form_params.except(:unexplained_employment_gaps_present)
-    else
-      update_params = form_params
-    end
-
     if step_incomplete?
-      update_params.merge(
+      update_fields.merge(
         completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
         in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
       )
     else
-      update_params.merge(
+      update_fields.merge(
         completed_steps: job_application.completed_steps.append(step.to_s).uniq,
         in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
       )
+    end
+  end
+
+  def update_fields
+    if form.instance_of?(Jobseekers::JobApplication::EmploymentHistoryForm)
+      form_params.except(:unexplained_employment_gaps_present)
+    else
+      form_params
     end
   end
 
