@@ -48,11 +48,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def form_attributes
     case action_name
     when "show"
-      if step.name == "employment_history"
-        job_application.slice(form_class.fields - [:unexplained_employment_gaps_present])
-      else
-        job_application.slice(form_class.fields)
-      end
+      job_application.slice(form_class.storable_fields)
     when "update"
       form_params
     end
@@ -95,11 +91,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_fields
-    if form.instance_of?(Jobseekers::JobApplication::EmploymentHistoryForm)
-      form_params.except(:unexplained_employment_gaps_present)
-    else
-      form_params
-    end
+    form_params.except(*form_class.unstorable_fields)
   end
 
   def step_incomplete?
