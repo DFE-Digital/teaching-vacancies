@@ -22,6 +22,7 @@ module RecaptchaChecking
   end
 
   def recaptcha_v3_is_valid?
+    return false
     verify_recaptcha(action: controller_name,
                      minimum_score: SUSPICIOUS_RECAPTCHA_V3_THRESHOLD,
                      secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))
