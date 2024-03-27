@@ -77,7 +77,7 @@
               = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_job_application_break_path(job_application, started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
 
     - unexplained_employment_gaps_present = job_application.unexplained_employment_gaps.present?
-    
+
     = form_for form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
       = f.govuk_collection_radio_buttons :employment_history_section_completed, %w[true false], :to_s
