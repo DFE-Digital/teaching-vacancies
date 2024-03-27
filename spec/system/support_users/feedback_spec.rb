@@ -33,6 +33,7 @@ RSpec.describe "Feedback supportal section" do
       feedback_type: :job_alert,
       comment: "Some job alert feedback text",
       occupation: "Teacher",
+      rating: nil,
     )
   end
 
@@ -67,6 +68,7 @@ RSpec.describe "Feedback supportal section" do
     create(
       :feedback,
       feedback_type: :job_alert,
+      rating: nil,
       comment: "Oh wow!",
       occupation: "Teacher",
       created_at: "2022-03-17 10:00",

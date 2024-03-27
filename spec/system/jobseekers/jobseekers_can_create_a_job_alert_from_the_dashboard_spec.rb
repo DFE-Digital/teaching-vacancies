@@ -26,18 +26,20 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
       and_the_job_alert_is_on_the_index_page
     end
 
-    context "when verify_recaptcha is false" do
+    context "when recaptcha V3 check fails" do
       before do
         allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
       end
 
-      it "registers the recaptcha failure while still creating the job alert" do
+      it "requests the user to pass a recaptcha V2 check" do
         within ".empty-section-component" do
           click_on I18n.t("jobseekers.subscriptions.index.link_create")
         end
-        expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
-        expect { create_a_job_alert }.to change { Subscription.count }.by(1)
-        and_the_job_alert_is_on_the_index_page
+
+        expect { create_a_job_alert }.not_to(change { Subscription.count })
+        expect(page).to have_content("There is a problem")
+        expect(page).to have_content(I18n.t("recaptcha.error"))
+        expect(page).to have_content(I18n.t("recaptcha.label"))
       end
     end
   end

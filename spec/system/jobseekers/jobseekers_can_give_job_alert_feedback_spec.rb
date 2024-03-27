@@ -83,14 +83,14 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
         expect(feedback.occupation).to eq(occupation)
       end
 
-      context "when recaptcha is invalid" do
+      context "when recaptcha V3 check fails" do
         let(:verify_recaptcha) { false }
 
-        scenario "registers the recaptcha failure while still submitting the feedback" do
-          expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
+        scenario "requests the user to pass a recaptcha V2 check" do
           click_button I18n.t("buttons.submit")
-          expect(current_path).to eq root_path
-          expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.update.success"))
+          expect(page).to have_content("There is a problem")
+          expect(page).to have_content(I18n.t("recaptcha.error"))
+          expect(page).to have_content(I18n.t("recaptcha.label"))
         end
       end
     end

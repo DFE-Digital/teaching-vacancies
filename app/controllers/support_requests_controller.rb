@@ -11,16 +11,16 @@ class SupportRequestsController < ApplicationController
     if @form.invalid?
       render :new
     else
-      log_invalid_recaptcha(form: @form, score: recaptcha_reply["score"]) if recaptcha_is_invalid?
-      Zendesk.create_request!(
-        attachments: [@form.screenshot],
-        comment: @form.issue,
-        email_address: @form.email_address,
-        name: @form.name,
-        subject: @form.page,
-      )
-
-      redirect_to root_path, success: t(".success")
+      recaptcha_protected(form: @form) do
+        Zendesk.create_request!(
+          attachments: [@form.screenshot],
+          comment: @form.issue,
+          email_address: @form.email_address,
+          name: @form.name,
+          subject: @form.page,
+        )
+        redirect_to root_path, success: t(".success")
+      end
     end
   end
 

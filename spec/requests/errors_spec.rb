@@ -21,11 +21,4 @@ RSpec.describe "Errors" do
       expect(response).to have_http_status(:internal_server_error)
     end
   end
-
-  describe "GET #invalid_recaptcha" do
-    it "returns unauthorised" do
-      get invalid_recaptcha_path
-      expect(response).to have_http_status(:unauthorized)
-    end
-  end
 end

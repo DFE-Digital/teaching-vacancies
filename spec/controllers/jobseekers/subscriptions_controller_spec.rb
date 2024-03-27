@@ -29,7 +29,8 @@ RSpec.describe SubscriptionsController, recaptcha: true do
       end
 
       let(:subscription) { instance_double(Subscription).as_null_object }
-      let(:form) { instance_double(Jobseekers::SubscriptionForm) }
+      let(:errors) { instance_double(ActiveModel::Errors, add: nil) }
+      let(:form) { instance_double(Jobseekers::SubscriptionForm, errors: errors) }
       let(:subscription_form_valid?) { true }
 
       before do
@@ -44,43 +45,47 @@ RSpec.describe SubscriptionsController, recaptcha: true do
         allow(controller).to receive(:verify_recaptcha).and_return(verify_recaptcha)
       end
 
-      context "when verify_recaptcha is true" do
+      context "when verify_recaptcha V3 is true" do
         let(:verify_recaptcha) { true }
 
-        it "verifies the recaptcha" do
+        it "verifies the recaptcha once with v3" do
           expect(controller).to receive(:verify_recaptcha)
+                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
+          expect(controller).not_to receive(:verify_recaptcha).with(no_args)
           subject
         end
 
-        it "sends the action when it verifies the recaptcha" do
-          expect(controller).to receive(:verify_recaptcha)
-                                  .with(model: nil,
-                                        action: "subscriptions",
-                                        minimum_score: SubscriptionsController::SUSPICIOUS_RECAPTCHA_THRESHOLD)
-          subject
+        it "renders the subscription confirmation page" do
+          expect(subject).to render_template("confirm")
         end
 
-        it "sets the recaptcha score on the Subscription record" do
-          expect(subscription).to receive(:update).with(recaptcha_score: recaptcha_score)
-          subject
+        context "when the subscriber is a signed in jobseeker" do
+          before do
+            sign_in create(:jobseeker)
+          end
+
+          it "redirects to the subscriptions page for the jobseeker" do
+            expect(subject).to redirect_to(jobseekers_subscriptions_path)
+          end
         end
       end
 
-      context "when verify_recaptcha is false" do
+      context "when verify_recaptcha V3 is false" do
         let(:verify_recaptcha) { false }
 
         before do
           allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
         end
 
-        it "sets the recaptcha score on the Subscription record" do
-          expect(subscription).to receive(:update).with(recaptcha_score: recaptcha_score)
+        it "verifies the recaptcha once with v3 and once with v2" do
+          expect(controller).to receive(:verify_recaptcha)
+                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
+          expect(controller).to receive(:verify_recaptcha).with(no_args).once
           subject
         end
 
-        it "sends the recaptcha error to Sentry" do
-          expect(Sentry).to receive(:capture_message).with("Invalid recaptcha", level: :warning)
-          subject
+        it "renders the 'new' page" do
+          expect(subject).to render_template("new")
         end
       end
     end
