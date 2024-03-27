@@ -103,6 +103,10 @@ RSpec.describe "Jobseekers applications statuses" do
             click_link("Complete section")
           end
 
+          click_on "Add another job"
+          fill_in_current_role(start_year: jobseeker_profile.employments.first.ended_on.year.to_s, start_month: jobseeker_profile.employments.first.ended_on.month.to_s)
+          click_on "Save role"
+
           choose "Yes, I've completed this section"
           click_on "Save"
 
