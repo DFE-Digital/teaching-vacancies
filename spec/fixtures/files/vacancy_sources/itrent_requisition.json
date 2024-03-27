@@ -1,0 +1,45 @@
+{
+  "RequisitionData": {
+      "requisition": [{
+          "requisitionreference": "FF00067",
+          "requisitionname": "Class Teacher",
+          "startdate": "2023-05-01",
+          "enddate": "",
+          "applicationclosingdate": "2023-06-30",
+          "recruitingmanager": "Mr Daniel Andrews He/They",
+          "requisitionadministrator": "Mrs Kathryn Baxendale She/Her",
+          "speculativeenquiries": "F",
+          "vacancyptysrchs": {
+              "vacancyptysrch": {
+                  "requisitioncategorytypes": {
+                      "requisitioncategorytype": "Human Resources"
+                  },
+                  "language": "USA",
+                  "publish": "T",
+                  "jobtitle": "HR Business Partner",
+                  "jobdescription": "<p>Lorem Ipsum dolor sit amet</p>",
+                  "salarysearchvalue": "24000",
+                  "minimumsalary": "24000",
+                  "maximumsalary": "30000",
+                  "formattedsalarydescription": "£24,000 to £30,000 depending on working knowledge",
+                  "package": "Company Pension, excellent employee benefits, 25 days holiday + bank holidays.",
+                  "contractualhours": "37.00",
+                  "basis": "Full time",
+                  "region": "Central",
+                  "location": "Birmingham",
+                  "intranetonly": "F",
+                  "keyword1": "HR",
+                  "keyword2": "HUMAN RESOURCES",
+                  "keyword3": "ASSISTANT",
+                  "keyword4": "ADMINISTRATION",
+                  "urllinks": {
+                      "urllink": {
+                          "webview": "MHR 2022 - 10.45",
+                          "link": "https://teachvacs.itrentdemo.co.uk/ttrent_webrecruitment/wrd/run/ETREC179GF.open?WVID=2750500Wqk&VACANCY_ID=5116820Y9h"
+                      }
+                  }
+              }
+          }
+      }]
+  }
+}

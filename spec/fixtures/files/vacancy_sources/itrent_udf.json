@@ -1,0 +1,20 @@
+{
+    "itrent" : {
+        "udfs" : [{
+            "category": "TeachVacs",
+            "udf" : "FF00083 - Maths Teacher",
+            "schoolurns" : "12345",
+            "trustuid" : "456789",
+            "jobrole" : "Teacher",
+            "contracttype" : "fixed term",
+            "phase" : "secondary",
+            "publishon" : "07\/08\/2023",
+            "additionalallowances" : "TLR2a",
+            "ectsuitable" : "true",
+            "keystages" : "ks2",
+            "subjects" : "maths\nadvanced maths"
+        }],
+        "messages" : [
+        ]
+    }
+  }
