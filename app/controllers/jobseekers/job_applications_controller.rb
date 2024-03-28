@@ -116,11 +116,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def step_valid?(step)
     step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
-    form = if step.name == "employment_history"
-             step_form.new(job_application.slice(step_form.fields - [:unexplained_employment_gaps_present]))
-           else
-             step_form.new(job_application.slice(step_form.fields))
-           end
+    form = step_form.new(job_application.slice(step_form.storable_fields))
 
     form.valid?.tap do
       job_application.errors.merge!(form.errors)
