@@ -14,4 +14,8 @@ class Jobseekers::JobApplication::EmploymentHistoryForm < Jobseekers::JobApplica
 
     errors.add(:gaps, "You must provide your full work history, including the reason for any gaps in employment.")
   end
+
+  def self.unstorable_fields
+    %i[unexplained_employment_gaps_present]
+  end
 end
