@@ -37,14 +37,14 @@ module JobseekerHelpers
     fill_in "Tell us any information you think is relevant", with: "Some details about support"
   end
 
-  def fill_in_current_role
+  def fill_in_current_role(job_title: "The Best Teacher", start_month: "07", start_year: "2020")
     fill_in "School or other organisation", with: "The Best School"
-    fill_in "Job title", with: "The Best Teacher"
+    fill_in "Job title", with: job_title
     fill_in "Main duties", with: "Some details about what the main duties were"
     fill_in "Reason for leaving role", with: "It's complicated"
     fill_in "Subjects and key stages taught (optional field)", with: "English KS1"
-    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: "2019"
-    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: "09"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: start_year
+    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: start_month
     choose "Yes", name: "jobseekers_job_application_details_employment_form[current_role]"
   end
 
@@ -67,12 +67,12 @@ module JobseekerHelpers
     fill_in "jobseekers_job_application_details_employment_form[ended_on(2i)]", with: end_month
   end
 
-  def fill_in_break_in_employment
+  def fill_in_break_in_employment(start_year: "2020", start_month: "08", end_year: "2020", end_month: "12")
     fill_in "Enter reasons for gap in work history", with: "Caring for a person"
-    fill_in "jobseekers_break_form[started_on(1i)]", with: "2020"
-    fill_in "jobseekers_break_form[started_on(2i)]", with: "08"
-    fill_in "jobseekers_break_form[ended_on(1i)]", with: "2020"
-    fill_in "jobseekers_break_form[ended_on(2i)]", with: "12"
+    fill_in "jobseekers_break_form[started_on(1i)]", with: start_year
+    fill_in "jobseekers_break_form[started_on(2i)]", with: start_month
+    fill_in "jobseekers_break_form[ended_on(1i)]", with: end_year
+    fill_in "jobseekers_break_form[ended_on(2i)]", with: end_month
   end
 
   def fill_in_equal_opportunities
