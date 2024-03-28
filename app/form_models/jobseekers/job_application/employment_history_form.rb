@@ -4,6 +4,11 @@ class Jobseekers::JobApplication::EmploymentHistoryForm < Jobseekers::JobApplica
   def self.fields
     %i[employment_history_section_completed unexplained_employment_gaps_present]
   end
+
+  def self.unstorable_fields
+    %i[unexplained_employment_gaps_present]
+  end
+
   attr_accessor(*fields)
 
   validates :employment_history_section_completed, presence: true
