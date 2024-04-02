@@ -12,7 +12,7 @@ class Jobseekers::JobApplication::EmploymentHistoryForm < Jobseekers::JobApplica
   def employment_history_does_not_contain_gaps
     return unless unexplained_employment_gaps_present == "true" && employment_history_section_completed == "true"
 
-    errors.add(:gaps, "You must provide your full work history, including the reason for any gaps in employment.")
+    errors.add(:employment_history_section_completed, "You must provide your full work history, including the reason for any gaps in employment.")
   end
 
   def self.unstorable_fields
