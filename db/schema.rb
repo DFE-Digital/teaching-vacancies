@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_03_093724) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_03_104656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -564,6 +564,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_03_093724) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["oid"], name: "index_support_users_on_oid"
+  end
+
+  create_table "training_and_cpds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "provider"
+    t.string "grade"
+    t.string "year_awarded"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "jobseeker_profile_id"
   end
 
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
