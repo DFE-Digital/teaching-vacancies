@@ -134,6 +134,8 @@
   - last_sign_in_ip_ciphertext
   - last_sign_in_ip
   - current_sign_in_ip
+  :job_preferences:
+  - willing_to_relocate
   :organisations:
   - gias_data_hash
   - slug
