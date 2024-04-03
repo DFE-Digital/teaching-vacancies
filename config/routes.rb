@@ -97,6 +97,7 @@ Rails.application.routes.draw do
         end
         get :confirm_destroy
       end
+      resources :training_and_cpds, only: %i[new create edit update destroy], controller: "profiles/training_and_cpds"
 
       resources :breaks, only: %i[new create edit update destroy], controller: "profiles/breaks" do
         get :confirm_destroy
