@@ -115,7 +115,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def step_valid?(step)
     step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
-    form = step_form.new(job_application.slice(step_form.fields))
+    form = step_form.new(job_application.slice(step_form.storable_fields))
 
     form.valid?.tap do
       job_application.errors.merge!(form.errors)

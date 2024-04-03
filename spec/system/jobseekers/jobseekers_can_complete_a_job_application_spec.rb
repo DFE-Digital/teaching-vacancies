@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     fill_in_employment_history
     click_on I18n.t("buttons.save_employment")
     click_on I18n.t("buttons.add_reason_for_break")
-    fill_in_break_in_employment
+    fill_in_break_in_employment(end_year: Date.today.year.to_s, end_month: Date.today.month.to_s.rjust(2, "0"))
     click_on I18n.t("buttons.continue")
     choose I18n.t("helpers.label.jobseekers_job_application_employment_history_form.employment_history_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
