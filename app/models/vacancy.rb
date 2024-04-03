@@ -2,6 +2,8 @@ require "geocoding"
 
 # rubocop:disable Metrics/ClassLength
 class Vacancy < ApplicationRecord
+  self.ignored_columns += ["job_role"]
+
   extend FriendlyId
   extend ArrayEnum
 
@@ -13,7 +15,7 @@ class Vacancy < ApplicationRecord
   # TODO: Update with job listing updates
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
     about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
-    job_role job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
+    job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
     working_patterns
   ].freeze
 
@@ -51,7 +53,6 @@ class Vacancy < ApplicationRecord
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
   enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
-  enum job_role: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, higher_level_teaching_assistant: 8, education_support: 4, sendco: 5 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum start_date_type: { specific_date: 0, date_range: 1, other: 2, undefined: 3 }
   enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
@@ -119,11 +120,6 @@ class Vacancy < ApplicationRecord
       working_patterns: working_patterns,
     }
   end
-
-  # We have 'enum job_role' and 'array_enum job_roles'.
-  # Both provide the 'Vacancy.job_roles' class method, and the 'enum job_role' enum list takes over.
-  # When calling 'Vacancy.job_roles' we want to get the list of 'array_enum job_roles' instead, hence this method override.
-  def self.job_roles = JOB_ROLES
 
   def external?
     external_source.present?
