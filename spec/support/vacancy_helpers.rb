@@ -279,7 +279,7 @@ module VacancyHelpers
       jobBenefits: vacancy.benefits_details,
       datePosted: vacancy.publish_on.to_time.iso8601,
       description: vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : vacancy.job_advert,
-      occupationalCategory: vacancy.job_role,
+      occupationalCategory: vacancy.job_roles.first,
       directApply: vacancy.enable_job_applications,
       employmentType: vacancy.working_patterns_for_job_schema,
       industry: "Education",
