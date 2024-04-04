@@ -1,0 +1,21 @@
+p class="govuk-!-margin-bottom-6"
+  = govuk_link_to "Add training", new_jobseekers_profile_training_and_cpd_path
+
+- if profile.training_and_cpds.any?
+      - profile.training_and_cpds.each do |training|
+        = govuk_summary_list classes: "govuk-!-margin-bottom-10" do |summary_list|
+          - summary_list.with_row do |row|
+            - row.with_key text: "Name of course or training"
+            - row.with_value text: training.name
+
+          - summary_list.with_row do |row|
+            - row.with_key text: "Training provider"
+            - row.with_value text: training.provider
+          
+          - summary_list.with_row do |row|
+            - row.with_key text: "Grade (optional)"
+            - row.with_value text: training.grade
+          
+          - summary_list.with_row do |row|
+            - row.with_key text: "Year awarded"
+            - row.with_value text: training.year_awarded

@@ -1,1 +1,16 @@
-AYOOOO
+- content_for :page_title_prefix, "Training and continuing personal development (CPD)"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = "Add training and continuing personal development (CPD"
+
+    = form_for form, url: jobseekers_profile_training_and_cpds_path(profile), method: :post do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }
+      = f.govuk_text_field :provider, label: { size: "s" }, aria: { required: true }
+      = f.govuk_text_field :grade, label: { size: "s"}
+      = f.govuk_text_field :year_awarded, label: { size: "s"}
+      = f.govuk_submit "Save"
+
+    = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
