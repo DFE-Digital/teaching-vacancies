@@ -27,7 +27,7 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
   end
 
   def form
-    @form ||= Jobseekers::TrainingAndCpd::TrainingAndCpdForm.new(form_attributes)
+    @form ||= Jobseekers::TrainingAndCpdForm.new(form_attributes)
   end
 
   def form_attributes
@@ -42,8 +42,7 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
   end
 
   def training_and_cpd_form_params
-    # todo: fix form name in params
-    params.require(:jobseekers_training_and_cpd_training_and_cpd_form)
+    params.require(:jobseekers_training_and_cpd_form)
           .permit(:name, :provider, :grade, :year_awarded)
   end
 
