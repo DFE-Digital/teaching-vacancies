@@ -2,7 +2,6 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
   helper_method :jobseeker_profile, :form
 
   def edit
-    binding.pry
   end
 
   def new
@@ -19,7 +18,7 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
 
   def update
     if form.valid?
-      training_and_cpds.update(training_and_cpd_form_params)
+      training_and_cpd.update(training_and_cpd_form_params)
       redirect_to review_jobseekers_profile_training_and_cpds_path
     else
       render :edit
