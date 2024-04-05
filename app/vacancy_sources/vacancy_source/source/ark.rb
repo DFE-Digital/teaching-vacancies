@@ -115,6 +115,7 @@ class VacancySource::Source::Ark
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def job_roles_for(item)
     roles = item.fetch_by_attribute("category", "domain", "Role Type")&.strip&.split(",")
     return [] if roles.blank?
@@ -128,11 +129,16 @@ class VacancySource::Source::Ark
         .gsub(/Head of Department|Head of Dept/, "head_of_department_or_curriculum")
         .gsub(/Head of Year|Head of Phase/, "head_of_year_or_phase")
         .gsub(/Teaching Assistant|Cover Support Teaching Assistant/, "teaching_assistant")
-        .gsub("Pastoral", "pastoral_health_and_welfare")
-        .gsub(%r{SEN/Inclusion Support|Technician|Librarian}, "other_support")
-        .gsub("SEN/Inclusion Teacher", "sendco"))
+        .gsub(%r{SEN/Inclusion Support|Technician|Librarian}, "education_support")
+        .gsub("SEN/Inclusion Teacher", "sendco")
+        .gsub(/Finance|HR|School Admin|Data/, "administration_hr_data_and_finance")
+        .gsub(/Estates & Premises|Catering|Cleaning/, "catering_cleaning_and_site_management")
+        .gsub(/Pastoral|School Nurse/, "pastoral_health_and_welfare")
+        .gsub("Operations Leadership", "other_leadership")
+        .gsub(/School Marketing and Comms|Governance|Exam Invigilator/, "other_support"))
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def ect_status_for(item)
     item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
