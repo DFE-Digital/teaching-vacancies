@@ -5,7 +5,7 @@ RSpec.describe "Publishers can add aditional documents to a vacancy" do
   let(:primary_school) { create(:school, name: "Primary school", phase: "primary") }
   let(:organisation) { primary_school }
 
-  let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
+  let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
 
   scenario "can add an additional documents to a vacancy" do
     allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
@@ -39,7 +39,7 @@ RSpec.describe "Publishers can add aditional documents to a vacancy" do
     # Once decided not to include additional documents, can continue to the next step
     answer_include_additional_documents(false)
     expect(current_path).to eq(organisation_job_review_path(vacancy.id))
-    expect(page).to have_content(vacancy.job_role.humanize)
+    expect(page).to have_content(vacancy.job_roles.first.humanize)
 
     # Can publish the job listing
     click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")

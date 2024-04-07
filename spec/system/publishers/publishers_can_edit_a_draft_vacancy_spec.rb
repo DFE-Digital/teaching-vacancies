@@ -8,7 +8,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
   context "when a single school" do
-    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
+    let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
 
     before do
       visit organisation_jobs_with_type_path
@@ -23,13 +23,13 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     scenario "can edit a draft" do
       click_review_page_change_link(section: "job_details", row: "job_role")
 
-      vacancy.job_role = "teaching_assistant"
+      vacancy.job_roles = ["teaching_assistant"]
       fill_in_job_role_form_fields(vacancy)
 
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_review_path(vacancy.id))
-      expect(page).to have_content(vacancy.job_role.humanize)
+      expect(page).to have_content(vacancy.job_roles.first.humanize)
     end
 
     scenario "going back to the review page after clicking change link" do
@@ -42,7 +42,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   end
 
   context "when a school group" do
-    let!(:vacancy) { create(:vacancy, :draft, :teacher, :ect_suitable, organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
+    let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
     let(:another_primary_school) { create(:school, name: "Another primary school", phase: "primary") }
     let(:trust) { create(:trust, schools: [primary_school, another_primary_school]) }
     let(:organisation) { trust }

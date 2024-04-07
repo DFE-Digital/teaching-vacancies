@@ -12,7 +12,7 @@ module VacancyHelpers
   end
 
   def fill_in_job_role_form_fields(vacancy)
-    checkbox_label = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_role}")
+    checkbox_label = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_roles.first}")
     find("label", text: checkbox_label, visible: true).click
   end
 
