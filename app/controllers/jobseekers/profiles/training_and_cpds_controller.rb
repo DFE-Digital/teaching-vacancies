@@ -1,5 +1,5 @@
 class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesController
-  helper_method :jobseeker_profile, :form
+  helper_method :jobseeker_profile, :form, :training_and_cpd
 
   def edit
   end
@@ -23,6 +23,14 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
     else
       render :edit
     end
+  end
+
+  def confirm_destroy
+  end
+
+  def destroy
+    training_and_cpd.destroy
+    redirect_to jobseekers_profile_path, success: t(".success")
   end
 
   def form

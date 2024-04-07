@@ -752,6 +752,9 @@ en:
           summary_title: About You
         summary:
           about_you_title: About You
+      training_and_cpds:
+        destroy:
+          success: Training deleted
       qualifications:
         confirm_destroy:
           secondary:
