@@ -14,7 +14,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
 
       it "allows jobseekers to add training" do
         click_on "Add training"
-        click_on "Save"
+        click_on "Save and continue"
 
         expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
         within(".govuk-error-summary__body") do
@@ -95,7 +95,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
     fill_in "Training provider", with: provider
     fill_in "Grade", with: grade
     fill_in "Year awarded", with: year
-    click_on "Save"
+    click_on "Save and continue"
   end
 
   def expect_page_to_have_values(name, provider, grade, year)

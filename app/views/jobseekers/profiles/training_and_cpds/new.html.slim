@@ -12,6 +12,7 @@
       = f.govuk_text_field :provider, label: { size: "s" }, aria: { required: true }
       = f.govuk_text_field :grade, label: { size: "s" }
       = f.govuk_text_field :year_awarded, label: { size: "s" }
-      = f.govuk_submit "Save"
+      = f.govuk_submit t("buttons.save_and_continue")
 
-    = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
