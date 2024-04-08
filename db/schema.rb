@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_08_173633) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_03_093724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -614,12 +614,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_08_173633) do
     t.string "external_reference"
     t.string "external_advert_url"
     t.integer "ect_status"
-    t.integer "job_role"
-    t.string "pay_scale"
-    t.boolean "benefits"
+    t.integer "phases", array: true
     t.text "full_time_details"
     t.text "part_time_details"
-    t.integer "phases", array: true
+    t.string "pay_scale"
+    t.boolean "benefits"
     t.integer "start_date_type"
     t.date "earliest_start_date"
     t.date "latest_start_date"

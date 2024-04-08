@@ -12,7 +12,7 @@ module VacancyHelpers
   end
 
   def fill_in_job_role_form_fields(vacancy)
-    checkbox_label = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_role}")
+    checkbox_label = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_roles.first}")
     find("label", text: checkbox_label, visible: true).click
   end
 
@@ -279,7 +279,7 @@ module VacancyHelpers
       jobBenefits: vacancy.benefits_details,
       datePosted: vacancy.publish_on.to_time.iso8601,
       description: vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : vacancy.job_advert,
-      occupationalCategory: vacancy.job_role,
+      occupationalCategory: vacancy.job_roles.first,
       directApply: vacancy.enable_job_applications,
       employmentType: vacancy.working_patterns_for_job_schema,
       industry: "Education",

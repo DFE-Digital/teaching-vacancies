@@ -51,7 +51,6 @@ FactoryBot.define do
     job_title { Rails.env.production? ? factory_sample(job_titles) : generate(:job_title) }
     listed_elsewhere { nil }
     job_roles { [factory_sample(Vacancy.job_roles.keys)] }
-    job_role { "teacher" }
     ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
     pay_scale { factory_sample(salaries) }
     publish_on { Date.current }

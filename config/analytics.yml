@@ -369,7 +369,6 @@ shared:
     - subjects
     - school_visits
     - how_to_apply
-    - job_role
     - ect_status
     - contact_number
     - publisher_organisation_id
