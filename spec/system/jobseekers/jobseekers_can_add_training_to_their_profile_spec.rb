@@ -86,8 +86,8 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
         expect(page).to have_css(".govuk-summary-list__value", text: "2020")
 
-        within('.govuk-summary-card__title-wrapper', text: 'Rock climbing') do
-          click_link('Change')
+        within(".govuk-summary-card__title-wrapper", text: "Rock climbing") do
+          click_link("Change")
         end
 
         fill_in "Name", with: "Teaching piano to young adults"
@@ -153,8 +153,8 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
         expect(page).to have_css(".govuk-summary-list__value", text: "2020")
 
-        within('.govuk-summary-card__title-wrapper', text: 'Rock climbing') do
-          click_link('Delete')
+        within(".govuk-summary-card__title-wrapper", text: "Rock climbing") do
+          click_link("Delete")
         end
 
         expect(page).to have_content "Confirm that you want to delete this training and development"

@@ -9,8 +9,8 @@
 
       = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }
       = f.govuk_text_field :provider, label: { size: "s" }, aria: { required: true }
-      = f.govuk_text_field :grade, label: { size: "s"}
-      = f.govuk_text_field :year_awarded, label: { size: "s"}
+      = f.govuk_text_field :grade, label: { size: "s" }
+      = f.govuk_text_field :year_awarded, label: { size: "s" }
       = f.govuk_submit "Save"
 
     = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
