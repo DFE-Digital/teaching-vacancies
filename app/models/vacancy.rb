@@ -2,8 +2,6 @@ require "geocoding"
 
 # rubocop:disable Metrics/ClassLength
 class Vacancy < ApplicationRecord
-  self.ignored_columns += ["job_role"]
-
   extend FriendlyId
   extend ArrayEnum
 
