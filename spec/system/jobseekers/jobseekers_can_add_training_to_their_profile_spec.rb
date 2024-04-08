@@ -23,47 +23,15 @@ RSpec.describe "Jobseekers can add training to their profile" do
           expect(page).to have_link("Enter the year the course or training was awarded", href: "#jobseekers-training-and-cpd-form-year-awarded-field-error")
         end
 
-        fill_in "Name", with: "Rock climbing instructional course"
-        fill_in "Training provider", with: "TeachTrain ltd"
-        fill_in "Grade", with: "A"
-        fill_in "Year awarded", with: "2024"
-        click_on "Save"
+        fill_in_and_submit_training_form("Rock climbing instructional course", "TeachTrain ltd", "A", "2024")
 
-        within(all(".govuk-summary-list__row")[0]) do
-          expect(page).to have_css(".govuk-summary-list__key", text: "Name of course or training")
-          expect(page).to have_css(".govuk-summary-list__value", text: "Rock climbing instructional course")
-        end
-
-        within(all(".govuk-summary-list__row")[1]) do
-          expect(page).to have_css(".govuk-summary-list__key", text: "Training provider")
-          expect(page).to have_css(".govuk-summary-list__value", text: "TeachTrain ltd")
-        end
-
-        within(all(".govuk-summary-list__row")[2]) do
-          expect(page).to have_css(".govuk-summary-list__key", text: "Grade (optional)")
-          expect(page).to have_css(".govuk-summary-list__value", text: "A")
-        end
-
-        within(all(".govuk-summary-list__row")[3]) do
-          expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
-          expect(page).to have_css(".govuk-summary-list__value", text: "2024")
-        end
+        expect_page_to_have_values("Rock climbing instructional course", "TeachTrain ltd", "A", "2024")
 
         click_link "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
-        expect(page).to have_css(".govuk-summary-list__key", text: "Name of course or training")
-        expect(page).to have_css(".govuk-summary-list__value", text: "Rock climbing instructional course")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Training provider")
-        expect(page).to have_css(".govuk-summary-list__value", text: "TeachTrain ltd")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Grade (optional)")
-        expect(page).to have_css(".govuk-summary-list__value", text: "A")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
-        expect(page).to have_css(".govuk-summary-list__value", text: "2024")
+        expect_page_to_have_values("Rock climbing instructional course", "TeachTrain ltd", "A", "2024")
       end
     end
 
@@ -74,63 +42,21 @@ RSpec.describe "Jobseekers can add training to their profile" do
       end
 
       it "allows jobseeker to edit training" do
-        expect(page).to have_css(".govuk-summary-list__key", text: "Name of course or training")
-        expect(page).to have_css(".govuk-summary-list__value", text: "Rock climbing")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Training provider")
-        expect(page).to have_css(".govuk-summary-list__value", text: "TeachTrainLtd")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Grade (optional)")
-        expect(page).to have_css(".govuk-summary-list__value", text: "Pass")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
-        expect(page).to have_css(".govuk-summary-list__value", text: "2020")
+        expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020")
 
         within(".govuk-summary-card__title-wrapper", text: "Rock climbing") do
           click_link("Change")
         end
 
-        fill_in "Name", with: "Teaching piano to young adults"
-        fill_in "Training provider", with: "PianoWorx"
-        fill_in "Grade", with: "A"
-        fill_in "Year awarded", with: "2021"
-        click_on "Save"
+        fill_in_and_submit_training_form("Teaching piano to young adults", "PianoWorx", "A", "2021")
 
-        within(all(".govuk-summary-list__row")[0]) do
-          expect(page).to have_css(".govuk-summary-list__key", text: "Name of course or training")
-          expect(page).to have_css(".govuk-summary-list__value", text: "Teaching piano to young adults")
-        end
-
-        within(all(".govuk-summary-list__row")[1]) do
-          expect(page).to have_css(".govuk-summary-list__key", text: "Training provider")
-          expect(page).to have_css(".govuk-summary-list__value", text: "PianoWorx")
-        end
-
-        within(all(".govuk-summary-list__row")[2]) do
-          expect(page).to have_css(".govuk-summary-list__key", text: "Grade (optional)")
-          expect(page).to have_css(".govuk-summary-list__value", text: "A")
-        end
-
-        within(all(".govuk-summary-list__row")[3]) do
-          expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
-          expect(page).to have_css(".govuk-summary-list__value", text: "2021")
-        end
+        expect_page_to_have_values("Teaching piano to young adults", "PianoWorx", "A", "2021")
 
         click_link "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
-        expect(page).to have_css(".govuk-summary-list__key", text: "Name of course or training")
-        expect(page).to have_css(".govuk-summary-list__value", text: "Teaching piano to young adults")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Training provider")
-        expect(page).to have_css(".govuk-summary-list__value", text: "PianoWorx")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Grade (optional)")
-        expect(page).to have_css(".govuk-summary-list__value", text: "A")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
-        expect(page).to have_css(".govuk-summary-list__value", text: "2021")
+        expect_page_to_have_values("Teaching piano to young adults", "PianoWorx", "A", "2021")
       end
     end
 
@@ -141,17 +67,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
       end
 
       it "allows users to delete training" do
-        expect(page).to have_css(".govuk-summary-list__key", text: "Name of course or training")
-        expect(page).to have_css(".govuk-summary-list__value", text: "Rock climbing")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Training provider")
-        expect(page).to have_css(".govuk-summary-list__value", text: "TeachTrainLtd")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Grade (optional)")
-        expect(page).to have_css(".govuk-summary-list__value", text: "Pass")
-
-        expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
-        expect(page).to have_css(".govuk-summary-list__value", text: "2020")
+        expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020")
 
         within(".govuk-summary-card__title-wrapper", text: "Rock climbing") do
           click_link("Delete")
@@ -172,5 +88,27 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect(page).to_not have_css(".govuk-summary-list__value", text: "2020")
       end
     end
+  end
+
+  def fill_in_and_submit_training_form(name, provider, grade, year)
+    fill_in "Name", with: name
+    fill_in "Training provider", with: provider
+    fill_in "Grade", with: grade
+    fill_in "Year awarded", with: year
+    click_on "Save"
+  end
+
+  def expect_page_to_have_values(name, provider, grade, year)
+    expect(page).to have_css(".govuk-summary-list__key", text: "Name of course or training")
+    expect(page).to have_css(".govuk-summary-list__value", text: name)
+
+    expect(page).to have_css(".govuk-summary-list__key", text: "Training provider")
+    expect(page).to have_css(".govuk-summary-list__value", text: provider)
+
+    expect(page).to have_css(".govuk-summary-list__key", text: "Grade (optional)")
+    expect(page).to have_css(".govuk-summary-list__value", text: grade)
+
+    expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
+    expect(page).to have_css(".govuk-summary-list__value", text: year)
   end
 end
