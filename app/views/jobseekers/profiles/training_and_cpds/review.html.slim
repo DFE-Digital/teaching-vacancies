@@ -6,31 +6,29 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = "Training and continuing personal development (CPD)"
-    / todo: may need to add some classes to rows
-    / todo: add translations
-    / todo: this is in weird grey box thing, remove that
     - if profile.training_and_cpds.any?
-      - profile.training_and_cpds.each do |training|
-        = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
-          - summary_list.with_row do |row|
-            - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.name")
-            - row.with_value text: training.name
-            - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_training_and_cpd_path(training))
+    - profile.training_and_cpds.each do |training|
+      = render DetailComponent.new title: training.name do |detail|
+        - detail.with_body do
+          = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
+            - summary_list.with_row do |row|
+              - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.name")
+              - row.with_value text: training.name
+            
+            - summary_list.with_row do |row|
+              - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.provider")
+              - row.with_value text: training.provider
+            
+            - summary_list.with_row do |row|
+              - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.grade")
+              - row.with_value text: training.grade
+            
+            - summary_list.with_row do |row|
+              - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.year_awarded")
+              - row.with_value text: training.year_awarded
 
-          - summary_list.with_row do |row|
-            - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.provider")
-            - row.with_value text: training.provider
-            - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_training_and_cpd_path(training))
-          
-          - summary_list.with_row do |row|
-            - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.grade")
-            - row.with_value text: training.grade
-            - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_training_and_cpd_path(training))
-          
-          - summary_list.with_row do |row|
-            - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.year_awarded")
-            - row.with_value text: training.year_awarded
-            - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_training_and_cpd_path(training))
+        - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_profile_training_and_cpd_path(training), class: "govuk-link--no-visited-state"
+        - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_profile_training_and_cpd_confirm_destroy_path(training)
 
     .govuk-button-group
       = govuk_button_link_to "Add training", new_jobseekers_profile_training_and_cpd_path(profile), class: "govuk-button--secondary govuk-!-margin-bottom-0"
