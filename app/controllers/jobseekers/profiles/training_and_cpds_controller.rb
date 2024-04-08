@@ -1,11 +1,9 @@
 class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesController
   helper_method :jobseeker_profile, :form, :training_and_cpd
 
-  def edit
-  end
+  def edit; end
 
-  def new
-  end
+  def new; end
 
   def create
     if form.valid?
@@ -25,8 +23,7 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
     end
   end
 
-  def confirm_destroy
-  end
+  def confirm_destroy; end
 
   def destroy
     training_and_cpd.destroy

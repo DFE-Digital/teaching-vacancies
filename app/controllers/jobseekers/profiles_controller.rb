@@ -52,7 +52,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       title: "About you",
       display_summary: -> { profile.about_you.present? },
       key: "about_you",
-    condition: -> { profile.about_you.present? },
+      condition: -> { profile.about_you.present? },
       link_text: "Add details about you",
       page_path: -> { edit_jobseekers_profile_about_you_path },
       partial: "jobseekers/profiles/about_you/summary",
