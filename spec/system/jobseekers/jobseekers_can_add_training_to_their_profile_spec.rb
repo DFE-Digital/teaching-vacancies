@@ -24,9 +24,9 @@ RSpec.describe "Jobseekers can add training to their profile" do
         end
 
         fill_in "Name", with: "Rock climbing instructional course"
-        fill_in "Provider", with: "TeachTrain ltd"
+        fill_in "Training provider", with: "TeachTrain ltd"
         fill_in "Grade", with: "A"
-        fill_in "Year_awarded", with: "2024"
+        fill_in "Year awarded", with: "2024"
         click_on "Save"
 
         within(all(".govuk-summary-list__row")[0]) do
@@ -86,12 +86,14 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
         expect(page).to have_css(".govuk-summary-list__value", text: "2020")
 
-        click_link "Change grade"
+        within('.govuk-summary-card__title-wrapper', text: 'Rock climbing') do
+          click_link('Change')
+        end
 
         fill_in "Name", with: "Teaching piano to young adults"
-        fill_in "Provider", with: "PianoWorx"
+        fill_in "Training provider", with: "PianoWorx"
         fill_in "Grade", with: "A"
-        fill_in "Year_awarded", with: "2021"
+        fill_in "Year awarded", with: "2021"
         click_on "Save"
 
         within(all(".govuk-summary-list__row")[0]) do
@@ -151,7 +153,9 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
         expect(page).to have_css(".govuk-summary-list__value", text: "2020")
 
-        click_link "Delete training"
+        within('.govuk-summary-card__title-wrapper', text: 'Rock climbing') do
+          click_link('Delete')
+        end
 
         expect(page).to have_content "Confirm that you want to delete this training and development"
 

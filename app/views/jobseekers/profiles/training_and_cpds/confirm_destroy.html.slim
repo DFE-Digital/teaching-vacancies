@@ -9,22 +9,22 @@
     = form_for form, url: jobseekers_profile_training_and_cpd_path(training_and_cpd), method: :delete do |f|
       = govuk_summary_list classes: "govuk-!-margin-bottom-10" do |summary_list|
         - summary_list.with_row do |row|
-          - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.name")
+          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.name")
           - row.with_value text: training_and_cpd.name
           - row.with_action(text: "Change", href: edit_jobseekers_profile_training_and_cpd_path(training_and_cpd), visually_hidden_text: " name of course or training")
 
         - summary_list.with_row do |row|
-          - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.provider")
+          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.provider")
           - row.with_value text: training_and_cpd.provider
           - row.with_action(text: "Change", href: edit_jobseekers_profile_training_and_cpd_path(training_and_cpd), visually_hidden_text: " training provider")
         
         - summary_list.with_row do |row|
-          - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.grade")
+          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.grade")
           - row.with_value text: training_and_cpd.grade
           - row.with_action(text: "Change", href: edit_jobseekers_profile_training_and_cpd_path(training_and_cpd), visually_hidden_text: " grade")
         
         - summary_list.with_row do |row|
-          - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.year_awarded")
+          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.year_awarded")
           - row.with_value text: training_and_cpd.year_awarded
           - row.with_action(text: "Change", href: edit_jobseekers_profile_training_and_cpd_path(training_and_cpd), visually_hidden_text: " year awarded")
       
