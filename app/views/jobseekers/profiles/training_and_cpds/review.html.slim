@@ -13,22 +13,22 @@
       - profile.training_and_cpds.each do |training|
         = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
           - summary_list.with_row do |row|
-            - row.with_key text: "Name of course or training"
+            - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.name")
             - row.with_value text: training.name
             - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_training_and_cpd_path(training))
 
           - summary_list.with_row do |row|
-            - row.with_key text: "Training provider"
+            - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.provider")
             - row.with_value text: training.provider
             - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_training_and_cpd_path(training))
           
           - summary_list.with_row do |row|
-            - row.with_key text: "Grade (optional)"
+            - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.grade")
             - row.with_value text: training.grade
             - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_training_and_cpd_path(training))
           
           - summary_list.with_row do |row|
-            - row.with_key text: "Year awarded"
+            - row.with_key text: t(".helpers.label.jobseekers_training_and_cpd_form.year_awarded")
             - row.with_value text: training.year_awarded
             - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_training_and_cpd_path(training))
 

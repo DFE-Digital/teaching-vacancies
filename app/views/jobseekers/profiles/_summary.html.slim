@@ -59,7 +59,7 @@ dl.govuk-summary-list
   = render "jobseekers/qualifications/preview_qualifications", qualifications: profile.qualifications
 
 - if profile.training_and_cpds.any?
-  h2.govuk-heading-m class="govuk-!-padding-bottom-3" = "Training and continued personal development (CPD)"
+  h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".training_and_cpd")
   - profile.training_and_cpds.each do |training|
     h3.govuk-heading-s class="govuk-!-padding-bottom-0"
       = training.name
