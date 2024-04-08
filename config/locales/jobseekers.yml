@@ -841,6 +841,7 @@ en:
         subjects:
           one: Subject
           other: Subjects
+        training_and_cpd: Training and continuing personal development (CPD)
 
     sessions:
       new:
