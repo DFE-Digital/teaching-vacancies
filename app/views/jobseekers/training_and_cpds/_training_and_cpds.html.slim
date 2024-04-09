@@ -18,5 +18,5 @@
           - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.year_awarded")
           - row.with_value text: training.year_awarded
 
-    - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_profile_training_and_cpd_path(training), class: "govuk-link--no-visited-state"
-    - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_profile_training_and_cpd_confirm_destroy_path(training)
+    - detail.with_action govuk_link_to(safe_join([t("buttons.change"), tag.span(training.name, class: "govuk-visually-hidden")]), edit_jobseekers_profile_training_and_cpd_path(training), class: "govuk-link--no-visited-state")
+    - detail.with_action govuk_link_to(safe_join([t("buttons.delete"), tag.span(training.name, class: "govuk-visually-hidden")]), jobseekers_profile_training_and_cpd_confirm_destroy_path(training))
