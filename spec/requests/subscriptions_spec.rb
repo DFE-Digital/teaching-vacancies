@@ -21,6 +21,18 @@ RSpec.describe "Subscriptions" do
       end
     end
 
+    context "when containing campaign parameters" do
+      let(:params) { { "email_contact" => "user@example.com", email_postcode: "SW12JP" } }
+
+      it "renders the template for the campaign users with pre-filled values" do
+        get(new_subscription_path, params:)
+
+        expect(response).to render_template(:new_campaign)
+        expect(response.body).to include("user@example.com")
+                             .and include("SW12JP")
+      end
+    end
+
     context "when hit via the nqt job alerts url" do
       before { get "/sign-up-for-NQT-job-alerts" }
 
