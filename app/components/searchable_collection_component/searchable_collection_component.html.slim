@@ -5,4 +5,5 @@
         input.govuk-input.icon.icon--left.icon--search.js-action data-searchable-collection-target="input" data-action="input->searchable-collection#input" placeholder=@text[:placeholder] aria-label=@text[:aria_label] aria-expanded="true" aria-describedby=@text[:aria_describedby] aria-owns="subjects__listbox" role="combobox"
         .govuk-visually-hidden aria-live="assertive" role="status" class="collection-match"
 
-    = collection
+    #subjects__listbox
+      = collection
