@@ -2,10 +2,10 @@
   - summary_list.with_row do |row|
     - row.with_key text: t(".status_title")
     - row.with_value text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.qualified_teacher_status_options.#{profile.qualified_teacher_status}")
-    - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path)
+    - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "qualified teacher status")
 
   - if profile.qualified_teacher_status_year.present?
     - summary_list.with_row do |row|
       - row.with_key text: t(".year_title")
       - row.with_value text: profile.qualified_teacher_status_year
-      - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path)
+      - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "year QTS awarded")
