@@ -4,7 +4,7 @@
       .header-with-logo
         - if vacancy.organisation.logo.attached?
           .header-with-logo-logo--search-result
-            = image_tag(vacancy.organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: vacancy.organisation.name))
+            = image_tag(vacancy.organisation.logo, alt: "")
         .header-with-logo-title
           h2.govuk-heading-m class="govuk-!-margin-bottom-0"
             span class="govuk-!-margin-right-2" = results_link(vacancy, class: "view-vacancy-link")

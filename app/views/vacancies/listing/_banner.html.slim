@@ -4,7 +4,7 @@
 .header-with-logo class="govuk-!-margin-bottom-5"
   - if vacancy.organisation.logo.attached?
     .header-with-logo-logo
-      = image_tag(vacancy.organisation.logo, alt: t("publishers.organisations.organisation.logo.alt_text", organisation_name: vacancy.organisation.name))
+      = image_tag(vacancy.organisation.logo, alt: "")
   .header-with-logo-title
     - if vacancy.enable_job_applications?
       div class="govuk-!-margin-bottom-2" = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green")
