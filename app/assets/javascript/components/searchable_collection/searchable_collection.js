@@ -34,8 +34,10 @@ const SearchableCollectionComponent = class extends Controller {
 
     if (this.inputTarget.value.length) {
       this.element.querySelector('.collection-match').innerHTML = `${visibleItems.length} subjects match ${this.inputTarget.value}`;
+      this.inputTarget.setAttribute('aria-controls', 'subjects__listbox');
     } else {
       this.element.querySelector('.collection-match').innerHTML = '';
+      this.inputTarget.removeAttribute('aria-controls');
     }
   }
 
