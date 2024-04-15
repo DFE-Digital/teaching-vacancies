@@ -22,11 +22,6 @@ const SearchableCollectionComponent = class extends Controller {
 
     const visibleItems = this.collection.filter((item) => item.parentElement.style.display === 'block');
 
-    Array.from(this.element.getElementsByClassName('govuk-checkboxes')).forEach((el) => {
-      el.setAttribute('role', 'listbox');
-      el.id = 'subjects__listbox';
-    });
-
     visibleItems.forEach((item, i) => {
       item.setAttribute('aria-posinset', i + 1);
       item.setAttribute('aria-setsize', visibleItems.length);
