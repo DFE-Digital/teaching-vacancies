@@ -5,5 +5,5 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-     = render "form", form_options: { url: subscriptions_path }, i18n_prefix: "subscriptions.new", button_text: t("buttons.subscribe") do |f|
+     = render "subscriptions/campaign/form", form_options: { url: subscriptions_path }, i18n_prefix: "subscriptions.new", button_text: t("buttons.subscribe_campaign") do |f|
        = render "shared/recaptcha", form: f

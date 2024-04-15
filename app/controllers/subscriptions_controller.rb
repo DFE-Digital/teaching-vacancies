@@ -13,7 +13,7 @@ class SubscriptionsController < ApplicationController
     @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
     @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
 
-    render :new_campaign if campaign_link?
+    render "subscriptions/campaign/new" if campaign_link?
   end
 
   def create
@@ -22,7 +22,7 @@ class SubscriptionsController < ApplicationController
     @subscription = SubscriptionPresenter.new(subscription)
 
     if @form.invalid?
-      render :new
+      render @form.campaign.present? ? "subscriptions/campaign/new" : :new
     else
       recaptcha_protected(form: @form) do
         notify_new_subscription(subscription)
@@ -100,6 +100,7 @@ class SubscriptionsController < ApplicationController
       ect_statuses: (campaign[:email_ect].present? ? [campaign[:email_ect]] : ["ect_suitable"]),
       working_patterns: (campaign[:email_working_pattern].present? ? [campaign[:email_working_pattern]] : ["full_time"]),
       email: campaign[:email_contact].presence,
+      campaign: true,
     }.compact
   end
 
@@ -167,7 +168,9 @@ class SubscriptionsController < ApplicationController
 
   def subscription_params
     params.require(:jobseekers_subscription_form)
-          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [], visa_sponsorship_availability: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
+          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, :campaign,
+                  teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [],
+                  visa_sponsorship_availability: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def token

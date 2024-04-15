@@ -1,0 +1,17 @@
+= form_for @form, **local_assigns.fetch(:form_options, {}) do |f|
+  = f.govuk_error_summary
+
+  h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t("#{i18n_prefix}.title")
+
+  - if @organisation
+    p.govuk-body-m = t("subscriptions.new.organisation_link_html", organisation_landing_page_link: govuk_link_to(@organisation.name, organisation_landing_page_path(@organisation)))
+    = f.hidden_field :organisation_slug, value: @organisation.slug
+
+  .subscription-criteria
+    = render "subscriptions/campaign/fields", f: f
+
+  = govuk_details summary_text: t("subscriptions.unsubscribe.guidance.heading"), text: t("subscriptions.unsubscribe.guidance.body")
+
+  = yield f
+
+  = f.govuk_submit button_text, class: "govuk-!-padding-left-8 govuk-!-padding-right-8"

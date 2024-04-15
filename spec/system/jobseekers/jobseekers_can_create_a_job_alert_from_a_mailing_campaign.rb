@@ -12,7 +12,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
       visit new_subscription_path(params:)
       choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.daily")
 
-      expect { click_on I18n.t("buttons.subscribe") }.not_to(change { Subscription.count })
+      expect { click_on I18n.t("buttons.subscribe_campaign") }.not_to(change { Subscription.count })
       expect(page).to have_content("There is a problem")
       expect(page).to have_content(I18n.t("recaptcha.error"))
       expect(page).to have_content(I18n.t("recaptcha.label"))
@@ -22,12 +22,14 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
   scenario "the landing form has default values for radio, job role, ect suitability and working pattern" do
     visit new_subscription_path(params:)
 
-    expect(page).to have_field("Location", with: "SW24LP")
+    expect(page).to have_field("City, county or postcode (in England)", with: "SW24LP")
                 .and have_field("Email address", with: "user@example.com")
                 .and have_field("Search radius", with: "15")
                 .and have_checked_field("Teacher")
                 .and have_checked_field("Suitable for early career teachers")
                 .and have_checked_field("Full time")
+
+    validate_and_confirm
   end
 
   scenario "the subscription form values are set from the URL parameters" do
@@ -41,7 +43,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
       email_working_pattern: "part_time",
     })
 
-    expect(page).to have_field("Location", with: "SW24LP")
+    expect(page).to have_field("City, county or postcode (in England)", with: "SW24LP")
                 .and have_field("Email address", with: "user@example.com")
                 .and have_field("Search radius", with: "10")
                 .and have_checked_field("Assistant headteacher")
@@ -52,5 +54,18 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
 
     expect(page).not_to have_checked_field("Teacher")
     expect(page).not_to have_checked_field("Full time")
+
+    validate_and_confirm
+  end
+
+  def validate_and_confirm
+    click_button I18n.t("buttons.subscribe_campaign")
+    expect(page).to have_content("There is a problem")
+                .and have_content("Select when you want to receive job alert emails")
+
+    choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.daily")
+    click_button I18n.t("buttons.subscribe_campaign")
+    expect(current_path).to eq(subscriptions_path)
+    expect(page).to have_content(I18n.t("subscriptions.confirm.header.create"))
   end
 end

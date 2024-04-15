@@ -27,7 +27,7 @@ RSpec.describe "Subscriptions" do
       it "renders the template for the campaign users with pre-filled values" do
         get(new_subscription_path, params:)
 
-        expect(response).to render_template(:new_campaign)
+        expect(response).to render_template("subscriptions/campaign/new")
         expect(response.body).to include("user@example.com")
                              .and include("SW12JP")
       end

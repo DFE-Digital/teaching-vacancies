@@ -19,7 +19,8 @@ class Jobseekers::SubscriptionForm < BaseForm
                 :ect_status_options,
                 :phase_options,
                 :working_pattern_options,
-                :organisation_slug
+                :organisation_slug,
+                :campaign
 
   validates :email, presence: true, email_address: true
   validates :frequency, presence: true
@@ -44,6 +45,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @phases = params[:phases]&.reject(&:blank?) || search_criteria[:phases]
     @working_patterns = params[:working_patterns]&.reject(&:blank?) || search_criteria[:working_patterns]
     @organisation_slug = params[:organisation_slug]
+    @campaign = params[:campaign].presence || false
 
     set_radius((params[:radius] || search_criteria[:radius]))
     set_facet_options
