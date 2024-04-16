@@ -10,8 +10,10 @@ class SubscriptionsController < ApplicationController
     @point_coordinates = params[:coordinates_present] == "true"
     @ect_job_alert = params[:ect_job_alert]
     session[:subscription_autopopulated] = params[:search_criteria].present?
-    @form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
+    @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
     @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
+
+    render "subscriptions/campaign/new" if campaign_link?
   end
 
   def create
@@ -20,7 +22,7 @@ class SubscriptionsController < ApplicationController
     @subscription = SubscriptionPresenter.new(subscription)
 
     if @form.invalid?
-      render :new
+      render @form.campaign.present? ? "subscriptions/campaign/new" : :new
     else
       recaptcha_protected(form: @form) do
         notify_new_subscription(subscription)
@@ -79,6 +81,39 @@ class SubscriptionsController < ApplicationController
 
   private
 
+  def campaign_link?
+    params[:email_contact].present?
+  end
+
+  # There are mailing campaigns using Mailchimp to send "Subscribe to our job alerts" emails to user groups.
+  # These emails links to our service contain parameters in their URL, which values are used to pre-populate the
+  # subscription form fields.
+  # Some fields have default values unless explicitly set by a parameter.
+  def campaign_attributes
+    campaign = campaign_params
+    {
+      subjects: ([campaign[:email_subject].capitalize] if campaign[:email_subject].present?),
+      phases: ([campaign[:email_phase]] if campaign[:email_phase].present?),
+      location: campaign[:email_postcode].presence,
+      radius: campaign[:email_radius].presence || "15",
+      teaching_job_roles: (campaign[:email_jobrole].present? ? [campaign[:email_jobrole]] : ["teacher"]),
+      ect_statuses: (campaign[:email_ect].present? ? [campaign[:email_ect]] : ["ect_suitable"]),
+      working_patterns: (campaign[:email_working_pattern].present? ? [campaign[:email_working_pattern]] : ["full_time"]),
+      email: campaign[:email_contact].presence,
+      campaign: true,
+    }.compact
+  end
+
+  def new_form_attributes
+    if params[:search_criteria].present?
+      search_criteria_params
+    elsif campaign_link?
+      email.merge(campaign_attributes)
+    else
+      email
+    end
+  end
+
   def notify_new_subscription(subscription)
     subscription.update(recaptcha_score: recaptcha_reply&.dig("score"))
     Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
@@ -121,6 +156,11 @@ class SubscriptionsController < ApplicationController
     params.permit(:email)
   end
 
+  def campaign_params
+    params.permit(:email_name, :email_subject, :email_phase, :email_postcode, :email_jobrole, :email_radius, :email_ect,
+                  :email_working_pattern, :email_contact)
+  end
+
   def search_criteria_params
     params.require(:search_criteria)
           .permit(:keyword, :location, :organisation_slug, :radius, teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
@@ -128,7 +168,9 @@ class SubscriptionsController < ApplicationController
 
   def subscription_params
     params.require(:jobseekers_subscription_form)
-          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [], visa_sponsorship_availability: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
+          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, :campaign,
+                  teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [],
+                  visa_sponsorship_availability: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def token

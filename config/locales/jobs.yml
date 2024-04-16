@@ -34,6 +34,10 @@ en:
         with_count: Active jobs (%{count})
 
     filters:
+      campaign:
+        teaching_job_roles: Teaching roles
+        teaching_support_job_roles: Teaching support roles
+        non_teaching_support_job_roles: Non-teaching support roles
       job_filters: Job Filters
       job_type: Job type
       job_roles: Job role
