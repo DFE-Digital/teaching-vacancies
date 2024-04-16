@@ -34,7 +34,7 @@
   .govuk-hint,
   .govuk-link,
   h1,
-  h3 {
+  h2 {
     color: govuk-colour('white');
   }
 
@@ -42,7 +42,7 @@
     display: none;
   }
 
-  h3 {
+  h2 {
     margin-bottom: govuk-spacing(2);
     margin-top: govuk-spacing(2);
   }
