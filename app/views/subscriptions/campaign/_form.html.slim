@@ -1,7 +1,7 @@
 = form_for @form, **local_assigns.fetch(:form_options, {}) do |f|
   = f.govuk_error_summary
 
-  h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t("#{i18n_prefix}.title")
+  h2.govuk-heading-l class="govuk-!-margin-bottom-4" = t("#{i18n_prefix}.title")
 
   - if @organisation
     p.govuk-body-m = t("subscriptions.new.organisation_link_html", organisation_landing_page_link: govuk_link_to(@organisation.name, organisation_landing_page_path(@organisation)))

@@ -21,6 +21,7 @@
 .divider-bottom class="govuk-!-margin-top-4"
 
 = f.hidden_field :campaign, value: true
+= f.hidden_field :user_name, value: @form.user_name
 
 - if jobseeker_signed_in?
   = f.hidden_field :email, value: current_jobseeker.email
