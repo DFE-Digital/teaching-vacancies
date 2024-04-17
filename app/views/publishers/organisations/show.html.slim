@@ -2,7 +2,8 @@
 
 - if current_organisation.school_group? && @organisation.school?
   - content_for :breadcrumbs do
-    = govuk_breadcrumbs breadcrumbs: { t("nav.organisation_profile") => publishers_organisation_path(current_organisation), t("nav.school_profile") => nil }
+    nav aria-label="breadcrumb" role="navigation"
+      = govuk_breadcrumbs breadcrumbs: { t("nav.organisation_profile") => publishers_organisation_path(current_organisation), t("nav.school_profile") => nil }
 
 - unless @organisation.profile_complete?
   = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|

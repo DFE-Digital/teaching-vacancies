@@ -5,7 +5,8 @@
                                                         deadline: format_date(@vacancy.expires_at, :date_only_shorthand))
 
 - content_for :breadcrumbs do
-  = govuk_breadcrumbs breadcrumbs: vacancy_breadcrumbs(@vacancy)
+  nav aria-label="breadcrumb" role="navigation"
+    = govuk_breadcrumbs breadcrumbs: vacancy_breadcrumbs(@vacancy)
 
 - if @vacancy.expired?
   - content_for :meta_no_index do

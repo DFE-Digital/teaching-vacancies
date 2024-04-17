@@ -1,7 +1,8 @@
 - content_for :page_title_prefix, t("subscriptions.edit.title")
 
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("app.back_to_homepage"), href: root_path
+  a.govuk-back-link aria-label="Back navigation" role="navigation" href=root_path
+    = t("app.back_to_homepage")
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
