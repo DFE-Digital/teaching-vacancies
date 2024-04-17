@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, "Job preferences: roles"
 - content_for :breadcrumbs do
   a.govuk-back-link aria-label="Back navigation" role="navigation" href=back_url
-    = t('buttons.back')
+    = t("buttons.back")
 
 = form_for @step, url: { action: :update }, as: :job_preferences do |f|
   = f.govuk_error_summary
