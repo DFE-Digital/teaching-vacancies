@@ -2,7 +2,11 @@
 
 = f.govuk_text_field :subject, label: { size: "s" }, aria: { required: true }
 
-= f.govuk_radio_buttons_fieldset :finished_studying do
+- finished_studying_legend = capture do
+  legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+    h2.govuk-fieldset__heading = t("helpers.legend.jobseekers_qualifications_shared_legends.finished_studying")
+
+= f.govuk_radio_buttons_fieldset :finished_studying, legend: -> { finished_studying_legend } do
   = f.govuk_radio_button :finished_studying, "true", link_errors: true do
     = f.govuk_text_field :grade, label: { size: "s" }, aria: { required: true }
     = f.govuk_number_field :year, label: { size: "s" }, aria: { required: true }, width: 4
