@@ -698,9 +698,9 @@ RSpec.describe "Jobseekers can manage their profile" do
       click_link("Add job preferences")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
       expect(page).to have_css("h1", text: "What roles are you interested in?")
-      expect(page).to have_css("h3", text: "Teaching")
-      expect(page).to have_css("h3", text: "Teaching support")
-      expect(page).to have_css("h3", text: "Non-teaching support")
+      expect(page).to have_css("h2", text: "Teaching")
+      expect(page).to have_css("h2", text: "Teaching support")
+      expect(page).to have_css("h2", text: "Non-teaching support")
 
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
@@ -847,9 +847,9 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_link("Add job preferences")
         expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
         expect(page).to have_css("h1", text: "What roles are you interested in?")
-        expect(page).to have_css("h3", text: "Teaching")
-        expect(page).to have_css("h3", text: "Teaching support")
-        expect(page).to have_css("h3", text: "Non-teaching support")
+        expect(page).to have_css("h2", text: "Teaching")
+        expect(page).to have_css("h2", text: "Teaching support")
+        expect(page).to have_css("h2", text: "Non-teaching support")
 
         # TODO: change when we have non-teaching roles
         check "Teacher"

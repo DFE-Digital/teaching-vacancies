@@ -13,8 +13,20 @@
       span.govuk-caption-m class="govuk-!-margin-bottom-8"
         | Select all that apply to set up your profile
 
-      = f.govuk_collection_check_boxes :roles, @step.teaching_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_job_roles"), size: "m" }
-      = f.govuk_collection_check_boxes :roles, @step.teaching_support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_support_job_roles"), size: "m" }
-      = f.govuk_collection_check_boxes :roles, @step.non_teaching_support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.non_teaching_support_job_roles"), size: "m" }
+      - teaching_legend = capture do
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+          h2.govuk-fieldset__heading = t("jobs.filters.teaching_job_roles")
+
+      - teaching_support_legend = capture do
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+          h2.govuk-fieldset__heading = t("jobs.filters.teaching_support_job_roles")
+
+      - non_teaching_support_legend = capture do
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+          h2.govuk-fieldset__heading = t("jobs.filters.non_teaching_support_job_roles")
+
+      = f.govuk_collection_check_boxes :roles, @step.teaching_job_roles_options, :first, :last, legend: -> { teaching_legend }
+      = f.govuk_collection_check_boxes :roles, @step.teaching_support_job_roles_options, :first, :last, legend: -> { teaching_support_legend }
+      = f.govuk_collection_check_boxes :roles, @step.non_teaching_support_job_roles_options, :first, :last, legend: -> { non_teaching_support_legend }
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path
