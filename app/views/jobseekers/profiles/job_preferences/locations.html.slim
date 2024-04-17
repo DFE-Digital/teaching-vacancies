@@ -13,7 +13,7 @@
 
       - another_location_legend = capture do
         legend.govuk-fieldset__legend.govuk-fieldset__legend--m
-          h2.govuk-fieldset__heading = "Do you want to add another location?"
+          h2.govuk-fieldset__heading = t("helpers.legend.jobseekers_profile_location_preferences.another_location")
 
       = govuk_summary_list(classes: "locations-summary-list") do |summary_list|
         = @form.locations.each.with_index do |(id, location), index|
