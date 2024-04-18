@@ -16,18 +16,18 @@ section#school-overview
     p.govuk-body = simple_format(vacancy_or_organisation_description(vacancy))
 
   - if vacancy.organisations.many?
-    h4.govuk-heading-m = t(".schools.school_details")
+    h3.govuk-heading-m = t(".schools.school_details")
     = govuk_accordion do |accordion|
       - vacancy.organisations.select(&:school?).each do |organisation|
         - accordion.with_section heading_text: organisation.name do
           = render "vacancies/listing/school", organisation: organisation, vacancy: vacancy, contact_details: false
 
   - if vacancy.school_visits?
-    h4.govuk-heading-m
+    h3.govuk-heading-m
       = t("jobs.arranging_a_visit.heading", organisation: vacancy.organisation_name)
     p.govuk-body = t("jobs.arranging_a_visit.description_html", email: contact_email_link(vacancy, class: "link-wrap"))
   - elsif vacancy.school_visits_details.present?
-    h4.govuk-heading-m
+    h3.govuk-heading-m
       = t("jobs.arranging_a_visit.heading", organisation: vacancy.organisation_name)
     p.govuk-body = vacancy.school_visits_details
 
