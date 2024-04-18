@@ -598,8 +598,8 @@ en:
       jobseekers_subscription_form:
         email: Email address
         frequency_options:
-          daily: Daily, at around 3 pm
-          weekly: Weekly (Friday evening at around 6 pm)
+          daily: Daily, around 3 pm
+          weekly: Weekly (Friday, around 6 pm)
       jobseekers_unsubscribe_feedback_form:
         email: What is your email address?
         comment: Is there anything else you'd like to tell us?
