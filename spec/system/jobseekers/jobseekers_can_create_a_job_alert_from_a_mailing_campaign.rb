@@ -19,9 +19,11 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
     end
   end
 
-  scenario "the landing form has default values for radio, job role, ect suitability and working pattern" do
+  scenario "the landing form has default values when not set from the URL parameters" do
     visit new_subscription_path(params:)
 
+    expect(page).to have_css("h1", text: "Welcome to Teaching Vacancies!", exact_text: true)
+    expect(page).to have_css("p", text: "Get teaching jobs sent straight to your inbox.")
     expect(page).to have_field("City, county or postcode (in England)", with: "SW24LP")
                 .and have_field("Email address", with: "user@example.com")
                 .and have_field("Search radius", with: "15")
@@ -34,6 +36,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
 
   scenario "the subscription form values are set from the URL parameters" do
     visit new_subscription_path(params: {
+      email_name: "Ali",
       email_contact: "user@example.com",
       email_postcode: "SW24LP",
       email_subject: "mathematics",
@@ -43,6 +46,8 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
       email_working_pattern: "part_time",
     })
 
+    expect(page).to have_css("h1", text: "Hey Ali, welcome to Teaching Vacancies!", exact_text: true)
+    expect(page).to have_css("p", text: "Get mathematics teacher jobs sent straight to your inbox.")
     expect(page).to have_field("City, county or postcode (in England)", with: "SW24LP")
                 .and have_field("Email address", with: "user@example.com")
                 .and have_field("Search radius", with: "10")

@@ -13,7 +13,7 @@ class SubscriptionsController < ApplicationController
     @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
     @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
 
-    render "subscriptions/campaign/new" if campaign_link?
+    render("subscriptions/campaign/new", layout: "subscription_campaign") if campaign_link?
   end
 
   def create
@@ -22,7 +22,7 @@ class SubscriptionsController < ApplicationController
     @subscription = SubscriptionPresenter.new(subscription)
 
     if @form.invalid?
-      render @form.campaign.present? ? "subscriptions/campaign/new" : :new
+      @form.campaign.present? ? render("subscriptions/campaign/new", layout: "subscription_campaign") : render(:new)
     else
       recaptcha_protected(form: @form) do
         notify_new_subscription(subscription)
@@ -92,6 +92,7 @@ class SubscriptionsController < ApplicationController
   def campaign_attributes
     campaign = campaign_params
     {
+      campaign: true,
       subjects: ([campaign[:email_subject].capitalize] if campaign[:email_subject].present?),
       phases: ([campaign[:email_phase]] if campaign[:email_phase].present?),
       location: campaign[:email_postcode].presence,
@@ -100,7 +101,7 @@ class SubscriptionsController < ApplicationController
       ect_statuses: (campaign[:email_ect].present? ? [campaign[:email_ect]] : ["ect_suitable"]),
       working_patterns: (campaign[:email_working_pattern].present? ? [campaign[:email_working_pattern]] : ["full_time"]),
       email: campaign[:email_contact].presence,
-      campaign: true,
+      user_name: campaign[:email_name].presence,
     }.compact
   end
 
@@ -168,7 +169,7 @@ class SubscriptionsController < ApplicationController
 
   def subscription_params
     params.require(:jobseekers_subscription_form)
-          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, :campaign,
+          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, :campaign, :user_name,
                   teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [],
                   visa_sponsorship_availability: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
   end

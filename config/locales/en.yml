@@ -392,12 +392,18 @@ en:
       location:
         hint: Teaching Vacancies advertises school roles in England. Enter a UK city, county or postcode to look for roles near you.
       campaign:
+        title: 
+          with_name: Hey %{name}, welcome to Teaching Vacancies!
+          without_name: Welcome to Teaching Vacancies!
+        description: 
+          with_subject: Get %{subject} teacher jobs sent straight to your inbox.
+          without_subject: Get teaching jobs sent straight to your inbox.
         location: City, county or postcode (in England)
     unsubscribe:
       confirmation: Are you sure you want to unsubscribe?
       guidance:
         heading: Want to unsubscribe?
-        body: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
+        body: You can unsubscribe at any time by clicking the unsubscribe link at the bottom of your job alerts email.
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated

@@ -859,8 +859,8 @@ en:
       index:
         button_create: Create a job alert
         frequency:
-          daily: Daily, at around 3 pm
-          weekly: Weekly (Friday at around 6 pm)
+          daily: Daily, around 3 pm
+          weekly: Weekly (Friday, around 6 pm)
         heading:
           actions: Actions
           criteria: Alert criteria

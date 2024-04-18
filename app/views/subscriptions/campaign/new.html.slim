@@ -1,9 +1,25 @@
 - content_for :page_title_prefix, t("subscriptions.new.title")
+.campaign-header
+  .govuk-width-container
+    .govuk-grid-row class="govuk-!-padding-top-6 govuk-!-padding-bottom-2"
+      .govuk-grid-column-one-half
+        = image_tag("teaching_vacancies_logo.png", size: "250x122", alt: "The Teaching Vacancies logo")
+        h1.govuk-heading-l class="govuk-!-margin-top-4"
+          - if @form.user_name.present?
+            = t("subscriptions.new.campaign.title.with_name", name: @form.user_name)
+          - else
+            = t("subscriptions.new.campaign.title.without_name")
+        p
+          - if @form.subjects&.any?
+            = t("subscriptions.new.campaign.description.with_subject", subject: @form.subjects.first.humanize(capitalize: false))
+          - else
+            = t("subscriptions.new.campaign.description.without_subject")
 
-- content_for :breadcrumbs do
-  = govuk_back_link text: t("app.back_to_homepage"), href: root_path
+      .govuk-grid-column-one-half
+        = image_tag("subscription_campaign_banner.jpg", size: "450x300", alt: "A teacher in a class with pupils.")
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds
-     = render "subscriptions/campaign/form", form_options: { url: subscriptions_path }, i18n_prefix: "subscriptions.new", button_text: t("buttons.subscribe_campaign") do |f|
-       = render "shared/recaptcha", form: f
+.govuk-width-container class="govuk-!-margin-top-6"
+  .govuk-grid-row
+    .govuk-grid-column-two-thirds
+      = render "subscriptions/campaign/form", form_options: { url: subscriptions_path }, i18n_prefix: "subscriptions.new", button_text: t("buttons.subscribe_campaign") do |f|
+        = render "shared/recaptcha", form: f
