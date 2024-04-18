@@ -940,6 +940,8 @@ en:
       jobseekers_unsubscribe_feedback_form:
         reason: Why do you want to unsubscribe from this alert?
         user_participation_response: Would you like to participate in our research?
+      jobseekers_profile_location_preferences: 
+        another_location: Do you want to add another location?
 
       publishers_job_listing_about_the_role_form:
         ect_status: Is this role suitable for an early career teacher (ECT)?

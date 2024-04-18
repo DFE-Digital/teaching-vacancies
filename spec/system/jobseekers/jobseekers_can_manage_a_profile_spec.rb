@@ -801,7 +801,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
       expect(page).to have_css("h1", text: "Job preferencesLocations")
       expect(page).to have_content("London (1 mile)")
-      expect(page).to have_css("h3", text: "Do you want to add another location?")
+      expect(page).to have_css("h2", text: "Do you want to add another location?")
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_css("h2", text: "There is a problem")
@@ -818,7 +818,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_css("h1", text: "Job preferencesLocations")
       expect(page).to have_content("London (1 mile)")
       expect(page).to have_content("Manchester (10 miles)")
-      expect(page).to have_css("h3", text: "Do you want to add another location?")
+      expect(page).to have_css("h2", text: "Do you want to add another location?")
 
       choose "No"
       click_on I18n.t("buttons.save_and_continue")
@@ -881,7 +881,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(current_path).to eq(jobseekers_job_preferences_step_path(:locations))
         expect(page).to have_css("h1", text: "Job preferencesLocations")
         expect(page).to have_content("Manchester (10 miles)")
-        expect(page).to have_css("h3", text: "Do you want to add another location?")
+        expect(page).to have_css("h2", text: "Do you want to add another location?")
 
         choose "No"
         click_on I18n.t("buttons.save_and_continue")
