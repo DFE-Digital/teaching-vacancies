@@ -3,7 +3,7 @@
 = f.govuk_text_field :subject, label: { size: "s" }, aria: { required: true }
 
 - finished_studying_legend = capture do
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+  legend.govuk-fieldset__legend.govuk-fieldset__legend--s
     h2.govuk-fieldset__heading = t("helpers.legend.jobseekers_qualifications_shared_legends.finished_studying")
 
 = f.govuk_radio_buttons_fieldset :finished_studying, legend: -> { finished_studying_legend } do
