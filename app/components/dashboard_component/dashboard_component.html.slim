@@ -8,7 +8,7 @@
   .govuk-grid-row
     .govuk-grid-column-three-quarters
       .help-guide--mobile.help-guide--border-bottom
-        h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+        h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
         p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_mobile")
         = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
                         post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
@@ -51,7 +51,7 @@
             = f.hidden_field :jobs_type, value: @selected_type
 
         .help-guide--desktop class="govuk-!-margin-top-4"
-          h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+          h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
           p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
           = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
                           post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
@@ -126,7 +126,7 @@
     - unless @organisation.school_group?
       .govuk-grid-column-one-quarter
         .help-guide--desktop
-          h3.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
+          h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
           p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
           = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
                           post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
