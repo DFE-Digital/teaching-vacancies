@@ -2,9 +2,10 @@
 - content_for :page_description, @post.meta_description
 
 - content_for :breadcrumbs do
-  = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
-                                     params[:section].titleize.capitalize => posts_path(section: params[:section]),
-                                     @post.title => "" }
+  nav aria-label="breadcrumb" role="navigation"
+    = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
+                                       params[:section].titleize.capitalize => posts_path(section: params[:section]),
+                                       @post.title => "" }
 
 .govuk-grid-row.post
   .govuk-grid-column-two-thirds
