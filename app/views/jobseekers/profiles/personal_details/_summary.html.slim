@@ -2,16 +2,19 @@ ruby:
   form = Jobseekers::Profile::PersonalDetailsForm.from_record(profile.personal_details)
 
   attributes = {
-                 first_name: nil,
-                 last_name: nil,
                  phone_number_provided: { map_values: ->(value) { value.nil? ? "" : t("helpers.label.personal_details_form.phone_number_provided_options.#{value}") } },
                  phone_number: nil,
                  right_to_work_in_uk: { map_values: ->(value) { value.nil? ? "" : t("jobseekers.profiles.personal_details.work.options.#{value}") } },
                }
 
   summary = govuk_summary_list(html_attributes: { id: "personal_details" }) do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key text: "Name"
+      row.with_value text: "#{form.first_name} #{form.last_name}"
+      row.with_action(text: t("buttons.change"), href: edit_personal_details_jobseekers_profile_path(step: "name"), visually_hidden_text: " name")
+    end
+
     attributes.each do |attribute, options|
-      next if attribute == :last_name
       step_name = form.class.delegated_attributes[attribute.to_s]
       value = form.public_send(attribute)
 
@@ -20,15 +23,9 @@ ruby:
       end
 
       summary_list.with_row do |row|
-        if attribute == :first_name
-          row.with_key text: "Name"
-          row.with_value text: "#{form.first_name} #{form.last_name}"
-          row.with_action(text: t("buttons.change"), href: edit_personal_details_jobseekers_profile_path(step: step_name), visually_hidden_text: " name")
-        else
-          row.with_key text: t(".#{attribute}")
-          row.with_value text: value
-          row.with_action(text: t("buttons.change"), href: edit_personal_details_jobseekers_profile_path(step: step_name), visually_hidden_text: attribute.to_s.humanize)
-        end
+        row.with_key text: t(".#{attribute}")
+        row.with_value text: value
+        row.with_action(text: t("buttons.change"), href: edit_personal_details_jobseekers_profile_path(step: step_name), visually_hidden_text: attribute.to_s.humanize)
       end
     end
 
