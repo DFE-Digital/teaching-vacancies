@@ -22,12 +22,12 @@ section#job-details class="govuk-!-margin-bottom-5"
       - summary_list.with_row do |row|
         - row.with_key do
           h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.subjects", count: vacancy.subjects.count)
-        - row.with_value text: linked_subjects(vacancy)
+        - row.with_value text: vacancy.readable_subjects
 
     - summary_list.with_row do |row|
       - row.with_key do
         h3.govuk-heading-s class="govuk-!-margin-bottom-0" = t("jobs.working_patterns")
-      - row.with_value text: linked_working_patterns(vacancy)
+      - row.with_value text: vacancy.readable_working_patterns_with_details
 
     - if vacancy.contract_type
       - summary_list.with_row do |row|

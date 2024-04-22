@@ -45,8 +45,8 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, organisations: [school], working_patterns: %w[full_time part_time]) }
 
       scenario "the page contains correct JobPosting schema.org mark up" do
-        expect(page).to have_link "View all Full timejobs"
-        expect(page).to have_link "View all Part timejobs"
+        expect(page).to have_content "Full time"
+        expect(page).to have_content "part time"
         expect(script_tag_content(wrapper_class: ".jobref"))
           .to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)).to_json)
       end
