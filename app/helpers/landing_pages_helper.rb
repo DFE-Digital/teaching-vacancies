@@ -37,25 +37,6 @@ module LandingPagesHelper
     landing_page_link_or_text({ ect_statuses: [vacancy.ect_status] }, vacancy.ect_status.humanize)
   end
 
-  def linked_subjects(vacancy)
-    vacancy.subjects.map { |subject|
-      landing_page_link_or_text({ subjects: [subject] }, subject, match: :partial)
-    }.join(", ").html_safe
-  end
-
-  def linked_working_patterns(vacancy)
-    tag.ul class: "govuk-list" do
-      safe_join [
-        tag.li do
-          vacancy.working_patterns.map { |working_pattern|
-            landing_page_link_or_text({ working_patterns: [working_pattern] }, working_pattern&.capitalize)
-          }.join(", ").html_safe
-        end,
-        tag.li { tag.span(vacancy.working_patterns_details) },
-      ]
-    end
-  end
-
   def linked_school_phase(school)
     landing_page_link_or_text({ phases: [school.readable_phase] }, school.readable_phase&.capitalize)
   end
