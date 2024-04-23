@@ -14,6 +14,11 @@
 
 ## Monitoring, Metrics and Usage
 
+### Grafana Dashboards
+
+- [TV roduction namespace dashboard](https://grafana.teacherservices.cloud/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=10s&var-datasource=P5DCFC7561CCDE821&var-cluster=prometheus&var-namespace=tv-production&var-resolution=30s&var-created_by=All&from=now-3h&to=now)
+- [TV production pods dashboard](https://grafana.teacherservices.cloud/d/k8s_views_pods/kubernetes-views-pods?orgId=1&refresh=10s&var-datasource=P5DCFC7561CCDE821&var-cluster=prometheus&var-namespace=tv-production&var-deployment=All&var-pod=All&var-resolution=30s&from=now-3h&to=now)
+
 ### Skylight
 
 - [Report performance data with Skylight](https://www.skylight.io/app/applications/xsMWeSG9ned8/recent/6h/endpoints)
