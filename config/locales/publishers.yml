@@ -63,6 +63,7 @@ en:
     job_listing_process_changed_draft_banner:
       heading_html: "You cannot make changes to this draft job listing. %{create_new_link} or %{contact_support_link}."
     jobseeker_profiles:
+      skip_link_list: Skip to candidate profiles
       trusts:
         available_to_travel_text:
           single_selected_location: "These candidates are willing to travel to your selected school location."
