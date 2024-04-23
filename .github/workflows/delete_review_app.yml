@@ -13,12 +13,8 @@ on:
       pr_number:
         description: 'Pull Request number to delete (EG: 1234 for review-pr-1234)'
         required: true
-      skip_status_check:
-        description: 'Attempt deletion even if the review app status check fails'
-        required: false
-        type: boolean
 
-concurrency: workflow-Build-and-deploy-${{ github.ref }}
+concurrency: workflow-Build-and-deploy-${{ github.event.pull_request.number }}
 
 env:
   DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
@@ -62,16 +58,6 @@ jobs:
       with:
         ssm_parameter: /teaching-vacancies/github_action/infra/git_hub_service_account_token
         env_variable_name: GIT_HUB_SERVICE_ACCOUNT_TOKEN
-
-
-    - name: check review status
-      run: |
-        HTTP_CODE=$(curl -o/dev/null -s -w "%{http_code}" https://${{secrets.HTTP_BASIC_USER}}:${{secrets.HTTP_BASIC_PASSWORD}}@teaching-vacancies-review-pr-${{env.PR_NUMBER}}.test.teacherservices.cloud)
-        echo "HTTP_CODE=$HTTP_CODE" >> $GITHUB_ENV
-
-    - name: Exit whole workflow if wait was not successful and review app is not up
-      if: inputs.skip_status_check != true && steps.wait_for_deployment.outputs.conclusion != 'success' && env.HTTP_CODE != '200'
-      run: exit 1
 
     - uses: actions/checkout@v4
       name: Checkout Code

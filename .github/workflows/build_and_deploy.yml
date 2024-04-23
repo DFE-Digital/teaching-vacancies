@@ -21,7 +21,7 @@ on:
       - synchronize
       - reopened
 
-concurrency: workflow-Build-and-deploy-${{ github.ref }}
+concurrency: workflow-Build-and-deploy-${{ github.event.pull_request.number }}
 
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
