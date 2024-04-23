@@ -50,7 +50,7 @@ RSpec.describe "Copying a vacancy" do
 
   scenario "a job can be copied from the dashboard" do
     visit organisation_jobs_with_type_path
-    click_on "#{I18n.t('buttons.copy_listing')} #{original_vacancy.job_title}"
+    click_on "#{I18n.t('buttons.copy_listing')} for #{original_vacancy.job_title}"
 
     new_vacancy = Vacancy.all.order(:created_at).last
 

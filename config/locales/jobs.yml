@@ -375,10 +375,9 @@ en:
           no_filters: You currently have no active jobs.
           with_filters: There are no active jobs for the schools you have selected.
       view_applicants:
-        hidden_text: view
-        zero: "%{count} applicants"
-        one: "%{count} applicant"
-        other: "%{count} applicants"
+        zero: "View %{count} applicants"
+        one: "View %{count} applicant"
+        other: "View %{count} applicants"
 
     date_listed: Date listed
 

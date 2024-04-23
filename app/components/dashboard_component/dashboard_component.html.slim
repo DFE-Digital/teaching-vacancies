@@ -120,7 +120,7 @@
               - unless vacancy.external? || vacancy.draft?
                 - row.with_action(text: t("buttons.copy_listing"),
                              href: organisation_job_copy_path(vacancy.id),
-                             visually_hidden_text: "#{t('buttons.copy_listing')} #{vacancy.job_title}",
+                             visually_hidden_text: "for #{vacancy.job_title}",
                              html_attributes: { "data-method": "post" })
 
     - unless @organisation.school_group?
