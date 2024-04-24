@@ -1,6 +1,6 @@
 - qualifications_sort_and_group(qualifications).each_value do |qualification_group|
   - qualification_group.each do |qualification|
-    h3.govuk-heading-s class="govuk-!-padding-bottom-0"
+    h3.govuk-heading-s class="govuk-!-padding-bottom-0 govuk-!-margin-bottom-0"
       = qualification.name
     - if qualification.finished_studying?
       p class="govuk-body govuk-!-margin-bottom-0"
@@ -10,8 +10,9 @@
           = qualification.subject.presence || qualification.grade
     - if qualification.secondary?
       - qualification.qualification_results.each do |res|
-        p class="govuk-!-padding-bottom-0" = tag.div("#{res.subject} (#{res.grade})", class: "govuk-body govuk-!-margin-bottom-0")
+        p class="govuk-!-margin-bottom-0" = tag.div("#{res.subject} (#{res.grade})", class: "govuk-body govuk-!-margin-bottom-0")
     - unless qualification.finished_studying.nil?
       p class="govuk-!-margin-top-0" = tag.div(qualification.finished_studying_details.presence, class: "govuk-body")
     p.govuk-hint = qualification.year
-    hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
+    - class_name = "govuk-!-margin-bottom-3"
+    hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible[class=class_name]
