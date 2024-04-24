@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, current_organisation.name
+- content_for :page_title_prefix, t(".title.#{@selected_type}", organisation_name: current_organisation.name)
 
 - content_for :skip_links do
   = govuk_skip_link(href: "#vacancy-results", text: t(".skip_link", heading: t("jobs.dashboard.#{@selected_type}.tab_heading")))

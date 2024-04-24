@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, @organisation.name
+- content_for :page_title_prefix, t(".title", organisation_type: (@organisation.school? ? "School" : "Organisation"))
 
 - if current_organisation.school_group? && @organisation.school?
   - content_for :breadcrumbs do
