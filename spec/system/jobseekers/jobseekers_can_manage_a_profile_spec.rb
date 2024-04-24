@@ -52,8 +52,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         click_on I18n.t("buttons.return_to_profile")
 
-        expect(page).to have_content(first_name)
-        expect(page).to have_content(last_name)
+        expect(page).to have_content("#{first_name} #{last_name}")
         expect(page).to have_content(phone_number)
         expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
       end
@@ -81,7 +80,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
 
       it "allows the jobseeker to edit their profile" do
-        row = page.find(".govuk-summary-list__key", text: "First name").find(:xpath, "..")
+        row = page.find(".govuk-summary-list__key", text: "Name").find(:xpath, "..")
 
         within(row) do
           click_link "Change"
@@ -97,8 +96,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         choose "No"
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content(new_first_name)
-        expect(page).to have_content(new_last_name)
+        expect(page).to have_content("#{new_first_name} #{new_last_name}")
         expect(page).to have_content("Do you want to provide a phone number?No")
         expect(page).not_to have_content(old_phone_number)
         expect(page).to have_content("No, I already have the right to work in the UK")
@@ -132,8 +130,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     it "still shows the summary rows for the blank attributes" do
-      expect(page).to have_content("First name")
-      expect(page).to have_content("Last name")
+      expect(page).to have_content("Name")
     end
   end
 
