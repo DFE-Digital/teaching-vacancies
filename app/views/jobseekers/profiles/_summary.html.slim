@@ -47,11 +47,11 @@ dl.govuk-summary-list
   - profile.employments.order(:started_on).reverse_each do |employment|
     h3.govuk-heading-s class="govuk-!-padding-bottom-3"
       = employment.organisation
-      p class="govuk-!-margin-bottom-0" = employment.job_title
-      - if employment.subjects.present?
-        p class="govuk-!-margin-bottom-0" = employment.subjects
-      p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
-      hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
+    p class="govuk-!-margin-bottom-0" = employment.job_title
+    - if employment.subjects.present?
+      p class="govuk-!-margin-bottom-0" = employment.subjects
+    p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
+    hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
 
 - if profile.qualifications.any?
   h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".qualifications")
