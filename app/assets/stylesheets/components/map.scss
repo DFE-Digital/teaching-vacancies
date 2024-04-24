@@ -18,7 +18,7 @@
 
         &__marker {
           &:focus {
-            outline: $govuk-focus-width solid $govuk-focus-colour !important;
+            outline: $govuk-focus-width solid govuk-colour('red') !important;
           }
 
           &--show {
