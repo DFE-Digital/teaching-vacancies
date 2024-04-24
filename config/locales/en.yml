@@ -17,7 +17,6 @@ en:
       of <span class='govuk-!-font-weight-bold'>%{total}</span>
       %{type}
     skip_link:
-      cookie: Skip to cookie consent
       main: Skip to main content
     title: Teaching Vacancies
     support_title: Support for Teaching Vacancies
