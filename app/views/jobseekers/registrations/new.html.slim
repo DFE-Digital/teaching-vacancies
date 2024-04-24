@@ -16,8 +16,16 @@
         legend.govuk-fieldset__legend.govuk-fieldset__legend--m
           h2.govuk-fieldset__heading = t(".labels.account_type")
 
-      = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
-      = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
+      = f.govuk_email_field :email,
+        label: { size: "s" },
+        width: "two-thirds",
+        autocomplete: "email"
+
+      = f.govuk_password_field :password,
+        label: { size: "s" },
+        width: "two-thirds",
+        autocomplete: "new-password"
+
       = f.govuk_radio_buttons_fieldset(:account_type, legend: -> { legend_html }) do
         = f.govuk_radio_button :account_type, :teaching, label: { text: t(".labels.teaching") }, hint: { text: t(".hints.teaching") }, link_errors: true
         = f.govuk_radio_button :account_type, :non_teaching, label: { text: t(".labels.non_teaching") }, hint: { text: t(".hints.non_teaching") }
