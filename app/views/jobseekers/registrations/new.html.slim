@@ -23,6 +23,8 @@
         = f.govuk_radio_button :account_type, :non_teaching, label: { text: t(".labels.non_teaching") }, hint: { text: t(".hints.non_teaching") }
       end
 
+      = render "shared/recaptcha", form: f
+
       = f.govuk_submit t("buttons.create_account")
 
   .govuk-grid-column-one-third
