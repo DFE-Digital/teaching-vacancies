@@ -8,9 +8,15 @@
       = f.govuk_error_summary
 
       p.govuk-body = t(".description")
-
-      = f.govuk_email_field :email, label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" }, width: "two-thirds"
-      = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
+      .govuk-grid-row
+        .govuk-grid-column-two-thirds
+          = f.govuk_email_field :email,
+                                label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" },
+                                autocomplete: "email"
+          = f.govuk_password_field :password,
+                                   label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" },
+                                   hint: nil,
+                                   autocomplete: "current-password"
       = hidden_field_tag :redirected, true if redirected?
 
       p.govuk-body = govuk_link_to(t(".forgotten"), new_jobseeker_password_path)
