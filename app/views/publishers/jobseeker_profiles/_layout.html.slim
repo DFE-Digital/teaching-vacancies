@@ -4,7 +4,7 @@
   = govuk_back_link text: t("buttons.back"), href: publishers_jobseeker_profiles_path, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
+  .govuk-grid-column-full
     h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = profile.full_name
     .govuk-button-group data-controller="clipboard" data-clipboard-success-content-value="email address copied"
       = tracked_mail_to(profile.email,
@@ -21,4 +21,6 @@
             data-clipboard-target="button"
             class="js-action govuk-button govuk-button--secondary govuk-!-margin-bottom-2 clipboard-copy"]
         | Copy email
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
     = yield
