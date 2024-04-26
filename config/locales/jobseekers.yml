@@ -753,6 +753,10 @@ en:
         summary:
           about_you_title: About You
       training_and_cpds:
+        new:
+          hint: For example, 1998
+        edit:
+          hint: For example, 1998
         destroy:
           success: Training deleted
       qualifications:
