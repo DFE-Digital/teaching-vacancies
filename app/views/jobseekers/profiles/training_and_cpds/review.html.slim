@@ -1,11 +1,11 @@
-- content_for :page_title_prefix, "Training and continuing personal development (CPD)"
+- content_for :page_title_prefix, "Training and continuing professional development (CPD)"
 
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-l = "Training and continuing personal development (CPD)"
+    h1.govuk-heading-l = "Training and continuing professional development (CPD)"
     - if profile.training_and_cpds.any?
       = render "jobseekers/training_and_cpds/training_and_cpds", profile: profile
 
