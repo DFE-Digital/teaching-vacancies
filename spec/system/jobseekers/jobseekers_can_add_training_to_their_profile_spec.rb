@@ -77,7 +77,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
 
         click_button "Delete training"
 
-        expect(page).to have_current_path(jobseekers_profile_path)
+        expect(page).to have_current_path(review_jobseekers_profile_training_and_cpds_path)
 
         expect(page).to have_css("h2.govuk-notification-banner__title", text: "Success")
         expect(page).to have_css(".govuk-notification-banner__content", text: "Training deleted")

@@ -27,7 +27,7 @@ class Jobseekers::Profiles::TrainingAndCpdsController < Jobseekers::ProfilesCont
 
   def destroy
     training_and_cpd.destroy
-    redirect_to jobseekers_profile_path, success: t(".success")
+    redirect_to review_jobseekers_profile_training_and_cpds_path, success: t(".success")
   end
 
   def form
