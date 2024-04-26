@@ -540,9 +540,23 @@ en:
           new_email: New email address
           title: Update email address
       edit_password:
-        current_password: Old password
+        current_password: 
+          label: Old password
+          show: 
+            label: Show current password
+            announcement: Your current password is visible
+          hide: 
+            label: Hide current password
+            announcement: Your current password is hidden
         description: Password reset for %{email}
-        new_password: New password
+        new_password: 
+          label: New password
+          show: 
+            label: Show new password
+            announcement: Your new password is visible
+          hide: 
+            label: Hide new password
+            announcement: Your new password is hidden
         title: Change password
       edit_account_type: 
         current_password: Password

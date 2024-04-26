@@ -72,6 +72,7 @@ en:
       non_trusts:
         available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."
       index:
+        title: "Candidate profiles - %{organisation_name}"
         no_results:
           heading: No candidates found
           lead_in: "This may be because:"
@@ -493,6 +494,12 @@ en:
         job_applications: When you create a job listing you can now choose for candidates to apply through Teaching Vacancies.
         job_applications_link_text: Preview the application form
         skip_link: Skip to %{heading}
+        title:
+          published: Active jobs - %{organisation_name}
+          expired: Closed jobs - %{organisation_name}
+          pending: Scheduled jobs - %{organisation_name}
+          draft: Draft jobs - %{organisation_name}
+          awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
         header:
           status_heading: Applicant status

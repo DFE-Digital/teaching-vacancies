@@ -1,10 +1,13 @@
 class Jobseekers::RegistrationsController < Devise::RegistrationsController
+  include RecaptchaChecking
+
   helper_method :password_update?, :account_type_update?
+
+  prepend_before_action :check_captcha, :configure_sign_up_params, only: [:create]
 
   before_action :check_password_difference, only: %i[update]
   before_action :check_new_password_presence, only: %i[update]
   before_action :check_email_difference, only: %i[update]
-  before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
   after_action :set_correct_update_message, only: %i[update]
 
@@ -98,5 +101,20 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
 
   def configure_account_update_params
     devise_parameter_sanitizer.permit(:account_update, keys: [:account_type])
+  end
+
+  # https://github.com/heartcombo/devise/wiki/How-To:-Use-Recaptcha-with-Devise
+  def check_captcha
+    return if recaptcha_is_valid?
+
+    self.resource = resource_class.new sign_up_params
+    resource.validate # Look for any other validation errors besides reCAPTCHA
+    set_minimum_password_length
+
+    respond_with_navigational(resource) do
+      @show_recaptcha = true
+      resource.errors.add(:recaptcha, t("recaptcha.error"))
+      render :new
+    end
   end
 end

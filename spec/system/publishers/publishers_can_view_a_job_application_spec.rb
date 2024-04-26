@@ -66,10 +66,12 @@ RSpec.describe "Publishers can view a job application" do
     it "shows the correct calls to action" do
       visit organisation_job_job_application_path(vacancy.id, job_application)
 
-      expect(page).to have_css(".govuk-button-group") do |actions|
-        expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
-        expect(actions).not_to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
-        expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
+      within("#main-content") do
+        expect(page).to have_css(".govuk-button-group") do |actions|
+          expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
+          expect(actions).not_to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
+          expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
+        end
       end
     end
   end
@@ -80,10 +82,12 @@ RSpec.describe "Publishers can view a job application" do
     it "shows the correct calls to action and timeline" do
       visit organisation_job_job_application_path(vacancy.id, job_application)
 
-      expect(page).to have_css(".govuk-button-group") do |actions|
-        expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
-        expect(actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
-        expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
+      within("#main-content") do
+        expect(page).to have_css(".govuk-button-group") do |actions|
+          expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
+          expect(actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
+          expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
+        end
       end
     end
   end
@@ -94,10 +98,12 @@ RSpec.describe "Publishers can view a job application" do
     it "shows the correct calls to action and timeline" do
       visit organisation_job_job_application_path(vacancy.id, job_application)
 
-      expect(page).to have_css(".govuk-button-group") do |actions|
-        expect(actions).to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
-        expect(actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
-        expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
+      within("#main-content") do
+        expect(page).to have_css(".govuk-button-group") do |actions|
+          expect(actions).to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
+          expect(actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
+          expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
+        end
       end
     end
   end

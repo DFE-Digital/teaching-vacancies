@@ -6,6 +6,20 @@ RSpec.describe "Jobseekers can sign up to an account" do
   let(:created_jobseeker) { Jobseeker.first }
 
   describe "creating an account" do
+    context "when recaptcha V3 check fails" do
+      before do
+        allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
+      end
+
+      scenario "requests the user to pass a recaptcha V2 check" do
+        visit new_jobseeker_registration_path
+        expect { sign_up_jobseeker }.not_to change(Jobseeker, :count)
+        expect(page).to have_content("There is a problem")
+        expect(page).to have_content(I18n.t("recaptcha.error"))
+        expect(page).to have_content(I18n.t("recaptcha.label"))
+      end
+    end
+
     it "validates and submits the form, triggers account created event, sends confirmation email and redirects to check your email page" do
       visit new_jobseeker_registration_path
       click_on I18n.t("buttons.create_account")
