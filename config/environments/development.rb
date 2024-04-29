@@ -27,6 +27,7 @@ Rails.application.configure do
 
   # Allow Web Console from outside devcontainer
   config.web_console.permissions = "172.0.0.0/8" if ENV["DEVCONTAINER"].present?
+  config.web_console.whiny_requests = false
 
   # Allow better errors to be displayed when accessing Docker running apps
   BetterErrors::Middleware.allow_ip! "10.0.0.0/8"
