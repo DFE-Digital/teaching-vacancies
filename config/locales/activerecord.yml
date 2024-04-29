@@ -689,6 +689,15 @@ en:
               invalid: Enter a date in the correct format
             reason_for_leaving:
               blank: Enter your reason for leaving the role
+        jobseekers/training_and_cpd_form:
+          attributes:
+            name:
+              blank: Enter the name of the course or training
+            provider:
+              blank: Enter the name of the provider of the training
+            year_awarded:
+              blank: Enter the year the course or training was awarded
+
 
         publishers/job_application/notes_form:
           attributes:

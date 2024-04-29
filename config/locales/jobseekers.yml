@@ -766,6 +766,13 @@ en:
           summary_title: About You
         summary:
           about_you_title: About You
+      training_and_cpds:
+        new:
+          hint: For example, 1998
+        edit:
+          hint: For example, 1998
+        destroy:
+          success: Training deleted
       qualifications:
         confirm_destroy:
           secondary:
@@ -852,6 +859,7 @@ en:
         subjects:
           one: Subject
           other: Subjects
+        training_and_cpd: Training and continuing professional development (CPD)
 
     sessions:
       new:

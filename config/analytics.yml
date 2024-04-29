@@ -423,3 +423,12 @@ shared:
     - created_at
     - right_to_work_in_uk
     - updated_at
+  :training_and_cpds:
+    - id
+    - name
+    - provider
+    - grade
+    - year_awarded
+    - created_at
+    - updated_at
+    - jobseeker_profile_id

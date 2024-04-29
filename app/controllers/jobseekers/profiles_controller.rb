@@ -35,6 +35,13 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       page_path: -> { select_category_jobseekers_profile_qualifications_path },
     },
     {
+      title: "Training and continuing professional development (CPD)",
+      display_summary: -> { profile.training_and_cpds.present? },
+      key: "training_and_cpds",
+      link_text: "Add training",
+      page_path: -> { new_jobseekers_profile_training_and_cpd_path },
+    },
+    {
       title: "Work history",
       display_summary: -> { profile.employments.any? },
       key: "employments",

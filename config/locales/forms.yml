@@ -571,6 +571,13 @@ en:
           on_track: "I’m on track to receive QTS"
           non_teacher: "I'm not looking for a teaching job"
         qualified_teacher_status_year: Year QTS was awarded
+      jobseekers_training_and_cpd_form:
+        name: Name of course or training
+        provider: Training provider
+        grade: Grade (optional)
+        year_awarded: Year awarded
+        year_completed_hint: For example, 1998
+
 
       personal_details_form:
         email: Email

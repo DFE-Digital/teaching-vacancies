@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_03_093724) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_03_104656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -566,6 +566,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_03_093724) do
     t.index ["oid"], name: "index_support_users_on_oid"
   end
 
+  create_table "training_and_cpds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "provider"
+    t.string "grade"
+    t.string "year_awarded"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "jobseeker_profile_id"
+    t.index ["jobseeker_profile_id"], name: "index_training_and_cpds_on_jobseeker_profile_id"
+  end
+
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title"
     t.string "slug", null: false
@@ -699,6 +710,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_03_093724) do
   add_foreign_key "saved_jobs", "vacancies"
   add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
+  add_foreign_key "training_and_cpds", "jobseeker_profiles"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publishers"
 end

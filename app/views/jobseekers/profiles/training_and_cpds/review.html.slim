@@ -1,0 +1,14 @@
+- content_for :page_title_prefix, "Training and continuing professional development (CPD)"
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = "Training and continuing professional development (CPD)"
+    - if profile.training_and_cpds.any?
+      = render "jobseekers/training_and_cpds/training_and_cpds", profile: profile
+
+    .govuk-button-group
+      = govuk_button_link_to "Add training", new_jobseekers_profile_training_and_cpd_path(profile), class: "govuk-button--secondary govuk-!-margin-bottom-0"
+      = govuk_button_link_to "Return to profile", jobseekers_profile_path
