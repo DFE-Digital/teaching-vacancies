@@ -4,7 +4,7 @@
  # the hardcoded versions below when they have been updated in the alpine ruby image.
 ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15 gnutls=3.8.4-r0"
 
-FROM ruby:3.3.0-alpine3.19 AS builder
+FROM ruby:3.3.1-alpine3.19 AS builder
 
 WORKDIR /app
 
@@ -48,7 +48,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.3.0-alpine3.19 AS production
+FROM ruby:3.3.1-alpine3.19 AS production
 
 WORKDIR /app
 
