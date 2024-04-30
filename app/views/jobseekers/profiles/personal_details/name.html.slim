@@ -9,9 +9,13 @@
       = f.govuk_error_summary
 
       = f.govuk_fieldset legend: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".caption"), size: "l" } do
-        = f.govuk_text_field :first_name, label: { size: "m" }
+        = f.govuk_text_field :first_name,
+          label: { size: "m" },
+          autocomplete: "given-name"
 
-        = f.govuk_text_field :last_name, label: { size: "m" }
+        = f.govuk_text_field :last_name,
+          label: { size: "m" },
+          autocomplete: "family-name"
 
         = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
 
