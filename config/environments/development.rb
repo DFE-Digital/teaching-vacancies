@@ -9,7 +9,10 @@ Rails.application.configure do
   config.active_storage.service = :amazon_s3_documents
 
   # Configure the domains permitted to access coordinates API
-  config.allowed_cors_origin = proc { "https://#{DOMAIN}" }
+  config.allowed_cors_origin = proc { "https://#{ENV.fetch('GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN', DOMAIN)}" }
+
+  # If developing through Github codespaces: allow the port forwarding domain to access the app.
+  config.action_controller.forgery_protection_origin_check = false if ENV["GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN"].present?
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
