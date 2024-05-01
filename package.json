@@ -12,13 +12,13 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@sentry/browser": "7.112.1",
+    "@sentry/browser": "7.112.2",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.0",
     "axios": "^1.6.8",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.37.0",
-    "dompurify": "^3.1.0",
+    "dompurify": "^3.1.2",
     "govuk-frontend": "^5.3.1",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
@@ -26,8 +26,8 @@
     "rails-ujs": "^5.2.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.4",
-    "@babel/preset-env": "^7.24.4",
+    "@babel/core": "^7.24.5",
+    "@babel/preset-env": "^7.24.5",
     "concurrently": "^8.2.2",
     "dotenv": "^16.4.5",
     "esbuild": "^0.20.2",
@@ -39,11 +39,11 @@
     "jest-environment-jsdom": "29.7.0",
     "jsdom": "^24.0.0",
     "postcss": "^8.4.38",
-    "sass": "^1.75.0",
+    "sass": "^1.76.0",
     "stylelint": "^15.11.0",
     "stylelint-config-sass-guidelines": "^10.0.0",
     "stylelint-config-standard": "^34.0.0",
-    "yaml": "^2.4.1"
+    "yaml": "^2.4.2"
   },
   "scripts": {
     "build": "node esbuild.config.js",
