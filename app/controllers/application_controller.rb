@@ -63,15 +63,26 @@ class ApplicationController < ActionController::Base
   def redirect_to_canonical_domain
     return unless request_host_is_invalid?
 
-    redirect_to status: 301, host: DOMAIN
+    redirect_to status: 301, host: service_domain
   end
 
   def request_host_is_invalid?
-    !Rails.env.test? && !request_is_healthcheck? && request.host_with_port != DOMAIN
+    return false if Rails.env.test? || request_is_healthcheck? || request_from_github_codespace?
+
+    request.host_with_port != service_domain
   end
 
   def request_is_healthcheck?
     ["diego-healthcheck", "Amazon CloudFront"].include?(request.headers["User-Agent"])
+  end
+
+  # Default to Github Codespaces domain if set, otherwise use the standard domain.
+  def service_domain
+    ENV.fetch("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN", DOMAIN)
+  end
+
+  def request_from_github_codespace?
+    Rails.env.development? && request.host_with_port.end_with?(".app.github.dev")
   end
 
   def set_headers

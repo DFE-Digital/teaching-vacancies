@@ -1,6 +1,6 @@
 class SitemapController < ApplicationController
   def show # rubocop:disable Metrics/AbcSize
-    map = XmlSitemap::Map.new(DOMAIN, secure: !Rails.env.development?) do |m|
+    map = XmlSitemap::Map.new(service_domain, secure: !Rails.env.development?) do |m|
       # Live vacancies
       Vacancy.live.applicable.find_each do |vacancy|
         m.add job_path(vacancy), updated: vacancy.updated_at, expires: vacancy.expires_at, period: "hourly", priority: 0.7

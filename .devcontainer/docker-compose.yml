@@ -17,8 +17,6 @@ services:
     ports:
       - "3000:3000"
       - "3035:3035"
-    tmpfs:
-      - /tmp # Required for ActiveStorage, see https://github.com/docker/for-mac/issues/5570
     environment:
       # Rails
       DATABASE_URL: postgis://postgres:postgres@db
@@ -56,8 +54,6 @@ services:
     shm_size: 2G
     ports:
       - "7900:7900"
-    tmpfs:
-      - /tmp
 
 volumes:
   # Postgres data directory
