@@ -17,6 +17,21 @@ shared:
   # criteria is correct and doesn't break the search engine).
 
   ### Job roles
+  sendco-jobs:
+    teaching_job_roles:
+      - sendco
+  teacher-jobs:
+    teaching_job_roles:
+      - teacher
+  headteacher-jobs:
+    teaching_job_roles:
+      - headteacher
+  head-of-department-or-curriculum-jobs:
+    teaching_job_roles:
+      - head_of_department_or_curriculum
+  head-of-year-or-phase-jobs:
+    teaching_job_roles:
+      - head_of_year_or_phase
   assistant-headteacher-jobs:
     teaching_job_roles:
       - assistant_headteacher
@@ -29,27 +44,33 @@ shared:
   education-support-jobs:
     support_job_roles:
       - education_support
-  head-of-year-or-phase-jobs:
-    teaching_job_roles:
-      - head_of_year_or_phase
-  head-of-department-or-curriculum-jobs:
-    teaching_job_roles:
-      - head_of_department_or_curriculum
-  headteacher-jobs:
-    teaching_job_roles:
-      - headteacher
   higher-level-teaching-assistant-jobs:
     support_job_roles:
       - higher_level_teaching_assistant
-  sendco-jobs:
-    teaching_job_roles:
-      - sendco
-  teacher-jobs:
-    teaching_job_roles:
-      - teacher
   teaching-assistant-jobs:
     support_job_roles:
       - teaching_assistant
+  other-teaching-support-jobs:
+    teaching_support_job_roles:
+      - other_teaching_support
+  administration-hr-data-finance-jobs:
+    non_teaching_job_roles:
+      - administration
+  catering-cleaning-site-management-jobs:
+    non_teaching_job_roles:
+      - catering
+  it-support-jobs:
+    non_teaching_job_roles:
+      - it_support
+  pastoral-health-welfare-jobs:
+    non_teaching_job_roles:
+      - pastoral
+  other-leadership-roles-jobs:
+    non_teaching_job_roles:
+      - other_leadership
+  other-support-roles-jobs:
+    non_teaching_job_roles:
+      - other_support
 
   ### Phases
   nursery-jobs:
