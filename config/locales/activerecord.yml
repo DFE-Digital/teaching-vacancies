@@ -549,6 +549,10 @@ en:
           attributes:
             qualifications_section_completed:
               blank: Select yes if you have completed this section
+        jobseekers/job_application/training_and_cpds_form:
+          attributes:
+            training_and_cpds_section_completed:
+              blank: Select yes if you have completed this section
         jobseekers/job_application/review_form:
           attributes:
             confirm_data_accurate:

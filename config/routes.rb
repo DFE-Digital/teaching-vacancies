@@ -63,6 +63,7 @@ Rails.application.routes.draw do
         end
       end
       resources :references, only: %i[new create edit update destroy], controller: "job_applications/references"
+      resources :training_and_cpds, only: %i[new create edit update destroy], controller: "job_applications/training_and_cpds"
       get :review
       get :confirm_destroy
       get :confirm_withdraw

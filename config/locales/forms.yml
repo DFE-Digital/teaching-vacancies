@@ -11,6 +11,8 @@ en:
     add_job: Add a job
     add_note: Add note
     add_qualification: Add a qualification
+    add_training: Add training
+    add_another_training: Add another training
     add_reference: Add a referee
     add_work_history: Add work history
     apply_filters: Apply filters
@@ -521,6 +523,10 @@ en:
         qualifications_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
+      jobseekers_job_application_training_and_cpds_form:
+        training_and_cpds_section_completed_options:
+          false: No, I'll come back to it later
+          true: Yes, I've completed this section
       jobseekers_job_application_review_form:
         update_profile_options:
           qualifications: Update qualifications on profile
@@ -929,6 +935,8 @@ en:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
       jobseekers_job_application_qualifications_form:
         qualifications_section_completed: Have you completed this section?
+      jobseekers_job_application_training_and_cpds_form:
+        training_and_cpds_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:
         withdraw_reason: Why would you like to withdraw your application?
       jobseekers_qualifications_degree_form:

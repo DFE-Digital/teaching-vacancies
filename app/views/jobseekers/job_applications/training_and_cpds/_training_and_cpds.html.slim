@@ -1,0 +1,22 @@
+- job_application.training_and_cpds.each do |training|
+  = render DetailComponent.new title: training.name do |detail|
+    - detail.with_body do
+      = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.name")
+          - row.with_value text: training.name
+
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.provider")
+          - row.with_value text: training.provider
+
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.grade")
+          - row.with_value text: training.grade
+
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.year_awarded")
+          - row.with_value text: training.year_awarded
+
+    - detail.with_action govuk_link_to(safe_join([t("buttons.change"), tag.span(training.name, class: "govuk-visually-hidden")]), edit_jobseekers_job_application_training_and_cpd_path(training), class: "govuk-link--no-visited-state")
+    - detail.with_action govuk_link_to(safe_join([t("buttons.delete"), tag.span(training.name, class: "govuk-visually-hidden")]), jobseekers_job_application_training_and_cpd_confirm_destroy_path(training))

@@ -112,6 +112,8 @@ FactoryBot.define do
     # Employment history
     employment_history_section_completed { nil }
 
+    training_and_cpds_section_completed { nil }
+
     # Personal statement
     personal_statement { "" }
 

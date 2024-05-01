@@ -215,6 +215,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       last_name: profile.personal_details&.last_name,
       phone_number: profile.personal_details&.phone_number,
       qualifications: profile.qualifications.map(&:duplicate),
+      training_and_cpds: profile.training_and_cpds.map(&:duplicate),
       qualified_teacher_status_year: profile.qualified_teacher_status_year || "",
       qualified_teacher_status: profile.qualified_teacher_status || "",
       right_to_work_in_uk: profile_right_to_work,
@@ -240,6 +241,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     if application.qualified_teacher_status.present?
       application.in_progress_steps += [:professional_status]
+    end
+
+    if application.training_and_cpds.any?
+      application.in_progress_steps += [:training_and_cpds]
     end
 
     return unless application.qualifications.present?

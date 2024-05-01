@@ -1,0 +1,18 @@
+- content_for :page_title_prefix, "Training and continuing professional development (CPD)"
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l Training and continuing professional development (CPD)
+    h1.govuk-heading-xl = "Edit training and continuing professional development (CPD)"
+
+    = form_for form, url: jobseekers_job_application_training_and_cpd_path, method: :put do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }
+      = f.govuk_text_field :provider, label: { size: "s" }, aria: { required: true }
+      = f.govuk_text_field :grade, label: { size: "s" }
+      = f.govuk_text_field :year_awarded, label: { size: "s" }, type: "number", width: 4, hint: { text: t(".hint") }
+      = f.govuk_submit t("buttons.save_and_continue")
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :training_and_cpds)
