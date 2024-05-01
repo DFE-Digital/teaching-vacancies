@@ -927,7 +927,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     fill_in "jobseekers_profile_employment_form[started_on(2i)]", with: "09"
     choose "No", name: "jobseekers_profile_employment_form[current_role]"
     fill_in "jobseekers_profile_employment_form[ended_on(1i)]", with: (Date.today - 1.year).year
-    fill_in "jobseekers_profile_employment_form[ended_on(2i)]", with: Date.today.month
+    fill_in "jobseekers_profile_employment_form[ended_on(2i)]", with: 1.month.ago.month
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: "Goals and that"
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: "I hate it there"
 
