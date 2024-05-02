@@ -5,7 +5,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @step, url: { action: :update }, method: :post, as: :personal_details_form do |f|
+    = form_for @step, url: { action: :update }, method: :post, as: :personal_details_form_name do |f|
       = f.govuk_error_summary
 
       = f.govuk_fieldset legend: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".caption"), size: "l" } do
@@ -17,7 +17,7 @@
           label: { size: "m" },
           autocomplete: "family-name"
 
-        = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
+        = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5", id: "name-button"
 
     .govuk-button-group
       = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
