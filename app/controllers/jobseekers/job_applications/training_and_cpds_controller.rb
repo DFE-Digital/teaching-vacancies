@@ -3,8 +3,7 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::Profi
 
   def edit; end
 
-  def new
-  end
+  def new; end
 
   def create
     if form.valid?

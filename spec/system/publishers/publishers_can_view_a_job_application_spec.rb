@@ -13,7 +13,7 @@ RSpec.describe "Publishers can view a job application" do
 
   it "shows the timeline" do
     visit organisation_job_job_application_path(vacancy.id, job_application)
-    
+
     expect_page_to_show_training_and_cpds_details
     expect_work_history_to_be_ordered_most_recent_first
 

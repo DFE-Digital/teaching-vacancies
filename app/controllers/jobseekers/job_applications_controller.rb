@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
@@ -266,3 +267,4 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
+# rubocop:enable Metrics/ClassLength

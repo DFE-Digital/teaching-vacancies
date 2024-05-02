@@ -37,7 +37,7 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
       expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020")
 
       click_link "Change"
-      
+
       fill_in_and_submit_training_form("Choir singing instructional course", "Training org", "A", "2024")
 
       expect(current_path).to eq("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds")
@@ -56,7 +56,7 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
 
       click_link "Delete"
 
-      expect(page).to have_css('div.govuk-notification-banner__content p.govuk-notification-banner__heading', text: 'Training deleted')
+      expect(page).to have_css("div.govuk-notification-banner__content p.govuk-notification-banner__heading", text: "Training deleted")
 
       expect(current_path).to eq("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds")
 
