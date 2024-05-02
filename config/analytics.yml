@@ -142,6 +142,7 @@ shared:
     - withdrawn_by_closing_account
     - safeguarding_issue
     - safeguarding_issue_details
+    - training_and_cpds_section_completed
   job_preferences_locations:
     - id
     - job_preferences_id
@@ -432,3 +433,4 @@ shared:
     - created_at
     - updated_at
     - jobseeker_profile_id
+    - job_application_id
