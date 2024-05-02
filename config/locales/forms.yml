@@ -531,6 +531,7 @@ en:
         update_profile_options:
           qualifications: Update qualifications on profile
           work_history: Update work history on profile
+          training_and_cpds: Update training and CPD on profile
         confirm_data_accurate_options:
           "1": I confirm that the above information is accurate and complete
         confirm_data_usage_options:
