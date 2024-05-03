@@ -577,6 +577,8 @@ en:
               incomplete: Complete your qualifications
             references:
               incomplete: Complete your references
+            training_and_cpds:
+              incomplete: Complete your training and CPD
         jobseekers/job_application/withdraw_form:
           attributes:
             withdraw_reason:
