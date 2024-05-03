@@ -245,10 +245,16 @@ en:
         title: Add training and continuing professional development (CPD)
         new:
           hint: For example, 1998
+          caption: Training and continuing professional development (CPD)
+          heading: Add training and continuing professional development (CPD)
         edit:
           hint: For example, 1998
+          caption: Training and continuing professional development (CPD)
+          heading: Edit training and continuing professional development (CPD)
         destroy:
           success: Training deleted
+        review:
+          heading: Training and continuing professional development (CPD)
       employments:
         current_role: This is my current role
         destroy:

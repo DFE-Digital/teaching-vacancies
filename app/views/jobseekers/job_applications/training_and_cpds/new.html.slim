@@ -2,8 +2,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l Training and continuing professional development (CPD)
-    h1.govuk-heading-xl = "Add training and continuing professional development (CPD)"
+    span.govuk-caption-l = t(".caption")
+    h1.govuk-heading-xl = t(".heading")
 
     = form_for form, url: jobseekers_job_application_training_and_cpds_path(job_application), method: :post do |f|
       = f.govuk_error_summary
