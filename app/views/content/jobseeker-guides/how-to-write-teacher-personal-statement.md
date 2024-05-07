@@ -21,7 +21,7 @@ Think about any research that has affected your teaching practice. Explain what 
 
 
 ## Are you up to date on safeguarding statutory guidance?
-You need to demonstrate your awareness of the importance of safeguarding and the requirements of [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2). Include any examples of how you worked with a Designated Safeguarding Lead.
+You will need to demonstrate your awareness of the importance of safeguarding and the requirements of [Keeping Children Safe in Education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2). Include any examples of how you worked with a Designated Safeguarding Lead.
 
 
 ## What are your skills and qualities?
