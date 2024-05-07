@@ -15,13 +15,13 @@ RSpec.describe Publishers::JobApplicationDataExpiryMailer do
       expect(mail.subject).to eq(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.subject", job_title: vacancy.job_title,
                                                                                                                              expiration_date: format_date(vacancy_data_expiration_date)))
       expect(mail.to).to eq(["test@example.com"])
-      expect(mail.body.encoded).to include(vacancy.job_title)
-                               .and include(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.title", job_title: vacancy.job_title,
-                                                                                                                                      publish_date: vacancy.publish_on.to_formatted_s(:month_year),
-                                                                                                                                      expiration_date: vacancy_data_expiration_date))
-                               .and include(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.expiry", job_title: vacancy.job_title,
-                                                                                                                                       expiration_date: vacancy_data_expiration_date))
-      expect(mail.body.to_s).to include("https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers")
+      expect(mail.body.to_s).to include(vacancy.job_title)
+                            .and include(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.title", job_title: vacancy.job_title,
+                                                                                                                                   publish_date: vacancy.publish_on.to_formatted_s(:month_year),
+                                                                                                                                   expiration_date: vacancy_data_expiration_date))
+                            .and include(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.expiry", job_title: vacancy.job_title,
+                                                                                                                                    expiration_date: vacancy_data_expiration_date))
+                            .and include("https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers")
                             .and include(organisation_job_job_applications_url(vacancy.id))
     end
 
