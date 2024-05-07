@@ -5,7 +5,7 @@ meta_description: Congratulations, you’ve been invited to an interview for a t
 date_posted: 07/05/2024
 category_tags: apply
 ---
-![A teacher stands in front of a classroom having an engaging discussion with teenagers in her class.](/content-assets/jobseeker-guides/how-to-approach-a-teaching-job-interview-2-800x300.jpg)
+![3 teachers laughing in a playground.](/content-assets/jobseeker-guides/3-quick-ways-to-find-the-right-teaching-job-for-you.jpg)
 
 Teaching Vacancies is the official government service to help you find your perfect teaching role. 
 
