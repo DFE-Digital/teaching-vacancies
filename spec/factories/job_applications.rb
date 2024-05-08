@@ -33,6 +33,8 @@ FactoryBot.define do
     # Employment history
     employment_history_section_completed { true }
 
+    training_and_cpds_section_completed { true }
+
     # Personal statement
     personal_statement { Faker::Lorem.paragraph(sentence_count: 8) }
 
@@ -111,6 +113,8 @@ FactoryBot.define do
 
     # Employment history
     employment_history_section_completed { nil }
+
+    training_and_cpds_section_completed { nil }
 
     # Personal statement
     personal_statement { "" }

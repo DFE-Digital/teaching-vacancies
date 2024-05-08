@@ -70,6 +70,13 @@ class JobseekerProfile < ApplicationRecord
     end
   end
 
+  def replace_training_and_cpds!(new_training_and_cpds)
+    transaction do
+      training_and_cpds.destroy_all
+      update!(training_and_cpds: new_training_and_cpds)
+    end
+  end
+
   def deactivate!
     return unless active?
 

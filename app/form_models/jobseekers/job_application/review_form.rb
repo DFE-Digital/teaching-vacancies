@@ -26,4 +26,8 @@ class Jobseekers::JobApplication::ReviewForm
   def update_profile_work_history?
     update_profile&.include?("work_history")
   end
+
+  def update_profile_training_and_cpds?
+    update_profile&.include?("training_and_cpds")
+  end
 end

@@ -6,5 +6,6 @@ FactoryBot.define do
     year_awarded { "2020" }
 
     jobseeker_profile
+    job_application
   end
 end

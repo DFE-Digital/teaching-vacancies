@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
@@ -105,6 +106,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     profile.replace_qualifications!(job_application.qualifications.map(&:duplicate)) if form.update_profile_qualifications?
     profile.replace_employments!(job_application.employments.map(&:duplicate)) if form.update_profile_work_history?
+    profile.replace_training_and_cpds!(job_application.training_and_cpds.map(&:duplicate)) if form.update_profile_training_and_cpds?
   end
 
   def all_steps_valid?
@@ -215,6 +217,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       last_name: profile.personal_details&.last_name,
       phone_number: profile.personal_details&.phone_number,
       qualifications: profile.qualifications.map(&:duplicate),
+      training_and_cpds: profile.training_and_cpds.map(&:duplicate),
       qualified_teacher_status_year: profile.qualified_teacher_status_year || "",
       qualified_teacher_status: profile.qualified_teacher_status || "",
       right_to_work_in_uk: profile_right_to_work,
@@ -242,6 +245,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       application.in_progress_steps += [:professional_status]
     end
 
+    if application.training_and_cpds.any?
+      application.in_progress_steps += [:training_and_cpds]
+    end
+
     return unless application.qualifications.present?
 
     application.in_progress_steps += [:qualifications]
@@ -260,3 +267,4 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
+# rubocop:enable Metrics/ClassLength

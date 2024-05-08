@@ -1,0 +1,40 @@
+- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+
+= render "banner", vacancy: vacancy, back_path: back_path
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = render "caption"
+    h2.govuk-heading-l = t(".heading")
+
+    - if job_application.training_and_cpds.any?
+      - job_application.training_and_cpds.each do |training|
+        = render DetailComponent.new title: training.name do |detail|
+          - detail.with_body do
+            = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
+              - attributes = %w[name provider grade year_awarded]
+              - attributes.each do |attribute|
+                - if training[attribute].present?
+                  - summary_list.with_row do |row|
+                    - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.#{attribute}")
+                    - row.with_value text: training[attribute]
+
+          - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_training_and_cpd_path(job_application, training), class: "govuk-link--no-visited-state"
+          - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_training_and_cpd_path(job_application, training), method: :delete
+
+      = govuk_button_link_to t("buttons.add_another_training"), new_jobseekers_job_application_training_and_cpd_path(job_application)
+    - else
+      = render EmptySectionComponent.new title: t(".no_training") do
+        = govuk_button_link_to t("buttons.add_training"), new_jobseekers_job_application_training_and_cpd_path(job_application), class: "govuk-!-margin-bottom-0"
+
+    = form_for form, url: wizard_path, method: :patch do |f|
+      = f.govuk_error_summary
+      = f.govuk_collection_radio_buttons :training_and_cpds_section_completed, %w[true false], :to_s
+      = f.govuk_submit job_application_build_submit_button_text do
+        = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+        span.govuk-caption-m
+          = t("jobseekers.job_applications.cancel_caption")
+
+  - if current_jobseeker.job_applications.not_draft.none?
+    .govuk-grid-column-one-third
+      = render "steps"

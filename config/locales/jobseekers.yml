@@ -87,6 +87,11 @@ en:
         withdrawn: Withdrawn - view application
       build:
         # Content Design originally specified the page titles in https://docs.google.com/document/d/1oF4Vh1P8eJRdzmlJ4--cDDZQ_bCZMkKv/
+        training_and_cpds:
+          heading: Training and continuing professional development (CPD)
+          step_title: Training and continuing professional development (CPD)
+          title: Add training and continuing professional development (CPD)
+          no_training: No training or CPD specified
         ask_for_support:
           adjustments: "This could be:"
           adjustment_examples:
@@ -234,6 +239,22 @@ en:
           caption: Current role and employment history
           heading: Please tell us what you were doing over this period
           title: Add a reason for gap — Application
+      training_and_cpds:
+        heading: Training and continuing professional development (CPD)
+        step_title: Training and continuing professional development (CPD)
+        title: Add training and continuing professional development (CPD)
+        new:
+          hint: For example, 1998
+          caption: Training and continuing professional development (CPD)
+          heading: Add training and continuing professional development (CPD)
+        edit:
+          hint: For example, 1998
+          caption: Training and continuing professional development (CPD)
+          heading: Edit training and continuing professional development (CPD)
+        destroy:
+          success: Training deleted
+        review:
+          heading: Training and continuing professional development (CPD)
       employments:
         current_role: This is my current role
         destroy:
@@ -415,6 +436,8 @@ en:
         steps: Application steps
         title: Review your application — Application
         warning: You cannot review a non-draft job application
+        training_and_cpds:
+          none: You have not added any training.
       show:
         application_sections: Application sections
         ask_for_support:
@@ -458,6 +481,8 @@ en:
           heading: Qualifications
           none: The candidate has not included any qualifications.
           subjects_and_grades: Subjects and grades
+        training_and_cpds:
+          none: The candidate has not included any training or CPD.
         references:
           email: Email address
           heading: References
