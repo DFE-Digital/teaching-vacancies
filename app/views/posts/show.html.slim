@@ -10,12 +10,7 @@
 .govuk-grid-row.post
   .govuk-grid-column-two-thirds
     h1 = @post.title
-    h2 = t(".contents")
-    ul
-      - @post.h2_headings.each do |heading|
-        - heading_id = heading.parameterize.sub(/^\d+-/, "") # Removes leading numbers from anchor links so they don't break
-        li = link_to(heading, "##{heading_id}")
-    hr.govuk-section-break.govuk-section-break--xl.govuk-section-break--visible
+
     == @post.content
 
     - if @post.date_posted
