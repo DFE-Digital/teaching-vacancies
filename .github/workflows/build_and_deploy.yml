@@ -53,23 +53,12 @@ jobs:
           role-duration-seconds: 3600
           role-skip-session-tagging: true
 
-      - name: Get GIT_HUB_SERVICE_ACCOUNT_TOKEN From ParameterStore
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+      - name: Get secrets from AWS ParameterStore
+        uses: dkershner6/aws-ssm-getparameters-action@v2
         with:
-          ssm_parameter: /teaching-vacancies/github_action/infra/git_hub_service_account_token
-          env_variable_name: GIT_HUB_SERVICE_ACCOUNT_TOKEN
-
-      - name: Get SLACK_WEBHOOK From ParameterStore
-        uses: marvinpinto/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
-          env_variable_name: SLACK_WEBHOOK
-
-      - name: Get SNYK_TOKEN From ParameterStore
-        uses: marvinpinto/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /teaching-vacancies/github_action/infra/snyk
-          env_variable_name: SNYK_TOKEN
+          parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK,
+            /teaching-vacancies/github_action/infra/git_hub_service_account_token = GIT_HUB_SERVICE_ACCOUNT_TOKEN,
+            /teaching-vacancies/github_action/infra/snyk = SNYK_TOKEN"
 
       - name: Set environment variables (Push)
         if: github.event_name == 'push'
@@ -200,17 +189,11 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
-    - name: Get SLACK_WEBHOOK From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
+    - name: Get secrets from AWS ParameterStore
+      uses: dkershner6/aws-ssm-getparameters-action@v2
       with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
-        env_variable_name: SLACK_WEBHOOK
-
-    - name: Get GIT_HUB_SERVICE_ACCOUNT_TOKEN From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
-      with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/git_hub_service_account_token
-        env_variable_name: GIT_HUB_SERVICE_ACCOUNT_TOKEN
+        parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK,
+          /teaching-vacancies/github_action/infra/git_hub_service_account_token = GIT_HUB_SERVICE_ACCOUNT_TOKEN"
 
     - name: Set environment variables from build output
       run: |
@@ -313,11 +296,10 @@ jobs:
           role-duration-seconds: 3600
           role-skip-session-tagging: true
 
-      - name: Get SLACK_WEBHOOK From ParameterStore
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+      - name: Get secrets from AWS ParameterStore
+        uses: dkershner6/aws-ssm-getparameters-action@v2
         with:
-          ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
-          env_variable_name: SLACK_WEBHOOK
+          parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
 
       - name: Download and extract Gov.UK frontend archive
         run: bin/regenerate-offline
