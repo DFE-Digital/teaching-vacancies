@@ -151,7 +151,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         click_link "HLTA (higher level teaching assistant)"
 
         within ".filters-component" do
-          find('span[title="Teaching"]').click
+          find('span[title="Teaching & leadership"]').click
           check "Teacher"
           click_on I18n.t("buttons.apply_filters")
         end
