@@ -7,6 +7,7 @@ class Jobseekers::SubscriptionForm < BaseForm
                 :teaching_job_roles,
                 :teaching_support_job_roles,
                 :non_teaching_support_job_roles,
+                :support_job_roles,
                 :visa_sponsorship_availability,
                 :ect_statuses,
                 :subjects,
@@ -15,6 +16,7 @@ class Jobseekers::SubscriptionForm < BaseForm
                 :teaching_job_role_options,
                 :teaching_support_job_role_options,
                 :non_teaching_support_job_role_options,
+                :support_job_role_options,
                 :visa_sponsorship_availability_options,
                 :ect_status_options,
                 :phase_options,
@@ -30,7 +32,7 @@ class Jobseekers::SubscriptionForm < BaseForm
   validate :unique_job_alert
   validate :location_and_one_other_criterion_selected, unless: :organisation_slug
 
-  def initialize(params = {}) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+  def initialize(params = {}) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength
     search_criteria = params[:search_criteria]&.symbolize_keys || {}
 
     @email = params[:email]
@@ -40,6 +42,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @teaching_job_roles = params[:teaching_job_roles]&.reject(&:blank?) || search_criteria[:teaching_job_roles] || []
     @teaching_support_job_roles = params[:teaching_support_job_roles]&.reject(&:blank?) || search_criteria[:teaching_support_job_roles] || []
     @non_teaching_support_job_roles = params[:non_teaching_support_job_roles]&.reject(&:blank?) || search_criteria[:non_teaching_support_job_roles] || []
+    @support_job_roles = params[:support_job_roles]&.reject(&:blank?) || search_criteria[:support_job_roles] || []
     @visa_sponsorship_availability = params[:visa_sponsorship_availability]&.reject(&:blank?) || search_criteria[:visa_sponsorship_availability]
     @ect_statuses = params[:ect_statuses]&.reject(&:blank?) || search_criteria[:ect_statuses] || []
     @subjects = params[:subjects]&.reject(&:blank?) || search_criteria[:subjects]
@@ -69,6 +72,7 @@ class Jobseekers::SubscriptionForm < BaseForm
       teaching_job_roles: teaching_job_roles,
       teaching_support_job_roles: teaching_support_job_roles,
       non_teaching_support_job_roles: non_teaching_support_job_roles,
+      support_job_roles: support_job_roles,
       visa_sponsorship_availability: visa_sponsorship_availability,
       ect_statuses: ect_statuses,
       subjects: subjects,
@@ -84,6 +88,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @visa_sponsorship_availability_options =  [["true", I18n.t("jobs.filters.visa_sponsorship_availability.subscriptions")]]
     @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
     @teaching_support_job_role_options = Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
+    @support_job_role_options = Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
     @non_teaching_support_job_role_options = Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
@@ -94,7 +99,7 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   def location_and_one_other_criterion_selected
     errors.add(:base, I18n.t("subscriptions.errors.no_location_and_other_criterion_selected")) unless
-      location.present? && %i[keyword teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles subjects phases working_patterns].any? { |criterion| public_send(criterion).present? }
+      location.present? && %i[keyword teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles support_job_roles subjects phases working_patterns].any? { |criterion| public_send(criterion).present? }
   end
 
   def unique_job_alert

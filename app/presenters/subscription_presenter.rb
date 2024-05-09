@@ -9,6 +9,7 @@ class SubscriptionPresenter < BasePresenter
                                   teaching_job_roles
                                   teaching_support_job_roles
                                   non_teaching_support_job_roles
+                                  support_job_roles
                                   ect_statuses
                                   visa_sponsorship_availability
                                   subjects
@@ -59,6 +60,8 @@ class SubscriptionPresenter < BasePresenter
       render_teaching_support_job_roles_filter(value)
     when "non_teaching_support_job_roles"
       render_non_teaching_support_job_roles_filter(value)
+    when "support_job_roles"
+      render_support_job_roles_filter(value)
     else
       { "#{field}": value }
     end
@@ -88,6 +91,10 @@ class SubscriptionPresenter < BasePresenter
 
   def render_non_teaching_support_job_roles_filter(value)
     { non_teaching_support_job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{role}") }.join(", ") }
+  end
+
+  def render_support_job_roles_filter(value)
+    { support_job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{role}") }.join(", ") }
   end
 
   def render_visas_filter(value)
