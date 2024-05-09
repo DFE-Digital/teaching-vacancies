@@ -211,26 +211,26 @@ RSpec.describe VacancyFilterQuery do
       it "correctly filters by multiple roles, including all roles selected" do
         filters = {
           teaching_job_roles: %w[headteacher],
-          non_teaching_support_job_roles: %w[other_support],
-          teaching_support_job_roles: %w[higher_level_teaching_assistant],
+          support_job_roles: %w[other_support higher_level_teaching_assistant],
         }
         expect(subject.call(filters).count).to eq(3)
         expect(subject.call(filters)).to contain_exactly(vacancy7, other_support_vacancy, hlta_vacancy)
 
         filters = {
-          teaching_job_roles: %w[pastoral_health_and_welfare sendco],
+          support_job_roles: %w[pastoral_health_and_welfare sendco],
         }
         expect(subject.call(filters).count).to eq(3)
         expect(subject.call(filters)).to contain_exactly(pastoral_health_and_welfare_vacancy, sendco_vacancy, vacancy3)
 
         filters = {
-          teaching_job_roles: %w[teaching_assistant catering_cleaning_and_site_management],
+          support_job_roles: %w[teaching_assistant catering_cleaning_and_site_management],
         }
         expect(subject.call(filters).count).to eq(2)
         expect(subject.call(filters)).to contain_exactly(teaching_assistant_vacancy, catering_cleaning_and_site_management_vacancy)
 
         filters = {
-          teaching_job_roles: %w[teacher catering_cleaning_and_site_management],
+          teaching_job_roles: %w[teacher],
+          support_job_roles: %w[catering_cleaning_and_site_management],
         }
         expect(subject.call(filters).count).to eq(14)
         expect(subject.call(filters)).to contain_exactly(

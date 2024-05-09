@@ -44,6 +44,7 @@ en:
       teaching_job_roles: Teaching & leadership
       teaching_support_job_roles: Teaching support
       non_teaching_support_job_roles: Non-teaching support
+      support_job_roles: Support
       ect_suitable: Suitable for early career teachers
       subject: Subject
       phases: Education phase
@@ -413,3 +414,4 @@ en:
         teaching_job_roles: Teaching & leadership job roles
         teaching_support_job_roles: Teaching support job roles
         non_teaching_support_job_roles: Non-teaching support job roles
+        support_job_roles: Support job roles

@@ -21,10 +21,8 @@ class Jobseekers::SearchForm
               :subjects,
               :teaching_job_roles,
               :teaching_job_role_options,
-              :teaching_support_job_roles,
-              :teaching_support_job_role_options,
-              :non_teaching_support_job_roles,
-              :non_teaching_support_job_role_options,
+              :support_job_roles,
+              :support_job_role_options,
               :total_filters,
               :visa_sponsorship_availability,
               :visa_sponsorship_availability_options,
@@ -50,8 +48,7 @@ class Jobseekers::SearchForm
       radius: @radius,
       organisation_slug: @organisation_slug,
       teaching_job_roles: @teaching_job_roles,
-      teaching_support_job_roles: @teaching_support_job_roles,
-      non_teaching_support_job_roles: @non_teaching_support_job_roles,
+      support_job_roles: @support_job_roles,
       ect_statuses: @ect_statuses,
       subjects: @subjects,
       phases: @phases,
@@ -81,8 +78,7 @@ class Jobseekers::SearchForm
     return unless @filters_from_keyword
 
     @teaching_job_roles += filters_from_keyword["teaching_job_roles"]
-    @teaching_support_job_roles += filters_from_keyword["teaching_support_job_roles"]
-    @non_teaching_support_job_roles += filters_from_keyword["non_teaching_support_job_roles"]
+    @support_job_roles += filters_from_keyword["support_job_roles"]
     @ect_statuses += filters_from_keyword["ect_statuses"]
     @phases += filters_from_keyword["phases"]
     @working_patterns += filters_from_keyword["working_patterns"]
@@ -96,8 +92,7 @@ class Jobseekers::SearchForm
     return unless previous_filters
 
     @teaching_job_roles -= previous_filters["teaching_job_roles"]
-    @teaching_support_job_roles -= previous_filters["teaching_support_job_roles"]
-    @non_teaching_support_job_roles -= previous_filters["non_teaching_support_job_roles"]
+    @support_job_roles -= previous_filters["support_job_roles"]
     @ect_statuses -= previous_filters["ect_statuses"]
     @phases -= previous_filters["phases"]
     @working_patterns -= previous_filters["working_patterns"]
@@ -107,8 +102,7 @@ class Jobseekers::SearchForm
   def set_facet_options
     @visa_sponsorship_availability_options = [["true", I18n.t("jobs.filters.visa_sponsorship_availability.option")]]
     @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
-    @teaching_support_job_role_options = Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
-    @non_teaching_support_job_role_options = Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
+    @support_job_role_options = Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
     set_quick_apply_options
@@ -126,8 +120,7 @@ class Jobseekers::SearchForm
     @location = params[:location]
     @visa_sponsorship_availability = params[:visa_sponsorship_availability] || []
     @teaching_job_roles = params[:teaching_job_roles] || []
-    @teaching_support_job_roles = params[:teaching_support_job_roles] || []
-    @non_teaching_support_job_roles = params[:non_teaching_support_job_roles] || []
+    @support_job_roles = params[:support_job_roles] || []
     @ect_statuses = params[:ect_statuses] || []
     @subjects = params[:subjects] || []
     @phases = params[:phases] || []
@@ -139,7 +132,7 @@ class Jobseekers::SearchForm
   end
 
   def set_total_filters
-    @total_filters = [@visa_sponsorship_availability&.count, @teaching_job_roles&.count, @teaching_support_job_roles&.count, @non_teaching_support_job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @quick_apply&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
+    @total_filters = [@visa_sponsorship_availability&.count, @teaching_job_roles&.count, @support_job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @quick_apply&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
   end
 
   def set_radius(radius_param)
