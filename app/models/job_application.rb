@@ -9,6 +9,7 @@ class JobApplication < ApplicationRecord
     personal_details: 0,
     professional_status: 1,
     qualifications: 2,
+    training_and_cpds: 9,
     employment_history: 3,
     personal_statement: 4,
     references: 5,
@@ -22,6 +23,7 @@ class JobApplication < ApplicationRecord
     employment_history: 1,
     personal_details: 2,
     professional_status: 3,
+    training_and_cpds: 4,
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
@@ -39,6 +41,7 @@ class JobApplication < ApplicationRecord
   has_many :qualifications, dependent: :destroy
   has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
+  has_many :training_and_cpds, dependent: :destroy
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :job_application
 

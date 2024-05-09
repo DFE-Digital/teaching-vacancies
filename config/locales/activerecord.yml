@@ -549,6 +549,10 @@ en:
           attributes:
             qualifications_section_completed:
               blank: Select yes if you have completed this section
+        jobseekers/job_application/training_and_cpds_form:
+          attributes:
+            training_and_cpds_section_completed:
+              blank: Select yes if you have completed this section
         jobseekers/job_application/review_form:
           attributes:
             confirm_data_accurate:
@@ -573,6 +577,8 @@ en:
               incomplete: Complete your qualifications
             references:
               incomplete: Complete your references
+            training_and_cpds:
+              incomplete: Complete your training and CPD
         jobseekers/job_application/withdraw_form:
           attributes:
             withdraw_reason:

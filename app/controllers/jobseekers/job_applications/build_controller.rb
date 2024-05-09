@@ -2,7 +2,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   include Wicked::Wizard
   include Jobseekers::QualificationFormConcerns
 
-  steps :personal_details, :professional_status, :qualifications, :employment_history, :personal_statement, :references,
+  steps :personal_details, :professional_status, :qualifications, :training_and_cpds, :employment_history, :personal_statement, :references,
         :equal_opportunities, :ask_for_support, :declarations
 
   helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
@@ -95,7 +95,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def step_incomplete?
-    return false unless step.in? %i[qualifications employment_history]
+    return false unless step.in? %i[qualifications employment_history training_and_cpds]
 
     form_params["#{step}_section_completed"] == "false"
   end

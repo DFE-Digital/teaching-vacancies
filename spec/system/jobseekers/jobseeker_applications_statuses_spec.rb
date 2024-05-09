@@ -21,6 +21,7 @@ RSpec.describe "Jobseekers applications statuses" do
         expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "in progress")
         expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "in progress")
         expect(page).to have_css("#qualifications .review-component__section__heading__status", text: "in progress")
+        expect(page).to have_css("#training_and_cpds .review-component__section__heading__status", text: "in progress")
         expect(page).to have_css("#employment_history .review-component__section__heading__status", text: "in progress")
       end
     end
@@ -40,6 +41,7 @@ RSpec.describe "Jobseekers applications statuses" do
         expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "not started")
         expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "not started")
         expect(page).to have_css("#qualifications .review-component__section__heading__status", text: "not started")
+        expect(page).to have_css("#training_and_cpds .review-component__section__heading__status", text: "not started")
         expect(page).to have_css("#employment_history .review-component__section__heading__status", text: "not started")
       end
     end
@@ -59,6 +61,7 @@ RSpec.describe "Jobseekers applications statuses" do
         expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "not started")
         expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "not started")
         expect(page).to have_css("#qualifications .review-component__section__heading__status", text: "in progress")
+        expect(page).to have_css("#training_and_cpds .review-component__section__heading__status", text: "not started")
         expect(page).to have_css("#employment_history .review-component__section__heading__status", text: "in progress")
       end
 
@@ -98,6 +101,15 @@ RSpec.describe "Jobseekers applications statuses" do
           click_on "Save"
 
           expect(page).to have_css("#qualifications .review-component__section__heading__status", text: "complete")
+
+          within("#training_and_cpds") do
+            click_link("Complete section")
+          end
+
+          choose "Yes, I've completed this section"
+          click_on "Save"
+
+          expect(page).to have_css("#training_and_cpds .review-component__section__heading__status", text: "complete")
 
           within("#employment_history") do
             click_link("Complete section")

@@ -8,11 +8,13 @@ RSpec.describe "Publishers can view a job application" do
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
+    create(:training_and_cpd, job_application: job_application)
   end
 
   it "shows the timeline" do
     visit organisation_job_job_application_path(vacancy.id, job_application)
 
+    expect_page_to_show_training_and_cpds_details
     expect_work_history_to_be_ordered_most_recent_first
 
     click_on I18n.t("buttons.shortlist")
@@ -106,5 +108,12 @@ RSpec.describe "Publishers can view a job application" do
         end
       end
     end
+  end
+
+  def expect_page_to_show_training_and_cpds_details
+    expect(page).to have_content "Training and continuing professional development (CPD)"
+    expect(page).to have_content job_application.training_and_cpds.first.name
+    expect(page).to have_content job_application.training_and_cpds.first.provider
+    expect(page).to have_content job_application.training_and_cpds.first.year_awarded
   end
 end

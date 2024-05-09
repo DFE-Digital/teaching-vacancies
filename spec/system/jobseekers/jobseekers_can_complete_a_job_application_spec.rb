@@ -36,6 +36,16 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("buttons.save_qualification.one")
     click_on I18n.t("buttons.save_and_continue")
 
+    expect(page).to have_content("Training and continuing professional development (CPD)")
+    validates_step_complete
+    click_on "Add training"
+    click_on "Save and continue"
+    expect(page).to have_content("There is a problem")
+    fill_in_training_and_cpds
+    click_on "Save and continue"
+    choose "Yes, I've completed this section"
+    click_on "Save and continue"
+
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
     validates_step_complete
     click_on I18n.t("buttons.add_work_history")
