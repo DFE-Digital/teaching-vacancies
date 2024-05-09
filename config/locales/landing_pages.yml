@@ -24,7 +24,7 @@ en:
       heading:
         one: "<span class='govuk-!-font-weight-bold'>%{count}</span> job found at <span class='govuk-!-font-weight-bold'>%{organisation}</span>"
         other: "<span class='govuk-!-font-weight-bold'>%{count}</span> jobs found at <span class='govuk-!-font-weight-bold'>%{organisation}</span>"
-      : "Find school and teaching jobs at %{organisation} with Teaching Vacancies. Search for roles and set up email alerts for the latest jobs near you."
+      meta_description: "Find school and teaching jobs at %{organisation} with Teaching Vacancies. Search for roles and set up email alerts for the latest jobs near you."
     ##
     # Content for "static" (non-location) landing pages
     #   Every key is a landing page slug and must exist in `config/landing_pages.yml`
