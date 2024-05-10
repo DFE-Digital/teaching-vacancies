@@ -8,6 +8,7 @@ class Publishers::JobseekerProfileSearchForm
   attribute :teaching_job_roles
   attribute :teaching_support_job_roles
   attribute :non_teaching_support_job_roles
+  attribute :support_job_roles
   attribute :working_patterns
   attribute :education_phases
   attribute :key_stages
@@ -28,6 +29,10 @@ class Publishers::JobseekerProfileSearchForm
 
   def non_teaching_support_job_role_options
     Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
+  end
+
+  def support_job_role_options
+    Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
   end
 
   def qts_options

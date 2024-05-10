@@ -133,10 +133,9 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
       it "will allow hiring staff to filter by jobseekers' preferred roles" do
         within ".filters-component" do
-          find('span[title="Teaching support"]').click
-          check "HLTA (higher level teaching assistant)"
-          find('span[title="Non-teaching support"]').click
+          find('span[title="Support"]').click
           check "Catering, cleaning and site management"
+          check "HLTA (higher level teaching assistant)"
           click_on I18n.t("buttons.apply_filters")
         end
 
