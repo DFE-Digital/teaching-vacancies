@@ -27,6 +27,10 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
     Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
   end
 
+  def support_job_roles_options
+    Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
+  end
+
   def job_roles_inclusion
     return unless job_roles
 
