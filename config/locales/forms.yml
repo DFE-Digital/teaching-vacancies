@@ -394,7 +394,6 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
           teacher: Teacher
           teaching_assistant: Teaching assistant
-          other_teaching_support: Other teaching support
           administration_hr_data_and_finance: Administration, HR, data and finance
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support
@@ -785,7 +784,6 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
           teacher: Teacher
           teaching_assistant: Teaching assistant
-          other_teaching_support: Other teaching support
           administration_hr_data_and_finance: Administration, HR, data and finance
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support
@@ -806,7 +804,6 @@ en:
           teaching_assistant: Teaching assistant
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
           education_support: Learning support or cover supervisor
-          other_teaching_support: Other teaching support
         non_teaching_support_job_role_options:
           administration_hr_data_and_finance:  Administration, HR, data and finance
           catering_cleaning_and_site_management: Catering, cleaning and site management
@@ -818,7 +815,6 @@ en:
           teaching_assistant: Teaching assistant
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
           education_support: Learning support or cover supervisor
-          other_teaching_support: Other teaching support
           administration_hr_data_and_finance:  Administration, HR, data and finance
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support

@@ -31,7 +31,6 @@ RSpec.describe VacancyFilterQuery do
   let!(:hlta_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 11", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["higher_level_teaching_assistant"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:education_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 12", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["education_support"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:sendco_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 13", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["sendco"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:other_teaching_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["other_teaching_support"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:administration_hr_data_and_finance_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 15", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["administration_hr_data_and_finance"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:it_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 16", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["it_support"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:pastoral_health_and_welfare_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 17", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["pastoral_health_and_welfare"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
@@ -82,7 +81,7 @@ RSpec.describe VacancyFilterQuery do
           }
           expect(subject.call(filters))
             .to contain_exactly(vacancy1, vacancy2, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
-                                hlta_vacancy, education_support_vacancy, sendco_vacancy, other_teaching_support_vacancy,
+                                hlta_vacancy, education_support_vacancy, sendco_vacancy,
                                 administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
                                 other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy)
         end
@@ -104,7 +103,7 @@ RSpec.describe VacancyFilterQuery do
             vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
             special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
             non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
-            hlta_vacancy, education_support_vacancy, sendco_vacancy, other_teaching_support_vacancy,
+            hlta_vacancy, education_support_vacancy, sendco_vacancy,
             administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
             other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
           )
@@ -119,7 +118,7 @@ RSpec.describe VacancyFilterQuery do
           expect(subject.call(filters))
             .to contain_exactly(
               vacancy1, vacancy2, vacancy3, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, teaching_assistant_vacancy,
-              hlta_vacancy, education_support_vacancy, sendco_vacancy, other_teaching_support_vacancy,
+              hlta_vacancy, education_support_vacancy, sendco_vacancy,
               administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
               other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
             )
@@ -202,7 +201,7 @@ RSpec.describe VacancyFilterQuery do
           vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
           special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy,
           non_faith_vacancy1, non_faith_vacancy2, non_faith_vacancy3, teaching_assistant_vacancy,
-          hlta_vacancy, education_support_vacancy, sendco_vacancy, other_teaching_support_vacancy,
+          hlta_vacancy, education_support_vacancy, sendco_vacancy,
           administration_hr_data_and_finance_vacancy, it_support_vacancy, pastoral_health_and_welfare_vacancy,
           other_leadership_vacancy, other_support_vacancy, catering_cleaning_and_site_management_vacancy
         )
