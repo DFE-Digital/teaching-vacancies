@@ -8,7 +8,9 @@ category_tags: how-to
 ![3 teachers sat on sofas having an engaging and relaxed conversation in a canteen area of a school.](/content-assets/jobseeker-guides/write-a-great-teaching-job-application-800x300.jpg)
 
 You can use Teaching Vacancies to recruit for all roles in your school or trust.
+
 This includes roles such as a finance director, office support staff, site management and more.
+
 The job listing process is almost exactly the same for teaching and non-teaching roles.
 
 ## Listing a non-teaching role
@@ -17,5 +19,7 @@ The job listing process is almost exactly the same for teaching and non-teaching
 
 ## Leaving feedback
 You can leave feedback after you’ve created your job listing.
+
 We’ll also email you after the job listing has ended to ask how you filled your vacancy.
+
 We’re excited to support you with recruiting all roles in your school and look forward to welcoming new jobseekers to Teaching Vacancies.
