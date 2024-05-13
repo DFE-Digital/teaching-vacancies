@@ -1,9 +1,9 @@
 require "notifications/client"
 
-class RemoveInvalidSubscriptions
+class Jobseekers::RemoveInvalidSubscriptions
   # The GOV.UK Notify API retrieves a maximum of 250 messages that are 7 days old or newer
 
-  def run!
+  def call
     permanent_failures.each do |failed_message|
       Subscription.where(email: failed_message.email_address).destroy_all
     end
