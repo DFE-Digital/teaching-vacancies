@@ -166,7 +166,7 @@ en:
             sign_in: Sign in
             sign_up: sign up
         title: For hiring staff
-      title: Find a job in teaching
+      title: Teaching, leadership and support jobs
       title_h2: Welcome to Teaching Vacancies
     landing_page_links:
       education_phases: School phases
@@ -545,9 +545,9 @@ en:
             other: (%{count} results)
       page_title_and_description:
         title:
-          zero: "%{heading} - Find a job in teaching"
-          one: "%{heading} - Find a job in teaching"
-          other: "%{heading} page %{count} - Find a job in teaching"
+          zero: "%{heading} - Teaching, leadership and support jobs"
+          one: "%{heading} - Teaching, leadership and support jobs"
+          other: "%{heading} page %{count} - Teaching, leadership and support jobs"
     show:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
       job_details: Job details
