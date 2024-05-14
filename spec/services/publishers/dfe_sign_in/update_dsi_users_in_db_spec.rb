@@ -1,22 +1,19 @@
 require "rails_helper"
-require "update_dsi_users_in_db"
 
-RSpec.describe UpdateDSIUsersInDb do
+RSpec.describe Publishers::DfeSignIn::UpdateUsersInDb do
   let(:test_file_1_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_1.json") }
   let(:test_file_2_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_response_page_2.json") }
   let(:test_file_empty_users_path) { Rails.root.join("spec/fixtures/dfe_sign_in_service_users_empty_response.json") }
   let(:update_dfe_sign_in_users) { described_class.new }
 
-  describe "#run!" do
+  describe "#call" do
     before do
       allow(described_class).to receive(:new).and_return(update_dfe_sign_in_users)
     end
 
     it "updates the users database with correct emails and URNs/UIDs" do
-      allow(update_dfe_sign_in_users).to receive(:number_of_pages).and_return(2)
-
       [test_file_1_path, test_file_2_path].each_with_index do |file_path, index|
-        stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=#{index + 1}&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
+        stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=#{index + 1}&pageSize=#{DfeSignIn::API::USERS_PAGE_SIZE}")
           .to_return(
             body: File.read(file_path),
           )
@@ -29,7 +26,7 @@ RSpec.describe UpdateDSIUsersInDb do
       create(:school_group, uid: "222222")
       create(:school_group, uid: "444444")
 
-      expect { update_dfe_sign_in_users.run! }.to change { Publisher.all.size }.by(3)
+      expect { update_dfe_sign_in_users.call }.to change { Publisher.all.size }.by(3)
 
       user_with_one_school = Publisher.find_by(email: "foo@example.com")
       expect(user_with_one_school.given_name).to eq("Roger")
@@ -48,19 +45,17 @@ RSpec.describe UpdateDSIUsersInDb do
     end
 
     it "raises an error when it finds no users in the response" do
-      allow(update_dfe_sign_in_users).to receive(:number_of_pages).and_return(1)
-
-      stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=1&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
+      stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=1&pageSize=#{DfeSignIn::API::USERS_PAGE_SIZE}")
           .to_return(
             body: File.read(test_file_empty_users_path),
           )
-      expect { update_dfe_sign_in_users.run! }.to raise_error("failed request")
+      expect { update_dfe_sign_in_users.call }.to raise_error("failed request")
 
-      stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=1&pageSize=#{DFESignIn::API::USERS_PAGE_SIZE}")
+      stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}/users?page=1&pageSize=#{DfeSignIn::API::USERS_PAGE_SIZE}")
           .to_return(
             body: "{}",
           )
-      expect { update_dfe_sign_in_users.run! }.to raise_error("failed request")
+      expect { update_dfe_sign_in_users.call }.to raise_error("failed request")
     end
   end
 end
