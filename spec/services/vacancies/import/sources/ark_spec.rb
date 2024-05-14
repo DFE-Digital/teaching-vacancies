@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacancySource::Source::Ark do
+RSpec.describe Vacancies::Import::Sources::Ark do
   let(:response_body) { file_fixture("vacancy_sources/ark.xml").read }
   let(:response) { double("ArkHttpResponse", success?: true, body: response_body) }
 
@@ -29,7 +29,7 @@ RSpec.describe VacancySource::Source::Ark do
     end
 
     before do
-      expect(HTTParty).to receive(:get).with(VacancySource::Source::Ark::FEED_URL).and_return(response)
+      expect(HTTParty).to receive(:get).with(Vacancies::Import::Sources::Ark::FEED_URL).and_return(response)
     end
 
     it "has the correct number of vacancies" do
@@ -347,7 +347,7 @@ RSpec.describe VacancySource::Source::Ark do
           :vacancy,
           :external,
           phases: %w[primary],
-          external_source: VacancySource::Source::Ark::SOURCE_NAME,
+          external_source: Vacancies::Import::Sources::Ark::SOURCE_NAME,
           external_reference: "Solomon-1143",
           organisations: schools,
           job_title: "Out of date",

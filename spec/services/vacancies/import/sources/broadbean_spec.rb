@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacancySource::Source::Broadbean do
+RSpec.describe Vacancies::Import::Sources::Broadbean do
   let(:response_body) { file_fixture("vacancy_sources/broadbean.xml").read }
   let(:response) { double("BroadbeanHttpResponse", success?: true, body: response_body) }
 

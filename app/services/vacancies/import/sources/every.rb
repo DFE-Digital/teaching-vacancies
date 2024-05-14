@@ -1,11 +1,11 @@
-class VacancySource::Source::Fusion
-  include VacancySource::Parser
-  include VacancySource::Shared
+class Vacancies::Import::Sources::Every
+  include Vacancies::Import::Parser
+  include Vacancies::Import::Shared
 
-  FEED_URL = ENV.fetch("VACANCY_SOURCE_FUSION_FEED_URL").freeze
-  SOURCE_NAME = "fusion".freeze
+  FEED_URL = ENV.fetch("VACANCY_SOURCE_EVERY_FEED_URL").freeze
+  SOURCE_NAME = "every".freeze
 
-  class FusionImportError < StandardError; end
+  class EveryImportError < StandardError; end
 
   include Enumerable
 
@@ -63,14 +63,6 @@ class VacancySource::Source::Fusion
      .merge(start_date_fields(item))
   end
 
-  def organisation_fields(item, schools)
-    {
-      organisations: schools,
-      readable_job_location: main_organisation(item)&.name,
-      about_school: main_organisation(item)&.description,
-    }
-  end
-
   def start_date_fields(item)
     return {} if item["startDate"].blank?
 
@@ -82,12 +74,24 @@ class VacancySource::Source::Fusion
     end
   end
 
+  def organisation_fields(item, schools)
+    {
+      organisations: schools,
+      readable_job_location: main_organisation(item)&.name,
+      about_school: main_organisation(item)&.description,
+    }
+  end
+
   def schools_for(item)
     if multi_academy_trust(item).present?
       multi_academy_trust(item).schools.where(urn: item["schoolUrns"])
     else
       Organisation.where(urn: item["schoolUrns"])
     end.to_a
+  end
+
+  def visa_sponsorship_available_for(item)
+    item["visaSponsorshipAvailable"] == true
   end
 
   def multi_academy_trust(item)
@@ -104,14 +108,17 @@ class VacancySource::Source::Fusion
 
     roles.flat_map do |role|
       # Translate legacy senior/middle leader into all the granular roles split from them
-
       if role == "senior_leader"
         Vacancy::SENIOR_LEADER_JOB_ROLES
       elsif role == "middle_leader"
         Vacancy::MIDDLE_LEADER_JOB_ROLES
       else
-        Array.wrap(role.gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
-                       .gsub("learning_support", "other_support")
+
+        Array.wrap(role.gsub("deputy_headteacher_principal", "deputy_headteacher")
+                       .gsub("assistant_headteacher_principal", "assistant_headteacher")
+                       .gsub("headteacher_principal", "headteacher")
+                       .gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
+                       .gsub(/learning_support|other_support|science_technician/, "other_support")
                        .gsub(/\s+/, ""))
       end
     end
@@ -130,10 +137,6 @@ class VacancySource::Source::Fusion
                  .gsub(/16-19|16_19/, "sixth_form_or_college")
   end
 
-  def visa_sponsorship_available_for(item)
-    item["visaSponsorshipAvailable"] == true
-  end
-
   def results
     feed["result"]
   end
@@ -143,12 +146,12 @@ class VacancySource::Source::Fusion
     raise HTTParty::ResponseError, error_message unless response.success?
 
     parsed_response = JSON.parse(response.body)
-    raise FusionImportError, error_message if parsed_response["error"]
+    raise EveryImportError, error_message + parsed_response["error"] if parsed_response["error"]
 
     parsed_response
   end
 
   def error_message
-    "Something went wrong with Fusion Import"
+    "Something went wrong with Every Import. Response:"
   end
 end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacancySource::Source::Every do
+RSpec.describe Vacancies::Import::Sources::Every do
   let(:response_body) { file_fixture("vacancy_sources/every.json").read }
   let(:response) { double("EveryHttpResponse", success?: true, body: response_body) }
 

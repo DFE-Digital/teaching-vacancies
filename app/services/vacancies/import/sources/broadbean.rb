@@ -1,6 +1,6 @@
-class VacancySource::Source::Broadbean
-  include VacancySource::Parser
-  include VacancySource::Shared
+class Vacancies::Import::Sources::Broadbean
+  include Vacancies::Import::Parser
+  include Vacancies::Import::Shared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_BROADBEAN_FEED_URL").freeze
   SOURCE_NAME = "broadbean".freeze

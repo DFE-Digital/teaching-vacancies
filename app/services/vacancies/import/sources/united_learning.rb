@@ -1,5 +1,5 @@
-class VacancySource::Source::UnitedLearning
-  include VacancySource::Shared
+class Vacancies::Import::Sources::UnitedLearning
+  include Vacancies::Import::Shared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_UNITED_LEARNING_FEED_URL").freeze
   UNITED_LEARNING_TRUST_UID = "5143".freeze

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacancySource::Source::MyNewTerm do
+RSpec.describe Vacancies::Import::Sources::MyNewTerm do
   let(:response) { double("AuthenticationResponse", code: 200, body: { access_token: "valid_access_token" }.to_json) }
   let(:job_listings_response_body) { file_fixture("vacancy_sources/my_new_term.json").read }
   let(:job_listings_response) { double("JobListingResponse", code: 200, body: job_listings_response_body) }
