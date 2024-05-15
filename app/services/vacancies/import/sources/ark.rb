@@ -1,6 +1,6 @@
-class VacancySource::Source::Ark
-  include VacancySource::Parser
-  include VacancySource::Shared
+class Vacancies::Import::Sources::Ark
+  include Vacancies::Import::Parser
+  include Vacancies::Import::Shared
 
   FEED_URL = ENV.fetch("VACANCY_SOURCE_ARK_FEED_URL").freeze
   SOURCE_NAME = "ark".freeze

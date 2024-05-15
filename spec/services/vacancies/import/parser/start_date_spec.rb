@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacancySource::Parser::StartDate do
+RSpec.describe Vacancies::Import::Parser::StartDate do
   describe "#new" do
     it "doesnt't parse a null value" do
       start_date = described_class.new(nil)

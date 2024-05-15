@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacancySource::Source::Fusion do
+RSpec.describe Vacancies::Import::Sources::Fusion do
   let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
   let!(:school_group) { create(:school_group, name: "E-ACT", uid: "12345", schools: schools) }
   let(:schools) { [school1] }

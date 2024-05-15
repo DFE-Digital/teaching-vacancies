@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacancySource::Source::UnitedLearning do
+RSpec.describe Vacancies::Import::Sources::UnitedLearning do
   let!(:school) { create(:school, name: "Test School", urn: "136636", phase: :secondary) }
   let!(:school_group) { create(:school_group, name: "United Learning", uid: described_class::UNITED_LEARNING_TRUST_UID, schools: [school]) }
 

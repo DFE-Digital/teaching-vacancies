@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe VacancySource::Source::Ventrus do
+RSpec.describe Vacancies::Import::Sources::Ventrus do
   let(:response_body) { file_fixture("vacancy_sources/ventrus.xml").read }
   let(:response) { double("VentrusHttpResponse", success?: true, body: response_body) }
 
