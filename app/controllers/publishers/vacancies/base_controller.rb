@@ -1,4 +1,4 @@
-require "indexing"
+require "google_indexing"
 
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable

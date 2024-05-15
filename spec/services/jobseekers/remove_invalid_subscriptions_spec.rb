@@ -1,10 +1,9 @@
 require "rails_helper"
-require "remove_invalid_subscriptions"
 
-RSpec.describe RemoveInvalidSubscriptions do
+RSpec.describe Jobseekers::RemoveInvalidSubscriptions do
   subject { described_class.new }
 
-  describe "#run!" do
+  describe "#call" do
     let(:notify_api_response) do
       [double("response", status: "permanent-failure", email_address: "first@failed.com"),
        double("response", status: "permanent-failure", email_address: "second@failed.com"),
@@ -27,7 +26,7 @@ RSpec.describe RemoveInvalidSubscriptions do
     end
 
     it "destroys subscriptions with permanently failed email addresses" do
-      expect { subject.run! }.to change { Subscription.count }.from(3).to(1)
+      expect { subject.call }.to change { Subscription.count }.from(3).to(1)
     end
   end
 end

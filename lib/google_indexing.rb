@@ -1,6 +1,6 @@
 require "google/apis/indexing_v3"
 
-class Indexing
+class GoogleIndexing
   ACTIONS = { update: "URL_UPDATED",
               remove: "URL_DELETED" }.freeze
 
