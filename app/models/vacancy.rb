@@ -36,10 +36,10 @@ class Vacancy < ApplicationRecord
   SENIOR_LEADER_JOB_ROLES = %w[headteacher deputy_headteacher assistant_headteacher].freeze
 
   TEACHING_JOB_ROLES = %w[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher
-                          deputy_headteacher headteacher sendco].freeze
+                          deputy_headteacher headteacher sendco other_leadership].freeze
   SUPPORT_JOB_ROLES = %w[teaching_assistant higher_level_teaching_assistant education_support
                          administration_hr_data_and_finance catering_cleaning_and_site_management
-                         it_support pastoral_health_and_welfare other_leadership other_support].freeze
+                         it_support pastoral_health_and_welfare other_support].freeze
 
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
   array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }

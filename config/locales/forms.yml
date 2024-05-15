@@ -800,6 +800,7 @@ en:
           deputy_headteacher: Deputy headteacher
           headteacher: Headteacher
           sendco: SENDCo (special educational needs and disabilities coordinator)
+          other_leadership: Other leadership roles
         support_job_role_options:
           teaching_assistant: Teaching assistant
           higher_level_teaching_assistant: HLTA (higher level teaching assistant)
@@ -808,7 +809,6 @@ en:
           catering_cleaning_and_site_management: Catering, cleaning and site management
           it_support: IT support
           pastoral_health_and_welfare: Pastoral, health and welfare
-          other_leadership: Other leadership roles
           other_support: Other support roles
         job_roles_options:
           <<: *job_role_options
