@@ -1,12 +1,12 @@
 require "rails_helper"
-require "dfe_sign_in_api"
+require "dfe_sign_in/api/request"
 
 RSpec.shared_examples "a DFE Sign In endpoint" do
   context "when the external response status is 500" do
     before { stub_api_response_with_external_error(1) }
 
     it "raises an external server error" do
-      expect { subject.call }.to raise_error(DFESignIn::ExternalServerError)
+      expect { subject.perform }.to raise_error(DfeSignIn::API::Request::ExternalServerError)
     end
   end
 
@@ -14,36 +14,39 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
     before { stub_api_response_with_forbidden_error(1) }
 
     it "raises an forbidden request error" do
-      expect { subject.call }.to raise_error(DFESignIn::ForbiddenRequestError)
+      expect { subject.perform }.to raise_error(DfeSignIn::API::Request::ForbiddenRequestError)
     end
   end
 
   context "when the response status is unknown" do
     before do
-      stub_request(:get,
-                   "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}#{api_path}?page=1&pageSize=#{page_size}")
+      stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}#{api_path}?page=1&pageSize=#{page_size}")
         .to_return(body: "", status: 499)
     end
     it "raises an unknown response error" do
-      expect { subject.call }.to raise_error(DFESignIn::UnknownResponseError)
+      expect { subject.perform }.to raise_error(DfeSignIn::API::Request::UnknownResponseError)
     end
   end
 
   context "when the response code is 200" do
     it "returns the users from the API" do
       stub_api_response_for_page(1)
-      response = subject.call
+      response = subject.perform
 
       expect(response).to eq(JSON.parse(response_file(1)))
     end
 
-    it "returns the approvers from the API for a given page " do
-      stub_api_response_for_page(2)
-      response = subject.call(page: 2)
+    context "when providing a different page number" do
+      let(:page) { 2 }
 
-      expect(response).to eq(JSON.parse(response_file(2)))
-      expect(response["page"]).to eq(2)
-      expect(response["numberOfPages"]).to eq(2)
+      it "returns the approvers from the API for a given page " do
+        stub_api_response_for_page(2)
+        response = subject.perform
+
+        expect(response).to eq(JSON.parse(response_file(2)))
+        expect(response["page"]).to eq(2)
+        expect(response["numberOfPages"]).to eq(2)
+      end
     end
 
     it "sets a token in the header of the request" do
@@ -51,7 +54,7 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
         expected_token = generate_jwt_token
 
         stub_api_response_for_page(1)
-        subject.call
+        subject.perform
 
         expect(a_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}#{api_path}?page=1&pageSize=#{page_size}")
           .with(headers: { "Authorization" => "Bearer #{expected_token}" }))
@@ -97,22 +100,25 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
   end
 end
 
-RSpec.describe DFESignIn::API do
-  describe "#users" do
-    let(:api_path) { "/users" }
-    let(:fixture_filename) { "users" }
-    let(:page_size) { DFESignIn::API::USERS_PAGE_SIZE }
-    subject { described_class.new.method(:users) }
+RSpec.describe DfeSignIn::API::Request do
+  describe ".perform" do
+    let(:page) { 1 }
+    let(:page_size) { 275 }
 
-    it_behaves_like "a DFE Sign In endpoint"
-  end
+    subject { described_class.new(api_path, page, page_size) }
 
-  describe "#approvers" do
-    let(:api_path) { "/users/approvers" }
-    let(:fixture_filename) { "approvers" }
-    let(:page_size) { DFESignIn::API::APPROVERS_PAGE_SIZE }
-    subject { described_class.new.method(:approvers) }
+    context "when requesting users" do
+      let(:api_path) { "/users" }
+      let(:fixture_filename) { "users" }
 
-    it_behaves_like "a DFE Sign In endpoint"
+      it_behaves_like "a DFE Sign In endpoint"
+    end
+
+    context "when requesting users" do
+      let(:api_path) { "/users/approvers" }
+      let(:fixture_filename) { "approvers" }
+
+      it_behaves_like "a DFE Sign In endpoint"
+    end
   end
 end

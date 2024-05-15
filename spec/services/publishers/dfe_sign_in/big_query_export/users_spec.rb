@@ -1,53 +1,52 @@
 require "rails_helper"
-require "export_dsi_approvers_to_big_query"
+require "dfe_sign_in/api/request"
 
-RSpec.describe ExportDSIApproversToBigQuery do
+RSpec.describe Publishers::DfeSignIn::BigQueryExport::Users do
   before do
     expect(bigquery_stub).to receive(:dataset).with("test_dataset").and_return(dataset_stub)
     expect(dataset_stub).to receive(:table).and_return(table_stub)
 
-    expect(DFESignIn::API).to receive(:new).at_least(:once).and_return(dfe_sign_in_api)
-    expect(dfe_sign_in_api).to receive(:approvers).at_least(:once).and_return(api_response)
+    expect(DfeSignIn::API::Request).to receive(:new).at_least(:once).and_return(api_request)
+    expect(api_request).to receive(:perform).at_least(:once).and_return(api_response)
   end
 
-  subject { ExportDSIApproversToBigQuery.new(bigquery: bigquery_stub) }
+  subject { described_class.new(bigquery: bigquery_stub) }
 
   let(:bigquery_stub) { instance_double("Google::Cloud::Bigquery::Project") }
   let(:dataset_stub) { instance_double("Google::Cloud::Bigquery::Dataset") }
 
-  let(:dfe_sign_in_api) { double(DFESignIn::API) }
+  let(:api_request) { instance_double(DfeSignIn::API::Request) }
   let(:number_of_pages) { 1 }
-  let(:api_response) { succesful_api_response }
+  let(:api_response) { successful_api_response }
 
-  let(:succesful_api_response) do
+  let(:successful_api_response) do
     json_response(
-      users: [approver],
+      users: [user],
       numberOfPages: number_of_pages,
     )
   end
 
-  let(:unsuccesful_api_response) do
+  let(:unsuccessful_api_response) do
     json_response(
       success: false,
       message: "jwt expired",
     )
   end
 
-  let(:approver) do
+  let(:user) do
     {
       "userId" => SecureRandom.uuid,
-      "role_id" => [100, 101].sample,
-      "role_name" => ["End user", "Approver"].sample,
+      "role" => ["End user", "Approver"].sample,
       "approval_datetime" => 3.weeks.ago,
       "update_datetime" => 2.weeks.ago,
       "given_name" => Faker::Name.first_name,
       "family_name" => Faker::Name.last_name,
       "email" => Faker::Internet.email(domain: "example.com"),
       "organisation" => {
-        "urn" => 100_000,
-        "uid" => 999_999,
-        "category" => { id: "002" },
-        "establishmentNumber" => "800",
+        "URN" => 100_000,
+        "UID" => 999_999,
+        "Category" => "002",
+        "EstablishmentNumber" => "800",
       },
     }
   end
@@ -55,15 +54,16 @@ RSpec.describe ExportDSIApproversToBigQuery do
   let(:expected_table_data) do
     [
       {
-        email: approver["email"],
-        family_name: approver["familyName"],
-        given_name: approver["givenName"],
-        la_code: approver["organisation"]["establishmentNumber"],
-        role_id: approver["roleId"],
-        role_name: approver["roleName"],
-        school_urn: approver["organisation"]["urn"],
-        trust_uid: approver["organisation"]["uid"],
-        user_id: approver["userId"],
+        approval_datetime: user["approvedAt"],
+        email: user["email"],
+        family_name: user["familyName"],
+        given_name: user["givenName"],
+        la_code: user["organisation"]["EstablishmentNumber"],
+        role: user["roleName"],
+        school_urn: user["organisation"]["URN"],
+        trust_uid: user["organisation"]["UID"],
+        update_datetime: user["updatedAt"],
+        user_id: user["userId"],
       },
     ]
   end
@@ -76,26 +76,26 @@ RSpec.describe ExportDSIApproversToBigQuery do
       expect(dataset_stub).to receive(:reload!)
       expect(dataset_stub).to receive(:insert)
 
-      subject.run!
+      subject.call
     end
   end
 
-  context "when the approver table does not exist in the dataset" do
+  context "when the user table does not exist in the dataset" do
     let(:table_stub) { nil }
 
     context "when DSI API is up and running" do
       it "invokes insert on the dataset" do
-        expect(dataset_stub).to receive(:insert).with("dsi_approvers", expected_table_data, autocreate: true)
+        expect(dataset_stub).to receive(:insert).with("dsi_users", expected_table_data, autocreate: true)
 
-        subject.run!
+        subject.call
       end
     end
 
     context "when DSI API fails" do
-      let(:api_response) { unsuccesful_api_response }
+      let(:api_response) { unsuccessful_api_response }
 
       it "raises a runtime error" do
-        expect { subject.run! }.to raise_error(RuntimeError)
+        expect { subject.call }.to raise_error(RuntimeError)
       end
     end
   end
