@@ -37,9 +37,6 @@ class Vacancy < ApplicationRecord
 
   TEACHING_JOB_ROLES = %w[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher
                           deputy_headteacher headteacher sendco].freeze
-  TEACHING_SUPPORT_JOB_ROLES = %w[teaching_assistant higher_level_teaching_assistant education_support].freeze
-  NON_TEACHING_SUPPORT_JOB_ROLES = %w[administration_hr_data_and_finance catering_cleaning_and_site_management
-                                      it_support pastoral_health_and_welfare other_leadership other_support].freeze
   SUPPORT_JOB_ROLES = %w[teaching_assistant higher_level_teaching_assistant education_support
                          administration_hr_data_and_finance catering_cleaning_and_site_management
                          it_support pastoral_health_and_welfare other_leadership other_support].freeze

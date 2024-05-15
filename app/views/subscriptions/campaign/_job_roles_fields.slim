@@ -1,13 +1,9 @@
 - teaching_job_roles = capture do
   = f.govuk_collection_check_boxes(:teaching_job_roles, form.teaching_job_role_options, :first, :last, small: false,
                                    legend: { text: t("jobs.filters.campaign.teaching_job_roles") }, hint: nil)
-- teaching_support_job_roles = capture do
-  = f.govuk_collection_check_boxes(:teaching_support_job_roles, form.teaching_support_job_role_options, :first, :last, small: false,
-                                   legend: { text: t("jobs.filters.campaign.teaching_support_job_roles") }, hint: nil)
-- non_teaching_support_job_roles = capture do
-  = f.govuk_collection_check_boxes(:non_teaching_support_job_roles, form.non_teaching_support_job_role_options, :first, :last, small: false,
-                                   legend: { text: t("jobs.filters.campaign.non_teaching_support_job_roles") }, hint: nil)
+- support_job_roles = capture do
+  = f.govuk_collection_check_boxes(:support_job_roles, form.support_job_role_options, :first, :last, small: false,
+                                   legend: { text: t("jobs.filters.campaign.support_job_roles") }, hint: nil)
 
 - filters_component.with_group key: "teaching_job_roles", component: teaching_job_roles
-- filters_component.with_group key: "teaching_support_job_roles", component: teaching_support_job_roles
-- filters_component.with_group key: "non_teaching_support_job_roles", component: non_teaching_support_job_roles
+- filters_component.with_group key: "support_job_roles", component: support_job_roles

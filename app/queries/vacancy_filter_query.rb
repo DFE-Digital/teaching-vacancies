@@ -20,7 +20,7 @@ class VacancyFilterQuery < ApplicationQuery
     # General filters
     built_scope = built_scope.visa_sponsorship_available if filters[:visa_sponsorship_availability]
 
-    job_role_keys = %i[job_roles teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles]
+    job_role_keys = %i[job_roles teaching_job_roles support_job_roles]
     built_scope = apply_job_roles(job_role_keys, built_scope, filters)
 
     built_scope = built_scope.ect_suitable if filters[:ect_statuses]&.include?("ect_suitable") || filters[:job_roles]&.include?("ect_suitable")

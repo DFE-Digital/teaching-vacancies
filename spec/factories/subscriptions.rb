@@ -8,8 +8,7 @@ FactoryBot.define do
         radius: "10",
         working_patterns: %w[full_time part_time],
         teaching_job_roles: %w[teacher],
-        teaching_support_job_roles: %w[teaching_assistant],
-        non_teaching_support_job_roles: %w[it_support],
+        support_job_roles: %w[teaching_assistant it_support],
         ect_statuses: %w[ect_suitable],
         phases: %w[primary] }
     end

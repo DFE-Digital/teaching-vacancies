@@ -5,8 +5,6 @@ class Jobseekers::SubscriptionForm < BaseForm
                 :location,
                 :radius,
                 :teaching_job_roles,
-                :teaching_support_job_roles,
-                :non_teaching_support_job_roles,
                 :support_job_roles,
                 :visa_sponsorship_availability,
                 :ect_statuses,
@@ -40,8 +38,6 @@ class Jobseekers::SubscriptionForm < BaseForm
     @keyword = params[:keyword] || search_criteria[:keyword]
     @location = params[:location] || search_criteria[:location]
     @teaching_job_roles = params[:teaching_job_roles]&.reject(&:blank?) || search_criteria[:teaching_job_roles] || []
-    @teaching_support_job_roles = params[:teaching_support_job_roles]&.reject(&:blank?) || search_criteria[:teaching_support_job_roles] || []
-    @non_teaching_support_job_roles = params[:non_teaching_support_job_roles]&.reject(&:blank?) || search_criteria[:non_teaching_support_job_roles] || []
     @support_job_roles = params[:support_job_roles]&.reject(&:blank?) || search_criteria[:support_job_roles] || []
     @visa_sponsorship_availability = params[:visa_sponsorship_availability]&.reject(&:blank?) || search_criteria[:visa_sponsorship_availability]
     @ect_statuses = params[:ect_statuses]&.reject(&:blank?) || search_criteria[:ect_statuses] || []
@@ -70,8 +66,6 @@ class Jobseekers::SubscriptionForm < BaseForm
       location: location,
       radius: (@location.present? ? radius : nil),
       teaching_job_roles: teaching_job_roles,
-      teaching_support_job_roles: teaching_support_job_roles,
-      non_teaching_support_job_roles: non_teaching_support_job_roles,
       support_job_roles: support_job_roles,
       visa_sponsorship_availability: visa_sponsorship_availability,
       ect_statuses: ect_statuses,
@@ -87,9 +81,7 @@ class Jobseekers::SubscriptionForm < BaseForm
   def set_facet_options
     @visa_sponsorship_availability_options =  [["true", I18n.t("jobs.filters.visa_sponsorship_availability.subscriptions")]]
     @teaching_job_role_options = Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
-    @teaching_support_job_role_options = Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
     @support_job_role_options = Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
-    @non_teaching_support_job_role_options = Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
     @phase_options = Vacancy.phases.keys.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{option}")] }
     @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
@@ -99,7 +91,7 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   def location_and_one_other_criterion_selected
     errors.add(:base, I18n.t("subscriptions.errors.no_location_and_other_criterion_selected")) unless
-      location.present? && %i[keyword teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles support_job_roles subjects phases working_patterns].any? { |criterion| public_send(criterion).present? }
+      location.present? && %i[keyword teaching_job_roles support_job_roles subjects phases working_patterns].any? { |criterion| public_send(criterion).present? }
   end
 
   def unique_job_alert

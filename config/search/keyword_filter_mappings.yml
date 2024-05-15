@@ -223,7 +223,7 @@
   subjects:
     - History
 "hlta":
-  teaching_support_job_roles:
+  support_job_roles:
     - teaching_assistant
 "hospitality":
   phases:
@@ -319,7 +319,7 @@
     - head_of_year_or_phase
     - head_of_department_or_curriculum
 "learning support assistant":
-  teaching_support_job_roles:
+  support_job_roles:
     - teaching_assistant
     - education_support
 "literacy":
@@ -334,7 +334,7 @@
   subjects:
     - English
 "lsa":
-  teaching_support_job_roles:
+  support_job_roles:
     - teaching_assistant
     - education_support
 "mandarin":
@@ -616,7 +616,7 @@
   ect_statuses:
     - ect_suitable
 "support":
-  teaching_support_job_roles:
+  support_job_roles:
     - education_support
 "systems":
   phases:
@@ -625,7 +625,7 @@
   subjects:
     - Design and technology
 "ta":
-  teaching_support_job_roles:
+  support_job_roles:
     - teaching_assistant
 "teach":
   teaching_job_roles:
@@ -652,10 +652,10 @@
   teaching_job_roles:
     - teacher
 "teaching assistant":
-  teaching_support_job_roles:
+  support_job_roles:
     - teaching_assistant
 "teaching assistants":
-  teaching_support_job_roles:
+  support_job_roles:
     - teaching_assistant
 "textiles":
   phases:

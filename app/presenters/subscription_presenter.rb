@@ -7,8 +7,6 @@ class SubscriptionPresenter < BasePresenter
                                   location
                                   job_roles
                                   teaching_job_roles
-                                  teaching_support_job_roles
-                                  non_teaching_support_job_roles
                                   support_job_roles
                                   ect_statuses
                                   visa_sponsorship_availability
@@ -56,10 +54,6 @@ class SubscriptionPresenter < BasePresenter
       render_legacy_job_roles_filter(value)
     when "teaching_job_roles"
       render_teaching_job_roles_filter(value)
-    when "teaching_support_job_roles"
-      render_teaching_support_job_roles_filter(value)
-    when "non_teaching_support_job_roles"
-      render_non_teaching_support_job_roles_filter(value)
     when "support_job_roles"
       render_support_job_roles_filter(value)
     else
@@ -83,14 +77,6 @@ class SubscriptionPresenter < BasePresenter
 
   def render_teaching_job_roles_filter(value)
     { teaching_job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", ") }
-  end
-
-  def render_teaching_support_job_roles_filter(value)
-    { teaching_support_job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{role}") }.join(", ") }
-  end
-
-  def render_non_teaching_support_job_roles_filter(value)
-    { non_teaching_support_job_roles: value.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{role}") }.join(", ") }
   end
 
   def render_support_job_roles_filter(value)

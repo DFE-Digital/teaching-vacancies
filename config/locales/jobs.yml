@@ -36,14 +36,11 @@ en:
     filters:
       campaign:
         teaching_job_roles: Teaching & leadership roles
-        teaching_support_job_roles: Teaching support roles
-        non_teaching_support_job_roles: Non-teaching support roles
+        support_job_roles: Support roles
       job_filters: Job Filters
       job_type: Job type
       job_roles: Job role
       teaching_job_roles: Teaching & leadership
-      teaching_support_job_roles: Teaching support
-      non_teaching_support_job_roles: Non-teaching support
       support_job_roles: Support
       ect_suitable: Suitable for early career teachers
       subject: Subject
@@ -412,6 +409,4 @@ en:
       sort_by_link: Sort jobs by %{column} in %{order}ending order
       filters:
         teaching_job_roles: Teaching & leadership job roles
-        teaching_support_job_roles: Teaching support job roles
-        non_teaching_support_job_roles: Non-teaching support job roles
         support_job_roles: Support job roles
