@@ -12,8 +12,6 @@ class Jobseekers::SubscriptionForm < BaseForm
                 :phases,
                 :working_patterns,
                 :teaching_job_role_options,
-                :teaching_support_job_role_options,
-                :non_teaching_support_job_role_options,
                 :support_job_role_options,
                 :visa_sponsorship_availability_options,
                 :ect_status_options,
@@ -30,7 +28,7 @@ class Jobseekers::SubscriptionForm < BaseForm
   validate :unique_job_alert
   validate :location_and_one_other_criterion_selected, unless: :organisation_slug
 
-  def initialize(params = {}) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength
+  def initialize(params = {}) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
     search_criteria = params[:search_criteria]&.symbolize_keys || {}
 
     @email = params[:email]
