@@ -22,6 +22,7 @@ class Vacancies::Import::Sources::MyNewTerm
   def each
     results.each do |result|
       schools = find_schools(result)
+      next if vacancy_listed_at_excluded_trust_type?(schools, result["trustUID"])
       next if vacancy_listed_at_excluded_school_type?(schools)
 
       v = Vacancy.find_or_initialize_by(

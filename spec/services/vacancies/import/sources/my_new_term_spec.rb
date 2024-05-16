@@ -357,6 +357,14 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
       it "assigns the vacancy job location to the school group" do
         expect(vacancy.readable_job_location).to eq(school_group.name)
       end
+
+      context "when the provided central trust does not exist in our system" do
+        let(:trust_uid) { "invalid_trust_id" }
+
+        it "skips the vacancy" do
+          expect(vacancy).to be_nil
+        end
+      end
     end
 
     context "when the school doesn't belong to a school group" do
