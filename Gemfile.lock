@@ -524,7 +524,8 @@ GEM
     retriable (3.1.2)
     reverse_markdown (2.1.1)
       nokogiri
-    rexml (3.2.6)
+    rexml (3.2.8)
+      strscan (>= 3.0.9)
     rgeo (3.0.1)
     rgeo-activerecord (7.0.1)
       activerecord (>= 5.0)
@@ -652,6 +653,7 @@ GEM
       listen (>= 2.7, < 4.0)
       spring (>= 4)
     stringio (3.1.0)
+    strscan (3.1.0)
     swd (2.0.2)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
