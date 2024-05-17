@@ -1,26 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <channel>
   <title>ATS Integration RSS Feed</title>
-  <link>https://example.com</link>
-  <description>Ats integration RSS Feed</description>
+  <link>
+    <![CDATA[ https://vprs.co.uk/vpmain/vpxmloutput.php?jobboard=TEACHINGVACANCIES&clid=TEACHVALL&pw=c3baaad37db67602183c30c736dbe733 ]]>
+  </link>
+  <description>ATS Integration RSS Feed</description>
   <item>
-    <reference><![CDATA[coventrycc/TP/123/1234]]></reference>
-    <advertUrl><![CDATA[https://jobs.test.gov.uk/members/?j=1234]]></adverturl>
-    <publishOn>2023-06-06 00:00:00</publishOn>
-    <expiresAt>2023-07-05 00:00:00</expiresAt>
-    <jobTitle><![CDATA[Teacher (SEN) - Castle Wood School]]></jobTitle>
-    <jobAdvert><![CDATA[&lt;b&gt;What is the job role?&lt;/b&gt;&lt;br/&gt;&lt;p&gt;Castle Wood is an outstanding special school.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;]]></jobAdvert>
-    <salary><![CDATA[TMS and UPS with SEN allowance]]></salary>
-    <additionalAllowances><![CDATA[TMS and UPS with SEN allowance]]></additionalAllowances>
-    <startDate>2023-06-06 00:00:00</startDate>
-    <schoolUrns><![CDATA[111111]]></schoolUrns>
-    <trustUID><![CDATA[]]></trustUID>
-    <jobRole><![CDATA[sendco]]></jobRole>
-    <ectSuitable><![CDATA[false]]></ectSuitable>
-    <workingPatterns><![CDATA[part_time]]></workingPatterns>
-    <contractType><![CDATA[fixed_term]]></contractType>
+    <reference>
+      <![CDATA[ TEST002 ]]>
+    </reference>
+    <advertUrl>
+      <![CDATA[ www.company.com/jobs/12345?jobboard=Teaching+Vacancies&amp;c=vacancyposter ]]>
+    </advertUrl>
+    <publishOn>
+      <![CDATA[ 2024-05-16 00:00:00 ]]>
+    </publishOn>
+    <expiresAt>
+      <![CDATA[ 2024-06-15 00:00:00 ]]>
+    </expiresAt>
+    <jobTitle><![CDATA[Test Post]]></jobTitle>
+    <jobAdvert><![CDATA[What is the job role? Castle Wood is an outstanding special school.]]></jobAdvert>
+    <salary><![CDATA[£80000]]></salary>
+    <additionalAllowances>
+      <![CDATA[ Car Parking Space ]]>
+    </additionalAllowances>
+    <startDate>
+      <![CDATA[ 2024-05-16 00:00:00 ]]>
+    </startDate>
+    <schoolUrns><![CDATA[123456]]></schoolUrns>
+    <trustUID><![CDATA[ ]]></trustUID>
+    <jobRole><![CDATA[deputy_headteacher]]></jobRole>
+    <ectSuitable>
+      <![CDATA[ false ]]>
+    </ectSuitable>
+    <workingPatterns><![CDATA[full_time]]></workingPatterns>
+    <contractType><![CDATA[permanent]]></contractType>
     <phase><![CDATA[primary]]></phase>
-    <keyStages><![CDATA[ks3]]></keyStages>
-    <subjects><![CDATA[]]></subjects>
+    <keyStages><![CDATA[ks5]]></keyStages>
+    <subjects>
+      <![CDATA[ German, French ]]>
+    </subjects>
   </item>
 </channel>

@@ -1,25 +1,25 @@
 require "rails_helper"
 
-RSpec.describe VacancySource::Source::VacancyPoster do
+RSpec.describe Vacancies::Import::Sources::VacancyPoster do
   let(:response_body) { file_fixture("vacancy_sources/vacancy_poster.xml").read }
   let(:response) { double("VacancyPosterHttpResponse", success?: true, body: response_body) }
 
-  let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
+  let!(:school1) { create(:school, name: "Test School", urn: "123456", phase: :primary) }
   let(:schools) { [school1] }
 
   describe "enumeration" do
     let(:vacancy) { subject.first }
-    let(:job_role) { "sendco" }
+    let(:job_role) { "deputy_headteacher" }
 
     let(:expected_vacancy) do
       {
-        job_title: "Teacher (SEN) - Castle Wood School",
-        job_advert: "<b>What is the job role?</b><br/><p>Castle Wood is an outstanding special school.</em></strong></p>",
-        salary: "TMS and UPS with SEN allowance",
+        job_title: "Test Post",
+        job_advert: "What is the job role? Castle Wood is an outstanding special school.",
+        salary: "£80000",
         job_roles: [job_role],
-        key_stages: ["ks3"],
-        working_patterns: %w[part_time],
-        contract_type: "fixed_term",
+        key_stages: ["ks5"],
+        working_patterns: %w[full_time],
+        contract_type: "permanent",
         phases: %w[primary],
         visa_sponsorship_available: false,
       }
@@ -50,14 +50,14 @@ RSpec.describe VacancySource::Source::VacancyPoster do
       expect(vacancy.organisations.first).to eq(school1)
 
       expect(vacancy.external_source).to eq("vacancy_poster")
-      expect(vacancy.external_advert_url).to eq("https://jobs.test.gov.uk/members/?j=1234")
-      expect(vacancy.external_reference).to eq("coventrycc/TP/123/1234")
+      expect(vacancy.external_advert_url).to eq("www.company.com/jobs/12345?jobboard=Teaching+Vacancies&amp;c=vacancyposter")
+      expect(vacancy.external_reference).to eq("TEST002")
 
       expect(vacancy.organisations).to eq(schools)
     end
 
     describe "job roles mapping" do
-      let(:response_body) { super().gsub("sendco", job_role) }
+      let(:response_body) { super().gsub("deputy_headteacher", job_role) }
 
       %w[deputy_headteacher_principal deputy_headteacher].each do |role|
         context "when the source role is '#{role}'" do
@@ -163,7 +163,7 @@ RSpec.describe VacancySource::Source::VacancyPoster do
           :external,
           phases: %w[primary],
           external_source: "vacancy_poster",
-          external_reference: "coventrycc/TP/123/1234",
+          external_reference: "TEST002",
           organisations: schools,
           job_title: "Out of date",
         )
@@ -174,7 +174,7 @@ RSpec.describe VacancySource::Source::VacancyPoster do
         expect(vacancy).to be_persisted
         expect(vacancy).to be_changed
 
-        expect(vacancy.job_title).to eq("Teacher (SEN) - Castle Wood School")
+        expect(vacancy.job_title).to eq("Test Post")
       end
     end
   end

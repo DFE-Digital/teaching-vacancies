@@ -1,13 +1,13 @@
 class ImportFromVacancySourcesJob < ApplicationJob
   SOURCES = [
     Vacancies::Import::Sources::Ark,
-    VacancySource::Source::Broadbean,
-    VacancySource::Source::Every,
-    VacancySource::Source::Fusion,
-    VacancySource::Source::MyNewTerm,
-    VacancySource::Source::UnitedLearning,
-    VacancySource::Source::VacancyPoster,
-    VacancySource::Source::Ventrus,
+    Vacancies::Import::Sources::Broadbean,
+    Vacancies::Import::Sources::Every,
+    Vacancies::Import::Sources::Fusion,
+    Vacancies::Import::Sources::MyNewTerm,
+    Vacancies::Import::Sources::VacancyPoster,
+    Vacancies::Import::Sources::Ventrus,
+    Vacancies::Import::Sources::UnitedLearning,
   ].freeze
 
   queue_as :default

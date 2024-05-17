@@ -1,6 +1,6 @@
 require "cgi"
 
-class VacancySource::Source::VacancyPoster
+class Vacancies::Import::Sources::VacancyPoster
   FEED_URL = ENV.fetch("VACANCY_SOURCE_VACANCY_POSTER_FEED_URL").freeze
   VENTRUS_TRUST_UID = "".freeze
   SOURCE_NAME = "vacancy_poster".freeze
@@ -25,7 +25,7 @@ class VacancySource::Source::VacancyPoster
     items.each do |item|
       v = Vacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
-        external_reference: item["reference"],
+        external_reference: item["reference"]&.strip,
       )
 
       # An external vacancy is by definition always published
@@ -50,7 +50,7 @@ class VacancySource::Source::VacancyPoster
       job_advert: job_advert_for(item),
       salary: item["salary"],
       expires_at: Time.zone.parse(item["expiresAt"]),
-      external_advert_url: item["advertUrl"],
+      external_advert_url: item["advertUrl"]&.strip,
 
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
@@ -86,9 +86,9 @@ class VacancySource::Source::VacancyPoster
   end
 
   def find_schools(item)
-    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"])
+    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"]&.strip)
 
-    multi_academy_trust&.schools&.where(urn: item["schoolUrns"]).presence ||
+    multi_academy_trust&.schools&.where(urn: item["schoolUrns"]&.strip).presence ||
       Organisation.where(urn: item["schoolUrns"]).presence ||
       Array(multi_academy_trust)
   end
