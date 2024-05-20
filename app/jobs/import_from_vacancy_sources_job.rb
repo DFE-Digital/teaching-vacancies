@@ -5,9 +5,9 @@ class ImportFromVacancySourcesJob < ApplicationJob
     Vacancies::Import::Sources::Every,
     Vacancies::Import::Sources::Fusion,
     Vacancies::Import::Sources::MyNewTerm,
+    Vacancies::Import::Sources::UnitedLearning,
     Vacancies::Import::Sources::VacancyPoster,
     Vacancies::Import::Sources::Ventrus,
-    Vacancies::Import::Sources::UnitedLearning,
   ].freeze
 
   queue_as :default
