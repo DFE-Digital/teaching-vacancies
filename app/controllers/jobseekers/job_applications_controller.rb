@@ -40,11 +40,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
 
-    new_job_application = if profile
-                            current_jobseeker.job_applications.build(vacancy:)
-                          else
-                            Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
-                          end
+    new_job_application = Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
 
     prefill_application(new_job_application)
     new_job_application.save!
