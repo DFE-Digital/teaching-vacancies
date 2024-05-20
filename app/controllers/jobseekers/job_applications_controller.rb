@@ -212,7 +212,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     application.first_name = profile.first_name if profile.personal_details&.first_name
     application.last_name = profile.last_name if profile.personal_details&.last_name
     application.phone_number = profile.phone_number if profile.personal_details&.phone_number
-    application.email = profile.email if profile.email
+    application.email_address = profile.email if profile.email
     if profile.right_to_work_in_uk.present?
       application.right_to_work_in_uk = profile.personal_details.right_to_work_in_uk? ? "yes" : "no"
     end
@@ -231,23 +231,23 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     application
   end
 
-  def prefill_application(application)
-    return unless profile.present?
+  # def prefill_application(application)
+  #   return unless profile.present?
 
-    application.assign_attributes(
-      employments: profile.employments.map(&:duplicate),
-      first_name: profile.personal_details&.first_name,
-      last_name: profile.personal_details&.last_name,
-      phone_number: profile.personal_details&.phone_number,
-      qualifications: profile.qualifications.map(&:duplicate),
-      training_and_cpds: profile.training_and_cpds.map(&:duplicate),
-      qualified_teacher_status_year: profile.qualified_teacher_status_year || "",
-      qualified_teacher_status: profile.qualified_teacher_status || "",
-      right_to_work_in_uk: profile_right_to_work,
-    )
+  #   application.assign_attributes(
+  #     employments: profile.employments.map(&:duplicate),
+  #     first_name: profile.personal_details&.first_name,
+  #     last_name: profile.personal_details&.last_name,
+  #     phone_number: profile.personal_details&.phone_number,
+  #     qualifications: profile.qualifications.map(&:duplicate),
+  #     training_and_cpds: profile.training_and_cpds.map(&:duplicate),
+  #     qualified_teacher_status_year: profile.qualified_teacher_status_year || "",
+  #     qualified_teacher_status: profile.qualified_teacher_status || "",
+  #     right_to_work_in_uk: profile_right_to_work,
+  #   )
 
-    mark_step_completion(application)
-  end
+  #   mark_step_completion(application)
+  # end
 
   def profile_right_to_work
     return "" if profile.personal_details&.right_to_work_in_uk.nil?
