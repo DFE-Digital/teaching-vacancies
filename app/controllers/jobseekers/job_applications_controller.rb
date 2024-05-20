@@ -42,7 +42,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     new_job_application = Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
 
-    prefill_application(new_job_application)
+    add_profile_data_to_application(new_job_application)
     new_job_application.save!
 
     redirect_to jobseekers_job_application_review_path(new_job_application)
@@ -202,6 +202,33 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
       DfE::Analytics::SendEvents.do([event])
     end
+  end
+
+  def add_profile_data_to_application(application)
+    # should this check to see if profile is live?
+    return unless profile.present?
+
+    # personal_details
+    application.first_name = profile.first_name if profile.personal_details&.first_name
+    application.last_name = profile.last_name if profile.personal_details&.last_name
+    application.phone_number = profile.phone_number if profile.personal_details&.phone_number
+    application.email = profile.email if profile.email
+    if profile.right_to_work_in_uk.present?
+      application.right_to_work_in_uk = profile.personal_details.right_to_work_in_uk? ? "yes" : "no"
+    end
+
+    if profile.qualifications.present?
+      application.qualifications = profile.qualifications.map(&:duplicate)
+    end
+
+    if profile.training_and_cpds.present?
+      application.training_and_cpds = profile.training_and_cpds.map(&:duplicate)
+    end
+
+    application.qualified_teacher_status_year = profile.qualified_teacher_status_year if profile.qualified_teacher_status_year
+    application.qualified_teacher_status = profile.qualified_teacher_status if profile.qualified_teacher_status
+
+    application
   end
 
   def prefill_application(application)
