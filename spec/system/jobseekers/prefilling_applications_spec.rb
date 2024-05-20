@@ -34,11 +34,11 @@ RSpec.describe "Jobseekers can prefill applications" do
     end
 
     context "and the jobseeker has a previous application" do
-      before do
-        create(:job_application, :status_submitted, jobseeker:)
-      end
+      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, statutory_induction_complete: "on_track", support_needed: "no") }
+      # let!(:reference1) { create(:reference, :reference1, job_application: previous_application) }
+      # let!(:reference2) { create(:reference, :reference2, job_application: previous_application) }
 
-      it "prefers the jobseeker's profile details over the previous application" do
+      before do
         visit job_path(vacancy.id)
 
         within ".banner-buttons" do
@@ -46,10 +46,22 @@ RSpec.describe "Jobseekers can prefill applications" do
         end
 
         click_on I18n.t("buttons.start_application")
+      end
 
+      it "prefers the jobseeker's profile details over the previous application, but populates any missing fields from the previous application" do
         expect(page).to have_content(profile.personal_details.first_name)
         expect(page).to have_content(profile.personal_details.last_name)
         expect(page).to have_content(profile.personal_details.phone_number)
+        expect(page).to have_content(profile.qualified_teacher_status_year)
+        expect(page).to have_content(profile.qualifications.first.institution)
+        expect(page).to have_content(profile.employments.first.job_title)
+        expect(page).to have_content(profile.employments.first.subjects)
+        expect(page).to have_content(previous_application.street_address)
+        expect(page).to have_content(previous_application.teacher_reference_number)
+        expect(page).to have_content(previous_application.national_insurance_number)
+        expect(page).to have_css('dd.govuk-summary-list__value #support_needed', text: 'No')
+        expect(page).to have_content(previous_application.references.first.name)
+        expect(page).to have_content(previous_application.references.second.name)
       end
     end
   end
@@ -71,6 +83,12 @@ RSpec.describe "Jobseekers can prefill applications" do
       expect(page).to have_content(previous_application.first_name)
       expect(page).to have_content(previous_application.last_name)
       expect(page).to have_content(previous_application.phone_number)
+      expect(page).to have_content(previous_application.street_address)
+      expect(page).to have_content(previous_application.teacher_reference_number)
+      expect(page).to have_content(previous_application.national_insurance_number)
+      expect(page).to have_css('dd.govuk-summary-list__value #support_needed', text: 'No')
+      expect(page).to have_content(previous_application.references.first.name)
+      expect(page).to have_content(previous_application.references.second.name)
     end
   end
 

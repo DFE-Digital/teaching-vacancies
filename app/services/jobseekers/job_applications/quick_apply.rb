@@ -7,7 +7,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def job_application
-    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy).merge(completed_steps: completed_steps, in_progress_steps: in_progress_steps))
+    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy).merge(imported_steps: imported_steps, in_progress_steps: in_progress_steps))
     copy_qualifications
     copy_employments
     copy_references
@@ -42,7 +42,7 @@ class Jobseekers::JobApplications::QuickApply
     "jobseekers/job_application/#{step}_form".camelize.constantize.fields
   end
 
-  def completed_steps
+  def imported_steps
     %w[personal_details professional_status references ask_for_support].select { |step| relevant_steps.include?(step.to_sym) }
   end
 

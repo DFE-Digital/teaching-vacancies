@@ -41,6 +41,14 @@ RSpec.describe StatusTagHelper do
           expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.in_progress"), colour: "yellow"))
         end
       end
+
+      context "when the step is imported" do
+        let(:steps) { [:qualifications] }
+
+        it "returns 'imported' tag" do
+          expect(subject).to eq(helper.govuk_tag(text: I18n.t("shared.status_tags.imported"), colour: "blue"))
+        end
+      end
     end
 
     context "when the whole section is optional" do

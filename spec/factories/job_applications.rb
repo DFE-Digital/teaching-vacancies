@@ -169,6 +169,7 @@ FactoryBot.define do
       submitted_at { 4.days.ago }
     end
 
+    disability { "yes" }
     status { :submitted }
   end
 

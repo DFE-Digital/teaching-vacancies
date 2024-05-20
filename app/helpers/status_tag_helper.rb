@@ -1,5 +1,7 @@
 module StatusTagHelper
   def review_section_tag(resource, steps, form_classes)
+    if resource.is_a?(JobApplication) && steps.all? { |step| job_application_step_imported?(resource, step) }
+      imported
     if form_classes.all?(&:optional?)
       optional
     elsif resource.is_a?(JobApplication) && steps.all? { |step| job_application_step_in_progress?(resource, step) }
@@ -43,5 +45,9 @@ module StatusTagHelper
 
   def in_progress
     govuk_tag(text: t("shared.status_tags.in_progress"), colour: "yellow")
+  end
+
+  def imported
+    govuk_tag(text: t("shared.status_tags.in_progress"), colour: "blue")
   end
 end
