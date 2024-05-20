@@ -15,7 +15,8 @@ h1.govuk-heading-l = t(".page_title")
             = render CardComponent.new do |card|
               - card.with_header do
                 - subscription.filtered_search_criteria.each_pair do |filter, value|
-                  = tag.div(card.labelled_item(filter.humanize, value))
+                  - humanized_filter = filter == "teaching_job_roles" ? "Teaching & leadership roles" : filter.humanize
+                  = tag.div(card.labelled_item(humanized_filter, value))
                 .govuk-button-group class="govuk-!-margin-top-2"
                   = govuk_button_link_to(t(".link_manage"), edit_subscription_path(subscription.token), secondary: true)
                   = govuk_link_to(t(".link_unsubscribe"), unsubscribe_subscription_path(subscription.token))
