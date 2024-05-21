@@ -143,6 +143,7 @@ shared:
     - safeguarding_issue
     - safeguarding_issue_details
     - training_and_cpds_section_completed
+    - imported_steps
   job_preferences_locations:
     - id
     - job_preferences_id
