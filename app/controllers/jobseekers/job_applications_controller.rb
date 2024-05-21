@@ -213,20 +213,36 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     application.last_name = profile.last_name if profile.personal_details&.last_name
     application.phone_number = profile.phone_number if profile.personal_details&.phone_number
     application.email_address = profile.email if profile.email
-    if profile.right_to_work_in_uk.present?
+    if profile.personal_details.right_to_work_in_uk.present?
       application.right_to_work_in_uk = profile.personal_details.right_to_work_in_uk? ? "yes" : "no"
+    end
+
+    if profile.personal_details&.first_name || profile.personal_details&.last_name || profile.personal_details&.phone_number || profile.right_to_work_in_uk.present?
+      application.in_progress_steps += ["personal_details"]
+      application.imported_steps -= ["personal_details"]
     end
 
     if profile.qualifications.present?
       application.qualifications = profile.qualifications.map(&:duplicate)
+
+      application.in_progress_steps += ["qualifications"]
+      application.imported_steps -= ["qualifications"]
     end
 
     if profile.training_and_cpds.present?
       application.training_and_cpds = profile.training_and_cpds.map(&:duplicate)
+
+      application.in_progress_steps += ["training_and_cpds"]
+      application.imported_steps -= ["training_and_cpds"]
     end
 
     application.qualified_teacher_status_year = profile.qualified_teacher_status_year if profile.qualified_teacher_status_year
     application.qualified_teacher_status = profile.qualified_teacher_status if profile.qualified_teacher_status
+
+    if profile.qualified_teacher_status_year || profile.qualified_teacher_status
+      application.in_progress_steps += ["professional_status"]
+      application.imported_steps -= ["professional_status"]
+    end
 
     application
   end

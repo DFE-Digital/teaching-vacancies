@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_29_155152) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_21_125846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -76,9 +76,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_155152) do
     t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "organisation_ciphertext"
     t.integer "employment_type", default: 0
     t.text "reason_for_break", default: ""
+    t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
     t.uuid "jobseeker_profile_id"
@@ -243,6 +243,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_155152) do
     t.string "safeguarding_issue"
     t.text "safeguarding_issue_details"
     t.boolean "training_and_cpds_section_completed"
+    t.jsonb "imported_steps", default: {}, null: false
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -628,11 +629,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_155152) do
     t.string "external_reference"
     t.string "external_advert_url"
     t.integer "ect_status"
+    t.string "pay_scale"
+    t.boolean "benefits"
     t.text "full_time_details"
     t.text "part_time_details"
     t.integer "phases", array: true
-    t.string "pay_scale"
-    t.boolean "benefits"
     t.integer "start_date_type"
     t.date "earliest_start_date"
     t.date "latest_start_date"
