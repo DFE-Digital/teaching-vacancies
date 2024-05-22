@@ -79,15 +79,9 @@ RSpec.describe Search::CriteriaInventor do
       end
     end
 
-    describe "teaching_support_job_roles" do
+    describe "support_job_roles" do
       it "sets the job_roles with the job roles of the vacancy" do
-        expect(subject.criteria[:teaching_support_job_roles]).to eq(["teaching_assistant"])
-      end
-    end
-
-    describe "non_teaching_support_job_roles" do
-      it "sets the job_roles with the job roles of the vacancy" do
-        expect(subject.criteria[:non_teaching_support_job_roles]).to eq(["administration_hr_data_and_finance"])
+        expect(subject.criteria[:support_job_roles]).to eq(%w[teaching_assistant administration_hr_data_and_finance])
       end
     end
 

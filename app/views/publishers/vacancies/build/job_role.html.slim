@@ -8,7 +8,6 @@
       = f.govuk_error_summary
 
       = f.govuk_collection_check_boxes :job_roles, form.teaching_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_job_roles"), size: "s" }, include_hidden: false
-      = f.govuk_collection_check_boxes :job_roles, form.teaching_support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_support_job_roles"), size: "s" }, include_hidden: false
-      = f.govuk_collection_check_boxes :job_roles, form.non_teaching_support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.non_teaching_support_job_roles"), size: "s" }, include_hidden: false
+      = f.govuk_collection_check_boxes :job_roles, form.support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.support_job_roles"), size: "s" }, include_hidden: false
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

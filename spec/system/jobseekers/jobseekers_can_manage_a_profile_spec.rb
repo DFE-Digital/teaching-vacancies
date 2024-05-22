@@ -696,8 +696,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
       expect(page).to have_css("h1", text: "What roles are you interested in?")
       expect(page).to have_css("h2", text: "Teaching")
-      expect(page).to have_css("h2", text: "Teaching support")
-      expect(page).to have_css("h2", text: "Non-teaching support")
+      expect(page).to have_css("h2", text: "Support")
 
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
@@ -845,11 +844,10 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
         expect(page).to have_css("h1", text: "What roles are you interested in?")
         expect(page).to have_css("h2", text: "Teaching")
-        expect(page).to have_css("h2", text: "Teaching support")
-        expect(page).to have_css("h2", text: "Non-teaching support")
+        expect(page).to have_css("h2", text: "Support")
 
         # TODO: change when we have non-teaching roles
-        check "Teacher"
+        check "IT support"
         click_on I18n.t("buttons.save_and_continue")
         expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
         expect(page).to have_css("h3", text: "Job preferencesPhases")
@@ -884,7 +882,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_on I18n.t("buttons.save_and_continue")
         expect(current_path).to eq(jobseekers_job_preferences_step_path(:review))
         expect(page).to have_css("h1", text: "Job preferences")
-        expect(page).to have_css("dd", text: "Teacher")
+        expect(page).to have_css("dd", text: "IT support")
         expect(page).to have_css("dd", text: "Secondary")
         expect(page).to have_css("dd", text: "I'm not looking for a teaching job")
         expect(page).to have_css("dd", text: "Full time")
@@ -893,7 +891,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_on I18n.t("buttons.return_to_profile")
         expect(current_path).to eq(jobseekers_profile_path)
         expect(page).to have_css("h1", text: "Your profile")
-        expect(page).to have_css("dd", text: "Teacher")
+        expect(page).to have_css("dd", text: "IT support")
         expect(page).to have_css("dd", text: "Secondary")
         expect(page).to have_css("dd", text: "I'm not looking for a teaching job")
         expect(page).to have_css("dd", text: "Full time")

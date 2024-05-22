@@ -1,13 +1,9 @@
 - teaching_job_roles = capture do
   = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.teaching_job_roles"), "aria-label": t("jobs.aria_labels.filters.teaching_job_roles"), title: t("jobs.filters.teaching_job_roles"))]), open: form.teaching_job_roles.any?) do
     = f.govuk_collection_check_boxes(:teaching_job_roles, form.teaching_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
-- teaching_support_job_roles = capture do
-  = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.teaching_support_job_roles"), "aria-label": t("jobs.aria_labels.filters.teaching_support_job_roles"), title: t("jobs.filters.teaching_support_job_roles"))]), open: form.teaching_support_job_roles.any?) do
-    = f.govuk_collection_check_boxes(:teaching_support_job_roles, form.teaching_support_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
-- non_teaching_support_job_roles = capture do
-  = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.non_teaching_support_job_roles"), "aria-label": t("jobs.aria_labels.filters.non_teaching_support_job_roles"), title: t("jobs.filters.non_teaching_support_job_roles"))]), open: form.non_teaching_support_job_roles.any?) do
-    = f.govuk_collection_check_boxes(:non_teaching_support_job_roles, form.non_teaching_support_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
+- support_job_roles = capture do
+  = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.support_job_roles"), "aria-label": t("jobs.aria_labels.filters.support_job_roles"), title: t("jobs.filters.support_job_roles"))]), open: form.support_job_roles.any?) do
+    = f.govuk_collection_check_boxes(:support_job_roles, form.support_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
 
 - filters_component.with_group key: "teaching_job_roles", component: teaching_job_roles, title: t("jobs.filters.job_type")
-- filters_component.with_group key: "teaching_support_job_roles", component: teaching_support_job_roles
-- filters_component.with_group key: "non_teaching_support_job_roles", component: non_teaching_support_job_roles
+- filters_component.with_group key: "support_job_roles", component: support_job_roles

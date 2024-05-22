@@ -24,7 +24,7 @@ class Search::JobseekerProfileSearch
   end
 
   def roles_filter
-    role_filters = %i[teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles]
+    role_filters = %i[teaching_job_roles support_job_roles]
 
     role_filters.flat_map { |filter_type| filters[filter_type] }.compact
   end
@@ -34,12 +34,12 @@ class Search::JobseekerProfileSearch
   end
 
   def total_filters
-    filter_counts = %i[qualified_teacher_status teaching_job_roles teaching_support_job_roles non_teaching_support_job_roles working_patterns education_phases key_stages subjects right_to_work_in_uk].map { |filter| @filters[filter]&.count || 0 }
+    filter_counts = %i[qualified_teacher_status teaching_job_roles support_job_roles working_patterns education_phases key_stages subjects right_to_work_in_uk].map { |filter| @filters[filter]&.count || 0 }
     filter_counts.sum
   end
 
   def clear_filters_params
-    @filters.merge({ qualified_teacher_status: [], teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: [], right_to_work_in_uk: [] })
+    @filters.merge({ qualified_teacher_status: [], teaching_job_roles: [], support_job_roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: [], right_to_work_in_uk: [] })
   end
 
   def filter_by_qts(scope)

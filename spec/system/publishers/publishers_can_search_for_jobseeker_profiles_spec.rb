@@ -9,7 +9,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:trust) { create(:trust, schools: [school_oxford, school_cambridge], geopoint: "POINT (-0.108267 51.506438)") }
   let(:roles) do
     %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
-        higher_level_teaching_assistant education_support sendco other_teaching_support administration_hr_data_and_finance
+        higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
         catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ]
   end
 
@@ -48,7 +48,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
           "Head of year or phase, Head of department or curriculum, " \
           "Teaching assistant, HLTA (higher level teaching assistant), " \
           "Learning support or cover supervisor, SENDCo (special educational needs and disabilities coordinator), " \
-          "Other teaching support, Administration, HR, data and finance, " \
+          "Administration, HR, data and finance, " \
           "Catering, cleaning and site management, IT support, " \
           "Pastoral, health and welfare, Other leadership roles, " \
           "Other support roles",
@@ -133,10 +133,9 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
       it "will allow hiring staff to filter by jobseekers' preferred roles" do
         within ".filters-component" do
-          find('span[title="Teaching support"]').click
-          check "HLTA (higher level teaching assistant)"
-          find('span[title="Non-teaching support"]').click
+          find('span[title="Support"]').click
           check "Catering, cleaning and site management"
+          check "HLTA (higher level teaching assistant)"
           click_on I18n.t("buttons.apply_filters")
         end
 
@@ -151,7 +150,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         click_link "HLTA (higher level teaching assistant)"
 
         within ".filters-component" do
-          find('span[title="Teaching"]').click
+          find('span[title="Teaching & leadership"]').click
           check "Teacher"
           click_on I18n.t("buttons.apply_filters")
         end

@@ -383,6 +383,43 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     end
   end
 
+  context "when filtering by job roles" do
+    let!(:headteacher) { create(:vacancy, :past_publish, job_roles: ["headteacher"], job_title: "Headteacher job", subjects: [], organisations: [school]) }
+    let!(:deputy_head) { create(:vacancy, :past_publish, job_roles: ["deputy_headteacher"], job_title: "Deputy job", subjects: [], organisations: [school]) }
+    let!(:senior_leader) { create(:vacancy, :past_publish, job_roles: %w[head_of_year_or_phase head_of_department_or_curriculum], job_title: "Senior leader job", subjects: [], organisations: [school]) }
+    let!(:teaching_assistant) { create(:vacancy, :past_publish, job_roles: %w[higher_level_teaching_assistant education_support teaching_assistant], job_title: "Assistant job", subjects: [], organisations: [school]) }
+    let!(:sendco) { create(:vacancy, :past_publish, job_roles: ["sendco"], job_title: "Sendco job", subjects: [], organisations: [school]) }
+    let!(:it_support) { create(:vacancy, :past_publish, job_roles: ["it_support"], job_title: "IT job", subjects: [], organisations: [school]) }
+    let!(:pastoral) { create(:vacancy, :past_publish, job_roles: ["pastoral_health_and_welfare"], job_title: "Pastoral job", subjects: [], organisations: [school]) }
+    let!(:other) { create(:vacancy, :past_publish, job_roles: %w[other_leadership other_support], job_title: "Other job", subjects: [], organisations: [school]) }
+
+    it "allows users to filter by job role" do
+      visit jobs_path
+      find('span[title="Teaching & leadership"]').click
+      check "Teacher"
+      click_on I18n.t("buttons.apply_filters")
+
+      expect_page_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2])
+      expect_page_not_to_show_jobs([headteacher, deputy_head, senior_leader, teaching_assistant, sendco, it_support, pastoral, other])
+
+      find('span[title="Support"]').click
+      check "IT support"
+      check "Head of year or phase"
+      uncheck "Teacher"
+      click_on I18n.t("buttons.apply_filters")
+
+      expect_page_to_show_jobs([senior_leader, it_support])
+      expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, headteacher, deputy_head, teaching_assistant, sendco, pastoral, other])
+
+      uncheck "IT support"
+      uncheck "Head of year or phase"
+      check "Other support"
+      click_on I18n.t("buttons.apply_filters")
+      expect_page_to_show_jobs([other])
+      expect_page_not_to_show_jobs([job1, job2, job3, job4, maths_job1, maths_job2, headteacher, deputy_head, teaching_assistant, sendco, pastoral, senior_leader, it_support])
+    end
+  end
+
   def expect_page_to_show_jobs(jobs)
     jobs.each do |job|
       expect(page).to have_link(job.job_title, count: 1)

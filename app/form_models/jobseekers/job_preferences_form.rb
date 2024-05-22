@@ -5,7 +5,7 @@ module Jobseekers
     include Multistep::Form
 
     ROLES = %i[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher deputy_headteacher
-               headteacher teaching_assistant higher_level_teaching_assistant education_support other_teaching_support
+               headteacher teaching_assistant higher_level_teaching_assistant education_support
                sendco administration_hr_data_and_finance catering_cleaning_and_site_management it_support
                pastoral_health_and_welfare other_leadership other_support].freeze
     PHASES = %i[nursery primary middle secondary through].freeze
@@ -28,12 +28,8 @@ module Jobseekers
         Vacancy::TEACHING_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_job_role_options.#{option}")] }
       end
 
-      def teaching_support_job_roles_options
-        Vacancy::TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.teaching_support_job_role_options.#{option}")] }
-      end
-
-      def non_teaching_support_job_roles_options
-        Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.non_teaching_support_job_role_options.#{option}")] }
+      def support_job_roles_options
+        Vacancy::SUPPORT_JOB_ROLES.map { |option| [option, I18n.t("helpers.label.publishers_job_listing_job_role_form.support_job_role_options.#{option}")] }
       end
 
       def options

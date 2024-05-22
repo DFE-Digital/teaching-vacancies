@@ -13,8 +13,7 @@ class Search::CriteriaInventor
       working_patterns: [],
       phases: @vacancy.phases,
       teaching_job_roles: @vacancy.job_roles & Vacancy::TEACHING_JOB_ROLES,
-      teaching_support_job_roles: @vacancy.job_roles & Vacancy::TEACHING_SUPPORT_JOB_ROLES,
-      non_teaching_support_job_roles: @vacancy.job_roles & Vacancy::NON_TEACHING_SUPPORT_JOB_ROLES,
+      support_job_roles: @vacancy.job_roles & Vacancy::SUPPORT_JOB_ROLES,
       ect_statuses: [@vacancy.ect_status],
       subjects: subjects,
     }.delete_if { |_k, v| v.blank? }

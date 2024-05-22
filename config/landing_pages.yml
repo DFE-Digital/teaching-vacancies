@@ -27,7 +27,7 @@ shared:
     ect_statuses:
       - ect_suitable
   education-support-jobs:
-    teaching_support_job_roles:
+    support_job_roles:
       - education_support
   head-of-year-or-phase-jobs:
     teaching_job_roles:
@@ -39,7 +39,7 @@ shared:
     teaching_job_roles:
       - headteacher
   higher-level-teaching-assistant-jobs:
-    teaching_support_job_roles:
+    support_job_roles:
       - higher_level_teaching_assistant
   sendco-jobs:
     teaching_job_roles:
@@ -48,7 +48,7 @@ shared:
     teaching_job_roles:
       - teacher
   teaching-assistant-jobs:
-    teaching_support_job_roles:
+    support_job_roles:
       - teaching_assistant
 
   ### Phases

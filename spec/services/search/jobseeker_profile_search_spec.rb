@@ -137,7 +137,7 @@ RSpec.describe Search::JobseekerProfileSearch do
     end
 
     context "job_preferences roles" do
-      let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: [], teaching_support_job_roles: [], non_teaching_support_job_roles: %w[other_support], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
+      let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: [], support_job_roles: %w[other_support], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
       let(:control_job_preferences_attrs) { { roles: %w[leader] } }
       let(:control_profile_attrs) { {} }
 
@@ -158,7 +158,7 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
 
       context "searching using multiple roles" do
-        let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: %w[teacher headteacher], teaching_support_job_roles: [], non_teaching_support_job_roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
+        let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], teaching_job_roles: %w[teacher headteacher], support_job_roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
 
         let(:headteacher_jobseeker_profile) { create(:jobseeker_profile) }
         let(:headteacher_job_preferences) { create(:job_preferences, roles: %w[headteacher], jobseeker_profile: headteacher_jobseeker_profile) }

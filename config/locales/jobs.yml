@@ -35,15 +35,13 @@ en:
 
     filters:
       campaign:
-        teaching_job_roles: Teaching roles
-        teaching_support_job_roles: Teaching support roles
-        non_teaching_support_job_roles: Non-teaching support roles
+        teaching_job_roles: Teaching & leadership roles
+        support_job_roles: Support roles
       job_filters: Job Filters
       job_type: Job type
       job_roles: Job role
-      teaching_job_roles: Teaching
-      teaching_support_job_roles: Teaching support
-      non_teaching_support_job_roles: Non-teaching support
+      teaching_job_roles: Teaching & leadership
+      support_job_roles: Support
       ect_suitable: Suitable for early career teachers
       subject: Subject
       phases: Education phase
@@ -410,6 +408,5 @@ en:
       contact_email_link: Email link for job contact email — %{email}
       sort_by_link: Sort jobs by %{column} in %{order}ending order
       filters:
-        teaching_job_roles: Teaching job roles
-        teaching_support_job_roles: Teaching support job roles
-        non_teaching_support_job_roles: Non-teaching support job roles
+        teaching_job_roles: Teaching & leadership job roles
+        support_job_roles: Support job roles
