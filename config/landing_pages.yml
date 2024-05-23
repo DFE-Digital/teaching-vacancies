@@ -50,26 +50,23 @@ shared:
   teaching-assistant-jobs:
     support_job_roles:
       - teaching_assistant
-  other-teaching-support-jobs:
-    teaching_support_job_roles:
-      - other_teaching_support
   administration-hr-data-finance-jobs:
-    non_teaching_support_job_roles:
+    support_job_roles:
       - administration_hr_data_and_finance
   catering-cleaning-site-management-jobs:
-    non_teaching_support_job_roles:
+    support_job_roles:
       - catering_cleaning_and_site_management
   it-support-jobs:
-    non_teaching_support_job_roles:
+    support_job_roles:
       - it_support
   pastoral-health-welfare-jobs:
-    non_teaching_support_job_roles:
+    support_job_roles:
       - pastoral_health_and_welfare
   other-leadership-roles-jobs:
-    non_teaching_support_job_roles:
+    support_job_roles:
       - other_leadership
   other-support-roles-jobs:
-    non_teaching_support_job_roles:
+    support_job_roles:
       - other_support
 
   ### Phases
