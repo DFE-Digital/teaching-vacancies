@@ -6,7 +6,7 @@ en:
   app:
     back_to_homepage: Return to homepage
     description: >-
-      Find your next teaching job. Apply for jobs in schools and stay up-to-date with local teaching jobs on Teaching Vacancies.
+      Find your next teaching, leadership or school-based support job. Apply for jobs in schools and stay up-to-date with local jobs on Teaching Vacancies.
     environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <span class="govuk-!-font-weight-bold">%{environment}</span> version of the site.
     govuk: GOV.UK
     menu: Menu
@@ -140,7 +140,7 @@ en:
   home:
     index:
       browse_all: Browse all teaching jobs in England
-      description: Search for teaching, school leadership and education support jobs in England.
+      description: Search for teaching, leadership and school-based support jobs in England.
       jobseeker_section:
         signed_in:
           description: Apply for jobs you are interested in, and check the status of your applications.
@@ -166,7 +166,7 @@ en:
             sign_in: Sign in
             sign_up: sign up
         title: For hiring staff
-      title: Find a job in teaching
+      title: Teaching, leadership and support jobs
       title_h2: Welcome to Teaching Vacancies
     landing_page_links:
       education_phases: School phases
@@ -195,7 +195,7 @@ en:
         how it is used, how long it is kept and what your data protection rights are.
     sign-in:
       page_description: >-
-        Sign in to the official place to find teaching jobs in England. Apply for jobs as a jobseeker, or advertise and manage job listings for your school.
+        Sign in to find teaching, leadership and school-based support jobs in England. Apply for jobs, or advertise and manage job listings for your school.
     terms-and-conditions:
       page_description:
         Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
@@ -544,9 +544,9 @@ en:
             other: (%{count} results)
       page_title_and_description:
         title:
-          zero: "%{heading} - Find a job in teaching"
-          one: "%{heading} - Find a job in teaching"
-          other: "%{heading} page %{count} - Find a job in teaching"
+          zero: "%{heading} - Teaching, leadership and support jobs"
+          one: "%{heading} - Teaching, leadership and support jobs"
+          other: "%{heading} page %{count} - Teaching, leadership and support jobs"
     show:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
       job_details: Job details
