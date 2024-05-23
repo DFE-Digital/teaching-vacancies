@@ -1,4 +1,5 @@
 class Jobseeker < ApplicationRecord
+  self.ignored_columns += ["account_type"]
   has_encrypted :last_sign_in_ip, :current_sign_in_ip
 
   devise(*%I[
@@ -18,7 +19,6 @@ class Jobseeker < ApplicationRecord
   has_one :jobseeker_profile
 
   validates :email, presence: true, email_address: true
-  validates :account_type, presence: true
 
   after_update :update_subscription_emails
 
