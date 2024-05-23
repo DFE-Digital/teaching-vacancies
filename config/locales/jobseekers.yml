@@ -330,7 +330,7 @@ en:
         title: About your application
         warning:
           text: This role cannot offer sponsorship visa.
-          paragraph_1: It is unlikely you will be considered for this job as it is not offering skilled worker visa sponsorship to non-UK citizens.
+          paragraph_1: It is unlikely you will be considered for this job as it is not offering Skilled Worker visa sponsorship to non-UK citizens.
           paragraph_2:
             text: Learn more about %{link}
             link: teaching in England as a non-UK citizen (opens in new tab).
@@ -728,7 +728,7 @@ en:
               link: find out what visa you need if you're a non-UK citizen (link opens in new tab).
           warning:
             text: This role cannot offer visa sponsorship.
-            paragraph_1: It is unlikely you will be considered for this job as it is not offering skilled worker visa sponsorship to non-UK citizens.
+            paragraph_1: It is unlikely you will be considered for this job as it is not offering Skilled Worker visa sponsorship to non-UK citizens.
             paragraph_2:
               text: Learn more about %{link}
               link: teaching in England as a non-UK citizen (opens in new tab).

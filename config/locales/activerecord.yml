@@ -531,7 +531,7 @@ en:
             teacher_reference_number:
               invalid: Enter a teacher reference number in the correct format
             right_to_work_in_uk: 
-              inclusion: Select yes if you have the right to work in the UK
+              inclusion: Select no if you have the right to work in the UK
         jobseekers/job_application/personal_statement_form:
           attributes:
             personal_statement:
