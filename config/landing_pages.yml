@@ -38,6 +38,9 @@ shared:
   deputy-headteacher-jobs:
     teaching_job_roles:
       - deputy_headteacher
+  other-leadership-roles-jobs:
+      teaching_job_roles:
+        - other_leadership
   ect-suitable-jobs:
     ect_statuses:
       - ect_suitable
@@ -62,9 +65,6 @@ shared:
   pastoral-health-welfare-jobs:
     support_job_roles:
       - pastoral_health_and_welfare
-  other-leadership-roles-jobs:
-    support_job_roles:
-      - other_leadership
   other-support-roles-jobs:
     support_job_roles:
       - other_support
