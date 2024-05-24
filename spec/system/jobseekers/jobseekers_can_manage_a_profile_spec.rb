@@ -46,7 +46,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         fill_in "personal_details_form[phone_number]", with: phone_number
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content("Do you need Skilled work visa sponsorship?")
+        expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
         choose "Yes"
         click_on I18n.t("buttons.save_and_continue")
 

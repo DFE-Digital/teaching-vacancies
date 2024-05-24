@@ -893,7 +893,7 @@ en:
         support_needed: Do you want to ask for support so that you can attend an interview?
       jobseekers_job_application_declarations_form:
         close_relationships: Do you have any family or close relationship with people within %{organisation}?
-        right_to_work_in_uk: Do you need Skilled worker visa sponsorship?
+        right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
         safeguarding_issue: Do you want to declare any safeguarding issues, such as a criminal record or professional misconduct?
       jobseekers_job_application_details_reference_form:
         phone_number: Phone number
