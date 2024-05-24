@@ -185,7 +185,6 @@ shared:
     - created_at
     - updated_at
     - account_closed_on
-    - account_type
   job_preferences:
     - id
     - roles
