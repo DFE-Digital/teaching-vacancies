@@ -75,7 +75,7 @@ en:
       name: "Learning support or cover supervisor"
       title: "Education & School Support Jobs"
       heading: "%{count} education and school support jobs"
-      meta_description: "Find jobs for LSAs, HR managers, finance officers, admin assistants, cover supervisors and other non-teaching vacancies in schools near you."
+      meta_description: "Find jobs for LSAs, HR managers, finance officers, admin assistants, cover supervisors and other support roles in schools near you."
     sendco-jobs:
       name: "SENDCo (special educational needs and disabilities coordinator)"
       title: "SEND Coordinator (SENDCo) Jobs"
@@ -91,6 +91,41 @@ en:
       title: "Teaching Assistant Jobs"
       heading: "%{count} teaching assistant jobs"
       meta_description: "Find full and part time teaching assistant jobs and classroom assistant vacancies. See which schools near you are currently hiring TAs and LSAs."
+    other-teaching-support-jobs:
+      name: "Other teaching support"
+      title: "Other Teaching Support Jobs"
+      heading: "%{count} other teaching support jobs"
+      meta_description: "Find full and part time teaching support roles in schools. See which schools near you are hiring and apply quickly and easily through Teaching Vacancies."
+    administration-hr-data-finance-jobs:
+      name: "Administration, HR, data and finance"
+      title: "Administration, HR, Data & Finance Jobs"
+      heading: "%{count} administration, HR, data and finance jobs"
+      meta_description: "Find administration, HR, data and finance jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies. "
+    catering-cleaning-site-management-jobs:
+      name: "Catering, cleaning and site management"
+      title: "Catering, Cleaning & Site Management Jobs"
+      heading: "%{count} catering, cleaning and site management jobs"
+      meta_description: "Find catering, cleaning and site management jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies."
+    it-support-jobs:
+      name: "IT support"
+      title: "IT Support Jobs"
+      heading: "%{count} IT support jobs"
+      meta_description: "Find IT support jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies."
+    pastoral-health-welfare-jobs:
+      name: "Pastoral, health and welfare"
+      title: "Pastoral, Health & Welfare Jobs"
+      heading: "%{count} pastoral, health and welfare jobs"
+      meta_description: "Find pastoral, health and welfare jobs in schools. Apply for full and part time roles quickly and easily through Teaching Vacancies."
+    other-leadership-roles-jobs:
+      name: "Other leadership roles"
+      title: "Other Leadership Roles"
+      heading: "%{count} other leadership roles"
+      meta_description: "Find the right leadership role for you on Teaching Vacancies. Apply for full and part time jobs in schools quickly and easily."
+    other-support-roles-jobs:
+      name: "Other support roles"
+      title: "Other Support Roles"
+      heading: "%{count} other support roles"
+      meta_description: "Find and apply for support roles in schools on Teaching Vacancies. Apply quickly and easily for full and part time jobs in schools."
 
     ### Education phases
     nursery-jobs:
