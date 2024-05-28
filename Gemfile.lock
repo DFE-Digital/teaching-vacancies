@@ -255,7 +255,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 8)
       view_component (>= 3.9, < 3.12)
-    govuk_design_system_formbuilder (5.3.3)
+    govuk_design_system_formbuilder (5.4.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -758,7 +758,7 @@ DEPENDENCIES
   google-apis-indexing_v3
   google-cloud-bigquery
   govuk-components (~> 5.3.1)
-  govuk_design_system_formbuilder (~> 5.3.2)
+  govuk_design_system_formbuilder (~> 5.4.0)
   high_voltage
   httparty
   ipaddr
