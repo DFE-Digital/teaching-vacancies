@@ -5,7 +5,7 @@ export default class extends Controller {
     this.handleMobilePageFocus();
   }
 
-  detectMobile() {
+  static detectMobile() {
     return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   }
 
@@ -14,8 +14,8 @@ export default class extends Controller {
       return;
     }
 
-    if (window.location.href.includes("profile/personal-details")) {
-      let skipLinkElement = document.getElementsByClassName("govuk-skip-link");
+    if (window.location.href.includes('profile/personal-details')) {
+      const skipLinkElement = document.getElementsByClassName('govuk-skip-link');
 
       if (skipLinkElement && skipLinkElement.length > 0) {
         skipLinkElement[0].focus();
