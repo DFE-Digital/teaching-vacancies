@@ -24,6 +24,8 @@ RSpec.describe "Creating a vacancy" do
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
       end
 
+      uncheck I18n.t("organisations.job_location_heading.central_office")
+
       click_on I18n.t("buttons.continue")
 
       within(".govuk-error-summary") do
@@ -53,8 +55,9 @@ RSpec.describe "Creating a vacancy" do
   scenario "publishes a vacancy" do
     visit organisation_jobs_with_type_path
     click_on I18n.t("buttons.create_job")
-
+    uncheck I18n.t("organisations.job_location_heading.central_office")
     click_on I18n.t("buttons.continue")
+
     expect(page).to have_content("There is a problem")
 
     fill_in_job_location_form_fields(vacancy)

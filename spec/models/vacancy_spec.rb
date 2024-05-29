@@ -33,7 +33,7 @@ RSpec.describe Vacancy do
     let(:generator) { instance_double(Search::Postgres::TsvectorGenerator, tsvector: "'Hello'") }
 
     it "updates the searchable_content column on save" do
-      expect(Search::Postgres::TsvectorGenerator).to receive(:new).with(Hash).and_return(generator)
+      allow(Search::Postgres::TsvectorGenerator).to receive(:new).with(Hash).and_return(generator)
       expect(subject.searchable_content).to be_nil
       subject.save
       expect(subject.searchable_content).to eq("'Hello'")
@@ -542,14 +542,6 @@ RSpec.describe Vacancy do
       it "is set to a multipoint" do
         expect(subject.geolocation.map(&:lat)).to contain_exactly(2, 4)
         expect(subject.geolocation.map(&:lon)).to contain_exactly(1, 3)
-      end
-    end
-
-    context "if there is no organisation" do
-      let(:organisations) { [] }
-
-      it "is set to nil" do
-        expect(subject.geolocation).to be_nil
       end
     end
 

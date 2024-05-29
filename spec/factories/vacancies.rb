@@ -65,6 +65,7 @@ FactoryBot.define do
     working_patterns { factory_rand_sample(Vacancy.working_patterns.keys, 1..2) }
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     visa_sponsorship_available { false }
+    organisations { build_list(:school, 1) }
 
     trait :legacy_vacancy do
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }

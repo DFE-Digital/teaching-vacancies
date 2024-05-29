@@ -95,6 +95,7 @@ class Vacancy < ApplicationRecord
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
   validates_with ExternalVacancyValidator, if: :external?
+  validates :organisations, :presence => true
 
   has_noticed_notifications
   has_paper_trail on: [:update],
