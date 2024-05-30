@@ -92,6 +92,8 @@ variable "redis_queue_sku_name" {}
 variable "add_database_name_suffix" {}
 variable "azure_maintenance_window" {}
 
+variable "enable_logit" {}
+
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
 

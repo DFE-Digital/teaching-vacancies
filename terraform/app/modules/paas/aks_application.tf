@@ -50,6 +50,7 @@ module "web_application" {
   probe_path             = "/check"
   web_external_hostnames = var.web_external_hostnames_aks
   replicas               = var.aks_web_app_instances
+  enable_logit           = var.enable_logit
 }
 
 module "worker_application" {
@@ -70,4 +71,5 @@ module "worker_application" {
   command      = ["/bin/sh", "-c", "bundle exec sidekiq -C config/sidekiq.yml"]
   max_memory   = var.aks_worker_app_memory
   replicas     = var.aks_worker_app_instances
+  enable_logit = var.enable_logit
 }

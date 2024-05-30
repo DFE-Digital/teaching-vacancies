@@ -88,6 +88,7 @@ module "paas" {
   azure_enable_backup_storage       = var.azure_enable_backup_storage
   web_external_hostnames_aks        = local.web_external_hostnames_aks
   azure_maintenance_window          = var.azure_maintenance_window
+  enable_logit                      = var.enable_logit
 }
 
 module "statuscake" {
