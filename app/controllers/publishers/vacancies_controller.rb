@@ -25,7 +25,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def create
-    vacancy = Vacancy.create(publisher: current_publisher, publisher_organisation: current_organisation)
+    vacancy = Vacancy.create(publisher: current_publisher, publisher_organisation: current_organisation, organisations: [current_organisation])
 
     if current_organisation.school?
       vacancy.update(organisations: [current_organisation])
