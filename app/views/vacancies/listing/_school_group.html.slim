@@ -1,16 +1,16 @@
 = govuk_summary_list actions: false do |summary_list|
   - if organisation.group_type != "local_authority"
-    - summary_list.row do |row|
-      - row.key text: t(".school_groups.type")
-      - row.value text: organisation.group_type
+    - summary_list.with_row do |row|
+      - row.with_key text: t(".school_groups.type")
+      - row.with_value text: organisation.group_type
 
   - if organisation.url.present?
-    - summary_list.row do |row|
-      - row.key text: t(".school_groups.website", organisation_type: organisation_type_basic(organisation).humanize)
-      - row.value text: school_website_link(organisation, vacancy: vacancy, class: "link-wrap")
+    - summary_list.with_row do |row|
+      - row.with_key text: t(".school_groups.website", organisation_type: organisation_type_basic(organisation).humanize)
+      - row.with_value text: school_website_link(organisation, vacancy: vacancy, class: "link-wrap")
 
   = render "vacancies/listing/contact_details", vacancy: vacancy, summary_list: summary_list
 
-  - summary_list.row do |row|
-    - row.key text: "See more jobs"
-    - row.value text: organisation_vacancies_link(organisation)
+  - summary_list.with_row do |row|
+    - row.with_key text: "See more jobs"
+    - row.with_value text: organisation_vacancies_link(organisation)

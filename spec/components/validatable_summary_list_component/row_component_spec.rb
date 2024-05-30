@@ -62,6 +62,10 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
   end
 
   describe "#label" do
+    before do
+      render_inline(row)
+    end
+
     context "when a label is provided" do
       let(:options) do
         {
@@ -126,6 +130,10 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
   end
 
   describe "#build_text" do
+    before do
+      render_inline(row)
+    end
+
     context "when the attribute is a boolean" do
       let(:attribute) { :benefits }
 
@@ -138,7 +146,7 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
       let(:attribute) { :job_title }
 
       before do
-        record.public_send("#{attribute}=", "Some value")
+        record.public_send(:"#{attribute}=", "Some value")
       end
 
       it "renders the text version of the value" do
@@ -155,7 +163,7 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
 
       context "and the attribute is present" do
         before do
-          record.public_send("#{attribute}=", "Some value")
+          record.public_send(:"#{attribute}=", "Some value")
         end
 
         it "uses the attribute value" do
@@ -165,7 +173,7 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
 
       context "but the attribute is not present" do
         before do
-          record.public_send("#{attribute}=", nil)
+          record.public_send(:"#{attribute}=", nil)
         end
 
         it "uses a 'not defined' translation" do
@@ -195,7 +203,7 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
 
       context "and the attribute is present" do
         before do
-          record.public_send("#{attribute}=", "Some value")
+          record.public_send(:"#{attribute}=", "Some value")
         end
 
         it "uses the given value" do
@@ -205,7 +213,7 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
 
       context "but the attribute is not present" do
         before do
-          record.public_send("#{attribute}=", nil)
+          record.public_send(:"#{attribute}=", nil)
         end
 
         it "uses the attribute value" do

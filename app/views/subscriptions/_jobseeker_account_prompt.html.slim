@@ -3,28 +3,35 @@
     h1.govuk-heading-l class="govuk-!-margin-bottom-5" = t(".heading.sign_in")
     p.govuk-body = t(".body.sign_in")
 
-    = form_for @jobseeker, url: jobseeker_session_path, method: :post do |f|
-      .govuk-heading-s class="govuk-!-margin-bottom-2"
-        = t(".form.email_address")
-      .govuk-body = @subscription.email
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
+        = form_for @jobseeker, url: jobseeker_session_path, method: :post do |f|
+          .govuk-heading-s class="govuk-!-margin-bottom-2"
+            = t(".form.email_address")
+          .govuk-body = @subscription.email
 
-      = f.hidden_field :email, value: @subscription.email
-      = f.govuk_password_field :password, label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" }, hint: nil, width: "two-thirds"
-      = hidden_field_tag :redirected, true
+          = f.hidden_field :email, value: @subscription.email
+          = f.govuk_password_field :password,
+                                   label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" },
+                                   hint: nil,
+                                   autocomplete: "current-password"
+          = hidden_field_tag :redirected, true
 
-      = f.govuk_submit t("buttons.sign_in")
+          = f.govuk_submit t("buttons.sign_in")
 
 - else
   div data-account-prompt="sign-up"
     h1.govuk-heading-l class="govuk-!-margin-bottom-5" = t(".heading.sign_up")
     p.govuk-body = t(".body.sign_up")
 
-    = form_for Jobseeker.new, as: :jobseeker, url: jobseeker_registration_path, method: :post do |f|
-      .govuk-heading-s class="govuk-!-margin-bottom-2"
-        = t(".form.email_address")
-      .govuk-body = @subscription.email
+    .govuk-grid-row
+      .govuk-grid-column-two-thirds
+        = form_for Jobseeker.new, as: :jobseeker, url: jobseeker_registration_path, method: :post do |f|
+          .govuk-heading-s class="govuk-!-margin-bottom-2"
+            = t(".form.email_address")
+          .govuk-body = @subscription.email
 
-      = f.hidden_field :email, value: @subscription.email
-      = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
+          = f.hidden_field :email, value: @subscription.email
+          = f.govuk_password_field :password, label: { size: "s" }, autocomplete: "new-password"
 
-      = f.govuk_submit t("buttons.create_account"), classes: "govuk-!-margin-bottom-0"
+          = f.govuk_submit t("buttons.create_account"), class: "govuk-!-margin-bottom-0"

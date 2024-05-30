@@ -7,6 +7,7 @@ class JobseekerProfile < ApplicationRecord
   has_one :job_preferences, dependent: :destroy
   has_many :employments, dependent: :destroy
   has_many :qualifications, dependent: :destroy
+  has_many :training_and_cpds, dependent: :destroy
   has_many :organisation_exclusions, class_name: "JobseekerProfileExcludedOrganisation", dependent: :destroy
   has_many :excluded_organisations, through: :organisation_exclusions, source: :organisation
 
@@ -31,7 +32,7 @@ class JobseekerProfile < ApplicationRecord
 
   delegate :first_name, :last_name, to: :personal_details, allow_nil: true
 
-  enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2 }
+  enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2, non_teacher: 3 }
 
   validates :jobseeker, uniqueness: true
 
@@ -53,6 +54,27 @@ class JobseekerProfile < ApplicationRecord
 
   def self.jobseeker(record)
     record.jobseeker
+  end
+
+  def replace_qualifications!(new_qualifications)
+    transaction do
+      qualifications.destroy_all
+      update!(qualifications: new_qualifications)
+    end
+  end
+
+  def replace_employments!(new_employments)
+    transaction do
+      employments.destroy_all
+      update!(employments: new_employments)
+    end
+  end
+
+  def replace_training_and_cpds!(new_training_and_cpds)
+    transaction do
+      training_and_cpds.destroy_all
+      update!(training_and_cpds: new_training_and_cpds)
+    end
   end
 
   def deactivate!
@@ -82,5 +104,9 @@ class JobseekerProfile < ApplicationRecord
 
   def hidden_from_any_organisations?
     requested_hidden_profile && excluded_organisations.any?
+  end
+
+  def unexplained_employment_gaps
+    @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
   end
 end

@@ -1,0 +1,8 @@
+- content_for :page_title_prefix, t(".title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".title")
+
+    p.govuk-body = t(".description")
+    p.govuk-body You can #{govuk_link_to("return to the homepage", "/")} to use the service.

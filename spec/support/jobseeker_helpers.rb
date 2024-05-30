@@ -1,6 +1,8 @@
 module JobseekerHelpers
   def confirm_email_address
     visit first_link_from_last_mail
+    expect(page).to have_css("h1", text: I18n.t("jobseekers.confirmations.show.title"))
+    click_on I18n.t("jobseekers.confirmations.show.confirm")
   end
 
   def sign_up_jobseeker(email: jobseeker.email, password: jobseeker.password)
@@ -34,38 +36,49 @@ module JobseekerHelpers
     fill_in "Tell us any information you think is relevant", with: "Some details about support"
   end
 
-  def fill_in_current_role
+  def fill_in_current_role(job_title: "The Best Teacher", start_month: "07", start_year: "2020")
     fill_in "School or other organisation", with: "The Best School"
-    fill_in "Job title", with: "The Best Teacher"
+    fill_in "Job title", with: job_title
     fill_in "Main duties", with: "Some details about what the main duties were"
+    fill_in "Reason for leaving role", with: "It's complicated"
     fill_in "Subjects and key stages taught (optional field)", with: "English KS1"
-    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: "2019"
-    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: "09"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: start_year
+    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: start_month
     choose "Yes", name: "jobseekers_job_application_details_employment_form[current_role]"
   end
 
   def fill_in_declarations
     choose "Yes", name: "jobseekers_job_application_declarations_form[close_relationships]"
     fill_in "Please give details", with: "Some details of the relationship"
+    choose "Yes, I want to share something"
+    fill_in "Give any relevant information", with: "Criminal record"
   end
 
-  def fill_in_employment_history
+  def fill_in_employment_history(job_title: "The Best Teacher", start_month: "09", start_year: "2019", end_month: "07", end_year: "2020")
     fill_in "School or other organisation", with: "The Best School"
-    fill_in "Job title", with: "The Best Teacher"
+    fill_in "Job title", with: job_title
     fill_in "Main duties", with: "Some details about what the main duties were"
-    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: "2019"
-    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: "09"
+    fill_in "Reason for leaving role", with: "Just couldn't take it any longer"
+    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: start_year
+    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: start_month
     choose "No", name: "jobseekers_job_application_details_employment_form[current_role]"
-    fill_in "jobseekers_job_application_details_employment_form[ended_on(1i)]", with: "2020"
-    fill_in "jobseekers_job_application_details_employment_form[ended_on(2i)]", with: "07"
+    fill_in "jobseekers_job_application_details_employment_form[ended_on(1i)]", with: end_year
+    fill_in "jobseekers_job_application_details_employment_form[ended_on(2i)]", with: end_month
   end
 
-  def fill_in_break_in_employment
-    fill_in "Enter reasons for break in work history", with: "Caring for a person"
-    fill_in "jobseekers_job_application_details_break_form[started_on(1i)]", with: "2020"
-    fill_in "jobseekers_job_application_details_break_form[started_on(2i)]", with: "08"
-    fill_in "jobseekers_job_application_details_break_form[ended_on(1i)]", with: "2020"
-    fill_in "jobseekers_job_application_details_break_form[ended_on(2i)]", with: "12"
+  def fill_in_training_and_cpds(name: "Fire safety", provider: "TrainingProvider ltd", grade: "Pass", year_awarded: "2020")
+    fill_in "Name of course or training", with: name
+    fill_in "Training provider", with: provider
+    fill_in "Grade", with: grade
+    fill_in "Year awarded", with: year_awarded
+  end
+
+  def fill_in_break_in_employment(start_year: "2020", start_month: "08", end_year: "2020", end_month: "12")
+    fill_in "Enter reasons for gap in work history", with: "Caring for a person"
+    fill_in "jobseekers_break_form[started_on(1i)]", with: start_year
+    fill_in "jobseekers_break_form[started_on(2i)]", with: start_month
+    fill_in "jobseekers_break_form[ended_on(1i)]", with: end_year
+    fill_in "jobseekers_break_form[ended_on(2i)]", with: end_month
   end
 
   def fill_in_equal_opportunities
@@ -143,5 +156,13 @@ module JobseekerHelpers
     fill_in "School, college, university or other organisation", with: "Teachers Academy"
     choose "No", name: "jobseekers_qualifications_other_form[finished_studying]"
     fill_in "Please give details", with: "I expect to finish next year"
+  end
+
+  def expect_work_history_to_be_ordered_most_recent_first
+    start_dates = all(".govuk-summary-list__row dt", text: "Start date").map { |dt| dt.find("+ dd").text }
+
+    parsed_dates = start_dates.map { |date| Date.strptime(date, "%B %Y") }
+
+    expect(parsed_dates).to eq parsed_dates.sort.reverse
   end
 end

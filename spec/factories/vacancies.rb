@@ -51,7 +51,6 @@ FactoryBot.define do
     job_title { Rails.env.production? ? factory_sample(job_titles) : generate(:job_title) }
     listed_elsewhere { nil }
     job_roles { [factory_sample(Vacancy.job_roles.keys)] }
-    job_role { "teacher" }
     ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
     pay_scale { factory_sample(salaries) }
     publish_on { Date.current }
@@ -63,14 +62,10 @@ FactoryBot.define do
     starts_on { 1.year.from_now.to_date }
     status { :published }
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
-    # TODO: Working Patterns: Remove call to #reject once all vacancies with legacy working patterns have expired
-    working_patterns { factory_rand_sample(Vacancy.working_patterns.keys.reject { |working_pattern| working_pattern.in?(%w[flexible job_share term_time]) }, 1..2) }
+    working_patterns { factory_rand_sample(Vacancy.working_patterns.keys, 1..2) }
+    working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     visa_sponsorship_available { false }
-
-    after(:build) do |v|
-      v.full_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("full_time")
-      v.part_time_details = Faker::Lorem.sentence(word_count: factory_rand(1..50)) if v.working_patterns.include?("part_time")
-    end
+    organisations { build_list(:school, 1) }
 
     trait :legacy_vacancy do
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }

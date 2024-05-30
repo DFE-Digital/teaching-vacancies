@@ -87,8 +87,8 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
     context "when rows are defined" do
       before do
         render_inline(component) do |section|
-          section.row
-          section.row
+          section.with_row
+          section.with_row
         end
       end
 

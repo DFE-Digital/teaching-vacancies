@@ -17,39 +17,57 @@ shared:
   # criteria is correct and doesn't break the search engine).
 
   ### Job roles
+  sendco-jobs:
+    teaching_job_roles:
+      - sendco
+  teacher-jobs:
+    teaching_job_roles:
+      - teacher
+  headteacher-jobs:
+    teaching_job_roles:
+      - headteacher
+  head-of-department-or-curriculum-jobs:
+    teaching_job_roles:
+      - head_of_department_or_curriculum
+  head-of-year-or-phase-jobs:
+    teaching_job_roles:
+      - head_of_year_or_phase
   assistant-headteacher-jobs:
-    job_roles:
+    teaching_job_roles:
       - assistant_headteacher
   deputy-headteacher-jobs:
-    job_roles:
+    teaching_job_roles:
       - deputy_headteacher
+  other-leadership-roles-jobs:
+      teaching_job_roles:
+        - other_leadership
   ect-suitable-jobs:
     ect_statuses:
       - ect_suitable
   education-support-jobs:
-    job_roles:
+    support_job_roles:
       - education_support
-  head-of-year-or-phase-jobs:
-    job_roles:
-      - head_of_year_or_phase
-  head-of-department-or-curriculum-jobs:
-    job_roles:
-      - head_of_department_or_curriculum
-  headteacher-jobs:
-    job_roles:
-      - headteacher
   higher-level-teaching-assistant-jobs:
-    job_roles:
+    support_job_roles:
       - higher_level_teaching_assistant
-  sendco-jobs:
-    job_roles:
-      - sendco
-  teacher-jobs:
-    job_roles:
-      - teacher
   teaching-assistant-jobs:
-    job_roles:
+    support_job_roles:
       - teaching_assistant
+  administration-hr-data-finance-jobs:
+    support_job_roles:
+      - administration_hr_data_and_finance
+  catering-cleaning-site-management-jobs:
+    support_job_roles:
+      - catering_cleaning_and_site_management
+  it-support-jobs:
+    support_job_roles:
+      - it_support
+  pastoral-health-welfare-jobs:
+    support_job_roles:
+      - pastoral_health_and_welfare
+  other-support-roles-jobs:
+    support_job_roles:
+      - other_support
 
   ### Phases
   nursery-jobs:
@@ -100,7 +118,7 @@ shared:
       - Media studies
   food-technology-teacher-jobs:
     subjects:
-      - Food Technology
+      - Food technology
   french-teacher-jobs:
     subjects:
       - French
@@ -166,13 +184,13 @@ shared:
       - part_time
   school-job-shares:
     working_patterns:
-      - part_time
+      - job_share
   school-term-time-jobs:
     working_patterns:
-      - part_time
+      - term_time
   flexible-working-jobs-in-schools:
     working_patterns:
-      - part_time
+      - flexible
 
 ####################################################################################################
 # The data below is only used in automated tests, make sure you add your landing pages to the

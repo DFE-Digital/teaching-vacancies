@@ -44,13 +44,6 @@ local: ## local # Same values as the deployed dev environment, adapted for local
 		$(eval local_override=-d file:terraform/workspace-variables/local_app_env.yml -d file:terraform/workspace-variables/my_app_env.yml)
 		$(eval local_filter=| sed -e '/APP_ROLE=/d' -e '/RAILS_ENV=/d')
 
-.PHONY: dev
-dev: test-cluster ## dev
-		$(eval env=dev)
-		$(eval space=teaching-vacancies-dev)
-		$(eval var_file=$(env))
-		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
-
 bin/terrafile: ## Install terrafile to manage terraform modules
 	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
 		| tar xz -C ./bin terrafile
@@ -94,14 +87,6 @@ qa: test-cluster ## qa
 		$(eval include global_config/qa.sh)
 		$(eval azure_namespace=$(shell jq '.namespace' terraform/workspace-variables/$(var_file).tfvars.json))
 
-.PHONY: sandbox
-sandbox: ## sandbox
-		$(eval env=sandbox)
-		$(eval space=teaching-vacancies-production)
-		$(eval var_file=$(env))
-		$(eval backend_config=-backend-config="key=$(env)/app.tfstate")
-		$(eval include global_config/sandbox.sh)
-
 ##@ Docker - build, tag, and push an image from local code. Requires Docker CLI
 
 .PHONY: build-local-image
@@ -131,24 +116,21 @@ plan-local-image: push-local-image terraform-app-plan## make passcode=MyPasscode
 .PHONY: deploy-local-image
 deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPasscode <env> deploy-local-image # Requires active Docker Hub session (`docker login`)
 
-##@ Plan or apply changes to dev, review, staging, sandbox or production. Requires Terraform CLI
+##@ Plan or apply changes to, review, staging or production. Requires Terraform CLI
 
 .PHONY: check-terraform-variables
 check-terraform-variables:
 		$(if $(tag), , $(eval export tag=main))
-		$(eval export TF_VAR_paas_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
-		$(if $(or $(disable_passcode),$(passcode)), , $(error Missing environment variable "passcode", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
+		$(eval export TF_VAR_app_docker_image=$(DOCKER_REPOSITORY):$(tag))
 
 ci:	## Run in automation environment
-	$(eval export disable_passcode=true)
 	$(eval export AUTO_APPROVE=-auto-approve)
 	$(eval export SKIP_AZURE_LOGIN=true)
 
 .PHONY: terraform-app-init
 terraform-app-init: bin/terrafile set-azure-account
 	./bin/terrafile -p terraform/app/vendor/modules -f terraform/workspace-variables/$(var_file)_Terrafile
-	terraform -chdir=terraform/app init -reconfigure -input=false $(backend_config)
+	terraform -chdir=terraform/app init -upgrade -reconfigure -input=false $(backend_config)
 
 	$(eval export TF_VAR_azure_resource_prefix=${AZURE_RESOURCE_PREFIX})
 	$(eval export TF_VAR_config_short=${CONFIG_SHORT})
@@ -171,7 +153,7 @@ terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 
 .PHONY: terraform-common-init
 terraform-common-init:
-		terraform -chdir=terraform/common init -reconfigure -input=false
+		terraform -chdir=terraform/common init -upgrade -reconfigure -input=false
 
 .PHONY: terraform-common-plan
 terraform-common-plan: terraform-common-init ## make terraform-common-plan
@@ -181,33 +163,12 @@ terraform-common-plan: terraform-common-init ## make terraform-common-plan
 terraform-common-apply: terraform-common-init ## make terraform-common-apply
 		terraform -chdir=terraform/common apply
 
-##@ terraform/monitoring. Deploys grafana, prometheus monitoring on Gov.UK PaaS
-
-.PHONY: terraform-monitoring-init
-terraform-monitoring-init:
-		$(if $(passcode), , $(error Missing environment variable "passcode"))
-		$(eval export TF_VAR_paas_sso_passcode=$(passcode))
-		terraform -chdir=terraform/monitoring init -upgrade=true -reconfigure -input=false
-
-.PHONY: terraform-monitoring-plan
-terraform-monitoring-plan: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-plan
-		terraform -chdir=terraform/monitoring plan -input=false
-
-.PHONY: terraform-monitoring-apply
-terraform-monitoring-apply: terraform-monitoring-init ## make passcode=MyPasscode terraform-monitoring-apply
-		terraform -chdir=terraform/monitoring apply -input=false -auto-approve
-
-
 ##@ install konduit
 bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh
 
-##@ rails console. Ability to rail console to apps on PaaS
-
-console: ## make qa console
-	cf target -s ${space}
-	cf ssh teaching-vacancies-${env} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
+##@ rails console. Ability to rail console to apps on AKS
 
 composed-variables:
 	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
@@ -248,6 +209,7 @@ test-cluster:
 get-cluster-credentials: set-azure-account
 	$(if $(env), , $(error Missing <env>. Usage: "make <env> get-cluster-credentials"))
 	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
+	kubelogin convert-kubeconfig -l $(if ${GITHUB_ACTIONS},spn,azurecli)
 
 # make review pr_id=5432 shell
 # make qa shell

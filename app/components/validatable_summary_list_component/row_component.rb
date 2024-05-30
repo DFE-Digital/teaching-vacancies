@@ -12,6 +12,11 @@ class ValidatableSummaryListComponent::RowComponent < GovukComponent::SummaryLis
 
   attr_reader :attribute
 
+  def before_render
+    @translated_label = t("jobs.#{attribute}") unless @options[:label]
+    @translated_text = t("jobs.not_defined") unless @options[:text]
+  end
+
   def error_component
     ValidatableSummaryListComponent::ErrorComponent.new(
       errors: @errors,
@@ -20,7 +25,7 @@ class ValidatableSummaryListComponent::RowComponent < GovukComponent::SummaryLis
   end
 
   def label
-    @options[:label] || t("jobs.#{attribute}")
+    @options[:label] || @translated_label
   end
 
   def build_text
@@ -30,7 +35,7 @@ class ValidatableSummaryListComponent::RowComponent < GovukComponent::SummaryLis
     val = @options[:value_if_attribute_present] if val.present? && @options[:value_if_attribute_present].present?
 
     if @options[:optional]
-      val.presence || t("jobs.not_defined")
+      val.presence || @translated_text
     elsif boolean?
       val ? "Yes" : "No"
     else

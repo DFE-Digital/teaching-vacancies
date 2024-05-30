@@ -83,7 +83,7 @@ module Multistep
     end
 
     def completed_steps=(values)
-      super values.to_h { |k, v| [k.to_sym, v.to_sym] }
+      super(values.to_h { |k, v| [k.to_sym, v.to_sym] })
     end
 
     def complete!; end

@@ -2,9 +2,24 @@ class School < Organisation
   has_many :school_group_memberships
   has_many :school_groups, through: :school_group_memberships
 
-  scope :not_universities, (-> { where("gias_data->>'TypeOfEstablishment (code)' != ?", "29") })
+  scope :not_excluded, -> { where.not(detailed_school_type: EXCLUDED_DETAILED_SCHOOL_TYPES) }
 
   validates :urn, uniqueness: true
+
+  EXCLUDED_DETAILED_SCHOOL_TYPES = [
+    "Further education",
+    "Other independent school",
+    "Online provider",
+    "British schools overseas",
+    "Institution funded by other government department",
+    "Miscellaneous",
+    "Offshore schools",
+    "Service children’s education",
+    "Special post 16 institution",
+    "Other independent special school",
+    "Higher education institutions",
+    "Welsh establishment",
+  ].freeze
 
   READABLE_PHASE_MAPPINGS = {
     not_applicable: nil,

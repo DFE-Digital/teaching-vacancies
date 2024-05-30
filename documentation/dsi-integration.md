@@ -4,9 +4,10 @@ Hiring staff authenticate via the [DfE Sign-in](https://services.signin.educatio
 
 Different environments talk to different DfE Sign-in environments:
 
-- Local development, Dev(GOV.UK PaaS) -> Test DfE Sign-in
-- Staging(GOV.UK PaaS) -> Pre-production DfE Sign-in
-- Production (GOV.UK PaaS) -> Production DfE Sign-in
+- Local development -> Test DfE Sign-in
+- Staging AKS -> Pre-production DfE Sign-in
+- Production AKS -> Production DfE Sign-in
+- QA AKS -> Test DfE Sign-in
 
 Review apps use the magic link sent via email to authenticate.
 
@@ -84,34 +85,41 @@ Changing the environment variable within the `<env>_app_env.yml` follows the sta
 #### Toggling Authentication Fallback Using manual steps
 
 The following method is included for completeness, but should be considered as a "panic mode" option only.
-It requires `SpaceDeveloper` permission on the `teaching-vacancies-production` space, and only persists until the next [Automated Deployment to staging and production](/deployments.md#build-and-deploy-to-staging-and-production---github-actions)
+It requires `SpaceDeveloper` permission on the `s189-teacher-services-cloud-production` subscription, and only persists until the next [Automated Deployment to staging and production](/deployments.md#build-and-deploy-to-staging-and-production---github-actions)
 
 - Block all deployments to `production` by requesting in the Slack channel `#tv_engineering`
-- Log in to GOV.UK PaaS (with `cf login --sso`). You will need a [Passcode](https://login.london.cloud.service.gov.uk/passcode)
-- Select the `teaching-vacancies-production` space from the menu, or Switch to the production space:
-```bash
-cf target -s teaching-vacancies-production
-```
+- Log in in the [Azure Portal](https://portal.azure.com.mcas.ms/) and request access to the `s189-Contributor and Key Vault editor` role in the `s189-teacher-services-cloud-production` subscription.
+- Once having the access granted by one of the managers, login into Azure from the console:
+  ```bash
+  az login --tenant 9c7d9dd3-840c-4b3f-818e-552865082e16
+  ```
+- Get the credentials for the production cluster:
+  ```bash
+  make production get-cluster-credentials CONFIRM_PRODUCTION=YES
+  ```
+- Get the current environment value:
+  ```bash
+  kubectl -n tv-production exec deployment/teaching-vacancies-production -- env | grep AUTHENTICATION_FALLBACK
+  ```
+- Get current environment variable value over one of the listed pods:
 
-- Get the current setting with:
-```bash
-cf env teaching-vacancies-production | grep "AUTHENTICATION_FALLBACK:"
-```
 
-- Update the environment variable with the [set-env](http://cli.cloudfoundry.org/en-US/v7/set-env.html) command
+- Update the environment variable with the [set env](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-em-env-em-) command
 - Enable the fallback with:
-```bash
-cf set-env teaching-vacancies-production AUTHENTICATION_FALLBACK true
-```
-- Disable the fallback with:
-```bash
-cf set-env teaching-vacancies-production AUTHENTICATION_FALLBACK false
-```
+  ```bash
+  kubectl -n tv-production set env deployment/teaching-vacancies-production AUTHENTICATION_FALLBACK=true
+  ```
 
-- [Restart](http://cli.cloudfoundry.org/en-US/v7/restart.html) the app to pick up the updated configuration:
-```bash
-cf restart teaching-vacancies-production --strategy rolling
-```
+- Wait for a bit until the pods get automatically restarted with the new value. Check that the value changed:
+  ```bash
+  kubectl -n tv-production exec deployment/teaching-vacancies-production -- env | grep AUTHENTICATION_FALLBACK
+  ```
+
+- When not needed anymore disable the fallback with:
+  ```bash
+  kubectl  -n tv-production set env  deployment/teaching-vacancies-production AUTHENTICATION_FALLBACK=false
+  ```
+
 ### Optional extras
 
 End all sessions (without warning users beforehand):

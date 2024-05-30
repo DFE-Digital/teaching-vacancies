@@ -6,25 +6,25 @@ p class="govuk-!-margin-bottom-3" = jobseeker_status(profile)
     = t(".job_preferences")
     = govuk_summary_list do |summary_list|
       - if (roles = job_preferences.roles).present?
-        - summary_list.row do |row|
-          - row.key text: t(".roles", count: roles.count)
-          - row.value text: humanize_array(roles)
+        - summary_list.with_row do |row|
+          - row.with_key text: t(".roles", count: roles.count)
+          - row.with_value text: job_preferences.roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }.join(", ")
       - if (phases = job_preferences.phases).present?
-        - summary_list.row do |row|
-          - row.key text: t(".education_phases", count: phases.count)
-          - row.value text: humanize_array(phases)
+        - summary_list.with_row do |row|
+          - row.with_key text: t(".education_phases", count: phases.count)
+          - row.with_value text: humanize_array(phases)
       - if (stages = job_preferences.key_stages).present?
-        - summary_list.row do |row|
-          - row.key text: t(".key_stages", count: stages.count)
-          - row.value text: humanize_array(stages)
+        - summary_list.with_row do |row|
+          - row.with_key text: t(".key_stages", count: stages.count)
+          - row.with_value text: humanize_array(stages)
       - if (subjects = job_preferences.subjects).present?
-        - summary_list.row do |row|
-          - row.key text: t(".subjects", count: subjects.count)
-          - row.value text: humanize_array(subjects)
+        - summary_list.with_row do |row|
+          - row.with_key text: t(".subjects", count: subjects.count)
+          - row.with_value text: humanize_array(subjects)
       - if (patterns = job_preferences.working_patterns).present?
-        - summary_list.row do |row|
-          - row.key text: t(".working_patterns", count: patterns.count)
-          - row.value text: humanize_array(patterns)
+        - summary_list.with_row do |row|
+          - row.with_key text: t(".working_patterns", count: patterns.count)
+          - row.with_value text: humanize_array(patterns)
 
 - if profile.about_you.present?
   h2.govuk-heading-m class="govuk-!-padding-bottom-2"
@@ -44,15 +44,27 @@ dl.govuk-summary-list
 
 - if profile.employments.any?
   h2.govuk-heading-m = t(".work_history")
-  - profile.employments.order(:started_on).each do |employment|
-    h3.govuk-heading-s class="govuk-!-padding-bottom-3"
+  - profile.employments.order(:started_on).reverse_each do |employment|
+    h3.govuk-heading-s class="govuk-!-padding-bottom-0 govuk-!-margin-bottom-0"
       = employment.organisation
-      p class="govuk-!-margin-bottom-0" = employment.job_title
-      - if employment.subjects.present?
-        p class="govuk-!-margin-bottom-0" = employment.subjects
-      p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
-      hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
+    p class="govuk-!-margin-bottom-0" = employment.job_title
+    - if employment.subjects.present?
+      p class="govuk-!-margin-bottom-0" = employment.subjects
+    p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
+    - class_name = "govuk-!-margin-bottom-3"
+    hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible[class=class_name]
 
 - if profile.qualifications.any?
   h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".qualifications")
   = render "jobseekers/qualifications/preview_qualifications", qualifications: profile.qualifications
+
+- if profile.training_and_cpds.any?
+  h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".training_and_cpd")
+  - profile.training_and_cpds.each do |training|
+    h3.govuk-heading-s class="govuk-!-padding-bottom-0"
+      = training.name
+      - if training.grade
+        p class="govuk-body govuk-!-margin-bottom-0"
+          = training.grade
+      p.govuk-hint = "#{training.provider}, #{training.year_awarded}"
+      hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible

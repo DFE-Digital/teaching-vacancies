@@ -27,7 +27,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       job_application.draft? || job_application.withdrawn?
 
     job_application.update(form_params.merge(status: status))
-    Jobseekers::JobApplicationMailer.send("application_#{status}".to_sym, job_application).deliver_later
+    Jobseekers::JobApplicationMailer.send(:"application_#{status}", job_application).deliver_later
     redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: job_application.name)
   end
 

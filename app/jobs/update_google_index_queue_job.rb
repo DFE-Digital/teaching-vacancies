@@ -1,9 +1,9 @@
-require "indexing"
+require "google_indexing"
 class UpdateGoogleIndexQueueJob < ApplicationJob
   queue_as :default
 
   def perform(url)
-    Indexing.new(url).update
+    GoogleIndexing.new(url).update
   rescue SystemExit => e
     Rails.logger.info("Sidekiq: Aborting Google update index. Error: #{e.message}")
   rescue StandardError => e

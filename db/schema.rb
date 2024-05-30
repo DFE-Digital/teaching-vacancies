@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_28_084036) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "btree_gist"
   enable_extension "citext"
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -75,12 +76,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
     t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "organisation_ciphertext"
     t.integer "employment_type", default: 0
     t.text "reason_for_break", default: ""
-    t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
     t.uuid "jobseeker_profile_id"
+    t.text "reason_for_leaving"
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_employments_on_jobseeker_profile_id"
   end
@@ -186,17 +188,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
-  create_table "invitation_to_applies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "jobseeker_id", null: false
-    t.uuid "vacancy_id", null: false
-    t.uuid "invited_by_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["invited_by_id"], name: "index_invitation_to_applies_on_invited_by_id"
-    t.index ["jobseeker_id"], name: "index_invitation_to_applies_on_jobseeker_id"
-    t.index ["vacancy_id"], name: "index_invitation_to_applies_on_vacancy_id"
-  end
-
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "status"
     t.datetime "created_at", null: false
@@ -249,6 +240,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
     t.integer "in_progress_steps", default: [], null: false, array: true
     t.boolean "employment_history_section_completed"
     t.boolean "qualifications_section_completed"
+    t.string "safeguarding_issue"
+    t.text "safeguarding_issue_details"
+    t.boolean "training_and_cpds_section_completed"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -434,7 +428,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
     t.text "gias_data_hash"
     t.string "slug"
     t.string "email"
-    t.string "safeguarding_information"
+    t.string "safeguarding_information", default: "Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.\n\nOur recruitment process follows the keeping children safe in education guidance.\n\nOffers of employment may be subject to the following checks (where relevant):\nchildcare disqualification\nDisclosure and Barring Service (DBS)\nmedical\nonline and social media\nprohibition from teaching\nright to work\nsatisfactory references\nsuitability to work with children\n\nYou must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975."
     t.tsvector "searchable_content"
     t.index ["geopoint"], name: "index_organisations_on_geopoint", using: :gist
     t.index ["local_authority_code"], name: "index_organisations_on_local_authority_code", unique: true
@@ -572,6 +566,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
     t.index ["oid"], name: "index_support_users_on_oid"
   end
 
+  create_table "training_and_cpds", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "provider"
+    t.string "grade"
+    t.string "year_awarded"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "jobseeker_profile_id"
+    t.uuid "job_application_id"
+    t.index ["job_application_id"], name: "index_training_and_cpds_on_job_application_id"
+    t.index ["jobseeker_profile_id"], name: "index_training_and_cpds_on_jobseeker_profile_id"
+  end
+
   create_table "vacancies", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "job_title"
     t.string "slug", null: false
@@ -620,12 +627,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
     t.string "external_reference"
     t.string "external_advert_url"
     t.integer "ect_status"
-    t.integer "job_role"
-    t.string "pay_scale"
-    t.boolean "benefits"
     t.text "full_time_details"
     t.text "part_time_details"
     t.integer "phases", array: true
+    t.string "pay_scale"
+    t.boolean "benefits"
     t.integer "start_date_type"
     t.date "earliest_start_date"
     t.date "latest_start_date"
@@ -643,7 +649,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
     t.boolean "include_additional_documents"
     t.boolean "visa_sponsorship_available"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
-    t.index ["geolocation"], name: "index_vacancies_on_geolocation", using: :gist
+    t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
+    t.index ["geolocation", "expires_at", "publish_on"], name: "index_vacancies_on_geolocation_and_expires_at_and_publish_on", using: :gist
     t.index ["publish_on"], name: "index_vacancies_on_publish_on"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
@@ -675,9 +682,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
   add_foreign_key "feedbacks", "publishers"
   add_foreign_key "feedbacks", "subscriptions"
   add_foreign_key "feedbacks", "vacancies"
-  add_foreign_key "invitation_to_applies", "jobseekers"
-  add_foreign_key "invitation_to_applies", "publishers", column: "invited_by_id"
-  add_foreign_key "invitation_to_applies", "vacancies"
   add_foreign_key "job_applications", "jobseekers"
   add_foreign_key "job_applications", "vacancies"
   add_foreign_key "job_preferences", "jobseeker_profiles"
@@ -708,6 +712,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_153216) do
   add_foreign_key "saved_jobs", "vacancies"
   add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
+  add_foreign_key "training_and_cpds", "job_applications"
+  add_foreign_key "training_and_cpds", "jobseeker_profiles"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publishers"
 end

@@ -124,7 +124,7 @@ end
 RSpec.describe VacancyPresenter do
   subject { described_class.new(vacancy) }
 
-  let(:vacancy) { build(:vacancy) }
+  let(:vacancy) { build_stubbed(:vacancy) }
 
   describe "#about_school" do
     it_behaves_like "a fields that outputs the correct HTML", :about_school
@@ -138,7 +138,20 @@ RSpec.describe VacancyPresenter do
     it_behaves_like "a fields that outputs the correct HTML", :benefits_details
   end
 
-  # TODO: Working Patterns: Remove this test once all vacancies with legacy working patterns & working_pattern_details have expired
+  describe "#job_advert" do
+    it "adds line breaks and paragraphs to plain text adverts" do
+      vacancy.job_advert = "This is an example job advert without HTML.\n\nThe advert includes:\nFirst line.\nSecond line."
+      expect(subject.job_advert).to eq(
+        "<p>This is an example job advert without HTML.</p>\n\n<p>The advert includes:\n<br />First line.\n<br />Second line.</p>",
+      )
+    end
+
+    it "does not modify HTML adverts" do
+      vacancy.job_advert = "<p>This is an example job advert with HTML.</p><p>The advert includes:<br />First line.<br />Second line.</p>"
+      expect(subject.job_advert).to eq(vacancy.job_advert)
+    end
+  end
+
   describe "#readable_working_patterns" do
     let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
 
@@ -149,14 +162,19 @@ RSpec.describe VacancyPresenter do
 
   describe "#readable_working_patterns_with_details" do
     let(:working_patterns) { %w[full_time part_time] }
-    let(:full_time_details) { "Some details" }
-    let(:part_time_details) { "Some other details" }
-    let(:vacancy) do
-      build_stubbed(:vacancy, working_patterns: working_patterns, full_time_details: full_time_details, part_time_details: part_time_details)
+    let(:working_patterns_details) { "Some details" }
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns:, working_patterns_details:) }
+
+    it "returns the working with details" do
+      expect(subject.readable_working_patterns_with_details).to eq("Full time, part time: Some details")
     end
 
-    it "returns the working with details for each working pattern" do
-      expect(subject.readable_working_patterns_with_details).to eq("Full time - Some details\nPart time - Some other details")
+    context "when there is no details" do
+      let(:working_patterns_details) { "" }
+
+      it "returns the working patterns" do
+        expect(subject.readable_working_patterns_with_details).to eq("Full time, part time")
+      end
     end
   end
 

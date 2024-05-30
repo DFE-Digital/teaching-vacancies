@@ -10,7 +10,7 @@ RSpec.describe Jobseekers::JobApplications::JobApplicationStepProcess do
   describe "#step_groups" do
     let(:all_possible_step_groups) do
       %i[
-        personal_details professional_status qualifications employment_history personal_statement
+        personal_details professional_status qualifications training_and_cpds employment_history personal_statement
         references equal_opportunities ask_for_support declarations review
       ]
     end

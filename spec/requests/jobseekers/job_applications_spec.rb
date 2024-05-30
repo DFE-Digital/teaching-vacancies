@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Job applications" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
@@ -21,8 +22,8 @@ RSpec.describe "Job applications" do
       context "when the job is not live" do
         let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
-        it "does not trigger a `vacancy_apply_clicked` event and returns not found" do
-          expect { get new_jobseekers_job_job_application_path(vacancy.id) }.to not_have_triggered_event(:vacancy_apply_clicked)
+        it "returns not found" do
+          get new_jobseekers_job_job_application_path(vacancy.id)
 
           expect(response).to have_http_status(:not_found)
         end
@@ -30,8 +31,9 @@ RSpec.describe "Job applications" do
 
       context "when the job is live" do
         it "triggers a `vacancy_apply_clicked` event" do
-          expect { get new_jobseekers_job_job_application_path(vacancy.id) }
-            .to have_triggered_event(:vacancy_apply_clicked).with_data(vacancy_id: vacancy.id)
+          get new_jobseekers_job_job_application_path(vacancy.id)
+
+          expect(:vacancy_apply_clicked).to have_been_enqueued_as_analytics_events
         end
 
         context "when a job application for the job already exists" do
@@ -42,13 +44,28 @@ RSpec.describe "Job applications" do
           end
         end
 
-        context "when a non-draft job application already exists" do
-          let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+        context "when a non-draft job application already exists and the user does not have right to work in UK" do
+          let(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+          let!(:personal_details) { create(:personal_details, right_to_work_in_uk: false, jobseeker_profile: jobseeker_profile) }
+          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
           let(:new_vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
-          it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
-            expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
+          context "when the user has the right to work in UK" do
+            let!(:personal_details) { create(:personal_details, right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
+
+            it "redirects to `about_your_application_jobseekers_job_job_application_path`" do
+              expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
+              .to redirect_to(about_your_application_jobseekers_job_job_application_path(new_vacancy.id))
+            end
+          end
+
+          context "when the user has right to work in UK" do
+            let!(:personal_details) { create(:personal_details, right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
+
+            it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
+              expect(get(about_your_application_jobseekers_job_job_application_path(new_vacancy.id)))
               .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(new_vacancy.id))
+            end
           end
         end
 

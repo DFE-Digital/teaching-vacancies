@@ -19,7 +19,7 @@
 
     = govuk_summary_list do |summary_list|
       - current_ab_variants.each do |test, variant|
-        - summary_list.row do |row|
-          - row.key text: test
-          - row.value
+        - summary_list.with_row do |row|
+          - row.with_key text: test
+          - row.with_value
             span.govuk-tag.govuk-tag--blue = variant

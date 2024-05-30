@@ -1,6 +1,22 @@
 ruby:
   filter_types = [
     {
+      legend: t("jobs.filters.teaching_job_roles"),
+      key: :teaching_job_roles,
+      selected: @form.teaching_job_roles,
+      options: @form.teaching_job_role_options,
+      value_method: :first,
+      selected_method: :last,
+    },
+    {
+      legend: t("jobs.filters.support_job_roles"),
+      key: :support_job_roles,
+      selected: @form.support_job_roles,
+      options: @form.support_job_role_options,
+      value_method: :first,
+      selected_method: :last,
+    },
+    {
       legend: t("publishers.jobseeker_profiles.filters.right_to_work_in_uk"),
       key: :right_to_work_in_uk,
       selected: @form.right_to_work_in_uk,
@@ -16,14 +32,6 @@ ruby:
       value_method: :first,
       selected_method: :last,
     },
-    {
-      legend: t("publishers.jobseeker_profiles.filters.preferred_roles"),
-      key: :roles,
-      selected: @form.roles,
-      options: @form.role_options,
-      value_method: :first,
-      selected_method: :last,
-      },
     {
       legend: t("publishers.jobseeker_profiles.filters.preferred_working_patterns"),
       key: :working_patterns,
@@ -56,18 +64,18 @@ ruby:
         options: { heading_text: "Filter", remove_filter_links: true },
         html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
         - if current_organisation.trust?
-          - filters_component.group key: "location", component: searchable_collection(collection: f.govuk_collection_check_boxes(:locations,
+          - filters_component.with_group key: "location", component: searchable_collection(collection: f.govuk_collection_check_boxes(:locations,
             f.object.school_options,
             :first, :last,
             small: true, legend: { text: t("publishers.jobseeker_profiles.filters.schools") }),
             collection_count: f.object.school_options.count,
             options: { scrollable: true })
-        - filters_component.remove_filter_links do |rb|
+        - filters_component.with_remove_filter_links do |rb|
           - filter_types.each do |filter_type|
             - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :publishers_jobseeker_profiles_path, params: @jobseeker_profile_search.filters }))
+        = render "publishers/jobseeker_profiles/search/job_roles_filters", filters_component: filters_component, f: f, form: @form
         - filters_component.with_group key: "right_to_work_in_uk", component: f.govuk_collection_check_boxes(:right_to_work_in_uk, f.object.right_to_work_in_uk_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.right_to_work_in_uk") }, hint: nil)
         - filters_component.with_group key: "qualified_teacher_status", component: f.govuk_collection_check_boxes(:qualified_teacher_status, f.object.qts_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.qualified_teacher_status") }, hint: nil)
-        - filters_component.with_group key: "roles", component: f.govuk_collection_check_boxes(:roles, f.object.role_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_roles") }, hint: nil)
         - filters_component.with_group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, f.object.working_pattern_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_working_patterns") }, hint: nil)
         - filters_component.with_group key: "education_phases", component: f.govuk_collection_check_boxes(:education_phases, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_education_phases") }, hint: nil)
         - filters_component.with_group key: "key_stages", component: f.govuk_collection_check_boxes(:key_stages, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.preferred_key_stages") }, hint: nil)

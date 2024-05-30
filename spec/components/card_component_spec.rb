@@ -11,8 +11,8 @@ RSpec.describe CardComponent, type: :component do
   context "when header, body and action blocks slots are defined" do
     subject! do
       render_inline(described_class.new) do |card|
-        card.header { tag.h2 "Hello" }
-        card.body { tag.p "World!" }
+        card.with_header { tag.h2 "Hello" }
+        card.with_body { tag.p "World!" }
         card.with_action_item(link: tag.a("Click this", href: "/test-url"))
       end
     end

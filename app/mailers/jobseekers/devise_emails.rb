@@ -55,9 +55,9 @@ module Jobseekers::DeviseEmails
 
     # Some of these are required for the event data
     @jobseeker = jobseeker
-    @subject = (subject || t(".subject"))
+    @subject = subject || t(".subject")
     @template = template
-    @to = (to || jobseeker.email)
+    @to = to || jobseeker.email
     @token = token
 
     view_mail(
@@ -65,15 +65,6 @@ module Jobseekers::DeviseEmails
       to: @to,
       subject: @subject,
     )
-  end
-
-  def email_event_data
-    case action_name
-    when "confirmation_instructions"
-      @jobseeker.pending_reconfirmation? ? { previous_email_identifier: StringAnonymiser.new(@jobseeker.email).to_s } : {}
-    else
-      {}
-    end
   end
 
   def dfe_analytics_custom_data

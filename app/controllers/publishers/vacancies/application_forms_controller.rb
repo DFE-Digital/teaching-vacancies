@@ -7,7 +7,6 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     if form.valid?
       vacancy.application_form.attach(form.application_form) if application_form_uploaded?
       update_vacancy
-      send_event if application_form_uploaded?
       send_dfe_analytics_event if application_form_uploaded?
       redirect_to_next_step
     else
@@ -41,19 +40,6 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
     return :supporting_document_replaced if application_form_staged_for_replacement?
 
     :supporting_document_created
-  end
-
-  def send_event
-    fail_safe do
-      request_event.trigger(
-        event_type,
-        vacancy_id: vacancy.id,
-        document_type: "application_form",
-        name: vacancy.application_form.filename,
-        size: vacancy.application_form.byte_size,
-        content_type: vacancy.application_form.content_type,
-      )
-    end
   end
 
   def send_dfe_analytics_event

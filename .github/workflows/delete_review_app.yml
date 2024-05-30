@@ -2,13 +2,11 @@ name: Delete review app
 
 on:
   pull_request:
-    branches: [ main ]
     types: [closed]
     paths-ignore:
       - 'bigquery/**'
       - 'documentation/**'
       - 'terraform/common/**'
-      - 'terraform/monitoring/**'
       - '**.md'
   workflow_dispatch:
     inputs:
@@ -16,7 +14,7 @@ on:
         description: 'Pull Request number to delete (EG: 1234 for review-pr-1234)'
         required: true
 
-concurrency: workflow-Build-and-deploy-${{ github.ref }}
+concurrency: workflow-Build-and-deploy-${{ github.event.pull_request.number }}
 
 env:
   DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
@@ -49,27 +47,11 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
-    - name: Get SLACK_WEBHOOK From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
+    - name: Get secrets from AWS ParameterStore
+      uses: dkershner6/aws-ssm-getparameters-action@v2
       with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
-        env_variable_name: SLACK_WEBHOOK
-
-    - name: Get GIT_HUB_SERVICE_ACCOUNT_TOKEN From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
-      with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/git_hub_service_account_token
-        env_variable_name: GIT_HUB_SERVICE_ACCOUNT_TOKEN
-
-
-    - name: check review status
-      run: |
-        HTTP_CODE=$(curl -o/dev/null -s -w "%{http_code}" https://teaching-vacancies-review-pr-${{env.PR_NUMBER}}.test.teacherservices.cloud)
-        echo "HTTP_CODE=$HTTP_CODE"  >> $GITHUB_ENV
-
-    - name: Exit whole workflow if wait was not successful and review app is not up
-      if: steps.wait_for_deployment.outputs.conclusion != 'success' && env.HTTP_CODE != '200'
-      run: exit 1
+        parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK,
+          /teaching-vacancies/github_action/infra/git_hub_service_account_token = GIT_HUB_SERVICE_ACCOUNT_TOKEN"
 
     - uses: actions/checkout@v4
       name: Checkout Code
@@ -93,11 +75,11 @@ jobs:
           && echo Data in /teaching-vacancies/dev looks valid
 
     - name: Terraform pin version
-      uses: hashicorp/setup-terraform@v2
+      uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: 1.5.1
 
-    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
         azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -116,7 +98,7 @@ jobs:
 
     - name: Send failure message to twd_tv_dev channel
       if: failure()
-      uses: rtCamp/action-slack-notify@v2.2.1
+      uses: rtCamp/action-slack-notify@v2.3.0
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment

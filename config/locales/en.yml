@@ -6,7 +6,7 @@ en:
   app:
     back_to_homepage: Return to homepage
     description: >-
-      Find your next teaching job. Apply for jobs in schools and stay up-to-date with local teaching jobs on Teaching Vacancies.
+      Find your next teaching, leadership or school-based support job. Apply for jobs in schools and stay up-to-date with local jobs on Teaching Vacancies.
     environment_html: This is not the live Teaching Vacancies website. You are currently viewing the <span class="govuk-!-font-weight-bold">%{environment}</span> version of the site.
     govuk: GOV.UK
     menu: Menu
@@ -17,7 +17,6 @@ en:
       of <span class='govuk-!-font-weight-bold'>%{total}</span>
       %{type}
     skip_link:
-      cookie: Skip to cookie consent
       main: Skip to main content
     title: Teaching Vacancies
     support_title: Support for Teaching Vacancies
@@ -47,10 +46,6 @@ en:
       default: "%e %B %Y %H:%M"
 
   error_pages:
-    invalid_recaptcha:
-      email_subject: ReCAPTCHA issue - %{form}
-      request_support_link: request support
-      title: Sorry, we cannot process your request
     not_found: Page not found.
     server_error: Sorry, there’s a technical issue at our end
     unauthorised:
@@ -82,6 +77,7 @@ en:
     hiring_guides: Hiring guides
     search_teaching_vacancies: Find a job
     service_support: Get support
+    return_to_teaching: Return to teaching
 
   general_feedbacks:
     create:
@@ -144,7 +140,7 @@ en:
   home:
     index:
       browse_all: Browse all teaching jobs in England
-      description: Search for teaching, school leadership and education support jobs in England.
+      description: Search for teaching, leadership and school-based support jobs in England.
       jobseeker_section:
         signed_in:
           description: Apply for jobs you are interested in, and check the status of your applications.
@@ -170,7 +166,7 @@ en:
             sign_in: Sign in
             sign_up: sign up
         title: For hiring staff
-      title: Find a job in teaching
+      title: Teaching, leadership and support jobs
       title_h2: Welcome to Teaching Vacancies
     landing_page_links:
       education_phases: School phases
@@ -179,6 +175,9 @@ en:
       jobs_by_school_type_and_role: Jobs by type of school and role
       jobs_by_subject: Teaching jobs by subject
       working_patterns: Working patterns
+      teaching_roles: Teaching & leadership roles
+      support_roles: Support roles
+
     search:
       location_label: City, county or postcode
       title_h1: Find teacher and school jobs near you
@@ -196,7 +195,7 @@ en:
         how it is used, how long it is kept and what your data protection rights are.
     sign-in:
       page_description: >-
-        Sign in to the official place to find teaching jobs in England. Apply for jobs as a jobseeker, or advertise and manage job listings for your school.
+        Sign in to find teaching, leadership and school-based support jobs in England. Apply for jobs, or advertise and manage job listings for your school.
     terms-and-conditions:
       page_description:
         Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
@@ -388,11 +387,21 @@ en:
       description: You can change the search criteria you have used by amending the keywords, location or filters before you create your alert.
       organisation_link_html: This alert will only send you emails about %{organisation_landing_page_link}.
       title: Create your job alert
+      location:
+        hint: Teaching Vacancies advertises school roles in England. Enter a UK city, county or postcode to look for roles near you.
+      campaign:
+        title: 
+          with_name: Hey %{name}, welcome to Teaching Vacancies!
+          without_name: Welcome to Teaching Vacancies!
+        description: 
+          with_subject: Get %{subject} teacher jobs sent straight to your inbox.
+          without_subject: Get teaching jobs sent straight to your inbox.
+        location: City, county or postcode (in England)
     unsubscribe:
       confirmation: Are you sure you want to unsubscribe?
       guidance:
         heading: Want to unsubscribe?
-        body: You can unsubscribe at any time by following the simple instructions at the bottom of the alert.
+        body: You can unsubscribe at any time by clicking the unsubscribe link at the bottom of your job alerts email.
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated
@@ -448,6 +457,11 @@ en:
       - specify the types of teaching jobs you're looking for
       - apply for roles more quickly by pre-filling your information
     link_to_profile: Create a profile to simplify your job search.
+  
+  visa_sponsorship_banner:
+    heading: You can now specify if you need visa sponsorship on your profile
+    body: You can %{link} on your profile.
+    link_text: update your answer about needing a visa sponsorship
 
   terms_and_conditions:
     intro_html: >-
@@ -483,8 +497,8 @@ en:
     international_teacher_advice:
         link: help you understand your next steps
         text_html: If you're interested in teaching or training to teach in England as an international citizen, we can %{link}.
-    sponsorship_available: Skilled worker visa sponsorship is available for this job.
-    sponsorship_unavailable: Skilled worker visa sponsorship is not available for this job.
+    sponsorship_available: Skilled Worker visas can be sponsored.
+    sponsorship_unavailable: Visas cannot be sponsored.
     listing:
       enable_job_applications_tag: "Quick Apply"
       schools:
@@ -530,9 +544,9 @@ en:
             other: (%{count} results)
       page_title_and_description:
         title:
-          zero: "%{heading} - Find a job in teaching"
-          one: "%{heading} - Find a job in teaching"
-          other: "%{heading} page %{count} - Find a job in teaching"
+          zero: "%{heading} - Teaching, leadership and support jobs"
+          one: "%{heading} - Teaching, leadership and support jobs"
+          other: "%{heading} page %{count} - Teaching, leadership and support jobs"
     show:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
       job_details: Job details

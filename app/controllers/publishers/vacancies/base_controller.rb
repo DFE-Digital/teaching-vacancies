@@ -1,4 +1,4 @@
-require "indexing"
+require "google_indexing"
 
 class Publishers::Vacancies::BaseController < Publishers::BaseController
   include Publishers::Wizardable
@@ -26,7 +26,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
 
     # As the vacancy is not associated with an organisation upon creation, calling the vacancies method will return an empty array as an organisation is not associated
     # with it. To fix this, before the vacancy's status is set (and therefore before an organisation is associated), we find the job from the vacancies where status is nil.
-    @vacancy ||= (vacancies.internal.find_by(id: params[:job_id].presence || params[:id]) || Vacancy.where(status: nil).find(params[:job_id].presence || params[:id]))
+    @vacancy ||= vacancies.internal.find_by(id: params[:job_id].presence || params[:id]) || Vacancy.where(status: nil).find(params[:job_id].presence || params[:id])
   end
 
   def form_sequence

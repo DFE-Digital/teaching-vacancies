@@ -2,7 +2,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   include Wicked::Wizard
   include Jobseekers::QualificationFormConcerns
 
-  steps :personal_details, :professional_status, :qualifications, :employment_history, :personal_statement, :references,
+  steps :personal_details, :professional_status, :qualifications, :training_and_cpds, :employment_history, :personal_statement, :references,
         :equal_opportunities, :ask_for_support, :declarations
 
   helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
@@ -48,7 +48,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def form_attributes
     case action_name
     when "show"
-      job_application.slice(form_class.fields)
+      job_application.slice(form_class.storable_fields)
     when "update"
       form_params
     end
@@ -78,20 +78,24 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def update_params
     if step_incomplete?
-      form_params.merge(
+      update_fields.merge(
         completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
         in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
       )
     else
-      form_params.merge(
+      update_fields.merge(
         completed_steps: job_application.completed_steps.append(step.to_s).uniq,
         in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
       )
     end
   end
 
+  def update_fields
+    form_params.except(*form_class.unstorable_fields)
+  end
+
   def step_incomplete?
-    return false unless step.in? %i[qualifications employment_history]
+    return false unless step.in? %i[qualifications employment_history training_and_cpds]
 
     form_params["#{step}_section_completed"] == "false"
   end

@@ -31,17 +31,11 @@ jobs:
           role-duration-seconds: 3600
           role-skip-session-tagging: true
 
-      - name: Get SLACK_WEBHOOK From ParameterStore
-        uses: marvinpinto/action-inject-ssm-secrets@latest
+      - name: Get secrets from AWS ParameterStore
+        uses: dkershner6/aws-ssm-getparameters-action@v2
         with:
-          ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
-          env_variable_name: SLACK_WEBHOOK
-
-      - name: Get SNYK_TOKEN From ParameterStore
-        uses: marvinpinto/action-inject-ssm-secrets@latest
-        with:
-          ssm_parameter: /teaching-vacancies/github_action/infra/snyk
-          env_variable_name: SNYK_TOKEN
+          parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK,
+            /teaching-vacancies/github_action/infra/snyk = SNYK_TOKEN"
 
       - name: Set environment variables
         run: |
@@ -99,7 +93,7 @@ jobs:
 
       - name: Notify twd_tv_dev channel on build workflow failure
         if: failure()
-        uses: rtCamp/action-slack-notify@v2.2.1
+        uses: rtCamp/action-slack-notify@v2.3.0
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Deployment

@@ -2,7 +2,7 @@ class ExternalVacancyValidator < ActiveModel::Validator
   def validate(record)
     validate_presence(
       record,
-      :job_title, :job_advert, :salary, :publish_on, :expires_at,
+      :job_title, :job_advert, :salary, :expires_at,
       :external_reference, :external_advert_url,
       :job_roles, :contract_type, :phases, :working_patterns
     )

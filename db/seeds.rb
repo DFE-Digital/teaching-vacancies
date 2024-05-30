@@ -18,16 +18,16 @@ users = [
   { email: "alex.lee@education.gov.uk", family_name: "Alex", given_name: "Lee" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
   { email: "brandon1.chan@education.gov.uk", family_name: "Chan", given_name: "Brandon" },
-  { email: "colin.saliceti@education.gov.uk", family_name: "Saliceti", given_name: "Colin" },
-  { email: "danielle.dean@education.gov.uk", family_name: "Danielle", given_name: "Dean" },
+  { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
   { email: "davide.dippolito@education.gov.uk", family_name: "Dippolito", given_name: "Davide" },
-  { email: "georgina.watts@education.gov.uk", family_name: "Watts", given_name: "Georgina" },
+  { email: "ellie.nodder@education.gov.uk", family_name: "Nodder", given_name: "Ellie" },
+  { email: "grace.bryant@education.gov.uk", family_name: "Bryant", given_name: "Grace" },
+  { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "luke.anslow@education.gov.uk", family_name: "Anslow", given_name: "Luke" },
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
-  { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
-  { email: "stephanie.maskery@education.gov.uk", family_name: "Maskery", given_name: "Stephanie" },
-  { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
   { email: "matthew.jefford@education.gov.uk", family_name: "Jefford", given_name: "Matthew" },
+  { email: "stephanie.maskery@education.gov.uk", family_name: "Maskery", given_name: "Stephanie" },
+  { email: "yvonne.ridley@education.gov.uk", family_name: "Yvonne", given_name: "Ridley" },
 ]
 
 users.each do |user|
@@ -82,7 +82,8 @@ JobApplication.statuses.count.times { |i| Jobseeker.create(email: "jobseeker#{i}
 Vacancy.listed.each do |vacancy|
   statuses = JobApplication.statuses.keys
   Jobseeker.where.not(email: "jobseeker@example.com").each do |jobseeker|
-    application_status = statuses.delete(statuses.sample)
+    # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
+    application_status = statuses.delete(statuses.sample) || JobApplication.statuses.keys.sample
     FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
   end
 end
@@ -95,6 +96,16 @@ Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
   FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications, :with_employment_history, jobseeker: jobseeker) do |jobseeker_profile|
     FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
       FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
+    end
+    # :with_employment_history trait creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures
+    jobseeker_profile.employments.each do |employment|
+      vacancy_without_org_id = employment.job_application.vacancy_id
+      OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
+    end
+    # :with_qualifications trait also creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures.
+    jobseeker_profile.qualifications.each do |qualification|
+      vacancy_without_org_id = qualification.job_application.vacancy_id
+      OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
     end
   end
 end

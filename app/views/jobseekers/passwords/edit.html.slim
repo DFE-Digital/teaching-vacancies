@@ -9,6 +9,9 @@
 
       = f.govuk_error_summary
 
-      = f.govuk_password_field :password, label: { text: t(".new_password"), size: "s" }, width: "two-thirds"
-
-      = f.govuk_submit t("buttons.update_password"), classes: "govuk-!-margin-bottom-0"
+      .govuk-grid-row
+        .govuk-grid-column-two-thirds
+          = f.govuk_password_field :password,
+                                   label: { text: t(".new_password"), size: "s" },
+                                   autocomplete: "new-password"
+          = f.govuk_submit t("buttons.update_password"), class: "govuk-!-margin-bottom-0"

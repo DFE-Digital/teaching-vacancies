@@ -11,7 +11,7 @@ module Authenticated
 
   def authenticate_scope!
     require_scope
-    send("authenticate_#{authentication_scope}!", { recall: "warden##{authentication_scope}_forced_login" })
+    send(:"authenticate_#{authentication_scope}!", { recall: "warden##{authentication_scope}_forced_login" })
   end
 
   def require_scope

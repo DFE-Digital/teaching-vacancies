@@ -15,10 +15,6 @@ class Publishers::JobApplicationMailer < Publishers::BaseMailer
 
   private
 
-  def email_event_data
-    { vacancies_job_applications: vacancies_job_applications }
-  end
-
   def dfe_analytics_custom_data
     { vacancies_job_applications: vacancies_job_applications }
   end

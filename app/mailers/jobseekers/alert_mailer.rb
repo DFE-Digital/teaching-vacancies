@@ -30,10 +30,6 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
 
   attr_reader :subscription_id
 
-  def email_event_data
-    { subscription_identifier: subscription.id, subscription_frequency: subscription.frequency }
-  end
-
   def dfe_analytics_custom_data
     { subscription_identifier: subscription.id, subscription_frequency: subscription.frequency }
   end

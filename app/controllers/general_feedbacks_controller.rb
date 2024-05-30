@@ -1,4 +1,6 @@
 class GeneralFeedbacksController < ApplicationController
+  include RecaptchaChecking
+
   def new
     origin_path = URI.parse(request.referrer).path if request.referrer.present?
     @general_feedback_form = GeneralFeedbackForm.new(user_type: current_user&.class, origin_path:)
@@ -10,12 +12,11 @@ class GeneralFeedbacksController < ApplicationController
 
     if @general_feedback_form.invalid?
       render :new
-    elsif recaptcha_is_invalid?
-      redirect_to invalid_recaptcha_path(form_name: @general_feedback_form.class.name.underscore.humanize)
     else
-      @feedback.recaptcha_score = recaptcha_reply["score"]
-      @feedback.save
-      redirect_to root_path, success: t(".success")
+      recaptcha_protected(form: @general_feedback_form) do
+        @feedback.save
+        redirect_to root_path, success: t(".success")
+      end
     end
   end
 

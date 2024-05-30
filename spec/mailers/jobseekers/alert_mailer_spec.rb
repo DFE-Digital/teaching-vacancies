@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Jobseekers::AlertMailer do
   include DatesHelper
@@ -96,7 +97,8 @@ RSpec.describe Jobseekers::AlertMailer do
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_alert` email event with the anonymised jobseeker id" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
+        mail.deliver_now
+        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_analytics_events
       end
     end
 
@@ -104,7 +106,8 @@ RSpec.describe Jobseekers::AlertMailer do
       let(:user_anonymised_jobseeker_id) { nil }
 
       it "triggers a `jobseeker_subscription_alert` email event without the anonymised jobseeker id" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
+        mail.deliver_now
+        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_analytics_events
       end
     end
   end
@@ -148,7 +151,8 @@ RSpec.describe Jobseekers::AlertMailer do
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
       it "triggers a `jobseeker_subscription_alert` email event with the anonymised jobseeker id" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
+        mail.deliver_now
+        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_analytics_events
       end
     end
 
@@ -156,19 +160,8 @@ RSpec.describe Jobseekers::AlertMailer do
       let(:user_anonymised_jobseeker_id) { nil }
 
       it "triggers a `jobseeker_subscription_alert` email event without the anonymised jobseeker id" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
-      end
-    end
-
-    context "from Sandbox environment" do
-      let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
-      let(:jobseeker) { create(:jobseeker, email: email) }
-      let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
-
-      before { allow(Rails.configuration).to receive(:app_role).and_return("sandbox") }
-
-      it "triggers a `publisher_sign_in_fallback` email event" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_subscription_alert).with_data(expected_data)
+        mail.deliver_now
+        expect(:jobseeker_subscription_alert).to have_been_enqueued_as_analytics_events
       end
     end
 

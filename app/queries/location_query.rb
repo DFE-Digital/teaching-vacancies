@@ -8,14 +8,14 @@ class LocationQuery < ApplicationQuery
 
   private
 
-  def call(field_name, location_query, radius_in_miles, sort_by_distance: false)
+  def call(field_name, location_query, radius_in_miles, polygon: nil, sort_by_distance: false)
     normalised_query = normalise_query(location_query)
     radius = convert_miles_to_metres(radius_in_miles.to_i)
 
     return scope if normalised_query.blank? || nationwide_location?(normalised_query)
 
-    if polygon_location?(normalised_query)
-      handle_polygon_location(field_name, normalised_query, radius, sort_by_distance)
+    if polygon ||= LocationPolygon.with_name(normalised_query)
+      handle_polygon_location(field_name, polygon, radius, sort_by_distance)
     else
       handle_coordinates(field_name, normalised_query, radius, sort_by_distance)
     end
@@ -29,12 +29,7 @@ class LocationQuery < ApplicationQuery
     NATIONWIDE_LOCATIONS.include?(query)
   end
 
-  def polygon_location?(query)
-    LocationPolygon.contain?(query)
-  end
-
-  def handle_polygon_location(field_name, query, radius, sort_by_distance)
-    polygon = LocationPolygon.with_name(query)
+  def handle_polygon_location(field_name, polygon, radius, sort_by_distance)
     @scope = scope.joins("
       INNER JOIN location_polygons
       ON ST_DWithin(#{field_name}, location_polygons.area, #{radius})

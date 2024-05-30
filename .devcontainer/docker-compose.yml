@@ -17,8 +17,6 @@ services:
     ports:
       - "3000:3000"
       - "3035:3035"
-    tmpfs:
-      - /tmp # Required for ActiveStorage, see https://github.com/docker/for-mac/issues/5570
     environment:
       # Rails
       DATABASE_URL: postgis://postgres:postgres@db
@@ -34,7 +32,7 @@ services:
       - selenium-chrome
 
   db:
-    image: postgis/postgis:12-3.1-alpine
+    image: postgis/postgis:14-3.4-alpine
     restart: unless-stopped
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -52,12 +50,10 @@ services:
       - "6379:6379"
 
   selenium-chrome:
-    image: selenium/standalone-chrome:95.0
+    image: selenium/standalone-chrome:119.0
     shm_size: 2G
     ports:
       - "7900:7900"
-    tmpfs:
-      - /tmp
 
 volumes:
   # Postgres data directory

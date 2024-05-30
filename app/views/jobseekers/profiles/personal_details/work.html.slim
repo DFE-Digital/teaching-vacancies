@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, t(".page_title")
 
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: back_url
+  = govuk_back_link text: t("buttons.back"), href: back_url, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -11,12 +11,12 @@
       = f.govuk_radio_buttons_fieldset :right_to_work_in_uk,
         legend: { text: t(".page_title"), tag: "h1", size: "l" },
         caption: { text: t(".caption"), size: "l" },
-        hint: { text: t(".hint.text", link: govuk_link_to(t(".hint.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe } do
+        hint: { text: t(".hint.text", link: govuk_link_to(t(".hint.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/visas-for-non-uk-teachers", target: "_blank")).html_safe } do
 
         = f.govuk_radio_button :right_to_work_in_uk, "true", label: { text: t(".options.true") }, link_errors: true
         = f.govuk_radio_button :right_to_work_in_uk, "false", label: { text: t(".options.false") }
 
-      = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5"
+      = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
 
     .govuk-button-group
       = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

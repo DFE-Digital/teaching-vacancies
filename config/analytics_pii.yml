@@ -10,9 +10,6 @@ shared:
     - email
     - jobseeker_id
     - publisher_id
-  invitation_to_applies:
-    - jobseeker_id
-    - invited_by_id
   job_applications:
     - jobseeker_id
     - first_name
@@ -20,7 +17,6 @@ shared:
     - previous_names
     - street_address
     - city
-    - country
     - postcode
     - phone_number
     - teacher_reference_number

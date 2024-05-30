@@ -5,37 +5,41 @@
     - elsif publisher_signed_in?
       p.govuk-body = t("jobseekers.job_applications.show.employment_history.none")
   - else
-    - job_application.employments.sort_by { |r| r[:started_on] }.each_with_index do |employment, index|
+    - job_application.employments.sort_by { |r| r[:started_on] }.reverse.each_with_index do |employment, index|
       - if employment.job?
         = govuk_summary_list html_attributes: { id: "#{employment.job_title}-#{index}" } do |summary_list|
-          - summary_list.row do |row|
-            - row.key text: employment.job_title
+          - summary_list.with_row do |row|
+            - row.with_key text: employment.job_title
 
-          - summary_list.row do |row|
-            - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.organisation")
-            - row.value text: employment.organisation
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_job_application_details_employment_form.organisation")
+            - row.with_value text: employment.organisation
 
           - if employment.subjects? || jobseeker?
-            - summary_list.row do |row|
-              - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.subjects_review")
-              - row.value text: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
+            - summary_list.with_row do |row|
+              - row.with_key text: t("helpers.label.jobseekers_job_application_details_employment_form.subjects_review")
+              - row.with_value text: employment.subjects.presence || t("jobseekers.job_applications.not_defined")
 
-          - summary_list.row do |row|
-            - row.key text: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties")
-            - row.value text: employment.main_duties
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_job_application_details_employment_form.main_duties")
+            - row.with_value text: employment.main_duties
 
-          - summary_list.row do |row|
-            - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on")
-            - row.value text: employment.started_on.to_formatted_s(:month_year)
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.legend.jobseekers_job_application_details_employment_form.started_on")
+            - row.with_value text: employment.started_on.to_formatted_s(:month_year)
 
-          - summary_list.row do |row|
-            - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role")
-            - row.value text: employment.current_role.humanize
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.legend.jobseekers_job_application_details_employment_form.current_role")
+            - row.with_value text: employment.current_role.humanize
 
           - if employment.current_role == "no"
-            - summary_list.row do |row|
-              - row.key text: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on")
-              - row.value text: employment.ended_on.to_formatted_s(:month_year)
+            - summary_list.with_row do |row|
+              - row.with_key text: t("helpers.legend.jobseekers_job_application_details_employment_form.ended_on")
+              - row.with_value text: employment.ended_on.to_formatted_s(:month_year)
+
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_job_application_details_employment_form.reason_for_leaving")
+            - row.with_value text: employment.reason_for_leaving
 
       - elsif employment.break?
         = render "jobseekers/job_applications/explained_employment_break", employment: employment, index: index

@@ -7,7 +7,8 @@ FactoryBot.define do
         location: Faker::Address.postcode,
         radius: "10",
         working_patterns: %w[full_time part_time],
-        job_roles: %w[teacher],
+        teaching_job_roles: %w[teacher],
+        support_job_roles: %w[teaching_assistant it_support],
         ect_statuses: %w[ect_suitable],
         phases: %w[primary] }
     end

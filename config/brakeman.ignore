@@ -7,7 +7,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped parameter value",
       "file": "app/views/posts/show.html.slim",
-      "line": 17,
+      "line": 18,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "MarkdownDocument.new(params[:section], params[:post_name]).content",
       "render_path": [
@@ -37,25 +37,25 @@
     {
       "warning_type": "Unscoped Find",
       "warning_code": 82,
-      "fingerprint": "2958a42de474fe8d86f893d3f6735d7f6d05d0755845d75f54bf69290577cb5c",
+      "fingerprint": "4555c296b942cffb89636f6e393403f7c6a8918d34ce290871cd44ee9a0a6ab1",
       "check_name": "UnscopedFind",
-      "message": "Unscoped call to `JobseekerProfile#find`",
-      "file": "app/controllers/publishers/invitations_controller.rb",
-      "line": 10,
+      "message": "Unscoped call to `EmergencyLoginKey#find_by`",
+      "file": "app/controllers/publishers/login_keys_controller.rb",
+      "line": 49,
       "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
-      "code": "JobseekerProfile.find(params[:id])",
+      "code": "EmergencyLoginKey.find_by(:id => params[:id])",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "Publishers::InvitationsController",
-        "method": "index"
+        "class": "Publishers::LoginKeysController",
+        "method": "check_login_key"
       },
       "user_input": "params[:id]",
       "confidence": "Weak",
       "cwe_id": [
         285
       ],
-      "note": ""
+      "note": "Emergency login key cannot be scoped to already signed-in users"
     },
     {
       "warning_type": "SQL Injection",
@@ -81,13 +81,36 @@
       "note": "This is our own static data with no user input provided in the query"
     },
     {
+      "warning_type": "Unscoped Find",
+      "warning_code": 82,
+      "fingerprint": "58f3df7253d0dfa30ca15dd14b17c6e3c5f8f5760b5363c3df49a692a1c74195",
+      "check_name": "UnscopedFind",
+      "message": "Unscoped call to `JobseekerProfile#find`",
+      "file": "app/controllers/support_users/service_data/jobseeker_profiles_controller.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
+      "code": "JobseekerProfile.find(params[:id])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "SupportUsers::ServiceData::JobseekerProfilesController",
+        "method": "show"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        285
+      ],
+      "note": "Support users are meant to be able to see jobseeker profiles"
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "807960ad995ced9524fef98fa8770d355bd5f44365c88ad4eba82831afcb9258",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/queries/location_query.rb",
-      "line": 70,
+      "line": 65,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Arel.sql(\"ST_Distance(#{field_name}, '#{point}')\")",
       "render_path": null,
@@ -133,7 +156,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/queries/location_query.rb",
-      "line": 40,
+      "line": 35,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "scope.joins(\"\\n      INNER JOIN location_polygons\\n      ON ST_DWithin(#{field_name}, location_polygons.area, #{radius})\\n    \")",
       "render_path": null,
@@ -148,29 +171,6 @@
         89
       ],
       "note": "Neither field_name or radius come directly from user input. field_name is hardcoded in the child classes of LocationQuery and radius comes from Search::RadiusBuilder#get_radius which sanitises the input."
-    },
-    {
-      "warning_type": "Unscoped Find",
-      "warning_code": 82,
-      "fingerprint": "9c93c9f5d08bf27281c1583b673b5915f80943fcb8f0b89e90c84c497242a7fe",
-      "check_name": "UnscopedFind",
-      "message": "Unscoped call to `EmergencyLoginKey#find_by`",
-      "file": "app/controllers/publishers/login_keys_controller.rb",
-      "line": 17,
-      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
-      "code": "EmergencyLoginKey.find_by(:id => params[:id])",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Publishers::LoginKeysController",
-        "method": "show"
-      },
-      "user_input": "params[:id]",
-      "confidence": "Weak",
-      "cwe_id": [
-        285
-      ],
-      "note": ""
     },
     {
       "warning_type": "SQL Injection",
@@ -202,7 +202,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/queries/location_query.rb",
-      "line": 65,
+      "line": 60,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "Arel.sql(\"ST_Distance(#{field_name}, ST_Centroid(location_polygons.area))\")",
       "render_path": null,
@@ -225,7 +225,7 @@
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/queries/location_query.rb",
-      "line": 56,
+      "line": 51,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
       "code": "scope.where(\"ST_DWithin(#{field_name}, ?, ?)\", \"POINT(#{Geocoding.new(query).coordinates.second} #{Geocoding.new(query).coordinates.first})\", radius)",
       "render_path": null,
@@ -242,6 +242,6 @@
       "note": "Neither field_name or the coordinates come directly from user input. field_name is hardcoded in the child classes of LocationQuery and the coordinates come from Geocoding#coordinates which returns an array with coordinates returned by our cache or third party geocoding APIs. It defaults to [0,0] if relevant coordinates are not found."
     }
   ],
-  "updated": "2023-08-30 17:07:26 +0100",
-  "brakeman_version": "6.0.1"
+  "updated": "2024-03-07 14:26:16 +0000",
+  "brakeman_version": "6.1.2"
 }

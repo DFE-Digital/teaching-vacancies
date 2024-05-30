@@ -35,19 +35,28 @@ en:
       survey_link_text: Give feedback
       survey_text: Take our quick survey about your experience of using Teaching Vacancies
     confirmations:
-      new:
+      already_confirmed:
+        description: Your email address has already been confirmed.
+        title: Email already confirmed
+      new_with_email:
+        description: We need to email another link so you can activate your account.
+        title: Resend confirmation
+      new_hidden_email:
         description: We need to email another link to %{email} so you can activate your account.
         title: Link has expired
       show:
         confirm: Confirm
         title: Confirm your email address
     employments:
+      break: Gap in work history
       current_role: Is this your current role?
       ended_on: End date
       main_duties: Main duties
       organisation: School or employer
       started_on: Start date
       subjects: Subjects and key stages taught (optional)
+      reason_for_leaving: Reason for leaving
+      gap_with_duration: You have a gap in your work history (%{duration})
     forced_login:
       create_account: create an account
       job_application_html: You need to login or %{account_creation_link} with Teaching Vacancies to apply for this job.
@@ -75,6 +84,11 @@ en:
         withdrawn: Withdrawn - view application
       build:
         # Content Design originally specified the page titles in https://docs.google.com/document/d/1oF4Vh1P8eJRdzmlJ4--cDDZQ_bCZMkKv/
+        training_and_cpds:
+          heading: Training and continuing professional development (CPD)
+          step_title: Training and continuing professional development (CPD)
+          title: Add training and continuing professional development (CPD)
+          no_training: No training or CPD specified
         ask_for_support:
           adjustments: "This could be:"
           adjustment_examples:
@@ -94,16 +108,34 @@ en:
           heading: Declarations
           step_title: Declarations
           title: Declarations — Application
-        employment_history:
-          break: Break in work history
+          dbs_link_text: Disclosure and Barring Service (DBS) check
           description1: >-
-            Add details of all jobs you have had since you left full time education. This should include all teaching
-            roles, as well as any other jobs you have had. You can also include voluntary work if it is relevant to your
-            application.
-          description2: >-
-            Schools need a complete picture of your work history, including time out of the workplace, in order to
-            safeguard children.
-          gap_with_duration: You have a break in your work history (%{duration})
+            You'll need to complete an enhanced %{link_text} if you're successful in this role. If you're outside the UK, you'll need to get a 
+            criminal record check from your home country.
+          description2: It's a criminal offence if you're barred by the DBS or court orders to apply for a role working with children.
+          description3: Not all convictions or police cautions on a criminal record will stop you from working in a school. But you will have to declare any convictions.
+          description4: Learn more about when you need to tell someone about your criminal record.
+          keep_children_safe_link_text: keeping children safe in education obligations.
+          description5: Schools may also conduct their own online checks as part of their %{link_text}
+          safeguarding_issue:
+            "yes": "Yes, I want to share something"
+            hint: "Give any relevant information"
+            "no": "No"
+        employment_history:
+          break: Gap in work history
+          description:
+            opening: >-
+              Add details of all jobs you’ve had since leaving full-time education. This should include:
+            jobs_bullets:
+              - all paid roles
+              - voluntary work, if relevant to your application
+            work_experience_advice: If you’re applying for a teaching job, you should include teaching and other experience, if you have it. 
+            gaps_advice: You’ll also need to explain any gaps in your work history, including between finishing full-time education and starting work.
+            reasons: You’ll need to provide the reason you left each role.
+            gaps: >-
+              If you had a gap between finishing full-time education and starting work that you have not explained then please %{link} to give details about it
+            gaps_link_text: click here
+          gap_with_duration: You have a gap in your work history (%{duration})
           heading: Work history
           no_employments: No employment specified
           step_title: Employment history
@@ -142,6 +174,7 @@ en:
             title: How to write a teacher personal statement
           step_title: Personal statement
           title: Personal statement — Application
+          hint: You can copy and paste bullet points into the text box.
         process_title: Application steps
         professional_status:
           heading: Professional status
@@ -159,7 +192,7 @@ en:
           title: Education and qualifications — Application
         references:
           description1_html: >-
-            <span class='text-red'>Two referees are required</span> for this application. One of these must be your
+            <strong>Two referees are required for this application.</strong> One of these must be your
             current or most recent employer. If you are shortlisted, your referees may be contacted before your interview.
           description2: >-
             If you do not currently work with children, but have done so in the past, you must include a referee from
@@ -194,15 +227,31 @@ en:
         confirm_destroy:
           caption: Current role and employment history
           heading: Are you sure you want to delete this entry?
-          title: Confirm deletion of a break — Application
+          title: Confirm deletion of a gap — Application
         edit:
           caption: Current role and employment history
           heading: Please tell us what you were doing over this period
-          title: Change the reason of a break — Application
+          title: Change the reason of a gap — Application
         new:
           caption: Current role and employment history
           heading: Please tell us what you were doing over this period
-          title: Add a reason for break — Application
+          title: Add a reason for gap — Application
+      training_and_cpds:
+        heading: Training and continuing professional development (CPD)
+        step_title: Training and continuing professional development (CPD)
+        title: Add training and continuing professional development (CPD)
+        new:
+          hint: For example, 1998
+          caption: Training and continuing professional development (CPD)
+          heading: Add training and continuing professional development (CPD)
+        edit:
+          hint: For example, 1998
+          caption: Training and continuing professional development (CPD)
+          heading: Edit training and continuing professional development (CPD)
+        destroy:
+          success: Training deleted
+        review:
+          heading: Training and continuing professional development (CPD)
       employments:
         current_role: This is my current role
         destroy:
@@ -214,6 +263,7 @@ en:
         ended_on: End date
         job_title: Job title
         main_duties: Main duties
+        reason_for_leaving: Reason for leaving
         new:
           caption: Current role and employment history
           heading: Add a role
@@ -273,6 +323,16 @@ en:
           into a %{profile_link} so schools can contact you about relevant roles.
         profile_link_text: candidate profile
         title: Application
+      about_your_application:
+        title: About your application
+        warning:
+          text: This role cannot offer sponsorship visa.
+          paragraph_1: It is unlikely you will be considered for this job as it is not offering Skilled Worker visa sponsorship to non-UK citizens.
+          paragraph_2:
+            text: Learn more about %{link}
+            link: teaching in England as a non-UK citizen (opens in new tab).
+          search_for_jobs: Search for other jobs
+          continue: Continue application
       new_quick_apply:
         assistance:
           content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
@@ -346,6 +406,9 @@ en:
       review:
         confirmation:
           heading: Confirmation
+          update_your_profile:
+            heading: Do you want to update your profile?
+            hint: You can update your profile to match this application. This will replace the current information on your profile. Choose the sections you'd like to update.
           how_we_use_your_data:
             description: "When you submit your application, your data will be shared with:"
             heading: How your data is used
@@ -370,6 +433,8 @@ en:
         steps: Application steps
         title: Review your application — Application
         warning: You cannot review a non-draft job application
+        training_and_cpds:
+          none: You have not added any training.
       show:
         application_sections: Application sections
         ask_for_support:
@@ -389,6 +454,7 @@ en:
           salary: Salary
           started_on: Start date
           subjects: Subjects and key stages taught
+          reason_for_leaving: Reason for leaving
         feedback: Feedback on your application
         heading: Application sections
         page_title: View application
@@ -406,12 +472,14 @@ en:
           heading: Personal statement
         professional_status:
           heading: Professional status
-          statutory_induction_complete: Have you completed your statutory induction year?
+          statutory_induction_complete: Have you completed your statutory induction period?
           qualified_teacher_status: Do you have qualified teacher status (QTS)?
         qualifications:
           heading: Qualifications
           none: The candidate has not included any qualifications.
           subjects_and_grades: Subjects and grades
+        training_and_cpds:
+          none: The candidate has not included any training or CPD.
         references:
           email: Email address
           heading: References
@@ -440,6 +508,8 @@ en:
           heading: What happens next
           shortlisted: >-
             If you are shortlisted for an interview %{organisation} will be in touch to let you know.
+          profile_update: >-
+            Your profile will match the information you supplied in your application if you chose to update it.
           view_applications: View your applications
         panel:
           body: We have sent an email confirmation to %{email}
@@ -491,9 +561,23 @@ en:
           new_email: New email address
           title: Update email address
       edit_password:
-        current_password: Old password
+        current_password: 
+          label: Old password
+          show: 
+            label: Show current password
+            announcement: Your current password is visible
+          hide: 
+            label: Hide current password
+            announcement: Your current password is hidden
         description: Password reset for %{email}
-        new_password: New password
+        new_password: 
+          label: New password
+          show: 
+            label: Show new password
+            announcement: Your new password is visible
+          hide: 
+            label: Hide new password
+            announcement: Your new password is hidden
         title: Change password
       new:
         description: Create an account to save and apply for jobs.
@@ -523,6 +607,19 @@ en:
       success_html: >-
         You have saved this job. <a href="%{link}" class="govuk-link">View all your saved jobs</a> on your account.
     profiles:
+      breaks:
+        confirm_destroy:
+          caption: Current role and employment history
+          heading: Are you sure you want to delete this entry?
+          title: Confirm deletion of a gap — Profile
+        edit:
+          caption: Current role and employment history
+          heading: Please tell us what you were doing over this period
+          title: Change the reason of a gap — Profile
+        new:
+          caption: Current role and employment history
+          heading: Please tell us what you were doing over this period
+          title: Add a reason for gap — Profile
       hide_profile:
         add:
           cannot_find_school: I cannot find the school I'm looking for
@@ -600,12 +697,22 @@ en:
           last_name: Last name
           phone_number: Phone number
           phone_number_provided: Do you want to provide a phone number?
-          right_to_work_in_uk: Do you currently have the right to work in the UK?
+          right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
         work:
           caption: Personal details
           hint:
-            text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work as a teacher in England. Learn more about %{link}
+            text: If you're a non-UK citizen you will need a visa or immigration status which allows you to work in England. If you're looking for a teaching job, you can learn more about %{link}
             link: teaching in England as a non-UK citizen (opens in new tab).
+            no_visa:
+              text: You can %{link}
+              link: find out what visa you need if you're a non-UK citizen (link opens in new tab).
+          warning:
+            text: This role cannot offer visa sponsorship.
+            paragraph_1: It is unlikely you will be considered for this job as it is not offering Skilled Worker visa sponsorship to non-UK citizens.
+            paragraph_2:
+              text: Learn more about %{link}
+              link: teaching in England as a non-UK citizen (opens in new tab).
+            search_for_jobs: Search for other jobs
           learn_more:
             other_routes_to_qts: other routes to QTS
             qualifications_and_experience: the qualifications and experience you’ll need
@@ -614,9 +721,9 @@ en:
             text: You may be able to apply for QTS – %{link}.
             link: check your eligibility (link opens in new tab)
           options:
-            false: "No"
-            true: "Yes"
-          page_title: Do you currently have the right to work in the UK?
+            false: "Yes, I will need to apply for a visa giving me the right to work in the UK"
+            true: "No, I already have the right to work in the UK"
+          page_title: Do you need Skilled Worker visa sponsorship?
           schools_cannot_give_advice:
             text: "Schools cannot give you advice about becoming a teacher in England. However, you can visit %{link} to learn more about:"
             link: Teach in England if you trained overseas (link opens in new tab)
@@ -648,7 +755,8 @@ en:
       about_you:
         edit:
           page_title: About You
-          page_description: "Write a statement about yourself. This will be visible on your profile. This may include information about:"
+          page_description: Describe your relevant skills, knowledge and experience. This will help schools see if you'd be a good fit for their role.
+          items_explanation: "If you're a teacher, this may include information about:"
           page_description_items:
             - "working with pupils"
             - "your teaching style and classroom management"
@@ -663,6 +771,13 @@ en:
           summary_title: About You
         summary:
           about_you_title: About You
+      training_and_cpds:
+        new:
+          hint: For example, 1998
+        edit:
+          hint: For example, 1998
+        destroy:
+          success: Training deleted
       qualifications:
         confirm_destroy:
           secondary:
@@ -715,7 +830,7 @@ en:
           caption: Work history
           page_title: Add a role — Profile
           title: Role
-          hint_text: If you have had more than one role at the same school, add them all separately.
+          hint_text: "If you've had more than 1 role at the same employer, add each role separately."
         review:
           add_role_button_text: Add role
           return_to_profile: Return to profile
@@ -749,6 +864,7 @@ en:
         subjects:
           one: Subject
           other: Subjects
+        training_and_cpd: Training and continuing professional development (CPD)
 
     sessions:
       new:
@@ -770,8 +886,8 @@ en:
       index:
         button_create: Create a job alert
         frequency:
-          daily: Daily, at around 3 pm
-          weekly: Weekly (Friday at around 6 pm)
+          daily: Daily, around 3 pm
+          weekly: Weekly (Friday, around 6 pm)
         heading:
           actions: Actions
           criteria: Alert criteria

@@ -10,9 +10,10 @@ jobs:
   sync:
     name: Backup production database
     runs-on: ubuntu-20.04
+    environment: production
     services:
       postgres:
-        image: postgres:11.6-alpine
+        image: postgres:14.9-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -34,38 +35,38 @@ jobs:
         role-duration-seconds: 3600
         role-skip-session-tagging: true
 
-    - name: Get CF_USERNAME From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
+    - name: Get secrets from AWS ParameterStore
+      uses: dkershner6/aws-ssm-getparameters-action@v2
       with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/cf_username_prod
-        env_variable_name: CF_USERNAME_PROD
-
-    - name: Get CF_PASSWORD From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
-      with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/cf_password_prod
-        env_variable_name: CF_PASSWORD
-
-    - name: Get SLACK_WEBHOOK From ParameterStore
-      uses: marvinpinto/action-inject-ssm-secrets@latest
-      with:
-        ssm_parameter: /teaching-vacancies/github_action/infra/slack_webhook
-        env_variable_name: SLACK_WEBHOOK
-
-    - name: Setup cf cli
-      uses: DFE-Digital/github-actions/setup-cf-cli@master
-      with:
-        CF_USERNAME: ${{env.CF_USERNAME_PROD}}
-        CF_PASSWORD: ${{env.CF_PASSWORD}}
-        CF_SPACE_NAME: teaching-vacancies-production
-        INSTALL_CONDUIT: true
+        parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
 
     - name: Install postgres client
       uses: DFE-Digital/github-actions/install-postgres-client@master
+      with:
+        version: 14
 
-    - name: Dump production database to file
-      shell: bash
-      run: bin/dump-db
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v4
+      with:
+        version: "v1.26.1"
+
+    - uses: Azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: K8 setup for staging
+      run: |
+        make production get-cluster-credentials CONFIRM_PRODUCTION=YES
+        make bin/konduit.sh
+
+    - name: Backup production DB
+      run: |
+        bin/konduit.sh teaching-vacancies-production -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f full.sql
+        tar -cvzf full.tar.gz full.sql
 
     - name: Upload backup to S3
       run: bin/upload-db-backup
@@ -98,7 +99,7 @@ jobs:
 
     - name: Send job status message to twd_tv_dev channel
       if: always() && github.ref == 'refs/heads/main'
-      uses: rtCamp/action-slack-notify@v2.2.1
+      uses: rtCamp/action-slack-notify@v2.3.0
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment

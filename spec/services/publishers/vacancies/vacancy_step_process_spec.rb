@@ -5,12 +5,12 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
   let(:current_step) { :job_role }
 
-  let(:vacancy) { build_stubbed(:vacancy, :draft, :teacher) }
+  let(:vacancy) { build_stubbed(:vacancy, :draft, job_roles: ["teacher"]) }
   let(:organisation) { build(:school) }
 
   describe "#step_groups" do
     let(:all_possible_step_groups) { %i[job_details important_dates application_process about_the_role review] }
-    let(:vacancy) { create(:vacancy, :draft, :teacher, organisations: [organisation]) }
+    let(:vacancy) { create(:vacancy, :draft, job_roles: ["teacher"], organisations: [organisation]) }
 
     it "has the expected step groups" do
       expect(subject.step_groups.keys).to eq(all_possible_step_groups)
@@ -117,7 +117,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
       end
 
       context "when the vacancy is published" do
-        let(:vacancy) { build_stubbed(:vacancy, :published, :teacher) }
+        let(:vacancy) { build_stubbed(:vacancy, :published, job_roles: ["teacher"]) }
 
         context "when the vacancy allows job applications" do
           before { allow(vacancy).to receive(:enable_job_applications).and_return(true) }

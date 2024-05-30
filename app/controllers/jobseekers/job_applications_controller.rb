@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
@@ -8,12 +9,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   helper_method :employments, :job_application, :qualification_form_param_key, :review_form, :vacancy, :withdraw_form
 
   def new
-    request_event.trigger(:vacancy_apply_clicked, vacancy_id: vacancy.id)
     send_dfe_analytics_event
 
     return unless quick_apply?
 
-    redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+    redirect_to about_your_application_jobseekers_job_job_application_path(vacancy.id)
   end
 
   def create
@@ -24,6 +24,14 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def review
     session[:back_to_review] = (session[:back_to_review] || []).push(job_application.id).uniq
   end
+
+  # rubocop:disable Style/GuardClause
+  def about_your_application
+    if profile.nil? || profile&.personal_details&.right_to_work_in_uk? || vacancy.visa_sponsorship_available?
+      redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
+    end
+  end
+  # rubocop:enable Style/GuardClause
 
   def new_quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
@@ -49,6 +57,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
     if review_form.valid? && all_steps_valid?
+      update_jobseeker_profile!(job_application, review_form)
       job_application.submit!
       @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
     else
@@ -91,6 +100,15 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   private
 
+  def update_jobseeker_profile!(job_application, form)
+    profile = job_application.jobseeker.jobseeker_profile
+    return unless profile.present?
+
+    profile.replace_qualifications!(job_application.qualifications.map(&:duplicate)) if form.update_profile_qualifications?
+    profile.replace_employments!(job_application.employments.map(&:duplicate)) if form.update_profile_work_history?
+    profile.replace_training_and_cpds!(job_application.training_and_cpds.map(&:duplicate)) if form.update_profile_training_and_cpds?
+  end
+
   def all_steps_valid?
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
@@ -99,7 +117,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def step_valid?(step)
     step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
-    form = step_form.new(job_application.slice(step_form.fields))
+    form = step_form.new(job_application.slice(step_form.storable_fields))
 
     form.valid?.tap do
       job_application.errors.merge!(form.errors)
@@ -161,7 +179,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def review_form_params
-    params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage)
+    params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage, update_profile: [])
           .merge(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
   end
 
@@ -195,12 +213,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     application.assign_attributes(
       employments: profile.employments.map(&:duplicate),
-      first_name: profile.personal_details.first_name,
-      last_name: profile.personal_details.last_name,
-      phone_number: profile.personal_details.phone_number,
+      first_name: profile.personal_details&.first_name,
+      last_name: profile.personal_details&.last_name,
+      phone_number: profile.personal_details&.phone_number,
       qualifications: profile.qualifications.map(&:duplicate),
-      qualified_teacher_status_year: (profile.qualified_teacher_status_year || ""),
-      qualified_teacher_status: (profile.qualified_teacher_status || ""),
+      training_and_cpds: profile.training_and_cpds.map(&:duplicate),
+      qualified_teacher_status_year: profile.qualified_teacher_status_year || "",
+      qualified_teacher_status: profile.qualified_teacher_status || "",
       right_to_work_in_uk: profile_right_to_work,
     )
 
@@ -208,7 +227,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def profile_right_to_work
-    return "" if profile.personal_details.right_to_work_in_uk.nil?
+    return "" if profile.personal_details&.right_to_work_in_uk.nil?
 
     profile.personal_details.right_to_work_in_uk? ? "yes" : "no"
   end
@@ -219,12 +238,20 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     end
 
     if application.employments.any?
-      application.completed_steps += [:employment_history]
+      application.in_progress_steps += [:employment_history]
     end
 
-    return unless application.qualifications.any?
+    if application.qualified_teacher_status.present?
+      application.in_progress_steps += [:professional_status]
+    end
 
-    application.completed_steps += [:qualifications]
+    if application.training_and_cpds.any?
+      application.in_progress_steps += [:training_and_cpds]
+    end
+
+    return unless application.qualifications.present?
+
+    application.in_progress_steps += [:qualifications]
   end
 
   def profile
@@ -240,3 +267,4 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
+# rubocop:enable Metrics/ClassLength

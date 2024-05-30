@@ -7,15 +7,6 @@ variable "app_docker_image" {
 variable "app_env_values" {
 }
 
-variable "docker_username" {
-}
-
-variable "docker_password" {
-}
-
-variable "logging_url" {
-}
-
 variable "parameter_store_environment" {
   default = "dev"
 }
@@ -31,23 +22,23 @@ variable "schools_images_logos_s3_bucket_force_destroy" {
 
 variable "service_name" {
 }
+
 variable "service_abbreviation" {
-}
-variable "space_name" {
 }
 
 variable "aks_web_app_instances" {
   default = 1
 }
+
 variable "aks_web_app_start_command" {
 }
+
 variable "aks_worker_app_instances" {
 }
+
 variable "aks_worker_app_memory" {
 }
-variable "route53_zones" {
-  type = list(any)
-}
+
 variable "web_external_hostnames_aks" {
   type = list(string)
 }
@@ -99,6 +90,7 @@ variable "redis_queue_capacity" {}
 variable "redis_queue_family" {}
 variable "redis_queue_sku_name" {}
 variable "add_database_name_suffix" {}
+variable "azure_maintenance_window" {}
 
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
@@ -135,11 +127,11 @@ locals {
   worker_app_start_command            = "bundle exec sidekiq -C config/sidekiq.yml"
   worker_app_name                     = "${var.service_name}-worker-${var.environment}"
 
-  postgres_extensions = { enable_extensions = ["pgcrypto", "fuzzystrmatch", "plpgsql", "pg_trgm", "postgis"] }
+  postgres_extensions = { enable_extensions = ["btree_gist", "pgcrypto", "fuzzystrmatch", "plpgsql", "pg_trgm", "postgis"] }
 
   # AKS
   # Use the AKS ingress domain by default. Override with the DOMAIN variable is present
-  # The TEMP_DOMAIN variable takes precedence during the migration from PaaS to AKS
+  # The TEMP_DOMAIN variable takes precedence, in case of a migration to a new environment for instance
   web_app_aks_domain = "teaching-vacancies-${var.environment}.${module.cluster_data.ingress_domain}"
   web_app_domain = try(
     var.app_env_values["TEMP_DOMAIN"],

@@ -63,6 +63,7 @@ Rails.application.routes.draw do
         end
       end
       resources :references, only: %i[new create edit update destroy], controller: "job_applications/references"
+      resources :training_and_cpds, only: %i[new create edit update destroy], controller: "job_applications/training_and_cpds"
       get :review
       get :confirm_destroy
       get :confirm_withdraw
@@ -73,6 +74,7 @@ Rails.application.routes.draw do
 
     scope as: :job, path: ":job_id" do
       resource :job_application, only: %i[new create] do
+        get :about_your_application
         get :new_quick_apply
         post :quick_apply
       end
@@ -94,6 +96,14 @@ Rails.application.routes.draw do
           get :select_category
           post :submit_category
         end
+        get :confirm_destroy
+      end
+      resources :training_and_cpds, only: %i[new create edit update destroy], controller: "profiles/training_and_cpds" do
+        get :review, on: :collection, to: "profiles/training_and_cpds#review"
+        get :confirm_destroy
+      end
+
+      resources :breaks, only: %i[new create edit update destroy], controller: "profiles/breaks" do
         get :confirm_destroy
       end
 
@@ -153,17 +163,10 @@ Rails.application.routes.draw do
       get "confirm-unsubscribe", to: "accounts#confirm_unsubscribe"
       patch "unsubscribe", to: "accounts#unsubscribe"
     end
-    resources :login_keys, only: %i[show new create]
-    resources :jobseeker_profiles, only: %i[index show] do
-      member do
-        resources :invitations, only: :index
-        scope controller: "invitations", path: "/invite" do
-          get "", action: :start, as: :invite_to_apply
-          get ":step", action: :edit, as: :invite_to_apply_step
-          post ":step", action: :update, as: nil
-        end
-      end
+    resources :login_keys, only: %i[show new create] do
+      post :consume, on: :member
     end
+    resources :jobseeker_profiles, only: %i[index show]
     resource :new_features, only: %i[show update] do
       get :reminder
     end
@@ -215,6 +218,11 @@ Rails.application.routes.draw do
     get "feedback/satisfaction-ratings", to: "feedbacks#satisfaction_ratings"
 
     post "feedback/recategorize", to: "feedbacks#recategorize"
+
+    get "service-data", to: "service_data#index"
+    namespace :service_data, path: "service-data" do
+      resources :jobseeker_profiles, only: %i[index show]
+    end
   end
 
   devise_for :support_users
@@ -323,7 +331,6 @@ Rails.application.routes.draw do
   # Well known URLs
   get ".well-known/change-password", to: redirect(status: 302) { Rails.application.routes.url_helpers.edit_jobseeker_registration_path(password_update: true) }
 
-  get "/invalid-recaptcha", to: "errors#invalid_recaptcha", as: "invalid_recaptcha"
   match "/401", as: :unauthorised, to: "errors#unauthorised", via: :all
   match "/404", as: :not_found, to: "errors#not_found", via: :all
   match "/422", as: :unprocessable_entity, to: "errors#unprocessable_entity", via: :all

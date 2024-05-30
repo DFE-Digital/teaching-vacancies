@@ -2,14 +2,12 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    =  vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false, sub_caption: { text: "Select all that apply", class: "govuk-!-margin-top-4 govuk-!-margin-bottom-4" })
+
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_collection_radio_buttons :job_roles,
-                                         Vacancy.job_roles.keys,
-                                         :to_s,
-                                         legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path),
-                                                   tag: "h1",
-                                                   size: "l" }
+      = f.govuk_collection_check_boxes :job_roles, form.teaching_job_roles_options, :first, :last, legend: { text: t("jobs.filters.teaching_job_roles"), size: "s" }, include_hidden: false
+      = f.govuk_collection_check_boxes :job_roles, form.support_job_roles_options, :first, :last, legend: { text: t("jobs.filters.support_job_roles"), size: "s" }, include_hidden: false
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

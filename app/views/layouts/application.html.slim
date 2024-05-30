@@ -10,6 +10,7 @@ html.govuk-template.app-html-class lang="en"
     = render "layouts/sentry_js_config"
 
   body class=body_class
+    = render "layouts/cookies_banner"
     = render "layouts/google_tag_manager_body" if include_google_tag_manager?
     = render "layouts/add_js_enabled_class_to_body"
     = render "layouts/skip_links"
@@ -29,5 +30,4 @@ html.govuk-template.app-html-class lang="en"
         = yield
       = content_for :after_main
     = render "layouts/footer"
-    = render "layouts/cookies_banner"
     = javascript_include_tag "application", defer: true

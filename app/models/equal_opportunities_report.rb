@@ -4,6 +4,7 @@ class EqualOpportunitiesReport < ApplicationRecord
   validates :vacancy, uniqueness: true
 
   def trigger_event
-    Event.new.trigger(:equal_opportunities_report_published, event_data)
+    event = DfE::Analytics::Event.new.with_type(:equal_opportunities_report_published)
+    DfE::Analytics::SendEvents.do([event])
   end
 end

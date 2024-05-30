@@ -25,28 +25,16 @@ module ApplicationHelper
     end
   end
 
-  def recaptcha
-    recaptcha_v3(action: controller_name, nonce: request.content_security_policy_nonce)
-  end
-
   def footer_links
-    {
-      "Cookies" => cookies_preferences_path,
-      "Privacy policy" => page_path("privacy-policy"),
-      "Terms and Conditions" => page_path("terms-and-conditions"),
-      "Accessibility" => page_path("accessibility"),
-    }
+    [
+      { text: "Cookies", href: cookies_preferences_path },
+      { text: "Privacy policy", href: "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers", attr: { target: "_blank" } },
+      { text: "Terms and Conditions", href: page_path("terms-and-conditions") },
+      { text: "Accessibility", href: page_path("accessibility") },
+    ]
   end
 
   def include_google_tag_manager?
     cookies["consented-to-additional-cookies"] == "yes" && Rails.configuration.app_role.production?
-  end
-
-  def phase_banner_text
-    if Rails.configuration.app_role.sandbox?
-      "sandbox"
-    else
-      "beta"
-    end
   end
 end

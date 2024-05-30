@@ -45,8 +45,8 @@ RSpec.describe EditorComponent, type: :component do
     subject! do
       render_inline(described_class.new(**kwargs))
     end
-    it "renders no hint text" do
-      expect(page).not_to have_css("div", class: "govuk-hint")
+    it "renders a default hint text" do
+      expect(page).to have_css("div", class: "govuk-hint", text: "You can copy and paste bullet points into the text box.")
     end
   end
 end

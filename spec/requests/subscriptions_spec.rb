@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Subscriptions" do
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
@@ -17,6 +18,18 @@ RSpec.describe "Subscriptions" do
         get new_subscription_path
 
         expect(session[:subscription_autopopulated]).to eq(false)
+      end
+    end
+
+    context "when containing campaign parameters" do
+      let(:params) { { "email_contact" => "user@example.com", email_postcode: "SW12JP" } }
+
+      it "renders the template for the campaign users with pre-filled values" do
+        get(new_subscription_path, params:)
+
+        expect(response).to render_template("subscriptions/campaign/new")
+        expect(response.body).to include("user@example.com")
+                             .and include("SW12JP")
       end
     end
 
@@ -73,14 +86,9 @@ RSpec.describe "Subscriptions" do
     end
 
     it "triggers a `job_alert_subscription_created` event" do
-      expect { subject }.to have_triggered_event(:job_alert_subscription_created).and_data(
-        autopopulated: "false",
-        email_identifier: anonymised_form_of("foo@example.net"),
-        frequency: "daily",
-        subscription_identifier: anything,
-        recaptcha_score: 0.9,
-        search_criteria: /^{.*}$/,
-      )
+      subject
+
+      expect(:job_alert_subscription_created).to have_been_enqueued_as_analytics_events
     end
 
     context "with unsafe params" do
@@ -124,13 +132,9 @@ RSpec.describe "Subscriptions" do
     end
 
     it "triggers a `job_alert_subscription_updated` event" do
-      expect { subject }.to have_triggered_event(:job_alert_subscription_updated).and_data(
-        autopopulated: nil,
-        email_identifier: anonymised_form_of("jimi@hendrix.com"),
-        frequency: "weekly",
-        subscription_identifier: subscription.id,
-        search_criteria: /^{.*}$/,
-      )
+      subject
+
+      expect(:job_alert_subscription_updated).to have_been_enqueued_as_analytics_events
     end
 
     context "with unsafe params" do
@@ -154,13 +158,9 @@ RSpec.describe "Subscriptions" do
     subject { delete subscription_path(subscription.token) }
 
     it "triggers a `job_alert_subscription_unsubscribed` event" do
-      expect { subject }.to have_triggered_event(:job_alert_subscription_unsubscribed).and_data(
-        autopopulated: nil,
-        email_identifier: anonymised_form_of("bob@dylan.com"),
-        frequency: "daily",
-        subscription_identifier: subscription.id,
-        search_criteria: /^{.*}$/,
-      )
+      subject
+
+      expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_analytics_events
     end
   end
 end

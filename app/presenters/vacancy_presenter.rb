@@ -19,7 +19,13 @@ class VacancyPresenter < BasePresenter
     simple_format(fix_bullet_points(model.benefits_details)) if model.benefits_details.present?
   end
 
-  # TODO: Working Patterns: Remove this once all vacancies with legacy working patterns & working_pattern_details have expired
+  def job_advert
+    return if model.job_advert.blank?
+
+    # Basic HTML formatting of text if it is not already HTML
+    model.job_advert.strip.starts_with?("<") ? model.job_advert : simple_format(model.job_advert)
+  end
+
   def readable_working_patterns
     model.working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
@@ -27,15 +33,11 @@ class VacancyPresenter < BasePresenter
   end
 
   def readable_working_patterns_with_details
-    return readable_working_patterns unless model.full_time_details? || model.part_time_details?
-
-    model.working_patterns.map { |working_pattern|
-      if working_pattern == "full_time"
-        I18n.t("jobs.full_time_details", details: model.full_time_details)
-      else
-        I18n.t("jobs.part_time_details", details: model.part_time_details)
-      end
-    }.join("\n")
+    if model.working_patterns_details.present?
+      "#{readable_working_patterns}: #{model.working_patterns_details}"
+    else
+      readable_working_patterns
+    end
   end
 
   def working_patterns_for_job_schema
@@ -45,6 +47,10 @@ class VacancyPresenter < BasePresenter
       ("TEMPORARY" if model.fixed_term_contract_duration?),
       ("OTHER" if model.working_patterns.any? { |working_pattern| working_pattern.in? %w[flexible job_share term_time] } && !model.fixed_term_contract_duration?),
     ].compact
+  end
+
+  def readable_visa_sponsorship_availability
+    ["visa sponsorship"] if model.visa_sponsorship_available
   end
 
   def readable_job_roles

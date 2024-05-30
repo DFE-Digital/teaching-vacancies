@@ -34,7 +34,7 @@ class Organisation < ApplicationRecord
     point = "POINT(#{coordinates&.second} #{coordinates&.first})"
     where("ST_DWithin(geopoint, ?, ?)", point, radius) if coordinates && radius
   }
-  scope :in_vacancy_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct })
+  scope :in_vacancy_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct }
 
   scope :search_by_location, OrganisationLocationQuery
   pg_search_scope :search_by_name,
@@ -78,8 +78,14 @@ class Organisation < ApplicationRecord
   end
 
   def schools_outside_local_authority
-    school_urns = Rails.configuration.local_authorities_extra_schools&.dig(local_authority_code.to_i)
-    School.where(urn: school_urns)
+    local_authorities_extra_schools = Rails.configuration.local_authorities_extra_schools.to_h.transform_keys(&:to_s)
+
+    if local_authority_code && local_authorities_extra_schools
+      school_urns = local_authorities_extra_schools[local_authority_code]
+      School.where(urn: school_urns)
+    else
+      School.none
+    end
   end
 
   def school?
@@ -102,10 +108,6 @@ class Organisation < ApplicationRecord
     trust? || local_authority?
   end
 
-  # We bulk import organisations from GIAS, so cannot use ActiveRecord callbacks or rely on
-  # the `updated_at` field to trigger "entity updated" events for our data warehouse.
-  # Instead, we use a job to iterate over all organisations and call this method to recompute
-  # the `gias_data_hash` and update it if it has changed, which will trigger an update event.
   def refresh_gias_data_hash
     computed_hash = gias_data.presence && Digest::SHA256.hexdigest(gias_data.to_s)
     return if gias_data_hash == computed_hash

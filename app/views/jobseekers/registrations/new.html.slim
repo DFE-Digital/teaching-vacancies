@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, t(".title")
 
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: new_jobseeker_session_path
+  = govuk_back_link text: t("buttons.back"), href: new_jobseeker_session_path, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -12,8 +12,12 @@
 
       p.govuk-body = t(".description")
 
-      = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
-      = f.govuk_password_field :password, label: { size: "s" }, width: "two-thirds"
+      .govuk-grid-row
+        .govuk-grid-column-two-thirds
+          = f.govuk_email_field :email, label: { size: "s" }, autocomplete: "email"
+          = f.govuk_password_field :password, label: { size: "s" }, autocomplete: "new-password"
+
+      = render "shared/recaptcha", form: f
 
       = f.govuk_submit t("buttons.create_account")
 

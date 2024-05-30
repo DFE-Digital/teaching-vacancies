@@ -17,7 +17,8 @@
       "workingPatterns": "full_time",
       "contractType": "fixed_term",
       "phase": "primary",
-      "trustUID": "12345"
+      "trustUID": "12345",
+      "visaSponsorshipAvailable": true
     }
   ]
 }

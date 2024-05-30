@@ -4,8 +4,15 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in
   # config/application.rb.
 
+  # The application uses multiple services for storing files. This sets up a default value which gets overridden
+  # in every specific use case.
+  config.active_storage.service = :amazon_s3_documents
+
   # Configure the domains permitted to access coordinates API
   config.allowed_cors_origin = proc { "https://#{DOMAIN}" }
+
+  # If developing through Github codespaces: allow the port forwarding domain to access the app.
+  config.action_controller.forgery_protection_origin_check = false if ENV["GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN"].present?
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -23,6 +30,13 @@ Rails.application.configure do
 
   # Allow Web Console from outside devcontainer
   config.web_console.permissions = "172.0.0.0/8" if ENV["DEVCONTAINER"].present?
+  config.web_console.whiny_requests = false
+
+  # Allow better errors to be displayed when accessing Docker running apps
+  BetterErrors::Middleware.allow_ip! "10.0.0.0/8"
+  BetterErrors::Middleware.allow_ip! "172.24.0.1/12"
+  BetterErrors::Middleware.allow_ip! "172.16.0.0/12"
+  BetterErrors::Middleware.allow_ip! "192.168.0.0/16"
 
   # Enable/disable caching. By default caching is disabled.
   if Rails.root.join("tmp/caching-dev.txt").exist?
@@ -74,4 +88,6 @@ Rails.application.configure do
   config.action_view.annotate_rendered_view_with_filenames = true
 
   config.i18n.raise
+
+  config.log_file_size = 100.megabytes
 end

@@ -25,7 +25,7 @@ module FormObject
 
         mod = Module.new do
           define_method(:"#{name}=") do |value|
-            super value&.reject(&:blank?) || []
+            super(value&.reject(&:blank?) || [])
           end
         end
 

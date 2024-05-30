@@ -11,6 +11,7 @@
       = f.govuk_fieldset legend: { text: t(".page_title"), tag: "h1", size: "l" } do
 
         p = t(".page_description")
+        p = t(".items_explanation")
 
         ul.govuk-list.govuk-list--bullet
           - t(".page_description_items").each do |item|

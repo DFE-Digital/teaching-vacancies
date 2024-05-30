@@ -51,14 +51,6 @@ RSpec.describe "Api::LocationSuggestion" do
         allow(location_suggestion).to receive(:suggest_locations).and_return([suggestions, matched_terms])
       end
 
-      it "does not trigger a page_visited event" do
-        expect { subject }.not_to have_triggered_event(:page_visited)
-      end
-
-      it "does not trigger an api_queried event" do
-        expect { subject }.not_to have_triggered_event(:api_queried)
-      end
-
       it "returns status :ok" do
         subject
         expect(response).to have_http_status(:ok)

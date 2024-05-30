@@ -21,54 +21,20 @@ module LandingPagesHelper
   def linked_job_roles_and_ect_status(vacancy)
     tag.ul class: "govuk-list" do
       safe_join(
-        vacancy.job_roles.map { |role| tag.li(linked_job_role(role)) }
+        vacancy.job_roles.map { |role| tag.li(linked_job_role(I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}"))) }
                          .push(tag.li(linked_ect_status(vacancy))),
       )
     end
   end
 
   def linked_job_role(role)
-    landing_page_link_or_text({ job_roles: [role] }, role&.humanize)
+    landing_page_link_or_text({ job_roles: [role] }, role)
   end
 
   def linked_ect_status(vacancy)
     return unless vacancy.job_roles.include?("teacher") && vacancy.ect_suitable?
 
     landing_page_link_or_text({ ect_statuses: [vacancy.ect_status] }, vacancy.ect_status.humanize)
-  end
-
-  def linked_subjects(vacancy)
-    vacancy.subjects.map { |subject|
-      landing_page_link_or_text({ subjects: [subject] }, subject, match: :partial)
-    }.join(", ").html_safe
-  end
-
-  def linked_working_patterns(vacancy)
-    # TODO: Working Patterns: Remove the call to linked_working_patterns_legacy_vacancy once all vacancies with legacy working patterns & working_pattern_details have expired
-    return linked_working_patterns_legacy_vacancy(vacancy) unless vacancy.full_time_details? || vacancy.part_time_details?
-
-    full_time_landing_page_link = landing_page_link_or_text({ working_patterns: ["full_time"] }, "Full time")
-    part_time_landing_page_link = landing_page_link_or_text({ working_patterns: ["part_time"] }, "Part time")
-
-    tag.ul class: "govuk-list" do
-      safe_join [
-        (tag.li { [full_time_landing_page_link, vacancy.full_time_details].join(" - ").html_safe } if vacancy.full_time_details?),
-        (tag.li { [part_time_landing_page_link, vacancy.part_time_details].join(" - ").html_safe } if vacancy.part_time_details?),
-      ]
-    end
-  end
-
-  def linked_working_patterns_legacy_vacancy(vacancy)
-    tag.ul class: "govuk-list" do
-      safe_join [
-        tag.li do
-          vacancy.working_patterns.map { |working_pattern|
-            landing_page_link_or_text({ working_patterns: [working_pattern] }, working_pattern&.capitalize)
-          }.join(", ").html_safe
-        end,
-        tag.li { tag.span(vacancy.working_patterns_details) },
-      ]
-    end
   end
 
   def linked_school_phase(school)

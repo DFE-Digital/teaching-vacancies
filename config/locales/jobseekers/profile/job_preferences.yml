@@ -1,5 +1,7 @@
 en:
   activemodel:
+    location:
+      hint: Teaching Vacancies advertises school roles in England. Enter a UK city, county or postcode to set up a job alert for roles near you.
     errors:
       models:
         jobseekers/job_preferences_form/role:
@@ -25,7 +27,7 @@ en:
         jobseekers/job_preferences_form/location_form:
           attributes:
             location:
-              blank: Enter a location
+              blank: Enter a city, county or postcode in the UK
             radius:
               blank: Select a search radius
 

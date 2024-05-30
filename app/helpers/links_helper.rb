@@ -27,6 +27,7 @@ module LinksHelper
       "link-type": kwargs.delete(:link_type),
       "link-subject": kwargs.delete(:link_subject),
       "tracked-link-text": kwargs.delete(:tracked_link_text),
+      "tracked-link-href": kwargs.delete(:tracked_link_href),
     }))
   end
 

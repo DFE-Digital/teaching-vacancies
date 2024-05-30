@@ -1,5 +1,7 @@
 shared:
   - api_queried
+  - copied_to_clipboard
+  - equal_opportunities_report_published
   - failed_dsi_sign_in_attempt
   - form_validation_failed
   - job_alert_subscription_created
@@ -19,7 +21,6 @@ shared:
   - jobseeker_subscription_confirmation
   - jobseeker_subscription_update
   - jobseeker_unlock_instructions
-  - page_visited
   - publisher_applications_received
   - publisher_invite_to_apply
   - publisher_job_application_data_expiry

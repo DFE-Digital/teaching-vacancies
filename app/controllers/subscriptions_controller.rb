@@ -1,5 +1,7 @@
 class SubscriptionsController < ApplicationController
   include ReturnPathTracking
+  include RecaptchaChecking
+
   self.authentication_scope = :jobseeker
 
   before_action :trigger_create_job_alert_clicked_event, only: :new, if: -> { vacancy_id.present? }
@@ -8,8 +10,10 @@ class SubscriptionsController < ApplicationController
     @point_coordinates = params[:coordinates_present] == "true"
     @ect_job_alert = params[:ect_job_alert]
     session[:subscription_autopopulated] = params[:search_criteria].present?
-    @form = Jobseekers::SubscriptionForm.new(params[:search_criteria].present? ? search_criteria_params : email)
+    @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
     @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
+
+    render("subscriptions/campaign/new", layout: "subscription_campaign") if campaign_link?
   end
 
   def create
@@ -18,18 +22,17 @@ class SubscriptionsController < ApplicationController
     @subscription = SubscriptionPresenter.new(subscription)
 
     if @form.invalid?
-      render :new
-    elsif recaptcha_is_invalid?
-      redirect_to invalid_recaptcha_path(form_name: subscription.class.name.underscore.humanize)
+      @form.campaign.present? ? render("subscriptions/campaign/new", layout: "subscription_campaign") : render(:new)
     else
-      notify_new_subscription(subscription)
-
-      if jobseeker_signed_in?
-        redirect_to jobseekers_subscriptions_path, success: t(".success")
-      else
-        @jobseeker = Jobseeker.find_by(email: subscription.email)
-        store_return_location(jobseekers_subscriptions_path)
-        render :confirm
+      recaptcha_protected(form: @form) do
+        notify_new_subscription(subscription)
+        if jobseeker_signed_in?
+          redirect_to jobseekers_subscriptions_path, success: t(".success")
+        else
+          @jobseeker = Jobseeker.find_by(email: subscription.email)
+          store_return_location(jobseekers_subscriptions_path)
+          render :confirm
+        end
       end
     end
   end
@@ -78,6 +81,40 @@ class SubscriptionsController < ApplicationController
 
   private
 
+  def campaign_link?
+    params[:email_contact].present?
+  end
+
+  # There are mailing campaigns using Mailchimp to send "Subscribe to our job alerts" emails to user groups.
+  # These emails links to our service contain parameters in their URL, which values are used to pre-populate the
+  # subscription form fields.
+  # Some fields have default values unless explicitly set by a parameter.
+  def campaign_attributes
+    campaign = campaign_params
+    {
+      campaign: true,
+      subjects: ([campaign[:email_subject].capitalize] if campaign[:email_subject].present?),
+      phases: ([campaign[:email_phase]] if campaign[:email_phase].present?),
+      location: campaign[:email_postcode].presence,
+      radius: campaign[:email_radius].presence || "15",
+      teaching_job_roles: (campaign[:email_jobrole].present? ? [campaign[:email_jobrole]] : ["teacher"]),
+      ect_statuses: (campaign[:email_ect].present? ? [campaign[:email_ect]] : ["ect_suitable"]),
+      working_patterns: (campaign[:email_working_pattern].present? ? [campaign[:email_working_pattern]] : ["full_time"]),
+      email: campaign[:email_contact].presence,
+      user_name: campaign[:email_name].presence,
+    }.compact
+  end
+
+  def new_form_attributes
+    if params[:search_criteria].present?
+      search_criteria_params
+    elsif campaign_link?
+      email.merge(campaign_attributes)
+    else
+      email
+    end
+  end
+
   def notify_new_subscription(subscription)
     subscription.update(recaptcha_score: recaptcha_reply&.dig("score"))
     Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
@@ -85,7 +122,6 @@ class SubscriptionsController < ApplicationController
   end
 
   def trigger_create_job_alert_clicked_event
-    request_event.trigger(:vacancy_create_job_alert_clicked, vacancy_id: vacancy_id)
     trigger_dfe_analytics_event(:vacancy_create_job_alert_clicked, { vacancy_id: vacancy_id })
   end
 
@@ -114,7 +150,6 @@ class SubscriptionsController < ApplicationController
 
     dfe_analytics_event_data = event_data.merge(email_identifier: DfE::Analytics.anonymise(subscription.email))
 
-    request_event.trigger(type, event_data)
     trigger_dfe_analytics_event(type, dfe_analytics_event_data)
   end
 
@@ -122,14 +157,21 @@ class SubscriptionsController < ApplicationController
     params.permit(:email)
   end
 
+  def campaign_params
+    params.permit(:email_name, :email_subject, :email_phase, :email_postcode, :email_jobrole, :email_radius, :email_ect,
+                  :email_working_pattern, :email_contact)
+  end
+
   def search_criteria_params
     params.require(:search_criteria)
-          .permit(:keyword, :location, :organisation_slug, :radius, job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
+          .permit(:keyword, :location, :organisation_slug, :radius, teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def subscription_params
     params.require(:jobseekers_subscription_form)
-          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
+          .permit(:email, :frequency, :keyword, :location, :organisation_slug, :radius, :campaign, :user_name,
+                  teaching_job_roles: [], support_job_roles: [],
+                  visa_sponsorship_availability: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [])
   end
 
   def token

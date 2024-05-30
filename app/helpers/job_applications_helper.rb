@@ -60,6 +60,16 @@ module JobApplicationsHelper
     end
   end
 
+  def job_application_safeguarding_issues_info(job_application)
+    case job_application.safeguarding_issue
+    when "yes"
+      safe_join([tag.div("Yes", class: "govuk-body", id: "safeguarding_issue"),
+                 tag.p(job_application.safeguarding_issue_details, class: "govuk-body", id: "safeguarding_issue_details")])
+    when "no"
+      tag.div("No", class: "govuk-body", id: "safeguarding_issue")
+    end
+  end
+
   def job_application_status_tag(status)
     govuk_tag text: JOBSEEKER_STATUS_MAPPINGS[status.to_sym],
               colour: JOB_APPLICATION_STATUS_TAG_COLOURS[JOBSEEKER_STATUS_MAPPINGS[status.to_sym].parameterize.underscore.to_sym],
@@ -108,5 +118,25 @@ module JobApplicationsHelper
 
   def job_application_step_in_progress?(job_application, step)
     job_application.in_progress_steps.include?(step.to_s)
+  end
+
+  def visa_sponsorship_needed_answer(job_application)
+    return unless job_application.right_to_work_in_uk.present?
+
+    job_application.right_to_work_in_uk == "yes" ? t("jobseekers.profiles.personal_details.work.options.true") : t("jobseekers.profiles.personal_details.work.options.false")
+  end
+
+  def radio_button_legend_hint
+    if vacancy.visa_sponsorship_available?
+      {
+        text: "jobseekers.profiles.personal_details.work.hint.text",
+        link: "jobseekers.profiles.personal_details.work.hint.link",
+      }
+    else
+      {
+        text: "jobseekers.profiles.personal_details.work.hint.no_visa.text",
+        link: "jobseekers.profiles.personal_details.work.hint.no_visa.link",
+      }
+    end
   end
 end

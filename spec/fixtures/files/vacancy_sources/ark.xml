@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:engAts="http://www.eurorscgskybridge.com/2011/EngageAts/"
+     version="2.0">
+  <channel>
+    <atom:link href="https://arkcareers.engageats.co.uk/CustomVacanciesFeed.ashx" rel="self"
+               type="application/rss+xml"/>
+    <title>http:arkcareers.engageats.co.uk latest vacancies</title>
+    <link>
+      https://arkcareers.engageats.co.uk/
+    </link>
+    <description>Our latest vacancies</description>
+    <item>
+      <title>Tutor Fellow (Primary or Secondary)</title>
+      <link>http://testurl.com</link>
+      <guid>https://arkcareers.engageats.co.uk/Vacancies/W/1972/0/247720/19522/tutor-fellow-primary-or-secondary</guid>
+      <description>A one year programme that prepares you to enter teacher training, in primary or secondary.</description>
+      <category domain="Location">London
+      </category>
+      <category domain="Phase">All-through</category>
+      <category domain="School/Network" suppValue="111111">Ark King Solomon Academy</category>
+      <category domain="Job Category">Education Support</category>
+      <category domain="Role Type">Teaching Assistant</category>
+      <category domain="Contract Type">Fixed Term</category>
+      <category domain="Working Pattern">Full Time</category>
+      <atom:content type="html" mode="escaped" xml:lang="en">Some text</atom:content>
+      <engAts:jobdescription>A one year programme that prepares you to enter teacher training, in primary or secondary.</engAts:jobdescription>
+      <engAts:vacancyid>Solomon-1143</engAts:vacancyid>
+      <engAts:salaryRangeFrom>£24,454</engAts:salaryRangeFrom>
+      <engAts:salaryRangeTo/>
+      <engAts:endDate>2023-10-12T12:00:00.0000000</engAts:endDate>
+      <startDate>2023-05-20</startDate>
+      <engAts:advertUrl >https://testurl.com/ApplicationForm.aspx?enc=mEgrBL4XQK0==</engAts:advertUrl >
+      <engAts:rssFeedVacancyUrl>
+        https://arkcareers.engageats.co.uk/Vacancies/W/1972/0/247720/19522/tutor-fellow-primary-or-secondary
+      </engAts:rssFeedVacancyUrl>
+      <pubDate>Tue, 09 Mar 2021 00:00:00 GMT</pubDate>
+      <engAts:visaSponsorshipAvailable>true</visaSponsorshipAvailable>
+    </item>
+  </channel>
+</rss>

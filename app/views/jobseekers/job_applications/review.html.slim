@@ -25,6 +25,15 @@
       = form_for review_form, url: jobseekers_job_application_submit_path(job_application), method: :post do |f|
         = f.govuk_error_summary
 
+        - if current_jobseeker.jobseeker_profile.present?
+          = f.govuk_check_boxes_fieldset(:update_profile,
+                                         multiple: true,
+                                         legend: { text: t(".confirmation.update_your_profile.heading"), size: "m" },
+                                         hint: { text: t(".confirmation.update_your_profile.hint") }) do
+            = f.govuk_check_box :update_profile, "qualifications"
+            = f.govuk_check_box :update_profile, "work_history"
+            = f.govuk_check_box :update_profile, "training_and_cpds"
+
         h3.govuk-heading-m = t(".confirmation.heading")
 
         = f.govuk_check_boxes_fieldset :confirm_data_accurate, multiple: false, legend: nil do
@@ -41,7 +50,7 @@
 
         p.govuk-body
           = t(".confirmation.how_we_use_your_data.privacy_policy.description_html",
-              link_to: govuk_link_to(t(".confirmation.how_we_use_your_data.privacy_policy.link_text"), page_path("privacy-policy")))
+              link_to: govuk_link_to(t(".confirmation.how_we_use_your_data.privacy_policy.link_text"), "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers"))
 
         = f.govuk_check_boxes_fieldset :confirm_data_usage, multiple: false, legend: nil do
           = f.govuk_check_box :confirm_data_usage, "1", 0, multiple: false, link_errors: true

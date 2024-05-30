@@ -15,7 +15,7 @@ It's worth a quick reminder that Containers are created from Images. [Docker's o
 > First of all, you can name a stage that starts with a `FROM` command with `AS stagename` and use `--from=stagename` option in a `COPY` command to copy files from that stage.
 - Images created from the `builder` stage are ~357 MB in size
 - Images created from the `production` stage are ~83 MB in size
-- The (Docker) production _stage_ should not be confused with the (Gov.UK PaaS) production _environment_
+- The (Docker) production _stage_ should not be confused with the (AKS) production _environment_
 
 For both stages, we:
 
@@ -136,12 +136,12 @@ build-local-image:
 - Tag it with `TAG`
 - Push the image to the Docker Hub repository, with both tags
 
-## Run a Docker container on Gov.UK PaaS
+## Run a Docker container on Azure AKS
 
-The GitHub Action workflow [deploy.yml](../.github/workflows/deploy.yml):
+The GitHub Action workflow [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml):
 - builds and tags a Docker image
 - pushes the Docker image to the Docker Hub repository
-- sets the Terraform variable `paas_app_docker_image` to the image tag
+- sets the Terraform variable `app_docker_image` to the image tag
 - uses `terraform apply` to update the `staging` environment to use a container based off the tagged image
 - runs a smoke test to check the recent update has not broken the `staging` environment
 - uses `terraform apply` to update the `production` environment to use a container based off the tagged image
@@ -231,50 +231,20 @@ For images built off the `main` branch, we use the [SHA of the GitHub commit](ht
 
 The Docker images for Teaching Vacancies are stored in the GitHub's container registry [https://github.com/DFE-Digital/teaching-vacancies/](https://github.com/DFE-Digital/teaching-vacancies/pkgs/container/teaching-vacancies).
 
+### GitHub authentication
+Access and authentication to GitHub is via the default
+[GITHUB_TOKEN](https://github.com/DFE-Digital/teaching-vacancies/blob/main/.github/workflows/build_and_deploy.yml#L105). Follow link for further info about [authentication in github](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-in-a-github-actions-workflow)
 
-### GitHub Packages users
+An example of authentication via Github token is as below
 
-#### Individual end-user
-
-To use `docker` commands, either directly, or through the abstraction of the Makefile, you must first be logged in as a GitHub user.
-
-- You will require write access to GitHub packages [https://github.com/DFE-Digital/teaching-vacancies/](https://github.com/DFE-Digital/teaching-vacancies/pkgs/container/teaching-vacancies) repository. Ask in #digital-tools-support should you require it.
-- Log in to Log in to Github Packages (with `docker login ghcr.io -u USERNAME` - use PAT token as passoword)
-
-#### The `twd-tv-ci` user:
-- is used as a service account, by GitHub Actions to pull and/or push images.
-- is registered with the email address `twd-tv-ci@digital.education.gov.uk`
-
-Credentials for `twd-tv-ci` for pulling images
-- are held in [AWS Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table), per-environment e.g. `/teaching-vacancies/dev/infra/secrets` as a pair of YAML lines:
 ```
-github_packages_username: NotARealUserName
-github_packages_token: NotRealToken
-```
-These are used within the Gov.UK PaaS web app and worker app [terraform](../terraform/app/modules/paas/main.tf), like so:
-```
-  docker_credentials = {
-    username = var.docker_username
-    password = var.docker_password
-  }
-```
-
-Credentials for `twd-tv-ci` for pulling and pushing images in workflows
-- entered into [GitHub Actions secrets](https://github.com/DFE-Digital/teaching-vacancies/settings/secrets/actions) repository secret:
-```
-GIT_HUB_SERVICE_ACCOUNT_TOKEN
-
-No username is required; but we use `${{ github.repository_owner }}` in the workflow.
-```
-These are used within GitHub workflows like [deploy.yml](../github/workflows/deploy.yml), like so:
-```
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1
-      with:
+  - name: Login to GitHub Container Registry
+    uses: docker/login-action@v3
+    with:
+        registry: ghcr.io
         username: ${{ github.repository_owner }}
-        password: ${{ secrets.GIT_HUB_SERVICE_ACCOUNT_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 ```
-The secrets can not be decrypted through the UI, but can be updated.
 
 ### GitHub container registry
 
@@ -285,4 +255,4 @@ To view the docker images stored on GitHub's container registry, you need to go 
 
 ### Docker image scan
 
-As part of the CI/CD, we conduct a Docker security scan using `snyk`, by invoking Snyk's docker image: `snyk/snyk-cli:docker`. This allows us a deep image inspection and vulnerability scan. When a vulnerability is detected while scanning, this breaks breaks CI/CD build. The vulnerability detected by `snyk`would need to be fixed before a successfully build can be completed. In order to limit-rate our scans, `snyk` scan is only invoked when a commit is merged to the `main` branch.
+As part of the CI/CD, we conduct a Docker security scan using `snyk`, by invoking Snyk's docker image: `snyk/snyk-cli:docker`. This allows us a deep image inspection and vulnerability scan. When a vulnerability is detected while scanning, this breaks breaks CI/CD build. The vulnerability detected by `snyk`would need to be fixed before a successfully build can be completed.

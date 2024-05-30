@@ -1,0 +1,5 @@
+p class="govuk-!-margin-bottom-6"
+  = govuk_link_to "Add training", new_jobseekers_profile_training_and_cpd_path
+
+- if profile.training_and_cpds.any?
+  = render "jobseekers/training_and_cpds/training_and_cpds", profile: profile

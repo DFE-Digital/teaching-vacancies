@@ -33,16 +33,4 @@ class ErrorsController < ApplicationController
       format.json { render json: { error: "Internal server error" }, status: :internal_server_error }
     end
   end
-
-  def invalid_recaptcha
-    @form = params[:form_name]
-    Sentry.with_scope do |scope|
-      scope.set_tags("form.name": @form)
-      Sentry.capture_message("Invalid recaptcha", level: :warning)
-    end
-
-    respond_to do |format|
-      format.html { render status: :unauthorized }
-    end
-  end
 end

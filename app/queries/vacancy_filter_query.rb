@@ -1,7 +1,7 @@
 class VacancyFilterQuery < ApplicationQuery
   attr_reader :scope
 
-  def initialize(scope = Vacancy.live)
+  def initialize(scope = Vacancy.all)
     @scope = scope
   end
 
@@ -18,9 +18,11 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = built_scope.where("vacancies.subjects && ARRAY[?]::varchar[]", filters[:subjects]) if filters[:subjects].present?
 
     # General filters
-    if (filter_job_roles = job_roles(filters[:job_roles]).presence)
-      built_scope = built_scope.with_any_of_job_roles(filter_job_roles)
-    end
+    built_scope = built_scope.visa_sponsorship_available if filters[:visa_sponsorship_availability]
+
+    job_role_keys = %i[job_roles teaching_job_roles support_job_roles]
+    built_scope = apply_job_roles(job_role_keys, built_scope, filters)
+
     built_scope = built_scope.ect_suitable if filters[:ect_statuses]&.include?("ect_suitable") || filters[:job_roles]&.include?("ect_suitable")
     built_scope = add_organisation_type_filters(filters, built_scope)
     built_scope = built_scope.quick_apply if filters[:quick_apply]
@@ -72,14 +74,20 @@ class VacancyFilterQuery < ApplicationQuery
   # Keeps compatibility with legacy job roles filters that have been removed but they are still used by users.
   # EG: Bookmarked results page for a search with the old job roles filters.
   # EG2: Job alerts with the old job roles filters.
-  def job_roles(filter)
-    filter&.flat_map { |job_role|
+  def map_legacy_job_roles(job_roles)
+    job_roles.flat_map do |job_role|
       case job_role
       when "leadership", "senior_leader" then Vacancy::SENIOR_LEADER_JOB_ROLES
       when "middle_leader" then Vacancy::MIDDLE_LEADER_JOB_ROLES
       else job_role
       end
-    }&.reject { |job_role| Vacancy.job_roles.exclude? job_role } # Avoids exceptions raised by ArrayEnum when the job role is not valid
+    end
+  end
+
+  def job_roles(filter)
+    return if filter.blank?
+
+    map_legacy_job_roles(filter).reject { |job_role| Vacancy.job_roles.exclude? job_role } # Avoids exceptions raised by ArrayEnum when the job role is not valid
   end
 
   def phases(filter)
@@ -94,5 +102,17 @@ class VacancyFilterQuery < ApplicationQuery
 
     # These are no longer relevant and have no current equivalent
     working_patterns - %w[compressed_hours staggered_hours]
+  end
+
+  def apply_job_roles(keys, built_scope, filters)
+    filtered_roles_as_strings = keys.flat_map { |key|
+      job_roles(filters[key])
+    }.compact
+
+    return built_scope if filtered_roles_as_strings.blank?
+
+    filtered_roles_as_integers = filtered_roles_as_strings.map { |role| Vacancy::JOB_ROLES[role] }
+
+    built_scope.where("job_roles && ARRAY[?]::integer[]", filtered_roles_as_integers)
   end
 end

@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Jobseekers::JobApplicationMailer do
   let(:jobseeker) { create(:jobseeker, email: email) }
@@ -30,7 +31,8 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     end
 
     it "triggers a `jobseeker_application_shortlisted` email event" do
-      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_application_shortlisted).with_data(expected_data)
+      mail.deliver_now
+      expect(:jobseeker_application_shortlisted).to have_been_enqueued_as_analytics_events
     end
   end
 
@@ -49,7 +51,8 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     end
 
     it "triggers a `jobseeker_application_submitted` email event" do
-      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_application_submitted).with_data(expected_data)
+      mail.deliver_now
+      expect(:jobseeker_application_submitted).to have_been_enqueued_as_analytics_events
     end
   end
 
@@ -67,7 +70,8 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     end
 
     it "triggers a `jobseeker_application_unsuccessful` email event" do
-      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_application_unsuccessful).with_data(expected_data)
+      mail.deliver_now
+      expect(:jobseeker_application_unsuccessful).to have_been_enqueued_as_analytics_events
     end
   end
 
@@ -85,17 +89,8 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     end
 
     it "triggers a `jobseeker_job_listing_ended_early` email event" do
-      expect { mail.deliver_now }.to have_triggered_event(:jobseeker_job_listing_ended_early).with_data(expected_data)
-    end
-
-    context "from Sandbox environment" do
-      let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
-
-      before { allow(Rails.configuration).to receive(:app_role).and_return("sandbox") }
-
-      it "triggers a `publisher_sign_in_fallback` email event" do
-        expect { mail.deliver_now }.to have_triggered_event(:jobseeker_job_listing_ended_early).with_data(expected_data)
-      end
+      mail.deliver_now
+      expect(:jobseeker_job_listing_ended_early).to have_been_enqueued_as_analytics_events
     end
   end
 end

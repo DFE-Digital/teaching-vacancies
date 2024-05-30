@@ -1,9 +1,9 @@
 - if vacancy.contact_email.present?
-  - summary_list.row do |row|
-    - row.key text: t("jobs.contact_email")
-    - row.value text: contact_email_link(vacancy, class: "link-wrap")
+  - summary_list.with_row do |row|
+    - row.with_key text: t("jobs.contact_email")
+    - row.with_value text: contact_email_link(vacancy, class: "link-wrap")
 
 - if vacancy.contact_number.present?
-  - summary_list.row do |row|
-    - row.key text: t("jobs.contact_number")
-    - row.value text: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}")
+  - summary_list.with_row do |row|
+    - row.with_key text: t("jobs.contact_number")
+    - row.with_value text: govuk_link_to(vacancy.contact_number, "tel:#{vacancy.contact_number}")

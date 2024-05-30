@@ -4,6 +4,10 @@
   display: none;
 }
 
+.leaflet-bar a:focus {
+  outline: 6px solid #d4351c; 
+}
+
 .js-enabled {
   .map-component {
     display: block;
@@ -18,7 +22,7 @@
 
         &__marker {
           &:focus {
-            outline: $govuk-focus-width solid $govuk-focus-colour !important;
+            outline: $govuk-focus-width solid govuk-colour('red') !important;
           }
 
           &--show {

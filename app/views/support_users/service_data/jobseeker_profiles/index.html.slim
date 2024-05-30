@@ -1,0 +1,12 @@
+- content_for :page_title_prefix, t(".title")
+
+h1.govuk-heading-l = t(".title")
+= supportal_table(entries: @jobseeker_profiles) do |t|
+  - t.column "Jobseeker" do |jobseeker_profile|
+    - capture do
+      - pd = jobseeker_profile.personal_details
+      - link_text = pd&.first_name? ? "#{pd.first_name} #{pd.last_name}" : jobseeker_profile.jobseeker.email
+      = govuk_link_to(link_text, support_users_service_data_jobseeker_profile_path(jobseeker_profile))
+  - t.boolean "Active", :active
+  - t.datetime "Created", :created_at
+= govuk_pagination(pagy: @pagy)

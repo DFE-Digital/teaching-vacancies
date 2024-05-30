@@ -13,7 +13,7 @@ class Vacancy < ApplicationRecord
   # TODO: Update with job listing updates
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
     about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
-    job_role job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
+    job_roles job_title key_stages personal_statement_guidance salary school_visits subjects starts_on
     working_patterns
   ].freeze
 
@@ -28,20 +28,27 @@ class Vacancy < ApplicationRecord
 
   JOB_ROLES = { "teacher" => 0, "headteacher" => 1, "deputy_headteacher" => 2, "assistant_headteacher" => 3,
                 "head_of_year_or_phase" => 4, "head_of_department_or_curriculum" => 5, "teaching_assistant" => 6,
-                "higher_level_teaching_assistant" => 7, "education_support" => 8, "sendco" => 9 }.freeze
+                "higher_level_teaching_assistant" => 7, "education_support" => 8, "sendco" => 9, "administration_hr_data_and_finance" => 11,
+                "catering_cleaning_and_site_management" => 12, "it_support" => 13, "pastoral_health_and_welfare" => 14,
+                "other_leadership" => 15, "other_support" => 16 }.freeze
 
   MIDDLE_LEADER_JOB_ROLES = %w[head_of_year_or_phase head_of_department_or_curriculum].freeze
   SENIOR_LEADER_JOB_ROLES = %w[headteacher deputy_headteacher assistant_headteacher].freeze
 
+  TEACHING_JOB_ROLES = %w[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher
+                          deputy_headteacher headteacher sendco other_leadership].freeze
+  SUPPORT_JOB_ROLES = %w[teaching_assistant higher_level_teaching_assistant education_support
+                         administration_hr_data_and_finance catering_cleaning_and_site_management
+                         it_support pastoral_health_and_welfare other_support].freeze
+
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
-  array_enum working_patterns: { full_time: 0, part_time: 100 }
+  array_enum working_patterns: { full_time: 0, part_time: 100, flexible: 104, job_share: 101, term_time: 102 }
   array_enum phases: { nursery: 0, primary: 1, middle: 2, secondary: 3, sixth_form_or_college: 4, through: 5 }
   array_enum job_roles: JOB_ROLES
 
   enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2 }
   enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
-  enum job_role: { teacher: 0, senior_leader: 1, middle_leader: 7, teaching_assistant: 6, higher_level_teaching_assistant: 8, education_support: 4, sendco: 5 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum start_date_type: { specific_date: 0, date_range: 1, other: 2, undefined: 3 }
   enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
@@ -64,21 +71,22 @@ class Vacancy < ApplicationRecord
 
   delegate :name, to: :organisation, prefix: true, allow_nil: true
 
-  scope :active, (-> { where(status: %i[published draft]) })
-  scope :applicable, (-> { where("expires_at >= ?", Time.current) })
-  scope :awaiting_feedback, (-> { expired.where(listed_elsewhere: nil, hired_status: nil) })
-  scope :expired, (-> { published.where("expires_at < ?", Time.current) })
-  scope :expired_yesterday, (-> { where("DATE(expires_at) = ?", 1.day.ago.to_date) })
-  scope :expires_within_data_access_period, (-> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) })
-  scope :in_organisation_ids, (->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct })
-  scope :listed, (-> { published.where("publish_on <= ?", Date.current) })
-  scope :live, (-> { listed.applicable })
-  scope :pending, (-> { published.where("publish_on > ?", Date.current) })
-  scope :quick_apply, (-> { where(enable_job_applications: true) })
-  scope :published_on_count, (->(date) { published.where(publish_on: date.all_day).count })
+  scope :active, -> { where(status: %i[published draft]) }
+  scope :applicable, -> { where("expires_at >= ?", Time.current) }
+  scope :awaiting_feedback, -> { expired.where(listed_elsewhere: nil, hired_status: nil) }
+  scope :expired, -> { published.where("expires_at < ?", Time.current) }
+  scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
+  scope :expires_within_data_access_period, -> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) }
+  scope :in_organisation_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { organisation_id: ids }).distinct }
+  scope :listed, -> { published.where("publish_on <= ?", Date.current) }
+  scope :live, -> { listed.applicable }
+  scope :pending, -> { published.where("publish_on > ?", Date.current) }
+  scope :quick_apply, -> { where(enable_job_applications: true) }
+  scope :published_on_count, ->(date) { published.where(publish_on: date.all_day).count }
+  scope :visa_sponsorship_available, -> { where(visa_sponsorship_available: true) }
 
-  scope :internal, (-> { where(external_source: nil) })
-  scope :external, (-> { where.not(external_source: nil) })
+  scope :internal, -> { where(external_source: nil) }
+  scope :external, -> { where.not(external_source: nil) }
 
   scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
@@ -87,6 +95,7 @@ class Vacancy < ApplicationRecord
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
   validates_with ExternalVacancyValidator, if: :external?
+  validates :organisations, :presence => true
 
   has_noticed_notifications
   has_paper_trail on: [:update],
@@ -94,11 +103,10 @@ class Vacancy < ApplicationRecord
                   if: proc { |vacancy| vacancy.listed? }
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
-  before_save :on_job_roles_set_job_role
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
 
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
-  EXPIRY_TIME_OPTIONS = %w[9:00 12:00 17:00 23:59].freeze
+  EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
 
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
@@ -109,11 +117,6 @@ class Vacancy < ApplicationRecord
       working_patterns: working_patterns,
     }
   end
-
-  # We have 'enum job_role' and 'array_enum job_roles'.
-  # Both provide the 'Vacancy.job_roles' class method, and the 'enum job_role' enum list takes over.
-  # When calling 'Vacancy.job_roles' we want to get the list of 'array_enum job_roles' instead, hence this method override.
-  def self.job_roles = JOB_ROLES
 
   def external?
     external_source.present?
@@ -257,19 +260,6 @@ class Vacancy < ApplicationRecord
 
   def slug_candidates
     [:job_title, %i[job_title organisation_name], %i[job_title location]]
-  end
-
-  def on_job_roles_set_job_role
-    return unless job_roles_changed?
-
-    # job_roles contain an individual role unless middle or senior leader roles that may contain all their options
-    self.job_role = if job_roles.intersect? SENIOR_LEADER_JOB_ROLES
-                      "senior_leader"
-                    elsif job_roles.intersect? MIDDLE_LEADER_JOB_ROLES
-                      "middle_leader"
-                    else
-                      job_roles.first
-                    end
   end
 
   def on_expired_vacancy_feedback_submitted_update_stats_updated_at

@@ -1,7 +1,7 @@
 - content_for :page_title_prefix, t(".page_title")
 
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: back_url
+  = govuk_back_link text: t("buttons.back"), href: back_url, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -9,11 +9,15 @@
       = f.govuk_error_summary
 
       = f.govuk_fieldset legend: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".caption"), size: "l" } do
-        = f.govuk_text_field :first_name, label: { size: "m" }
+        = f.govuk_text_field :first_name,
+          label: { size: "m" },
+          autocomplete: "given-name"
 
-        = f.govuk_text_field :last_name, label: { size: "m" }
+        = f.govuk_text_field :last_name,
+          label: { size: "m" },
+          autocomplete: "family-name"
 
-        = f.govuk_submit t("buttons.save_and_continue"), classes: "govuk-!-margin-bottom-5"
+        = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
 
     .govuk-button-group
       = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

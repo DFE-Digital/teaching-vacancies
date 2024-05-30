@@ -1,7 +1,7 @@
 class ValidatableSummaryListComponent < GovukComponent::SummaryListComponent
   registered_slots.delete(:rows)
 
-  renders_many :rows, (lambda do |attribute, **kwargs|
+  renders_many(:rows, lambda do |attribute, **kwargs|
     ValidatableSummaryListComponent::RowComponent.new(
       attribute,
       record: @record,

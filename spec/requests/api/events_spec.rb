@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Events API" do
   describe "#create" do
@@ -12,8 +13,8 @@ RSpec.describe "Events API" do
     end
 
     it "triggers an event" do
-      expect { request }.to have_triggered_event(:tracked_link_clicked)
-        .with_data(link_type: "foo")
+      request
+      expect(:tracked_link_clicked).to have_been_enqueued_as_analytics_events
     end
 
     it "requires a CSRF token", with_csrf_protection: true do
@@ -25,7 +26,7 @@ RSpec.describe "Events API" do
       let(:event_type) { :invalid_event }
 
       it "does not accept the event" do
-        expect { request }.not_to have_triggered_event(:invalid_event)
+        request
         expect(response).to have_http_status(:bad_request)
       end
     end

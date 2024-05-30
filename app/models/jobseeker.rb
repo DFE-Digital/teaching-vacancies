@@ -30,4 +30,8 @@ class Jobseeker < ApplicationRecord
   def account_closed?
     !!account_closed_on
   end
+
+  def needs_email_confirmation?
+    !confirmed? || unconfirmed_email.present?
+  end
 end

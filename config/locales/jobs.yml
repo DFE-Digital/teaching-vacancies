@@ -23,6 +23,9 @@ en:
         description_mobile: Get guidance around how to accept vacancies
         link_text: View article
         title: How to accept job applications on Teaching Vacancies
+      non-teaching-roles-banner:
+        heading: You can now create job listings for all roles in your school or trust.
+        link_text: Find out how to list non-teaching roles.
       pending:
         tab_heading: Scheduled jobs
         with_count: Scheduled jobs (%{count})
@@ -31,8 +34,14 @@ en:
         with_count: Active jobs (%{count})
 
     filters:
+      campaign:
+        teaching_job_roles: Teaching & leadership roles
+        support_job_roles: Support roles
       job_filters: Job Filters
+      job_type: Job type
       job_roles: Job role
+      teaching_job_roles: Teaching & leadership
+      support_job_roles: Support
       ect_suitable: Suitable for early career teachers
       subject: Subject
       phases: Education phase
@@ -40,6 +49,11 @@ en:
       working_patterns: Working pattern
       organisation_type: Organisation type
       school_type: School type
+      visa_sponsorship_availability:
+        legend: Visa sponsorship
+        option: Only show jobs with visa sponsorship
+        subscriptions: Only send alerts for jobs with visa sponsorship
+
 
     education_phase_options:
       middle: Middle
@@ -156,7 +170,6 @@ en:
     create_job_caption: Create a job listing - section %{step} of %{total}
 
     ect_status: Is this role suitable for an early career teacher (ECT)?
-    full_time_details: Full time - %{details}
     further_details: Further details about the role
     location: Location
     location_find_more_html:
@@ -167,7 +180,6 @@ en:
     job_role: Job role
     job_summary: "%{job_title} job summary"
     key_stage: Key stage
-    part_time_details: Part time - %{details}
     safeguarding_information:
       jobseeker: Commitment to safeguarding
       publisher: Information about your commitment to safeguarding
@@ -222,8 +234,8 @@ en:
     expires_at: Closing date
     time_at: at
     visa_sponsorship_row_title: Visa sponsorship
-    visa_sponsorship_available: Yes, visa sponsorship available
-    visa_sponsorship_unavailable: No, visa sponsorship not available
+    visa_sponsorship_available: Skilled Worker visas can be sponsored
+    visa_sponsorship_unavailable: Visas cannot be sponsored
     supporting_documents: Supporting documents
     supporting_documents_accessibility: If you need these documents in an accessible format, please contact the school.
     no_files_message: No files selected
@@ -272,7 +284,7 @@ en:
     school_visits: Do you want to offer school visits?
     school_visits_heading: Arranging a visit to %{school}
     how_to_apply: Application instructions
-    visa_sponsorship: Can you offer skilled worker visa sponsorship to non-UK citizens for this role?
+    visa_sponsorship: Can you offer Skilled Worker visa sponsorship to non-UK citizens for this role?
 
     job_advert: Job advert
     about_school: About %{school}
@@ -361,10 +373,9 @@ en:
           no_filters: You currently have no active jobs.
           with_filters: There are no active jobs for the schools you have selected.
       view_applicants:
-        hidden_text: view
-        zero: "%{count} applicants"
-        one: "%{count} applicant"
-        other: "%{count} applicants"
+        zero: "View %{count} applicants"
+        one: "View %{count} applicant"
+        other: "View %{count} applicants"
 
     date_listed: Date listed
 
@@ -396,3 +407,6 @@ en:
       apply_link: Learn more about this role and how to apply for it (link opens external website in a new window)
       contact_email_link: Email link for job contact email — %{email}
       sort_by_link: Sort jobs by %{column} in %{order}ending order
+      filters:
+        teaching_job_roles: Teaching & leadership job roles
+        support_job_roles: Support job roles

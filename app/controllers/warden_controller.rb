@@ -47,11 +47,11 @@ class WardenController < ApplicationController
     params_hash[:login_failure] = login_failure if login_failure
     params_hash[:attempted_path] = attempted_path if forced_login_requires_alert?
 
-    redirect_to send("new_#{scope}_session_path", params_hash)
+    redirect_to send(:"new_#{scope}_session_path", params_hash)
   end
 
   def failed_login(scope)
-    redirect_to send("new_#{scope}_session_path", login_failure: login_failure)
+    redirect_to send(:"new_#{scope}_session_path", login_failure: login_failure)
   end
 
   def attempted_path

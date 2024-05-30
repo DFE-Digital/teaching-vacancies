@@ -1,6 +1,7 @@
 class Publishers::JobApplicationDataExpiryNotification < Noticed::Base
   include ActionView::Helpers::UrlHelper
   include GovukLinkHelper
+  include GovukVisuallyHiddenHelper
   include DatesHelper
 
   deliver_by :database

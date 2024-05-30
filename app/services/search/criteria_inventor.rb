@@ -12,7 +12,8 @@ class Search::CriteriaInventor
       radius: (location.present? ? DEFAULT_RADIUS_IN_MILES.to_s : nil),
       working_patterns: [],
       phases: @vacancy.phases,
-      job_roles: @vacancy.job_roles,
+      teaching_job_roles: @vacancy.job_roles & Vacancy::TEACHING_JOB_ROLES,
+      support_job_roles: @vacancy.job_roles & Vacancy::SUPPORT_JOB_ROLES,
       ect_statuses: [@vacancy.ect_status],
       subjects: subjects,
     }.delete_if { |_k, v| v.blank? }

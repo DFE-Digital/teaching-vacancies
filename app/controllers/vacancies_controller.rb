@@ -1,12 +1,12 @@
 class VacanciesController < ApplicationController
   before_action :set_landing_page, only: %i[index]
-  after_action :trigger_search_performed_event, only: %i[index]
 
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
     @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
 
     set_search_coordinates unless do_not_show_distance?
+    trigger_search_performed_event
   end
 
   def show
@@ -27,12 +27,11 @@ class VacanciesController < ApplicationController
   def search_params
     return @landing_page.criteria if @landing_page
 
-    strip_empty_checkboxes(%i[job_roles ect_statuses subjects phases quick_apply working_patterns organisation_types school_types]) unless params[:skip_strip_checkboxes]
-    %w[job_roles subjects phases working_patterns quick_apply organisation_types].each do |facet|
+    strip_empty_checkboxes(%i[teaching_job_roles support_job_roles ect_statuses subjects phases quick_apply working_patterns organisation_types school_types visa_sponsorship_availability]) unless params[:skip_strip_checkboxes]
+    %w[teaching_job_roles support_job_roles subjects phases working_patterns quick_apply organisation_types].each do |facet|
       params[facet] = params[facet].split if params[facet].is_a?(String)
     end
-    params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by,
-                  job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], quick_apply: [], organisation_types: [], school_types: [])
+    params.permit(:keyword, :previous_keyword, :organisation_slug, :location, :radius, :subject, :sort_by, teaching_job_roles: [], support_job_roles: [], ect_statuses: [], subjects: [], phases: [], working_patterns: [], quick_apply: [], organisation_types: [], school_types: [], visa_sponsorship_availability: [])
   end
 
   def set_landing_page
@@ -51,21 +50,19 @@ class VacanciesController < ApplicationController
 
   def trigger_search_performed_event
     fail_safe do
-      vacancy_ids = @vacancies.pluck(:id)
-      polygon_id = DfE::Analytics.anonymise(@vacancies_search.location_search.polygon.id) if @vacancies_search.location_search.polygon
+      polygon_id = DfE::Analytics.anonymise(@vacancies_search.polygon.id) if @vacancies_search.polygon
 
       event_data = {
         search_criteria: form.to_hash,
         sort_by: form.sort.by,
         page: params[:page] || 1,
         total_count: @vacancies_search.total_count,
-        vacancies_on_page: vacancy_ids,
+        vacancies_on_page: @vacancies.map(&:id),
         location_polygon_used: polygon_id,
         landing_page: params[:landing_page_slug],
         filters_set_from_keywords: form.filters_from_keyword.present?,
       }
 
-      request_event.trigger(:search_performed, event_data)
       trigger_dfe_analytics_event(:search_performed, event_data)
     end
   end
@@ -90,6 +87,6 @@ class VacanciesController < ApplicationController
     # This is because the coordinates Google (or other providers) use for London (for example) could be miles away from the location of the school, even if the school is
     # actually in London which could potentially confuse jobseekers.
     normalised_query = form.to_hash[:location]&.strip&.downcase
-    normalised_query.nil? || LocationQuery::NATIONWIDE_LOCATIONS.include?(normalised_query) || LocationPolygon.contain?(normalised_query)
+    normalised_query.nil? || LocationQuery::NATIONWIDE_LOCATIONS.include?(normalised_query) || @vacancies_search.polygon.present?
   end
 end

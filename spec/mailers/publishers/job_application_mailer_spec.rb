@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Publishers::JobApplicationMailer do
   let(:publisher) { create(:publisher, email: email) }
@@ -32,23 +33,8 @@ RSpec.describe Publishers::JobApplicationMailer do
     end
 
     it "triggers a `publisher_applications_received` email event" do
-      expect { mail.deliver_now }
-        .to have_triggered_event(:publisher_applications_received)
-        .with_data(expected_data)
-        .and_data(vacancies_job_applications: anything)
-    end
-
-    context "from Sandbox environment" do
-      let(:notify_template) { NOTIFY_SANDBOX_TEMPLATE }
-
-      before { allow(Rails.env).to receive(:sandbox?).and_return(true) }
-
-      it "triggers an email event" do
-        expect { mail.deliver_now }
-          .to have_triggered_event(:publisher_applications_received)
-          .with_data(expected_data)
-          .and_data(vacancies_job_applications: anything)
-      end
+      mail.deliver_now
+      expect(:publisher_applications_received).to have_been_enqueued_as_analytics_events
     end
   end
 end

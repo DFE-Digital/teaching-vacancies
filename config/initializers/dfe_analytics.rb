@@ -42,6 +42,11 @@ DfE::Analytics.configure do |config|
   #
   # config.enable_analytics = proc { true }
 
+  # Ensures the latest version of an entity table in BigQuery is in sync with the database.
+  # It is advisable to schedule this job to run on a nightly basis for consistent data verification.
+  #
+  config.entity_table_checks_enabled = true
+
   # The environment we’re running in. This value will be attached
   # to all events we send to BigQuery.
   #

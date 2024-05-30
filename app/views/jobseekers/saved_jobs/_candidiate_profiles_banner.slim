@@ -1,5 +1,5 @@
 = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |notification_banner|
-  - notification_banner.heading(text: "Create a profile")
+  - notification_banner.with_heading(text: "Create a profile")
 
   p.govuk-body = t("candidate_profiles_banner.intro")
   ul.govuk-list.govuk-list--bullet

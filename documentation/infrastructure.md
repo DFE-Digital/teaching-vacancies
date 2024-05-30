@@ -1,4 +1,5 @@
 # Infrastructure diagrams
+## [Outdated] Diagrams are not visible anymore. Need to regenerate them.
 
 ## CI/CD deployment pipeline
 
@@ -14,7 +15,7 @@ On Pull Request to `main` branch, GitHub Actions `deploy.yml` workflow launches:
 
 - Circle - End user
 - Diamond - Third parties other than AWS and GitHub
-- Ellipse - Gov.UK PaaS
+- Ellipse - AKS
 - Rectangle - AWS
 - Rounded rectangle - GitHub
 

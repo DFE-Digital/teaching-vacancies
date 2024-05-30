@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "deployments_role_policy" {
   # SSM
   statement {
     sid       = "ReadSSMParameters"
-    actions   = ["ssm:GetParameter", "ssm:GetParametersByPath"]
+    actions   = ["ssm:GetParameter", "ssm:GetParameters", "ssm:GetParametersByPath"]
     resources = ["*"]
   }
 
@@ -83,7 +83,8 @@ data "aws_iam_policy_document" "deployments_role_policy" {
     actions = [
       "acm:DescribeCertificate",
       "acm:ListCertificates",
-      "acm:ListTagsForCertificate"
+      "acm:ListTagsForCertificate",
+      "acm:GetCertificate"
     ]
     resources = ["*"]
   }

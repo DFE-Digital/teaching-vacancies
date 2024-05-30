@@ -1,7 +1,7 @@
 default: &default
   adapter: postgis
   encoding: unicode
-  # PaaS DATABASE_URL will start with `postgres://`, which overrides the postgis adapter
+  # AKS DATABASE_URL will start with `postgres://`, which overrides the postgis adapter
   # so we need to replace `postgres` if it occurs at the beginning of DATABASE_URL
   url: <%= ENV.fetch('DATABASE_URL', 'postgis://postgres@localhost:5432').sub(/^postgres/, "postgis") %>
   pool: <%= Integer(ENV.fetch('RAILS_MAX_THREADS') { 5 }) %>

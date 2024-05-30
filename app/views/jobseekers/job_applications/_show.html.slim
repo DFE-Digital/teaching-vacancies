@@ -6,7 +6,8 @@
     .with_anchor-link-list class="govuk-!-display-none-print"
       = navigation_list(title: t(".application_sections")) do |navigation|
         - navigation.with_anchor text: t(".personal_details.heading"), href: "#personal_details"
-        - navigation.with_anchor text: t(".professional_status.heading"), href: "#professional_status"
+        - if (vacancy.job_roles & Vacancy::TEACHING_JOB_ROLES).present?
+          - navigation.with_anchor text: t(".professional_status.heading"), href: "#professional_status"
         - navigation.with_anchor text: t(".qualifications.heading"), href: "#qualifications"
         - navigation.with_anchor text: t(".employment_history.heading"), href: "#employment_history"
         - navigation.with_anchor text: t(".personal_statement.heading"), href: "#personal_statement"

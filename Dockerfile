@@ -1,14 +1,15 @@
-# TODO: Remove procps-ng and libwebp from this list once we upgrade to alpine > v3.18
-# The packages are defined here with a hardcoded version to resolve a vulnerability in the procps-ng, libwebpand cups
-# packages coming with Alpine v3.18.
-ARG PROD_PACKAGES="imagemagick libxml2 libxslt libpq tzdata shared-mime-info procps-ng=4.0.4-r0 libwebp=1.3.2-r0 cups=2.4.7-r0"
+ # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
+ # Alpine v3.19.
+ # TODO: Regularly check in the alpine ruby "3.3.1-alpine3.19" images for its latest upgraded packages so we can remove
+ # the hardcoded versions below when they have been updated in the alpine ruby image.
+ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15 busybox=1.36.1-r18 openssl=3.1.5-r0"
 
-FROM ruby:3.2.2-alpine3.18 AS builder
+FROM ruby:3.3.1-alpine3.19 AS builder
 
 WORKDIR /app
 
 ARG PROD_PACKAGES
-ENV DEV_PACKAGES="gcc libc-dev make yarn postgresql13-dev build-base git"
+ENV DEV_PACKAGES="gcc libc-dev make yarn postgresql15-dev build-base git"
 RUN apk add --no-cache $PROD_PACKAGES $DEV_PACKAGES
 RUN echo "Europe/London" > /etc/timezone && \
         cp /usr/share/zoneinfo/Europe/London /etc/localtime
@@ -47,7 +48,7 @@ RUN rm -rf node_modules log tmp yarn.lock && \
 
 
 # this stage reduces the image size.
-FROM ruby:3.2.2-alpine3.18 AS production
+FROM ruby:3.3.1-alpine3.19 AS production
 
 WORKDIR /app
 

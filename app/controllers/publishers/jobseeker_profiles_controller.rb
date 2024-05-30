@@ -12,7 +12,7 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
   private
 
   def jobseeker_profile_search_params
-    params.permit(locations: [], qualified_teacher_status: [], roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: [], right_to_work_in_uk: [])
+    params.permit(locations: [], qualified_teacher_status: [], teaching_job_roles: [], support_job_roles: [], working_patterns: [], education_phases: [], key_stages: [], subjects: [], right_to_work_in_uk: [])
           .transform_values(&:compact_blank)
           .merge(current_organisation:)
   end

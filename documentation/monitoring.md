@@ -14,30 +14,10 @@
 
 ## Monitoring, Metrics and Usage
 
-### Grafana, Prometheus, and AlertManager
+### Grafana Dashboards
 
-For several infrastructure components on Gov.UK PaaS, we use [Prometheus Exporters](https://prometheus.io/docs/instrumenting/exporters/) to:
-- fetch statistics from another, non-Prometheus system
-- turn those statistics into Prometheus metrics, using a client library
-- expose a `/metrics` URL, and have that URL display the system metrics (in the case of teaching vacancies, rather than appending `/metrics` to the root URL, it's instead at [https://paas-prometheus-exporter-teaching-vacancies.london.cloudapps.digital/metrics](https://paas-prometheus-exporter-teaching-vacancies.london.cloudapps.digital/metrics))
-
-- The [Teaching Vacancies Production Grafana dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/6Ac4lUWGk/teaching-vacancies-production?orgId=1&refresh=5s) has been set up with useful visualisations of metrics over time
-- The [CF apps Grafana dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/eF19g4RZx/cf-apps?orgId=1&refresh=10s) allows the filtering of apps and spaces, so you could choose to see the performance of the `teaching-vacancies-worker-staging` app
-- The [CF Databases dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/a2FR6FUMz/cf-databases?orgId=1&refresh=10s&var-SpaceName=teaching-vacancies-production&var-Services=teaching-vacancies-postgres-production) shows postgres metrics
-- The [Redis dashboard](https://grafana-teaching-vacancies.london.cloudapps.digital/d/_XaXFGTMz/redis-dashboard-for-prometheus-redis-exporter-1-x?orgId=1&refresh=30s) shows metrics for all redis instances
-
-- Additionally, we set up [Prometheus alerting rules](https://prometheus-teaching-vacancies.london.cloudapps.digital/alerts) (example: trigger when CPU usage goes above 60% for 5 minutes)
-- [Alertmanager](https://alertmanager-teaching-vacancies.london.cloudapps.digital/#/alerts) receives the alerts specified in Prometheus, and routes these to the `#twd_tv_dev` channel in Slack
-
-Alerts can be unit tested, which is very useful for non obvious changes. Use [promtool](https://prometheus.io/docs/prometheus/latest/configuration/unit_testing_rules/)
-which is part of Prometheus and run `promtool test rules alert.test.yml` in the `terraform/monitoring/config` directory.
-
-The stack is comprised of 4 apps in the Gov.UK `teaching-vacancies-monitoring` space:
-
-- alertmanager-teaching-vacancies
-- grafana-teaching-vacancies
-- paas-prometheus-exporter-teaching-vacancies
-- prometheus-teaching-vacancies
+- [TV roduction namespace dashboard](https://grafana.teacherservices.cloud/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=10s&var-datasource=P5DCFC7561CCDE821&var-cluster=prometheus&var-namespace=tv-production&var-resolution=30s&var-created_by=All&from=now-3h&to=now)
+- [TV production pods dashboard](https://grafana.teacherservices.cloud/d/k8s_views_pods/kubernetes-views-pods?orgId=1&refresh=10s&var-datasource=P5DCFC7561CCDE821&var-cluster=prometheus&var-namespace=tv-production&var-deployment=All&var-pod=All&var-resolution=30s&from=now-3h&to=now)
 
 ### Skylight
 
@@ -47,18 +27,19 @@ The stack is comprised of 4 apps in the Gov.UK `teaching-vacancies-monitoring` s
 
 - [Uptime check including test history](https://app.statuscake.com/UptimeStatus.php?tid=5636370) against `https://teaching-vacancies.service.gov.uk/check`
 
-### PaaS
+### AKS
 
-- [Check the Gov.UK PaaS `teaching-vacancies-production` space](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e/spaces/ebce88e9-8d3e-424b-8da3-c8dc0072b900/applications)
+- Check the Teaching Vacancies `s189-teacher-services-cloud-production` [subscription resources](https://portal.azure.com/)
 
-### Logit
+### Logs
 
-PaaS logs are drained to logit. There are customised alerts on Logit, which monitors and alerts on various events.
+- Azure logs can be accessed/queried from the Azure Long resources `s189p01-tv-pd-rg` under `s189-teacher-services-cloud-production` subscription.
 
-`alert_on_no_logs_from_paas.yaml`: This monitors and alerts if no logs are being sent from PaaS to Teaching-Vacanices' Logit stack.
-`Throttled.yml`: This monitors and alerts if we have unusual amount of requests, which have been throttled.
+
+For the moment, AKS logs are not sent to Logit. There are plans to change this in the future.
+
 
 ### Billing
 
 - [Billing & Cost Management Dashboard](https://console.aws.amazon.com/billing/home#/) for which you'll need to first assume the AWS role [Billing Manager](https://console.aws.amazon.com/iam/home?region=eu-west-2#/roles/BillingManager)
-- [PaaS statements](https://admin.london.cloud.service.gov.uk/organisations/386a9502-d9b6-4aba-b3c3-ebe4fa3f963e/statements) for which you'll need to be added to the Billing Role by `#digital-tools-support`
+- [Hosting Billing](https://portal.azure.com/?feature.msaljs=true#view/Microsoft_Azure_Billing/SubscriptionsBladeV1) accessed through the DFE Platform Identity subscriptions in Azure.

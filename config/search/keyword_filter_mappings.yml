@@ -3,6 +3,15 @@
   phases:
     - sixth_form_or_college
     - secondary
+"visa":
+  visa_sponsorship_availability:
+    - "true"
+"visa sponsorship":
+  visa_sponsorship_availability:
+    - "true"
+"sponsorship":
+  visa_sponsorship_availability:
+    - "true"
 "accounting teacher":
   phases:
     - secondary
@@ -13,13 +22,13 @@
   subjects:
     - Art and design
 "assistant head":
-  job_roles:
+  teaching_job_roles:
     - assistant_headteacher
 "assistant headteacher":
-  job_roles:
+  teaching_job_roles:
     - assistant_headteacher
 "assistant head teacher":
-  job_roles:
+  teaching_job_roles:
     - assistant_headteacher
 "biology":
   phases:
@@ -34,7 +43,7 @@
   subjects:
     - Business studies
 "ceo":
-  job_roles:
+  teaching_job_roles:
     - headteacher
 "chemistry":
   phases:
@@ -69,16 +78,16 @@
   subjects:
     - Dance
 "deputy":
-  job_roles:
+  teaching_job_roles:
     - deputy_headteacher
 "deputy head":
-  job_roles:
+  teaching_job_roles:
     - deputy_headteacher
 "deputy headteacher":
-  job_roles:
+  teaching_job_roles:
     - deputy_headteacher
 "deputy head teacher":
-  job_roles:
+  teaching_job_roles:
     - deputy_headteacher
 "design":
   phases:
@@ -120,6 +129,9 @@
 "film":
   subjects:
     - Media studies
+"flexible":
+  working_patterns:
+    - flexible
 "finance teacher":
   phases:
     - secondary
@@ -151,58 +163,58 @@
   subjects:
     - Classics
 "head of english":
-  job_roles:
+  teaching_job_roles:
     - head_of_department_or_curriculum
 "head of history":
-  job_roles:
+  teaching_job_roles:
     - head_of_department_or_curriculum
 "head of maths":
-  job_roles:
+  teaching_job_roles:
     - head_of_department_or_curriculum
 "head of mfl":
-  job_roles:
+  teaching_job_roles:
     - head_of_department_or_curriculum
 "head of school":
-  job_roles:
+  teaching_job_roles:
     - headteacher
 "head of science":
-  job_roles:
+  teaching_job_roles:
     - head_of_department_or_curriculum
 "head of":
-  job_roles:
+  teaching_job_roles:
     - head_of_department_or_curriculum
 "head of sixth form":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "head of key stage":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "head of ks":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "head of ks1":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "head of ks2":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "head of ks3":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "head of ks4":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "head of ks5":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "head of year":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "head teacher":
-  job_roles:
+  teaching_job_roles:
     - headteacher
 "headteacher":
-  job_roles:
+  teaching_job_roles:
     - headteacher
 "health":
   subjects:
@@ -211,7 +223,7 @@
   subjects:
     - History
 "hlta":
-  job_roles:
+  support_job_roles:
     - teaching_assistant
 "hospitality":
   phases:
@@ -293,21 +305,21 @@
   subjects:
     - Law
 "leader":
-  job_roles:
+  teaching_job_roles:
     - headteacher
     - deputy_headteacher
     - assistant_headteacher
     - head_of_year_or_phase
     - head_of_department_or_curriculum
 "leadership":
-  job_roles:
+  teaching_job_roles:
     - headteacher
     - deputy_headteacher
     - assistant_headteacher
     - head_of_year_or_phase
     - head_of_department_or_curriculum
 "learning support assistant":
-  job_roles:
+  support_job_roles:
     - teaching_assistant
     - education_support
 "literacy":
@@ -322,7 +334,7 @@
   subjects:
     - English
 "lsa":
-  job_roles:
+  support_job_roles:
     - teaching_assistant
     - education_support
 "mandarin":
@@ -354,11 +366,11 @@
     - Spanish
     - Mandarin
 "middle leader":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
     - head_of_department_or_curriculum
 "middle leadership":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
     - head_of_department_or_curriculum
 "middle school":
@@ -400,7 +412,7 @@
   subjects:
     - Drama
 "phase leader":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
 "philosophy":
   phases:
@@ -442,7 +454,7 @@
   phases:
     - primary
 "principal":
-  job_roles:
+  teaching_job_roles:
     - headteacher
 "product":
   phases:
@@ -502,29 +514,29 @@
   phases:
     - secondary
 "sen":
-  job_roles:
+  teaching_job_roles:
     - sendco
 "senco":
-  job_roles:
+  teaching_job_roles:
     - sendco
 "send":
-  job_roles:
+  teaching_job_roles:
     - sendco
 "sendco":
-  job_roles:
+  teaching_job_roles:
     - sendco
 "senior leader":
-  job_roles:
+  teaching_job_roles:
     - headteacher
     - deputy_headteacher
     - assistant_headteacher
 "senior leadership":
-  job_roles:
+  teaching_job_roles:
     - headteacher
     - deputy_headteacher
     - assistant_headteacher
 "senior leadership team":
-  job_roles:
+  teaching_job_roles:
     - headteacher
     - deputy_headteacher
     - assistant_headteacher
@@ -536,7 +548,7 @@
     - sixth_form_or_college
     - secondary
 "slt":
-  job_roles:
+  teaching_job_roles:
     - headteacher
     - deputy_headteacher
     - assistant_headteacher
@@ -571,13 +583,13 @@
   subjects:
     - Spanish
 "special educational needs":
-  job_roles:
+  teaching_job_roles:
     - sendco
 "special educational needs co-ordinator":
-  job_roles:
+  teaching_job_roles:
     - sendco
 "special educational needs coordinator":
-  job_roles:
+  teaching_job_roles:
     - sendco
 "sport":
   subjects:
@@ -604,7 +616,7 @@
   ect_statuses:
     - ect_suitable
 "support":
-  job_roles:
+  support_job_roles:
     - education_support
 "systems":
   phases:
@@ -613,13 +625,13 @@
   subjects:
     - Design and technology
 "ta":
-  job_roles:
+  support_job_roles:
     - teaching_assistant
 "teach":
-  job_roles:
+  teaching_job_roles:
     - teacher
 "teacher":
-  job_roles:
+  teaching_job_roles:
     - teacher
 "teacher of accounting":
   phases:
@@ -634,16 +646,16 @@
   subjects:
     - Accounting
 "teachers":
-  job_roles:
+  teaching_job_roles:
     - teacher
 "teaching":
-  job_roles:
+  teaching_job_roles:
     - teacher
 "teaching assistant":
-  job_roles:
+  support_job_roles:
     - teaching_assistant
 "teaching assistants":
-  job_roles:
+  support_job_roles:
     - teaching_assistant
 "textiles":
   phases:
@@ -655,6 +667,6 @@
   subjects:
     - Drama
 "tlr":
-  job_roles:
+  teaching_job_roles:
     - head_of_year_or_phase
     - head_of_department_or_curriculum

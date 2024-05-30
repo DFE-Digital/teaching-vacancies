@@ -21,13 +21,17 @@
         = f.govuk_text_field :postcode, width: "one-third"
         = f.govuk_text_field :country, width: "one-third"
       = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "one-half", aria: { required: true }
-      = f.govuk_email_field :email_address, value: (form.email_address.presence || job_application.email), label: { size: "s" }, width: "one-half", aria: { required: true }
+      = f.govuk_email_field :email_address, value: form.email_address.presence || job_application.email, label: { size: "s" }, width: "one-half", aria: { required: true }
       = f.govuk_radio_buttons_fieldset :right_to_work_in_uk,
         legend: { text: t("jobseekers.profiles.personal_details.work.page_title"), size: "s" },
-        hint: { text: t("jobseekers.profiles.personal_details.work.hint.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.hint.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe } do
-
+        hint: { text: t(radio_button_legend_hint[:text], link: govuk_link_to(t(radio_button_legend_hint[:link]), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe } do
         = f.govuk_radio_button :right_to_work_in_uk, "yes", label: { text: t("jobseekers.profiles.personal_details.work.options.true") }, link_errors: true
-        = f.govuk_radio_button :right_to_work_in_uk, "no", label: { text: t("jobseekers.profiles.personal_details.work.options.false") }
+        = f.govuk_radio_button :right_to_work_in_uk, "no", label: { text: t("jobseekers.profiles.personal_details.work.options.false") } do
+          - unless vacancy.visa_sponsorship_available?
+            = govuk_warning_text(text: t("jobseekers.profiles.personal_details.work.warning.text"))
+            p.govuk-body = t("jobseekers.profiles.personal_details.work.warning.paragraph_1")
+            p.govuk-body = t("jobseekers.profiles.personal_details.work.warning.paragraph_2.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.warning.paragraph_2.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe
+            = link_to t("jobseekers.profiles.personal_details.work.warning.search_for_jobs"), jobs_path, class: "govuk-button govuk-button--secondary"
 
       = f.govuk_text_field :teacher_reference_number, hint: { text: t("helpers.hint.jobseekers_job_application_personal_details_form.teacher_reference_number_html") }, label: { size: "s" }, width: "one-half"
       = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half"

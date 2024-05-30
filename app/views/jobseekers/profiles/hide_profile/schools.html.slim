@@ -12,7 +12,7 @@
 
       = govuk_summary_list do |summary_list|
         - profile.organisation_exclusions.each do |exclusion|
-          = summary_list.row do |row|
+          = summary_list.with_row do |row|
             - row.with_key(text: exclusion.organisation.name)
             - row.with_value do
               = exclusion.organisation.address

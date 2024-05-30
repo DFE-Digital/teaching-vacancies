@@ -18,7 +18,7 @@ module VacancyFormsHelper
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.senior_leader")
     when "head_of_year_or_phase", "head_of_department_or_curriculum"
       middle_leader_job_title_hint_text(vacancy)
-    else
+    when "education_support", "higher_level_teaching_assistant", "sendco", "teaching_assistant"
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.#{first_role}")
     end
   end

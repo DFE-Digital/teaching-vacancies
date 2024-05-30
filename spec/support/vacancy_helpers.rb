@@ -12,7 +12,8 @@ module VacancyHelpers
   end
 
   def fill_in_job_role_form_fields(vacancy)
-    choose I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_role}")
+    checkbox_label = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_roles.first}")
+    find("label", text: checkbox_label, visible: true).click
   end
 
   def fill_in_education_phases_form_fields(vacancy)
@@ -46,8 +47,7 @@ module VacancyHelpers
       check Vacancy.human_attribute_name(working_pattern.to_s), name: "publishers_job_listing_working_patterns_form[working_patterns][]"
     end
 
-    fill_in "publishers_job_listing_working_patterns_form[full_time_details]", with: vacancy.full_time_details if vacancy.working_patterns.include?("full_time")
-    fill_in "publishers_job_listing_working_patterns_form[part_time_details]", with: vacancy.part_time_details if vacancy.working_patterns.include?("part_time")
+    fill_in "publishers_job_listing_working_patterns_form[working_patterns_details]", with: vacancy.working_patterns_details
   end
 
   def fill_in_pay_package_form_fields(vacancy)
@@ -77,7 +77,7 @@ module VacancyHelpers
     fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: vacancy.expires_at.month
     fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: vacancy.expires_at.year
 
-    choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
+    choose "3pm", name: "publishers_job_listing_important_dates_form[expiry_time]"
   end
 
   def fill_in_start_date_form_fields(vacancy)
@@ -177,11 +177,9 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.contract_type_with_duration)
 
     vacancy.working_patterns.each do |working_pattern|
-      expect(page).to have_content(working_pattern.humanize)
+      expect(page).to have_content(/#{working_pattern.humanize}/i)
     end
-
-    expect(page).to have_content(vacancy.full_time_details) if vacancy.working_patterns.include?("full_time")
-    expect(page).to have_content(vacancy.part_time_details) if vacancy.working_patterns.include?("part_time")
+    expect(page).to have_content(vacancy.working_patterns_details)
 
     expect(page).to have_content(vacancy.salary) if vacancy.salary_types.include?("full_time")
     expect(page).to have_content(vacancy.actual_salary) if vacancy.salary_types.include?("part_time")
@@ -226,8 +224,11 @@ module VacancyHelpers
   def verify_vacancy_show_page_details(vacancy)
     vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.readable_job_roles)
-    sponsorship_text = vacancy.visa_sponsorship_available ? "Yes, visa sponsorship available" : "No, visa sponsorship not available"
+    readable_job_roles = vacancy.job_roles.map { |role| I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{role}") }
+    readable_job_roles.each do |role|
+      expect(page).to have_content(role)
+    end
+    sponsorship_text = vacancy.visa_sponsorship_available ? "Skilled Worker visas can be sponsored" : "Visas cannot be sponsored"
     expect(page).to have_content(sponsorship_text)
     vacancy.subjects.each { |subject| expect(page).to have_content subject }
 
@@ -257,7 +258,7 @@ module VacancyHelpers
     expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents")) if vacancy.supporting_documents.any?
 
     if vacancy.enable_job_applications?
-      sponsorship_inset_text = vacancy.visa_sponsorship_available ? "Skilled worker visa sponsorship is available for this job." : "Skilled worker visa sponsorship is not available for this job."
+      sponsorship_inset_text = vacancy.visa_sponsorship_available ? "Skilled Worker visas can be sponsored." : "Visas cannot be sponsored"
       expect(page).to have_content sponsorship_inset_text
       expect(page).to have_link(I18n.t("jobseekers.job_applications.apply"), href: new_jobseekers_job_job_application_path(vacancy.id))
     else
@@ -278,7 +279,7 @@ module VacancyHelpers
       jobBenefits: vacancy.benefits_details,
       datePosted: vacancy.publish_on.to_time.iso8601,
       description: vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : vacancy.job_advert,
-      occupationalCategory: vacancy.job_role,
+      occupationalCategory: vacancy.job_roles.first,
       directApply: vacancy.enable_job_applications,
       employmentType: vacancy.working_patterns_for_job_schema,
       industry: "Education",

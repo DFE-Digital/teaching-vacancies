@@ -55,9 +55,9 @@ ruby:
   clear_filters_link: { text: t("shared.filter_group.clear_all_filters"), url: organisations_path(@school_search.clear_filters_params) },
   options: { heading_text: "Filter", remove_filter_links: true },
   html_attributes: { tabindex: "-1", id: "filters-component" }) do |filters_component|
-    - filters_component.remove_filter_links do |rb|
+    - filters_component.with_remove_filter_links do |rb|
       - filter_types.each do |filter_type|
-        - rb.group(**filter_type.merge(remove_filter_link: { url_helper: :organisations_path, params: @school_search.active_criteria }))
+        - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :organisations_path, params: @school_search.active_criteria }))
     - filters_component.with_group key: "education_phase", component: f.govuk_collection_check_boxes(:education_phase, f.object.education_phase_options, :first, :last, small: true, legend: { text: t("organisations.filters.education_phase") }, hint: nil)
     - filters_component.with_group key: "key_stage", component: f.govuk_collection_check_boxes(:key_stage, f.object.key_stage_options, :first, :last, small: true, legend: { text: t("organisations.filters.key_stage") }, hint: nil)
     - filters_component.with_group key: "organisation_types", component: f.govuk_collection_check_boxes(:organisation_types, f.object.organisation_type_options, :first, :first, :last, small: true, legend: { text: t("jobs.filters.organisation_type") })

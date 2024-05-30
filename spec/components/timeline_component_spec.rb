@@ -10,11 +10,11 @@ RSpec.describe TimelineComponent, type: :component do
 
   describe "heading" do
     context "when heading slot is defined" do
-      subject! { render_inline(described_class.new) { |timeline| timeline.heading(title: "A title") } }
+      subject! { render_inline(described_class.new) { |timeline| timeline.with_heading(title: "A title") } }
 
       it "renders heading" do
         expect(page).to have_css(".timeline-component") do |timeline|
-          expect(timeline).to have_css("h3", class: "timeline-component__heading", text: "A title")
+          expect(timeline).to have_css("h2", class: "timeline-component__heading", text: "A title")
         end
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe TimelineComponent, type: :component do
     context "when heading slot is not defined" do
       it "does not render heading" do
         expect(page).to have_css(".timeline-component") do |timeline|
-          expect(timeline).not_to have_css("h4", class: "timeline-component__heading")
+          expect(timeline).not_to have_css("h3", class: "timeline-component__heading")
         end
       end
     end
@@ -32,8 +32,8 @@ RSpec.describe TimelineComponent, type: :component do
     context "when item slots are defined" do
       subject! do
         render_inline(described_class.new) do |timeline|
-          timeline.item(key: "Item 1", value: "The first thing")
-          timeline.item(key: "Item 2", value: "The second thing")
+          timeline.with_item(key: "Item 1", value: "The first thing")
+          timeline.with_item(key: "Item 2", value: "The second thing")
         end
       end
 
@@ -45,11 +45,11 @@ RSpec.describe TimelineComponent, type: :component do
         end
 
         expect(page.all(".timeline-component__item")[0])
-          .to have_css("h4", text: "Item 1")
+          .to have_css("h3", text: "Item 1")
           .and have_css("p", text: "The first thing")
 
         expect(page.all(".timeline-component__item")[1])
-          .to have_css("h4", text: "Item 2")
+          .to have_css("h3", text: "Item 2")
           .and have_css("p", text: "The second thing")
       end
     end

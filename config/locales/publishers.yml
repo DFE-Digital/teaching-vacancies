@@ -63,6 +63,7 @@ en:
     job_listing_process_changed_draft_banner:
       heading_html: "You cannot make changes to this draft job listing. %{create_new_link} or %{contact_support_link}."
     jobseeker_profiles:
+      skip_link_list: Skip to candidate profiles
       trusts:
         available_to_travel_text:
           single_selected_location: "These candidates are willing to travel to your selected school location."
@@ -71,6 +72,7 @@ en:
       non_trusts:
         available_to_travel_text: "These candidates are willing to travel to a location that’s near to your school."
       index:
+        title: "Candidate profiles - %{organisation_name}"
         no_results:
           heading: No candidates found
           lead_in: "This may be because:"
@@ -111,7 +113,7 @@ en:
         preferred_roles: "Preferred roles"
         preferred_working_patterns: "Preferred working patterns"
         qualified_teacher_status: "Qualified teaching status (QTS)"
-        right_to_work_in_uk: "Right to work in the UK"
+        right_to_work_in_uk: "Visa sponsorship"
         qts_options:
           "no": Does not have QTS
           on_track: On track to receive QTS
@@ -129,17 +131,14 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
         schools: Locations
         working_pattern_options:
-          full_time: "Full time"
-          part_time: "Part time"
+          flexible: Flexible
+          full_time: Full time
+          job_share: Job share
+          part_time: Part time
+          term_time: Term time
         right_to_work_in_uk_options:
-          "true": "Does have the right to work in the UK"
-          "false": "Does not have the right to work in the UK"
-
-    invitations:
-      index:
-        no_invitations:
-          school: This user has not been invited to apply to any roles at your school.
-          organisation: This user has not been invited to apply to any roles at your organisation.
+          "true": "Does not need visa sponsorship"
+          "false": "Needs visa sponsorship"
     login_keys:
       new:
         notice: >-
@@ -363,7 +362,7 @@ en:
         heading: Choose your organisation
         page_title: Choose your organisation
         please_select: >-
-          You are associated with more than one organisation. Please select the one you wish to sign in with.
+          Please select the organisation you wish to sign in with.
       email:
         body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
         heading: Sign in to Teaching Vacancies
@@ -495,6 +494,12 @@ en:
         job_applications: When you create a job listing you can now choose for candidates to apply through Teaching Vacancies.
         job_applications_link_text: Preview the application form
         skip_link: Skip to %{heading}
+        title:
+          published: Active jobs - %{organisation_name}
+          expired: Closed jobs - %{organisation_name}
+          pending: Scheduled jobs - %{organisation_name}
+          draft: Draft jobs - %{organisation_name}
+          awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
         header:
           status_heading: Applicant status
@@ -598,7 +603,7 @@ en:
         view_live_listing_title: View the live job listing
       steps:
         job_details: Job details
-        job_role: Job role
+        job_role: What type of job is this?
         job_location: Locations where the job is based
         education_phases: Education phase
         job_title: Job title
@@ -620,7 +625,7 @@ en:
         include_additional_documents: Do you want to upload any additional documents?
         documents: Upload additional documents
         review_heading: Review the job listing
-        visa_sponsorship: Can you offer skilled worker visa sponsorship to non-UK citizens for this role?
+        visa_sponsorship: Can you offer Skilled Worker visa sponsorship to non-UK citizens for this role?
       submit:
         cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft jobs.
       summary:

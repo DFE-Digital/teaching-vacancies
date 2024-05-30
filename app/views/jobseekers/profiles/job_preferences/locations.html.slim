@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, "Job preferences: locations"
 - content_for :breadcrumbs do
-  = govuk_back_link text: t("buttons.back"), href: back_url
+  = govuk_back_link text: t("buttons.back"), href: back_url, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
 = form_for @step, as: :job_preferences, url: { action: :update } do |f|
   = f.govuk_error_summary
@@ -11,16 +11,20 @@
         span.govuk-caption-l Job preferences
         | Locations
 
+      - another_location_legend = capture do
+        legend.govuk-fieldset__legend.govuk-fieldset__legend--m
+          h2.govuk-fieldset__heading = t("helpers.legend.jobseekers_profile_location_preferences.another_location")
+
       = govuk_summary_list(classes: "locations-summary-list") do |summary_list|
         = @form.locations.each.with_index do |(id, location), index|
-          - summary_list.row do |row|
+          - summary_list.with_row do |row|
             - row.with_key text: "Location #{index + 1}"
             - row.with_value text: "#{location[:location]} (#{t 'jobs.search.number_of_miles', count: location[:radius].to_i})"
             - row.with_action(text: t("buttons.change"), href: { action: :update_location, id: id })
             - row.with_action(text: t("buttons.delete"), href: { action: :delete_location, id: id })
 
       = f.hidden_field :add_location, value: ""
-      = f.govuk_radio_buttons_fieldset(:add_location, legend: { size: "m", text: "Do you want to add another location?" }) do
+      = f.govuk_radio_buttons_fieldset(:add_location, legend: -> { another_location_legend }) do
         = f.govuk_radio_button :add_location, "true", label: { text: "Yes" }
         = f.govuk_radio_button :add_location, "false", label: { text: "No" }
 

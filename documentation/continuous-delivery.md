@@ -46,8 +46,6 @@ Our [Github actions dashboard](https://github.com/DFE-Digital/teaching-vacancies
 
 When a developer creates a pull request, a dedicated `review app` is automatically created for them and populated with test data. It allows them to test the new feature in isolation and show it to the business for validation.
 
-They can also deploy manually to the `dev` permanent environment. This allows integrating different branches or using specific `dev` data. They can build and deploy directly from their development environment. They can also push their changes to the `dev` branch, which will trigger a deployment to the dev environment.
-
 Unit tests are run by the developers manually and by the automated workflow when they push a branch.
 
 When a pull request is merged to the master branch, a docker image is built and stored on [Docker hub](https://hub.docker.com/r/dfedigital/teaching-vacancies). This is the build artifact that will be deployed to all environments.

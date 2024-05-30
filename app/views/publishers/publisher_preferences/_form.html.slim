@@ -4,7 +4,7 @@
     classes: "checkbox-label__bold govuk-!-margin-top-5" do
 
     = searchable_collection(collection: f.govuk_collection_check_boxes(:school_ids,
-          current_organisation.schools.not_universities.not_closed.order(:name),
+          current_organisation.schools.not_excluded.not_closed.order(:name),
           :id,
           :name,
           :address,
@@ -12,7 +12,7 @@
           hint: nil,
           small: true,
           classes: "checkbox-label__bold"),
-          collection_count: current_organisation.schools.not_universities.not_closed.order(:name).count,
+          collection_count: current_organisation.schools.not_excluded.not_closed.order(:name).count,
           options: { border: true },
           text: { aria_label: "search organisation schools" })
 

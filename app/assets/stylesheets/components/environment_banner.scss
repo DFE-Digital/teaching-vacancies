@@ -40,11 +40,6 @@
     @include striped-banner(govuk-colour('yellow', 25));
   }
 
-  &--dev {
-    @include striped-banner(govuk-colour('green', 25));
-    color: govuk-colour('white');
-  }
-
   &--user-testing {
     @include striped-banner(govuk-colour('turquoise'), 10);
     color: govuk-colour('white');

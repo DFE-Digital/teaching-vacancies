@@ -1,0 +1,8 @@
+- content_for :page_title_prefix, t("support_users.service_data.index.title")
+
+h1.govuk-heading-l = t("support_users.service_data.index.heading")
+
+nav
+  ul.govuk-list
+    li
+      = govuk_link_to t("support_users.service_data.index.jobseeker_profiles_link"), support_users_service_data_jobseeker_profiles_path

@@ -11,7 +11,7 @@ With the [offline/index.html](../offline/index.html) page, paths to assets are d
 
 ## When is it served?
 
-The "site offline" page is served if Cloudfront detects that the PaaS-hosted site is returning HTTP status codes:
+The "site offline" page is served if Cloudfront detects that the site is returning HTTP status codes:
 - [502 Bad Gateway](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502)
 - [503 Service Unavailable](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503)
 
@@ -28,7 +28,7 @@ The [sync-offline](../bin/sync-offline) script:
 
 - uses the AWS CLI to synchronise with the offline site S3 bucket
 
-The GitHub Action [deploy](../.github/workflows/deploy.yml) workflow includes these steps:
+The GitHub Action [build_and_deploy](../.github/workflows/build_and_deploy.yml) workflow includes these steps:
 - runs the regenerate-offline script
 - runs the sync-offline script
 
@@ -46,19 +46,3 @@ The offline page is a single HTML file in [offline/index.html](../offline/index.
 RELEASE=3.11.0
 ```
 - When the change is merged, the new version will be synchronised
-
-## How to test
-
-- Check the underlying page [in the S3 bucket](https://530003481352-offline-site.s3.eu-west-2.amazonaws.com/teaching-vacancies-offline/index.html)
-- Check the page when served [through the site](https://dev.teaching-vacancies.service.gov.uk/teaching-vacancies-offline/index.html)
-- Simulate an error on [https://dev.teaching-vacancies.service.gov.uk/](https://dev.teaching-vacancies.service.gov.uk/)
-```bash
-cf login --sso
-cf target -s teaching-vacancies-dev
-cf unbind-service teaching-vacancies-dev teaching-vacancies-postgres-dev
-```
-And after testing, re-bind:
-```bash
-cf bind-service teaching-vacancies-dev teaching-vacancies-postgres-dev
-cf restart teaching-vacancies-dev
-```

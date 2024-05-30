@@ -57,7 +57,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Terraform pin version
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 0.15.5
 
@@ -77,7 +77,7 @@ jobs:
 
     services:
       postgres:
-        image: postgis/postgis:12-3.1-alpine
+        image: postgis/postgis:14-3.4-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -102,7 +102,7 @@ jobs:
 
       - name: Upload error file
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: database_consistency_errors
           path: database_consistency_*

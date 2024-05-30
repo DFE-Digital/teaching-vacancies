@@ -33,6 +33,7 @@ shared:
     - created_at
     - updated_at
     - jobseeker_profile_id
+    - reason_for_leaving
   equal_opportunities_reports:
     - id
     - vacancy_id
@@ -100,13 +101,6 @@ shared:
     - close_account_reason_comment
     - occupation
     - origin_path
-  invitation_to_applies:
-    - id
-    - jobseeker_id
-    - vacancy_id
-    - invited_by_id
-    - created_at
-    - updated_at
   job_applications:
     - id
     - status
@@ -146,6 +140,9 @@ shared:
     - country
     - email_address
     - withdrawn_by_closing_account
+    - safeguarding_issue
+    - safeguarding_issue_details
+    - training_and_cpds_section_completed
   job_preferences_locations:
     - id
     - job_preferences_id
@@ -372,7 +369,6 @@ shared:
     - subjects
     - school_visits
     - how_to_apply
-    - job_role
     - ect_status
     - contact_number
     - publisher_organisation_id
@@ -427,3 +423,13 @@ shared:
     - created_at
     - right_to_work_in_uk
     - updated_at
+  :training_and_cpds:
+    - id
+    - name
+    - provider
+    - grade
+    - year_awarded
+    - created_at
+    - updated_at
+    - jobseeker_profile_id
+    - job_application_id

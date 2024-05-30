@@ -1,8 +1,9 @@
-- content_for :page_title_prefix, @organisation.name
+- content_for :page_title_prefix, t(".title", organisation_type: (@organisation.school? ? "School" : "Organisation"))
 
 - if current_organisation.school_group? && @organisation.school?
   - content_for :breadcrumbs do
-    = govuk_breadcrumbs breadcrumbs: { t("nav.organisation_profile") => publishers_organisation_path(current_organisation), t("nav.school_profile") => nil }
+    nav aria-label="breadcrumb" role="navigation"
+      = govuk_breadcrumbs breadcrumbs: { t("nav.organisation_profile") => publishers_organisation_path(current_organisation), t("nav.school_profile") => nil }
 
 - unless @organisation.profile_complete?
   = govuk_notification_banner title_text: t("banners.important"), classes: "govuk-!-margin-bottom-5" do |banner|
@@ -23,7 +24,7 @@
 
       = govuk_summary_list do |summary_list|
         - current_organisation.schools.not_closed.order(:name).partition(&:profile_complete?).reverse.flatten.each do |school|
-          - summary_list.row do |row|
+          - summary_list.with_row do |row|
             - row.with_value do
               - if school.profile_complete?
                 .govuk-heading-s class="govuk-!-margin-bottom-2 govuk-!-margin-top-2"

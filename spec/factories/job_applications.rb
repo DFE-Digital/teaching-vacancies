@@ -33,6 +33,8 @@ FactoryBot.define do
     # Employment history
     employment_history_section_completed { true }
 
+    training_and_cpds_section_completed { true }
+
     # Personal statement
     personal_statement { Faker::Lorem.paragraph(sentence_count: 8) }
 
@@ -55,6 +57,8 @@ FactoryBot.define do
     # Declarations
     close_relationships { "yes" }
     close_relationships_details { Faker::Lorem.paragraph(sentence_count: 1) }
+    safeguarding_issue { "yes" }
+    safeguarding_issue_details { Faker::Lorem.paragraph(sentence_count: 1) }
     right_to_work_in_uk { "yes" }
 
     completed_steps { JobApplication.completed_steps.keys }
@@ -110,6 +114,8 @@ FactoryBot.define do
     # Employment history
     employment_history_section_completed { nil }
 
+    training_and_cpds_section_completed { nil }
+
     # Personal statement
     personal_statement { "" }
 
@@ -131,6 +137,8 @@ FactoryBot.define do
     # Declarations
     close_relationships { "" }
     close_relationships_details { "" }
+    safeguarding_issue { "" }
+    safeguarding_issue_details { "" }
     right_to_work_in_uk { "" }
 
     completed_steps { [] }

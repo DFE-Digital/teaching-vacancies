@@ -3,7 +3,7 @@ namespace :db do # rubocop:disable Metrics/BlockLength
   task set_new_job_role_and_ect_status: :environment do
     main_job_roles = [0, 1, 4, 5, 6, 7]
     Vacancy.published.find_each do |v|
-      v.update_columns job_role: (v.job_roles&.find { |r| r.in? main_job_roles } || 0),
+      v.update_columns job_role: v.job_roles&.find { |r| r.in? main_job_roles } || 0,
                        ect_status: v.job_roles&.include?(3) ? :ect_suitable : :ect_unsuitable
     end
   end
@@ -43,6 +43,26 @@ namespace :db do # rubocop:disable Metrics/BlockLength
   desc "Add FriendlyId slugs to Organisation records"
   task add_friendlyid_organisation_slugs: :environment do
     SetOrganisationSlugsJob.perform_now
+  end
+
+  desc "Backfill default safeguarding information for organisations without it"
+  task backfill_default_organisation_safeguarding_information: :environment do
+    default = "Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. " \
+              "We expect all staff, volunteers and trustees to share this commitment.\n\n" \
+              "Our recruitment process follows the keeping children safe in education guidance.\n\n" \
+              "Offers of employment may be subject to the following checks (where relevant):\n" \
+              "childcare disqualification\n" \
+              "Disclosure and Barring Service (DBS)\n" \
+              "medical\n" \
+              "online and social media\n" \
+              "prohibition from teaching\n" \
+              "right to work\n" \
+              "satisfactory references\n" \
+              "suitability to work with children\n\n" \
+              "You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975."
+    Organisation.where(safeguarding_information: nil)
+      .or(Organisation.where(safeguarding_information: ""))
+      .update_all(safeguarding_information: default)
   end
 
   desc "Set other_start_date_details and start_date_type for vacancies"

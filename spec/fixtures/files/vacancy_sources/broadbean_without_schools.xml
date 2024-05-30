@@ -1,0 +1,20 @@
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<items>
+  <item>
+    <reference>0044</reference>
+    <advertUrl>http://testurl.com</advertUrl>
+    <publishOn>2023-08-02</publishOn>
+    <expiresAt>2023-08-23T01:40:35+0100</expiresAt>
+    <jobTitle>Class Teacher</jobTitle>
+    <jobAdvert>Non-random descriptive text</jobAdvert>
+    <salary>£50879 - £85262 per week</salary>
+    <startDate>20-5-2023</startDate>
+    <jobRole>head_of_year_or_phase</jobRole>
+    <ectSuitable>true</ectSuitable>
+    <workingPatterns>part_time</workingPatterns>
+    <contractType>parental_leave_cover</contractType>
+    <phase>primary</phase>
+    <schoolUrns></schoolUrns>
+    <trustUID>12345</trustUID>
+  </item>
+</items>

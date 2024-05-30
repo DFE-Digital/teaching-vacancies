@@ -38,7 +38,7 @@ module StatusTagHelper
   end
 
   def complete
-    govuk_tag(text: t("shared.status_tags.complete"))
+    govuk_tag(text: t("shared.status_tags.complete"), colour: "green")
   end
 
   def in_progress

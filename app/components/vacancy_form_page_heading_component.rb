@@ -1,11 +1,13 @@
 class VacancyFormPageHeadingComponent < ViewComponent::Base
   delegate :current_organisation, to: :helpers
+  attr_reader :sub_caption
 
-  def initialize(vacancy, step_process, back_path:, fieldset: true)
+  def initialize(vacancy, step_process, back_path:, fieldset: true, sub_caption: {})
     @vacancy = vacancy
     @step_process = step_process
     @back_path = back_path
     @fieldset = fieldset
+    @sub_caption = sub_caption
   end
 
   def heading_class

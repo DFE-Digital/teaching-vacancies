@@ -2,8 +2,9 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include DfE::Analytics::Requests
 
-  SUSPICIOUS_RECAPTCHA_THRESHOLD = 0.5
-  VALID_CLICK_EVENT_TYPES = %w[vacancy_save_to_account_clicked].freeze
+  http_basic_authenticate_with name: ENV.fetch("HTTP_BASIC_USER", ""),
+                               password: ENV.fetch("HTTP_BASIC_PASSWORD", ""),
+                               if: -> { ENV["HTTP_BASIC_PASSWORD"].present? && request.path != "/check" }
 
   add_flash_types :success, :warning
 
@@ -13,12 +14,8 @@ class ApplicationController < ActionController::Base
 
   before_action :set_sentry_user
   before_action :redirect_to_canonical_domain, :set_headers
-  before_action :trigger_click_event, if: -> { click_event_param.present? }
-  before_action { EventContext.request_event = request_event }
   before_action { EventContext.dfe_analytics_request_event = dfe_analytics_request_event }
   before_action :set_paper_trail_whodunnit
-
-  after_action :trigger_page_visited_event, unless: :request_is_healthcheck?
 
   helper GOVUKDesignSystemFormBuilder::BuilderHelper
 
@@ -66,52 +63,34 @@ class ApplicationController < ActionController::Base
   def redirect_to_canonical_domain
     return unless request_host_is_invalid?
 
-    redirect_to status: 301, host: DOMAIN
+    redirect_to status: 301, host: service_domain
   end
 
   def request_host_is_invalid?
-    !Rails.env.test? && !request_is_healthcheck? && request.host_with_port != DOMAIN
+    return false if Rails.env.test? || request_is_healthcheck? || request_from_github_codespace?
+
+    request.host_with_port != service_domain
   end
 
   def request_is_healthcheck?
     ["diego-healthcheck", "Amazon CloudFront"].include?(request.headers["User-Agent"])
   end
 
+  # Default to Github Codespaces domain if set, otherwise use the standard domain.
+  def service_domain
+    ENV.fetch("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN", DOMAIN)
+  end
+
+  def request_from_github_codespace?
+    Rails.env.development? && request.host_with_port.end_with?(".app.github.dev")
+  end
+
   def set_headers
     response.set_header("X-Robots-Tag", "noindex, nofollow")
   end
 
-  # https://github.com/ambethia/recaptcha#verify_recaptcha
-  # https://github.com/ambethia/recaptcha#recaptcha_reply
-  def recaptcha_is_invalid?(model = nil)
-    !verify_recaptcha(model: model, action: controller_name, minimum_score: SUSPICIOUS_RECAPTCHA_THRESHOLD) && recaptcha_reply
-  end
-
-  def request_event
-    RequestEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
-  end
-
   def dfe_analytics_request_event
     DfeAnalyticsRequestEvent.new(request, response, session, current_jobseeker, current_publisher, current_support_user)
-  end
-
-  def trigger_page_visited_event
-    request_event.trigger(:page_visited)
-  end
-
-  def trigger_click_event
-    return unless VALID_CLICK_EVENT_TYPES.include?(click_event_param)
-
-    request_event.trigger(click_event_param.to_sym, click_event_data_params.to_h)
-  end
-
-  def click_event_param
-    params[:click_event]
-  end
-
-  def click_event_data_params
-    # Any params that might be present must be explicitly permitted in order to convert to hash
-    params[:click_event_data]&.permit(:vacancy_id)
   end
 
   def current_organisation

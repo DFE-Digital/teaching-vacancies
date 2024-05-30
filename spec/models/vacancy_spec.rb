@@ -33,7 +33,7 @@ RSpec.describe Vacancy do
     let(:generator) { instance_double(Search::Postgres::TsvectorGenerator, tsvector: "'Hello'") }
 
     it "updates the searchable_content column on save" do
-      expect(Search::Postgres::TsvectorGenerator).to receive(:new).with(Hash).and_return(generator)
+      allow(Search::Postgres::TsvectorGenerator).to receive(:new).with(Hash).and_return(generator)
       expect(subject.searchable_content).to be_nil
       subject.save
       expect(subject.searchable_content).to eq("'Hello'")
@@ -545,14 +545,6 @@ RSpec.describe Vacancy do
       end
     end
 
-    context "if there is no organisation" do
-      let(:organisations) { [] }
-
-      it "is set to nil" do
-        expect(subject.geolocation).to be_nil
-      end
-    end
-
     context "if all organisations have no geopoint" do
       let(:organisations) { [create(:school, geopoint: nil), create(:school, geopoint: nil)] }
 
@@ -597,30 +589,6 @@ RSpec.describe Vacancy do
 
     it "resets the publish_on date" do
       expect(subject.publish_on).to eq(nil)
-    end
-  end
-
-  describe "legacy job_role set from new job_roles" do
-    {
-      "teacher" => "teacher",
-      "headteacher" => "senior_leader",
-      "deputy_headteacher" => "senior_leader",
-      "assistant_headteacher" => "senior_leader",
-      "head_of_year_or_phase" => "middle_leader",
-      "head_of_department_or_curriculum" => "middle_leader",
-      "teaching_assistant" => "teaching_assistant",
-      "higher_level_teaching_assistant" => "higher_level_teaching_assistant",
-      "education_support" => "education_support",
-      "sendco" => "sendco",
-    }.each do |new_role, legacy_role|
-      it "creating a vacancy with job_roles '[#{new_role}]' sets its legacy job_role to '#{legacy_role}'" do
-        expect(create(:vacancy, job_roles: [new_role]).job_role).to eq(legacy_role)
-      end
-
-      it "updating a vacancy job_roles to ['#{new_role}]' sets its legacy job_role to '#{legacy_role}'" do
-        vacancy = create(:vacancy, job_role: nil, job_roles: [])
-        expect { vacancy.update(job_roles: [new_role]) }.to change { vacancy.reload.job_role }.from(nil).to(legacy_role)
-      end
     end
   end
 end

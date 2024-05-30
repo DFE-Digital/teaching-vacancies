@@ -8,6 +8,7 @@ class Jobseekers::JobApplications::JobApplicationStepProcess < StepProcess
       personal_details: %i[personal_details],
       professional_status: professional_status_steps,
       qualifications: %i[qualifications],
+      training_and_cpds: %i[training_and_cpds],
       employment_history: %i[employment_history],
       personal_statement: %i[personal_statement],
       references: %i[references],

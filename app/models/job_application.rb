@@ -9,6 +9,7 @@ class JobApplication < ApplicationRecord
     personal_details: 0,
     professional_status: 1,
     qualifications: 2,
+    training_and_cpds: 9,
     employment_history: 3,
     personal_statement: 4,
     references: 5,
@@ -21,6 +22,8 @@ class JobApplication < ApplicationRecord
     qualifications: 0,
     employment_history: 1,
     personal_details: 2,
+    professional_status: 3,
+    training_and_cpds: 4,
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
@@ -38,6 +41,7 @@ class JobApplication < ApplicationRecord
   has_many :qualifications, dependent: :destroy
   has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
+  has_many :training_and_cpds, dependent: :destroy
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :job_application
 
@@ -64,7 +68,7 @@ class JobApplication < ApplicationRecord
 
   def ask_professional_status?
     vacancy.job_roles.intersect?(%w[teacher headteacher deputy_headteacher assistant_headteacher
-                                    head_of_year_or_phase head_of_department_or_curriculum])
+                                    head_of_year_or_phase head_of_department_or_curriculum sendco])
   end
 
   def deadline_passed?
@@ -96,7 +100,7 @@ class JobApplication < ApplicationRecord
 
       if attr.ends_with?("_description")
         attr_name = attr.to_s.split("_").first
-        report.public_send("#{attr_name}_other_descriptions") << attr_value
+        report.public_send(:"#{attr_name}_other_descriptions") << attr_value
       else
         report.increment("#{attr}_#{attr_value}")
       end

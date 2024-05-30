@@ -2,15 +2,19 @@ en:
   buttons:
     accept_all_cookies: Accept all cookies
     accept_and_continue: Accept and continue
-    add_another_break: add a reason for this break
+    add_reason_for_break: add a reason for this gap
     add_another_job: Add another job
     add_another_qualification: Add another qualification
     add_another_reference: Add another referee
     add_another_subject: Add another subject
+    add_gap: Add gap in work history
     add_job: Add a job
     add_note: Add note
     add_qualification: Add a qualification
+    add_training: Add training
+    add_another_training: Add another training
     add_reference: Add a referee
+    add_work_history: Add work history
     apply_filters: Apply filters
     back: Back
     back_to_manage_jobs: Back to manage jobs
@@ -96,6 +100,7 @@ en:
     submit_for_publication: Submit for publication
     submit_job_listing: Confirm and submit job
     subscribe: Subscribe
+    subscribe_campaign: Set up job alert
     unsubscribe: Unsubscribe
     update_alert: Update alert
     update_job: Update listing
@@ -137,11 +142,12 @@ en:
           You can find out whether you have the right to work in the UK on the
           <a href="https://www.gov.uk/" target="_blank" class="govuk-link">GOV.UK website (opens in new tab)</a>. You can apply for this role even if you do not have the
           right to work in the UK.
-      jobseekers_job_application_details_break_form:
+      jobseekers_break_form:
         reason_for_break: "For example, 'I was unemployed', 'I had health issues' or 'I was caring for a child'"
       jobseekers_job_application_details_employment_form:
-        main_duties: A very brief summary
+        main_duties: Give a brief summary of your key responsibilities.
         organisation: For a non-teaching job, tell us the name of the organisation you worked at
+        reason_for_leaving: If you’re still in the role, give a brief summary of your reasons for wanting to leave.
       jobseekers_job_application_details_qualifications_degree_form:
         institution: Awarding body
         year: Year qualification was awarded
@@ -188,9 +194,10 @@ en:
         last_name: Or family name
         phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
       jobseekers_profile_employment_form:
-        main_duties: List all the responsibilities this role involved
+        main_duties: Give a brief summary of your key responsibilities.
         organisation_name: If you worked for yourself, enter ‘self-employed’
         started_on: For example, %{date}
+        reason_for_leaving: If you're still in the role, give a brief summary of your reasons for wanting to leave.
 
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
@@ -263,7 +270,7 @@ en:
       publishers_job_listing_job_title_form:
         job_title:
           education_support: For example ‘Learning support assistant’
-          higher_level_teaching_assistant: ‘Higher level teaching assistant’
+          higher_level_teaching_assistant: For example ‘Higher level teaching assistant’
           middle_leader:
             middle_secondary_or_sixth_form_or_college: For example ’Head of modern foreign languages’
             nursery: For example, ‘Nursery phase leader’
@@ -278,6 +285,8 @@ en:
             through: For example ‘Teacher of KS1’ or ‘Teacher of Maths’
           teaching_assistant: For example ‘Teaching assistant’
       publishers_job_listing_working_patterns_form:
+        working_patterns: Select all that apply.
+        working_patterns_details: For example, 32.5 hours a week.
         working_patterns_options:
           full_time_education_support: Usually at least 36.5 hours a week
           full_time_higher_level_teaching_assistant: Usually at least 36.5 hours a week
@@ -357,8 +366,8 @@ en:
         close_relationships_options:
           "no": "No"
           "yes": "Yes"
-      jobseekers_job_application_details_break_form:
-        reason_for_break: Enter reasons for break in work history
+      jobseekers_break_form:
+        reason_for_break: Enter reasons for gap in work history
       jobseekers_job_application_details_employment_form:
         current_role_options:
           "no": "No"
@@ -368,6 +377,7 @@ en:
         organisation: School or other organisation
         subjects_review: Subjects and key stages taught
         subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        reason_for_leaving: Reason for leaving role
       jobseekers_job_application_employment_history_form:
         employment_history_section_completed_options:
           false: No, I'll come back to it later
@@ -384,6 +394,12 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
           teacher: Teacher
           teaching_assistant: Teaching assistant
+          administration_hr_data_and_finance: Administration, HR, data and finance
+          catering_cleaning_and_site_management: Catering, cleaning and site management
+          it_support: IT support
+          pastoral_health_and_welfare: Pastoral, health and welfare
+          other_leadership: Other leadership roles
+          other_support: Other support roles
         key_stages_options:
           early_years: Early years (ages 0 to 5)
           ks1: Key stage 1 (ages 5 to 7)
@@ -413,7 +429,7 @@ en:
         name: Name
         organisation: Organisation
         relationship: Relationship to applicant
-        phone_number_html: Phone number (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        phone_number_html: Phone number (optional)
       jobseekers_job_application_equal_opportunities_form:
         age_options:
           under_twenty_five: Under 25
@@ -492,15 +508,29 @@ en:
         qualified_teacher_status_options:
           "no": "No"
           on_track: I'm on track to receive my QTS
+          non_teacher: I'm not looking for a teaching job
           "yes": "Yes"
+        statutory_induction_complete_options:
+          "no": "No"
+          on_track: I'm on track to complete it
+          "yes": "Yes, I have completed a 1 or 2 year induction period"
         qualified_teacher_status_year: Year QTS was awarded
         hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}.
+        completed_period_hint: New teachers before 2021 had to complete a 1 year statutory induction period. New teachers after 2021 have to complete a 2 year statutory induction period.
         link_text: how to get QTS
       jobseekers_job_application_qualifications_form:
         qualifications_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
+      jobseekers_job_application_training_and_cpds_form:
+        training_and_cpds_section_completed_options:
+          false: No, I'll come back to it later
+          true: Yes, I've completed this section
       jobseekers_job_application_review_form:
+        update_profile_options:
+          qualifications: Update qualifications on profile
+          work_history: Update work history on profile
+          training_and_cpds: Update training and CPD on profile
         confirm_data_accurate_options:
           "1": I confirm that the above information is accurate and complete
         confirm_data_usage_options:
@@ -545,7 +575,15 @@ en:
           "yes": "Yes"
           "no": "No"
           on_track: "I’m on track to receive QTS"
+          non_teacher: "I'm not looking for a teaching job"
         qualified_teacher_status_year: Year QTS was awarded
+      jobseekers_training_and_cpd_form:
+        name: Name of course or training
+        provider: Training provider
+        grade: Grade (optional)
+        year_awarded: Year awarded
+        year_completed_hint: For example, 1998
+
 
       personal_details_form:
         email: Email
@@ -564,6 +602,7 @@ en:
           "yes": "Yes"
         job_title: Role
         main_duties: Main duties
+        reason_for_leaving: Reason for leaving role
         organisation: Name of school or employer
         subjects: Subjects and key stages taught (optional)
       jobseekers_sign_in_form:
@@ -572,8 +611,8 @@ en:
       jobseekers_subscription_form:
         email: Email address
         frequency_options:
-          daily: Daily, at around 3 pm
-          weekly: Weekly (Friday evening at around 6 pm)
+          daily: Daily, around 3 pm
+          weekly: Weekly (Friday, around 6 pm)
       jobseekers_unsubscribe_feedback_form:
         email: What is your email address?
         comment: Is there anything else you'd like to tell us?
@@ -745,6 +784,32 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
           teacher: Teacher
           teaching_assistant: Teaching assistant
+          administration_hr_data_and_finance: Administration, HR, data and finance
+          catering_cleaning_and_site_management: Catering, cleaning and site management
+          it_support: IT support
+          pastoral_health_and_welfare: Pastoral, health and welfare
+          other_leadership: Other leadership roles
+          other_support: Other support roles
+          senior_leader: Senior leader
+          middle_leader: Middle leader
+        teaching_job_role_options:
+          teacher: Teacher
+          head_of_year_or_phase: Head of year or phase
+          head_of_department_or_curriculum: Head of department or curriculum
+          assistant_headteacher: Assistant headteacher
+          deputy_headteacher: Deputy headteacher
+          headteacher: Headteacher
+          sendco: SENDCo (special educational needs and disabilities coordinator)
+          other_leadership: Other leadership roles
+        support_job_role_options:
+          teaching_assistant: Teaching assistant
+          higher_level_teaching_assistant: HLTA (higher level teaching assistant)
+          education_support: Learning support or cover supervisor
+          administration_hr_data_and_finance:  Administration, HR, data and finance
+          catering_cleaning_and_site_management: Catering, cleaning and site management
+          it_support: IT support
+          pastoral_health_and_welfare: Pastoral, health and welfare
+          other_support: Other support roles
         job_roles_options:
           <<: *job_role_options
       publishers_job_listing_key_stages_form:
@@ -779,8 +844,7 @@ en:
           false: "No"
           true: "Yes"
       publishers_job_listing_working_patterns_form:
-        full_time_details: Details
-        part_time_details: Details
+        working_patterns_details: Details of working hours (optional)
         organisation_type_options:
           academy: Academy
           local_authority: Local authority maintained schools
@@ -829,7 +893,8 @@ en:
         support_needed: Do you want to ask for support so that you can attend an interview?
       jobseekers_job_application_declarations_form:
         close_relationships: Do you have any family or close relationship with people within %{organisation}?
-        right_to_work_in_uk: Do you currently have the right to work in the UK?
+        right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
+        safeguarding_issue: Do you want to declare any safeguarding issues, such as a criminal record or professional misconduct?
       jobseekers_job_application_details_reference_form:
         phone_number: Phone number
       jobseekers_job_application_employment_history_form:
@@ -841,9 +906,9 @@ en:
         gender: How would you describe your gender?
         orientation: How would you describe your sexual orientation?
         religion: What is your religion or belief?
-      jobseekers_job_application_details_break_form:
-        ended_on: End of break
-        started_on: Start of break
+      jobseekers_break_form:
+        ended_on: End of gap
+        started_on: Start of gap
       jobseekers_job_application_details_employment_form:
         current_role: Is this your current role?
         ended_on: End date
@@ -863,10 +928,12 @@ en:
       jobseekers_job_application_personal_details_form:
         your_address: Your address
       jobseekers_job_application_professional_status_form:
-        statutory_induction_complete: Have you completed your statutory induction year?
+        statutory_induction_complete: Have you completed your statutory induction period?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
       jobseekers_job_application_qualifications_form:
         qualifications_section_completed: Have you completed this section?
+      jobseekers_job_application_training_and_cpds_form:
+        training_and_cpds_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:
         withdraw_reason: Why would you like to withdraw your application?
       jobseekers_qualifications_degree_form:
@@ -880,12 +947,13 @@ en:
         current_role: Are you still working in this role?
         ended_on: End date
         started_on: Start date
-
       jobseekers_subscription_form:
         frequency: When do you want to receive alerts?
       jobseekers_unsubscribe_feedback_form:
         reason: Why do you want to unsubscribe from this alert?
         user_participation_response: Would you like to participate in our research?
+      jobseekers_profile_location_preferences: 
+        another_location: Do you want to add another location?
 
       publishers_job_listing_about_the_role_form:
         ect_status: Is this role suitable for an early career teacher (ECT)?
@@ -962,21 +1030,28 @@ en:
     options:
       publishers_job_listing_copy_vacancy_form:
         expiry_time:
+          "8:00": 8am
           "9:00": 9am
           "12:00": 12pm (midday)
-          "17:00": 5pm
+          "15:00": 3pm
           "23:59": 11:59pm
       publishers_job_listing_extend_deadline_form:
         expiry_time:
+          "8:00": 8am
           "9:00": 9am
           "12:00": 12pm (midday)
-          "17:00": 5pm
+          "15:00": 3pm
           "23:59": 11:59pm
       publishers_job_listing_important_dates_form:
         expiry_time:
+          "8:00": 8am
           "9:00": 9am
           "12:00": 12pm (midday)
-          "17:00": 5pm
+          "15:00": 3pm
           "23:59": 11:59pm
 
     placeholder:
+
+  recaptcha:
+    label: "Security check"
+    error: "Fill in the Security check"

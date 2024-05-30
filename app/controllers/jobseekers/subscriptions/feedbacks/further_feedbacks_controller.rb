@@ -1,4 +1,6 @@
 class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < ApplicationController
+  include RecaptchaChecking
+
   def new
     @feedback_form = Jobseekers::JobAlertFurtherFeedbackForm.new
   end
@@ -8,11 +10,11 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
 
     if @feedback_form.invalid?
       render :new
-    elsif recaptcha_is_invalid?
-      redirect_to invalid_recaptcha_path(form_name: @feedback_form.class.name.gsub("::", "").underscore.humanize)
     else
-      update_feedback
-      redirect_to root_path, success: t(".success")
+      recaptcha_protected(form: @feedback_form) do
+        update_feedback
+        redirect_to root_path, success: t(".success")
+      end
     end
   end
 
@@ -24,7 +26,7 @@ class Jobseekers::Subscriptions::Feedbacks::FurtherFeedbacksController < Applica
 
   def update_feedback
     feedback.update(further_feedback_form_params)
-    feedback.recaptcha_score = recaptcha_reply["score"]
+    feedback.recaptcha_score = recaptcha_reply&.dig("score")
     feedback.save
   end
 

@@ -1,0 +1,31 @@
+doctype html
+html.govuk-template.app-html-class lang="en"
+  head
+    = render "layouts/google_tag_manager_head" if include_google_tag_manager?
+    = render "layouts/head_meta"
+    = render "layouts/head_links"
+    title #{content_for :page_title_prefix} - #{t("app.title")} - GOV.UK
+    = stylesheet_link_tag "application", media: "all"
+    = csrf_meta_tags
+    = render "layouts/sentry_js_config"
+
+  body class=body_class
+    = render "layouts/google_tag_manager_body" if include_google_tag_manager?
+    = render "layouts/add_js_enabled_class_to_body"
+    = render "layouts/skip_links"
+    = render EnvironmentBannerComponent.new
+    / Uncomment the line below to display a banner announcing future period where the page will be in maintenance mode
+    / = render ScheduledMaintenanceBannerComponent.new(date: "5th October 2023", start_time: "08:00", end_time: "09:30")
+    = render "layouts/header"
+    .govuk-width-container
+      = render "layouts/phase_banner"
+    = render "layouts/publisher_secondary_nav"
+    = render "layouts/sub_navigation"
+    .divider-bottom class="govuk-!-margin-top-0 govuk-!-margin-bottom-0"
+    = render "layouts/flash_messages"
+    main#main-content role="main"
+      = yield
+    = content_for :after_main
+    = render "layouts/footer"
+    = render "layouts/cookies_banner"
+    = javascript_include_tag "application", defer: true
