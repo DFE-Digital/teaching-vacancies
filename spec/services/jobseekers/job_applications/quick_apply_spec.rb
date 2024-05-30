@@ -92,6 +92,13 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         .to eq(recent_job_application.references.map { |reference| reference.slice(*attributes_to_copy) })
     end
 
+    it "copies training and cpds" do
+      attributes_to_copy = %i[name provider grade year_awarded]
+
+      expect(subject.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
+        .to eq(recent_job_application.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
+    end
+
     it "does not copy declarations attributes" do
       expect(subject.close_relationships).to be_blank
       expect(subject.close_relationships_details).to be_blank

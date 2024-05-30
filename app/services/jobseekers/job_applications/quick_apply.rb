@@ -11,6 +11,7 @@ class Jobseekers::JobApplications::QuickApply
     copy_qualifications
     copy_employments
     copy_references
+    copy_training_and_cpds
     new_job_application.save
     new_job_application
   end
@@ -75,6 +76,13 @@ class Jobseekers::JobApplications::QuickApply
     recent_job_application.references.each do |reference|
       new_reference = reference.dup
       new_reference.update(job_application: new_job_application)
+    end
+  end
+
+  def copy_training_and_cpds
+    recent_job_application.training_and_cpds.each do |training|
+      new_training = training.dup
+      new_training.update(job_application: new_job_application)
     end
   end
 end
