@@ -5,7 +5,18 @@
     = form_for form, url: wizard_path(current_step), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :visa_sponsorship_available, hint: -> { tag.p(t("publishers.vacancies.job_applications.visa_sponsorship.hint", link: govuk_link_to(t("publishers.vacancies.job_applications.visa_sponsorship.link_text"), "https://www.gov.uk/guidance/recruit-teachers-from-overseas#apply-to-become-a-licensed-worker-sponsor", target: "_blank")).html_safe) }, legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } do
+      - hint = capture do
+        p = t("publishers.vacancies.job_applications.visa_sponsorship.hint_intro")
+        ul
+          li = t("publishers.vacancies.job_applications.visa_sponsorship.hint_bullet_1")
+          li = t("publishers.vacancies.job_applications.visa_sponsorship.hint_bullet_2")
+        p
+          a href="https://www.gov.uk/skilled-worker-visa/if-you-work-in-healthcare-or-education" target="_blank" = t("publishers.vacancies.job_applications.visa_sponsorship.learn_more_link_text")
+        p
+          = t("publishers.vacancies.job_applications.visa_sponsorship.hint_salary_text")
+          a href="https://www.gov.uk/government/publications/skilled-worker-visa-eligible-occupations/skilled-worker-visa-eligible-occupations-and-codes" target="_blank" = t("publishers.vacancies.job_applications.visa_sponsorship.eligibility_link_text")
+
+      = f.govuk_radio_buttons_fieldset :visa_sponsorship_available, hint: -> { hint }, legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } do
 
         = f.govuk_radio_button :visa_sponsorship_available, "true", link_errors: true
           p = t("publishers.vacancies.job_applications.visa_sponsorship.yes_hint")
