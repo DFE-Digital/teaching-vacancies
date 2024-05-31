@@ -558,8 +558,12 @@ en:
         visa_sponsorship:
           yes_hint: This will help jobseekers who are looking for sponsorship to find your job more easily.
           no_hint: This will tell jobseekers on your job listing that you cannot offer sponsorship for this role.
-          hint: If you're not already a sponsor you can %{link}
-          link_text: apply to become a licensed worker sponsor (opens in new tab).
+          hint_intro: "To offer Skill Worker visa sponsorship, this role must:"
+          hint_bullet_1: meet the minimum salary requirements
+          hint_bullet_2: be included on the list of eligible roles
+          hint_salary_text: Different salary rules apply for support roles in schools. 
+          learn_more_link_text: Learn more about Skilled Worker visa requirements for teaching jobs (opens in new tab).
+          eligibility_link_text: Find out about eligible support roles and salary requirements (opens in new tab).
       live:
         notice: You can only view active jobs
       review:
