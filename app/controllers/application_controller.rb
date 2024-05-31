@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
   end
 
   def request_is_healthcheck?
-    ["diego-healthcheck", "Amazon CloudFront"].include?(request.headers["User-Agent"])
+    request.path == "/check" || ["diego-healthcheck", "Amazon CloudFront"].include?(request.headers["User-Agent"])
   end
 
   # Default to Github Codespaces domain if set, otherwise use the standard domain.

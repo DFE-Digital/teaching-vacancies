@@ -18,6 +18,24 @@ RSpec.describe "Redirect to canonical domain" do
       domain_minus_port = DOMAIN.split(":").first
       expect(response.location).to eq("http://#{domain_minus_port}/")
     end
+
+    it "does not redirect when the request is to the healthcheck path" do
+      get "/check", headers: headers
+
+      expect(response.status).to eq(200)
+    end
+
+    it "does not redirect when the request is from Diego Healthcheck" do
+      get "/", headers: headers.merge("User-Agent" => "diego-healthcheck")
+
+      expect(response.status).to eq(200)
+    end
+
+    it "does not redirect when the request is from Amazon CloudFront" do
+      get "/", headers: headers.merge("User-Agent" => "Amazon CloudFront")
+
+      expect(response.status).to eq(200)
+    end
   end
 
   context "when request.host_with_port is already the canonical DOMAIN" do
