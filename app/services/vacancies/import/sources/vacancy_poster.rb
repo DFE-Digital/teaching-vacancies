@@ -48,7 +48,7 @@ class Vacancies::Import::Sources::VacancyPoster
     {
       job_title: item["jobTitle"],
       job_advert: job_advert_for(item),
-      salary: item["salary"],
+      salary: Nokogiri::HTML.parse(item["salary"].to_s).text,
       expires_at: Time.zone.parse(item["expiresAt"]),
       external_advert_url: item["advertUrl"]&.strip,
 
