@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
   before_action { EventContext.dfe_analytics_request_event = dfe_analytics_request_event }
   before_action :set_paper_trail_whodunnit
 
+  skip_after_action :trigger_request_event, only: :check
+
   helper GOVUKDesignSystemFormBuilder::BuilderHelper
 
   include AbTestable

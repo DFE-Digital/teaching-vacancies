@@ -28,5 +28,9 @@ RSpec.describe "dfe analytics integration" do
     it "sends a DFE Analytics web request event" do
       expect { get "/api/test" }.to have_sent_analytics_event_types(:web_request)
     end
+
+    it "does not send health check requests to DFE Analytics" do
+      expect { get "/check" }.not_to have_sent_analytics_event_types(:web_request)
+    end
   end
 end
