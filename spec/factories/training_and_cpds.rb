@@ -5,7 +5,7 @@ FactoryBot.define do
     grade { "Pass" }
     year_awarded { "2020" }
 
-    jobseeker_profile
-    job_application
+    jobseeker_profile { nil }
+    job_application { nil }
   end
 end
