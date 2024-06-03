@@ -80,9 +80,15 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def copy_training_and_cpds
+    return if recent_job_application.training_and_cpds.empty?
+
     recent_job_application.training_and_cpds.each do |training|
       new_training = training.dup
       new_training.update(job_application: new_job_application)
     end
+
+    new_job_application.training_and_cpds_section_completed = false
+    in_progress_steps = new_job_application.in_progress_steps + ["training_and_cpds"]
+    new_job_application.in_progress_steps = in_progress_steps
   end
 end

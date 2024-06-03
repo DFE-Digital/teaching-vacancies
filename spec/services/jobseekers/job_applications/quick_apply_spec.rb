@@ -42,7 +42,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
       it "sets in progress steps as qualifications, employment history and professional status" do
         expect(subject.in_progress_steps)
-          .to eq(%w[qualifications employment_history professional_status])
+          .to eq(%w[qualifications employment_history professional_status training_and_cpds])
       end
     end
 
@@ -97,6 +97,8 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
       expect(subject.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
         .to eq(recent_job_application.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
+
+      expect(subject.training_and_cpds_section_completed).to eq(false)
     end
 
     it "does not copy declarations attributes" do
