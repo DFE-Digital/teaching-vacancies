@@ -30,22 +30,6 @@ RSpec.describe "Creating a vacancy" do
     scenario "follows the flow" do
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
-
-      click_on I18n.t("buttons.continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
-
-      fill_in_job_role_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
-
-      click_on I18n.t("buttons.continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
-
-      fill_in_education_phases_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
       click_on I18n.t("buttons.save_and_continue")
@@ -53,6 +37,22 @@ RSpec.describe "Creating a vacancy" do
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
       fill_in_job_title_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
+
+      click_on I18n.t("buttons.save_and_continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
+
+      fill_in_job_role_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
+
+      click_on I18n.t("buttons.save_and_continue")
+      expect(page).to have_content("There is a problem")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
+
+      fill_in_education_phases_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :key_stages))
 
@@ -166,13 +166,13 @@ RSpec.describe "Creating a vacancy" do
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
 
+      fill_in_job_title_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
       fill_in_job_role_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
       fill_in_education_phases_form_fields(vacancy)
-      click_on I18n.t("buttons.continue")
-
-      fill_in_job_title_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       fill_in_key_stages_form_fields(vacancy)

@@ -13,7 +13,7 @@ RSpec.describe "Application feature reminder" do
     it "does not show reminder page when creating a job" do
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_role))
+      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
     end
   end
 
@@ -31,13 +31,13 @@ RSpec.describe "Application feature reminder" do
 
       click_on I18n.t("buttons.reminder_continue")
 
-      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_role))
+      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
 
       expect(page).not_to have_content(I18n.t("publishers.new_features.reminder.page_title"))
 
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(organisation_job_build_path(Vacancy.order("created_at").last.id, :job_role))
+      expect(current_path).to eq(organisation_job_build_path(Vacancy.order("created_at").last.id, :job_title))
     end
 
     context "when the organisation is a local authority" do
@@ -57,7 +57,7 @@ RSpec.describe "Application feature reminder" do
 
       click_on "Change", match: :first
 
-      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_role))
+      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
     end
 
     # TODO: Temporarily disabled for TEVA-4099
