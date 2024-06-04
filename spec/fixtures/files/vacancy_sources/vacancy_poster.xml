@@ -1,0 +1,43 @@
+<channel>
+  <title>ATS Integration RSS Feed</title>
+  <link>
+    <![CDATA[ https://vprs.co.uk/vpmain/vpxmloutput.php?jobboard=TEACHINGVACANCIES&clid=TEACHVALL&pw=c3baaad37db67602183c30c736dbe733 ]]>
+  </link>
+  <description>ATS Integration RSS Feed</description>
+  <item>
+    <reference>
+      <![CDATA[ TEST002 ]]>
+    </reference>
+    <advertUrl>
+      <![CDATA[ www.company.com/jobs/12345?jobboard=Teaching+Vacancies&amp;c=vacancyposter ]]>
+    </advertUrl>
+    <publishOn>
+      <![CDATA[ 2024-05-16 00:00:00 ]]>
+    </publishOn>
+    <expiresAt>
+      <![CDATA[ 2024-06-15 00:00:00 ]]>
+    </expiresAt>
+    <jobTitle><![CDATA[Test Post]]></jobTitle>
+    <jobAdvert><![CDATA[What is the job role? Castle Wood is an outstanding special school.]]></jobAdvert>
+    <salary><![CDATA[£80000]]></salary>
+    <additionalAllowances>
+      <![CDATA[ Car Parking Space ]]>
+    </additionalAllowances>
+    <startDate>
+      <![CDATA[ 2024-05-16 00:00:00 ]]>
+    </startDate>
+    <schoolUrns><![CDATA[123456]]></schoolUrns>
+    <trustUID><![CDATA[ ]]></trustUID>
+    <jobRole><![CDATA[deputy_headteacher]]></jobRole>
+    <ectSuitable>
+      <![CDATA[ false ]]>
+    </ectSuitable>
+    <workingPatterns><![CDATA[full_time]]></workingPatterns>
+    <contractType><![CDATA[permanent]]></contractType>
+    <phase><![CDATA[primary]]></phase>
+    <keyStages><![CDATA[ks5]]></keyStages>
+    <subjects>
+      <![CDATA[ German, French ]]>
+    </subjects>
+  </item>
+</channel>
