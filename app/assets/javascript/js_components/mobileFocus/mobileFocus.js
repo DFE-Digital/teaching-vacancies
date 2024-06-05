@@ -14,6 +14,10 @@ export default class MobileFocusController extends Controller {
       return;
     }
 
+    window.onbeforeunload = () => {
+      window.scrollTo(0, 0);
+    };
+
     if (window.location.href.includes('profile/personal-details')) {
       const skipLinkElement = document.querySelector('.govuk-skip-link');
 
