@@ -12,13 +12,13 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@sentry/browser": "8.5.0",
+    "@sentry/browser": "8.7.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.0",
     "axios": "^1.7.2",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.37.1",
-    "dompurify": "^3.1.4",
+    "dompurify": "^3.1.5",
     "govuk-frontend": "^5.3.1",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
@@ -39,11 +39,11 @@
     "jest-environment-jsdom": "29.7.0",
     "jsdom": "^24.1.0",
     "postcss": "^8.4.38",
-    "sass": "^1.77.2",
+    "sass": "^1.77.4",
     "stylelint": "^15.11.0",
     "stylelint-config-sass-guidelines": "^10.0.0",
     "stylelint-config-standard": "^34.0.0",
-    "yaml": "^2.4.2"
+    "yaml": "^2.4.3"
   },
   "scripts": {
     "build": "node esbuild.config.js",
