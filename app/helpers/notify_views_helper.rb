@@ -70,7 +70,7 @@ module NotifyViewsHelper
   end
 
   def publisher_job_applications_link(vacancy)
-    url = organisation_job_job_applications_url(vacancy, **utm_params)
+    url = organisation_job_job_applications_url(vacancy.id, **utm_params)
     notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count))
   end
 
