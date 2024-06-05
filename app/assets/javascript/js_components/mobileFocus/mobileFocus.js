@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 export default class MobileFocusController extends Controller {
   connect() {
-    this.handleMobilePageFocus();
+    setTimeout(this.handleMobilePageFocus.bind(this), 100);
   }
 
   static detectMobile() {
