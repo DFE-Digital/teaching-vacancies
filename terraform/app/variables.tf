@@ -157,6 +157,7 @@ variable "aks_route53_cname_record" {
 
 variable "azure_maintenance_window" { default = null }
 
+variable "enable_logit" { default = false }
 
 locals {
   app_env_values             = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
