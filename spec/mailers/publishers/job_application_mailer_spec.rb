@@ -28,7 +28,7 @@ RSpec.describe Publishers::JobApplicationMailer do
       expect(mail.subject).to eq(I18n.t("publishers.job_application_mailer.applications_received.subject", count: 2))
       expect(mail.to).to eq(["test@example.net"])
       expect(mail.body.encoded).to include(vacancy.job_title)
-                               .and include(organisation_job_job_applications_url(vacancy))
+                               .and include(organisation_job_job_applications_url(vacancy.id))
                                .and include(I18n.t("publishers.job_application_mailer.applications_received.view_applications", count: 2))
     end
 
