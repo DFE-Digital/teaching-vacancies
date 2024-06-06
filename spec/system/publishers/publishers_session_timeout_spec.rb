@@ -18,7 +18,7 @@ RSpec.describe "Publisher session" do
     click_on I18n.t("buttons.create_job")
 
     travel(Publisher.timeout_in + 1.minute) do
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content(I18n.t("devise.failure.timeout"))
       visit "/"
@@ -31,9 +31,9 @@ RSpec.describe "Publisher session" do
     click_on I18n.t("buttons.create_job")
 
     travel(Publisher.timeout_in - 1.minute) do
-      click_on I18n.t("buttons.continue")
+      click_on I18n.t("buttons.save_and_continue")
 
-      expect(page.current_path).to eq organisation_job_build_path(Vacancy.last.id, :job_role)
+      expect(page.current_path).to eq organisation_job_build_path(Vacancy.last.id, :job_title)
     end
   end
 end

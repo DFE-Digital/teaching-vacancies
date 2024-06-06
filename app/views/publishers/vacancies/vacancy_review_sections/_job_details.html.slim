@@ -13,16 +13,6 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                   href: organisation_job_build_path(vacancy.id, :job_location, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("publishers.vacancies.steps.job_location")
 
-  - summary_list.with_row(html_attributes: { id: "job_role" }) do |row|
-    - row.with_key
-      = t("jobs.job_role")
-    - row.with_value
-      - vacancy.readable_job_roles
-    - unless vacancy.legacy_draft?
-      - row.with_action text: t("buttons.change"),
-                  href: organisation_job_build_path(vacancy.id, :job_role, "back_to_#{action_name}": "true"),
-                  visually_hidden_text: t("publishers.vacancies.steps.job_role")
-
   - summary_list.with_row(html_attributes: { id: "job_title" }) do |row|
     - row.with_key
       = t("jobs.job_title")
@@ -32,6 +22,16 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.with_action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :job_title, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.job_title")
+
+  - summary_list.with_row(html_attributes: { id: "job_role" }) do |row|
+    - row.with_key
+      = t("jobs.job_role")
+    - row.with_value
+      - vacancy.readable_job_roles
+    - unless vacancy.legacy_draft?
+      - row.with_action text: t("buttons.change"),
+                  href: organisation_job_build_path(vacancy.id, :job_role, "back_to_#{action_name}": "true"),
+                  visually_hidden_text: t("publishers.vacancies.steps.job_role")
 
   - if vacancy.allow_key_stages? && vacancy.key_stages.any?
     - summary_list.with_row(html_attributes: { id: "key_stages" }) do |row|

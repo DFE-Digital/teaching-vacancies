@@ -58,7 +58,7 @@ class Publishers::VacancyFormSequence < FormSequence
     @vacancy.completed_steps.last == if @vacancy.allow_key_stages?
                                        "key_stages"
                                      else
-                                       "job_title"
+                                       "job_role"
                                      end
   end
 
