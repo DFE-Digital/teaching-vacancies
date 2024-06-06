@@ -6,7 +6,7 @@ module VacanciesHelper
   WORD_EXCEPTIONS = %w[and the of upon].freeze
 
   def humanize_array(items)
-    items.map(&:humanize).join(", ")
+    items.reject(&:blank?).map(&:humanize).join(", ")
   end
 
   def page_title_prefix(step_process, form_object)
