@@ -1,6 +1,34 @@
 require "rails_helper"
 
 RSpec.describe VacanciesHelper do
+  describe "#humanize_array" do
+    subject { helper.humanize_array(items) }
+
+    context "when the array is empty" do
+      let(:items) { [] }
+
+      it "returns an empty string" do
+        expect(subject).to eq("")
+      end
+    end
+
+    context "when the array contains items" do
+      let(:items) { %w[maths science physics] }
+
+      it "returns a humanized list of items" do
+        expect(subject).to eq("Maths, Science, Physics")
+      end
+    end
+
+    context "when the array contains empty or null elements" do
+      let(:items) { ["", nil, "maths", "science", "physics"] }
+
+      it "returns a humanized list of items without the empty or null elements" do
+        expect(subject).to eq("Maths, Science, Physics")
+      end
+    end
+  end
+
   describe "#page_title_prefix" do
     subject { helper.page_title_prefix(step_process, form_object) }
 
