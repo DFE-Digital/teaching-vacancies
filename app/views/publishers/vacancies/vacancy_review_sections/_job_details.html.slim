@@ -22,7 +22,7 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
       - row.with_action text: t("buttons.change"),
                   href: organisation_job_build_path(vacancy.id, :job_title, "back_to_#{action_name}": "true"),
                   visually_hidden_text: t("jobs.job_title")
-  
+
   - summary_list.with_row(html_attributes: { id: "job_role" }) do |row|
     - row.with_key
       = t("jobs.job_role")
