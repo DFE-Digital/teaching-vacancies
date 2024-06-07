@@ -15,5 +15,7 @@
       - timeline.with_item(key: t("jobs.latest_start_date"), value: format_date(vacancy.latest_start_date))
     - when "other"
       - timeline.with_item(key: t("jobs.other_start_date_details"), value: vacancy.other_start_date_details)
+    - when "asap"
+      - timeline.with_item(key: t("jobs.other_start_date_details"), value: t("helpers.legend.publishers_job_listing_start_date_form.asap") )
   - timeline.with_item(key: t("jobs.application_deadline"), value: format_time_to_datetime_at(vacancy.expires_at))
   - timeline.with_item(key: t("jobs.date_listed"), value: format_date(vacancy.publish_on))

@@ -50,7 +50,7 @@ class Vacancy < ApplicationRecord
   enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
-  enum start_date_type: { specific_date: 0, date_range: 1, other: 2, undefined: 3 }
+  enum start_date_type: { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
   enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
   enum receive_applications: { email: 0, website: 1 }
 

@@ -36,6 +36,8 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
           = "#{format_date(vacancy.earliest_start_date)} to #{format_date(vacancy.latest_start_date)}"
         - when "other"
           = vacancy.other_start_date_details
+        - when "asap"
+          = t("helpers.legend.publishers_job_listing_start_date_form.asap")
         - else
           = t("jobs.not_defined")
       - unless vacancy.legacy_draft?
