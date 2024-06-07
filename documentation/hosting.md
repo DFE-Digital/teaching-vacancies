@@ -96,7 +96,7 @@ If the environment has multiple pods running the web/application. The command wi
 make review pr_id=5432 railsc
 ```
 ```
-make qa/staging rails c
+make qa/staging railsc
 ```
 ```
 make production railsc CONFIRM_PRODUCTION=YES
