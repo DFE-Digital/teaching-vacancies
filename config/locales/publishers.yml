@@ -636,13 +636,12 @@ en:
         date_posted: Your job listing will be published on %{date}.
         feedback:
           heading: Have time to share some feedback?
-          description: >-
-            Your feedback can help us improve the service to better support you as well as schools around England.
+          description: Your feedback can help us improve how you can list jobs.
         heading:
           published: Job listing published
           scheduled: Job listing scheduled
         make_changes: make changes to the job listing
-        manage_jobs: manage jobs
+        manage_jobs: manage your other job listings
         next_steps: Next steps
         page_title: Job listing published - Create job listing - Teaching Vacancies - GOV.UK
         preview_listing: preview the job listing
