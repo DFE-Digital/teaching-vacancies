@@ -103,8 +103,8 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
     end
 
     it "generates an XML with the vacancies published/edited after the given date" do
-      tempfile = instance_double(Tempfile, path: "/tmp/#{file_name}")
-      expect(Tempfile).to receive(:open).with(file_name).and_yield(tempfile)
+      tempfile = instance_double(Tempfile, path: "/tmp/#{file_name}", close!: true)
+      expect(Tempfile).to receive(:new).with(file_name).and_return(tempfile)
       expect(tempfile).to receive(:write).with(expected_xml_content)
 
       subject.call
