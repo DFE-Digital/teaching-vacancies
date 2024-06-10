@@ -14,11 +14,14 @@ module Vacancies::Export::DwpFindAJob
     def call
       vacancies = self.class::QUERY_CLASS.new(from_date).vacancies
       xml = self.class::XML_CLASS.new(vacancies).xml
-      Tempfile.open(filename) do |file|
+      file = Tempfile.new(filename)
+      begin
         file.write(xml)
         upload_to_find_a_job_sftp(file.path)
-        log_upload(vacancies.size)
+      ensure
+        file.close!
       end
+      log_upload(vacancies.size)
     end
 
     private
