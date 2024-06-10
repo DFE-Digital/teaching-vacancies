@@ -2,13 +2,13 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   include JobApplicationsHelper
   include VacanciesHelper
 
-  def initialize(job_application, allow_edit: nil, forms: [], classes: [], html_attributes: {}, **kwargs)
+  def initialize(job_application, allow_edit: nil, forms: [], classes: [], html_attributes: {}, **)
     super(
       job_application,
       forms: forms,
       classes: classes,
       html_attributes: html_attributes,
-      **kwargs,
+      **,
     )
 
     @allow_edit = allow_edit

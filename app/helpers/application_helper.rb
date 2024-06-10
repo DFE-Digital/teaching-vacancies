@@ -3,7 +3,7 @@ module ApplicationHelper
   include ActionView::Helpers::SanitizeHelper
 
   def sanitize(text, options = {})
-    super(text, options)&.gsub("&amp;", "&")
+    super&.gsub("&amp;", "&")
   end
 
   def body_class

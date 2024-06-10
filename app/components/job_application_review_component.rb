@@ -8,12 +8,12 @@ class JobApplicationReviewComponent < ReviewComponent
     )
   end)
 
-  def initialize(job_application, step_process:, allow_edit: nil, classes: [], html_attributes: {}, **kwargs)
+  def initialize(job_application, step_process:, allow_edit: nil, classes: [], html_attributes: {}, **)
     super(
       classes: classes,
       html_attributes: html_attributes,
       namespace: "jobseekers/job_applications",
-      **kwargs,
+      **,
     )
 
     @allow_edit = allow_edit

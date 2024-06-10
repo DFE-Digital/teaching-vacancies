@@ -7,6 +7,6 @@ class Jobseekers::Profile::HideProfileForm < BaseForm
 
   def initialize(attributes = {})
     self.requested_hidden_profile = ActiveModel::Type::Boolean.new.cast(attributes.delete(:requested_hidden_profile))
-    super(attributes)
+    super
   end
 end

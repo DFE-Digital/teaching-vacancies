@@ -11,8 +11,8 @@ class ValidatableSummaryListComponent < GovukComponent::SummaryListComponent
     )
   end)
 
-  def initialize(record, error_path:, show_errors: true, **kwargs)
-    super(**kwargs)
+  def initialize(record, error_path:, show_errors: true, **)
+    super(**)
 
     @record = record
     @show_errors = show_errors

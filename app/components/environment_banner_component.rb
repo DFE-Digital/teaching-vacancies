@@ -2,7 +2,7 @@ class EnvironmentBannerComponent < ApplicationComponent
   include FailSafe
 
   def initialize(classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super
   end
 
   def render?

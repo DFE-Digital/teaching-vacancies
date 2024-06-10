@@ -6,7 +6,7 @@ class ApplicationComponent < GovukComponent::Base
     #  on it.
     @classes = Array(classes)
 
-    super(classes: classes, html_attributes: html_attributes)
+    super
   end
 
   private
