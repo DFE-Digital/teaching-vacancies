@@ -100,7 +100,7 @@ class Vacancy < ApplicationRecord
   has_noticed_notifications
   has_paper_trail on: [:update],
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,
-                  if: proc { |vacancy| vacancy.listed? }
+                  if: proc(&:listed?)
 
   before_save :on_expired_vacancy_feedback_submitted_update_stats_updated_at
   after_save :reset_markers, if: -> { saved_change_to_status? && (listed? || pending?) }
@@ -208,7 +208,7 @@ class Vacancy < ApplicationRecord
     rescue Addressable::URI::InvalidURIError
       Rails.logger.debug("Validation error: Invalid application link format")
     end
-    super(value)
+    super
   end
 
   def refresh_slug
@@ -217,7 +217,7 @@ class Vacancy < ApplicationRecord
   end
 
   def attributes
-    super().merge("working_patterns" => working_patterns)
+    super.merge("working_patterns" => working_patterns)
   end
 
   def publish_equal_opportunities_report?

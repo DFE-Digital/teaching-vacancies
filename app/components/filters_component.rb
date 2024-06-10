@@ -28,7 +28,7 @@ class FiltersComponent < ApplicationComponent
 
   class RemoveFilterLinks < ApplicationComponent
     def initialize(classes: [], html_attributes: {})
-      super(classes: classes, html_attributes: html_attributes)
+      super
     end
 
     def filter_link(selected, key, option, value_method, selected_method, remove_filter_link)

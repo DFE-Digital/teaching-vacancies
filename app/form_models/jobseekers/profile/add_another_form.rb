@@ -7,6 +7,6 @@ class Jobseekers::Profile::AddAnotherForm < BaseForm
 
   def initialize(attributes = {})
     self.add_another = ActiveModel::Type::Boolean.new.cast(attributes.delete(:add_another))
-    super(attributes)
+    super
   end
 end

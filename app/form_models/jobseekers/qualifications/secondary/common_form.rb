@@ -10,7 +10,7 @@ module Jobseekers::Qualifications::Secondary
     validates :year, numericality: { less_than_or_equal_to: proc { Time.current.year } }
 
     def initialize(attributes = nil)
-      super(attributes)
+      super
       pad_qualification_results
     end
 

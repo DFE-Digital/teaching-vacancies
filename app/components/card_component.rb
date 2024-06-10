@@ -3,7 +3,7 @@ class CardComponent < ApplicationComponent
   renders_one :body
 
   def initialize(classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+    super
   end
 
   renders_many :action_items, lambda { |link:|

@@ -1,6 +1,6 @@
 class ValidatableSummaryListComponent::ErrorComponent < ViewComponent::Base
-  def initialize(*args, errors:, error_path:, **kwargs)
-    super(*args, **kwargs)
+  def initialize(*, errors:, error_path:, **)
+    super(*, **)
 
     @errors = errors
     @error_path = error_path

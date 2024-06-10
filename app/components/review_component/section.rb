@@ -9,8 +9,8 @@ class ReviewComponent::Section < ApplicationComponent
 
   delegate :with_row, to: :@list
 
-  def initialize(record, name:, id: nil, forms: [], **kwargs)
-    super(**kwargs)
+  def initialize(record, name:, id: nil, forms: [], **)
+    super(**)
 
     forms << "#{name.to_s.camelize}Form" if forms.empty?
 

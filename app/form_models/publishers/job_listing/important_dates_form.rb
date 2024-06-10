@@ -26,7 +26,7 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
   def initialize(params, vacancy, current_publisher = nil)
     @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
 
-    super(params, vacancy, current_publisher)
+    super
   end
 
   def disable_editing_publish_on?

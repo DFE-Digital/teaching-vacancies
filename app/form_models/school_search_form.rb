@@ -61,7 +61,7 @@ class SchoolSearchForm
       new_attributes = new_attributes.permit(*self.class.strong_params_args)
     end
 
-    super(new_attributes)
+    super
   end
 
   class << self
