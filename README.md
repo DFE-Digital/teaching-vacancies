@@ -65,6 +65,7 @@ bar, using the VS Code "Run task" option, or the Rails convention `bin/dev` scri
 * [Docker](/documentation/docker.md)
 * [DSI Integration](/documentation/dsi-integration.md)
 * [Hosting](/documentation/hosting.md)
+* [Integrations with other job posting services](/documentation/integrations.md)
 * [Logging](/documentation/logging.md)
 * [Onboarding](/documentation/onboarding.md)
 * [Search](/documentation/search.md)
