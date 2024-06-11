@@ -2,7 +2,14 @@ require "rails_helper"
 
 RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
   describe "#call" do
-    let(:org) { create(:school, address: "1 School Lane", town: "School Town", county: "School County", postcode: "AB12 3CD") }
+    let(:org) do
+      create(:school,
+             address: "1 School Lane",
+             town: "School Town",
+             county: "School County",
+             postcode: "AB12 3CD",
+             safeguarding_information: "Safeguarding text")
+    end
     let(:vacancy_published_old) do
       create(:vacancy,
              :published,
@@ -19,7 +26,9 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
              updated_at: 2.weeks.ago,
              created_at: 2.weeks.ago,
              job_title: "Great teacher",
-             job_advert: "We need a great teacher",
+             skills_and_experience: "We need a great teacher",
+             school_offer: "We offer a great school",
+             further_details: "More details",
              expires_at: Time.zone.local(2024, 5, 17, 9, 0, 0),
              working_patterns: ["full_time"],
              job_roles: ["teacher"],
@@ -35,7 +44,9 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
              updated_at: 1.hour.ago,
              created_at: 1.hour.ago,
              job_title: "IT technician",
-             job_advert: "IT technician for school",
+             skills_and_experience: "We need a IT technician",
+             school_offer: "We offer a great school",
+             further_details: "More details",
              expires_at: Time.zone.local(2024, 5, 20, 9, 0, 0),
              working_patterns: ["part_time"],
              job_roles: ["it_support"],
@@ -50,7 +61,21 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
         <Vacancies>
           <Vacancy vacancyRefCode="#{vacancy_published.id}">
             <Title>Great teacher</Title>
-            <Description>We need a great teacher</Description>
+            <Description>What skills and experience we're looking for
+
+        We need a great teacher
+
+        What the school offers its staff
+
+        We offer a great school
+
+        Further details about the role
+
+        More details
+
+        Commitment to safeguarding
+
+        Safeguarding text</Description>
             <Location>
               <StreetAddress>1 School Lane</StreetAddress>
               <City>School Town</City>
@@ -66,7 +91,21 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
           </Vacancy>
           <Vacancy vacancyRefCode="#{vacancy_updated.id}">
             <Title>IT technician</Title>
-            <Description>IT technician for school</Description>
+            <Description>What skills and experience we're looking for
+
+        We need a IT technician
+
+        What the school offers its staff
+
+        We offer a great school
+
+        Further details about the role
+
+        More details
+
+        Commitment to safeguarding
+
+        Safeguarding text</Description>
             <Location>
               <StreetAddress>1 School Lane</StreetAddress>
               <City>School Town</City>
