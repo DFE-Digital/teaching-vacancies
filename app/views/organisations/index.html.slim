@@ -9,6 +9,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       = render "organisations/search/filters", f: f
     .govuk-grid-column-two-thirds-at-desktop
       = render "organisations/search/form", f: f
+      = render "organisations/search/open_filters_button", f: search_form
 
       #search-results
         - if @schools.any?
