@@ -6,15 +6,14 @@ class SendExpiredVacancyFeedbackPromptJob < ApplicationJob
   CUTOFF_DATE = 6.weeks.ago.beginning_of_day
 
   def perform
-    vacancies_requiring_expiry_email_prompt.group_by(&:publisher).each do |publisher, expired_vacancies|
-      vacancies_to_include = expired_vacancies.sort_by(&:expires_at).first(MAX_NUMBER_OF_VACANCIES)
+    vacancies_requiring_expiry_email_prompt.each do |expired_vacancy|
+      next unless expired_vacancy.publisher.email.present? && expired_vacancy.publisher.unsubscribed_from_expired_vacancy_prompt_at.nil?
 
-      next unless publisher.email.present? && publisher.unsubscribed_from_expired_vacancy_prompt_at.nil?
+      Publishers::ExpiredVacancyFeedbackPromptMailer.prompt_for_feedback(expired_vacancy.publisher, expired_vacancy).deliver_later
 
-      Publishers::ExpiredVacancyFeedbackPromptMailer.prompt_for_feedback(publisher, vacancies_to_include).deliver_later
-      Rails.logger.info("Sidekiq: Sending feedback prompt emails for #{vacancies_to_include.count} vacancies to #{publisher.email}")
+      Rails.logger.info("Sidekiq: Sending feedback prompt emails for vacancy id: #{expired_vacancy.id} vacancies to #{expired_vacancy.publisher.email}")
 
-      vacancies_to_include.each { |vacancy| vacancy.update(expired_vacancy_feedback_email_sent_at: Time.zone.now) }
+      expired_vacancy.update(expired_vacancy_feedback_email_sent_at: Time.zone.now)
     end
   end
 
