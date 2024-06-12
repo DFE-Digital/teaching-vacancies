@@ -27,7 +27,16 @@ module Vacancies::Export::DwpFindAJob::NewAndEdited
     end
 
     def description
-      strip_tags(vacancy.job_advert)
+      skills_and_experience = strip_tags(vacancy.skills_and_experience)
+      school_offer = strip_tags(vacancy.school_offer)
+      further_details = strip_tags(vacancy.further_details)
+      safeguarding = strip_tags(vacancy.organisation.safeguarding_information)
+      description = ""
+      description += "#{I18n.t('jobs.skills_and_experience.jobseeker')}\n\n#{skills_and_experience}\n\n" if skills_and_experience.present?
+      description += "#{I18n.t('jobs.school_offer.jobseeker')}\n\n#{school_offer}\n\n" if school_offer.present?
+      description += "#{I18n.t('jobs.further_details')}\n\n#{further_details}\n\n" if further_details.present?
+      description += "#{I18n.t('jobs.safeguarding_information.jobseeker')}\n\n#{safeguarding}" if safeguarding.present?
+      description.strip
     end
 
     def expiry

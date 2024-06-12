@@ -55,11 +55,83 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::ParsedVacancy do
   end
 
   describe "#description" do
-    it "returns the vacancy job advert without html tags" do
-      allow(vacancy).to receive(:job_advert).and_return(
-        "<p>Job description with <strong>html</strong> and a <a href='http://example.com'>link</a></p>",
-      )
-      expect(parsed.description).to eq("Job description with html and a link")
+    let(:school) { build_stubbed(:school, safeguarding_information: nil) }
+
+    before do
+      allow(vacancy).to receive(:skills_and_experience).and_return("")
+      allow(vacancy).to receive(:school_offer).and_return("")
+      allow(vacancy).to receive(:further_details).and_return("")
+      allow(vacancy).to receive(:organisation).and_return(school)
+    end
+
+    context "when none of the job details are present" do
+      it "returns an empty string" do
+        expect(parsed.description).to eq("")
+      end
+    end
+
+    context "when the vacancy has skills and experience information" do
+      before { allow(vacancy).to receive(:skills_and_experience).and_return("Skills and experience info") }
+
+      it "returns the vacancy skills and experience info" do
+        expect(parsed.description).to eq("What skills and experience we're looking for\n\nSkills and experience info")
+      end
+    end
+
+    context "when the vacancy has school offer information" do
+      before { allow(vacancy).to receive(:school_offer).and_return("School offer info") }
+
+      it "returns the vacancy school offer info" do
+        expect(parsed.description).to eq("What the school offers its staff\n\nSchool offer info")
+      end
+    end
+
+    context "when the vacancy has further details information" do
+      before { allow(vacancy).to receive(:further_details).and_return("Further details info") }
+
+      it "returns the vacancy further details info" do
+        expect(parsed.description).to eq("Further details about the role\n\nFurther details info")
+      end
+    end
+
+    context "when the vacancy organisation has safeguarding information" do
+      before { allow(school).to receive(:safeguarding_information).and_return("Safeguarding info") }
+
+      it "returns the vacancy organisation safeguarding information" do
+        expect(parsed.description).to eq("Commitment to safeguarding\n\nSafeguarding info")
+      end
+    end
+
+    context "when the vacancy has all job details" do
+      before do
+        allow(vacancy).to receive(:skills_and_experience).and_return("Skills and experience info")
+        allow(vacancy).to receive(:school_offer).and_return("School offer info")
+        allow(vacancy).to receive(:further_details).and_return("Further details info")
+        allow(school).to receive(:safeguarding_information).and_return("Safeguarding info")
+      end
+
+      it "returns all the job details info" do
+        expect(parsed.description).to eq(
+          "What skills and experience we're looking for\n\nSkills and experience info\n\n" \
+          "What the school offers its staff\n\nSchool offer info\n\n" \
+          "Further details about the role\n\nFurther details info\n\n" \
+          "Commitment to safeguarding\n\nSafeguarding info",
+        )
+      end
+    end
+
+    context "when the vacancy job details have html tags" do
+      before do
+        allow(vacancy).to receive(:skills_and_experience).and_return(
+          "<p>Skills and experience info <strong>html</strong> and a <a href='http://example.com'>link</a></p>",
+        )
+      end
+
+      it "return the info without html tags" do
+        expect(parsed.description).to eq(
+          "What skills and experience we're looking for\n\nSkills and experience info html and a link",
+        )
+      end
     end
   end
 
