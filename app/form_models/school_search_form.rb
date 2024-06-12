@@ -64,6 +64,17 @@ class SchoolSearchForm
     super
   end
 
+  def total_filters
+    [
+      education_phase&.count,
+      key_stage&.count,
+      special_school&.count,
+      job_availability&.count,
+      organisation_types&.count,
+      school_types&.count,
+    ].compact.sum
+  end
+
   class << self
     def strong_params_args
       return @strong_params_args if defined? @strong_params_args
