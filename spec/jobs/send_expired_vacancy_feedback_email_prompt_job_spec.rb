@@ -10,13 +10,13 @@ RSpec.describe SendExpiredVacancyFeedbackPromptJob do
   before { allow(Publishers::ExpiredVacancyFeedbackPromptMailer).to receive(:prompt_for_feedback).and_return(mail) }
 
   context "when the publisher has 5 or less vacancies to be prompted on" do
-    let!(:expired_vacancy_1) { create(:vacancy, :expired, publisher: publisher, expires_at: expiry_date) }
-    let!(:expired_vacancy_2) { create(:vacancy, :expired, publisher: publisher, expires_at: expiry_date) }
+    let!(:expired_vacancy1) { create(:vacancy, :expired, publisher: publisher, expires_at: expiry_date) }
+    let!(:expired_vacancy2) { create(:vacancy, :expired, publisher: publisher, expires_at: expiry_date) }
 
     before { create(:vacancy, :expired, publisher: publisher, expires_at: 1.day.ago) }
 
     it "sends an email with vacancies that expired between 2 weeks ago and the cutoff date" do
-      expect(Publishers::ExpiredVacancyFeedbackPromptMailer).to receive(:prompt_for_feedback).with(publisher, expired_vacancy_1)
+      expect(Publishers::ExpiredVacancyFeedbackPromptMailer).to receive(:prompt_for_feedback).with(publisher, expired_vacancy1)
       expect(mail).to receive(:deliver_later)
 
       perform_enqueued_jobs { job }
@@ -24,9 +24,9 @@ RSpec.describe SendExpiredVacancyFeedbackPromptJob do
 
     it "sets the timestamp" do
       perform_enqueued_jobs { job }
-      [expired_vacancy_1, expired_vacancy_2].each(&:reload)
+      [expired_vacancy1, expired_vacancy2].each(&:reload)
 
-      expect([expired_vacancy_1, expired_vacancy_2].map(&:expired_vacancy_feedback_email_sent_at)).to_not include(nil)
+      expect([expired_vacancy1, expired_vacancy2].map(&:expired_vacancy_feedback_email_sent_at)).to_not include(nil)
     end
 
     context "when the publisher has no email address" do
