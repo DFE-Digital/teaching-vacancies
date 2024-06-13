@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Publishers::JobApplicationReceivedNotification do
+RSpec.describe Publishers::JobApplicationReceivedNotifier do
   let(:vacancy) { create(:vacancy, :published, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 

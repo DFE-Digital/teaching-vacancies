@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SendJobApplicationDataExpiryNotificationJob do
+RSpec.describe SendJobApplicationDataExpiryNotifierJob do
   let(:notification) { instance_double(Publishers::JobApplicationDataExpiryNotification) }
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher, organisations: [organisation]) }

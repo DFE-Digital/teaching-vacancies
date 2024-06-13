@@ -11,7 +11,7 @@ RSpec.describe "Publishers can view their notifications" do
   context "when the notification was created outside the data access period" do
     before do
       travel_to 2.years.ago do
-        Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+        Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
       end
       visit publishers_notifications_path
     end
@@ -24,8 +24,8 @@ RSpec.describe "Publishers can view their notifications" do
   context "when paginating" do
     before do
       stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 1)
-      Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-      Publishers::JobApplicationReceivedNotification.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
       visit root_path
     end
 

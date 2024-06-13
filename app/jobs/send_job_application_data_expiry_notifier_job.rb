@@ -1,4 +1,4 @@
-class SendJobApplicationDataExpiryNotificationJob < ApplicationJob
+class SendJobApplicationDataExpiryNotifierJob < ApplicationJob
   queue_as :default
 
   def perform_now
@@ -8,7 +8,7 @@ class SendJobApplicationDataExpiryNotificationJob < ApplicationJob
       next unless vacancy.job_applications.any?
 
       vacancy.organisation.publishers.each do |publisher|
-        Publishers::JobApplicationDataExpiryNotification.with(vacancy: vacancy, publisher: publisher).deliver(publisher)
+        Publishers::JobApplicationDataExpiryNotifier.with(vacancy: vacancy, publisher: publisher).deliver(publisher)
       end
     end
   end

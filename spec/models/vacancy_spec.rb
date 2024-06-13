@@ -16,7 +16,7 @@ RSpec.describe Vacancy do
     let(:job_application) { create(:job_application, vacancy: subject) }
 
     before do
-      Publishers::JobApplicationReceivedNotification.with(vacancy: subject, job_application: job_application)
+      Publishers::JobApplicationReceivedNotifier.with(vacancy: subject, job_application: job_application)
                                                     .deliver(subject.publisher)
       expect(Notification.count).to eq 1
       subject.destroy
