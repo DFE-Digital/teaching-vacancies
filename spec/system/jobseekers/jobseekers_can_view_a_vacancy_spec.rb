@@ -7,9 +7,9 @@ RSpec.describe "Viewing a single published vacancy" do
 
   context "when the vacancy status is published" do
     let(:vacancy) do
-      create(:vacancy, :published, organisations: [school], job_roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
-                                                                           higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
-                                                                           catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ])
+      create(:vacancy, :published, start_date_type: "asap", organisations: [school], job_roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
+                                                                                                    higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
+                                                                                                    catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support ])
     end
 
     scenario "jobseekers can view the vacancy" do

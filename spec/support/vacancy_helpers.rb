@@ -191,6 +191,8 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
     if vacancy.start_date_type == "specific_date"
       expect(page).to have_content(vacancy.starts_on.to_formatted_s.strip)
+    elsif vacancy.start_date_type == "asap"
+      expect(page).to have_content("As soon as possible")
     end
 
     unless vacancy.enable_job_applications?
@@ -240,8 +242,10 @@ module VacancyHelpers
 
     expect(page).to have_content(vacancy.publish_on.to_formatted_s.strip)
     expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
-    if vacancy.starts_on?
+    if vacancy.start_date_type == "specific_date"
       expect(page).to have_content(vacancy.starts_on.to_formatted_s.strip)
+    elsif vacancy.start_date_type == "asap"
+      expect(page).to have_content("As soon as possible")
     end
 
     expect(page.html).to include(vacancy.skills_and_experience)

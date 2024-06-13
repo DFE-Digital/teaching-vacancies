@@ -132,7 +132,7 @@ RSpec.describe "Creating a vacancy" do
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :start_date))
 
-    fill_in_start_date_form_fields(vacancy)
+    choose I18n.t("helpers.legend.publishers_job_listing_start_date_form.asap")
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
