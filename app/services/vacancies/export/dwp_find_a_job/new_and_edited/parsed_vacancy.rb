@@ -1,3 +1,5 @@
+require "action_text"
+
 module Vacancies::Export::DwpFindAJob::NewAndEdited
   class ParsedVacancy
     include ActionView::Helpers::SanitizeHelper
@@ -27,15 +29,11 @@ module Vacancies::Export::DwpFindAJob::NewAndEdited
     end
 
     def description
-      skills_and_experience = strip_tags(vacancy.skills_and_experience)
-      school_offer = strip_tags(vacancy.school_offer)
-      further_details = strip_tags(vacancy.further_details)
-      safeguarding = strip_tags(vacancy.organisation.safeguarding_information)
       description = ""
-      description += "#{I18n.t('jobs.skills_and_experience.jobseeker')}\n\n#{skills_and_experience}\n\n" if skills_and_experience.present?
-      description += "#{I18n.t('jobs.school_offer.jobseeker')}\n\n#{school_offer}\n\n" if school_offer.present?
-      description += "#{I18n.t('jobs.further_details')}\n\n#{further_details}\n\n" if further_details.present?
-      description += "#{I18n.t('jobs.safeguarding_information.jobseeker')}\n\n#{safeguarding}" if safeguarding.present?
+      description += description_paragraph(I18n.t("jobs.skills_and_experience.jobseeker"), vacancy.skills_and_experience)
+      description += description_paragraph(I18n.t("jobs.school_offer.jobseeker"), vacancy.school_offer)
+      description += description_paragraph(I18n.t("jobs.further_details"), vacancy.further_details)
+      description += description_paragraph(I18n.t("jobs.safeguarding_information.jobseeker"), vacancy.organisation.safeguarding_information)
       description.strip
     end
 
@@ -64,6 +62,13 @@ module Vacancies::Export::DwpFindAJob::NewAndEdited
       when "fixed_term", "parental_leave_cover"
         TYPE_CONTRACT_ID
       end
+    end
+
+    private
+
+    def description_paragraph(title, text)
+      plain_text = ActionText::Fragment.from_html(text).to_plain_text
+      plain_text.present? ? "#{title}\n\n#{plain_text}\n\n" : ""
     end
   end
 end
