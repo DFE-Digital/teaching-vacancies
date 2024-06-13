@@ -1,8 +1,15 @@
-class SanitizedMailerLogger < ActiveSupport::Logger
+class SanitisedMailerLogger < Logger
+  def initialize(*args)
+    super
+    @formatter = proc do |severity, timestamp, progname, msg|
+      format_message(severity, timestamp, progname, msg)
+    end
+  end
+
   def format_message(severity, timestamp, progname, msg)
-    filtered_message = msg.gsub(/"to":\["[^"]+"\]/, '"to":["[FILTERED]"]')
-    super(severity, timestamp, progname, filtered_message)
+    sanitized_message = msg.gsub(/"to":\[\s*"[^\"]+"\s*\]/, '"to":["[FILTERED]"]')
+    "#{timestamp} #{severity} #{progname}: #{sanitized_message}\n"
   end
 end
 
-ActionMailer::Base.logger = SanitizedMailerLogger.new($stdout)
+ActionMailer::Base.logger = SanitisedMailerLogger.new($stdout)
