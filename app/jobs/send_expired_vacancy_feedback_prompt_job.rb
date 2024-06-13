@@ -11,8 +11,6 @@ class SendExpiredVacancyFeedbackPromptJob < ApplicationJob
 
       Publishers::ExpiredVacancyFeedbackPromptMailer.prompt_for_feedback(expired_vacancy.publisher, expired_vacancy).deliver_later
 
-      Rails.logger.info("Sidekiq: Sending feedback prompt emails for vacancy id: #{expired_vacancy.id} vacancies to #{expired_vacancy.publisher.email}")
-
       expired_vacancy.update(expired_vacancy_feedback_email_sent_at: Time.zone.now)
     end
   end
