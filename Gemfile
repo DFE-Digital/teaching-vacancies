@@ -5,6 +5,7 @@ ruby "3.3.2"
 RAILS_VERSION = "~> 7.1.2".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
+gem "actiontext", RAILS_VERSION
 gem "activejob", RAILS_VERSION
 gem "activemodel", RAILS_VERSION
 gem "activerecord", RAILS_VERSION

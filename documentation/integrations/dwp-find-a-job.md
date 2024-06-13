@@ -144,6 +144,7 @@ classDiagram
       +expiry()
       +status_id()
       +type_id()
+      -description_paragraph(title, text)
     }
 
   }

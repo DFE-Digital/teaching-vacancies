@@ -27,7 +27,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
              created_at: 2.weeks.ago,
              job_title: "Great teacher",
              skills_and_experience: "We need a great teacher",
-             school_offer: "We offer a great school",
+             school_offer: "<p>We are a <strong>great school</strong></p><ul><li>Item 0</li><li>Item 1<ul><li>Item A<ol><li>Item i</li><li>Item ii</li></ol></li><li>Item B<ul><li>Item i</li></ul></li></ul></li><li>Item 2</li></ul><p><a href='url'>link text</a>",
              further_details: "More details",
              expires_at: Time.zone.local(2024, 5, 17, 9, 0, 0),
              working_patterns: ["full_time"],
@@ -67,7 +67,18 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
 
         What the school offers its staff
 
-        We offer a great school
+        We are a great school
+
+        • Item 0
+        • Item 1
+          • Item A
+            1. Item i
+            2. Item ii
+          • Item B
+            • Item i
+        • Item 2
+
+        link text
 
         Further details about the role
 

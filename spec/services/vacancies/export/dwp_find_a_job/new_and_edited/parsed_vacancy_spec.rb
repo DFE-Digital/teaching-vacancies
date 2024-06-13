@@ -123,13 +123,13 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::ParsedVacancy do
     context "when the vacancy job details have html tags" do
       before do
         allow(vacancy).to receive(:skills_and_experience).and_return(
-          "<p>Skills and experience info <strong>html</strong> and a <a href='http://example.com'>link</a></p>",
+          "<p>First paragraph</p><ul><li>Item 0</li><li>Item 1<ul><li>Item A<ol><li>Item i</li><li>Item ii</li></ol></li><li>Item B<ul><li>Item i</li></ul></li></ul></li><li>Item 2</li></ul><p><a href='url'>link text</a>",
         )
       end
 
-      it "return the info without html tags" do
+      it "return the html content parsed into plain text" do
         expect(parsed.description).to eq(
-          "What skills and experience we're looking for\n\nSkills and experience info html and a link",
+          "What skills and experience we're looking for\n\nFirst paragraph\n\n• Item 0\n• Item 1\n  • Item A\n    1. Item i\n    2. Item ii\n  • Item B\n    • Item i\n• Item 2\n\nlink text",
         )
       end
     end

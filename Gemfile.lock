@@ -727,6 +727,7 @@ PLATFORMS
 DEPENDENCIES
   actionmailer (~> 7.1.2)
   actionpack (~> 7.1.2)
+  actiontext (~> 7.1.2)
   activejob (~> 7.1.2)
   activemodel (~> 7.1.2)
   activerecord (~> 7.1.2)
