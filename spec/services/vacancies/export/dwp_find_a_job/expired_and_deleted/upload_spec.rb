@@ -51,7 +51,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Upload do
     end
 
     it "generates an XML with the vacancies manually expired after the given date" do
-      tempfile = instance_double(Tempfile, path: "/tmp/#{file_name}", close!: true)
+      tempfile = instance_double(Tempfile, path: "/tmp/#{file_name}", flush: true, close!: true)
       expect(Tempfile).to receive(:new).with(file_name).and_return(tempfile)
       expect(tempfile).to receive(:write).with(
         <<~XML,

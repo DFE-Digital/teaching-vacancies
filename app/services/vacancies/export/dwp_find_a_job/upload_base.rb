@@ -17,6 +17,7 @@ module Vacancies::Export::DwpFindAJob
       file = Tempfile.new(filename)
       begin
         file.write(xml)
+        file.flush # Ensure all data is written to disk before uploading
         upload_to_find_a_job_sftp(file.path)
       ensure
         file.close!
