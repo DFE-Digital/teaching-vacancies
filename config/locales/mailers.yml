@@ -203,6 +203,8 @@ en:
         view_applications:
           one: View %{count} new application
           other: View %{count} new applications
+    expired_vacancy_feedback_prompt_mailer:
+      feedback_link_text: Tell us how you filled your vacancy.
 
   support_users:
     authentication_fallback_mailer:

@@ -19,7 +19,7 @@ module NotifyViewsHelper
 
   def expired_vacancy_feedback_link(vacancy)
     url = new_organisation_job_expired_feedback_url(vacancy.signed_id)
-    notify_link(url, vacancy.job_title)
+    notify_link(url, I18n.t("publishers.expired_vacancy_feedback_prompt_mailer.feedback_link_text"))
   end
 
   def expired_vacancy_unsubscribe_link(publisher)

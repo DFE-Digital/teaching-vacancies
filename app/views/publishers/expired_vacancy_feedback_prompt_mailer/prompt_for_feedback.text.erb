@@ -1,23 +1,10 @@
-# <%= t('app.title') %>
+You recently recruited for <%= @vacancy.job_title %>.
 
-Please let us know whether you filled these roles through Teaching Vacancies, or through another site or service.
+<%= expired_vacancy_feedback_link(@vacancy) %>
 
-It should only take a minute of your time.
-
----
-
-<%- @vacancies.each do |vacancy| %>
-  <%=expired_vacancy_feedback_link(vacancy)%>
-<% end %>
-
----
-
-Your feedback will help Teaching Vacancies to keep getting better, supporting us to save schools millions of pounds in recruitment costs each year.
-
-Thank you for your feedback.
+Your feedback will help us improve how we advertise roles for your school or trust.
 
 Kind regards,
-
-The <%= t('app.title') %> team
+Teaching Vacancies
 
 <%= expired_vacancy_unsubscribe_link(@publisher)%>

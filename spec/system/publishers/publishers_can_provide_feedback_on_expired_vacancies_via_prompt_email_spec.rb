@@ -23,7 +23,6 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
     let!(:first_vacancy_in_email) { create(:vacancy, :published, publisher: publisher, expires_at: 5.weeks.ago) }
 
     before do
-      create(:vacancy, :published, publisher: publisher, expires_at: 4.weeks.ago)
       perform_enqueued_jobs do
         SendExpiredVacancyFeedbackPromptJob.new.perform
       end
@@ -65,9 +64,9 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
       end
     end
 
-    scenario "they all receive a feedback prompt email" do
-      expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(["test@example.com"], ["test2@example.com"])
-      expect(ApplicationMailer.deliveries.count).to eq(2)
+    scenario "they receive a feedback prompt email for each qualifying vacanct" do
+      expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(["test@example.com"], ["test@example.com"], ["test2@example.com"], ["test2@example.com"])
+      expect(ApplicationMailer.deliveries.count).to eq(4)
     end
   end
 end

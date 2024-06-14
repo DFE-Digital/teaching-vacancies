@@ -7,12 +7,17 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
   let(:body) { mail.body.raw_source }
 
   describe "prompt_for_feedback" do
-    let(:content_extract) { "Please let us know whether you filled these roles through Teaching Vacancies, or through another site or service." }
+    let(:content_extract1) do
+      "You recently recruited for #{vacancy.job_title}"
+    end
+    let(:content_extract2) do
+      "Tell us how you filled your vacancy"
+    end
     let(:email) { "test@example.com" }
     let(:publisher) { create(:publisher, email: email) }
-    let(:mail) { described_class.prompt_for_feedback(publisher, vacancies) }
+    let(:mail) { described_class.prompt_for_feedback(publisher, vacancy) }
     let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
-    let(:vacancies) { create_list(:vacancy, 5, :expired) }
+    let(:vacancy) { create(:vacancy, :expired) }
     let(:expected_data) do
       {
         notify_template: notify_template,
@@ -23,15 +28,12 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
     end
 
     it "lists all vacancies" do
-      expect(mail.subject).to eq("Teaching Vacancies needs your feedback on closed job listings")
+      expect(mail.subject).to eq("Did you fill your vacancy?")
       expect(mail.to).to eq([email])
 
-      expect(body).to include(content_extract)
-                  .and include(vacancies.first.job_title)
-                  .and include(vacancies.second.job_title)
-                  .and include(vacancies.third.job_title)
-                  .and include(vacancies.fourth.job_title)
-                  .and include(vacancies.fifth.job_title)
+      expect(body).to include(content_extract1)
+                  .and include(content_extract2)
+                  .and include(vacancy.job_title)
     end
 
     it "triggers a `publisher_prompt_for_feedback` email event" do
