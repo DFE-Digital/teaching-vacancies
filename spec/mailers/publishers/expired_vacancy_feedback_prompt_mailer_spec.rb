@@ -28,7 +28,7 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
     end
 
     it "lists all vacancies" do
-      expect(mail.subject).to eq("Teaching Vacancies needs your feedback on closed job listings")
+      expect(mail.subject).to eq("Did you fill your vacancy?")
       expect(mail.to).to eq([email])
 
       expect(body).to include(content_extract1)
