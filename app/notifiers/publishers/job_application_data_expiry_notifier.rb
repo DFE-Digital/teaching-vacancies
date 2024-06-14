@@ -1,4 +1,4 @@
-class Publishers::JobApplicationDataExpiryNotifier < Noticed::Base
+class Publishers::JobApplicationDataExpiryNotifier < Noticed::Event
   include ActionView::Helpers::UrlHelper
   include GovukLinkHelper
   include GovukVisuallyHiddenHelper

@@ -1,4 +1,4 @@
-class Publishers::JobApplicationReceivedNotifier < Noticed::Base
+class Publishers::JobApplicationReceivedNotifier < Noticed::Event
   include ActionView::Helpers::UrlHelper
   include GovukLinkHelper
   include GovukVisuallyHiddenHelper
