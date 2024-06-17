@@ -6,7 +6,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotifier do
   let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
 
   describe "#message" do
-    subject { Notification.last.to_notification.message }
+    subject { Noticed::Notification.last.message }
 
     let(:data_expiration_date) { (vacancy.expires_at + 1.year).to_date }
     let(:vacancy_applications_link) { "/organisation/jobs/#{vacancy.id}/job_applications" }
@@ -25,7 +25,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotifier do
   end
 
   describe "#timestamp" do
-    subject { Notification.last.to_notification.timestamp }
+    subject { Noticed::Notification.last.timestamp }
 
     context "when the notification is delivered today" do
       before do
