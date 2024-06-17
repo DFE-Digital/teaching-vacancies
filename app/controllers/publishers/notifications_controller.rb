@@ -11,7 +11,7 @@ class Publishers::NotificationsController < Publishers::BaseController
   private
 
   def notifications
-    @notifications ||= current_publisher.noticed_events
+    @notifications ||= current_publisher.notifications
                                         .where("created_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS)
                                         .order(created_at: :desc)
   end
