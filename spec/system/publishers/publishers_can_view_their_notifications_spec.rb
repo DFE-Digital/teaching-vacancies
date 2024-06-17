@@ -10,9 +10,8 @@ RSpec.describe "Publishers can view their notifications" do
 
   context "when the notification was created outside the data access period" do
     before do
-      travel_to 2.years.ago do
-        Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-      end
+      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      publisher.notifications.first.update(created_at: Time.now - 2.years)
       visit publishers_notifications_path
     end
 
