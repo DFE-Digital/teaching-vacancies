@@ -31,6 +31,13 @@ updates:
         exclude-patterns:
           - "govuk*"
           - "noticed"
+          - "rubocop*"
+      govuk:
+        patterns:
+          - "govuk*"
+      rubocop:
+        patterns:
+          - "rubocop*"
 
   - package-ecosystem: "docker"
     directory: "/"
