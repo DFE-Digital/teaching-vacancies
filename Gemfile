@@ -103,9 +103,12 @@ group :development, :test do
   gem "rack-mini-profiler", require: false
   gem "rails-controller-testing"
   gem "rspec-rails"
+  gem "rubocop-capybara"
+  gem "rubocop-factory_bot"
   gem "rubocop-performance"
   gem "rubocop-rails"
   gem "rubocop-rspec"
+  gem "rubocop-rspec_rails"
   gem "slim_lint", require: false
 end
 
