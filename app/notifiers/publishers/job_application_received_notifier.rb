@@ -8,7 +8,7 @@ class Publishers::JobApplicationReceivedNotifier < Noticed::Event
     include GovukLinkHelper
     include GovukVisuallyHiddenHelper
     include DatesHelper
-    
+
     def message
       t("notifications.publishers/job_application_received_notification.message_html",
         link: application_link, job_title: vacancy.job_title, organisation: vacancy.organisation_name)

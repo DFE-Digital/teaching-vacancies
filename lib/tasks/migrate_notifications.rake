@@ -12,11 +12,11 @@ namespace :notifications do
         recipient_type: notification.recipient_type,
         recipient_id: notification.recipient_id,
         read_at: notification.read_at,
-        seen_at: notification.read_at,  # Assuming `seen_at` should be the same as `read_at`
+        seen_at: notification.read_at, # Assuming `seen_at` should be the same as `read_at`
         created_at: notification.created_at,
-        updated_at: notification.updated_at
+        updated_at: notification.updated_at,
       }]
-      
+
       Noticed::Event.create!(attributes)
     end
   rescue StandardError => e
