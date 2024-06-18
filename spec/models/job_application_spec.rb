@@ -12,12 +12,12 @@ RSpec.describe JobApplication do
     before do
       Publishers::JobApplicationReceivedNotifier.with(vacancy: subject.vacancy, job_application: subject)
                                                     .deliver(subject.vacancy.publisher)
-      expect(Notification.count).to eq 1
+      expect(Noticed::Notification.count).to eq 1
       subject.destroy
     end
 
     it "removes the notification when destroyed" do
-      expect(Notification.count).to eq 0
+      expect(Noticed::Notification.count).to eq 0
     end
   end
 
