@@ -11,7 +11,7 @@ RSpec.describe "Documents" do
         get job_document_path(vacancy, document.id)
 
         expect(response).to redirect_to(document)
-        expect(response.status).to eq(301)
+        expect(response).to have_http_status(:moved_permanently)
       end
 
       it "triggers a `vacancy_document_downloaded` event" do
@@ -31,7 +31,7 @@ RSpec.describe "Documents" do
         get job_document_path(vacancy, document.id)
 
         expect(response).to redirect_to(document)
-        expect(response.status).to eq(301)
+        expect(response).to have_http_status(:moved_permanently)
       end
 
       it "triggers a `vacancy_document_downloaded` event" do

@@ -68,7 +68,7 @@ RSpec.describe MarkdownDocument do
       let(:document_content) { file_fixture("document_no_front_matter.md").read }
 
       it "returns nil" do
-        expect(subject.date_posted).to eq(nil)
+        expect(subject.date_posted).to be_nil
       end
     end
   end

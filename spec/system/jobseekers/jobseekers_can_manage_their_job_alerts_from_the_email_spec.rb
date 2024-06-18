@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
           let(:jobseeker_signed_in?) { true }
 
           it "redirects to job alerts dashboard" do
-            expect(current_path).to eq(jobseekers_subscriptions_path)
+            expect(page).to have_current_path(jobseekers_subscriptions_path, ignore_query: true)
           end
         end
 
@@ -45,7 +45,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
                 click_on I18n.t("buttons.sign_in")
               end
             end
-            expect(current_path).to eq(jobseekers_subscriptions_path)
+            expect(page).to have_current_path(jobseekers_subscriptions_path, ignore_query: true)
           end
 
           it "renders a sign in prompt form that redirects to sign in page on error then redirects to job alerts dashboard" do
@@ -54,7 +54,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
               click_on I18n.t("buttons.sign_in")
             end
             sign_in_jobseeker
-            expect(current_path).to eq(jobseekers_subscriptions_path)
+            expect(page).to have_current_path(jobseekers_subscriptions_path, ignore_query: true)
           end
         end
       end
@@ -121,7 +121,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
   context "with an old token" do
     let(:token) { subscription.token }
 
-    scenario "still returns 200" do
+    it "still returns 200" do
       travel 3.days do
         expect(page.status_code).to eq(200)
       end

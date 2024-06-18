@@ -1,9 +1,11 @@
 RSpec.shared_examples "a component that accepts custom classes" do |uses_positional_args: false|
+  # rubocop:disable RSpec/LeadingSubject
   if uses_positional_args
     subject! { render_inline(described_class.send(:new, *args, **kwargs.merge(classes: custom_classes))) }
   else
     subject! { render_inline(described_class.send(:new, **kwargs.merge(classes: custom_classes))) }
   end
+  # rubocop:enable RSpec/LeadingSubject
 
   context "when classes are supplied as a string" do
     let(:custom_classes) { "purple-stripes" }

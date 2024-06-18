@@ -27,7 +27,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(school_website_url)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(new_trust_website_url)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
 
       it "allows the publisher to navigate and edit a school's website" do
@@ -71,7 +71,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(new_school_website_url)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
-        expect(page.current_path).to eq(publishers_organisation_path(school1))
+        expect(page).to have_current_path(publishers_organisation_path(school1), ignore_query: true)
       end
     end
 
@@ -93,7 +93,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(local_authority_website)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
     end
   end
@@ -117,7 +117,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(school_description)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
     end
 
@@ -142,7 +142,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(new_trust_description)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
 
       it "allows the publisher to navigate and edit a school's description" do
@@ -159,7 +159,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(new_school_description)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
-        expect(page.current_path).to eq(publishers_organisation_path(school1))
+        expect(page).to have_current_path(publishers_organisation_path(school1), ignore_query: true)
       end
     end
 
@@ -181,7 +181,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(local_authority_description)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
     end
   end
@@ -205,7 +205,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(school_email)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
     end
 
@@ -230,7 +230,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(new_trust_email)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
 
       it "allows the publisher to navigate and edit a school's email" do
@@ -247,7 +247,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(new_school_email)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
-        expect(page.current_path).to eq(publishers_organisation_path(school1))
+        expect(page).to have_current_path(publishers_organisation_path(school1), ignore_query: true)
       end
     end
 
@@ -269,7 +269,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(local_authority_email)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
     end
   end
@@ -293,7 +293,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(school_safeguarding_information)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
     end
 
@@ -318,7 +318,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(new_trust_safeguarding_information)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
 
       it "allows the publisher to navigate and edit a school's description" do
@@ -335,7 +335,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(new_school_safeguarding_information)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
-        expect(page.current_path).to eq(publishers_organisation_path(school1))
+        expect(page).to have_current_path(publishers_organisation_path(school1), ignore_query: true)
       end
     end
 
@@ -357,7 +357,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
         expect(page).to have_content(local_authority_safeguarding_information)
         expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "Organisation"))
-        expect(page.current_path).to eq(publishers_organisation_path(organisation))
+        expect(page).to have_current_path(publishers_organisation_path(organisation), ignore_query: true)
       end
     end
   end
@@ -404,7 +404,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
       click_on I18n.t("publishers.organisations.logo.edit.delete_logo_link")
 
-      expect(current_path).to eq(confirm_destroy_publishers_organisation_logo_path(organisation))
+      expect(page).to have_current_path(confirm_destroy_publishers_organisation_logo_path(organisation), ignore_query: true)
 
       click_on I18n.t("buttons.delete_logo")
 
@@ -455,7 +455,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
       click_on I18n.t("publishers.organisations.photo.edit.delete_photo_link")
 
-      expect(current_path).to eq(confirm_destroy_publishers_organisation_photo_path(organisation))
+      expect(page).to have_current_path(confirm_destroy_publishers_organisation_photo_path(organisation), ignore_query: true)
 
       click_on I18n.t("buttons.delete_photo")
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "General feedback can interface with recaptcha", recaptcha: true do
+RSpec.describe "General feedback can interface with recaptcha", :recaptcha do
   let(:feedback_params) { { general_feedback_form: attributes_for(:feedback).merge(report_a_problem: "no") } }
 
   before do

@@ -112,7 +112,7 @@ RSpec.describe "Job applications qualifications" do
 
         it "creates the qualification and redirects to the qualification build step" do
           expect { post jobseekers_job_application_qualifications_path(job_application), params: params }
-            .to change { Qualification.count }.by(1)
+            .to change(Qualification, :count).by(1)
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
         end
@@ -159,8 +159,8 @@ RSpec.describe "Job applications qualifications" do
 
         it "creates the qualification with its results, and redirects to the qualification build step" do
           expect { post jobseekers_job_application_qualifications_path(job_application), params: params }
-            .to change { Qualification.count }.by(1)
-            .and change { QualificationResult.count }.by(2)
+            .to change(Qualification, :count).by(1)
+            .and change(QualificationResult, :count).by(2)
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
         end
@@ -325,7 +325,7 @@ RSpec.describe "Job applications qualifications" do
 
     it "destroys the qualification and redirects to the qualification build step" do
       expect { delete jobseekers_job_application_qualification_path(job_application, qualification) }
-        .to change { Qualification.count }.by(-1)
+        .to change(Qualification, :count).by(-1)
 
       expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :qualifications))
     end

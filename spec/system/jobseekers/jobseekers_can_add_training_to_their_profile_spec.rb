@@ -82,10 +82,10 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect(page).to have_css("h2.govuk-notification-banner__title", text: "Success")
         expect(page).to have_css(".govuk-notification-banner__content", text: "Training deleted")
 
-        expect(page).to_not have_css(".govuk-summary-list__value", text: "Rock climbing")
-        expect(page).to_not have_css(".govuk-summary-list__value", text: "TeachTrainLtd")
-        expect(page).to_not have_css(".govuk-summary-list__value", text: "Pass")
-        expect(page).to_not have_css(".govuk-summary-list__value", text: "2020")
+        expect(page).to have_no_css(".govuk-summary-list__value", text: "Rock climbing")
+        expect(page).to have_no_css(".govuk-summary-list__value", text: "TeachTrainLtd")
+        expect(page).to have_no_css(".govuk-summary-list__value", text: "Pass")
+        expect(page).to have_no_css(".govuk-summary-list__value", text: "2020")
       end
     end
   end

@@ -8,7 +8,7 @@ RSpec.describe "Pages" do
       it { is_expected.to render_template(page) }
 
       it "does not have a noindex header" do
-        expect(response.headers["X-Robots-Tag"]).to_not include("noindex")
+        expect(response.headers["X-Robots-Tag"]).not_to include("noindex")
       end
 
       it "responds with success" do

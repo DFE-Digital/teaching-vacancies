@@ -6,7 +6,7 @@ RSpec.describe "Api::Markers" do
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:marker_type) { "vacancy" }
 
-  describe "GET /api/v1/markers/:id.json?parent_id=:parent_id", json: true do
+  describe "GET /api/v1/markers/:id.json?parent_id=:parent_id", :json do
     subject do
       get api_marker_path(vacancy.id, api_version: 1), params: { parent_id: organisation.id, marker_type: marker_type, format: :json }
     end

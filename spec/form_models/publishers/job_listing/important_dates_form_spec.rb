@@ -65,7 +65,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:vacancy) { build_stubbed(:vacancy, :published, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
-          expect(subject).to be_invalid
+          expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:publish_on, :blank)).to be true
         end
       end
@@ -74,7 +74,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:vacancy) { build_stubbed(:vacancy, :draft) }
 
         it "is invalid" do
-          expect(subject).to be_invalid
+          expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:publish_on, :blank)).to be true
         end
       end
@@ -95,7 +95,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:vacancy) { build_stubbed(:vacancy, :published, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
-          expect(subject).to be_invalid
+          expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
         end
       end
@@ -104,7 +104,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:vacancy) { build_stubbed(:vacancy, :draft) }
 
         it "is invalid" do
-          expect(subject).to be_invalid
+          expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
         end
       end
@@ -125,7 +125,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:vacancy) { build_stubbed(:vacancy, :published, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
-          expect(subject).to be_invalid
+          expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
         end
       end
@@ -134,7 +134,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:vacancy) { build_stubbed(:vacancy, :draft) }
 
         it "is invalid" do
-          expect(subject).to be_invalid
+          expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:publish_on, :invalid)).to be true
         end
       end
@@ -155,7 +155,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
         let(:vacancy) { build_stubbed(:vacancy, :draft) }
 
         it "is invalid" do
-          expect(subject).to be_invalid
+          expect(subject).not_to be_valid
           expect(subject.errors.of_kind?(:publish_on, :on_or_after)).to be true
         end
       end
@@ -165,7 +165,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       let(:publish_on) { 25.months.from_now }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:publish_on, :on_or_before)).to be true
       end
     end
@@ -180,7 +180,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       end
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:expires_at, :blank)).to be true
       end
     end
@@ -189,7 +189,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       before { params["expires_at(2i)"] = "" }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:expires_at, :invalid)).to be true
       end
     end
@@ -198,7 +198,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       before { params["expires_at(2i)"] = "100" }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:expires_at, :invalid)).to be true
       end
     end
@@ -207,7 +207,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       let(:expires_at) { 1.month.ago }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:expires_at, :on_or_after)).to be true
       end
     end
@@ -216,7 +216,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       let(:expires_at) { 25.months.from_now }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:expires_at, :on_or_before)).to be true
       end
     end
@@ -225,7 +225,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       let(:expires_at) { 3.months.from_now }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:expires_at, :after)).to be true
       end
     end

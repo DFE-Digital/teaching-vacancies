@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe ProfilesHelper do
   describe "#jobseeker_status" do
-    let(:profile) { instance_double("profile") }
-    let(:personal_details) { instance_double("personal_details", right_to_work_in_uk: right_to_work_in_uk) }
+    let(:profile) { instance_double(JobseekerProfile) }
+    let(:personal_details) { instance_double(PersonalDetails, right_to_work_in_uk: right_to_work_in_uk) }
 
     before do
       allow(profile).to receive(:personal_details).and_return(personal_details)
@@ -14,8 +14,7 @@ RSpec.describe ProfilesHelper do
 
       context "when qualified teacher status is `yes`" do
         before do
-          allow(profile).to receive(:qualified_teacher_status_year).and_return("2020")
-          allow(profile).to receive(:qualified_teacher_status).and_return("yes")
+          allow(profile).to receive_messages(qualified_teacher_status_year: "2020", qualified_teacher_status: "yes")
         end
 
         it "returns correct string" do
@@ -49,8 +48,7 @@ RSpec.describe ProfilesHelper do
 
       context "when qualified teacher status is `yes`" do
         before do
-          allow(profile).to receive(:qualified_teacher_status_year).and_return("2020")
-          allow(profile).to receive(:qualified_teacher_status).and_return("yes")
+          allow(profile).to receive_messages(qualified_teacher_status_year: "2020", qualified_teacher_status: "yes")
         end
 
         it "returns correct string" do
@@ -84,8 +82,7 @@ RSpec.describe ProfilesHelper do
 
       context "when qualified teacher status is `yes`" do
         before do
-          allow(profile).to receive(:qualified_teacher_status_year).and_return("2020")
-          allow(profile).to receive(:qualified_teacher_status).and_return("yes")
+          allow(profile).to receive_messages(qualified_teacher_status_year: "2020", qualified_teacher_status: "yes")
         end
 
         it "returns correct string" do

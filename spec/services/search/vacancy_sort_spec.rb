@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Search::VacancySort do
   subject { described_class.new(keyword: keyword).update(sort_by: sort_by) }
+
   let(:sort_by) { "" }
   let(:keyword) { "" }
 

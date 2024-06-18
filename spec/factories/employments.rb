@@ -9,7 +9,7 @@ FactoryBot.define do
     current_role { "no" }
     ended_on { Faker::Date.in_date_period(year: 2018) }
 
-    job_application
+    association :job_application
   end
 
   trait :employment1 do
@@ -29,7 +29,7 @@ FactoryBot.define do
   trait :jobseeker_profile_employment do
     job_application { nil }
 
-    jobseeker_profile
+    association :jobseeker_profile
   end
 
   trait :current_role do

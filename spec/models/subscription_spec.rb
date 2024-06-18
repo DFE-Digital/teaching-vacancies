@@ -15,7 +15,7 @@ RSpec.describe Subscription do
   end
 
   describe "scopes" do
-    before(:each) do
+    before do
       create_list(:subscription, 3, frequency: :daily)
       create_list(:subscription, 5, frequency: :weekly)
       create(:subscription, frequency: :daily, active: false)
@@ -23,19 +23,19 @@ RSpec.describe Subscription do
 
     describe "#daily" do
       it "retrieves all subscriptions with frequency set to :daily" do
-        expect(Subscription.daily.count).to eq(4)
+        expect(described_class.daily.count).to eq(4)
       end
     end
 
     describe "#weekly" do
       it "retrieves all subscriptions with frequency set to :daily" do
-        expect(Subscription.weekly.count).to eq(5)
+        expect(described_class.weekly.count).to eq(5)
       end
     end
 
     describe "active" do
       it "retrieves all subscriptions with active set to true" do
-        expect(Subscription.active.count).to eq(8)
+        expect(described_class.active.count).to eq(8)
       end
     end
   end
@@ -50,11 +50,11 @@ RSpec.describe Subscription do
     let(:token) { subscription.token }
 
     it "generates a token" do
-      expect(token).to_not be_nil
+      expect(token).not_to be_nil
     end
 
     describe "#find_and_verify_by_token" do
-      let(:result) { Subscription.find_and_verify_by_token(token) }
+      let(:result) { described_class.find_and_verify_by_token(token) }
 
       it "finds by token" do
         expect(result).to eq(subscription)
@@ -82,7 +82,7 @@ RSpec.describe Subscription do
         let(:token) do
           expires = Time.current + 2.days
           token_values = { id: subscription.id, expires: expires }
-          Subscription.encryptor.encrypt_and_sign(token_values)
+          described_class.encryptor.encrypt_and_sign(token_values)
         end
 
         it "finds by token" do
@@ -117,15 +117,16 @@ RSpec.describe Subscription do
   end
 
   describe "alert_run_today?" do
-    let(:subscription) { create(:subscription, frequency: :daily) }
     subject { subscription.alert_run_today? }
+
+    let(:subscription) { create(:subscription, frequency: :daily) }
 
     context "when an alert has run today" do
       before do
         subscription.alert_runs.find_or_create_by(run_on: Date.current)
       end
 
-      it { expect(subject).to eq(true) }
+      it { expect(subject).to be(true) }
     end
 
     context "when an alert ran yesterday" do
@@ -133,11 +134,11 @@ RSpec.describe Subscription do
         subscription.alert_runs.find_or_create_by(run_on: Time.zone.yesterday)
       end
 
-      it { expect(subject).to eq(false) }
+      it { expect(subject).to be(false) }
     end
 
     context "when an alert has never run" do
-      it { expect(subject).to eq(false) }
+      it { expect(subject).to be(false) }
     end
   end
 

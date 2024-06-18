@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe JobPreferences::JobScope do
+  subject(:job_scope) { described_class.new(original_scope, job_preferences) }
+
   let(:original_scope) { Vacancy.live }
 
   let!(:vacancy1) do
@@ -50,8 +52,6 @@ RSpec.describe JobPreferences::JobScope do
                   working_patterns: %w[part_time full_time],
                   key_stages: %w[ks1 ks2])
   end
-
-  subject(:job_scope) { described_class.new(original_scope, job_preferences) }
 
   describe "roles scope" do
     let(:jobseeker_roles) { %w[teacher head_of_year_or_phase] }

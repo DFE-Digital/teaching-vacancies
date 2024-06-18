@@ -46,8 +46,8 @@ RSpec.describe SubscriptionPresenter do
       let(:search_criteria) { { radius: "10" } }
 
       it "does not return location or radius information" do
-        expect(presenter.filtered_search_criteria.key?("location")).to eq(false)
-        expect(presenter.filtered_search_criteria.key?("radius")).to eq(false)
+        expect(presenter.filtered_search_criteria.key?("location")).to be(false)
+        expect(presenter.filtered_search_criteria.key?("radius")).to be(false)
       end
     end
 

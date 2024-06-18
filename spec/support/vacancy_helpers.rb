@@ -272,7 +272,7 @@ module VacancyHelpers
   end
 
   def expect_schema_property_to_match_value(key, value)
-    expect(page).to have_selector("meta[itemprop='#{key}'][content='#{value}']")
+    expect(page).to have_css("meta[itemprop='#{key}'][content='#{value}']")
   end
 
   def vacancy_json_ld(vacancy)

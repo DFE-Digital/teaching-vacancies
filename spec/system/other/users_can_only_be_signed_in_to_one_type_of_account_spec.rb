@@ -39,7 +39,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
         expect(page).to have_current_path(publisher_root_path)
 
         visit jobseekers_account_path
-        expect(current_path).to eq(new_jobseeker_session_path)
+        expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
         expect(page).to have_current_path(publisher_root_path)
 
         visit jobseekers_account_path
-        expect(current_path).to eq(new_jobseeker_session_path)
+        expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
       end
     end
   end
@@ -72,15 +72,15 @@ RSpec.describe "Users can only be signed in to one type of account" do
     context "when email fallback is disabled" do
       it "signs out from the publisher account when signing in as a jobseeker" do
         visit organisation_jobs_with_type_path
-        expect(current_path).to eq(organisation_jobs_with_type_path)
+        expect(page).to have_current_path(organisation_jobs_with_type_path, ignore_query: true)
 
         visit new_jobseeker_session_path
         sign_in_jobseeker
 
-        expect(current_path).to eq(jobseekers_saved_jobs_path)
+        expect(page).to have_current_path(jobseekers_saved_jobs_path, ignore_query: true)
 
         visit organisation_jobs_with_type_path
-        expect(current_path).to eq(new_publisher_session_path)
+        expect(page).to have_current_path(new_publisher_session_path, ignore_query: true)
       end
     end
 
@@ -89,15 +89,15 @@ RSpec.describe "Users can only be signed in to one type of account" do
 
       it "signs out from the publisher account when signing in as a jobseeker" do
         visit organisation_jobs_with_type_path
-        expect(current_path).to eq(organisation_jobs_with_type_path)
+        expect(page).to have_current_path(organisation_jobs_with_type_path, ignore_query: true)
 
         visit new_jobseeker_session_path
         sign_in_jobseeker
 
-        expect(current_path).to eq(jobseekers_saved_jobs_path)
+        expect(page).to have_current_path(jobseekers_saved_jobs_path, ignore_query: true)
 
         visit organisation_jobs_with_type_path
-        expect(current_path).to eq(new_publishers_login_key_path)
+        expect(page).to have_current_path(new_publishers_login_key_path, ignore_query: true)
       end
     end
   end

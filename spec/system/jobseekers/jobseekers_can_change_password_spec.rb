@@ -18,7 +18,7 @@ RSpec.describe "Jobseekers can change password" do
     click_on I18n.t("buttons.update_password")
 
     expect(page).to have_content I18n.t("devise.passwords.updated")
-    expect(current_path).to eq(jobseekers_account_path)
+    expect(page).to have_current_path(jobseekers_account_path, ignore_query: true)
   end
 
   context "when email is not pending reconfirmation" do
@@ -34,7 +34,7 @@ RSpec.describe "Jobseekers can change password" do
       click_on I18n.t("buttons.update_password")
 
       expect(page).to have_content I18n.t("devise.passwords.updated")
-      expect(current_path).to eq(jobseekers_account_path)
+      expect(page).to have_current_path(jobseekers_account_path, ignore_query: true)
     end
   end
 end

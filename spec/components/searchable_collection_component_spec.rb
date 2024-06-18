@@ -2,17 +2,6 @@ require "rails_helper"
 
 RSpec.describe SearchableCollectionComponent, type: :component do
   let(:subject) { described_class.new(**base.merge!(options)) }
-
-  let(:form) { instance_double(GOVUKDesignSystemFormBuilder::FormBuilder) }
-  let(:collection) { [1, 2, 3, 4, 5].freeze }
-  let(:options) { {} }
-
-  let(:inline_component) { render_inline(subject) }
-
-  before do
-    allow(form).to receive(:govuk_collection_check_boxes)
-  end
-
   let(:base) do
     {
       text: { aria_label: "search collection" },
@@ -24,15 +13,24 @@ RSpec.describe SearchableCollectionComponent, type: :component do
       collection_count: collection.count,
     }
   end
-
   let(:kwargs) { { collection: collection, collection_count: collection.count } }
+
+  let(:form) { instance_double(GOVUKDesignSystemFormBuilder::FormBuilder) }
+  let(:collection) { [1, 2, 3, 4, 5].freeze }
+  let(:options) { {} }
+
+  let(:inline_component) { render_inline(subject) }
+
+  before do
+    allow(form).to receive(:govuk_collection_check_boxes)
+  end
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"
 
   context "when providing an item threshold higher in number than the collection size" do
     it "is not searchable" do
-      expect(subject.searchable?).to be_falsey
+      expect(subject).not_to be_searchable
       expect(inline_component.css(".searchable-collection-component__search")).to be_blank
       expect(inline_component.css(".searchable-collection-component--border")).to be_blank
     end
@@ -46,7 +44,7 @@ RSpec.describe SearchableCollectionComponent, type: :component do
     let(:options) { { options: { threshold: collection.size, border: true } } }
 
     it "is searchable" do
-      expect(subject.searchable?).to be_truthy
+      expect(subject).to be_searchable
       expect(inline_component.css(".searchable-collection-component__search").count).to eq(1)
       expect(inline_component.css(".searchable-collection-component--border").count).to eq(1)
     end

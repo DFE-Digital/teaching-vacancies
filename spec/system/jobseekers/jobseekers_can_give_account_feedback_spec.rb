@@ -28,7 +28,7 @@ RSpec.describe "Jobseekers can give account feedback" do
                                 occupation: occupation,
                                 origin_path: jobseekers_account_path).count
     }.by(1)
-    expect(current_path).to eq(jobseekers_account_path)
+    expect(page).to have_current_path(jobseekers_account_path, ignore_query: true)
     expect(page).to have_content(I18n.t("jobseekers.account_feedbacks.create.success"))
   end
 end

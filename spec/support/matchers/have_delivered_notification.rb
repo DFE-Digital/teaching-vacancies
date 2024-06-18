@@ -17,7 +17,7 @@ RSpec::Matchers.define :have_delivered_notification do |notification_type|
       params: (hash_including(expected_params) if expected_params),
     }
 
-    expect(proc).to change { Noticed::Notification.count }.by(1)
+    expect(proc).to change(Noticed::Notification, :count).by(1)
 
     notification = Noticed::Notification.last
     event = Noticed::Event.find(notification.event_id)

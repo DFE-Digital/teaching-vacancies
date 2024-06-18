@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::Qualifications::Secondary::CommonForm, type: :model do
   subject { described_class.new(params) }
+
   let(:params) { {} }
 
   it { is_expected.to validate_presence_of(:category) }

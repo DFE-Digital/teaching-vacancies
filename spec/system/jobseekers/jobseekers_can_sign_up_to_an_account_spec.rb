@@ -11,7 +11,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
         allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
       end
 
-      scenario "requests the user to pass a recaptcha V2 check" do
+      it "requests the user to pass a recaptcha V2 check" do
         visit new_jobseeker_registration_path
         expect { sign_up_jobseeker }.not_to change(Jobseeker, :count)
         expect(page).to have_content("There is a problem")
@@ -31,7 +31,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       end
 
       sign_up_jobseeker
-      expect(current_path).to eq(jobseekers_check_your_email_path)
+      expect(page).to have_current_path(jobseekers_check_your_email_path, ignore_query: true)
     end
 
     it "allows jobseekers to reset their password" do
@@ -47,7 +47,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       expect(page).to have_content I18n.t("jobseekers.registrations.check_your_email.resent_email_confirmation")
 
       confirm_email_address
-      expect(current_path).to eq(confirmation_jobseekers_account_path)
+      expect(page).to have_current_path(confirmation_jobseekers_account_path, ignore_query: true)
     end
   end
 
@@ -60,11 +60,11 @@ RSpec.describe "Jobseekers can sign up to an account" do
     context "when the confirmation token is valid" do
       it "confirms email, triggers email confirmed event and redirects to jobseeker account confirmation interstitial" do
         confirm_email_address
-        expect(current_path).to eq(confirmation_jobseekers_account_path)
+        expect(page).to have_current_path(confirmation_jobseekers_account_path, ignore_query: true)
         expect(page).to have_content(I18n.t("jobseekers.accounts.confirmation.page_title"))
         expect(page).to have_link(I18n.t("jobseekers.accounts.confirmation.apply_for_jobs_link_text"), href: jobs_path)
         expect(page).to have_link(I18n.t("jobseekers.accounts.confirmation.create_profile.heading"), href: jobseekers_profile_path)
-        expect(page).not_to have_content(I18n.t("devise.confirmations.confirmed"))
+        expect(page).to have_no_content(I18n.t("devise.confirmations.confirmed"))
       end
 
       it "shows an error when trying to visit the confirmation link after a successfull confirmation" do
@@ -89,7 +89,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
         expect(page).to have_content "Email has been resent"
 
         confirm_email_address
-        expect(current_path).to eq(confirmation_jobseekers_account_path)
+        expect(page).to have_current_path(confirmation_jobseekers_account_path, ignore_query: true)
       end
 
       context "when the user session does not contain the jobseeker information" do
@@ -119,7 +119,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
           expect(page).to have_content "Email has been resent"
 
           confirm_email_address
-          expect(current_path).to eq(confirmation_jobseekers_account_path)
+          expect(page).to have_current_path(confirmation_jobseekers_account_path, ignore_query: true)
         end
       end
     end
@@ -134,16 +134,16 @@ RSpec.describe "Jobseekers can sign up to an account" do
 
         it "informs user that the link has expired and allows them to resend email and confirm their email" do
           expect(page).to have_content("Link has expired")
-          expect { click_on "Resend email" }.to change { delivered_emails.count }.by(1)
-          expect(current_path).to eq(jobseekers_check_your_email_path)
+          expect { click_on "Resend email" }.to change(delivered_emails, :count).by(1)
+          expect(page).to have_current_path(jobseekers_check_your_email_path, ignore_query: true)
           confirm_email_address
-          expect(current_path).to eq(confirmation_jobseekers_account_path)
+          expect(page).to have_current_path(confirmation_jobseekers_account_path, ignore_query: true)
         end
       end
 
       context "when the confirmation email is resent" do
         it "resends confirmation email and redirects to check your email page" do
-          expect { click_on "resend the email" }.to change { delivered_emails.count }.by(1)
+          expect { click_on "resend the email" }.to change(delivered_emails, :count).by(1)
           expect(page).to have_content "Email has been resent"
         end
       end

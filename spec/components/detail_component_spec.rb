@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe DetailComponent, type: :component do
+  subject! { render_inline(described_class.new(**kwargs)) }
+
   let(:title) { "Detail title" }
   let(:kwargs) { { title: title } }
-
-  subject! { render_inline(described_class.new(**kwargs)) }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"
@@ -22,7 +22,7 @@ RSpec.describe DetailComponent, type: :component do
 
     it "renders the detail without a title" do
       expect(page).to have_css("div", class: "detail-component") do |detail|
-        expect(detail).not_to have_css("div", class: "govuk-summary-card__title")
+        expect(detail).to have_no_css("div", class: "govuk-summary-card__title")
       end
     end
   end
@@ -30,13 +30,13 @@ RSpec.describe DetailComponent, type: :component do
   context "when body and action slots are not defined" do
     it "renders the detail without body" do
       expect(page).to have_css("div", class: "detail-component") do |detail|
-        expect(detail).not_to have_css("div", class: "govuk-summary-card__content")
+        expect(detail).to have_no_css("div", class: "govuk-summary-card__content")
       end
     end
 
     it "renders the detail without actions" do
       expect(page).to have_css("div", class: "detail-component") do |detail|
-        expect(detail).not_to have_css("div", class: "govuk-summary-card__action")
+        expect(detail).to have_no_css("div", class: "govuk-summary-card__action")
       end
     end
   end

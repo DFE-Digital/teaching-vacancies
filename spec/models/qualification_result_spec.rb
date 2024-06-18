@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe QualificationResult do
   describe "#duplicate" do
     subject(:duplicate) { result.duplicate }
+
     let(:result) { create(:qualification_result) }
 
     it "returns a new QualificationResult with the same attributes" do

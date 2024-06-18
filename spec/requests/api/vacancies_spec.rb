@@ -13,9 +13,9 @@ RSpec.describe "Api::Vacancies" do
     end
   end
 
-  describe "GET /api/v1/jobs.json", json: true do
+  describe "GET /api/v1/jobs.json", :json do
     context "sets headers" do
-      before(:each) { get api_jobs_path(api_version: 1), params: { format: :json } }
+      before { get api_jobs_path(api_version: 1), params: { format: :json } }
 
       it_behaves_like "X-Robots-Tag"
       it_behaves_like "Content-Type JSON"
@@ -107,12 +107,12 @@ RSpec.describe "Api::Vacancies" do
     end
   end
 
-  describe "GET /api/v1/jobs/:id.json", json: true do
-    let(:vacancy) { create(:vacancy, organisations: [school]) }
-
+  describe "GET /api/v1/jobs/:id.json", :json do
     subject do
       get api_job_path(vacancy.slug, api_version: 1), params: { format: :json }
     end
+
+    let(:vacancy) { create(:vacancy, organisations: [school]) }
 
     it "returns status :not_found if the request format is not JSON" do
       get api_job_path(vacancy.slug, api_version: 1), params: { format: :html }

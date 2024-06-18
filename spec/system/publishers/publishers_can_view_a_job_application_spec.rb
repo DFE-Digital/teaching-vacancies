@@ -70,8 +70,8 @@ RSpec.describe "Publishers can view a job application" do
 
       within("#main-content") do
         expect(page).to have_css(".govuk-button-group") do |actions|
-          expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
-          expect(actions).not_to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
+          expect(actions).to have_no_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
+          expect(actions).to have_no_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
           expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
         end
       end
@@ -86,7 +86,7 @@ RSpec.describe "Publishers can view a job application" do
 
       within("#main-content") do
         expect(page).to have_css(".govuk-button-group") do |actions|
-          expect(actions).not_to have_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
+          expect(actions).to have_no_css("a", class: "govuk-button", text: I18n.t("buttons.shortlist"))
           expect(actions).to have_css("a", class: "govuk-button--warning", text: I18n.t("buttons.reject"))
           expect(actions).to have_css("a", class: "govuk-button--secondary", text: I18n.t("buttons.download_application"))
         end

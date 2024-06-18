@@ -11,15 +11,15 @@ RSpec.describe "Copying a vacancy" do
   RSpec.shared_examples "publishing a copied vacancy" do |options|
     before { visit organisation_jobs_with_type_path(type: options[:type]) }
 
-    scenario "a job can be successfully copied and published" do
+    it "a job can be successfully copied and published" do
       click_on original_vacancy.job_title
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       new_vacancy = Vacancy.all.order(:created_at).last
 
-      expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      expect(page).to have_current_path organisation_job_path(new_vacancy.id), ignore_query: true
       click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
+      expect(page).to have_current_path(organisation_job_build_path(new_vacancy.id, :important_dates), ignore_query: true)
 
       new_vacancy.publish_on = Date.current
       new_vacancy.expires_at = 30.days.from_now
@@ -32,13 +32,13 @@ RSpec.describe "Copying a vacancy" do
       fill_in_start_date_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+      expect(page).to have_current_path(organisation_job_build_path(new_vacancy.id, :include_additional_documents), ignore_query: true)
 
       new_vacancy.include_additional_documents = false
       fill_in_include_additional_documents_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
+      expect(page).to have_current_path(organisation_job_review_path(new_vacancy.id), ignore_query: true)
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
@@ -48,13 +48,13 @@ RSpec.describe "Copying a vacancy" do
 
   include_examples "publishing a copied vacancy", type: "published"
 
-  scenario "a job can be copied from the dashboard" do
+  it "a job can be copied from the dashboard" do
     visit organisation_jobs_with_type_path
     click_on "#{I18n.t('buttons.copy_listing')} for #{original_vacancy.job_title}"
 
     new_vacancy = Vacancy.all.order(:created_at).last
 
-    expect(current_path).to eq organisation_job_path(new_vacancy.id)
+    expect(page).to have_current_path organisation_job_path(new_vacancy.id), ignore_query: true
   end
 
   context "when the original job is now invalid" do
@@ -64,17 +64,17 @@ RSpec.describe "Copying a vacancy" do
       end
     end
 
-    scenario "the user is taken through the invalid steps" do
+    it "the user is taken through the invalid steps" do
       visit organisation_jobs_with_type_path
       click_on original_vacancy.job_title
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       new_vacancy = Vacancy.all.order(:created_at).last
 
-      expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      expect(page).to have_current_path organisation_job_path(new_vacancy.id), ignore_query: true
       click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
 
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
+      expect(page).to have_current_path(organisation_job_build_path(new_vacancy.id, :important_dates), ignore_query: true)
 
       new_vacancy.publish_on = Date.current
       new_vacancy.expires_at = 30.days.from_now
@@ -91,13 +91,13 @@ RSpec.describe "Copying a vacancy" do
       fill_in_about_the_role_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+      expect(page).to have_current_path(organisation_job_build_path(new_vacancy.id, :include_additional_documents), ignore_query: true)
 
       new_vacancy.include_additional_documents = false
       fill_in_include_additional_documents_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
+      expect(page).to have_current_path(organisation_job_review_path(new_vacancy.id), ignore_query: true)
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
@@ -108,22 +108,22 @@ RSpec.describe "Copying a vacancy" do
   context "when the original job is pending/scheduled/future_publish" do
     let!(:original_vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
 
-    scenario "the dates are pre-filled" do
+    it "the dates are pre-filled" do
       visit organisation_jobs_with_type_path(type: "pending")
       click_on original_vacancy.job_title
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 
       new_vacancy = Vacancy.all.order(:created_at).last
-      expect(current_path).to eq organisation_job_path(new_vacancy.id)
+      expect(page).to have_current_path organisation_job_path(new_vacancy.id), ignore_query: true
       click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
 
-      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
+      expect(page).to have_current_path(organisation_job_build_path(new_vacancy.id, :include_additional_documents), ignore_query: true)
 
       new_vacancy.include_additional_documents = false
       fill_in_include_additional_documents_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(current_path).to eq(organisation_job_review_path(new_vacancy.id))
+      expect(page).to have_current_path(organisation_job_review_path(new_vacancy.id), ignore_query: true)
     end
   end
 

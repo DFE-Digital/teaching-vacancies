@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :saved_job do
-    jobseeker
-    vacancy
+    association :jobseeker
+    association :vacancy
   end
 end

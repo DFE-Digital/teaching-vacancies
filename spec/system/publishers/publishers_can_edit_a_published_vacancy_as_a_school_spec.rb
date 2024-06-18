@@ -19,13 +19,13 @@ RSpec.describe "Publishers can edit a vacancy" do
       )
     end
 
-    scenario "shows all vacancy information" do
+    it "shows all vacancy information" do
       visit organisation_job_path(vacancy.id)
 
       verify_all_vacancy_details(vacancy)
     end
 
-    scenario "takes you to the show page" do
+    it "takes you to the show page" do
       visit organisation_job_path(vacancy.id)
 
       has_published_vacancy_review_heading?(vacancy)
@@ -33,20 +33,20 @@ RSpec.describe "Publishers can edit a vacancy" do
       expect(page).to have_css(".tabs-component", count: 2)
     end
 
-    scenario "create a job sidebar is not present" do
+    it "create a job sidebar is not present" do
       visit organisation_job_path(vacancy.id)
 
-      expect(page).to_not have_content("Creating a job listing steps")
+      expect(page).to have_no_content("Creating a job listing steps")
     end
 
-    scenario "publish buttons are not present" do
+    it "publish buttons are not present" do
       visit organisation_job_path(vacancy.id)
 
-      expect(page).to_not have_content("Confirm and submit job")
+      expect(page).to have_no_content("Confirm and submit job")
     end
 
     describe "#job_title" do
-      scenario "can not be edited when validation fails" do
+      it "can not be edited when validation fails" do
         visit organisation_job_path(vacancy.id)
 
         has_published_vacancy_review_heading?(vacancy)
@@ -59,7 +59,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         expect(page).to have_content("Enter a job title")
       end
 
-      scenario "can be successfully edited" do
+      it "can be successfully edited" do
         visit organisation_job_path(vacancy.id)
 
         click_review_page_change_link(section: "job_details", row: "job_title")
@@ -67,11 +67,11 @@ RSpec.describe "Publishers can edit a vacancy" do
         fill_in "publishers_job_listing_job_title_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(current_path).to eq(organisation_job_path(vacancy.id))
+        expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
         expect(page).to have_content("Assistant Head Teacher")
       end
 
-      scenario "ensures the vacancy slug is updated when the title is saved" do
+      it "ensures the vacancy slug is updated when the title is saved" do
         vacancy = create(:vacancy, :published, slug: "the-vacancy-slug", organisations: [school], phases: %w[secondary], key_stages: %w[ks3])
         visit organisation_job_path(vacancy.id)
         click_review_page_change_link(section: "job_details", row: "job_title")
@@ -79,14 +79,14 @@ RSpec.describe "Publishers can edit a vacancy" do
         fill_in "publishers_job_listing_job_title_form[job_title]", with: "Assistant Head Teacher"
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(current_path).to eq(organisation_job_path(vacancy.id))
+        expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
         expect(page).to have_content("Assistant Head Teacher")
 
         visit job_path(vacancy.reload)
-        expect(page.current_path).to eq("/jobs/assistant-head-teacher")
+        expect(page).to have_current_path("/jobs/assistant-head-teacher", ignore_query: true)
       end
 
-      scenario "notifies the Google index service" do
+      it "notifies the Google index service" do
         expect_any_instance_of(Publishers::Vacancies::BaseController)
           .to receive(:update_google_index).with(vacancy)
 
@@ -99,7 +99,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#pay_package" do
-      scenario "can not be edited when validation fails" do
+      it "can not be edited when validation fails" do
         visit organisation_job_path(vacancy.id)
 
         has_published_vacancy_review_heading?(vacancy)
@@ -115,18 +115,18 @@ RSpec.describe "Publishers can edit a vacancy" do
         end
       end
 
-      scenario "can be successfully edited" do
+      it "can be successfully edited" do
         visit organisation_job_path(vacancy.id)
         click_review_page_change_link(section: "job_details", row: "salary")
 
         fill_in "publishers_job_listing_pay_package_form[salary]", with: "Lotsa monies"
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(current_path).to eq(organisation_job_path(vacancy.id))
+        expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
         expect(page).to have_content("Lotsa monies")
       end
 
-      scenario "adds a job to update the Google index in the queue" do
+      it "adds a job to update the Google index in the queue" do
         expect_any_instance_of(Publishers::Vacancies::BaseController)
           .to receive(:update_google_index).with(vacancy)
 
@@ -146,7 +146,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
       end
 
-      scenario "can not be edited when validation fails" do
+      it "can not be edited when validation fails" do
         visit organisation_job_path(vacancy.id)
 
         has_published_vacancy_review_heading?(vacancy)
@@ -161,20 +161,20 @@ RSpec.describe "Publishers can edit a vacancy" do
         end
       end
 
-      scenario "can be successfully edited" do
+      it "can be successfully edited" do
         visit organisation_job_path(vacancy.id)
         click_review_page_change_link(section: "important_dates", row: "expires_at")
 
         expiry_date = Date.current + 1.week
         edit_date("expires_at", expiry_date)
 
-        expect(current_path).to eq(organisation_job_path(vacancy.id))
+        expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
         # Using String#strip to get rid of an initial space in e.g. " 1 July 2020" which caused test failures
         # due to a leading newline in the body ("\n1 July 2020").
         expect(page).to have_content(expiry_date.to_formatted_s.strip)
       end
 
-      scenario "adds a job to update the Google index in the queue" do
+      it "adds a job to update the Google index in the queue" do
         expect_any_instance_of(Publishers::Vacancies::BaseController)
           .to receive(:update_google_index).with(vacancy)
 
@@ -187,7 +187,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       context "when the job post has already been published" do
         context "when the publication date is in the past" do
-          scenario "renders the publication date as text and does not allow editing" do
+          it "renders the publication date as text and does not allow editing" do
             vacancy = build(:vacancy, :published, organisations: [school], slug: "test-slug", publish_on: 1.day.ago)
             vacancy.save(validate: false)
             vacancy = VacancyPresenter.new(vacancy)
@@ -200,13 +200,13 @@ RSpec.describe "Publishers can edit a vacancy" do
             fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: vacancy.expires_at.day
             click_on I18n.t("buttons.save_and_continue")
 
-            expect(current_path).to eq(organisation_job_path(vacancy.id))
+            expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
             verify_all_vacancy_details(vacancy)
           end
         end
 
         context "when the publication date is in the future" do
-          scenario "renders the publication date as text and allows editing" do
+          it "renders the publication date as text and allows editing" do
             vacancy = create(:vacancy, :future_publish, organisations: [school])
             vacancy = VacancyPresenter.new(vacancy)
             visit organisation_job_path(vacancy.id)
@@ -217,7 +217,7 @@ RSpec.describe "Publishers can edit a vacancy" do
             publish_on = Date.current + 1.week
             edit_date("publish_on", publish_on)
 
-            expect(current_path).to eq(organisation_job_path(vacancy.id))
+            expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
 
             vacancy.publish_on = publish_on
             verify_all_vacancy_details(vacancy)
@@ -229,15 +229,15 @@ RSpec.describe "Publishers can edit a vacancy" do
     describe "#application_form" do
       let(:vacancy) { create(:vacancy, :with_application_form, organisations: [school], phases: %w[secondary], key_stages: %w[ks3]) }
 
-      scenario "replacing an application form" do
+      it "replacing an application form" do
         visit organisation_job_path(vacancy.id)
         click_review_page_change_link(section: "application_process", row: "application_form")
 
-        expect(current_path).to eq(organisation_job_build_path(vacancy.id, :application_form))
+        expect(page).to have_current_path(organisation_job_build_path(vacancy.id, :application_form), ignore_query: true)
 
         click_on I18n.t("jobs.upload_documents_table.actions.delete")
 
-        expect(current_path).to eq(organisation_job_build_path(vacancy.id, :application_form))
+        expect(page).to have_current_path(organisation_job_build_path(vacancy.id, :application_form), ignore_query: true)
         expect(page.has_field?("publishers_job_listing_application_form_form_application_form_staged_for_replacement", type: :hidden, with: "true")).to be true
 
         old_file_id = vacancy.application_form.id
@@ -254,7 +254,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     describe "#documents" do
       let(:filename) { "blank_job_spec.pdf" }
 
-      scenario "can edit documents" do
+      it "can edit documents" do
         vacancy = create(:vacancy, :published, :with_supporting_documents, include_additional_documents: true, organisations: [school], phases: %w[secondary], key_stages: %w[ks3])
         visit organisation_job_path(vacancy.id)
 
@@ -278,13 +278,13 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(current_path).to eq(organisation_job_path(vacancy.id))
+        expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
         expect(page).to have_content(filename)
       end
     end
 
     describe "#contact_details" do
-      scenario "can not be edited when validation fails" do
+      it "can not be edited when validation fails" do
         visit organisation_job_path(vacancy.id)
 
         has_published_vacancy_review_heading?(vacancy)
@@ -298,7 +298,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         expect(page).to have_content("There is a problem")
       end
 
-      scenario "can be successfully edited" do
+      it "can be successfully edited" do
         visit organisation_job_path(vacancy.id)
 
         click_review_page_change_link(section: "application_process", row: "contact_email")
@@ -308,12 +308,12 @@ RSpec.describe "Publishers can edit a vacancy" do
         fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: vacancy.contact_email
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(current_path).to eq(organisation_job_path(vacancy.id))
+        expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
 
         verify_all_vacancy_details(vacancy)
       end
 
-      scenario "adds a job to update the Google index in the queue" do
+      it "adds a job to update the Google index in the queue" do
         expect_any_instance_of(Publishers::Vacancies::BaseController)
           .to receive(:update_google_index).with(vacancy)
 
@@ -328,7 +328,7 @@ RSpec.describe "Publishers can edit a vacancy" do
     end
 
     describe "#about_the_role" do
-      scenario "can not be edited when validation fails" do
+      it "can not be edited when validation fails" do
         visit organisation_job_path(vacancy.id)
 
         has_published_vacancy_review_heading?(vacancy)
@@ -341,18 +341,18 @@ RSpec.describe "Publishers can edit a vacancy" do
         expect(page).to have_content("There is a problem")
       end
 
-      scenario "can be successfully edited" do
+      it "can be successfully edited" do
         visit organisation_job_path(vacancy.id)
         click_review_page_change_link(section: "about_the_role", row: "skills_and_experience")
 
         fill_in "publishers_job_listing_about_the_role_form[skills_and_experience]", with: "A summary about the job."
         click_on I18n.t("buttons.save_and_continue")
 
-        expect(current_path).to eq(organisation_job_path(vacancy.id))
+        expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
         expect(page).to have_content("A summary about the job.")
       end
 
-      scenario "adds a job to update the Google index in the queue" do
+      it "adds a job to update the Google index in the queue" do
         expect_any_instance_of(Publishers::Vacancies::BaseController)
           .to receive(:update_google_index).with(vacancy)
 
@@ -375,10 +375,10 @@ RSpec.describe "Publishers can edit a vacancy" do
       )
     end
 
-    scenario "it is visible on the dashboard but cannot be edited" do
+    it "is visible on the dashboard but cannot be edited" do
       visit organisation_jobs_with_type_path
       expect(page).to have_content("Imported vacancy")
-      expect(page).not_to have_link("Imported vacancy")
+      expect(page).to have_no_link("Imported vacancy")
 
       visit organisation_job_path(vacancy.id)
       expect(page).to have_content(I18n.t("error_pages.not_found"))

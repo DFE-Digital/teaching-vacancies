@@ -50,13 +50,13 @@ RSpec.describe "Jobseekers can manage their job applications" do
             click_on draft_job_application.vacancy.job_title
           end
 
-          expect(current_path).to eq(jobseekers_job_application_review_path(draft_job_application))
+          expect(page).to have_current_path(jobseekers_job_application_review_path(draft_job_application), ignore_query: true)
         end
 
         it "can not continue a draft application that has passed the deadline" do
           expect(page).to have_css(".card-component", text: deadline_passed_job_application.vacancy.job_title) do |card|
             expect(card).to have_css(".card-component__actions") do |actions|
-              expect(actions).not_to have_link(I18n.t("jobseekers.job_applications.index.continue_application"))
+              expect(actions).to have_no_link(I18n.t("jobseekers.job_applications.index.continue_application"))
             end
           end
         end
@@ -66,7 +66,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
             click_on submitted_job_application.vacancy.job_title
           end
 
-          expect(current_path).to eq(jobseekers_job_application_path(submitted_job_application))
+          expect(page).to have_current_path(jobseekers_job_application_path(submitted_job_application), ignore_query: true)
         end
 
         it "can delete a draft application" do
@@ -75,7 +75,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
           click_on I18n.t("buttons.delete_application")
 
-          expect(current_path).to eq(jobseekers_job_application_confirm_destroy_path(draft_job_application))
+          expect(page).to have_current_path(jobseekers_job_application_confirm_destroy_path(draft_job_application), ignore_query: true)
         end
 
         it "can withdraw a submitted application" do
@@ -84,7 +84,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
           end
           click_on I18n.t("buttons.withdraw_application")
 
-          expect(current_path).to eq(jobseekers_job_application_confirm_withdraw_path(submitted_job_application))
+          expect(page).to have_current_path(jobseekers_job_application_confirm_withdraw_path(submitted_job_application), ignore_query: true)
         end
       end
     end
@@ -102,7 +102,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
     before { visit jobseekers_job_applications_path }
 
     it "redirects to the sign in page" do
-      expect(current_path).to eq(new_jobseeker_session_path)
+      expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
     end
   end
 end

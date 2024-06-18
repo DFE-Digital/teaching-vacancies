@@ -134,6 +134,7 @@ RSpec.describe VacanciesHelper do
 
   describe "#vacancy_breadcrumbs" do
     subject { vacancy_breadcrumbs(vacancy).to_a }
+
     let(:vacancy) { build_stubbed(:vacancy, job_roles: ["teacher"], job_title: "A Job") }
     let(:request) { double("request", host: "example.com", referrer: referrer) }
     let(:referrer) { "http://www.example.com/foo" }
@@ -189,6 +190,7 @@ RSpec.describe VacanciesHelper do
 
   describe "#vacancy_activity_log_item" do
     subject { vacancy_activity_log_item(attribute, new_value, organisation_type) }
+
     let(:vacancy) { create(:vacancy, organisations: [school], publisher_organisation: school) }
     let(:school) { create(:school) }
     let(:organisation_type) { organisation_type_basic(vacancy.organisation) }
@@ -440,7 +442,7 @@ RSpec.describe VacanciesHelper do
         # Helper uses next_invalid_step which is a helper method defined in Publishers::Vacancies::BaseController. This helper
         # is not available in the context of the test, so I did the below. TODO: Other solutions involve moving these helpers out into
         # a separate module and including that in the controller, but this was the quickest fix for now.
-        VacanciesHelper.instance_eval do
+        described_class.instance_eval do
           define_method(:next_invalid_step) { :working_patterns }
         end
       end

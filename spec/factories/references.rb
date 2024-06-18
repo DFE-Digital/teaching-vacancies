@@ -8,7 +8,7 @@ FactoryBot.define do
     phone_number { "01234 567890" }
     created_at { Faker::Date.in_date_period(year: 2016) }
 
-    job_application
+    association :job_application
   end
 
   trait :reference1 do

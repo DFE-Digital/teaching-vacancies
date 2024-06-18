@@ -16,7 +16,7 @@ RSpec.describe "Service Data supportal section" do
     OmniAuth.config.test_mode = false
   end
 
-  scenario "support users can list and see the Jobseekers Profile information through the Supportal" do
+  it "support users can list and see the Jobseekers Profile information through the Supportal" do
     profile = create(:jobseeker_profile,
                      :completed,
                      about_you: "I am a jobseeker",

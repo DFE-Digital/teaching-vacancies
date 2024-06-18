@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe NavigationListComponent, type: :component do
+  subject! { render_inline(described_class.new(**kwargs)) }
+
   let(:title) { "A title" }
   let(:kwargs) { { title: title } }
-
-  subject! { render_inline(described_class.new(**kwargs)) }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"
@@ -22,7 +22,7 @@ RSpec.describe NavigationListComponent, type: :component do
 
     it "does not render the title" do
       expect(page).to have_css("div", class: "navigation-list-component") do |navigation|
-        expect(navigation).not_to have_css("h2", class: "govuk-heading-m")
+        expect(navigation).to have_no_css("h2", class: "govuk-heading-m")
       end
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe NavigationListComponent, type: :component do
   context "when anchors are not defined" do
     it "does not render the anchors" do
       expect(page).to have_css("div", class: "navigation-list-component") do |navigation|
-        expect(navigation).not_to have_css("div", class: "navigation-list-component__anchors")
+        expect(navigation).to have_no_css("div", class: "navigation-list-component__anchors")
       end
     end
   end

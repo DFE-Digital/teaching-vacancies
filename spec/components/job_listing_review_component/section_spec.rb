@@ -81,7 +81,7 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
     it "does not render the list by default" do
       render_inline(component)
 
-      expect(page).not_to have_css(".govuk-summary-list")
+      expect(page).to have_no_css(".govuk-summary-list")
     end
 
     context "when rows are defined" do

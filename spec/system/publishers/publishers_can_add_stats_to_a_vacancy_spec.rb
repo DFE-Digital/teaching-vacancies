@@ -14,7 +14,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
     let!(:another_vacancy) { create(:vacancy, :expired, job_title: "English teacher", organisations: [school]) }
     let!(:third_vacancy) { create(:vacancy, :expired, job_title: "Science teacher", organisations: [school]) }
 
-    scenario "displays the vacancies awaiting feedback" do
+    it "displays the vacancies awaiting feedback" do
       visit organisation_jobs_with_type_path(type: :awaiting_feedback)
 
       expect(page).to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
@@ -23,10 +23,10 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
 
       submit_feedback_for(vacancy)
 
-      expect(page).not_to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
+      expect(page).to have_no_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
     end
 
-    scenario "it saves feedback to the correct record" do
+    it "saves feedback to the correct record" do
       visit organisation_jobs_with_type_path(type: :awaiting_feedback)
 
       submit_feedback_for(another_vacancy)
@@ -45,7 +45,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
         end
       end
 
-      scenario "it renders the errors on the correct form" do
+      it "renders the errors on the correct form" do
         within("##{vacancy.id}") do
           expect(page).to have_content(I18n.t("errors.publishers.job_statistics.error_summary", job_title: vacancy.job_title))
         end
@@ -57,7 +57,7 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
         create(:vacancy, :expired, starts_on: 10.days.ago, organisations: [school])
       end
 
-      scenario "it saves the feedback to the model without triggering validation errors" do
+      it "saves the feedback to the model without triggering validation errors" do
         visit organisation_jobs_with_type_path(type: :awaiting_feedback)
 
         submit_feedback_for(invalid_vacancy)
@@ -77,10 +77,10 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
              organisations: [school])
     end
 
-    scenario "the no vacancies component is displayed" do
+    it "the no vacancies component is displayed" do
       visit organisation_jobs_with_type_path(type: :awaiting_feedback)
 
-      expect(page).not_to have_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
+      expect(page).to have_no_link(vacancy.job_title, href: organisation_job_path(vacancy.id))
       expect(page).to have_content(I18n.t("jobs.manage.awaiting_feedback.no_jobs.no_filters"))
     end
   end

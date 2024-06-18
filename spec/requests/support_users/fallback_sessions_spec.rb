@@ -34,7 +34,7 @@ RSpec.describe "Fallback sign in for support users" do
 
     it "shows a not found error with an invalid signed ID" do
       get support_users_fallback_session_path("some-signed-id")
-      expect(response.status).to eq(404)
+      expect(response).to have_http_status(:not_found)
     end
   end
 end

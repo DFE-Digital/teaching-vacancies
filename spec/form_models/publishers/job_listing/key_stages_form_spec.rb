@@ -34,7 +34,7 @@ RSpec.describe Publishers::JobListing::KeyStagesForm, type: :model do
     let(:key_stages) { %w[ks1 ks5] }
 
     it "is invalid" do
-      expect(subject).to be_invalid
+      expect(subject).not_to be_valid
       expect(subject.errors.of_kind?(:key_stages, :inclusion)).to be true
     end
   end
@@ -45,7 +45,7 @@ RSpec.describe Publishers::JobListing::KeyStagesForm, type: :model do
     let(:key_stages) { nil }
 
     it "is invalid" do
-      expect(subject).to be_invalid
+      expect(subject).not_to be_valid
       expect(subject.errors.of_kind?(:key_stages, :inclusion)).to be true
     end
   end

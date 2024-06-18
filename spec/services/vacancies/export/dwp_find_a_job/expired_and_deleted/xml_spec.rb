@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Xml do
   describe "#xml" do
+    subject { described_class.new([vacancy1, vacancy2]) }
+
     let(:vacancy1) { instance_double(Vacancy, id: 1) }
     let(:vacancy2) { instance_double(Vacancy, id: 2) }
-
-    subject { described_class.new([vacancy1, vacancy2]) }
 
     it "generates an XML document with the given vacancy references to be deleted" do
       expect(subject.xml).to eq(

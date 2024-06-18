@@ -47,7 +47,7 @@ RSpec.shared_examples "a successful search" do
       before { click_on I18n.t("shared.filter_group.clear_all_filters") }
 
       it "displays no remove filter links" do
-        expect(page).to_not have_css("a", text: "Remove this filter Teacher")
+        expect(page).to have_no_css("a", text: "Remove this filter Teacher")
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.shared_examples "a successful search" do
       before { click_on "Remove this filter Teacher" }
 
       it "removes the filter" do
-        expect(page).to_not have_css("a", text: "Remove this filter Teacher")
+        expect(page).to have_no_css("a", text: "Remove this filter Teacher")
       end
     end
   end
@@ -134,7 +134,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       visit jobs_path
       fill_in "Keyword", with: "teacher"
       click_on I18n.t("buttons.search")
-      expect(page).not_to have_content "Distance from location"
+      expect(page).to have_no_content "Distance from location"
     end
   end
 
@@ -174,11 +174,11 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       end
 
       it "does not show distance measurements" do
-        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations) { nil }
+        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations).and_return(nil)
         fill_in "location-field", with: "London"
         click_on I18n.t("buttons.search")
         expect_page_to_show_jobs([maths_job1])
-        expect(page).not_to have_content "Distance from location"
+        expect(page).to have_no_content "Distance from location"
       end
     end
 
@@ -188,13 +188,13 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([maths_job1, maths_job2, job1, job2, job3, job4])
-        expect(page).not_to have_content "Distance from location"
+        expect(page).to have_no_content "Distance from location"
       end
     end
 
     context "when jobseekers search is not a country or an existing location polygon" do
       before do
-        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations) { nil }
+        allow_any_instance_of(LocationSuggestion).to receive(:suggest_locations).and_return(nil)
         fill_in "location-field", with: "Birmingham"
         select "200 miles", from: "radius-field"
         click_on I18n.t("buttons.search")
@@ -225,7 +225,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
         expect("Maths 1").to appear_before("Maths Teacher 2")
       end
 
-      it "jobseekers can then choose to sort by different sort option", js: true do
+      it "jobseekers can then choose to sort by different sort option", :js do
         expect(page).to have_select("sort_by", selected: "Distance")
 
         select "Closing date", :from => "sort-by-field"
@@ -428,7 +428,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
   def expect_page_not_to_show_jobs(jobs)
     jobs.each do |job|
-      expect(page).not_to have_link job.job_title
+      expect(page).to have_no_link job.job_title
     end
   end
 end

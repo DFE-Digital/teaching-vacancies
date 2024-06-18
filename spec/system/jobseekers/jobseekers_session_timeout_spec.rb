@@ -12,10 +12,10 @@ RSpec.describe "Jobseekers session timeout" do
     travel(timeout_period + 10.seconds) do
       visit jobseekers_saved_jobs_path
 
-      expect(current_path).to eq(new_jobseeker_session_path)
+      expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
       expect(page).to have_content(I18n.t("devise.failure.timeout"))
       visit "/"
-      expect(page).not_to have_content(I18n.t("devise.failure.timeout"))
+      expect(page).to have_no_content(I18n.t("devise.failure.timeout"))
     end
   end
 
@@ -25,7 +25,7 @@ RSpec.describe "Jobseekers session timeout" do
     travel(timeout_period - 1.day) do
       visit jobseekers_saved_jobs_path
 
-      expect(current_path).to eq(jobseekers_saved_jobs_path)
+      expect(page).to have_current_path(jobseekers_saved_jobs_path, ignore_query: true)
     end
   end
 end

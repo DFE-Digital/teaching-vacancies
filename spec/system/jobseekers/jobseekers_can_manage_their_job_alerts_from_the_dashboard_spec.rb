@@ -51,7 +51,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
             expect(card).to have_css(".card-component__header", text: "KeywordMaths")
           end
           expect(page).to have_checked_field(I18n.t(".helpers.label.subscription.frequency_options.weekly"))
-          expect(page).not_to have_checked_field(I18n.t(".helpers.label.subscription.frequency_options.daily"))
+          expect(page).to have_no_checked_field(I18n.t(".helpers.label.subscription.frequency_options.daily"))
           expect(subscription.reload.frequency).to eq("weekly")
         end
       end
@@ -68,7 +68,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
 
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.subscriptions.index.page_title"))
           expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.create.success"))
-          expect(page).not_to have_css(".card-component")
+          expect(page).to have_no_css(".card-component")
           expect(page).to have_content(I18n.t("jobseekers.subscriptions.index.zero_subscriptions_title"))
         end
       end
@@ -87,7 +87,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
     before { visit jobseekers_subscriptions_path }
 
     it "redirects to the sign in page" do
-      expect(current_path).to eq(new_jobseeker_session_path)
+      expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
     end
   end
 end

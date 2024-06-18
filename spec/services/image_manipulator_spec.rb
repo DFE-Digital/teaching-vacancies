@@ -39,7 +39,7 @@ RSpec.describe ImageManipulator do
         end
 
         it "changes the height of the image to maintain the aspect ratio" do
-          expect(logo.height).to_not eq(pre_processing_image_size.last)
+          expect(logo.height).not_to eq(pre_processing_image_size.last)
         end
       end
 
@@ -51,7 +51,7 @@ RSpec.describe ImageManipulator do
         end
 
         it "changes the height of the image to maintain the aspect ratio" do
-          expect(logo.width).to_not eq(pre_processing_image_size.first)
+          expect(logo.width).not_to eq(pre_processing_image_size.first)
         end
       end
     end

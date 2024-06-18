@@ -16,7 +16,7 @@ RSpec.describe "Job applications" do
       end
     end
 
-    context "when the jobseeker is signed in " do
+    context "when the jobseeker is signed in" do
       before { sign_in(jobseeker, scope: :jobseeker) }
 
       context "when the job is not live" do
@@ -356,7 +356,7 @@ RSpec.describe "Job applications" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "deletes the application" do
-        expect { delete(jobseekers_job_application_path(job_application.id)) }.to change { JobApplication.count }.by(-1)
+        expect { delete(jobseekers_job_application_path(job_application.id)) }.to change(JobApplication, :count).by(-1)
       end
 
       it "redirects back to the index of applications" do

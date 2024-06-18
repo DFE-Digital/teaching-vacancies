@@ -11,7 +11,7 @@ RSpec.describe "School deleting vacancies" do
     click_on vacancy.job_title
   end
 
-  scenario "A school can delete a vacancy from a list" do
+  it "A school can delete a vacancy from a list" do
     click_on I18n.t("publishers.vacancies.show.heading_component.action.delete")
     click_on I18n.t("buttons.confirm_deletion")
 
@@ -20,14 +20,14 @@ RSpec.describe "School deleting vacancies" do
     )
   end
 
-  scenario "Deleting a vacancy triggers deletion of its supporting documents" do
+  it "Deleting a vacancy triggers deletion of its supporting documents" do
     click_on I18n.t("publishers.vacancies.show.heading_component.action.delete")
     click_on I18n.t("buttons.confirm_deletion")
 
     expect(vacancy.supporting_documents.count).to be_zero
   end
 
-  scenario "Notifies the Google index service" do
+  it "Notifies the Google index service" do
     expect_any_instance_of(Publishers::Vacancies::BaseController).to receive(:remove_google_index).with(vacancy)
 
     click_on I18n.t("publishers.vacancies.show.heading_component.action.delete")

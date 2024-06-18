@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
 
     click_on I18n.t("buttons.save_reference")
 
-    expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
+    expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :references), ignore_query: true)
     expect(page).to have_content("Jim Referee")
   end
 
@@ -32,9 +32,9 @@ RSpec.describe "Jobseekers can add references to their job application" do
 
       click_on I18n.t("buttons.delete")
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :references), ignore_query: true)
       expect(page).to have_content(I18n.t("jobseekers.job_applications.references.destroy.success"))
-      expect(page).not_to have_content("John")
+      expect(page).to have_no_content("John")
     end
 
     it "allows jobseekers to edit references" do
@@ -48,8 +48,8 @@ RSpec.describe "Jobseekers can add references to their job application" do
       fill_in "Name", with: "Jason"
       click_on I18n.t("buttons.save_reference")
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
-      expect(page).not_to have_content("John")
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :references), ignore_query: true)
+      expect(page).to have_no_content("John")
       expect(page).to have_content("Jason")
     end
   end

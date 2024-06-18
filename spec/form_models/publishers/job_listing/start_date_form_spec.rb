@@ -30,8 +30,9 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
   describe "start_date_type" do
     context "when blank" do
       let(:start_date_type) { nil }
+
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:start_date_type, :inclusion)).to be true
       end
     end
@@ -42,7 +43,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       before { params["starts_on(2i)"] = "" }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:starts_on, :invalid)).to be true
       end
     end
@@ -51,7 +52,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       before { params["starts_on(2i)"] = "100" }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:starts_on, :invalid)).to be true
       end
     end
@@ -60,7 +61,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:starts_on) { 1.year.ago }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:starts_on, :on_or_after)).to be true
       end
     end
@@ -69,7 +70,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:starts_on) { 25.months.from_now }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:starts_on, :on_or_before)).to be true
       end
     end
@@ -78,7 +79,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:starts_on) { 2.months.from_now }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:starts_on, :after)).to be true
       end
     end
@@ -91,7 +92,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       before { params["earliest_start_date(2i)"] = "" }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:earliest_start_date, :invalid)).to be true
       end
     end
@@ -100,7 +101,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       before { params["earliest_start_date(2i)"] = "100" }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:earliest_start_date, :invalid)).to be true
       end
     end
@@ -109,7 +110,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:earliest_start_date) { 1.year.ago }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:earliest_start_date, :on_or_after)).to be true
       end
     end
@@ -118,7 +119,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:earliest_start_date) { 25.months.from_now }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:earliest_start_date, :on_or_before)).to be true
       end
     end
@@ -127,7 +128,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:earliest_start_date) { 2.months.from_now }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:earliest_start_date, :after)).to be true
       end
     end
@@ -140,7 +141,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       before { params["latest_start_date(2i)"] = "" }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:latest_start_date, :invalid)).to be true
       end
     end
@@ -149,7 +150,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       before { params["latest_start_date(2i)"] = "100" }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:latest_start_date, :invalid)).to be true
       end
     end
@@ -158,7 +159,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:latest_start_date) { 1.year.ago }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:latest_start_date, :on_or_after)).to be true
       end
     end
@@ -167,7 +168,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:latest_start_date) { 25.months.from_now }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:latest_start_date, :on_or_before)).to be true
       end
     end
@@ -176,7 +177,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:latest_start_date) { 9.months.from_now }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:latest_start_date, :after)).to be true
       end
     end
@@ -185,7 +186,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
       let(:latest_start_date) { earliest_start_date - 1.month }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:latest_start_date, :after)).to be true
       end
     end
@@ -196,7 +197,7 @@ RSpec.describe Publishers::JobListing::StartDateForm, type: :model do
 
     context "when blank" do
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:other_start_date_details, :blank)).to be true
       end
     end

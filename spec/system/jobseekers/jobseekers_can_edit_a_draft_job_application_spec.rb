@@ -14,13 +14,13 @@ RSpec.describe "Jobseekers can edit a draft job application" do
       click_on "Change"
     end
 
-    expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :personal_details))
+    expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :personal_details), ignore_query: true)
 
     fill_in "First name", with: "Dave"
 
     expect { click_on I18n.t("buttons.save") }.to change { job_application.reload.first_name }.from("Steve").to("Dave")
 
-    expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
+    expect(page).to have_current_path(jobseekers_job_application_review_path(job_application), ignore_query: true)
     expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.saved"))
   end
 end

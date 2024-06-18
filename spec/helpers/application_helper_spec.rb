@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ApplicationHelper do
   describe "#sanitize" do
-    it "it sanitises the text" do
+    it "sanitises the text" do
       html = "<p> a paragraph <a href='link'>with a link</a></p><br>"
       sanitized_html = "<p> a paragraph with a link</p><br>"
 
@@ -12,9 +12,9 @@ RSpec.describe ApplicationHelper do
 
   describe "#body_class" do
     before do
-      expect(controller).to receive(:controller_path) { "foo/baz" }
-      expect(controller).to receive(:action_name) { "bar" }
-      allow(controller).to receive(:publisher_signed_in?) { false }
+      expect(controller).to receive(:controller_path).and_return("foo/baz")
+      expect(controller).to receive(:action_name).and_return("bar")
+      allow(controller).to receive(:publisher_signed_in?).and_return(false)
     end
 
     it "returns the controller and action name" do
@@ -22,12 +22,12 @@ RSpec.describe ApplicationHelper do
     end
 
     it "does not return the authenticated class" do
-      expect(helper.body_class).to_not match(/publisher/)
+      expect(helper.body_class).not_to match(/publisher/)
     end
 
     context "when logged in" do
       before do
-        expect(controller).to receive(:publisher_signed_in?) { true }
+        expect(controller).to receive(:publisher_signed_in?).and_return(true)
       end
 
       it "returns the authenticated class" do

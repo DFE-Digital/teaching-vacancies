@@ -25,11 +25,13 @@ RSpec.describe Jobseeker do
 
       context "when the user does not have a new unconfirmed email address" do
         before { jobseeker.unconfirmed_email = nil }
+
         it { is_expected.not_to be_needs_email_confirmation }
       end
 
       context "when the user has a new unconfirmed email address" do
         before { jobseeker.unconfirmed_email = "foobar@example.com" }
+
         it { is_expected.to be_needs_email_confirmation }
       end
     end
@@ -39,11 +41,13 @@ RSpec.describe Jobseeker do
 
       context "when the user does not have a new unconfirmed email address" do
         before { jobseeker.unconfirmed_email = nil }
+
         it { is_expected.to be_needs_email_confirmation }
       end
 
       context "when the user has a new unconfirmed email address" do
         before { jobseeker.unconfirmed_email = "foobar@example.com" }
+
         it { is_expected.to be_needs_email_confirmation }
       end
     end

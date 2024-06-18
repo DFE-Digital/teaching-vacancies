@@ -10,7 +10,7 @@ RSpec.describe EnvironmentBannerComponent, type: :component do
       let(:app_role) { "production" }
 
       it "does not render" do
-        expect(subject.render?).to eq(false)
+        expect(subject.render?).to be(false)
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe EnvironmentBannerComponent, type: :component do
       let(:app_role) { "unknown" }
 
       it "does not render" do
-        expect(subject.render?).to eq(false)
+        expect(subject.render?).to be(false)
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe EnvironmentBannerComponent, type: :component do
       let(:app_role) { "wow" }
 
       it "renders" do
-        expect(subject.render?).to eq(true)
+        expect(subject.render?).to be(true)
       end
     end
   end

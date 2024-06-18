@@ -168,3 +168,14 @@ Metrics/PerceivedComplexity:
   Max: 18 # Default 8
   Exclude:
     - "spec/**/*"
+
+##
+# Testing Rules
+FactoryBot/AssociationStyle:
+  EnforcedStyle: explicit
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false

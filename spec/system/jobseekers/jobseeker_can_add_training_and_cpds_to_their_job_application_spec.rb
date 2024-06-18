@@ -23,7 +23,7 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
 
       fill_in_and_submit_training_form("Rock climbing instructional course", "Training org", "A", "2024")
 
-      expect(current_path).to eq("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds")
+      expect(page).to have_current_path("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds", ignore_query: true)
 
       expect_page_to_have_values("Rock climbing instructional course", "Training org", "A", "2024")
     end
@@ -40,7 +40,7 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
 
       fill_in_and_submit_training_form("Choir singing instructional course", "Training org", "A", "2024")
 
-      expect(current_path).to eq("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds")
+      expect(page).to have_current_path("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds", ignore_query: true)
 
       expect_page_to_have_values("Choir singing instructional course", "Training org", "A", "2024")
       expect_page_not_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020")
@@ -58,7 +58,7 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
 
       expect(page).to have_css("div.govuk-notification-banner__content p.govuk-notification-banner__heading", text: "Training deleted")
 
-      expect(current_path).to eq("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds")
+      expect(page).to have_current_path("/jobseekers/job_applications/#{job_application.id}/build/training_and_cpds", ignore_query: true)
 
       expect_page_not_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020")
     end
@@ -87,9 +87,9 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
   end
 
   def expect_page_not_to_have_values(name, provider, grade, year)
-    expect(page).not_to have_css(".govuk-summary-list__value", text: name)
-    expect(page).not_to have_css(".govuk-summary-list__value", text: provider)
-    expect(page).not_to have_css(".govuk-summary-list__value", text: grade)
-    expect(page).not_to have_css(".govuk-summary-list__value", text: year)
+    expect(page).to have_no_css(".govuk-summary-list__value", text: name)
+    expect(page).to have_no_css(".govuk-summary-list__value", text: provider)
+    expect(page).to have_no_css(".govuk-summary-list__value", text: grade)
+    expect(page).to have_no_css(".govuk-summary-list__value", text: year)
   end
 end

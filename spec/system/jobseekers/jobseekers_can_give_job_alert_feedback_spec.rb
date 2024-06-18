@@ -10,7 +10,7 @@ RSpec.shared_examples "a correctly created Feedback" do
   end
 end
 
-RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true do
+RSpec.describe "A jobseeker can give feedback on a job alert", :recaptcha do
   let(:search_criteria) { { keyword: "Math", location: "London" } }
   let(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily, search_criteria: search_criteria) }
   let(:relevant_to_user) { true }
@@ -74,7 +74,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
 
       it "allows the user to submit further feedback" do
         click_button I18n.t("buttons.submit")
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.update.success"))
         expect(feedback.comment).to eq comment
         expect(feedback.email).to eq email
@@ -86,7 +86,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
       context "when recaptcha V3 check fails" do
         let(:verify_recaptcha) { false }
 
-        scenario "requests the user to pass a recaptcha V2 check" do
+        it "requests the user to pass a recaptcha V2 check" do
           click_button I18n.t("buttons.submit")
           expect(page).to have_content("There is a problem")
           expect(page).to have_content(I18n.t("recaptcha.error"))
@@ -111,7 +111,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", recaptcha: true d
 
     let(:token) { subscription.token }
 
-    scenario "still returns 200" do
+    it "still returns 200" do
       travel 3.days do
         expect(page.status_code).to eq(200)
       end

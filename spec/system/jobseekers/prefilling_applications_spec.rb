@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers can prefill applications" do
       click_on I18n.t("buttons.start_application")
 
       expect(page).to have_field("jobseekers_job_application_personal_details_form[first_name]")
-      expect(page.find("#jobseekers-job-application-personal-details-form-first-name-field").value).to be_blank
+      expect(page.find_by_id("jobseekers-job-application-personal-details-form-first-name-field").value).to be_blank
     end
   end
 end

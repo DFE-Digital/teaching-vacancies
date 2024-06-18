@@ -34,7 +34,7 @@ RSpec.describe "Viewing an organisation" do
     expect(page.find("h3 span", text: vacancy.job_title))
       .to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
     expect(page.find("h3 span", text: vacancy_without_apply.job_title))
-      .not_to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+      .to have_no_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
   end
 
   it "has a map showing the organisation's location" do
@@ -46,7 +46,7 @@ RSpec.describe "Viewing an organisation" do
 
     click_on I18n.t("organisations.show.job_alert.button")
 
-    expect(current_path).to eq(new_subscription_path)
+    expect(page).to have_current_path(new_subscription_path, ignore_query: true)
   end
 
   context "when the organisation is part of a school group" do
@@ -55,7 +55,7 @@ RSpec.describe "Viewing an organisation" do
 
       click_on school_group.name
 
-      expect(current_path).to eq(organisation_path(school_group))
+      expect(page).to have_current_path(organisation_path(school_group), ignore_query: true)
     end
   end
 
@@ -85,7 +85,7 @@ RSpec.describe "Viewing an organisation" do
       expect(page.find("h3 span", text: vacancy.job_title))
         .to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
       expect(page.find("h3 span", text: vacancy_without_apply.job_title))
-        .not_to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+        .to have_no_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
     end
 
     it "has a map showing the organisation's location" do
@@ -97,7 +97,7 @@ RSpec.describe "Viewing an organisation" do
 
       click_on I18n.t("organisations.show.job_alert.button")
 
-      expect(current_path).to eq(new_subscription_path)
+      expect(page).to have_current_path(new_subscription_path, ignore_query: true)
     end
 
     it "displays a list of schools associated with the school group" do

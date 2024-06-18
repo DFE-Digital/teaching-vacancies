@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha: true do
+RSpec.describe "Jobseekers can create a job alert from the dashboard", :recaptcha do
   let(:jobseeker) { create(:jobseeker) }
   let(:subscription) { build(:subscription) }
   let(:search_criteria) { subscription.search_criteria }
@@ -22,7 +22,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
         click_on I18n.t("jobseekers.subscriptions.index.link_create")
       end
       an_invalid_form_is_rejected
-      expect { create_a_job_alert }.to change { Subscription.count }.by(1)
+      expect { create_a_job_alert }.to change(Subscription, :count).by(1)
       and_the_job_alert_is_on_the_index_page
     end
 
@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
           click_on I18n.t("jobseekers.subscriptions.index.link_create")
         end
 
-        expect { create_a_job_alert }.not_to(change { Subscription.count })
+        expect { create_a_job_alert }.not_to(change(Subscription, :count))
         expect(page).to have_content("There is a problem")
         expect(page).to have_content(I18n.t("recaptcha.error"))
         expect(page).to have_content(I18n.t("recaptcha.label"))
@@ -58,7 +58,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
         click_on I18n.t("jobseekers.subscriptions.index.button_create")
       end
       an_invalid_form_is_rejected
-      expect { create_a_job_alert }.to change { Subscription.count }.by(1)
+      expect { create_a_job_alert }.to change(Subscription, :count).by(1)
       and_the_job_alert_is_on_the_index_page
     end
   end
@@ -69,7 +69,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
   end
 
   def and_the_job_alert_is_on_the_index_page
-    expect(current_path).to eq(jobseekers_subscriptions_path)
+    expect(page).to have_current_path(jobseekers_subscriptions_path, ignore_query: true)
     expect(page).to have_content(I18n.t("subscriptions.create.success"))
     expect(page).to have_content("Keyword#{search_criteria['keyword']}")
   end

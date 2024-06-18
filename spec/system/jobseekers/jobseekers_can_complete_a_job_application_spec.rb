@@ -25,7 +25,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     validates_step_complete
     choose I18n.t("helpers.label.jobseekers_job_application_qualifications_form.qualifications_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).not_to have_content("There is a problem")
+    expect(page).to have_no_content("There is a problem")
     click_on I18n.t("buttons.back")
     click_on I18n.t("buttons.add_qualification")
     validates_step_complete(button: I18n.t("buttons.continue"))
@@ -65,7 +65,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("buttons.save_and_continue")
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
-    expect(page).not_to have_content(I18n.t("buttons.save_and_continue"))
+    expect(page).to have_no_content(I18n.t("buttons.save_and_continue"))
     click_on I18n.t("buttons.add_reference")
     click_on I18n.t("buttons.save_reference")
     expect(page).to have_content("There is a problem")
@@ -91,6 +91,6 @@ RSpec.describe "Jobseekers can complete a job application" do
     fill_in_declarations
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
+    expect(page).to have_current_path(jobseekers_job_application_review_path(job_application), ignore_query: true)
   end
 end

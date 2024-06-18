@@ -4,7 +4,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 
-  scenario "school" do
+  it "school" do
     login_publisher(publisher: publisher, organisation: school)
     vacancy = create(:vacancy, status: "published", organisations: [school])
 
@@ -28,7 +28,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
 
     before { login_publisher(publisher: publisher, organisation: school) }
 
-    scenario "jobs are split into sections" do
+    it "jobs are split into sections" do
       create_list(:vacancy, 5, :published, organisations: [school])
 
       visit organisation_jobs_with_type_path
@@ -40,7 +40,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
       expect(page).to have_content(I18n.t("jobs.dashboard.awaiting_feedback.tab_heading"))
     end
 
-    scenario "with published vacancies" do
+    it "with published vacancies" do
       visit organisation_jobs_with_type_path
 
       within(".dashboard-component") do
@@ -51,7 +51,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
       expect(page).to have_css(".govuk-summary-list", count: 1)
     end
 
-    scenario "with draft vacancies" do
+    it "with draft vacancies" do
       visit organisation_jobs_with_type_path
 
       within(".dashboard-component") do
@@ -65,7 +65,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
       expect(page).to have_css(".govuk-summary-list", count: 1)
     end
 
-    scenario "with pending vacancies" do
+    it "with pending vacancies" do
       visit organisation_jobs_with_type_path
 
       within(".dashboard-component") do
@@ -79,7 +79,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
       expect(page).to have_css(".govuk-summary-list", count: 1)
     end
 
-    scenario "with expired vacancies" do
+    it "with expired vacancies" do
       visit organisation_jobs_with_type_path
 
       within(".dashboard-component") do
@@ -95,7 +95,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     context "when a draft vacancy has been updated" do
       let!(:draft_vacancy) { create(:vacancy, :draft, organisations: [school], created_at: 3.days.ago, updated_at: 1.day.ago) }
 
-      scenario "shows the last updated at" do
+      it "shows the last updated at" do
         draft_vacancy
         visit organisation_jobs_with_type_path
 

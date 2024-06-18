@@ -38,6 +38,7 @@ RSpec.describe Qualification do
 
   describe "#duplicate" do
     subject(:duplicate) { qualification.duplicate }
+
     let(:qualification) { create(:qualification) }
 
     it "returns a new Qualification with the same attributes" do

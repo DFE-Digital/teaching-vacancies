@@ -12,7 +12,7 @@ RSpec.describe "Api::LocationSuggestion" do
     end
   end
 
-  describe "GET /api/v1/location_suggestion/lon?format=json", json: true do
+  describe "GET /api/v1/location_suggestion/lon?format=json", :json do
     let(:location_suggestion) { double(LocationSuggestion) }
 
     before do
@@ -40,12 +40,12 @@ RSpec.describe "Api::LocationSuggestion" do
     end
 
     context "location is 3 or more characters long" do
-      let(:suggestions) { ["first playful place, UK", "second place, UK"] }
-      let(:matched_terms) { [%w[playful place], %w[place]] }
-
       subject do
         get api_location_suggestion_path(api_version: 1), params: { format: :json, location: location }
       end
+
+      let(:suggestions) { ["first playful place, UK", "second place, UK"] }
+      let(:matched_terms) { [%w[playful place], %w[place]] }
 
       before do
         allow(location_suggestion).to receive(:suggest_locations).and_return([suggestions, matched_terms])

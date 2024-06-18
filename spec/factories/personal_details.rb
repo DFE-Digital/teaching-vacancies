@@ -6,7 +6,7 @@ FactoryBot.define do
     phone_number { "07777777777" }
     right_to_work_in_uk { true }
     completed_steps { { "name" => "completed", "phone_number" => "completed", "work" => "completed" } }
-    jobseeker_profile
+    association :jobseeker_profile
 
     trait :not_started do
       first_name { nil }

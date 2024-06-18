@@ -6,7 +6,7 @@ require "yaml"
 
 CLOUD_DOMAIN = "test.teacherservices.cloud".freeze
 
-RSpec.describe "Page availability", js: true, smoke_test: true do
+RSpec.describe "Page availability", :js, :smoke_test do
   after do |example|
     # Print page on failure to help triage failures
     puts page.html if example.exception

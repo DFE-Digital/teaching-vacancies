@@ -39,7 +39,7 @@ RSpec.describe "Job applications build" do
         it "updates the job application and redirects to the review page" do
           expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
             .to change { job_application.reload.first_name }.from("").to("Cool name")
-            .and change { job_application.completed_steps }.from([]).to(["personal_details"])
+            .and change(job_application, :completed_steps).from([]).to(["personal_details"])
 
           expect(response).to redirect_to(jobseekers_job_application_review_path(job_application))
         end
@@ -54,7 +54,7 @@ RSpec.describe "Job applications build" do
           it "updates the job application and redirects to the review page" do
             expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
               .to change { job_application.reload.first_name }.from("").to("Cool name")
-              .and change { job_application.completed_steps }.from([]).to(["personal_details"])
+              .and change(job_application, :completed_steps).from([]).to(["personal_details"])
 
             expect(response).to redirect_to(jobseekers_job_application_review_path(job_application))
           end
@@ -64,7 +64,7 @@ RSpec.describe "Job applications build" do
           it "updates the job application and redirects to the next step" do
             expect { patch jobseekers_job_application_build_path(job_application, :personal_details), params: params }
               .to change { job_application.reload.first_name }.from("").to("Cool name")
-              .and change { job_application.completed_steps }.from([]).to(["personal_details"])
+              .and change(job_application, :completed_steps).from([]).to(["personal_details"])
 
             expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :professional_status))
           end

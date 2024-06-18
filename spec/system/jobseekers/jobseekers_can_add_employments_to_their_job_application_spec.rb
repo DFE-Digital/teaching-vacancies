@@ -18,7 +18,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     click_on I18n.t("buttons.save_employment")
 
-    expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
+    expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
     expect(page).to have_content("The Best Teacher")
     expect(page).to have_content("English KS1")
   end
@@ -33,7 +33,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     click_on I18n.t("buttons.save_employment")
 
-    expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
+    expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
     expect(page).to have_content("The Best Teacher")
     expect(page).to have_content(Date.new(2020, 0o7, 1).to_formatted_s(:month_year))
   end
@@ -110,7 +110,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       click_on "Delete Gap in work history 2021-02-01 to 2021-06-01"
       click_on I18n.t("buttons.confirm_destroy")
 
-      expect(page).not_to have_content("Looking after my needy turtle")
+      expect(page).to have_no_content("Looking after my needy turtle")
     end
   end
 
@@ -123,9 +123,9 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
       click_on "Delete Teacher"
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
       expect(page).to have_content(I18n.t("jobseekers.job_applications.employments.destroy.success"))
-      expect(page).not_to have_content("Teacher")
+      expect(page).to have_no_content("Teacher")
     end
 
     it "allows jobseekers to edit employment history" do
@@ -139,13 +139,13 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       fill_in "School or other organisation", with: "A different school"
       click_on I18n.t("buttons.save_employment")
 
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
-      expect(page).not_to have_content("A school")
+      expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history), ignore_query: true)
+      expect(page).to have_no_content("A school")
       expect(page).to have_content("A different school")
     end
 
     context "when there are gaps in work history" do
-      it "will not allow the user to complete the employment history section until the gaps are explained" do
+      it "does not allow the user to complete the employment history section until the gaps are explained" do
         visit jobseekers_job_application_build_path(job_application, :employment_history)
         expect(page).to have_content "You have a gap in your work history"
         choose("Yes, I've completed this section")
@@ -167,8 +167,8 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
         choose("Yes, I've completed this section")
         click_button("Save and continue")
 
-        expect(page).not_to have_content("You must provide your full work history, including the reason for any gaps in employment")
-        expect(page).not_to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history))
+        expect(page).to have_no_content("You must provide your full work history, including the reason for any gaps in employment")
+        expect(page).to have_no_current_path(jobseekers_job_application_build_path(job_application, :employment_history))
       end
     end
   end

@@ -19,7 +19,7 @@ RSpec.describe "Jobseekers can withdraw a job application" do
     choose "jobseekers-job-application-withdraw-form-withdraw-reason-other-field"
     click_on I18n.t("buttons.withdraw_application")
 
-    expect(current_path).to eq(jobseekers_job_applications_path)
+    expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
     expect(page).to have_content(I18n.t("jobseekers.job_applications.withdraw.success", job_title: vacancy.job_title))
   end
 end

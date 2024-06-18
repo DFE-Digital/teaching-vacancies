@@ -32,18 +32,18 @@ RSpec.describe SendDailyAlertEmailJob do
       let!(:run) { subscription.alert_runs.create(run_on: Date.current) }
 
       it "does not send another email" do
-        expect(Jobseekers::AlertMailer).to_not receive(:alert)
+        expect(Jobseekers::AlertMailer).not_to receive(:alert)
         perform_enqueued_jobs { job }
       end
     end
 
     context "with no vacancies" do
       before do
-        allow_any_instance_of(described_class).to receive(:vacancies_for_subscription) { [] }
+        allow_any_instance_of(described_class).to receive(:vacancies_for_subscription).and_return([])
       end
 
       it "does not send an email" do
-        expect(Jobseekers::AlertMailer).to_not receive(:alert)
+        expect(Jobseekers::AlertMailer).not_to receive(:alert)
         perform_enqueued_jobs { job }
       end
 

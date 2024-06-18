@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe StepsComponent, type: :component do
+  subject! { render_inline(described_class.new(**kwargs)) }
+
   let(:kwargs) { { title: title } }
   let(:title) { "Stepway to Heaven" }
-
-  subject! { render_inline(described_class.new(**kwargs)) }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"
@@ -22,7 +22,7 @@ RSpec.describe StepsComponent, type: :component do
 
     it "does not render the title" do
       expect(page).to have_css("div", class: "steps-component") do |component|
-        expect(component).not_to have_css("h2", class: "govuk-heading-s", text: "Stepway to Heaven")
+        expect(component).to have_no_css("h2", class: "govuk-heading-s", text: "Stepway to Heaven")
       end
     end
   end
@@ -99,7 +99,7 @@ RSpec.describe StepsComponent, type: :component do
     context "when steps slots are not defined" do
       it "does not render steps" do
         expect(page).to have_css("div", class: "steps-component") do |c|
-          expect(c).not_to have_css("ol", class: "steps-component__step")
+          expect(c).to have_no_css("ol", class: "steps-component__step")
         end
       end
     end

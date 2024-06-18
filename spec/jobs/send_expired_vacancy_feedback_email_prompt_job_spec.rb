@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe SendExpiredVacancyFeedbackPromptJob do
   subject(:job) { described_class.perform_later }
+
   let(:expiry_date) { 3.weeks.ago }
   let(:mail) { double("Mail::Message", deliver_later: true) }
   let(:publisher) { create(:publisher, email: publisher_email) }
@@ -26,14 +27,14 @@ RSpec.describe SendExpiredVacancyFeedbackPromptJob do
       perform_enqueued_jobs { job }
       [expired_vacancy1, expired_vacancy2].each(&:reload)
 
-      expect([expired_vacancy1, expired_vacancy2].map(&:expired_vacancy_feedback_email_sent_at)).to_not include(nil)
+      expect([expired_vacancy1, expired_vacancy2].map(&:expired_vacancy_feedback_email_sent_at)).not_to include(nil)
     end
 
     context "when the publisher has no email address" do
       let(:publisher_email) { nil }
 
       it "does not send an email" do
-        expect(Publishers::ExpiredVacancyFeedbackPromptMailer).to_not receive(:prompt_for_feedback)
+        expect(Publishers::ExpiredVacancyFeedbackPromptMailer).not_to receive(:prompt_for_feedback)
 
         perform_enqueued_jobs { job }
       end
@@ -43,7 +44,7 @@ RSpec.describe SendExpiredVacancyFeedbackPromptJob do
       before { publisher.update(unsubscribed_from_expired_vacancy_prompt_at: 1.day.ago) }
 
       it "does not send an email" do
-        expect(Publishers::ExpiredVacancyFeedbackPromptMailer).to_not receive(:prompt_for_feedback)
+        expect(Publishers::ExpiredVacancyFeedbackPromptMailer).not_to receive(:prompt_for_feedback)
 
         perform_enqueued_jobs { job }
       end

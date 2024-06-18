@@ -8,19 +8,19 @@ RSpec.describe Flag do
     context "when the flag is set to true" do
       before { stub_const("FEATURE_EMAIL_ALERTS", "true") }
 
-      it { expect(subject.enabled?).to eq(true) }
+      it { expect(subject.enabled?).to be(true) }
     end
 
     context "when the flag is set to false" do
       before { stub_const("FEATURE_EMAIL_ALERTS", "false") }
 
-      it { expect(subject.enabled?).to eq(false) }
+      it { expect(subject.enabled?).to be(false) }
     end
 
     context "when the flag is not set" do
       before { stub_const("FEATURE_EMAIL_ALERTS", nil) }
 
-      it { expect(subject.enabled?).to eq(false) }
+      it { expect(subject.enabled?).to be(false) }
     end
   end
 
@@ -30,19 +30,19 @@ RSpec.describe Flag do
     context "when the flag is set to true" do
       before { stub_const("DOWNTIME_MESSAGE", "true") }
 
-      it { expect(subject.enabled?).to eq(true) }
+      it { expect(subject.enabled?).to be(true) }
     end
 
     context "when the flag is set to false" do
       before { stub_const("DOWNTIME_MESSAGE", "false") }
 
-      it { expect(subject.enabled?).to eq(false) }
+      it { expect(subject.enabled?).to be(false) }
     end
 
     context "when the flag is not set" do
       before { stub_const("DOWNTIME_MESSAGE", nil) }
 
-      it { expect(subject.enabled?).to eq(false) }
+      it { expect(subject.enabled?).to be(false) }
     end
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe "Job alert unsubscription feedback" do
 
   describe "POST #create" do
     context "when form is valid" do
-      before { allow_any_instance_of(Jobseekers::UnsubscribeFeedbackForm).to receive(:valid?) { true } }
+      before { allow_any_instance_of(Jobseekers::UnsubscribeFeedbackForm).to receive(:valid?).and_return(true) }
 
       context "when jobseeker is signed in" do
         before { login_as(jobseeker, scope: :jobseeker) }

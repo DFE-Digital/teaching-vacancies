@@ -90,7 +90,7 @@ RSpec.describe Vacancies::Import::Sources::Every do
     end
 
     it "sets visa_sponsorship_available to false" do
-      expect(vacancy.visa_sponsorship_available).to eq false
+      expect(vacancy.visa_sponsorship_available).to be false
     end
   end
 
@@ -203,7 +203,7 @@ RSpec.describe Vacancies::Import::Sources::Every do
 
       it "doesn't store a start date" do
         expect(vacancy.starts_on).to be_nil
-        expect(vacancy.start_date_type).to eq nil
+        expect(vacancy.start_date_type).to be_nil
       end
     end
 
@@ -212,7 +212,7 @@ RSpec.describe Vacancies::Import::Sources::Every do
 
       it "doesn't store a start date" do
         expect(vacancy.starts_on).to be_nil
-        expect(vacancy.start_date_type).to eq nil
+        expect(vacancy.start_date_type).to be_nil
       end
     end
 

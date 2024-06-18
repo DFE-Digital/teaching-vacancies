@@ -29,7 +29,7 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
       jobseeker.feedbacks.where(comment: comment, email: jobseeker.email, feedback_type: "application", rating: "somewhat_satisfied", user_participation_response: "interested", occupation: occupation).count
     }.by(1)
 
-    expect(current_path).to eq(jobseekers_job_applications_path)
+    expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.feedbacks.create.success"))
   end

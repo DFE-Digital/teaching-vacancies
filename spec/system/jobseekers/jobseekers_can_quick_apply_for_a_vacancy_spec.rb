@@ -12,10 +12,10 @@ RSpec.describe "Jobseekers can quick apply for a job" do
   end
 
   it "redirects to quick_apply page, starts application and redirects to review page" do
-    expect(current_path).to eq(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+    expect(page).to have_current_path(new_quick_apply_jobseekers_job_job_application_path(vacancy.id), ignore_query: true)
 
     click_on I18n.t("buttons.start_application")
 
-    expect(current_path).to eq(jobseekers_job_application_review_path(jobseeker.job_applications.draft.first.id))
+    expect(page).to have_current_path(jobseekers_job_application_review_path(jobseeker.job_applications.draft.first.id), ignore_query: true)
   end
 end

@@ -7,7 +7,7 @@ RSpec.shared_examples "a successful Publisher sign in" do
     visit new_publisher_session_path
   end
 
-  scenario "it signs in the user successfully" do
+  it "signs in the user successfully" do
     sign_in_publisher
     expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
@@ -17,7 +17,7 @@ RSpec.shared_examples "a successful Publisher sign in" do
 end
 
 RSpec.shared_examples "a failed Publisher sign in" do |options|
-  scenario "it does not sign-in the user, and tells the user what to do" do
+  it "does not sign-in the user, and tells the user what to do" do
     visit new_publisher_session_path
     sign_in_publisher
 
@@ -25,7 +25,7 @@ RSpec.shared_examples "a failed Publisher sign in" do |options|
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])
-    within(".govuk-header__navigation") { expect(page).not_to have_content(I18n.t("nav.manage_jobs")) }
+    within(".govuk-header__navigation") { expect(page).to have_no_content(I18n.t("nav.manage_jobs")) }
   end
 end
 
@@ -34,7 +34,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
   let(:dsi_email_address) { Faker::Internet.email(domain: "example.com") }
 
   before do
-    allow(AuthenticationFallback).to receive(:enabled?) { false }
+    allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
     stub_accepted_terms_and_conditions
     OmniAuth.config.test_mode = true
   end
@@ -46,7 +46,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
   end
 
   context "when the hiring staff is not signed in" do
-    scenario "it displays the hiring staff CTA section with the text for when they are signed out" do
+    it "displays the hiring staff CTA section with the text for when they are signed out" do
       visit root_path
 
       expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
@@ -67,22 +67,22 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
     it_behaves_like "a successful Publisher sign in"
 
-    scenario "it redirects the sign in page to the school page" do
+    it "redirects the sign in page to the school page" do
       sign_in_publisher(navigate: true)
       visit new_publisher_session_path
 
       expect(page).to have_content(organisation.name)
-      expect(current_path).to eq(publisher_root_path)
+      expect(page).to have_current_path(publisher_root_path, ignore_query: true)
     end
 
-    scenario "it displays the hiring staff CTA section with the text for when they are signed in" do
+    it "displays the hiring staff CTA section with the text for when they are signed in" do
       sign_in_publisher(navigate: true)
       visit root_path
 
       expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
       expect(page).to have_link(I18n.t("home.index.publisher_section.signed_in.link_text.manage_jobs"), href: organisation_jobs_with_type_path)
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(reminder_publishers_new_features_path)
+      expect(page).to have_current_path(reminder_publishers_new_features_path, ignore_query: true)
     end
 
     context "when navigating to support user login page" do
@@ -90,7 +90,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
         sign_in_publisher(navigate: true)
         visit new_support_user_session_path
 
-        expect(current_path).not_to eq(support_user_root_path)
+        expect(page).to have_no_current_path(support_user_root_path, ignore_query: true)
       end
     end
   end
@@ -114,7 +114,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
       it "associates the user with the trust instead of the school" do
         click_on I18n.t("publishers.incomplete_profile.skip_to_link_text")
-        expect(current_path).to eq(organisation_jobs_path)
+        expect(page).to have_current_path(organisation_jobs_path, ignore_query: true)
         expect(page).to have_content(school_group.name)
       end
     end
@@ -123,7 +123,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       let!(:school_group) { create(:local_authority, local_authority_code: "323", schools: [school]) }
 
       it "associates the user with the local_authority instead of the school" do
-        expect(current_path).to eq(new_publishers_publisher_preference_path)
+        expect(page).to have_current_path(new_publishers_publisher_preference_path, ignore_query: true)
       end
 
       it "shows the local_authority name" do
@@ -146,14 +146,14 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
     it_behaves_like "a successful Publisher sign in"
 
-    scenario "it redirects the sign in page to the trust page" do
+    it "redirects the sign in page to the trust page" do
       visit new_publisher_session_path
       sign_in_publisher
       visit new_publisher_session_path
 
       click_on I18n.t("publishers.incomplete_profile.skip_to_link_text")
       expect(page).to have_content(organisation.name)
-      expect(current_path).to eq(organisation_jobs_path)
+      expect(page).to have_current_path(organisation_jobs_path, ignore_query: true)
     end
   end
 
@@ -178,7 +178,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
         sign_in_publisher
 
         expect(page).to have_content(organisation.name)
-        expect(current_path).to eq(publisher_root_path)
+        expect(page).to have_current_path(publisher_root_path, ignore_query: true)
       end
     end
 
@@ -189,7 +189,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
         visit new_publisher_session_path
         sign_in_publisher
 
-        expect(current_path).to eq(new_publishers_publisher_preference_path)
+        expect(page).to have_current_path(new_publishers_publisher_preference_path, ignore_query: true)
       end
     end
   end
@@ -227,7 +227,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
       sign_in_publisher(navigate: true)
 
-      expect(current_path).to eq(new_publisher_session_path)
+      expect(page).to have_current_path(new_publisher_session_path, ignore_query: true)
       expect(page).to have_content(I18n.t("omniauth_callbacks.failure.message"))
     end
   end

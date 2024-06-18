@@ -9,7 +9,7 @@ RSpec.describe "Saved jobs" do
       before { sign_in(jobseeker, scope: :jobseeker) }
 
       it "saves a job" do
-        expect { get new_jobseekers_saved_job_path(vacancy.id) }.to change { SavedJob.count }.by(1)
+        expect { get new_jobseekers_saved_job_path(vacancy.id) }.to change(SavedJob, :count).by(1)
       end
 
       it "redirects to `job_path`" do
@@ -37,7 +37,7 @@ RSpec.describe "Saved jobs" do
       before { get jobseekers_saved_jobs_path }
 
       it "does not display a reminder to create a profile" do
-        expect(response).to_not render_template(partial: "_candidiate_profiles_banner")
+        expect(response).not_to render_template(partial: "_candidiate_profiles_banner")
       end
     end
 

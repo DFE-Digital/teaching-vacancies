@@ -13,12 +13,12 @@ class FakeVacancySource
 end
 
 RSpec.describe ImportFromVacancySourceJob do
+  subject(:import_from_vacancy_source_job) { described_class.perform_now(FakeVacancySource) }
+
   before do
     FakeVacancySource.vacancies = vacancies_from_source
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
   end
-
-  subject(:import_from_vacancy_source_job) { described_class.perform_now(FakeVacancySource) }
 
   let(:school) { create(:school) }
 
@@ -30,7 +30,7 @@ RSpec.describe ImportFromVacancySourceJob do
       end
 
       it "saves the vacancy" do
-        expect { import_from_vacancy_source_job }.to change { Vacancy.count }.by(1)
+        expect { import_from_vacancy_source_job }.to change(Vacancy, :count).by(1)
         expect(Vacancy.last).to have_attributes(
           id: vacancy.id,
           phases: %w[secondary],
@@ -83,11 +83,11 @@ RSpec.describe ImportFromVacancySourceJob do
       end
 
       it "does not save the vacancy to the Vacancies table" do
-        expect { import_from_vacancy_source_job }.to change { Vacancy.count }.by(0)
+        expect { import_from_vacancy_source_job }.not_to(change(Vacancy, :count))
       end
 
       it "saves the vacancy in the FailedVacancyImports table" do
-        expect { import_from_vacancy_source_job }.to change { FailedImportedVacancy.count }.by(1)
+        expect { import_from_vacancy_source_job }.to change(FailedImportedVacancy, :count).by(1)
       end
 
       it "saves the vacancy in the FailedVacancyImports with the import errors and identifiable info" do
@@ -174,7 +174,7 @@ RSpec.describe ImportFromVacancySourceJob do
         vacancy.errors.add(:base, "blah")
         import_from_vacancy_source_job
 
-        expect(vacancy).to_not be_valid
+        expect(vacancy).not_to be_valid
         expect(Vacancy.count).to eq(0)
         expect(FailedImportedVacancy.count).to eq(1)
         expect(FailedImportedVacancy.first.import_errors).to eq(["base:[blah]"])

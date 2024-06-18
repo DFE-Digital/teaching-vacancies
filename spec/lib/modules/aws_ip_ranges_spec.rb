@@ -39,7 +39,7 @@ RSpec.describe AWSIpRanges do
         216.137.32.0/19
       ]
 
-      expect(AWSIpRanges.cloudfront_ips).to eq(expected_result)
+      expect(described_class.cloudfront_ips).to eq(expected_result)
     end
 
     it "configures a short timeout" do
@@ -54,13 +54,13 @@ RSpec.describe AWSIpRanges do
       successful_response = instance_double(Net::HTTPOK, body: "")
       expect(http_connection_double).to receive(:start).and_return(successful_response)
 
-      AWSIpRanges.cloudfront_ips
+      described_class.cloudfront_ips
     end
 
     context "when there was any connectivity issue" do
       it "returns an empty array" do
         allow_any_instance_of(Net::HTTP).to receive(:start).and_raise(Timeout::Error.new("error"))
-        expect(AWSIpRanges.cloudfront_ips).to eq([])
+        expect(described_class.cloudfront_ips).to eq([])
       end
 
       it "logs a warning" do
@@ -68,7 +68,7 @@ RSpec.describe AWSIpRanges do
         expect(Rails.logger)
           .to receive(:warn)
           .with("Unable to setup Rack Proxies to acquire the correct remote_ip: Timeout::Error")
-        AWSIpRanges.cloudfront_ips
+        described_class.cloudfront_ips
       end
     end
 
@@ -85,27 +85,27 @@ RSpec.describe AWSIpRanges do
         context "when #{error} is raised" do
           it "returns an empty array" do
             allow_any_instance_of(Net::HTTP).to receive(:start).and_raise(error.new("error"))
-            expect(AWSIpRanges.cloudfront_ips).to eq([])
+            expect(described_class.cloudfront_ips).to eq([])
           end
         end
       end
     end
 
     context "when the response was 403 and not JSON" do
-      before(:each) do
+      before do
         aws_ip_ranges = file_fixture("bad_aws_ip_ranges.xml")
         stub_request(:get, AWSIpRanges::PATH).to_return(body: aws_ip_ranges, status: 403)
       end
 
       it "returns an empty array" do
-        expect(AWSIpRanges.cloudfront_ips).to eq([])
+        expect(described_class.cloudfront_ips).to eq([])
       end
 
       it "logs a warning" do
         expect(Rails.logger)
           .to receive(:warn)
           .with("Unable parse AWS Ip Range response to setup Rack Proxies")
-        AWSIpRanges.cloudfront_ips
+        described_class.cloudfront_ips
       end
     end
   end

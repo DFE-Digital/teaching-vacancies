@@ -17,7 +17,7 @@ RSpec.describe "Events API" do
       expect(:tracked_link_clicked).to have_been_enqueued_as_analytics_events
     end
 
-    it "requires a CSRF token", with_csrf_protection: true do
+    it "requires a CSRF token", :with_csrf_protection do
       expect { request }.not_to have_triggered_event(:invalid_event)
       expect(response).to have_http_status(:bad_request)
     end

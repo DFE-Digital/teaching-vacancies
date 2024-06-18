@@ -16,7 +16,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
     let(:error) { %i[skills_and_experience blank] }
 
     context "when the vacancy's job_advert is present" do
-      context "when skills_and_experience is nil " do
+      context "when skills_and_experience is nil" do
         let(:params) { { skills_and_experience: nil } }
         let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
 
@@ -25,7 +25,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
         end
       end
 
-      context "when skills_and_experience exceeds the maxiumum words " do
+      context "when skills_and_experience exceeds the maxiumum words" do
         let(:params) { { skills_and_experience: Faker::Lorem.sentence(word_count: 151) } }
         let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
 
@@ -185,6 +185,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   describe "further_details" do
     context "when further_details_provided is false" do
       before { allow(subject).to receive(:further_details_provided).and_return("false") }
+
       it { is_expected.not_to validate_presence_of(:further_details) }
     end
 

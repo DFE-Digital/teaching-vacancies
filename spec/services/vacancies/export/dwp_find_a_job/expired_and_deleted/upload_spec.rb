@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Upload do
   describe "#call" do
+    subject { described_class.new("2024-05-01") }
+
     let(:vacancy_expired_old) { create(:vacancy, :published, publish_on: 4.days.ago, expires_at: 2.days.ago) }
     let(:vacancy_manually_expired) do
       create(:vacancy,
@@ -33,8 +35,6 @@ RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Upload do
 
     let(:sftp_session) { instance_double(Net::SFTP::Session, upload!: true) }
     let(:file_name) { "TeachingVacancies-expire-20240502-010444" }
-
-    subject { described_class.new("2024-05-01") }
 
     before do
       travel_to(Time.zone.local(2024, 5, 2, 1, 4, 44))

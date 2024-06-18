@@ -2,20 +2,24 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
   subject(:multistep) { described_class.new initial_attributes }
+
   let(:initial_attributes) { {} }
 
   describe "`roles` step" do
     subject(:step) { multistep.steps[:roles] }
+
     it { is_expected.to validate_presence_of :roles }
   end
 
   describe "`phases` step" do
     subject(:step) { multistep.steps[:phases] }
+
     it { is_expected.to validate_presence_of :phases }
   end
 
   describe "`key_stages` step" do
     subject(:step) { multistep.steps[:key_stages] }
+
     it { is_expected.to validate_presence_of :key_stages }
 
     describe "#options" do
@@ -61,6 +65,7 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
 
   describe "`subjects` step" do
     subject(:step) { multistep.steps[:subjects] }
+
     it { is_expected.not_to validate_presence_of :subjects }
 
     describe "#skip?" do
@@ -85,6 +90,7 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
 
   describe "`working_patterns` step" do
     subject(:step) { multistep.steps[:working_patterns] }
+
     it { is_expected.to validate_presence_of :working_patterns }
   end
 end

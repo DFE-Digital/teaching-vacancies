@@ -21,11 +21,11 @@ RSpec.describe Jobseekers::ReactivateAccount do
     end
 
     it "marks subscriptions as active" do
-      expect(subscription.reload.active).to eq(true)
+      expect(subscription.reload.active).to be(true)
     end
 
     it "doesn't mark subscriptions previously unsubscribed as active" do
-      expect(subscription_previously_unsubscribed.reload.active).to eq(false)
+      expect(subscription_previously_unsubscribed.reload.active).to be(false)
     end
 
     context "if the jobseeker's account isn't closed" do

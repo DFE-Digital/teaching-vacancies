@@ -74,7 +74,7 @@ RSpec.describe Publishers::VacancyFormSequence do
           before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
           it "returns a hash containing invalid forms for each dependent step" do
-            validated_forms.each_value { |form| expect(form).to be_invalid }
+            validated_forms.each_value { |form| expect(form).not_to be_valid }
           end
         end
 

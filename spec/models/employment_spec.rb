@@ -6,6 +6,7 @@ RSpec.describe Employment do
 
   describe "#duplicate" do
     subject(:duplicate) { employment.duplicate }
+
     let(:employment) { create(:employment) }
 
     it "returns a new Employment with the same attributes" do

@@ -20,12 +20,12 @@ RSpec.describe "Jobseekers can start or continue a job application" do
         end
 
         it "starts a job application" do
-          expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
+          expect(page).to have_current_path(new_jobseekers_job_job_application_path(vacancy.id), ignore_query: true)
           expect(page).to have_css(".govuk-caption-l", text: vacancy.job_title)
 
-          expect { click_on I18n.t("buttons.start_application") }.to change { JobApplication.count }.by(1)
+          expect { click_on I18n.t("buttons.start_application") }.to change(JobApplication, :count).by(1)
 
-          expect(current_path).to eq(jobseekers_job_application_build_path(created_job_application, :personal_details))
+          expect(page).to have_current_path(jobseekers_job_application_build_path(created_job_application, :personal_details), ignore_query: true)
         end
       end
 
@@ -39,16 +39,16 @@ RSpec.describe "Jobseekers can start or continue a job application" do
           end
 
           it "starts a job application after signing in" do
-            expect(current_path).not_to eq(new_jobseekers_job_job_application_path(vacancy.id))
+            expect(page).to have_no_current_path(new_jobseekers_job_job_application_path(vacancy.id), ignore_query: true)
 
             sign_in_jobseeker
 
-            expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
+            expect(page).to have_current_path(new_jobseekers_job_job_application_path(vacancy.id), ignore_query: true)
             expect(page).to have_css(".govuk-caption-l", text: vacancy.job_title)
 
-            expect { click_on I18n.t("buttons.start_application") }.to change { JobApplication.count }.by(1)
+            expect { click_on I18n.t("buttons.start_application") }.to change(JobApplication, :count).by(1)
 
-            expect(current_path).to eq(jobseekers_job_application_build_path(created_job_application, :personal_details))
+            expect(page).to have_current_path(jobseekers_job_application_build_path(created_job_application, :personal_details), ignore_query: true)
           end
         end
       end
@@ -67,7 +67,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
       end
 
       it "redirects to the job application review page" do
-        expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
+        expect(page).to have_current_path(jobseekers_job_application_review_path(job_application), ignore_query: true)
         expect(page).to have_content(I18n.t("jobseekers.job_applications.review.heading"))
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
       end
 
       it "redirects to job applications dashboard with correct message" do
-        expect(current_path).to eq(jobseekers_job_applications_path)
+        expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
         expect(page)
           .to have_content(strip_tags(I18n.t("messages.jobseekers.job_applications.already_exists.draft_html",
                                              job_title: vacancy.job_title,
@@ -103,7 +103,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
       end
 
       it "redirects to the job application show page" do
-        expect(current_path).to eq(jobseekers_job_application_path(job_application))
+        expect(page).to have_current_path(jobseekers_job_application_path(job_application), ignore_query: true)
       end
     end
 
@@ -117,7 +117,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
       end
 
       it "redirects to job applications dashboard with correct message" do
-        expect(current_path).to eq(jobseekers_job_applications_path)
+        expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
         expect(page).to have_content(I18n.t("messages.jobseekers.job_applications.already_exists.submitted",
                                             job_title: vacancy.job_title))
       end

@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe PersonalDetails do
   describe ".prepare(profile:)" do
     subject(:personal_details) { described_class.prepare(jobseeker_profile:) }
+
     let(:jobseeker_profile) { create(:jobseeker_profile, personal_details: nil) }
     let(:jobseeker) { jobseeker_profile.jobseeker }
 

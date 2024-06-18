@@ -32,8 +32,8 @@ RSpec.describe "Sub navigation for users to sign in and out" do
       end
     end
 
-    it "will not render the publisher secondary subnav" do
-      expect(page).to_not have_css("#publisher-nav")
+    it "does not render the publisher secondary subnav" do
+      expect(page).to have_no_css("#publisher-nav")
     end
   end
 

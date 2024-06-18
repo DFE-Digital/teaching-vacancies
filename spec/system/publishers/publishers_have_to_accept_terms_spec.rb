@@ -8,13 +8,13 @@ RSpec.describe "Publishers can accept terms and conditions" do
 
     before { login_publisher(publisher: publisher, organisation: school) }
 
-    scenario "they will see the terms and conditions" do
+    it "they will see the terms and conditions" do
       visit organisation_jobs_with_type_path
 
       expect(page).to have_content(I18n.t("terms_and_conditions.please_accept"))
     end
 
-    scenario "they can accept the terms and conditions" do
+    it "they can accept the terms and conditions" do
       visit publishers_terms_and_conditions_path
 
       expect(publisher).not_to be_accepted_terms_at
@@ -27,7 +27,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
       expect(publisher).to be_accepted_terms_at
     end
 
-    scenario "an error is shown if they don’t accept" do
+    it "an error is shown if they don’t accept" do
       visit publishers_terms_and_conditions_path
 
       expect(publisher).not_to be_accepted_terms_at
@@ -41,7 +41,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
     end
 
     context "signing out" do
-      scenario "with authentication fallback" do
+      it "with authentication fallback" do
         allow(AuthenticationFallback).to receive(:enabled?).and_return(true)
 
         visit publishers_terms_and_conditions_path
@@ -50,7 +50,7 @@ RSpec.describe "Publishers can accept terms and conditions" do
         within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
       end
 
-      scenario "without authentication fallback" do
+      it "without authentication fallback" do
         allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
 
         visit publishers_terms_and_conditions_path
@@ -67,10 +67,10 @@ RSpec.describe "Publishers can accept terms and conditions" do
 
     before { login_publisher(publisher: publisher, organisation: school) }
 
-    scenario "they will not see the terms and conditions" do
+    it "they will not see the terms and conditions" do
       visit organisation_jobs_with_type_path
 
-      expect(page).not_to have_content(I18n.t("terms_and_conditions.please_accept"))
+      expect(page).to have_no_content(I18n.t("terms_and_conditions.please_accept"))
     end
   end
 end

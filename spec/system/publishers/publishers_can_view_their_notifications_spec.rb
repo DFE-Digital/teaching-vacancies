@@ -16,7 +16,7 @@ RSpec.describe "Publishers can view their notifications" do
     end
 
     it "does not display the notification" do
-      expect(page).not_to have_css("div", class: "notification")
+      expect(page).to have_no_css("div", class: "notification")
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe "Publishers can view their notifications" do
       click_on "Previous"
 
       within first(".notification") do
-        expect(page).not_to have_css("div", class: "notification__tag", text: "new", count: 1)
+        expect(page).to have_no_css("div", class: "notification__tag", text: "new", count: 1)
       end
     end
   end

@@ -1,9 +1,11 @@
 RSpec.shared_examples "a component that accepts custom HTML attributes" do |uses_positional_args: false|
+  # rubocop:disable RSpec/LeadingSubject
   if uses_positional_args
     subject! { render_inline(described_class.send(:new, *args, html_attributes: custom_attributes, **kwargs)) }
   else
     subject! { render_inline(described_class.send(:new, html_attributes: custom_attributes, **kwargs)) }
   end
+  # rubocop:enable RSpec/LeadingSubject
 
   let(:custom_attributes) { { lang: "en-GB", style: "background-color: blue;" } }
 

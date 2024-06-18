@@ -35,7 +35,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
 
     it "signs in the jobseeker" do
       sign_in_jobseeker(email: email, password: password)
-      expect(current_path).to eq(jobseeker_root_path)
+      expect(page).to have_current_path(jobseeker_root_path, ignore_query: true)
     end
 
     include_examples "a sign in attempt"
@@ -51,7 +51,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
 
       it "does not sign in the jobseeker and displays an error message" do
         sign_in_jobseeker(email: email, password: password)
-        expect(current_path).to eq(jobseeker_session_path)
+        expect(page).to have_current_path(jobseeker_session_path, ignore_query: true)
         expect(page).to have_content(I18n.t("devise.failure.blank"))
       end
 
@@ -64,7 +64,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
 
       it "does not sign in the jobseeker and displays a general error message" do
         sign_in_jobseeker(email: email, password: password)
-        expect(current_path).to eq(jobseeker_session_path)
+        expect(page).to have_current_path(jobseeker_session_path, ignore_query: true)
         expect(page).to have_content(I18n.t("devise.failure.invalid"))
       end
 
@@ -77,7 +77,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
 
       it "does not sign in the jobseeker and displays a general error message" do
         sign_in_jobseeker(email: email, password: password)
-        expect(current_path).to eq(jobseeker_session_path)
+        expect(page).to have_current_path(jobseeker_session_path, ignore_query: true)
         expect(page).to have_content(I18n.t("devise.failure.invalid"))
       end
 

@@ -79,12 +79,12 @@ RSpec.describe Vacancy do
     end
 
     describe "#listed?" do
-      let(:datetime) do
-        instance_double(DateTime)
-      end
-
       subject do
         build(:vacancy, :published)
+      end
+
+      let(:datetime) do
+        instance_double(DateTime)
       end
 
       it "does not break if #expires_at is nil" do
@@ -105,7 +105,7 @@ RSpec.describe Vacancy do
 
       it 'checks if #published == "draft" (yields published? == false)' do
         subject.status = "draft"
-        expect(subject.listed?).to be_falsey
+        expect(subject).not_to be_listed
       end
 
       describe "#publish_on" do
@@ -132,7 +132,7 @@ RSpec.describe Vacancy do
       end
 
       it "return true if all the conditions are met" do
-        expect(subject.listed?).to be_truthy
+        expect(subject).to be_listed
       end
     end
   end
@@ -147,7 +147,7 @@ RSpec.describe Vacancy do
         published = create_list(:vacancy, 5, :published)
         create_list(:vacancy, 4, :trashed)
 
-        expect(Vacancy.active.count).to eq(draft.count + published.count)
+        expect(described_class.active.count).to eq(draft.count + published.count)
       end
     end
 
@@ -156,9 +156,9 @@ RSpec.describe Vacancy do
         expired_earlier_today.send :set_slug
         expired_earlier_today.save(validate: false)
 
-        results = Vacancy.applicable
+        results = described_class.applicable
         expect(results).to include(expires_later_today)
-        expect(results).to_not include(expired_earlier_today)
+        expect(results).not_to include(expired_earlier_today)
       end
     end
 
@@ -168,7 +168,7 @@ RSpec.describe Vacancy do
         create_list(:vacancy, 3, :expired, listed_elsewhere: :listed_paid, hired_status: :hired_tvs)
         create_list(:vacancy, 3, :published_slugged)
 
-        expect(Vacancy.awaiting_feedback.count).to eq(expired_and_awaiting.count)
+        expect(described_class.awaiting_feedback.count).to eq(expired_and_awaiting.count)
       end
     end
 
@@ -184,7 +184,7 @@ RSpec.describe Vacancy do
         trashed_expired.save(validate: false)
         trashed_expired.trashed!
 
-        expect(Vacancy.expired.count).to eq(1)
+        expect(described_class.expired.count).to eq(1)
       end
     end
 
@@ -194,7 +194,7 @@ RSpec.describe Vacancy do
         create(:vacancy, :draft, :expired_yesterday)
         create(:vacancy, :published, :expires_tomorrow)
 
-        expect(Vacancy.expired_yesterday.count).to eq(2)
+        expect(described_class.expired_yesterday.count).to eq(2)
       end
     end
 
@@ -202,8 +202,8 @@ RSpec.describe Vacancy do
       let(:expired_years_ago) { build(:vacancy, expires_at: 2.years.ago) }
 
       it "retrieves vacancies that expired not more than one year ago" do
-        expect(Vacancy.expires_within_data_access_period).to_not include(expired_years_ago)
-        expect(Vacancy.expires_within_data_access_period).to include(expired_earlier_today)
+        expect(described_class.expires_within_data_access_period).not_to include(expired_years_ago)
+        expect(described_class.expires_within_data_access_period).to include(expired_earlier_today)
       end
     end
 
@@ -213,14 +213,14 @@ RSpec.describe Vacancy do
         create_list(:vacancy, 3, :future_publish)
         create_list(:vacancy, 4, :trashed)
 
-        expect(Vacancy.listed.count).to eq(published.count)
+        expect(described_class.listed.count).to eq(published.count)
       end
     end
 
     describe "#live" do
       it "includes vacancies till expiry time" do
-        expect(Vacancy.live).to include(expires_later_today)
-        expect(Vacancy.live).to_not include(expired_earlier_today)
+        expect(described_class.live).to include(expires_later_today)
+        expect(described_class.live).not_to include(expired_earlier_today)
       end
     end
 
@@ -229,7 +229,7 @@ RSpec.describe Vacancy do
         create_list(:vacancy, 5, :published)
         pending = create_list(:vacancy, 3, :future_publish)
 
-        expect(Vacancy.pending.count).to eq(pending.count)
+        expect(described_class.pending.count).to eq(pending.count)
       end
     end
 
@@ -243,10 +243,10 @@ RSpec.describe Vacancy do
         published_some_other_day = build_list(:vacancy, 6, :published_slugged, publish_on: 1.month.ago)
         published_some_other_day.each { |v| v.save(validate: false) }
 
-        expect(Vacancy.published_on_count(Date.current)).to eq(published_today.count)
-        expect(Vacancy.published_on_count(1.day.ago)).to eq(published_yesterday.count)
-        expect(Vacancy.published_on_count(2.days.ago)).to eq(published_the_other_day.count)
-        expect(Vacancy.published_on_count(1.month.ago)).to eq(published_some_other_day.count)
+        expect(described_class.published_on_count(Date.current)).to eq(published_today.count)
+        expect(described_class.published_on_count(1.day.ago)).to eq(published_yesterday.count)
+        expect(described_class.published_on_count(2.days.ago)).to eq(published_the_other_day.count)
+        expect(described_class.published_on_count(1.month.ago)).to eq(published_some_other_day.count)
       end
     end
   end
@@ -339,7 +339,7 @@ RSpec.describe Vacancy do
         let(:statuses) { %i[status_reviewed status_shortlisted status_submitted status_unsuccessful status_withdrawn] }
 
         it "returns true" do
-          expect(subject.publish_equal_opportunities_report?).to eq(true)
+          expect(subject.publish_equal_opportunities_report?).to be(true)
         end
       end
 
@@ -347,7 +347,7 @@ RSpec.describe Vacancy do
         let(:statuses) { %i[status_draft] }
 
         it "returns false" do
-          expect(subject.publish_equal_opportunities_report?).to eq(false)
+          expect(subject.publish_equal_opportunities_report?).to be(false)
         end
       end
     end
@@ -355,7 +355,7 @@ RSpec.describe Vacancy do
 
   context "stats updated at" do
     let(:expired_job) { create(:vacancy, :expired) }
-    let(:stats_updated_at) { Vacancy.find(expired_job.id).stats_updated_at }
+    let(:stats_updated_at) { described_class.find(expired_job.id).stats_updated_at }
 
     it { expect(stats_updated_at).to be_nil }
 
@@ -546,7 +546,7 @@ RSpec.describe Vacancy do
     end
 
     context "if all organisations have no geopoint" do
-      let(:organisations) { [create(:school, geopoint: nil), create(:school, geopoint: nil)] }
+      let(:organisations) { create_list(:school, 2, geopoint: nil) }
 
       it "is set to nil" do
         expect(subject.geolocation).to be_nil
@@ -555,8 +555,9 @@ RSpec.describe Vacancy do
   end
 
   describe "#distance_in_miles_to" do
-    let(:test_coordinates) { Geocoding.new("Stonehenge").coordinates }
     subject { create(:vacancy, organisations: organisations) }
+
+    let(:test_coordinates) { Geocoding.new("Stonehenge").coordinates }
 
     context "when vacancy has multiple geolocations" do
       let(:glasgow_school) { create(:school, geopoint: "POINT(-4.2542 55.8628)") } # 338 miles from stonehenge
@@ -588,7 +589,7 @@ RSpec.describe Vacancy do
     end
 
     it "resets the publish_on date" do
-      expect(subject.publish_on).to eq(nil)
+      expect(subject.publish_on).to be_nil
     end
   end
 end

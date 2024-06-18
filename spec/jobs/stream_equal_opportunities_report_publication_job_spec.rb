@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe StreamEqualOpportunitiesReportPublicationJob do
   subject(:job) { described_class.perform_later }
+
   let(:vacancy) do
     instance_double(Vacancy,
                     publish_equal_opportunities_report?: publish_report?,

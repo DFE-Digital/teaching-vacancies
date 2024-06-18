@@ -67,7 +67,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.before(:each, recaptcha: true) do
+  config.before(:each, :recaptcha) do
     recaptcha_reply = double("recaptcha_reply")
     allow(recaptcha_reply).to receive(:dig).with("score").and_return(0.9)
     allow(recaptcha_reply).to receive(:[]).with("score").and_return(0.9)
@@ -75,11 +75,11 @@ RSpec.configure do |config|
     allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return(recaptcha_reply)
   end
 
-  config.before(:each, type: :system, js: true) do
+  config.before(:each, :js, type: :system) do
     driven_by :chrome_headless
   end
 
-  config.before(:each, geocode: true) do
+  config.before(:each, :geocode) do
     allow(Geocoder).to receive(:search).and_call_original
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
@@ -95,7 +95,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.around(:each, zendesk: true) do |example|
+  config.around(:each, :zendesk) do |example|
     with_env("ZENDESK_API_KEY" => SecureRandom.uuid) do
       example.run
     end

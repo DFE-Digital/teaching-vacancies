@@ -14,7 +14,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
       end
     end
 
-    scenario "they do not receive the feedback prompt email" do
+    it "they do not receive the feedback prompt email" do
       expect(ApplicationMailer.deliveries.count).to eq(0)
     end
   end
@@ -28,11 +28,11 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
       end
     end
 
-    scenario "they receive the feedback prompt email" do
+    it "they receive the feedback prompt email" do
       expect(ApplicationMailer.deliveries.count).to eq(1)
     end
 
-    scenario "they can provide feedback" do
+    it "they can provide feedback" do
       visit first_link_from_last_mail
 
       choose I18n.t("helpers.label.publishers_job_listing_expired_feedback_form.hired_status_options.hired_tvs")
@@ -46,10 +46,10 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
       expect {
         click_button I18n.t("buttons.submit_feedback")
         first_vacancy_in_email.reload
-      }.to change { first_vacancy_in_email.hired_status }.from(nil).to("hired_tvs")
-       .and change { first_vacancy_in_email.listed_elsewhere }.from(nil).to("listed_free")
+      }.to change(first_vacancy_in_email, :hired_status).from(nil).to("hired_tvs")
+       .and change(first_vacancy_in_email, :listed_elsewhere).from(nil).to("listed_free")
 
-      expect(current_path).to eq(submitted_organisation_job_expired_feedback_path(first_vacancy_in_email.signed_id))
+      expect(page).to have_current_path(submitted_organisation_job_expired_feedback_path(first_vacancy_in_email.signed_id), ignore_query: true)
     end
   end
 
@@ -64,7 +64,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
       end
     end
 
-    scenario "they receive a feedback prompt email for each qualifying vacanct" do
+    it "they receive a feedback prompt email for each qualifying vacanct" do
       expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(["test@example.com"], ["test@example.com"], ["test2@example.com"], ["test2@example.com"])
       expect(ApplicationMailer.deliveries.count).to eq(4)
     end

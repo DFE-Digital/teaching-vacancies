@@ -5,7 +5,7 @@ RSpec.describe Authorisation do
     described_class.new(organisation_id: "123", user_id: "456", dsi_client:)
   end
 
-  let(:dsi_client) { instance_double("DSIClient", role_ids:) }
+  let(:dsi_client) { instance_double(DSIClient, role_ids:) }
   let(:role_ids) { [] }
   let(:organisations) { [] }
 
@@ -13,19 +13,19 @@ RSpec.describe Authorisation do
     context "when roles include the publisher role ID" do
       let(:role_ids) { ["test-publisher-role-id"] }
 
-      it { should be_authorised_publisher }
+      it { is_expected.to be_authorised_publisher }
     end
 
     context "when roles do not include the publisher role ID" do
       let(:role_ids) { ["unknown-role-id"] }
 
-      it { should_not be_authorised_publisher }
+      it { is_expected.not_to be_authorised_publisher }
     end
 
     context "when there are no roles" do
       let(:role_ids) { [] }
 
-      it { should_not be_authorised_publisher }
+      it { is_expected.not_to be_authorised_publisher }
     end
 
     context "when the DSI request 404s" do
@@ -34,7 +34,7 @@ RSpec.describe Authorisation do
           .and_raise(DSIClient::RequestInvalid, "404")
       end
 
-      it { should_not be_authorised_publisher }
+      it { is_expected.not_to be_authorised_publisher }
     end
 
     context "when the DSI request 500s" do
@@ -53,19 +53,19 @@ RSpec.describe Authorisation do
     context "when roles include the support user role ID" do
       let(:role_ids) { ["test-support-user-role-id"] }
 
-      it { should be_authorised_support_user }
+      it { is_expected.to be_authorised_support_user }
     end
 
     context "when roles do not include the publisher role ID" do
       let(:role_ids) { ["unknown-role-id"] }
 
-      it { should_not be_authorised_support_user }
+      it { is_expected.not_to be_authorised_support_user }
     end
 
     context "when there are no roles" do
       let(:role_ids) { [] }
 
-      it { should_not be_authorised_support_user }
+      it { is_expected.not_to be_authorised_support_user }
     end
 
     context "when the DSI request 404s" do
@@ -74,7 +74,7 @@ RSpec.describe Authorisation do
           .and_raise(DSIClient::RequestInvalid, "404")
       end
 
-      it { should_not be_authorised_support_user }
+      it { is_expected.not_to be_authorised_support_user }
     end
 
     context "when the DSI request 500s" do

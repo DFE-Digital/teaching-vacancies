@@ -13,8 +13,8 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
       it "overrides enable_job_applications and sets it to false" do
         subject.valid?
 
-        expect(subject.enable_job_applications).to eq(false)
-        expect(subject.errors).to_not include(:enable_job_applications)
+        expect(subject.enable_job_applications).to be(false)
+        expect(subject.errors).not_to include(:enable_job_applications)
       end
     end
 
@@ -25,13 +25,13 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
         it "does not override enable_job_applications" do
           subject.enable_job_applications = true
 
-          expect { subject.valid? }.to_not(change { subject.enable_job_applications })
+          expect { subject.valid? }.not_to(change(subject, :enable_job_applications))
         end
 
         it "is not valid" do
           subject.valid?
 
-          expect(subject).to_not be_valid
+          expect(subject).not_to be_valid
           expect(subject.errors).to include(:enable_job_applications)
         end
       end
@@ -46,14 +46,14 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
         let(:vacancy) { build_stubbed(:vacancy, :past_publish, job_roles: ["teacher"]) }
 
         it "overrides enable_job_applications" do
-          expect { subject.valid? }.to change { subject.enable_job_applications }.from(nil).to(false)
+          expect { subject.valid? }.to change(subject, :enable_job_applications).from(nil).to(false)
         end
 
         it "is valid" do
           subject.valid?
 
           expect(subject).to be_valid
-          expect(subject.errors).to_not include(:enable_job_applications)
+          expect(subject.errors).not_to include(:enable_job_applications)
         end
       end
     end

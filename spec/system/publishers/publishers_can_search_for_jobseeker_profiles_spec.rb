@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
+RSpec.describe "Publishers searching for Jobseeker profiles" do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:organisation) { create(:school, geopoint: "POINT (-0.108267 51.506438)") }
   let(:school_oxford) { create(:school, name: "Oxford", geopoint: "POINT (-0.108267 51.506438)") }
@@ -37,7 +37,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   describe "Visiting the publisher's jobseeker profiles start page" do
     before { login_publisher(publisher:, organisation:) }
 
-    it "will display all jobseeker profiles with location preference areas containing the school" do
+    it "displays all jobseeker profiles with location preference areas containing the school" do
       visit publishers_jobseeker_profiles_path
 
       [jobseeker_profile, part_time_jobseeker_profile].each do |jobseeker_profile|
@@ -59,7 +59,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
       end
     end
 
-    it "will allow a publisher to filter the jobseeker profiles" do
+    it "allows a publisher to filter the jobseeker profiles" do
       visit publishers_jobseeker_profiles_path
 
       within ".filters-component" do
@@ -71,7 +71,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
       end
 
       expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
-      expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
+      expect(page).to have_no_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
     end
 
     context "when filters are selected" do
@@ -88,31 +88,31 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
           click_on I18n.t("buttons.apply_filters")
         end
 
-        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
-        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
-        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
-        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
-        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
       end
 
-      it "will allow publisher to clear a filter" do
+      it "allows publisher to clear a filter" do
         click_link I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5")
         click_link I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true")
 
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
-        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
-        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
-        expect(page).to_not have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
         expect(page).to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
-        expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
-        expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
+        expect(page).to have_no_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
+        expect(page).to have_no_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
       end
 
-      it "will allow publisher to clear all filters" do
+      it "allows publisher to clear all filters" do
         click_link "Clear filters"
 
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
@@ -120,9 +120,9 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
-        expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
-        expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
-        expect(page).not_to have_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
+        expect(page).to have_no_link(I18n.t("publishers.jobseeker_profiles.filters.working_pattern_options.part_time"))
+        expect(page).to have_no_link(I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5"))
+        expect(page).to have_no_link(I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true"))
       end
     end
 
@@ -131,7 +131,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         visit publishers_jobseeker_profiles_path
       end
 
-      it "will allow hiring staff to filter by jobseekers' preferred roles" do
+      it "allows hiring staff to filter by jobseekers' preferred roles" do
         within ".filters-component" do
           find('span[title="Support"]').click
           check "Catering, cleaning and site management"
@@ -139,9 +139,9 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
           click_on I18n.t("buttons.apply_filters")
         end
 
-        expect(page).not_to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
-        expect(page).not_to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
         expect(page).to have_link("Catering, cleaning and site management")
@@ -159,7 +159,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(no_right_to_work_in_uk_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(cleaning_staff_jobseeker_profile))
-        expect(page).not_to have_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
+        expect(page).to have_no_link(href: publishers_jobseeker_profile_path(teaching_assistant_jobseeker_profile))
         expect(page).to have_link("Catering, cleaning and site management")
         expect(page).to have_link("Teacher")
 
@@ -182,7 +182,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
 
     context "when no locations are selected in the filters" do
       it "shows text explaining that the candidates are willing travel to one of more of the locations" do
-        expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that's near to at least one of your schools.")
+        expect(page).to have_css("p", text: "These candidates are willing to travel to a location that's near to at least one of your schools.")
       end
     end
 
@@ -190,7 +190,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
       it "shows text explaining that the candidates are willing travel to the selected location" do
         check "Oxford"
         click_button "Apply filters"
-        expect(page).to have_selector("p", text: "These candidates are willing to travel to your selected school location.")
+        expect(page).to have_css("p", text: "These candidates are willing to travel to your selected school location.")
       end
     end
 
@@ -199,7 +199,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         check "Oxford"
         check "Cambridge"
         click_button "Apply filters"
-        expect(page).to have_selector("p", text: "These candidates are willing to travel to at least one of your selected school locations.")
+        expect(page).to have_css("p", text: "These candidates are willing to travel to at least one of your selected school locations.")
       end
     end
   end
@@ -211,7 +211,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
     end
 
     it "shows text explaining that the candidates are willing to travel to the school" do
-      expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school.")
+      expect(page).to have_css("p", text: "These candidates are willing to travel to a location that’s near to your school.")
     end
   end
 end

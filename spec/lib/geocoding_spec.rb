@@ -1,7 +1,7 @@
 require "rails_helper"
 require "geocoding"
 
-RSpec.describe Geocoding, geocode: true do
+RSpec.describe Geocoding, :geocode do
   subject { described_class.new(location) }
 
   let(:google_coordinates) { [54.5399146, -1.0435559] }
@@ -64,10 +64,10 @@ RSpec.describe Geocoding, geocode: true do
   end
 
   describe "#postcode_from_coordinates" do
+    subject { described_class.new(coordinates) }
+
     let(:coordinates) { google_coordinates }
     let(:postcode) { "TS14 6RE" }
-
-    subject { described_class.new(coordinates) }
 
     context "when the coordinates have a cache entry" do
       before do

@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe VacancyFormPageHeadingComponent, type: :component do
+  subject { described_class.new(vacancy, vacancy_step_process, back_path: back_path, fieldset: false) }
+
   let(:organisation) { create(:school, name: "Teaching Vacancies Academy") }
   let(:vacancy) { create(:vacancy, status, organisations: [organisation], job_title: "Test job title", completed_steps: %w[job_location job_role review]) }
   let(:status) { :published }
@@ -16,14 +18,9 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
                                                                organisation: organisation)
   end
 
-  subject { described_class.new(vacancy, vacancy_step_process, back_path: back_path, fieldset: false) }
-
   before do
     allow(subject).to receive(:current_organisation).and_return(organisation)
-    allow(vacancy_step_process).to receive(:previous_step).and_return(previous_step)
-    allow(vacancy_step_process).to receive(:steps).and_return(steps)
-    allow(vacancy_step_process).to receive(:current_step_group_number).and_return(1)
-    allow(vacancy_step_process).to receive(:total_step_groups).and_return(3)
+    allow(vacancy_step_process).to receive_messages(previous_step: previous_step, steps: steps, current_step_group_number: 1, total_step_groups: 3)
 
     render_inline(subject)
   end

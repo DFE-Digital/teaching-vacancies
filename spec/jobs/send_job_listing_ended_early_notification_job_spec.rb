@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe SendJobListingEndedEarlyNotificationJob do
   subject(:job) { described_class.perform_later(vacancy) }
+
   let(:mail) { double("Mail::Message", deliver_later: true) }
   let(:vacancy) { create(:vacancy, :published) }
 
@@ -26,7 +27,7 @@ RSpec.describe SendJobListingEndedEarlyNotificationJob do
 
     context "when the vacancy has no draft applications" do
       it "does not send an email" do
-        expect(Jobseekers::JobApplicationMailer).to_not receive(:job_listing_ended_early)
+        expect(Jobseekers::JobApplicationMailer).not_to receive(:job_listing_ended_early)
         perform_enqueued_jobs { job }
       end
     end

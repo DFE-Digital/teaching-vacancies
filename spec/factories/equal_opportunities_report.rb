@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :equal_opportunities_report do
-    vacancy
+    association :vacancy
 
     total_submissions { 1 }
     disability_no { 1 }

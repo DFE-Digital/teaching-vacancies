@@ -22,7 +22,7 @@ RSpec.describe "Publishers can end a job listing early" do
 
     expect { click_on I18n.t("buttons.end_listing") }.to change { Vacancy.live.count }.from(1).to(0)
 
-    expect(current_path).to eq(organisation_job_path(vacancy.id))
+    expect(page).to have_current_path(organisation_job_path(vacancy.id), ignore_query: true)
   end
 
   context "when there are draft applications for the listing" do
