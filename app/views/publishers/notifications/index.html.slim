@@ -14,8 +14,8 @@
           .govuk-grid-column-full
             .govuk-body.float-right
               = pagy_stats(@pagy, type: "notification")
-        
-        = render partial: 'notification', collection: @notifications, as: :notification
+
+        = render partial: "notification", collection: @notifications, as: :notification
 
         .govuk-grid-row
           .govuk-grid-column-full
