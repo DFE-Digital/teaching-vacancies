@@ -73,7 +73,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", :recaptcha do
       end
 
       it "allows the user to submit further feedback" do
-        click_button I18n.t("buttons.submit")
+        click_on I18n.t("buttons.submit")
         expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content(I18n.t("jobseekers.job_alert_feedbacks.update.success"))
         expect(feedback.comment).to eq comment
@@ -87,7 +87,7 @@ RSpec.describe "A jobseeker can give feedback on a job alert", :recaptcha do
         let(:verify_recaptcha) { false }
 
         it "requests the user to pass a recaptcha V2 check" do
-          click_button I18n.t("buttons.submit")
+          click_on I18n.t("buttons.submit")
           expect(page).to have_content("There is a problem")
           expect(page).to have_content(I18n.t("recaptcha.error"))
           expect(page).to have_content(I18n.t("recaptcha.label"))

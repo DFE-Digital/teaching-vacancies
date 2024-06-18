@@ -29,10 +29,10 @@ RSpec.describe "Service Data supportal section" do
     click_on "View service data"
     expect(page).to have_css("h1", text: "Service data")
 
-    click_link "Jobseeker profiles"
+    click_on "Jobseeker profiles"
     expect(page).to have_css("h1", text: "Service Jobseeker Profiles")
 
-    click_link jobseeker_name
+    click_on jobseeker_name
     expect(page).to have_css("h1", text: jobseeker_name)
 
     within(summary_card("Jobseeker")) do

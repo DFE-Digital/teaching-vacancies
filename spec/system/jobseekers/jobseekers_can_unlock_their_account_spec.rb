@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can unlock their account" do
       visit first_link_from_last_mail
       expect(page).to have_css("h1", text: I18n.t("jobseekers.unlocks.show.title"))
 
-      click_button I18n.t("jobseekers.unlocks.show.confirm")
+      click_on I18n.t("jobseekers.unlocks.show.confirm")
       expect(jobseeker.reload).not_to be_access_locked
       expect(page).to have_css("h1", text: I18n.t("jobseekers.sessions.new.title"))
       expect(page).to have_content(I18n.t("devise.unlocks.unlocked"))
@@ -29,7 +29,7 @@ RSpec.describe "Jobseekers can unlock their account" do
     it "following the unlock link for a second time takes them directly to an error page" do
       sign_in_jobseeker(password: "wrong password")
       visit first_link_from_last_mail
-      click_button I18n.t("jobseekers.unlocks.show.confirm")
+      click_on I18n.t("jobseekers.unlocks.show.confirm")
 
       visit first_link_from_last_mail
       expect(page).to have_css("h1", text: I18n.t("jobseekers.unlocks.new.heading"))
@@ -62,7 +62,7 @@ RSpec.describe "Jobseekers can unlock their account" do
 
         visit first_link_from_last_mail
         expect(page).to have_css("h1", text: I18n.t("jobseekers.unlocks.show.title"))
-        click_button I18n.t("jobseekers.unlocks.show.confirm")
+        click_on I18n.t("jobseekers.unlocks.show.confirm")
 
         expect(jobseeker.reload).not_to be_access_locked
 

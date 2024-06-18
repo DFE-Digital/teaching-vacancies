@@ -16,7 +16,7 @@ RSpec.describe "Giving general feedback for the service", :recaptcha do
 
     fill_in_general_feedback
 
-    expect { click_button I18n.t("buttons.submit_feedback") }.to change {
+    expect { click_on I18n.t("buttons.submit_feedback") }.to change {
       Feedback.where(comment: comment,
                      email: email,
                      occupation: occupation,
@@ -44,7 +44,7 @@ RSpec.describe "Giving general feedback for the service", :recaptcha do
 
       fill_in_general_feedback
 
-      expect { click_button I18n.t("buttons.submit_feedback") }.not_to change(Feedback, :count)
+      expect { click_on I18n.t("buttons.submit_feedback") }.not_to change(Feedback, :count)
       expect(page).to have_content("There is a problem")
       expect(page).to have_content(I18n.t("recaptcha.error"))
       expect(page).to have_content(I18n.t("recaptcha.label"))

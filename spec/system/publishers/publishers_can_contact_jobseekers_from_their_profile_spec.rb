@@ -40,9 +40,9 @@ RSpec.describe "Contacting Jobseekers" do
   it "A publisher can contact the jobseeker from their profile" do
     login_publisher(publisher:)
     visit root_path
-    click_link "Candidate profiles"
+    click_on "Candidate profiles"
 
-    click_link candidate_name
+    click_on candidate_name
     expect(page).to have_link(jobseeker_profile.email, href: "mailto:#{jobseeker_profile.email}")
   end
 end

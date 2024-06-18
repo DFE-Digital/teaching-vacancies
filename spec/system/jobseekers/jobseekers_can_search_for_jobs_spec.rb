@@ -119,7 +119,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     it "lists the jobs with the earliest closing date first" do
       visit jobs_path
       select "Closing date", :from => "sort-by-field"
-      click_button "Sort"
+      click_on "Sort"
       expect(page).to have_select("sort_by", selected: "Closing date")
       expect("Maths 1").to appear_before("Physics Teacher")
       expect("Physics Teacher").to appear_before("Maths Teacher 2")
@@ -302,7 +302,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         click_on I18n.t("buttons.search")
 
-        click_link "Remove this filter Teacher"
+        click_on "Remove this filter Teacher"
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([job1])
@@ -374,7 +374,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         click_on I18n.t("buttons.search")
 
-        click_link "Remove this filter Teacher"
+        click_on "Remove this filter Teacher"
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([faith_job])

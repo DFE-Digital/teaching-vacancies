@@ -28,7 +28,7 @@ RSpec.describe "Jobseekers can update their profile from job applications" do
       click_on I18n.t("buttons.submit_application")
       expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
 
-      click_link "Your profile"
+      click_on "Your profile"
       expect(page).to have_css("h3.govuk-summary-card__title", text: "Application qualification")
       expect(page).to have_no_css("h3.govuk-summary-card__title", text: "Original profile qualification")
 
@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can update their profile from job applications" do
       click_on I18n.t("buttons.submit_application")
       expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
 
-      click_link "Your profile"
+      click_on "Your profile"
 
       expect(page).to have_css("h3.govuk-summary-card__title", text: "Original profile qualification")
       expect(page).to have_no_css("h3.govuk-summary-card__title", text: "Application qualification")
@@ -61,7 +61,7 @@ RSpec.describe "Jobseekers can update their profile from job applications" do
       click_on I18n.t("buttons.submit_application")
       expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
 
-      click_link "Your profile"
+      click_on "Your profile"
 
       expect(page).to have_css("h3.govuk-summary-card__title", text: "Original profile qualification")
       expect(page).to have_no_css("h3.govuk-summary-card__title", text: "Application qualification")

@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers applications statuses" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
 
-        click_button "Start application"
+        click_on "Start application"
 
         expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "in progress")
         expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "in progress")
@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers applications statuses" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
 
-        click_button "Start application"
+        click_on "Start application"
 
         expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "not started")
         expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "not started")
@@ -56,7 +56,7 @@ RSpec.describe "Jobseekers applications statuses" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
 
-        click_button "Start application"
+        click_on "Start application"
 
         expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "not started")
         expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "not started")
@@ -73,10 +73,10 @@ RSpec.describe "Jobseekers applications statuses" do
             click_on I18n.t("jobseekers.job_applications.banner_links.apply")
           end
 
-          click_button "Start application"
+          click_on "Start application"
 
           within("#personal_details") do
-            click_link("Complete section")
+            click_on("Complete section")
           end
 
           fill_in_personal_details
@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers applications statuses" do
           expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "complete")
 
           within("#professional_status") do
-            click_link("Complete section")
+            click_on("Complete section")
           end
 
           fill_in_professional_status
@@ -94,7 +94,7 @@ RSpec.describe "Jobseekers applications statuses" do
           expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "complete")
 
           within("#qualifications") do
-            click_link("Complete section")
+            click_on("Complete section")
           end
 
           choose "Yes, I've completed this section"
@@ -103,7 +103,7 @@ RSpec.describe "Jobseekers applications statuses" do
           expect(page).to have_css("#qualifications .review-component__section__heading__status", text: "complete")
 
           within("#training_and_cpds") do
-            click_link("Complete section")
+            click_on("Complete section")
           end
 
           choose "Yes, I've completed this section"
@@ -112,7 +112,7 @@ RSpec.describe "Jobseekers applications statuses" do
           expect(page).to have_css("#training_and_cpds .review-component__section__heading__status", text: "complete")
 
           within("#employment_history") do
-            click_link("Complete section")
+            click_on("Complete section")
           end
 
           click_on "Add another job"

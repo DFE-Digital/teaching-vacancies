@@ -99,8 +99,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles" do
       end
 
       it "allows publisher to clear a filter" do
-        click_link I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5")
-        click_link I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true")
+        click_on I18n.t("publishers.jobseeker_profiles.filters.key_stage_options.ks5")
+        click_on I18n.t("publishers.jobseeker_profiles.filters.right_to_work_in_uk_options.true")
 
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to have_no_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
@@ -113,7 +113,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles" do
       end
 
       it "allows publisher to clear all filters" do
-        click_link "Clear filters"
+        click_on "Clear filters"
 
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
@@ -147,7 +147,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles" do
         expect(page).to have_link("Catering, cleaning and site management")
         expect(page).to have_link("HLTA (higher level teaching assistant)")
 
-        click_link "HLTA (higher level teaching assistant)"
+        click_on "HLTA (higher level teaching assistant)"
 
         within ".filters-component" do
           find('span[title="Teaching & leadership"]').click
@@ -163,7 +163,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles" do
         expect(page).to have_link("Catering, cleaning and site management")
         expect(page).to have_link("Teacher")
 
-        click_link "Clear filters"
+        click_on "Clear filters"
 
         expect(page).to have_link(href: publishers_jobseeker_profile_path(part_time_jobseeker_profile))
         expect(page).to have_link(href: publishers_jobseeker_profile_path(jobseeker_profile))
@@ -189,7 +189,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles" do
     context "when 1 location is selected in the filters" do
       it "shows text explaining that the candidates are willing travel to the selected location" do
         check "Oxford"
-        click_button "Apply filters"
+        click_on "Apply filters"
         expect(page).to have_css("p", text: "These candidates are willing to travel to your selected school location.")
       end
     end
@@ -198,7 +198,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles" do
       it "shows text explaining that the candidates are willing travel to at least one of the selected locations" do
         check "Oxford"
         check "Cambridge"
-        click_button "Apply filters"
+        click_on "Apply filters"
         expect(page).to have_css("p", text: "These candidates are willing to travel to at least one of your selected school locations.")
       end
     end

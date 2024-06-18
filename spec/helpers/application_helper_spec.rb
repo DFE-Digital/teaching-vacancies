@@ -12,9 +12,7 @@ RSpec.describe ApplicationHelper do
 
   describe "#body_class" do
     before do
-      expect(controller).to receive(:controller_path).and_return("foo/baz")
-      expect(controller).to receive(:action_name).and_return("bar")
-      allow(controller).to receive(:publisher_signed_in?).and_return(false)
+      allow(controller).to receive_messages(controller_path: "foo/baz", action_name: "bar", publisher_signed_in?: false)
     end
 
     it "returns the controller and action name" do
@@ -27,7 +25,7 @@ RSpec.describe ApplicationHelper do
 
     context "when logged in" do
       before do
-        expect(controller).to receive(:publisher_signed_in?).and_return(true)
+        allow(controller).to receive(:publisher_signed_in?).and_return(true)
       end
 
       it "returns the authenticated class" do

@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
 
         expect_page_to_have_values("Rock climbing instructional course", "TeachTrain ltd", "A", "2024")
 
-        click_link "Return to profile"
+        click_on "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
@@ -45,14 +45,14 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020")
 
         within(".govuk-summary-card__title-wrapper", text: "Rock climbing") do
-          click_link("Change")
+          click_on("Change")
         end
 
         fill_in_and_submit_training_form("Teaching piano to young adults", "PianoWorx", "A", "2021")
 
         expect_page_to_have_values("Teaching piano to young adults", "PianoWorx", "A", "2021")
 
-        click_link "Return to profile"
+        click_on "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
@@ -70,12 +70,12 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020")
 
         within(".govuk-summary-card__title-wrapper", text: "Rock climbing") do
-          click_link("Delete")
+          click_on("Delete")
         end
 
         expect(page).to have_content "Confirm that you want to delete this training and development"
 
-        click_button "Delete training"
+        click_on "Delete training"
 
         expect(page).to have_current_path(review_jobseekers_profile_training_and_cpds_path)
 

@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
         expect(page).to have_content "You need to confirm your email address to sign in. You should have received a link by email."
         expect(page).to have_content "If the link has expired, you can resend the email"
 
-        click_link "resend the email"
+        click_on "resend the email"
         expect(page).to have_content "Email has been resent"
 
         confirm_email_address
@@ -105,7 +105,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
           expect(page).to have_content "You need to confirm your email address to sign in. You should have received a link by email."
           expect(page).to have_content "If the link has expired, you can resend the email"
 
-          click_link "resend the email"
+          click_on "resend the email"
           expect(page).to have_css("h1", text: "Resend confirmation")
 
           click_on "Resend email"

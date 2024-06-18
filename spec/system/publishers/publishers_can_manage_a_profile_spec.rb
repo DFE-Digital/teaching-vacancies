@@ -13,11 +13,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:school) }
       let(:school_website_url) { "https://www.this-is-a-test-url.example.com" }
 
-      before { click_link I18n.t("nav.school_profile") }
+      before { click_on I18n.t("nav.school_profile") }
 
       it "allows the publisher to edit the school's website" do
         within("div.govuk-summary-list__row#website") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_url_override_form[url_override]").value).to be_blank
@@ -40,11 +40,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:school_website_url) { "https://www.this-is-a-test-url-for-a-school.example.com" }
       let(:new_school_website_url) { "https://www.this-is-a-new-test-url-for-a-school.example.com" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_on I18n.t("nav.organisation_profile") }
 
       it "allows the publisher to edit the trust's website" do
         within("div.govuk-summary-list__row#website") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_url_override_form[url_override]").value).to eq(trust_website_url)
@@ -61,7 +61,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
         click_on school1.name
 
         within("div.govuk-summary-list__row#website") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_url_override_form[url_override]").value).to eq(school_website_url)
@@ -79,11 +79,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:local_authority) }
       let(:local_authority_website) { "https://www.this-is-a-new-test-url-for-a-local-authority.example.com" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_on I18n.t("nav.organisation_profile") }
 
       it "allows the publisher to edit the local authority's website" do
         within("div.govuk-summary-list__row#website") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_url_override_form[url_override]").value).to be_blank
@@ -103,11 +103,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:school) }
       let(:school_description) { "A lovely place" }
 
-      before { click_link I18n.t("nav.school_profile") }
+      before { click_on I18n.t("nav.school_profile") }
 
       it "allows the publisher to edit the school's description" do
         within("div.govuk-summary-list__row#description") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_description_form[description]").value).to eq(organisation.description)
@@ -128,11 +128,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:new_trust_description) { "A lovely trust" }
       let(:new_school_description) { "A lovely school" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_on I18n.t("nav.organisation_profile") }
 
       it "allows the publisher to edit the trust's description" do
         within("div.govuk-summary-list__row#description") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_description_form[description]").value).to eq(organisation.description)
@@ -149,7 +149,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
         click_on school1.name
 
         within("div.govuk-summary-list__row#description") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_description_form[description]").value).to eq(school1.description)
@@ -167,11 +167,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:local_authority) }
       let(:local_authority_description) { "A lovely local authority" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_on I18n.t("nav.organisation_profile") }
 
       it "allows the publisher to edit the local authority's description" do
         within("div.govuk-summary-list__row#description") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_description_form[description]").value).to be_empty
@@ -191,11 +191,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:school) }
       let(:school_email) { "me@home.com" }
 
-      before { click_link I18n.t("nav.school_profile") }
+      before { click_on I18n.t("nav.school_profile") }
 
       it "allows the publisher to edit the school's email" do
         within("div.govuk-summary-list__row#email") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_email_form[email]").value).to eq(organisation.email)
@@ -216,11 +216,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:new_trust_email) { "me@trust.com" }
       let(:new_school_email) { "me@school.com" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_on I18n.t("nav.organisation_profile") }
 
       it "allows the publisher to edit the trust's email" do
         within("div.govuk-summary-list__row#email") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_email_form[email]").value).to eq(organisation.email)
@@ -237,7 +237,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
         click_on school1.name
 
         within("div.govuk-summary-list__row#email") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_email_form[email]").value).to eq(school1.email)
@@ -255,11 +255,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:local_authority) }
       let(:local_authority_email) { "me@authority.com" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_on I18n.t("nav.organisation_profile") }
 
       it "allows the publisher to edit the local authority's email" do
         within("div.govuk-summary-list__row#email") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_email_form[email]").value).to be_blank
@@ -279,11 +279,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:school) }
       let(:school_safeguarding_information) { "A very safe school" }
 
-      before { click_link I18n.t("nav.school_profile") }
+      before { click_on I18n.t("nav.school_profile") }
 
       it "allows the publisher to edit the school's safeguarding information" do
         within("div.govuk-summary-list__row#safeguarding_information") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_safeguarding_information_form[safeguarding_information]").value).to eq(organisation.safeguarding_information)
@@ -304,11 +304,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:new_trust_safeguarding_information) { "This trust is very safe" }
       let(:new_school_safeguarding_information) { "This school is very safe" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_on I18n.t("nav.organisation_profile") }
 
       it "allows the publisher to edit the trust's safeguarding information" do
         within("div.govuk-summary-list__row#safeguarding_information") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_safeguarding_information_form[safeguarding_information]").value).to eq(organisation.safeguarding_information)
@@ -325,7 +325,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
         click_on school1.name
 
         within("div.govuk-summary-list__row#safeguarding_information") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_safeguarding_information_form[safeguarding_information]").value).to eq(school1.safeguarding_information)
@@ -343,11 +343,11 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
       let(:organisation) { create(:local_authority) }
       let(:local_authority_safeguarding_information) { "A very safe local authority" }
 
-      before { click_link I18n.t("nav.organisation_profile") }
+      before { click_on I18n.t("nav.organisation_profile") }
 
       it "allows the publisher to edit the local authority's safeguarding information" do
         within("div.govuk-summary-list__row#safeguarding_information") do
-          click_link("Change")
+          click_on("Change")
         end
 
         expect(find_field("publishers_organisation_safeguarding_information_form[safeguarding_information]").value).to eq(organisation.safeguarding_information)
@@ -368,12 +368,12 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
     before do
       allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true)
-      click_link I18n.t("nav.school_profile")
+      click_on I18n.t("nav.school_profile")
     end
 
     it "allows the publisher to edit the organisation's logo" do
       within("div.govuk-summary-list__row#logo") do
-        click_link("Change")
+        click_on("Change")
       end
 
       upload_file(
@@ -394,12 +394,12 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
     before do
       allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true)
-      click_link I18n.t("nav.school_profile")
+      click_on I18n.t("nav.school_profile")
     end
 
     it "allows the publisher to delete the organisation's logo" do
       within("div.govuk-summary-list__row#logo") do
-        click_link("Change")
+        click_on("Change")
       end
 
       click_on I18n.t("publishers.organisations.logo.edit.delete_logo_link")
@@ -419,12 +419,12 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
     before do
       allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true)
-      click_link I18n.t("nav.school_profile")
+      click_on I18n.t("nav.school_profile")
     end
 
     it "allows the publisher to edit the organisation's photo" do
       within("div.govuk-summary-list__row#photo") do
-        click_link("Change")
+        click_on("Change")
       end
 
       upload_file(
@@ -445,12 +445,12 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
     before do
       allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true)
-      click_link I18n.t("nav.school_profile")
+      click_on I18n.t("nav.school_profile")
     end
 
     it "allows the publisher to delete the organisation's photo" do
       within("div.govuk-summary-list__row#photo") do
-        click_link("Change")
+        click_on("Change")
       end
 
       click_on I18n.t("publishers.organisations.photo.edit.delete_photo_link")

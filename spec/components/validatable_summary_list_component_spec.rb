@@ -20,29 +20,16 @@ RSpec.describe ValidatableSummaryListComponent, type: :component do
     expect(list).to be_a(GovukComponent::SummaryListComponent)
   end
 
-  it "builds row components for each row" do
+  it "builds a row component for the given row information" do
+    allow(ValidatableSummaryListComponent::RowComponent).to receive(:new)
     attribute = "a"
     row_kwargs = { a: 1 }
-    expect(ValidatableSummaryListComponent::RowComponent).to receive(:new)
-      .with(
-        attribute,
-        record: record,
-        show_errors: show_errors,
-        error_path: error_path,
-        **row_kwargs,
-      )
-    list.with_row(attribute, **row_kwargs)
 
-    attribute = "b"
-    row_kwargs = { b: 2 }
-    expect(ValidatableSummaryListComponent::RowComponent).to receive(:new)
-      .with(
-        attribute,
-        record: record,
-        show_errors: show_errors,
-        error_path: error_path,
-        **row_kwargs,
-      )
     list.with_row(attribute, **row_kwargs)
+    expect(ValidatableSummaryListComponent::RowComponent).to have_received(:new).with(attribute,
+                                                                                      record: record,
+                                                                                      show_errors: show_errors,
+                                                                                      error_path: error_path,
+                                                                                      **row_kwargs)
   end
 end

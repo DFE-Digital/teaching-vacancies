@@ -70,7 +70,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           expect(page).to have_content(local_authority.name)
 
           choose school.name
-          click_button I18n.t("buttons.sign_in")
+          click_on I18n.t("buttons.sign_in")
 
           expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
@@ -126,7 +126,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(page).to have_content(school.name)
 
             choose school.name
-            click_button I18n.t("buttons.sign_in")
+            click_on I18n.t("buttons.sign_in")
 
             expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
             expect(page).to have_no_content("Choose your organisation")
@@ -161,7 +161,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(page).to have_content(trust.name)
 
             choose trust.name
-            click_button I18n.t("buttons.sign_in")
+            click_on I18n.t("buttons.sign_in")
 
             expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 
@@ -200,7 +200,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             expect(page).to have_content(local_authority.name)
 
             choose local_authority.name
-            click_button I18n.t("buttons.sign_in")
+            click_on I18n.t("buttons.sign_in")
 
             expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_events
 

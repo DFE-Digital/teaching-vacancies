@@ -149,7 +149,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
         visit jobseekers_job_application_build_path(job_application, :employment_history)
         expect(page).to have_content "You have a gap in your work history"
         choose("Yes, I've completed this section")
-        click_button("Save and continue")
+        click_on("Save and continue")
 
         expect(page).to have_content("You must provide your full work history, including the reason for any gaps in employment")
         expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :employment_history))
@@ -165,7 +165,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
         click_on I18n.t("buttons.continue")
 
         choose("Yes, I've completed this section")
-        click_button("Save and continue")
+        click_on("Save and continue")
 
         expect(page).to have_no_content("You must provide your full work history, including the reason for any gaps in employment")
         expect(page).to have_no_current_path(jobseekers_job_application_build_path(job_application, :employment_history))

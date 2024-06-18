@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       before { visit jobseekers_profile_path }
 
       it "allows the jobseeker to fill in their personal details" do
-        click_link("Add personal details")
+        click_on("Add personal details")
         fill_in "personal_details_form[first_name]", with: first_name
         fill_in "personal_details_form[last_name]", with: last_name
         click_on I18n.t("buttons.save_and_continue")
@@ -83,7 +83,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         row = page.find(".govuk-summary-list__key", text: "Name").find(:xpath, "..")
 
         within(row) do
-          click_link "Change"
+          click_on "Change"
         end
 
         fill_in "personal_details_form[first_name]", with: new_first_name
@@ -140,14 +140,14 @@ RSpec.describe "Jobseekers can manage their profile" do
     before { visit jobseekers_profile_path }
 
     it "allows the jobseeker to add #about_you" do
-      click_link("Add details about you")
+      click_on("Add details about you")
 
       fill_in "jobseekers_profile_about_you_form[about_you]", with: jobseeker_about_you
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content(jobseeker_about_you)
 
-      click_link I18n.t("buttons.return_to_profile")
+      click_on I18n.t("buttons.return_to_profile")
       expect(page).to have_content(jobseeker_about_you)
     end
   end
@@ -156,7 +156,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     before { visit jobseekers_profile_path }
 
     it "allows the jobseeker to edit their QTS status to yes with year acheived" do
-      click_link("Add qualified teacher status")
+      click_on("Add qualified teacher status")
 
       choose "Yes"
       fill_in "jobseekers_profile_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"
@@ -166,7 +166,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     it "allows the jobseeker to edit their QTS status to no" do
-      click_link("Add qualified teacher status")
+      click_on("Add qualified teacher status")
 
       choose "I’m on track to receive QTS"
       click_on I18n.t("buttons.save_and_continue")
@@ -176,7 +176,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     it "allows the jobseeker to edit their QTS status to non-teacher" do
-      click_link("Add qualified teacher status")
+      click_on("Add qualified teacher status")
 
       choose "I'm not looking for a teaching job"
       click_on I18n.t("buttons.save_and_continue")
@@ -202,7 +202,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       before { visit jobseekers_profile_path }
 
       it "raises errors for missing fields" do
-        click_link("Add roles")
+        click_on("Add roles")
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
@@ -230,7 +230,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         it "displays every employment history entry on the review page" do
           add_jobseeker_profile_employment
-          click_link "Return to profile"
+          click_on "Return to profile"
 
           profile.employments.each do |employment|
             expect(page).to have_content(employment.organisation)
@@ -244,19 +244,19 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         it "asks user to account for any gaps in employment" do
           add_jobseeker_profile_employment_with_a_gap
-          click_link "Return to profile"
+          click_on "Return to profile"
 
           expect(page).to have_content "You have a gap in your work history (about 1 year)"
           expect(page).to have_content "Add another job or add a reason for this gap"
-          click_link "add a reason for this gap"
+          click_on "add a reason for this gap"
 
-          click_button "Continue"
+          click_on "Continue"
 
           expect(page).to have_css(".govuk-error-summary__list", text: "Enter a reason for this gap")
 
           fill_in "jobseekers_break_form[reason_for_break]", with: "I was travelling"
 
-          click_button "Continue"
+          click_on "Continue"
 
           expect(page).to have_css(".govuk-inset-text", text: "Gap in work history")
 
@@ -299,7 +299,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       it "successfully changes the employment record" do
         visit jobseekers_profile_path
 
-        within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.change") }
+        within(".govuk-summary-card", match: :first) { click_on I18n.t("buttons.change") }
 
         expect(page).to have_current_path(edit_jobseekers_profile_work_history_path(employment), ignore_query: true)
 
@@ -323,7 +323,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       it "deletes the employment record" do
         visit review_jobseekers_profile_work_history_index_path
 
-        within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.delete") }
+        within(".govuk-summary-card", match: :first) { click_on I18n.t("buttons.delete") }
 
         expect(profile.employments.any?).to be false
         expect(page).to have_current_path(review_jobseekers_profile_work_history_index_path, ignore_query: true)
@@ -420,10 +420,10 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         visit jobseekers_profile_path
         within ".preview-and-turn-on-profile" do
-          click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          click_on I18n.t("jobseekers.profiles.show.turn_on_profile")
         end
 
-        click_button I18n.t("jobseekers.profiles.show.turn_on_profile")
+        click_on I18n.t("jobseekers.profiles.show.turn_on_profile")
         expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_on"))
         expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
         expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
@@ -433,10 +433,10 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         visit jobseekers_profile_path
         within ".preview-and-turn-on-profile" do
-          click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
+          click_on I18n.t("jobseekers.profiles.show.turn_off_profile")
         end
 
-        click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
+        click_on I18n.t("jobseekers.profiles.show.turn_off_profile")
         expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
         expect(page).to have_no_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
         expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
@@ -463,7 +463,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).to have_no_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
 
         within ".preview-and-turn-on-profile" do
-          click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          click_on I18n.t("jobseekers.profiles.show.turn_on_profile")
         end
 
         expect(page).to have_content I18n.t("jobseekers.profiles.toggle.not_ready")
@@ -557,7 +557,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       within page.find(".govuk-summary-list__key", text: permitted_organisation.name).find(:xpath, "..") do
         click_on I18n.t("buttons.delete")
       end
-      click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
+      click_on I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
 
       login_publisher(publisher: permitted_publisher)
       visit publishers_jobseeker_profiles_path
@@ -692,7 +692,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     before { visit jobseekers_profile_path }
 
     it "allows the jobseeker to fill in their job preferences" do
-      click_link("Add job preferences")
+      click_on("Add job preferences")
       expect(page).to have_current_path(jobseekers_job_preferences_step_path(:roles), ignore_query: true)
       expect(page).to have_css("h1", text: "What roles are you interested in?")
       expect(page).to have_css("h2", text: "Teaching")
@@ -734,7 +734,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_css("h3", text: "Job preferencesWorking patterns")
 
       # Fill in the Subjects
-      click_link "Back"
+      click_on "Back"
       expect(page).to have_current_path(jobseekers_job_preferences_step_path(:subjects), ignore_query: true)
       expect(page).to have_css("h3", text: "Job preferencesSubjects (optional)")
 
@@ -766,7 +766,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_css("h1", text: "Job preferencesLocations")
       expect(page).to have_content("London (1 mile)")
 
-      click_link "Change"
+      click_on "Change"
       expect(page).to have_css("h1", text: "Job preferencesLocation")
       expect(page).to have_field("Location", with: "London")
       expect(page).to have_checked_field("1 mile")
@@ -777,7 +777,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_css("h1", text: "Job preferencesLocations")
       expect(page).to have_content("London (5 miles)")
 
-      click_link "Delete"
+      click_on "Delete"
       expect(page).to have_css("h1", text: "Delete locationConfirm that you want to delete London (5 miles)")
       click_on "Delete this location"
 
@@ -840,7 +840,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     context "when a jobseeker enters non-teacher preferences" do
       it "changes the journey" do
-        click_link("Add job preferences")
+        click_on("Add job preferences")
         expect(page).to have_current_path(jobseekers_job_preferences_step_path(:roles), ignore_query: true)
         expect(page).to have_css("h1", text: "What roles are you interested in?")
         expect(page).to have_css("h2", text: "Teaching")
@@ -903,7 +903,7 @@ RSpec.describe "Jobseekers can manage their profile" do
   private
 
   def add_jobseeker_profile_employment
-    click_link("Add roles")
+    click_on("Add roles")
 
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: "Arsenal"
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: "Number 9"
@@ -917,7 +917,7 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   def add_jobseeker_profile_employment_with_a_gap
-    click_link("Add roles")
+    click_on("Add roles")
 
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: "Arsenal"
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: "Number 9"

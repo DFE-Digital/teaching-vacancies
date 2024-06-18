@@ -132,13 +132,11 @@ Metrics/AbcSize:
   Max: 31 # Default 17
   Exclude:
     - "config/**/*"
-    - "spec/**/*"
 
 Metrics/BlockLength:
   Max: 25 # Default 25
   Exclude:
     - "config/**/*"
-    - "spec/**/*"
     - "app/models/concerns/indexable.rb"
 
 Metrics/ClassLength:
@@ -146,36 +144,19 @@ Metrics/ClassLength:
 
 Metrics/CyclomaticComplexity:
   Max: 18 # Default 7
-  Exclude:
-    - "spec/**/*"
 
 Metrics/MethodLength:
   Max: 18 # Default 10
   Exclude:
     - "config/**/*"
-    - "spec/**/*"
 
 Metrics/ModuleLength:
   Max: 130 # Default 100
   Exclude:
     - "app/helpers/**/*"
-    - "spec/**/*"
 
 Metrics/ParameterLists:
   Max: 7 # Default 5
 
 Metrics/PerceivedComplexity:
   Max: 18 # Default 8
-  Exclude:
-    - "spec/**/*"
-
-##
-# Testing Rules
-FactoryBot/AssociationStyle:
-  EnforcedStyle: explicit
-
-RSpec/NamedSubject:
-  Enabled: false
-
-RSpec/AnyInstance:
-  Enabled: false

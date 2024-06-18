@@ -19,7 +19,7 @@ RSpec.describe "Users are redirected after sign in" do
 
       it "then goes to a different page and signs in" do
         visit job_path(job)
-        click_link I18n.t("jobseekers.job_applications.apply")
+        click_on I18n.t("jobseekers.job_applications.apply")
 
         expect(page).to have_text(I18n.t("jobseekers.sessions.new.title"))
         visit root_path

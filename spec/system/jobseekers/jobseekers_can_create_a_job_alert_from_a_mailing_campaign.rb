@@ -64,12 +64,12 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", :rec
   end
 
   def validate_and_confirm
-    click_button I18n.t("buttons.subscribe_campaign")
+    click_on I18n.t("buttons.subscribe_campaign")
     expect(page).to have_content("There is a problem")
                 .and have_content("Select when you want to receive job alert emails")
 
     choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.daily")
-    click_button I18n.t("buttons.subscribe_campaign")
+    click_on I18n.t("buttons.subscribe_campaign")
     expect(page).to have_current_path(subscriptions_path, ignore_query: true)
     expect(page).to have_content(I18n.t("subscriptions.confirm.header.create"))
   end

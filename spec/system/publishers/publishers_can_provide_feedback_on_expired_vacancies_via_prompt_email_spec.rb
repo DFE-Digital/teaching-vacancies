@@ -44,7 +44,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
       choose I18n.t("helpers.label.publishers_job_listing_expired_feedback_form.listed_elsewhere_options.listed_free")
 
       expect {
-        click_button I18n.t("buttons.submit_feedback")
+        click_on I18n.t("buttons.submit_feedback")
         first_vacancy_in_email.reload
       }.to change(first_vacancy_in_email, :hired_status).from(nil).to("hired_tvs")
        .and change(first_vacancy_in_email, :listed_elsewhere).from(nil).to("listed_free")

@@ -46,10 +46,10 @@ RSpec.describe SubscriptionsController, :recaptcha do
         let(:verify_recaptcha) { true }
 
         it "verifies the recaptcha once with v3" do
-          expect(controller).to receive(:verify_recaptcha)
-                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
-          expect(controller).not_to receive(:verify_recaptcha).with(no_args)
           subject
+          expect(controller).to have_received(:verify_recaptcha)
+                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
+          expect(controller).not_to have_received(:verify_recaptcha).with(no_args)
         end
 
         it "renders the subscription confirmation page" do
@@ -75,10 +75,10 @@ RSpec.describe SubscriptionsController, :recaptcha do
         end
 
         it "verifies the recaptcha once with v3 and once with v2" do
-          expect(controller).to receive(:verify_recaptcha)
-                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
-          expect(controller).to receive(:verify_recaptcha).with(no_args).once
           subject
+          expect(controller).to have_received(:verify_recaptcha)
+                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
+          expect(controller).to have_received(:verify_recaptcha).with(no_args).once
         end
 
         it "renders the 'new' page" do

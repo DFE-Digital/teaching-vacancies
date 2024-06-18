@@ -43,7 +43,7 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows jobseeker to clear a filter" do
-      click_link I18n.t("organisations.filters.special_school")
+      click_on I18n.t("organisations.filters.special_school")
 
       expect_page_to_show_schools([special_school1, secondary_school])
       expect_page_not_to_show_schools([primary_school])
@@ -53,7 +53,7 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows jobseeker to clear all filters" do
-      click_link "Clear filters"
+      click_on "Clear filters"
 
       expect_page_to_show_schools([special_school1, secondary_school, primary_school])
 
@@ -154,7 +154,7 @@ RSpec.describe "Searching on the schools page" do
       expect_page_to_show_schools([faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6,
                                    secondary_school, primary_school, non_faith_school1])
 
-      click_link "2"
+      click_on "2"
 
       expect_page_to_show_schools([non_faith_school2, non_faith_school3])
     end
