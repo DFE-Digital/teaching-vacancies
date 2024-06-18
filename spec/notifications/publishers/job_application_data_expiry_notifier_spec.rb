@@ -41,11 +41,10 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotifier do
 
     context "when the notification was delivered yesterday" do
       before do
-        travel_to 1.day.ago do
-          described_class
-            .with(vacancy: vacancy, publisher: publisher)
-            .deliver(publisher)
-        end
+        described_class
+          .with(vacancy: vacancy, publisher: publisher)
+          .deliver(publisher)
+        allow_any_instance_of(Noticed::Notification).to receive(:created_at) { Time.current - 1.day }
       end
 
       it "returns the correct timestamp" do
@@ -55,11 +54,10 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotifier do
 
     context "when the notification was delivered before yesterday" do
       before do
-        travel_to DateTime.new(2000, 0o1, 0o1, 14, 30) do
-          described_class
-            .with(vacancy: vacancy, publisher: publisher)
-            .deliver(publisher)
-        end
+        described_class
+          .with(vacancy: vacancy, publisher: publisher)
+          .deliver(publisher)
+        allow_any_instance_of(Noticed::Notification).to receive(:created_at) { DateTime.new(2000, 0o1, 0o1, 14, 30) }
       end
 
       it "returns the correct timestamp" do
