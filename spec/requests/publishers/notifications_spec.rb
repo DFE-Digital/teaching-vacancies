@@ -5,9 +5,10 @@ RSpec.describe "Publisher notifications" do
   let(:organisation) { build(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
   let(:job_application) { create(:job_application, vacancy: vacancy) }
-  let!(:notification) { create(:notification, :job_application_received, recipient: publisher, params: { vacancy: vacancy, job_application: job_application }) }
+  # let!(:notification) { create(:notification, :job_application_received, recipient: publisher, params: { vacancy: vacancy, job_application: job_application }) }
 
   before do
+    Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(publisher)
     allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
     sign_in(publisher, scope: :publisher)
   end
@@ -18,6 +19,7 @@ RSpec.describe "Publisher notifications" do
     end
 
     it "marks notifications as read" do
+      notification = publisher.notifications.first
       freeze_time do
         expect { get publishers_notifications_path }.to change { notification.reload.read_at }.from(nil).to(Time.current)
       end

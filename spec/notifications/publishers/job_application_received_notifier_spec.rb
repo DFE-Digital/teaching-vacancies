@@ -5,7 +5,7 @@ RSpec.describe Publishers::JobApplicationReceivedNotifier do
   let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
   describe "#timestamp" do
-    subject { Notification.last.to_notification.timestamp }
+    subject { Noticed::Notification.last.timestamp }
 
     context "when the notification is delivered today" do
       before do
