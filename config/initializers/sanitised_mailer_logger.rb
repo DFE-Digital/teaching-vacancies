@@ -1,3 +1,5 @@
+require "json"
+
 class SanitisedMailerLogger < Logger
   def initialize(*args)
     super
@@ -7,6 +9,8 @@ class SanitisedMailerLogger < Logger
   end
 
   def format_message(severity, timestamp, progname, msg)
+    msg = msg.to_json if msg.is_a?(Hash)
+
     sanitized_message = msg.gsub(/"to":\[\s*"[^\"]+"\s*\]/, '"to":["[FILTERED]"]')
     "#{timestamp} #{severity} #{progname}: #{sanitized_message}\n"
   end
