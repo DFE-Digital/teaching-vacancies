@@ -1,3 +1,5 @@
+require "net/sftp"
+
 module Vacancies::Export::DwpFindAJob
   # Base class for uploading vacancies to DWP Find a Job service.
   # Subclasses must define the following constants:

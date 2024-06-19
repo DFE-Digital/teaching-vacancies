@@ -1,5 +1,3 @@
-require "net/sftp"
-
 module Vacancies::Export::DwpFindAJob::NewAndEdited
   class Upload < Vacancies::Export::DwpFindAJob::UploadBase
     FILENAME_PREFIX = "TeachingVacancies-upload".freeze
