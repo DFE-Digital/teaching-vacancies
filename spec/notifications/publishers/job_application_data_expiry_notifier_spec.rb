@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe Publishers::JobApplicationDataExpiryNotification do
+RSpec.describe Publishers::JobApplicationDataExpiryNotifier do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
   let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
 
   describe "#message" do
-    subject { Notification.last.to_notification.message }
+    subject { Noticed::Notification.last.message }
 
     let(:data_expiration_date) { (vacancy.expires_at + 1.year).to_date }
     let(:vacancy_applications_link) { "/organisation/jobs/#{vacancy.id}/job_applications" }
@@ -25,8 +25,6 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotification do
   end
 
   describe "#timestamp" do
-    subject { Notification.last.to_notification.timestamp }
-
     context "when the notification is delivered today" do
       before do
         described_class
@@ -35,7 +33,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotification do
       end
 
       it "returns the correct timestamp" do
-        expect(subject).to include("Today at")
+        expect(publisher.notifications.first.timestamp).to include("Today at")
       end
     end
 
@@ -46,10 +44,11 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotification do
             .with(vacancy: vacancy, publisher: publisher)
             .deliver(publisher)
         end
+        publisher.notifications.first.update(created_at: Time.now - 1.day)
       end
 
       it "returns the correct timestamp" do
-        expect(subject).to include("Yesterday at")
+        expect(publisher.notifications.first.timestamp).to include("Yesterday at")
       end
     end
 
@@ -60,10 +59,11 @@ RSpec.describe Publishers::JobApplicationDataExpiryNotification do
             .with(vacancy: vacancy, publisher: publisher)
             .deliver(publisher)
         end
+        publisher.notifications.first.update(created_at: DateTime.new(2000, 0o1, 0o1, 14, 30))
       end
 
       it "returns the correct timestamp" do
-        expect(subject).to eq("1 January at 2:30pm")
+        expect(publisher.notifications.first.timestamp).to eq("1 January at 2:30pm")
       end
     end
   end

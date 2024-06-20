@@ -433,3 +433,22 @@ shared:
     - updated_at
     - jobseeker_profile_id
     - job_application_id
+  :noticed_notifications:
+    - id
+    - type
+    - event_id
+    - recipient_type
+    - recipient_id
+    - read_at
+    - seen_at
+    - created_at
+    - updated_at
+  :noticed_events:
+    - id
+    - type
+    - record_type
+    - record_id
+    - params
+    - created_at
+    - updated_at
+    - notifications_count

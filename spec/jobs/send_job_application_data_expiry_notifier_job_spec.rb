@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe SendJobApplicationDataExpiryNotificationJob do
-  let(:notification) { instance_double(Publishers::JobApplicationDataExpiryNotification) }
+RSpec.describe SendJobApplicationDataExpiryNotifierJob do
+  let(:notification) { instance_double(Publishers::JobApplicationDataExpiryNotifier) }
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let!(:vacancy) { create(:vacancy, expires_at: 351.days.ago, publisher: publisher, organisations: [organisation]) }
@@ -10,7 +10,7 @@ RSpec.describe SendJobApplicationDataExpiryNotificationJob do
 
   context "when the vacancy has no job applications" do
     it "does not send notifications" do
-      expect(Publishers::JobApplicationDataExpiryNotification).not_to receive(:with).with(vacancy: vacancy, publisher: publisher)
+      expect(Publishers::JobApplicationDataExpiryNotifier).not_to receive(:with).with(vacancy: vacancy, publisher: publisher)
       described_class.perform_now
     end
   end
@@ -20,7 +20,7 @@ RSpec.describe SendJobApplicationDataExpiryNotificationJob do
 
     context "when the vacancy expired 351 days ago" do
       it "sends notifications" do
-        expect(Publishers::JobApplicationDataExpiryNotification).to receive(:with).with(vacancy: vacancy, publisher: publisher).and_return(notification)
+        expect(Publishers::JobApplicationDataExpiryNotifier).to receive(:with).with(vacancy: vacancy, publisher: publisher).and_return(notification)
         expect(notification).to receive(:deliver).with(publisher)
         described_class.perform_now
       end
@@ -30,7 +30,7 @@ RSpec.describe SendJobApplicationDataExpiryNotificationJob do
       let!(:vacancy) { create(:vacancy, expires_at: 1.day.ago, publisher: publisher, organisations: [organisation]) }
 
       it "does not send notifications" do
-        expect(Publishers::JobApplicationDataExpiryNotification).not_to receive(:with).with(vacancy: vacancy, publisher: publisher)
+        expect(Publishers::JobApplicationDataExpiryNotifier).not_to receive(:with).with(vacancy: vacancy, publisher: publisher)
         described_class.perform_now
       end
     end

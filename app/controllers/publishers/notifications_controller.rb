@@ -12,11 +12,11 @@ class Publishers::NotificationsController < Publishers::BaseController
 
   def notifications
     @notifications ||= current_publisher.notifications
-                                        .created_within_data_access_period
+                                        .where("created_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS)
                                         .order(created_at: :desc)
   end
 
   def mark_notifications_as_read
-    notifications.mark_as_read!
+    notifications.mark_as_read
   end
 end

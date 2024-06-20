@@ -10,14 +10,14 @@ RSpec.describe JobApplication do
     subject { create(:job_application) }
 
     before do
-      Publishers::JobApplicationReceivedNotification.with(vacancy: subject.vacancy, job_application: subject)
+      Publishers::JobApplicationReceivedNotifier.with(vacancy: subject.vacancy, job_application: subject)
                                                     .deliver(subject.vacancy.publisher)
-      expect(Notification.count).to eq 1
+      expect(Noticed::Notification.count).to eq 1
       subject.destroy
     end
 
     it "removes the notification when destroyed" do
-      expect(Notification.count).to eq 0
+      expect(Noticed::Notification.count).to eq 0
     end
   end
 
@@ -152,9 +152,9 @@ RSpec.describe JobApplication do
       expect { subject }.to change { job_application.reload.status }.from("draft").to("submitted")
     end
 
-    it "delivers `Publishers::JobApplicationReceivedNotification` notification" do
+    it "delivers `Publishers::JobApplicationReceivedNotifier` notification" do
       expect { subject }
-        .to have_delivered_notification("Publishers::JobApplicationReceivedNotification")
+        .to have_delivered_notification("Publishers::JobApplicationReceivedNotifier")
         .with_recipient(job_application.vacancy.publisher)
         .and_params(vacancy: job_application.vacancy, job_application: job_application)
     end

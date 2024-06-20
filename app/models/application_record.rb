@@ -3,8 +3,6 @@ class ApplicationRecord < ActiveRecord::Base
 
   before_save :strip_attributes
 
-  DATA_ACCESS_PERIOD_FOR_PUBLISHERS = 1.year.freeze
-
   private
 
   def strip_attributes

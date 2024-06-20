@@ -7,7 +7,7 @@ FactoryBot.define do
   end
 
   trait :job_application_received do
-    type { "Publishers::JobApplicationReceivedNotification" }
+    type { "Publishers::JobApplicationReceivedNotifier" }
     read_at { nil }
   end
 end
