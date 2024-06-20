@@ -13,43 +13,47 @@ RSpec.describe "Jobseekers can prefill applications" do
     let(:profile) { create(:jobseeker_profile, :completed, qualified_teacher_status: "yes") }
     let(:jobseeker) { profile.jobseeker }
 
-    it "prefills the application form with the jobseeker's details" do
-      visit job_path(vacancy.id)
+    context "and when the jobseeker also has a previous application" do
+      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
 
+      it "prefills the new application with the previous application details, not the profile details" do
+        visit job_path(vacancy.id)
+
+      expect(page).to have_content("Your details have been imported from your last job application or profile")
+      
       within ".banner-buttons" do
         click_on I18n.t("jobseekers.saved_jobs.index.apply")
       end
 
-      expect(page).to have_content("Your details have been imported from your last job application or profile")
+      expect(page).to have_content("We saved your information from the last job you applied for")
 
       click_on I18n.t("buttons.start_application")
 
-      expect(page).to have_content(profile.personal_details.first_name)
-      expect(page).to have_content(profile.personal_details.last_name)
-      expect(page).to have_content(profile.personal_details.phone_number)
-      expect(page).to have_content(profile.qualified_teacher_status_year)
-      expect(page).to have_content(profile.qualifications.first.institution)
-      expect(page).to have_content(profile.employments.first.job_title)
-      expect(page).to have_content(profile.employments.first.subjects)
+      expect(page).to have_content(previous_application.first_name)
+      expect(page).to have_content(previous_application.last_name)
+      expect(page).to have_content(previous_application.phone_number)
+      end
     end
 
-    context "and the jobseeker has a previous application" do
-      before do
-        create(:job_application, :status_submitted, jobseeker:)
-      end
-
-      it "prefers the jobseeker's profile details over the previous application" do
+    context "when the jobseeeker does not have a previous application" do
+      it "prefills the application form with the jobseeker's details" do
         visit job_path(vacancy.id)
-
+  
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.saved_jobs.index.apply")
         end
-
+  
+        expect(page).to have_content("You have recently made a candidate profile")
+  
         click_on I18n.t("buttons.start_application")
-
+  
         expect(page).to have_content(profile.personal_details.first_name)
         expect(page).to have_content(profile.personal_details.last_name)
         expect(page).to have_content(profile.personal_details.phone_number)
+        expect(page).to have_content(profile.qualified_teacher_status_year)
+        expect(page).to have_content(profile.qualifications.first.institution)
+        expect(page).to have_content(profile.employments.first.job_title)
+        expect(page).to have_content(profile.employments.first.subjects)
       end
     end
   end

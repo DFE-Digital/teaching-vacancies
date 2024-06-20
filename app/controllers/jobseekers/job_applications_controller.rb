@@ -34,16 +34,17 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   # rubocop:enable Style/GuardClause
 
   def new_quick_apply
+    @has_previous_application = previous_application?
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
   end
 
   def quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
 
-    new_job_application = if profile
-                            current_jobseeker.job_applications.build(vacancy:)
-                          else
+    new_job_application = if previous_application?
                             Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
+                          else
+                            current_jobseeker.job_applications.build(vacancy:)
                           end
 
     prefill_application(new_job_application)
@@ -209,6 +210,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def prefill_application(application)
+    return if previous_application?
     return unless profile.present?
 
     application.assign_attributes(
@@ -224,6 +226,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     )
 
     mark_step_completion(application)
+    application
   end
 
   def profile_right_to_work
