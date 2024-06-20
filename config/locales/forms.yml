@@ -681,7 +681,7 @@ en:
         other_application_email: Email address
       publishers_job_listing_applying_for_the_job_form:
         quick_apply: Only show quick apply jobs
-        quick_apply_hint: Apply for jobs simply and quickly using your profile
+        quick_apply_hint: Apply for jobs quickly using an online application form
         enable_job_applications_options:
           false: "No"
           true: "Yes"
