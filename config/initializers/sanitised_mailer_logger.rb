@@ -16,4 +16,5 @@ class SanitisedMailerLogger < Logger
   end
 end
 
-ActionMailer::Base.logger = SanitisedMailerLogger.new($stdout)
+ActionMailer::Base.logger = SemanticLogger["SanitisedMailerLogger"]
+SemanticLogger.add_appender(io: $stdout, formatter: :json, appender: SanitisedMailerLogger.new($stdout))
