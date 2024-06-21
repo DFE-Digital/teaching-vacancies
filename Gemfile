@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.3.2"
+ruby "3.3.3"
 
 RAILS_VERSION = "~> 7.1.2".freeze
 gem "actionmailer", RAILS_VERSION
@@ -44,6 +44,7 @@ gem "lockbox"
 gem "mail-notify"
 gem "mimemagic"
 gem "mini_magick"
+gem "net-pop", github: "ruby/net-pop"
 gem "net-sftp"
 gem "nokogiri"
 gem "noticed"

@@ -8,6 +8,13 @@ GIT
       httparty (~> 0.21)
       request_store_rails (~> 2)
 
+GIT
+  remote: https://github.com/ruby/net-pop.git
+  revision: e8d0afe2773b9eb6a23c39e9e437f6fc0fc7c733
+  specs:
+    net-pop (0.1.2)
+      net-protocol
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -338,8 +345,6 @@ GEM
       uri
     net-imap (0.4.12)
       date
-      net-protocol
-    net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
       timeout
@@ -760,6 +765,7 @@ DEPENDENCIES
   mail-notify
   mimemagic
   mini_magick
+  net-pop!
   net-sftp
   nokogiri
   noticed
@@ -818,7 +824,7 @@ DEPENDENCIES
   zendesk_api
 
 RUBY VERSION
-   ruby 3.3.2p78
+   ruby 3.3.3p89
 
 BUNDLED WITH
    2.3.5
