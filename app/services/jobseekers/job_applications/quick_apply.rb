@@ -34,9 +34,9 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def attributes_to_copy
-    %i[personal_details professional_status ask_for_support].select { |step| relevant_steps.include?(step) }
-                                                            .map { |step| form_fields_from_step(step) }
-                                                            .flatten
+    %i[personal_details professional_status ask_for_support personal_statement].select { |step| relevant_steps.include?(step) }
+                                                                               .map { |step| form_fields_from_step(step) }
+                                                                               .flatten
   end
 
   def form_fields_from_step(step)

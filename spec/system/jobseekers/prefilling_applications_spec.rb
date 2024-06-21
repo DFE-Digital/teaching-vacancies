@@ -10,11 +10,18 @@ RSpec.describe "Jobseekers can prefill applications" do
   end
 
   context "when the jobseeker has a completed profile" do
-    let(:profile) { create(:jobseeker_profile, :completed, qualified_teacher_status: "yes") }
+    let(:profile) { create(:jobseeker_profile, :completed, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020") }
     let(:jobseeker) { profile.jobseeker }
 
     context "and when the jobseeker also has a previous application" do
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+      let(:reference) { create(:reference, job_title: "Reference4Testing") }
+      let(:employment1) { create(:employment) }
+      let(:employment2) { create(:employment) }
+      let(:qualification1) { create(:qualification) }
+      let(:qualification2) { create(:qualification) }
+      let(:training) { create(:training_and_cpd) }
+      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", 
+                                                             references: [reference], employments: [employment1, employment2], qualifications: [qualification1, qualification2]) }
 
       it "prefills the new application with the previous application details, not the profile details" do
         visit job_path(vacancy.id)
@@ -29,14 +36,44 @@ RSpec.describe "Jobseekers can prefill applications" do
 
       click_on I18n.t("buttons.start_application")
 
+<<<<<<< HEAD
       expect(page).to have_content(previous_application.first_name)
       expect(page).to have_content(previous_application.last_name)
       expect(page).to have_content(previous_application.phone_number)
+=======
+        expect(page).to have_content(previous_application.first_name)
+        expect(page).to have_content(previous_application.last_name)
+        expect(page).to have_content(previous_application.phone_number)
+        expect(page).to have_content(previous_application.personal_statement)
+        # qualified teacher status
+        expect(page).to have_content("Yes, awarded in 2020")
+        # skilled worker visa sponsorship
+        expect(page).to have_content("No, I already have the right to work in the UK")
+        # references
+        expect(page).to have_content(reference.job_title)
+        expect(page).to have_content(reference.organisation)
+        expect(page).to have_content(reference.relationship)
+        # work history
+        expect(page).to have_content(employment1.main_duties)
+        expect(page).to have_content(employment1.organisation)
+        expect(page).to have_content(employment2.main_duties)
+        expect(page).to have_content(employment2.organisation)
+
+        expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification1.category}"))
+        expect(page).to have_content(qualification1.institution)
+        expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification1.category}"))
+        expect(page).to have_content(qualification2.institution)
+
+        expect(page).to have_content(training.name)
+        expect(page).to have_content(training.provider)
+        expect(page).to have_content(training.grade)
+        expect(page).to have_content(training.year_awarded)
+>>>>>>> e685dce7a (Add specs)
       end
     end
 
     context "when the jobseeeker does not have a previous application" do
-      it "prefills the application form with the jobseeker's details" do
+      it "prefills the application form with the jobseeker's profile details" do
         visit job_path(vacancy.id)
   
         within ".banner-buttons" do
