@@ -1,6 +1,6 @@
 require "nokogiri"
 
-module Vacancies::Export::DwpFindAJob::ExpiredAndDeleted
+module Vacancies::Export::DwpFindAJob::ClosedEarlyVacancies
   class Xml
     attr_reader :vacancies
 

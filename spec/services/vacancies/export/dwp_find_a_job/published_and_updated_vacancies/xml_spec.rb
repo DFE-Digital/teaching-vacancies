@@ -1,6 +1,6 @@
 require "rails_helper"
 
-module Vacancies::Export::DwpFindAJob::NewAndEdited
+module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
   RSpec.describe Xml do
     describe "#xml" do
       let(:vacancy) { instance_double(Vacancy, organisation: org) }

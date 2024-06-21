@@ -1,6 +1,6 @@
 require "action_text"
 
-module Vacancies::Export::DwpFindAJob::NewAndEdited
+module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
   class ParsedVacancy
     include ActionView::Helpers::SanitizeHelper
     include Rails.application.routes.url_helpers

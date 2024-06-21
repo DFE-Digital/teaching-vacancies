@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Xml do
+RSpec.describe Vacancies::Export::DwpFindAJob::ClosedEarlyVacancies::Xml do
   describe "#xml" do
     let(:vacancy1) { instance_double(Vacancy, id: 1) }
     let(:vacancy2) { instance_double(Vacancy, id: 2) }

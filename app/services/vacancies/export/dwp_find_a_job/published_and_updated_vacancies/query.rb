@@ -1,4 +1,4 @@
-module Vacancies::Export::DwpFindAJob::NewAndEdited
+module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
   class Query
     # Find a Job only accepts "expiry" dates up to 30 days from the date of export/update.
     FIND_A_JOB_MAX_EXPIRY_DAYS = 30
