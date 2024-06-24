@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::ParsedVacancy do
+RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacancy do
   let(:vacancy) { build_stubbed(:vacancy, :published) }
 
   subject(:parsed) { described_class.new(vacancy) }

@@ -1,7 +1,9 @@
 require "rails_helper"
 
-RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Upload do
+RSpec.describe Vacancies::Export::DwpFindAJob::ClosedEarly do
   describe "#call" do
+    subject { described_class.new("2024-05-01") }
+
     let(:vacancy_expired_old) { create(:vacancy, :published, publish_on: 4.days.ago, expires_at: 2.days.ago) }
     let(:vacancy_manually_expired) do
       create(:vacancy,
@@ -32,9 +34,8 @@ RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Upload do
     end
 
     let(:sftp_session) { instance_double(Net::SFTP::Session, upload!: true) }
-    let(:file_name) { "TeachingVacancies-expire-20240502-010444" }
-
-    subject { described_class.new("2024-05-01") }
+    let(:tempfile) { instance_double(Tempfile, path: "/tmp/#{filename}", flush: true, close!: true, write: true) }
+    let(:filename) { "TeachingVacancies-expire-20240502-010444" }
 
     before do
       travel_to(Time.zone.local(2024, 5, 2, 1, 4, 44))
@@ -43,6 +44,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Upload do
       vacancy_manually_expired2
       vacancy_naturally_expired
 
+      allow(Tempfile).to receive(:new).with(filename).and_return(tempfile)
       allow(Net::SFTP).to receive(:start).and_yield(sftp_session)
     end
 
@@ -50,10 +52,9 @@ RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Upload do
       travel_back
     end
 
-    it "generates an XML with the vacancies manually expired after the given date" do
-      tempfile = instance_double(Tempfile, path: "/tmp/#{file_name}", flush: true, close!: true)
-      expect(Tempfile).to receive(:new).with(file_name).and_return(tempfile)
-      expect(tempfile).to receive(:write).with(
+    it "generates an XML with the vacancies manually closed after the given date" do
+      subject.call
+      expect(tempfile).to have_received(:write).with(
         <<~XML,
           <?xml version="1.0" encoding="UTF-8"?>
           <ExpireVacancies>
@@ -62,17 +63,15 @@ RSpec.describe Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Upload do
           </ExpireVacancies>
         XML
       )
-
-      subject.call
     end
 
     it "uploads the XML file to the SFTP server" do
-      expect(sftp_session).to receive(:upload!).with(%r{^/tmp/#{file_name}}, "Inbound/#{file_name}.xml")
       subject.call
+      expect(sftp_session).to have_received(:upload!).with(%r{^/tmp/#{filename}}, "Inbound/#{filename}.xml")
     end
 
     it "logs the upload" do
-      expect(Rails.logger).to receive(:info).with("[DWP Find a Job] Uploaded '#{file_name}.xml': Containing 2 vacancies.")
+      expect(Rails.logger).to receive(:info).with("[DWP Find a Job] Uploaded '#{filename}.xml': Containing 2 vacancies to close.")
       subject.call
     end
   end

@@ -7,8 +7,8 @@ Find a job service integration is done through daily XML bulk uploads to their S
 
 There are 2 bulk upload types:
 
-1. Uploading new/edited vacancies.
-2. Uploading expired/deleted vacancies.
+1. Uploading new/edited vacancies (published/updated on TV vacancies)
+2. Uploading expired/deleted vacancies (manually closed early on TV vacancies)
 
 The bulk upload file/s are imported once per day by Find a job service.
 
@@ -22,19 +22,19 @@ block:TeachingVacancies:3
     TeachingVacanciesTag>"Teaching Vacancies"] space:2
     space Database[("Database")] space
 
-    NewAndEdited["NewAndEdited"]
+    PublishedAndUpdated["PublishedAndUpdated"]
     space
-    ExpiredAndDeleted["ExpiredAndDeleted"]
+    ClosedEarly["ClosedEarly"]
 
-    Database --> NewAndEdited
-    Database --> ExpiredAndDeleted
+    Database --> PublishedAndUpdated
+    Database --> ClosedEarly
 
     XmlPublish[\"XML: to publish/update"/]
     space
     XmlDelete[\"XML: to delete"/]
 
-    NewAndEdited-- "Generates" -->XmlPublish
-    ExpiredAndDeleted-- "Generates" -->XmlDelete
+    PublishedAndUpdated-- "Generates" -->XmlPublish
+    ClosedEarly-- "Generates" -->XmlDelete
 end
 style TeachingVacancies fill:#e6f2ff,stroke:#333,stroke-width:2px
 
@@ -80,43 +80,39 @@ The process has 3 stages:
 2. Generate a bulk XML temporal file from those vacancies following Find a Job file specs.
 3. Push the file to the Find a Job service SFTP server.
 
-This stages are orchrestated by an [abstract upload class](../../app/services/vacancies/export/dwp_find_a_job/upload_base.rb)
-
-The classes in charge of generating and pushing the new/edited and deleted files use this base class and only need to define:
-- what query is done
-- how the XML file is generated (the parsing from Vacancy to XML)
-- the name of the file to upload to Find a Job service SFTP server.
-
 ```mermaid
 ---
 title: DWP Find a Job integration code structure
 ---
 classDiagram
-   note for UploadBase "NOTE: Implements the behaviour but child classes need to define:\nFILENAME_PREFIX\nQUERY_CLASS\nXML_CLASS"
-  UploadBase <|-- NewUpload : implements
-  UploadBase <|-- ExpiredUpload : implements
+  PublishedAndUpdated *-- Upload : composition
+  ClosedEarly *-- Upload : composition
   NewXml *-- ParsedVacancy : composition
-  NewUpload *-- NewXml : composition
-  NewUpload *-- NewQuery : composition
-  ExpiredUpload *-- ExpiredXml : composition
-  ExpiredUpload *-- ExpiredQuery : composition
+  PublishedAndUpdated *-- NewXml : composition
+  PublishedAndUpdated *-- NewQuery : composition
+  ClosedEarly *-- ExpiredXml : composition
+  ClosedEarly *-- ExpiredQuery : composition
 
-  class UploadBase {
-    <<Abstract>>
+  class PublishedAndUpdated {
     from_date
     +call()
-    -upload_to_find_a_job_sftp(file_path)
     -filename()
-    -log_upload(vacancies_number)
   }
 
-  namespace NewAndEdited {
-    class NewUpload["Upload"] {
-      FILENAME_PREFIX
-      QUERY_CLASS
-      XML_CLASS
-    }
+  class ClosedEarly {
+    from_date
+    +call()
+    -filename()
+  }
 
+  class Upload {
+    xml
+    filename
+    +call()
+    -upload_to_find_a_job_sftp(file_path)
+  }
+
+  namespace PublishedAndUpdatedVacancies {
     class NewXml["Xml"] {
       vacancies
       +xml()
@@ -149,13 +145,7 @@ classDiagram
 
   }
 
-  namespace ExpiredAndDeleted {
-    class ExpiredUpload["Upload"] {
-      FILENAME_PREFIX
-      QUERY_CLASS
-      XML_CLASS
-    }
-
+  namespace ClosedEarlyVacancies {
     class ExpiredXml["Xml"] {
       vacancies
       +xml()
@@ -168,9 +158,9 @@ classDiagram
   }
 ```
 
-## Uploading new/edited vacancies
+## Uploading published/updated vacancies
 
-The service orcherstating the upload of new/edited vacancies is [Vacancies::Export::DwpFindAJob::NewAndEdited::Upload](../../app/services/vacancies/export/dwp_find_a_job/new_and_edited/upload.rb)
+The service orcherstating the upload of new/edited vacancies is [Vacancies::Export::DwpFindAJob::PublishedAndUpdated](../../app/services/vacancies/export/dwp_find_a_job/published_and_updated.rb)
 
 ### What vacancies are exported?
 We publish vacancies that fall on any of these conditions:
@@ -209,7 +199,6 @@ classDef querybit fill:#ffffcc,stroke:#333;
 classDef datasource fill:#ffcc99,stroke:#333;
 class RecentlyPublished,RecentlyUpdated,NeedToSetExpiryDate,NeedToPushExpiryDate querybit
 class Database datasource
-
 ```
 
 ### Vacancies that need their expiry date updated/pushed back
@@ -246,9 +235,9 @@ This would:
 - Pro: Reduce DB query complexity. As we would only need to query: "Any vacancies with expiry date over 30 days from today".
 - Con: Increase the size of the XML files we push into DWP Find a Job service, as now selects "all the vacancies over 30 days..." instead of a subset of those.
 
-## Uploading expired/deleted vacancies
+## Uploading vacancies closed early
 
-The service orcherstating the upload of new/edited vacancies is [Vacancies::Export::DwpFindAJob::ExpiredAndDeleted::Upload](../../app/services/vacancies/export/dwp_find_a_job/expired_and_deleted/upload.rb)
+The service orcherstating the upload of vacancies closed early is [Vacancies::Export::DwpFindAJob::ClosedEarly](../../app/services/vacancies/export/dwp_find_a_job/closed_early.rb)
 
 ### What vacancies are exported?
 

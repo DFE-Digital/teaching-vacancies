@@ -1,6 +1,6 @@
 require "nokogiri"
 
-module Vacancies::Export::DwpFindAJob::NewAndEdited
+module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
   class Xml
     APPLY_VIA_EXTERNAL_URL_ID = 2
 

@@ -1,4 +1,4 @@
-module Vacancies::Export::DwpFindAJob::ExpiredAndDeleted
+module Vacancies::Export::DwpFindAJob::ClosedEarlyVacancies
   class Query
     attr_reader :from_date
 

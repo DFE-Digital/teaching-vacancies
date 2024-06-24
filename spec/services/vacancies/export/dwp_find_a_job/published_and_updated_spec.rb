@@ -1,7 +1,9 @@
 require "rails_helper"
 
-RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
+RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
   describe "#call" do
+    subject { described_class.new("2024-05-01") }
+
     let(:org) do
       create(:school,
              address: "1 School Lane",
@@ -135,9 +137,8 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
     end
 
     let(:sftp_session) { instance_double(Net::SFTP::Session, upload!: true) }
-    let(:file_name) { "TeachingVacancies-upload-20240502-010444" }
-
-    subject { described_class.new("2024-05-01") }
+    let(:tempfile) { instance_double(Tempfile, path: "/tmp/#{filename}", flush: true, close!: true, write: true) }
+    let(:filename) { "TeachingVacancies-upload-20240502-010444" }
 
     before do
       travel_to(Time.zone.local(2024, 5, 2, 1, 4, 44))
@@ -145,6 +146,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
       vacancy_published
       vacancy_updated
 
+      allow(Tempfile).to receive(:new).with(filename).and_return(tempfile)
       allow(Net::SFTP).to receive(:start).and_yield(sftp_session)
     end
 
@@ -152,22 +154,22 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
       travel_back
     end
 
-    it "generates an XML with the vacancies published/edited after the given date" do
-      tempfile = instance_double(Tempfile, path: "/tmp/#{file_name}", flush: true, close!: true)
-      expect(Tempfile).to receive(:new).with(file_name).and_return(tempfile)
-      expect(tempfile).to receive(:write).with(expected_xml_content)
-
+    it "generates an XML file with the vacancies published/edited after the given date" do
       subject.call
+      expect(tempfile).to have_received(:write).with(expected_xml_content)
     end
 
     it "uploads the XML file to the SFTP server" do
-      expect(sftp_session).to receive(:upload!).with(%r{^/tmp/#{file_name}}, "Inbound/#{file_name}.xml")
       subject.call
+      expect(sftp_session).to have_received(:upload!).with(%r{^/tmp/#{filename}}, "Inbound/#{filename}.xml")
     end
 
     it "logs the upload" do
-      expect(Rails.logger).to receive(:info).with("[DWP Find a Job] Uploaded '#{file_name}.xml': Containing 2 vacancies.")
+      allow(Rails.logger).to receive(:info)
+
       subject.call
+      expect(Rails.logger).to have_received(:info)
+        .with("[DWP Find a Job] Uploaded '#{filename}.xml': Containing 2 vacancies to publish.")
     end
   end
 end
