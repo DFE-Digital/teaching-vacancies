@@ -162,7 +162,7 @@ en:
           create_account_html: or %{create_account_link}.
           description_html: Post jobs and manage applications.
           link_text:
-            create_account: create an account
+            create_account: create a hiring staff account
             sign_in: Sign in
             sign_up: sign up
         title: For hiring staff
