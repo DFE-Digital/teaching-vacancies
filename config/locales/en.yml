@@ -148,7 +148,7 @@ en:
           create_account_html: or %{create_account_link}.
           description_html: Save and apply for jobs in schools.
           link_text:
-            create_account: create an account
+            create_account: create a jobseeker account
         title: For jobseekers
       personal_statement_section:
         description_html: You can also apply for jobs, set up job alerts and %{personal_statement_guide_link}.
