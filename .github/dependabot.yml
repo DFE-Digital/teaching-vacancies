@@ -30,7 +30,6 @@ updates:
           - "*"
         exclude-patterns:
           - "govuk*"
-          - "noticed"
 
   - package-ecosystem: "docker"
     directory: "/"
