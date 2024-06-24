@@ -21,6 +21,8 @@ Bundler.require(*Rails.groups)
 require_relative "../lib/fail_safe"
 require_relative "../lib/modules/aws_ip_ranges"
 require_relative "../lib/vcap_services"
+require_relative "middleware/sanitised_mailer_middleware"
+
 
 require "rack-mini-profiler" if ENV.fetch("RACK_MINI_PROFILER", nil) == "true" && !Rails.env.production?
 
@@ -72,6 +74,8 @@ module TeachingVacancies
       config.redis_queue_url = "#{redis_url}/0"
       config.redis_cache_url = "#{redis_url}/1"
     end
+
+    config.middleware.insert_before 0, "SanitisedMailerMiddleware"
 
     config.app_role = ActiveSupport::StringInquirer.new(ENV.fetch("APP_ROLE", "unknown"))
 

@@ -1,17 +1,12 @@
 require "semantic_logger"
 
-class SanitisedMailerLogger < SemanticLogger::Appender::Wrapper
+class SanitisedMailerLogger < SemanticLogger::Appender::IO
   def log(log)
-    msg = log.message.is_a?(Hash) ? log.message.to_json : log.message
-
-    sanitized_message = msg.gsub(/"to":\[\s*"[^"]+"\s*\]/, '"to":["[FILTERED]"]')
-
-    log.message = sanitized_message
-
+    log.message = SanitisedMailerMiddleware.sanitize(log.message)
     super
   end
 end
 
-sanitised_logger = SanitisedMailerLogger.new(logger: SemanticLogger["SanitisedMailerLogger"])
-ActionMailer::Base.logger = sanitised_logger
-SemanticLogger.add_appender(io: $stdout, formatter: :json, appender: sanitised_logger)
+wrapped_logger = SanitisedMailerLogger.new(io: $stdout, formatter: :json)
+ActionMailer::Base.logger = wrapped_logger
+SemanticLogger.add_appender(appender: wrapped_logger)
