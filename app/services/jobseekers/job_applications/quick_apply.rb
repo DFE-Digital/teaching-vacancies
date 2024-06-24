@@ -7,7 +7,8 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def job_application
-    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy).merge(completed_steps: completed_steps, in_progress_steps: in_progress_steps))
+    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy))
+    set_status_of_each_step
     copy_qualifications
     copy_employments
     copy_references
@@ -17,6 +18,12 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   private
+
+  def set_status_of_each_step
+    new_job_application.completed_steps = completed_steps
+    new_job_application.imported_steps = completed_steps
+    new_job_application.in_progress_steps = []
+  end
 
   def relevant_steps
     # The step process is needed in order to filter out the steps that are not relevant to the new job application,
@@ -44,11 +51,11 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def completed_steps
-    %w[personal_details professional_status references ask_for_support].select { |step| relevant_steps.include?(step.to_sym) }
+    %w[personal_details professional_status references ask_for_support qualifications employment_history training_and_cpds].select { |step| relevant_steps.include?(step.to_sym) }
   end
 
   def in_progress_steps
-    %w[qualifications employment_history professional_status]
+    %w[]
   end
 
   def copy_qualifications
@@ -61,7 +68,7 @@ class Jobseekers::JobApplications::QuickApply
         new_result.update(qualification: new_qualification)
       end
     end
-    new_job_application.qualifications_section_completed = false
+    new_job_application.qualifications_section_completed = true
   end
 
   def copy_employments
@@ -69,7 +76,7 @@ class Jobseekers::JobApplications::QuickApply
       new_employment = employment.dup
       new_employment.update(job_application: new_job_application, salary: "")
     end
-    new_job_application.employment_history_section_completed = false
+    new_job_application.employment_history_section_completed = true
   end
 
   def copy_references
@@ -87,8 +94,6 @@ class Jobseekers::JobApplications::QuickApply
       new_training.update(job_application: new_job_application)
     end
 
-    new_job_application.training_and_cpds_section_completed = false
-    in_progress_steps = new_job_application.in_progress_steps + ["training_and_cpds"]
-    new_job_application.in_progress_steps = in_progress_steps
+    new_job_application.training_and_cpds_section_completed = true
   end
 end

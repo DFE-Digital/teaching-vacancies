@@ -35,14 +35,16 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         expect(subject.slice(attributes_to_copy)).to eq(recent_job_application.slice(attributes_to_copy))
       end
 
-      it "copies completed steps except qualifications and employment history" do
+      it "copies completed steps except for declarations and equal opportunities and also adds them to imported steps" do
         expect(subject.completed_steps)
-          .to eq(%w[personal_details professional_status references ask_for_support])
+          .to eq(%w[personal_details professional_status references ask_for_support qualifications employment_history training_and_cpds])
+        expect(subject.imported_steps)
+          .to eq(%w[personal_details professional_status references ask_for_support qualifications employment_history training_and_cpds])
       end
 
       it "sets in progress steps as qualifications, employment history and professional status" do
         expect(subject.in_progress_steps)
-          .to eq(%w[qualifications employment_history professional_status training_and_cpds])
+          .to eq(%w[])
       end
     end
 
@@ -70,8 +72,8 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         .to eq(recent_job_application.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
     end
 
-    it "sets qualifications section completed to false" do
-      expect(subject.qualifications_section_completed).to eq(false)
+    it "sets qualifications section completed to true" do
+      expect(subject.qualifications_section_completed).to eq(true)
     end
 
     it "copies employments" do
@@ -81,8 +83,8 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
         .to eq(recent_job_application.employments.map { |employment| employment.slice(*attributes_to_copy) })
     end
 
-    it "sets employment history section completed to false" do
-      expect(subject.employment_history_section_completed).to eq(false)
+    it "sets employment history section completed to true" do
+      expect(subject.employment_history_section_completed).to eq(true)
     end
 
     it "copies references" do
@@ -98,7 +100,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
       expect(subject.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
         .to eq(recent_job_application.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
 
-      expect(subject.training_and_cpds_section_completed).to eq(false)
+      expect(subject.training_and_cpds_section_completed).to eq(true)
     end
 
     it "does not copy declarations attributes" do
@@ -119,7 +121,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     end
 
     it "does not copy personal statement" do
-      expect(subject.personal_statement).to be_blank
+      expect(subject.personal_statement).to eq recent_job_application.personal_statement
     end
   end
 end
