@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         click_on I18n.t("jobseekers.saved_jobs.index.apply")
       end
 
-      expect(page).to have_content("You have recently made a candidate profile")
+      expect(page).to have_content("Your details have been imported from your last job application or profile")
 
       click_on I18n.t("buttons.start_application")
 
@@ -64,7 +64,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         click_on I18n.t("jobseekers.saved_jobs.index.apply")
       end
 
-      expect(page).to have_content("We saved your information from the last job you applied for")
+      expect(page).to have_content("Your details have been imported from your last job application")
 
       click_on I18n.t("buttons.start_application")
 

@@ -25,8 +25,8 @@ Schools can then reach out to you if they think you’re a good fit for their ro
 
 ## Apply quickly for roles 
 
-Use the information saved in your profile to quickly apply for jobs. 
+Use our online application form to quickly apply for jobs.
 
-This means you won’t have to spend time filling in an application form, where quick apply is available. 
+We'll save your details so you won’t have to spend time filling in new applications every time, where quick apply is available. 
 
 <a href="https://teaching-vacancies.service.gov.uk/jobseekers/sign_up" class="govuk-button">Create a Teaching Vacancies account now</a>
