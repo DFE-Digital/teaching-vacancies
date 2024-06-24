@@ -51,7 +51,7 @@ class Jobseekers::JobApplications::QuickApply
   end
 
   def completed_steps
-    %w[personal_details professional_status references ask_for_support qualifications employment_history training_and_cpds].select { |step| relevant_steps.include?(step.to_sym) }
+    %w[personal_details professional_status personal_statement references ask_for_support qualifications employment_history training_and_cpds].select { |step| relevant_steps.include?(step.to_sym) }
   end
 
   def in_progress_steps

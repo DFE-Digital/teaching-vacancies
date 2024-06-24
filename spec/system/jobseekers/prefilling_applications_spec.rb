@@ -23,32 +23,38 @@ RSpec.describe "Jobseekers can prefill applications" do
       let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", 
                                                              references: [reference], employments: [employment1, employment2], qualifications: [qualification1, qualification2]) }
 
-      it "prefills the new application with the previous application details, not the profile details" do
+      it "prefills the new application with the previous application details, not the profile details and marks steps as `imported`" do
         visit job_path(vacancy.id)
 
-      expect(page).to have_content("Your details have been imported from your last job application or profile")
+        expect(page).to have_content("Your details have been imported from your last job application or profile")
       
-      within ".banner-buttons" do
-        click_on I18n.t("jobseekers.saved_jobs.index.apply")
-      end
+        within ".banner-buttons" do
+          click_on I18n.t("jobseekers.saved_jobs.index.apply")
+        end
 
-      expect(page).to have_content("We saved your information from the last job you applied for")
+        expect(page).to have_content("We saved your information from the last job you applied for")
 
-      click_on I18n.t("buttons.start_application")
+        click_on I18n.t("buttons.start_application")
 
-<<<<<<< HEAD
-      expect(page).to have_content(previous_application.first_name)
-      expect(page).to have_content(previous_application.last_name)
-      expect(page).to have_content(previous_application.phone_number)
-=======
         expect(page).to have_content(previous_application.first_name)
         expect(page).to have_content(previous_application.last_name)
         expect(page).to have_content(previous_application.phone_number)
+        within('#personal_details') do
+          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        end
+
         expect(page).to have_content(previous_application.personal_statement)
+        within('#personal_statement.review-component__section') do
+          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        end
+
         # qualified teacher status
         expect(page).to have_content("Yes, awarded in 2020")
         # skilled worker visa sponsorship
         expect(page).to have_content("No, I already have the right to work in the UK")
+        within('#professional_status') do
+          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        end
         # references
         expect(page).to have_content(reference.job_title)
         expect(page).to have_content(reference.organisation)
@@ -58,17 +64,32 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(page).to have_content(employment1.organisation)
         expect(page).to have_content(employment2.main_duties)
         expect(page).to have_content(employment2.organisation)
+        within('#employment_history') do
+          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        end
 
         expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification1.category}"))
         expect(page).to have_content(qualification1.institution)
         expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification1.category}"))
         expect(page).to have_content(qualification2.institution)
+        within('#qualifications') do
+          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        end
 
         expect(page).to have_content(training.name)
         expect(page).to have_content(training.provider)
         expect(page).to have_content(training.grade)
         expect(page).to have_content(training.year_awarded)
->>>>>>> e685dce7a (Add specs)
+
+        within('#training_and_cpds') do
+          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        end
+
+        expect(page).to have_content(previous_application.support_needed.capitalize)
+        expect(page).to have_content(previous_application.support_needed_details)
+        within('#ask_for_support') do
+          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        end
       end
     end
 
