@@ -14,11 +14,13 @@ RSpec.describe Publishers::JobListing::ContactDetailsForm, type: :model do
   describe "contact number" do
     context "when contact_number_provided is false" do
       before { allow(subject).to receive(:contact_number_provided).and_return("false") }
+
       it { is_expected.not_to validate_presence_of(:contact_number) }
     end
 
     context "when contact_number_provided is true" do
       before { allow(subject).to receive(:contact_number_provided).and_return("true") }
+
       it { is_expected.to validate_presence_of(:contact_number) }
     end
   end
@@ -50,7 +52,7 @@ RSpec.describe Publishers::JobListing::ContactDetailsForm, type: :model do
       let(:params) { { other_contact_email: nil, contact_email: "other" } }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:other_contact_email, :blank)).to be true
       end
     end
@@ -59,7 +61,7 @@ RSpec.describe Publishers::JobListing::ContactDetailsForm, type: :model do
       let(:params) { { other_contact_email: "", contact_email: "other" } }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:other_contact_email, :blank)).to be true
       end
     end
@@ -68,7 +70,7 @@ RSpec.describe Publishers::JobListing::ContactDetailsForm, type: :model do
       let(:params) { { other_contact_email: "invalid_email", contact_email: "other" } }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:other_contact_email, :invalid)).to be true
       end
     end

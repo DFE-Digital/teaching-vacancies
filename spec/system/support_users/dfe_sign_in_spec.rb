@@ -6,7 +6,7 @@ RSpec.shared_examples "a successful Support User sign in" do
     visit new_support_user_session_path
   end
 
-  scenario "it signs in the user successfully" do
+  it "signs in the user successfully" do
     sign_in_support_user
 
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
@@ -15,7 +15,7 @@ RSpec.shared_examples "a successful Support User sign in" do
 end
 
 RSpec.shared_examples "a failed Support User sign in" do |options|
-  scenario "it does not sign-in the user, and tells the user what to do" do
+  it "does not sign-in the user, and tells the user what to do" do
     visit new_support_user_session_path
 
     sign_in_support_user
@@ -23,7 +23,7 @@ RSpec.shared_examples "a failed Support User sign in" do |options|
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])
-    within(".govuk-header__navigation") { expect(page).not_to have_content("Link text") }
+    within(".govuk-header__navigation") { expect(page).to have_no_content("Link text") }
   end
 end
 
@@ -48,11 +48,11 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
 
     it_behaves_like "a successful Support User sign in"
 
-    scenario "it redirects the sign in page to the support user dashboard" do
+    it "redirects the sign in page to the support user dashboard" do
       sign_in_support_user(navigate: true)
       visit new_support_user_session_path
 
-      expect(current_path).to eq(support_user_root_path)
+      expect(page).to have_current_path(support_user_root_path, ignore_query: true)
       expect(page).to have_content(I18n.t("support_users.dashboard.heading"))
     end
 
@@ -61,7 +61,7 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
         sign_in_support_user(navigate: true)
         visit new_publisher_session_path
 
-        expect(current_path).not_to eq(publisher_root_path)
+        expect(page).to have_no_current_path(publisher_root_path, ignore_query: true)
       end
     end
   end
@@ -99,7 +99,7 @@ RSpec.describe "Support users can sign in with DfE Sign In" do
 
       sign_in_support_user(navigate: true)
 
-      expect(current_path).to eq(new_publisher_session_path)
+      expect(page).to have_current_path(new_publisher_session_path, ignore_query: true)
       expect(page).to have_content(I18n.t("omniauth_callbacks.failure.message"))
     end
   end

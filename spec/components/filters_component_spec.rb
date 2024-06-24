@@ -43,9 +43,6 @@ RSpec.describe FiltersComponent, type: :component do
   end
 
   context "when there are no selected filters" do
-    let(:filters) { {} }
-    let(:options) { { remove_filter_links: true } }
-
     subject! do
       render_inline(described_class.new(**kwargs)) do |c|
         c.with_remove_filter_links do |rb|
@@ -57,6 +54,9 @@ RSpec.describe FiltersComponent, type: :component do
         c.with_group key: "group_two", component: form.govuk_collection_check_boxes(:group_two, [%w[filter_1 FILTER1], %w[filter_2 FILTER2]], :first, :last, small: true, legend: { text: "Group 2" }, hint: nil)
       end
     end
+
+    let(:filters) { {} }
+    let(:options) { { remove_filter_links: true } }
 
     it "filters remove UI is not visible" do
       expect(subject.css(".filters-component__remove").to_html).to be_blank

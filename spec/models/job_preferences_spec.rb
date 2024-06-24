@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe JobPreferences do
   describe ".prepare(profile:)" do
     subject(:job_preferences) { described_class.prepare(jobseeker_profile:) }
+
     let(:jobseeker_profile) { create(:jobseeker_profile, job_preferences: nil) }
     let(:jobseeker) { jobseeker_profile.jobseeker }
 

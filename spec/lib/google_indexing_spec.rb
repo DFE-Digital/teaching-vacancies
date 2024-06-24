@@ -5,10 +5,10 @@ RSpec.describe GoogleIndexing do
   let(:url) { "https://google.com" }
   let(:mock_request) { double(:mock_request) }
   let(:google_service) { double(:google_service) }
-  let(:service) { GoogleIndexing.new(url) }
+  let(:service) { described_class.new(url) }
 
   context "Successful requests" do
-    before(:each) do
+    before do
       stub_const("GOOGLE_API_JSON_KEY", '{ "key": "value" }')
     end
 
@@ -45,7 +45,7 @@ RSpec.describe GoogleIndexing do
     it "logs an error and aborts execution" do
       stub_const("GOOGLE_API_JSON_KEY", "")
       expect(GoogleIndexing::API::IndexingService).not_to receive(:new)
-      GoogleIndexing.new(url)
+      described_class.new(url)
     end
   end
 end

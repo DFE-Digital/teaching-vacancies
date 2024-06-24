@@ -14,15 +14,15 @@ RSpec.xdescribe "Publishers are shown the new features page" do
     let(:publisher) { create(:publisher, dismissed_new_features_page_at: nil) }
 
     it "redirects them to the new features page after logging in" do
-      expect(current_path).to eq(publishers_new_features_path)
-      expect(page.get_rack_session_key("visited_new_features_page")).to eq(true)
+      expect(page).to have_current_path(publishers_new_features_path, ignore_query: true)
+      expect(page.get_rack_session_key("visited_new_features_page")).to be(true)
 
       visit publishers_new_features_path
       check I18n.t("helpers.label.publishers_new_features_form.dismiss_options.true")
       click_on I18n.t("buttons.continue_to_account")
 
       publisher.reload
-      expect(current_path).to eq(publisher_root_path)
+      expect(page).to have_current_path(publisher_root_path, ignore_query: true)
       expect(publisher).to be_dismissed_new_features_page_at
     end
 
@@ -30,7 +30,7 @@ RSpec.xdescribe "Publishers are shown the new features page" do
       let(:organisation) { create(:local_authority) }
 
       it "does not redirect them to the new features page" do
-        expect(current_path).to eq(publisher_root_path)
+        expect(page).to have_current_path(publisher_root_path, ignore_query: true)
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.xdescribe "Publishers are shown the new features page" do
       before { visit publisher_root_path }
 
       it "does not redirect them to the new features page" do
-        expect(current_path).to eq(publisher_root_path)
+        expect(page).to have_current_path(publisher_root_path, ignore_query: true)
       end
     end
   end
@@ -49,7 +49,7 @@ RSpec.xdescribe "Publishers are shown the new features page" do
     let(:publisher) { create(:publisher, dismissed_new_features_page_at: 2.days.ago) }
 
     it "does not redirect them to the new features page" do
-      expect(current_path).to eq(publisher_root_path)
+      expect(page).to have_current_path(publisher_root_path, ignore_query: true)
     end
   end
 end

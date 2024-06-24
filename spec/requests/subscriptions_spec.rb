@@ -9,7 +9,7 @@ RSpec.describe "Subscriptions" do
       it "sets subscription_autopopulated in the session so we can track it with subscription events" do
         get new_subscription_path(search_criteria: { key: "value" })
 
-        expect(session[:subscription_autopopulated]).to eq(true)
+        expect(session[:subscription_autopopulated]).to be(true)
       end
     end
 
@@ -17,7 +17,7 @@ RSpec.describe "Subscriptions" do
       it "sets subscription_autopopulated in the session so we can track it with subscription events" do
         get new_subscription_path
 
-        expect(session[:subscription_autopopulated]).to eq(false)
+        expect(session[:subscription_autopopulated]).to be(false)
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe "Subscriptions" do
     end
   end
 
-  describe "POST #create", recaptcha: true do
+  describe "POST #create", :recaptcha do
     subject { post subscriptions_path, params: params }
 
     let(:params) do
@@ -80,7 +80,7 @@ RSpec.describe "Subscriptions" do
     end
 
     it "creates a subscription" do
-      expect { subject }.to change { Subscription.count }.by(1)
+      expect { subject }.to change(Subscription, :count).by(1)
       expect(created_subscription.email).to eq("foo@example.net")
       expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
     end
@@ -104,7 +104,7 @@ RSpec.describe "Subscriptions" do
       end
 
       it "does not create a subscription" do
-        expect { subject }.to change { Subscription.count }.by(0)
+        expect { subject }.not_to(change(Subscription, :count))
       end
     end
   end
@@ -126,7 +126,7 @@ RSpec.describe "Subscriptions" do
     end
 
     it "updates the subscription" do
-      expect { subject }.not_to(change { Subscription.count })
+      expect { subject }.not_to(change(Subscription, :count))
       expect(subscription.reload.email).to eq("jimi@hendrix.com")
       expect(subscription.reload.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
     end
@@ -153,9 +153,9 @@ RSpec.describe "Subscriptions" do
   end
 
   describe "DELETE #destroy" do
-    let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
-
     subject { delete subscription_path(subscription.token) }
+
+    let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
 
     it "triggers a `job_alert_subscription_unsubscribed` event" do
       subject

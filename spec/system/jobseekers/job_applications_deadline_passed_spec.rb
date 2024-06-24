@@ -46,15 +46,15 @@ RSpec.describe "Deadline-passed job applications for jobseekers" do
       end
 
       it "does not show the section status indicators" do
-        expect(page).not_to have_css(".review-component__section__heading .govuk-tag")
+        expect(page).to have_no_css(".review-component__section__heading .govuk-tag")
       end
 
       it "does not allow the jobseeker to edit or update any sections" do
-        expect(page).not_to have_css(".review-component__section__heading a")
+        expect(page).to have_no_css(".review-component__section__heading a")
       end
 
       it "removes the 'submit application' section" do
-        expect(page).not_to have_css(".new_jobseekers_job_application_review_form")
+        expect(page).to have_no_css(".new_jobseekers_job_application_review_form")
       end
     end
   end

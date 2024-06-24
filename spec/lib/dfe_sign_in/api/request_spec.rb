@@ -23,6 +23,7 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
       stub_request(:get, "#{ENV.fetch('DFE_SIGN_IN_URL', nil)}#{api_path}?page=1&pageSize=#{page_size}")
         .to_return(body: "", status: 499)
     end
+
     it "raises an unknown response error" do
       expect { subject.perform }.to raise_error(DfeSignIn::API::Request::UnknownResponseError)
     end
@@ -39,7 +40,7 @@ RSpec.shared_examples "a DFE Sign In endpoint" do
     context "when providing a different page number" do
       let(:page) { 2 }
 
-      it "returns the approvers from the API for a given page " do
+      it "returns the approvers from the API for a given page" do
         stub_api_response_for_page(2)
         response = subject.perform
 
@@ -102,10 +103,10 @@ end
 
 RSpec.describe DfeSignIn::API::Request do
   describe ".perform" do
+    subject { described_class.new(api_path, page, page_size) }
+
     let(:page) { 1 }
     let(:page_size) { 275 }
-
-    subject { described_class.new(api_path, page, page_size) }
 
     context "when requesting users" do
       let(:api_path) { "/users" }

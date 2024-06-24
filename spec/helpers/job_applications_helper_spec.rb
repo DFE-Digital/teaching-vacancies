@@ -182,7 +182,7 @@ RSpec.describe JobApplicationsHelper do
       let(:job_application) { create(:job_application, in_progress_steps: %w[qualifications]) }
 
       it "returns true" do
-        expect(subject).to eq(true)
+        expect(subject).to be(true)
       end
     end
 
@@ -190,7 +190,7 @@ RSpec.describe JobApplicationsHelper do
       let(:job_application) { create(:job_application) }
 
       it "returns false" do
-        expect(subject).to eq(false)
+        expect(subject).to be(false)
       end
     end
   end

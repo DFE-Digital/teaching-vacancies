@@ -33,7 +33,7 @@ RSpec.describe Publishers::JobListing::ApplicationFormForm, type: :model do
       let(:params) { { other_application_email: nil, application_email: "other" } }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:other_application_email, :blank)).to be true
       end
     end
@@ -42,7 +42,7 @@ RSpec.describe Publishers::JobListing::ApplicationFormForm, type: :model do
       let(:params) { { other_application_email: "", application_email: "other" } }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:other_application_email, :blank)).to be true
       end
     end
@@ -51,7 +51,7 @@ RSpec.describe Publishers::JobListing::ApplicationFormForm, type: :model do
       let(:params) { { other_application_email: "invalidemail", application_email: "other" } }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:other_application_email, :invalid)).to be true
       end
     end
@@ -75,7 +75,7 @@ RSpec.describe Publishers::JobListing::ApplicationFormForm, type: :model do
       let(:params) { { application_email: current_publisher.email } }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
         expect(subject.errors.of_kind?(:application_form, :blank)).to be true
       end
     end

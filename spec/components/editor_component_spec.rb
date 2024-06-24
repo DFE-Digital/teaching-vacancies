@@ -27,6 +27,7 @@ RSpec.describe EditorComponent, type: :component do
     subject! do
       render_inline(described_class.new(**kwargs))
     end
+
     it "renders label text" do
       expect(page).to have_css("label[for=#{field_name}-field]", class: "govuk-label", text: label[:text])
     end
@@ -41,10 +42,12 @@ RSpec.describe EditorComponent, type: :component do
   end
 
   context "when hint is not defined" do
-    let(:hint) { "" }
     subject! do
       render_inline(described_class.new(**kwargs))
     end
+
+    let(:hint) { "" }
+
     it "renders a default hint text" do
       expect(page).to have_css("div", class: "govuk-hint", text: "You can copy and paste bullet points into the text box.")
     end

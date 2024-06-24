@@ -15,7 +15,7 @@ RSpec.describe Resettable do
 
     it "resets actual salary" do
       expect { update_working_patterns }
-        .to change { vacancy.actual_salary }
+        .to change(vacancy, :actual_salary)
         .from(previous_actual_salary).to("")
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe Resettable do
 
       it "resets fixed term contract duration" do
         expect { update_contract_type }
-          .to change { vacancy.fixed_term_contract_duration }
+          .to change(vacancy, :fixed_term_contract_duration)
           .from(previous_fixed_term_contract_duration).to("")
       end
     end
@@ -42,7 +42,7 @@ RSpec.describe Resettable do
 
       it "resets parental leave cover contract duration" do
         expect { update_contract_type }
-          .to change { vacancy.parental_leave_cover_contract_duration }
+          .to change(vacancy, :parental_leave_cover_contract_duration)
           .from(previous_parental_leave_cover_contract_duration).to("")
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe Resettable do
 
     it "resets key stages" do
       expect { update_education_support }
-        .to change { vacancy.key_stages }
+        .to change(vacancy, :key_stages)
         .from(previous_key_stages).to([])
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe Resettable do
 
       it "resets subjects" do
         expect { update_education_phases }
-          .to change { vacancy.subjects }
+          .to change(vacancy, :subjects)
           .from(previous_subjects).to([])
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe Resettable do
 
       it "resets key stages" do
         expect { update_education_phases }
-          .to change { vacancy.key_stages }
+          .to change(vacancy, :key_stages)
           .from(previous_key_stages).to(%w[early_years])
       end
     end
@@ -97,7 +97,7 @@ RSpec.describe Resettable do
 
     it "resets the ect status" do
       expect { update_job_role }
-        .to change { vacancy.ect_status }
+        .to change(vacancy, :ect_status)
         .from(previous_ect_status).to(nil)
     end
   end
@@ -112,7 +112,7 @@ RSpec.describe Resettable do
 
     it "resets receive application" do
       expect { update_job_applications }
-        .to change { vacancy.receive_applications }
+        .to change(vacancy, :receive_applications)
         .from(previous_receive_applications).to(nil)
     end
   end
@@ -127,7 +127,7 @@ RSpec.describe Resettable do
 
       it "resets application email" do
         expect { update_receive_application }
-        .to change { vacancy.application_email }
+        .to change(vacancy, :application_email)
         .from(previous_application_email).to(nil)
       end
     end
@@ -139,7 +139,7 @@ RSpec.describe Resettable do
 
       it "resets application link" do
         expect { update_receive_application }
-          .to change { vacancy.application_link }
+          .to change(vacancy, :application_link)
           .from(previous_application_link).to("")
       end
     end
@@ -168,7 +168,7 @@ RSpec.describe Resettable do
 
     it "resets the personal statement guidance" do
       expect { update_enable_job_applications }
-        .to change { vacancy.personal_statement_guidance }
+        .to change(vacancy, :personal_statement_guidance)
         .from(previous_personal_statement_guidance).to(nil)
     end
   end
@@ -181,7 +181,7 @@ RSpec.describe Resettable do
 
     it "resets school visits details" do
       expect { update_school_visits }
-        .to change { vacancy.school_visits_details }
+        .to change(vacancy, :school_visits_details)
         .from(previous_school_visits_details).to(nil)
     end
   end
@@ -194,7 +194,7 @@ RSpec.describe Resettable do
 
     it "resets contact number" do
       expect { update_contact_number_provided }
-        .to change { vacancy.contact_number }
+        .to change(vacancy, :contact_number)
         .from(previous_contact_number).to(nil)
     end
   end
@@ -207,7 +207,7 @@ RSpec.describe Resettable do
 
     it "resets safeguarding information" do
       expect { update_safeguarding_information_provided }
-        .to change { vacancy.safeguarding_information }
+        .to change(vacancy, :safeguarding_information)
         .from(previous_safeguarding_information).to(nil)
     end
   end
@@ -220,7 +220,7 @@ RSpec.describe Resettable do
 
     it "resets further details" do
       expect { update_further_details_provided }
-        .to change { vacancy.further_details }
+        .to change(vacancy, :further_details)
         .from(previous_further_details).to(nil)
     end
   end
@@ -233,7 +233,7 @@ RSpec.describe Resettable do
 
     it "resets benefits details" do
       expect { update_benefits }
-        .to change { vacancy.benefits_details }
+        .to change(vacancy, :benefits_details)
         .from(previous_benefits_details).to(nil)
     end
   end

@@ -23,8 +23,7 @@ RSpec.describe LocationSuggestion do
     let(:query_hash) { { key: "test_key", input: location_input } }
 
     before do
-      allow(subject).to receive(:request_url).and_return(request_url)
-      allow(subject).to receive(:build_google_query).and_return(query_hash)
+      allow(subject).to receive_messages(request_url: request_url, build_google_query: query_hash)
       stub_request(:get, request_url).to_return(body: request_body, status: request_status)
     end
 

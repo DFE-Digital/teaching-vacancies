@@ -27,7 +27,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         end
       end
 
-      it "shows breadcrumbs with vacancy title " do
+      it "shows breadcrumbs with vacancy title" do
         within(".govuk-breadcrumbs") do
           expect(page).to have_content(vacancy.job_title)
         end
@@ -142,7 +142,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       it "has action to reject application only" do
         within(".application-#{status} .govuk-summary-list__actions") do
           expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_shortlisted.id))
-          expect(page).not_to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_shortlisted.id))
+          expect(page).to have_no_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_shortlisted.id))
         end
       end
     end
@@ -169,8 +169,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
 
       it "has no actions" do
-        expect(page).not_to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_unsuccessful.id))
-        expect(page).not_to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_unsuccessful.id))
+        expect(page).to have_no_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_unsuccessful.id))
+        expect(page).to have_no_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_unsuccessful.id))
       end
     end
   end
@@ -187,7 +187,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         end
       end
 
-      it "shows breadcrumbs with vacancy title " do
+      it "shows breadcrumbs with vacancy title" do
         within(".govuk-breadcrumbs") do
           expect(page).to have_content(vacancy.job_title)
         end
@@ -207,11 +207,11 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
     describe "the summary section" do
       it "shows no application cards" do
-        expect(page).not_to have_css(".govuk-summary-list__row")
+        expect(page).to have_no_css(".govuk-summary-list__row")
       end
 
       it "shows no sort applications control" do
-        expect(page).not_to have_css("#sort-column-field")
+        expect(page).to have_no_css("#sort-column-field")
       end
 
       it "shows text to tell user can no longer see applications" do

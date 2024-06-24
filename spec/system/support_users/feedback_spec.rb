@@ -2,18 +2,18 @@ require "rails_helper"
 
 RSpec.shared_examples "has a satisfaction rating table" do |data_testid, number_of_options|
   it "has the correct values" do
-    expect(page).to have_selector("table[data-testid='#{data_testid}']")
+    expect(page).to have_css("table[data-testid='#{data_testid}']")
 
-    within(find("table[data-testid='#{data_testid}']")) do
-      within(find("tr[data-testid='#{testid_for 1.month.ago}']")) do
+    within("table[data-testid='#{data_testid}']") do
+      within("tr[data-testid='#{testid_for 1.month.ago}']") do
         (1..number_of_options).each do |n|
           expect(find("td:nth-child(#{n + 1})").text).to eq(n.to_s)
         end
       end
     end
 
-    within(find("table[data-testid='#{data_testid}']")) do
-      within(find("tr[data-testid='#{testid_for 3.month.ago}']")) do
+    within("table[data-testid='#{data_testid}']") do
+      within("tr[data-testid='#{testid_for 3.month.ago}']") do
         (1..number_of_options).each do |n|
           expect(find("td:nth-child(#{n + 1})").text).to eq((n + number_of_options).to_s)
         end
@@ -98,7 +98,7 @@ RSpec.describe "Feedback supportal section" do
 
     it "shows only general feedback" do
       expect(page).to have_text("Some other feedback text")
-      expect(page).not_to have_text("Some job alert feedback text")
+      expect(page).to have_no_text("Some job alert feedback text")
     end
 
     it "allows categorisation" do
@@ -109,7 +109,7 @@ RSpec.describe "Feedback supportal section" do
 
       page.first("button", text: "Save changes").click
 
-      expect(page).not_to have_css(".supportal-table-component--uncategorised")
+      expect(page).to have_no_css(".supportal-table-component--uncategorised")
 
       within ".supportal-table-component--formatting" do
         expect(page).to have_text("Some other feedback text")
@@ -117,7 +117,7 @@ RSpec.describe "Feedback supportal section" do
     end
 
     it "allows user to download data" do
-      click_link "Download general feedback report"
+      click_on "Download general feedback report"
       expect(csv.first).to eq ["Created at", "Source", "Who", "Type", "Origin path", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
       expect(csv.second).to eq [other_feedback.created_at.to_s, "identified", "jobseeker", other_feedback.feedback_type, other_feedback.origin_path, other_feedback.email, other_feedback.occupation, other_feedback.rating, other_feedback.comment, other_feedback.category]
       created_at_dates = csv.map(&:first).drop(1)
@@ -132,7 +132,7 @@ RSpec.describe "Feedback supportal section" do
       fill_in "From", with: "2022-03-15"
       fill_in "To", with: "2022-03-21"
       click_on "Go"
-      click_link "Download general feedback report"
+      click_on "Download general feedback report"
       expect(csv.first).to eq ["Created at", "Source", "Who", "Type", "Origin path", "Contact email", "Occupation", "CSAT", "Comment", "Category"]
       expect(csv.second).to eq [old_general_feedback.created_at.to_s, "identified", "jobseeker", old_general_feedback.feedback_type, old_general_feedback.origin_path, old_general_feedback.email, old_general_feedback.occupation, old_general_feedback.rating, old_general_feedback.comment, old_general_feedback.category]
 
@@ -180,7 +180,7 @@ RSpec.describe "Feedback supportal section" do
 
     it "shows only job alert feedback" do
       expect(page).to have_text("Some job alert feedback text")
-      expect(page).not_to have_text("Some other feedback text")
+      expect(page).to have_no_text("Some other feedback text")
     end
 
     it "allows categorisation" do
@@ -191,7 +191,7 @@ RSpec.describe "Feedback supportal section" do
 
       page.first("button", text: "Save changes").click
 
-      expect(page).not_to have_css(".supportal-table-component--uncategorised")
+      expect(page).to have_no_css(".supportal-table-component--uncategorised")
 
       within ".supportal-table-component--insufficient_job_alerts" do
         expect(page).to have_text("Some job alert feedback text")
@@ -199,7 +199,7 @@ RSpec.describe "Feedback supportal section" do
     end
 
     it "allows user to download data" do
-      click_link "Download job alerts feedback report"
+      click_on "Download job alerts feedback report"
       expect(csv.first).to eq ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
       expect(csv.second).to eq [job_alert_feedback.created_at.to_s, job_alert_feedback.relevant_to_user, job_alert_feedback.comment, "[]", nil, nil, nil, nil, job_alert_feedback.category]
 
@@ -214,7 +214,7 @@ RSpec.describe "Feedback supportal section" do
       fill_in "From", with: "2022-03-15"
       fill_in "To", with: "2022-03-21"
       click_on "Go"
-      click_link "Download job alerts feedback report"
+      click_on "Download job alerts feedback report"
       expect(csv.first).to eq ["Timestamp", "Relevant?", "Comment", "Criteria", "Keyword", "Location", "Radius", "Working patterns", "Category"]
       expect(csv.second).to eq [old_job_alert_feedback.created_at.to_s, old_job_alert_feedback.relevant_to_user, old_job_alert_feedback.comment, "[]", nil, nil, nil, nil, old_job_alert_feedback.category]
 
@@ -265,10 +265,11 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Job alert unsubscribe - reason given' table" do
       before { click_on "Job alert unsubscribe" }
+
       include_examples "has a satisfaction rating table", "job-alert-unsubscribe-reason", 4
 
       it "allows user to download data" do
-        click_link "Download unsubscribe reports"
+        click_on "Download unsubscribe reports"
 
         expect(csv.first).to eq ["Reporting period", "Job found", "Circumstances change", "Not relevant", "Other reason"]
         expect(csv.second).to eq [testid_for(Date.today), "0", "0", "0", "0"]
@@ -278,10 +279,11 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Satisfaction rating - jobseekers' table" do
       before { click_on "Jobseeker" }
+
       include_examples "has a satisfaction rating table", "satisfaction-rating-jobseekers", 5
 
       it "allows user to download data" do
-        click_link "Download jobseeker_account reports"
+        click_on "Download jobseeker_account reports"
 
         expect(csv.first).to eq ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
         expect(csv.second).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
@@ -291,10 +293,11 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Satisfaction rating - hiring staff' table" do
       before { click_on "Hiring staff" }
+
       include_examples "has a satisfaction rating table", "satisfaction-rating-hiring-staff", 5
 
       it "allows user to download data" do
-        click_link "Download vacancy_publisher reports"
+        click_on "Download vacancy_publisher reports"
 
         expect(csv.first).to eq ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
         expect(csv.second).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
@@ -304,10 +307,11 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Satisfaction rating - job alerts' table" do
       before { click_on "Job alert relevance" }
+
       include_examples "has a satisfaction rating table", "satisfaction-rating-job-alerts", 2
 
       it "allows user to download data" do
-        click_link "Download job_alert reports"
+        click_on "Download job_alert reports"
 
         expect(csv.first).to eq ["Reporting period", "Relevant", "Not relevant"]
         expect(csv.second).to eq [testid_for(Date.today), "0", "0"]
@@ -317,10 +321,11 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Satisfaction rating - job application' table" do
       before { click_on "Job applications" }
+
       include_examples "has a satisfaction rating table", "satisfaction-rating-job-application", 5
 
       it "allows user to download data" do
-        click_link "Download application reports"
+        click_on "Download application reports"
 
         expect(csv.first).to eq ["Reporting period", "Highly satisfied", "Somewhat satisfied", "Neither", "Somewhat dissatisfied", "Highly dissatisfied"]
         expect(csv.second).to eq [testid_for(Date.today), "0", "0", "0", "0", "0"]
@@ -330,6 +335,7 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Close account reason' table" do
       before { click_on "Close account reason" }
+
       include_examples "has a satisfaction rating table", "close-account-reason", 4
     end
   end
@@ -375,8 +381,8 @@ RSpec.describe "Feedback supportal section" do
       click_on "View user feedback"
 
       expect(page).to have_text(other_feedback.comment)
-      expect(page).not_to have_text(old_other_feedback.comment)
-      expect(page).not_to have_text(older_other_feedback.comment)
+      expect(page).to have_no_text(old_other_feedback.comment)
+      expect(page).to have_no_text(older_other_feedback.comment)
 
       fill_in "From", with: "2022-03-15"
       fill_in "To", with: "2022-03-21"
@@ -384,15 +390,15 @@ RSpec.describe "Feedback supportal section" do
 
       expect(page).to have_field("From", with: "2022-03-15")
       expect(page).to have_field("To", with: "2022-03-21")
-      expect(page).not_to have_text(other_feedback.comment)
+      expect(page).to have_no_text(other_feedback.comment)
       expect(page).to have_text(old_other_feedback.comment)
-      expect(page).not_to have_text(older_other_feedback.comment)
+      expect(page).to have_no_text(older_other_feedback.comment)
 
       click_on "Job alerts"
 
-      expect(page).not_to have_text(job_alert_feedback.comment)
+      expect(page).to have_no_text(job_alert_feedback.comment)
       expect(page).to have_text(old_job_alert_feedback.comment)
-      expect(page).not_to have_text(older_job_alert_feedback.comment)
+      expect(page).to have_no_text(older_job_alert_feedback.comment)
 
       fill_in "From", with: "2022-01-04"
       fill_in "To", with: "2022-01-10"
@@ -400,16 +406,16 @@ RSpec.describe "Feedback supportal section" do
 
       expect(page).to have_field("From", with: "2022-01-04")
       expect(page).to have_field("To", with: "2022-01-10")
-      expect(page).not_to have_text(job_alert_feedback.comment)
-      expect(page).not_to have_text(old_job_alert_feedback.comment)
+      expect(page).to have_no_text(job_alert_feedback.comment)
+      expect(page).to have_no_text(old_job_alert_feedback.comment)
       expect(page).to have_text(older_job_alert_feedback.comment)
 
       click_on "General"
 
       expect(page).to have_field("From", with: "2022-01-04")
       expect(page).to have_field("To", with: "2022-01-10")
-      expect(page).not_to have_text(other_feedback.comment)
-      expect(page).not_to have_text(old_other_feedback.comment)
+      expect(page).to have_no_text(other_feedback.comment)
+      expect(page).to have_no_text(old_other_feedback.comment)
       expect(page).to have_text(older_other_feedback.comment)
     end
   end

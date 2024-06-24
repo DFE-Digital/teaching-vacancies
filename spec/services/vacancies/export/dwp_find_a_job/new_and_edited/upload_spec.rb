@@ -2,6 +2,8 @@ require "rails_helper"
 
 RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
   describe "#call" do
+    subject { described_class.new("2024-05-01") }
+
     let(:org) do
       create(:school,
              address: "1 School Lane",
@@ -136,8 +138,6 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::Upload do
 
     let(:sftp_session) { instance_double(Net::SFTP::Session, upload!: true) }
     let(:file_name) { "TeachingVacancies-upload-20240502-010444" }
-
-    subject { described_class.new("2024-05-01") }
 
     before do
       travel_to(Time.zone.local(2024, 5, 2, 1, 4, 44))

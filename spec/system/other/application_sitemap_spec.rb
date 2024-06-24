@@ -1,7 +1,7 @@
 require "rails_helper"
 RSpec.describe "Application sitemap" do
   context "sitemap.xml" do
-    scenario "generates a sitemap of the application" do
+    it "generates a sitemap of the application" do
       published_jobs = (1..4).map { |i| create(:vacancy, :published, job_title: "Title#{i}") }
       expired_jobs = create_list(:vacancy, 2, :expired).each { |j| j.save(validate: false) }
 

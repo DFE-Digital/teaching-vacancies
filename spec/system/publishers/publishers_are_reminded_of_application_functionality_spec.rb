@@ -13,7 +13,7 @@ RSpec.describe "Application feature reminder" do
     it "does not show reminder page when creating a job" do
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
+      expect(page).to have_current_path(organisation_job_build_path(last_vacancy.id, :job_title), ignore_query: true)
     end
   end
 
@@ -31,13 +31,13 @@ RSpec.describe "Application feature reminder" do
 
       click_on I18n.t("buttons.reminder_continue")
 
-      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
+      expect(page).to have_current_path(organisation_job_build_path(last_vacancy.id, :job_title), ignore_query: true)
 
-      expect(page).not_to have_content(I18n.t("publishers.new_features.reminder.page_title"))
+      expect(page).to have_no_content(I18n.t("publishers.new_features.reminder.page_title"))
 
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(organisation_job_build_path(Vacancy.order("created_at").last.id, :job_title))
+      expect(page).to have_current_path(organisation_job_build_path(Vacancy.order("created_at").last.id, :job_title), ignore_query: true)
     end
 
     context "when the organisation is a local authority" do
@@ -48,7 +48,7 @@ RSpec.describe "Application feature reminder" do
       it "does not show reminder page when creating a job" do
         visit organisation_jobs_with_type_path
         click_on "List a job"
-        expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_location))
+        expect(page).to have_current_path(organisation_job_build_path(last_vacancy.id, :job_location), ignore_query: true)
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe "Application feature reminder" do
 
       click_on "Change", match: :first
 
-      expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
+      expect(page).to have_current_path(organisation_job_build_path(last_vacancy.id, :job_title), ignore_query: true)
     end
 
     # TODO: Temporarily disabled for TEVA-4099
@@ -66,12 +66,12 @@ RSpec.describe "Application feature reminder" do
 
       it "does not show the reminder page" do
         visit organisation_jobs_with_type_path
-        expect(current_path).to eq(publishers_new_features_path)
+        expect(page).to have_current_path(publishers_new_features_path, ignore_query: true)
         check I18n.t("helpers.label.publishers_new_features_form.dismiss_options.true")
         click_on I18n.t("buttons.continue_to_account")
         visit organisation_jobs_with_type_path
         click_on I18n.t("buttons.create_job")
-        expect(current_path).to eq(organisation_jobs_path)
+        expect(page).to have_current_path(organisation_jobs_path, ignore_query: true)
       end
     end
   end

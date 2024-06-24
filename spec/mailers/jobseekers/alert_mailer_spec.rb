@@ -170,9 +170,9 @@ RSpec.describe Jobseekers::AlertMailer do
       let!(:profile) { create(:jobseeker_profile, :completed, jobseeker_id: jobseeker.id) }
 
       it "does not display the section encouraging them to create a profile" do
-        expect(body).to_not include(jobseekers_profile_url(**utm_params))
-        expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
-        expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
+        expect(body).not_to include(jobseekers_profile_url(**utm_params))
+        expect(body).not_to include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
+        expect(body).not_to include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
       end
     end
 

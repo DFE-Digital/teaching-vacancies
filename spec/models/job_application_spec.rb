@@ -30,8 +30,9 @@ RSpec.describe JobApplication do
   end
 
   describe "#email" do
-    let(:jobseeker) { build_stubbed(:jobseeker, email: "backup-email@example.com") }
     subject { build_stubbed(:job_application, email_address: email_address, jobseeker: jobseeker) }
+
+    let(:jobseeker) { build_stubbed(:jobseeker, email: "backup-email@example.com") }
     let(:email_address) { "something@example.com" }
 
     context "when the application has an email address" do
@@ -56,7 +57,7 @@ RSpec.describe JobApplication do
 
     it "updates status timestamp" do
       freeze_time do
-        expect { subject.submitted! }.to change { subject.submitted_at }.from(nil).to(Time.current)
+        expect { subject.submitted! }.to change(subject, :submitted_at).from(nil).to(Time.current)
       end
     end
   end

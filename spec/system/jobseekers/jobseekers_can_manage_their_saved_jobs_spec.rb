@@ -45,17 +45,17 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
           end
 
           within ".card-component:nth-child(2)" do
-            expect(page).not_to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
+            expect(page).to have_no_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
 
           within ".card-component:nth-child(3)" do
-            expect(page).not_to have_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
+            expect(page).to have_no_css(".card-component__body", text: I18n.t("jobseekers.saved_jobs.index.deadline_passed"))
           end
         end
 
         it "does not show apply for this job links" do
           within ".card-component:nth-child(1)" do
-            expect(page).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
+            expect(page).to have_no_link(I18n.t("jobseekers.saved_jobs.index.apply"))
           end
 
           within ".card-component:nth-child(2)" do
@@ -63,7 +63,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
           end
 
           within ".card-component:nth-child(3)" do
-            expect(page).not_to have_link(I18n.t("jobseekers.saved_jobs.index.apply"))
+            expect(page).to have_no_link(I18n.t("jobseekers.saved_jobs.index.apply"))
           end
         end
 
@@ -71,7 +71,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
           before { click_on I18n.t("jobseekers.saved_jobs.index.apply") }
 
           it "redirects to the new job application page" do
-            expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy2.id))
+            expect(page).to have_current_path(new_jobseekers_job_job_application_path(vacancy2.id), ignore_query: true)
           end
         end
       end
@@ -100,7 +100,7 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
     before { visit jobseekers_saved_jobs_path }
 
     it "redirects to the sign in page" do
-      expect(current_path).to eq(new_jobseeker_session_path)
+      expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
     end
   end
 end

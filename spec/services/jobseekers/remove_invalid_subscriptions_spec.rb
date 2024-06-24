@@ -26,7 +26,7 @@ RSpec.describe Jobseekers::RemoveInvalidSubscriptions do
     end
 
     it "destroys subscriptions with permanently failed email addresses" do
-      expect { subject.call }.to change { Subscription.count }.from(3).to(1)
+      expect { subject.call }.to change(Subscription, :count).from(3).to(1)
     end
   end
 end

@@ -27,7 +27,7 @@ FactoryBot.define do
       "£25,543 to £41,635 per year (full time equivalent)",
     ].freeze
 
-    publisher
+    association :publisher
 
     actual_salary { factory_rand(20_000..100_000) }
     enable_job_applications { true }

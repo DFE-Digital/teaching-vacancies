@@ -9,7 +9,7 @@ RSpec.describe CopyVacancy do
 
       result = described_class.new(vacancy).call
 
-      expect(result).to be_kind_of(Vacancy)
+      expect(result).to be_a(Vacancy)
       expect(Vacancy.count).to eq(2)
       expect(result.status).to eq("draft")
       expect(result.organisations).to eq [school]
@@ -67,7 +67,7 @@ RSpec.describe CopyVacancy do
       let(:result) { described_class.new(vacancy).call }
 
       it "does not copy the slug of a vacancy" do
-        expect(Vacancy.find(result.id).slug).to_not eq("maths-teacher")
+        expect(Vacancy.find(result.id).slug).not_to eq("maths-teacher")
       end
     end
   end

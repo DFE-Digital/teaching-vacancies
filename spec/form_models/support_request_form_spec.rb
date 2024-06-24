@@ -20,7 +20,7 @@ RSpec.describe SupportRequestForm, type: :model do
 
   it { is_expected.to validate_presence_of(:email_address) }
   it { is_expected.to allow_value("email@example.com").for(:email_address) }
-  it { is_expected.to_not allow_value("invalid@email@com").for(:email_address) }
+  it { is_expected.not_to allow_value("invalid@email@com").for(:email_address) }
 
   it { is_expected.to validate_inclusion_of(:is_for_whole_site).in_array(%w[yes no]) }
 

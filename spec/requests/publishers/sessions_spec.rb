@@ -20,7 +20,7 @@ RSpec.describe "Redirect to correct authentication method" do
       before { get new_publishers_login_key_path }
 
       it "does not redirect" do
-        expect(response.status).not_to eq(302)
+        expect(response).not_to have_http_status(:found)
       end
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe "Redirect to correct authentication method" do
       before { get new_publisher_session_path }
 
       it "does not redirect" do
-        expect(response.status).not_to eq(302)
+        expect(response).not_to have_http_status(:found)
       end
     end
 

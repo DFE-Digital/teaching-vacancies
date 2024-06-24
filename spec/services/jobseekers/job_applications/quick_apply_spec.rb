@@ -48,6 +48,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
 
     context "when there are steps in the most recent application that are not relevant to the new application" do
       subject { described_class.new(jobseeker, vacancy_for_teaching_assistant).job_application }
+
       let(:vacancy_for_teacher) { create(:vacancy, job_roles: ["teacher"]) }
       let(:vacancy_for_teaching_assistant) { create(:vacancy, job_roles: ["teaching_assistant"]) }
       let!(:most_recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.hour.ago, jobseeker: jobseeker, vacancy: vacancy_for_teacher) }
@@ -55,11 +56,11 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
       let(:completed_step_to_not_copy) { %i[professional_status] }
 
       it "only copies the relevant attributes" do
-        expect(subject.slice(attributes_to_not_copy)).to_not eq(most_recent_job_application.slice(attributes_to_not_copy))
+        expect(subject.slice(attributes_to_not_copy)).not_to eq(most_recent_job_application.slice(attributes_to_not_copy))
       end
 
       it "only copies the relevant completed steps" do
-        expect(subject.completed_steps).to_not include(completed_step_to_not_copy)
+        expect(subject.completed_steps).not_to include(completed_step_to_not_copy)
       end
     end
 
@@ -71,7 +72,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     end
 
     it "sets qualifications section completed to false" do
-      expect(subject.qualifications_section_completed).to eq(false)
+      expect(subject.qualifications_section_completed).to be(false)
     end
 
     it "copies employments" do
@@ -82,7 +83,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     end
 
     it "sets employment history section completed to false" do
-      expect(subject.employment_history_section_completed).to eq(false)
+      expect(subject.employment_history_section_completed).to be(false)
     end
 
     it "copies references" do
@@ -98,7 +99,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
       expect(subject.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
         .to eq(recent_job_application.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
 
-      expect(subject.training_and_cpds_section_completed).to eq(false)
+      expect(subject.training_and_cpds_section_completed).to be(false)
     end
 
     it "does not copy declarations attributes" do

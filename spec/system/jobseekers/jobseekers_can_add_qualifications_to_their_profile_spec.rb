@@ -19,11 +19,11 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
         fill_in_undergraduate_degree
         click_on I18n.t("buttons.save_qualification.one")
-        expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
+        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
         expect(page).to have_content("Undergraduate degree")
         expect(page).to have_content("University of Life")
-        expect(page).not_to have_content("Subjects and grades")
-        expect(page).not_to have_content("School, college, or other organisation")
+        expect(page).to have_no_content("Subjects and grades")
+        expect(page).to have_no_content("School, college, or other organisation")
       end
 
       it "allows jobseekers to add a custom qualification or course (category 'other')" do
@@ -33,12 +33,12 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
         fill_in_other_qualification
         click_on I18n.t("buttons.save_qualification.one")
-        expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
+        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
         expect(page).to have_content("Superteacher Certificate")
         expect(page).to have_content("Teachers Academy")
         expect(page).to have_content("I expect to finish next year")
-        expect(page).not_to have_content("Grade")
-        expect(page).not_to have_content("Year")
+        expect(page).to have_no_content("Grade")
+        expect(page).to have_no_content("Year")
       end
 
       it "allows jobseekers to add a common secondary qualification" do
@@ -49,7 +49,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
         fill_in_gcses
         click_on I18n.t("buttons.save_qualification.other")
-        expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
+        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
         expect(page).to have_content("GCSEs")
         expect(page).to have_content("Churchill School for Gifted Macaques")
         expect(page).to have_content("Maths – 110%")
@@ -64,7 +64,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
         fill_in_custom_secondary_qualifications
         click_on I18n.t("buttons.save_qualification.other")
-        expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
+        expect(page).to have_current_path(review_jobseekers_profile_qualifications_path, ignore_query: true)
         expect(page).to have_content("Welsh Baccalaureate")
         expect(page).to have_content("Happy Rainbows School for High Achievers")
         expect(page).to have_content("Science – 5")
@@ -88,7 +88,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         click_on "Change"
         fill_in "Awarding body", with: "University of Life"
         click_on I18n.t("buttons.save_and_continue")
-        expect(page).not_to have_content("Life University")
+        expect(page).to have_no_content("Life University")
         expect(page).to have_content("University of Life")
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         empty_second_qualification_result
         fill_in "School", with: "St Nicholas School"
         click_on I18n.t("buttons.save_and_continue")
-        expect(page).not_to have_content("John")
+        expect(page).to have_no_content("John")
         expect(page).to have_content("Nicholas")
         expect(page).to have_content("Hard Knocks")
       end

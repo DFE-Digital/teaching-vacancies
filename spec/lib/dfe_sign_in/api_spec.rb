@@ -2,6 +2,8 @@ require "rails_helper"
 require "dfe_sign_in/api"
 
 RSpec.describe DfeSignIn::API do
+  subject { extend(described_class) }
+
   let(:stubbed_request) { instance_double(DfeSignIn::API::Request) }
   let(:stubbed_response) { instance_double(DfeSignIn::API::Response, number_of_pages: 2) }
 
@@ -11,8 +13,6 @@ RSpec.describe DfeSignIn::API do
     allow(DfeSignIn::API::Request).to receive(:new).and_return(stubbed_request)
     allow(DfeSignIn::API::Response).to receive(:new).with(stubbed_request).and_return(stubbed_response)
   end
-
-  subject { extend(described_class) }
 
   describe "#dsi_users" do
     let(:fixture_filename) { "users" }

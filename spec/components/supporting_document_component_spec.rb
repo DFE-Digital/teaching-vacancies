@@ -1,11 +1,11 @@
 require "rails_helper"
 
 RSpec.describe SupportingDocumentComponent, type: :component do
+  subject! { render_inline(described_class.new(**kwargs)) }
+
   let(:vacancy) { create(:vacancy) }
   let(:supporting_document) { double("ActiveStorage attachment", id: "abcde-12345", filename: "job_desc.doc", byte_size: 100_000, record: vacancy) }
   let(:kwargs) { { supporting_document: supporting_document } }
-
-  subject! { render_inline(described_class.new(**kwargs)) }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"

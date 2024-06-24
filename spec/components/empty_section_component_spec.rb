@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe EmptySectionComponent, type: :component do
+  subject! { render_inline(described_class.new(**kwargs)) }
+
   let(:title) { "A lovely title" }
   let(:kwargs) { { title: title } }
-
-  subject! { render_inline(described_class.new(**kwargs)) }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"
@@ -20,7 +20,7 @@ RSpec.describe EmptySectionComponent, type: :component do
 
     it "renders the empty section without a title" do
       expect(page).to have_css("div", class: "empty-section-component") do |section|
-        expect(section).not_to have_css("h3", class: "govuk-heading-m")
+        expect(section).to have_no_css("h3", class: "govuk-heading-m")
       end
     end
   end

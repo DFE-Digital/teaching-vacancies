@@ -24,7 +24,7 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
 
   it "does not render a task list by default" do
     render_inline(component)
-    expect(page).not_to have_css("ul.review-component__sections")
+    expect(page).to have_no_css("ul.review-component__sections")
   end
 
   context "if sections are provided" do
@@ -59,7 +59,7 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
 
     it "does not render the 'train tracks' component" do
       render_inline(component)
-      expect(page).not_to have_css(".steps-component")
+      expect(page).to have_no_css(".steps-component")
     end
   end
 end

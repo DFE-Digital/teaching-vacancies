@@ -24,7 +24,7 @@ RSpec.describe "Users can view help guides" do
 
     it "shows all links to content pages" do
       click_on("How to accept job applications")
-      expect(current_path).to eq(post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"))
+      expect(page).to have_current_path(post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"), ignore_query: true)
     end
   end
 end

@@ -8,7 +8,7 @@ RSpec.describe "Publishers can see the Candidate profiles interstitial page" do
 
     before { login_publisher(publisher: publisher, organisation: school) }
 
-    scenario "they will see the interstitial page" do
+    it "they will see the interstitial page" do
       visit organisation_jobs_with_type_path
 
       check I18n.t("terms_and_conditions.label")
@@ -23,10 +23,10 @@ RSpec.describe "Publishers can see the Candidate profiles interstitial page" do
 
     before { login_publisher(publisher: publisher, organisation: school) }
 
-    scenario "they will NOT see the interstitial page" do
+    it "they will NOT see the interstitial page" do
       visit organisation_jobs_with_type_path
 
-      expect(page).to_not have_content("You can now view candidate profiles and invite them to apply to jobs")
+      expect(page).to have_no_content("You can now view candidate profiles and invite them to apply to jobs")
     end
   end
 end

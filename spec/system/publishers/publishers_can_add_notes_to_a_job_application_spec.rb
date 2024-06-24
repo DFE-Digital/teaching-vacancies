@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can add notes to a job application", js: true do
+RSpec.describe "Publishers can add notes to a job application", :js do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
@@ -14,18 +14,18 @@ RSpec.describe "Publishers can add notes to a job application", js: true do
     visit organisation_job_job_application_path(vacancy.id, job_application)
     click_on I18n.t("publishers.vacancies.job_applications.header.tabs.notes")
 
-    expect(current_path).to eq(organisation_job_job_application_notes_path(vacancy.id, job_application))
+    expect(page).to have_current_path(organisation_job_job_application_notes_path(vacancy.id, job_application), ignore_query: true)
     expect(page).to have_content(note.content)
   end
 
   it "allows notes to be added to job applications" do
     visit organisation_job_job_application_notes_path(vacancy.id, job_application)
 
-    expect(page.has_field?("publishers-job-application-notes-form-content-field")).to eq(false)
+    expect(page.has_field?("publishers-job-application-notes-form-content-field")).to be(false)
 
     click_on I18n.t("buttons.add_note")
 
-    expect(page.has_field?("publishers-job-application-notes-form-content-field")).to eq(true)
+    expect(page.has_field?("publishers-job-application-notes-form-content-field")).to be(true)
 
     fill_in "Add a note", with: ""
     click_on I18n.t("buttons.save")
@@ -44,6 +44,6 @@ RSpec.describe "Publishers can add notes to a job application", js: true do
     expect(page).to have_content(note.content)
     click_on I18n.t("buttons.delete")
 
-    expect(page).to_not have_content(note.content)
+    expect(page).to have_no_content(note.content)
   end
 end

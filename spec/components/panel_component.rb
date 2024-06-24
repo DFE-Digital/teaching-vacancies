@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe PanelComponent, type: :component do
-  let(:kwargs) { { button_text: "button-text", heading_text: "heading text" } }
-
   subject! { render_inline(described_class.new(**kwargs)) }
+
+  let(:kwargs) { { button_text: "button-text", heading_text: "heading text" } }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"

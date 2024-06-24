@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe FeedbacksHelper, type: :helper do
+RSpec.describe FeedbacksHelper do
   describe "#header_feedback_link_text" do
     let(:feedback_url) { "jobseekers/account_feedback" }
     let(:jobseeker_signed_in?) { true }

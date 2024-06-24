@@ -36,7 +36,7 @@ RSpec.describe SortComponent, type: :component do
     let(:number_of_sorting_options) { 1 }
 
     it "does not render" do
-      expect(described_class.new(**kwargs).render?).to be_falsey
+      expect(described_class.new(**kwargs)).not_to be_render
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe SortComponent, type: :component do
 
     it "renders the list instead of the drop-down" do
       expect(page).to have_css("ul.sort-component__list")
-      expect(page).not_to have_css("select")
+      expect(page).to have_no_css("select")
     end
 
     it "makes the inactive sort option into a link" do
@@ -54,7 +54,7 @@ RSpec.describe SortComponent, type: :component do
 
     it "does not make the current sort option into a link" do
       expect(page).to have_content("Sorting algorithm number 1")
-      expect(page).not_to have_link("Sorting algorithm number 1", href: path.call(url_params.merge(sort_by: "sort_by_1")))
+      expect(page).to have_no_link("Sorting algorithm number 1", href: path.call(url_params.merge(sort_by: "sort_by_1")))
     end
   end
 
@@ -78,6 +78,7 @@ RSpec.describe SortComponent, type: :component do
 
   context "when display_type is 'links'" do
     let(:display_type) { "links" }
+
     context "when there are more than four sorting options available" do
       let(:number_of_sorting_options) { 5 }
 
@@ -97,6 +98,7 @@ RSpec.describe SortComponent, type: :component do
 
   context "when display_type is 'inline-select'" do
     let(:display_type) { "inline-select" }
+
     context "when there are more than four sorting options available" do
       let(:number_of_sorting_options) { 5 }
 
@@ -119,7 +121,7 @@ RSpec.describe SortComponent, type: :component do
 
     it "renders the drop-down instead of the list" do
       expect(page).to have_css("select[name='sort_by']")
-      expect(page).not_to have_css("ul")
+      expect(page).to have_no_css("ul")
     end
 
     it "points the form to the correct endpoint" do

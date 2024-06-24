@@ -3,10 +3,10 @@ require "dfe_sign_in/api/request"
 require "dfe_sign_in/api/response"
 
 RSpec.describe DfeSignIn::API::Response do
-  let(:api_response) { JSON.parse(response_file) }
-  let(:request) { instance_double("DfeSignIn::API::Request", perform: api_response) }
-
   subject(:response) { described_class.new(request) }
+
+  let(:api_response) { JSON.parse(response_file) }
+  let(:request) { instance_double(DfeSignIn::API::Request, perform: api_response) }
 
   describe "#number_of_pages" do
     it "returns the number of pages from the API response" do

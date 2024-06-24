@@ -201,7 +201,7 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
       let(:response_body) { file_fixture("vacancy_sources/ventrus_without_visa_sponsorship_available.xml").read }
 
       it "defaults visa_sponsorship_available to false" do
-        expect(vacancy.visa_sponsorship_available).to eq false
+        expect(vacancy.visa_sponsorship_available).to be false
       end
     end
 

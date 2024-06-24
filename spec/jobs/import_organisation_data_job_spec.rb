@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe ImportOrganisationDataJob do
-  let(:import_school_data) { instance_double("ImportSchoolData") }
-  let(:import_trust_data) { instance_double("ImportTrustData") }
+  let(:import_school_data) { instance_double(Gias::ImportSchoolsAndLocalAuthorities) }
+  let(:import_trust_data) { instance_double(Gias::ImportTrusts) }
 
   it "executes the importers" do
     expect(Gias::ImportSchoolsAndLocalAuthorities).to receive(:new).and_return(import_school_data)

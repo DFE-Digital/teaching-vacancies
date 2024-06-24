@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::ParsedVacancy do
-  let(:vacancy) { build_stubbed(:vacancy, :published) }
-
   subject(:parsed) { described_class.new(vacancy) }
+
+  let(:vacancy) { build_stubbed(:vacancy, :published) }
 
   describe "#id" do
     it "returns the vacancy id" do
@@ -58,10 +58,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::ParsedVacancy do
     let(:school) { build_stubbed(:school, safeguarding_information: nil) }
 
     before do
-      allow(vacancy).to receive(:skills_and_experience).and_return("")
-      allow(vacancy).to receive(:school_offer).and_return("")
-      allow(vacancy).to receive(:further_details).and_return("")
-      allow(vacancy).to receive(:organisation).and_return(school)
+      allow(vacancy).to receive_messages(skills_and_experience: "", school_offer: "", further_details: "", organisation: school)
     end
 
     context "when none of the job details are present" do
@@ -104,9 +101,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::NewAndEdited::ParsedVacancy do
 
     context "when the vacancy has all job details" do
       before do
-        allow(vacancy).to receive(:skills_and_experience).and_return("Skills and experience info")
-        allow(vacancy).to receive(:school_offer).and_return("School offer info")
-        allow(vacancy).to receive(:further_details).and_return("Further details info")
+        allow(vacancy).to receive_messages(skills_and_experience: "Skills and experience info", school_offer: "School offer info", further_details: "Further details info")
         allow(school).to receive(:safeguarding_information).and_return("Safeguarding info")
       end
 

@@ -1,0 +1,48 @@
+inherit_from:
+  - ../.rubocop.yml
+##
+# General rules to disable for test files
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+##
+# Testing rules
+
+FactoryBot/AssociationStyle:
+  EnforcedStyle: explicit
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 8 # We had many violations here. There is room for test refactoring and lowering this value later.
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4 # We had many violations here. There is room for test refactoring and lowering this value later.
+
+RSpec/MultipleExpectations:
+  Max: 2
+
+

@@ -22,7 +22,7 @@ RSpec.describe "Publisher session" do
 
       expect(page).to have_content(I18n.t("devise.failure.timeout"))
       visit "/"
-      expect(page).not_to have_content(I18n.t("devise.failure.timeout"))
+      expect(page).to have_no_content(I18n.t("devise.failure.timeout"))
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe "Publisher session" do
     travel(Publisher.timeout_in - 1.minute) do
       click_on I18n.t("buttons.save_and_continue")
 
-      expect(page.current_path).to eq organisation_job_build_path(Vacancy.last.id, :job_title)
+      expect(page).to have_current_path organisation_job_build_path(Vacancy.last.id, :job_title), ignore_query: true
     end
   end
 end

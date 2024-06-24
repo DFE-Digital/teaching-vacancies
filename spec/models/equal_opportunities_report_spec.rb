@@ -3,6 +3,7 @@ require "dfe/analytics/rspec/matchers"
 
 RSpec.describe EqualOpportunitiesReport do
   subject { create(:equal_opportunities_report) }
+
   it { is_expected.to belong_to(:vacancy) }
 
   describe "#trigger_event" do

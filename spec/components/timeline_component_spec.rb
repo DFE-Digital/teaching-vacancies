@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe TimelineComponent, type: :component do
-  let(:kwargs) { {} }
-
   subject! { render_inline(described_class.new(**kwargs)) }
+
+  let(:kwargs) { {} }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"
@@ -22,7 +22,7 @@ RSpec.describe TimelineComponent, type: :component do
     context "when heading slot is not defined" do
       it "does not render heading" do
         expect(page).to have_css(".timeline-component") do |timeline|
-          expect(timeline).not_to have_css("h3", class: "timeline-component__heading")
+          expect(timeline).to have_no_css("h3", class: "timeline-component__heading")
         end
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe TimelineComponent, type: :component do
     context "when item slots are not defined" do
       it "does not render items" do
         expect(page).to have_css(".timeline-component") do |timeline|
-          expect(timeline).not_to have_css("ul", class: "timeline-component__items")
+          expect(timeline).to have_no_css("ul", class: "timeline-component__items")
         end
       end
     end

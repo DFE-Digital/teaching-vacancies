@@ -24,12 +24,12 @@ RSpec.describe "Jobseekers can submit a job application" do
 
       expect { perform_enqueued_jobs { click_on I18n.t("buttons.submit_application") } }
         .to change { JobApplication.first.status }.from("draft").to("submitted")
-        .and change { delivered_emails.count }.by(1)
+        .and change(delivered_emails, :count).by(1)
 
       expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
 
       visit first_link_from_last_mail
-      expect(current_path).to eq(jobseekers_job_applications_path)
+      expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe "Jobseekers can submit a job application" do
       click_on I18n.t("buttons.cancel_and_return_to_account")
 
       expect(JobApplication.first.status).to eq("draft")
-      expect(current_path).to eq(jobseekers_job_applications_path)
+      expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
     end
   end
 
@@ -64,7 +64,7 @@ RSpec.describe "Jobseekers can submit a job application" do
       click_on I18n.t("buttons.submit_application")
 
       expect(JobApplication.first.status).to eq("draft")
-      expect(page).not_to have_content("There is a problem")
+      expect(page).to have_no_content("There is a problem")
       expect(page).to have_content(I18n.t("messages.jobs.action_required.message.jobseeker"))
       expect(page).to have_link(I18n.t("activemodel.errors.models.jobseekers/job_application/professional_status_form.attributes.statutory_induction_complete.inclusion"),
                                 href: "#statutory_induction_complete")

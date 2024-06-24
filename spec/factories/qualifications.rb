@@ -27,7 +27,7 @@ FactoryBot.define do
     subject { undergraduate? || postgraduate? || other? ? Faker::Educator.subject : "" }
     year { finished_studying == false ? nil : factory_rand(1970..2020) }
 
-    job_application
+    association :job_application
   end
 
   trait :category_undergraduate do

@@ -7,13 +7,13 @@ RSpec.describe "Jobseekers can sign out from their account" do
     login_as(jobseeker, scope: :jobseeker)
   end
 
-  scenario "signing out takes them to sign in page with banner" do
+  it "signing out takes them to sign in page with banner" do
     visit root_path
     within(".govuk-header__navigation") do
       click_on I18n.t("nav.sign_out")
     end
 
-    expect(current_path).to eq(new_jobseeker_session_path)
+    expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
     expect(page).to have_content(I18n.t("devise.sessions.signed_out"))
   end
 end

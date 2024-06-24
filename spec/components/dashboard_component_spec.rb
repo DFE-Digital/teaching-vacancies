@@ -1,16 +1,16 @@
 require "rails_helper"
 
 RSpec.describe DashboardComponent, type: :component do
-  let(:publisher) { create(:publisher) }
-  let(:sort) { Publishers::VacancySort.new(organisation, selected_type).update(sort_by: "job_title") }
-  let(:selected_type) { "published" }
-  let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
-
   subject do
     described_class.new(
       organisation: organisation, sort: sort, selected_type: selected_type, publisher_preference: publisher_preference,
     )
   end
+
+  let(:publisher) { create(:publisher) }
+  let(:sort) { Publishers::VacancySort.new(organisation, selected_type).update(sort_by: "job_title") }
+  let(:selected_type) { "published" }
+  let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
 
   context "when organisation has no active vacancies" do
     let(:organisation) { create(:school, name: "A school with no published or draft jobs") }
@@ -141,7 +141,7 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         it "does not render the link to view applicants" do
-          expect(page).not_to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
+          expect(page).to have_no_content(I18n.t("jobs.manage.view_applicants", count: 1))
         end
 
         it "renders the local authority's name in the table" do
@@ -186,7 +186,7 @@ RSpec.describe DashboardComponent, type: :component do
 
       it "renders plain text of 0 applicants" do
         expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 0))
-        expect(page).not_to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
+        expect(page).to have_no_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
       end
     end
   end
@@ -209,7 +209,7 @@ RSpec.describe DashboardComponent, type: :component do
       end
 
       it "does not render the vacancy in Cambridge" do
-        expect(page).not_to have_content(vacancy_cambridge.job_title)
+        expect(page).to have_no_content(vacancy_cambridge.job_title)
       end
     end
 

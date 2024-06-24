@@ -25,7 +25,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
       context "when the organisation is a school" do
         it "has the expected steps" do
-          expect(subject.steps).to_not include(:job_location)
+          expect(subject.steps).not_to include(:job_location)
         end
       end
 

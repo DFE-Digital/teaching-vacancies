@@ -5,11 +5,6 @@ RSpec.describe LocationLandingPage do
 
   before do
     stub_const("ALL_IMPORTED_LOCATIONS", %w[narnia])
-  end
-
-  let(:search) { instance_double(Search::VacancySearch, total_count: 34) }
-
-  before do
     create(:location_polygon, name: "narnia")
 
     allow(Search::VacancySearch)
@@ -17,6 +12,8 @@ RSpec.describe LocationLandingPage do
       .with(hash_including(location: "Narnia"))
       .and_return(search)
   end
+
+  let(:search) { instance_double(Search::VacancySearch, total_count: 34) }
 
   describe ".exists?" do
     it "returns whether a landing page exists for the given location name" do

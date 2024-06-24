@@ -63,7 +63,7 @@ RSpec.describe Search::CriteriaInventor do
 
     describe "working_patterns" do
       it "does not set working_patterns" do
-        expect(subject.criteria[:working_patterns]).to eq(nil)
+        expect(subject.criteria[:working_patterns]).to be_nil
       end
     end
 

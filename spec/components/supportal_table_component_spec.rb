@@ -69,7 +69,7 @@ RSpec.describe SupportalTableComponent, type: :component do
     end
 
     # Generic columns don't get a special class
-    expect(page).not_to have_css("th.column-width--column")
+    expect(page).to have_no_css("th.column-width--column")
   end
 
   it "treats symbols as method names for getting values" do

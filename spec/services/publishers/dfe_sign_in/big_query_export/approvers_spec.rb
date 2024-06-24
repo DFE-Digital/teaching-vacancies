@@ -3,6 +3,8 @@ require "rails_helper"
 require "dfe_sign_in/api/request"
 
 RSpec.describe Publishers::DfeSignIn::BigQueryExport::Approvers do
+  subject { described_class.new(bigquery: bigquery_stub) }
+
   before do
     expect(bigquery_stub).to receive(:dataset).with("test_dataset").and_return(dataset_stub)
     expect(dataset_stub).to receive(:table).and_return(table_stub)
@@ -11,10 +13,8 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Approvers do
     expect(api_request).to receive(:perform).at_least(:once).and_return(api_response)
   end
 
-  subject { described_class.new(bigquery: bigquery_stub) }
-
-  let(:bigquery_stub) { instance_double("Google::Cloud::Bigquery::Project") }
-  let(:dataset_stub) { instance_double("Google::Cloud::Bigquery::Dataset") }
+  let(:bigquery_stub) { instance_double(Google::Cloud::Bigquery::Project) }
+  let(:dataset_stub) { instance_double(Google::Cloud::Bigquery::Dataset) }
 
   let(:api_request) { instance_double(DfeSignIn::API::Request) }
   let(:number_of_pages) { 1 }
@@ -70,7 +70,7 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Approvers do
   end
 
   context "when the user table exists in the dataset" do
-    let(:table_stub) { instance_double("Google::Cloud::Bigquery::Table") }
+    let(:table_stub) { instance_double(Google::Cloud::Bigquery::Table) }
 
     it "deletes the table first before inserting new table data" do
       expect(table_stub).to receive(:delete).and_return(true)

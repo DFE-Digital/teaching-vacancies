@@ -28,13 +28,13 @@ RSpec.describe LocationPolygon do
       before { create(:location_polygon, name: "london") }
 
       it "returns true" do
-        expect(described_class.contain?("London")).to be_truthy
+        expect(described_class).to be_contain("London")
       end
     end
 
     context "when location is not contained on the list of locations to import" do
       it "returns false" do
-        expect(described_class.contain?("Canterbury")).to be_falsey
+        expect(described_class).not_to be_contain("Canterbury")
       end
     end
   end

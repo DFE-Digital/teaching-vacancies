@@ -60,14 +60,14 @@ RSpec.describe "Jobseekers can save a job" do
   end
 
   def and_the_job_is_saved
-    expect(current_path).to eq(job_path(vacancy))
+    expect(page).to have_current_path(job_path(vacancy), ignore_query: true)
     expect(page).to have_content("You have saved this job. View all your saved jobs on your account")
     expect(page).to have_selector(:link_or_button, I18n.t("jobseekers.saved_jobs.saved"))
     expect(created_jobseeker.saved_jobs.pluck(:vacancy_id)).to include(vacancy.id)
   end
 
   def and_the_job_is_unsaved
-    expect(current_path).to eq(job_path(vacancy))
+    expect(page).to have_current_path(job_path(vacancy), ignore_query: true)
     expect(page).to have_selector(:link_or_button, I18n.t("jobseekers.saved_jobs.save"))
     expect(created_jobseeker.saved_jobs.pluck(:vacancy_id)).not_to include(vacancy.id)
   end

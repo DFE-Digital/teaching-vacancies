@@ -53,7 +53,7 @@ RSpec.describe "Job applications employments" do
 
       it "creates the employment and redirects to the employment history build step" do
         expect { post jobseekers_job_application_employments_path(job_application), params: params }
-          .to change { Employment.count }.by(1)
+          .to change(Employment, :count).by(1)
 
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
       end
@@ -130,7 +130,7 @@ RSpec.describe "Job applications employments" do
 
     it "destroys the employment and redirects to the employment history build step" do
       expect { delete jobseekers_job_application_employment_path(job_application, employment) }
-        .to change { Employment.count }.by(-1)
+        .to change(Employment, :count).by(-1)
 
       expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
     end

@@ -1,7 +1,9 @@
 require "rails_helper"
 
-RSpec.describe SubscriptionsController, recaptcha: true do
+RSpec.describe SubscriptionsController, :recaptcha do
   describe "#create" do
+    subject { post :create, params: params }
+
     let(:params) do
       {
         jobseekers_subscription_form: {
@@ -11,7 +13,6 @@ RSpec.describe SubscriptionsController, recaptcha: true do
         }.symbolize_keys,
       }
     end
-    subject { post :create, params: params }
     let(:created_subscription) { Subscription.last }
 
     before do
@@ -35,24 +36,20 @@ RSpec.describe SubscriptionsController, recaptcha: true do
 
       before do
         allow(Subscription).to receive(:new).and_return(subscription)
-        allow(subscription).to receive(:id).and_return("abc123")
-        allow(subscription).to receive(:class).and_return(Subscription)
+        allow(subscription).to receive_messages(id: "abc123", class: Subscription)
         allow(Jobseekers::SubscriptionForm).to receive(:new).and_return(form)
-        allow(form).to receive(:job_alert_params).and_return(job_alert_params)
-        allow(form).to receive(:invalid?).and_return(!subscription_form_valid?)
-        allow(form).to receive(:class).and_return(Jobseekers::SubscriptionForm)
-        allow(controller).to receive(:recaptcha_reply).and_return({ "score" => recaptcha_score })
-        allow(controller).to receive(:verify_recaptcha).and_return(verify_recaptcha)
+        allow(form).to receive_messages(job_alert_params: job_alert_params, invalid?: !subscription_form_valid?, class: Jobseekers::SubscriptionForm)
+        allow(controller).to receive_messages(recaptcha_reply: { "score" => recaptcha_score }, verify_recaptcha: verify_recaptcha)
       end
 
       context "when verify_recaptcha V3 is true" do
         let(:verify_recaptcha) { true }
 
         it "verifies the recaptcha once with v3" do
-          expect(controller).to receive(:verify_recaptcha)
-                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
-          expect(controller).not_to receive(:verify_recaptcha).with(no_args)
           subject
+          expect(controller).to have_received(:verify_recaptcha)
+                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
+          expect(controller).not_to have_received(:verify_recaptcha).with(no_args)
         end
 
         it "renders the subscription confirmation page" do
@@ -78,10 +75,10 @@ RSpec.describe SubscriptionsController, recaptcha: true do
         end
 
         it "verifies the recaptcha once with v3 and once with v2" do
-          expect(controller).to receive(:verify_recaptcha)
-                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
-          expect(controller).to receive(:verify_recaptcha).with(no_args).once
           subject
+          expect(controller).to have_received(:verify_recaptcha)
+                            .with(hash_including(secret_key: ENV.fetch("RECAPTCHA_V3_SECRET_KEY", ""))).once
+          expect(controller).to have_received(:verify_recaptcha).with(no_args).once
         end
 
         it "renders the 'new' page" do

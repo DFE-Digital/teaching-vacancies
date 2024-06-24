@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe UpdateGoogleIndexQueueJob do
-  let(:url) { Faker::Internet.url }
   subject(:job) { described_class.perform_later(url) }
+
+  let(:url) { Faker::Internet.url }
 
   it "executes perform" do
     indexing_service = double(:mock)

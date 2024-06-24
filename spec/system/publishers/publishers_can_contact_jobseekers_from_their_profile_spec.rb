@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Contacting Jobseekers", type: :system do
+RSpec.describe "Contacting Jobseekers" do
   include ActiveJob::TestHelper
 
   let!(:job_preferences) do
@@ -37,12 +37,12 @@ RSpec.describe "Contacting Jobseekers", type: :system do
     allow(Geocoding).to receive(:test_coordinates).and_return(location_in_london)
   end
 
-  scenario "A publisher can contact the jobseeker from their profile" do
+  it "A publisher can contact the jobseeker from their profile" do
     login_publisher(publisher:)
     visit root_path
-    click_link "Candidate profiles"
+    click_on "Candidate profiles"
 
-    click_link candidate_name
+    click_on candidate_name
     expect(page).to have_link(jobseeker_profile.email, href: "mailto:#{jobseeker_profile.email}")
   end
 end

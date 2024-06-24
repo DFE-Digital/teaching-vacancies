@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
 
         it "edits the job alert and redirects to the dashboard" do
           fill_in "jobseekers_subscription_form[location]", with: "London"
-          click_button I18n.t("buttons.update_alert")
+          click_on I18n.t("buttons.update_alert")
 
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.subscriptions.index.page_title"))
           expect(page).to have_content(I18n.t("subscriptions.update.success"))
@@ -42,7 +42,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
       context "when editing the alert frequency using the radio buttons" do
         it "edits the frequency and redirects to the dashboard" do
           choose I18n.t(".helpers.label.subscription.frequency_options.weekly")
-          click_button I18n.t("buttons.save")
+          click_on I18n.t("buttons.save")
 
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.subscriptions.index.page_title"))
           expect(page).to have_content(I18n.t("subscriptions.update.success"))
@@ -51,7 +51,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
             expect(card).to have_css(".card-component__header", text: "KeywordMaths")
           end
           expect(page).to have_checked_field(I18n.t(".helpers.label.subscription.frequency_options.weekly"))
-          expect(page).not_to have_checked_field(I18n.t(".helpers.label.subscription.frequency_options.daily"))
+          expect(page).to have_no_checked_field(I18n.t(".helpers.label.subscription.frequency_options.daily"))
           expect(subscription.reload.frequency).to eq("weekly")
         end
       end
@@ -64,11 +64,11 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
           choose I18n.t("helpers.label.jobseekers_unsubscribe_feedback_form.unsubscribe_reason_options.job_found")
           choose name: "jobseekers_unsubscribe_feedback_form[user_participation_response]", option: "interested"
           fill_in "jobseekers_unsubscribe_feedback_form[occupation]", with: "teacher"
-          click_button I18n.t("buttons.submit_feedback")
+          click_on I18n.t("buttons.submit_feedback")
 
           expect(page).to have_css("h1.govuk-heading-l", text: I18n.t("jobseekers.subscriptions.index.page_title"))
           expect(page).to have_content(I18n.t("jobseekers.unsubscribe_feedbacks.create.success"))
-          expect(page).not_to have_css(".card-component")
+          expect(page).to have_no_css(".card-component")
           expect(page).to have_content(I18n.t("jobseekers.subscriptions.index.zero_subscriptions_title"))
         end
       end
@@ -87,7 +87,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
     before { visit jobseekers_subscriptions_path }
 
     it "redirects to the sign in page" do
-      expect(current_path).to eq(new_jobseeker_session_path)
+      expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
     end
   end
 end

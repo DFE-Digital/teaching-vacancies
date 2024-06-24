@@ -1,8 +1,9 @@
 require "rails_helper"
 
-RSpec.describe JobseekerProfile, type: :model do
+RSpec.describe JobseekerProfile do
   describe ".prepare(jobseeker:)" do
     subject(:profile) { described_class.prepare(jobseeker:) }
+
     let(:jobseeker) { create(:jobseeker) }
 
     context "when a profile already exists for that jobseeker" do

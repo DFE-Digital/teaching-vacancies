@@ -23,7 +23,7 @@ RSpec.describe "Jobseekers can manage their account details" do
     end
 
     it "redirects to the sign in page" do
-      expect(current_path).to eq(new_jobseeker_session_path)
+      expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
     end
   end
 end

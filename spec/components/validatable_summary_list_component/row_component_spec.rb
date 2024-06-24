@@ -32,18 +32,18 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
   describe "#error_component" do
     before do
       record.errors.add(attribute, :not_present)
+      allow(ValidatableSummaryListComponent::ErrorComponent).to receive(:new).and_call_original
     end
 
     context "when showing errors" do
       let(:show_errors) { true }
 
       it "builds an error component from the record and row args" do
-        expect(ValidatableSummaryListComponent::ErrorComponent).to receive(:new).with(
+        expect(row.error_component).to be_a(ValidatableSummaryListComponent::ErrorComponent)
+        expect(ValidatableSummaryListComponent::ErrorComponent).to have_received(:new).with(
           errors: [ActiveModel::Error.new(record, attribute, :not_present)],
           error_path: error_path,
-        ).and_call_original
-
-        expect(row.error_component).to be_a(ValidatableSummaryListComponent::ErrorComponent)
+        )
       end
     end
 
@@ -51,12 +51,11 @@ RSpec.describe ValidatableSummaryListComponent::RowComponent, type: :component d
       let(:show_errors) { false }
 
       it "builds an empty error component" do
-        expect(ValidatableSummaryListComponent::ErrorComponent).to receive(:new).with(
+        expect(row.error_component).to be_a(ValidatableSummaryListComponent::ErrorComponent)
+        expect(ValidatableSummaryListComponent::ErrorComponent).to have_received(:new).with(
           errors: nil,
           error_path: error_path,
-        ).and_call_original
-
-        expect(row.error_component).to be_a(ValidatableSummaryListComponent::ErrorComponent)
+        )
       end
     end
   end

@@ -14,15 +14,15 @@ RSpec.describe "Searching on the schools page" do
   end
 
   context "when the location is not a polygon" do
-    scenario "resets radius to a default radius" do
+    it "resets radius to a default radius" do
       fill_in I18n.t("home.search.location_label"), with: "my house"
 
       click_on I18n.t("buttons.search")
 
-      expect(page.find("#location-field").value).to eq("my house")
-      expect(page.find("#location-field").value).to eq("my house")
-      expect(page.find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
-      expect(page.find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
+      expect(page.find_by_id("location-field").value).to eq("my house")
+      expect(page.find_by_id("location-field").value).to eq("my house")
+      expect(page.find_by_id("radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
+      expect(page.find_by_id("radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
     end
   end
 
@@ -43,22 +43,22 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows jobseeker to clear a filter" do
-      click_link I18n.t("organisations.filters.special_school")
+      click_on I18n.t("organisations.filters.special_school")
 
       expect_page_to_show_schools([special_school1, secondary_school])
       expect_page_not_to_show_schools([primary_school])
 
       expect(page).to have_link(I18n.t("organisations.search.results.phases.secondary"))
-      expect(page).not_to have_link(I18n.t("organisations.filters.special_school"))
+      expect(page).to have_no_link(I18n.t("organisations.filters.special_school"))
     end
 
     it "allows jobseeker to clear all filters" do
-      click_link "Clear filters"
+      click_on "Clear filters"
 
       expect_page_to_show_schools([special_school1, secondary_school, primary_school])
 
-      expect(page).not_to have_link(I18n.t("organisations.search.results.phases.secondary"))
-      expect(page).not_to have_link(I18n.t("organisations.filters.special_school"))
+      expect(page).to have_no_link(I18n.t("organisations.search.results.phases.secondary"))
+      expect(page).to have_no_link(I18n.t("organisations.filters.special_school"))
     end
   end
 
@@ -154,7 +154,7 @@ RSpec.describe "Searching on the schools page" do
       expect_page_to_show_schools([faith_school, special_school1, special_school2, special_school3, special_school4, special_school5, special_school6,
                                    secondary_school, primary_school, non_faith_school1])
 
-      click_link "2"
+      click_on "2"
 
       expect_page_to_show_schools([non_faith_school2, non_faith_school3])
     end
@@ -168,7 +168,7 @@ RSpec.describe "Searching on the schools page" do
 
   def expect_page_not_to_show_schools(schools)
     schools.each do |school|
-      expect(page).not_to have_link school.name
+      expect(page).to have_no_link school.name
     end
   end
 end

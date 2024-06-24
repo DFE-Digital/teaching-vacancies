@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe StringAnonymiser do
-  let(:input) { "Hello world!" }
   subject { described_class.new(input) }
+
+  let(:input) { "Hello world!" }
 
   describe "#to_s" do
     it "returns an anonymised form of the input string" do

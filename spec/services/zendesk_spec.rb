@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Zendesk, zendesk: true do
+RSpec.describe Zendesk, :zendesk do
   subject(:service) { described_class }
 
   let(:client) { double(ZendeskAPI::Client) }
@@ -37,8 +37,7 @@ RSpec.describe Zendesk, zendesk: true do
     let(:uploads) { double(create!: nil) }
 
     before do
-      allow(client).to receive(:requests).and_return(requests)
-      allow(client).to receive(:uploads).and_return(uploads)
+      allow(client).to receive_messages(requests: requests, uploads: uploads)
     end
 
     it "uses the end user's email address as the API username" do

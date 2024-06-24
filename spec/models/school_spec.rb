@@ -13,10 +13,10 @@ RSpec.describe School do
   end
 
   describe "#religious_character" do
+    subject { build(:school, gias_data: gias_data) }
+
     let(:religious_character) { "Roman Catholic" }
     let(:gias_data) { { "ReligiousCharacter (name)" => religious_character } }
-
-    subject { build(:school, gias_data: gias_data) }
 
     it "returns religious character" do
       expect(subject.religious_character).to eq "Roman Catholic"
@@ -26,7 +26,7 @@ RSpec.describe School do
       let(:religious_character) { "Does not apply" }
 
       it "returns nil" do
-        expect(subject.religious_character).to eq nil
+        expect(subject.religious_character).to be_nil
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe School do
       let(:gias_data) { nil }
 
       it "returns nil" do
-        expect(subject.religious_character).to eq nil
+        expect(subject.religious_character).to be_nil
       end
     end
   end

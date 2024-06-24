@@ -50,7 +50,7 @@ RSpec.describe "Jobseeker profile employments" do
     context "when the form is valid" do
       it "creates the employment and redirects to the review page" do
         expect { post jobseekers_profile_work_history_index_path, params: params }
-          .to change { Employment.count }.by(1)
+          .to change(Employment, :count).by(1)
 
         expect(response).to redirect_to(review_jobseekers_profile_work_history_index_path)
       end
@@ -101,7 +101,7 @@ RSpec.describe "Jobseeker profile employments" do
 
     it "destroys the employment and redirects to the review page" do
       expect { delete jobseekers_profile_work_history_path(employment) }
-        .to change { Employment.count }.by(-1)
+        .to change(Employment, :count).by(-1)
 
       expect(response).to redirect_to(review_jobseekers_profile_work_history_index_path)
     end

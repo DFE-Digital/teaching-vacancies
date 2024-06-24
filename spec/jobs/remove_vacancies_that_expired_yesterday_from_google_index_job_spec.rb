@@ -19,7 +19,7 @@ RSpec.describe RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob do
   end
 
   it "only removes the urls of vacancies that expired yesterday" do
-    urls_for_other_vacancies.each { |url| expect(RemoveGoogleIndexQueueJob).to_not receive(:perform_now).with(url) }
+    urls_for_other_vacancies.each { |url| expect(RemoveGoogleIndexQueueJob).not_to receive(:perform_now).with(url) }
 
     perform_enqueued_jobs { described_class.perform_later }
   end

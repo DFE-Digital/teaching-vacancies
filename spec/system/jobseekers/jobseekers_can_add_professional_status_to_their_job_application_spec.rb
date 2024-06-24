@@ -34,6 +34,6 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
     click_on "Save and continue"
 
-    expect(page).not_to have_css("h2", text: "There is a problem")
+    expect(page).to have_no_css("h2", text: "There is a problem")
   end
 end

@@ -16,8 +16,8 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
     let(:organisation) { create(:school) }
 
     before do
-      click_link I18n.t("nav.school_profile")
-      click_link I18n.t("publishers.organisations.show.preview_link_text", organisation_type: "school")
+      click_on I18n.t("nav.school_profile")
+      click_on I18n.t("publishers.organisations.show.preview_link_text", organisation_type: "school")
     end
 
     it "displays a profile summary" do
@@ -52,8 +52,8 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
     let(:school_two) { create(:school, name: "Test school two") }
 
     before do
-      click_link I18n.t("nav.organisation_profile")
-      click_link I18n.t("publishers.organisations.show.preview_link_text", organisation_type: "organisation")
+      click_on I18n.t("nav.organisation_profile")
+      click_on I18n.t("publishers.organisations.show.preview_link_text", organisation_type: "organisation")
     end
 
     it "displays a profile summary" do
@@ -124,7 +124,7 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
 
         click_on I18n.t("publishers.organisations.schools.preview.exit_preview_link_text")
 
-        expect(current_path).to eq(publishers_organisation_path(school_one))
+        expect(page).to have_current_path(publishers_organisation_path(school_one), ignore_query: true)
       end
     end
   end

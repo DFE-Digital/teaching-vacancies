@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe TabsComponent, type: :component do
-  let(:kwargs) { {} }
-
   subject! { render_inline(described_class.new(**kwargs)) }
+
+  let(:kwargs) { {} }
 
   it_behaves_like "a component that accepts custom classes"
   it_behaves_like "a component that accepts custom HTML attributes"

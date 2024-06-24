@@ -17,7 +17,7 @@ RSpec.describe RandomHelpers do
       end
 
       it "picks a random number from the range" do
-        expect(RandomHelpers).to receive(:rand).with(range).and_call_original
+        expect(described_class).to receive(:rand).with(range).and_call_original
         described_class.factory_rand(range)
       end
     end

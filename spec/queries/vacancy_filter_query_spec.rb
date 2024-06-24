@@ -64,7 +64,7 @@ RSpec.describe VacancyFilterQuery do
     end
 
     context "when visa_sponsorship_available is selected" do
-      it "will return vacancies that offer visa sponsorships" do
+      it "returns vacancies that offer visa sponsorships" do
         filters = {
           visa_sponsorship_availability: ["true"],
         }
@@ -75,7 +75,7 @@ RSpec.describe VacancyFilterQuery do
 
     context "when organisation_types filter is selected" do
       context "when organisation_types == ['Academy']" do
-        it "will return vacancies associated with academies and free schools" do
+        it "returns vacancies associated with academies and free schools" do
           filters = {
             organisation_types: ["Academy"],
           }
@@ -88,7 +88,7 @@ RSpec.describe VacancyFilterQuery do
       end
 
       context "when organisation_types == ['Local authority maintained schools']" do
-        it "will return vacancies associated with local authority maintained schools" do
+        it "returns vacancies associated with local authority maintained schools" do
           filters = {
             organisation_types: ["Local authority maintained schools"],
           }
@@ -97,7 +97,7 @@ RSpec.describe VacancyFilterQuery do
       end
 
       context "when organisation_types is empty" do
-        it "will return vacancies associated with all schools" do
+        it "returns vacancies associated with all schools" do
           filters = {}
           expect(subject.call(filters)).to contain_exactly(
             vacancy1, vacancy2, vacancy3, vacancy4, vacancy5, vacancy6, vacancy7, vacancy8, vacancy9, special_vacancy1,
@@ -111,7 +111,7 @@ RSpec.describe VacancyFilterQuery do
       end
 
       context "when organisation_types includes both 'Academy' and 'Local authority maintained schools'" do
-        it "will return vacancies associated with local authority maintained schools, academies and free schools" do
+        it "returns vacancies associated with local authority maintained schools, academies and free schools" do
           filters = {
             organisation_types: ["Academy", "Local authority maintained schools"],
           }
@@ -127,7 +127,7 @@ RSpec.describe VacancyFilterQuery do
     end
 
     context "when a quick apply filter is selected" do
-      it "will return vacancies with TV quick apply status only" do
+      it "returns vacancies with TV quick apply status only" do
         filters = {
           quick_apply: ["quick_apply"],
         }
@@ -137,7 +137,7 @@ RSpec.describe VacancyFilterQuery do
 
     context "when school_types filter is selected" do
       context "when school_types == ['faith_school']" do
-        it "will return vacancies associated with faith schools" do
+        it "returns vacancies associated with faith schools" do
           filters = {
             school_types: ["faith_school"],
           }
@@ -146,7 +146,7 @@ RSpec.describe VacancyFilterQuery do
       end
 
       context "when school_types = ['special_school']" do
-        it "will return vacancies associated with special schools" do
+        it "returns vacancies associated with special schools" do
           filters = {
             school_types: ["special_school"],
           }
@@ -155,7 +155,7 @@ RSpec.describe VacancyFilterQuery do
       end
 
       context "when school_types includes 'special_school' and 'faith_school" do
-        it "will return vacancies associated with both faith schools and special schools" do
+        it "returns vacancies associated with both faith schools and special schools" do
           filters = {
             school_types: %w[special_school faith_school],
           }

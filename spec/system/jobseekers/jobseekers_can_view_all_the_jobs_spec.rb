@@ -9,7 +9,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
     visit root_path
     click_on I18n.t("buttons.search")
 
-    expect(current_path).to eq(jobs_path)
+    expect(page).to have_current_path(jobs_path, ignore_query: true)
   end
 
   it "jobseekers can visit the home page and use secondary navigation to view jobs" do
@@ -17,7 +17,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
 
     within ".sub-navigation" do
       click_on I18n.t("sub_nav.jobs")
-      expect(current_path).to eq(jobs_path)
+      expect(page).to have_current_path(jobs_path, ignore_query: true)
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can view all the jobs" do
 
     within ".sub-navigation" do
       click_on I18n.t("sub_nav.schools")
-      expect(current_path).to eq(organisations_path)
+      expect(page).to have_current_path(organisations_path, ignore_query: true)
     end
   end
 
@@ -39,12 +39,12 @@ RSpec.describe "Jobseekers can view all the jobs" do
         .to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
     end
     expect(page.find("h2 span", text: job_without_apply.job_title))
-      .not_to have_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
+      .to have_no_sibling("strong.govuk-tag--green", text: I18n.t("vacancies.listing.enable_job_applications_tag"))
   end
 
   describe "pagination" do
     shared_examples "jobseekers can view jobs and navigate between pages" do
-      scenario "jobseekers can view jobs and navigate between pages" do
+      it "jobseekers can view jobs and navigate between pages" do
         expect(page).to have_css(".search-results > .search-results__item", count: 2)
         expect(page).to have_content "Showing 1 to 2 of 5 results"
 

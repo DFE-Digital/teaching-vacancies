@@ -11,7 +11,7 @@ RSpec.describe "School viewing public listings" do
     OmniAuth.config.test_mode = true
   end
 
-  after(:each) do
+  after do
     set_up_omniauth_config
   end
 
@@ -23,10 +23,10 @@ RSpec.describe "School viewing public listings" do
       stub_publisher_authentication_step(school_urn: "110627")
       stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
-      allow(AuthenticationFallback).to receive(:enabled?) { false }
+      allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
     end
 
-    scenario "A signed in school publisher sees a link back to their own dashboard when viewing public listings" do
+    it "A signed in school publisher sees a link back to their own dashboard when viewing public listings" do
       visit new_publisher_session_path
 
       sign_in_publisher

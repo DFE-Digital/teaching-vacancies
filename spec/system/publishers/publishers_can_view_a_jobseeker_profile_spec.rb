@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseeker profiles", type: :system do
+RSpec.describe "Jobseeker profiles" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:jobseeker_profile) { create(:jobseeker_profile, :completed, :with_location_preferences) }
@@ -11,7 +11,7 @@ RSpec.describe "Jobseeker profiles", type: :system do
                                                         catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support senior_leader middle_leader])
   end
 
-  scenario "A publisher can view a jobseeker's profile" do
+  it "A publisher can view a jobseeker's profile" do
     login_publisher(publisher:, organisation:)
     visit publishers_jobseeker_profile_path(jobseeker_profile)
 
@@ -31,7 +31,7 @@ RSpec.describe "Jobseeker profiles", type: :system do
       "Other support roles, Senior leader, Middle leader",
     )
     expect(page).to have_content(jobseeker_profile.employments.first.subjects)
-    expect(page).not_to have_content("Location")
+    expect(page).to have_no_content("Location")
     expect(page).to have_content(jobseeker_profile.training_and_cpds.first.name)
     expect(page).to have_content(jobseeker_profile.training_and_cpds.first.provider)
     expect(page).to have_content(jobseeker_profile.training_and_cpds.first.grade)

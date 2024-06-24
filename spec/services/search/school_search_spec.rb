@@ -58,7 +58,7 @@ RSpec.describe Search::SchoolSearch do
     context "when organisation_types == ['Academy']" do
       let(:organisation_types) { ["Academy"] }
 
-      it "will return academies and free schools" do
+      it "returns academies and free schools" do
         expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools)
       end
     end
@@ -66,20 +66,21 @@ RSpec.describe Search::SchoolSearch do
     context "when organisation_types == ['Local authority maintained schools']" do
       let(:organisation_types) { ["Local authority maintained schools"] }
 
-      it "will return local authority maintained schools" do
+      it "returns local authority maintained schools" do
         expect(subject.organisations).to contain_exactly(local_authority_school)
       end
     end
 
     context "when organisation_types is empty" do
-      it "will return all schools" do
+      it "returns all schools" do
         expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools, local_authority_school, other_school)
       end
     end
 
     context "when organisation_types includes both 'Academy' and 'Local authority maintained schools'" do
       let(:organisation_types) { ["Academy", "Local authority maintained schools"] }
-      it "will return local authority maintained schools, academies and free schools" do
+
+      it "returns local authority maintained schools, academies and free schools" do
         expect(subject.organisations).to contain_exactly(academies, academy, free_school, free_schools, local_authority_school)
       end
     end
@@ -101,7 +102,7 @@ RSpec.describe Search::SchoolSearch do
     context "when school_types == ['faith_school']" do
       let(:school_types) { ["faith_school"] }
 
-      it "will return faith schools" do
+      it "returns faith schools" do
         expect(subject.organisations).to contain_exactly(faith_school)
       end
     end
@@ -109,20 +110,21 @@ RSpec.describe Search::SchoolSearch do
     context "when school_types == ['special_school']" do
       let(:school_types) { ["special_school"] }
 
-      it "will return special schools" do
+      it "returns special schools" do
         expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6)
       end
     end
 
     context "when school_types is empty" do
-      it "will return all schools" do
+      it "returns all schools" do
         expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school, other_school, non_faith_school1, non_faith_school2, non_faith_school3)
       end
     end
 
     context "when school_types includes both 'faith_school' and 'special_school'" do
       let(:school_types) { %w[faith_school special_school] }
-      it "will return special schools and faith schools" do
+
+      it "returns special schools and faith schools" do
         expect(subject.organisations).to contain_exactly(special_school1, special_school2, special_school3, special_school4, special_school5, special_school6, faith_school)
       end
     end
@@ -136,7 +138,7 @@ RSpec.describe Search::SchoolSearch do
     let(:job_availability) { "true" }
     let(:school_types) { ["special_school"] }
 
-    it "clears selected filters " do
+    it "clears selected filters" do
       expect(subject.active_criteria).to eq({ location: ["Sevenoaks", 10], name: name, organisation_types: organisation_types, job_availability: job_availability, key_stage: key_stage, school_types: school_types })
       expect(subject.clear_filters_params).to eq({ location: ["Sevenoaks", 10], name: name, organisation_types: [], education_phase: [], key_stage: [], job_availability: [], school_types: [] })
     end

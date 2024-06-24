@@ -16,19 +16,19 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
   context "when no organisations have been previously selected" do
     context "when viewing active jobs tab" do
-      scenario "it shows all published vacancies" do
+      it "shows all published vacancies" do
         visit organisation_jobs_with_type_path(:published)
 
-        expect(page).to_not have_css(".filters-component__remove-tags__tag")
+        expect(page).to have_no_css(".filters-component__remove-tags__tag")
 
         expect(page).to have_content(school_group_vacancy.job_title)
         expect(page).to have_content(school1_vacancy.job_title)
-        expect(page).to_not have_content(school1_draft_vacancy.job_title)
-        expect(page).to_not have_content(school2_draft_vacancy.job_title)
+        expect(page).to have_no_content(school1_draft_vacancy.job_title)
+        expect(page).to have_no_content(school2_draft_vacancy.job_title)
       end
 
       context "when applying filters" do
-        scenario "it shows filtered published vacancies" do
+        it "shows filtered published vacancies" do
           visit organisation_jobs_with_type_path(:published)
 
           check "Happy Rainbows School (1)"
@@ -36,10 +36,10 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
           expect(page).to have_css(".filters-component__remove-tags__tag", count: 1)
 
-          expect(page).to_not have_content(school_group_vacancy.job_title)
+          expect(page).to have_no_content(school_group_vacancy.job_title)
           expect(page).to have_content(school1_vacancy.job_title)
-          expect(page).to_not have_content(school1_draft_vacancy.job_title)
-          expect(page).to_not have_content(school2_draft_vacancy.job_title)
+          expect(page).to have_no_content(school1_draft_vacancy.job_title)
+          expect(page).to have_no_content(school2_draft_vacancy.job_title)
         end
       end
 
@@ -51,7 +51,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
         end
 
         it "shows all published vacancies again" do
-          expect(page).to_not have_css(".filters-component__remove-tags__tag")
+          expect(page).to have_no_css(".filters-component__remove-tags__tag")
           expect(page).to have_content(school_group_vacancy.job_title)
           expect(page).to have_content(school1_vacancy.job_title)
         end
@@ -59,13 +59,13 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
     end
 
     context "when viewing draft jobs tab" do
-      scenario "it shows all draft vacancies" do
+      it "shows all draft vacancies" do
         visit organisation_jobs_with_type_path(:draft)
 
-        expect(page).to_not have_css(".filters-component__remove-tags__tag")
+        expect(page).to have_no_css(".filters-component__remove-tags__tag")
 
-        expect(page).to_not have_content(school_group_vacancy.job_title)
-        expect(page).to_not have_content(school1_vacancy.job_title)
+        expect(page).to have_no_content(school_group_vacancy.job_title)
+        expect(page).to have_no_content(school1_vacancy.job_title)
         expect(page).to have_content(school1_draft_vacancy.job_title)
         expect(page).to have_content(school2_draft_vacancy.job_title)
       end
@@ -75,15 +75,15 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
   context "when organisations have been previously selected" do
     let!(:publisher_preference_trust) { PublisherPreference.create(publisher: publisher, organisation: trust, organisations: [school1, school2]) }
 
-    scenario "it shows filtered published vacancies" do
+    it "shows filtered published vacancies" do
       visit organisation_jobs_with_type_path
 
       expect(page).to have_css(".filters-component__remove-tags__tag", count: 2)
 
-      expect(page).to_not have_content(school_group_vacancy.job_title)
+      expect(page).to have_no_content(school_group_vacancy.job_title)
       expect(page).to have_content(school1_vacancy.job_title)
-      expect(page).to_not have_content(school1_draft_vacancy.job_title)
-      expect(page).to_not have_content(school2_draft_vacancy.job_title)
+      expect(page).to have_no_content(school1_draft_vacancy.job_title)
+      expect(page).to have_no_content(school2_draft_vacancy.job_title)
     end
   end
 
@@ -106,16 +106,16 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content(I18n.t("publishers.publisher_preferences.form.missing_schools_error"))
-      expect(page).to_not have_content(school4.name)
-      expect(page).to_not have_content(school5.name)
+      expect(page).to have_no_content(school4.name)
+      expect(page).to have_no_content(school5.name)
 
       check school1.name
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content("#{school1.name} (1)")
-      expect(page).to_not have_content(school2.name)
-      expect(page).to_not have_content(school1_draft_vacancy.job_title)
-      expect(page).to_not have_content(school2_draft_vacancy.job_title)
+      expect(page).to have_no_content(school2.name)
+      expect(page).to have_no_content(school1_draft_vacancy.job_title)
+      expect(page).to have_no_content(school2_draft_vacancy.job_title)
 
       click_on I18n.t("jobs.dashboard.add_or_remove_schools")
       uncheck school1.name
@@ -128,10 +128,10 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content("#{school3.name} (0)")
-      expect(page).to_not have_content(school1.name)
-      expect(page).to_not have_content(school2.name)
-      expect(page).to_not have_content(school1_draft_vacancy.job_title)
-      expect(page).to_not have_content(school2_draft_vacancy.job_title)
+      expect(page).to have_no_content(school1.name)
+      expect(page).to have_no_content(school2.name)
+      expect(page).to have_no_content(school1_draft_vacancy.job_title)
+      expect(page).to have_no_content(school2_draft_vacancy.job_title)
     end
   end
 end

@@ -14,7 +14,7 @@ RSpec.describe "Publishers get email notifications from job applications" do
     login_publisher(publisher: publisher, organisation:)
   end
 
-  scenario "publishers get an email linking to the job applications received the day before" do
+  it "publishers get an email linking to the job applications received the day before" do
     perform_enqueued_jobs do
       SendApplicationsReceivedYesterdayJob.new.perform
     end

@@ -47,7 +47,7 @@ RSpec.describe ApplicationController do
   end
 
   describe "AB testing helpers" do
-    let(:ab_tests) { double(AbTests, current_variants: {}) }
+    let(:ab_tests) { instance_double(AbTests, current_variants: {}, variant_for: nil) }
 
     before do
       allow(AbTests).to receive(:new).and_return(ab_tests)
@@ -59,7 +59,7 @@ RSpec.describe ApplicationController do
         let(:params) { {} }
 
         it "returns the variant as determined by AbTests" do
-          expect(ab_tests).to receive(:variant_for).with(:foo).and_return(:bar)
+          allow(ab_tests).to receive(:variant_for).with(:foo).and_return(:bar)
           expect(controller.view_context.ab_variant_for(:foo)).to eq(:bar)
         end
       end
@@ -68,8 +68,8 @@ RSpec.describe ApplicationController do
         let(:params) { { ab_test_override: { foo: :baz } } }
 
         it "returns the variant as determined by AbTests" do
-          expect(ab_tests).not_to receive(:variant_for).with(:foo)
           expect(controller.view_context.ab_variant_for(:foo)).to eq(:baz)
+          expect(ab_tests).not_to have_received(:variant_for).with(:foo)
         end
       end
     end

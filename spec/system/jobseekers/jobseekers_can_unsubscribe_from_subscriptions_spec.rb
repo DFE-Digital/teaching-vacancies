@@ -22,7 +22,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
     end
 
     it "updates the subscription status" do
-      expect(subscription.reload.active).to eq(false)
+      expect(subscription.reload.active).to be(false)
     end
 
     context "when jobseeker is not signed in" do
@@ -50,7 +50,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
 
         click_on I18n.t("jobseekers.unsubscribe_feedbacks.confirmation.new_search_link")
 
-        expect(current_path).to eq jobs_path
+        expect(page).to have_current_path jobs_path, ignore_query: true
       end
     end
   end
@@ -74,7 +74,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
 
     let(:token) { subscription.token }
 
-    scenario "still returns 200" do
+    it "still returns 200" do
       travel 3.days do
         expect(page.status_code).to eq(200)
       end

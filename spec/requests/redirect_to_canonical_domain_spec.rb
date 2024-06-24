@@ -13,7 +13,7 @@ RSpec.describe "Redirect to canonical domain" do
     it "redirects to the canonical domain" do
       get "/", headers: headers
 
-      expect(response.status).to eq(301)
+      expect(response).to have_http_status(:moved_permanently)
 
       domain_minus_port = DOMAIN.split(":").first
       expect(response.location).to eq("http://#{domain_minus_port}/")
@@ -22,19 +22,19 @@ RSpec.describe "Redirect to canonical domain" do
     it "does not redirect when the request is to the healthcheck path" do
       get "/check", headers: headers
 
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it "does not redirect when the request is from Diego Healthcheck" do
       get "/", headers: headers.merge("User-Agent" => "diego-healthcheck")
 
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it "does not redirect when the request is from Amazon CloudFront" do
       get "/", headers: headers.merge("User-Agent" => "Amazon CloudFront")
 
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe "Redirect to canonical domain" do
     it "does not redirect" do
       get "/", headers: headers
 
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 end

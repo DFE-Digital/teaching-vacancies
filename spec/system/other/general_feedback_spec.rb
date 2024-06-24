@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "Giving general feedback for the service", recaptcha: true do
+RSpec.describe "Giving general feedback for the service", :recaptcha do
   let(:comment) { "Keep going!" }
   let(:email) { "test@example.com" }
   let(:occupation) { "teacher" }
   let(:visit_purpose_comment) { "testing" }
 
-  scenario "can submit general feedback from any page" do
+  it "can submit general feedback from any page" do
     visit jobs_path
     click_on I18n.t("footer.provide_feedback")
     expect(page).to have_content(I18n.t("general_feedbacks.new.heading"))
@@ -16,7 +16,7 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
 
     fill_in_general_feedback
 
-    expect { click_button I18n.t("buttons.submit_feedback") }.to change {
+    expect { click_on I18n.t("buttons.submit_feedback") }.to change {
       Feedback.where(comment: comment,
                      email: email,
                      occupation: occupation,
@@ -37,14 +37,14 @@ RSpec.describe "Giving general feedback for the service", recaptcha: true do
       allow_any_instance_of(ApplicationController).to receive(:verify_recaptcha).and_return(false)
     end
 
-    scenario "requests the user to pass a recaptcha V2 check" do
+    it "requests the user to pass a recaptcha V2 check" do
       visit new_feedback_path
       click_on I18n.t("buttons.submit_feedback")
       expect(page).to have_content("There is a problem")
 
       fill_in_general_feedback
 
-      expect { click_button I18n.t("buttons.submit_feedback") }.not_to change(Feedback, :count)
+      expect { click_on I18n.t("buttons.submit_feedback") }.not_to change(Feedback, :count)
       expect(page).to have_content("There is a problem")
       expect(page).to have_content(I18n.t("recaptcha.error"))
       expect(page).to have_content(I18n.t("recaptcha.label"))

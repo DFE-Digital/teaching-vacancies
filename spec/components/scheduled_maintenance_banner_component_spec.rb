@@ -2,13 +2,13 @@ require "rails_helper"
 
 RSpec.describe ScheduledMaintenanceBannerComponent, type: :component do
   describe "#render" do
+    subject(:component) { described_class.new(date:, start_time:, end_time:) }
+
     RSpec.shared_examples "does not render" do
       it "does not render" do
-        expect(component.render?).to eq(false)
+        expect(component.render?).to be(false)
       end
     end
-
-    subject(:component) { described_class.new(date:, start_time:, end_time:) }
 
     let(:app_role) { "production" }
     let(:date) { "5th October 2023" }
@@ -53,7 +53,7 @@ RSpec.describe ScheduledMaintenanceBannerComponent, type: :component do
       let(:app_role) { "production" }
 
       it "does render" do
-        expect(component.render?).to eq(true)
+        expect(component.render?).to be(true)
       end
     end
   end

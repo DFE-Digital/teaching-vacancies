@@ -18,7 +18,7 @@ RSpec.describe FeedbackReportingPeriod do
     context "when there is no feedback" do
       before { Feedback.destroy_all }
 
-      it { should be_empty }
+      it { is_expected.to be_empty }
     end
   end
 
