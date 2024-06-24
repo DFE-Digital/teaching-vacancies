@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@sentry/browser": "8.9.2",
+    "@sentry/browser": "8.11.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.0",
     "axios": "^1.7.2",
