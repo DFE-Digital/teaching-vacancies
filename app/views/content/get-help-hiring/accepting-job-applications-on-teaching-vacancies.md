@@ -98,11 +98,11 @@ When you view your list of [active](https://teaching-vacancies.service.gov.uk/or
 
 Click on a candidate’s name to see details of their application. Each applicant is given one of the following labels:
 
-* **Unread** - new applications you have not yet clicked on
-* **Reviewed** - applications you have clicked on, but not yet rejected or shortlisted
-* **Withdrawn** - applications that have been withdrawn by the jobseeker
-* **Rejected** - applications which you have declined
-* **Shortlisted** - applications which you have taken on to the next stage
+* **unread** - new applications you have not yet clicked on
+* **reviewed** - applications you have clicked on, but not yet rejected or shortlisted
+* **withdrawn** - applications that have been withdrawn by the jobseeker
+* **rejected** - applications which you have declined
+* **shortlisted** - applications which you have taken on to the next stage
 
 You can shortlist or reject applications either from the main list (once they have been reviewed) or from within the application details page. When you choose to shortlist or reject a candidate, you’re given the option to provide more information to be included within the notification email.
 
