@@ -68,10 +68,14 @@ RSpec.describe "Jobseekers can prefill applications" do
           expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
         end
 
-        expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification1.category}"))
-        expect(page).to have_content(qualification1.institution)
-        expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification1.category}"))
-        expect(page).to have_content(qualification2.institution)
+        previous_application.qualifications.each do |qualification|
+          expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification.category}"))
+          expect(page).to have_content(qualification.institution)
+          if qualification.display_attributes.include?("grade")
+            expect(page).to have_content("(#{qualification.grade})")
+          end
+        end
+
         within('#qualifications') do
           expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
         end
@@ -104,12 +108,20 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(page).to have_content("You have recently made a candidate profile")
   
         click_on I18n.t("buttons.start_application")
+
   
         expect(page).to have_content(profile.personal_details.first_name)
         expect(page).to have_content(profile.personal_details.last_name)
         expect(page).to have_content(profile.personal_details.phone_number)
         expect(page).to have_content(profile.qualified_teacher_status_year)
         expect(page).to have_content(profile.qualifications.first.institution)
+        profile.qualifications.each do |qualification|
+          expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification.category}"))
+          expect(page).to have_content(qualification.institution)
+          if qualification.display_attributes.include?("grade")
+            expect(page).to have_content("(#{qualification.grade})")
+          end
+        end
         expect(page).to have_content(profile.employments.first.job_title)
         expect(page).to have_content(profile.employments.first.subjects)
       end

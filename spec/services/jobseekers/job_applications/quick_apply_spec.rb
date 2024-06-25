@@ -2,126 +2,190 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplications::QuickApply do
   let(:jobseeker) { create(:jobseeker) }
-  let(:old_vacancy) { create(:vacancy) }
   let(:new_vacancy) { create(:vacancy) }
-  let!(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
-  let!(:older_job_application) { create(:job_application, :status_submitted, submitted_at: 1.week.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
-  let!(:draft_job_application) { create(:job_application, jobseeker: jobseeker, vacancy: old_vacancy) }
 
-  describe "#recent_job_application" do
-    subject { described_class.new(jobseeker, new_vacancy).send(:recent_job_application) }
+  subject { described_class.new(jobseeker, new_vacancy).job_application }
 
-    it "returns the most recent non draft job application for the jobseeker" do
-      expect(subject).to eq(recent_job_application)
+  describe "#job_application" do
+    context "when jobseeker has a recent job application" do
+      let(:old_vacancy) { create(:vacancy) }
+      let!(:recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.day.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
+      let!(:older_job_application) { create(:job_application, :status_submitted, submitted_at: 1.week.ago, jobseeker: jobseeker, vacancy: old_vacancy) }
+      let!(:draft_job_application) { create(:job_application, jobseeker: jobseeker, vacancy: old_vacancy) }
+
+      it "creates a new draft job application for the new vacancy" do
+        expect { subject }.to change { jobseeker.job_applications.draft.count }.by(1)
+        expect(subject.vacancy).to eq(new_vacancy)
+      end
+
+      context "when all steps from the most recent application are relevant to the new application" do
+        let(:attributes_to_copy) do
+          %i[ first_name last_name previous_names street_address city country postcode phone_number teacher_reference_number
+              national_insurance_number qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details
+              statutory_induction_complete support_needed support_needed_details]
+        end
+
+        it "copies personal info from the recent job application" do
+          expect(subject.slice(attributes_to_copy)).to eq(recent_job_application.slice(attributes_to_copy))
+        end
+
+        it "copies completed steps except for declarations and equal opportunities and also adds them to imported steps" do
+          expect(subject.completed_steps)
+            .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications employment_history training_and_cpds])
+          expect(subject.imported_steps)
+            .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications employment_history training_and_cpds])
+        end
+
+        it "sets in progress steps as empty" do
+          expect(subject.in_progress_steps)
+            .to eq(%w[])
+        end
+      end
+
+      context "when there are steps in the most recent application that are not relevant to the new application" do
+        subject { described_class.new(jobseeker, vacancy_for_teaching_assistant).job_application }
+        let(:vacancy_for_teacher) { create(:vacancy, job_roles: ["teacher"]) }
+        let(:vacancy_for_teaching_assistant) { create(:vacancy, job_roles: ["teaching_assistant"]) }
+        let!(:most_recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.hour.ago, jobseeker: jobseeker, vacancy: vacancy_for_teacher) }
+        let(:attributes_to_not_copy) { %i[qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details statutory_induction_complete] }
+        let(:completed_step_to_not_copy) { %i[professional_status] }
+
+        it "only copies the relevant personal info from the recent job application" do
+          expect(subject.slice(attributes_to_not_copy)).to_not eq(most_recent_job_application.slice(attributes_to_not_copy))
+        end
+
+        it "only copies the relevant completed steps" do
+          expect(subject.completed_steps).to_not include(completed_step_to_not_copy)
+        end
+      end
+
+      it "copies qualifications from the recent job application" do
+        attributes_to_copy = %i[category finished_studying finished_studying_details grade institution name subject year]
+
+        expect(subject.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
+          .to eq(recent_job_application.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
+      end
+
+      it "sets qualifications section completed to true" do
+        expect(subject.qualifications_section_completed).to eq(true)
+      end
+
+      it "copies employments from the recent job application" do
+        attributes_to_copy = %i[organisation job_title subjects current_role main_duties started_on ended_on]
+
+        expect(subject.employments.map { |employment| employment.slice(*attributes_to_copy) })
+          .to eq(recent_job_application.employments.map { |employment| employment.slice(*attributes_to_copy) })
+      end
+
+      it "sets employment history section completed to true" do
+        expect(subject.employment_history_section_completed).to eq(true)
+      end
+
+      it "copies references from the recent job application" do
+        attributes_to_copy = %i[name job_title organisation relationship email phone_number]
+
+        expect(subject.references.map { |reference| reference.slice(*attributes_to_copy) })
+          .to eq(recent_job_application.references.map { |reference| reference.slice(*attributes_to_copy) })
+      end
+
+      it "copies training and cpds from the recent job application" do
+        attributes_to_copy = %i[name provider grade year_awarded]
+
+        expect(subject.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
+          .to eq(recent_job_application.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
+
+        expect(subject.training_and_cpds_section_completed).to eq(true)
+      end
+
+      it "does not copy declarations attributes from the recent job application" do
+        expect(subject.close_relationships).to be_blank
+        expect(subject.close_relationships_details).to be_blank
+      end
+
+      it "does not copy equal opportunities attributes from the recent job application" do
+        expect(subject.disability).to be_blank
+        expect(subject.gender).to be_blank
+        expect(subject.gender_description).to be_blank
+        expect(subject.orientation).to be_blank
+        expect(subject.orientation_description).to be_blank
+        expect(subject.ethnicity).to be_blank
+        expect(subject.ethnicity_description).to be_blank
+        expect(subject.religion).to be_blank
+        expect(subject.religion_description).to be_blank
+      end
     end
   end
 
-  describe "#job_application" do
-    subject { described_class.new(jobseeker, new_vacancy).job_application }
+  context "when jobseeker does not have a recent job application but does have a jobseeker profile" do
+    let!(:jobseeker_profile) { create(:jobseeker_profile, :completed, jobseeker: jobseeker) }
 
     it "creates a new draft job application for the new vacancy" do
       expect { subject }.to change { jobseeker.job_applications.draft.count }.by(1)
       expect(subject.vacancy).to eq(new_vacancy)
     end
 
-    context "when all steps from the most recent application are relevant to the new application" do
-      let(:attributes_to_copy) do
-        %i[ first_name last_name previous_names street_address city country postcode phone_number teacher_reference_number
-            national_insurance_number qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details
-            statutory_induction_complete support_needed support_needed_details]
-      end
-
-      it "copies attributes" do
-        expect(subject.slice(attributes_to_copy)).to eq(recent_job_application.slice(attributes_to_copy))
-      end
-
-      it "copies completed steps except for declarations and equal opportunities and also adds them to imported steps" do
-        expect(subject.completed_steps)
-          .to eq(%w[personal_details professional_status references ask_for_support qualifications employment_history training_and_cpds])
-        expect(subject.imported_steps)
-          .to eq(%w[personal_details professional_status references ask_for_support qualifications employment_history training_and_cpds])
-      end
-
-      it "sets in progress steps as qualifications, employment history and professional status" do
-        expect(subject.in_progress_steps)
-          .to eq(%w[])
-      end
-    end
-
-    context "when there are steps in the most recent application that are not relevant to the new application" do
-      subject { described_class.new(jobseeker, vacancy_for_teaching_assistant).job_application }
-      let(:vacancy_for_teacher) { create(:vacancy, job_roles: ["teacher"]) }
-      let(:vacancy_for_teaching_assistant) { create(:vacancy, job_roles: ["teaching_assistant"]) }
-      let!(:most_recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.hour.ago, jobseeker: jobseeker, vacancy: vacancy_for_teacher) }
-      let(:attributes_to_not_copy) { %i[qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details statutory_induction_complete] }
-      let(:completed_step_to_not_copy) { %i[professional_status] }
-
-      it "only copies the relevant attributes" do
-        expect(subject.slice(attributes_to_not_copy)).to_not eq(most_recent_job_application.slice(attributes_to_not_copy))
-      end
-
-      it "only copies the relevant completed steps" do
-        expect(subject.completed_steps).to_not include(completed_step_to_not_copy)
-      end
-    end
-
-    it "copies qualifications" do
+    it "copies qualifications from jobseeker profile" do
       attributes_to_copy = %i[category finished_studying finished_studying_details grade institution name subject year]
 
       expect(subject.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
-        .to eq(recent_job_application.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
+        .to eq(jobseeker_profile.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
     end
 
-    it "sets qualifications section completed to true" do
-      expect(subject.qualifications_section_completed).to eq(true)
+    it "sets qualifications section completed to false" do
+      expect(subject.qualifications_section_completed).to eq(false)
     end
 
-    it "copies employments" do
+    it "adds qualifications to in progress steps" do
+      expect(subject.in_progress_steps).to include("qualifications")
+    end
+
+    it "copies employments from jobseeker profile" do
       attributes_to_copy = %i[organisation job_title subjects current_role main_duties started_on ended_on]
 
       expect(subject.employments.map { |employment| employment.slice(*attributes_to_copy) })
-        .to eq(recent_job_application.employments.map { |employment| employment.slice(*attributes_to_copy) })
+        .to eq(jobseeker_profile.employments.map { |employment| employment.slice(*attributes_to_copy) })
     end
 
-    it "sets employment history section completed to true" do
-      expect(subject.employment_history_section_completed).to eq(true)
+    it "sets employment history section completed to false" do
+      expect(subject.employment_history_section_completed).to eq(false)
     end
 
-    it "copies references" do
-      attributes_to_copy = %i[name job_title organisation relationship email phone_number]
-
-      expect(subject.references.map { |reference| reference.slice(*attributes_to_copy) })
-        .to eq(recent_job_application.references.map { |reference| reference.slice(*attributes_to_copy) })
+    it "adds employment history to in progress steps" do
+      expect(subject.in_progress_steps).to include("employment_history")
     end
 
-    it "copies training and cpds" do
+    it "copies training and cpds from jobseeker profile" do
       attributes_to_copy = %i[name provider grade year_awarded]
 
       expect(subject.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
-        .to eq(recent_job_application.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
-
-      expect(subject.training_and_cpds_section_completed).to eq(true)
+        .to eq(jobseeker_profile.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
     end
 
-    it "does not copy declarations attributes" do
-      expect(subject.close_relationships).to be_blank
-      expect(subject.close_relationships_details).to be_blank
+    it "sets training and cpds section completed to false" do
+      expect(subject.training_and_cpds_section_completed).to eq(false)
     end
 
-    it "does not copy equal opportunities attributes" do
-      expect(subject.disability).to be_blank
-      expect(subject.gender).to be_blank
-      expect(subject.gender_description).to be_blank
-      expect(subject.orientation).to be_blank
-      expect(subject.orientation_description).to be_blank
-      expect(subject.ethnicity).to be_blank
-      expect(subject.ethnicity_description).to be_blank
-      expect(subject.religion).to be_blank
-      expect(subject.religion_description).to be_blank
+    it "adds training and cpds to in progress steps" do
+      expect(subject.in_progress_steps).to include("training_and_cpds")
+    end
+  end
+
+  context "when jobseeker has neither a recent job application nor a jobseeker profile" do
+    it "creates a new draft job application for the new vacancy" do
+      expect { subject }.to change { jobseeker.job_applications.draft.count }.by(1)
+      expect(subject.vacancy).to eq(new_vacancy)
     end
 
-    it "does not copy personal statement" do
-      expect(subject.personal_statement).to eq recent_job_application.personal_statement
+    it "returns blank job application" do
+      expect(subject.first_name).to be_blank
+      expect(subject.last_name).to be_blank
+      expect(subject.phone_number).to be_blank
+      expect(subject.qualified_teacher_status_year).to be_blank
+      expect(subject.qualified_teacher_status).to be_blank
+      expect(subject.right_to_work_in_uk).to be_blank
+      expect(subject.qualifications).to be_blank
+      expect(subject.employments).to be_blank
+      expect(subject.training_and_cpds).to be_blank
     end
   end
 end

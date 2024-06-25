@@ -41,15 +41,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
 
-    new_job_application = if previous_application?
-                            Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
-                          else
-                            current_jobseeker.job_applications.build(vacancy:)
-                          end
-
-    prefill_application(new_job_application)
-    new_job_application.save!
-
+    new_job_application = prefill_job_application_with_available_data
+    
     redirect_to jobseekers_job_application_review_path(new_job_application)
   end
 
@@ -100,6 +93,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   private
+
+  def prefill_job_application_with_available_data
+    Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
+  end
 
   def update_jobseeker_profile!(job_application, form)
     profile = job_application.jobseeker.jobseeker_profile
@@ -207,54 +204,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
       DfE::Analytics::SendEvents.do([event])
     end
-  end
-
-  def prefill_application(application)
-    return if previous_application?
-    return unless profile.present?
-
-    application.assign_attributes(
-      employments: profile.employments.map(&:duplicate),
-      first_name: profile.personal_details&.first_name,
-      last_name: profile.personal_details&.last_name,
-      phone_number: profile.personal_details&.phone_number,
-      qualifications: profile.qualifications.map(&:duplicate),
-      training_and_cpds: profile.training_and_cpds.map(&:duplicate),
-      qualified_teacher_status_year: profile.qualified_teacher_status_year || "",
-      qualified_teacher_status: profile.qualified_teacher_status || "",
-      right_to_work_in_uk: profile_right_to_work,
-    )
-
-    mark_step_completion(application)
-    application
-  end
-
-  def profile_right_to_work
-    return "" if profile.personal_details&.right_to_work_in_uk.nil?
-
-    profile.personal_details.right_to_work_in_uk? ? "yes" : "no"
-  end
-
-  def mark_step_completion(application)
-    if application.first_name.present? || application.last_name.present? || application.phone_number.present? || application.right_to_work_in_uk.present?
-      application.in_progress_steps += [:personal_details]
-    end
-
-    if application.employments.any?
-      application.in_progress_steps += [:employment_history]
-    end
-
-    if application.qualified_teacher_status.present?
-      application.in_progress_steps += [:professional_status]
-    end
-
-    if application.training_and_cpds.any?
-      application.in_progress_steps += [:training_and_cpds]
-    end
-
-    return unless application.qualifications.present?
-
-    application.in_progress_steps += [:qualifications]
   end
 
   def profile
