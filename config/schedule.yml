@@ -18,6 +18,16 @@ export_users:
   class: 'ExportDSIUsersToBigQueryJob'
   queue: low
 
+export_vacancies_published_and_updated_to_dwp_find_a_job_service:
+  cron: '30 23 * * *'
+  class: 'ExportVacanciesPublishedAndUpdatedSinceYesterdayToDwpFindAJobServiceJob'
+  queue: low
+
+export_vacancies_closed_early_to_dwp_find_a_job_service:
+  cron: '30 21 * * *'
+  class: 'ExportVacanciesClosedEarlySinceYesterdayToDwpFindAJobServiceJob'
+  queue: low
+
 import_organisation_data:
   cron: '0 22 * * *'
   class: 'ImportOrganisationDataJob'

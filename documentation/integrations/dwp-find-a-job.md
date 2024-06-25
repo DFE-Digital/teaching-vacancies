@@ -10,10 +10,6 @@ There are 2 bulk upload types:
 1. Uploading new/edited vacancies (published/updated on TV vacancies)
 2. Uploading expired/deleted vacancies (manually closed early on TV vacancies)
 
-The bulk upload file/s are imported once per day by Find a job service.
-
-Teaching Vacancies has no control on the frequency or timing of these imports, besides pushing info daily to be imported by Find a job.
-
 ```mermaid
 block-beta
 columns 3
@@ -252,6 +248,41 @@ We identify them by querying vacancies under all the following conditions:
 
 This criteria relies on, when the vacancies are manually closed, they get their closing datetime set to "right now", what also gets registered in the `updated_at` DB timestamp.
 There will be some difference on the exact timestamps, so we were generous and set 60 secs to be sure no closed vacancy stays posted in the Find a Job service.
+
+## How do we schedule the uploads
+The bulk upload file/s are imported once per day by Find a job service.
+
+Teaching Vacancies has no control on the frequency or timing of these imports, besides pushing info daily to be imported by Find a job.
+
+Every night we will push:
+- the vacancies that got published or updated over the last 25 hours.
+- the vacancies that got manually closed/expired by the publisher over the last 25 hours.
+
+Note: We use 25 hours to have 1h overlap between runs. Better to have some vacancies updated/deleted twice than missing from being exported
+due to its update in TV happening at the same time as the scheduled export run.
+
+## How to test-debug changes
+Find a Job service does not offer a testing environment, so all the testing needs to be done over production environment.
+
+The process for end-to-end manually testing goes through:
+1. Connect to a TV production console.
+2. Manually push the export to Find a Job service.
+  - Eg: `Vacancies::Export::DwpFindAJob::PublishedAndUpdated.new(1.hour.ago).call`
+3. Using a FTP Client, connect to the DWP Find a Job SFTP Server.
+  - The connection details are defined in the env variables:
+    - `FIND_A_JOB_FTP_HOST`
+    - `FIND_A_JOB_FTP_PORT`
+    - `FIND_A_JOB_FTP_USER`
+    - `FIND_A_JOB_FTP_PASSWORD`
+4. On the FTP server, you will find:
+  - The files to be imported placed in the `Inbound` folder.
+  - The output of the recent upload/expiry exports placed in the `Outbund` folder.
+  - Already imported files placed in the `processed` folder.
+5. You can download/delete the files, editing them locally and re-upload them.
+6. Eventually, the files at the `Inbound` folder will be imported, moved to `processed` and a report generated at `Outbound`.
+5. You can see/manage the job adverts through the [Find a Job employer dashboard](https://findajob.dwp.gov.uk/employer/sign-in)
+  - An administrator has to invite you to Teaching Vacancies team. Our PM is the current admin.
+  - You will be able to manually Delete the adverts there.
 
 
 ## Technical specification
