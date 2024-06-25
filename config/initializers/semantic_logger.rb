@@ -1,3 +1,6 @@
+require "semantic_logger"
+require "json"
+
 class CustomLogFormatter < SemanticLogger::Formatters::Raw
   def call(log, logger)
     super
@@ -9,6 +12,10 @@ class CustomLogFormatter < SemanticLogger::Formatters::Raw
 end
 
 unless Rails.env.local?
-  SemanticLogger.add_appender(io: STDOUT, level: Rails.application.config.log_level, formatter: CustomLogFormatter.new)
+  SemanticLogger.add_appender(
+    io: $stdout,
+    level: Rails.application.config.log_level,
+    formatter: CustomLogFormatter.new,
+  )
   Rails.logger.info("Application logging to STDOUT")
 end

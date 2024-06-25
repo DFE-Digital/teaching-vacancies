@@ -71,9 +71,12 @@ Rails.application.configure do
   config.active_support.report_deprecations = true
 
   # Use Semantic_Logger for cleaner logging
+  config.semantic_logger.application = "" # No need to send the application name as logstash reads it from Cloud Foundry log tags
   config.rails_semantic_logger.format = :json
   config.rails_semantic_logger.add_file_appender = false
   config.active_record.logger = nil # Don't log SQL in production
+  config.semantic_logger.backtrace_level = :error
+  config.semantic_logger.add_appender(io: $stdout, level: config.log_level, formatter: config.rails_semantic_logger.format)
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
