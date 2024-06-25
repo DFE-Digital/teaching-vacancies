@@ -116,4 +116,4 @@ To comply with data protection regulations, you will have access to applications
 
 If you have questions about using Teaching Vacancies to receive and manage job applications, please [contact us](https://teaching-vacancies.service.gov.uk/support_request/new).
 
-* Read our advice on [how to write teacher job adverts](/get-help-hiring/creating-the-perfect-teacher-job-advert)
+ Read our advice on [how to write teacher job adverts](/get-help-hiring/creating-the-perfect-teacher-job-advert)
