@@ -36,6 +36,25 @@ users.each do |user|
   FactoryBot.create(:jobseeker, email: user[:email], password: "password")
 end
 
+zoonou_users = [
+  { email: "ch01@teztr.com", family_name: "CH01", given_name: "ch01" },
+  { email: "ch02@teztr.com", family_name: "CH02", given_name: "ch02" },
+  { email: "ch03@teztr.com", family_name: "CH03", given_name: "ch03" },
+  { email: "ch04@teztr.com", family_name: "CH04", given_name: "ch04" },
+  { email: "ch05@teztr.com", family_name: "CH05", given_name: "ch05" },
+  { email: "ch06@teztr.com", family_name: "CH06", given_name: "ch06" },
+  { email: "ch07@teztr.com", family_name: "CH07", given_name: "ch07" },
+  { email: "ch08@teztr.com", family_name: "CH08", given_name: "ch08" },
+  { email: "ch09@teztr.com", family_name: "CH09", given_name: "ch09" },
+  { email: "ch10@teztr.com", family_name: "CH10", given_name: "ch10" },
+]
+
+zoonou_users.each do |user|
+  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la], **user)
+  SupportUser.create(user)
+  FactoryBot.create(:jobseeker, email: user[:email], password: "Tester987!")
+end
+
 # Vacancies at Bexleyheath school
 attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.readable_phase], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
 6.times { FactoryBot.create(:vacancy, :published, **attrs) }
