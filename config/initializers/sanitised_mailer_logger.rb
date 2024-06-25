@@ -5,9 +5,7 @@ class CustomLogFormatter < SemanticLogger::Formatters::Raw
   def call(log, logger)
     super
 
-    if hash["payload"].is_a?(Hash) && hash["payload"]["to"]
-      hash["payload"].delete("to")
-    end
+    hash["message"].reject! { |key, _| key == "to" }
 
     hash.to_json
   end
