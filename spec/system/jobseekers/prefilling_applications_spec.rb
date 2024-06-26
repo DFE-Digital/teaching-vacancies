@@ -28,13 +28,13 @@ RSpec.describe "Jobseekers can prefill applications" do
       it "prefills the new application with the previous application details, not the profile details and marks steps as `imported`" do
         visit job_path(vacancy.id)
 
-        expect(page).to have_content("Your details have been imported from your last job application.")
-
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.saved_jobs.index.apply")
         end
 
         click_on I18n.t("buttons.start_application")
+
+        expect(page).to have_content("Your details have been imported from your last job application.")
 
         expect(page).to have_content(previous_application.first_name)
         expect(page).to have_content(previous_application.last_name)
@@ -122,26 +122,6 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(page).to have_content(profile.employments.first.job_title)
         expect(page).to have_content(profile.employments.first.subjects)
       end
-    end
-  end
-
-  context "when the jobseeker has a previous application" do
-    let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
-
-    it "uses the details from the previous application" do
-      visit job_path(vacancy.id)
-
-      within ".banner-buttons" do
-        click_on I18n.t("jobseekers.saved_jobs.index.apply")
-      end
-
-      expect(page).to have_content("Your details have been imported from your last job application")
-
-      click_on I18n.t("buttons.start_application")
-
-      expect(page).to have_content(previous_application.first_name)
-      expect(page).to have_content(previous_application.last_name)
-      expect(page).to have_content(previous_application.phone_number)
     end
   end
 
