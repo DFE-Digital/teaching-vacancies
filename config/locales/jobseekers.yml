@@ -339,6 +339,7 @@ en:
           heading: Terms & Conditions
           privacy: privacy policy
           terms: terms and conditions
+        import_from_previous_application: Your details have been imported from your last job application. You should review each section to make sure the information is correct.
         description1: >-
           Your details have been imported from your last job application.
         description2: You should review this information before submitting.
