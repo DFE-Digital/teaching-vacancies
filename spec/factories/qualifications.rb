@@ -13,12 +13,10 @@ FactoryBot.define do
     end
 
     category { factory_sample(Qualification.categories.keys) }
-    finished_studying { undergraduate? || postgraduate? || other? ? Faker::Boolean.boolean : true }
+    finished_studying { undergraduate? || postgraduate? || other? ? Faker::Boolean.boolean : nil }
     finished_studying_details { finished_studying == false ? "Stopped due to illness" : "" }
     grade do
-      if gcse? || a_level? || as_level?
-        factory_sample(%w[A B C])
-      elsif finished_studying?
+      if finished_studying?
         undergraduate? || postgraduate? ? factory_sample(["2.1", "2.2", "Honours"]) : factory_sample(%w[Pass Merit Distinction])
       else
         ""
