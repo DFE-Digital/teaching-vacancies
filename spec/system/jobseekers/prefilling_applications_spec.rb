@@ -20,14 +20,16 @@ RSpec.describe "Jobseekers can prefill applications" do
       let(:qualification1) { create(:qualification) }
       let(:qualification2) { create(:qualification) }
       let(:training) { create(:training_and_cpd) }
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", 
-                                                             references: [reference], employments: [employment1, employment2], qualifications: [qualification1, qualification2]) }
+      let!(:previous_application) do
+        create(:job_application, :status_submitted, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020",
+                                                    references: [reference], employments: [employment1, employment2], qualifications: [qualification1, qualification2])
+      end
 
       it "prefills the new application with the previous application details, not the profile details and marks steps as `imported`" do
         visit job_path(vacancy.id)
 
         expect(page).to have_content("Your details have been imported from your last job application or profile")
-      
+
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.saved_jobs.index.apply")
         end
@@ -39,21 +41,21 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(page).to have_content(previous_application.first_name)
         expect(page).to have_content(previous_application.last_name)
         expect(page).to have_content(previous_application.phone_number)
-        within('#personal_details') do
-          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        within("#personal_details") do
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
         expect(page).to have_content(previous_application.personal_statement)
-        within('#personal_statement.review-component__section') do
-          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        within("#personal_statement.review-component__section") do
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
         # qualified teacher status
         expect(page).to have_content("Yes, awarded in 2020")
         # skilled worker visa sponsorship
         expect(page).to have_content("No, I already have the right to work in the UK")
-        within('#professional_status') do
-          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        within("#professional_status") do
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
         # references
         expect(page).to have_content(reference.job_title)
@@ -64,8 +66,8 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(page).to have_content(employment1.organisation)
         expect(page).to have_content(employment2.main_duties)
         expect(page).to have_content(employment2.organisation)
-        within('#employment_history') do
-          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        within("#employment_history") do
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
         previous_application.qualifications.each do |qualification|
@@ -76,8 +78,8 @@ RSpec.describe "Jobseekers can prefill applications" do
           end
         end
 
-        within('#qualifications') do
-          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        within("#qualifications") do
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
         expect(page).to have_content(training.name)
@@ -85,14 +87,14 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(page).to have_content(training.grade)
         expect(page).to have_content(training.year_awarded)
 
-        within('#training_and_cpds') do
-          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        within("#training_and_cpds") do
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
         expect(page).to have_content(previous_application.support_needed.capitalize)
         expect(page).to have_content(previous_application.support_needed_details)
-        within('#ask_for_support') do
-          expect(page).to have_css('strong.govuk-tag.govuk-tag--blue', text: 'imported')
+        within("#ask_for_support") do
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
       end
     end
@@ -100,16 +102,15 @@ RSpec.describe "Jobseekers can prefill applications" do
     context "when the jobseeeker does not have a previous application" do
       it "prefills the application form with the jobseeker's profile details" do
         visit job_path(vacancy.id)
-  
+
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.saved_jobs.index.apply")
         end
-  
+
         expect(page).to have_content("You have recently made a candidate profile")
-  
+
         click_on I18n.t("buttons.start_application")
 
-  
         expect(page).to have_content(profile.personal_details.first_name)
         expect(page).to have_content(profile.personal_details.last_name)
         expect(page).to have_content(profile.personal_details.phone_number)

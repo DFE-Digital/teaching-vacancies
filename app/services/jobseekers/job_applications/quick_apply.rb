@@ -57,6 +57,7 @@ class Jobseekers::JobApplications::QuickApply
     new_job_application.in_progress_steps = []
   end
 
+  # rubocop:disable Metrics/AbcSize
   def set_step_statuses_for_import_from_jobseeker_profile
     new_job_application.completed_steps = []
     new_job_application.imported_steps = []
@@ -70,6 +71,7 @@ class Jobseekers::JobApplications::QuickApply
     new_job_application.in_progress_steps += [:training_and_cpds] if new_job_application.training_and_cpds.any?
     new_job_application.in_progress_steps += [:qualifications] if new_job_application.qualifications.present?
   end
+  # rubocop:enable Metrics/AbcSize
 
   def relevant_steps
     # The step process is needed in order to filter out the steps that are not relevant to the new job application,
@@ -114,7 +116,7 @@ class Jobseekers::JobApplications::QuickApply
         new_result.update(qualification: new_qualification)
       end
     end
-    
+
     qualifications_section_completed = true if source.is_a? JobApplication
     qualifications_section_completed = false if source.is_a? JobseekerProfile
 
@@ -157,7 +159,7 @@ class Jobseekers::JobApplications::QuickApply
   def previously_submitted_application?
     jobseeker.job_applications.not_draft.any?
   end
-  
+
   def jobseeker_profile
     @jobseeker_profile ||= jobseeker.jobseeker_profile
   end

@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
@@ -42,7 +41,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
 
     new_job_application = prefill_job_application_with_available_data
-    
+
     redirect_to jobseekers_job_application_review_path(new_job_application)
   end
 
@@ -219,4 +218,3 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
-# rubocop:enable Metrics/ClassLength
