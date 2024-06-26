@@ -67,7 +67,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     private
 
     def description_paragraph(title, text)
-      plain_text = ActionText::Fragment.from_html(text).to_plain_text
+      plain_text = ActionText::Fragment.from_html(text&.squish).to_plain_text
       plain_text.present? ? "#{title}\n\n#{plain_text}\n\n" : ""
     end
   end

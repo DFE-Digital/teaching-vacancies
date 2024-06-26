@@ -123,13 +123,27 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacanc
     context "when the vacancy job details have html tags" do
       before do
         allow(vacancy).to receive(:skills_and_experience).and_return(
-          "<p>First paragraph</p><ul><li>Item 0</li><li>Item 1<ul><li>Item A<ol><li>Item i</li><li>Item ii</li></ol></li><li>Item B<ul><li>Item i</li></ul></li></ul></li><li>Item 2</li></ul><p><a href='url'>link text</a>",
+          "<p>First paragraph</p><ul><li>Item 0</li><li>Item 1<ul><li>Item A<ol><li>Item i</li><li>Item ii</li></ol></li><li>Item B<ul><li>Item i</li></ul></li></ul></li><li>Item 2</li></ul><p><a href='url'>link text</a></p>",
         )
       end
 
       it "return the html content parsed into plain text" do
         expect(parsed.description).to eq(
           "What skills and experience we're looking for\n\nFirst paragraph\n\n• Item 0\n• Item 1\n  • Item A\n    1. Item i\n    2. Item ii\n  • Item B\n    • Item i\n• Item 2\n\nlink text",
+        )
+      end
+    end
+
+    context "when the vacancy job details have html tags mixed with carriage return symbols" do
+      before do
+        allow(vacancy).to receive(:skills_and_experience).and_return(
+          "<p>First\r\nparagraph</p><ul><li>Item 0</li><li>Item\r\n1</li></ul><p>Last paragraph</p>",
+        )
+      end
+
+      it "return the html content parsed into plain text with the carriage symbols turned into spaces" do
+        expect(parsed.description).to eq(
+          "What skills and experience we're looking for\n\nFirst paragraph\n\n• Item 0\n• Item 1\n\nLast paragraph",
         )
       end
     end
