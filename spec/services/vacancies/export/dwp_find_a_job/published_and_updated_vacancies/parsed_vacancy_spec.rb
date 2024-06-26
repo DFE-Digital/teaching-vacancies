@@ -147,6 +147,26 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacanc
         )
       end
     end
+
+    context "when the vacancy job details contains an invalid byte sequence" do
+      before do
+        allow(vacancy).to receive(:skills_and_experience).and_return("Multi\x80\x80\x80Academy Trust")
+      end
+
+      it "removes them" do
+        expect(parsed.description).to eq("What skills and experience we're looking for\n\nMultiAcademy Trust")
+      end
+    end
+
+    context "when the vacancy job details contains unicode special characters" do
+      before do
+        allow(vacancy).to receive(:skills_and_experience).and_return("Multi\u0002'Academy' Trust. Any other info?")
+      end
+
+      it "removes them" do
+        expect(parsed.description).to eq("What skills and experience we're looking for\n\nMulti'Academy' Trust. Any other info?")
+      end
+    end
   end
 
   describe "#expiry" do
