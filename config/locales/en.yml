@@ -151,7 +151,7 @@ en:
             create_account: create a jobseeker account
         title: For jobseekers
       personal_statement_section:
-        description_html: You can also apply for jobs, set up job alerts and %{personal_statement_guide_link}.
+        description_html: You can apply for jobs, set up job alerts and %{personal_statement_guide_link}.
         link_text: read advice for jobseekers
       publisher_section:
         signed_in:

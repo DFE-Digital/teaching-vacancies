@@ -170,7 +170,7 @@ en:
           personal_statement_guide:
             description_desktop: Find out how to sell your skills and experience to school recruiters.
             description_mobile: Get guidance around creating the perfect personal statement.
-            link_text: How to write a teacher personal statement article
+            link_text: How to write a teacher personal statement
             title: How to write a teacher personal statement
           step_title: Personal statement
           title: Personal statement — Application
@@ -874,7 +874,7 @@ en:
           content_html: "%{link_to} to save and apply for jobs you are interested in."
           heading: Don't have an account yet?
           link: Create an account
-        title: Jobseeker sign in
+        title: Sign in
       locked:
         description: You have been locked out of your account because you have made too many attempts to log in.
         having_trouble_html: Still having trouble? %{request_support_link}.
