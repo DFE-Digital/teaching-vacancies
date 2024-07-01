@@ -5,7 +5,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @step, url: { action: :update }, method: :post, as: :personal_details_form do |f|
+    = form_for @step, url: { action: :update }, method: :post, as: :personal_details_form, html: { data: { controller: "mobile-focus" } } do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :phone_number_provided, legend: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".caption"), size: "l" } do
