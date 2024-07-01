@@ -122,6 +122,9 @@ en:
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
       other: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
     personal_statement: Writing a personal statement
+    find_a_teaching_job_at_the_right_school: Find a teaching job at the right school
+    return_to_england_after_teaching_overseas: Return to England after teaching overseas
+    return_to_teaching: Return to teaching
     hiring_guides: Hiring guides
     sign_in: Sign in
     sign_out: Sign out
@@ -390,10 +393,10 @@ en:
       location:
         hint: Teaching Vacancies advertises school roles in England. Enter a UK city, county or postcode to look for roles near you.
       campaign:
-        title: 
+        title:
           with_name: Hey %{name}, welcome to Teaching Vacancies!
           without_name: Welcome to Teaching Vacancies!
-        description: 
+        description:
           with_subject: Get %{subject} teacher jobs sent straight to your inbox.
           without_subject: Get teaching jobs sent straight to your inbox.
         location: City, county or postcode (in England)
@@ -457,7 +460,7 @@ en:
       - specify the types of teaching jobs you're looking for
       - apply for roles more quickly by pre-filling your information
     link_to_profile: Create a profile to simplify your job search.
-  
+
   visa_sponsorship_banner:
     heading: You can now specify if you need visa sponsorship on your profile
     body: You can %{link} on your profile.
