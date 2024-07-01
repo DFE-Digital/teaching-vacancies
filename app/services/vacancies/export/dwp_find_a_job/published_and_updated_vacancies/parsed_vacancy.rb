@@ -39,7 +39,9 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
 
     def expiry
       expiry_date = vacancy.expires_at.to_date
-      return unless expiry_date.between?(Date.today + 1, Date.today + 30.days)
+      # Why max 29 days? Find a Job is rejecting vacancies where the expiry date 30 days from today is explicitly set.
+      # If left blank it will default to 30 days from today without rejection.
+      return unless expiry_date.between?(Date.today + 1, Date.today + 29.days)
 
       expiry_date.to_s
     end

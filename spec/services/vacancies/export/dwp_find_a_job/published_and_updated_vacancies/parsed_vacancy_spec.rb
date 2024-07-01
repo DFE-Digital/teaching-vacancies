@@ -191,8 +191,8 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacanc
       expect(parsed.expiry).to be_nil
     end
 
-    it "returns nil if the vacancy expiry date is more than 30 days in the future" do
-      allow(vacancy).to receive(:expires_at).and_return(Date.today + 31.days)
+    it "returns nil if the vacancy expiry date is more than 29 days in the future" do
+      allow(vacancy).to receive(:expires_at).and_return(Date.today + 30.days)
 
       expect(parsed.expiry).to be_nil
     end
