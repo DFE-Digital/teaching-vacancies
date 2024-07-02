@@ -588,8 +588,8 @@ en:
 
       personal_details_form:
         email: Email
-        change_email_html: Change your email address from within your %{link}
-        change_email_link_text: account
+        change_email_html: Select to %{link}
+        change_email_link_text: change your email address
         first_name: First name
         last_name: Last name
         phone_number: Phone number

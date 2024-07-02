@@ -24,18 +24,26 @@ Your job title will not only be displayed on Teaching Vacancies but also on sear
 
 Naturally, a jobseeker’s eyes are often drawn to the salary field. They want to know whether the compensation being offered meets their expectations, and many will move on at this stage if it’s not what they’re looking for.
 
-Teacher salaries can be complicated compared to some other industries, so when listing a job there are three separate fields to give you space to be transparent and explain the exact remuneration related to the role:
+Teacher salaries can be complicated compared to some other industries, so when listing a job there are three separate fields to give you space to be transparent and explain the exact remuneration related to the role.
 
-* **Annual or full time equivalent (FTE) salary** - this is simply what the role would pay per year, regardless of any particular working patterns. If it’s a [full time](/full-time-school-jobs) role, enter the full basic salary (or a salary band) here. If it’s not, calculate this from the number of days or weeks per year the role covers.
-* **Actual salary** - for [part time](/part-time-school-jobs), [flexible](/flexible-working-jobs-in-schools), [job share](/school-job-shares) or [term time](/school-term-time-jobs) roles, provide the candidate with specific information on the money they will receive. You may decide to state this per year or per month, depending on the nature of the role.
-* **Additional allowances** - many schools offer teachers benefits beyond their monthly wages. This is your opportunity to list salary sacrifice schemes, cycle to work vouchers, tax-free childcare, and any other bonuses related to working at your school. You may also want to detail the training and career development opportunities you offer.
+ **Annual or full time equivalent (FTE) salary** 
+
+ This is simply what the role would pay per year, regardless of any particular working patterns. If it’s a [full time](/full-time-school-jobs) role, enter the full basic salary (or a salary band) here. If it’s not, calculate this from the number of days or weeks per year the role covers.
+ 
+ **Actual salary** 
+ 
+ For [part time](/part-time-school-jobs), [flexible](/flexible-working-jobs-in-schools), [job share](/school-job-shares) or [term time](/school-term-time-jobs) roles, provide the candidate with specific information on the money they will receive. You may decide to state this per year or per month, depending on the nature of the role.
+ 
+ **Additional allowances** 
+ 
+ Many schools offer teachers benefits beyond their monthly wages. This is your opportunity to list salary sacrifice schemes, cycle to work vouchers, tax-free childcare, and any other bonuses related to working at your school. You may also want to detail the training and career development opportunities you offer.
 
 However you decide to best describe the salary on offer using these fields, avoid referring to pay in a way that doesn’t make sense to people outside your organisation. Those you work with may have an understanding of the grades or bands you use, or acronyms such as MPS or UPS, but don’t assume your candidates will. Make it easy for them by providing a straightforward numerical value.
 
 ### Application method
 On Teaching Vacancies we offer two ways for you to receive applications, either through our built-in application form, or through your own method.
 
-* Read our guidance on [how to accept job applications on Teaching Vacancies](/get-help-hiring/accepting-job-applications-on-teaching-vacancies)
+Read our guidance on [how to accept job applications on Teaching Vacancies](/get-help-hiring/accepting-job-applications-on-teaching-vacancies).
 
 If you choose the former you’ll have the benefit of managing candidates in one place from the start of the process all the way through to offering someone the job. If you choose the latter, you can point applicants to a form on your website, or ask them to submit attachments via an email address.
 
@@ -95,10 +103,18 @@ You don’t want to put anyone off applying by making the criteria too strict, b
 
 The final step of posting a job on Teaching Vacancies offers you a chance to preview how it will look from the jobseeker’s perspective. Remember that job ads should be written for them, not you.
 
-We highly recommend taking off your hiring staff hat and looking at your job advert with an objective eye and asking yourself these questions:
+We highly recommend taking off your hiring staff hat and looking at your job advert with an objective eye and asking yourself the following questions.
 
-* **How does it look on a mobile?** The majority of candidates search for jobs on smartphones, so look at the preview link on a small screen to ensure it flows as you’d like it to and it’s pleasing to the eye.
-* **Is there any duplicate information?** Some schools post job ads including salaries or working patterns within the job description, despite these already being summarised at the top of the job advert template. Remove anything that’s already included elsewhere.
-* **Does it comply with employment legislation?** While you’re perfectly within your rights to ask that candidates meet certain criteria, it’s illegal to refer to age, gender, and various other personal characteristics. This also applies to phrases such as 'recent graduate' or 'highly experienced', so focus more on what you want candidates to be able to do, rather than how long they’ve been doing it.
+ **How does it look on a mobile?**
+ 
+  The majority of candidates search for jobs on smartphones, so look at the preview link on a small screen to ensure it flows as you’d like it to and it’s pleasing to the eye.
+ 
+ **Is there any duplicate information?** 
+ 
+ Some schools post job ads including salaries or working patterns within the job description, despite these already being summarised at the top of the job advert template. Remove anything that’s already included elsewhere.
+
+**Does it comply with employment legislation?** 
+
+While you’re perfectly within your rights to ask that candidates meet certain criteria, it’s illegal to refer to age, gender, and various other personal characteristics. This also applies to phrases such as 'recent graduate' or 'highly experienced', so focus more on what you want candidates to be able to do, rather than how long they’ve been doing it.
 
 And finally, edit your text thoroughly. Like any piece of writing, your first draft should look very different from your final version. Don’t rely on your computer’s spell checker, and make use of the many online tools that help you write in a simpler, clearer and more persuasive way.
