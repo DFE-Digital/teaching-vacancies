@@ -50,7 +50,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       new_employment.update(job_application: new_job_application, salary: "")
     end
 
-    new_job_application.employment_history_section_completed = true
+    new_job_application.employment_history_section_completed = !previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
   end
 
   def copy_references
@@ -72,7 +72,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   def set_status_of_each_step
     new_job_application.completed_steps = completed_steps
     new_job_application.imported_steps = completed_steps
-    new_job_application.in_progress_steps = []
+    new_job_application.in_progress_steps = in_progress_steps
   end
 
   def recent_job_application
@@ -87,10 +87,24 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def completed_steps
-    %w[personal_details professional_status personal_statement references ask_for_support qualifications employment_history training_and_cpds].select { |step| relevant_steps.include?(step.to_sym) }
+    completed_steps = %w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds].select { |step| relevant_steps.include?(step.to_sym) }
+    completed_steps << "employment_history" unless previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
+    completed_steps
+  end
+
+  def in_progress_steps
+    if previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
+      %w[employment_history]
+    else
+      []
+    end
   end
 
   def form_fields_from_step(step)
     "jobseekers/job_application/#{step}_form".camelize.constantize.fields
+  end
+
+  def previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
+    recent_job_application.submitted_at < DateTime.strptime("Apr 3 10:34:11 2024 +0100", "%b %d %H:%M:%S %Y %z")
   end
 end

@@ -30,16 +30,38 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
           expect(subject.slice(attributes_to_copy)).to eq(recent_job_application.slice(attributes_to_copy))
         end
 
-        it "copies completed steps except for declarations and equal opportunities and also adds them to imported steps" do
-          expect(subject.completed_steps)
-            .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications employment_history training_and_cpds])
-          expect(subject.imported_steps)
-            .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications employment_history training_and_cpds])
+        context "when the application is from before we added gap validation for employment history section" do
+          before do
+            # ensure both submitted job applications were submitted before we started validating employment history gaps
+            recent_job_application.update(submitted_at: Date.new(2024, 4, 2))
+            older_job_application.update(submitted_at: Date.new(2024, 4, 2))
+          end
+
+          it "copies completed steps except for declarations and equal opportunities and employment_history and also adds them to imported steps" do
+            expect(subject.completed_steps)
+              .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds])
+            expect(subject.imported_steps)
+              .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds])
+          end
+
+          it "add employment_history to the in progress steps " do
+            expect(subject.in_progress_steps)
+              .to eq(%w[employment_history])
+          end
         end
 
-        it "sets in progress steps as empty" do
-          expect(subject.in_progress_steps)
-            .to eq(%w[])
+        context "when the application is from after we added gap validation for employment history section" do
+          it "copies completed steps except for declarations and equal opportunities and also adds them to imported steps" do
+            expect(subject.completed_steps)
+              .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds employment_history])
+            expect(subject.imported_steps)
+              .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds employment_history])
+          end
+
+          it "sets in progress steps as empty" do
+            expect(subject.in_progress_steps)
+              .to eq(%w[])
+          end
         end
       end
 
@@ -78,8 +100,22 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
           .to eq(recent_job_application.employments.map { |employment| employment.slice(*attributes_to_copy) })
       end
 
-      it "sets employment history section completed to true" do
-        expect(subject.employment_history_section_completed).to eq(true)
+      context "when the application is from before we added gap validation for employment history section" do
+        before do
+          # ensure both submitted job applications were submitted before we started validating employment history gaps
+          recent_job_application.update(submitted_at: Date.new(2024, 4, 2))
+          older_job_application.update(submitted_at: Date.new(2024, 4, 2))
+        end
+
+        it "sets employment history section completed to false" do
+          expect(subject.employment_history_section_completed).to eq(false)
+        end
+      end
+
+      context "when the application is from after we added gap validation for employment history section" do
+        it "sets employment history section completed to true" do
+          expect(subject.employment_history_section_completed).to eq(true)
+        end
       end
 
       it "copies references from the recent job application" do
