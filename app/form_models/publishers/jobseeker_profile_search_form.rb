@@ -30,7 +30,7 @@ class Publishers::JobseekerProfileSearchForm
   end
 
   def working_pattern_options
-    %w[full_time part_time flexible job_share term_time].map do |working_pattern|
+    %w[full_time part_time job_share].map do |working_pattern|
       [working_pattern, I18n.t(working_pattern, scope: "publishers.jobseeker_profiles.filters.working_pattern_options")]
     end
   end
