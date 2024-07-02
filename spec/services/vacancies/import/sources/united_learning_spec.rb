@@ -161,10 +161,10 @@ RSpec.describe Vacancies::Import::Sources::UnitedLearning do
         end
 
         context "when the working patterns contain multiple valid values" do
-          let(:working_patterns) { "part_time,full_time,job_share,flexible" }
+          let(:working_patterns) { "part_time,full_time,job_share" }
 
           it "records them all in the vacancy" do
-            expect(vacancy.working_patterns).to contain_exactly("part_time", "full_time", "job_share", "flexible")
+            expect(vacancy.working_patterns).to contain_exactly("part_time", "full_time", "job_share")
           end
         end
 

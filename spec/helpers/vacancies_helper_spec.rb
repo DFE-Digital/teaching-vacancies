@@ -286,10 +286,10 @@ RSpec.describe VacanciesHelper do
     subject { vacancy_working_patterns(vacancy) }
 
     context "when the vacancy does not contain working patterns details" do
-      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time flexible], working_patterns_details: nil) }
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], working_patterns_details: nil) }
 
       it "returns a summary of the working patterns" do
-        expect(subject).to eq("<li>Full time, flexible</li>")
+        expect(subject).to eq("<li>Full time, part time</li>")
       end
     end
 
