@@ -49,7 +49,7 @@ class VacancyPresenter < BasePresenter
       ("FULL_TIME" if model.working_patterns.include? "full_time"),
       ("PART_TIME" if model.working_patterns.include? "part_time"),
       ("TEMPORARY" if model.fixed_term_contract_duration?),
-      ("OTHER" if model.working_patterns.any? { |working_pattern| working_pattern.in? %w[flexible job_share term_time] } && !model.fixed_term_contract_duration?),
+      ("OTHER" if model.working_patterns.any?("job_share") && !model.fixed_term_contract_duration?),
     ].compact
   end
 
