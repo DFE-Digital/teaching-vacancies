@@ -18,6 +18,19 @@ class JobApplication < ApplicationRecord
     declarations: 8,
   }
 
+  array_enum imported_steps: {
+    personal_details: 0,
+    professional_status: 1,
+    qualifications: 2,
+    training_and_cpds: 9,
+    employment_history: 3,
+    personal_statement: 4,
+    references: 5,
+    equal_opportunities: 6,
+    ask_for_support: 7,
+    declarations: 8,
+  }
+
   array_enum in_progress_steps: {
     qualifications: 0,
     employment_history: 1,

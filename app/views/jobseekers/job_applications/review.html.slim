@@ -55,6 +55,9 @@
         = f.govuk_check_boxes_fieldset :confirm_data_usage, multiple: false, legend: nil do
           = f.govuk_check_box :confirm_data_usage, "1", 0, multiple: false, link_errors: true
 
+        p.govuk-body
+          = t(".confirmation.resubmission_warning")
+
         - if vacancy.listed?
           = f.govuk_submit t("buttons.submit_application") do
             = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
