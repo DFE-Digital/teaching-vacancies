@@ -87,8 +87,9 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def completed_steps
-    completed_steps = %w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds].select { |step| relevant_steps.include?(step.to_sym) }
+    completed_steps = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds].select { |step| relevant_steps.include?(step.to_sym) }
     completed_steps << "employment_history" unless previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
+    completed_steps << "professional_status" if previous_application_has_professional_status_details?
     completed_steps
   end
 
@@ -106,5 +107,9 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
 
   def previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
     recent_job_application.submitted_at < DateTime.strptime("Apr 3 10:34:11 2024 +0100", "%b %d %H:%M:%S %Y %z")
+  end
+
+  def previous_application_has_professional_status_details?
+    recent_job_application.ask_professional_status?
   end
 end

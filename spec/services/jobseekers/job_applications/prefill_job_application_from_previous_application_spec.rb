@@ -39,9 +39,9 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
 
           it "copies completed steps except for declarations and equal opportunities and employment_history and also adds them to imported steps" do
             expect(subject.completed_steps)
-              .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds])
+              .to eq(%w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_status])
             expect(subject.imported_steps)
-              .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds])
+              .to eq(%w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_status])
           end
 
           it "add employment_history to the in progress steps " do
@@ -53,14 +53,24 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         context "when the application is from after we added gap validation for employment history section" do
           it "copies completed steps except for declarations and equal opportunities and also adds them to imported steps" do
             expect(subject.completed_steps)
-              .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds employment_history])
+              .to eq(%w[personal_details personal_statement references ask_for_support qualifications training_and_cpds employment_history professional_status])
             expect(subject.imported_steps)
-              .to eq(%w[personal_details professional_status personal_statement references ask_for_support qualifications training_and_cpds employment_history])
+              .to eq(%w[personal_details personal_statement references ask_for_support qualifications training_and_cpds employment_history professional_status])
           end
 
           it "sets in progress steps as empty" do
             expect(subject.in_progress_steps)
               .to eq(%w[])
+          end
+        end
+
+        context "when the previous application did not ask about professional_status" do
+          let(:old_vacancy) { create(:vacancy, job_roles: ["it_support"]) }
+
+          it "does not include professional_status in completed, imported or in_progress steps" do
+            expect(subject.completed_steps.include?("professional_status")).to eq false
+            expect(subject.imported_steps.include?("professional_status")).to eq false
+            expect(subject.in_progress_steps.include?("professional_status")).to eq false
           end
         end
       end
