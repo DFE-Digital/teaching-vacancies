@@ -20,7 +20,8 @@ Rails.application.configure do
     policy.frame_src   :self,
                        "https://2673654.fls.doubleclick.net", # Floodlight
                        "https://www.recaptcha.net",
-                       "https://www.googletagmanager.com"
+                       "https://www.googletagmanager.com",
+                       "https://www.youtube.com"
 
     policy.img_src     :self,
                        :https,
