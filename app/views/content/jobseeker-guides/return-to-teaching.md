@@ -23,6 +23,17 @@ A return to teaching provides you with an opportunity to take greater control of
 
 Flexible working options can also help you start back in a way that works for you.
 
+## Advice and support for returning teachers
+
+The Department for Education (DfE) has been taking action to help schools support teachers with:
+
+* [improving workload and wellbeing](https://www.gov.uk/guidance/improve-workload-and-wellbeing-for-school-staff)
+* [looking after their mental health](https://www.gov.uk/guidance/education-staff-wellbeing-charter)
+* enabling [flexible working opportunities](https://www.gov.uk/government/collections/flexible-working-resources-for-teachers-and-schools) 
+* putting in place [behaviour hubs](https://behaviourhubs.co.uk/)
+
+Teaching is a diverse and inclusive profession with many networks that can help you in your teaching career, including [WomenEd](https://womened.com/), [BAMEed](https://www.bameednetwork.com/), [LGBTed](https://lgbted.uk/) and [DisabilityEd](https://twitter.com/disability_ed)
+
 ## Get a return to teaching adviser
 If you have [qualified teacher status (QTS)](https://www.gov.uk/guidance/qualified-teacher-status-qts), you could be eligible for a [return to teaching adviser.](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers)
 
