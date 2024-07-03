@@ -124,6 +124,8 @@ en:
     personal_statement: Writing a personal statement
     hiring_guides: Hiring guides
     sign_in: Sign in
+    jobseeker_sign_in: Jobseeker sign in
+    publisher_sign_in: Hiring staff sign in
     sign_out: Sign out
     support_user_dashboard: Support dashboard
     support_user_return_to_service: Return to Teaching Vacancies
@@ -149,6 +151,7 @@ en:
           description_html: Save and apply for jobs in schools.
           link_text:
             create_account: create a jobseeker account
+            sign_in: Jobseeker sign in
         title: For jobseekers
       personal_statement_section:
         description_html: You can apply for jobs, set up job alerts and %{personal_statement_guide_link}.
@@ -390,10 +393,10 @@ en:
       location:
         hint: Teaching Vacancies advertises school roles in England. Enter a UK city, county or postcode to look for roles near you.
       campaign:
-        title: 
+        title:
           with_name: Hey %{name}, welcome to Teaching Vacancies!
           without_name: Welcome to Teaching Vacancies!
-        description: 
+        description:
           with_subject: Get %{subject} teacher jobs sent straight to your inbox.
           without_subject: Get teaching jobs sent straight to your inbox.
         location: City, county or postcode (in England)
@@ -457,7 +460,7 @@ en:
       - specify the types of teaching jobs you're looking for
       - apply for roles more quickly by pre-filling your information
     link_to_profile: Create a profile to simplify your job search.
-  
+
   visa_sponsorship_banner:
     heading: You can now specify if you need visa sponsorship on your profile
     body: You can %{link} on your profile.
