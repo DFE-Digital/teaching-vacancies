@@ -1,15 +1,16 @@
-- content_for :page_title_prefix, "#{params[:subcategory].titleize.capitalize}"
-- content_for :page_description, "All posts under the subcategory: #{params[:subcategory].titleize.capitalize}"
+- formatted_subcategory = format_title(params[:subcategory])
+- content_for :page_title_prefix, "#{formatted_subcategory}"
+- content_for :page_description, "All posts under the subcategory: #{formatted_subcategory}"
 
 - content_for :breadcrumbs do
   = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
     params[:section].titleize.capitalize => posts_path(section: params[:section]),
-    params[:subcategory].titleize.capitalize => ""}
+    formatted_subcategory => ""}
 
 .govuk-grid-row
   .govuk-grid-column-full
-    h1.govuk-heading-xl = "#{params[:subcategory].titleize.capitalize}"
-    p.govuk-body = "All posts under the subcategory: #{params[:subcategory].titleize.capitalize}"
+    h1.govuk-heading-xl = "#{formatted_subcategory}"
+    p.govuk-body = "All posts under the subcategory: #{formatted_subcategory}"
     ul.govuk-list
       - @posts.sort.each do |post|
         li = govuk_link_to(post.title, post_path(section: post.section, subcategory: post.subcategory, post_name: post.post_name))
