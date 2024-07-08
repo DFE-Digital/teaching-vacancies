@@ -219,6 +219,40 @@
       "note": "field_name does not come from user_input, field_name is hardcoded in the child classes of LocationQuery."
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "eddde082170c2fcbbc5dc3de2db3109eff12fb0e3fd16dbc83082e8fac8a9d91",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/posts/show.html.slim",
+      "line": 15,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "sanitize(MarkdownDocument.new(params[:section], params[:subcategory], params[:post_name]).content)",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PostsController",
+          "method": "show",
+          "line": 14,
+          "file": "app/controllers/posts_controller.rb",
+          "rendered": {
+            "name": "posts/show",
+            "file": "app/views/posts/show.html.slim"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "posts/show"
+      },
+      "user_input": "params[:section]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "f11a61ecb831b6d9e0448ef9ea7cd7107bb307154933c07c4a35c3a835a4d406",
@@ -242,6 +276,6 @@
       "note": "Neither field_name or the coordinates come directly from user input. field_name is hardcoded in the child classes of LocationQuery and the coordinates come from Geocoding#coordinates which returns an array with coordinates returned by our cache or third party geocoding APIs. It defaults to [0,0] if relevant coordinates are not found."
     }
   ],
-  "updated": "2024-03-07 14:26:16 +0000",
+  "updated": "2024-07-08 16:23:49 +0100",
   "brakeman_version": "6.1.2"
 }

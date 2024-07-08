@@ -12,7 +12,7 @@
   .govuk-grid-column-two-thirds
     h1 = @post.title
 
-    == @post.content
+    == sanitize @post.content
 
     - if @post.date_posted
       span.govuk-body-s
