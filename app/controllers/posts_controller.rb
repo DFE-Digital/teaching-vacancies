@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
-  def index; end
+  def index
+    @subcategories = get_subcategories(params[:section])
+  end
 
   def subcategory
     @posts = MarkdownDocument.all(params[:section], params[:subcategory])
