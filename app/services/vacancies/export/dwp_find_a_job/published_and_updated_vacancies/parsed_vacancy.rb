@@ -69,11 +69,25 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     private
 
     def description_paragraph(title, text)
-      sanitized_text = text&.scrub("") # remove invalid byte sequences
-                           &.squish # remove leading/trailing whitespace and collapse multiple spaces
-                           &.gsub(/[\u0001-\u001A]/, "") # remove control chars, unicode codepoints from 0001 to 001A (Invalid under XML 1.0)
-      plain_text = ActionText::Fragment.from_html(sanitized_text).to_plain_text # convert HTML tags into plain text representation
-      plain_text.present? ? "#{title}\n\n#{plain_text}\n\n" : ""
+      plain_text = html_to_plain_text(text)
+      return "" if plain_text.blank?
+
+      "#{title}\n\n#{plain_text}\n\n"
+    end
+
+    def html_to_plain_text(html)
+      ActionText::Fragment.from_html(sanitize(html))
+                          .to_plain_text # convert HTML tags into plain text representation
+                          .strip
+                          .gsub(/(\s*\n\n\s*){2,}/, "\n\n") # reduce paragraph breaks to a single empty line between paragraphs
+    end
+
+    def sanitize(text)
+      return unless text
+
+      text.scrub("") # remove invalid byte sequences
+          .squish # remove leading/trailing whitespace and collapse multiple spaces
+          .gsub(/[\u0001-\u001A]/, "") # remove control chars, unicode codepoints from 0001 to 001A (Invalid under XML 1.0)
     end
   end
 end

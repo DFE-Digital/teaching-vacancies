@@ -137,6 +137,8 @@ classDiagram
       +status_id()
       +type_id()
       -description_paragraph(title, text)
+      -html_to_plain_text(html)
+      -sanitize(text)
     }
 
   }
