@@ -11,4 +11,4 @@
     p.govuk-body = t(".#{params[:section]}.description")
     ul.govuk-list
       - @subcategories.each do |subcategory|
-        li = govuk_link_to(subcategory.titleize.capitalize, subcategory_path(section: params[:section], subcategory: subcategory))
+        li = govuk_link_to(format_title(subcategory), subcategory_path(section: params[:section], subcategory: subcategory))
