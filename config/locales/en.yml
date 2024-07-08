@@ -122,6 +122,7 @@ en:
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
       other: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
     personal_statement: Writing a personal statement
+    get_help_applying_for_your_teaching_role: Get help applying for your teaching role
     find_a_teaching_job_at_the_right_school: Find a teaching job at the right school
     return_to_england_after_teaching_overseas: Return to England after teaching overseas
     return_to_teaching: Return to teaching

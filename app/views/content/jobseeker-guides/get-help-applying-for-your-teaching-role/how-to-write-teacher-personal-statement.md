@@ -4,6 +4,7 @@ title: How to write a teacher personal statement
 meta_description: Expert advice on what to include in your personal statement when applying for a teaching job. Read some example teacher personal statements.
 date_posted: 15/03/2022
 category_tags: apply
+subcategory: get-help-applying-for-your-teaching-role
 ---
 
 Your personal statement is your first opportunity to show the school you’re a great fit for the job, and gets you closer to being shortlisted for an interview. The more you show how your skills and interests match the school’s ethos and values, the better. We've spoken to a range of teachers to get their top tips for success.

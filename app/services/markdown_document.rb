@@ -1,20 +1,27 @@
 class MarkdownDocument
   include Comparable
 
-  attr_reader :section, :post_name
+  attr_reader :section, :subcategory, :post_name
 
-  def initialize(section, post_name)
+  def initialize(section, subcategory, post_name)
     @section = section
+    @subcategory = subcategory
     @post_name = post_name
     parse if exist?
   end
 
-  def self.all(section)
-    dir_path = Rails.root.join("app", "views", "content", section)
+  def self.all(section, subcategory)
+    dir_path = Rails.root.join("app", "views", "content", section, subcategory)
 
     Dir.children(dir_path).map do |file_name|
-      new(section, file_name.remove(".md"))
+      new(section, subcategory, file_name.remove(".md"))
     end
+  end
+
+  def self.all_subcategories(section)
+    dir_path = Rails.root.join("app", "views", "content", section)
+
+    Dir.children(dir_path)
   end
 
   def title
@@ -24,6 +31,10 @@ class MarkdownDocument
   def category_tags
     @front_matter["category_tags"]&.split(",")&.map(&:strip)
   end
+
+  # def subcategory
+  #   @front_matter["subcategory"]
+  # end
 
   def date_posted
     Date.parse(@front_matter["date_posted"]) if @front_matter["date_posted"]
@@ -68,6 +79,6 @@ class MarkdownDocument
   end
 
   def file_path
-    Rails.root.join("app", "views", "content", @section, "#{@post_name}.md")
+    Rails.root.join("app", "views", "content", @section, @subcategory, "#{@post_name}.md")
   end
 end

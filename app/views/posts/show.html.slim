@@ -5,6 +5,7 @@
   nav aria-label="breadcrumb" role="navigation"
     = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
                                        params[:section].titleize.capitalize => posts_path(section: params[:section]),
+                                       params[:subcategory].titleize.capitalize => subcategory_path(section: params[:section], subcategory: params[:subcategory]),
                                        @post.title => "" }
 
 .govuk-grid-row.post
