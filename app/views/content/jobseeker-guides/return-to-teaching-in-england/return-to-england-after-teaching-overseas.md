@@ -4,7 +4,6 @@ title: Return to England after teaching overseas
 meta_description: Find out how to get support to return to England after teaching outside the UK and bring your skills and experience back to an English classroom.
 date_posted: 06/12/2023
 category_tags: apply
-subcategory: return-to-teaching-in-england
 ---
 
 ![A teacher smiling stood infront of a classroom full of students during a lesson](/content-assets/jobseeker-guides/DFE_Southfeilds_Room-A360_10445_Stephen-Jedge-1-800x300.jpg)

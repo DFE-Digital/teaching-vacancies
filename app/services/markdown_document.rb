@@ -32,10 +32,6 @@ class MarkdownDocument
     @front_matter["category_tags"]&.split(",")&.map(&:strip)
   end
 
-  # def subcategory
-  #   @front_matter["subcategory"]
-  # end
-
   def date_posted
     Date.parse(@front_matter["date_posted"]) if @front_matter["date_posted"]
   end
