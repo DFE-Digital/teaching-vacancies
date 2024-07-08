@@ -3,7 +3,7 @@
     .govuk-grid-column-full
       = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
         - banner.with_heading(text: t("jobs.dashboard.non-teaching-roles-banner.heading"))
-        p.govuk-body = govuk_link_to(t("jobs.dashboard.non-teaching-roles-banner.link_text"), "/get-help-hiring/how-to-list-non-teaching-roles")
+        p.govuk-body = govuk_link_to(t("jobs.dashboard.non-teaching-roles-banner.link_text"), "/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-list-non-teaching-roles")
 
   .govuk-grid-row
     .govuk-grid-column-three-quarters
@@ -11,7 +11,7 @@
         h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
         p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_mobile")
         = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
-                        post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
+                        post_path(section: "get-help-hiring", subcategory: "get-help-applying-for-your-teaching-role", post_name: "accepting-job-applications-on-teaching-vacancies"),
                         class: "govuk-link--no-visited-state")
       span.govuk-caption-l = @organisation.name
       h1.govuk-heading-l = t("jobs.dashboard.#{@selected_type}.with_count", count: @vacancies.count)
@@ -54,7 +54,7 @@
           h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
           p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
           = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
-                          post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
+                          post_path(section: "get-help-hiring", subcategory: "get-help-applying-for-your-teaching-role", post_name: "accepting-job-applications-on-teaching-vacancies"),
                           class: "govuk-link--no-visited-state")
     #vacancy-results class=grid_column_class
       - if vacancies.none?
@@ -129,5 +129,5 @@
           h2.govuk-heading-m = t("jobs.dashboard.how_to_accept_job_applications_guide.title")
           p.govuk-body = t("jobs.dashboard.how_to_accept_job_applications_guide.description_desktop")
           = govuk_link_to(t("jobs.dashboard.how_to_accept_job_applications_guide.link_text"),
-                          post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"),
+                          post_path(section: "get-help-hiring", subcategory: "get-help-applying-for-your-teaching-role", post_name: "accepting-job-applications-on-teaching-vacancies"),
                           class: "govuk-link--no-visited-state")

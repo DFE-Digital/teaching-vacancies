@@ -8,5 +8,5 @@
       = t(".page_title")
     p.govuk-body
       = t(".content")
-    = open_in_new_tab_link_to(t(".how_applications_work_link"), post_path(section: "get-help-hiring", post_name: "accepting-job-applications-on-teaching-vacancies"), class: "govuk-body")
+    = open_in_new_tab_link_to(t(".how_applications_work_link"), post_path(section: "get-help-hiring", subcategory: "get-help-applying-for-your-teaching-role", post_name: "accepting-job-applications-on-teaching-vacancies"), class: "govuk-body")
     = govuk_button_to t("buttons.reminder_continue"), organisation_jobs_path, class: "govuk-!-margin-top-8"

@@ -1,15 +1,15 @@
 - formatted_subcategory = format_title(params[:subcategory])
-- content_for :page_title_prefix, "#{formatted_subcategory}"
+- content_for :page_title_prefix, formatted_subcategory.to_s
 - content_for :page_description, "All posts under the subcategory: #{formatted_subcategory}"
 
 - content_for :breadcrumbs do
   = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
     params[:section].titleize.capitalize => posts_path(section: params[:section]),
-    formatted_subcategory => ""}
+    formatted_subcategory => "" }
 
 .govuk-grid-row
   .govuk-grid-column-full
-    h1.govuk-heading-xl = "#{formatted_subcategory}"
+    h1.govuk-heading-xl = formatted_subcategory.to_s
     p.govuk-body = "All posts under the subcategory: #{formatted_subcategory}"
     ul.govuk-list
       - @posts.sort.each do |post|

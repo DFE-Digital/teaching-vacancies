@@ -46,7 +46,7 @@ RSpec.describe PostsController do
         it "returns the correct guide posts" do
           get :subcategory, params: { section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role" }
 
-          expect(assigns(:posts).map(&:post_name)).to eq(post_names)
+          expect(assigns(:posts).map(&:post_name).sort).to eq(post_names.sort)
         end
       end
 
@@ -61,7 +61,7 @@ RSpec.describe PostsController do
         it "returns the correct guide posts" do
           get :subcategory, params: { section: "jobseeker-guides", subcategory: "return-to-teaching-in-england" }
 
-          expect(assigns(:posts).map(&:post_name)).to eq(post_names)
+          expect(assigns(:posts).map(&:post_name).sort).to eq(post_names.sort)
         end
       end
     end
@@ -79,7 +79,7 @@ RSpec.describe PostsController do
         it "returns the correct guide posts" do
           get :subcategory, params: { section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications" }
 
-          expect(assigns(:posts).map(&:post_name)).to eq(post_names)
+          expect(assigns(:posts).map(&:post_name).sort).to eq(post_names.sort)
         end
       end
 
@@ -95,7 +95,7 @@ RSpec.describe PostsController do
         it "returns the correct guide posts" do
           get :subcategory, params: { section: "get-help-hiring", subcategory: "how-to-setup-your-account" }
 
-          expect(assigns(:posts).map(&:post_name)).to eq(post_names)
+          expect(assigns(:posts).map(&:post_name).sort).to eq(post_names.sort)
         end
       end
     end
@@ -108,7 +108,6 @@ RSpec.describe PostsController do
   end
 
   describe "#show" do
-
     it "returns the correct post" do
       get :show, params: { section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "prepare-for-a-teaching-job-interview-lesson" }
 
