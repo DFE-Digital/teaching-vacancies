@@ -10,5 +10,5 @@
     h1.govuk-heading-xl = t(".#{params[:section]}.title")
     p.govuk-body = t(".#{params[:section]}.description")
     ul.govuk-list
-      - @posts.sort.each do |post|
-        li = govuk_link_to(post.title, post_path(section: post.section, post_name: post.post_name))
+      li = govuk_link_to("Get help applying for your teaching role", subcategory_path(section: params[:section], subcategory: "get-help-applying-for-your-teaching-role"))
+      li = govuk_link_to("Return to Teaching in England", subcategory_path(section: params[:section], subcategory: "return-to-teaching-in-england"))
