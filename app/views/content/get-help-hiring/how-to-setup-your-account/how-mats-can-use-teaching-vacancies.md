@@ -4,6 +4,7 @@ title: How multi-academy trusts can use Teaching Vacancies
 meta_description: Multi-academy trusts can use Teaching Vacancies to manage roles across all of their locations. Find out how to manage applications and MAT information.
 date_posted: 05/07/2022
 category_tags: how-to
+card-image: "/content-assets/get-help-hiring/how-to-setup-your-account/how-mat-can-use-TV.png"
 ---
 
 

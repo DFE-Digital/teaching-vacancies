@@ -4,6 +4,7 @@ title: Return to teaching
 meta_description: Find out how you could get support returning to teaching, including how to get free, one-to-one guidance from a return to teaching adviser.
 date_posted: 08/09/2023
 category_tags: apply
+card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-teaching.jpg"
 ---
 
 ![A teacher talking to a pupil at a desk.](/content-assets/jobseeker-guides/return_to_teaching_cropped_4978-800x300.jpg)
