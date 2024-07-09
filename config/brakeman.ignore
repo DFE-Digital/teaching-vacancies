@@ -274,8 +274,42 @@
         89
       ],
       "note": "Neither field_name or the coordinates come directly from user input. field_name is hardcoded in the child classes of LocationQuery and the coordinates come from Geocoding#coordinates which returns an array with coordinates returned by our cache or third party geocoding APIs. It defaults to [0,0] if relevant coordinates are not found."
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "f5170bf560d4ed79a5b9ada6e914fe7bd7f90624d63bdd4498454ef6ba60274f",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/posts/show.html.slim",
+      "line": 15,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "MarkdownDocument.new(params[:section], params[:subcategory], params[:post_name]).content",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PostsController",
+          "method": "show",
+          "line": 14,
+          "file": "app/controllers/posts_controller.rb",
+          "rendered": {
+            "name": "posts/show",
+            "file": "app/views/posts/show.html.slim"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "posts/show"
+      },
+      "user_input": "params[:section]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
     }
   ],
-  "updated": "2024-07-08 16:23:49 +0100",
+  "updated": "2024-07-09 20:18:36 +0100",
   "brakeman_version": "6.1.2"
 }
