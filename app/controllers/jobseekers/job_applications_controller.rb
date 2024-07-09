@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
@@ -34,22 +33,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   # rubocop:enable Style/GuardClause
 
   def new_quick_apply
+    @has_previous_application = previous_application?
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
   end
 
   def quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
 
-    new_job_application = if profile
-                            current_jobseeker.job_applications.build(vacancy:)
-                          else
-                            Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
-                          end
+    new_job_application = prefill_job_application_with_available_data
 
-    prefill_application(new_job_application)
-    new_job_application.save!
-
-    redirect_to jobseekers_job_application_review_path(new_job_application)
+    redirect_to jobseekers_job_application_review_path(new_job_application), notice: t("jobseekers.job_applications.new_quick_apply.import_from_previous_application")
   end
 
   def submit
@@ -99,6 +92,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   private
+
+  def prefill_job_application_with_available_data
+    Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
+  end
 
   def update_jobseeker_profile!(job_application, form)
     profile = job_application.jobseeker.jobseeker_profile
@@ -208,52 +205,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     end
   end
 
-  def prefill_application(application)
-    return unless profile.present?
-
-    application.assign_attributes(
-      employments: profile.employments.map(&:duplicate),
-      first_name: profile.personal_details&.first_name,
-      last_name: profile.personal_details&.last_name,
-      phone_number: profile.personal_details&.phone_number,
-      qualifications: profile.qualifications.map(&:duplicate),
-      training_and_cpds: profile.training_and_cpds.map(&:duplicate),
-      qualified_teacher_status_year: profile.qualified_teacher_status_year || "",
-      qualified_teacher_status: profile.qualified_teacher_status || "",
-      right_to_work_in_uk: profile_right_to_work,
-    )
-
-    mark_step_completion(application)
-  end
-
-  def profile_right_to_work
-    return "" if profile.personal_details&.right_to_work_in_uk.nil?
-
-    profile.personal_details.right_to_work_in_uk? ? "yes" : "no"
-  end
-
-  def mark_step_completion(application)
-    if application.first_name.present? || application.last_name.present? || application.phone_number.present? || application.right_to_work_in_uk.present?
-      application.in_progress_steps += [:personal_details]
-    end
-
-    if application.employments.any?
-      application.in_progress_steps += [:employment_history]
-    end
-
-    if application.qualified_teacher_status.present?
-      application.in_progress_steps += [:professional_status]
-    end
-
-    if application.training_and_cpds.any?
-      application.in_progress_steps += [:training_and_cpds]
-    end
-
-    return unless application.qualifications.present?
-
-    application.in_progress_steps += [:qualifications]
-  end
-
   def profile
     @profile ||= current_jobseeker.jobseeker_profile
   end
@@ -267,4 +218,3 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     previous_application? || profile.present?
   end
 end
-# rubocop:enable Metrics/ClassLength

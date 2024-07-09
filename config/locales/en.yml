@@ -321,6 +321,7 @@ en:
       in_progress: in progress
       not_started: not started
       optional: optional
+      imported: imported
 
   stats:
     intro: >-

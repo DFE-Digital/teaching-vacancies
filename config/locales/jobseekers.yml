@@ -339,6 +339,7 @@ en:
           heading: Terms & Conditions
           privacy: privacy policy
           terms: terms and conditions
+        import_from_previous_application: Your details have been imported from your last job application. You should review each section to make sure the information is still accurate.
         description1: >-
           Your details have been imported from your last job application.
         description2: You should review this information before submitting.
@@ -417,6 +418,7 @@ en:
             privacy_policy:
               description_html: Please read the Teaching Vacancies %{link_to} for more information on how your data is used.
               link_text: Privacy Policy
+          resubmission_warning: You cannot edit your application after submitting. If you withdraw your application, you will not be able to resubmit.
         deadline_passed: The deadline for this job listing has passed
         employment_history:
           none: You have not added any roles or employment history.
