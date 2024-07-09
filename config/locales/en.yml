@@ -66,7 +66,7 @@ en:
   footer:
     headings:
       feedback: Feedback
-      for_job_seekers: Job seekers
+      for_job_seekers: Jobseekers
       for_schools: Hiring staff
       support: Support
     international_teacher_advice_link_text: Teach in England if you trained overseas
@@ -127,6 +127,8 @@ en:
     return_to_teaching: Return to teaching
     hiring_guides: Hiring guides
     sign_in: Sign in
+    jobseeker_sign_in: Jobseeker sign in
+    publisher_sign_in: Hiring staff sign in
     sign_out: Sign out
     support_user_dashboard: Support dashboard
     support_user_return_to_service: Return to Teaching Vacancies
@@ -151,10 +153,11 @@ en:
           create_account_html: or %{create_account_link}.
           description_html: Save and apply for jobs in schools.
           link_text:
-            create_account: create an account
+            create_account: create a jobseeker account
+            sign_in: Jobseeker sign in
         title: For jobseekers
       personal_statement_section:
-        description_html: You can also apply for jobs, set up job alerts and %{personal_statement_guide_link}.
+        description_html: You can apply for jobs, set up job alerts and %{personal_statement_guide_link}.
         link_text: read advice for jobseekers
       publisher_section:
         signed_in:
@@ -165,8 +168,8 @@ en:
           create_account_html: or %{create_account_link}.
           description_html: Post jobs and manage applications.
           link_text:
-            create_account: create an account
-            sign_in: Sign in
+            create_account: create a hiring staff account
+            sign_in: Hiring staff sign in
             sign_up: sign up
         title: For hiring staff
       title: Teaching, leadership and support jobs

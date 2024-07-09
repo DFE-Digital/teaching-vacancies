@@ -393,7 +393,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     context "if the profile is inactive" do
-      let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: false) }
+      let!(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:, job_preferences:, active: false) }
 
       it "does not appear in search results" do
         visit publishers_jobseeker_profiles_path
@@ -495,7 +495,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     let(:permitted_publisher) { create(:publisher) }
     let(:forbidden_publisher) { create(:publisher) }
 
-    let!(:profile) { create(:jobseeker_profile, jobseeker:, job_preferences:, active: true) }
+    let!(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:, job_preferences:, active: true) }
 
     let(:job_preferences) do
       build(:job_preferences,

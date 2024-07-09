@@ -19,10 +19,8 @@ en:
         tab_heading: Closed jobs
         with_count: Closed jobs (%{count})
       how_to_accept_job_applications_guide:
-        description_desktop: Find out the simplest way to get candidates to apply for your jobs.
-        description_mobile: Get guidance around how to accept vacancies
-        link_text: View article
-        title: How to accept job applications on Teaching Vacancies
+        link_text: Find out how to use the Teaching Vacancies application form
+        title: Accept job applications using our online form
       non-teaching-roles-banner:
         heading: You can now create job listings for all roles in your school or trust.
         link_text: Find out how to list non-teaching roles.
