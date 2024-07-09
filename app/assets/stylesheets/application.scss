@@ -10,6 +10,7 @@ $govuk-assets-path: "/";
 @import 'leaflet-gesture-handling/dist/leaflet-gesture-handling';
 
 @import 'base/global';
+@import 'base/guide_card';
 @import 'base/govuk/components/accordion';
 @import 'base/govuk/components/error-summary';
 @import 'base/govuk/components/inset-text';

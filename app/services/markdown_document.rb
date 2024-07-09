@@ -40,6 +40,10 @@ class MarkdownDocument
     @front_matter["meta_description"]
   end
 
+  def card_image
+    @front_matter["card-image"]
+  end
+
   def content
     @kramdown_document.to_html
   end

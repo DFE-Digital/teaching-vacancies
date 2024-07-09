@@ -8,9 +8,11 @@
     formatted_subcategory => "" }
 
 .govuk-grid-row
-  .govuk-grid-column-full
-    h1.govuk-heading-xl = formatted_subcategory.to_s
-    p.govuk-body = t(".#{params[:section]}.#{params[:subcategory]}")
-    ul.govuk-list
-      - @posts.sort.each do |post|
-        li = govuk_link_to(post.title, post_path(section: post.section, subcategory: post.subcategory, post_name: post.post_name))
+  - @posts.sort.each do |post|
+    .govuk-grid-column-one-third
+      .hf-card
+        .hf-card-container
+          img src=image_path(post.card_image) alt=post.title class="hf-card-image"
+          .hf-card-details
+            .govuk-heading-m = govuk_link_to(post.title, post_path(section: post.section, subcategory: post.subcategory, post_name: post.post_name))
+
