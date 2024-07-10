@@ -28,7 +28,7 @@ Study the school’s website to get a sense of what the school is like. Prepare 
 ## 4. Know about statutory guidance on safeguarding
 If you have not had any experience of dealing with a safeguarding issue yourself, you must still be able to talk about what you would do. Think of some possible scenarios and explain how you would address them.
 
-[Statutory guidance for schools and colleges on safeguarding children and safer recruitment on GOV.UK](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2)
+[Statutory guidance for schools and colleges on safeguarding children and safer recruitment on GOV.UK](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2).
 
 ## 5. Ask the panel questions
 This shows your interest and gives you the opportunity to inform your decision about the role. You could ask:

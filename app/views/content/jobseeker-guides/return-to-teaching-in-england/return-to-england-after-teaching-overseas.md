@@ -46,6 +46,6 @@ Get ready to apply by:
 
 You can search for a teaching job in England through the government’s official Teaching Vacancies service.
 
-Set up job alerts so you don’t miss out on new roles
+Set up job alerts so you don’t miss out on new roles.
 
 [Search for roles on Teaching Vacancies now.](https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=)

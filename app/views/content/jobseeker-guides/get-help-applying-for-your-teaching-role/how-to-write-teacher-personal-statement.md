@@ -5,9 +5,9 @@ meta_description: Expert advice on what to include in your personal statement wh
 date_posted: 15/03/2022
 category_tags: apply
 ---
+![A teacher talking to students while they're working.](/content-assets/jobseeker-guides/How_to_write_your_teacher_training_personal_statement.jpg)
 
 Your personal statement is your first opportunity to show the school you’re a great fit for the job, and gets you closer to being shortlisted for an interview. The more you show how your skills and interests match the school’s ethos and values, the better. We've spoken to a range of teachers to get their top tips for success.
-
 
 ## What experience do you have?
 Schools want to hear about your trainee experience with different subjects, key stages, types of school, and working with a range of pupils.
@@ -32,4 +32,5 @@ Schools will also want to know how you overcome challenges.
 Set yourself apart by showing how your hobbies and achievements could contribute to the wider school community. Could you run an after school club or organise school trips?
 
 ## Search for roles
-[Search for roles on Teaching Vacancies now.](https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=)
+<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles on Teaching Vacancies now.</a>
+

@@ -10,7 +10,7 @@ category_tags: apply
 
 If you’re thinking about returning to teaching, or if you’re qualified to teach but have never taught in a state school in England, support is available.
 
-If you trained to teach in the UK and are a UK citizen currently working abroad, find out about [returning to England to teach.](https://teaching-vacancies.campaign.gov.uk/return-to-england-after-teaching-overseas/)
+If you trained to teach in the UK and are a UK citizen currently working abroad, find out about [returning to England to teach.](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-england-after-teaching-overseas)
 
 ## Get back into teaching
 Returning to teaching might be easier than you think.
@@ -32,7 +32,7 @@ The Department for Education (DfE) has been taking action to help schools suppor
 * enabling [flexible working opportunities](https://www.gov.uk/government/collections/flexible-working-resources-for-teachers-and-schools) 
 * putting in place [behaviour hubs](https://behaviourhubs.co.uk/)
 
-Teaching is a diverse and inclusive profession with many networks that can help you in your teaching career, including [WomenEd](https://womened.com/), [BAMEed](https://www.bameednetwork.com/), [LGBTed](https://lgbted.uk/) and [DisabilityEd](https://twitter.com/disability_ed)
+Teaching is a diverse and inclusive profession with many networks that can help you in your teaching career, including [WomenEd](https://womened.com/), [BAMEed](https://www.bameednetwork.com/), [LGBTed](https://lgbted.uk/) and [DisabilityEd](https://twitter.com/disability_ed).
 
 ## Get a return to teaching adviser
 If you have [qualified teacher status (QTS)](https://www.gov.uk/guidance/qualified-teacher-status-qts), you could be eligible for a [return to teaching adviser.](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers)
@@ -58,7 +58,7 @@ If you qualified as a teacher outside the UK, you must have qualified teacher st
 ## Find your perfect teaching job
 Every school has its own culture and values so it’s useful to consider what’s important to you when searching for a teaching job.
 
-You can [find out more about how to find a teaching role at the right school.](https://teaching-vacancies.campaign.gov.uk/find-a-teaching-role-at-the-right-school/)
+You can [find out more about how to find a teaching role at the right school.](https://teaching-vacancies.service.gov.uk/jobseeker-guides/find-a-teaching-role-at-the-right-school)
 
 ## Get help applying for a teaching job
 
@@ -67,9 +67,9 @@ If you’ve found a teaching job which looks right for you, help make it yours w
 Find out how to:
 
   * [write a teacher personal statement](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-write-teacher-personal-statement)
-  * [write a great teaching job application in 5 steps](https://teaching-vacancies.campaign.gov.uk/get-help-applying-for-teacher-jobs/write-a-great-teaching-job-application/)
-  * [approach a teaching job interview](https://teaching-vacancies.campaign.gov.uk/get-help-applying-for-teacher-jobs/how-to-approach-a-teaching-job-interview/)
-  * [prepare for a teaching interview lesson](https://teaching-vacancies.campaign.gov.uk/get-help-applying-for-teacher-jobs/prepare-for-a-teaching-interview-lesson/)
+  * [write a great teaching job application in 5 steps](https://teaching-vacancies.service.gov.uk/jobseeker-guides/write-a-great-teaching-job-application-in-five-steps)
+  * [approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-approach-a-teaching-job-interview)
+  * [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/prepare-for-a-teaching-job-interview-lesson)
 
 When you’re ready, you can search for a job on [Teaching Vacancies.](https://teaching-vacancies.service.gov.uk/)
 
