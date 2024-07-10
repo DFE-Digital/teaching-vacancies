@@ -148,6 +148,20 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacanc
       end
     end
 
+    context "when the vacancy job details have more than 2 consecutive line breaks" do
+      before do
+        allow(vacancy).to receive(:skills_and_experience).and_return(
+          "<p>\r\n\r\n\r\n</p><p>The\r\nsuccessful candidate willwork as a 1:1 GTA, working alongside our teaching\r\nteam. </p><p>\r\n\r\n\r\n\r\n</p><p>Second\r\nparagraph.</p><p>\r\n\r\n</p><p>We are aspirational for every\r\nstudent within our Trust.</p><p>\r\n\r\n\r\n\r\n\r\n\r\n</p>",
+        )
+      end
+
+      it "normalises the empty lines between content to maximum 1 empty line" do
+        expect(parsed.description).to eq(
+          "What skills and experience we're looking for\n\nThe successful candidate willwork as a 1:1 GTA, working alongside our teaching team.\n\nSecond paragraph.\n\nWe are aspirational for every student within our Trust.",
+        )
+      end
+    end
+
     context "when the vacancy job details contains an invalid byte sequence" do
       before do
         allow(vacancy).to receive(:skills_and_experience).and_return("Multi\x80\x80\x80Academy Trust")
