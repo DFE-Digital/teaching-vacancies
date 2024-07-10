@@ -219,8 +219,7 @@ en:
         title: Hiring guides
       jobseeker-guides:
         description: >-
-          Looking for your next teaching job, or another role within a school? Take a look at our expert advice covering applications, interviews, and more
-           to help you in your job search.
+          Find expert advice on securing your teaching job.
         meta_description: >-
           Take a look at expert advice from Teaching Vacancies for people looking for jobs in schools. Guides cover applications, interviews, and much more.
         page_title: Advice for School Jobskeekers
@@ -228,6 +227,17 @@ en:
     show:
       contents: Contents
       published_on: Published on
+    subcategory:
+      get-help-hiring:
+        how-to-create-job-listings-and-accept-applications: >-
+          Get support using your account
+        how-to-setup-your-account: >-
+          Get support setting up your account
+      jobseeker-guides:
+        get-help-applying-for-your-teaching-role: >-
+          Get advice from experienced teachers and school leaders on applying for your teaching role
+        return-to-teaching-in-england: >-
+          Find out how to get support returning to teaching in England
 
   organisations:
     about:

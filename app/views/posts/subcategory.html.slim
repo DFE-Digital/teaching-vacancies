@@ -10,7 +10,7 @@
 .govuk-grid-row
   .govuk-grid-column-full
     h1.govuk-heading-xl = formatted_subcategory.to_s
-    p.govuk-body = "All posts under the subcategory: #{formatted_subcategory}"
+    p.govuk-body = t(".#{params[:section]}.#{params[:subcategory]}")
     ul.govuk-list
       - @posts.sort.each do |post|
         li = govuk_link_to(post.title, post_path(section: post.section, subcategory: post.subcategory, post_name: post.post_name))
