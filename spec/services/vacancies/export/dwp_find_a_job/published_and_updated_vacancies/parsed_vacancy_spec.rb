@@ -5,12 +5,6 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacanc
 
   subject(:parsed) { described_class.new(vacancy) }
 
-  describe "#id" do
-    it "returns the vacancy id" do
-      expect(parsed.id).to eq(vacancy.id)
-    end
-  end
-
   describe "#job_title" do
     it "returns the vacancy job title" do
       expect(parsed.job_title).to eq(vacancy.job_title)
@@ -187,28 +181,88 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacanc
     before { travel_to(Time.zone.local(2024, 5, 1, 10, 55, 30)) }
     after { travel_back }
 
-    it "returns the vacancy expiry date as a string if it is between today and 30 days in the future" do
-      allow(vacancy).to receive(:expires_at).and_return(Date.today + 15.days)
+    describe "with the original version of the vacancy" do
+      before do
+        allow(parsed).to receive(:version).with(vacancy).and_return(0)
+      end
 
-      expect(parsed.expiry).to eq("2024-05-16")
+      it "returns nil if the vacancy expiry date is before today" do
+        allow(vacancy).to receive(:expires_at).and_return(1.day.ago)
+        expect(parsed.expiry).to be_nil
+      end
+
+      it "returns nil if the vacancy expiry date is today" do
+        allow(vacancy).to receive(:expires_at).and_return(1.hour.after)
+        expect(parsed.expiry).to be_nil
+      end
+
+      it "returns nil if the expiry date is over 31 days after the publishing date" do
+        allow(vacancy).to receive_messages(publish_on: 1.days.ago, expires_at: 31.days.after)
+        expect(parsed.expiry).to be_nil
+      end
+
+      context "when the expiry date is 31 days after the publishing date" do
+        before { allow(vacancy).to receive(:expires_at).and_return(30.days.after) }
+
+        it "returns nil if it was published before 23:30" do
+          allow(vacancy).to receive(:publish_on).and_return(1.day.ago.change(hour: 23, min: 29))
+          expect(parsed.expiry).to be_nil
+        end
+
+        it "returns the expiry date if it was published after 23:30" do
+          allow(vacancy).to receive(:publish_on).and_return(1.day.ago.change(hour: 23, min: 30, sec: 1))
+          expect(parsed.expiry).to eq(30.days.after.to_date.to_s)
+        end
+      end
+
+      it "returns the expiry date if it is 30 days after the publishing date" do
+        allow(vacancy).to receive_messages(publish_on: 1.day.ago, expires_at: 29.days.after)
+        expect(parsed.expiry).to eq(29.days.after.to_date.to_s)
+      end
     end
 
-    it "returns nil if the vacancy expiry date is before today" do
-      allow(vacancy).to receive(:expires_at).and_return(Date.yesterday)
+    context "with a newer version of the vacancy" do
+      before do
+        allow(parsed).to receive(:version).with(vacancy).and_return(2)
+        allow(vacancy).to receive(:publish_on).and_return(1.hour.ago)
+      end
 
-      expect(parsed.expiry).to be_nil
+      it "returns the vacancy expiry date if it is after the publishing date of the given version" do
+        allow(vacancy).to receive(:expires_at).and_return(63.days.after)
+        expect(parsed.expiry).to eq(63.days.after.to_date.to_s)
+      end
+
+      context "when the expiry date is a multiplier of 31 days after the original publishing date" do
+        before { allow(vacancy).to receive(:expires_at).and_return(92.days.after) }
+
+        it "returns nil if it was published before 23:30" do
+          allow(vacancy).to receive(:publish_on).and_return(1.day.ago.change(hour: 23, min: 29))
+          expect(parsed.expiry).to be_nil
+        end
+
+        it "returns the expiry date if it was published after 23:30" do
+          allow(vacancy).to receive(:publish_on).and_return(1.day.ago.change(hour: 23, min: 30, sec: 1))
+          expect(parsed.expiry).to eq(92.days.after.to_date.to_s)
+        end
+      end
+
+      it "returns the vacancy expiry date is on the last allowed day after the publishing date of the given version" do
+        allow(vacancy).to receive(:expires_at).and_return(92.days.after)
+        expect(parsed.expiry).to eq(92.days.after.to_date.to_s)
+      end
+
+      it "returns nil if the vacancy expiry date surpases the last allowed day after the publishing date of the given version" do
+        allow(vacancy).to receive(:expires_at).and_return(93.days.after)
+        expect(parsed.expiry).to be_nil
+      end
     end
+  end
 
-    it "returns nil if the vacancy expiry date is today" do
-      allow(vacancy).to receive(:expires_at).and_return(Date.yesterday)
-
-      expect(parsed.expiry).to be_nil
-    end
-
-    it "returns nil if the vacancy expiry date is more than 29 days in the future" do
-      allow(vacancy).to receive(:expires_at).and_return(Date.today + 30.days)
-
-      expect(parsed.expiry).to be_nil
+  describe "#reference" do
+    it "gets the versioned reference for the vacancy" do
+      allow(parsed).to receive(:versioned_reference).with(vacancy).and_return("123-1")
+      expect(parsed.reference).to eq("123-1")
+      expect(parsed).to have_received(:versioned_reference).with(vacancy)
     end
   end
 
