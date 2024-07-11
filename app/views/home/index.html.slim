@@ -8,7 +8,7 @@
     p.govuk-body = t(".description")
     p.govuk-body = t(".personal_statement_section.description_html",
                      personal_statement_guide_link: govuk_link_to(t(".personal_statement_section.link_text"),
-                                                    posts_path(section: "jobseeker-guides"),
+                                                    post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
                                                     class: "govuk-link--no-visited-state"))
   .govuk-grid-column-one-quarter
     h2.govuk-heading-m = t(".jobseeker_section.title")
@@ -17,7 +17,7 @@
       .govuk-body class="govuk-!-margin-bottom-3" = govuk_link_to t("buttons.view_account"), jobseeker_root_path, class: "govuk-link--no-visited-state"
     - else
       p.govuk-body = t(".jobseeker_section.signed_out.description_html")
-      = govuk_button_link_to(t(".jobseeker_section.signed_out.link_text.sign_in"), new_jobseeker_session_path, class: "govuk-!-margin-bottom-2")
+      = govuk_button_link_to(t("buttons.sign_in"), new_jobseeker_session_path, class: "govuk-!-margin-bottom-2")
       p.govuk-body = t(".jobseeker_section.signed_out.create_account_html", create_account_link: govuk_link_to(t(".jobseeker_section.signed_out.link_text.create_account"), new_jobseeker_registration_path, class: "govuk-link--no-visited-state"))
 
   .govuk-grid-column-one-quarter

@@ -122,7 +122,8 @@ en:
       one: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
       other: Notifications <span class="count-badge">%{count}<span class="govuk-visually-hidden"> unread</span></span>
     personal_statement: Writing a personal statement
-    find_a_teaching_job_at_the_right_school: Find a teaching job at the right school
+    get_help_applying_for_your_teaching_role: Get help applying for your teaching role
+    find_a_teaching_role_at_the_right_school: Find a teaching role at the right school
     return_to_england_after_teaching_overseas: Return to England after teaching overseas
     return_to_teaching: Return to teaching
     hiring_guides: Hiring guides
@@ -218,8 +219,7 @@ en:
         title: Hiring guides
       jobseeker-guides:
         description: >-
-          Looking for your next teaching job, or another role within a school? Take a look at our expert advice covering applications, interviews, and more
-           to help you in your job search.
+          Find expert advice on securing your teaching job.
         meta_description: >-
           Take a look at expert advice from Teaching Vacancies for people looking for jobs in schools. Guides cover applications, interviews, and much more.
         page_title: Advice for School Jobskeekers
@@ -227,6 +227,17 @@ en:
     show:
       contents: Contents
       published_on: Published on
+    subcategory:
+      get-help-hiring:
+        how-to-create-job-listings-and-accept-applications: >-
+          Get support using your account
+        how-to-setup-your-account: >-
+          Get support setting up your account
+      jobseeker-guides:
+        get-help-applying-for-your-teaching-role: >-
+          Get advice from experienced teachers and school leaders on applying for your teaching role.
+        return-to-teaching-in-england: >-
+          Find out how to get support returning to teaching in England.
 
   organisations:
     about:

@@ -21,7 +21,7 @@
       h3.govuk-heading-m = t(".personal_statement_guide.title")
       p.govuk-body = t(".personal_statement_guide.description_mobile")
       = govuk_link_to(t(".personal_statement_guide.link_text"),
-                      post_path(section: "jobseeker-guides", post_name: "how-to-write-teacher-personal-statement"),
+                      post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
                       class: "govuk-link--no-visited-state")
 
     - if job_application.vacancy.personal_statement_guidance.present?
@@ -46,5 +46,5 @@
       h3.govuk-heading-m = t(".personal_statement_guide.title")
       p.govuk-body = t(".personal_statement_guide.description_desktop")
       = govuk_link_to(t(".personal_statement_guide.link_text"),
-                      post_path(section: "jobseeker-guides", post_name: "how-to-write-teacher-personal-statement"),
+                      post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
                       class: "govuk-link--no-visited-state")

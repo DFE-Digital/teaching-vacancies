@@ -1,0 +1,16 @@
+- formatted_subcategory = format_title(params[:subcategory])
+- content_for :page_title_prefix, formatted_subcategory.to_s
+- content_for :page_description, "All posts under the subcategory: #{formatted_subcategory}"
+
+- content_for :breadcrumbs do
+  = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
+    params[:section].titleize.capitalize => posts_path(section: params[:section]),
+    formatted_subcategory => "" }
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    h1.govuk-heading-xl = formatted_subcategory.to_s
+    p.govuk-body = t(".#{params[:section]}.#{params[:subcategory]}")
+    ul.govuk-list
+      - @posts.sort.each do |post|
+        li = govuk_link_to(post.title, post_path(section: post.section, subcategory: post.subcategory, post_name: post.post_name))
