@@ -52,7 +52,7 @@ module Publishers::Wizardable
 
   def contract_type_params(params)
     params.require(:publishers_job_listing_contract_type_form)
-          .permit(:contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration)
+          .permit(:contract_type, :fixed_term_contract_duration, :is_parental_leave_cover)
           .merge(completed_steps: completed_steps)
   end
 
