@@ -3,10 +3,10 @@ class MarkdownDocument
 
   attr_reader :section, :subcategory, :post_name
 
-  def initialize(section, subcategory, post_name)
+  def initialize(section:, post_name:, subcategory: nil)
     @section = section
-    @subcategory = subcategory
     @post_name = post_name
+    @subcategory = subcategory
     parse if exist?
   end
 
@@ -14,14 +14,16 @@ class MarkdownDocument
     dir_path = Rails.root.join("app", "views", "content", section, subcategory)
 
     Dir.children(dir_path).map do |file_name|
-      new(section, subcategory, file_name.remove(".md"))
+      new(section: section, post_name: file_name.remove(".md"), subcategory: subcategory)
     end
   end
 
   def self.all_subcategories(section)
-    dir_path = Rails.root.join("app", "views", "content", section)
-
-    Dir.children(dir_path)
+    dir_path = Rails.root.join("app", "views", "content", section, "*.md")
+    Dir.glob(dir_path).map do |path|
+      file_name = File.basename(path)
+      new(section: section, post_name: file_name.remove(".md"))
+    end
   end
 
   def title
@@ -79,6 +81,7 @@ class MarkdownDocument
   end
 
   def file_path
-    Rails.root.join("app", "views", "content", @section, @subcategory, "#{@post_name}.md")
+    subcategory_path = [@section, @subcategory].compact
+    Rails.root.join("app", "views", "content", *subcategory_path, "#{@post_name}.md")
   end
 end

@@ -3,22 +3,22 @@ require "rails_helper"
 RSpec.describe PostsController do
   describe "#index" do
     context "jobseeker guides" do
-      let(:subcategories) { %w[get-help-applying-for-your-teaching-role return-to-teaching-in-england] }
+      let(:post_names) { %w[get-help-applying-for-your-teaching-role return-to-teaching-in-england] }
 
       it "finds the subcategories for jobseeker guides" do
         get :index, params: { section: "jobseeker-guides" }
 
-        expect(assigns(:subcategories).sort).to eq(subcategories.sort)
+        expect(assigns(:subcategories).map(&:post_name).sort).to eq(post_names.sort)
       end
     end
 
     context "hiring staff guides" do
-      let(:subcategories) { %w[how-to-create-job-listings-and-accept-applications how-to-setup-your-account] }
+      let(:post_names) { %w[how-to-create-job-listings-and-accept-applications how-to-setup-your-account] }
 
       it "finds the subcategories for jobseeker guides" do
         get :index, params: { section: "get-help-hiring" }
 
-        expect(assigns(:subcategories)).to eq(subcategories)
+        expect(assigns(:subcategories).map(&:post_name).sort).to eq(post_names.sort)
       end
     end
 
