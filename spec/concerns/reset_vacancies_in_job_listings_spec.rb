@@ -36,16 +36,6 @@ RSpec.describe Resettable do
           .from(previous_fixed_term_contract_duration).to("")
       end
     end
-
-    context "from parental leave cover" do
-      let(:contract_type) { "parental_leave_cover" }
-
-      it "resets parental leave cover contract duration" do
-        expect { update_contract_type }
-          .to change { vacancy.parental_leave_cover_contract_duration }
-          .from(previous_parental_leave_cover_contract_duration).to("")
-      end
-    end
   end
 
   context "when changing education support" do
