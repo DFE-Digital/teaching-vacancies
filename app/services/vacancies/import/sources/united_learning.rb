@@ -65,7 +65,7 @@ class Vacancies::Import::Sources::UnitedLearning
       subjects: item["Subjects"].presence&.split(",") || [],
       working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
-      is_parental_leave_cover: is_parental_leave_cover_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(item))
@@ -124,10 +124,11 @@ class Vacancies::Import::Sources::UnitedLearning
 
   def contract_type_for(item)
     return "fixed_term" if item["Contract_type"] == "parental_leave_cover"
+
     item["Contract_type"].presence
   end
-  
-  def is_parental_leave_cover_for(item)
+
+  def parental_leave_cover_for?(item)
     item["Contract_type"] == "parental_leave_cover"
   end
 

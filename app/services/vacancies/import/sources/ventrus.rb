@@ -61,7 +61,7 @@ class Vacancies::Import::Sources::Ventrus
       # subjects: item["Subjects"].presence&.split(",") || [], # Ventrus don't have subjects in their feed
       working_patterns: item["Working_Patterns"].presence&.split(","),
       contract_type: contract_type_for(item),
-      is_parental_leave_cover: is_parental_leave_cover_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(schools))
@@ -124,10 +124,11 @@ class Vacancies::Import::Sources::Ventrus
 
   def contract_type_for(item)
     return "fixed_term" if item["Contract_Type"] == "parental_leave_cover"
+
     item["Contract_Type"].presence
   end
-  
-  def is_parental_leave_cover_for(item)
+
+  def parental_leave_cover_for?(item)
     item["Contract_Type"] == "parental_leave_cover"
   end
 

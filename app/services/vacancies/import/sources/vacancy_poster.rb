@@ -58,7 +58,7 @@ class Vacancies::Import::Sources::VacancyPoster
       subjects: item["subjects"].presence&.split(","),
       working_patterns: item["workingPatterns"].presence&.split(","),
       contract_type: contract_type_for(item),
-      is_parental_leave_cover: is_parental_leave_cover_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: false,
     }.merge(organisation_fields(item))
@@ -125,10 +125,11 @@ class Vacancies::Import::Sources::VacancyPoster
 
   def contract_type_for(item)
     return "fixed_term" if item["contractType"] == "parental_leave_cover"
+
     item["contractType"].presence
   end
-  
-  def is_parental_leave_cover_for(item)
+
+  def parental_leave_cover_for?(item)
     item["contractType"] == "parental_leave_cover"
   end
 

@@ -180,7 +180,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
 
     context "when contract_type is parental_leave_cover" do
       let(:response_body) { super().gsub("fixed_term", "parental_leave_cover") }
-  
+
       it "sets contract_type to fixed_term and is_parental_leave_cover to true" do
         expect(vacancy.contract_type).to eq("fixed_term")
         expect(vacancy.is_parental_leave_cover).to eq(true)

@@ -10,9 +10,9 @@
 
         = f.govuk_radio_button :contract_type, :fixed_term do
           = f.govuk_radio_buttons_fieldset :is_parental_leave_cover, inline: true, legend: { text: "Is this covering maternity or paternity leave?" } do
-            = f.govuk_radio_button :is_parental_leave_cover, :true, label: { text: "Yes" }
-            = f.govuk_radio_button :is_parental_leave_cover, :false, label: { text: "No" }
+            = f.govuk_radio_button :is_parental_leave_cover, true, label: { text: "Yes" }
+            = f.govuk_radio_button :is_parental_leave_cover, false, label: { text: "No" }
           = f.govuk_text_field :fixed_term_contract_duration, label: { size: "s" }
-        
+
         = f.govuk_radio_button :contract_type, :casual
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

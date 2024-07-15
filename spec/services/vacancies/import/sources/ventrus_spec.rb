@@ -207,7 +207,7 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
 
     context "when contract_type is parental_leave_cover" do
       let(:response_body) { file_fixture("vacancy_sources/ventrus_with_parental_leave_cover.xml").read }
-  
+
       it "sets contract_type to fixed_term and is_parental_leave_cover to true" do
         expect(vacancy.contract_type).to eq("fixed_term")
         expect(vacancy.is_parental_leave_cover).to eq(true)

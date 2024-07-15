@@ -53,7 +53,7 @@ class Vacancies::Import::Sources::Fusion
       subjects: item["subjects"].presence&.split(",") || [],
       working_patterns: item["workingPatterns"].presence&.split(","),
       contract_type: contract_type_for(item),
-      is_parental_leave_cover: is_parental_leave_cover_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       key_stages: item["keyStages"].presence&.split(","),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
@@ -137,10 +137,11 @@ class Vacancies::Import::Sources::Fusion
 
   def contract_type_for(item)
     return "fixed_term" if item["contractType"] == "parental_leave_cover"
+
     item["contractType"].presence
   end
-  
-  def is_parental_leave_cover_for(item)
+
+  def parental_leave_cover_for?(item)
     item["contractType"] == "parental_leave_cover"
   end
 

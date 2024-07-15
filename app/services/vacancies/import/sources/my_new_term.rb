@@ -60,7 +60,7 @@ class Vacancies::Import::Sources::MyNewTerm
       subjects: item["subjects"].presence || [],
       working_patterns: item["workingPatterns"].presence,
       contract_type: contract_type_for(item),
-      is_parental_leave_cover: is_parental_leave_cover_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
@@ -153,10 +153,11 @@ class Vacancies::Import::Sources::MyNewTerm
 
   def contract_type_for(item)
     return "fixed_term" if item["contractType"]&.first == "parental_leave_cover"
+
     item["contractType"]&.first
   end
-  
-  def is_parental_leave_cover_for(item)
+
+  def parental_leave_cover_for?(item)
     item["contractType"]&.first == "parental_leave_cover"
   end
 
