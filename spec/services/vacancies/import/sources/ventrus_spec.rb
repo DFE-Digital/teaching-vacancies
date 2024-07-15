@@ -205,6 +205,15 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
       end
     end
 
+    context "when contract_type is parental_leave_cover" do
+      let(:response_body) { file_fixture("vacancy_sources/ventrus_with_parental_leave_cover.xml").read }
+  
+      it "sets contract_type to fixed_term and is_parental_leave_cover to true" do
+        expect(vacancy.contract_type).to eq("fixed_term")
+        expect(vacancy.is_parental_leave_cover).to eq(true)
+      end
+    end
+
     context "when school associated with vacancy is of excluded type" do
       before do
         school1.update(detailed_school_type: "Other independent school")

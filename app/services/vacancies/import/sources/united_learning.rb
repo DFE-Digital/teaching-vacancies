@@ -64,7 +64,8 @@ class Vacancies::Import::Sources::UnitedLearning
       ect_status: ect_status_for(item),
       subjects: item["Subjects"].presence&.split(",") || [],
       working_patterns: working_patterns_for(item),
-      contract_type: item["Contract_type"].presence,
+      contract_type: contract_type_for(item),
+      is_parental_leave_cover: is_parental_leave_cover_for(item),
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(item))
@@ -119,6 +120,15 @@ class Vacancies::Import::Sources::UnitedLearning
                  .parameterize(separator: "_")
                  .gsub("through_school", "through")
                  .gsub(/16-19|16_19/, "sixth_form_or_college")
+  end
+
+  def contract_type_for(item)
+    return "fixed_term" if item["Contract_type"] == "parental_leave_cover"
+    item["Contract_type"].presence
+  end
+  
+  def is_parental_leave_cover_for(item)
+    item["Contract_type"] == "parental_leave_cover"
   end
 
   def visa_sponsorship_available_for(item)
