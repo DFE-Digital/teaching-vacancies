@@ -1,11 +1,12 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: d2299142d986e46d1c86d415dc9b8b215f7245ab
-  tag: v1.12.7
+  revision: b2ea063f7c3616b034118589efe48cea30134b4c
+  tag: v1.13.0
   specs:
-    dfe-analytics (1.12.7)
+    dfe-analytics (1.13.0)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
+      multi_xml (~> 0.6.0)
       request_store_rails (~> 2)
 
 GIT
@@ -201,8 +202,9 @@ GEM
       railties (>= 5.0.0)
     faker (3.4.1)
       i18n (>= 1.8.11, < 2)
-    faraday (2.9.2)
+    faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
+      logger
     faraday-follow_redirects (0.3.0)
       faraday (>= 1, < 3)
     faraday-multipart (1.0.4)
@@ -339,8 +341,7 @@ GEM
     mini_mime (1.1.5)
     minitest (5.24.1)
     multi_json (1.15.0)
-    multi_xml (0.7.1)
-      bigdecimal (~> 3.1)
+    multi_xml (0.6.0)
     multipart-post (2.4.1)
     mutex_m (0.2.0)
     net-http (0.4.1)
