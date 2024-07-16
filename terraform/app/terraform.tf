@@ -89,6 +89,7 @@ module "paas" {
   web_external_hostnames_aks        = local.web_external_hostnames_aks
   azure_maintenance_window          = var.azure_maintenance_window
   enable_logit                      = var.enable_logit
+  aks_web_app_memory                = var.aks_web_app_memory
 }
 
 module "statuscake" {
