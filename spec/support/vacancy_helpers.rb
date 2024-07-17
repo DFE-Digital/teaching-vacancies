@@ -59,16 +59,21 @@ module VacancyHelpers
   end
 
   def fill_in_pay_package_form_fields(vacancy)
-    check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.full_time")
-    fill_in "publishers_job_listing_pay_package_form[salary]", with: vacancy.salary
+    if vacancy.contract_type == "casual"
+      check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.hourly_rate")
+      fill_in "publishers_job_listing_pay_package_form[salary]", with: vacancy.hourly_rate
+    else
+      check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.full_time")
+      fill_in "publishers_job_listing_pay_package_form[salary]", with: vacancy.salary
 
-    if vacancy.working_patterns.include? "part_time"
-      check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.part_time")
-      fill_in "publishers_job_listing_pay_package_form[actual_salary]", with: vacancy.actual_salary
+      if vacancy.working_patterns.include? "part_time"
+        check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.part_time")
+        fill_in "publishers_job_listing_pay_package_form[actual_salary]", with: vacancy.actual_salary
+      end
+
+      check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.pay_scale")
+      fill_in "publishers_job_listing_pay_package_form[pay_scale]", with: vacancy.pay_scale
     end
-
-    check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.pay_scale")
-    fill_in "publishers_job_listing_pay_package_form[pay_scale]", with: vacancy.pay_scale
 
     choose I18n.t("helpers.label.publishers_job_listing_pay_package_form.benefits_options.true")
     fill_in "publishers_job_listing_pay_package_form[benefits_details]", with: vacancy.benefits_details
@@ -370,6 +375,24 @@ module VacancyHelpers
         expect(page).to have_content("#{organisation.name}, #{full_address(organisation)}")
       else
         expect(page).to have_content("#{I18n.t('organisations.job_location_heading.central_office')}, #{full_address(organisation)}")
+      end
+    end
+  end
+
+  def expect_correct_pay_package_options(vacancy)
+    if vacancy.contract_type == "casual"
+      expect(page).not_to have_field("Full-time equivalent salary", type: "checkbox")
+      expect(page).not_to have_field("Actual salary", type: "checkbox")
+      expect(page).not_to have_field("Pay scale", type: "checkbox")
+      expect(page).to have_field("Hourly rate of pay", type: "checkbox")
+    else
+      expect(page).to have_field("Full-time equivalent salary", type: "checkbox")
+      expect(page).to have_field("Pay scale", type: "checkbox")
+      expect(page).to have_field("Hourly rate of pay", type: "checkbox")
+      if vacancy.working_patterns.include? "part_time"
+        expect(page).to have_field("Actual salary", type: "checkbox")
+      else
+        expect(page).not_to have_field("Actual salary", type: "checkbox")
       end
     end
   end

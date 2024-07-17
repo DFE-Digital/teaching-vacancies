@@ -82,6 +82,8 @@ RSpec.describe "Creating a vacancy" do
     expect(page).to have_content("There is a problem")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
+    expect_correct_pay_package_options(vacancy)
+
     fill_in_pay_package_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
