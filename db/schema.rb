@@ -675,6 +675,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_142645) do
     t.boolean "visa_sponsorship_available"
     t.boolean "is_parental_leave_cover"
     t.boolean "is_job_share"
+    t.string "hourly_rate"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
     t.index ["geolocation", "expires_at", "publish_on"], name: "index_vacancies_on_geolocation_and_expires_at_and_publish_on", using: :gist
