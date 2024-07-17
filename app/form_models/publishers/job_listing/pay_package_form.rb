@@ -5,6 +5,7 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
     salary: "full_time",
     actual_salary: "part_time",
     pay_scale: "pay_scale",
+    hourly_rate: "hourly_rate"
   }.freeze
 
   validate :salary_presence
@@ -15,7 +16,7 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
   validates :benefits_details, presence: true, length: { minimum: 1, maximum: 256 }, if: -> { benefits == "true" }
 
   def self.fields
-    %i[actual_salary salary pay_scale benefits benefits_details salary_types]
+    %i[actual_salary salary pay_scale benefits benefits_details salary_types hourly_rate]
   end
   attr_accessor(*fields)
 
