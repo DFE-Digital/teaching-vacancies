@@ -181,6 +181,8 @@ en:
       blank: Enter full-time salary
       too_long: Full-time equivalent salary must not be more than %{count} characters
       invalid_characters: Salary must not contain any HTML tags
+    hourly_rate:
+      blank: Enter hourly rate
     salary_types:
       invalid: Select salary details
   important_dates_errors: &important_dates_errors
