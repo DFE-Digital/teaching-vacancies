@@ -12,6 +12,40 @@ Rails.application.routes.draw do
 
   get "check" => "application#check"
 
+  get "/get-help-hiring/how-to-approve-access-for-hiring-staff", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-setup-your-account", post_name: "how-to-approve-access-for-hiring-staff")
+  }
+  get "/get-help-hiring/how-to-request-organisation-access", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-setup-your-account", post_name: "how-to-request-organisation-access")
+  }
+  get "/get-help-hiring/how-mats-can-use-teaching-vacancies", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-setup-your-account", post_name: "how-mats-can-use-teaching-vacancies")
+  }
+  get "/get-help-hiring/how-to-list-non-teaching-roles", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "how-to-list-non-teaching-roles")
+  }
+  get "/get-help-hiring/creating-the-perfect-teacher-job-advert", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "creating-the-perfect-teacher-job-advert")
+  }
+  get "/get-help-hiring/accepting-job-applications-on-teaching-vacancies", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies")
+  }
+  get "/jobseeker-guides/write-a-great-teaching-job-application-in-five-steps", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "write-a-great-teaching-job-application-in-five-steps")
+  }
+  get "/jobseeker-guides/how-to-write-teacher-personal-statement", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement")
+  }
+  get "/jobseeker-guides/prepare-for-a-teaching-job-interview-lesson", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "prepare-for-a-teaching-job-interview-lesson")
+  }
+  get "/jobseeker-guides/how-to-approach-a-teaching-job-interview", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-approach-a-teaching-job-interview")
+  }
+  get "/jobseeker-guides/3-quick-ways-to-find-the-right-teaching-job", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "3-quick-ways-to-find-the-right-teaching-job")
+  }
+
   if Rails.application.config.maintenance_mode
     # If in maintenance mode, route *all* requests to maintenance page
     match "*path", to: "errors#maintenance", via: :all
