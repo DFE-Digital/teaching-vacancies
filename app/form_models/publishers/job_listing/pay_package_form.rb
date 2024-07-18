@@ -5,7 +5,7 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
     salary: "full_time",
     actual_salary: "part_time",
     pay_scale: "pay_scale",
-    hourly_rate: "hourly_rate"
+    hourly_rate: "hourly_rate",
   }.freeze
 
   validate :salary_presence
