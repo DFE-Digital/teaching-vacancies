@@ -13,7 +13,6 @@ require "rack_session_access/capybara"
 require "sidekiq/testing"
 require "view_component/test_helpers"
 require "webmock/rspec"
-require "capybara-screenshot/rspec"
 
 Sidekiq::Testing.fake!
 
