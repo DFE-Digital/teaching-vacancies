@@ -406,6 +406,7 @@ shared:
     - include_additional_documents
     - visa_sponsorship_available
     - is_parental_leave_cover
+    - is_job_share
   failed_imported_vacancies:
     - id
     - import_errors
