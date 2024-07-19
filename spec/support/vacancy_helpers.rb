@@ -53,6 +53,8 @@ module VacancyHelpers
       check Vacancy.human_attribute_name(working_pattern.to_s), name: "publishers_job_listing_working_patterns_form[working_patterns][]"
     end
 
+    choose(vacancy.is_job_share ? "Yes" : "No")
+
     fill_in "publishers_job_listing_working_patterns_form[working_patterns_details]", with: vacancy.working_patterns_details
   end
 

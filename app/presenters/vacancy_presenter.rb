@@ -27,9 +27,13 @@ class VacancyPresenter < BasePresenter
   end
 
   def readable_working_patterns
-    model.working_patterns.map { |working_pattern|
+    working_patterns = model.working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ").capitalize
+
+    return working_patterns unless is_job_share
+
+    "#{working_patterns} (Can be done as a job share)"
   end
 
   def readable_working_patterns_with_details
