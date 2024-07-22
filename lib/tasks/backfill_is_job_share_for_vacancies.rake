@@ -1,7 +1,7 @@
 namespace :vacancies do
   desc "Update working_patterns to replace 'job_share' with 'part_time' and set is_job_share to true"
   task update_job_share: :environment do
-    vacancies_to_update = Vacancy.where("working_patterns @> ARRAY[?]::varchar[]", ["job_share"])
+    vacancies_to_update = Vacancy.where("101 = ANY(working_patterns)")
 
     vacancies_to_update.find_each do |vacancy|
       if vacancy.working_patterns.include?("job_share")
