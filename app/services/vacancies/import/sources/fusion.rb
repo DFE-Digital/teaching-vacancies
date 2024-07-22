@@ -51,12 +51,13 @@ class Vacancies::Import::Sources::Fusion
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence&.split(",") || [],
-      working_patterns: item["workingPatterns"].presence&.split(","),
+      working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       key_stages: item["keyStages"].presence&.split(","),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
+      is_job_share: job_share_for(item),
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
@@ -81,6 +82,25 @@ class Vacancies::Import::Sources::Fusion
     else
       { other_start_date_details: parsed_date.date, start_date_type: parsed_date.type }
     end
+  end
+
+  def working_patterns_for(item)
+    return unless item["workingPatterns"].present?
+
+    working_patterns = item["workingPatterns"].split(",")
+
+    if working_patterns.include?("job_share")
+      working_patterns -= ["job_share"]
+      working_patterns += ["part_time"]
+    end
+
+    working_patterns.uniq
+  end
+
+  def job_share_for(item)
+    return false unless item["workingPatterns"].split(",").include?("job_share")
+
+    true
   end
 
   def schools_for(item)
