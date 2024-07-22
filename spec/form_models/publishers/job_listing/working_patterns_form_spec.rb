@@ -11,7 +11,7 @@ RSpec.describe Publishers::JobListing::WorkingPatternsForm, type: :model do
   before { subject.valid? }
 
   it { is_expected.to validate_presence_of(:working_patterns) }
-  it { is_expected.to validate_inclusion_of(:working_patterns).in_array(Vacancy.working_patterns.keys) }
+  it { is_expected.to validate_inclusion_of(:working_patterns).in_array(Vacancy.working_patterns.keys - ["job_share"]) }
 
   describe "#working_patterns_details" do
     let(:working_patterns_details) { Faker::Lorem.sentence(word_count: 50) }

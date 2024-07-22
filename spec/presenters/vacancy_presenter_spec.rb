@@ -153,17 +153,26 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#readable_working_patterns" do
-    let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
+    context "when is_job_share" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: true) }
 
-    it "returns working patterns" do
-      expect(subject.readable_working_patterns).to eq("Full time, part time")
+      it "returns working patterns" do
+        expect(subject.readable_working_patterns).to eq("Full time, part time (Can be done as a job share)")
+      end
+    end
+
+    context "when is_job_share == false" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: false) }
+      it "returns working patterns" do
+        expect(subject.readable_working_patterns).to eq("Full time, part time")
+      end
     end
   end
 
   describe "#readable_working_patterns_with_details" do
     let(:working_patterns) { %w[full_time part_time] }
     let(:working_patterns_details) { "Some details" }
-    let(:vacancy) { build_stubbed(:vacancy, working_patterns:, working_patterns_details:) }
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns:, working_patterns_details:, is_job_share: false) }
 
     it "returns the working with details" do
       expect(subject.readable_working_patterns_with_details).to eq("Full time, part time: Some details")

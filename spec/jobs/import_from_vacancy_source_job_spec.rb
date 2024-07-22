@@ -168,6 +168,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "working_patterns_details" => nil,
           "visa_sponsorship_available" => false,
           "is_parental_leave_cover" => nil,
+          "is_job_share" => true,
         )
       end
 
