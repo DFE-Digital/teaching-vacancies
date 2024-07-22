@@ -20,7 +20,7 @@ RSpec.describe VacancyFilterQuery do
 
   let!(:vacancy1) { create(:vacancy, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[secondary], job_roles: ["teacher"], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true) }
   let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[sixth_form_or_college], job_roles: ["teacher"], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true) }
-  let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["sendco"], ect_status: nil, organisations: [local_authority_school], enable_job_applications: true) }
+  let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["sendco"], ect_status: nil, organisations: [local_authority_school], enable_job_applications: true, ) }
   let!(:vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 4", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil) }
   let!(:vacancy5) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 5", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["head_of_year_or_phase"], ect_status: nil, organisations: [academies]) }
   let!(:vacancy6) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 6", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["head_of_department_or_curriculum"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
@@ -160,6 +160,18 @@ RSpec.describe VacancyFilterQuery do
             school_types: %w[special_school faith_school],
           }
           expect(subject.call(filters)).to contain_exactly(special_vacancy1, special_vacancy2, special_vacancy3, special_vacancy4, special_vacancy5, special_vacancy6, faith_vacancy)
+        end
+      end
+    end
+
+    context "when working_patterns filter is selected" do
+      context "when job_share is selected" do
+        it "will return vacancies where is_job_share is true" do
+          filters = {
+            working_patterns: %w[job_share],
+          }
+          
+          expect(subject.call(filters).map(&:is_job_share).uniq).to contain_exactly(true)
         end
       end
     end
