@@ -106,7 +106,7 @@ class VacancyFilterQuery < ApplicationQuery
 
   def add_working_patterns_filters(working_patterns, built_scope)
     return built_scope unless working_patterns.present?
-    
+
     if working_patterns.include?("job_share")
       working_patterns -= ["job_share"]
       built_scope = built_scope.where(is_job_share: true)
