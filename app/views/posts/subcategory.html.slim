@@ -8,6 +8,8 @@
     formatted_subcategory => "" }
 
 .govuk-grid-row
+  h1.govuk-heading-xl = formatted_subcategory.to_s
+  p.govuk-body = t(".#{params[:section]}.#{params[:subcategory]}")
   - @posts.sort.each do |post|
     .govuk-grid-column-one-third
       .hf-card
