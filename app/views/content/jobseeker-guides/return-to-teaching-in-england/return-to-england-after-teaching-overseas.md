@@ -37,16 +37,12 @@ Find out:
 ## Before you apply for teaching jobs in England
 Get ready to apply by:
 
-1. collecting evidence of your performance and experience overseas (this can include video recorded lessons and testimonials from your headteacher)
-2. obtaining a police clearance certificate or letter of good conduct 
-3. arranging your references
-4. [getting information about schools](https://get-information-schools.service.gov.uk/)
-5. [researching family visas for non-UK spouses and children](https://www.gov.uk/uk-family-visa)
+* collecting evidence of your performance and experience overseas (this can include video recorded lessons and testimonials from your headteacher)
+* obtaining a police clearance certificate or letter of good conduct 
+* arranging your references
+* [getting information about schools](https://get-information-schools.service.gov.uk/)
+* [researching family visas for non-UK spouses and children](https://www.gov.uk/uk-family-visa)
 
 ## Find a teaching job in England
 
-You can search for a teaching job in England through the government’s official Teaching Vacancies service.
-
-Set up job alerts so you don’t miss out on new roles.
-
-[Search for roles on Teaching Vacancies now.](https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=)
+<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles on Teaching Vacancies now.</a>
