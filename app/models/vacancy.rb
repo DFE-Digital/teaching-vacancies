@@ -46,7 +46,7 @@ class Vacancy < ApplicationRecord
   array_enum phases: { nursery: 0, primary: 1, middle: 2, secondary: 3, sixth_form_or_college: 4, through: 5 }
   array_enum job_roles: JOB_ROLES
 
-  enum contract_type: { permanent: 0, fixed_term: 1, casual: 3 }
+  enum contract_type: { permanent: 0, fixed_term: 1, parental_leave_cover: 2, casual: 3 }
   enum ect_status: { ect_suitable: 0, ect_unsuitable: 1 }
   enum hired_status: { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum listed_elsewhere: { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
