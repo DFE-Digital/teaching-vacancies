@@ -692,7 +692,6 @@ en:
           permanent: Permanent
           casual: Casual
         fixed_term_contract_duration: Length of contract
-        parental_leave_cover_contract_duration: Length of contract
         is_parental_leave_cover: Is this covering maternity or paternal leave?
       publishers_job_listing_contact_details_form:
         contact_email_options:

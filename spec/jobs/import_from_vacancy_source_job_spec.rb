@@ -136,7 +136,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "latest_start_date" => nil,
           "listed_elsewhere" => nil,
           "other_start_date_details" => nil,
-          "parental_leave_cover_contract_duration" => "",
+          "parental_leave_cover_contract_duration" => nil,
           "part_time_details" => nil,
           "pay_scale" => "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
           "personal_statement_guidance" => "Maxime blanditiis quos. Cum officia facilis. Et et quod. Dolore id ut. Id aut quia.",

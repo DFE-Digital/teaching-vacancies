@@ -424,16 +424,12 @@ RSpec.describe Vacancy do
     end
 
     context "when changing contract type to permanent" do
-      subject { create(:vacancy, contract_type: "fixed_term", fixed_term_contract_duration: "8 months", parental_leave_cover_contract_duration: "8 months") }
+      subject { create(:vacancy, contract_type: "fixed_term", fixed_term_contract_duration: "8 months") }
 
       before { subject.update contract_type: "permanent" }
 
       it "resets fixed_term_contract_duration field" do
         expect(subject.fixed_term_contract_duration).to be_blank
-      end
-
-      it "resets parental_leave_cover_contract_duration field" do
-        expect(subject.parental_leave_cover_contract_duration).to be_blank
       end
     end
 

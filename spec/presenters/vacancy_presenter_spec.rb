@@ -200,10 +200,8 @@ RSpec.describe VacancyPresenter do
     let(:vacancy) do
       build_stubbed(:vacancy, contract_type: contract_type,
                               fixed_term_contract_duration: fixed_term_contract_duration,
-                              parental_leave_cover_contract_duration: parental_leave_cover_contract_duration,
                               is_parental_leave_cover: is_parental_leave_cover)
     end
-    let(:parental_leave_cover_contract_duration) { "" }
 
     context "when permanent" do
       let(:contract_type) { :permanent }
