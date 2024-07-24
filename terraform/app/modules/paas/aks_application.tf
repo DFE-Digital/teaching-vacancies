@@ -51,6 +51,7 @@ module "web_application" {
   web_external_hostnames = var.web_external_hostnames_aks
   replicas               = var.aks_web_app_instances
   enable_logit           = var.enable_logit
+  max_memory             = var.aks_web_app_memory
 }
 
 module "worker_application" {

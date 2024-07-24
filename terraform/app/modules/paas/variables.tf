@@ -94,6 +94,8 @@ variable "azure_maintenance_window" {}
 
 variable "enable_logit" {}
 
+variable "aks_web_app_memory" {}
+
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
 

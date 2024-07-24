@@ -35,7 +35,7 @@ class FiltersComponent < ApplicationComponent
       filter_value = option.public_send(value_method)
       return unless selected.include?(filter_value)
 
-      if remove_filter_link[:params]
+      if remove_filter_link.dig(:params, key)
         filters = remove_filter_link[:params][key] - [filter_value]
         remove_filter_link_params = remove_filter_link[:params].merge(key => filters)
       else

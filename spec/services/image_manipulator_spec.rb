@@ -18,7 +18,7 @@ RSpec.describe ImageManipulator do
       # is called. This in turn uses MiniMagick::Tool::Mogrify to tell ImageMagick to use the -resize option with the arguments
       # provided.
 
-      expect_any_instance_of(MiniMagick::Tool::MogrifyRestricted).to receive(:send).with(:resize, desired_image_dimensions.join("x"))
+      expect_any_instance_of(MiniMagick::Tool).to receive(:send).with(:resize, desired_image_dimensions.join("x"))
 
       subject.alter_dimensions_and_preserve_aspect_ratio(*desired_image_dimensions)
     end

@@ -169,6 +169,44 @@ kubectl -n tv-development exec -ti teaching-vacancies-review-pr-xxxx-podid -- /b
 kubectl -n tv-development exec deployment/teaching-vacancies-review-pr-xxxx -- ps aux
 ```
 
+### Temporally scaling up our deployment instances
+Sometimes we may need to temporally scale up our service resources. That can be done with the `kubectl scale` command.
+
+**Important: These changes are ephemereal and will be overriden to the defaults on the next deployment.**
+
+If you need to scale the changes for a period of time and to keep the new number of instances between deployments, you will
+need to set it up in the [terraform configuration](../terraform/workspace-variables/production.tfvars.json) and release
+it through a PR/deployment.
+
+#### EG: Executing a task that will enqueue thousands of jobs in our workers, this could cause a bottleneck in our Sidekiq queues.
+
+To see the original number of instances:
+```
+kubectl -n tv-production get deployments
+NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
+teaching-vacancies-production          8/8     8            8           318d
+teaching-vacancies-production-worker   4/4     4            4           314d
+```
+
+To temporally increase our worker instances:
+
+```
+kubectl scale --replicas=16 deployment teaching-vacancies-production-worker -n tv-production
+```
+
+See the new number of instances:
+```
+kubectl -n tv-production get deployments
+NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
+teaching-vacancies-production          8/8     8            8           318d
+teaching-vacancies-production-worker   16/16   16           16          314d
+```
+
+Scale it back when not needed anymore:
+```
+kubectl scale --replicas=4 deployment teaching-vacancies-production-worker -n tv-production
+```
+
 ## Set up a new environment
 - Create file `terraform/workspace-variables/<env>.tfvars.json`
 - Create file `terraform/workspace-variables/<env>_app_env.yml`
