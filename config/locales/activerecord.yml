@@ -154,8 +154,6 @@ en:
       inclusion: Select contract type
     fixed_term_contract_duration:
       blank: Enter the length of the fixed term contract
-    parental_leave_cover_contract_duration:
-      blank: Enter the length of the maternity or parental leave cover contract
   working_patterns_errors: &working_patterns_errors
     working_patterns:
       blank: Select a working pattern

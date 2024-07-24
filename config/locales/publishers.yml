@@ -431,6 +431,10 @@ en:
           step_title: Subjects
         contract_type:
           step_title: Contract type
+          fixed_term: Fixed term
+          parental_leave: Maternity or parental leave cover
+          permanent: Permanent
+          casual: Casual
         page_title:
           create: Create job listing - [Section %{section_number} of 4] - Teaching Vacancies - GOV.UK
           edit: Change job listing - [Section %{section_number} of 4] - Teaching Vacancies - GOV.UK

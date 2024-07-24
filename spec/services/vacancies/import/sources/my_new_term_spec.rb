@@ -71,6 +71,15 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
     end
   end
 
+  context "when contract_type is parental_leave_cover" do
+    let(:job_listings_response_body) { super().gsub("permanent", "parental_leave_cover") }
+
+    it "sets contract_type to fixed_term and is_parental_leave_cover to true" do
+      expect(vacancy.contract_type).to eq("fixed_term")
+      expect(vacancy.is_parental_leave_cover).to eq(true)
+    end
+  end
+
   describe "job roles mapping" do
     let(:job_listings_response_body) { super().gsub("teacher", source_roles.join(",")) }
 

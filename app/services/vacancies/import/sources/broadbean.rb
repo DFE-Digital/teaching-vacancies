@@ -61,7 +61,8 @@ class Vacancies::Import::Sources::Broadbean
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence&.split(",") || [],
       working_patterns: item["workingPatterns"].presence&.split(","),
-      contract_type: item["contractType"].presence,
+      contract_type: contract_type_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(schools))
@@ -114,6 +115,16 @@ class Vacancies::Import::Sources::Broadbean
 
   def visa_sponsorship_available_for(item)
     item["visaSponsorshipAvailable"] == "true"
+  end
+
+  def contract_type_for(item)
+    return "fixed_term" if item["contractType"] == "parental_leave_cover"
+
+    item["contractType"].presence
+  end
+
+  def parental_leave_cover_for?(item)
+    item["contractType"] == "parental_leave_cover"
   end
 
   def organisation_fields(schools)

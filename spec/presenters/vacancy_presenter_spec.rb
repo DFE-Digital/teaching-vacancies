@@ -200,13 +200,13 @@ RSpec.describe VacancyPresenter do
     let(:vacancy) do
       build_stubbed(:vacancy, contract_type: contract_type,
                               fixed_term_contract_duration: fixed_term_contract_duration,
-                              parental_leave_cover_contract_duration: parental_leave_cover_contract_duration)
+                              is_parental_leave_cover: is_parental_leave_cover)
     end
-    let(:parental_leave_cover_contract_duration) { "" }
 
     context "when permanent" do
       let(:contract_type) { :permanent }
       let(:fixed_term_contract_duration) { "" }
+      let(:is_parental_leave_cover) { nil }
 
       it "returns Permanent" do
         expect(subject.contract_type_with_duration).to eq "Permanent"
@@ -217,35 +217,20 @@ RSpec.describe VacancyPresenter do
       let(:contract_type) { :fixed_term }
       let(:fixed_term_contract_duration) { "6 months" }
 
-      it "returns Fixed term (duration)" do
-        expect(subject.contract_type_with_duration).to eq "Fixed term - 6 months"
+      context "when is_parental_leave_cover is false" do
+        let(:is_parental_leave_cover) { false }
+
+        it "returns Fixed term (duration)" do
+          expect(subject.contract_type_with_duration).to eq "Fixed term - 6 months"
+        end
       end
-    end
-  end
 
-  describe "#parental_leave_cover_contract_duration" do
-    let(:vacancy) do
-      build_stubbed(:vacancy, contract_type: contract_type,
-                              parental_leave_cover_contract_duration: parental_leave_cover_contract_duration,
-                              fixed_term_contract_duration: fixed_term_contract_duration)
-    end
-    let(:fixed_term_contract_duration) { "" }
+      context "when is_parental_leave_cover is true" do
+        let(:is_parental_leave_cover) { true }
 
-    context "when permanent" do
-      let(:contract_type) { :permanent }
-      let(:parental_leave_cover_contract_duration) { "" }
-
-      it "returns Permanent" do
-        expect(subject.contract_type_with_duration).to eq "Permanent"
-      end
-    end
-
-    context "when parental_leave cover" do
-      let(:contract_type) { :parental_leave_cover }
-      let(:parental_leave_cover_contract_duration) { "6 months" }
-
-      it "returns Maternity or parental leave cover (duration)" do
-        expect(subject.contract_type_with_duration).to eq "Maternity or parental leave cover - 6 months"
+        it "returns Fixed term (duration)" do
+          expect(subject.contract_type_with_duration).to eq "Fixed term - 6 months - Maternity or parental leave cover"
+        end
       end
     end
   end

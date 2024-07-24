@@ -59,7 +59,8 @@ class Vacancies::Import::Sources::MyNewTerm
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence || [],
       working_patterns: item["workingPatterns"].presence,
-      contract_type: item["contractType"]&.first,
+      contract_type: contract_type_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
@@ -148,6 +149,16 @@ class Vacancies::Import::Sources::MyNewTerm
     item["phase"].strip
                  .gsub(/all_through|through_school/, "through")
                  .gsub(/16-19|16_19/, "sixth_form_or_college")
+  end
+
+  def contract_type_for(item)
+    return "fixed_term" if item["contractType"]&.first == "parental_leave_cover"
+
+    item["contractType"]&.first
+  end
+
+  def parental_leave_cover_for?(item)
+    item["contractType"]&.first == "parental_leave_cover"
   end
 
   def results

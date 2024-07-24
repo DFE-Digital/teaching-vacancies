@@ -44,7 +44,6 @@ FactoryBot.define do
     fixed_term_contract_duration { "6 months" }
     further_details_provided { true }
     further_details { Faker::Lorem.sentence(word_count: factory_rand(50..300)) }
-    parental_leave_cover_contract_duration { "6 months" }
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }

@@ -21,7 +21,8 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
         job_roles: job_roles,
         key_stages: [],
         working_patterns: %w[part_time],
-        contract_type: "parental_leave_cover",
+        contract_type: "fixed_term",
+        is_parental_leave_cover: true,
         phases: %w[primary],
         visa_sponsorship_available: true,
         ect_status: "ect_suitable",
@@ -314,6 +315,15 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
 
       it "does not import vacancy" do
         expect(subject.count).to eq(0)
+      end
+    end
+
+    context "when the vacancy is not parental leave cover" do
+      let(:response_body) { file_fixture("vacancy_sources/broadband_not_parental_leave_cover.xml").read }
+
+      it "sets is_parental_leave_cover to false" do
+        expect(vacancy.is_parental_leave_cover).to eq false
+        expect(vacancy.contract_type).to eq "fixed_term"
       end
     end
   end
