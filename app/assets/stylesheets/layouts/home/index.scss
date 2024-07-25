@@ -1,8 +1,8 @@
 .home_index {
   @import './search';
 
-  .govuk-accordion .section-content {
-    display: inline-block;
+  #teaching-jobs-by-subject-content {
+    display: inline-block !important;
   }
 
   &.js-enabled .landing-page-links .govuk-accordion__section-content {
