@@ -90,6 +90,10 @@ shared:
       - through
 
   ### Subjects
+  art-design-technology-teacher-jobs:
+    subjects:
+      - Art and design
+      - Design and technology
   art-design-teacher-jobs:
     subjects:
       - Art and design
