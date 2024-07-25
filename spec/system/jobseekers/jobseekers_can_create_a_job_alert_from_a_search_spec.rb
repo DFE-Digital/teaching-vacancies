@@ -171,6 +171,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     check I18n.t("jobs.filters.ect_suitable")
     check I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.primary")
     check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.full_time")
+    check I18n.t("jobs.filters.visa_sponsorship_availability.option")
     click_on I18n.t("buttons.search")
   end
 
@@ -185,6 +186,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
     expect(page.find_field("jobseekers-subscription-form-ect-statuses-ect-suitable-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-phases-primary-field")).to be_checked
     expect(page.find_field("jobseekers-subscription-form-working-patterns-full-time-field")).to be_checked
+    expect(page.find_field("jobseekers-subscription-form-visa-sponsorship-availability-true-field")).to be_checked
   end
 
   def fill_in_subscription_fields
