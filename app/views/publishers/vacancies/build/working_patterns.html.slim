@@ -17,6 +17,6 @@
       = f.govuk_text_area(:working_patterns_details,
                           label: -> { tag.label(t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
                           hint: -> { t("helpers.hint.publishers_job_listing_working_patterns_form.working_patterns_details") },
-                          max_words: 50)
+                          max_words: 75)
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
