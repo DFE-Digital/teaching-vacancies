@@ -213,6 +213,19 @@ RSpec.describe Vacancies::Import::Sources::UnitedLearning do
     end
   end
 
+  context "when contract_type is parental_leave_cover" do
+    before do
+      expect(HTTParty).to receive(:get).with("http://example.com/feed.xml").and_return(file_fixture("vacancy_sources/united_learning_with_parental_leave_cover.xml").read)
+    end
+
+    let(:vacancy) { subject.first }
+
+    it "sets contract_type to fixed_term and is_parental_leave_cover to true" do
+      expect(vacancy.contract_type).to eq("fixed_term")
+      expect(vacancy.is_parental_leave_cover).to eq(true)
+    end
+  end
+
   describe "enumeration error" do
     before do
       # FIXME: Manually stubbing HTTParty because of weird interactions between VCR and Webmock

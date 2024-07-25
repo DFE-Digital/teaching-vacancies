@@ -57,7 +57,8 @@ class Vacancies::Import::Sources::VacancyPoster
       key_stages: item["keyStages"].presence&.split(","),
       subjects: item["subjects"].presence&.split(","),
       working_patterns: item["workingPatterns"].presence&.split(","),
-      contract_type: item["contractType"].presence,
+      contract_type: contract_type_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: false,
     }.merge(organisation_fields(item))
@@ -120,6 +121,16 @@ class Vacancies::Import::Sources::VacancyPoster
     .parameterize(separator: "_")
     .gsub("through_school", "through")
     .gsub(/16-19|16_19/, "sixth_form_or_college")
+  end
+
+  def contract_type_for(item)
+    return "fixed_term" if item["contractType"] == "parental_leave_cover"
+
+    item["contractType"].presence
+  end
+
+  def parental_leave_cover_for?(item)
+    item["contractType"] == "parental_leave_cover"
   end
 
   def items

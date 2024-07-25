@@ -8,7 +8,7 @@ RSpec.describe PostsController do
       it "finds the subcategories for jobseeker guides" do
         get :index, params: { section: "jobseeker-guides" }
 
-        expect(assigns(:subcategories).sort).to eq(subcategories.sort)
+        expect(assigns(:subcategories)).to match_array(subcategories)
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe PostsController do
       it "finds the subcategories for jobseeker guides" do
         get :index, params: { section: "get-help-hiring" }
 
-        expect(assigns(:subcategories).sort).to eq(subcategories.sort)
+        expect(assigns(:subcategories)).to match_array(subcategories)
       end
     end
 

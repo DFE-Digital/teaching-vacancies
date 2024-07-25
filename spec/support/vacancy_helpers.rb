@@ -39,7 +39,13 @@ module VacancyHelpers
   end
 
   def fill_in_contract_type_form_fields(vacancy)
-    choose I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{vacancy.contract_type}")
+    if vacancy.contract_type == "fixed_term"
+      choose I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.fixed_term")
+      choose "Yes"
+      fill_in "Length of contract", with: "1 month"
+    else
+      choose I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{vacancy.contract_type}")
+    end
   end
 
   def fill_in_working_patterns_form_fields(vacancy)
