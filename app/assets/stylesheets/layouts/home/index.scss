@@ -1,11 +1,14 @@
 .home_index {
   @import './search';
 
+  .govuk-accordion .section-content {
+    display: inline-block;
+  }
 
   &.js-enabled .landing-page-links .govuk-accordion__section-content {
     padding: 0;
   }
-  
+
   .landing-page-links .govuk-accordion__section-button {
     font-size: 1.2rem;
   }
