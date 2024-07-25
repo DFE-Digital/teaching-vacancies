@@ -8,7 +8,7 @@
     p.govuk-body = t(".description")
     p.govuk-body = t(".personal_statement_section.description_html",
                      personal_statement_guide_link: govuk_link_to(t(".personal_statement_section.link_text"),
-                                                    post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
+                                                    posts_path(section: "jobseeker-guides"),
                                                     class: "govuk-link--no-visited-state"))
   .govuk-grid-column-one-quarter
     h2.govuk-heading-m = t(".jobseeker_section.title")
