@@ -1,11 +1,14 @@
 .home_index {
   @import './search';
 
+  #teaching-jobs-by-subject-content {
+    display: inline-block !important;
+  }
 
   &.js-enabled .landing-page-links .govuk-accordion__section-content {
     padding: 0;
   }
-  
+
   .landing-page-links .govuk-accordion__section-button {
     font-size: 1.2rem;
   }

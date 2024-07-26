@@ -65,16 +65,16 @@ en:
 
   footer:
     headings:
-      feedback: Feedback
       for_job_seekers: Jobseekers
       for_schools: Hiring staff
-      support: Support
+      support_and_feedback: Support and feedback
     international_teacher_advice_link_text: Teach in England if you trained overseas
     list_a_teaching_job: List a job
     manage_job_listings: Manage job listings
     provide_feedback: Provide feedback on Teaching Vacancies
     request_support: Get help or report a problem
     hiring_guides: Hiring guides
+    jobseeker_guides: Jobseeker guides
     search_teaching_vacancies: Find a job
     service_support: Get support
     return_to_teaching: Return to teaching

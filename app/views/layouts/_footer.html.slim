@@ -4,51 +4,22 @@
         .govuk-grid-row
           .govuk-grid-column-full
             span.govuk-footer__heading.govuk-heading-m
-              = t("footer.headings.support")
-            ul.govuk-footer__list
-              li.govuk-footer__list-item
-                = link_to t("footer.request_support"), new_support_request_path, class: "govuk-footer__link"
-        .govuk-grid-row
-          .govuk-grid-column-full
-            span.govuk-footer__heading.govuk-heading-m
               = t("footer.headings.for_job_seekers")
             ul.govuk-footer__list
-              li.govuk-footer__list-item
-                = link_to t("footer.search_teaching_vacancies"), root_url, class: "govuk-footer__link"
-              li.govuk-footer__list-item
-                = link_to t("footer.return_to_teaching"), post_path(section: "jobseeker-guides", subcategory: "return-to-teaching-in-england", post_name: "return-to-teaching"), class: "govuk-footer__link"
-              li.govuk-footer__list-item
-                = tracked_link_to(t("footer.international_teacher_advice_link_text"), "https://getintoteaching.education.gov.uk/non-uk-teachers", class: "govuk-footer__link", link_type: :international_teacher_advice_link_footer)
               li.govuk-footer__list-item
                 - if jobseeker_signed_in?
                   = link_to t("nav.create_a_job_alert"), jobseekers_account_path, class: "govuk-footer__link"
                 - else
                   = link_to t("nav.jobseeker_sign_in"), new_jobseeker_session_path, class: "govuk-footer__link"
               li.govuk-footer__list-item
-                = link_to t("nav.personal_statement"),
-                          post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "how-to-write-teacher-personal-statement"),
-                          class: "govuk-footer__link"
+                = link_to t("footer.search_teaching_vacancies"), root_url, class: "govuk-footer__link"
               li.govuk-footer__list-item
-                = link_to t("nav.find_a_teaching_role_at_the_right_school"),
-                          post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "find-a-teaching-role-at-the-right-school"),
-                          class: "govuk-footer__link"
+                = link_to t("footer.jobseeker_guides"), posts_path(section: "jobseeker-guides"), class: "govuk-footer__link"
               li.govuk-footer__list-item
-                = link_to t("nav.return_to_england_after_teaching_overseas"),
-                          post_path(section: "jobseeker-guides", subcategory: "return-to-teaching-in-england", post_name: "return-to-england-after-teaching-overseas"),
-                          class: "govuk-footer__link"
-                li.govuk-footer__list-item
-                = link_to t("nav.get_help_applying_for_your_teaching_role"),
-                          subcategory_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role"),
-                          class: "govuk-footer__link"
-
+                = link_to t("footer.return_to_teaching"), post_path(section: "jobseeker-guides", subcategory: "return-to-teaching-in-england", post_name: "return-to-teaching"), class: "govuk-footer__link", target: "_blank"
+              li.govuk-footer__list-item
+                = tracked_link_to(t("footer.international_teacher_advice_link_text"), "https://getintoteaching.education.gov.uk/non-uk-teachers", class: "govuk-footer__link", target: "_blank", link_type: :international_teacher_advice_link_footer)
       .govuk-grid-column-one-half
-        .govuk-grid-row
-          .govuk-grid-column-full
-            span.govuk-footer__heading.govuk-heading-m
-              = t("footer.headings.feedback")
-            ul.govuk-footer__list
-              li.govuk-footer__list-item
-                = footer_feedback_link_text
         .govuk-grid-row
           .govuk-grid-column-full
             span.govuk-footer__heading.govuk-heading-m
@@ -64,3 +35,12 @@
                   = link_to t("nav.publisher_sign_in"), new_publisher_session_path, class: "govuk-footer__link"
               li.govuk-footer__list-item
                 = link_to t("footer.hiring_guides"), posts_path(section: "get-help-hiring"), class: "govuk-footer__link"
+        .govuk-grid-row
+          .govuk-grid-column-full
+            span.govuk-footer__heading.govuk-heading-m
+              = t("footer.headings.support_and_feedback")
+            ul.govuk-footer__list
+              li.govuk-footer__list-item
+                = link_to t("footer.request_support"), new_support_request_path, class: "govuk-footer__link"
+              li.govuk-footer__list-item
+                = footer_feedback_link_text
