@@ -1,7 +1,6 @@
 module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
   class Query
-    # Find a Job only accepts "expiry" dates up to 30 days from the date of export/update.
-    FIND_A_JOB_MAX_EXPIRY_DAYS = 30
+    include Vacancies::Export::DwpFindAJob::Versioning
 
     attr_reader :from_date
 
@@ -12,8 +11,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     def vacancies
       vacancies_published_after_date
         .or(vacancies_updated_after_date)
-        .or(vacancies_that_reached_expiry_date_threshold)
-        .or(vacancies_that_need_expiry_date_pushed_back)
+        .or(vacancies_to_repost_today)
     end
 
     private
@@ -30,32 +28,19 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
       vacancies_published_before_date.where("updated_at > ?", from_date)
     end
 
-    # Vacancies in our service that had over 30 days to expire when published,
-    # but as today have reached exactly 30 days to expire.
+    # Find a Job vacancies can only be posted up to 30 days from the original posting date.
     #
-    # Now we can select them to be exported so it will align Find a Job and TV expiration/closing dates.
-    def vacancies_that_reached_expiry_date_threshold
-      vacancies_published_before_date.where(expires_at: (Time.zone.now + FIND_A_JOB_MAX_EXPIRY_DAYS.days).all_day)
-    end
-
-    # Vacancies in our service that have over 30 days to expire.
+    # Vacancies in our service generally last well beyond 30 days, so we need to repost them as new job adverts in Find
+    # a Job service every 31 days from the publish date, exactly when the previous advert has expired and the previous
+    # version of the vacancy posting is no longer live.
     #
-    # Since Find a Job vacancies have a maximum expiry date of 30 days from when exported/updated, we need to regularly
-    # push back the expiration date onf Find a Job to "30 days from today" through the life of the vacancy in TV service.
-    #
-    # Every time we select them for exporting, it will push back their expiry date on Find a Job service to the max 30 days.
-    #
-    # To achieve this regular updates, we select for export any TV vacancy that::
-    # - has over 30 days to expire
-    # - the difference in days between today and the vacancy expiration date in TV is a multiple of 7 days.
-    #
-    # This will cause vacancies to be exported every 7 days (pushing back their expiry on Find a Job service to 30 days)
-    # until they reach the last 30 days of their life.
-    def vacancies_that_need_expiry_date_pushed_back
-      vacancies_published_before_date
-        .where("expires_at > ?", Time.zone.now + FIND_A_JOB_MAX_EXPIRY_DAYS.days)
-        .where("DATE_PART('day', DATE_TRUNC('day', expires_at::timestamp) - '#{Date.today}'::date)::integer
-                % 7 = 0") # TV expiration date is a multiple of 7 days from today
+    # This query identifies all the live vacancies that, as today, need to be reposted as their publish date is a
+    # multiple of 31 days ago.
+    def vacancies_to_repost_today
+      vacancies_published_before_date.where(
+        "DATE_PART('day', DATE_TRUNC('day', '#{Date.today}'::date - publish_on::timestamp))::integer
+        % #{DAYS_BETWEEN_REPOSTS} = 0",
+      )
     end
   end
 end

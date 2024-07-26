@@ -56,6 +56,24 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
              slug: "it-technician",
              organisations: [org])
     end
+    let(:vacancy_to_be_reposted) do
+      create(:vacancy,
+             :published,
+             id: "51d379eb-78f8-47ab-be8e-307887d4c807",
+             publish_on: 62.days.ago,
+             updated_at: 62.days.ago,
+             created_at: 62.days.ago,
+             job_title: "Maths teacher",
+             skills_and_experience: "We need a maths teacher",
+             school_offer: "We offer a great school for a maths teacher",
+             further_details: "More details",
+             expires_at: Time.zone.local(2024, 5, 17, 9, 0, 0),
+             working_patterns: ["full_time"],
+             job_roles: ["teacher"],
+             contract_type: "permanent",
+             slug: "maths-teacher",
+             organisations: [org])
+    end
 
     let(:expected_xml_content) do
       <<~XML
@@ -102,6 +120,36 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
             <ApplyMethod id="2"/>
             <ApplyUrl>http://#{DOMAIN}/jobs/great-teacher</ApplyUrl>
           </Vacancy>
+          <Vacancy vacancyRefCode="#{vacancy_to_be_reposted.id}-2">
+            <Title>Maths teacher</Title>
+            <Description>What skills and experience we're looking for
+
+        We need a maths teacher
+
+        What the school offers its staff
+
+        We offer a great school for a maths teacher
+
+        Further details about the role
+
+        More details
+
+        Commitment to safeguarding
+
+        Safeguarding text</Description>
+            <Location>
+              <StreetAddress>1 School Lane</StreetAddress>
+              <City>School Town</City>
+              <State>School County</State>
+              <PostalCode>AB12 3CD</PostalCode>
+            </Location>
+            <VacancyExpiry>2024-05-17</VacancyExpiry>
+            <VacancyType id="1"/>
+            <VacancyStatus id="1"/>
+            <VacancyCategory id="27"/>
+            <ApplyMethod id="2"/>
+            <ApplyUrl>http://#{DOMAIN}/jobs/maths-teacher</ApplyUrl>
+          </Vacancy>
           <Vacancy vacancyRefCode="#{vacancy_updated.id}">
             <Title>IT technician</Title>
             <Description>What skills and experience we're looking for
@@ -144,6 +192,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
       travel_to(Time.zone.local(2024, 5, 2, 1, 4, 44))
       vacancy_published_old
       vacancy_published
+      vacancy_to_be_reposted
       vacancy_updated
 
       allow(Tempfile).to receive(:new).with(filename).and_return(tempfile)
@@ -169,7 +218,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
 
       subject.call
       expect(Rails.logger).to have_received(:info)
-        .with("[DWP Find a Job] Uploaded '#{filename}.xml': Containing 2 vacancies to publish.")
+        .with("[DWP Find a Job] Uploaded '#{filename}.xml': Containing 3 vacancies to publish.")
     end
   end
 end

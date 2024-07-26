@@ -4,6 +4,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
   class ParsedVacancy
     include ActionView::Helpers::SanitizeHelper
     include Rails.application.routes.url_helpers
+    include Vacancies::Export::DwpFindAJob::Versioning
 
     CATEGORY_IT_ID = 14
     CATEGORY_EDUCATION_ID = 27
@@ -14,7 +15,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
 
     attr_reader :vacancy
 
-    delegate :id, :job_title, :organisation, to: :vacancy
+    delegate :job_title, :organisation, to: :vacancy
 
     def initialize(vacancy)
       @vacancy = vacancy
@@ -38,19 +39,22 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     end
 
     def expiry
-      expiry_date = vacancy.expires_at.to_date
-      # Why max 29 days? Find a Job is rejecting vacancies where the expiry date 30 days from today is explicitly set.
-      # If left blank it will default to 30 days from today without rejection.
-      return unless expiry_date.between?(Date.today + 1, Date.today + 29.days)
+      min_date = date_from_publishing_version(MIN_LIVE_DAYS).in_time_zone.at_beginning_of_day
+      max_date = date_from_publishing_version(MAX_LIVE_DAYS).in_time_zone.at_end_of_day
+      return unless vacancy.expires_at.between?(min_date, max_date)
 
-      expiry_date.to_s
+      vacancy.expires_at.to_date.to_s
+    end
+
+    def reference
+      versioned_reference(vacancy)
     end
 
     def status_id
       wp = vacancy.working_patterns
-      if wp.blank?
-        nil
-      elsif wp.include?("full_time") || (wp.include?("term_time") && wp.exclude?("part_time"))
+      return if wp.blank?
+
+      if wp.include?("full_time") || (wp.include?("term_time") && wp.exclude?("part_time"))
         STATUS_FULL_TIME_ID
       else
         STATUS_PART_TIME_ID
@@ -67,6 +71,16 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     end
 
     private
+
+    # Every particular repost version of a vacancy will be live for a different 30 days period after the previous version.
+    def date_from_publishing_version(offset_days)
+      publish_date = vacancy.publish_on.to_date
+      # Export runs at 23:30 and publishes vacancies published on TV after 23:30 the previous day to 23:30 today
+      # We need to add a day to the TV publish date if the vacancy was published after 23:30 to reflect when the vacancy
+      # got exported to Find a Job service.
+      publish_date += 1.day if vacancy.publish_on.after?(vacancy.publish_on.change(hour: 23, min: 30))
+      publish_date + ((version(vacancy) * DAYS_BETWEEN_REPOSTS) + offset_days).days
+    end
 
     def description_paragraph(title, text)
       plain_text = html_to_plain_text(text)
