@@ -14,10 +14,10 @@ RSpec.describe Publishers::JobListing::WorkingPatternsForm, type: :model do
   it { is_expected.to validate_inclusion_of(:working_patterns).in_array(Vacancy.working_patterns.keys - ["job_share"]) }
 
   describe "#working_patterns_details" do
-    let(:working_patterns_details) { Faker::Lorem.sentence(word_count: 50) }
+    let(:working_patterns_details) { Faker::Lorem.sentence(word_count: 75) }
 
     context "when working_patterns_details exceeds the maximud allowed length" do
-      let(:working_patterns_details) { Faker::Lorem.sentence(word_count: 51) }
+      let(:working_patterns_details) { Faker::Lorem.sentence(word_count: 76) }
 
       it "ensures working_patterns_details cannot exceed 50 words" do
         expect(subject.errors.of_kind?(:working_patterns_details, :working_patterns_details_maximum_words)).to be true

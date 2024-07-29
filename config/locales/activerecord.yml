@@ -160,7 +160,7 @@ en:
       inclusion: Select a working pattern
     working_patterns_details:
       blank: Enter working patterns details
-      maximum_words: Working patterns details must be 50 words or less
+      maximum_words: Working patterns details must be 75 words or less
     is_job_share:
       blank: Select yes if this role can be done as a job share
   pay_package_errors: &pay_package_errors
