@@ -143,9 +143,13 @@ module VacanciesHelper
   end
 
   def vacancy_working_patterns_summary(vacancy)
-    vacancy.working_patterns.map { |working_pattern|
+    working_patterns = vacancy.working_patterns.map do |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
-    }.join(", ").capitalize
+    end
+
+    working_patterns << "open to job share" if vacancy.is_job_share
+
+    working_patterns.join(", ").capitalize
   end
 
   def vacancy_working_patterns(vacancy)

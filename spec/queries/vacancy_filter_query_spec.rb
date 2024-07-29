@@ -164,6 +164,18 @@ RSpec.describe VacancyFilterQuery do
       end
     end
 
+    context "when working_patterns filter is selected" do
+      context "when job_share is selected" do
+        it "will return vacancies where is_job_share is true" do
+          filters = {
+            working_patterns: %w[job_share],
+          }
+
+          expect(subject.call(filters).map(&:is_job_share).uniq).to contain_exactly(true)
+        end
+      end
+    end
+
     it "transforms legacy phases filters to new ones" do
       filters = {
         phases: %w[16-19],

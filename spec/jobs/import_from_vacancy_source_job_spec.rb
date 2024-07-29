@@ -79,7 +79,8 @@ RSpec.describe ImportFromVacancySourceJob do
               further_details: "details",
               how_to_apply: "Click button",
               job_advert: "Aut repellat vel. Nesciunt exercitationem et. Numquam a corrupti. Et minus hic. Perspiciatis dolor neque. Sit est nemo. Ut ex officiis. Illum et mollitia. Quia qui qui. Debitis totam odio. Consequatur eum iste. Aut ex et. Quo explicabo quae. Aut id laborum. Occaecati quod sit. Laudantium ipsum placeat. Et sed nesciunt. Ut iste maxime. Ea repudiandae rem. Qui fugit adipisci. Vero fugiat dolor. Nesciunt eum et. Molestias nulla facere. Aliquid dolore assumenda. Aut repudiandae iusto. Quia aut maxime. Consequatur voluptates facere. Facere eius asperiores. Fugiat occaecati assumenda. Maiores consequatur architecto. Perferendis sint ut. Est odio dolorem. Aliquid fugiat iusto. Eaque fugiat voluptas. Eos velit assumenda. Nesciunt minus quia. Cupiditate vero dolor. Quos temporibus consequuntur. Vel cupiditate eos. Dolore dolores repellat. Ex ipsam consequuntur. Dolores harum voluptatem. Temporibus neque quis. Vero soluta sunt. Voluptas laboriosam modi. Quod ut nostrum. Veniam voluptatem et. Explicabo necessitatibus ex. Ut architecto placeat. Neque velit et.",
-              visa_sponsorship_available: false)
+              visa_sponsorship_available: false,
+              is_job_share: true)
       end
 
       it "does not save the vacancy to the Vacancies table" do
@@ -168,6 +169,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "working_patterns_details" => nil,
           "visa_sponsorship_available" => false,
           "is_parental_leave_cover" => nil,
+          "is_job_share" => true,
         )
       end
 

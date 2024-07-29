@@ -209,6 +209,17 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       end
     end
 
+    describe "working_patterns" do
+      let(:response_body) { super().gsub("full_time", "job_share") }
+
+      context "when vacancy is a job share" do
+        it "sets vacancy to part time and is_job_share to true" do
+          expect(vacancy.working_patterns).to eq(["part_time"])
+          expect(vacancy.is_job_share).to eq(true)
+        end
+      end
+    end
+
     describe "ect suitability mapping" do
       let(:response_body) do
         JSON.parse(super()).tap { |h|
