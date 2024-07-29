@@ -165,6 +165,16 @@ en:
       title: "Art & Design Technology (DT) Teacher Jobs"
       heading: "%{count} art and design technology teacher jobs"
       meta_description: "Search for the latest art and design teacher jobs in England. Apply for design technology (DT) teaching roles and set up alerts for new jobs near you."
+    art-design-teacher-jobs:
+      name: "Art and design"
+      title: "Art & design Teacher Jobs"
+      heading: "%{count} art and design teacher jobs"
+      meta_description: "Search for the latest art and design teacher jobs in England. Apply for art and design teaching roles and set up alerts for new jobs near you."
+    design-technology-teacher-jobs:
+      name: "Design and technology"
+      title: "Design & technology Teacher Jobs"
+      heading: "%{count} design and technology teacher jobs"
+      meta_description: "Search for the latest design and technology teacher jobs in England. Apply for design and technology roles and set up alerts for new jobs near you."
     biology-teacher-jobs:
       name: "Biology"
       title: "Biology Teacher Jobs"

@@ -94,6 +94,12 @@ shared:
     subjects:
       - Art and design
       - Design and technology
+  art-design-teacher-jobs:
+    subjects:
+      - Art and design
+  design-technology-teacher-jobs:
+    subjects:
+      - Design and technology
   biology-teacher-jobs:
     subjects:
       - Biology
