@@ -61,7 +61,7 @@
       | We’ll consider your request and get back to you in 7 working days.
 
     p.govuk-body
-      | Contact the school listing a vacancy for support finding out about or applying for a particular job.
+      | Contact the school listing the vacancy for support finding out about or applying for a particular job.
 
     h2.govuk-heading-l Reporting accessibility problems with this website
 
@@ -119,11 +119,15 @@
       |   criterion 4.1.2 Name, Role, Value.
 
     p.govuk-body
-      |  While navigating with a screen reader, there are incorrect announcements on several of the pages.
-      |   Decorative separator elements are announced by screen readers on the 'candidate profile' page,
-      |   form field labels on the 'job application, quick apply' page are read out in stages and hidden
-      |   words on the 'create a jobseeker account' are announced. This fails WCAG 2.2 success criterion
-      |   4.1.2 Name, Role, Value.
+      |  While navigating with a screen reader, there are incorrect announcements on several of the pages. For example:
+      ul.govuk-list.govuk-list--bullet
+        li decorative separator elements are announced by screen readers on the 'candidate profile' page
+
+        li form field labels on the 'job application, quick apply' page are read out in stages
+
+        li hidden words on the 'create a jobseeker account' are announced.
+
+    p.govuk-body This fails WCAG 2.2 success criterion 4.1.2 Name, Role, Value.
 
     h2.govuk-heading-l Disproportionate burden
 
@@ -131,7 +135,7 @@
       |  Dragon Naturally Speaking (speech recognition software) can only upload files when using the mouse
       |   grid feature. This issue is believed to be an ongoing issue with the Dragon Naturally Speaking
       |   software and further information can be found on the following link:
-      |   https://github.com/alphagov/reported-bugs/issues/35.
+      |   #{govuk_link_to("https://github.com/alphagov/reported-bugs/issues/35", "https://github.com/alphagov/reported-bugs/issues/35")}.
 
     p.govuk-body
       |  As this is a third-party issue, we are unable to fix this and it is therefore
@@ -159,5 +163,9 @@
 
     p.govuk-body
       |  This statement was prepared on 24 July 2024. It was last reviewed on 24 July 2024.
+
+    p.govuk-body
       |   This website was last tested on 25 June 2024. The test was carried out by Zoonou.
+
+    p.govuk-body
       |   Zoonou used #{govuk_link_to("WCAG-EM", "https://www.w3.org/TR/WCAG-EM/")} to define a representative selection of pages and test approach.
