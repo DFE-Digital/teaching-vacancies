@@ -28,7 +28,7 @@
     p.govuk-body
       | #{govuk_link_to("AbilityNet", "https://mcmw.abilitynet.org.uk/")} has advice on making your device easier to use if you have a disability.
 
-    h2.govuk-heading-1 How accessible this website is
+    h2.govuk-heading-l How accessible this website is
 
     p.govuk-body
       |  We know some parts of this website are not fully accessible:
@@ -41,7 +41,7 @@
 
         li
           | users navigating with a Mac with VoiceOver enabled cannot access the site past the
-          |  this website. For example, that means users should be able to:‘skip to main content’ link
+          |  ‘skip to main content’ link
 
         li some elements are not using supported ARIA attributes
 
@@ -51,11 +51,11 @@
 
         li some buttons do not function when iOS VoiceOver is enabled
 
-    h2.govuk-heading-1 Feedback and contact information
+    h2.govuk-heading-l Feedback and contact information
 
     p.govuk-body
       | If you need information on this website in a different format like accessible PDF, large print, easy read,
-      |  audio recording or braille please email teaching.vacancies@education.gov.uk.
+      |  audio recording or braille please email #{govuk_mail_to(t("help.email"), t("help.email"))}.
 
     p.govuk-body
       | We’ll consider your request and get back to you in 7 working days.
@@ -63,14 +63,14 @@
     p.govuk-body
       | Contact the school listing a vacancy for support finding out about or applying for a particular job.
 
-    h2.govuk-heading-1 Reporting accessibility problems with this website
+    h2.govuk-heading-l Reporting accessibility problems with this website
 
     p.govuk-body
       | We’re always looking to improve the accessibility of this website. If you find any problems that are not
       |  listed on this page or think we’re not meeting accessibility requirements, contact
       |  #{govuk_mail_to(t("help.email"), t("help.email"))}.
 
-    h2.govuk-heading-1 Enforcement procedure
+    h2.govuk-heading-l Enforcement procedure
 
     p.govuk-body
       | The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies
@@ -78,7 +78,7 @@
       |  If you’re not happy with how we respond to your complaint,
       |  #{govuk_link_to("contact the Equality Advisory and Support Service (EASS)", "https://www.equalityadvisoryservice.com")}.
 
-    h2.govuk-heading-l Technical information about Teaching Vacancies' accessibility
+    h2.govuk-heading-l Technical information about this website's accessibility
 
     p.govuk-body
       | The Department for Education is committed to making its websites accessible, in accordance
