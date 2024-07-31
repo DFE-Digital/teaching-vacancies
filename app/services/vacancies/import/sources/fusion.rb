@@ -41,6 +41,7 @@ class Vacancies::Import::Sources::Fusion
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def attributes_for(item, schools)
     {
       job_title: item["jobTitle"],
@@ -51,17 +52,20 @@ class Vacancies::Import::Sources::Fusion
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence&.split(",") || [],
-      working_patterns: item["workingPatterns"].presence&.split(","),
-      contract_type: item["contractType"].presence,
+      working_patterns: working_patterns_for(item),
+      contract_type: contract_type_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       key_stages: item["keyStages"].presence&.split(","),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
+      is_job_share: job_share_for(item),
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
     }.merge(organisation_fields(item, schools))
      .merge(start_date_fields(item))
   end
+  # rubocop:enable Metrics/MethodLength
 
   def organisation_fields(item, schools)
     {
@@ -80,6 +84,25 @@ class Vacancies::Import::Sources::Fusion
     else
       { other_start_date_details: parsed_date.date, start_date_type: parsed_date.type }
     end
+  end
+
+  def working_patterns_for(item)
+    return unless item["workingPatterns"].present?
+
+    working_patterns = item["workingPatterns"].split(",")
+
+    if working_patterns.include?("job_share")
+      working_patterns -= ["job_share"]
+      working_patterns += ["part_time"]
+    end
+
+    working_patterns.uniq
+  end
+
+  def job_share_for(item)
+    return false unless item["workingPatterns"].split(",").include?("job_share")
+
+    true
   end
 
   def schools_for(item)
@@ -132,6 +155,16 @@ class Vacancies::Import::Sources::Fusion
 
   def visa_sponsorship_available_for(item)
     item["visaSponsorshipAvailable"] == true
+  end
+
+  def contract_type_for(item)
+    return "fixed_term" if item["contractType"] == "parental_leave_cover"
+
+    item["contractType"].presence
+  end
+
+  def parental_leave_cover_for?(item)
+    item["contractType"] == "parental_leave_cover"
   end
 
   def results

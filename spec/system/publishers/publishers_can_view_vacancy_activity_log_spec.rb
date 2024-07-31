@@ -28,6 +28,7 @@ RSpec.describe "Publishers can view a vacancy's activity log", versioning: true 
 
     choose I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{new_contract_type}")
     within("#publishers-job-listing-contract-type-form-contract-type-fixed-term-conditional") do
+      choose "Yes"
       fill_in I18n.t("helpers.label.publishers_job_listing_contract_type_form.fixed_term_contract_duration"), with: "6 months"
     end
 

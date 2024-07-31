@@ -44,7 +44,6 @@ FactoryBot.define do
     fixed_term_contract_duration { "6 months" }
     further_details_provided { true }
     further_details { Faker::Lorem.sentence(word_count: factory_rand(50..300)) }
-    parental_leave_cover_contract_duration { "6 months" }
     expires_at { 6.months.from_now.change(hour: 9, minute: 0, second: 0) }
     hired_status { nil }
     include_additional_documents { false }
@@ -55,6 +54,7 @@ FactoryBot.define do
     pay_scale { factory_sample(salaries) }
     publish_on { Date.current }
     salary { factory_sample(salaries) }
+    hourly_rate { "£25 per hour" }
     school_offer { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
     school_visits { true }
     skills_and_experience { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
@@ -62,10 +62,11 @@ FactoryBot.define do
     starts_on { 1.year.from_now.to_date }
     status { :published }
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
-    working_patterns { factory_rand_sample(Vacancy.working_patterns.keys, 1..2) }
+    working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     visa_sponsorship_available { false }
     organisations { build_list(:school, 1) }
+    is_job_share { [true, false].sample }
 
     trait :legacy_vacancy do
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }

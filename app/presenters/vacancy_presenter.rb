@@ -27,9 +27,13 @@ class VacancyPresenter < BasePresenter
   end
 
   def readable_working_patterns
-    model.working_patterns.map { |working_pattern|
+    working_patterns = model.working_patterns.map { |working_pattern|
       Vacancy.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ").capitalize
+
+    return working_patterns unless is_job_share
+
+    "#{working_patterns} (Can be done as a job share)"
   end
 
   def readable_working_patterns_with_details
@@ -78,11 +82,13 @@ class VacancyPresenter < BasePresenter
   def contract_type_with_duration
     return nil unless model.contract_type.present?
 
-    duration = model.fixed_term? ? model.fixed_term_contract_duration : model.parental_leave_cover_contract_duration
+    return I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}") if model.fixed_term_contract_duration.blank?
 
-    return I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{model.contract_type}") if duration.blank?
-
-    [I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{model.contract_type}"), duration].compact.join(" - ")
+    if is_parental_leave_cover
+      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration, I18n.t("publishers.vacancies.build.contract_type.parental_leave")].compact.join(" - ")
+    else
+      [I18n.t("publishers.vacancies.build.contract_type.#{model.contract_type}"),  model.fixed_term_contract_duration].compact.join(" - ")
+    end
   end
 
   def school_group_names

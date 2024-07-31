@@ -6,7 +6,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school_group) { create(:local_authority, schools: [school1, school2], safeguarding_information: nil) }
   let(:school1) { create(:school, :not_applicable, name: "First school") }
   let(:school2) { create(:school, :not_applicable, name: "Second school") }
-  let(:vacancy) { build(:vacancy, :no_tv_applications, :ect_suitable, job_roles: ["teacher"], phases: %w[secondary], organisations: [school1, school2]) }
+  let(:vacancy) { build(:vacancy, :no_tv_applications, :ect_suitable, job_roles: ["teacher"], phases: %w[secondary], organisations: [school1, school2], contract_type: "fixed_term", is_parental_leave_cover: true) }
   let(:created_vacancy) { Vacancy.last }
 
   before do
@@ -81,6 +81,8 @@ RSpec.describe "Creating a vacancy" do
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
+
+    expect_correct_pay_package_options(vacancy)
 
     fill_in_pay_package_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")

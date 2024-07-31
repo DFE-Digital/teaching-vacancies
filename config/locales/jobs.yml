@@ -210,6 +210,7 @@ en:
     pay_scale: Pay scale
     salary: Salary
     salary_details: Salary details
+    hourly_rate: Hourly rate
 
     arranging_a_visit:
       description_html: To arrange a visit and increase the chance of a successful application email %{email}.

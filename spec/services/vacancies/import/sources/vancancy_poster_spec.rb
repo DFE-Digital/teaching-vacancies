@@ -156,6 +156,15 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
       end
     end
 
+    context "when contract_type is parental_leave_cover" do
+      let(:response_body) { super().gsub("permanent", "parental_leave_cover") }
+
+      it "sets contract_type to fixed_term and is_parental_leave_cover to true" do
+        expect(vacancy.contract_type).to eq("fixed_term")
+        expect(vacancy.is_parental_leave_cover).to eq(true)
+      end
+    end
+
     context "when the same vacancy has been imported previously" do
       let!(:existing_vacancy) do
         create(

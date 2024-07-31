@@ -178,6 +178,15 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       end
     end
 
+    context "when contract_type is parental_leave_cover" do
+      let(:response_body) { super().gsub("fixed_term", "parental_leave_cover") }
+
+      it "sets contract_type to fixed_term and is_parental_leave_cover to true" do
+        expect(vacancy.contract_type).to eq("fixed_term")
+        expect(vacancy.is_parental_leave_cover).to eq(true)
+      end
+    end
+
     describe "phase mapping" do
       let(:response_body) { super().gsub("primary", phase) }
 
@@ -196,6 +205,17 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
 
         it "maps the phase to '[through]' in the vacancy" do
           expect(vacancy.phases).to eq(["through"])
+        end
+      end
+    end
+
+    describe "working_patterns" do
+      let(:response_body) { super().gsub("full_time", "job_share") }
+
+      context "when vacancy is a job share" do
+        it "sets vacancy to part time and is_job_share to true" do
+          expect(vacancy.working_patterns).to eq(["part_time"])
+          expect(vacancy.is_job_share).to eq(true)
         end
       end
     end

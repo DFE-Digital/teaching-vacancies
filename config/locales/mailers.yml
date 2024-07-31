@@ -23,7 +23,7 @@ en:
         intro: You have requested a Teaching Vacancies account using this email.
         link: Verify email and create account
         not_requested:
-          body: If you have not requested a Teaching Vacancies account please email %{mail_to}
+          body: If you have not requested an account, you can ignore this email.
           heading: Not requested this email?
         subject: Verify your email with Teaching Vacancies
         what_to_do: What to do now

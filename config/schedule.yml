@@ -18,6 +18,8 @@ export_users:
   class: 'ExportDSIUsersToBigQueryJob'
   queue: low
 
+# Internal querying & parsing of Find a Job export data depends on this running time.
+# Be careful if changing this time as you will need to adapt the code.
 export_vacancies_published_and_updated_to_dwp_find_a_job_service:
   cron: '30 23 * * *'
   class: 'ExportVacanciesPublishedAndUpdatedSinceYesterdayToDwpFindAJobServiceJob'

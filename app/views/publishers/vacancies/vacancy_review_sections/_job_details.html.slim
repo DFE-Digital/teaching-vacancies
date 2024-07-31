@@ -105,6 +105,10 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
             li
               div => "#{t('jobs.pay_scale')}:"
               = vacancy.pay_scale
+          - if vacancy.hourly_rate?
+            li
+              div => "#{t('jobs.hourly_rate')}:"
+              = vacancy.hourly_rate
       - unless vacancy.legacy_draft?
         - row.with_action text: t("buttons.change"),
                       href: organisation_job_build_path(vacancy.id, :pay_package, "back_to_#{action_name}": "true"),

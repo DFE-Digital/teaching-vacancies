@@ -83,7 +83,10 @@ title: DWP Find a Job integration code structure
 classDiagram
   PublishedAndUpdated *-- Upload : composition
   ClosedEarly *-- Upload : composition
+  NewQuery *-- Versioning : inclusion
   NewXml *-- ParsedVacancy : composition
+  ParsedVacancy *-- Versioning : inclusion
+  ExpiredXml *-- Versioning : inclusion
   PublishedAndUpdated *-- NewXml : composition
   PublishedAndUpdated *-- NewQuery : composition
   ClosedEarly *-- ExpiredXml : composition
@@ -108,6 +111,14 @@ classDiagram
     -upload_to_find_a_job_sftp(file_path)
   }
 
+  class Versioning {
+    DAYS_BETWEEN_REPOSTS
+    MIN_LIVE_DAYS
+    MAX_LIVE_DAYS
+    +versioned_reference(vacancy)
+    +version(vacancy )
+  }
+
   namespace PublishedAndUpdatedVacancies {
     class NewXml["Xml"] {
       vacancies
@@ -121,13 +132,12 @@ classDiagram
       -vacancies_published_after_date()
       -vacancies_published_before_date()
       -vacancies_updated_after_date()
-      -vacancies_that_reached_expiry_date_threshold()
-      -vacancies_that_need_expiry_date_pushed_back()
+      -vacancies_to_repost_today()
     }
 
     class ParsedVacancy {
       vacancy
-      +id()
+      +reference()
       +job_title()
       +organisation()
       +apply_url()
@@ -136,6 +146,7 @@ classDiagram
       +expiry()
       +status_id()
       +type_id()
+      -date_from_publishing_version(offset_days)
       -description_paragraph(title, text)
       -html_to_plain_text(html)
       -sanitize(text)
@@ -166,72 +177,89 @@ We publish vacancies that fall on any of these conditions:
   EG: Providing yesterday's date, all the vacancies published yesterday and today will be returned.
 - Were previously published but got updated after the given date.
   In this case, the publish will update the vacancy changed info in the Find a Job service.
-- Were previously published but need their expiry date to be updated/pushed back in Find a Job service.
+- Were previously published but need to be reposted on Find a Job service.
 
 ```mermaid
 block-beta
-columns 3
-block:TeachingVacancies:3
-    columns 4
-    space:2 Database[("Database\nVacancies")] space
+columns 8
+block:TeachingVacancies:8
+    columns 3
+    space Database[("Database\nVacancies")] space
 
      RecentlyPublished{"Recently\npublished"}
      RecentlyUpdated{"Recently\nupdated"}
-     NeedToSetExpiryDate{"Need to set\nthe expiry date"}
-     NeedToPushExpiryDate{"Need to push\nthe expiry date"}
+     NeedToBeReposted{"Need to be\nreposted"}
 
-    space:2 Query space
+    space Query space
 
     Database --> RecentlyPublished
     Database --> RecentlyUpdated
-    Database --> NeedToSetExpiryDate
-    Database --> NeedToPushExpiryDate
+    Database --> NeedToBeReposted
     RecentlyPublished --> Query
     RecentlyUpdated --> Query
-    NeedToSetExpiryDate --> Query
-    NeedToPushExpiryDate --> Query
+    NeedToBeReposted --> Query
 end
 style TeachingVacancies fill:#e6f2ff,stroke:#333,stroke-width:2px
 
 classDef querybit fill:#ffffcc,stroke:#333;
 classDef datasource fill:#ffcc99,stroke:#333;
-class RecentlyPublished,RecentlyUpdated,NeedToSetExpiryDate,NeedToPushExpiryDate querybit
+class RecentlyPublished,RecentlyUpdated,NeedToBeReposted querybit
 class Database datasource
 ```
-
-### Vacancies that need their expiry date updated/pushed back
-
+### Reposting Vacancies.
 Find a Job service has a limit on the vacancy closing/expiry date:
 
-**A vacancy advert must expire in maximum of 30 days from the date it got published/updated .**
+**A vacancy advert must expire after a maximum of 30 days from the date it got published.**
 
-For a vacancy to be accepted we must either:
-- Do not specify an expiry date in its XML value: It will default to 30 days.
-- Set a specific expiry date in its XML value: Between 1 and 30 days after the publish/update date.
+For a new vacancy to be accepted we must either:
+- Do not specify an expiry date: It will default to 30 days after the publish date.
+- Specify an expiry date between 1 and 30 days after the publishing date.
+
+For a vacancy edit/update to be acceoted we must either:
+- Do not specify an expiry date: It will keep the original value.
+- Set a specific expiry date: Between 1 and 30 days after the original publishing date.
 
 #### The problem with this limitation
 The majority of our live vacancies have closing dates way beyond a month from the publish date.
 
-**How do we ensure the vacancy from TV is live in the DWP Find a Job service after 30 days from being published?**
+```mermaid
+timeline
+    title Max life of an advert in Find a Job
+    Day 1 : Advert gets Published
+    Day 31 : Advert expires.
+           : Last day published
+    Day 32 : Advert no longer published
 
-#### Our take on resolving this
-Forcing regular updates to Find a Job for TV long-life vacancies, pushing back the expiry date to 30 days from the update.
+```
 
-Doing this daily would cause hundreds/thousands of unneeded updates, so we decided to do this on a weekly basis:
-- When the query for filtering vacancies to push runs, it will also select vacancies that:
-  - Have a TV closing date over 30 days from today.
-  - The number of days between the current date and its TV closing date is a multiple of 7.
+#### How do we ensure the vacancy from TV is live in the DWP Find a Job service after 30 days from being published?
 
-These conditions translate in **any vacancy with closing date over 30 days from today, will be selected for pushing back their "Find a Job" expiry date once per week**.
+We will republish the vacancy as a new advert on DWP Find a Job every 31 days.
 
-This approach distributes the load of pushing back vacancies over multiple days on the regular publish/update runs, instead of having a dedicated scheduled job dedicated to exclusively query/update these vacancies.
+**EG: Lifetime of a TV vacancy published today, that expires in TV 70 days later:**
+```mermaid
+timeline
+    title Vacancy: TV to Find a Job cycle
+    Day 1 : TV exports the vacancy for first time
+          : Advert reference is the vacancy "id"
+          : Advert expiry date is left to default 30 days after today
+          : Advert "id" gets Published
+    Day 31 : Advert "id" Expires
+    Day 32 : Advert "id" no longer published
+           : TV exports the vacancy for second time
+           : New advert with reference "id-1"
+           : Advert expiry date is left to default 30 days after today
+           : Advert "id-1" gets published
+    Day 62 : Advert "id-1" expires
+    Day 63 : Advert "id-1" no longer published
+           : TV exports the vacancy for third time
+           : New advert with reference "id-2"
+           : Advert expiry date is set to 8 days after today, matching TV expiry date.
+           : Advert  "id-2" gets published
+    Day 71 : Advert "id-2" Expires same day as in TV
+    Day 72 : Advert "id-2" no longer published
 
-#### Alternative approach
-If we want more fine control over when to run the expiration date pushbacks for long-life TV vacancies, we could extract it to its own query/upload service, and schedule it independently to push back all long-life vacancies expiry dates in Find a Job service.
-
-This would:
-- Pro: Reduce DB query complexity. As we would only need to query: "Any vacancies with expiry date over 30 days from today".
-- Con: Increase the size of the XML files we push into DWP Find a Job service, as now selects "all the vacancies over 30 days..." instead of a subset of those.
+```
 
 ## Uploading vacancies closed early
 

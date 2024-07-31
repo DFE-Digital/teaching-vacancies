@@ -6,14 +6,17 @@
       = f.govuk_error_summary
 
       = f.govuk_collection_check_boxes(:working_patterns,
-                                       Vacancy.working_patterns.keys,
+                                       Vacancy.working_patterns.keys - ["job_share"],
                                        :to_s,
                                        :to_s,
                                        legend: -> { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: "govuk-heading-l") },
                                        hint: -> { t("helpers.hint.publishers_job_listing_working_patterns_form.working_patterns") })
+      = f.govuk_radio_buttons_fieldset :is_job_share, inline: true, legend: { text: "Can this role be done as a job share?" }, hint: { text: "For example, can this role be filled by two teacher who share responsibility for the class?" } do
+            = f.govuk_radio_button :is_job_share, true, label: { text: "Yes" }
+            = f.govuk_radio_button :is_job_share, false, label: { text: "No" }
       = f.govuk_text_area(:working_patterns_details,
                           label: -> { tag.label(t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
                           hint: -> { t("helpers.hint.publishers_job_listing_working_patterns_form.working_patterns_details") },
-                          max_words: 50)
+                          max_words: 75)
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

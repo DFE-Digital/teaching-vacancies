@@ -8,7 +8,6 @@ module Resettable
   def reset_dependent_fields
     reset_actual_salary
     reset_fixed_term_contract_duration
-    reset_parental_leave_cover_contract_duration
     reset_keystages
     reset_subjects
     set_default_key_stage
@@ -36,12 +35,6 @@ module Resettable
     return unless contract_type_changed? && contract_type != "fixed_term"
 
     self.fixed_term_contract_duration = ""
-  end
-
-  def reset_parental_leave_cover_contract_duration
-    return unless contract_type_changed? && contract_type != "parental_leave_cover"
-
-    self.parental_leave_cover_contract_duration = ""
   end
 
   def reset_keystages

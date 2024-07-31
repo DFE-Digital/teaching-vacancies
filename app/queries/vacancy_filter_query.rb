@@ -28,7 +28,7 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = built_scope.quick_apply if filters[:quick_apply]
     built_scope = add_school_type_filters(filters, built_scope)
     working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
-    built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
+    built_scope = add_working_patterns_filters(working_patterns, built_scope)
 
     built_scope = built_scope.with_any_of_phases(phases(filters[:phases])) if phases(filters[:phases]).present?
 
@@ -102,6 +102,19 @@ class VacancyFilterQuery < ApplicationQuery
 
     # These are no longer relevant and have no current equivalent
     working_patterns - %w[compressed_hours staggered_hours]
+  end
+
+  def add_working_patterns_filters(working_patterns, built_scope)
+    return built_scope unless working_patterns.present?
+
+    if working_patterns.include?("job_share")
+      working_patterns -= ["job_share"]
+      built_scope = built_scope.where(is_job_share: true)
+    end
+
+    built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
+
+    built_scope
   end
 
   def apply_job_roles(keys, built_scope, filters)

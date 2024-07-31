@@ -153,17 +153,26 @@ RSpec.describe VacancyPresenter do
   end
 
   describe "#readable_working_patterns" do
-    let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time]) }
+    context "when is_job_share" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: true) }
 
-    it "returns working patterns" do
-      expect(subject.readable_working_patterns).to eq("Full time, part time")
+      it "returns working patterns" do
+        expect(subject.readable_working_patterns).to eq("Full time, part time (Can be done as a job share)")
+      end
+    end
+
+    context "when is_job_share == false" do
+      let(:vacancy) { build_stubbed(:vacancy, working_patterns: %w[full_time part_time], is_job_share: false) }
+      it "returns working patterns" do
+        expect(subject.readable_working_patterns).to eq("Full time, part time")
+      end
     end
   end
 
   describe "#readable_working_patterns_with_details" do
     let(:working_patterns) { %w[full_time part_time] }
     let(:working_patterns_details) { "Some details" }
-    let(:vacancy) { build_stubbed(:vacancy, working_patterns:, working_patterns_details:) }
+    let(:vacancy) { build_stubbed(:vacancy, working_patterns:, working_patterns_details:, is_job_share: false) }
 
     it "returns the working with details" do
       expect(subject.readable_working_patterns_with_details).to eq("Full time, part time: Some details")
@@ -200,13 +209,13 @@ RSpec.describe VacancyPresenter do
     let(:vacancy) do
       build_stubbed(:vacancy, contract_type: contract_type,
                               fixed_term_contract_duration: fixed_term_contract_duration,
-                              parental_leave_cover_contract_duration: parental_leave_cover_contract_duration)
+                              is_parental_leave_cover: is_parental_leave_cover)
     end
-    let(:parental_leave_cover_contract_duration) { "" }
 
     context "when permanent" do
       let(:contract_type) { :permanent }
       let(:fixed_term_contract_duration) { "" }
+      let(:is_parental_leave_cover) { nil }
 
       it "returns Permanent" do
         expect(subject.contract_type_with_duration).to eq "Permanent"
@@ -217,35 +226,20 @@ RSpec.describe VacancyPresenter do
       let(:contract_type) { :fixed_term }
       let(:fixed_term_contract_duration) { "6 months" }
 
-      it "returns Fixed term (duration)" do
-        expect(subject.contract_type_with_duration).to eq "Fixed term - 6 months"
+      context "when is_parental_leave_cover is false" do
+        let(:is_parental_leave_cover) { false }
+
+        it "returns Fixed term (duration)" do
+          expect(subject.contract_type_with_duration).to eq "Fixed term - 6 months"
+        end
       end
-    end
-  end
 
-  describe "#parental_leave_cover_contract_duration" do
-    let(:vacancy) do
-      build_stubbed(:vacancy, contract_type: contract_type,
-                              parental_leave_cover_contract_duration: parental_leave_cover_contract_duration,
-                              fixed_term_contract_duration: fixed_term_contract_duration)
-    end
-    let(:fixed_term_contract_duration) { "" }
+      context "when is_parental_leave_cover is true" do
+        let(:is_parental_leave_cover) { true }
 
-    context "when permanent" do
-      let(:contract_type) { :permanent }
-      let(:parental_leave_cover_contract_duration) { "" }
-
-      it "returns Permanent" do
-        expect(subject.contract_type_with_duration).to eq "Permanent"
-      end
-    end
-
-    context "when parental_leave cover" do
-      let(:contract_type) { :parental_leave_cover }
-      let(:parental_leave_cover_contract_duration) { "6 months" }
-
-      it "returns Maternity or parental leave cover (duration)" do
-        expect(subject.contract_type_with_duration).to eq "Maternity or parental leave cover - 6 months"
+        it "returns Fixed term (duration)" do
+          expect(subject.contract_type_with_duration).to eq "Fixed term - 6 months - Maternity or parental leave cover"
+        end
       end
     end
   end

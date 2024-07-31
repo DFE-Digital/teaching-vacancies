@@ -24,15 +24,6 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::Query do
         v.save(validate: false)
       end
     end
-    let(:published_internal_reached_max_expiry_threshold) do
-      create(:vacancy, :published, publish_on: "2024-04-30", expires_at: Time.zone.now + 30.days, created_at: 1.week.ago, updated_at: 1.week.ago)
-    end
-    let(:published_internal_vacancy_over_max_expiry_threshold) do
-      create(:vacancy, :published, publish_on: "2024-04-30", expires_at: Time.zone.now + 31.days, created_at: 1.week.ago, updated_at: 1.week.ago)
-    end
-    let(:published_internal_vacancy_with_expiration_exactly_12_weeks_from_today) do
-      create(:vacancy, :published, publish_on: "2024-04-30", expires_at: Time.zone.now + 12.weeks, created_at: 1.week.ago, updated_at: 1.week.ago)
-    end
 
     it "includes internal vacancies already published after the from_date" do
       published_internal_vacancy
@@ -59,39 +50,40 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::Query do
       expect(subject.vacancies).to be_empty
     end
 
-    it "includes internal vacancies published before the form_date, not updated since, but now have 30 days to expire" do
-      published_internal_reached_max_expiry_threshold
-      expect(subject.vacancies).to contain_exactly(published_internal_reached_max_expiry_threshold)
-    end
-
-    describe "vacancies over 30 days inclusion" do
-      it "are not included if the expiration date is not 7*x days (exactly 'x' weeks) away from today" do
-        published_internal_vacancy_over_max_expiry_threshold
-        expect(subject.vacancies).to be_empty
+    describe "vacancies that need to be reposted" do
+      [31, 62, 93, 124, 155, 186].each do |days|
+        it "includes internal vacancies published exactly #{days} days ago" do
+          vacancy = create(:vacancy, :published, publish_on: days.days.ago, expires_at: Time.zone.now + 12.days,
+                                                 created_at: days.days.ago, updated_at: days.days.ago)
+          expect(subject.vacancies).to contain_exactly(vacancy)
+        end
       end
 
-      it "are included if the expiration date is 7*x days (exactly 'x' weeks) away from today" do
-        published_internal_vacancy_with_expiration_exactly_12_weeks_from_today
-        expect(subject.vacancies)
-          .to contain_exactly(published_internal_vacancy_with_expiration_exactly_12_weeks_from_today)
+      [15, 30, 60, 61, 63].each do |days|
+        it "does not include internal vacancies published exactly #{days} days ago" do
+          create(:vacancy, :published, publish_on: days.days.ago, expires_at: Time.zone.now + 12.days,
+                                       created_at: days.days.ago, updated_at: days.days.ago)
+          expect(subject.vacancies).to be_empty
+        end
       end
     end
 
     it "combines all the vacancy selection criterias" do
+      create(:vacancy, :published, publish_on: 30.days.ago, expires_at: Time.zone.now + 56.days, created_at: 50.days.ago, updated_at: 50.days.ago)
+
+      published_internal_31_days_ago_vacancy = create(:vacancy, :published, publish_on: 31.days.ago, expires_at: Time.zone.now + 56.days, created_at: 50.days.ago, updated_at: 50.days.ago)
+      published_internal_62_days_ago_vacancy = create(:vacancy, :published, publish_on: 62.days.ago, expires_at: Time.zone.now + 56.days, created_at: 70.days.ago, updated_at: 70.days.ago)
       published_internal_vacancy
       published_internal_before_date_vacancy
       published_internal_updated_vacancy
       unpublished_internal_vacancy
       publised_external_vacancy
-      published_internal_reached_max_expiry_threshold
-      published_internal_vacancy_over_max_expiry_threshold
-      published_internal_vacancy_with_expiration_exactly_12_weeks_from_today
 
       expect(subject.vacancies).to contain_exactly(
         published_internal_vacancy,
         published_internal_updated_vacancy,
-        published_internal_reached_max_expiry_threshold,
-        published_internal_vacancy_with_expiration_exactly_12_weeks_from_today,
+        published_internal_31_days_ago_vacancy,
+        published_internal_62_days_ago_vacancy,
       )
     end
   end

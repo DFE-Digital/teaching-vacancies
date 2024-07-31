@@ -60,7 +60,8 @@ class Vacancies::Import::Sources::Ventrus
       key_stages: item["Key_Stage"].presence&.split(","),
       # subjects: item["Subjects"].presence&.split(",") || [], # Ventrus don't have subjects in their feed
       working_patterns: item["Working_Patterns"].presence&.split(","),
-      contract_type: item["Contract_Type"].presence,
+      contract_type: contract_type_for(item),
+      is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(schools))
@@ -119,6 +120,16 @@ class Vacancies::Import::Sources::Ventrus
                  .parameterize(separator: "_")
                  .gsub("through_school", "through")
                  .gsub(/16-19|16_19/, "sixth_form_or_college")
+  end
+
+  def contract_type_for(item)
+    return "fixed_term" if item["Contract_Type"] == "parental_leave_cover"
+
+    item["Contract_Type"].presence
+  end
+
+  def parental_leave_cover_for?(item)
+    item["Contract_Type"] == "parental_leave_cover"
   end
 
   def visa_sponsorship_available_for(item)

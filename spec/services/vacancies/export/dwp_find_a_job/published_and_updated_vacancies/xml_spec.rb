@@ -14,7 +14,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
       let(:parsed_vacancy) do
         instance_double(
           ParsedVacancy,
-          id: "10",
+          reference: "10",
           organisation: org,
           job_title: "Awesome teacher",
           description: "Job description",
@@ -139,7 +139,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
         let(:parsed_vacancy2) do
           instance_double(
             ParsedVacancy,
-            id: "11",
+            reference: "11",
             organisation: org,
             job_title: "Another teacher",
             description: "Another job description",

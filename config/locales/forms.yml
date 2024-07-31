@@ -259,6 +259,7 @@ en:
         benefits: For example, special educational needs (SEN) or teaching and learning responsibility (TLR) payments
         pay_scale: For example, ‘M1 to M2’
         salary: For example, ‘Between £20,000 and £40,000’
+        hourly_rate: For example, '£10.00 per hour'
         salary_types: Select all that apply
         salary_types_options:
           full_time: This is what the annual salary would be for someone working full time
@@ -287,7 +288,7 @@ en:
           teaching_assistant: For example ‘Teaching assistant’
       publishers_job_listing_working_patterns_form:
         working_patterns: Select all that apply.
-        working_patterns_details: For example, 32.5 hours a week.
+        working_patterns_details: For example, 16 hours a week, Monday to Wednesday.
         working_patterns_options:
           full_time_education_support: Usually at least 36.5 hours a week
           full_time_higher_level_teaching_assistant: Usually at least 36.5 hours a week
@@ -687,11 +688,12 @@ en:
           true: "Yes"
       publishers_job_listing_contract_type_form:
         contract_type_options:
-          fixed_term: Fixed term
+          fixed_term: Fixed term (including maternity or parental leave cover)
           parental_leave_cover: Maternity or parental leave cover
           permanent: Permanent
+          casual: Casual
         fixed_term_contract_duration: Length of contract
-        parental_leave_cover_contract_duration: Length of contract
+        is_parental_leave_cover: Is this covering maternity or paternal leave?
       publishers_job_listing_contact_details_form:
         contact_email_options:
           other: Another email address
@@ -831,10 +833,12 @@ en:
           true: "Yes"
         pay_scale: Pay scale
         salary: Full-time equivalent salary
+        hourly_rate: Hourly rate of pay
         salary_types_options:
           full_time: Full-time equivalent salary
           part_time: Actual salary
           pay_scale: Pay scale
+          hourly_rate: Hourly rate of pay
       publishers_job_listing_school_visits_form:
         school_visits_options:
           false: "No"
@@ -845,7 +849,7 @@ en:
           false: "No"
           true: "Yes"
       publishers_job_listing_working_patterns_form:
-        working_patterns_details: Details of working hours (optional)
+        working_patterns_details: Details of working hours/days (optional)
         organisation_type_options:
           academy: Academy
           local_authority: Local authority maintained schools

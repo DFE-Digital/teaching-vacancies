@@ -154,15 +154,15 @@ en:
       inclusion: Select contract type
     fixed_term_contract_duration:
       blank: Enter the length of the fixed term contract
-    parental_leave_cover_contract_duration:
-      blank: Enter the length of the maternity or parental leave cover contract
   working_patterns_errors: &working_patterns_errors
     working_patterns:
       blank: Select a working pattern
       inclusion: Select a working pattern
     working_patterns_details:
       blank: Enter working patterns details
-      maximum_words: Working patterns details must be 50 words or less
+      maximum_words: Working patterns details must be 75 words or less
+    is_job_share:
+      blank: Select yes if this role can be done as a job share
   pay_package_errors: &pay_package_errors
     actual_salary:
       blank: Enter actual salary
@@ -181,6 +181,8 @@ en:
       blank: Enter full-time salary
       too_long: Full-time equivalent salary must not be more than %{count} characters
       invalid_characters: Salary must not contain any HTML tags
+    hourly_rate:
+      blank: Enter hourly rate
     salary_types:
       invalid: Select salary details
   important_dates_errors: &important_dates_errors

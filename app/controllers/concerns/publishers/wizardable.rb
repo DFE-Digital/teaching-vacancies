@@ -52,19 +52,19 @@ module Publishers::Wizardable
 
   def contract_type_params(params)
     params.require(:publishers_job_listing_contract_type_form)
-          .permit(:contract_type, :fixed_term_contract_duration, :parental_leave_cover_contract_duration)
+          .permit(:contract_type, :fixed_term_contract_duration, :is_parental_leave_cover)
           .merge(completed_steps: completed_steps)
   end
 
   def working_patterns_params(params)
     params.require(:publishers_job_listing_working_patterns_form)
-          .permit(:working_patterns_details, working_patterns: [])
+          .permit(:working_patterns_details, :is_job_share, working_patterns: [])
           .merge(completed_steps: completed_steps)
   end
 
   def pay_package_params(params)
     params.require(:publishers_job_listing_pay_package_form)
-          .permit(:actual_salary, :benefits, :benefits_details, :salary, :pay_scale, salary_types: [])
+          .permit(:actual_salary, :benefits, :benefits_details, :salary, :pay_scale, :hourly_rate, salary_types: [])
           .merge(completed_steps: completed_steps)
   end
 

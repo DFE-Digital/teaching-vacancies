@@ -29,7 +29,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
 
       vacancy = ParsedVacancy.new(vacancy)
 
-      xml.Vacancy(vacancyRefCode: vacancy.id) do
+      xml.Vacancy(vacancyRefCode: vacancy.reference) do
         xml.Title vacancy.job_title
         xml.Description vacancy.description
         xml.Location do
