@@ -1,4 +1,8 @@
 # Be sure to restart your server when you modify this file.
+MAILER_SANITIZED_PARAMS = %w[
+  mailer.subject
+  mailer.to
+].freeze
 
 # Configure sensitive parameters which will be filtered from the log file.
 Rails.application.config.filter_parameters += %i[
@@ -13,3 +17,5 @@ Rails.application.config.filter_parameters += %i[
 ] + [
   /^age$/i,
 ]
+
+Rails.application.config.filter_parameters += MAILER_SANITIZED_PARAMS
