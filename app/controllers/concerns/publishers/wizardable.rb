@@ -64,7 +64,7 @@ module Publishers::Wizardable
 
   def pay_package_params(params)
     params.require(:publishers_job_listing_pay_package_form)
-          .permit(:actual_salary, :benefits, :benefits_details, :salary, :pay_scale, salary_types: [])
+          .permit(:actual_salary, :benefits, :benefits_details, :salary, :pay_scale, :hourly_rate, salary_types: [])
           .merge(completed_steps: completed_steps)
   end
 

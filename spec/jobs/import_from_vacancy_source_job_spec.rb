@@ -170,6 +170,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "visa_sponsorship_available" => false,
           "is_parental_leave_cover" => nil,
           "is_job_share" => true,
+          "hourly_rate" => "£25 per hour",
         )
       end
 

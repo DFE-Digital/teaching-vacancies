@@ -259,6 +259,7 @@ en:
         benefits: For example, special educational needs (SEN) or teaching and learning responsibility (TLR) payments
         pay_scale: For example, ‘M1 to M2’
         salary: For example, ‘Between £20,000 and £40,000’
+        hourly_rate: For example, '£10.00 per hour'
         salary_types: Select all that apply
         salary_types_options:
           full_time: This is what the annual salary would be for someone working full time
@@ -832,10 +833,12 @@ en:
           true: "Yes"
         pay_scale: Pay scale
         salary: Full-time equivalent salary
+        hourly_rate: Hourly rate of pay
         salary_types_options:
           full_time: Full-time equivalent salary
           part_time: Actual salary
           pay_scale: Pay scale
+          hourly_rate: Hourly rate of pay
       publishers_job_listing_school_visits_form:
         school_visits_options:
           false: "No"
