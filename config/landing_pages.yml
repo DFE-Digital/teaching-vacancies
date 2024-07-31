@@ -68,6 +68,16 @@ shared:
   other-support-roles-jobs:
     support_job_roles:
       - other_support
+  support-jobs:
+    support_job_roles:
+      - teaching_assistant
+      - higher_level_teaching_assistant
+      - education_support
+      - administration_hr_data_and_finance
+      - catering_cleaning_and_site_management
+      - it_support
+      - pastoral_health_and_welfare
+      - other_support
 
   ### Phases
   nursery-jobs:
