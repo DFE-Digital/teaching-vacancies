@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @subcategories = get_subcategories(params[:section])
+    @subcategories = MarkdownDocument.all_subcategories(params[:section])
   end
 
   def subcategory
@@ -9,7 +9,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = MarkdownDocument.new(params[:section], params[:subcategory], params[:post_name])
+    @post = MarkdownDocument.new(section: params[:section], subcategory: params[:subcategory], post_name: params[:post_name])
     not_found unless @post.exist?
   end
 

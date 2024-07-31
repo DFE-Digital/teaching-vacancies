@@ -127,6 +127,40 @@
       "note": "field_name does not come from user_input, field_name is hardcoded in the child classes of LocationQuery. Point also does not come from user input it is derived from Geocoding#coordinates which returns an array with coordinates returned by our cache or third party geocoding APIs. It defaults to [0,0] if relevant coordinates are not found."
     },
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "84c4e6fcded5a5ae1fd4d47b22ee04c3ecab2f120a83166aaf15a51ecec836e7",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/posts/show.html.slim",
+      "line": 15,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "MarkdownDocument.new(:section => params[:section], :subcategory => params[:subcategory], :post_name => params[:post_name]).content",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PostsController",
+          "method": "show",
+          "line": 14,
+          "file": "app/controllers/posts_controller.rb",
+          "rendered": {
+            "name": "posts/show",
+            "file": "app/views/posts/show.html.slim"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "posts/show"
+      },
+      "user_input": "params[:section]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Unscoped Find",
       "warning_code": 82,
       "fingerprint": "91f40c38375f0a636bff503e39582a6114915364463203def97bbcfdf77077bc",
@@ -310,6 +344,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-07-09 20:18:36 +0100",
+  "updated": "2024-07-12 17:07:35 +0100",
   "brakeman_version": "6.1.2"
 }

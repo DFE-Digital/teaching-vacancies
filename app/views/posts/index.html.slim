@@ -6,9 +6,12 @@
                                      params[:section].titleize.capitalize => "" }
 
 .govuk-grid-row
-  .govuk-grid-column-full
-    h1.govuk-heading-xl = t(".#{params[:section]}.title")
-    p.govuk-body = t(".#{params[:section]}.description")
-    ul.govuk-list
-      - @subcategories.each do |subcategory|
-        li = govuk_link_to(format_title(subcategory), subcategory_path(section: params[:section], subcategory: subcategory))
+  h1.govuk-heading-xl = t(".#{params[:section]}.title")
+  p.govuk-body = t(".#{params[:section]}.description")
+  - @subcategories.each do |subcategory|
+    .govuk-grid-column-one-third
+      .hf-card
+        .hf-card-container
+          img src=image_path(subcategory.card_image) alt=subcategory.title class="hf-card-image"
+          .hf-card-details
+            .govuk-heading-m = govuk_link_to(subcategory.title, subcategory_path(section: params[:section], subcategory: subcategory.post_name))

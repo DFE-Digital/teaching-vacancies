@@ -4,8 +4,9 @@ title: 3 quick ways to find the right teaching job for you
 meta_description: Congratulations, you’ve been invited to an interview for a teaching job! What’s next? We’ve spoken to experienced teachers to get their top tips for success including how to prepare answers to interview questions.
 date_posted: 07/05/2024
 category_tags: apply
+card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/3-quick-ways-to-find-the-right-teaching-job-for-you.jpg"
 ---
-![3 teachers laughing in a playground.](/content-assets/jobseeker-guides/3-quick-ways-to-find-the-right-teaching-job-for-you.jpg)
+![3 teachers laughing in a playground.](/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/3-quick-ways-to-find-the-right-teaching-job-for-you.jpg)
 
 Teaching Vacancies is the official government service to help you find your perfect teaching role. 
 

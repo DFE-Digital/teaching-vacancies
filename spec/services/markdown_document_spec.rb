@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe MarkdownDocument do
-  subject { described_class.new(section, subcategory, post_name) }
+  subject { described_class.new(section: section, subcategory: subcategory, post_name: post_name) }
 
   let(:section) { "get-help-hiring" }
   let(:subcategory) { "accepting-job-applications-on-teaching-vacancies" }
@@ -86,7 +86,7 @@ RSpec.describe MarkdownDocument do
     before { allow(Dir).to receive(:children).with(dir_path).and_return(%w[document.md]) }
 
     it "returns an array of markdown documents" do
-      expect(described_class.all(section, subcategory)).to eq([described_class.new(section, subcategory, post_name)])
+      expect(described_class.all(section, subcategory)).to eq([described_class.new(section: section, subcategory: subcategory, post_name: post_name)])
     end
   end
 

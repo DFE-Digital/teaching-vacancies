@@ -4,6 +4,7 @@ title: How to approve access for hiring staff
 meta_description: Organisation approvers are able to manage who has access to post jobs on the Teaching Vacancies service. Find out how to add, manage and remove users.
 date_posted: 20/04/2022
 category_tags: how-to
+card-image: "/content-assets/get-help-hiring/how-to-setup-your-account/approve-access-for-hiring-staff.jpg"
 ---
 
 Access to Teaching Vacancies is managed through [DfE Sign-in](https://services.signin.education.gov.uk/), which allows organisation administrators to manage various services provided by the Department for Education.

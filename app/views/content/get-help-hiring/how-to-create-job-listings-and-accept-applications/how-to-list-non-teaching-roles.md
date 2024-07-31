@@ -4,6 +4,7 @@ title: How to list non-teaching roles
 meta_description: Find out how to list non-teaching roles for your school or trust on Teaching Vacancies. Recruit finance directors, business managers and more.
 date_posted: 19/03/2024
 category_tags: how-to
+card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-list-non-teaching-roles.png"
 ---
 ![3 teachers sat on sofas having an engaging and relaxed conversation in a canteen area of a school.](/content-assets/jobseeker-guides/write-a-great-teaching-job-application-800x300.jpg)
 
