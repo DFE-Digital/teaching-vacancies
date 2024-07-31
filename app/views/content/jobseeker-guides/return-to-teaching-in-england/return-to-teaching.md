@@ -11,7 +11,7 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/retu
 
 If you’re thinking about returning to teaching, or if you’re qualified to teach but have never taught in a state school in England, support is available.
 
-If you trained to teach in the UK and are a UK citizen currently working abroad, find out about [returning to England to teach.](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-england-after-teaching-overseas)
+If you trained to teach in the UK and are a UK citizen currently working abroad, find out about [returning to England to teach.](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas)
 
 ## Get back into teaching
 Returning to teaching might be easier than you think.
@@ -59,7 +59,7 @@ If you qualified as a teacher outside the UK, you must have qualified teacher st
 ## Find your perfect teaching job
 Every school has its own culture and values so it’s useful to consider what’s important to you when searching for a teaching job.
 
-You can [find out more about how to find a teaching role at the right school.](https://teaching-vacancies.service.gov.uk/jobseeker-guides/find-a-teaching-role-at-the-right-school)
+You can [find out more about how to find a teaching role at the right school.](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/find-a-teaching-role-at-the-right-school)
 
 ## Get help applying for a teaching job
 
