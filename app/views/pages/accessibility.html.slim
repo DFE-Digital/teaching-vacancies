@@ -3,43 +3,74 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-xl Accessibility
-
-    h2.govuk-heading-l Accessibility statement for Teaching Vacancies
+    h1.govuk-heading-xl Accessibility statement
 
     p.govuk-body
-      | Teaching Vacancies is run by the Department for Education. We want as many people as possible to be able to use
-      |  the service. For example, that means users should be able to:
+      | This accessibility statement applies to Teaching Vacancies.
+    p.govuk-body
+      | This website is run by the Department for Education. We want as many people as possible to be able to use
+      |  this website. For example, that means users should be able to:
       ul.govuk-list.govuk-list--bullet
         li change colours, contrast levels and fonts
 
         li zoom in up to 300% without the text spilling off the screen
 
-        li navigate most of the service using just a keyboard
+        li navigate most of the website using just a keyboard
 
-        li navigate most of the service using speech recognition software
+        li navigate most of the website using speech recognition software
 
         li
-          | listen to most of the content on Teaching Vacancies using a screen reader
+          | listen to most of the website using a screen reader
           |  (including the most recent versions of JAWS, NVDA and VoiceOver)
 
-    p.govuk-body We’ve also made the text on the service as simple as possible to understand.
-
-    h3.govuk-heading-m How accessible Teaching Vacancies is
+    p.govuk-body We’ve also made the website text as simple as possible to understand.
 
     p.govuk-body
-      | Teaching Vacancies is fully compliant with the #{govuk_link_to("Web Content Accessibility Guidelines version (WCAG) 2.1", "https://www.w3.org/TR/WCAG21/")}.
-      |  We are constantly improving the service and run accessibility audits during each new phase of development.
-      |  We last did an accessibility audit in June 2021.
+      | #{govuk_link_to("AbilityNet", "https://mcmw.abilitynet.org.uk/")} has advice on making your device easier to use if you have a disability.
 
-    h3.govuk-heading-m Reporting accessibility problems with Teaching Vacancies
+    h2.govuk-heading-l How accessible this website is
 
     p.govuk-body
-      | We’re always looking to improve the accessibility of this service. If you find any problems that are not
-      |  listed on this page or think we’re not meeting accessibility requirements, please
-      |  email #{govuk_mail_to(t("help.email"), t("help.email"))} with 'Accessibility issues' in the subject line of the email.
+      |  We know some parts of this website are not fully accessible:
+      ul.govuk-list.govuk-list--bullet
+        li in places, the heading structure is incorrect, with missing or skipped headers
 
-    h3.govuk-heading-m Enforcement procedure
+        li some page regions are not identified with ARIA landmarks
+
+        li some labels for user interface components do not match what is visually seen on screen
+
+        li
+          | users navigating with a Mac with VoiceOver enabled cannot access the site past the
+          |  ‘skip to main content’ link
+
+        li some elements are not using supported ARIA attributes
+
+        li
+          | there are multiple instances of decorative separators or words which appear off-screen
+          |  being announced
+
+        li some buttons do not function when iOS VoiceOver is enabled
+
+    h2.govuk-heading-l Feedback and contact information
+
+    p.govuk-body
+      | If you need information on this website in a different format like accessible PDF, large print, easy read,
+      |  audio recording or braille please email #{govuk_mail_to(t("help.email"), t("help.email"))}.
+
+    p.govuk-body
+      | We’ll consider your request and get back to you in 7 working days.
+
+    p.govuk-body
+      | Contact the school listing the vacancy for support finding out about or applying for a particular job.
+
+    h2.govuk-heading-l Reporting accessibility problems with this website
+
+    p.govuk-body
+      | We’re always looking to improve the accessibility of this website. If you find any problems that are not
+      |  listed on this page or think we’re not meeting accessibility requirements, contact
+      |  #{govuk_mail_to(t("help.email"), t("help.email"))}.
+
+    h2.govuk-heading-l Enforcement procedure
 
     p.govuk-body
       | The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies
@@ -47,48 +78,94 @@
       |  If you’re not happy with how we respond to your complaint,
       |  #{govuk_link_to("contact the Equality Advisory and Support Service (EASS)", "https://www.equalityadvisoryservice.com")}.
 
-    h3.govuk-heading-m What to do if you need support using Teaching Vacancies
-    p.govuk-body
-      | Email #{govuk_mail_to(t("help.email"), t("help.email"))} if you need support searching for a job, accessing a
-      |  PDF or using another part of the Teaching Vacancies service.
-    p.govuk-body
-      | Contact the school for support finding out about, or applying or, a particular job.
-
-    h2.govuk-heading-l Technical information about Teaching Vacancies' accessibility
+    h2.govuk-heading-l Technical information about this website's accessibility
 
     p.govuk-body
-      | The Department for Education is committed to making its digital services accessible, in accordance
+      | The Department for Education is committed to making its websites accessible, in accordance
       |  with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
 
-    p.govuk-body
-      | This website is at present compliant with the #{govuk_link_to("WCAG 2.1", "https://www.w3.org/TR/WCAG21/")} AA standard.
-
-    h3.govuk-heading-m Non-accessible content
+    h3.govuk-heading-m Compliance status
 
     p.govuk-body
-      | Documents uploaded by schools, such as a job description or person specification, may not be fully accessible.
-      |  These types of content are exempt from accessibility regulations, but we are currently working to make this
-      |  area of the service more accessible. For example, we are making it easier for jobseekers to request these
-      |  documents in an accessible format.
+      | This website is partially compliant with the #{govuk_link_to("Web Content Accessibility Guidelines version 2.2", "https://www.w3.org/TR/WCAG22/")} AA standard, due to the non-compliances listed below.
 
-    h3.govuk-heading-m How we tested this website
-
-    p.govuk-body This website was last tested in June 2021. The test was carried out by the Digital Accessibility Centre (DAC).
+    h2.govuk-heading-l Non-accessible content
 
     p.govuk-body
-      | DAC tested various combinations of the following for both desktop and mobile/tablet users:
+      | The content listed below is non-accessible for the following reasons.
+
+    h3.govuk-heading-m Non-compliance with the accessibility regulations
+
+    p.govuk-body
+      |  ARIA landmarks aren’t used to identify all page content. This may cause content to be missed by screen
+      |   reader users. This fails WCAG 2.2 success criterion 1.3.1 Info and Relationships.
+
+    p.govuk-body
+      |  A correctly formed heading structure is not present to facilitate navigation across the site, with
+      |   skipped or no heading levels present. This fails WCAG 2.2 success criterion 2.4.1 Bypass Blocks.
+
+    p.govuk-body
+      |  Users of Mac iOS with VoiceOver enabled are not able to access the site past the ‘skip to main content’
+      |   link. This fails WCAG 2.2 success criterion 2.4.3 Focus Order.
+
+    p.govuk-body
+      |  The displayed names of some user interface components do not always match the accessible label. This
+      |   may result in navigation issues for speech recognition users. This fails WCAG 2.2 success criterion
+      |   2.5.3 Label in Name.
+
+    p.govuk-body
+      |  Some elements are not supported by ARIA attributes, which may interfere with the accessibility of the
+      |   webpage. This can mainly be seen where radio buttons are present. This fails WCAG 2.2 success
+      |   criterion 4.1.2 Name, Role, Value.
+
+    p.govuk-body
+      |  While navigating with a screen reader, there are incorrect announcements on several of the pages. For example:
       ul.govuk-list.govuk-list--bullet
-        li assistive technologies (for example, screen magnifiers, screen readers and speech recognition tools)
-        li different browsers (IE11, Firefox, Safari, Chrome)
-        li accessibility user groups (for example, people with visual impairments, dyslexia, mobility impairments and learning disabilities)
+        li decorative separator elements are announced by screen readers on the 'candidate profile' page
+
+        li form field labels on the 'job application, quick apply' page are read out in stages
+
+        li hidden words on the 'create a jobseeker account' are announced.
+
+    p.govuk-body This fails WCAG 2.2 success criterion 4.1.2 Name, Role, Value.
+
+    h3.govuk-heading-m Content that’s not within the scope of the accessibility regulations
 
     p.govuk-body
-      | DAC tested:
-      ul.govuk-list.govuk-list--bullet
-        li the hiring staff journey for listing a job on the service, available at #{govuk_link_to(new_publisher_session_url, new_publisher_session_url)}
-        li the jobseeker journey for searching for a teaching job and signing up for a job alert, available at #{govuk_link_to(root_url, root_url)}
+      |  Text does not meet sufficient contrast requirements against the page background. This can be seen
+      |   on the ‘landing page’. This fails WCAG 2.2 success criterion 1.4.3 Contrast (Minimum). This
+      |   image identified is exempt from the success criterion under the logotypes exemption.
 
     p.govuk-body
-      | DAC provided a comprehensive report of how the website performed for the above criteria. All issues raised from this report have been successfully identified and addressed.
+      |  Schools upload documents onto our service to support their job listings. Some documents such as job
+      |   descriptions or person specifications may not be fully accessible. These types of content are
+      |   exempt from accessibility regulations, but we are currently working to make this area of the
+      |   website more accessible.
 
-    p.govuk-body This statement was prepared on 12 September 2019. It was last updated on 9th September 2021.
+    h2.govuk-heading-l Disproportionate burden
+
+    p.govuk-body
+      |  Dragon Naturally Speaking (speech recognition software) can only upload files when using the mouse
+      |   grid feature. This issue is believed to be an ongoing issue with the Dragon Naturally Speaking
+      |   software and further information can be found on the following link:
+      |   #{govuk_link_to("https://github.com/alphagov/reported-bugs/issues/35", "https://github.com/alphagov/reported-bugs/issues/35")}.
+
+    p.govuk-body
+      |  As this is a third-party issue, we are unable to fix this and it is therefore
+      |   #{govuk_link_to("exempt from meeting the accessibility regulations", "http://www.legislation.gov.uk/uksi/2018/952/regulation/4/made")}
+      |   and consequently a #{govuk_link_to("disproportionate burden", "http://www.legislation.gov.uk/uksi/2018/952/regulation/7/made")} within the meaning of the accessibility regulations.
+
+    h2.govuk-heading-l What we’re doing to improve accessibility
+
+    p.govuk-body We will continue to test the accessibility of this website as it develops.
+
+    h2.govuk-heading-l Preparation of this accessibility statement
+
+    p.govuk-body
+      |  This statement was prepared on 24 July 2024. It was last reviewed on 31 July 2024.
+
+    p.govuk-body
+      |   This website was last tested on 25 June 2024. The test was carried out by Zoonou.
+
+    p.govuk-body
+      |   Zoonou used #{govuk_link_to("WCAG-EM", "https://www.w3.org/TR/WCAG-EM/")} to define a representative selection of pages and test approach.

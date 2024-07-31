@@ -19,6 +19,6 @@ RSpec.describe "A visitor to the website can access the support links" do
     visit root_path
     click_on "Accessibility"
 
-    expect(page).to have_content(/Accessibility statement for Teaching Vacancies/i)
+    expect(page).to have_content(/Accessibility statement/i)
   end
 end
