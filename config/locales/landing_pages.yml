@@ -126,6 +126,11 @@ en:
       title: "Other Support Roles"
       heading: "%{count} other support roles"
       meta_description: "Find and apply for support roles in schools on Teaching Vacancies. Apply quickly and easily for full and part time jobs in schools."
+    support-jobs:
+      name: "Support roles"
+      title: "Support Roles"
+      heading: "%{count} support roles"
+      meta_description: "Find and apply for support roles in schools on Teaching Vacancies. Apply quickly and easily for full and part time jobs in schools."
 
     ### Education phases
     nursery-jobs:
