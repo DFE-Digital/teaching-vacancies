@@ -28,6 +28,11 @@ DfE::Analytics.configure do |config|
   #
   config.bigquery_api_json_key = ENV.fetch("BIG_QUERY_API_JSON_KEY", nil)
 
+  # Period while DFE Analytics will be set in maintenance mode and the events won'tbe sent to BigQuery.
+  # Any event generated during this period will be re-enqueued to be sent later.
+  #
+  config.bigquery_maintenance_window = "01-08-2024 18:00..01-08-2024 18:30"
+
   # Passed directly to the retries: option on the BigQuery client
   #
   # config.bigquery_retries = 3
