@@ -3,13 +3,16 @@ name: Accessibility Tests
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 3 * * 0' # Run every Sunday at 3am 
+    - cron: '0 3 * * 0' # Run every Sunday at 3am
 
 jobs:
   pally:
     name: Pa11y accessibility tests
+    environment: qa
     env:
       RAILS_ENV: test
+      HTTP_BASIC_USER: ${{ secrets.HTTP_BASIC_USER }}
+      HTTP_BASIC_PASSWORD: ${{ secrets.HTTP_BASIC_PASSWORD }}
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
@@ -19,16 +22,66 @@ jobs:
         uses: ./.github/actions/prepare-app-env
         with:
           skip-ruby: true
-    
-      - run: npm install
+
+      - name: Install pa11y-ci
+        run: |
+          npm install --global --unsafe-perm pa11y-ci
+          mkdir /tmp/pa11y
+
       - name: Run Pa11y accessibility tests against QA sitemap pages
         run: |
-          npm install -g pa11y-ci
-          pa11y-ci --sitemap https://qa.teaching-vacancies.service.gov.uk/sitemap.xml
+          pa11y-ci --config=.pa11yci \
+                   --sitemap https://$HTTP_BASIC_USER:$HTTP_BASIC_PASSWORD@qa.teaching-vacancies.service.gov.uk/sitemap.xml \
+                   --sitemap-find qa.teaching \
+                   --sitemap-replace $HTTP_BASIC_USER:$HTTP_BASIC_PASSWORD@qa.teaching \
+                   --sitemap-exclude teaching-jobs-in- \
+                   > report.txt
+
+      - name: Report Pa11y accessibility test results
+        run: cat report.txt && ((`cat report.txt | grep sign-in | wc -l`<2)) || exit 1
+
+      - name: Configure AWS credentials
+        if: failure()
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Get secrets from AWS ParameterStore
+        if: failure()
+        uses: dkershner6/aws-ssm-getparameters-action@v2
+        with:
+          parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
+
+      - name: Set environment variables from build output
+        if: failure()
+        run: |
+          echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
+
+      - name: Notify twd_tv_dev channel on Pa11y test failures
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2.3.0
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Accessiblity Tests
+          SLACK_TITLE: Pa11y tests failures
+          SLACK_MESSAGE: |
+            Pa11y accessibility tests failed against QA environment
+            See: <${{ env.LINK_TO_RUN }}|Workflow run>
+          SLACK_WEBHOOK: ${{env.SLACK_WEBHOOK}}
+          SLACK_COLOR: failure
+
   axe:
     name: Axe accessibility tests
+    environment: qa
     env:
       RAILS_ENV: test
+      HTTP_BASIC_USER: ${{ secrets.HTTP_BASIC_USER }}
+      HTTP_BASIC_PASSWORD: ${{ secrets.HTTP_BASIC_PASSWORD }}
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
@@ -39,16 +92,68 @@ jobs:
         with:
           skip-ruby: true
 
-      - run: npm install
+      - name: Install axe-core and sitemap-urls
+        run: npm install -g @axe-core/cli sitemap-urls node-jq
+
+      - name: Get list of URLs to test against from QA sitemap
+        run: |
+          # Gets all urls from sitemap in an array
+          urls=($(curl https://$HTTP_BASIC_USER:$HTTP_BASIC_PASSWORD@qa.teaching-vacancies.service.gov.uk/sitemap.xml | sitemap-urls))
+          # Removes redundant sitemap urls
+          urls=("${urls[@]/*teaching-jobs-in-*}")
+          urls=("${urls[@]/*\-jobs*}")
+          # Delete empty elements
+          for i in ${!urls[@]}; do [[ -z ${urls[i]} ]] && unset urls[i]; done
+          # Transforms URLS to authenticated URLs
+          urls=("${urls[@]/qa\./$HTTP_BASIC_USER\:$HTTP_BASIC_PASSWORD\@qa\.}")
+          echo "URLS=$urls" >> $GITHUB_ENV
+
       - name: Run Axe accessibility tests against QA sitemap pages
         run: |
-          npm install -g @axe-core/cli sitemap-urls
-          # Gets all urls from sitemap in an array
-          urls=($(curl https://qa.teaching-vacancies.service.gov.uk/sitemap.xml | sitemap-urls))
-          # Runs axe against each url from the sitemap
-          axe $(for url in "${urls[@]}"; do echo $url, ; done;) --exit
+          axe $(for url in "${URLS[@]}"; do echo $url, ; done;) --exit
+
+      - name: Configure AWS credentials
+        if: failure()
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Get secrets from AWS ParameterStore
+        if: failure()
+        uses: dkershner6/aws-ssm-getparameters-action@v2
+        with:
+          parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
+
+      - name: Set environment variables from build output
+        if: failure()
+        run: |
+          echo "LINK_TO_RUN=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
+
+      - name: Notify twd_tv_dev channel on Axe test failures
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2.3.0
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Accessiblity Tests
+          SLACK_TITLE: Axe tests failures
+          SLACK_MESSAGE: |
+            Axe accessibility tests failed against QA environment
+            See: <${{ env.LINK_TO_RUN }}|Workflow run>
+          SLACK_WEBHOOK: ${{env.SLACK_WEBHOOK}}
+          SLACK_COLOR: failure
+
   lighthouse:
     name: Lighthouse tests
+    environment: qa
+    env:
+      RAILS_ENV: test
+      HTTP_BASIC_USER: ${{ secrets.HTTP_BASIC_USER }}
+      HTTP_BASIC_PASSWORD: ${{ secrets.HTTP_BASIC_PASSWORD }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -58,11 +163,61 @@ jobs:
         uses: ./.github/actions/prepare-app-env
         with:
           skip-ruby: true
-      - run: npm install
-      - name: run Lighthouse Performance, Accessibility, Best Practices, SEO, and PWA tests
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          role-to-assume: Deployments
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+
+      - name: Get secrets from AWS ParameterStore
+        uses: dkershner6/aws-ssm-getparameters-action@v2
+        with:
+          parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
+
+      - name: Set lighthouse config values
         run: |
-          npm install -g @lhci/cli
-          lhci autorun \
-            --collect.url=https://qa.teaching-vacancies.service.gov.uk \
-            --collect.url=https://qa.teaching-vacancies.service.gov.uk/jobs \
-            --collect.url=https://qa.teaching-vacancies.service.gov.uk/schools \
+          encoded_auth=$(echo -n $HTTP_BASIC_USER:$HTTP_BASIC_PASSWORD | base64)
+          sed -i "s/auth_token/${encoded_auth}/g" .lighthouserc.json
+
+      - name: Set environment variables for testing URLs
+        run: |
+          echo "INDEX_URL=https://qa.teaching-vacancies.service.gov.uk/" >> $GITHUB_ENV
+          echo "JOBS_URL=https://qa.teaching-vacancies.service.gov.uk/jobs" >> $GITHUB_ENV
+          echo "SCHOOLS_URL=https://qa.teaching-vacancies.service.gov.uk/schools" >> $GITHUB_ENV
+
+      - name: Audit URLs using Lighthouse
+        id: LHCIAction
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            $INDEX_URL
+            $JOBS_URL
+            $SCHOOLS_URL
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+          runs: 3
+
+      - name: Set environment variables for test results
+        run: |
+          echo "INDEX_RESULT=$(echo '${{steps.LHCIAction.outputs.links}}' | jq 'nth(0; .[])' | tr -d '"')" >> $GITHUB_ENV
+          echo "JOBS_RESULT=$(echo '${{steps.LHCIAction.outputs.links}}' | jq 'nth(1; .[])' | tr -d '"')" >> $GITHUB_ENV
+          echo "SCHOOLS_RESULT=$(echo '${{steps.LHCIAction.outputs.links}}' | jq 'nth(2; .[])' | tr -d '"')" >> $GITHUB_ENV
+
+      - name: Notify twd_tv_dev channel on Lighthouse results
+        uses: rtCamp/action-slack-notify@v2.3.0
+        env:
+          SLACK_CHANNEL: twd_tv_dev
+          SLACK_USERNAME: CI Accessiblity Tests
+          SLACK_TITLE: LightHouse tests results
+          SLACK_MESSAGE: |
+            LightHouse accessibility and performance tests ran against the  QA environment
+            <${{ env.INDEX_RESULT }}|Index page results>
+            <${{ env.JOBS_RESULT }}|Jobs page results>
+            <${{ env.SCHOOLS_RESULT }}|Schools page results>
+          SLACK_WEBHOOK: ${{ env.SLACK_WEBHOOK }}
+          SLACK_COLOR: good

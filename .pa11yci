@@ -1,0 +1,11 @@
+
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "timeout": 180000,
+    "useIncognitoBrowserContext": false,
+    "actions": [
+      "screen capture /tmp/pa11y/screenshot.png"
+    ]
+  }
+}
