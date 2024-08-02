@@ -3,6 +3,7 @@ en:
     footer: >-
       %{home_page_link} is a free job-listing service from the Department for Education. It helps schools to save money
       on recruitment and you to take the next step in your career.
+    jobseeker_footer: "%{home_page_link} is a free job-listing service from the Department for Education. It helps you find the right jobs in schools and take the next step in your career."
 
   admins:
   jobseekers:
@@ -97,17 +98,18 @@ en:
           other: "%{school_name} is hiring for a %{job_title} - and %{count_minus_one} other new job(s)"
         summary:
           daily:
-            one: A new job matching your search criteria was listed in the last day
-            other: "%{count} new jobs matching your search criteria were listed in the last day"
+            one: You have a new job alert
+            other: "You have %{count} new job alerts"
           weekly:
-            one: A new job matching your search criteria was listed in the last week
-            other: "%{count} new jobs matching your search criteria were listed in the last week"
-        title: This job alert
+            one: You have a new job alert
+            other: "You have %{count} new job alerts"
+        title: Your job alert search
         quick_apply: You can use quick apply for this job which allows you to apply simply and quickly using your profile.
         unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         unsubscribe_link_text: Unsubscribe here
         working_pattern: "Working pattern: %{working_pattern}"
-
+        show_job_link: Look at the full job advert on Teaching Vacancies
+        edit_link_text: Change your job alert search on Teaching Vacancies
     job_application_mailer:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}
