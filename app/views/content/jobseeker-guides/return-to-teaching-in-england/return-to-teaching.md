@@ -50,7 +50,7 @@ You can chat by phone, text or email, as little or as often as you need.
 
 [Read a transcript of the video](https://teaching-vacancies.campaign.gov.uk/what-does-a-return-to-teaching-adviser-do-video-transcript)
 
-If you qualified as a teacher outside the UK, you must have qualified teacher status (QTS) to get an adviser and will be asked to provide your [Teacher Reference Number.](https://www.gov.uk/guidance/teacher-reference-number-trn)
+If you qualified as a teacher outside the UK, you must have qualified teacher status (QTS) to get an adviser and will be asked to provide your [Teacher Reference Number](https://www.gov.uk/guidance/teacher-reference-number-trn).
 
 [Call us on 0800 389 2500 to check if you’re eligible for an adviser](tel:08003892500).
 
