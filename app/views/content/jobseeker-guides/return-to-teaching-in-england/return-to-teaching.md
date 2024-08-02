@@ -72,7 +72,7 @@ Find out how to:
   * [approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-approach-a-teaching-job-interview)
   * [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/prepare-for-a-teaching-job-interview-lesson)
 
-When you’re ready, you can search for a job on [Teaching Vacancies](https://teaching-vacancies.service.gov.uk/).
+When you’re ready, you can [search for a job](https://teaching-vacancies.service.gov.uk/).
 
 ## Refresh your knowledge after a break from teaching
 
