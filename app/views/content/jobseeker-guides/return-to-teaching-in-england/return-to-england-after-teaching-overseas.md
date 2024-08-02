@@ -43,6 +43,6 @@ Get ready to apply by:
 * [getting information about schools](https://get-information-schools.service.gov.uk/)
 * [researching family visas for non-UK spouses and children](https://www.gov.uk/uk-family-visa)
 
-## Find a teaching job in England
+
 
 <a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
