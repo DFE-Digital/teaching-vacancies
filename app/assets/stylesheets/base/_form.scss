@@ -17,3 +17,8 @@
   margin-right: 5px;
   margin-top: 10px;
 }
+
+
+.govuk-summary-list__row--no-actions::after{
+  content: none;
+}
