@@ -1,6 +1,6 @@
 return unless defined? SemanticLogger
 
-require_dependency Rails.root.join("lib/custom_log_formatter")
+require_dependency Rails.root.join("app/services/custom_log_formatter")
 
 unless Rails.env.local?
   SemanticLogger.add_appender(
