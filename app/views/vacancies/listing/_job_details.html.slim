@@ -98,7 +98,6 @@ section#job-details class="govuk-!-margin-bottom-5"
       = govuk_button_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(vacancy.id)
       .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
 
-
     - elsif vacancy.receive_applications == "website"
       p.govuk-body = t("jobs.apply_via_website")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
