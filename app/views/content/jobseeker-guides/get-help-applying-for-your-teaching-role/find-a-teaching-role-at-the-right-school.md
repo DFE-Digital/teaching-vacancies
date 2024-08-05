@@ -12,7 +12,7 @@ card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teachin
 
 When searching for your perfect teaching role you'll need to think about the location, size and setting of the school you'd like to work in. 
 Teaching Vacancies is here to make it easier to work out what you’re looking for. 
-You can find out more about schools you’re interested in on the [Get Information about Schools service.](https://get-information-schools.service.gov.uk/)
+You can find out more about schools you’re interested in on the [Get Information about Schools service](https://get-information-schools.service.gov.uk/).
 
 The time you spend teaching is only one aspect of life in a school. 
 The wider school culture and community will have a big impact on your experience. 
@@ -42,6 +42,6 @@ Have a look at the [Education staff wellbeing charter](https://www.gov.uk/guidan
 The charter is a shared commitment to protect, promote and enhance the wellbeing of school staff. 
 Schools will approach wellbeing differently, so even if they aren’t signed up to the charter, it’s a good idea to ask how staff are supported.
 
-## Search for roles
-<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles on Teaching Vacancies now.</a>
+
+<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
 

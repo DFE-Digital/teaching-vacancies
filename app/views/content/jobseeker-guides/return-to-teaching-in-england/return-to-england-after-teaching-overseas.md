@@ -12,7 +12,7 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/retu
 Get support if you’re a UK citizen thinking about returning from overseas to teach in England. 
 The skills, experience and perspective you’ve gained outside the UK are highly valued by schools and headteachers.
 
-If you’re a non-UK citizen, read our [guidance for international trainees and teachers.](https://getintoteaching.education.gov.uk/non-uk-teachers)
+If you’re a non-UK citizen, read our [guidance for international trainees and teachers](https://getintoteaching.education.gov.uk/non-uk-teachers).
 
 ## Check your qualifications
 Before you start looking for teaching jobs, check which qualifications you need to teach in England.
@@ -22,10 +22,10 @@ Even where QTS is not a legal requirement, many schools use it to assess the qua
 
 ### If you trained in the UK
 If you completed your teacher training in England, you should already have QTS. 
-You can check this with the [Teaching Regulation Agency.](https://teacherservices.education.gov.uk/SelfService/Login)
+You can check this with the [Teaching Regulation Agency](https://teacherservices.education.gov.uk/SelfService/Login).
 
 ### If you do not have QTS
-If you trained as a teacher or have gained teaching experience outside the UK, you can [learn more about the best route to QTS for your circumstances.](https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk)
+If you trained as a teacher or have gained teaching experience outside the UK, you can [learn more about the best route to QTS for your circumstances](https://www.gov.uk/government/publications/apply-for-qualified-teacher-status-qts-if-you-teach-outside-the-uk/routes-to-qualified-teacher-status-qts-for-teachers-and-those-with-teaching-experience-outside-the-uk).
 
 ## Get help and support
 Find out:
@@ -43,6 +43,6 @@ Get ready to apply by:
 * [getting information about schools](https://get-information-schools.service.gov.uk/)
 * [researching family visas for non-UK spouses and children](https://www.gov.uk/uk-family-visa)
 
-## Find a teaching job in England
 
-<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles on Teaching Vacancies now.</a>
+
+<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles</a>

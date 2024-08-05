@@ -11,7 +11,7 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/retu
 
 If you’re thinking about returning to teaching, or if you’re qualified to teach but have never taught in a state school in England, support is available.
 
-If you trained to teach in the UK and are a UK citizen currently working abroad, find out about [returning to England to teach.](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas)
+If you trained to teach in the UK and are a UK citizen currently working abroad, find out about [returning to England to teach](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas).
 
 ## Get back into teaching
 Returning to teaching might be easier than you think.
@@ -36,7 +36,7 @@ The Department for Education (DfE) has been taking action to help schools suppor
 Teaching is a diverse and inclusive profession with many networks that can help you in your teaching career, including [WomenEd](https://womened.com/), [BAMEed](https://www.bameednetwork.com/), [LGBTed](https://lgbted.uk/) and [DisabilityEd](https://twitter.com/disability_ed).
 
 ## Get a return to teaching adviser
-If you have [qualified teacher status (QTS)](https://www.gov.uk/guidance/qualified-teacher-status-qts), you could be eligible for a [return to teaching adviser.](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers)
+If you have [qualified teacher status (QTS)](https://www.gov.uk/guidance/qualified-teacher-status-qts), you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
 
 Advisers can give you free one-to-one support with:
 
@@ -50,16 +50,16 @@ You can chat by phone, text or email, as little or as often as you need.
 
 [Read a transcript of the video](https://teaching-vacancies.campaign.gov.uk/what-does-a-return-to-teaching-adviser-do-video-transcript)
 
-If you qualified as a teacher outside the UK, you must have qualified teacher status (QTS) to get an adviser and will be asked to provide your [Teacher Reference Number.](https://www.gov.uk/guidance/teacher-reference-number-trn)
+If you qualified as a teacher outside the UK, you must have qualified teacher status (QTS) to get an adviser and will be asked to provide your [Teacher Reference Number](https://www.gov.uk/guidance/teacher-reference-number-trn).
 
-[Call us on 0800 389 2500 to check if you’re eligible for an adviser.](tel:08003892500)
+[Call us on 0800 389 2500 to check if you’re eligible for an adviser](tel:08003892500).
 
-[Get a return to teaching adviser.](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers)
+[Get a return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
 
 ## Find your perfect teaching job
 Every school has its own culture and values so it’s useful to consider what’s important to you when searching for a teaching job.
 
-You can [find out more about how to find a teaching role at the right school.](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/find-a-teaching-role-at-the-right-school)
+You can [find out more about how to find a teaching role at the right school](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/find-a-teaching-role-at-the-right-school).
 
 ## Get help applying for a teaching job
 
@@ -72,7 +72,7 @@ Find out how to:
   * [approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-approach-a-teaching-job-interview)
   * [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/prepare-for-a-teaching-job-interview-lesson)
 
-When you’re ready, you can search for a job on [Teaching Vacancies.](https://teaching-vacancies.service.gov.uk/)
+When you’re ready, you can [search for a job](https://teaching-vacancies.service.gov.uk/).
 
 ## Refresh your knowledge after a break from teaching
 
