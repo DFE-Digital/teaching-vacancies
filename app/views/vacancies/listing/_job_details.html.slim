@@ -90,44 +90,57 @@ section#job-details class="govuk-!-margin-bottom-5"
   - if vacancy.expires_at.future?
     h3.govuk-heading-m = t("jobseekers.job_applications.applying_for_the_job_heading")
 
-    .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
     - inset_text = t("vacancies.#{vacancy.visa_sponsorship_available ? 'sponsorship_available' : 'sponsorship_unavailable'}")
     - if vacancy.enable_job_applications?
       p.govuk-body = t("jobseekers.job_applications.applying_for_the_job_paragraph")
+      p.govuk-body = t("jobseekers.job_applications.no_cvs")
       = govuk_inset_text text: inset_text
       = govuk_button_link_to t("jobseekers.job_applications.apply"), new_jobseekers_job_job_application_path(vacancy.id)
+      .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
+
 
     - elsif vacancy.receive_applications == "website"
       p.govuk-body = t("jobs.apply_via_website")
+      p.govuk-body = t("jobseekers.job_applications.no_cvs")
       = govuk_inset_text text: inset_text
       = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
+      .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
 
     - elsif vacancy.receive_applications == "email"
       p.govuk-body = t("jobs.apply_via_email_html", email: application_email_link(vacancy))
+      p.govuk-body = t("jobseekers.job_applications.no_cvs")
       = govuk_inset_text text: inset_text
       = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
+      .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
 
     - else
       - if vacancy.how_to_apply.present?
         p.govuk-body = vacancy.how_to_apply
 
       - if vacancy.external?
-        h4.govuk-heading-m = t("publishers.vacancies.steps.applying_for_the_job")
         p = t("jobs.external.notice")
+        p.govuk-body = t("jobseekers.job_applications.no_cvs")
         = govuk_inset_text text: inset_text
         = external_advert_link vacancy, class: "govuk-!-margin-bottom-5"
+        .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
 
       - if vacancy.application_link.present? && vacancy.application_form.present?
+        p.govuk-body = t("jobseekers.job_applications.no_cvs")
         = govuk_inset_text text: inset_text
         = apply_link(vacancy, class: "govuk-button--secondary govuk-!-margin-bottom-5")
         br
         = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id), class: "govuk-button--secondary"
+        .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
       - elsif vacancy.application_link.present?
+        p.govuk-body = t("jobseekers.job_applications.no_cvs")
         = govuk_inset_text text: inset_text
         = apply_link(vacancy, class: "govuk-!-margin-bottom-5")
+        .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
       - elsif vacancy.application_form.present?
+        p.govuk-body = t("jobseekers.job_applications.no_cvs")
         = govuk_inset_text text: inset_text
         = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
+        .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
   - else
     = govuk_inset_text text: t("jobs.expired_listing.notification"), classes: "govuk-!-font-weight-bold"
 

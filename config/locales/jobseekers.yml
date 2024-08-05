@@ -77,6 +77,7 @@ en:
       apply: Apply for this job
       applying_for_the_job_heading: Applying for the job
       applying_for_the_job_paragraph: Please complete the online application.
+      no_cvs: CVs are not accepted.
       banner_links:
         apply: Apply for this job
         draft: Started - continue application
