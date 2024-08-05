@@ -130,7 +130,7 @@ module NotifyViewsHelper
   end
 
   def edit_job_alert_link(subscription)
-    url = edit_subscription_url(subscription)
+    url = edit_subscription_url(subscription.token)
     notify_link(url, t(".edit_link_text"))
   end
 

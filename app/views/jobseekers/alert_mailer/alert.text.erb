@@ -15,8 +15,8 @@
   <%= "- #{filter.humanize}: #{value}" %>
 <% end %>
 
-<%- if jobseeker_has_profile? %>
-  
+<%- if jobseeker %>
+  <%= edit_job_alert_link(subscription) %>
 <% end %>
 
 ---
