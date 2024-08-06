@@ -108,7 +108,8 @@ en:
         unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         unsubscribe_link_text: Unsubscribe here
         working_pattern: "Working pattern: %{working_pattern}"
-        show_job_link: Look at the full job advert on Teaching Vacancies
+        show_job_link: "View %{job_title} job"
+        show_job_link_with_organisation: "View %{job_title} at %{organisation_name} job"
         edit_link_text: Change your job alert search on Teaching Vacancies
     job_application_mailer:
       shared: &job_application_mailer_shared
