@@ -261,14 +261,14 @@ en:
         delete: Delete
 
     additional_documents: Additional documents
-    apply: More on how to apply
+    apply: How to apply
     application_link: Link to website
     application_email: Email address to receive applications
     application_email_subject: '%{job} job application'
     application_email_body: Regarding the job at %{url}
     application_form: Application form
     apply_via_email_html: Please download the application form using the link below, and once completed send to %{email}
-    apply_via_website: Apply for the job by following the link below
+    apply_via_website: Apply for the job by following the link below.
     contact_email: Email address
     contact_email_subject: '%{job} job enquiry'
     contact_email_body: Regarding the job at %{url}
