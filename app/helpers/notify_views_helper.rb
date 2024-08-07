@@ -81,7 +81,11 @@ module NotifyViewsHelper
 
   def show_link(vacancy)
     url = job_url(vacancy, **utm_params)
-    notify_link(url, vacancy.job_title)
+    if vacancy.organisations.many?
+      notify_link(url, t("jobseekers.alert_mailer.alert.show_job_link", job_title: vacancy.job_title))
+    else
+      notify_link(url, t("jobseekers.alert_mailer.alert.show_job_link_with_organisation", job_title: vacancy.job_title, organisation_name: vacancy.organisations.first.name))
+    end
   end
 
   def sign_in_link
@@ -118,6 +122,20 @@ module NotifyViewsHelper
     else
       address_join([notify_link(url, organisation.name), organisation.town, organisation.county, organisation.postcode]).html_safe
     end
+  end
+
+  def vacancy_organisation_and_location(vacancy)
+    organisation = vacancy.organisation
+    if vacancy.organisations.many?
+      "#{t('organisations.job_location_summary.at_multiple_locations')}, #{organisation.name}".html_safe
+    else
+      address_join([organisation.town, organisation.county, organisation.postcode])
+    end
+  end
+
+  def edit_job_alert_link(subscription)
+    url = edit_subscription_url(subscription.token)
+    notify_link(url, t(".edit_link_text"))
   end
 
   def view_applications_for_link(vacancy)

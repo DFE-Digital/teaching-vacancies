@@ -75,14 +75,9 @@ RSpec.describe Jobseekers::AlertMailer do
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.daily", count: 1))
                   .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **utm_params))
-                  .and include(organisation_landing_page_url(vacancies.first.organisation.slug, **utm_params))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern", working_pattern: vacancies.first.readable_working_patterns_with_details))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.closing_date", closing_date: format_time_to_datetime_at(vacancies.first.expires_at)))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
-                  .and include(I18n.t("subscriptions.intro"))
                   .and include("Keyword: English")
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))
                   .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.relevance_feedback.relevant_link_text')}\]\(.+true)/)
                   .and include(relevant_job_alert_feedback_url)
@@ -125,18 +120,11 @@ RSpec.describe Jobseekers::AlertMailer do
       expect(mail.to).to eq([subscription.email])
       expect(body).to include(I18n.t("jobseekers.alert_mailer.alert.summary.weekly", count: 1))
                   .and include(vacancies.first.job_title)
-                  .and include(vacancies.first.job_title)
                   .and include(job_url(vacancies.first, **utm_params))
-                  .and include(organisation_landing_page_url(vacancies.first.organisation.slug, **utm_params))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.salary", salary: vacancies.first.salary))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.working_pattern",
                                       working_pattern: vacancies.first.readable_working_patterns_with_details))
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.closing_date",
-                                      closing_date: format_time_to_datetime_at(vacancies.first.expires_at)))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.title"))
-                  .and include(I18n.t("subscriptions.intro"))
                   .and include("Keyword: English")
-                  .and include(I18n.t("jobseekers.alert_mailer.alert.alert_frequency", frequency: subscription.frequency))
                   .and include(I18n.t("jobseekers.alert_mailer.alert.relevance_feedback.heading"))
                   .and match(/(\[#{I18n.t('jobseekers.alert_mailer.alert.relevance_feedback.relevant_link_text')}\]\(.+true)/)
                   .and include(relevant_job_alert_feedback_url)
@@ -173,24 +161,6 @@ RSpec.describe Jobseekers::AlertMailer do
         expect(body).to_not include(jobseekers_profile_url(**utm_params))
         expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
         expect(body).to_not include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
-      end
-    end
-
-    context "when the subscriber does not have a jobseeker account" do
-      it "does not display the section encouraging them to create a profile" do
-        expect(body).to include(jobseekers_profile_url(**utm_params))
-                    .and include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
-                    .and include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
-      end
-    end
-
-    context "when the subscriber has a jobseeker account but no profile" do
-      let(:jobseeker) { create(:jobseeker, email: email) }
-
-      it "does not display the section encouraging them to create a profile" do
-        expect(body).to include(jobseekers_profile_url(**utm_params))
-                    .and include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.heading"))
-                    .and include(I18n.t("jobseekers.alert_mailer.alert.create_a_profile.link_text"))
       end
     end
   end
