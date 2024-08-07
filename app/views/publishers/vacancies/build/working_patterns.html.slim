@@ -11,7 +11,7 @@
                                        :to_s,
                                        legend: -> { tag.h2(t("publishers.vacancies.steps.working_patterns"), class: "govuk-heading-l") },
                                        hint: -> { t("helpers.hint.publishers_job_listing_working_patterns_form.working_patterns") })
-      = f.govuk_radio_buttons_fieldset :is_job_share, inline: true, legend: { text: "Can this role be done as a job share?" }, hint: { text: "For example, can this role be filled by two teacher who share responsibility for the class?" } do
+      = f.govuk_radio_buttons_fieldset :is_job_share, inline: true, legend: { text: "Can this role be done as a job share?" }, hint: { text: "For example, can this role be filled by 2 teachers who share responsibility for the class?" } do
             = f.govuk_radio_button :is_job_share, true, label: { text: "Yes" }
             = f.govuk_radio_button :is_job_share, false, label: { text: "No" }
       = f.govuk_text_area(:working_patterns_details,
