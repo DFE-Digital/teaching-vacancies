@@ -12,7 +12,7 @@
 # <%= t(".title") %>
 
 <%- subscription.filtered_search_criteria.each_pair do |filter, value| %>
-  <%= "- #{filter.humanize}: #{value}" %>
+  <%= "#{filter.humanize}: #{value}" %>
 <% end %>
 
 <%- if jobseeker %>
