@@ -332,7 +332,7 @@ en:
       new:
         get_account:
           heading: Get a Teaching Vacancies account
-          body: Create a DfE Sign-in account or log in to your existing one, the select 'Request access to a service' and choose Teaching Vacancies.
+          body: Create a DfE Sign-in account or log in to your existing one, then select 'Request access to a service' and choose Teaching Vacancies.
         list_role_for_trust_or_la:
           heading: List a role at trust or local authority level
           body: To list a role across multiple schools or at trust or local authority level, you need to make sure you have the right level of access. Continue to DfE Sign-in and select 'Request access to an organisation'.
