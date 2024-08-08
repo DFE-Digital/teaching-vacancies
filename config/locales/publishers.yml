@@ -330,6 +330,12 @@ en:
       create:
         not_authorised: You are not authorised to log in
       new:
+        get_account:
+          heading: Get a Teaching Vacancies account
+          body: Create a DfE Sign-in account or log in to your existing one, then select 'Request access to a service' and choose Teaching Vacancies.
+        list_role_for_trust_or_la:
+          heading: List a role at trust or local authority level
+          body: To list a role across multiple schools or at trust or local authority level, you need to make sure you have the right level of access. Continue to DfE Sign-in and select 'Request access to an organisation'.
         no_account:
           account_request_html: If you don't yet have access to Teaching Vacancies you can %{link}
           account_request_link_text: request an account
@@ -377,6 +383,9 @@ en:
           after: Deadline passed
           before: Application deadline
       build:
+        multiple_schools_advice_banner:
+          heading: Sign-in as your trust or local authority to advertise a job across multiple schools or at a trust or local authority level
+          link_text: Find out how to request organisational access
         about_the_role:
           step_title: About the role
         application_link:

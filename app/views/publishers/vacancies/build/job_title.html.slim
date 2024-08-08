@@ -1,4 +1,11 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
+- unless current_organisation.trust_or_la?
+  .govuk-grid-row
+      .govuk-grid-column-full
+        = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
+          - banner.with_heading(text: t("publishers.vacancies.build.multiple_schools_advice_banner.heading"))
+          p.govuk-body = govuk_link_to(t("publishers.vacancies.build.multiple_schools_advice_banner.link_text"), "/get-help-hiring/how-to-setup-your-account/how-to-request-organisation-access")
+end
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
