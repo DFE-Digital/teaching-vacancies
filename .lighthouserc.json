@@ -1,0 +1,23 @@
+{
+  "ci": {
+    "collect": {
+      "settings": {
+        "extraHeaders": {
+          "Authorization": "Basic auth_token"
+        }
+      }
+    },
+    "assert": {
+
+    },
+    "upload": {
+
+    },
+    "server": {
+
+    },
+    "wizard": {
+
+    }
+  }
+}
