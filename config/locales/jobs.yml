@@ -187,6 +187,7 @@ en:
     school_offer:
       jobseeker: What the school offers its staff
       publisher: What does your school offer?
+      hint: Provide details about what your school can offer staff, for example, employee benefits, flexible working opportunities or professional development.
     skills_and_experience:
       jobseeker: What skills and experience we're looking for
       publisher: What skills and experience are you looking for?

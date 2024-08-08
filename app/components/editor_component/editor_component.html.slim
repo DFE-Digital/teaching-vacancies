@@ -3,7 +3,10 @@
     label class="#{label_classes}" data-action="click->editor#focus" for="#{@field_name}-field" id=@label[:id]
       = @label[:text]
     .govuk-hint id="#{@field_name}-hint"
-      = @hint.presence || "You can copy and paste bullet points into the text box."
+      - if @hint
+        = @hint.presence
+        p
+      = "You can copy and paste bullet points into the text box."
     .editor-component__toolbar data-editor-target="toolbar"
 
   .editor-component__form-input data-editor-target="formInput"
