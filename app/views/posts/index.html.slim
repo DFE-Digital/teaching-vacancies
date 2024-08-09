@@ -6,8 +6,10 @@
                                      params[:section].titleize.capitalize => "" }
 
 .govuk-grid-row
-  h1.govuk-heading-xl = t(".#{params[:section]}.title")
-  p.govuk-body = t(".#{params[:section]}.description")
+  .govuk-grid-column-full
+    h2.govuk-heading-xl = t(".#{params[:section]}.title")
+    p.govuk-body = t(".#{params[:section]}.description")
+.govuk-grid-row
   - @subcategories.each do |subcategory|
     .govuk-grid-column-one-third
       .hf-card
