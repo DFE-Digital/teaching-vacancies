@@ -4,7 +4,7 @@
   = govuk_back_link text: t("buttons.back"), href: organisation_job_build_path(vacancy.id, step_process.previous_step)
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
+  .govuk-grid-column-full
     span.govuk-caption-l = t(".caption")
     h1.govuk-heading-l = t(".heading", status: (vacancy.publish_on&.future? ? "schedule" : "publish"))
 
