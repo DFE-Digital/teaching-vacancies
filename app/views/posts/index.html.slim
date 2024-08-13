@@ -9,11 +9,10 @@
   .govuk-grid-column-full
     h1.govuk-heading-xl = t(".#{params[:section]}.title")
     p.govuk-body = t(".#{params[:section]}.description")
-.govuk-grid-row
+.dfe-grid-container
   - @subcategories.each do |subcategory|
-    .govuk-grid-column-one-third
-      .hf-card
-        .hf-card-container
-          img src=image_path(subcategory.card_image) alt=subcategory.title class="hf-card-image"
-          .hf-card-details
-            .govuk-heading-m = govuk_link_to(subcategory.title, subcategory_path(section: params[:section], subcategory: subcategory.post_name))
+    .dfe-card
+      img src=image_path(subcategory.card_image) alt=subcategory.title class="hf-card-image"
+      .dfe-card-container
+        h3.govuk-heading-m
+          .govuk-heading-m = govuk_link_to(subcategory.title, subcategory_path(section: params[:section], subcategory: subcategory.post_name))

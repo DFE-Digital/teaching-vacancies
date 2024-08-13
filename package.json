@@ -18,6 +18,7 @@
     "axios": "^1.7.3",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.38.0",
+    "dfe-frontend": "^2.0.1",
     "dompurify": "^3.1.6",
     "govuk-frontend": "^5.4.1",
     "leaflet": "^1.9.4",
