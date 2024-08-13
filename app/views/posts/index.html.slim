@@ -7,7 +7,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-full
-    h2.govuk-heading-xl = t(".#{params[:section]}.title")
+    h1.govuk-heading-xl = t(".#{params[:section]}.title")
     p.govuk-body = t(".#{params[:section]}.description")
 .govuk-grid-row
   - @subcategories.each do |subcategory|
