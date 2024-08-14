@@ -14,5 +14,5 @@
     .dfe-card
       img src=image_path(subcategory.card_image) alt=subcategory.title class="hf-card-image"
       .dfe-card-container
-        h3.govuk-heading-m
+        .govuk-heading-m
           .govuk-heading-m = govuk_link_to(subcategory.title, subcategory_path(section: params[:section], subcategory: subcategory.post_name))
