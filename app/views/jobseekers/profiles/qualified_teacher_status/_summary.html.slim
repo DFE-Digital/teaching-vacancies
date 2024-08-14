@@ -9,3 +9,13 @@
       - row.with_key text: t(".year_title")
       - row.with_value text: profile.qualified_teacher_status_year
       - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "year QTS awarded")
+
+  - summary_list.with_row do |row|
+    - row.with_key text: t(".trn_title")
+    - row.with_value text: profile.teacher_reference_number
+    - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "teacher reference number")
+  
+  - summary_list.with_row do |row|
+    - row.with_key text: t(".completed_statutory_induction_title")
+    - row.with_value text: I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.#{profile.statutory_induction_complete}")
+    - row.with_action(text: t("buttons.change"), href: edit_jobseekers_profile_qualified_teacher_status_path, visually_hidden_text: "statutory induction completion")
