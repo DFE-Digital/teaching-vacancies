@@ -9,7 +9,7 @@ module Jobseekers
                sendco administration_hr_data_and_finance catering_cleaning_and_site_management it_support
                pastoral_health_and_welfare other_leadership other_support].freeze
     PHASES = %i[nursery primary middle secondary through].freeze
-    WORKING_PATTERNS = %i[full_time part_time flexible job_share term_time].freeze
+    WORKING_PATTERNS = %i[full_time part_time job_share].freeze
 
     def self.from_record(record)
       new(
