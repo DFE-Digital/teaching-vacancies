@@ -34,6 +34,8 @@ class JobseekerProfile < ApplicationRecord
 
   enum qualified_teacher_status: { yes: 0, no: 1, on_track: 2, non_teacher: 3 }
 
+  has_encrypted :teacher_reference_number
+
   validates :jobseeker, uniqueness: true
 
   def self.copy_attributes(record, previous_application)
