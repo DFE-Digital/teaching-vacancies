@@ -7,7 +7,7 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas.jpg"
 ---
 
-![A teacher smiling stood infront of a classroom full of students during a lesson](/content-assets/jobseeker-guides/DFE_Southfeilds_Room-A360_10445_Stephen-Jedge-1-800x300.jpg)
+![A teacher talking at the front of a classroom full of students during a lesson](/content-assets/jobseeker-guides/return-to-england-after-teaching-overseas-800x300.jpg)
 
 Get support if you’re a UK citizen thinking about returning from overseas to teach in England. 
 The skills, experience and perspective you’ve gained outside the UK are highly valued by schools and headteachers.

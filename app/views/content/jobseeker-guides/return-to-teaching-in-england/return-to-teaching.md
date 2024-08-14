@@ -7,7 +7,7 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-teaching.jpg"
 ---
 
-![A teacher talking to a pupil at a desk.](/content-assets/jobseeker-guides/return_to_teaching_cropped_4978-800x300.jpg)
+![A teacher talking to a pupil at a desk.](/content-assets/jobseeker-guides/return-to-teaching-800x300.jpg)
 
 If you’re thinking about returning to teaching, or if you’re qualified to teach but have never taught in a state school in England, support is available.
 
