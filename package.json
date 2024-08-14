@@ -12,10 +12,10 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@sentry/browser": "8.24.0",
+    "@sentry/browser": "8.26.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.0",
-    "axios": "^1.7.3",
+    "axios": "^1.7.4",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.38.0",
     "dfe-frontend": "^2.0.1",
