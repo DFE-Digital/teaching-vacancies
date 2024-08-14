@@ -1,3 +1,7 @@
+.govuk-width-container {
+  @include govuk-width-container;
+}
+
 p {
   @extend .govuk-body;
 }
