@@ -292,6 +292,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_05_135248) do
     t.string "qualified_teacher_status_year"
     t.boolean "active", default: false, null: false
     t.boolean "requested_hidden_profile"
+    t.text "teacher_reference_number_ciphertext"
+    t.string "statutory_induction_complete"
     t.index ["jobseeker_id"], name: "index_jobseeker_profiles_jobseeker_id", unique: true
   end
 
