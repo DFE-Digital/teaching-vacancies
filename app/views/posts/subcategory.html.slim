@@ -14,7 +14,7 @@
 .dfe-grid-container
   - @posts.sort.each do |post|
     .dfe-card
-      img src=image_path(post.card_image) alt=post.title class="hf-card-image"
+      img src=image_path(post.card_image) alt="" class="hf-card-image"
       .dfe-card-container
         .govuk-heading-m
           .govuk-heading-m = govuk_link_to(post.title, post_path(section: post.section, subcategory: post.subcategory, post_name: post.post_name))
