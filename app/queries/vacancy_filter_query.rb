@@ -112,7 +112,7 @@ class VacancyFilterQuery < ApplicationQuery
       built_scope = built_scope.where(is_job_share: true)
     end
 
-    built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
+    built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
 
     built_scope
   end
