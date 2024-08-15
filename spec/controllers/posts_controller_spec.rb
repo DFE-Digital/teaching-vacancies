@@ -55,6 +55,7 @@ RSpec.describe PostsController do
           %w[
             return-to-teaching
             return-to-england-after-teaching-overseas
+            what-does-a-return-to-teaching-adviser-do-video-transcript
           ]
         end
 
