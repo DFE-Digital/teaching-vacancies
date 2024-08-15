@@ -11,7 +11,7 @@ My role as a return to teaching adviser is to offer one-to-one personal support 
 
 I’m effectively a mentor to the candidates that I support. I offer impartial advice on gaining classroom experience, keeping up to date with the national curriculum and also keeping up to speed with educational developments. 
 
-I can also offer you support with searching for job vacancies, writing your personal statement and completing your application form, preparing for your teaching interview and securing that all-important role.
+I can also offer you support with searching for job vacancies, writing your personal statement and completing your application form, preparing for your teaching interview and securing that all important role.
 
 ## What experience do return to teaching advisers have? 
 
@@ -29,7 +29,7 @@ You need knowledge of the teaching standards and how you can document this infor
 
 So you might be thinking that you don’t have the confidence to return to teaching, but I’m here to tell you that you definitely can. 
 
-Once you gain some valuable classroom experience and you get back into the swing of things, you’ll realise that this is something you can really do and there’s nothing better for me as a Return to Teaching Adviser when you secure a role. 
+Once you gain some valuable classroom experience and you get back into the swing of things, you’ll realise that this is something you can really do and there’s nothing better for me as a return to teaching adviser when you secure a role. 
 
 Teaching. Every Lesson Shapes a Life.
 
