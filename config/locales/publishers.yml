@@ -131,11 +131,9 @@ en:
           sendco: SENDCo (special educational needs and disabilities coordinator)
         schools: Locations
         working_pattern_options:
-          flexible: Flexible
           full_time: Full time
           job_share: Job share
           part_time: Part time
-          term_time: Term time
         right_to_work_in_uk_options:
           "true": "Does not need visa sponsorship"
           "false": "Needs visa sponsorship"

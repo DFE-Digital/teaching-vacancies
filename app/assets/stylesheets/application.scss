@@ -4,6 +4,7 @@ $govuk-assets-path: "/";
 
 // External dependencioes
 @import 'accessible-autocomplete/dist/accessible-autocomplete.min';
+@import 'dfe-frontend/packages/dfefrontend';
 @import 'govuk-frontend/dist/govuk/all';
 @import 'leaflet/dist/leaflet';
 @import 'leaflet.markercluster/dist/MarkerCluster';

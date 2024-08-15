@@ -203,10 +203,10 @@ shared:
       - job_share
   school-term-time-jobs:
     working_patterns:
-      - term_time
+      - part_time
   flexible-working-jobs-in-schools:
     working_patterns:
-      - flexible
+      - part_time
 
 ####################################################################################################
 # The data below is only used in automated tests, make sure you add your landing pages to the

@@ -854,11 +854,9 @@ en:
           academy: Academy
           local_authority: Local authority maintained schools
         working_patterns_options:
-          flexible: Flexible
           full_time: Full time
           job_share: Job share
           part_time: Part time
-          term_time: Term time
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
         listed_elsewhere: Listed elsewhere?
