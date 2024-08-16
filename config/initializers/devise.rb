@@ -274,6 +274,21 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :openid_connect, {
+    name: :gov_uk_one_login,
+    scope: %i[openid email],
+    response_type: :code,
+    client_options: {
+      port: 443,
+      scheme: "https",
+      host: Rails.application.config.one_login_base_url,
+      identifier: Rails.application.config.one_login_client_id,
+      redirect_uri: "users/auth/openid_connect/callback", # This is the Early Years one. Change to our controller
+    },
+    authorize_params: {
+      prompt: "login",
+    },
+  }
 
   # NB: This has been extracted per
   # https://github.com/heartcombo/devise/wiki/OmniAuth-with-multiple-models

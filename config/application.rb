@@ -100,6 +100,11 @@ module TeachingVacancies
     config.view_component.preview_controller = "PreviewsController"
     config.view_component.show_previews = true
 
+    # GovUK One Login
+    config.one_login_base_url = ENV.fetch("ONE_LOGIN_BASE_URL", nil)
+    config.one_login_client_id = ENV.fetch("ONE_LOGIN_CLIENT_ID", nil)
+    config.one_login_private_key = Rails.application.credentials.one_login.private_key
+
     # TODO: We use Devise's `after_sign_out_path_for` to redirect users to DSI after signing out,
     # and have no way of disabling the foreign host redirect protection in that instance. Until
     # we figure out a way around that, this keeps the pre-Rails 7 default around.
