@@ -64,7 +64,7 @@ RSpec.describe "Service Data supportal section" do
     within(summary_card("Job Preferences")) do
       expect(page).to have_row("Id", preferences.id)
       expect(page).to have_row("Roles", preferences.roles)
-      expect(page).to have_row("Phases", preferences.phases)
+      expect(page).to have_row("Education phase", preferences.phases)
       expect(page).to have_row("Key stages", preferences.key_stages)
       expect(page).to have_row("Subjects", preferences.subjects)
       expect(page).to have_row("Working patterns", preferences.working_patterns)

@@ -707,7 +707,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       check "Assistant headteacher"
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
-      expect(page).to have_css("h3", text: "Job preferencesPhases")
+      expect(page).to have_css("h3", text: "Job preferencesEducation phase")
 
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
@@ -850,7 +850,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         check "IT support"
         click_on I18n.t("buttons.save_and_continue")
         expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
-        expect(page).to have_css("h3", text: "Job preferencesPhases")
+        expect(page).to have_css("h3", text: "Job preferencesEducation phase")
 
         check "Secondary"
         click_on I18n.t("buttons.save_and_continue")
