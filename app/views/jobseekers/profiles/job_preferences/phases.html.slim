@@ -7,6 +7,6 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = f.govuk_collection_check_boxes :phases, @step.options, :first, :last, legend: { size: "l" }, caption: { text: "Job preferences", size: "l" }
+      = f.govuk_collection_check_boxes :phases, @step.options, :first, :last, legend: { text: "Education phase", size: "l" }, caption: { text: "Job preferences", size: "l" }
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path
