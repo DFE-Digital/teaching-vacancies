@@ -264,7 +264,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 9)
       view_component (>= 3.9, < 3.13)
-    govuk_design_system_formbuilder (5.4.1)
+    govuk_design_system_formbuilder (5.5.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -340,7 +340,7 @@ GEM
       rake
     mini_magick (5.0.1)
     mini_mime (1.1.5)
-    minitest (5.24.1)
+    minitest (5.25.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
@@ -757,7 +757,7 @@ DEPENDENCIES
   google-apis-indexing_v3
   google-cloud-bigquery
   govuk-components (~> 5.4.1)
-  govuk_design_system_formbuilder (~> 5.4.1)
+  govuk_design_system_formbuilder (~> 5.5.0)
   high_voltage
   httparty
   ipaddr
