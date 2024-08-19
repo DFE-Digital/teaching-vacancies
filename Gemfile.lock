@@ -193,7 +193,7 @@ GEM
     email_validator (2.2.4)
       activemodel
     erubi (1.13.0)
-    et-orbi (1.2.7)
+    et-orbi (1.2.11)
       tzinfo
     factory_bot (6.4.5)
       activesupport (>= 5.0.0)
@@ -217,8 +217,8 @@ GEM
     friendly_id (5.5.1)
       activerecord (>= 4.0.0)
     front_matter_parser (1.0.1)
-    fugit (1.9.0)
-      et-orbi (~> 1, >= 1.2.7)
+    fugit (1.11.1)
+      et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
     geocoder (1.8.3)
       base64 (>= 0.1.0)
