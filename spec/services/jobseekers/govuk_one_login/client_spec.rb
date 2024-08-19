@@ -1,7 +1,6 @@
 require "rails_helper"
-require "gov_uk_one_login_client"
 
-RSpec.describe GovUkOneLoginClient do
+RSpec.describe Jobseekers::GovukOneLogin::Client do
   let(:code) { "mock_code" }
   let(:auth_service) { described_class.new(code) }
   let(:payload) { '{ "info": "auth_info" }' }
@@ -59,7 +58,7 @@ RSpec.describe GovUkOneLoginClient do
       expect(request_mock).to have_received(:set_form_data).with(
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: "https://localhost:3000/users/auth/openid_connect/callback",
+        redirect_uri: "https://localhost:3000/jobseekers/auth/openid_connect/callback",
         client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
         client_assertion: "jwt_assertion",
       )
@@ -76,7 +75,7 @@ RSpec.describe GovUkOneLoginClient do
     end
 
     include_examples "error management" do
-      let(:expected_log_message) { "GovUkOneLogin.tokens: got an error!" }
+      let(:expected_log_message) { "GovukOneLogin.tokens: got an error!" }
     end
   end
 
@@ -100,7 +99,7 @@ RSpec.describe GovUkOneLoginClient do
     end
 
     include_examples "error management" do
-      let(:expected_log_message) { "GovUkOneLogin.user_info: got an error!" }
+      let(:expected_log_message) { "GovukOneLogin.user_info: got an error!" }
     end
     context "when there is an exception" do
       before { allow(http_mock).to receive(:request).and_raise(StandardError, "got an error!") }
@@ -112,7 +111,7 @@ RSpec.describe GovUkOneLoginClient do
       it "logs the error" do
         allow(Rails.logger).to receive(:error)
         result
-        expect(Rails.logger).to have_received(:error).with("GovUkOneLogin.user_info: got an error!")
+        expect(Rails.logger).to have_received(:error).with("GovukOneLogin.user_info: got an error!")
       end
     end
   end

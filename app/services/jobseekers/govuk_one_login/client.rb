@@ -4,22 +4,10 @@
 # - decode an id token to get the user's gov one id
 #
 # see https://docs.sign-in.service.gov.uk/
-class GovUkOneLoginClient
-  BASE_URL = Rails.application.config.one_login_base_url
+class Jobseekers::GovukOneLogin::Client
+  include Jobseekers::GovukOneLogin
+
   JWT_SIGNING_ALGORITHM = "RS256".freeze
-
-  CALLBACKS = {
-    login: "https://#{ENV.fetch('DOMAIN')}/users/auth/openid_connect/callback",
-    logout: "https://#{ENV.fetch('DOMAIN')}/users/sign_out",
-  }.freeze
-
-  ENDPOINTS = {
-    login: "#{BASE_URL}/authorize",
-    logout: "#{BASE_URL}/logout",
-    token: "#{BASE_URL}/token",
-    user_info: "#{BASE_URL}/userinfo",
-    jwks: "#{BASE_URL}/.well-known/jwks.json",
-  }.freeze
 
   attr_reader :code
 
@@ -39,7 +27,7 @@ class GovUkOneLoginClient
     response = http.request(request)
     JSON.parse(response.body)
   rescue StandardError => e
-    Rails.logger.error "GovUkOneLogin.tokens: #{e.message}"
+    Rails.logger.error "GovukOneLogin.tokens: #{e.message}"
     {}
   end
 
@@ -50,7 +38,7 @@ class GovUkOneLoginClient
     response = http.request(request)
     JSON.parse(response.body)
   rescue StandardError => e
-    Rails.logger.error "GovUkOneLogin.user_info: #{e.message}"
+    Rails.logger.error "GovukOneLogin.user_info: #{e.message}"
     {}
   end
 
@@ -81,15 +69,15 @@ class GovUkOneLoginClient
   end
 
   def jwt_assertion
-    rsa_private = OpenSSL::PKey::RSA.new(Rails.application.config.one_login_private_key)
+    rsa_private = OpenSSL::PKey::RSA.new(Rails.application.config.govuk_one_login_private_key)
     JWT.encode(jwt_payload, rsa_private, JWT_SIGNING_ALGORITHM)
   end
 
   def jwt_payload
     {
       aud: ENDPOINTS[:token],
-      iss: Rails.application.config.one_login_client_id,
-      sub: Rails.application.config.one_login_client_id,
+      iss: Rails.application.config.govuk_one_login_client_id,
+      sub: Rails.application.config.govuk_one_login_client_id,
       exp: Time.zone.now.to_i + (5 * 60),
       jti: SecureRandom.uuid,
       iat: Time.zone.now.to_i,

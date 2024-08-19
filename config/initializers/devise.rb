@@ -281,9 +281,9 @@ Devise.setup do |config|
     client_options: {
       port: 443,
       scheme: "https",
-      host: Rails.application.config.one_login_base_url,
-      identifier: Rails.application.config.one_login_client_id,
-      redirect_uri: "users/auth/openid_connect/callback", # This is the Early Years one. Change to our controller
+      host: Rails.application.config.govuk_one_login_base_url,
+      identifier: Rails.application.config.govuk_one_login_client_id,
+      redirect_uri: "jobseekers/auth/openid_connect/callback",
     },
     authorize_params: {
       prompt: "login",
