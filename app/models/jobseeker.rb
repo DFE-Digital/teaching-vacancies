@@ -18,6 +18,7 @@ class Jobseeker < ApplicationRecord
   has_one :jobseeker_profile
 
   validates :email, presence: true, email_address: true
+  validates :govuk_one_login_id, uniqueness: true, allow_nil: true
 
   after_update :update_subscription_emails
 

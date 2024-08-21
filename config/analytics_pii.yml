@@ -38,6 +38,7 @@ shared:
     - id
     - email
     - unconfirmed_email
+    - govuk_one_login_id
   job_preferences:
     - jobseeker_profile_id
   notifications:
