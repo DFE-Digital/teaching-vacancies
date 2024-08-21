@@ -682,7 +682,7 @@ en:
               inclusion: Select yes if you have completed your statutory induction year
             teacher_reference_number:
               invalid: Enter a teacher reference number in the correct format
-              blank: Enter a teacher reference number
+              blank: Enter a teacher reference number (TRN)
         jobseekers/profile/employment_form:
           attributes:
             current_role:
