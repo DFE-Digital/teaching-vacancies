@@ -6,6 +6,7 @@
 # see https://docs.sign-in.service.gov.uk/
 class Jobseekers::GovukOneLogin::Client
   include Jobseekers::GovukOneLogin
+  include Jobseekers::GovukOneLogin::Errors
 
   JWT_SIGNING_ALGORITHM = "RS256".freeze
 
@@ -27,8 +28,7 @@ class Jobseekers::GovukOneLogin::Client
     response = http.request(request)
     JSON.parse(response.body)
   rescue StandardError => e
-    Rails.logger.error "GovukOneLogin.tokens: #{e.message}"
-    {}
+    raise ClientRequestError.new("GovukOneLogin.tokens", e.message)
   end
 
   # GET /userinfo
@@ -38,8 +38,7 @@ class Jobseekers::GovukOneLogin::Client
     response = http.request(request)
     JSON.parse(response.body)
   rescue StandardError => e
-    Rails.logger.error "GovukOneLogin.user_info: #{e.message}"
-    {}
+    raise ClientRequestError.new("GovukOneLogin.user_info", e.message)
   end
 
   def decode_id_token(token)

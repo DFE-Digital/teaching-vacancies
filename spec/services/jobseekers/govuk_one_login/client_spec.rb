@@ -12,22 +12,6 @@ RSpec.describe Jobseekers::GovukOneLogin::Client do
     allow(http_mock).to receive(:request).with(request_mock).and_return(response_mock)
   end
 
-  RSpec.shared_examples "error management" do
-    context "when there is an exception" do
-      before { allow(http_mock).to receive(:request).and_raise(StandardError, "got an error!") }
-
-      it "returns an empty hash" do
-        expect(result).to(eq({}))
-      end
-
-      it "logs the error" do
-        allow(Rails.logger).to receive(:error)
-        result
-        expect(Rails.logger).to have_received(:error).with(expected_log_message)
-      end
-    end
-  end
-
   describe "#tokens" do
     subject(:result) { auth_service.tokens }
 
@@ -58,7 +42,7 @@ RSpec.describe Jobseekers::GovukOneLogin::Client do
       expect(request_mock).to have_received(:set_form_data).with(
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: "https://localhost:3000/jobseekers/auth/openid_connect/callback",
+        redirect_uri: "http://localhost:3000/jobseekers/auth/openid_connect/callback",
         client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
         client_assertion: "jwt_assertion",
       )
@@ -74,8 +58,13 @@ RSpec.describe Jobseekers::GovukOneLogin::Client do
       expect(result).to eq({ "info" => "auth_info" })
     end
 
-    include_examples "error management" do
-      let(:expected_log_message) { "GovukOneLogin.tokens: got an error!" }
+    context "when there is an exception" do
+      before { allow(http_mock).to receive(:request).and_raise(StandardError, "got an error!") }
+
+      it "raises a GovukOneLogin exception" do
+        expect { result }.to raise_error(Jobseekers::GovukOneLogin::Errors::ClientRequestError,
+                                         "GovukOneLogin.tokens: got an error!")
+      end
     end
   end
 
@@ -98,20 +87,12 @@ RSpec.describe Jobseekers::GovukOneLogin::Client do
       expect(result).to eq({ "info" => "auth_info" })
     end
 
-    include_examples "error management" do
-      let(:expected_log_message) { "GovukOneLogin.user_info: got an error!" }
-    end
     context "when there is an exception" do
       before { allow(http_mock).to receive(:request).and_raise(StandardError, "got an error!") }
 
-      it "returns an empty hash" do
-        expect(result).to(eq({}))
-      end
-
-      it "logs the error" do
-        allow(Rails.logger).to receive(:error)
-        result
-        expect(Rails.logger).to have_received(:error).with("GovukOneLogin.user_info: got an error!")
+      it "raises a GovukOneLogin exception" do
+        expect { result }.to raise_error(Jobseekers::GovukOneLogin::Errors::ClientRequestError,
+                                         "GovukOneLogin.user_info: got an error!")
       end
     end
   end

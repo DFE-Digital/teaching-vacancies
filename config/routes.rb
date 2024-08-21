@@ -62,6 +62,7 @@ Rails.application.routes.draw do
     registrations: "jobseekers/registrations",
     sessions: "jobseekers/sessions",
     unlocks: "jobseekers/unlocks",
+    omniauth_callbacks: "jobseekers/govuk_one_login_callbacks",
   }, path_names: {
     sign_in: "sign-in",
   }

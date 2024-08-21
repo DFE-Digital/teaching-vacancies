@@ -35,4 +35,21 @@ class Jobseeker < ApplicationRecord
   def needs_email_confirmation?
     !confirmed? || unconfirmed_email.present?
   end
+
+  def self.find_or_create_from_govuk_one_login(email:, govuk_one_login_id:)
+    return unless email.present? && govuk_one_login_id.present?
+
+    if (user = find_by("LOWER(email) = ?", email.downcase))
+      user.update(govuk_one_login_id: govuk_one_login_id) if user.govuk_one_login_id != govuk_one_login_id
+      user
+    else
+      # OneLogin users won't need/use this password. But is required by validations for in-house Devise users.
+      # Eventually when all the users become OneLogin users, we should be able to remove the password requirement.
+      random_password = Devise.friendly_token
+      create!(email: email.downcase,
+              govuk_one_login_id: govuk_one_login_id,
+              password: random_password,
+              confirmed_at: Time.zone.now)
+    end
+  end
 end
