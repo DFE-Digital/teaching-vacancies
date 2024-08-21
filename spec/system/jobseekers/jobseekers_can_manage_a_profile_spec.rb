@@ -160,6 +160,8 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       choose "Yes"
       fill_in "jobseekers_profile_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"
+      fill_in "What is your Teacher reference number (TRN)?", with: "1234567"
+      choose "Yes, I have completed a 1 or 2 year induction period"
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content("2019")
