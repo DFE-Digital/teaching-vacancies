@@ -4,7 +4,7 @@ class Jobseekers::Profiles::QualifiedTeacherStatusController < Jobseekers::Profi
   def update
     if form.valid?
       year = form.qualified_teacher_status == "yes" ? form.qualified_teacher_status_year : ""
-      profile.update(qualified_teacher_status: JobseekerProfile.qualified_teacher_statuses[form.qualified_teacher_status], 
+      profile.update(qualified_teacher_status: JobseekerProfile.qualified_teacher_statuses[form.qualified_teacher_status],
                      qualified_teacher_status_year: year,
                      teacher_reference_number: form.teacher_reference_number,
                      statutory_induction_complete: form.statutory_induction_complete)
