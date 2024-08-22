@@ -18,12 +18,18 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         within "ul.govuk-list.govuk-error-summary__list" do
           expect(page).to have_link("Select yes if you have qualified teacher status (QTS)", href: "#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-field-error")
         end
-        choose "Yes"
+        within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
+          choose "Yes"
+        end
         click_on "Save and continue"
         within "ul.govuk-list.govuk-error-summary__list" do
           expect(page).to have_link("Enter the year your QTS was awarded", href: "#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-year-field-error")
           expect(page).to have_link("Enter a teacher reference number (TRN)", href: "#jobseekers-profile-qualified-teacher-status-form-teacher-reference-number-field-error")
+          expect(page).to have_link("Select yes if you have a teacher reference number. If you have qualified teacher status (QTS) you must select yes.", href: "#jobseekers-profile-qualified-teacher-status-form-has-teacher-reference-number-field-error")
           expect(page).to have_link("Select yes if you have completed your statutory induction year", href: "#jobseekers-profile-qualified-teacher-status-form-statutory-induction-complete-field-error")
+        end
+        within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+          choose "Yes"
         end
         fill_in "Year QTS was awarded", with: "2032"
         fill_in "What is your Teacher reference number (TRN)?", with: "ABC"
@@ -53,6 +59,13 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         end
         choose("jobseekers_profile_qualified_teacher_status_form[qualified_teacher_status]", option: "no")
         click_on "Save and continue"
+        within "ul.govuk-list.govuk-error-summary__list" do
+          expect(page).to have_link("Select yes if you have a teacher reference number. If you have qualified teacher status (QTS) you must select yes.", href: "#jobseekers-profile-qualified-teacher-status-form-has-teacher-reference-number-field-error")
+        end
+        within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+          choose "No"
+        end
+        click_on "Save and continue"
 
         expect_page_to_have_professional_status_information("no", nil, nil, nil)
       end
@@ -60,7 +73,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
   end
 
   describe "editing professional status" do
-    let!(:profile) { create(:jobseeker_profile, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", teacher_reference_number: "7777777", statutory_induction_complete: "yes") }
+    let!(:profile) { create(:jobseeker_profile, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", teacher_reference_number: "7777777", statutory_induction_complete: "yes", has_teacher_reference_number: "yes") }
 
     before { visit jobseekers_profile_path }
 
@@ -70,6 +83,9 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
       within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
         expect(find("#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-yes-field")).to be_checked
+      end
+      within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+        expect(find("#jobseekers-profile-qualified-teacher-status-form-has-teacher-reference-number-yes-field")).to be_checked
       end
       expect(find("#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-year-field").value).to eq("2020")
       within(find("fieldset", text: "Have you completed your statutory induction period?")) do
