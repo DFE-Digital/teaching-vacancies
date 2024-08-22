@@ -25,7 +25,7 @@ class Jobseekers::Profiles::QualifiedTeacherStatusController < Jobseekers::Profi
   def form_attributes
     case action_name
     when "edit"
-      profile.slice(:qualified_teacher_status, :qualified_teacher_status_year, :teacher_reference_number, :statutory_induction_complete)
+      profile.slice(:qualified_teacher_status, :qualified_teacher_status_year, :teacher_reference_number, :statutory_induction_complete, :has_teacher_reference_number)
     when "update"
       form_params
     end
