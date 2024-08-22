@@ -96,6 +96,7 @@ jobs:
         with:
           build-args: |
             BUILDKIT_INLINE_CACHE=1
+            RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
           # Cache from builder target tagged with branch name, may be empty first time branch is pushed
           # Cache from builder target tagged with main branch name, always present, maybe less recent
           cache-from: |
@@ -112,6 +113,7 @@ jobs:
           build-args: |
             BUILDKIT_INLINE_CACHE=1
             COMMIT_SHA=${{ env.COMMIT_SHA }}
+            RAILS_MASTER_KEY=${{ secrets.RAILS_MASTER_KEY }}
           # Cache from builder target built above, always present
           # Cache from production target tagged with branch name, may be empty first time branch is pushed
           # Cache from production target tagged with main branch name, always present, maybe less recent

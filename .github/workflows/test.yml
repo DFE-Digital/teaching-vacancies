@@ -32,8 +32,9 @@ jobs:
             params: '--exclude-pattern "spec/{system}/*_spec.rb, spec/system/{jobseekers,publishers,support_users,other}/*_spec.rb"'
 
     env:
-      RAILS_ENV: test
       DATABASE_URL: postgis://postgres:postgres@localhost:5432/tvs_test
+      RAILS_ENV: test
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
     services:
       postgres:
