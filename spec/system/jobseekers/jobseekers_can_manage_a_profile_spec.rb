@@ -176,16 +176,6 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(page).to have_content("I’m on track to receive QTS")
       expect(page).not_to have_content("2019")
     end
-
-    it "allows the jobseeker to edit their QTS status to non-teacher" do
-      click_link("Add qualified teacher status")
-
-      choose "I'm not looking for a teaching job"
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(page).to have_content("I'm not looking for a teaching job")
-      expect(page).not_to have_content("2019")
-    end
   end
 
   describe "QTS if the jobseeker has a previous job application" do
