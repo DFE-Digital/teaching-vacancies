@@ -294,6 +294,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_05_135248) do
     t.boolean "requested_hidden_profile"
     t.text "teacher_reference_number_ciphertext"
     t.string "statutory_induction_complete"
+    t.string "has_teacher_reference_number"
     t.index ["jobseeker_id"], name: "index_jobseeker_profiles_jobseeker_id", unique: true
   end
 
