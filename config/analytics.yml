@@ -162,7 +162,6 @@ shared:
     - qualified_teacher_status_year
     - active
     - requested_hidden_profile
-    - teacher_reference_number_ciphertext
     - statutory_induction_complete
     - teacher_reference_number
   jobseeker_profile_excluded_organisations:
