@@ -574,14 +574,21 @@ en:
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status_options:
           "yes": "Yes"
-          "no": "No"
+          "no": "No or not applicable"
           on_track: "I’m on track to receive QTS"
           non_teacher: "I'm not looking for a teaching job"
+        statutory_induction_complete_options:
+          "no": "No"
+          on_track: I'm on track to complete it
+          "yes": "Yes, I have completed a 1 or 2 year induction period"
+        has_teacher_reference_number_options:
+          "yes": "Yes"
+          "no": "No"
         qualified_teacher_status_year: Year QTS was awarded
         teacher_reference_number: What is your Teacher reference number (TRN)?
         statutory_induction_complete: Have you completed your statutory induction period?
         completed_period_hint: New teachers before 2021 had to complete a 1 year statutory induction period. New teachers after 2021 have to complete a 2 year statutory induction period.
-        teacher_reference_number_hint: Schools will only be able to see your TRN if you apply for a role. You can %{link} if you do not know or have forgotten it.
+        teacher_reference_number_hint: Schools will only be able to see your TRN if you apply for a role. You can %{link} if you do not know (for example, if you're a trainee teacher) or have forgotten it. Your TRN must be 7 digits.
         trn_link_text: find your TRN
 
 
@@ -952,6 +959,7 @@ en:
         <<: *jobseekers_qualifications_shared_legends
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
+        has_teacher_reference_number: Do you have a teacher reference number (TRN)?
 
       jobseekers_profile_employment_form:
         current_role: Are you still working in this role?
