@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_15_102033) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_22_141510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -293,6 +293,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_15_102033) do
     t.boolean "requested_hidden_profile"
     t.text "teacher_reference_number_ciphertext"
     t.string "statutory_induction_complete"
+    t.string "has_teacher_reference_number"
     t.index ["jobseeker_id"], name: "index_jobseeker_profiles_jobseeker_id", unique: true
   end
 
