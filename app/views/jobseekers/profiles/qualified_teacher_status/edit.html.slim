@@ -14,8 +14,6 @@
 
         = f.govuk_radio_button :qualified_teacher_status, "no"
         = f.govuk_radio_button :qualified_teacher_status, "on_track"
-        = f.govuk_radio_divider
-        = f.govuk_radio_button :qualified_teacher_status, "non_teacher"
 
       = f.govuk_text_field :teacher_reference_number, label: { size: "l" }, width: "one-half", hint: { text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.teacher_reference_number_hint", link: govuk_link_to(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.trn_link_text"), "https://find-a-lost-trn.education.gov.uk/start", target: "_blank")).html_safe }
 
