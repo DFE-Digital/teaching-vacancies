@@ -610,7 +610,7 @@ en:
             job_title:
               blank: Enter your job title
             main_duties:
-              blank: Tell us briefly what your main duties were
+              blank: Enter your main duties for this role
             organisation:
               blank: Enter a school or other organisation
             started_on:
@@ -688,7 +688,7 @@ en:
             job_title:
               blank: Enter your job title
             main_duties:
-              blank: Tell us briefly what your main duties were
+              blank: Enter your main duties for this role
             organisation:
               blank: Enter a school or other organisation
             started_on:
