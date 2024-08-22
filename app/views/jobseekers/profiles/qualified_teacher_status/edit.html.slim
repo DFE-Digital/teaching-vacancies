@@ -15,7 +15,10 @@
         = f.govuk_radio_button :qualified_teacher_status, "no"
         = f.govuk_radio_button :qualified_teacher_status, "on_track"
 
-      = f.govuk_text_field :teacher_reference_number, label: { size: "l" }, width: "one-half", hint: { text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.teacher_reference_number_hint", link: govuk_link_to(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.trn_link_text"), "https://find-a-lost-trn.education.gov.uk/start", target: "_blank")).html_safe }
+      = f.govuk_radio_buttons_fieldset :has_teacher_reference_number, hint: -> { tag.p(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.teacher_reference_number_hint", link: govuk_link_to(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.trn_link_text"), "https://find-a-lost-trn.education.gov.uk/start", target: "_blank")).html_safe) }, legend: { size: "l", tag: "h1" } do
+        = f.govuk_radio_button :has_teacher_reference_number, "yes", link_errors: true
+          = f.govuk_text_field :teacher_reference_number
+        = f.govuk_radio_button :has_teacher_reference_number, "no"
 
       = f.govuk_collection_radio_buttons :statutory_induction_complete, f.object.statutory_induction_complete_options, :first, :last, hint: { text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.completed_period_hint") }, legend: { size: "l", tag: "h1", text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete") }
 
