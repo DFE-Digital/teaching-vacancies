@@ -875,7 +875,13 @@ en:
           content_html: "%{link_to} to save and apply for jobs you are interested in."
           heading: Don't have an account yet?
           link: Create an account
-        title: Sign in
+        title: Jobseeker sign in
+        banner:
+          header: How your sign in has changed
+          body: Sign in to or create a GOV.UK One Login account to save and apply for jobs on Teaching Vacancies
+        govuk_one_log_in:
+          paragraph1: Create your GOV.UK One Login account using the same email address as your Teaching Vacancies account to automatically save your account details.
+          paragraph2: If you use a different email address, you'll be able to transfer your account details after signing in.
       locked:
         description: You have been locked out of your account because you have made too many attempts to log in.
         having_trouble_html: Still having trouble? %{request_support_link}.

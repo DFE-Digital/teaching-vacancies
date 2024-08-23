@@ -15,6 +15,6 @@ module JobseekersLoginHelper
   end
 
   def jobseeker_login_button(class: "")
-    govuk_button_link_to(t("buttons.sign_in"), jobseeker_login_uri.to_s, class:)
+    govuk_button_link_to(t("buttons.one_login_sign_in"), jobseeker_login_uri.to_s, class:)
   end
 end
