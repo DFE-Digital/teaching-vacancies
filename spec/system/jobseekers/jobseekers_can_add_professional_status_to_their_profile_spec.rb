@@ -107,7 +107,9 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         choose "No"
       end
 
-      fill_in "What is your Teacher reference number (TRN)?", with: ""
+      within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+        choose "No"
+      end
 
       click_on "Save and continue"
 
