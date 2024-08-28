@@ -26,6 +26,13 @@ en:
           prefill: apply for roles more quickly by pre-filling your information
           share_your_qualifications: share your qualifications and experience with schools
           specify_jobs: specify the types of teaching jobs you’re looking for
+      account_found:
+        page_title: Account found
+        email_found: We've found a Teaching Vacancies account using the same email address as your GOV.UK One Login account and have saved your information.
+        helpful_links: You can %{update_profile_link}, continue to %{search_and_apply_link} or %{create_alert_link}.
+        update_profile_link_text: update your profile details
+        search_and_apply_link_text: search and apply for jobs
+        create_alert_link_text: create a job alert
     account_feedbacks:
       create:
         success: Thank you for your feedback

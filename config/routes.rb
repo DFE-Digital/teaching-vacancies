@@ -184,6 +184,7 @@ Rails.application.routes.draw do
     resource :account, only: %i[show] do
       member do
         get :confirmation
+        get :account_found
       end
     end
     resource :account_feedback, only: %i[new create]
