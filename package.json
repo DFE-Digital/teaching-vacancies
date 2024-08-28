@@ -12,10 +12,10 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@sentry/browser": "8.26.0",
+    "@sentry/browser": "8.27.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.0",
-    "axios": "^1.7.4",
+    "axios": "^1.7.5",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.38.1",
     "dfe-frontend": "^2.0.1",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-env": "^7.25.4",
     "concurrently": "^8.2.2",
     "dotenv": "^16.4.5",
     "esbuild": "^0.23.1",
