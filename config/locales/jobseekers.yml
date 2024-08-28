@@ -5,6 +5,7 @@ en:
         accessible_signed_in_as: You are signed in as
       show:
         close_account: Close account
+        close_account_explanation: If you do not want to use your Teaching Vacancies account any more you can close your account.
         delete_account: Delete your account
         page_title: Your account
         summary_list:
@@ -12,6 +13,18 @@ en:
           email: Email address
           password: Account password
           password_placeholder: "**************"
+        data_to_change_in_govuk_one_login: 
+          email: email address
+          password: password
+          security_codes: how you get your security codes to sign in
+        change_sign_in:
+          heading: Change your sign in details
+          description: You can use your GOV.UK One Login to sign in to Teaching Vacancies.
+          change_details_description: "You can change these details in your GOV.UK One Login:"
+        find_account_details:
+          heading: Can't find your old account details?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your old account details will not automatically be saved.
+          paragraph2: You can request to transfer your existing account information.
       confirmation:
         page_title: Account created
         apply_for_jobs_link_text: search and apply for teaching jobs
@@ -556,8 +569,7 @@ en:
       confirm_destroy:
         feedback_title: Tell us why you are closing your account
         page_title: Close account
-        page_description_1: If you do not want to use your Teaching Vacancies account any more you can close your account.
-        page_description_2: You will no longer receive any job alerts you have subscribed to, and any job applications you have made will be withdrawn.
+        page_description: You will no longer receive any job alerts you have subscribed to, and any job applications you have made will be withdrawn.
       destroy:
         success: Your account has been closed. If you want to reactivate your account at any point, you can just sign back in with your email address and current password.
       edit:
