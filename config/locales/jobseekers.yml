@@ -8,6 +8,7 @@ en:
         close_account_explanation: If you do not want to use your Teaching Vacancies account any more you can close your account.
         delete_account: Delete your account
         page_title: Your account
+        change_details_link_text: Change your sign in details in your GOV.UK One Login.
         summary_list:
           change: Change
           email: Email address
