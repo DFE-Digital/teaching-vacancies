@@ -4,8 +4,7 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".page_title")
 
-    p = t(".page_description_1")
-    p = t(".page_description_2")
+    p = t(".page_description")
 
     = form_for @close_account_feedback_form, url: registration_path(current_jobseeker), method: :delete do |f|
       = f.govuk_error_summary
