@@ -15,6 +15,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
       session.delete(:govuk_one_login_state)
       session.delete(:govuk_one_login_nonce)
+
       sign_in_and_redirect jobseeker if jobseeker
     else
       error_redirect
@@ -35,8 +36,12 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
   # Devise method to redirect the user after sign in.
   # We need to build our own logic to redirect the user to the correct pages.
-  def after_sign_in_path_for(_resource)
-    if session[:user_exists_first_log_in]
+  def after_sign_in_path_for(resource)
+    stored_location = stored_location_for(resource)
+
+    if stored_location.include?("job_application/new")
+      stored_location
+    elsif session[:user_exists_first_log_in]
       session.delete(:user_exists_first_log_in)
       account_found_jobseekers_account_path
     else
