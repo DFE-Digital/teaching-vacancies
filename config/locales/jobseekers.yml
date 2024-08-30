@@ -917,6 +917,11 @@ en:
             title: Job alert feedback
           create:
             success: Thank you for providing additional feedback on your job alert
+    transfer_accounts:
+      new:
+        page_title: Transfer account details
+        heading: What was the email address on your Teaching Vacancies account?
+        hint: If you have an account associated with this email address, we'll send you an email to verify your details.
     unlocks:
       new:
         description: This link has already been used or is incorrect. If you still want to unlock your Teaching Vacancies account enter your email below.
