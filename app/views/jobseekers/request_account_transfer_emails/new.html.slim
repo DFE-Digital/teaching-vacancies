@@ -2,7 +2,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @transfer_accounts_form, url: jobseekers_transfer_account_path do |f|
+    = form_for @request_account_transfer_email_form, url: jobseekers_request_account_transfer_email_path do |f|
       = f.govuk_error_summary
 
       = f.govuk_email_field :email, label: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".page_title"), size: "l" }, width: "two-thirds", hint: { text: t(".hint") }, required: true

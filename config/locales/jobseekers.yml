@@ -917,7 +917,7 @@ en:
             title: Job alert feedback
           create:
             success: Thank you for providing additional feedback on your job alert
-    transfer_accounts:
+    request_account_transfer_emails:
       new:
         page_title: Transfer account details
         heading: What was the email address on your Teaching Vacancies account?
