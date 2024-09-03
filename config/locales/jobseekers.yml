@@ -932,6 +932,10 @@ en:
         email_sent: "Email sent to: %{email}"
         label: Enter the 12 digit verification code
         confirm: Confirm account transfer
+        help_with_code: Help with the code
+        helpful_links: We can %{resend_code_link} or you can %{different_email_link}.
+        resend_code_link_text: send the code again
+        different_email_link_text: use a different email address
     unlocks:
       new:
         description: This link has already been used or is incorrect. If you still want to unlock your Teaching Vacancies account enter your email below.
