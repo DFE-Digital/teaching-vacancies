@@ -318,6 +318,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_05_135248) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
+    t.string "account_merge_confirmation_code"
+    t.datetime "account_merge_confirmation_code_generated_at"
     t.index ["confirmation_token"], name: "index_jobseekers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_jobseekers_on_reset_password_token", unique: true
