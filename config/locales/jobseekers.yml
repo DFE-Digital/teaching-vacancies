@@ -922,6 +922,16 @@ en:
         page_title: Transfer account details
         heading: What was the email address on your Teaching Vacancies account?
         hint: If you have an account associated with this email address, we'll send you an email to verify your details.
+    account_transfers:
+      new:
+        page_title: Confirm account details transfer
+        heading: Check your email
+        paragraph1: If you have an account with this email address, we've sent you an email with a 12 digit verification code.
+        paragraph2: Your email make take a few minutes to arrive. If you do not get an email, check your spam folder or check that you've used the right email address.
+        paragraph3: The code will expire after one hour.
+        email_sent: "Email sent to: %{email}"
+        label: Enter the 12 digit verification code
+        confirm: Confirm account transfer
     unlocks:
       new:
         description: This link has already been used or is incorrect. If you still want to unlock your Teaching Vacancies account enter your email below.
