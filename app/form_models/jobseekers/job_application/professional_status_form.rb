@@ -9,7 +9,7 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
       statutory_induction_complete
       teacher_reference_number
       has_teacher_reference_number
-]
+    ]
   end
   attr_accessor(*fields)
 
@@ -25,10 +25,10 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
     jobseeker_profile = attributes.delete(:jobseeker_profile)
     super
 
-    if jobseeker_profile
-      self.teacher_reference_number ||= jobseeker_profile.teacher_reference_number
-      self.has_teacher_reference_number ||= jobseeker_profile.has_teacher_reference_number
-    end
+    return unless jobseeker_profile
+
+    self.teacher_reference_number ||= jobseeker_profile.teacher_reference_number
+    self.has_teacher_reference_number ||= jobseeker_profile.has_teacher_reference_number
   end
 
   validates :qualified_teacher_status, inclusion: { in: %w[yes no on_track] }

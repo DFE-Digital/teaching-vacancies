@@ -39,7 +39,11 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def form
-    @form ||= form_class.new(jobseeker_profile_attributes.merge(form_attributes))
+    @form ||= begin
+      attributes = form_attributes
+      attributes.merge!(jobseeker_profile_attributes) if step == :professional_status
+      form_class.new(attributes)
+    end
   end
 
   def form_class
@@ -47,12 +51,15 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def form_attributes
-    case action_name
-    when "show"
-      job_application.attributes.slice(*form_class.fields.map(&:to_s)).merge(trn_params)
-    when "update"
-      form_params.merge(trn_params)
-    end
+    attributes = case action_name
+                 when "show"
+                   job_application.attributes.slice(*form_class.fields.map(&:to_s))
+                 when "update"
+                   form_params
+                 end
+
+    attributes.merge!(trn_params) if step == :professional_status
+    attributes
   end
 
   def form_params
