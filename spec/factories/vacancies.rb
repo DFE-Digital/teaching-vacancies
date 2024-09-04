@@ -83,6 +83,13 @@ FactoryBot.define do
       skills_and_experience { nil }
     end
 
+    trait :without_any_money do
+      salary { nil }
+      hourly_rate { nil }
+      pay_scale { nil }
+      actual_salary { nil }
+    end
+
     trait :no_tv_applications do
       receive_applications { "website" }
       application_link { Faker::Internet.url(host: "example.com") }
