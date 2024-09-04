@@ -195,7 +195,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_141402) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "jobseeker_id", null: false
-    t.uuid "vacancy_id", null: false
+    t.uuid "vacancy_id", null: true
     t.integer "completed_steps", default: [], null: false, array: true
     t.datetime "submitted_at", precision: nil
     t.datetime "draft_at", precision: nil

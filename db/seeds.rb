@@ -12,6 +12,7 @@ SetOrganisationSlugsJob.perform_later
 bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
+plymouth_cast = SchoolGroup.find_by!(uid: "4214")
 
 # Team users
 users = [
@@ -32,7 +33,7 @@ users = [
 ]
 
 users.each do |user|
-  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la], **user)
+  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, plymouth_cast], **user)
   SupportUser.create(user)
   FactoryBot.create(:jobseeker, email: user[:email])
 end
@@ -94,19 +95,25 @@ weydon_trust_schools = weydon_trust.schools.all
 location_preference_names = weydon_trust_schools.map(&:postcode)
 
 Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
-  FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications, :with_employment_history, jobseeker: jobseeker) do |jobseeker_profile|
-    FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
-      FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
-    end
-    # :with_employment_history trait creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures
-    jobseeker_profile.employments.each do |employment|
-      vacancy_without_org_id = employment.job_application.vacancy_id
-      OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
-    end
-    # :with_qualifications trait also creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures.
-    jobseeker_profile.qualifications.each do |qualification|
-      vacancy_without_org_id = qualification.job_application.vacancy_id
-      OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
+  Jobseeker.transaction do
+    FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications,
+                      employments: FactoryBot.build_list(:employment, 1,
+                                                         job_application: FactoryBot.build(:job_application,
+                                                                                           vacancy: FactoryBot.build(:vacancy,
+                                                                                                                     organisations: weydon_trust_schools))),
+                      jobseeker: jobseeker) do |jobseeker_profile|
+      FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
+        FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
+      end
+
+      # :with_qualifications trait also creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures.
+      jobseeker_profile.qualifications.each do |qualification|
+        vacancy_without_org_id = qualification.job_application.vacancy_id
+        OrganisationVacancy.create!(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
+      end
     end
   end
 end
+
+# still need to delete jobs without an organisation
+Vacancy.includes(:organisations).find_each.reject { |v| v.organisation.present? }.each(&:destroy)
