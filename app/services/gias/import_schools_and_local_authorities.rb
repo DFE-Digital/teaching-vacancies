@@ -35,10 +35,11 @@ class Gias::ImportSchoolsAndLocalAuthorities
   end
 
   def import_batch
-    import_local_authorities if local_authorities.any?
-    import_schools if schools.any?
-    import_memberships if memberships.any?
-
+    SchoolGroup.transaction do
+      import_local_authorities if local_authorities.any?
+      import_schools if schools.any?
+      import_memberships if memberships.any?
+    end
     reset_data
   end
 
