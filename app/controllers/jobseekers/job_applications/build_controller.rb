@@ -15,7 +15,8 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def update
     if form.valid?
-      job_application.update(update_params)
+      job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
+      update_jobseeker_profile if step == :professional_status
 
       return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if redirect_to_review?
 
@@ -38,7 +39,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def form
-    @form ||= form_class.new(form_attributes)
+    @form ||= form_class.new(jobseeker_profile_attributes.merge(form_attributes))
   end
 
   def form_class
@@ -48,9 +49,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def form_attributes
     case action_name
     when "show"
-      job_application.slice(form_class.storable_fields)
+      job_application.attributes.slice(*form_class.fields.map(&:to_s)).merge(trn_params)
     when "update"
-      form_params
+      form_params.merge(trn_params)
     end
   end
 
@@ -109,5 +110,27 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     step_process
   rescue StepProcess::MissingStepError
     skip_step unless step == "wicked_finish"
+  end
+
+  def jobseeker_profile_attributes
+    {
+      jobseeker_profile: current_jobseeker.jobseeker_profile,
+    }
+  end
+
+  def trn_params
+    return {} unless step == :professional_status
+
+    {
+      teacher_reference_number: form_params[:teacher_reference_number] || current_jobseeker.jobseeker_profile.teacher_reference_number,
+      has_teacher_reference_number: form_params[:has_teacher_reference_number] || current_jobseeker.jobseeker_profile.has_teacher_reference_number,
+    }
+  end
+
+  def update_jobseeker_profile
+    current_jobseeker.jobseeker_profile.update(
+      teacher_reference_number: form_params[:teacher_reference_number],
+      has_teacher_reference_number: form_params[:has_teacher_reference_number],
+    )
   end
 end

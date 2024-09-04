@@ -945,6 +945,11 @@ en:
       jobseekers_job_application_personal_details_form:
         your_address: Your address
       jobseekers_job_application_professional_status_form:
+        has_teacher_reference_number: Do you have a teacher reference number (TRN)?
+        options:
+          yes: Yes
+          no: No
+        teacher_reference_number: What is your Teacher reference number (TRN)?
         statutory_induction_complete: Have you completed your statutory induction period?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
       jobseekers_job_application_qualifications_form:
@@ -970,7 +975,7 @@ en:
       jobseekers_unsubscribe_feedback_form:
         reason: Why do you want to unsubscribe from this alert?
         user_participation_response: Would you like to participate in our research?
-      jobseekers_profile_location_preferences: 
+      jobseekers_profile_location_preferences:
         another_location: Do you want to add another location?
 
       publishers_job_listing_about_the_role_form:
