@@ -131,7 +131,7 @@ VCR.configure do |config|
   config.hook_into :webmock
   config.configure_rspec_metadata!
   config.ignore_localhost = true
-  config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net", "selenium-chrome"
+  config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net", "selenium-chrome", "maps.googleapis.com"
   config.ignore_hosts IPSocket.getaddress(Socket.gethostname) if ENV.fetch("DEVCONTAINER", nil) == "true"
 end
 
