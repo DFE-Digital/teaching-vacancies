@@ -625,6 +625,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         expect(page).not_to have_content(profile.full_name)
 
         visit publishers_jobseeker_profile_path(profile)
+        sleep 2
         expect(page).to have_content("Page not found")
 
         login_publisher(publisher: forbidden_publisher)
