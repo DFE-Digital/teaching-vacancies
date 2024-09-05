@@ -53,3 +53,6 @@ runs:
       if: ${{ inputs.skip-node == 'false' }}
       run: yarn install
       shell: bash
+
+    - name: Install Image Magick
+      run: apt install imagemagick
