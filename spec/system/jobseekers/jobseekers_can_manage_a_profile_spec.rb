@@ -105,19 +105,20 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "personal details if the jobseeker has a previous job application" do
-    let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+    let(:previous_application) { JobApplication.last }
 
-    before { visit jobseekers_profile_path }
+    before do
+      create(:job_application, :status_submitted, jobseeker:)
+      visit jobseekers_profile_path
+    end
 
     it "prefills the form with the jobseeker's personal details" do
-      sleep 2
       expect(page).to have_content(previous_application.first_name)
       expect(page).to have_content(previous_application.last_name)
       expect(page).to have_content(previous_application.phone_number)
     end
 
     it "adds a notice to inform the user" do
-      sleep 2
       expect(page).to have_content("your details have been imported into your profile")
     end
   end
