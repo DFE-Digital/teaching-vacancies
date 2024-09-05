@@ -610,7 +610,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         visit jobseekers_profile_path
         sleep 8
         # wait for page load...?
-        find(".govuk-link")
+        find(".preview-and-turn-on-profile")
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
         sleep 8
         # choose "Yes", visible: false
