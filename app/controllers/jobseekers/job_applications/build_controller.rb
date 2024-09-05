@@ -129,8 +129,8 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     return {} unless step == :professional_status
 
     {
-      teacher_reference_number: form_params[:teacher_reference_number] || current_jobseeker.jobseeker_profile.teacher_reference_number,
-      has_teacher_reference_number: form_params[:has_teacher_reference_number] || current_jobseeker.jobseeker_profile.has_teacher_reference_number,
+      teacher_reference_number: form_params[:teacher_reference_number] || current_jobseeker&.jobseeker_profile&.teacher_reference_number,
+      has_teacher_reference_number: form_params[:has_teacher_reference_number] || current_jobseeker&.jobseeker_profile&.has_teacher_reference_number,
     }
   end
 

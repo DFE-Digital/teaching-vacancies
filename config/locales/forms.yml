@@ -945,10 +945,10 @@ en:
       jobseekers_job_application_personal_details_form:
         your_address: Your address
       jobseekers_job_application_professional_status_form:
-        has_teacher_reference_number: Do you have a teacher reference number (TRN)?
-        options:
-          yes: Yes
-          no: No
+        has_teacher_reference_number: "Do you have a teacher reference number (TRN)?"
+        has_teacher_reference_number_options:
+          "yes": "Yes"
+          "no": "No"
         teacher_reference_number: What is your Teacher reference number (TRN)?
         statutory_induction_complete: Have you completed your statutory induction period?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
