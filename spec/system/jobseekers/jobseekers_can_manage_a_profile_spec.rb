@@ -608,7 +608,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       it "allows the jobseeker to hide themselves from the trust and its schools" do
         visit jobseekers_profile_path
-        sleep 2
+        sleep 4
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
         choose "Yes", visible: false
         click_on I18n.t("buttons.save_and_continue")
