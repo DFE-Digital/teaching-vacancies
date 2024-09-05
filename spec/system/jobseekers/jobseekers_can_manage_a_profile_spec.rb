@@ -609,10 +609,11 @@ RSpec.describe "Jobseekers can manage their profile" do
       it "allows the jobseeker to hide themselves from the trust and its schools" do
         visit jobseekers_profile_path
         sleep 8
+        # wait for page load...?
+        find('.govuk-link')
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
         sleep 8
-        # choose "Yes", visible: false
-        click_on "Yes"
+        choose "Yes", visible: false
         click_on I18n.t("buttons.save_and_continue")
 
         field = find_field("Name of school or trust")
