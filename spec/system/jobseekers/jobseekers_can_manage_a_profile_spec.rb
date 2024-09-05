@@ -610,6 +610,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         visit jobseekers_profile_path
         sleep 4
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+        sleep 4
         choose "Yes", visible: false
         click_on I18n.t("buttons.save_and_continue")
 
