@@ -110,12 +110,14 @@ RSpec.describe "Jobseekers can manage their profile" do
     before { visit jobseekers_profile_path }
 
     it "prefills the form with the jobseeker's personal details" do
+      sleep 2
       expect(page).to have_content(previous_application.first_name)
       expect(page).to have_content(previous_application.last_name)
       expect(page).to have_content(previous_application.phone_number)
     end
 
     it "adds a notice to inform the user" do
+      sleep 2
       expect(page).to have_content("your details have been imported into your profile")
     end
   end
@@ -126,6 +128,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     before { visit jobseekers_profile_path }
 
     it "prefills the form with the jobseeker's provided personal details" do
+      sleep 2
       expect(page).to have_content(previous_application.phone_number)
     end
 
