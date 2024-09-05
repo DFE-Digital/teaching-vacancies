@@ -55,5 +55,5 @@ runs:
       shell: bash
 
     - name: Install Image Magick
-      run: apt install imagemagick
+      run: sudo apt install imagemagick
       shell: bash
