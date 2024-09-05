@@ -55,7 +55,7 @@ RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
     end
   end
 
-  context "with an incorrect token" do
+  context "with an incorrect token", js: false do
     before do
       visit unsubscribe_subscription_path(token)
     end
