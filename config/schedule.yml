@@ -80,6 +80,11 @@ remove_stale_vacancies:
   class: 'RemoveStaleVacanciesJob'
   queue: low
 
+withdraw_stale_drafts:
+  cron: '0 10 * * *'
+  class: 'WithdrawDraftApplicationsForExpiredVacanciesJob'
+  queue: low
+
 remove_vacancies_that_expired_yesterday_from_google_index:
   cron: '0 04 * * *'
   class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
