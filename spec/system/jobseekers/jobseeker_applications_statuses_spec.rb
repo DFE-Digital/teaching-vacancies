@@ -5,12 +5,17 @@ RSpec.describe "Jobseekers applications statuses" do
   let(:vacancy) { create(:vacancy, organisations: [school], visa_sponsorship_available: true) }
   let(:school) { create(:school) }
 
+  before do
+    login_as(jobseeker, scope: :jobseeker)
+  end
+
+  after { logout }
+
   context "when the jobseeker has a profile" do
     context "when the jobseeker has completed details in their profile" do
       let!(:jobseeker_profile) { create(:jobseeker_profile, :completed, jobseeker: jobseeker) }
 
       it "shows all sections with the status tag 'in progress'" do
-        login_as(jobseeker, scope: :jobseeker)
         visit job_path(vacancy)
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
@@ -30,7 +35,6 @@ RSpec.describe "Jobseekers applications statuses" do
       let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker, qualified_teacher_status: nil) }
 
       it "shows all sections with the status tag 'in progress'" do
-        login_as(jobseeker, scope: :jobseeker)
         visit job_path(vacancy)
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
@@ -50,7 +54,6 @@ RSpec.describe "Jobseekers applications statuses" do
       let!(:jobseeker_profile) { create(:jobseeker_profile, :with_qualifications, :with_employment_history, jobseeker: jobseeker, qualified_teacher_status: nil) }
 
       it "shows all sections that have been filled in with the status tag 'in progress' and shows empty sections with the status tag 'not started'" do
-        login_as(jobseeker, scope: :jobseeker)
         visit job_path(vacancy)
         within ".banner-buttons" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
@@ -67,7 +70,6 @@ RSpec.describe "Jobseekers applications statuses" do
 
       context "when the jobseeker completes a section" do
         it "shows the section as complete" do
-          login_as(jobseeker, scope: :jobseeker)
           visit job_path(vacancy)
           within ".banner-buttons" do
             click_on I18n.t("jobseekers.job_applications.banner_links.apply")

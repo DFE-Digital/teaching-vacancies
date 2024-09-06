@@ -20,6 +20,8 @@ RSpec.describe "Deadline-passed job applications for jobseekers" do
       login_as(jobseeker, scope: :jobseeker)
     end
 
+    after { logout }
+
     describe "on the 'my applications' page" do
       before do
         visit jobseekers_job_applications_path

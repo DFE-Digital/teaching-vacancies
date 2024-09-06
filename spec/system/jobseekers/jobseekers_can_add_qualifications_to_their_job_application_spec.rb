@@ -7,6 +7,8 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   context "adding a qualification" do
     before do
       visit jobseekers_job_application_build_path(job_application, :qualifications)

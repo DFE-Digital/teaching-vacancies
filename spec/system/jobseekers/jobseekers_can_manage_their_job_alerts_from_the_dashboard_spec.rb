@@ -6,6 +6,8 @@ RSpec.describe "Jobseekers can manage their job alerts from the dashboard" do
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
+    after { logout }
+
     context "when there are job alerts" do
       let!(:subscription) { create(:subscription, email: jobseeker.email, search_criteria: { keyword: "Maths" }, frequency: "daily") }
 

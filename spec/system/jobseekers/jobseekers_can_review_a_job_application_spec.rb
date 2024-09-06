@@ -10,6 +10,8 @@ RSpec.describe "Jobseekers can review a job application" do
     visit jobseekers_job_application_review_path(job_application)
   end
 
+  after { logout }
+
   it "displays all the job application information" do
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.personal_details.heading") do
       expect(page).to have_content(job_application.first_name)

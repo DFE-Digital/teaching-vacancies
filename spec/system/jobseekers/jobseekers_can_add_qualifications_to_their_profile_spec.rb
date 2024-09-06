@@ -8,6 +8,8 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
     login_as(jobseeker, scope: :jobseeker)
   end
 
+  after { logout }
+
   describe "changing personal details" do
     context "adding a qualification" do
       before { visit jobseekers_profile_path }

@@ -22,6 +22,8 @@ RSpec.describe "Main navigation for users to sign in and out" do
       visit root_path
     end
 
+    after { logout }
+
     it "renders the correct links" do
       within ".govuk-header__navigation" do
         expect(page).to have_content(I18n.t("nav.your_account"))
@@ -35,6 +37,8 @@ RSpec.describe "Main navigation for users to sign in and out" do
       login_publisher(publisher: publisher, organisation: organisation)
       visit root_path
     end
+
+    after { logout }
 
     it "renders the correct links" do
       within ".govuk-header__navigation" do

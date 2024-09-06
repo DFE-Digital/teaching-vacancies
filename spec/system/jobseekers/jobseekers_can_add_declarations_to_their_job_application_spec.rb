@@ -7,6 +7,8 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   it "allows jobseekers to add their declarations" do
     visit jobseekers_job_application_build_path(job_application, :declarations)
 

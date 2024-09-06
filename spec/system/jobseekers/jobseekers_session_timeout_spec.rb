@@ -6,6 +6,8 @@ RSpec.describe "Jobseekers session timeout" do
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   it "expires after the desired timeout period" do
     visit jobseekers_saved_jobs_path
 
