@@ -42,7 +42,7 @@ module JobApplicationsHelper
 
   def job_application_jobseeker_profile_info(job_application)
     profile = job_application&.jobseeker&.jobseeker_profile
-    if profile.has_teacher_reference_number.present? && profile.has_teacher_reference_number == "yes"
+    if profile&.has_teacher_reference_number.present? && profile&.has_teacher_reference_number == "yes"
       profile.teacher_reference_number
     else
       "None"

@@ -6,6 +6,8 @@ RSpec.describe "Job applications" do
   let(:jobseeker) { create(:jobseeker) }
 
   describe "GET #new" do
+    let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+
     context "when the jobseeker is not signed in" do
       before { get(new_jobseekers_job_job_application_path(vacancy.id)) }
 
@@ -82,6 +84,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "POST #create" do
+    let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+
     before { sign_in(jobseeker, scope: :jobseeker) }
 
     context "when the job is not live" do
@@ -266,6 +270,7 @@ RSpec.describe "Job applications" do
 
     context "when `Submit application`" do
       context "when the review form is invalid" do
+        let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
         let(:confirm_data_usage) { 0 }
 
         it "does not submit the job application or send email and renders the review template" do
@@ -279,6 +284,8 @@ RSpec.describe "Job applications" do
       end
 
       context "when the review form is valid" do
+        let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker, has_teacher_reference_number: "yes", teacher_reference_number: "1234567") }
+
         it "submits the job application and sends email" do
           assert_emails 1 do
             expect { post jobseekers_job_application_submit_path(job_application.id), params: params }
@@ -290,6 +297,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #show" do
+    let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+
     before { sign_in(jobseeker, scope: :jobseeker) }
 
     context "when the application is not a draft" do
@@ -330,6 +339,8 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #review" do
+    let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+
     before { sign_in(jobseeker, scope: :jobseeker) }
 
     context "when the application is not a draft" do
