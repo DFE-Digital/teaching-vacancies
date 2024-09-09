@@ -54,6 +54,7 @@ RSpec.configure do |config|
 
     mock_response = [double(country: "United Kingdom")]
     allow(Geocoder).to receive(:search).and_return(mock_response)
+    stub_request(:get, %r{maps.googleapis.com/maps/api/place/autocomplete}).to_return(status: 200, body: '{"predictions": []}', headers: {})
   end
 
   config.before(:each, type: :system) do

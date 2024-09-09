@@ -69,7 +69,6 @@ en:
     request_dsi_account: Request a DfE Sign-in account
     resend_email: Resend email
     return_to_profile: Return to profile
-    return_to_profile: Return to profile
     save: Save
     save_and_continue: Save and continue
     save_and_finish_later: Save and finish later
@@ -633,9 +632,10 @@ en:
         email: What is your email address?
         comment: Is there anything else you'd like to tell us?
         other_unsubscribe_reason_comment: Briefly, tell us more about that reason
+        job_found_unsubscribe_reason_comment: Where did you find your job?
         unsubscribe_reason_options:
           circumstances_change: My circumstances have changed
-          job_found: I have found a teaching job
+          job_found: I have found a job
           not_relevant: The alerts I am receiving are not relevant to me
           other_reason: Another reason
         user_participation_response_options:
@@ -970,7 +970,7 @@ en:
       jobseekers_unsubscribe_feedback_form:
         reason: Why do you want to unsubscribe from this alert?
         user_participation_response: Would you like to participate in our research?
-      jobseekers_profile_location_preferences: 
+      jobseekers_profile_location_preferences:
         another_location: Do you want to add another location?
 
       publishers_job_listing_about_the_role_form:

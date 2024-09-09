@@ -1,23 +1,29 @@
 resource "aws_s3_bucket" "db_backups" {
   bucket = "${data.aws_caller_identity.current.account_id}-tv-db-backups"
+}
 
-  lifecycle_rule {
-    id      = "full"
-    prefix  = "full"
-    enabled = true
+resource "aws_s3_bucket_lifecycle_configuration" "db_backups" {
+  bucket = aws_s3_bucket.db_backups.id
 
+  rule {
+    id = "full"
+    filter {
+      prefix = "full/"
+    }
     expiration {
       days = 7
     }
+    status = "Enabled"
   }
-  lifecycle_rule {
-    id      = "sanitised"
-    prefix  = "sanitised"
-    enabled = true
-
+  rule {
+    id = "sanitised"
+    filter {
+      prefix = "sanitised/"
+    }
     expiration {
       days = 7
     }
+    status = "Enabled"
   }
 }
 

@@ -231,11 +231,11 @@ en:
           title: Confirm deletion of a gap — Application
         edit:
           caption: Current role and employment history
-          heading: Please tell us what you were doing over this period
+          heading: Add a gap in work history
           title: Change the reason of a gap — Application
         new:
           caption: Current role and employment history
-          heading: Please tell us what you were doing over this period
+          heading: Add a gap in work history
           title: Add a reason for gap — Application
       training_and_cpds:
         heading: Training and continuing professional development (CPD)
@@ -615,11 +615,11 @@ en:
           title: Confirm deletion of a gap — Profile
         edit:
           caption: Current role and employment history
-          heading: Please tell us what you were doing over this period
+          heading: Add a gap in work history
           title: Change the reason of a gap — Profile
         new:
           caption: Current role and employment history
-          heading: Please tell us what you were doing over this period
+          heading: Add a gap in work history
           title: Add a reason for gap — Profile
       hide_profile:
         add:

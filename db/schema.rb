@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_22_141510) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_05_135248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -168,6 +168,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_22_141510) do
     t.string "category"
     t.text "occupation"
     t.string "origin_path"
+    t.text "job_found_unsubscribe_reason_comment"
     t.index ["job_application_id"], name: "index_feedbacks_job_application_id"
     t.index ["jobseeker_id"], name: "index_feedbacks_jobseeker_id"
     t.index ["publisher_id"], name: "index_feedbacks_publisher_id"

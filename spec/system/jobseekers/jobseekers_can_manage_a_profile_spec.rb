@@ -206,7 +206,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         within "ul.govuk-list.govuk-error-summary__list" do
           expect(page).to have_link("Enter a school or other organisation", href: "#jobseekers-profile-employment-form-organisation-field-error")
           expect(page).to have_link("Enter your job title", href: "#jobseekers-profile-employment-form-job-title-field-error")
-          expect(page).to have_link("Tell us briefly what your main duties were", href: "#jobseekers-profile-employment-form-main-duties-field-error")
+          expect(page).to have_link("Enter your main duties for this role", href: "#jobseekers-profile-employment-form-main-duties-field-error")
           expect(page).to have_link("Enter your reason for leaving the role", href: "#jobseekers-profile-employment-form-reason-for-leaving-field-error")
           expect(page).to have_link("Enter a date in the correct format", href: "#jobseekers-profile-employment-form-started-on-field-error")
           expect(page).to have_link("Select yes if this is your current role", href: "#jobseekers-profile-employment-form-current-role-field-error")
@@ -703,7 +703,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       check "Assistant headteacher"
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
-      expect(page).to have_css("h3", text: "Job preferencesPhases")
+      expect(page).to have_css("h3", text: "Job preferencesEducation phase")
 
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
@@ -846,7 +846,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         check "IT support"
         click_on I18n.t("buttons.save_and_continue")
         expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
-        expect(page).to have_css("h3", text: "Job preferencesPhases")
+        expect(page).to have_css("h3", text: "Job preferencesEducation phase")
 
         check "Secondary"
         click_on I18n.t("buttons.save_and_continue")

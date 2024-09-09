@@ -20,6 +20,9 @@
           - if reason == "other_reason"
             = f.govuk_radio_button :unsubscribe_reason, reason do
               = f.govuk_text_field :other_unsubscribe_reason_comment, label: { size: "s" }
+          - elsif reason == "job_found"
+            = f.govuk_radio_button :unsubscribe_reason, reason do
+              = f.govuk_text_field :job_found_unsubscribe_reason_comment, label: { size: "s" }
           - else
             = f.govuk_radio_button :unsubscribe_reason, reason
 
