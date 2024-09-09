@@ -71,7 +71,7 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
     end
   end
 
-  describe "working_patterns" do
+  describe "working_patterns mapping" do
     context "when working_patterns includes `flexible`" do
       let(:job_listings_response_body) do
         hash = JSON.parse(super())

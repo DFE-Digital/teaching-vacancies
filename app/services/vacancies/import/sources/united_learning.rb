@@ -102,7 +102,13 @@ class Vacancies::Import::Sources::UnitedLearning
   def working_patterns_for(item)
     return [] if item["Working_patterns"].blank?
 
-    item["Working_patterns"].delete(" ").split(",").uniq
+    item["Working_patterns"].delete(" ").split(",").map do |pattern|
+      if pattern == "flexible" || pattern == "term_time"
+        "part_time"
+      else
+        pattern
+      end
+    end.uniq
   end
 
   def ect_status_for(item)

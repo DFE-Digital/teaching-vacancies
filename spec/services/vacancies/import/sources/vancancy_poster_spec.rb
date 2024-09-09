@@ -56,6 +56,48 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
       expect(vacancy.organisations).to eq(schools)
     end
 
+    describe "working_patterns mapping" do
+      context "when working_patterns includes `flexible`" do
+        let(:response_body) { super().gsub("full_time", "full_time,flexible") }
+  
+        it "maps flexible to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+  
+      context "when working_patterns includes `flexible` and `part_time`" do
+        let(:response_body) { super().gsub("full_time", "full_time,part_time,flexible") }
+  
+        it "maps flexible to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+  
+      context "when working_patterns includes `term_time`" do
+        let(:response_body) { super().gsub("full_time", "full_time,term_time") }
+  
+        it "maps term_time to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+  
+      context "when working_patterns includes `term_time` and `part_time`" do
+        let(:response_body) { super().gsub("full_time", "full_time,part_time,term_time") }
+    
+        it "maps term_time to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+
+      context "when the working patterns list contains spaces" do
+        let(:response_body) { super().gsub("full_time", "full_time, part_time") }
+
+        it "records both working patterns in the vacancy" do
+          expect(vacancy.working_patterns).to contain_exactly("part_time", "full_time")
+        end
+      end
+    end
+
     describe "job roles mapping" do
       let(:response_body) { super().gsub("deputy_headteacher", job_role) }
 

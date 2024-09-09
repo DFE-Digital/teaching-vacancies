@@ -59,12 +59,24 @@ class Vacancies::Import::Sources::Ventrus
       ect_status: ect_status_for(item),
       key_stages: item["Key_Stage"].presence&.split(","),
       # subjects: item["Subjects"].presence&.split(",") || [], # Ventrus don't have subjects in their feed
-      working_patterns: item["Working_Patterns"].presence&.split(","),
+      working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(schools))
+  end
+
+  def working_patterns_for(item)
+    return [] if item["Working_Patterns"].blank?
+    
+    item["Working_Patterns"].delete(" ").split(",").map do |pattern|
+      if pattern == "flexible" || pattern == "term_time" || pattern == "job_share"
+        "part_time"
+      else
+        pattern
+      end
+    end.uniq
   end
 
   def ect_status_for(item)

@@ -113,6 +113,56 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       end
     end
 
+    describe "working_patterns mapping" do
+      context "when working_patterns includes `flexible`" do
+        let(:response_body) do
+          hash = JSON.parse(super())
+          hash["result"].first["workingPatterns"] = "full_time,flexible"
+          hash.to_json
+        end
+  
+        it "maps flexible to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+  
+      context "when working_patterns includes `flexible` and `part_time`" do
+        let(:response_body) do
+          hash = JSON.parse(super())
+          hash["result"].first["workingPatterns"] = "full_time,part_time,flexible"
+          hash.to_json
+        end
+  
+        it "maps flexible to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+  
+      context "when working_patterns includes `term_time`" do
+        let(:response_body) do
+          hash = JSON.parse(super())
+          hash["result"].first["workingPatterns"] = "full_time,term_time"
+          hash.to_json
+        end
+  
+        it "maps term_time to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+  
+      context "when working_patterns includes `term_time` and `part_time`" do
+        let(:response_body) do
+          hash = JSON.parse(super())
+          hash["result"].first["workingPatterns"] = "full_time,part_time,term_time"
+          hash.to_json
+        end
+    
+        it "maps term_time to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+    end
+
     describe "start date mapping" do
       let(:fixture_date) { "2022-11-21T00:00:00" }
 

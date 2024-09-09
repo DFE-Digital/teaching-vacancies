@@ -118,6 +118,40 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
       end
     end
 
+    describe "working_patterns mapping" do
+      context "when working_patterns includes `flexible`" do
+        let(:response_body) { super().gsub("part_time", "full_time,flexible") }
+  
+        it "maps flexible to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+  
+      context "when working_patterns includes `flexible` and `part_time`" do
+        let(:response_body) { super().gsub("part_time", "full_time,part_time,flexible") }
+  
+        it "maps flexible to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+  
+      context "when working_patterns includes `term_time`" do
+        let(:response_body) { super().gsub("part_time", "full_time,term_time") }
+  
+        it "maps term_time to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+  
+      context "when working_patterns includes `term_time` and `part_time`" do
+        let(:response_body) { super().gsub("part_time", "full_time,part_time,term_time") }
+    
+        it "maps term_time to part time" do
+          expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        end
+      end
+    end
+
     describe "job roles mapping" do
       let(:response_body) { super().gsub("head_of_year_or_phase", job_roles.join(",")) }
 

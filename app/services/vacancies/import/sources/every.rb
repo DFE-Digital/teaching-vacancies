@@ -51,7 +51,7 @@ class Vacancies::Import::Sources::Every
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence&.split(",") || [],
-      working_patterns: item["workingPatterns"].presence&.split(","),
+      working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
@@ -62,6 +62,18 @@ class Vacancies::Import::Sources::Every
       job_location: :at_one_school,
     }.merge(organisation_fields(item, schools))
      .merge(start_date_fields(item))
+  end
+
+  def working_patterns_for(item)
+    return [] if item["workingPatterns"].blank?
+    
+    item["workingPatterns"].split(",").map do |pattern|
+      if pattern == "flexible" || pattern == "term_time"
+        "part_time"
+      else
+        pattern
+      end
+    end.uniq
   end
 
   def start_date_fields(item)
