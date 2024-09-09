@@ -14,8 +14,7 @@ RSpec.describe "Jobseekers can update their profile from job applications" do
     let(:profile_qualification) { create(:qualification, name: "Original profile qualification") }
     let(:profile_employment) { create(:employment, job_title: "Original profile employment") }
     let(:profile_training) { create(:training_and_cpd, name: "Original profile training") }
-    let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker, qualifications: [profile_qualification], employments: [profile_employment], training_and_cpds: [profile_training]) }
-
+    let!(:jobseeker_profile) { create(:jobseeker_profile, :with_trn, jobseeker: jobseeker, qualifications: [profile_qualification], employments: [profile_employment], training_and_cpds: [profile_training]) }
     before do
       login_as(jobseeker, scope: :jobseeker)
       visit jobseekers_job_application_review_path(job_application)
