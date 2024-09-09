@@ -38,6 +38,8 @@ en:
       too_long: Occupation must not be more than 30 characters
     other_unsubscribe_reason_comment:
       blank: Tell us why you want to unsubscribe
+    job_found_unsubscribe_reason_comment:
+      blank: Enter where you found your job
     unsubscribe_reason:
       inclusion: Tell us why you want to unsubscribe
     user_participation_response:
@@ -532,7 +534,7 @@ en:
               blank: Enter your building and street
             teacher_reference_number:
               invalid: Enter a teacher reference number in the correct format
-            right_to_work_in_uk: 
+            right_to_work_in_uk:
               inclusion: Select no if you have the right to work in the UK
         jobseekers/job_application/personal_statement_form:
           attributes:

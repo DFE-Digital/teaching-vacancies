@@ -50,8 +50,7 @@ jobs:
     - name: Get secrets from AWS ParameterStore
       uses: dkershner6/aws-ssm-getparameters-action@v2
       with:
-        parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK,
-          /teaching-vacancies/github_action/infra/git_hub_service_account_token = GIT_HUB_SERVICE_ACCOUNT_TOKEN"
+        parameterPairs: "/teaching-vacancies/github_action/infra/slack_webhook = SLACK_WEBHOOK"
 
     - uses: actions/checkout@v4
       name: Checkout Code

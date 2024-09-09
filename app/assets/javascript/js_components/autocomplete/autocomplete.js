@@ -20,15 +20,16 @@ export default class extends Controller {
     const formInput = this.element.querySelector('input');
     const dataSource = api[this.element.dataset.source];
     const position = this.element.dataset.autocompletePosition;
+    const inputParent = formInput.parentNode;
 
-    this.element.insertAdjacentHTML('beforeend', suggestionsContainerHTML);
+    inputParent.insertAdjacentHTML('beforeend', suggestionsContainerHTML);
 
     if (formInput && dataSource) {
       let currentInputValue = formInput.value;
-      formInput.parentNode.removeChild(formInput);
+      inputParent.removeChild(formInput);
 
       accessibleAutocomplete({
-        element: this.element.getElementsByClassName(SUGGESTIONS_CLASSNAME).item(0),
+        element: inputParent.getElementsByClassName(SUGGESTIONS_CLASSNAME).item(0),
         id: formInput.id,
         name: formInput.name,
         defaultValue: currentInputValue,
