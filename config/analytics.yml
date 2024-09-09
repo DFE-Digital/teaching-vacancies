@@ -101,6 +101,7 @@ shared:
     - close_account_reason_comment
     - occupation
     - origin_path
+    - job_found_unsubscribe_reason_comment
   job_applications:
     - id
     - status
