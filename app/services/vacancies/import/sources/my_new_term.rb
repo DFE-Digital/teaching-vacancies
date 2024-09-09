@@ -58,7 +58,7 @@ class Vacancies::Import::Sources::MyNewTerm
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence || [],
-      working_patterns: item["workingPatterns"].presence,
+      working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
@@ -67,6 +67,19 @@ class Vacancies::Import::Sources::MyNewTerm
       visa_sponsorship_available: visa_sponsorship_available_for(item),
     }.merge(organisation_fields(schools))
      .merge(start_date_fields(item))
+  end
+
+  def working_patterns_for(item)
+    if item["workingPatterns"]
+      item["workingPatterns"] = item["workingPatterns"].map do |pattern|
+        if pattern == "flexible" || pattern == "term_time"
+          "part_time"
+        else
+          pattern
+        end
+      end.uniq
+    end
+    item["workingPatterns"]
   end
 
   def organisation_fields(schools)
