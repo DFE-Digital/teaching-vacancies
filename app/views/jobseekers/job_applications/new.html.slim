@@ -1,5 +1,11 @@
 - content_for :page_title_prefix, t(".title")
 
+- if current_jobseeker.job_applications.blank?
+  = govuk_notification_banner title_text: t("banners.important") do
+    h3.govuk-heading-s = t(".cannot_see_past_applications.title")
+    p.govuk-body = t(".cannot_see_past_applications.paragraph1")
+    p.govuk-body = t(".cannot_see_past_applications.paragraph2")
+
 span.govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
 h2.govuk-heading-xl = t("jobseekers.job_applications.heading")
 
