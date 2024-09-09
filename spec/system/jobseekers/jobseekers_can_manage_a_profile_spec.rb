@@ -76,7 +76,7 @@ RSpec.describe "Jobseekers can manage their profile" do
           phone_number_provided: true,
           phone_number: old_phone_number,
           completed_steps: { "name" => "completed", "phone_number" => "completed" },
-        )
+          )
 
         visit jobseekers_profile_path
       end
@@ -157,7 +157,7 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "changing the jobseekers's QTS status" do
     before { visit jobseekers_profile_path }
 
-    it "allows the jobseeker to edit their QTS status to yes with year acheived" do
+    it "allows the jobseeker to edit their QTS status to yes with year achieved" do
       click_link("Add qualified teacher status")
       within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
         choose "Yes"

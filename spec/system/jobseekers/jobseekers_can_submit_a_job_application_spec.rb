@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe "Jobseekers can submit a job application" do
   include ActiveJob::TestHelper
 
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
+  let(:jobseeker_profile) { create(:jobseeker_profile, :with_trn) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, organisations: [organisation]) }
 
