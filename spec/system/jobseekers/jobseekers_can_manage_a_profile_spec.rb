@@ -566,8 +566,6 @@ RSpec.describe "Jobseekers can manage their profile" do
       login_publisher(publisher: forbidden_publisher)
       visit publishers_jobseeker_profiles_path
       expect(page).not_to have_content(profile.full_name)
-
-      click_on I18n.t("nav.sign_out")
     end
 
     context "if the jobseeker is already hidden from the school" do
@@ -587,8 +585,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
-
-        click_on I18n.t("nav.sign_out")
       end
     end
 
@@ -632,8 +628,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         login_publisher(publisher: permitted_publisher)
         visit publishers_jobseeker_profiles_path
         expect(page).to have_content(profile.full_name)
-
-        click_on I18n.t("nav.sign_out")
       end
     end
 
@@ -680,8 +674,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         expect(page).to have_content(forbidden_trust.name)
         expect(page).to have_content(forbidden_organisation.name)
-
-        click_on I18n.t("nav.sign_out")
       end
     end
   end
