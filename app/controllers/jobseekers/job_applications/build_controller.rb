@@ -40,10 +40,10 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def form
     @form ||= begin
-                attributes = form_attributes
-                attributes.merge!(jobseeker_profile_attributes) if step == :professional_status
-                form_class.new(attributes)
-              end
+      attributes = form_attributes
+      attributes.merge!(jobseeker_profile_attributes) if step == :professional_status
+      form_class.new(attributes)
+    end
   end
 
   def form_class
@@ -89,12 +89,12 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
       update_fields.merge(
         completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
         in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
-        )
+      )
     else
       update_fields.merge(
         completed_steps: job_application.completed_steps.append(step.to_s).uniq,
         in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
-        )
+      )
     end
   end
 
@@ -138,6 +138,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     current_jobseeker.jobseeker_profile.update(
       teacher_reference_number: form_params[:teacher_reference_number],
       has_teacher_reference_number: form_params[:has_teacher_reference_number],
-      )
+    )
   end
 end
