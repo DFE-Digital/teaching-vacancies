@@ -14,4 +14,12 @@ class Jobseekers::AccountMailer < Jobseekers::BaseMailer
       template: template,
     )
   end
+
+  def request_account_transfer(record, _opts = {})
+    send_email(
+      jobseeker: record,
+      template: template,
+      token: record.account_merge_confirmation_code
+    )
+  end
 end
