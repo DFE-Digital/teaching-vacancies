@@ -15,20 +15,18 @@ southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
 
 # Team users
 users = [
-  { email: "alex.lee@education.gov.uk", family_name: "Alex", given_name: "Lee" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
   { email: "brandon1.chan@education.gov.uk", family_name: "Chan", given_name: "Brandon" },
   { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
   { email: "davide.dippolito@education.gov.uk", family_name: "Dippolito", given_name: "Davide" },
   { email: "halima.ikuomola@education.gov.uk", family_name: "Ikuomola", given_name: "Halima" },
   { email: "ellie.nodder@education.gov.uk", family_name: "Nodder", given_name: "Ellie" },
-  { email: "grace.bryant@education.gov.uk", family_name: "Bryant", given_name: "Grace" },
   { email: "joe.gibb@education.gov.uk", family_name: "Gibb", given_name: "Joe" },
   { email: "kyle.macpherson@education.gov.uk", family_name: "MacPherson", given_name: "Kyle" },
   { email: "luke.anslow@education.gov.uk", family_name: "Anslow", given_name: "Luke" },
   { email: "marc.sardon@education.gov.uk", family_name: "Sardon", given_name: "Marc" },
-  { email: "matthew.jefford@education.gov.uk", family_name: "Jefford", given_name: "Matthew" },
   { email: "stephanie.maskery@education.gov.uk", family_name: "Maskery", given_name: "Stephanie" },
+  { email: "stephen.dicks@education.gov.uk", family_name: "Dicks", given_name: "Stephen" },
   { email: "yvonne.ridley@education.gov.uk", family_name: "Yvonne", given_name: "Ridley" },
 ]
 
