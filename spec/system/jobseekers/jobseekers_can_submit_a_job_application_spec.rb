@@ -12,6 +12,8 @@ RSpec.describe "Jobseekers can submit a job application" do
     visit jobseekers_job_application_review_path(job_application)
   end
 
+  after { logout }
+
   context "when the application is complete" do
     let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 

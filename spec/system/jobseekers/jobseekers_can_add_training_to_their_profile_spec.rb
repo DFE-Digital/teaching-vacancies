@@ -8,6 +8,8 @@ RSpec.describe "Jobseekers can add training to their profile" do
     login_as(jobseeker, scope: :jobseeker)
   end
 
+  after { logout }
+
   describe "changing training details" do
     context "adding training" do
       before { visit jobseekers_profile_path }

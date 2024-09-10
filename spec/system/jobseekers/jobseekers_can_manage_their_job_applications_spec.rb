@@ -12,6 +12,8 @@ RSpec.describe "Jobseekers can manage their job applications" do
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
+    after { logout }
+
     context "when there are job applications" do
       let!(:draft_job_application) { create(:job_application, updated_at: 1.day.ago, jobseeker: jobseeker, vacancy: vacancy1) }
       let!(:deadline_passed_job_application) { create(:job_application, updated_at: 2.days.ago, jobseeker: jobseeker, vacancy: vacancy2) }

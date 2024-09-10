@@ -23,6 +23,8 @@ RSpec.describe "Jobseekers can update their profile from job applications" do
       check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
     end
 
+    after { logout }
+
     scenario "jobseekers can update their profile qualifications using the job application information on submission" do
       check I18n.t("helpers.label.jobseekers_job_application_review_form.update_profile_options.qualifications")
       click_on I18n.t("buttons.submit_application")
@@ -82,5 +84,7 @@ RSpec.describe "Jobseekers can update their profile from job applications" do
       visit jobseekers_job_application_review_path(job_application)
       expect(page.body).not_to have_content(I18n.t(".jobseekers.job_applications.review.confirmation.update_your_profile.heading"))
     end
+
+    after { logout }
   end
 end
