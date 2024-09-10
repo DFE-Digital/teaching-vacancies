@@ -1,5 +1,11 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
 
+- if current_jobseeker.job_applications.blank?
+  = govuk_notification_banner title_text: t("banners.important") do
+    h3.govuk-heading-s = t(".cannot_see_past_applications.title")
+    p.govuk-body = t(".cannot_see_past_applications.paragraph1")
+    p.govuk-body = t(".cannot_see_past_applications.paragraph2")
+
 = job_application_review(@job_application, step_process: step_process, show_tracks: current_jobseeker.job_applications.not_draft.none?) do |r|
   - r.with_header do
     = render "banner"

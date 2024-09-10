@@ -42,7 +42,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     new_job_application = prefill_job_application_with_available_data
 
-    redirect_to jobseekers_job_application_review_path(new_job_application), notice: t("jobseekers.job_applications.new_quick_apply.import_from_previous_application")
+    if jobseeker.job_applications.blank?
+      redirect_to jobseekers_job_application_review_path(new_job_application)
+    else
+      redirect_to jobseekers_job_application_review_path(new_job_application), notice: t("jobseekers.job_applications.new_quick_apply.import_from_previous_application")
+    end
   end
 
   def submit

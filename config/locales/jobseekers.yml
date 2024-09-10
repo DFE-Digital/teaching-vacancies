@@ -345,10 +345,6 @@ en:
           into a %{profile_link} so schools can contact you about relevant roles.
         profile_link_text: candidate profile
         title: Application
-        cannot_see_past_applications:
-          title: Can't see your information from past applications?
-          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, information from your past applications will not automatically be saved.
-          paragraph2: You can request to transfer information from your past applications.
       about_your_application:
         title: About your application
         warning:
@@ -429,6 +425,10 @@ en:
         phone_number: Phone number
         relationship: Relationship to applicant
       review:
+        cannot_see_past_applications:
+          title: Can't see your information from past applications?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, information from your past applications will not automatically be saved.
+          paragraph2: You can request to transfer information from your past applications.
         confirmation:
           heading: Confirmation
           update_your_profile:
