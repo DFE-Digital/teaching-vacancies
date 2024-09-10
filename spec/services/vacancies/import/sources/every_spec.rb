@@ -125,7 +125,7 @@ RSpec.describe Vacancies::Import::Sources::Every do
       end
 
       it "maps flexible to part time" do
-        expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe Vacancies::Import::Sources::Every do
       end
 
       it "maps flexible to part time" do
-        expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
       end
     end
 
@@ -149,7 +149,7 @@ RSpec.describe Vacancies::Import::Sources::Every do
       end
 
       it "maps term_time to part time" do
-        expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
       end
     end
 
@@ -159,9 +159,9 @@ RSpec.describe Vacancies::Import::Sources::Every do
         hash["result"].first["workingPatterns"] = "full_time,part_time,term_time"
         hash.to_json
       end
-  
+
       it "maps term_time to part time" do
-        expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
       end
     end
 
@@ -171,7 +171,7 @@ RSpec.describe Vacancies::Import::Sources::Every do
         hash["result"].first["workingPatterns"] = "job_share"
         hash.to_json
       end
-  
+
       it "maps job_share to part time" do
         expect(vacancy.working_patterns).to eq ["part_time"]
       end

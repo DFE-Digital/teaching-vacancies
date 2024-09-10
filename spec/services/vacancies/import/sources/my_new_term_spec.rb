@@ -75,48 +75,48 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
     context "when working_patterns includes `flexible`" do
       let(:job_listings_response_body) do
         hash = JSON.parse(super())
-        hash["data"]["jobs"].first["workingPatterns"] = ["full_time", "flexible"]
+        hash["data"]["jobs"].first["workingPatterns"] = %w[full_time flexible]
         hash.to_json
       end
 
       it "maps flexible to part time" do
-        expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
       end
     end
 
     context "when working_patterns includes `flexible` and `part_time`" do
       let(:job_listings_response_body) do
         hash = JSON.parse(super())
-        hash["data"]["jobs"].first["workingPatterns"] = ["full_time", "part_time", "flexible"]
+        hash["data"]["jobs"].first["workingPatterns"] = %w[full_time part_time flexible]
         hash.to_json
       end
 
       it "maps flexible to part time" do
-        expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
       end
     end
 
     context "when working_patterns includes `term_time`" do
       let(:job_listings_response_body) do
         hash = JSON.parse(super())
-        hash["data"]["jobs"].first["workingPatterns"] = ["full_time", "term_time"]
+        hash["data"]["jobs"].first["workingPatterns"] = %w[full_time term_time]
         hash.to_json
       end
 
       it "maps term_time to part time" do
-        expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
       end
     end
 
     context "when working_patterns includes `term_time` and `part_time`" do
       let(:job_listings_response_body) do
         hash = JSON.parse(super())
-        hash["data"]["jobs"].first["workingPatterns"] = ["full_time", "part_time", "term_time"]
+        hash["data"]["jobs"].first["workingPatterns"] = %w[full_time part_time term_time]
         hash.to_json
       end
-  
+
       it "maps term_time to part time" do
-        expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
       end
     end
 
@@ -126,7 +126,7 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
         hash["data"]["jobs"].first["workingPatterns"] = ["job_share"]
         hash.to_json
       end
-  
+
       it "maps job_share to part time" do
         expect(vacancy.working_patterns).to eq ["part_time"]
       end

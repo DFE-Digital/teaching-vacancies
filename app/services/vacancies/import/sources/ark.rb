@@ -77,7 +77,7 @@ class Vacancies::Import::Sources::Ark
       phases: phases_for(item),
       publish_on: publish_on_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
-      is_job_share: is_job_share_for(item)
+      is_job_share: job_share_for?(item),
     }.merge(organisation_fields(schools))
     .merge(start_date_fields(item))
   end
@@ -151,7 +151,7 @@ class Vacancies::Import::Sources::Ark
     .gsub(/Part Time|Casual|Flexible|Term Time|Job Share/, "part_time")
   end
 
-  def is_job_share_for(item)
+  def job_share_for?(item)
     item.fetch_by_attribute("category", "domain", "Working Pattern") == "Job Share"
   end
 

@@ -57,27 +57,25 @@ class Vacancies::Import::Sources::Every
       phases: phase_for(item),
       key_stages: item["keyStages"].presence&.split(","),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
-      is_job_share: is_job_share_for(item),
-
+      is_job_share: job_share_for?(item),
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
-    }.merge(organisation_fields(item, schools))
-     .merge(start_date_fields(item))
+    }.merge(organisation_fields(item, schools)).merge(start_date_fields(item))
   end
 
   def working_patterns_for(item)
     return [] if item["workingPatterns"].blank?
-    
-    item["workingPatterns"].delete(" ").split(",").map do |pattern|
-      if ["flexible", "term_time", "job_share"].include?(pattern)
+
+    item["workingPatterns"].delete(" ").split(",").map { |pattern|
+      if LEGACY_WORKING_PATTERNS.include?(pattern)
         "part_time"
       else
         pattern
       end
-    end.uniq
+    }.uniq
   end
 
-  def is_job_share_for(item)
+  def job_share_for?(item)
     item["workingPatterns"].include?("job_share")
   end
 

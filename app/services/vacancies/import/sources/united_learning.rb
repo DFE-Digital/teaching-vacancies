@@ -68,7 +68,7 @@ class Vacancies::Import::Sources::UnitedLearning
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
-      is_job_share: is_job_share_for(item)
+      is_job_share: job_share_for?(item),
     }.merge(organisation_fields(item))
   end
 
@@ -103,16 +103,16 @@ class Vacancies::Import::Sources::UnitedLearning
   def working_patterns_for(item)
     return [] if item["Working_patterns"].blank?
 
-    item["Working_patterns"].delete(" ").split(",").map do |pattern|
-      if ["flexible", "term_time", "job_share"].include?(pattern)
+    item["Working_patterns"].delete(" ").split(",").map { |pattern|
+      if LEGACY_WORKING_PATTERNS.include?(pattern)
         "part_time"
       else
         pattern
       end
-    end.uniq
+    }.uniq
   end
 
-  def is_job_share_for(item)
+  def job_share_for?(item)
     item["Working_patterns"].include?("job_share")
   end
 

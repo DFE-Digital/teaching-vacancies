@@ -162,43 +162,43 @@ RSpec.describe Vacancies::Import::Sources::UnitedLearning do
 
         context "when working_patterns includes `flexible`" do
           let(:working_patterns) { "full_time,flexible" }
-    
+
           it "maps flexible to part time" do
-            expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+            expect(vacancy.working_patterns).to eq %w[full_time part_time]
           end
         end
-    
+
         context "when working_patterns includes `flexible` and `part_time`" do
           let(:working_patterns) { "full_time,part_time,flexible" }
-    
+
           it "maps flexible to part time" do
-            expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+            expect(vacancy.working_patterns).to eq %w[full_time part_time]
           end
         end
-    
+
         context "when working_patterns includes `term_time`" do
           let(:working_patterns) { "full_time,term_time" }
-    
+
           it "maps term_time to part time" do
-            expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+            expect(vacancy.working_patterns).to eq %w[full_time part_time]
           end
         end
-    
+
         context "when working_patterns includes `term_time` and `part_time`" do
           let(:working_patterns) { "full_time,part_time,term_time" }
-      
+
           it "maps term_time to part time" do
-            expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
+            expect(vacancy.working_patterns).to eq %w[full_time part_time]
           end
         end
 
         context "when working_patterns includes `job_share`" do
           let(:working_patterns) { "job_share" }
-      
+
           it "maps job_share to part time" do
             expect(vacancy.working_patterns).to eq ["part_time"]
           end
-    
+
           it "sets is_job_share to true" do
             expect(vacancy.is_job_share).to eq true
           end
