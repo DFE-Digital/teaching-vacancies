@@ -281,6 +281,17 @@ RSpec.describe Vacancies::Import::Sources::Ark do
           end
         end
       end
+
+      context "when the working pattern is Job Share" do
+        let(:working_pattern) { "Job Share" }
+        it "maps the source working pattern to '[part_time]' in the vacancy" do
+          expect(vacancy.working_patterns).to eq(["part_time"])
+        end
+
+        it "sets is_job_share to true" do
+          expect(vacancy.is_job_share).to eq(true)
+        end
+      end
     end
 
     describe "contract type mapping" do

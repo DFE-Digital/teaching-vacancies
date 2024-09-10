@@ -89,6 +89,18 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
         end
       end
 
+      context "when working pattern includes `job_share`" do
+        let(:response_body) { super().gsub("full_time", "job_share") }
+    
+        it "maps job_share to part time" do
+          expect(vacancy.working_patterns).to eq ["part_time"]
+        end
+
+        it "sets is_job_share to true" do
+          expect(vacancy.is_job_share).to eq true
+        end
+      end
+
       context "when the working patterns list contains spaces" do
         let(:response_body) { super().gsub("full_time", "full_time, part_time") }
 

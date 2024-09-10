@@ -65,21 +65,25 @@ class Vacancies::Import::Sources::MyNewTerm
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
       visa_sponsorship_available: visa_sponsorship_available_for(item),
+      is_job_share: is_job_share_for(item)
     }.merge(organisation_fields(schools))
      .merge(start_date_fields(item))
   end
 
   def working_patterns_for(item)
-    if item["workingPatterns"]
-      item["workingPatterns"] = item["workingPatterns"].map do |pattern|
-        if pattern == "flexible" || pattern == "term_time"
-          "part_time"
-        else
-          pattern
-        end
-      end.uniq
-    end
-    item["workingPatterns"]
+    return if item["workingPatterns"].blank?
+
+    item["workingPatterns"].map do |pattern|
+      if ["flexible", "term_time", "job_share"].include?(pattern)
+        "part_time"
+      else
+        pattern
+      end
+    end.uniq
+  end
+
+  def is_job_share_for(item)
+    item["workingPatterns"].include?("job_share")
   end
 
   def organisation_fields(schools)

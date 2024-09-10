@@ -89,8 +89,8 @@ class Vacancies::Import::Sources::Fusion
   def working_patterns_for(item)
     return [] if item["workingPatterns"].blank?
     
-    item["workingPatterns"].split(",").map do |pattern|
-      if pattern == "flexible" || pattern == "term_time" || pattern == "job_share"
+    item["workingPatterns"].delete(" ").split(",").map do |pattern|
+      if ["flexible", "term_time", "job_share"].include?(pattern)
         "part_time"
       else
         pattern

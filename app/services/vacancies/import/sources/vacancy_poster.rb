@@ -61,6 +61,7 @@ class Vacancies::Import::Sources::VacancyPoster
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: false,
+      is_job_share: is_job_share_for(item)
     }.merge(organisation_fields(item))
   end
 
@@ -68,12 +69,16 @@ class Vacancies::Import::Sources::VacancyPoster
     return [] if item["workingPatterns"].blank?
     
     item["workingPatterns"].delete(" ").split(",").map do |pattern|
-      if pattern == "flexible" || pattern == "term_time" || pattern == "job_share"
+      if ["flexible", "term_time", "job_share"].include?(pattern)
         "part_time"
       else
         pattern
       end
     end.uniq
+  end
+
+  def is_job_share_for(item)
+    item["workingPatterns"].include?("job_share")
   end
 
   def job_advert_for(item)

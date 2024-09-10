@@ -119,6 +119,22 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
         expect(vacancy.working_patterns).to eq ["full_time", "part_time"]
       end
     end
+
+    context "when working pattern includes `job_share`" do
+      let(:job_listings_response_body) do
+        hash = JSON.parse(super())
+        hash["data"]["jobs"].first["workingPatterns"] = ["job_share"]
+        hash.to_json
+      end
+  
+      it "maps job_share to part time" do
+        expect(vacancy.working_patterns).to eq ["part_time"]
+      end
+
+      it "sets is_job_share to true" do
+        expect(vacancy.is_job_share).to eq true
+      end
+    end
   end
 
   context "when contract_type is parental_leave_cover" do
