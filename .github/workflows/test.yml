@@ -61,6 +61,13 @@ jobs:
       - name: Run tests
         run: bundle exec rspec ${{ matrix.test_params.params }}
 
+      - name: Upload Capybara failures screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capybara-screenshots-${{ matrix.test_params.params }}
+          path: /tmp/capybara/*.png
+          if-no-files-found: ignore # If only non-capybara tests fail there will be no screenshots
   frontend-tests:
     name: Run frontend JS unit tests
 
