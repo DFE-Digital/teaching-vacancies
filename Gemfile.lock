@@ -777,6 +777,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection (~> 1.0)
   omniauth_openid_connect
   online_migrations
+  pagy (< 9)
   paper_trail
   paper_trail-globalid
   parallel_tests
