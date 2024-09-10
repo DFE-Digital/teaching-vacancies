@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         choose "Yes, I have completed a 1 or 2 year induction period"
         click_on "Save and continue"
 
-        expect_page_to_have_professional_status_information("yes", "2022", "1234567", "yes")
+        expect_page_to_have_professional_status_information(qts: "yes", year: "2022", trn: "1234567", statutory_induction_complete: "yes")
       end
     end
 
@@ -66,8 +66,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
           choose "No"
         end
         click_on "Save and continue"
-
-        expect_page_to_have_professional_status_information("no", nil, nil, nil)
+        expect_page_to_have_professional_status_information(qts: "no", year: nil, trn: nil, statutory_induction_complete: nil)
       end
     end
   end
@@ -78,7 +77,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
     before { visit jobseekers_profile_path }
 
     it "allows jobseekers to add professional status information" do
-      expect_page_to_have_professional_status_information("yes", "2020", "7777777", "yes")
+      expect_page_to_have_professional_status_information(qts: "yes", year: "2020", trn: "7777777", statutory_induction_complete: "yes")
       click_on "Change qualified teacher status"
 
       within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
@@ -99,7 +98,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
       click_on "Save and continue"
 
-      expect_page_to_have_professional_status_information("yes", "2000", "1234567", "on_track")
+      expect_page_to_have_professional_status_information(qts: "yes", year: "2000", trn: "1234567", statutory_induction_complete: "on_track")
 
       click_on "Change qualified teacher status"
 
@@ -113,11 +112,11 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
       click_on "Save and continue"
 
-      expect_page_to_have_professional_status_information("no", nil, "", nil)
+      expect_page_to_have_professional_status_information(qts: "no", year: nil, trn: "", statutory_induction_complete: nil)
     end
   end
 
-  def expect_page_to_have_professional_status_information(qts, year, trn, statutory_induction_complete)
+  def expect_page_to_have_professional_status_information(qts:, year:, trn:, statutory_induction_complete:)
     expect(page).to have_css(".govuk-summary-list__key", text: "Do you have qualified teacher status (QTS)?")
     expect(page).to have_css(".govuk-summary-list__value", text: I18n.t("helpers.label.jobseekers_profile_qualified_teacher_status_form.qualified_teacher_status_options.#{qts}"))
 
