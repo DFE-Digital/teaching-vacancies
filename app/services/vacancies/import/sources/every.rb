@@ -51,17 +51,32 @@ class Vacancies::Import::Sources::Every
       job_roles: job_roles_for(item),
       ect_status: ect_status_for(item),
       subjects: item["subjects"].presence&.split(",") || [],
-      working_patterns: item["workingPatterns"].presence&.split(","),
+      working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       key_stages: item["keyStages"].presence&.split(","),
       visa_sponsorship_available: visa_sponsorship_available_for(item),
-
+      is_job_share: job_share_for?(item),
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
-    }.merge(organisation_fields(item, schools))
-     .merge(start_date_fields(item))
+    }.merge(organisation_fields(item, schools)).merge(start_date_fields(item))
+  end
+
+  def working_patterns_for(item)
+    return [] if item["workingPatterns"].blank?
+
+    item["workingPatterns"].delete(" ").split(",").map { |pattern|
+      if Vacancies::Import::Shared::LEGACY_WORKING_PATTERNS.include?(pattern)
+        "part_time"
+      else
+        pattern
+      end
+    }.uniq
+  end
+
+  def job_share_for?(item)
+    item["workingPatterns"].include?("job_share")
   end
 
   def start_date_fields(item)

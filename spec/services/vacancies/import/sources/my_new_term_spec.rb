@@ -71,6 +71,72 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
     end
   end
 
+  describe "working_patterns mapping" do
+    context "when working_patterns includes `flexible`" do
+      let(:job_listings_response_body) do
+        hash = JSON.parse(super())
+        hash["data"]["jobs"].first["workingPatterns"] = %w[full_time flexible]
+        hash.to_json
+      end
+
+      it "maps flexible to part time" do
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
+      end
+    end
+
+    context "when working_patterns includes `flexible` and `part_time`" do
+      let(:job_listings_response_body) do
+        hash = JSON.parse(super())
+        hash["data"]["jobs"].first["workingPatterns"] = %w[full_time part_time flexible]
+        hash.to_json
+      end
+
+      it "maps flexible to part time" do
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
+      end
+    end
+
+    context "when working_patterns includes `term_time`" do
+      let(:job_listings_response_body) do
+        hash = JSON.parse(super())
+        hash["data"]["jobs"].first["workingPatterns"] = %w[full_time term_time]
+        hash.to_json
+      end
+
+      it "maps term_time to part time" do
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
+      end
+    end
+
+    context "when working_patterns includes `term_time` and `part_time`" do
+      let(:job_listings_response_body) do
+        hash = JSON.parse(super())
+        hash["data"]["jobs"].first["workingPatterns"] = %w[full_time part_time term_time]
+        hash.to_json
+      end
+
+      it "maps term_time to part time" do
+        expect(vacancy.working_patterns).to eq %w[full_time part_time]
+      end
+    end
+
+    context "when working pattern includes `job_share`" do
+      let(:job_listings_response_body) do
+        hash = JSON.parse(super())
+        hash["data"]["jobs"].first["workingPatterns"] = ["job_share"]
+        hash.to_json
+      end
+
+      it "maps job_share to part time" do
+        expect(vacancy.working_patterns).to eq ["part_time"]
+      end
+
+      it "sets is_job_share to true" do
+        expect(vacancy.is_job_share).to eq true
+      end
+    end
+  end
+
   context "when contract_type is parental_leave_cover" do
     let(:job_listings_response_body) { super().gsub("permanent", "parental_leave_cover") }
 
