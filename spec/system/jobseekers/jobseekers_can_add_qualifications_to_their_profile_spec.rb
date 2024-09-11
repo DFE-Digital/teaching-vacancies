@@ -39,6 +39,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         expect(page).to have_content("Superteacher Certificate")
         expect(page).to have_content("Teachers Academy")
         expect(page).to have_content("I expect to finish next year")
+        expect(page).to have_content("Not finished yet")
         expect(page).not_to have_content("Grade")
         expect(page).not_to have_content("Year")
       end
@@ -57,6 +58,8 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         expect(page).to have_content("Maths – 110%")
         expect(page).to have_content("PE – 90%")
         expect(page).to have_content("2020")
+        expect(page).not_to have_content("Not finished yet")
+        expect(page).not_to have_content("Yes")
       end
 
       it "allows jobseekers to add a custom secondary qualification" do
