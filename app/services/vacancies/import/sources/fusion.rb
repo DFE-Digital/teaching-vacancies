@@ -99,7 +99,7 @@ class Vacancies::Import::Sources::Fusion
   end
 
   def job_share_for?(item)
-    return false unless item["workingPatterns"].split(",").include?("job_share")
+    return false unless item["workingPatterns"]&.split(",")&.include?("job_share")
 
     true
   end
