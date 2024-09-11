@@ -82,7 +82,7 @@ class Vacancies::Import::Sources::MyNewTerm
   end
 
   def job_share_for?(item)
-    item["workingPatterns"].include?("job_share")
+    item["workingPatterns"]&.include?("job_share")
   end
 
   def organisation_fields(schools)

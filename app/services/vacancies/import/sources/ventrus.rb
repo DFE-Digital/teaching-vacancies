@@ -81,7 +81,7 @@ class Vacancies::Import::Sources::Ventrus
   end
 
   def job_share_for?(item)
-    item["Working_Patterns"].include?("job_share")
+    item["Working_Patterns"]&.include?("job_share")
   end
 
   def ect_status_for(item)

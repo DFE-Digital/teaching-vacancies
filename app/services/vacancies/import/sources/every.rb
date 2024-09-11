@@ -76,7 +76,7 @@ class Vacancies::Import::Sources::Every
   end
 
   def job_share_for?(item)
-    item["workingPatterns"].include?("job_share")
+    item["workingPatterns"]&.include?("job_share")
   end
 
   def start_date_fields(item)
