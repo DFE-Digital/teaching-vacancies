@@ -128,25 +128,17 @@ RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   config.include WithEnv
 
+  # don't need the 'transaction' strategy here as we run fixtures inside transactions
+  # mostly by default
   config.before(:suite) do
     DatabaseCleaner.strategy = [:truncation, { except: POSTGIS_TABLES }]
     DatabaseCleaner.clean
   end
 
-  config.before do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, js: true) do
-    DatabaseCleaner.strategy = [:truncation, { except: POSTGIS_TABLES }]
-  end
-
-  config.before do
-    DatabaseCleaner.start
-  end
-
-  config.after do
-    DatabaseCleaner.clean
+  config.around(:each, js: true) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 end
 
