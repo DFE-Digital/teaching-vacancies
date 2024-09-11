@@ -1,6 +1,6 @@
  # Some packages are defined here with a hardcoded version to resolve vulnerabilities in the packages coming with
  # Alpine v3.19.
- # TODO: Regularly check in the alpine ruby "3.3.3-alpine3.19" images for its latest upgraded packages so we can remove
+ # TODO: Regularly check in the alpine ruby "3.3.5-alpine3.19" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
 ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15 busybox=1.36.1-r19 openssl=3.1.7-r0"
 
