@@ -38,6 +38,8 @@ Dir[Rails.root.join("spec/page_objects/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
+POSTGIS_TABLES = ["spatial_ref_sys"].freeze
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
@@ -125,6 +127,27 @@ RSpec.configure do |config|
   config.include VacancyHelpers
   config.include ViewComponent::TestHelpers, type: :component
   config.include WithEnv
+
+  config.before(:suite) do
+    DatabaseCleaner.strategy = [:truncation, { except: POSTGIS_TABLES }]
+    DatabaseCleaner.clean
+  end
+
+  config.before do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, js: true) do
+    DatabaseCleaner.strategy = [:truncation, { except: POSTGIS_TABLES }]
+  end
+
+  config.before do
+    DatabaseCleaner.start
+  end
+
+  config.after do
+    DatabaseCleaner.clean
+  end
 end
 
 VCR.configure do |config|

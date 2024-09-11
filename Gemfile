@@ -114,6 +114,7 @@ end
 group :test do
   gem "capybara"
   gem "climate_control"
+  gem "database_cleaner-active_record"
   gem "fastimage"
   gem "rack_session_access"
   gem "selenium-webdriver"
