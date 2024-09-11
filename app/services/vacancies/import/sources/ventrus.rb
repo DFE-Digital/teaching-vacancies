@@ -72,7 +72,7 @@ class Vacancies::Import::Sources::Ventrus
     return [] if item["Working_Patterns"].blank?
 
     item["Working_Patterns"].delete(" ").split(",").map { |pattern|
-      if LEGACY_WORKING_PATTERNS.include?(pattern)
+      if Vacancies::Import::Shared::LEGACY_WORKING_PATTERNS.include?(pattern)
         "part_time"
       else
         pattern

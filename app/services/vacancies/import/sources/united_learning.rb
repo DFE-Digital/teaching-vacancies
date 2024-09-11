@@ -104,7 +104,7 @@ class Vacancies::Import::Sources::UnitedLearning
     return [] if item["Working_patterns"].blank?
 
     item["Working_patterns"].delete(" ").split(",").map { |pattern|
-      if LEGACY_WORKING_PATTERNS.include?(pattern)
+      if Vacancies::Import::Shared::LEGACY_WORKING_PATTERNS.include?(pattern)
         "part_time"
       else
         pattern

@@ -90,7 +90,7 @@ class Vacancies::Import::Sources::Fusion
     return [] if item["workingPatterns"].blank?
 
     item["workingPatterns"].delete(" ").split(",").map { |pattern|
-      if LEGACY_WORKING_PATTERNS.include?(pattern)
+      if Vacancies::Import::Shared::LEGACY_WORKING_PATTERNS.include?(pattern)
         "part_time"
       else
         pattern
