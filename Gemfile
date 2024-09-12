@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.3.3"
+ruby "3.3.5"
 
 RAILS_VERSION = "~> 7.1.2".freeze
 gem "actionmailer", RAILS_VERSION
@@ -33,8 +33,8 @@ gem "geocoder"
 gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
-gem "govuk-components", "~> 5.4.1"
-gem "govuk_design_system_formbuilder", "~> 5.4.1"
+gem "govuk-components", "~> 5.6.1"
+gem "govuk_design_system_formbuilder", "~> 5.6.0"
 gem "high_voltage"
 gem "httparty"
 gem "ipaddr"
@@ -53,6 +53,7 @@ gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "online_migrations"
+gem "pagy", "< 9"
 gem "paper_trail"
 gem "paper_trail-globalid"
 gem "parslet"

@@ -7,6 +7,8 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   it "allows jobseekers to add their professional status" do
     visit jobseekers_job_application_build_path(job_application, :professional_status)
 

@@ -9,6 +9,8 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   it "allows jobseekers to give job application feedback after submitting the application" do
     visit jobseekers_job_application_review_path(job_application)
 

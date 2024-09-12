@@ -8,6 +8,8 @@ RSpec.describe "Jobseekers can change password" do
     visit edit_jobseeker_registration_path(password_update: true)
   end
 
+  after { logout }
+
   it "changes the password and redirects to the account details page" do
     click_on I18n.t("buttons.update_password")
 

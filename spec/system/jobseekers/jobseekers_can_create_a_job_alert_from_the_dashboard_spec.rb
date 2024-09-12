@@ -9,6 +9,8 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
     login_as(jobseeker, scope: :jobseeker)
   end
 
+  after { logout }
+
   context "when the jobseeker has no job alerts" do
     before { visit jobseekers_subscriptions_path }
 

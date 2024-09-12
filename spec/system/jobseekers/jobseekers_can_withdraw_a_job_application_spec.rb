@@ -11,6 +11,8 @@ RSpec.describe "Jobseekers can withdraw a job application" do
     click_on I18n.t("buttons.withdraw_application")
   end
 
+  after { logout }
+
   it "submits the form, renders error, withdraws the application and redirects to the dashboard with success message" do
     click_on I18n.t("buttons.withdraw_application")
 

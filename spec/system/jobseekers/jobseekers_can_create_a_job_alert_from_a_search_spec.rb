@@ -35,6 +35,8 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       click_on I18n.t("buttons.subscribe")
     end
 
+    after { logout if jobseeker_signed_in? }
+
     context "when jobseeker has an account" do
       let!(:jobseeker) { create(:jobseeker) }
 

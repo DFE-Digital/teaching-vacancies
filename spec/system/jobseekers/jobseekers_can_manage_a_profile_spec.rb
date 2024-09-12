@@ -14,6 +14,8 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
+  after { logout }
+
   it "allows the jobseeker to navigate to their profile" do
     visit jobseeker_root_path
 
@@ -566,8 +568,6 @@ RSpec.describe "Jobseekers can manage their profile" do
       login_publisher(publisher: forbidden_publisher)
       visit publishers_jobseeker_profiles_path
       expect(page).not_to have_content(profile.full_name)
-
-      click_on I18n.t("nav.sign_out")
     end
 
     context "if the jobseeker is already hidden from the school" do
@@ -587,8 +587,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
-
-        click_on I18n.t("nav.sign_out")
       end
     end
 
@@ -632,8 +630,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         login_publisher(publisher: permitted_publisher)
         visit publishers_jobseeker_profiles_path
         expect(page).to have_content(profile.full_name)
-
-        click_on I18n.t("nav.sign_out")
       end
     end
 
@@ -680,8 +676,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         expect(page).to have_content(forbidden_trust.name)
         expect(page).to have_content(forbidden_organisation.name)
-
-        click_on I18n.t("nav.sign_out")
       end
     end
   end
@@ -707,7 +701,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       check "Assistant headteacher"
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
-      expect(page).to have_css("h3", text: "Job preferencesPhases")
+      expect(page).to have_css("h3", text: "Job preferencesEducation phase")
 
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
@@ -850,7 +844,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         check "IT support"
         click_on I18n.t("buttons.save_and_continue")
         expect(current_path).to eq(jobseekers_job_preferences_step_path(:phases))
-        expect(page).to have_css("h3", text: "Job preferencesPhases")
+        expect(page).to have_css("h3", text: "Job preferencesEducation phase")
 
         check "Secondary"
         click_on I18n.t("buttons.save_and_continue")

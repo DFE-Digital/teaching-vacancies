@@ -9,6 +9,8 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   it "allows closing and reactivating a jobseeker account" do
     visit jobseekers_account_path
 

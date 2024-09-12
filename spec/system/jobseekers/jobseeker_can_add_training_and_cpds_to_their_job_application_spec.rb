@@ -7,6 +7,8 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   context "adding training" do
     it "allows jobseeker to add training" do
       visit jobseekers_job_application_build_path(job_application, :training_and_cpds)

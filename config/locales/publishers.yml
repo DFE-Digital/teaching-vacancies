@@ -96,11 +96,11 @@ en:
       filters:
         education_phase_options:
           nursery: "Nursery"
-          primary: "Primary"
-          middle: "Middle"
-          secondary: "Secondary"
+          primary: "Primary school"
+          middle: "Middle school"
+          secondary: "Secondary school"
           sixth_form_or_college: "Sixth form or college"
-          through: "Through"
+          through: "Through school"
         key_stage_options:
           early_years: "Early years"
           ks1: "Key stage 1"
