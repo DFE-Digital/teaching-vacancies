@@ -12,9 +12,9 @@ class Jobseekers::AccountTransferForm < BaseForm
     jobseeker = Jobseeker.find_by(email: email)
     
     if jobseeker.nil? || jobseeker.account_merge_confirmation_code != account_merge_confirmation_code
-      errors.add(:confirmation_code, :confirmation_code_mismatch, message: "Confirmation code does not match.")
+      errors.add(:account_merge_confirmation_code, :confirmation_code_mismatch, message: "Confirmation code does not match.")
     elsif jobseeker.account_merge_confirmation_code_generated_at < 1.hour.ago
-      errors.add(:confirmation_code, :confirmation_code_expired, message: "Confirmation code has expired. Please request a new code.")
+      errors.add(:account_merge_confirmation_code, :confirmation_code_expired, message: "Confirmation code has expired. Please request a new code.")
     end
   end
 end

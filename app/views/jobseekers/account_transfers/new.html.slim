@@ -11,7 +11,7 @@
     = form_for @account_transfer_form, url: jobseekers_account_transfer_path do |f|
       = f.govuk_error_summary
 
-      = f.hidden_field :email, value: @email
+      = f.hidden_field :email, value: @email || @account_transfer_form.email
 
       = f.govuk_text_field :account_merge_confirmation_code, label: { text: t(".label"), size: "s" }, width: "two-thirds", required: true
 

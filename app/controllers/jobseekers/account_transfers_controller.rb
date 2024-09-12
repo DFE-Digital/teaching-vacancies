@@ -50,6 +50,8 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
       saved_job.jobseeker_id = current_jobseeker.id
       saved_job.save!
     end
+
+    Subscription.where(email: account_to_transfer.email).each {|subscription| subscription.update(email: current_jobseeker.email)}
   end
 end
 

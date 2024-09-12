@@ -36,7 +36,7 @@ class Jobseeker < ApplicationRecord
   end
 
   def generate_merge_verification_code
-    self.account_merge_confirmation_code = SecureRandom.random_number(1_000_000).to_s.rjust(6, '0')
+    self.account_merge_confirmation_code = SecureRandom.alphanumeric(6)
     self.account_merge_confirmation_code_generated_at = Time.current
     save!
   end
