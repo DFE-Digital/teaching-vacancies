@@ -5,9 +5,9 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   def openid_connect
     if (govuk_one_login_user = Jobseekers::GovukOneLogin::UserFromAuthResponse.call(params, session))
       session[:govuk_one_login_id_token] = govuk_one_login_user.id_token
-      
+
       if existing_jobseeker_first_sign_in_via_one_login(govuk_one_login_user)
-        session[:user_exists_first_log_in] = { value: 'true', path: '/', expires: 1.hour.from_now }
+        session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
       end
 
       jobseeker = Jobseeker.find_or_create_from_govuk_one_login(email: govuk_one_login_user.email,
