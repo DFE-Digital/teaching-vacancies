@@ -9,6 +9,8 @@ RSpec.describe "Jobseekers can view their dashboard" do
     visit jobseekers_account_path
   end
 
+  after { logout }
+
   it "displays a summary list with their email address and password" do
     within ".govuk-summary-list" do
       expect(page).to have_content(I18n.t("jobseekers.accounts.show.summary_list.email"))

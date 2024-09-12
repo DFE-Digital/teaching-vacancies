@@ -7,6 +7,8 @@ RSpec.describe "Jobseekers can add references to their job application" do
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   it "allows jobseekers to add references" do
     visit jobseekers_job_application_build_path(job_application, :references)
 

@@ -19,6 +19,8 @@ RSpec.describe "Jobseekers can start or continue a job application" do
           end
         end
 
+        after { logout }
+
         it "starts a job application" do
           expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
           expect(page).to have_css(".govuk-caption-l", text: vacancy.job_title)
@@ -66,6 +68,8 @@ RSpec.describe "Jobseekers can start or continue a job application" do
         click_on I18n.t("jobseekers.job_applications.banner_links.draft")
       end
 
+      after { logout }
+
       it "redirects to the job application review page" do
         expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
         expect(page).to have_content(I18n.t("jobseekers.job_applications.review.heading"))
@@ -80,6 +84,8 @@ RSpec.describe "Jobseekers can start or continue a job application" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
       end
+
+      after { logout }
 
       it "redirects to job applications dashboard with correct message" do
         expect(current_path).to eq(jobseekers_job_applications_path)
@@ -102,6 +108,8 @@ RSpec.describe "Jobseekers can start or continue a job application" do
         click_on I18n.t("jobseekers.job_applications.banner_links.submitted")
       end
 
+      after { logout }
+
       it "redirects to the job application show page" do
         expect(current_path).to eq(jobseekers_job_application_path(job_application))
       end
@@ -115,6 +123,8 @@ RSpec.describe "Jobseekers can start or continue a job application" do
           click_on I18n.t("jobseekers.job_applications.banner_links.apply")
         end
       end
+
+      after { logout }
 
       it "redirects to job applications dashboard with correct message" do
         expect(current_path).to eq(jobseekers_job_applications_path)

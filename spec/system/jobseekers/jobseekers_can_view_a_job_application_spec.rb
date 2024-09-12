@@ -10,6 +10,8 @@ RSpec.describe "Jobseekers can view a job application" do
     visit jobseekers_job_application_path(job_application)
   end
 
+  after { logout }
+
   context "when the vacancy is for a teaching role" do
     let(:vacancy) { create(:vacancy, organisations: [build(:school)], job_roles: ["teacher"]) }
 

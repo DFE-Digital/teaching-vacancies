@@ -10,6 +10,8 @@ RSpec.describe "Jobseekers can give account feedback" do
     visit jobseekers_account_path
   end
 
+  after { logout }
+
   it "submits account feedback" do
     click_on I18n.t("footer.provide_feedback")
 

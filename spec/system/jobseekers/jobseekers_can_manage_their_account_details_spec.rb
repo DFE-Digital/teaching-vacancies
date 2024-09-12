@@ -9,6 +9,8 @@ RSpec.describe "Jobseekers can manage their account details" do
       visit jobseekers_account_path
     end
 
+    after { logout }
+
     it "shows their account details" do
       within("dl") do
         expect(page).to have_content(I18n.t("jobseekers.accounts.show.summary_list.email"))

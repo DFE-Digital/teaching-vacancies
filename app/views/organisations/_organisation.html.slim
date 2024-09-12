@@ -100,13 +100,17 @@
             - row.with_key text: t("organisations.show.vacancy.job_role"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
             - row.with_value text: humanize_array(vacancy.job_roles), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
-          - summary_list.with_row do |row|
-            - row.with_key text: t("organisations.show.vacancy.full_time_equivalent_salary"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: vacancy.salary, classes: "govuk-body-s govuk-!-padding-bottom-0"
+          - if vacancy.salary?
+            = render "organisations/vacancy_field", summary_list: summary_list, field_desc: t("organisations.show.vacancy.full_time_equivalent_salary"), field_value: vacancy.salary
 
-          - summary_list.with_row do |row|
-            - row.with_key text: t("organisations.show.vacancy.actual_salary"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-            - row.with_value text: vacancy.actual_salary, classes: "govuk-body-s govuk-!-padding-bottom-0"
+          - if vacancy.actual_salary?
+            = render "organisations/vacancy_field", summary_list: summary_list, field_desc: t("organisations.show.vacancy.actual_salary"), field_value: vacancy.actual_salary
+
+          - if vacancy.pay_scale?
+            = render "organisations/vacancy_field", summary_list: summary_list, field_desc: t("jobs.pay_scale"), field_value: vacancy.pay_scale
+
+          - if vacancy.hourly_rate?
+            = render "organisations/vacancy_field", summary_list: summary_list, field_desc: t("jobs.hourly_rate"), field_value: vacancy.hourly_rate
 
           - summary_list.with_row do |row|
             - row.with_key text: t("organisations.show.vacancy.working_pattern"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"

@@ -56,12 +56,29 @@ class Vacancies::Import::Sources::VacancyPoster
       ect_status: ect_status_for(item),
       key_stages: item["keyStages"].presence&.split(","),
       subjects: item["subjects"].presence&.split(","),
-      working_patterns: item["workingPatterns"].presence&.split(","),
+      working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
       phases: phase_for(item),
       visa_sponsorship_available: false,
+      is_job_share: job_share_for?(item),
     }.merge(organisation_fields(item))
+  end
+
+  def working_patterns_for(item)
+    return [] if item["workingPatterns"].blank?
+
+    item["workingPatterns"].delete(" ").split(",").map { |pattern|
+      if Vacancies::Import::Shared::LEGACY_WORKING_PATTERNS.include?(pattern)
+        "part_time"
+      else
+        pattern
+      end
+    }.uniq
+  end
+
+  def job_share_for?(item)
+    item["workingPatterns"]&.include?("job_share")
   end
 
   def job_advert_for(item)

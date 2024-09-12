@@ -8,6 +8,8 @@ RSpec.describe "Jobseekers can apply for a vacancy" do
 
   before { visit job_path(vacancy) }
 
+  after { logout }
+
   scenario "the application link is without protocol" do
     expect(page).to have_link(I18n.t("jobs.apply", href: "http://www.google.com"))
   end

@@ -11,6 +11,8 @@ RSpec.describe "Jobseekers can save a job" do
     context "when they are signed in to their account" do
       before { login_as(jobseeker, scope: :jobseeker) }
 
+      after { logout }
+
       context "when the job is not already saved" do
         it "saves the job" do
           save_job

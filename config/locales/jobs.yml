@@ -54,10 +54,10 @@ en:
 
 
     education_phase_options:
-      middle: Middle
+      middle: Middle school
       nursery: Nursery
-      primary: Primary
-      secondary: Secondary
+      primary: Primary school
+      secondary: Secondary school
       sixth_form_or_college: Sixth form or college
       through: Through school
 

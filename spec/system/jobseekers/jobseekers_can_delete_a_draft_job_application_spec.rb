@@ -8,6 +8,8 @@ RSpec.describe "Jobseekers can delete a draft job application" do
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   it "allows deleting the draft permanently" do
     visit jobseekers_job_applications_path
 

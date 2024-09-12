@@ -155,16 +155,52 @@ RSpec.describe Vacancies::Import::Sources::UnitedLearning do
         end
       end
 
-      describe "working patterns mapping" do
+      describe "working_patterns mapping" do
         before do
           allow(item_stub).to receive(:[]).with("Working_patterns").and_return(working_patterns)
         end
 
-        context "when the working patterns contain multiple valid values" do
-          let(:working_patterns) { "part_time,full_time,job_share" }
+        context "when working_patterns includes `flexible`" do
+          let(:working_patterns) { "full_time,flexible" }
 
-          it "records them all in the vacancy" do
-            expect(vacancy.working_patterns).to contain_exactly("part_time", "full_time", "job_share")
+          it "maps flexible to part time" do
+            expect(vacancy.working_patterns).to eq %w[full_time part_time]
+          end
+        end
+
+        context "when working_patterns includes `flexible` and `part_time`" do
+          let(:working_patterns) { "full_time,part_time,flexible" }
+
+          it "maps flexible to part time" do
+            expect(vacancy.working_patterns).to eq %w[full_time part_time]
+          end
+        end
+
+        context "when working_patterns includes `term_time`" do
+          let(:working_patterns) { "full_time,term_time" }
+
+          it "maps term_time to part time" do
+            expect(vacancy.working_patterns).to eq %w[full_time part_time]
+          end
+        end
+
+        context "when working_patterns includes `term_time` and `part_time`" do
+          let(:working_patterns) { "full_time,part_time,term_time" }
+
+          it "maps term_time to part time" do
+            expect(vacancy.working_patterns).to eq %w[full_time part_time]
+          end
+        end
+
+        context "when working_patterns includes `job_share`" do
+          let(:working_patterns) { "job_share" }
+
+          it "maps job_share to part time" do
+            expect(vacancy.working_patterns).to eq ["part_time"]
+          end
+
+          it "sets is_job_share to true" do
+            expect(vacancy.is_job_share).to eq true
           end
         end
 

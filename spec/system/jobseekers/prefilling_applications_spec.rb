@@ -9,6 +9,8 @@ RSpec.describe "Jobseekers can prefill applications" do
     login_as(jobseeker, scope: :jobseeker)
   end
 
+  after { logout }
+
   context "when the jobseeker has a completed profile" do
     let(:profile) { create(:jobseeker_profile, :completed, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020") }
     let(:jobseeker) { profile.jobseeker }

@@ -11,6 +11,8 @@ RSpec.describe "Jobseekers can manage their saved jobs" do
   context "when logged in" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
+    after { logout }
+
     context "when there are saved jobs" do
       before do
         jobseeker.saved_jobs.create(vacancy: vacancy1)

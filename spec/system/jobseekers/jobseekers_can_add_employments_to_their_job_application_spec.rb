@@ -7,6 +7,8 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
+  after { logout }
+
   it "allows jobseekers to add a current role" do
     visit jobseekers_job_application_build_path(job_application, :employment_history)
 
