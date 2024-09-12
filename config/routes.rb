@@ -285,6 +285,7 @@ Rails.application.routes.draw do
       as: :post
 
   get "/list-school-job" => "pages#show", defaults: { id: "list-school-job" }
+  get "/not-authorised" => "pages#show", defaults: { id: "not-authorised" }
 
   get "/cookies-preferences", to: "cookies_preferences#new", as: "cookies_preferences"
   post "/cookies-preferences", to: "cookies_preferences#create", as: "create_cookies_preferences"
