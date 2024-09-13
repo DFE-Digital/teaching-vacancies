@@ -13,7 +13,7 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
     let(:content_extract2) do
       "Tell us how you filled your vacancy"
     end
-    let(:email) { "test@example.com" }
+    let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     let(:publisher) { create(:publisher, email: email) }
     let(:mail) { described_class.prompt_for_feedback(publisher, vacancy) }
     let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }

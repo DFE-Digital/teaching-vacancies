@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can change password" do
-  let(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com", password: "password1234") }
+  let(:jobseeker) { create(:jobseeker, password: "password1234") }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

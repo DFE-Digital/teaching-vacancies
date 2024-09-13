@@ -37,7 +37,7 @@ FactoryBot.define do
       %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package important_dates start_date
          applying_for_the_job school_visits contact_details about_the_role include_additional_documents]
     end
-    contact_email { Faker::Internet.email(domain: "example.com") }
+    contact_email { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     contact_number_provided { true }
     contact_number { "01234 123456" }
     contract_type { factory_sample(Vacancy.contract_types.keys) }

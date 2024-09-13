@@ -28,7 +28,7 @@
     "roleName": "End user",
     "roleId": 10000,
     "userId": "CCC-333",
-    "email": "bar@example.com",
+    "email": "bar@education.gov.uk",
     "familyName": "Robertson",
     "givenName": "Alice"
   },
@@ -92,7 +92,7 @@
     "roleName": "End user",
     "roleId": 10000,
     "userId": "CCC-333",
-    "email": "bar@example.com",
+    "email": "bar@education.gov.uk",
     "familyName": "Robertson",
     "givenName": "Alice"
   },
@@ -124,7 +124,7 @@
     "roleName": "End user",
     "roleId": 10000,
     "userId": "CCC-333",
-    "email": "bar@example.com",
+    "email": "bar@education.gov.uk",
     "familyName": "Robertson",
     "givenName": "Alice"
   },
@@ -154,7 +154,7 @@
       "updatedAt": "2020-09-16T11:14:08.380Z"},
     "roleName": "End user",
     "userId": "DEF-456",
-    "email": "baz@example.com",
+    "email": "baz@education.gov.uk",
     "familyName": "Scott",
     "givenName": "Barry"
   }],

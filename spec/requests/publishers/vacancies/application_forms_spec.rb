@@ -15,7 +15,7 @@ RSpec.describe "Documents" do
   describe "POST #create" do
     let(:vacancy) { create(:vacancy, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
     let(:valid_file) { fixture_file_upload("blank_job_spec.pdf", "application/pdf") }
-    let(:application_email) { "test@example.com" }
+    let(:application_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     let(:request) do
       post organisation_job_application_forms_path(vacancy.id), params: {
         publishers_job_listing_application_form_form: {

@@ -5,6 +5,7 @@ en:
   email_errors: &email_errors
     email:
       blank: Enter an email address in the correct format, like name@example.com
+      invalid: Enter an email address in the correct format, like name@example.com
   qualification_errors: &qualification_errors
     qualification_results_attributes_0_subject:
       at_least_one_result_required: Enter at least one subject and grade for this qualification
@@ -28,11 +29,13 @@ en:
   subscription_errors: &subscription_errors
     email:
       blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
     frequency:
       blank: Select when you want to receive job alert emails
   unsubscribe_feedback_errors: &unsubscribe_feedback_errors
     email:
       blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
     occupation:
       blank: Enter your occupation
       too_long: Occupation must not be more than 30 characters
@@ -51,6 +54,7 @@ en:
       too_long: Feedback must not be more than 1,200 characters
     email:
       blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
     rating:
       inclusion: Select how satisfied or dissatisfied you are
     report_a_problem:
@@ -65,6 +69,7 @@ en:
       inclusion: Please indicate if you'd like to participate in user research
     email:
       blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
     occupation:
       blank: Enter your occupation
       too_long: Occupation must not be more than 30 characters
@@ -88,6 +93,7 @@ en:
   jobseekers_job_application_feedback_form: &jobseekers_job_application_feedback_form_errors
     email:
       blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
     occupation:
       blank: Enter your occupation
       too_long: Occupation must not be more than 30 characters
@@ -100,6 +106,7 @@ en:
   publisher_job_listing_feedback_form: &publisher_job_listing_feedback_form_errors
     email:
       blank: Enter your email address
+      invalid: Enter an email address in the correct format, like name@example.com
     occupation:
       blank: Enter your occupation
       too_long: Occupation must not be more than 30 characters
@@ -238,6 +245,7 @@ en:
   application_form_errors: &application_form_errors
     application_email:
       blank: Select the email address to receive applications
+      invalid: Enter an email address in the correct format, like name@example.com
     application_form:
       blank: Select application form
     other_application_email:
@@ -519,6 +527,7 @@ en:
               blank: Enter your country
             email_address:
               blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
             first_name:
               blank: Enter your first name
             last_name:
@@ -655,6 +664,7 @@ en:
           attributes:
             email:
               blank: Enter your referee's email address
+              invalid: Enter an email address in the correct format, like name@example.com
             job_title:
               blank: Enter your referee's job title
             name:
@@ -719,6 +729,7 @@ en:
           attributes:
             email_address:
               blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
             is_for_whole_site:
               inclusion: Choose whether this issue is for the whole site or a specific page
             issue:

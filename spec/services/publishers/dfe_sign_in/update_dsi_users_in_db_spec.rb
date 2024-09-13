@@ -28,17 +28,17 @@ RSpec.describe Publishers::DfeSignIn::UpdateUsersInDb do
 
       expect { update_dfe_sign_in_users.call }.to change { Publisher.all.size }.by(3)
 
-      user_with_one_school = Publisher.find_by(email: "foo@example.com")
+      user_with_one_school = Publisher.find_by!(email: "foo@education.gov.uk")
       expect(user_with_one_school.given_name).to eq("Roger")
       expect(user_with_one_school.family_name).to eq("Johnson")
       expect(user_with_one_school.organisations.first).to eq(school)
 
-      user_with_multiple_orgs = Publisher.find_by(email: "bar@example.com")
+      user_with_multiple_orgs = Publisher.find_by!(email: "bar@education.gov.uk")
       expect(user_with_multiple_orgs.given_name).to eq("Alice")
       expect(user_with_multiple_orgs.family_name).to eq("Robertson")
       expect(user_with_multiple_orgs.organisations.count).to be(4)
 
-      local_authority_user = Publisher.find_by(email: "baz@example.com")
+      local_authority_user = Publisher.find_by!(email: "baz@education.gov.uk")
       expect(local_authority_user.given_name).to eq("Barry")
       expect(local_authority_user.family_name).to eq("Scott")
       expect(local_authority_user.organisations.first).to eq(local_authority)

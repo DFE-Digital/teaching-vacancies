@@ -17,7 +17,7 @@ FactoryBot.define do
     city { Faker::Address.city }
     postcode { Faker::Address.postcode }
     country { Faker::Address.country }
-    email_address { Faker::Internet.email(domain: "example.com") }
+    email_address { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     phone_number { "01234 567890" }
     teacher_reference_number { "1234567" }
     national_insurance_number { "QQ 12 34 56 C" }

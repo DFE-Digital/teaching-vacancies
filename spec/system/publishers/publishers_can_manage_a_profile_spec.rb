@@ -253,7 +253,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
     context "when the publisher is signed in as a local authority" do
       let(:organisation) { create(:local_authority) }
-      let(:local_authority_email) { "me@authority.com" }
+      let(:local_authority_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
 
       before { click_link I18n.t("nav.organisation_profile") }
 

@@ -8,7 +8,7 @@ RSpec.describe SupportRequestForm, type: :model do
 
   let(:params) do
     {
-      email_address: "test@example.com",
+      email_address: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN),
       is_for_whole_site: is_for_whole_site,
       issue: "Help!",
       name: "A User",
@@ -19,7 +19,7 @@ RSpec.describe SupportRequestForm, type: :model do
   it { is_expected.to validate_presence_of(:name) }
 
   it { is_expected.to validate_presence_of(:email_address) }
-  it { is_expected.to allow_value("email@example.com").for(:email_address) }
+  it { is_expected.to allow_value("email@gmail.com").for(:email_address) }
   it { is_expected.to_not allow_value("invalid@email@com").for(:email_address) }
 
   it { is_expected.to validate_inclusion_of(:is_for_whole_site).in_array(%w[yes no]) }

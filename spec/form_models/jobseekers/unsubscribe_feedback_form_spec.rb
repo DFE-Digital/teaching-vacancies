@@ -6,7 +6,7 @@ RSpec.describe Jobseekers::UnsubscribeFeedbackForm, type: :model do
   let(:params) do
     {
       comment: "Found a job mate",
-      email: "email@example.com",
+      email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN),
       unsubscribe_reason: "job_found",
       user_participation_response: user_participation_response,
     }
@@ -34,7 +34,7 @@ RSpec.describe Jobseekers::UnsubscribeFeedbackForm, type: :model do
   context "when the user_participation_response == 'interested'" do
     it { is_expected.to validate_presence_of(:occupation) }
     it { is_expected.to validate_presence_of(:email) }
-    it { is_expected.to allow_value("email@example.com").for(:email) }
+    it { is_expected.to allow_value("email@gmail.com").for(:email) }
     it { is_expected.to_not allow_value("invalid@email@com").for(:email) }
   end
 

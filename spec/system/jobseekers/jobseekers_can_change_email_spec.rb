@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can change email" do
-  let(:jobseeker) { create(:jobseeker, email: "old@example.net", password: "password") }
+  let(:jobseeker) { create(:jobseeker, email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN), password: "password") }
   let(:created_jobseeker) { Jobseeker.first }
   let!(:subscription) { create(:subscription, email: jobseeker.email) }
-  let(:new_email_address) { "new@email.com" }
+  let(:new_email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

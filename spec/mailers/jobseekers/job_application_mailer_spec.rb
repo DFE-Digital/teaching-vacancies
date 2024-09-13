@@ -2,8 +2,7 @@ require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Jobseekers::JobApplicationMailer do
-  let(:jobseeker) { create(:jobseeker, email: email) }
-  let(:email) { "test@example.net" }
+  let(:jobseeker) { create(:jobseeker) }
   let(:organisation) { build(:school) }
   let(:vacancy) { build(:vacancy, organisations: [organisation]) }
   let(:contact_email) { vacancy.contact_email }
