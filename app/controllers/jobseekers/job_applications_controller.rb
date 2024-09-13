@@ -114,7 +114,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def step_valid?(step)
     step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
-    form = step_form.new(job_application.slice(step_form.storable_fields))
+
+    attributes = job_application.attributes.slice(*step_form.fields.map(&:to_s))
+    attributes.merge!(trn_params) if step == :professional_status
+
+    form = step_form.new(attributes)
 
     form.valid?.tap do
       job_application.errors.merge!(form.errors)
@@ -195,11 +199,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def send_dfe_analytics_event
     fail_safe do
       event = DfE::Analytics::Event.new
-        .with_type(:vacancy_apply_clicked)
-        .with_request_details(request)
-        .with_response_details(response)
-        .with_user(current_jobseeker)
-        .with_data(vacancy_id: vacancy.id)
+                                   .with_type(:vacancy_apply_clicked)
+                                   .with_request_details(request)
+                                   .with_response_details(response)
+                                   .with_user(current_jobseeker)
+                                   .with_data(vacancy_id: vacancy.id)
 
       DfE::Analytics::SendEvents.do([event])
     end
@@ -216,5 +220,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def quick_apply?
     previous_application? || profile.present?
+  end
+
+  def trn_params
+    {
+      teacher_reference_number: current_jobseeker&.jobseeker_profile&.teacher_reference_number,
+      has_teacher_reference_number: current_jobseeker&.jobseeker_profile&.has_teacher_reference_number,
+    }
   end
 end
