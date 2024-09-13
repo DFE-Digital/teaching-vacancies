@@ -16,7 +16,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def update
     if form.valid?
       job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
-      update_jobseeker_profile if step == :professional_status
+      update_or_create_jobseeker_profile! if step == :professional_status
 
       return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if redirect_to_review?
 
@@ -134,10 +134,17 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     }
   end
 
-  def update_jobseeker_profile
-    current_jobseeker.jobseeker_profile.update(
-      teacher_reference_number: form_params[:teacher_reference_number],
-      has_teacher_reference_number: form_params[:has_teacher_reference_number],
-    )
+  def update_or_create_jobseeker_profile!
+    if current_jobseeker.jobseeker_profile.nil?
+      current_jobseeker.create_jobseeker_profile(
+        teacher_reference_number: form_params[:teacher_reference_number],
+        has_teacher_reference_number: form_params[:has_teacher_reference_number],
+      )
+    else
+      current_jobseeker.jobseeker_profile.update(
+        teacher_reference_number: form_params[:teacher_reference_number],
+        has_teacher_reference_number: form_params[:has_teacher_reference_number],
+      )
+    end
   end
 end

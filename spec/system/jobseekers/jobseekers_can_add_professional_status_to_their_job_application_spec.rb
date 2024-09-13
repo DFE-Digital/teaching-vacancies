@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can add details about their qualified teacher status to a job application" do
   let(:jobseeker) { create(:jobseeker) }
-  let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let!(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
 
