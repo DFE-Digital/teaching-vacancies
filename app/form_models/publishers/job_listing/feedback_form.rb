@@ -4,6 +4,6 @@ class Publishers::JobListing::FeedbackForm < BaseForm
   validates :rating, inclusion: { in: Feedback.ratings.keys }
   validates :email, presence: true, if: -> { user_participation_response == "interested" }
   validates :occupation, presence: true, if: -> { user_participation_response == "interested" }
-  validates :email, "valid_email_2/email": { strict_mx: true }, if: -> { email.present? }
+  validates :email, email_address: true, if: -> { email.present? }
   validates :user_participation_response, inclusion: { in: Feedback.user_participation_responses.keys }
 end
