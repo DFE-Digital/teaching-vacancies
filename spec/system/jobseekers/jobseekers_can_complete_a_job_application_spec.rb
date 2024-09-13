@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can complete a job application" do
-  let(:jobseeker) { create(:jobseeker) }
+  let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
+  let(:jobseeker_profile) { create(:jobseeker_profile, :with_trn) }
   let(:vacancy) { create(:vacancy, job_roles: ["teacher"], organisations: [organisation]) }
   let(:organisation) { create(:school) }
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }

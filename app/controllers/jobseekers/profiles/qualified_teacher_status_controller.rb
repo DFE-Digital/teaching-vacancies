@@ -4,7 +4,11 @@ class Jobseekers::Profiles::QualifiedTeacherStatusController < Jobseekers::Profi
   def update
     if form.valid?
       year = form.qualified_teacher_status == "yes" ? form.qualified_teacher_status_year : ""
-      profile.update(qualified_teacher_status: JobseekerProfile.qualified_teacher_statuses[form.qualified_teacher_status], qualified_teacher_status_year: year)
+      profile.update(qualified_teacher_status: JobseekerProfile.qualified_teacher_statuses[form.qualified_teacher_status],
+                     qualified_teacher_status_year: year,
+                     teacher_reference_number: form.updated_teacher_reference_number,
+                     statutory_induction_complete: form.statutory_induction_complete,
+                     has_teacher_reference_number: form.has_teacher_reference_number)
       redirect_to jobseekers_profile_qualified_teacher_status_path
     else
       render :edit
@@ -22,7 +26,7 @@ class Jobseekers::Profiles::QualifiedTeacherStatusController < Jobseekers::Profi
   def form_attributes
     case action_name
     when "edit"
-      profile.slice(:qualified_teacher_status, :qualified_teacher_status_year)
+      profile.slice(:qualified_teacher_status, :qualified_teacher_status_year, :teacher_reference_number, :statutory_induction_complete, :has_teacher_reference_number)
     when "update"
       form_params
     end
