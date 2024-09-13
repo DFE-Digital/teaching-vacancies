@@ -1,0 +1,11 @@
+<%= t(".salutation", name: @jobseeker.jobseeker_profile.first_name) %>
+
+# <%= t(".vacancy_closes", job_title: @vacancy.job_title, school: @vacancy.organisation.name, date: @vacancy.expires_at.to_date.to_formatted_s) %>
+
+<%= t(".saved_but_not_applied") %>
+
+<%= notify_link(job_url(@vacancy), t(".apply_for_link", job_title: @vacancy.job_title)) %>
+
+<%= t(".to_find_the_right_job") %>
+
+<%= t("shared.jobseeker_footer", home_page_link: home_page_link) %>
