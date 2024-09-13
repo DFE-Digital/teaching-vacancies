@@ -48,4 +48,25 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
     expect(page).not_to have_css("h2", text: "There is a problem")
   end
+
+  it "creates a jobseeker profile if the jobseeker does not have one" do
+    visit jobseekers_job_application_build_path(job_application, :professional_status)
+
+    choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
+    choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
+
+    fill_in "Year QTS was awarded", with: "2022"
+    fill_in "Please provide more detail (optional field)", with: "It was hard work but I made it"
+
+    choose("I'm on track to complete it")
+    choose "Yes", name: "jobseekers_job_application_professional_status_form[has_teacher_reference_number]"
+    fill_in "What is your Teacher reference number (TRN)?", with: "1234567"
+
+    click_on "Save and continue"
+
+    expect(page).not_to have_css("h2", text: "There is a problem")
+
+    jobseeker.reload
+    expect(jobseeker.jobseeker_profile).to be_present
+  end
 end
