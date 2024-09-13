@@ -21,7 +21,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       page_path: -> { jobseekers_job_preferences_path },
     },
     {
-      title: "Professional Status",
+      title: "Qualified teacher status (QTS)",
       display_summary: -> { profile.qualified_teacher_status.present? },
       key: "qualified_teacher_status",
       link_text: "Add qualified teacher status",
