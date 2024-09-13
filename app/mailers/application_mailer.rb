@@ -4,7 +4,7 @@ class ApplicationMailer < Mail::Notify::Mailer
 
   helper_method :uid, :utm_campaign
 
-  # after_action :trigger_dfe_analytics_email_event
+  after_action :trigger_dfe_analytics_email_event
 
   private
 
