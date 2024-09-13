@@ -27,11 +27,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   def attributes_to_copy
     %i[personal_details professional_status ask_for_support personal_statement].select { |step| relevant_steps.include?(step) }
                                                                                .map { |step| form_fields_from_step(step) }
-                                                                               .flatten - jobseeker_profile_fields
-  end
-
-  def jobseeker_profile_fields
-    %i[has_teacher_reference_number teacher_reference_number]
+                                                                               .flatten
   end
 
   def copy_qualifications

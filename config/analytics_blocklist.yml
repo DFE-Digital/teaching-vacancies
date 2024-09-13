@@ -54,8 +54,6 @@
   - geopoint
   - created_at
   - updated_at
-  :jobseeker_profiles:
-  - teacher_reference_number_ciphertext
   :job_applications:
   - qualified_teacher_status_details
   - disability

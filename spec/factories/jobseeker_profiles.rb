@@ -7,16 +7,6 @@ FactoryBot.define do
 
     association :jobseeker
 
-    trait :with_trn do
-      has_teacher_reference_number { "yes" }
-      teacher_reference_number { Faker::Number.number(digits: 7).to_s }
-    end
-
-    trait :without_trn do
-      has_teacher_reference_number { "no" }
-      teacher_reference_number { nil }
-    end
-
     trait :with_personal_details do
       personal_details { build(:personal_details, jobseeker_profile: instance) }
     end

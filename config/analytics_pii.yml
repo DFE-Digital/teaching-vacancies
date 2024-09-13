@@ -32,7 +32,6 @@ shared:
     - id
     - jobseeker_id
     - about_you
-    - teacher_reference_number
   jobseeker_profile_excluded_organisations:
     - jobseeker_profile_id
   jobseekers:
