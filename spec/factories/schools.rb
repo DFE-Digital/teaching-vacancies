@@ -5,7 +5,7 @@ FactoryBot.define do
     address { Faker::Address.street_name.delete("'") }
     county { Faker::Address.state_abbr }
     description { Faker::Lorem.paragraph(sentence_count: 1) }
-    email { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+    email { Faker::Internet.email(domain: "contoso.com") }
     establishment_status { "Open" }
     geopoint { "POINT(2 1)" }
     gias_data do
