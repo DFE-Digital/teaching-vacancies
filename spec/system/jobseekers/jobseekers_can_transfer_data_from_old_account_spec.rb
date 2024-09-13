@@ -28,20 +28,20 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
       expect_account_to_have_no_data
 
       visit new_jobseekers_request_account_transfer_email_path
-      fill_in 'jobseekers_request_account_transfer_email_form[email]', with: old_jobseeker_account.email
+      fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
       click_on "Save and continue"
       expect(delivered_emails.last.subject).to eq "Transfer your account data"
       expect(delivered_emails.last.body.raw_source).to include "Your verification code: #{old_jobseeker_account.reload.account_merge_confirmation_code}"
 
-      fill_in 'jobseekers_account_transfer_form[account_merge_confirmation_code]', with: "somethingincorrect"
+      fill_in "jobseekers_account_transfer_form[account_merge_confirmation_code]", with: "somethingincorrect"
       click_on "Confirm account transfer"
-      
+
       expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
       within "ul.govuk-list.govuk-error-summary__list" do
         expect(page).to have_link("Confirmation code does not match.", href: "#jobseekers-account-transfer-form-account-merge-confirmation-code-field-error")
       end
 
-      fill_in 'jobseekers_account_transfer_form[account_merge_confirmation_code]', with: old_jobseeker_account.account_merge_confirmation_code
+      fill_in "jobseekers_account_transfer_form[account_merge_confirmation_code]", with: old_jobseeker_account.account_merge_confirmation_code
       click_on "Confirm account transfer"
       expect(page).to have_content "Your account details have been transferred successfully!"
 
@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
   context "when user enters an email that does not match any jobseekers in our db" do
     it "allows user to request an account transfer" do
       visit new_jobseekers_request_account_transfer_email_path
-      fill_in 'jobseekers_request_account_transfer_email_form[email]', with: "nonexistant-user-email@gmail.com"
+      fill_in "jobseekers_request_account_transfer_email_form[email]", with: "nonexistant-user-email@gmail.com"
       click_on "Save and continue"
       expect(delivered_emails).to eq []
       expect(page).to have_content "Check your email"
@@ -62,13 +62,13 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
   context "when the confirmation code has expired" do
     before do
       visit new_jobseekers_request_account_transfer_email_path
-      fill_in 'jobseekers_request_account_transfer_email_form[email]', with: old_jobseeker_account.email
+      fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
       click_on "Save and continue"
       travel_to(Time.current + 61.minutes)
     end
 
     it "does not allow the account transfer" do
-      fill_in 'jobseekers-account-transfer-form-account-merge-confirmation-code-field', with: old_jobseeker_account.reload.account_merge_confirmation_code
+      fill_in "jobseekers-account-transfer-form-account-merge-confirmation-code-field", with: old_jobseeker_account.reload.account_merge_confirmation_code
       click_on "Confirm account transfer"
 
       expect(page).not_to have_content "Your account details have been transferred successfully!"
@@ -82,13 +82,13 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
   context "when the user tries to request 2 or more confirmation code emails in quick succession" do
     it "only sends the first email" do
       visit new_jobseekers_request_account_transfer_email_path
-      fill_in 'jobseekers_request_account_transfer_email_form[email]', with: old_jobseeker_account.email
+      fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
       click_on "Save and continue"
 
       expect(page).to have_content "Email sent to: #{old_jobseeker_account.email}"
 
       visit new_jobseekers_request_account_transfer_email_path
-      fill_in 'jobseekers_request_account_transfer_email_form[email]', with: old_jobseeker_account.email
+      fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
       click_on "Save and continue"
 
       expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
