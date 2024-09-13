@@ -17,7 +17,7 @@ class Jobseekers::RequestAccountTransferEmailsController < Jobseekers::BaseContr
       render :new
     end
   end
-  
+
   def request_account_transfer_email_form_params
     params.require(:jobseekers_request_account_transfer_email_form).permit(:email)
   end

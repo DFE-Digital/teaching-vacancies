@@ -19,7 +19,7 @@ class Jobseekers::AccountMailer < Jobseekers::BaseMailer
     send_email(
       jobseeker: record,
       template: template,
-      token: record.account_merge_confirmation_code
+      token: record.account_merge_confirmation_code,
     )
   end
 end
