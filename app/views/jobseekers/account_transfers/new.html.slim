@@ -21,4 +21,3 @@
       = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
 
     = govuk_details summary_text: t(".help_with_code"), text: t(".helpful_links", resend_code_link: govuk_link_to(t(".resend_code_link_text"), jobseekers_request_account_transfer_email_path(jobseekers_request_account_transfer_email_form: { email: @email }), method: :post), different_email_link: govuk_link_to(t(".different_email_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
-
