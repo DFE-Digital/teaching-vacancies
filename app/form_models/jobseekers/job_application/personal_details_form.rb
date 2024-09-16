@@ -13,7 +13,7 @@ class Jobseekers::JobApplication::PersonalDetailsForm < Jobseekers::JobApplicati
       postcode
       street_address
       right_to_work_in_uk
-]
+    ]
   end
   attr_accessor(*fields)
 
