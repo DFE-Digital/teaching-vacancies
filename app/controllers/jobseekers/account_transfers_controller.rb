@@ -29,7 +29,7 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
   def successfully_transfer_account_data?
     Jobseekers::AccountTransfer.new(current_jobseeker, @account_transfer_form.email).call
     true
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+  rescue Jobseekers::AccountTransfer::AccountNotFoundError, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
     Rails.logger.error("Account transfer failed: #{e.message}")
     false
   end
