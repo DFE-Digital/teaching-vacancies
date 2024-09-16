@@ -844,6 +844,8 @@ en:
         summary:
           status_title: Do you have qualified teacher status (QTS)?
           year_title: Year QTS awarded
+          trn_title: Teacher reference number (TRN)
+          completed_statutory_induction_title: Have you completed your statutory induction period?
       employments:
         edit:
           caption: Work history

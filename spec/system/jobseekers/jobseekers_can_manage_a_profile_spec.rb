@@ -157,11 +157,17 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "changing the jobseekers's QTS status" do
     before { visit jobseekers_profile_path }
 
-    it "allows the jobseeker to edit their QTS status to yes with year acheived" do
+    it "allows the jobseeker to edit their QTS status to yes with year achieved" do
       click_link("Add qualified teacher status")
-
-      choose "Yes"
+      within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
+        choose "Yes"
+      end
+      within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+        choose "Yes"
+      end
       fill_in "jobseekers_profile_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"
+      fill_in "What is your Teacher reference number (TRN)?", with: "1234567"
+      choose "Yes, I have completed a 1 or 2 year induction period"
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content("2019")
@@ -174,16 +180,6 @@ RSpec.describe "Jobseekers can manage their profile" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page).to have_content("I’m on track to receive QTS")
-      expect(page).not_to have_content("2019")
-    end
-
-    it "allows the jobseeker to edit their QTS status to non-teacher" do
-      click_link("Add qualified teacher status")
-
-      choose "I'm not looking for a teaching job"
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(page).to have_content("I'm not looking for a teaching job")
       expect(page).not_to have_content("2019")
     end
   end
