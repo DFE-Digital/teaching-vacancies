@@ -101,7 +101,6 @@ module JobseekerHelpers
     fill_in "Phone number", with: "01234 123456"
     fill_in "Email address", with: "jobseeker@example.com"
     choose "Yes"
-    fill_in "Teacher reference number", with: "1234567"
     fill_in "National Insurance number", with: "AB 12 12 12 A"
   end
 

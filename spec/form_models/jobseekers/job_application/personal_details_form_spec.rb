@@ -20,9 +20,5 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
   it { is_expected.to allow_value("01234 12345678").for(:phone_number) }
   it { is_expected.not_to allow_value("01234 123456789").for(:phone_number) }
 
-  it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
-  it { is_expected.to allow_value("").for(:teacher_reference_number) }
-  it { is_expected.not_to allow_value("1234567891011").for(:teacher_reference_number) }
-  it { is_expected.not_to allow_value("ABCD").for(:teacher_reference_number) }
   it { is_expected.to validate_inclusion_of(:right_to_work_in_uk).in_array(%w[yes no]) }
 end
