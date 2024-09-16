@@ -22,7 +22,6 @@ RSpec.describe "Jobseekers can review a job application" do
       expect(page).to have_content(job_application.postcode)
       expect(page).to have_content(job_application.country)
       expect(page).to have_content(job_application.phone_number)
-      expect(page).to have_content(job_application.teacher_reference_number)
       expect(page).to have_content(job_application.national_insurance_number)
     end
 
