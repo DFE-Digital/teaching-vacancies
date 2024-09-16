@@ -37,18 +37,10 @@ One of TV developers needs to add the new developer to [teaching-vacancies-devel
 
 ## DFE Azure Platform Identity
 
-You will need to request a Azure CID through the [Service Portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=51b0b9c5db1ff7809402e1aa4b96197d&referrer=recent_items) following [these instructions](https://technical-guidance.education.gov.uk/infrastructure/hosting/azure-cip/#onboarding-users).
-
-Request your Lead Developer/Team Lead to add you to the Azure [s189 TV delivery team members list](https://portal.azure.com/#view/Microsoft_AAD_IAM/GroupDirectMembersBlade/groupId/30d11bf0-ab94-477a-bef4-82793788a7b7). On their absence, this can be requested to be actioned by a member of the [#teacher-services-infra](https://ukgovernmentdfe.slack.com/archives/C011EM7HU85) team.
-
-Once having access, contact the [Teacher Services Infrastructure team](https://ukgovernmentdfe.slack.com/archives/C011EM7HU85) and request access to the following s189 subscriptions:
-
-* s189-teacher-services-cloud-development
-* s189-teacher-services-cloud-test
-* s189-teacher-services-cloud-production
-
+Follow the [developer onboarding docs](https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/developer-onboarding.md#developer-onboarding) to setup your account in DFE Azure Platform Identity.
 
 ## GovUK Notify
+
 Ask a TV developer to add you to the [GovUK Notify team DfE Teaching Vacancies](https://www.notifications.service.gov.uk/services/786d369d-11d1-4c7e-9a11-ef06aab2978b/users/invite) team.
 
 New members will need this to be able to receive emails on testing environments.
