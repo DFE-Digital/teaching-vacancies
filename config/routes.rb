@@ -62,7 +62,6 @@ Rails.application.routes.draw do
     registrations: "jobseekers/registrations",
     sessions: "jobseekers/sessions",
     unlocks: "jobseekers/unlocks",
-    omniauth_callbacks: "jobseekers/govuk_one_login_callbacks",
   }, path_names: {
     sign_in: "sign-in",
   }
@@ -262,6 +261,12 @@ Rails.application.routes.draw do
   end
 
   devise_for :support_users
+
+  scope path: "jobseekers" do
+    devise_scope :jobseeker do
+      get "/auth/govuk_one_login/callback/", to: "jobseekers/govuk_one_login_callbacks#openid_connect"
+    end
+  end
 
   devise_scope :publisher do
     get "/auth/dfe", to: "omniauth_callbacks#passthru"

@@ -1,16 +1,16 @@
 class Jobseeker < ApplicationRecord
   has_encrypted :last_sign_in_ip, :current_sign_in_ip
 
-  devise(*%I[confirmable
-             database_authenticatable
-             lockable
-             omniauthable
-             recoverable
-             registerable
-             timeoutable
-             trackable
-             validatable],
-         omniauth_providers: [:openid_connect])
+  devise(*%I[
+    confirmable
+    database_authenticatable
+    lockable
+    recoverable
+    registerable
+    timeoutable
+    trackable
+    validatable
+  ])
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :jobseeker
   has_many :job_applications, dependent: :destroy
