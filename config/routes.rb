@@ -186,11 +186,7 @@ Rails.application.routes.draw do
       end
     end
     resource :account_feedback, only: %i[new create]
-    resource :request_account_transfer_email, only: %i[new create] do
-      member do
-        get :confirm
-      end
-    end
+    resource :request_account_transfer_email, only: %i[new create]
     resource :account_transfer, only: %i[new create]
   end
 

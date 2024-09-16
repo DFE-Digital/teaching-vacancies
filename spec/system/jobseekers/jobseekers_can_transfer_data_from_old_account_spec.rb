@@ -50,7 +50,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
   end
 
   context "when user enters an email that does not match any jobseekers in our db" do
-    it "allows user to request an account transfer" do
+    it "allows user to request an account transfer but does not send an email" do
       visit new_jobseekers_request_account_transfer_email_path
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: "nonexistant-user-email@gmail.com"
       click_on "Save and continue"
