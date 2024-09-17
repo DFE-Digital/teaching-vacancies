@@ -10,6 +10,11 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
         session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
       end
 
+      if no_existing_jobseeker_with_email_exists?(govuk_one_login_user)
+        session[:newly_created_user] = { value: "true", path: "/", expires: 1.hour.from_now }
+      end
+
+
       jobseeker = Jobseeker.find_or_create_from_govuk_one_login(email: govuk_one_login_user.email,
                                                                 govuk_one_login_id: govuk_one_login_user.id)
 
@@ -40,6 +45,9 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
     stored_location = stored_location_for(resource)
     if user_signed_in_from_quick_apply_link?(stored_location)
       stored_location
+    elsif session[:newly_created_user]
+      session.delete(:newly_created_user)
+      account_not_found_jobseekers_account_path
     elsif session[:user_exists_first_log_in]
       session.delete(:user_exists_first_log_in)
       account_found_jobseekers_account_path
@@ -54,5 +62,9 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
   def existing_jobseeker_first_sign_in_via_one_login(govuk_one_login_user)
     Jobseeker.find_by(email: govuk_one_login_user.email, govuk_one_login_id: nil)
+  end
+
+  def no_existing_jobseeker_with_email_exists?(govuk_one_login_user)
+    Jobseeker.find_by(email: govuk_one_login_user.email).blank?
   end
 end

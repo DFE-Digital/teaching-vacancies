@@ -102,10 +102,10 @@ RSpec.describe "Govuk One Login authentication response" do
       context "with no quick apply url location to redirect to in devise session" do
         let(:devise_stored_location) { jobseekers_subscriptions_path }
 
-        it "redirects the jobseeker to their applications page" do
+        it "redirects the jobseeker to an account not found page page" do
           get jobseeker_openid_connect_omniauth_callback_path
 
-          expect(response).to redirect_to(jobseekers_job_applications_path)
+          expect(response).to redirect_to(account_not_found_jobseekers_account_path)
         end
       end
     end
