@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Jobseekers::AccountTransfer do
   let!(:current_jobseeker) { create(:jobseeker) }
-  let!(:account_to_transfer) { create(:jobseeker, email: "old_account@example.com") }
+  let!(:account_to_transfer) { create(:jobseeker, email: "old_account@gmail.com") }
 
   let!(:profile) { create(:jobseeker_profile, jobseeker: account_to_transfer) }
   let!(:feedbacks) { create_list(:feedback, 3, jobseeker: account_to_transfer) }
