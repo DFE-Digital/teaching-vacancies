@@ -1,0 +1,9 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".page_title")
+
+    p.govuk-body = t(".email_found")
+    p.govuk-body = t(".continue_to_profile", link: govuk_link_to(t(".profile_link_text"), jobseekers_profile_path)).html_safe
+    p.govuk-body = t(".transfer_account")

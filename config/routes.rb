@@ -185,6 +185,7 @@ Rails.application.routes.draw do
       member do
         get :confirmation
         get :account_found
+        get :account_not_found
       end
     end
     resource :account_feedback, only: %i[new create]
