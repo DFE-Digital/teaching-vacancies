@@ -28,6 +28,19 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
       expect_account_to_have_no_data
 
       visit new_jobseekers_request_account_transfer_email_path
+      click_on "Save and continue"
+      expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
+      within "ul.govuk-list.govuk-error-summary__list" do
+        expect(page).to have_link("Enter your email address", href: "#jobseekers-request-account-transfer-email-form-email-field-error")
+      end
+
+      fill_in "jobseekers_request_account_transfer_email_form[email]", with: "xxxxx"
+      click_on "Save and continue"
+      expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
+      within "ul.govuk-list.govuk-error-summary__list" do
+        expect(page).to have_link("Enter an email address in the correct format, like name@example.com", href: "#jobseekers-request-account-transfer-email-form-email-field-error")
+      end
+
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: old_jobseeker_account.email
       click_on "Save and continue"
       expect(delivered_emails.last.subject).to eq "Transfer your account data"

@@ -729,6 +729,17 @@ en:
               blank: Enter the name of the provider of the training
             year_awarded:
               blank: Enter the year the course or training was awarded
+        jobseekers/account_transfer_form:
+          attributes:
+            email: 
+              blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
+        jobseekers/request_account_transfer_email_form:
+          attributes:
+            email:
+              blank: Enter your email address
+              invalid: Enter an email address in the correct format, like name@example.com
+            recent_code_request: XYZ
 
 
         publishers/job_application/notes_form:
