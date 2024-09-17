@@ -6,7 +6,7 @@ RSpec.describe Jobseekers::AccountFeedbackForm, type: :model do
   let(:params) do
     {
       comment: "Fancy",
-      email: "email@example.com",
+      email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN),
       rating: "neither",
       report_a_problem: "no",
       user_participation_response: user_participation_response,
@@ -24,7 +24,7 @@ RSpec.describe Jobseekers::AccountFeedbackForm, type: :model do
   context "when the user_participation_response == 'interested'" do
     it { is_expected.to validate_presence_of(:occupation) }
     it { is_expected.to validate_presence_of(:email) }
-    it { is_expected.to allow_value("email@example.com").for(:email) }
+    it { is_expected.to allow_value("email@gmail.com").for(:email) }
     it { is_expected.to_not allow_value("invalid@email@com").for(:email) }
   end
 

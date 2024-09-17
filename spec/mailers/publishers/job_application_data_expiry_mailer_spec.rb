@@ -2,7 +2,7 @@ require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Publishers::JobApplicationDataExpiryMailer do
-  let(:email) { "test@example.com" }
+  let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
   let(:mail) { described_class.with(params).job_application_data_expiry }
   let(:organisation) { create(:school) }
   let(:params) { { vacancy: vacancy, publisher: publisher } }
@@ -14,7 +14,7 @@ RSpec.describe Publishers::JobApplicationDataExpiryMailer do
     it "sends a `job_application_data_expiry` email" do
       expect(mail.subject).to eq(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.subject", job_title: vacancy.job_title,
                                                                                                                              expiration_date: format_date(vacancy_data_expiration_date)))
-      expect(mail.to).to eq(["test@example.com"])
+      expect(mail.to).to eq([email])
       expect(mail.body.to_s).to include(vacancy.job_title)
                             .and include(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.title", job_title: vacancy.job_title,
                                                                                                                                    publish_date: vacancy.publish_on.to_formatted_s(:month_year),

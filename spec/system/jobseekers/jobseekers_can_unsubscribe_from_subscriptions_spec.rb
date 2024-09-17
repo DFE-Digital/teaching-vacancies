@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "A jobseeker can unsubscribe from subscriptions" do
   let(:subscription) { create(:subscription) }
-  let(:email) { "email@example.com" }
+  let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
   let(:occupation) { "teacher" }
 
   context "with the correct token" do

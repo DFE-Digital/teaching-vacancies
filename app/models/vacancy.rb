@@ -97,6 +97,9 @@ class Vacancy < ApplicationRecord
   validates_with ExternalVacancyValidator, if: :external?
   validates :organisations, :presence => true
 
+  validates :application_email, email_address: true
+  validates :contact_email, email_address: true
+
   has_noticed_notifications
   has_paper_trail on: [:update],
                   only: ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG,

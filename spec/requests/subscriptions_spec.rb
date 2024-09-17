@@ -54,11 +54,12 @@ RSpec.describe "Subscriptions" do
 
   describe "POST #create", recaptcha: true do
     subject { post subscriptions_path, params: params }
+    let(:email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
 
     let(:params) do
       {
         jobseekers_subscription_form: {
-          email: "foo@example.net",
+          email: email_address,
           frequency: "daily",
           location: "London",
           keyword: "english",
@@ -81,7 +82,7 @@ RSpec.describe "Subscriptions" do
 
     it "creates a subscription" do
       expect { subject }.to change { Subscription.count }.by(1)
-      expect(created_subscription.email).to eq("foo@example.net")
+      expect(created_subscription.email).to eq(email_address)
       expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
     end
 
@@ -114,11 +115,13 @@ RSpec.describe "Subscriptions" do
 
     before { create(:location_polygon, name: "london") }
 
-    let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
+    let(:old_email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+    let!(:subscription) { create(:subscription, email: old_email_address, frequency: :daily) }
 
+    let(:email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     let(:params) do
       {
-        email: "jimi@hendrix.com",
+        email: email_address,
         frequency: "weekly",
         location: "London",
         keyword: "english",
@@ -127,7 +130,7 @@ RSpec.describe "Subscriptions" do
 
     it "updates the subscription" do
       expect { subject }.not_to(change { Subscription.count })
-      expect(subscription.reload.email).to eq("jimi@hendrix.com")
+      expect(subscription.reload.email).to eq(email_address)
       expect(subscription.reload.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
     end
 
@@ -147,13 +150,13 @@ RSpec.describe "Subscriptions" do
       end
 
       it "does not update a subscription" do
-        expect(subscription.reload.email).to eq("bob@dylan.com")
+        expect(subscription.reload.email).to eq(old_email_address)
       end
     end
   end
 
   describe "DELETE #destroy" do
-    let!(:subscription) { create(:subscription, email: "bob@dylan.com", frequency: :daily) }
+    let!(:subscription) { create(:subscription, frequency: :daily) }
 
     subject { delete subscription_path(subscription.token) }
 

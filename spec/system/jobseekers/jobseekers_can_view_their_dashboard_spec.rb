@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can view their dashboard" do
-  let(:email) { "jobseeker@example.com" }
-  let(:jobseeker) { create(:jobseeker, email: email) }
+  let(:jobseeker) { create(:jobseeker) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)

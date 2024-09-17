@@ -99,7 +99,7 @@ module JobseekerHelpers
     fill_in "Postcode", with: "F1 4KE"
     fill_in "Country", with: "United Kingdom"
     fill_in "Phone number", with: "01234 123456"
-    fill_in "Email address", with: "jobseeker@example.com"
+    fill_in "Email address", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
     choose "Yes"
     fill_in "National Insurance number", with: "AB 12 12 12 A"
   end
@@ -121,7 +121,7 @@ module JobseekerHelpers
     fill_in "Job title", with: "Important job"
     fill_in "Organisation", with: "Important organisation"
     fill_in "Relationship to applicant", with: "Colleague"
-    fill_in "Email address", with: "test@example.net"
+    fill_in "Email address", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
     fill_in "Phone number", with: "09999 123456"
   end
 

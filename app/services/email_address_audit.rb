@@ -13,7 +13,7 @@ class EmailAddressAudit
       EMAIL_CLASSES.each_with_object({}) do |(klass, method), hash|
         invalid_records = klass.find_each.with_object([]) do |record, array|
           address = record.public_send(method)
-          if address.present? && EmailAddressValidator.invalid?(address)
+          if address.present? && !record.valid?
             array << record
           end
         end

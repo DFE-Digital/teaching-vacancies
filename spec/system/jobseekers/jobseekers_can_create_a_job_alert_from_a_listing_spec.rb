@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers can create a job alert from a listing", recaptcha: tr
   end
 
   def fill_in_subscription_fields
-    fill_in "jobseekers_subscription_form[email]", with: "test@example.org"
+    fill_in "jobseekers_subscription_form[email]", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
     choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.daily")
   end
 end
