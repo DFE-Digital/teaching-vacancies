@@ -4,6 +4,5 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".page_title")
 
-    p.govuk-body = t(".could_not_find_account")
-    p.govuk-body = t(".continue_to_profile", link: govuk_link_to(t(".update_profile_link_text"), jobseekers_profile_path), search_and_apply_link: govuk_link_to(t(".search_and_apply_link_text"), jobs_path), create_alert_link: govuk_link_to(t(".create_alert_link_text"), new_subscription_path)).html_safe
+    p.govuk-body = t(".email_found")
     p.govuk-body = t(".helpful_links", update_profile_link: govuk_link_to(t(".update_profile_link_text"), jobseekers_profile_path), search_and_apply_link: govuk_link_to(t(".search_and_apply_link_text"), jobs_path), create_alert_link: govuk_link_to(t(".create_alert_link_text"), new_subscription_path)).html_safe
