@@ -7,6 +7,18 @@ module AuthHelpers
     login_as(publisher, scope: :publisher)
   end
 
+  def run_with_jobseeker(jobseeker)
+    login_as(jobseeker, scope: :jobseeker)
+    yield
+    logout
+  end
+
+  def run_with_publisher(publisher)
+    login_publisher(publisher: publisher)
+    yield
+    logout
+  end
+
   def stub_publisher_authentication_step(organisation_id: "939eac36-0777-48c2-9c2c-b87c948a9ee0",
                                          school_urn: "110627", trust_uid: nil, la_code: nil,
                                          email: "an-email@example.com")
