@@ -600,7 +600,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         profile.excluded_organisations << forbidden_organisation
       end
 
-      it "does not allow the jobseeker to hide themselves from the school again" do
+      it "does not allow the jobseeker to hide themselves from the school again", :ci_only do
         visit jobseekers_profile_path
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
         choose "Yes", visible: false
@@ -673,7 +673,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       let(:forbidden_trust_publisher) { create(:publisher) }
 
-      it "asks whether to hide from the whole trust or just the specific school" do
+      it "asks whether to hide from the whole trust or just the specific school", :ci_only do
         visit jobseekers_profile_path
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
         choose "Yes", visible: false
