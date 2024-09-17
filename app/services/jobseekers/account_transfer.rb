@@ -16,6 +16,7 @@ class Jobseekers::AccountTransfer
       transfer_job_applications
       transfer_saved_jobs
       update_subscriptions
+      account_to_transfer.reload.destroy
     end
   end
 

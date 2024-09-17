@@ -47,12 +47,17 @@ RSpec.describe Jobseekers::AccountTransfer do
           expect(subscription.reload.email).to eq(current_jobseeker.email)
         end
       end
+
+      it "deletes the account to transfer after successful transfer" do
+        expect { subject.call }.to change { Jobseeker.exists?(account_to_transfer.id) }.from(true).to(false)
+      end
     end
 
     context "when account to transfer does not exist" do
       it "raises an error and does nothing" do
         service = described_class.new(current_jobseeker, "non_existent@example.com")
         expect { service.call }.to raise_error(Jobseekers::AccountTransfer::AccountNotFoundError)
+        expect(Jobseeker.exists?(account_to_transfer.id)).to eq true
       end
     end
 
@@ -68,6 +73,10 @@ RSpec.describe Jobseekers::AccountTransfer do
           expect(feedback.reload.jobseeker_id).to eq(current_jobseeker.id)
         end
       end
+
+      it "deletes the account to transfer after successful transfer of other data" do
+        expect { subject.call }.to change { Jobseeker.exists?(account_to_transfer.id) }.from(true).to(false)
+      end
     end
 
     context "when an error occurs during the transfer" do
@@ -81,6 +90,11 @@ RSpec.describe Jobseekers::AccountTransfer do
           expect(feedback.reload.jobseeker_id).to eq(account_to_transfer.id)
         end
         expect(profile.reload.jobseeker_id).to eq(account_to_transfer.id)
+      end
+
+      it "does not delete account to transfer" do
+        expect { subject.call }.to raise_error(ActiveRecord::RecordInvalid)
+        expect(Jobseeker.exists?(account_to_transfer.id)).to eq true
       end
     end
   end
