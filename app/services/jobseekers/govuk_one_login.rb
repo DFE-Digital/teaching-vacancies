@@ -3,7 +3,7 @@ module Jobseekers::GovukOneLogin
   CALLBACKS_BASE_URL = "#{ENV.fetch('DOMAIN').include?('localhost') ? 'http' : 'https'}://#{ENV.fetch('DOMAIN')}".freeze
 
   CALLBACKS = {
-    login: "#{CALLBACKS_BASE_URL}/jobseekers/auth/openid_connect/callback",
+    login: "#{CALLBACKS_BASE_URL}/jobseekers/auth/govuk_one_login/callback",
     logout: "#{CALLBACKS_BASE_URL}/jobseekers/sign_out",
   }.freeze
 

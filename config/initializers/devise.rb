@@ -274,23 +274,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :openid_connect, {
-    name: :gov_uk_one_login,
-    scope: %i[openid email],
-    response_type: :code,
-    client_options: {
-      port: 443,
-      scheme: "https",
-      host: Rails.application.config.govuk_one_login_base_url,
-      identifier: Rails.application.config.govuk_one_login_client_id,
-      redirect_uri: "jobseekers/auth/openid_connect/callback",
-    },
-    authorize_params: {
-      prompt: "login",
-    },
-  }
-
-  # NB: This has been extracted per
+  # NB: This has been extracted to /config/initializers/omniauth.rb per
   # https://github.com/heartcombo/devise/wiki/OmniAuth-with-multiple-models
 
   # ==> Warden configuration

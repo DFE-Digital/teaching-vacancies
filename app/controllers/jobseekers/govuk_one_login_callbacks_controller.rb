@@ -5,9 +5,9 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   def openid_connect
     if (govuk_one_login_user = Jobseekers::GovukOneLogin::UserFromAuthResponse.call(params, session))
       session[:govuk_one_login_id_token] = govuk_one_login_user.id_token
-      
+
       if existing_jobseeker_first_sign_in_via_one_login(govuk_one_login_user)
-        session[:user_exists_first_log_in] = { value: 'true', path: '/', expires: 1.hour.from_now }
+        session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
       end
 
       jobseeker = Jobseeker.find_or_create_from_govuk_one_login(email: govuk_one_login_user.email,
@@ -38,8 +38,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   # We need to build our own logic to redirect the user to the correct pages.
   def after_sign_in_path_for(resource)
     stored_location = stored_location_for(resource)
-
-    if stored_location.include?("job_application/new")
+    if user_signed_in_from_quick_apply_link?(stored_location)
       stored_location
     elsif session[:user_exists_first_log_in]
       session.delete(:user_exists_first_log_in)
@@ -47,6 +46,10 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
     else
       jobseekers_job_applications_path
     end
+  end
+
+  def user_signed_in_from_quick_apply_link?(stored_location)
+    stored_location&.include?("job_application/new")
   end
 
   def existing_jobseeker_first_sign_in_via_one_login(govuk_one_login_user)

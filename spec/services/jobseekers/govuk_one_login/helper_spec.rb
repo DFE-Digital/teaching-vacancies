@@ -12,7 +12,7 @@ RSpec.describe Jobseekers::GovukOneLogin::Helper, type: :helper do
     it "generates the params for the GovUk OneLogin authorize endpoint" do
       login_params = helper.generate_login_params
       expect(login_params).to include(
-        redirect_uri: "http://localhost:3000/jobseekers/auth/openid_connect/callback",
+        redirect_uri: "http://localhost:3000/jobseekers/auth/govuk_one_login/callback",
         client_id: "one_login_client_id",
         response_type: "code",
         scope: "email openid",

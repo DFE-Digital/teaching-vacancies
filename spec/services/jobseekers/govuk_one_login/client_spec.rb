@@ -42,7 +42,7 @@ RSpec.describe Jobseekers::GovukOneLogin::Client do
       expect(request_mock).to have_received(:set_form_data).with(
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: "http://localhost:3000/jobseekers/auth/openid_connect/callback",
+        redirect_uri: "http://localhost:3000/jobseekers/auth/govuk_one_login/callback",
         client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
         client_assertion: "jwt_assertion",
       )
