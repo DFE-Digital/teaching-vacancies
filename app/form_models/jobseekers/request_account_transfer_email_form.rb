@@ -1,5 +1,6 @@
 class Jobseekers::RequestAccountTransferEmailForm < BaseForm
   attr_accessor :email
+
   validates :email, presence: true
   validates :email, email_address: true
   validate :validate_recent_code_request, if: -> { email.present? }

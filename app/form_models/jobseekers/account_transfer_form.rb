@@ -1,5 +1,6 @@
 class Jobseekers::AccountTransferForm < BaseForm
   attr_accessor :email, :account_merge_confirmation_code
+
   validates :email, presence: true
   validates :email, email_address: true
   validates :account_merge_confirmation_code, presence: true
