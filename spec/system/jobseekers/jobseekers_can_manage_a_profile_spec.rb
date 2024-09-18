@@ -601,16 +601,18 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
 
       it "does not allow the jobseeker to hide themselves from the school again" do
-        visit jobseekers_profile_path
-        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
-        choose "Yes", visible: false
-        click_on I18n.t("buttons.save_and_continue")
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
+          click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+          choose "Yes", visible: false
+          click_on I18n.t("buttons.save_and_continue")
 
-        field = find_field("Name of school or trust")
-        field.fill_in(with: forbidden_organisation.name)
-        click_on I18n.t("buttons.save_and_continue")
+          field = find_field("Name of school or trust")
+          field.fill_in(with: forbidden_organisation.name)
+          click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
+          expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
+        end
       end
     end
 
