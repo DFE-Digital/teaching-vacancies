@@ -378,15 +378,16 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     before do
       allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
-      login_publisher(publisher:)
     end
 
     context "if the profile does not exist" do
       let!(:profile) { nil }
 
       it "does not appear in search results" do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_css(".search-results__item")
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_css(".search-results__item")
+        end
       end
     end
 
@@ -394,8 +395,10 @@ RSpec.describe "Jobseekers can manage their profile" do
       let!(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:, job_preferences:, active: false) }
 
       it "does not appear in search results" do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
+        end
       end
     end
 
@@ -408,42 +411,54 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
 
       it "can be toggled on and off" do
-        visit jobseekers_profile_path
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
 
-        expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
-        expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
-
-        visit jobseekers_profile_path
-        within ".preview-and-turn-on-profile" do
-          click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
+          expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
         end
 
-        click_button I18n.t("jobseekers.profiles.show.turn_on_profile")
-        expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_on"))
-        expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-        expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
+        end
 
-        visit publishers_jobseeker_profiles_path
-        expect(page).to have_content(profile.full_name)
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
+          within ".preview-and-turn-on-profile" do
+            click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          end
+
+          click_button I18n.t("jobseekers.profiles.show.turn_on_profile")
+          expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_on"))
+          expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+          expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
+        end
+
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).to have_content(profile.full_name)
+        end
 
         visit jobseekers_profile_path
         within ".preview-and-turn-on-profile" do
           click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
         end
 
-        click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
-        expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
-        expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-        expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
+        run_with_jobseeker(jobseeker) do
+          click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
+          expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
+          expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+          expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
+        end
 
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
 
-        visit publishers_jobseeker_profile_path(profile)
-        expect(page).to have_content("Page not found")
+          visit publishers_jobseeker_profile_path(profile)
+          expect(page).to have_content("Page not found")
+        end
       end
     end
 
@@ -455,16 +470,18 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
 
       it "cannot be toggled on" do
-        visit jobseekers_profile_path
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
 
-        expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
-        expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+          expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
+          expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
 
-        within ".preview-and-turn-on-profile" do
-          click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          within ".preview-and-turn-on-profile" do
+            click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          end
+
+          expect(page).to have_content I18n.t("jobseekers.profiles.toggle.not_ready")
         end
-
-        expect(page).to have_content I18n.t("jobseekers.profiles.toggle.not_ready")
       end
     end
   end
@@ -506,64 +523,76 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     it "allows the jobseeker to hide themselves from specific schools" do
-      login_publisher(publisher: permitted_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).to have_content(profile.full_name)
-
-      login_publisher(publisher: forbidden_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).to have_content(profile.full_name)
-
-      visit jobseekers_profile_path
-      click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
-      choose "Yes", visible: false
-      click_on I18n.t("buttons.save_and_continue")
-
-      field = find_field("Name of school or trust")
-      field.fill_in(with: forbidden_organisation.name)
-      field.native.send_keys(:tab)
-      click_on I18n.t("buttons.save_and_continue")
-
-      login_publisher(publisher: forbidden_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
-
-      login_publisher(publisher: permitted_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).to have_content(profile.full_name)
-
-      visit jobseekers_profile_path
-      click_on I18n.t("jobseekers.profiles.hide_profile.summary.add_a_school")
-
-      field = find_field("Name of school or trust")
-      field.fill_in(with: permitted_organisation.name)
-      field.native.send_keys(:tab)
-      click_on I18n.t("buttons.save_and_continue")
-
-      login_publisher(publisher: permitted_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
-
-      login_publisher(publisher: forbidden_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
-
-      visit publishers_jobseeker_profile_path(profile)
-      expect(page).to have_content("Page not found")
-
-      visit schools_jobseekers_profile_hide_profile_path
-      within page.find(".govuk-summary-list__key", text: permitted_organisation.name).find(:xpath, "..") do
-        click_on I18n.t("buttons.delete")
+      run_with_publisher(permitted_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
       end
-      click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
 
-      login_publisher(publisher: permitted_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).to have_content(profile.full_name)
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
+      end
 
-      login_publisher(publisher: forbidden_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
+      run_with_jobseeker(jobseeker) do
+        visit jobseekers_profile_path
+        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+        choose "Yes", visible: false
+        click_on I18n.t("buttons.save_and_continue")
+
+        field = find_field("Name of school or trust")
+        field.fill_in(with: forbidden_organisation.name)
+        click_on I18n.t("buttons.save_and_continue")
+      end
+
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+      end
+
+      run_with_publisher(permitted_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
+      end
+
+      run_with_jobseeker(jobseeker) do
+        visit jobseekers_profile_path
+        click_on I18n.t("jobseekers.profiles.hide_profile.summary.add_a_school")
+
+        field = find_field("Name of school or trust")
+        field.fill_in(with: permitted_organisation.name)
+        click_on I18n.t("buttons.save_and_continue")
+      end
+
+      run_with_publisher(permitted_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+      end
+
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+
+        visit publishers_jobseeker_profile_path(profile)
+        expect(page).to have_content("Page not found")
+      end
+
+      run_with_jobseeker(jobseeker) do
+        visit schools_jobseekers_profile_hide_profile_path
+        within page.find(".govuk-summary-list__key", text: permitted_organisation.name).find(:xpath, "..") do
+          click_on I18n.t("buttons.delete")
+        end
+        click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
+      end
+
+      run_with_publisher(permitted_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
+      end
+
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+      end
     end
 
     context "if the jobseeker is already hidden from the school" do
@@ -609,23 +638,26 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.hidden_from_trust_and_schools"))
 
-        login_publisher(publisher: forbidden_trust_publisher)
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
+        run_with_publisher(forbidden_trust_publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
 
-        visit publishers_jobseeker_profile_path(profile)
-        expect(page).to have_content("Page not found")
+          visit publishers_jobseeker_profile_path(profile)
+          expect(page).to have_content("Page not found")
+        end
 
-        login_publisher(publisher: forbidden_publisher)
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
+        run_with_publisher(forbidden_publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
 
-        visit publishers_jobseeker_profile_path(profile)
-        expect(page).to have_content("Page not found")
+          visit publishers_jobseeker_profile_path(profile)
+          expect(page).to have_content("Page not found")
+        end
 
-        login_publisher(publisher: permitted_publisher)
-        visit publishers_jobseeker_profiles_path
-        expect(page).to have_content(profile.full_name)
+        run_with_publisher(permitted_publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).to have_content(profile.full_name)
+        end
       end
     end
 
