@@ -6,4 +6,4 @@
 
     p.govuk-body = t(".could_not_find_account")
     p.govuk-body = t(".continue_to_profile", link: govuk_link_to(t(".profile_link_text"), jobseekers_profile_path)).html_safe
-    p.govuk-body = t(".transfer_account", link: govuk_link_to(t(".transfer_account_link_text"), account_not_found_jobseekers_account_path)).html_safe
+    p.govuk-body = t(".transfer_account", link: govuk_link_to(t(".transfer_account_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
