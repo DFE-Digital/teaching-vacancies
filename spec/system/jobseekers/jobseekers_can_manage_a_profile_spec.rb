@@ -440,12 +440,12 @@ RSpec.describe "Jobseekers can manage their profile" do
           expect(page).to have_content(profile.full_name)
         end
 
-        visit jobseekers_profile_path
-        within ".preview-and-turn-on-profile" do
-          click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
-        end
-
         run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
+          within ".preview-and-turn-on-profile" do
+            click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
+          end
+
           click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
           expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
           expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
@@ -626,17 +626,19 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:forbidden_trust_publisher) { create(:publisher) }
 
       it "allows the jobseeker to hide themselves from the trust and its schools" do
-        visit jobseekers_profile_path
-        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
-        choose "Yes", visible: false
-        click_on I18n.t("buttons.save_and_continue")
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
+          click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+          choose "Yes", visible: false
+          click_on I18n.t("buttons.save_and_continue")
 
-        field = find_field("Name of school or trust")
-        field.fill_in(with: forbidden_trust.name)
-        field.native.send_keys(:tab)
-        click_on I18n.t("buttons.save_and_continue")
+          field = find_field("Name of school or trust")
+          field.fill_in(with: forbidden_trust.name)
+          field.native.send_keys(:tab)
+          click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.hidden_from_trust_and_schools"))
+          expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.hidden_from_trust_and_schools"))
+        end
 
         run_with_publisher(forbidden_trust_publisher) do
           visit publishers_jobseeker_profiles_path
