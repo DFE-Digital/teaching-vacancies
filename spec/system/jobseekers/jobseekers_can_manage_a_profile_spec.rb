@@ -13,8 +13,12 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  it "allows the jobseeker to navigate to their profile" do
-    run_with_jobseeker(jobseeker) do
+  describe "navigation to profile" do
+    before { login_as(jobseeker, scope: :jobseeker) }
+
+    after { logout }
+
+    it "allows the jobseeker to navigate to their profile" do
       visit jobseeker_root_path
 
       within "#navigation" do
@@ -34,36 +38,38 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:last_name) { "Baggins" }
       let(:phone_number) { "07777777777" }
 
+      before do
+        login_as(jobseeker, scope: :jobseeker)
+
+        visit jobseekers_profile_path
+      end
+
+      after { logout }
+
       it "allows the jobseeker to fill in their personal details" do
-        run_with_jobseeker(jobseeker) do
-          visit jobseekers_profile_path
-          click_link("Add personal details")
-          fill_in "personal_details_form[first_name]", with: first_name
-          fill_in "personal_details_form[last_name]", with: last_name
-          click_on I18n.t("buttons.save_and_continue")
+        click_link("Add personal details")
+        fill_in "personal_details_form[first_name]", with: first_name
+        fill_in "personal_details_form[last_name]", with: last_name
+        click_on I18n.t("buttons.save_and_continue")
 
-          expect(page).to have_content("Do you want to provide a phone number?")
-          choose "Yes"
-          fill_in "personal_details_form[phone_number]", with: phone_number
-          click_on I18n.t("buttons.save_and_continue")
+        expect(page).to have_content("Do you want to provide a phone number?")
+        choose "Yes"
+        fill_in "personal_details_form[phone_number]", with: phone_number
+        click_on I18n.t("buttons.save_and_continue")
 
-          expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
-          choose "Yes"
-          click_on I18n.t("buttons.save_and_continue")
+        expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
+        choose "Yes"
+        click_on I18n.t("buttons.save_and_continue")
 
-          click_on I18n.t("buttons.return_to_profile")
+        click_on I18n.t("buttons.return_to_profile")
 
-          expect(page).to have_content("#{first_name} #{last_name}")
-          expect(page).to have_content(phone_number)
-          expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
-        end
+        expect(page).to have_content("#{first_name} #{last_name}")
+        expect(page).to have_content(phone_number)
+        expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
       end
 
       it "does not display a notice to inform the user about prefilling" do
-        run_with_jobseeker(jobseeker) do
-          visit jobseekers_profile_path
-          expect(page).not_to have_content("your details have been imported into your profile")
-        end
+        expect(page).not_to have_content("your details have been imported into your profile")
       end
     end
 
@@ -79,10 +85,13 @@ RSpec.describe "Jobseekers can manage their profile" do
           phone_number_provided: true,
           phone_number: old_phone_number,
           completed_steps: { "name" => "completed", "phone_number" => "completed" },
-        )
+          )
 
+        login_as(jobseeker, scope: :jobseeker)
         visit jobseekers_profile_path
       end
+
+      after { logout }
 
       it "allows the jobseeker to edit their profile" do
         row = page.find(".govuk-summary-list__key", text: "Name").find(:xpath, "..")
@@ -112,7 +121,12 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "personal details if the jobseeker has a previous job application" do
     let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
 
-    before { visit jobseekers_profile_path }
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "prefills the form with the jobseeker's personal details" do
       expect(page).to have_content(previous_application.first_name)
@@ -128,7 +142,12 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "personal details if the jobseeker has a blank previous job application" do
     let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
 
-    before { visit jobseekers_profile_path }
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "prefills the form with the jobseeker's provided personal details" do
       expect(page).to have_content(previous_application.phone_number)
@@ -142,7 +161,12 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "#about_you" do
     let(:jobseeker_about_you) { "I am an amazing teacher" }
 
-    before { visit jobseekers_profile_path }
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "allows the jobseeker to add #about_you" do
       click_link("Add details about you")
@@ -158,7 +182,12 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "changing the jobseekers's QTS status" do
-    before { visit jobseekers_profile_path }
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "allows the jobseeker to edit their QTS status to yes with year achieved" do
       click_link("Add qualified teacher status")
@@ -190,8 +219,14 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "QTS if the jobseeker has a previous job application" do
     let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
 
-    it "prefills the form with the jobseeker's personal details" do
+    before do
+      login_as(jobseeker, scope: :jobseeker)
       visit jobseekers_profile_path
+    end
+
+    after { logout }
+
+    it "prefills the form with the jobseeker's personal details" do
       expect(page).to have_content("Year QTS awarded#{previous_application.qualified_teacher_status_year}")
     end
   end
@@ -200,7 +235,12 @@ RSpec.describe "Jobseekers can manage their profile" do
     describe "adding an employment history entry to a profile" do
       let!(:profile) { create(:jobseeker_profile, jobseeker:) }
 
-      before { visit jobseekers_profile_path }
+      before do
+        login_as(jobseeker, scope: :jobseeker)
+        visit jobseekers_profile_path
+      end
+
+      after { logout }
 
       it "raises errors for missing fields" do
         click_link("Add roles")
@@ -297,9 +337,14 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:new_job_role) { "Chief ET locator" }
       let(:new_reason_for_leaving) { "Relocating" }
 
-      it "successfully changes the employment record" do
+      before do
+        login_as(jobseeker, scope: :jobseeker)
         visit jobseekers_profile_path
+      end
 
+      after { logout }
+
+      it "successfully changes the employment record" do
         within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.change") }
 
         expect(current_path).to eq(edit_jobseekers_profile_work_history_path(employment))
@@ -321,6 +366,10 @@ RSpec.describe "Jobseekers can manage their profile" do
       let!(:profile) { create(:jobseeker_profile, jobseeker:) }
       let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
 
+      before { login_as(jobseeker, scope: :jobseeker) }
+
+      after { logout }
+
       it "deletes the employment record" do
         visit review_jobseekers_profile_work_history_index_path
 
@@ -333,6 +382,10 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     context "if the jobseeker has a previous job application" do
       let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
+
+      before { login_as(jobseeker, scope: :jobseeker) }
+
+      after { logout }
 
       it "prefills the form with the jobseeker's work history" do
         visit jobseekers_profile_path
@@ -350,6 +403,10 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "qualifications" do
     context "if the jobseeker has a previous job application" do
       let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
+
+      before { login_as(jobseeker, scope: :jobseeker) }
+
+      after { logout }
 
       it "prefills the form with the jobseeker's qualifications" do
         visit jobseekers_profile_path
@@ -676,6 +733,10 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       let(:forbidden_trust_publisher) { create(:publisher) }
 
+      before { login_as(jobseeker, scope: :jobseeker) }
+
+      after { logout }
+
       it "asks whether to hide from the whole trust or just the specific school" do
         visit jobseekers_profile_path
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
@@ -714,7 +775,12 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "job preferences" do
     let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
 
-    before { visit jobseekers_profile_path }
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "allows the jobseeker to fill in their job preferences" do
       click_link("Add job preferences")
