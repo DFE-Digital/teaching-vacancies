@@ -380,6 +380,10 @@ RSpec.describe "Jobseekers can manage their profile" do
       allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
     end
 
+    after do
+      logout
+    end
+
     context "if the profile does not exist" do
       let!(:profile) { nil }
 
@@ -486,7 +490,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "hiding profile from specific organisations", js: true do
+  describe "hiding profile from specific organisations" do
     let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
 
     let(:bexleyheath_geopoint) do
@@ -600,7 +604,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         profile.excluded_organisations << forbidden_organisation
       end
 
-      it "does not allow the jobseeker to hide themselves from the school again", :ci_only do
+      it "does not allow the jobseeker to hide themselves from the school again" do
         visit jobseekers_profile_path
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
         choose "Yes", visible: false
@@ -608,7 +612,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         field = find_field("Name of school or trust")
         field.fill_in(with: forbidden_organisation.name)
-        field.native.send_keys(:tab)
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
@@ -634,7 +637,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
           field = find_field("Name of school or trust")
           field.fill_in(with: forbidden_trust.name)
-          field.native.send_keys(:tab)
           click_on I18n.t("buttons.save_and_continue")
 
           expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.hidden_from_trust_and_schools"))
@@ -673,7 +675,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       let(:forbidden_trust_publisher) { create(:publisher) }
 
-      it "asks whether to hide from the whole trust or just the specific school", :ci_only do
+      it "asks whether to hide from the whole trust or just the specific school" do
         visit jobseekers_profile_path
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
         choose "Yes", visible: false
@@ -681,7 +683,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         field = find_field("Name of school or trust")
         field.fill_in(with: forbidden_organisation.name)
-        field.native.send_keys(:tab)
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.choose_school_or_trust.page_title", trust_name: forbidden_trust.name))
@@ -696,7 +697,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         field = find_field("Name of school or trust")
         field.fill_in(with: forbidden_organisation.name)
-        field.native.send_keys(:tab)
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.choose_school_or_trust.page_title", trust_name: forbidden_trust.name))
