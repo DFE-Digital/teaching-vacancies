@@ -6,7 +6,7 @@ RSpec.describe "Govuk One Login authentication response" do
     let(:govuk_one_login_user) do
       instance_double(Jobseekers::GovukOneLogin::User,
                       id: "urn:fdc:gov.uk:2022:VtcZjnU4Sif2oyJZola3OkN0e3Jeku1cIMN38rFlhU4",
-                      email: "user@example.com",
+                      email: "user@someemail.com",
                       id_token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjFlOWdkazcifQ.ewogImlzcyI6I")
     end
 
@@ -39,7 +39,7 @@ RSpec.describe "Govuk One Login authentication response" do
     end
 
     context "when the OneLogin user matches a TV jobseeker" do
-      let!(:jobseeker) { create(:jobseeker, email: "user@example.com") }
+      let!(:jobseeker) { create(:jobseeker, email: "user@someemail.com") }
 
       it "signs in the user as the existing jobseeker" do
         expect { get auth_govuk_one_login_callback_path }.not_to change(Jobseeker, :count)
@@ -70,7 +70,7 @@ RSpec.describe "Govuk One Login authentication response" do
         end
 
         context "when is not the first time the jobseeker is signing in via OneLogin" do
-          let!(:jobseeker) { create(:jobseeker, email: "user@example.com", govuk_one_login_id: govuk_one_login_user.id) }
+          let!(:jobseeker) { create(:jobseeker, email: "user@someemail.com", govuk_one_login_id: govuk_one_login_user.id) }
 
           it "redirects the jobseeker to their applications page" do
             get auth_govuk_one_login_callback_path
