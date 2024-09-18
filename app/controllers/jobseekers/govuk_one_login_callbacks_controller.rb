@@ -3,12 +3,13 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   # Devise redirects response from Govuk One Login to this method.
   # The request parameters contain the response from Govuk One Login from the user authentication through their portal.
 
-  
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def openid_connect
     if (govuk_one_login_user = Jobseekers::GovukOneLogin::UserFromAuthResponse.call(params, session))
       session[:govuk_one_login_id_token] = govuk_one_login_user.id_token
-      
-      jobseeker = Jobseeker.find_by('lower(email) = ?', govuk_one_login_user.email.downcase)
+
+      jobseeker = Jobseeker.find_by("lower(email) = ?", govuk_one_login_user.email.downcase)
 
       if jobseeker.nil?
         session[:newly_created_user] = { value: "true", path: "/", expires: 1.hour.from_now }
@@ -29,6 +30,8 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
     Rails.logger.error(e.message)
     error_redirect
   end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   private
 
