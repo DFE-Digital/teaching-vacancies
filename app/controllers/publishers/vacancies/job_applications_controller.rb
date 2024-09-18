@@ -22,6 +22,16 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     job_application.reviewed! if job_application.submitted?
   end
 
+  def download_pdf
+    pdf = generate_pdf(job_application, vacancy)
+
+    send_data pdf.render, filename: "job_application_#{job_application.id}.pdf",
+              type: "application/pdf",
+              disposition: "inline"
+  end
+
+
+
   def update_status
     raise ActionController::RoutingError, "Cannot shortlist or reject a draft or withdrawn application" if
       job_application.draft? || job_application.withdrawn?
@@ -32,6 +42,22 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   private
+
+  def generate_pdf(job_application, vacancy)
+    Prawn::Document.new do
+      caption_text = I18n.t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
+      text caption_text, size: 12, style: :italic  # Adjust size and style to match GovUK caption
+
+      # Add some spacing (similar to margins in HTML)
+      move_down 10
+
+      # Heading (h1.govuk-heading-xl equivalent)
+      text job_application.name, size: 24, style: :bold  # Adjust size to match heading-xl, bold style for heading
+
+      # Add more space after heading if needed
+      move_down 20
+    end
+  end
 
   def job_applications
     @job_applications ||= vacancy.job_applications.not_draft

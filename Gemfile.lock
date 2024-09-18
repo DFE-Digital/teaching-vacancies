@@ -407,10 +407,15 @@ GEM
       ast (~> 2.4.1)
       racc
     parslet (2.0.0)
+    pdf-core (0.10.0)
     pg (1.5.8)
     pg_search (2.3.7)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
+    prawn (2.5.0)
+      matrix (~> 0.4)
+      pdf-core (~> 0.10.0)
+      ttfunk (~> 1.8)
     propshaft (1.0.0)
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
@@ -663,6 +668,8 @@ GEM
     timecop (0.9.10)
     timeout (0.4.1)
     trailblazer-option (0.1.2)
+    ttfunk (1.8.0)
+      bigdecimal (~> 3.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
@@ -787,6 +794,7 @@ DEPENDENCIES
   parslet
   pg
   pg_search
+  prawn
   propshaft
   pry
   pry-byebug
