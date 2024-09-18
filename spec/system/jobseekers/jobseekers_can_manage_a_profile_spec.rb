@@ -486,7 +486,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "hiding profile from specific organisations" do
+  describe "hiding profile from specific organisations", :js do
     let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
 
     let(:bexleyheath_geopoint) do
