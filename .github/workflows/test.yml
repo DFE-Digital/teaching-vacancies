@@ -14,7 +14,7 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: postgis://postgres:postgres@localhost
-      PARALLEL_TEST_PROCESSORS: 4
+      PARALLEL_TEST_PROCESSORS: 2
       PARALLEL_TEST_FIRST_IS_1: true
 
     services:
