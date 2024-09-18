@@ -7,33 +7,15 @@ on:
 
 jobs:
   backend-tests:
-    name: Run RSpec (${{ matrix.test_params.name }})
+    name: Run RSpec Tests in Parallel
 
     runs-on: ubuntu-20.04
 
-    strategy:
-      fail-fast: false
-      matrix:
-        test_params:
-          -
-            name: system - jobseekers
-            params: 'spec/system/jobseekers'
-          -
-            name: system - publishers
-            params: 'spec/system/publishers'
-          -
-            name: system - support users
-            params: 'spec/system/support_users'
-          -
-            name: system - other
-            params: 'spec/system/other'
-          -
-            name: unit
-            params: '--exclude-pattern "spec/{system}/*_spec.rb, spec/system/{jobseekers,publishers,support_users,other}/*_spec.rb"'
-
     env:
       RAILS_ENV: test
-      DATABASE_URL: postgis://postgres:postgres@localhost:5432/tvs_test
+      DATABASE_URL: postgis://postgres:postgres@localhost
+      PARALLEL_TEST_PROCESSORS: 4
+      PARALLEL_TEST_FIRST_IS_1: true
 
     services:
       postgres:
@@ -53,13 +35,13 @@ jobs:
         uses: ./.github/actions/prepare-app-env
 
       - name: Set up test database
-        run: bin/rails db:create db:schema:load
+        run: bundle exec rake db:create db:schema:load parallel:create parallel:load_schema
 
       - name: Precompile assets
         run: bin/rails assets:precompile
 
       - name: Run tests
-        run: bundle exec rspec ${{ matrix.test_params.params }}
+        run: bundle exec rake parallel:spec
 
       - name: Upload Capybara failures screenshots
         if: failure()
