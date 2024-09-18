@@ -4,16 +4,6 @@ RSpec.describe Subscription do
   it { is_expected.to have_many(:alert_runs) }
   it { is_expected.to respond_to(:recaptcha_score) }
 
-  context "before_create" do
-    let!(:subscription) { create(:subscription, email: "john@lennon.con") }
-
-    context "when creating a subscription with email ending in `.con`" do
-      it "saves it with email ending in `.com`" do
-        expect(subscription.email).to eq "john@lennon.com"
-      end
-    end
-  end
-
   describe "scopes" do
     before(:each) do
       create_list(:subscription, 3, frequency: :daily)

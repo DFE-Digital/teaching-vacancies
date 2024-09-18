@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe GeneralFeedbackForm, type: :model do
   subject { described_class.new(params) }
-  let(:email) { "helpful@example.com" }
+  let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
   let(:user_participation_response) { "interested" }
   let(:visit_purpose) { "find_teaching_job" }
   let(:visit_purpose_comment) { nil }
@@ -45,7 +45,8 @@ RSpec.describe GeneralFeedbackForm, type: :model do
   context "when the user_participation_response == 'interested'" do
     it { is_expected.to validate_presence_of(:occupation) }
     it { is_expected.to validate_presence_of(:email) }
-    it { is_expected.to allow_value("email@example.com").for(:email) }
+    it { is_expected.to allow_value("email@gmail.com").for(:email) }
+    it { is_expected.to_not allow_value("example@com").for(:email) }
     it { is_expected.to_not allow_value("invalid@email@com").for(:email) }
   end
 

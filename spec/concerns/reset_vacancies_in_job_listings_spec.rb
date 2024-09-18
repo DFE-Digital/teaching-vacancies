@@ -110,7 +110,7 @@ RSpec.describe Resettable do
     subject(:update_receive_application) { vacancy.update(receive_applications: new_receive_applications) }
 
     context "from email to website" do
-      let(:vacancy) { build(:vacancy, enable_job_applications: false, receive_applications: "email", application_email: "test@test.com") }
+      let(:vacancy) { build(:vacancy, enable_job_applications: false, receive_applications: "email", application_email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)) }
       let(:new_receive_applications) { "website" }
       let(:previous_application_email) { vacancy.application_email }
 

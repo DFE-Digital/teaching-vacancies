@@ -13,7 +13,7 @@
               - row.with_key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
               - row.with_value text: qualification[attribute]
 
-          - unless qualification.finished_studying.nil?
+          - if qualification.finished_studying == false
             - summary_list.with_row do |row|
               - row.with_key text: t("helpers.legend.#{qualification_form_param_key(qualification.category)}.finished_studying")
               - row.with_value text: safe_join([tag.div(t("helpers.label.jobseekers_qualifications_shared_labels.finished_studying_options.#{qualification.finished_studying}"), class: "govuk-body"), tag.div(qualification.finished_studying_details.presence, class: "govuk-body")])

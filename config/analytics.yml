@@ -190,6 +190,7 @@ shared:
     - created_at
     - updated_at
     - account_closed_on
+    - account_merge_confirmation_code_generated_at
   job_preferences:
     - id
     - roles

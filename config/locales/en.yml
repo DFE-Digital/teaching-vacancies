@@ -270,11 +270,11 @@ en:
         key_stage: Key stage
         key_stages:
           early_years: Early years
-          ks1: KS1
-          ks2: KS2
-          ks3: KS3
-          ks4: KS4
-          ks5: KS5
+          ks1: Key stage 1
+          ks2: Key stage 2
+          ks3: Key stage 3
+          ks4: Key stage 4
+          ks5: Key stage 5
         phase: Education phase
         phases:
           nursery: Nursery

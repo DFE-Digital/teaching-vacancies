@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can manage their account details" do
-  let(:jobseeker) { create(:jobseeker, email: "jobseeker@example.com") }
+  let(:email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+  let(:jobseeker) { create(:jobseeker, email: email_address) }
 
   context "when logged in" do
     before do
@@ -14,7 +15,7 @@ RSpec.describe "Jobseekers can manage their account details" do
     it "shows their account details" do
       within("dl") do
         expect(page).to have_content(I18n.t("jobseekers.accounts.show.summary_list.email"))
-        expect(page).to have_content("jobseeker@example.com")
+        expect(page).to have_content(email_address)
       end
     end
   end

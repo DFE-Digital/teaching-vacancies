@@ -136,6 +136,7 @@
   - last_sign_in_ip_ciphertext
   - last_sign_in_ip
   - current_sign_in_ip
+  - account_merge_confirmation_code
   :job_preferences:
   - willing_to_relocate
   :organisations:

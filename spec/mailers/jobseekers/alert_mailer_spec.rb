@@ -9,7 +9,7 @@ RSpec.describe Jobseekers::AlertMailer do
 
   let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
   let(:body) { mail.body.raw_source }
-  let(:email) { "an@example.net" }
+  let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
   let(:frequency) { :daily }
   let(:search_criteria) { { keyword: "English" } }
   let(:subscription) do

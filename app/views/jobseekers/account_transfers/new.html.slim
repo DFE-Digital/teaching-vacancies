@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl = t(".heading")
+    = govuk_inset_text(text: t(".email_sent", email: @email))
+    p = t(".paragraph1")
+    p = t(".paragraph2")
+    p = t(".paragraph3")
+
+    = form_for @account_transfer_form, url: jobseekers_account_transfer_path do |f|
+      = f.govuk_error_summary
+
+      = f.hidden_field :email, value: @email || @account_transfer_form.email
+
+      = f.govuk_text_field :account_merge_confirmation_code, label: { text: t(".label"), size: "s" }, width: "two-thirds", required: true
+
+      = f.govuk_submit t(".confirm"), class: "govuk-!-margin-bottom-5"
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path
+
+    = govuk_details summary_text: t(".help_with_code"), text: t(".helpful_links", resend_code_link: govuk_link_to(t(".resend_code_link_text"), jobseekers_request_account_transfer_email_path(jobseekers_request_account_transfer_email_form: { email: @email }), method: :post), different_email_link: govuk_link_to(t(".different_email_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe

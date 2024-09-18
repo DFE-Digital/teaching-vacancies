@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Requesting support", recaptcha: true, vcr: true, zendesk: true do
   let(:issue) { "Help!" }
-  let(:email) { "test@example.com" }
+  let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
 
   context "when all required fields are complete" do
     scenario "can request support" do

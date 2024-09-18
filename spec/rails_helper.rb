@@ -20,6 +20,9 @@ Sidekiq::Testing.fake!
 Geocoder::DEFAULT_STUB_COORDINATES = [51.1789, -1.8262].freeze
 Geocoder::DEFAULT_LOCATION = "TE5 T1NG".freeze
 
+# https://stackoverflow.com/questions/1368163/is-there-a-standard-domain-for-testing-throwaway-email
+TEST_EMAIL_DOMAIN = "contoso.com".freeze
+
 Capybara.register_driver :chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox headless disable-gpu window-size=1400,1400])
 

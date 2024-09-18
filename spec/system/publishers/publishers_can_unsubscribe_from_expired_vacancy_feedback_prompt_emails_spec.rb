@@ -2,7 +2,7 @@ require "rails_helper"
 RSpec.describe "Publishers can unsubscribe from expired vacancy feedback prompt emails" do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher, email: "test@example.com") }
+  let(:publisher) { create(:publisher) }
 
   before do
     ActionMailer::Base.deliveries.clear

@@ -5,7 +5,7 @@ RSpec.describe SendExpiredVacancyFeedbackPromptJob do
   let(:expiry_date) { 3.weeks.ago }
   let(:mail) { double("Mail::Message", deliver_later: true) }
   let(:publisher) { create(:publisher, email: publisher_email) }
-  let(:publisher_email) { "test@example.com" }
+  let(:publisher_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
 
   before { allow(Publishers::ExpiredVacancyFeedbackPromptMailer).to receive(:prompt_for_feedback).and_return(mail) }
 
