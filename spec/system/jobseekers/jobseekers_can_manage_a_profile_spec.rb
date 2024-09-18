@@ -380,10 +380,6 @@ RSpec.describe "Jobseekers can manage their profile" do
       allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
     end
 
-    after do
-      logout
-    end
-
     context "if the profile does not exist" do
       let!(:profile) { nil }
 
