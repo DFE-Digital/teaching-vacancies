@@ -4,7 +4,7 @@ require "dfe/analytics/rspec/matchers"
 RSpec.describe Jobseekers::SubscriptionMailer do
   include ERB::Util
 
-  let(:email) { "an@example.net" }
+  let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
   let(:search_criteria) { { keyword: "English" } }
   let(:subscription) do
     subscription = Subscription.create(email: email, frequency: "daily", search_criteria: search_criteria)

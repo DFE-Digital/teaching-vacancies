@@ -59,6 +59,14 @@ en:
           body: If you did not make this request, please email %{mail_to}
           heading: Not requested a password reset?
         subject: Reset your password
+      request_account_transfer:
+        subject: Transfer your account data
+        heading: Your verification code
+        intro: Use this verification code to confirm the transfer of your Teaching Vacancies account details.
+        verification_code: "Your verification code: %{code}"
+        valid_for: The code is only valid for one hour.
+        not_requested: If you did not request this, you can ignore this email.
+        need_help: If you need help using the verification code, you can %{mail_to}.
       unlock_instructions:
         heading: Unlock your Teaching Vacancies account
         instructions: Click the link below to unlock your account and sign in to Teaching Vacancies.

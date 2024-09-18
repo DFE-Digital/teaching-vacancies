@@ -3,7 +3,7 @@ require "dfe/analytics/rspec/matchers"
 
 RSpec.describe Jobseekers::AccountMailer do
   let(:jobseeker) { create(:jobseeker, email: email) }
-  let(:email) { "test@example.net" }
+  let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
   let(:token) { "some-special-token" }
 
   let(:expected_data) do
@@ -21,7 +21,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
     it "sends an `account_closed` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.account_closed.subject"))
-      expect(mail.to).to eq(["test@example.net"])
+      expect(mail.to).to eq([email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.account_closed.heading"))
     end
 
@@ -36,12 +36,12 @@ RSpec.describe Jobseekers::AccountMailer do
     let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
 
     context "when the jobseeker is pending reconfirmation" do
-      let(:email) { "unconfirmed@example.net" }
-      let(:jobseeker) { create(:jobseeker, email: "test@example.net", unconfirmed_email: email) }
+      let(:email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+      let(:jobseeker) { create(:jobseeker, email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN), unconfirmed_email: email) }
 
       it "sends confirmation_instructions email" do
         expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.reconfirmation.subject"))
-        expect(mail.to).to eq(["unconfirmed@example.net"])
+        expect(mail.to).to eq([email])
         expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.body"))
                                  .and include(jobseeker_confirmation_path(confirmation_token: token))
       end
@@ -57,7 +57,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
       it "sends a `jobseeker_confirmation_instructions` email" do
         expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.subject"))
-        expect(mail.to).to eq(["test@example.net"])
+        expect(mail.to).to eq([email])
         expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.body"))
                                  .and include(jobseeker_confirmation_path(confirmation_token: token))
       end
@@ -69,11 +69,12 @@ RSpec.describe Jobseekers::AccountMailer do
     end
 
     context "when the jobseeker is being reminded to confirm" do
-      let(:jobseeker) { create(:jobseeker, email: "test@example.net", confirmation_token: token, unconfirmed_email: "test@example.net", confirmed_at: nil, confirmation_sent_at: 18.hours.ago) }
+      let(:email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+      let(:jobseeker) { create(:jobseeker, email: email_address, confirmation_token: token, unconfirmed_email: email_address, confirmed_at: nil, confirmation_sent_at: 18.hours.ago) }
 
       it "sends a `jobseeker_confirmation_instructions` email" do
         expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.reminder.subject"))
-        expect(mail.to).to eq(["test@example.net"])
+        expect(mail.to).to eq([email_address])
         expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.body"))
                                  .and include(jobseeker_confirmation_path(confirmation_token: token))
       end
@@ -91,7 +92,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
     it "sends a `jobseeker_email_changed` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.email_changed.subject"))
-      expect(mail.to).to eq(["test@example.net"])
+      expect(mail.to).to eq([email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.email_changed.heading"))
     end
 
@@ -107,7 +108,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
     it "sends an `inactive_account` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.inactive_account.subject"))
-      expect(mail.to).to eq(["test@example.net"])
+      expect(mail.to).to eq([email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.subject"))
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.intro"))
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.inactive_account.explanation"))
@@ -127,7 +128,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
     it "sends a `jobseeker_reset_password_instructions` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.reset_password_instructions.subject"))
-      expect(mail.to).to eq(["test@example.net"])
+      expect(mail.to).to eq([email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.reset_password_instructions.heading"))
                                .and include(edit_jobseeker_password_path(reset_password_token: token))
     end
@@ -144,7 +145,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
     it "sends a `jobseeker_unlock_instructions` email" do
       expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.unlock_instructions.subject"))
-      expect(mail.to).to eq(["test@example.net"])
+      expect(mail.to).to eq([email])
       expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.unlock_instructions.heading"))
                                .and include(jobseeker_unlock_path(unlock_token: token))
     end

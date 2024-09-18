@@ -4,7 +4,7 @@ en:
     other_type: Type
 
     filters:
-      education_phase: Phase of education
+      education_phase: Education phase
       key_stage: Key stage
       special_school: Special school
       faith_school: Faith school

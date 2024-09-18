@@ -60,6 +60,7 @@ RSpec.describe ImportFromVacancySourceJob do
 
     context "when a new vacancy comes through but isn't valid" do
       let(:vacancies_from_source) { [vacancy] }
+      let(:contact_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
       let(:vacancy) do
         build(:vacancy,
               :published,
@@ -69,7 +70,7 @@ RSpec.describe ImportFromVacancySourceJob do
               job_title: "",
               about_school: "test",
               benefits_details: "ut sit dolores.",
-              contact_email: "alexa.baumbach@example.com",
+              contact_email: contact_email,
               personal_statement_guidance: "Maxime blanditiis quos. Cum officia facilis. Et et quod. Dolore id ut. Id aut quia.",
               school_offer: "School Offer",
               skills_and_experience: "Quasi dolores vero molestiae et velit aut nulla dolorem odit officiis sit ea sint earum et accusantium optio illo dolorem numquam in et est quia ab consequatur aperiam aut et alias rerum fuga est impedit enim et sunt ea tempora facilis eaque voluptate ex iure voluptates necessitatibus ipsa veniam nihil.",
@@ -106,7 +107,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "benefits" => true,
           "benefits_details" => "ut sit dolores.",
           "completed_steps" => %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package important_dates start_date applying_for_the_job school_visits contact_details about_the_role include_additional_documents],
-          "contact_email" => "alexa.baumbach@example.com",
+          "contact_email" => contact_email,
           "contact_number" => "01234 123456",
           "contact_number_provided" => true,
           "contract_type" => "permanent",

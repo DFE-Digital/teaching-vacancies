@@ -33,7 +33,6 @@
             p.govuk-body = t("jobseekers.profiles.personal_details.work.warning.paragraph_2.text", link: govuk_link_to(t("jobseekers.profiles.personal_details.work.warning.paragraph_2.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas#apply-for-your-visa", target: "_blank")).html_safe
             = link_to t("jobseekers.profiles.personal_details.work.warning.search_for_jobs"), jobs_path, class: "govuk-button govuk-button--secondary"
 
-      = f.govuk_text_field :teacher_reference_number, hint: { text: t("helpers.hint.jobseekers_job_application_personal_details_form.teacher_reference_number_html") }, label: { size: "s" }, width: "one-half"
       = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half"
 
       = f.govuk_submit job_application_build_submit_button_text do

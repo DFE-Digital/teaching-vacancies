@@ -16,6 +16,7 @@ shared:
   - jobseeker_inactive_account
   - jobseeker_job_listing_ended_early
   - jobseeker_reset_password_instructions
+  - jobseeker_request_account_transfer
   - jobseeker_sign_in_attempt
   - jobseeker_subscription_alert
   - jobseeker_subscription_confirmation

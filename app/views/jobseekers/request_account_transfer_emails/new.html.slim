@@ -1,0 +1,13 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @request_account_transfer_email_form, url: jobseekers_request_account_transfer_email_path do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_email_field :email, label: { text: t(".heading"), tag: "h1", size: "l" }, caption: { text: t(".page_title"), size: "l" }, width: "two-thirds", hint: { text: t(".hint") }, required: true
+
+      = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
+
+    .govuk-button-group
+      = govuk_link_to t("buttons.cancel"), jobseekers_profile_path

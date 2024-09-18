@@ -49,6 +49,8 @@ class Feedback < ApplicationRecord
   scope :contactable, -> { except_job_alerts.where(user_participation_response: :interested) }
   scope :with_comments_or_contactable, -> { with_comments.or(contactable) }
 
+  validates :email, email_address: true
+
   belongs_to :job_application, optional: true, inverse_of: :feedbacks
   belongs_to :jobseeker, optional: true
   belongs_to :publisher, optional: true

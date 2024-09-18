@@ -2,7 +2,8 @@ require "rails_helper"
 RSpec.describe "Publishers can provide feedback on expired vacancies via the prompt email" do
   include ActiveJob::TestHelper
 
-  let(:publisher) { create(:publisher, email: "test@example.com") }
+  let(:first_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+  let(:publisher) { create(:publisher, email: first_email) }
 
   before { ActionMailer::Base.deliveries.clear }
 
@@ -54,7 +55,8 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
   end
 
   context "when multiple publishers have vacancies that expired between 2 and 6 weeks ago" do
-    let(:second_publisher) { create(:publisher, email: "test2@example.com") }
+    let(:second_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+    let(:second_publisher) { create(:publisher, email: second_email) }
 
     before do
       create_list(:vacancy, 2, :published, publisher: publisher, expires_at: 4.weeks.ago)
@@ -65,7 +67,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
     end
 
     scenario "they receive a feedback prompt email for each qualifying vacanct" do
-      expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly(["test@example.com"], ["test@example.com"], ["test2@example.com"], ["test2@example.com"])
+      expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly([first_email], [first_email], [second_email], [second_email])
       expect(ApplicationMailer.deliveries.count).to eq(4)
     end
   end

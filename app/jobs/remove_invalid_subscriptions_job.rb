@@ -4,6 +4,9 @@ class RemoveInvalidSubscriptionsJob < ApplicationJob
   def perform
     return if DisableExpensiveJobs.enabled?
 
-    Jobseekers::RemoveInvalidSubscriptions.new.call
+    client = GovUkNotifyStatusClient.new
+    client.get_email_notifications({ status: "permanent-failure" }).each do |failed_message|
+      Subscription.where(email: failed_message.email_address).destroy_all
+    end
   end
 end

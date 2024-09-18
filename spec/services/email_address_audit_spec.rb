@@ -5,14 +5,15 @@ RSpec.describe EmailAddressAudit do
 
   let(:options) { {} }
 
+  let(:feedback_email) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
   let!(:valid_records) do
     [
-      create(:feedback, email: "test@example.com"),
-      create(:job_application, email_address: "test@example.com"),
-      create(:jobseeker, email: "test@example.com"),
-      create(:publisher, email: "test@example.com"),
-      create(:subscription, email: "test@example.com"),
-      create(:vacancy, contact_email: "test@example.com"),
+      create(:feedback, email: feedback_email),
+      create(:job_application, email_address: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),
+      create(:jobseeker, email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),
+      create(:publisher, email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),
+      create(:subscription, email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),
+      create(:vacancy, contact_email: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)),
     ]
   end
 
@@ -78,7 +79,7 @@ RSpec.describe EmailAddressAudit do
       audit
 
       expect(Feedback.count).to eq(1)
-      expect(Feedback.last.email).to eq("test@example.com")
+      expect(Feedback.last.email).to eq(feedback_email)
     end
   end
 end

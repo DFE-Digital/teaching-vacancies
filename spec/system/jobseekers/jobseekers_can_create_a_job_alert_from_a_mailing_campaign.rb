@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can create a job alert from a mailing campaign", recaptcha: true do
-  let(:params) { { email_contact: "user@example.com", email_postcode: "SW24LP" } }
+  let(:email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
+  let(:params) { { email_contact: email_address, email_postcode: "SW24LP" } }
 
   describe "when recaptcha V3 check fails" do
     before do
@@ -25,7 +26,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
     expect(page).to have_css("h1", text: "Welcome to Teaching Vacancies!", exact_text: true)
     expect(page).to have_css("p", text: "Get teaching jobs sent straight to your inbox.")
     expect(page).to have_field("City, county or postcode (in England)", with: "SW24LP")
-                .and have_field("Email address", with: "user@example.com")
+                .and have_field("Email address", with: email_address)
                 .and have_field("Search radius", with: "15")
                 .and have_checked_field("Teacher")
                 .and have_checked_field("Suitable for early career teachers")
@@ -37,7 +38,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
   scenario "the subscription form values are set from the URL parameters" do
     visit new_subscription_path(params: {
       email_name: "Ali",
-      email_contact: "user@example.com",
+      email_contact: email_address,
       email_postcode: "SW24LP",
       email_subject: "mathematics",
       email_phase: "primary",
@@ -49,7 +50,7 @@ RSpec.describe "Jobseekers can create a job alert from a mailing campaign", reca
     expect(page).to have_css("h1", text: "Hey Ali, welcome to Teaching Vacancies!", exact_text: true)
     expect(page).to have_css("p", text: "Get mathematics teacher jobs sent straight to your inbox.")
     expect(page).to have_field("City, county or postcode (in England)", with: "SW24LP")
-                .and have_field("Email address", with: "user@example.com")
+                .and have_field("Email address", with: email_address)
                 .and have_field("Search radius", with: "10")
                 .and have_checked_field("Assistant headteacher")
                 .and have_checked_field("Mathematics")

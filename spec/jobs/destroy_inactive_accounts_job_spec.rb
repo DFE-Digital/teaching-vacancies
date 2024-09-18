@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe DestroyInactiveAccountsJob do
   let!(:jobseeker) { create(:jobseeker, last_sign_in_at: last_sign_in_at) }
   let!(:subscription) { create(:subscription, email: jobseeker.email) }
-  let!(:feedback) { create(:feedback, jobseeker:) }
+  let!(:feedback) { create(:feedback, jobseeker:, email: jobseeker.email) }
   let!(:job_application) { create(:job_application, jobseeker:) }
   let!(:saved_job) { create(:saved_job, jobseeker:) }
 

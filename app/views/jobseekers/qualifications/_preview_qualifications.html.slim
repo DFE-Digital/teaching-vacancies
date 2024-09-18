@@ -11,7 +11,7 @@
     - if qualification.secondary?
       - qualification.qualification_results.each do |res|
         p class="govuk-!-margin-bottom-0" = tag.div("#{res.subject} (#{res.grade})", class: "govuk-body govuk-!-margin-bottom-0")
-    - unless qualification.finished_studying.nil?
+    - if qualification.finished_studying == false
       p class="govuk-!-margin-top-0" = tag.div(qualification.finished_studying_details.presence, class: "govuk-body")
     p.govuk-hint = qualification.year
     - class_name = "govuk-!-margin-bottom-3"

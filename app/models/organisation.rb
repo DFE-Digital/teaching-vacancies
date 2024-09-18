@@ -51,6 +51,8 @@ class Organisation < ApplicationRecord
 
   scope :visible_to_jobseekers, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts).registered_for_service }
 
+  validates :email, email_address: true
+
   alias_attribute :data, :gias_data
 
   enum phase: {

@@ -52,4 +52,10 @@ class Jobseeker < ApplicationRecord
               confirmed_at: Time.zone.now)
     end
   end
+
+  def generate_merge_verification_code
+    self.account_merge_confirmation_code = SecureRandom.alphanumeric(6)
+    self.account_merge_confirmation_code_generated_at = Time.current
+    save!
+  end
 end

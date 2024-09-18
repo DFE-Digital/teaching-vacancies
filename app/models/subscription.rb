@@ -8,7 +8,7 @@ class Subscription < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
-  before_create :fix_wrong_email
+  validates :email, email_address: true
 
   def self.encryptor
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
@@ -52,10 +52,6 @@ class Subscription < ApplicationRecord
 
   def create_alert_run
     alert_runs.find_or_create_by(run_on: Date.current)
-  end
-
-  def fix_wrong_email
-    self.email = email.gsub(/\.con$/, ".com")
   end
 
   def organisation

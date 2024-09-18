@@ -28,11 +28,6 @@
     - row.with_key text: t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk")
     - row.with_value text: visa_sponsorship_needed_answer(job_application)
 
-  - if job_application.teacher_reference_number? || jobseeker?
-    - s.with_row do |row|
-      - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review")
-      - row.with_value text: job_application.teacher_reference_number.presence || t("jobseekers.job_applications.not_defined")
-
   - if job_application.national_insurance_number? || jobseeker?
     - s.with_row do |row|
       - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review")
