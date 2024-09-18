@@ -1,0 +1,11 @@
+# <%= t(".heading") %>
+
+<%= t(".intro") %>
+
+<%= t(".verification_code", code: @token) %>
+
+<%= t(".valid_for") %>
+
+<%= t(".not_requested") %>
+
+<%= t(".need_help", mail_to: notify_mail_to(t('help.email'))) %>
