@@ -4,7 +4,6 @@ RSpec.describe "Jobseekers can manage their profile" do
   let(:jobseeker) { create(:jobseeker) }
 
   before do
-    login_as(jobseeker, scope: :jobseeker)
     allow(Geocoder).to receive(:search) do |location|
       if %w[London Manchester].include?(location)
         [double(country: "United Kingdom")]
@@ -14,17 +13,17 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  after { logout }
-
   it "allows the jobseeker to navigate to their profile" do
-    visit jobseeker_root_path
+    run_with_jobseeker(jobseeker) do
+      visit jobseeker_root_path
 
-    within "#navigation" do
-      expect(page).to have_content("Your profile")
-      click_on "Your profile"
+      within "#navigation" do
+        expect(page).to have_content("Your profile")
+        click_on "Your profile"
+      end
+
+      expect(page).to have_current_path(jobseekers_profile_path)
     end
-
-    expect(page).to have_current_path(jobseekers_profile_path)
   end
 
   describe "changing personal details" do
@@ -35,32 +34,36 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:last_name) { "Baggins" }
       let(:phone_number) { "07777777777" }
 
-      before { visit jobseekers_profile_path }
-
       it "allows the jobseeker to fill in their personal details" do
-        click_link("Add personal details")
-        fill_in "personal_details_form[first_name]", with: first_name
-        fill_in "personal_details_form[last_name]", with: last_name
-        click_on I18n.t("buttons.save_and_continue")
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
+          click_link("Add personal details")
+          fill_in "personal_details_form[first_name]", with: first_name
+          fill_in "personal_details_form[last_name]", with: last_name
+          click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content("Do you want to provide a phone number?")
-        choose "Yes"
-        fill_in "personal_details_form[phone_number]", with: phone_number
-        click_on I18n.t("buttons.save_and_continue")
+          expect(page).to have_content("Do you want to provide a phone number?")
+          choose "Yes"
+          fill_in "personal_details_form[phone_number]", with: phone_number
+          click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
-        choose "Yes"
-        click_on I18n.t("buttons.save_and_continue")
+          expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
+          choose "Yes"
+          click_on I18n.t("buttons.save_and_continue")
 
-        click_on I18n.t("buttons.return_to_profile")
+          click_on I18n.t("buttons.return_to_profile")
 
-        expect(page).to have_content("#{first_name} #{last_name}")
-        expect(page).to have_content(phone_number)
-        expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
+          expect(page).to have_content("#{first_name} #{last_name}")
+          expect(page).to have_content(phone_number)
+          expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
+        end
       end
 
       it "does not display a notice to inform the user about prefilling" do
-        expect(page).not_to have_content("your details have been imported into your profile")
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
+          expect(page).not_to have_content("your details have been imported into your profile")
+        end
       end
     end
 
