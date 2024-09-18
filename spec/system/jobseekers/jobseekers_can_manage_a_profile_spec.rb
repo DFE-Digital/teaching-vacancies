@@ -85,7 +85,7 @@ RSpec.describe "Jobseekers can manage their profile" do
           phone_number_provided: true,
           phone_number: old_phone_number,
           completed_steps: { "name" => "completed", "phone_number" => "completed" },
-          )
+        )
 
         login_as(jobseeker, scope: :jobseeker)
         visit jobseekers_profile_path
