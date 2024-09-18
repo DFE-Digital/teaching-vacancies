@@ -2,21 +2,21 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   include Jobseekers::GovukOneLogin::Errors
   # Devise redirects response from Govuk One Login to this method.
   # The request parameters contain the response from Govuk One Login from the user authentication through their portal.
+
+  
   def openid_connect
     if (govuk_one_login_user = Jobseekers::GovukOneLogin::UserFromAuthResponse.call(params, session))
       session[:govuk_one_login_id_token] = govuk_one_login_user.id_token
+      
+      jobseeker = Jobseeker.find_by('lower(email) = ?', govuk_one_login_user.email.downcase)
 
-      if existing_jobseeker_first_sign_in_via_one_login(govuk_one_login_user)
-        session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
-      end
-
-      if no_existing_jobseeker_with_email_exists?(govuk_one_login_user)
+      if jobseeker.nil?
         session[:newly_created_user] = { value: "true", path: "/", expires: 1.hour.from_now }
+        jobseeker = Jobseeker.create_from_govuk_one_login(email: govuk_one_login_user.email, govuk_one_login_id: govuk_one_login_user.id)
+      elsif jobseeker.govuk_one_login_id.nil?
+        session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
+        jobseeker.update(govuk_one_login_id: govuk_one_login_user.id)
       end
-
-
-      jobseeker = Jobseeker.find_or_create_from_govuk_one_login(email: govuk_one_login_user.email,
-                                                                govuk_one_login_id: govuk_one_login_user.id)
 
       session.delete(:govuk_one_login_state)
       session.delete(:govuk_one_login_nonce)
@@ -58,13 +58,5 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
   def user_signed_in_from_quick_apply_link?(stored_location)
     stored_location&.include?("job_application/new")
-  end
-
-  def existing_jobseeker_first_sign_in_via_one_login(govuk_one_login_user)
-    Jobseeker.find_by(email: govuk_one_login_user.email, govuk_one_login_id: nil)
-  end
-
-  def no_existing_jobseeker_with_email_exists?(govuk_one_login_user)
-    Jobseeker.find_by(email: govuk_one_login_user.email).blank?
   end
 end
