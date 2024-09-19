@@ -50,7 +50,7 @@ RSpec.describe Jobseeker do
   end
 
   describe ".create_from_govuk_one_login" do
-    let(:email) { "user@example.com" }
+    let(:email) { "notarealuser121342@gmail.com" }
     let(:govuk_one_login_id) { "urn:fdc:gov.uk:2022:VtcZjnU4Sif2oyJZola3OkN0e3Jeku1cIMN38rFlhU4" }
 
     subject(:create_from_govuk_one_login) do
