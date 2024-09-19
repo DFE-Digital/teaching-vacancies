@@ -6,6 +6,11 @@
       = t(".page_title")
       = govuk_tag(text: t(".active"), colour: "green", classes: "vertical-align-middle govuk-!-margin-left-1") if profile.active?
 
+    = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
+        - banner.with_heading(text: t(".one_login_banner.header"))
+        p.govuk-body = t(".one_login_banner.paragraph1")
+        p.govuk-body = t(".one_login_banner.paragraph2", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
+
     p
       = govuk_link_to t(".turn_#{@off_on}_profile"), confirm_toggle_jobseekers_profile_path, class: "govuk-!-margin-right-2"
       = govuk_link_to t(".preview_profile"), jobseekers_profile_preview_path

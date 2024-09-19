@@ -779,6 +779,11 @@ en:
         turn_off_profile: Turn off profile
         turn_on_profile_text: When you turn on your profile it will be visible to hiring staff, and they can invite you to apply for roles.
         turn_on_profile: Turn on profile
+        one_login_banner:
+          header: Can't see your profile details?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
+          paragraph2: You can request to %{link}
+          transfer_profile_link_text: transfer your existing profile.
       confirm_toggle:
         confirm_turn_off: Confirm that you want to turn off your profile
         confirm_turn_on: Confirm that you want to turn on your profile
