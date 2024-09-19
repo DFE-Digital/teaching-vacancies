@@ -12,7 +12,8 @@ Rails.application.configure do
                        "https://api.postcodes.io",
                        "https://*.sentry.io",
                        "https://*.google-analytics.com",
-                       "https://*.analytics.google.com"
+                       "https://*.analytics.google.com",
+                       "https://dev.visualwebsiteoptimizer.com"
 
     policy.font_src    :self,
                        :data
@@ -35,7 +36,8 @@ Rails.application.configure do
                        "https://cdn.rollbar.com",
                        "https://www.google-analytics.com",
                        "https://www.googletagmanager.com",
-                       "https://www.recaptcha.net"
+                       "https://www.recaptcha.net",
+                       "https://*.visualwebsiteoptimizer.com"
 
     policy.style_src   :self
   end
