@@ -9,6 +9,29 @@
       p.govuk-body = t(".date_posted", date: @vacancy.publish_on.to_formatted_s)
 
     h2.govuk-heading-m = t(".next_steps")
+
+    - if @vacancy.publish_on.today?
+      h3.govuk-heading-s = t(".share_your_job_listing")
+      p.govuk-body = t(".the_below_url_will_change")
+
+      .govuk-grid-row data-controller="clipboard" data-clipboard-success-content-value=t(".job_url_copied")
+        .govuk-grid-column-three-quarters
+          = form_with(url: nil) do |f|
+            = f.govuk_text_field :job_url,
+              value: job_url(@vacancy.slug),
+              label: { text: t(".share_page_url") },
+              disabled: true,
+              data: { clipboard_target: "source" }
+        .govuk-grid-column-one-quarter
+          button[data-action="clipboard#copy"
+            data-clipboard-target="button"
+            class="js-action govuk-button govuk-button--secondary copy-button"]
+            = t(".button_copy")
+
+      ul.govuk-list.govuk-list-spaced
+        li = render "facebook_link", target_url: job_url(@vacancy.slug), text: t(".facebook_share")
+        li = render "twitter_x_link", target_url: job_url(@vacancy.slug), text: t(".x_share")
+
     p = t(".you_can")
 
     ul.govuk-list.govuk-list--bullet
