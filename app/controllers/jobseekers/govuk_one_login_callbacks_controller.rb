@@ -2,16 +2,22 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   include Jobseekers::GovukOneLogin::Errors
   # Devise redirects response from Govuk One Login to this method.
   # The request parameters contain the response from Govuk One Login from the user authentication through their portal.
+
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def openid_connect
     if (govuk_one_login_user = Jobseekers::GovukOneLogin::UserFromAuthResponse.call(params, session))
       session[:govuk_one_login_id_token] = govuk_one_login_user.id_token
 
-      if existing_jobseeker_first_sign_in_via_one_login(govuk_one_login_user)
-        session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
-      end
+      jobseeker = Jobseeker.find_by("lower(email) = ?", govuk_one_login_user.email.downcase)
 
-      jobseeker = Jobseeker.find_or_create_from_govuk_one_login(email: govuk_one_login_user.email,
-                                                                govuk_one_login_id: govuk_one_login_user.id)
+      if jobseeker.nil?
+        session[:newly_created_user] = { value: "true", path: "/", expires: 1.hour.from_now }
+        jobseeker = Jobseeker.create_from_govuk_one_login(email: govuk_one_login_user.email, govuk_one_login_id: govuk_one_login_user.id)
+      elsif jobseeker.govuk_one_login_id.nil?
+        session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
+        jobseeker.update(govuk_one_login_id: govuk_one_login_user.id)
+      end
 
       session.delete(:govuk_one_login_state)
       session.delete(:govuk_one_login_nonce)
@@ -24,6 +30,8 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
     Rails.logger.error(e.message)
     error_redirect
   end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   private
 
@@ -40,6 +48,9 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
     stored_location = stored_location_for(resource)
     if user_signed_in_from_quick_apply_link?(stored_location)
       stored_location
+    elsif session[:newly_created_user]
+      session.delete(:newly_created_user)
+      account_not_found_jobseekers_account_path
     elsif session[:user_exists_first_log_in]
       session.delete(:user_exists_first_log_in)
       account_found_jobseekers_account_path
@@ -50,9 +61,5 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
   def user_signed_in_from_quick_apply_link?(stored_location)
     stored_location&.include?("job_application/new")
-  end
-
-  def existing_jobseeker_first_sign_in_via_one_login(govuk_one_login_user)
-    Jobseeker.find_by(email: govuk_one_login_user.email, govuk_one_login_id: nil)
   end
 end

@@ -38,7 +38,7 @@ RSpec.describe Jobseekers::GovukOneLogin::Helper, type: :helper do
       login_uri = helper.govuk_one_login_uri(:login, helper.generate_login_params)
       expect(login_uri.host).to eq "oidc.test.account.gov.uk"
       expect(login_uri.path).to eq "/authorize"
-      expect(login_uri.query).to include "redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fjobseekers%2Fauth%2Fopenid_connect%2Fcallback"
+      expect(login_uri.query).to include "redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fjobseekers%2Fauth%2Fgovuk_one_login%2Fcallback"
       expect(login_uri.query).to include "client_id=one_login_client_id"
       expect(login_uri.query).to include "response_type=code"
       expect(login_uri.query).to include "scope=email+openid"
