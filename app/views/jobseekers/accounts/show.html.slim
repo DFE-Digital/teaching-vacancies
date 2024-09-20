@@ -15,7 +15,8 @@ h1.govuk-heading-l = t(".page_title")
 
     h2.govuk-heading-m = t(".find_account_details.heading")
     p = t(".find_account_details.paragraph1")
-    p = t(".find_account_details.paragraph2")
+    p = t(".find_account_details.paragraph2", link: govuk_link_to(t(".find_account_details.link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
+
 
     h2.govuk-heading-m = t(".close_account")
     p = t(".close_account_explanation")

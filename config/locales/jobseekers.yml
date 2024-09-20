@@ -25,7 +25,8 @@ en:
         find_account_details:
           heading: Can't find your old account details?
           paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your old account details will not automatically be saved.
-          paragraph2: You can request to transfer your existing account information.
+          paragraph2: You can request to %{link}
+          link_text: transfer your existing account information.
       confirmation:
         page_title: Account created
         apply_for_jobs_link_text: search and apply for teaching jobs
