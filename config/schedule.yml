@@ -116,7 +116,7 @@ update_dsi_users_in_db:
   queue: low
 
 delete_jobseekers_with_incorrect_emails:
-  cron: '30 2 * * 1'
+  cron: '30 2 * * Mon,Thu'
   class: 'DeleteJobseekersWithIncorrectEmailsJob'
   queue: low
 
