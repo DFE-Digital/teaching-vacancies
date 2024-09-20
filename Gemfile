@@ -58,8 +58,8 @@ gem "paper_trail-globalid"
 gem "parslet"
 gem "pg"
 gem "pg_search"
-gem 'prawn-html'
-gem 'prawn-table'
+gem "prawn-html"
+gem "prawn-table"
 gem "puma"
 gem "rack-attack"
 gem "rack-cors"

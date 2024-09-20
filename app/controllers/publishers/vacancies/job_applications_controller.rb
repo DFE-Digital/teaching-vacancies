@@ -30,11 +30,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     pdf = generate_pdf(job_application, vacancy)
 
     send_data pdf.render, filename: "job_application_#{job_application.id}.pdf",
-              type: "application/pdf",
-              disposition: "inline"
+                          type: "application/pdf",
+                          disposition: "inline"
   end
-
-
 
   def update_status
     raise ActionController::RoutingError, "Cannot shortlist or reject a draft or withdrawn application" if
@@ -81,7 +79,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
     declarations_data = [
       [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.safeguarding_issue"), safeguarding_issues_info],
-      [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation_name), close_relationships_info]
+      [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation_name), close_relationships_info],
     ]
 
     pdf.table(declarations_data, cell_style: { borders: [] }) do
@@ -125,7 +123,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     support_needed_info = job_application_support_needed_info(job_application)
 
     support_data = [
-      [I18n.t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed"), support_needed_info]
+      [I18n.t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed"), support_needed_info],
     ]
 
     pdf.table(support_data, cell_style: { borders: [] }) do
@@ -241,7 +239,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     end
   end
 
-
   def add_qualifications(pdf, job_application)
     pdf.start_new_page
 
@@ -286,7 +283,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
                               end
       pdf.text no_employment_message, size: 12
     else
-      job_application.employments.sort_by { |r| r[:started_on] }.reverse.each_with_index do |employment, index|
+      job_application.employments.sort_by { |r| r[:started_on] }.reverse.each_with_index do |employment, _index|
         pdf.move_down 10
         pdf.text employment.job_title, size: 14, style: :bold
 
@@ -342,7 +339,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       pdf.text I18n.t(".personal_statement.blank"), size: 12, style: :italic
     end
   end
-
 
   def job_application_qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
