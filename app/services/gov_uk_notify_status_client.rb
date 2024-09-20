@@ -3,7 +3,7 @@ class GovUkNotifyStatusClient
     @client = Notifications::Client.new(ENV.fetch("NOTIFY_KEY", nil))
   end
 
-  def get_email_notifications(options)
+  def get_email_notifications(options = {})
     opts = options.merge(template_type: "email")
     notifications = @client.get_notifications(opts).collection
 

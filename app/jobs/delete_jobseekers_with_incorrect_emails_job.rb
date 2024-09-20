@@ -3,7 +3,9 @@ class DeleteJobseekersWithIncorrectEmailsJob < ApplicationJob
 
   def perform
     client = GovUkNotifyStatusClient.new
-    responses = client.get_email_notifications(status: "permanent-failure")
+    # This isn't particularily well-documented, but this picks up
+    # all failures temporary-failure, permanent-failure and technical-failure
+    responses = client.get_email_notifications(status: "failure")
 
     failed_email_addresses = responses.map(&:email_address)
 
