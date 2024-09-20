@@ -1,6 +1,9 @@
 <%= t(".intro", job_title: @vacancy.job_title, organisation_name: @organisation_name) %>
 
-# <%= t(".heading") %>
+# <%= t(".heading", job_title: @vacancy.job_title, organisation_name: @organisation_name) %>
+
+<%= t(".paragraph1", email: notify_mail_to(@contact_email)) %>
+<%= t(".paragraph2", link: notify_link(jobs_url, t(".apply_link_text"))) %>
 
 <%- if @job_application.further_instructions.present? %>
   # <%= t(".instructions") %>
