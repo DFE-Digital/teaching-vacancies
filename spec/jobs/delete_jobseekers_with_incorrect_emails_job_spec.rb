@@ -4,11 +4,11 @@ RSpec.describe DeleteJobseekersWithIncorrectEmailsJob, type: :job do
   before do
     allow(Notifications::Client).to receive(:new).and_return(notify_client_mock)
     allow(notify_client_mock)
-      .to receive(:get_notifications).with({ template_type: "email", status: "permanent-failure" })
+      .to receive(:get_notifications).with({ template_type: "email", status: "failure" })
                                      .and_return(notify_notifications_mock)
     allow(notify_notifications_mock).to receive(:collection).and_return(notify_api_response)
     allow(notify_client_mock)
-      .to receive(:get_notifications).with({ template_type: "email", status: "permanent-failure", older_than: "last-email" })
+      .to receive(:get_notifications).with({ template_type: "email", status: "failure", older_than: "last-email" })
                                      .and_return(double("no notifications", collection: []))
   end
 
