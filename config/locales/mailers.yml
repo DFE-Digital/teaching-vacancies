@@ -179,7 +179,7 @@ en:
         title: You have subscribed to a job alert from Teaching Vacancies
         unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         unsubscribe_link_text: Unsubscribe here
-        multiple_job_alerts_link: To track more jobs with different criteria, you can %{link}
+        multiple_job_alerts: To track more jobs with different criteria, you can %{link}
         multiple_job_alerts_link_text: create multiple job alerts
       update:
         create_account:
