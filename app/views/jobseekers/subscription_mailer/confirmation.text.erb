@@ -7,6 +7,8 @@
 
 <%= t(".next_steps", frequency: t(".frequency.#{subscription.frequency}")) %>
 
+<%= t(".multiple_job_alerts", link: govuk_link_to(".multiple_job_alerts_link_text"), new_subscription_path) %>
+
 ---
 
 <%- unless jobseeker.present? %>
@@ -18,3 +20,5 @@
 <% end %>
 
 <%= t(".unsubscribe", unsubscribe_link: unsubscribe_link(subscription)) %>
+
+<%= t("shared.footer", home_page_link: home_page_link) %>

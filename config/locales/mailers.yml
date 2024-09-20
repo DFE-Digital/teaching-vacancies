@@ -174,11 +174,13 @@ en:
           daily: at the end of the day (at around 3 pm)
           weekly: weekly (at around 6 pm on Friday evening)
         next_steps: >-
-          You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
+          You’ll receive job alerts %{frequency} when there is a job matching your criteria.
         subject: Teaching Vacancies job alert confirmation
         title: You have subscribed to a job alert from Teaching Vacancies
         unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         unsubscribe_link_text: Unsubscribe here
+        multiple_job_alerts_link: To track more jobs with different criteria, you can %{link}
+        multiple_job_alerts_link_text: create multiple job alerts
       update:
         create_account:
           heading: Create a Teaching Vacancies account
@@ -188,11 +190,13 @@ en:
           daily: at the end of the day (at around 3 pm)
           weekly: weekly (at around 6 pm on Friday evening)
         next_steps: >-
-          You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
+          You’ll receive job alerts %{frequency} when there is a job matching your criteria.
         subject: Teaching Vacancies job alert update
         title: You have updated a job alert from Teaching Vacancies
         unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         unsubscribe_link_text: Unsubscribe here
+        multiple_job_alerts: To track more jobs with different criteria, you can %{link}
+        multiple_job_alerts_link_text: create multiple job alerts
 
   publishers:
     job_application_data_expiry_mailer:
