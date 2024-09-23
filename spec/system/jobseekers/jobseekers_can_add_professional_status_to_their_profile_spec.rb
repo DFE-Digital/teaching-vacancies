@@ -8,6 +8,10 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
     login_as(jobseeker, scope: :jobseeker)
   end
 
+  after do
+    logout
+  end
+
   describe "adding professional status" do
     context "when jobseeker has qualified teacher status" do
       before { visit jobseekers_profile_path }

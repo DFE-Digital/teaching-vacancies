@@ -4,7 +4,6 @@ RSpec.describe "Jobseekers can manage their profile" do
   let(:jobseeker) { create(:jobseeker) }
 
   before do
-    login_as(jobseeker, scope: :jobseeker)
     allow(Geocoder).to receive(:search) do |location|
       if %w[London Manchester].include?(location)
         [double(country: "United Kingdom")]
@@ -14,17 +13,21 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  after { logout }
+  describe "navigation to profile" do
+    before { login_as(jobseeker, scope: :jobseeker) }
 
-  it "allows the jobseeker to navigate to their profile" do
-    visit jobseeker_root_path
+    after { logout }
 
-    within "#navigation" do
-      expect(page).to have_content("Your profile")
-      click_on "Your profile"
+    it "allows the jobseeker to navigate to their profile" do
+      visit jobseeker_root_path
+
+      within "#navigation" do
+        expect(page).to have_content("Your profile")
+        click_on "Your profile"
+      end
+
+      expect(page).to have_current_path(jobseekers_profile_path)
     end
-
-    expect(page).to have_current_path(jobseekers_profile_path)
   end
 
   describe "changing personal details" do
@@ -35,7 +38,13 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:last_name) { "Baggins" }
       let(:phone_number) { "07777777777" }
 
-      before { visit jobseekers_profile_path }
+      before do
+        login_as(jobseeker, scope: :jobseeker)
+
+        visit jobseekers_profile_path
+      end
+
+      after { logout }
 
       it "allows the jobseeker to fill in their personal details" do
         click_link("Add personal details")
@@ -78,8 +87,11 @@ RSpec.describe "Jobseekers can manage their profile" do
           completed_steps: { "name" => "completed", "phone_number" => "completed" },
         )
 
+        login_as(jobseeker, scope: :jobseeker)
         visit jobseekers_profile_path
       end
+
+      after { logout }
 
       it "allows the jobseeker to edit their profile" do
         row = page.find(".govuk-summary-list__key", text: "Name").find(:xpath, "..")
@@ -107,9 +119,15 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "personal details if the jobseeker has a previous job application" do
-    let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+    let(:previous_application) { jobseeker.job_applications.last }
 
-    before { visit jobseekers_profile_path }
+    before do
+      create(:job_application, :status_submitted, jobseeker:)
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "prefills the form with the jobseeker's personal details" do
       expect(page).to have_content(previous_application.first_name)
@@ -125,7 +143,12 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "personal details if the jobseeker has a blank previous job application" do
     let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
 
-    before { visit jobseekers_profile_path }
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "prefills the form with the jobseeker's provided personal details" do
       expect(page).to have_content(previous_application.phone_number)
@@ -139,7 +162,12 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "#about_you" do
     let(:jobseeker_about_you) { "I am an amazing teacher" }
 
-    before { visit jobseekers_profile_path }
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "allows the jobseeker to add #about_you" do
       click_link("Add details about you")
@@ -155,7 +183,12 @@ RSpec.describe "Jobseekers can manage their profile" do
   end
 
   describe "changing the jobseekers's QTS status" do
-    before { visit jobseekers_profile_path }
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "allows the jobseeker to edit their QTS status to yes with year achieved" do
       click_link("Add qualified teacher status")
@@ -187,17 +220,29 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "QTS if the jobseeker has a previous job application" do
     let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
 
-    it "prefills the form with the jobseeker's personal details" do
+    before do
+      login_as(jobseeker, scope: :jobseeker)
       visit jobseekers_profile_path
+    end
+
+    after { logout }
+
+    it "prefills the form with the jobseeker's personal details" do
       expect(page).to have_content("Year QTS awarded#{previous_application.qualified_teacher_status_year}")
     end
   end
 
   describe "work history" do
     describe "adding an employment history entry to a profile" do
-      let!(:profile) { create(:jobseeker_profile, jobseeker:) }
+      let(:profile) { jobseeker.jobseeker_profile }
 
-      before { visit jobseekers_profile_path }
+      before do
+        create(:jobseeker_profile, jobseeker:)
+        login_as(jobseeker, scope: :jobseeker)
+        visit jobseekers_profile_path
+      end
+
+      after { logout }
 
       it "raises errors for missing fields" do
         click_link("Add roles")
@@ -294,9 +339,14 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:new_job_role) { "Chief ET locator" }
       let(:new_reason_for_leaving) { "Relocating" }
 
-      it "successfully changes the employment record" do
+      before do
+        login_as(jobseeker, scope: :jobseeker)
         visit jobseekers_profile_path
+      end
 
+      after { logout }
+
+      it "successfully changes the employment record" do
         within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.change") }
 
         expect(current_path).to eq(edit_jobseekers_profile_work_history_path(employment))
@@ -318,6 +368,10 @@ RSpec.describe "Jobseekers can manage their profile" do
       let!(:profile) { create(:jobseeker_profile, jobseeker:) }
       let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
 
+      before { login_as(jobseeker, scope: :jobseeker) }
+
+      after { logout }
+
       it "deletes the employment record" do
         visit review_jobseekers_profile_work_history_index_path
 
@@ -330,6 +384,10 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     context "if the jobseeker has a previous job application" do
       let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
+
+      before { login_as(jobseeker, scope: :jobseeker) }
+
+      after { logout }
 
       it "prefills the form with the jobseeker's work history" do
         visit jobseekers_profile_path
@@ -347,6 +405,10 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "qualifications" do
     context "if the jobseeker has a previous job application" do
       let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
+
+      before { login_as(jobseeker, scope: :jobseeker) }
+
+      after { logout }
 
       it "prefills the form with the jobseeker's qualifications" do
         visit jobseekers_profile_path
@@ -378,15 +440,16 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     before do
       allow(Geocoding).to receive(:test_coordinates).and_return(bexleyheath)
-      login_publisher(publisher:)
     end
 
     context "if the profile does not exist" do
       let!(:profile) { nil }
 
       it "does not appear in search results" do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_css(".search-results__item")
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_css(".search-results__item")
+        end
       end
     end
 
@@ -394,8 +457,10 @@ RSpec.describe "Jobseekers can manage their profile" do
       let!(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:, job_preferences:, active: false) }
 
       it "does not appear in search results" do
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
+        end
       end
     end
 
@@ -408,42 +473,54 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
 
       it "can be toggled on and off" do
-        visit jobseekers_profile_path
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
 
-        expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
-        expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
-
-        visit jobseekers_profile_path
-        within ".preview-and-turn-on-profile" do
-          click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
+          expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
         end
 
-        click_button I18n.t("jobseekers.profiles.show.turn_on_profile")
-        expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_on"))
-        expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-        expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
-
-        visit publishers_jobseeker_profiles_path
-        expect(page).to have_content(profile.full_name)
-
-        visit jobseekers_profile_path
-        within ".preview-and-turn-on-profile" do
-          click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
         end
 
-        click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
-        expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
-        expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
-        expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
+          within ".preview-and-turn-on-profile" do
+            click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          end
 
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
+          click_button I18n.t("jobseekers.profiles.show.turn_on_profile")
+          expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_on"))
+          expect(page).to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+          expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_off_profile"))
+        end
 
-        visit publishers_jobseeker_profile_path(profile)
-        expect(page).to have_content("Page not found")
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).to have_content(profile.full_name)
+        end
+
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
+          within ".preview-and-turn-on-profile" do
+            click_link I18n.t("jobseekers.profiles.show.turn_off_profile")
+          end
+
+          click_button I18n.t("jobseekers.profiles.show.turn_off_profile")
+          expect(page).to have_content(I18n.t("jobseekers.profiles.show.profile_turned_off"))
+          expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+          expect(page).to have_link(I18n.t("jobseekers.profiles.show.turn_on_profile"))
+        end
+
+        run_with_publisher(publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
+
+          visit publishers_jobseeker_profile_path(profile)
+          expect(page).to have_content("Page not found")
+        end
       end
     end
 
@@ -455,21 +532,23 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
 
       it "cannot be toggled on" do
-        visit jobseekers_profile_path
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
 
-        expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
-        expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
+          expect(page).to have_content(I18n.t("jobseekers.profiles.show.preview_and_turn_on_profile"))
+          expect(page).not_to have_css(".govuk-tag", text: I18n.t("jobseekers.profiles.show.active"))
 
-        within ".preview-and-turn-on-profile" do
-          click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          within ".preview-and-turn-on-profile" do
+            click_link I18n.t("jobseekers.profiles.show.turn_on_profile")
+          end
+
+          expect(page).to have_content I18n.t("jobseekers.profiles.toggle.not_ready")
         end
-
-        expect(page).to have_content I18n.t("jobseekers.profiles.toggle.not_ready")
       end
     end
   end
 
-  describe "hiding profile from specific organisations", js: true do
+  describe "hiding profile from specific organisations" do
     let(:bexleyheath) { ["0.14606549011864176", "51.457814649098104"] }
 
     let(:bexleyheath_geopoint) do
@@ -497,8 +576,7 @@ RSpec.describe "Jobseekers can manage their profile" do
 
     let(:job_preferences) do
       build(:job_preferences,
-            jobseeker_profile: nil,
-            locations: build_list(:job_preferences_location, 1, radius: 200, job_preferences: nil))
+            locations: build_list(:job_preferences_location, 1, radius: 200))
     end
 
     before do
@@ -506,70 +584,85 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
 
     it "allows the jobseeker to hide themselves from specific schools" do
-      login_publisher(publisher: permitted_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).to have_content(profile.full_name)
-
-      login_publisher(publisher: forbidden_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).to have_content(profile.full_name)
-
-      visit jobseekers_profile_path
-      click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
-      choose "Yes", visible: false
-      click_on I18n.t("buttons.save_and_continue")
-
-      field = find_field("Name of school or trust")
-      field.fill_in(with: forbidden_organisation.name)
-      field.native.send_keys(:tab)
-      click_on I18n.t("buttons.save_and_continue")
-
-      login_publisher(publisher: forbidden_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
-
-      login_publisher(publisher: permitted_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).to have_content(profile.full_name)
-
-      visit jobseekers_profile_path
-      click_on I18n.t("jobseekers.profiles.hide_profile.summary.add_a_school")
-
-      field = find_field("Name of school or trust")
-      field.fill_in(with: permitted_organisation.name)
-      field.native.send_keys(:tab)
-      click_on I18n.t("buttons.save_and_continue")
-
-      login_publisher(publisher: permitted_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
-
-      login_publisher(publisher: forbidden_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
-
-      visit publishers_jobseeker_profile_path(profile)
-      expect(page).to have_content("Page not found")
-
-      visit schools_jobseekers_profile_hide_profile_path
-      within page.find(".govuk-summary-list__key", text: permitted_organisation.name).find(:xpath, "..") do
-        click_on I18n.t("buttons.delete")
+      run_with_publisher(permitted_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
       end
-      click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
 
-      login_publisher(publisher: permitted_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).to have_content(profile.full_name)
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
+      end
 
-      login_publisher(publisher: forbidden_publisher)
-      visit publishers_jobseeker_profiles_path
-      expect(page).not_to have_content(profile.full_name)
+      run_with_jobseeker(jobseeker) do
+        visit jobseekers_profile_path
+        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+        choose "Yes", visible: false
+        click_on I18n.t("buttons.save_and_continue")
+
+        field = find_field("Name of school or trust")
+        field.fill_in(with: forbidden_organisation.name)
+        click_on I18n.t("buttons.save_and_continue")
+      end
+
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+      end
+
+      run_with_publisher(permitted_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
+      end
+
+      run_with_jobseeker(jobseeker) do
+        visit jobseekers_profile_path
+        click_on I18n.t("jobseekers.profiles.hide_profile.summary.add_a_school")
+
+        field = find_field("Name of school or trust")
+        field.fill_in(with: permitted_organisation.name)
+        click_on I18n.t("buttons.save_and_continue")
+      end
+
+      run_with_publisher(permitted_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+      end
+
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+
+        visit publishers_jobseeker_profile_path(profile)
+        expect(page).to have_content("Page not found")
+      end
+
+      run_with_jobseeker(jobseeker) do
+        visit schools_jobseekers_profile_hide_profile_path
+        within page.find(".govuk-summary-list__key", text: permitted_organisation.name).find(:xpath, "..") do
+          click_on I18n.t("buttons.delete")
+        end
+        click_button I18n.t("jobseekers.profiles.hide_profile.delete.delete_school")
+      end
+
+      run_with_publisher(permitted_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).to have_content(profile.full_name)
+      end
+
+      run_with_publisher(forbidden_publisher) do
+        visit publishers_jobseeker_profiles_path
+        expect(page).not_to have_content(profile.full_name)
+      end
     end
 
     context "if the jobseeker is already hidden from the school" do
       before do
         profile.excluded_organisations << forbidden_organisation
+        login_as(jobseeker, scope: :jobseeker)
       end
+
+      after { logout }
 
       it "does not allow the jobseeker to hide themselves from the school again" do
         visit jobseekers_profile_path
@@ -579,7 +672,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         field = find_field("Name of school or trust")
         field.fill_in(with: forbidden_organisation.name)
-        field.native.send_keys(:tab)
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.already_hidden", name: forbidden_organisation.name))
@@ -597,35 +689,39 @@ RSpec.describe "Jobseekers can manage their profile" do
       let(:forbidden_trust_publisher) { create(:publisher) }
 
       it "allows the jobseeker to hide themselves from the trust and its schools" do
-        visit jobseekers_profile_path
-        click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
-        choose "Yes", visible: false
-        click_on I18n.t("buttons.save_and_continue")
+        run_with_jobseeker(jobseeker) do
+          visit jobseekers_profile_path
+          click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
+          choose "Yes", visible: false
+          click_on I18n.t("buttons.save_and_continue")
 
-        field = find_field("Name of school or trust")
-        field.fill_in(with: forbidden_trust.name)
-        field.native.send_keys(:tab)
-        click_on I18n.t("buttons.save_and_continue")
+          field = find_field("Name of school or trust")
+          field.fill_in(with: forbidden_trust.name)
+          click_on I18n.t("buttons.save_and_continue")
 
-        expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.hidden_from_trust_and_schools"))
+          expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.schools.hidden_from_trust_and_schools"))
+        end
 
-        login_publisher(publisher: forbidden_trust_publisher)
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
+        run_with_publisher(forbidden_trust_publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
 
-        visit publishers_jobseeker_profile_path(profile)
-        expect(page).to have_content("Page not found")
+          visit publishers_jobseeker_profile_path(profile)
+          expect(page).to have_content("Page not found")
+        end
 
-        login_publisher(publisher: forbidden_publisher)
-        visit publishers_jobseeker_profiles_path
-        expect(page).not_to have_content(profile.full_name)
+        run_with_publisher(forbidden_publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).not_to have_content(profile.full_name)
 
-        visit publishers_jobseeker_profile_path(profile)
-        expect(page).to have_content("Page not found")
+          visit publishers_jobseeker_profile_path(profile)
+          expect(page).to have_content("Page not found")
+        end
 
-        login_publisher(publisher: permitted_publisher)
-        visit publishers_jobseeker_profiles_path
-        expect(page).to have_content(profile.full_name)
+        run_with_publisher(permitted_publisher) do
+          visit publishers_jobseeker_profiles_path
+          expect(page).to have_content(profile.full_name)
+        end
       end
     end
 
@@ -639,6 +735,10 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       let(:forbidden_trust_publisher) { create(:publisher) }
 
+      before { login_as(jobseeker, scope: :jobseeker) }
+
+      after { logout }
+
       it "asks whether to hide from the whole trust or just the specific school" do
         visit jobseekers_profile_path
         click_on I18n.t("jobseekers.profiles.show.set_up_profile_visibility")
@@ -647,7 +747,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         field = find_field("Name of school or trust")
         field.fill_in(with: forbidden_organisation.name)
-        field.native.send_keys(:tab)
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.choose_school_or_trust.page_title", trust_name: forbidden_trust.name))
@@ -662,7 +761,6 @@ RSpec.describe "Jobseekers can manage their profile" do
 
         field = find_field("Name of school or trust")
         field.fill_in(with: forbidden_organisation.name)
-        field.native.send_keys(:tab)
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content(I18n.t("jobseekers.profiles.hide_profile.choose_school_or_trust.page_title", trust_name: forbidden_trust.name))
@@ -679,7 +777,12 @@ RSpec.describe "Jobseekers can manage their profile" do
   describe "job preferences" do
     let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
 
-    before { visit jobseekers_profile_path }
+    before do
+      login_as(jobseeker, scope: :jobseeker)
+      visit jobseekers_profile_path
+    end
+
+    after { logout }
 
     it "allows the jobseeker to fill in their job preferences" do
       click_link("Add job preferences")

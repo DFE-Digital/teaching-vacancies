@@ -1,6 +1,7 @@
 doctype html
 html.govuk-template.app-html-class lang="en"
   head
+    = render "layouts/vwo_head"
     = render "layouts/google_tag_manager_head" if include_google_tag_manager?
     = render "layouts/head_meta"
     = render "layouts/head_links"
