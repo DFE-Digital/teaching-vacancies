@@ -13,7 +13,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
     visit edit_subscription_path(token)
   end
 
-  after { logout }
+  after { logout if jobseeker_signed_in? }
 
   context "with the correct token" do
     let(:token) { subscription.token }
