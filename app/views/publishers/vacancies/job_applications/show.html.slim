@@ -18,5 +18,4 @@
         = govuk_button_link_to t("buttons.reject"), organisation_job_job_application_reject_path(vacancy.id, job_application.id), class: "govuk-button--warning"
       = govuk_button_link_to t("buttons.download_application"), organisation_job_job_application_download_pdf_path(vacancy.id, job_application.id), class: "govuk-button--secondary"
 
-
 = render "jobseekers/job_applications/show", allow_edit: false

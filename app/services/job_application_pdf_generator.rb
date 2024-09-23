@@ -8,7 +8,9 @@ class JobApplicationPdfGenerator
 
   def generate
     Prawn::Document.new do |pdf|
+      add_image_to_first_page(pdf)
       add_headers(pdf)
+      pdf.stroke_horizontal_rule
       add_personal_details(pdf)
       add_professional_status(pdf)
       add_qualifications(pdf)
@@ -18,6 +20,7 @@ class JobApplicationPdfGenerator
       add_references(pdf)
       add_ask_for_support(pdf)
       add_declarations(pdf)
+      add_footers(pdf)
     end
   end
 

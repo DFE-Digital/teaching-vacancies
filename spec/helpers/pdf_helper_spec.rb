@@ -2,7 +2,6 @@ require "rails_helper"
 require "prawn"
 require "pdf/inspector"
 
-
 RSpec.describe JobApplicationPdfGenerator, type: :service do
   let(:job_application) { create(:job_application, vacancy: vacancy) }
   let(:vacancy) { create(:vacancy) }

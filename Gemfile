@@ -101,7 +101,7 @@ group :development, :test do
   gem "dotenv-rails"
   gem "launchy", "~> 3.0"
   gem "parallel_tests"
-  gem 'pdf-inspector', require: "pdf/inspector"
+  gem "pdf-inspector", require: "pdf/inspector"
   gem "pry"
   gem "pry-byebug"
   gem "pry-rails"

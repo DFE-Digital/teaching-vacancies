@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/AbcSize
 module PdfHelper
   include JobApplicationsHelper
   include QualificationsHelper
@@ -110,7 +111,7 @@ module PdfHelper
   end
 
   def add_training_and_cpds(pdf)
-    pdf.start_new_page
+    pdf.move_down 5
     add_section_title(pdf, "Training and CPD")
 
     if job_application.training_and_cpds.none?
@@ -131,54 +132,22 @@ module PdfHelper
   end
 
   def add_employment_history(pdf)
+    pdf.start_new_page
     add_section_title(pdf, "Employment History")
 
     if job_application.employments.none?
-      pdf.text I18n.t("jobseekers.job_applications.review.employment_history.none"), size: 12
+      render_no_employment_message(pdf)
     else
       job_application.employments.sort_by { |r| r[:started_on] }.reverse.each_with_index do |employment, _index|
-        pdf.move_down 10
-        pdf.text employment.job_title, size: 14, style: :bold
-
-        employment_data = [
-          ["Organisation:", employment.organisation],
-          ["Main Duties:", employment.main_duties],
-          ["Started on:", employment.started_on.to_formatted_s(:month_year)],
-          ["Current Role:", employment.current_role.humanize],
-        ]
-
-        if employment.subjects.present?
-          employment_data << [
-            "Subjects:", employment.subjects.presence || I18n.t("jobseekers.job_applications.not_defined")
-          ]
-        end
-
-        if employment.current_role == "no"
-          employment_data << ["Ended on:", employment.ended_on.to_formatted_s(:month_year)]
-        end
-
-        if employment.reason_for_leaving.present?
-          employment_data << ["Reason for Leaving:", employment.reason_for_leaving]
-        end
-
-        render_table(pdf, employment_data)
-
-        if employment.break?
-          pdf.move_down 5
-          pdf.text "Employment Break", size: 12, style: :italic
-          pdf.text employment.reason_for_break, size: 12
-        end
-
-        next unless (gap = job_application.unexplained_employment_gaps[employment]).present?
-
-        pdf.move_down 5
-        pdf.text "Unexplained Employment Gap", size: 12, style: :italic
-        pdf.text gap.to_s, size: 12
+        render_employment_entry(pdf, employment)
+        render_employment_break(pdf, employment)
+        render_unexplained_gap(pdf, employment)
       end
     end
   end
 
   def add_personal_statement(pdf)
+    pdf.start_new_page
     add_section_title(pdf, "Personal Statement")
 
     if job_application.personal_statement.present?
@@ -234,8 +203,8 @@ module PdfHelper
 
     add_section_title(pdf, "Declarations")
 
-    safeguarding_issues_info = job_application_safeguarding_issues_info
-    close_relationships_info = job_application_close_relationships_info
+    safeguarding_issues_info = pdf_job_application_safeguarding_issues_info
+    close_relationships_info = pdf_job_application_close_relationships_info
 
     declarations_data = [
       [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.safeguarding_issue"), safeguarding_issues_info],
@@ -245,7 +214,64 @@ module PdfHelper
     render_table(pdf, declarations_data)
   end
 
-  def job_application_safeguarding_issues_info
+  def add_image_to_first_page(pdf)
+    image_path = Rails.root.join("app", "assets", "images", "TVS-logo.png")
+    pdf.image image_path, at: [pdf.bounds.right - 100, pdf.bounds.top], width: 100
+  end
+
+  def add_footers(pdf)
+    applicant_name = job_application.name
+    school_name = vacancy.organisation_name
+
+    pdf.repeat(:all, dynamic: true) do
+      pdf.bounding_box([pdf.bounds.left, pdf.bounds.bottom + 25], width: pdf.bounds.width) do
+        pdf.text "#{applicant_name} | #{school_name}", size: 8, align: :center
+      end
+    end
+  end
+
+  private
+
+  def render_no_employment_message(pdf)
+    pdf.text I18n.t("jobseekers.job_applications.review.employment_history.none"), size: 12
+  end
+
+  def render_employment_entry(pdf, employment)
+    pdf.move_down 10
+    pdf.text employment.job_title, size: 14, style: :bold
+
+    employment_data = [
+      ["Organisation:", employment.organisation],
+      ["Main Duties:", employment.main_duties],
+      ["Started on:", employment.started_on.to_formatted_s(:month_year)],
+      ["Current Role:", employment.current_role.humanize],
+    ]
+
+    employment_data << ["Subjects:", employment.subjects.presence || I18n.t("jobseekers.job_applications.not_defined")] if employment.subjects.present?
+    employment_data << ["Ended on:", employment.ended_on.to_formatted_s(:month_year)] if employment.current_role == "no"
+    employment_data << ["Reason for Leaving:", employment.reason_for_leaving] if employment.reason_for_leaving.present?
+
+    render_table(pdf, employment_data)
+  end
+
+  def render_employment_break(pdf, employment)
+    return unless employment.break?
+
+    pdf.move_down 5
+    pdf.text "Employment Break", size: 12, style: :italic
+    pdf.text employment.reason_for_break, size: 12
+  end
+
+  def render_unexplained_gap(pdf, employment)
+    gap = job_application.unexplained_employment_gaps[employment]
+    return unless gap.present?
+
+    pdf.move_down 5
+    pdf.text "Unexplained Employment Gap", size: 12, style: :italic
+    pdf.text gap.to_s, size: 12
+  end
+
+  def pdf_job_application_safeguarding_issues_info
     case job_application.safeguarding_issue
     when "yes"
       "Yes\nDetails: #{job_application.safeguarding_issue_details}"
@@ -256,7 +282,7 @@ module PdfHelper
     end
   end
 
-  def job_application_close_relationships_info
+  def pdf_job_application_close_relationships_info
     case job_application.close_relationships
     when "yes"
       "Yes\nDetails: #{job_application.close_relationships_details}"
@@ -291,3 +317,4 @@ module PdfHelper
     end
   end
 end
+# rubocop:enable Metrics/AbcSize

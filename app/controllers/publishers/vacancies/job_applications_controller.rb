@@ -1,10 +1,6 @@
-require "prawn-html"
-
 class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
-  include JobApplicationsHelper
-  include QualificationsHelper
 
   helper_method :employments, :form, :job_applications, :qualification_form_param_key, :sort, :sorted_job_applications
 
