@@ -1,6 +1,15 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable        = true
+    Bullet.alert         = true
+    Bullet.bullet_logger = true
+    Bullet.console       = true
+    Bullet.rails_logger  = true
+    Bullet.add_footer    = true
+  end
+
   # Settings specified here will take precedence over those in
   # config/application.rb.
 
@@ -89,5 +98,9 @@ Rails.application.configure do
 
   config.i18n.raise
 
-  config.log_file_size = 100.megabytes
+  # config.log_file_size = 100.megabytes
+  # https://medium.com/@atinders/easy-log-rotation-with-rails-5-7b8d3c173461
+  config.logger = Logger.new(config.paths['log'].first, 3, 100.megabytes.to_i)
+
+  config.log_level = :debug
 end

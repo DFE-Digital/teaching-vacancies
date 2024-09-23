@@ -12,6 +12,7 @@ SetOrganisationSlugsJob.perform_later
 bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
+outwood_grange = SchoolGroup.find_by!(uid: "4119")
 
 # Team users
 users = [
@@ -32,7 +33,7 @@ users = [
 ]
 
 users.each do |user|
-  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la], **user)
+  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, outwood_grange], **user)
   SupportUser.create(user)
   FactoryBot.create(:jobseeker, email: user[:email], password: "password")
 end
@@ -45,8 +46,8 @@ attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.reada
 2.times { FactoryBot.create(:vacancy, :draft, **attrs) }
 4.times { FactoryBot.build(:vacancy, :expired, **attrs).save(validate: false) }
 
-# Vacancies at a school that belongs to Weydon Multi Academy Trust
-school = weydon_trust.schools.first
+# Vacancies at a school that belongs to Outwood Grange
+school = outwood_grange.schools.first
 attrs = { organisations: [school], phases: ["secondary"], publisher_organisation: school, publisher: Publisher.all.sample }
 6.times { FactoryBot.create(:vacancy, :published, **attrs) }
 2.times { FactoryBot.create(:vacancy, :published, :no_tv_applications, **attrs) }
@@ -63,12 +64,12 @@ attrs = { organisations: [school], phases: ["primary"], publisher_organisation: 
 2.times { FactoryBot.create(:vacancy, :draft, **attrs) }
 4.times { FactoryBot.build(:vacancy, :expired, **attrs).save(validate: false) }
 
-# Vacancies at Weydon trust central office
-attrs = { organisations: [weydon_trust], phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
+# Vacancies at Outwood Grange central office
+attrs = { organisations: [outwood_grange], phases: %w[secondary], publisher_organisation: outwood_grange, publisher: Publisher.all.sample }
 3.times { FactoryBot.create(:vacancy, :published, **attrs) }
 
-# Vacancies at multiple schools in Weydon trust
-attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_organisation: weydon_trust, publisher: Publisher.all.sample }
+# Vacancies at multiple schools in Outwood Grange
+attrs = { organisations: outwood_grange.schools, phases: %w[secondary], publisher_organisation: outwood_grange, publisher: Publisher.all.sample }
 3.times { FactoryBot.create(:vacancy, :published, **attrs) }
 
 # Vacancies at multiple schools in Southampton local authority
@@ -77,36 +78,50 @@ attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], p
 
 # Jobseekers
 FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com", password: "password")
-JobApplication.statuses.count.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com", password: "password") }
+800.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com", password: "password") }
 
 # Job Applications
 Vacancy.listed.each do |vacancy|
   statuses = JobApplication.statuses.keys
-  Jobseeker.where.not(email: "jobseeker@contoso.com").each do |jobseeker|
-    # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
-    application_status = statuses.delete(statuses.sample) || JobApplication.statuses.keys.sample
-    FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
+  Jobseeker.where.not(email: "jobseeker@contoso.com").all.sample(JobApplication.statuses.count) do |jobseeker|
+    Jobseeker.transaction do
+      # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
+      application_status = statuses.delete(statuses.sample) || JobApplication.statuses.keys.sample
+      FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)
+    end
   end
 end
 
 ## Jobseeker Profiles
 weydon_trust_schools = weydon_trust.schools.all
-location_preference_names = weydon_trust_schools.map(&:postcode)
+outwood_trust_schools = outwood_grange.schools.all
+location_preference_names = outwood_trust_schools.map(&:postcode)
+location_preferences = (outwood_trust_schools + weydon_trust_schools).map(&:postcode)
 
-Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
-  FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications, :with_employment_history, jobseeker: jobseeker) do |jobseeker_profile|
-    FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
-      FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
-    end
-    # :with_employment_history trait creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures
-    jobseeker_profile.employments.each do |employment|
-      vacancy_without_org_id = employment.job_application.vacancy_id
-      OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
-    end
-    # :with_qualifications trait also creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures.
-    jobseeker_profile.qualifications.each do |qualification|
-      vacancy_without_org_id = qualification.job_application.vacancy_id
-      OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
+Jobseeker.first(400).each do |jobseeker|
+  Jobseeker.transaction do
+    # FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications, :with_employment_history, jobseeker: jobseeker) do |jobseeker_profile|
+    FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications, :with_employment_history,
+                      job_preferences: FactoryBot.build(:job_preferences,
+                                                        locations: FactoryBot.build_list(:job_preferences_location, 1, name: location_preference_names.pop || location_preferences.sample)),
+                      jobseeker: jobseeker) do |jobseeker_profile|
+      # FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
+      #   FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
+      # end
+      # FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile,
+      #                   locations: FactoryBot.build_list(:job_preferences_location, 1, name: location_preference_names.pop))
+      # :with_employment_history trait creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures
+      jobseeker_profile.employments.each do |employment|
+        vacancy_without_org_id = employment.job_application.vacancy_id
+        OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: outwood_trust_schools.sample.id)
+        # FactoryBot.create(:organisation_vacancy, vacancy_id: vacancy_without_org_id.id, organisation_id: outwood_trust_schools.sample.id)
+      end
+      # :with_qualifications trait also creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures.
+      jobseeker_profile.qualifications.each do |qualification|
+        vacancy_without_org_id = qualification.job_application.vacancy_id
+        OrganisationVacancy.create(vacancy_id: vacancy_without_org_id, organisation_id: outwood_trust_schools.sample.id)
+        # FactoryBot.create(:organisation_vacancy, vacancy_id: vacancy_without_org_id.id, organisation_id: outwood_trust_schools.sample.id)
+      end
     end
   end
 end

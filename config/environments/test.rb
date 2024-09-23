@@ -1,6 +1,12 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable        = true
+    Bullet.bullet_logger = true
+    # Bullet.raise         = true # raise an error if n+1 query occurs
+  end
+
   # Settings specified here will take precedence over those in
   # config/application.rb.
 
@@ -68,7 +74,10 @@ Rails.application.configure do
   ENV["DFE_SIGN_IN_ISSUER"] = "http://fake.dsi.example.com"
   config.middleware.insert_before 0, DfeSignIn::FakeSignOutEndpoint
 
-  config.log_file_size = 100.megabytes
+  # https://medium.com/@atinders/easy-log-rotation-with-rails-5-7b8d3c173461
+  config.logger = Logger.new(config.paths['log'].first, 3, 100.megabytes.to_i)
+
+  config.log_level = :debug
 end
 
 # Avoid OmniAuth output in tests:
