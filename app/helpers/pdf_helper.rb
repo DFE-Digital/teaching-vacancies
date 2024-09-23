@@ -52,7 +52,7 @@ module PdfHelper
 
   def add_professional_status(pdf)
     professional_status = [
-      [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"), job_application_qualified_teacher_status_info(job_application)],
+      [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"), pdf_job_application_qualified_teacher_status_info(job_application)],
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review"), job_application_jobseeker_profile_info(job_application)],
       [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete"), job_application.statutory_induction_complete.humanize],
     ]
@@ -191,7 +191,7 @@ module PdfHelper
     support_data = [
       [
         I18n.t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed"),
-        job_application_support_needed_info(job_application),
+        pdf_job_application_support_needed_info(job_application),
       ],
     ]
 
@@ -293,7 +293,7 @@ module PdfHelper
     end
   end
 
-  def job_application_support_needed_info(job_application)
+  def pdf_job_application_support_needed_info(job_application)
     case job_application.support_needed
     when "yes"
       "Yes\nDetails: #{job_application.support_needed_details}"
@@ -304,7 +304,7 @@ module PdfHelper
     end
   end
 
-  def job_application_qualified_teacher_status_info(job_application)
+  def pdf_job_application_qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
     when "yes"
       "Yes, awarded in #{job_application.qualified_teacher_status_year}"
