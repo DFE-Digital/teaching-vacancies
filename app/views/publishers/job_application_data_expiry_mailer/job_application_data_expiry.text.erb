@@ -1,6 +1,6 @@
 # <%= t(".title", job_title: @vacancy.job_title, publish_date: @vacancy.publish_on.to_formatted_s(:month_year), expiration_date: data_expiration_date) %>
 
-<%= t(".expiry", job_title: @vacancy.job_title, expiration_date: data_expiration_date) %>
+<%= t(".expiry", job_title: @vacancy.job_title, expiration_date: data_expiration_date, published_month: published_month) %>
 
 <%= t(".privacy_policy", privacy_policy_link: privacy_policy_link) %>
 
