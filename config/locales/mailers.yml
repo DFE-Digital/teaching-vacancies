@@ -123,7 +123,7 @@ en:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}
         paragraph1: The school will be in touch to let you know what the next steps are. If you have any further questions, you can contact them at %{email}.
-        paragraph2: Search and 
+        paragraph2: Search and %{link}
         apply_link_text: apply for more jobs on Teaching Vacancies.
         more_info:
           heading: Still have questions?
