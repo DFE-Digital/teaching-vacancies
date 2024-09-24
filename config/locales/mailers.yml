@@ -122,6 +122,9 @@ en:
     job_application_mailer:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}
+        paragraph1: The school will be in touch to let you know what the next steps are. If you have any further questions, you can contact them at %{email}.
+        paragraph2: Search and %{link}
+        apply_link_text: apply for more jobs on Teaching Vacancies.
         more_info:
           heading: Still have questions?
           description: If you would like more information you can contact the school at %{email}.
@@ -130,7 +133,7 @@ en:
           link_text: Go to Teaching Vacancies
       application_shortlisted:
         <<: *job_application_mailer_shared
-        heading: You have been shortlisted for this role
+        heading: You have been shortlisted for %{job_title} at %{organisation_name}
         instructions: What happens next
         subject: Your job application has been shortlisted
       application_submitted:
@@ -171,28 +174,32 @@ en:
           intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
           link: Create an account
         frequency:
-          daily: at the end of the day (at around 3 pm)
-          weekly: weekly (at around 6 pm on Friday evening)
+          daily: at the end of the day
+          weekly: weekly
         next_steps: >-
-          You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
+          You’ll receive job alerts %{frequency} when there is a job matching your criteria.
         subject: Teaching Vacancies job alert confirmation
         title: You have subscribed to a job alert from Teaching Vacancies
         unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         unsubscribe_link_text: Unsubscribe here
+        multiple_job_alerts: To track more jobs with different criteria, you can %{link}
+        multiple_job_alerts_link_text: create multiple job alerts
       update:
         create_account:
           heading: Create a Teaching Vacancies account
           intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
           link: Create an account
         frequency:
-          daily: at the end of the day (at around 3 pm)
-          weekly: weekly (at around 6 pm on Friday evening)
+          daily: at the end of the day
+          weekly: weekly
         next_steps: >-
-          You’ll receive a job alert %{frequency} when a job matching your criteria is listed.
+          You’ll receive job alerts %{frequency} when there is a job matching your criteria.
         subject: Teaching Vacancies job alert update
         title: You have updated a job alert from Teaching Vacancies
         unsubscribe: Don’t want to receive these email alerts? %{unsubscribe_link}
         unsubscribe_link_text: Unsubscribe here
+        multiple_job_alerts: To track more jobs with different criteria, you can %{link}
+        multiple_job_alerts_link_text: create multiple job alerts
 
   publishers:
     job_application_data_expiry_mailer:
