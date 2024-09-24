@@ -171,8 +171,8 @@ en:
           intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
           link: Create an account
         frequency:
-          daily: at the end of the day (at around 3 pm)
-          weekly: weekly (at around 6 pm on Friday evening)
+          daily: at the end of the day
+          weekly: weekly
         next_steps: >-
           You’ll receive job alerts %{frequency} when there is a job matching your criteria.
         subject: Teaching Vacancies job alert confirmation
@@ -187,8 +187,8 @@ en:
           intro: "%{link_to} to see all your job alerts in one place, and save the jobs you are interested in"
           link: Create an account
         frequency:
-          daily: at the end of the day (at around 3 pm)
-          weekly: weekly (at around 6 pm on Friday evening)
+          daily: at the end of the day
+          weekly: weekly
         next_steps: >-
           You’ll receive job alerts %{frequency} when there is a job matching your criteria.
         subject: Teaching Vacancies job alert update
