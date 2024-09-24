@@ -122,6 +122,9 @@ en:
     job_application_mailer:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}
+        paragraph1: The school will be in touch to let you know what the next steps are. If you have any further questions, you can contact them at %{email}.
+        paragraph2: Search and %{link}
+        apply_link_text: apply for more jobs on Teaching Vacancies.
         more_info:
           heading: Still have questions?
           description: If you would like more information you can contact the school at %{email}.
@@ -130,7 +133,7 @@ en:
           link_text: Go to Teaching Vacancies
       application_shortlisted:
         <<: *job_application_mailer_shared
-        heading: You have been shortlisted for this role
+        heading: You have been shortlisted for %{job_title} at %{organisation_name}
         instructions: What happens next
         subject: Your job application has been shortlisted
       application_submitted:
