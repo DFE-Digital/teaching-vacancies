@@ -661,10 +661,10 @@ en:
         share_your_job_listing: Share your job listing
         the_below_url_will_change: If you edit the job title in your listing, the below URL will change and you may need to reshare the link
         share_page_url: Share page URL
-        button_copy: Copy
+        button_copy: Copy URL
         facebook_share: Share on Facebook
         x_share: Share on X (formerly known as Twitter)
-        job_url_copied: Copied
+        job_url_copied: URL Copied
       statistics:
         show:
           application_data: Application data
