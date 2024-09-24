@@ -46,7 +46,7 @@ jobs:
         version: 14
 
     - name: Install kubectl
-      uses: azure/setup-kubectl@v4
+      uses: DFE-Digital/github-actions/set-kubectl@master
       with:
         version: "v1.26.1"
 
