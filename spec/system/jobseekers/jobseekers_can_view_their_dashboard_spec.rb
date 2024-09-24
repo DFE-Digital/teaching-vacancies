@@ -10,18 +10,17 @@ RSpec.describe "Jobseekers can view their dashboard" do
 
   after { logout }
 
-  it "displays a summary list with their email address and password" do
-    within ".govuk-summary-list" do
-      expect(page).to have_content(I18n.t("jobseekers.accounts.show.summary_list.email"))
-      expect(page).to have_content(I18n.t("jobseekers.accounts.show.summary_list.password"))
-    end
-  end
+  scenario "the jobseeker can see their dashboard" do
+    expect(page).to have_css("h1", text: I18n.t("jobseekers.accounts.show.page_title"))
+    expect(page).to have_css("h2", text: I18n.t("jobseekers.accounts.show.change_sign_in.heading"))
+    expect(page).to have_link(text: I18n.t("jobseekers.accounts.show.change_details_link_text"))
 
-  it "allows the jobseeker to change their email address" do
-    expect(page).to have_link(href: edit_jobseeker_registration_path)
-  end
+    expect(page).to have_css("h2", text: I18n.t("jobseekers.accounts.show.find_account_details.heading"))
+    expect(page).to have_link(I18n.t("jobseekers.accounts.show.find_account_details.link_text"),
+                              href: new_jobseekers_request_account_transfer_email_path)
 
-  it "allows the jobseeker to change their email address" do
-    expect(page).to have_link(href: edit_jobseeker_registration_path(password_update: true))
+    expect(page).to have_css("h2", text: I18n.t("jobseekers.accounts.show.close_account"))
+    expect(page).to have_link(I18n.t("jobseekers.accounts.show.close_account"),
+                              href: jobseekers_confirm_destroy_account_path)
   end
 end
