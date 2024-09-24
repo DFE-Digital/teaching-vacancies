@@ -22,7 +22,10 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
       session.delete(:govuk_one_login_state)
       session.delete(:govuk_one_login_nonce)
 
-      sign_in_and_redirect jobseeker if jobseeker
+      if jobseeker
+        sign_out_except(:jobseeker)
+        sign_in_and_redirect jobseeker
+      end
     else
       error_redirect
     end
