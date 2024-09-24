@@ -36,7 +36,7 @@ RSpec.describe Jobseekers::GovukOneLogin::Helper, type: :helper do
   describe "#govuk_one_login_uri" do
     it "generates the URI with codified params for the GovUk OneLogin login endpoint" do
       login_uri = helper.govuk_one_login_uri(:login, helper.generate_login_params)
-      expect(login_uri.host).to eq "oidc.test.account.gov.uk"
+      expect(login_uri.host).to eq "test-onelogin-url.local"
       expect(login_uri.path).to eq "/authorize"
       expect(login_uri.query).to include "redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fjobseekers%2Fauth%2Fgovuk_one_login%2Fcallback"
       expect(login_uri.query).to include "client_id=one_login_client_id"
@@ -48,7 +48,7 @@ RSpec.describe Jobseekers::GovukOneLogin::Helper, type: :helper do
 
     it "generates the URI with codified params for the GovUk OneLogin logout endpoint" do
       logout_uri = helper.govuk_one_login_uri(:logout, helper.generate_logout_params("id_token"))
-      expect(logout_uri.host).to eq "oidc.test.account.gov.uk"
+      expect(logout_uri.host).to eq "test-onelogin-url.local"
       expect(logout_uri.path).to eq "/logout"
       expect(logout_uri.query).to include "post_logout_redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fjobseekers%2Fsign_out"
       expect(logout_uri.query).to include "id_token_hint=id_token"

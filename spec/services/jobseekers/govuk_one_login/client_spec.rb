@@ -8,7 +8,7 @@ RSpec.describe Jobseekers::GovukOneLogin::Client do
   let(:response_mock) { instance_double(Net::HTTPResponse, body: payload) }
 
   before do
-    allow(Net::HTTP).to receive(:new).with("oidc.test.account.gov.uk", 443).and_return(http_mock)
+    allow(Net::HTTP).to receive(:new).with("test-onelogin-url.local", 443).and_return(http_mock)
     allow(http_mock).to receive(:request).with(request_mock).and_return(response_mock)
   end
 
@@ -26,7 +26,7 @@ RSpec.describe Jobseekers::GovukOneLogin::Client do
       allow(SecureRandom).to receive(:uuid).and_return("b421e8e9-0ebb-4079-9ce7-76f63707157b")
       allow(OpenSSL::PKey::RSA).to receive(:new).and_return("private_key")
       freeze_time do
-        expected_jwt_payload = { aud: "https://oidc.test.account.gov.uk/token",
+        expected_jwt_payload = { aud: "https://test-onelogin-url.local/token",
                                  iss: "one_login_client_id",
                                  sub: "one_login_client_id",
                                  exp: Time.zone.now.to_i + 300,

@@ -41,6 +41,10 @@ RSpec.describe "Govuk One Login authentication response" do
     context "when the OneLogin user matches a TV jobseeker" do
       let!(:jobseeker) { create(:jobseeker, email: "user@someemail.com") }
 
+      before do
+        allow(govuk_one_login_user).to receive(:id).and_return(jobseeker.govuk_one_login_id)
+      end
+
       it "signs in the user as the existing jobseeker" do
         expect { get auth_govuk_one_login_callback_path }.not_to change(Jobseeker, :count)
         expect(controller.current_jobseeker).to eq(jobseeker)
@@ -62,6 +66,8 @@ RSpec.describe "Govuk One Login authentication response" do
         let(:devise_stored_location) { jobseekers_subscriptions_path }
 
         context "when the jobseeker is signing in for the first time via OneLogin" do
+          let!(:jobseeker) { create(:jobseeker, email: "user@someemail.com", govuk_one_login_id: nil) }
+
           it "redirects the new jobseeker to the account found page" do
             get auth_govuk_one_login_callback_path
 
