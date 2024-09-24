@@ -67,7 +67,7 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
               click_on I18n.t("buttons.sign_in")
             end
           end
-          sign_in_jobseeker
+          sign_in_jobseeker_govuk_one_login(jobseeker)
           expect(current_path).to eq(jobseekers_subscriptions_path)
         end
       end

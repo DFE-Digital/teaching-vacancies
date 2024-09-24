@@ -55,7 +55,7 @@ RSpec.describe "Jobseekers can manage their job alerts from the email" do
               expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
               click_on I18n.t("buttons.sign_in")
             end
-            sign_in_jobseeker
+            sign_in_jobseeker_govuk_one_login(jobseeker)
             expect(current_path).to eq(jobseekers_subscriptions_path)
           end
         end
