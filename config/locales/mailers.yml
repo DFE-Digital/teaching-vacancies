@@ -167,6 +167,15 @@ en:
           link_text: view your draft application
         subject: Update on %{job_title} at %{organisation_name}
 
+    vacancy_mailer:
+      draft_application_only:
+        subject: Apply for %{job_title} before %{date}
+        intro: The deadline to apply for %{job_title} at %{school} is %{date}
+        body: You started an application for this role, but have not submitted it yet. If you want to apply, there is still time to %{link_to}.
+        outro: Or search on %{link_to}
+        complete: complete your application
+        apply_for_more_jobs: apply for more jobs on Teaching Vacancies
+
     subscription_mailer:
       confirmation:
         create_account:

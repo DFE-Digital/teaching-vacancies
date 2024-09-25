@@ -1,0 +1,7 @@
+# <%= t(".intro", job_title: @vacancy.job_title, school: @vacancy.organisation.name, date: @vacancy.expires_at.to_date.to_formatted_s) %>
+
+<%= t(".body", link_to: notify_link(jobseekers_job_application_review_url(@job_application), t(".complete"))) %>
+
+<%= t(".outro", link_to: home_page_link) %>
+
+<%= t("shared.jobseeker_footer", home_page_link: home_page_link) %>
