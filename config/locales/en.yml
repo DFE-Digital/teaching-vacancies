@@ -423,6 +423,9 @@ en:
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated
+    new_v2:
+      banner:
+        title: Get jobs sent straight to your inbox
 
   sub_nav:
     jobs: Jobs
