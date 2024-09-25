@@ -136,7 +136,7 @@ module JobApplicationsHelper
   def visa_sponsorship_needed_answer(job_application)
     return unless job_application.right_to_work_in_uk.present?
 
-    job_application.right_to_work_in_uk == "yes" ? t("jobseekers.profiles.personal_details.work.options.true") : t("jobseekers.profiles.personal_details.work.options.false")
+    job_application.right_to_work_in_uk == "yes" ? I18n.t("jobseekers.profiles.personal_details.work.options.true") : I18n.t("jobseekers.profiles.personal_details.work.options.false")
   end
 
   def radio_button_legend_hint
