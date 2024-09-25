@@ -16,6 +16,11 @@ class SubscriptionsController < ApplicationController
     render("subscriptions/campaign/new", layout: "subscription_campaign") if campaign_link?
   end
 
+  def new_v2
+    @form = Jobseekers::SubscriptionForm.new(new_form_attributes)
+    @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
+  end
+
   def create
     @form = Jobseekers::SubscriptionForm.new(subscription_params)
     subscription = Subscription.new(@form.job_alert_params)
