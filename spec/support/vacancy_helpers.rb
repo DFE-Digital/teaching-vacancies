@@ -138,6 +138,7 @@ module VacancyHelpers
 
     fill_in "publishers_job_listing_about_the_role_form[skills_and_experience]", with: vacancy.skills_and_experience
     fill_in "publishers_job_listing_about_the_role_form[school_offer]", with: vacancy.school_offer
+    fill_in "publishers_job_listing_about_the_role_form[flexi_working]", with: vacancy.flexi_working
 
     # within ".safeguarding-information-provided-radios" do
     #   choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information_provided_options.#{vacancy.safeguarding_information_provided}")
@@ -221,6 +222,7 @@ module VacancyHelpers
     expect(page).to have_content(strip_tags(vacancy.readable_ect_status)) if vacancy.ect_status.present?
     expect(page).to have_content(vacancy.skills_and_experience)
     expect(page).to have_content(vacancy.school_offer)
+    expect(page).to have_content(vacancy.flexi_working)
 
     if vacancy.organisation&.safeguarding_information.present?
       expect(page).to have_content(vacancy.organisation.safeguarding_information)

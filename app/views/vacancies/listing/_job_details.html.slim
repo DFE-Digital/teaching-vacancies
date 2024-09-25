@@ -76,6 +76,10 @@ section#job-details class="govuk-!-margin-bottom-5"
     h2.govuk-heading-m = t("jobs.school_offer.jobseeker")
     .govuk-body.editor-rendered-content == vacancy.school_offer
 
+  - if vacancy.flexi_working.present?
+    h2.govuk-heading-m = t("jobs.flexi_working.jobseeker")
+    .govuk-body.editor-rendered-content == vacancy.flexi_working
+
   - if vacancy.further_details_provided?
     h2.govuk-heading-m = t("jobs.further_details")
     .govuk-body == vacancy.further_details
