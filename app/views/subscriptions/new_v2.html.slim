@@ -1,1 +1,25 @@
-p hello world
+- content_for :page_title_prefix, t("subscriptions.new.title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("app.back_to_homepage"), href: root_path, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @form, url: subscriptions_path do |f|
+      = f.govuk_error_summary
+
+      h1.govuk-heading-xl class="govuk-!-margin-bottom-4" = t("subscriptions.new.title")
+
+      - if @organisation
+        p.govuk-body-m = t("subscriptions.new.organisation_link_html", organisation_landing_page_link: govuk_link_to(@organisation.name, organisation_landing_page_path(@organisation)))
+        = f.hidden_field :organisation_slug, value: @organisation.slug
+
+      .subscription-criteria
+        = render "fields_v2", f: f
+
+      = govuk_details summary_text: t("subscriptions.unsubscribe.guidance.heading"), text: t("subscriptions.unsubscribe.guidance.body")
+
+      = render "shared/recaptcha", form: f
+
+      = f.govuk_submit t("buttons.subscribe"), class: "govuk-!-padding-left-8 govuk-!-padding-right-8"
+       

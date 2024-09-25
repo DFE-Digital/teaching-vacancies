@@ -1,15 +1,11 @@
-- teaching_legend = capture do
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-    h2.govuk-fieldset__heading = t("jobs.filters.teaching_job_roles")
-
-- support_legend = capture do
-  legend.govuk-fieldset__legend.govuk-fieldset__legend--s
-    h2.govuk-fieldset__heading = t("jobs.filters.support_job_roles")
-
 - teaching_job_roles = capture do
-  = f.govuk_collection_check_boxes(:teaching_job_roles, form.teaching_job_role_options, :first, :last, small: false, legend: -> { teaching_legend }, hint: nil)
+  = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.teaching_job_roles"), "aria-label": t("jobs.aria_labels.filters.teaching_job_roles"), title: t("jobs.filters.teaching_job_roles"))]), open: form.teaching_job_roles.any?) do
+    = f.govuk_collection_check_boxes(:teaching_job_roles, form.teaching_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
 - support_job_roles = capture do
-  = f.govuk_collection_check_boxes(:support_job_roles, form.support_job_role_options, :first, :last, small: false, legend: -> { support_legend }, hint: nil)
+  = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.support_job_roles"), "aria-label": t("jobs.aria_labels.filters.support_job_roles"), title: t("jobs.filters.support_job_roles"))]), open: form.support_job_roles.any?) do
+    = f.govuk_collection_check_boxes(:support_job_roles, form.support_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
 
 - filters_component.with_group key: "teaching_job_roles", component: teaching_job_roles
 - filters_component.with_group key: "support_job_roles", component: support_job_roles
+
+

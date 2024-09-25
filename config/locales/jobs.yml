@@ -42,6 +42,7 @@ en:
       support_job_roles: Support
       ect_suitable: Suitable for early career teachers
       subject: Subject
+      subjects: Subjects
       phases: Education phase
       quick_apply: Application method
       working_patterns: Working pattern
@@ -79,6 +80,7 @@ en:
         Tell us what teaching job you’re looking for and what kind of school you’d like to teach in.
         You can use any keywords that describe your ideal role.
         This alert is especially for jobs suitable for early career teachers, so you don’t need to add early career teacher or ECT as a keyword.
+      keyword_v2_hint: Enter job title or other information relevant to the roles you’re looking for.
       location: City, county or postcode (in England)
       number_of_miles:
         zero: This area only
@@ -410,3 +412,4 @@ en:
       filters:
         teaching_job_roles: Teaching & leadership job roles
         support_job_roles: Support job roles
+        subjects: Subjects
