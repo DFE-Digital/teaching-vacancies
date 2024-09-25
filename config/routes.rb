@@ -360,6 +360,7 @@ Rails.application.routes.draw do
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[index create destroy], controller: "publishers/vacancies/job_applications/notes"
+        get :download_pdf
         get :shortlist
         get :reject
         get :withdrawn

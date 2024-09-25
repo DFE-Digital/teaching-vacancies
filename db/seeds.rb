@@ -76,13 +76,13 @@ attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], p
 3.times { FactoryBot.create(:vacancy, :published, **attrs) }
 
 # Jobseekers
-Jobseeker.create(email: "jobseeker@example.com", password: "password", confirmed_at: Time.zone.now)
-JobApplication.statuses.count.times { |i| Jobseeker.create(email: "jobseeker#{i}@example.com", password: "password", confirmed_at: Time.zone.now) }
+FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com", password: "password")
+JobApplication.statuses.count.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com", password: "password") }
 
 # Job Applications
 Vacancy.listed.each do |vacancy|
   statuses = JobApplication.statuses.keys
-  Jobseeker.where.not(email: "jobseeker@example.com").each do |jobseeker|
+  Jobseeker.where.not(email: "jobseeker@contoso.com").each do |jobseeker|
     # Ensures each one of the statuses gets used. When no unused statuses are left, takes random ones from the list for further new applications.
     application_status = statuses.delete(statuses.sample) || JobApplication.statuses.keys.sample
     FactoryBot.create(:job_application, :"status_#{application_status}", jobseeker: jobseeker, vacancy: vacancy)

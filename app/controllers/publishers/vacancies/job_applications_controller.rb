@@ -22,6 +22,17 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     job_application.reviewed! if job_application.submitted?
   end
 
+  def download_pdf
+    pdf = JobApplicationPdfGenerator.new(job_application, vacancy).generate
+
+    send_data(
+      pdf.render,
+      filename: "job_application_#{job_application.id}.pdf",
+      type: "application/pdf",
+      disposition: "inline",
+    )
+  end
+
   def update_status
     raise ActionController::RoutingError, "Cannot shortlist or reject a draft or withdrawn application" if
       job_application.draft? || job_application.withdrawn?

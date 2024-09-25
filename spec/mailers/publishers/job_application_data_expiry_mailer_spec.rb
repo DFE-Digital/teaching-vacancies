@@ -12,15 +12,12 @@ RSpec.describe Publishers::JobApplicationDataExpiryMailer do
 
   describe "#job_application_data_expiry" do
     it "sends a `job_application_data_expiry` email" do
-      expect(mail.subject).to eq(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.subject", job_title: vacancy.job_title,
-                                                                                                                             expiration_date: format_date(vacancy_data_expiration_date)))
+      expect(mail.subject).to eq(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.subject", job_title: vacancy.job_title, published_date: vacancy.publish_on.to_formatted_s(:day_month_year)))
       expect(mail.to).to eq([email])
       expect(mail.body.to_s).to include(vacancy.job_title)
-                            .and include(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.title", job_title: vacancy.job_title,
-                                                                                                                                   publish_date: vacancy.publish_on.to_formatted_s(:month_year),
-                                                                                                                                   expiration_date: vacancy_data_expiration_date))
                             .and include(I18n.t("publishers.job_application_data_expiry_mailer.job_application_data_expiry.expiry", job_title: vacancy.job_title,
-                                                                                                                                    expiration_date: vacancy_data_expiration_date))
+                                                                                                                                    expiration_date: vacancy_data_expiration_date,
+                                                                                                                                    published_month: vacancy.publish_on.to_formatted_s(:month_year)))
                             .and include("https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers")
                             .and include(organisation_job_job_applications_url(vacancy.id))
     end
