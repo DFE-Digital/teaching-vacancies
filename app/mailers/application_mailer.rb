@@ -35,14 +35,20 @@ class ApplicationMailer < Mail::Notify::Mailer
   end
 
   def dfe_analytics_event_data
-    dfe_analytics_base_data.merge(dfe_analytics_custom_data)
+    base_data = dfe_analytics_base_data
+    base_data[:data].merge!(dfe_analytics_custom_data)
+    base_data
   end
 
   def dfe_analytics_base_data
     {
-      uid: uid,
-      notify_template: template,
-      email_identifier: DfE::Analytics.anonymise(to),
+      data: {
+        uid: uid,
+        notify_template: template,
+      },
+      hidden_data: {
+        email_identifier: to,
+      },
     }
   end
 end

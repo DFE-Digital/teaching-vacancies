@@ -50,17 +50,19 @@ class VacanciesController < ApplicationController
 
   def trigger_search_performed_event
     fail_safe do
-      polygon_id = DfE::Analytics.anonymise(@vacancies_search.polygon.id) if @vacancies_search.polygon
-
       event_data = {
-        search_criteria: form.to_hash,
-        sort_by: form.sort.by,
-        page: params[:page] || 1,
-        total_count: @vacancies_search.total_count,
-        vacancies_on_page: @vacancies.map(&:id),
-        location_polygon_used: polygon_id,
-        landing_page: params[:landing_page_slug],
-        filters_set_from_keywords: form.filters_from_keyword.present?,
+        data: {
+          search_criteria: form.to_hash,
+          sort_by: form.sort.by,
+          page: params[:page] || 1,
+          total_count: @vacancies_search.total_count,
+          vacancies_on_page: @vacancies.map(&:id),
+          landing_page: params[:landing_page_slug],
+          filters_set_from_keywords: form.filters_from_keyword.present?,
+        },
+        event_hidden_data: {
+          location_polygon_used: @vacancies_search&.polygon&.id,
+        },
       }
 
       trigger_dfe_analytics_event(:search_performed, event_data)
@@ -73,7 +75,7 @@ class VacanciesController < ApplicationController
       .with_request_details(request)
       .with_response_details(response)
       .with_user(current_jobseeker)
-      .with_data(event_data)
+      .with_data(data: event_data)
 
     DfE::Analytics::SendEvents.do([event])
   end
