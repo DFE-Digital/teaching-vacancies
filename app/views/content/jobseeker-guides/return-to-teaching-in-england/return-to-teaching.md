@@ -56,6 +56,8 @@ To get a return to teaching adviser, you will need:
 * previous paid teaching experience in the UK of at least one term
 * a [Teacher Reference Number](https://www.gov.uk/guidance/teacher-reference-number-trn)
 
+If you qualified to teach outside the UK, you can [find out more about teaching in England as a non-UK citizen](https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas).
+
 [Call us on 0800 389 2500 to check if you’re eligible for an adviser](tel:08003892500).
 
 [Get a return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
