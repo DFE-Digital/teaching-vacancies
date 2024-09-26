@@ -16,7 +16,7 @@ class Search::RadiusBuilder
   attr_reader :location
 
   def get_radius(radius)
-    if radius = "v2_default"
+    if (radius == "v2_default")
       DEFAULT_RADIUS_FOR_JOB_ALERT_V2
     elsif location.blank?
       DEFAULT_BUFFER_FOR_POLYGON_SEARCHES

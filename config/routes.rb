@@ -316,7 +316,7 @@ Rails.application.routes.draw do
   end
 
   get "sign-up-for-ECT-job-alerts", to: "subscriptions#new", as: "ect_job_alerts", defaults: { ect_job_alert: true, search_criteria: { job_roles: ["ect_suitable"] } }
-  get 'subscriptions/new_v2', to: 'subscriptions#new_v2', as: :new_v2_subscriptions
+  get "subscriptions/new_v2", to: "subscriptions#new_v2", as: :new_v2_subscriptions
 
   namespace :api do
     scope "v:api_version", api_version: /1/ do
