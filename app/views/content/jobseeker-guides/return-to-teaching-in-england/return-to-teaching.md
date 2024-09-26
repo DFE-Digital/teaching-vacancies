@@ -9,7 +9,7 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/retu
 
 ![A teacher talking to a pupil at a desk.](/content-assets/jobseeker-guides/return-to-teaching-800x300.jpg)
 
-If you’re thinking about returning to teaching, or if you’re qualified to teach but have never taught in a state school in England, support is available.
+If you’re thinking about returning to teaching and have previously taught or trained to teach in the UK, support is available.
 
 If you trained to teach in the UK and are a UK citizen currently working abroad, find out about [returning to England to teach](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas).
 
@@ -33,10 +33,8 @@ The Department for Education (DfE) has been taking action to help schools suppor
 * enabling [flexible working opportunities](https://www.gov.uk/government/collections/flexible-working-resources-for-teachers-and-schools) 
 * putting in place [behaviour hubs](https://behaviourhubs.co.uk/)
 
-Teaching is a diverse and inclusive profession with many networks that can help you in your teaching career, including [WomenEd](https://womened.com/), [BAMEed](https://www.bameednetwork.com/), [LGBTed](https://lgbted.uk/) and [DisabilityEd](https://twitter.com/disability_ed).
-
 ## Get a return to teaching adviser
-If you have [qualified teacher status (QTS)](https://www.gov.uk/guidance/qualified-teacher-status-qts), you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
+If you have previously taught in or trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
 
 Advisers can give you free one-to-one support with:
 
@@ -50,7 +48,13 @@ You can chat by phone, text or email, as little or as often as you need.
 
 [Read a transcript of the video](https://teaching-vacancies.campaign.gov.uk/what-does-a-return-to-teaching-adviser-do-video-transcript)
 
-If you qualified as a teacher outside the UK, you must have qualified teacher status (QTS) to get an adviser and will be asked to provide your [Teacher Reference Number](https://www.gov.uk/guidance/teacher-reference-number-trn).
+### Eligibility
+
+To get a return to teaching adviser, you will need:
+
+* qualified teacher status (QTS)
+* previous paid teaching experience in the UK of at least one term
+* a [Teacher Reference Number](https://www.gov.uk/guidance/teacher-reference-number-trn)
 
 [Call us on 0800 389 2500 to check if you’re eligible for an adviser](tel:08003892500).
 
