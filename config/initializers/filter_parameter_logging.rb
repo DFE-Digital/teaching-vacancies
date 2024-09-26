@@ -14,6 +14,41 @@ Rails.application.config.filter_parameters += %i[
   gender
   orientation
   religion
+  id
+  job_title
+  jobseeker_id
+  jobseeker_profile_id
+  support_needed_details
+  rejection_reasons
+  further_instructions
+  job_application_id
+  publisher_id
+  first_name
+  last_name
+  previous_names
+  street_address
+  city
+  postcode
+  phone_number
+  institution
+  organisation
+  recipient_id
+  oid
+  main_duties
+  teacher_reference_number
+  finished_studying_details
+  close_relationships_details
+  gaps_in_employment_details
+  personal_statement
+  unconfirmed_email
+  family_name
+  given_name
+  email_address
+  about_you
+  name
+  application_email
+  contact_email
+  contact_number
 ] + [
   /^age$/i,
 ]
