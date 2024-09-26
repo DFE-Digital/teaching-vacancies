@@ -21,16 +21,16 @@
       - filters_component.with_group key: "ect_statuses", component: f.govuk_collection_check_boxes(:ect_statuses, @form.ect_status_options, :first, :last, small: false, legend: { text: t("jobs.filters.ect_suitable") }, hint: nil)
       - filters_component.with_group key: "visa_sponsorship_availability", component: f.govuk_collection_check_boxes(:visa_sponsorship_availability, @form.visa_sponsorship_availability_options, :first, :last, small: false, legend: { text: t("jobs.filters.visa_sponsorship_availability.legend") }, hint: nil)
       - teaching_job_roles = capture do
-        = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.teaching_job_roles"), "aria-label": t("jobs.aria_labels.filters.teaching_job_roles"), title: t("jobs.filters.teaching_job_roles"))]), open: form.teaching_job_roles.any?) do
-          = f.govuk_collection_check_boxes(:teaching_job_roles, form.teaching_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
+        = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.teaching_job_roles"), "aria-label": t("jobs.aria_labels.filters.teaching_job_roles"), title: t("jobs.filters.teaching_job_roles"))]), open: @form.teaching_job_roles.any?) do
+          = f.govuk_collection_check_boxes(:teaching_job_roles, @form.teaching_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
       - support_job_roles = capture do
-        = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.support_job_roles"), "aria-label": t("jobs.aria_labels.filters.support_job_roles"), title: t("jobs.filters.support_job_roles"))]), open: form.support_job_roles.any?) do
-          = f.govuk_collection_check_boxes(:support_job_roles, form.support_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
+        = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.support_job_roles"), "aria-label": t("jobs.aria_labels.filters.support_job_roles"), title: t("jobs.filters.support_job_roles"))]), open: @form.support_job_roles.any?) do
+          = f.govuk_collection_check_boxes(:support_job_roles, @form.support_job_role_options, :first, :last, small: true, legend: nil, hint: nil)
 
       - filters_component.with_group key: "teaching_job_roles", component: teaching_job_roles
       - filters_component.with_group key: "support_job_roles", component: support_job_roles
       - subjects = capture do
-        = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.subjects"), "aria-label": t("jobs.aria_labels.filters.subjects"), title: t("jobs.filters.subjects"))]), open: form.subjects) do
+        = govuk_details(summary_text: safe_join([tag.span(t("jobs.filters.subjects"), "aria-label": t("jobs.aria_labels.filters.subjects"), title: t("jobs.filters.subjects"))]), open: @form.subjects) do
           = f.govuk_collection_check_boxes(:subjects,
               SUBJECT_OPTIONS,
               :first,
