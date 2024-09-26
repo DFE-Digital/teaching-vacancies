@@ -572,7 +572,7 @@ en:
           hint_intro: "To offer Skilled Worker visa sponsorship, this role must:"
           hint_bullet_1: meet the minimum salary requirements
           hint_bullet_2: be included on the list of eligible roles
-          hint_salary_text: Different salary rules apply for support roles in schools. 
+          hint_salary_text: Different salary rules apply for support roles in schools.
           learn_more_link_text: Learn more about Skilled Worker visa requirements for teaching jobs (opens in new tab).
           eligibility_link_text: Find out about eligible support roles and salary requirements (opens in new tab).
       live:
@@ -658,6 +658,13 @@ en:
         preview_listing: preview the job listing
         view_listing: view the job listing
         you_can: "You can:"
+        share_your_job_listing: Share your job listing
+        the_below_url_will_change: If you edit the job title in your listing, the below URL will change and you may need to reshare the link
+        share_page_url: Share page URL
+        button_copy: Copy URL
+        facebook_share: Share on Facebook
+        x_share: Share on X (formerly known as Twitter)
+        job_url_copied: URL Copied
       statistics:
         show:
           application_data: Application data
