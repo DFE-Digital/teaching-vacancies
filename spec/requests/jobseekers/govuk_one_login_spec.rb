@@ -41,6 +41,10 @@ RSpec.describe "Govuk One Login authentication response" do
     context "when the OneLogin user matches a TV jobseeker" do
       let!(:jobseeker) { create(:jobseeker, email: "user@someemail.com") }
 
+      before do
+        allow(govuk_one_login_user).to receive(:id).and_return(jobseeker.govuk_one_login_id)
+      end
+
       it "signs in the user as the existing jobseeker" do
         expect { get auth_govuk_one_login_callback_path }.not_to change(Jobseeker, :count)
         expect(controller.current_jobseeker).to eq(jobseeker)
@@ -58,10 +62,33 @@ RSpec.describe "Govuk One Login authentication response" do
         end
       end
 
-      context "with no quick apply url location to redirect to in devise session" do
+      context "with the job alerts subscriptions page to redirect to in devise session" do
         let(:devise_stored_location) { jobseekers_subscriptions_path }
 
+        it "redirects the jobseeker to the job alerts subscriptions page" do
+          get auth_govuk_one_login_callback_path
+
+          expect(response).to redirect_to(devise_stored_location)
+        end
+      end
+
+      context "with a saving/unsaving job action to redirect to in devise session" do
+        let(:vacancy) { create(:vacancy) }
+        let(:devise_stored_location) { new_jobseekers_saved_job_path(vacancy) }
+
+        it "redirects the jobseeker to the job page page" do
+          get auth_govuk_one_login_callback_path
+
+          expect(response).to redirect_to(devise_stored_location)
+        end
+      end
+
+      context "with no explicitly allowed url location to redirect to in devise session" do
+        let(:devise_stored_location) { jobseeker_root_path }
+
         context "when the jobseeker is signing in for the first time via OneLogin" do
+          let!(:jobseeker) { create(:jobseeker, email: "user@someemail.com", govuk_one_login_id: nil) }
+
           it "redirects the new jobseeker to the account found page" do
             get auth_govuk_one_login_callback_path
 
@@ -99,8 +126,29 @@ RSpec.describe "Govuk One Login authentication response" do
         end
       end
 
-      context "with no quick apply url location to redirect to in devise session" do
+      context "with the job alerts subscriptions page to redirect to in devise session" do
         let(:devise_stored_location) { jobseekers_subscriptions_path }
+
+        it "redirects the jobseeker to the job alerts subscriptions page" do
+          get auth_govuk_one_login_callback_path
+
+          expect(response).to redirect_to(devise_stored_location)
+        end
+      end
+
+      context "with a saving/unsaving job action to redirect to in devise session" do
+        let(:vacancy) { create(:vacancy) }
+        let(:devise_stored_location) { new_jobseekers_saved_job_path(vacancy) }
+
+        it "redirects the jobseeker to the job page page" do
+          get auth_govuk_one_login_callback_path
+
+          expect(response).to redirect_to(devise_stored_location)
+        end
+      end
+
+      context "with no explicitly allowed url location to redirect to in devise session" do
+        let(:devise_stored_location) { jobseeker_root_path }
 
         it "redirects the jobseeker to an account not found page page" do
           get auth_govuk_one_login_callback_path

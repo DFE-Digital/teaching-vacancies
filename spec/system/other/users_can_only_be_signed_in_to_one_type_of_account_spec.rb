@@ -75,9 +75,9 @@ RSpec.describe "Users can only be signed in to one type of account" do
         expect(current_path).to eq(organisation_jobs_with_type_path)
 
         visit new_jobseeker_session_path
-        sign_in_jobseeker
+        sign_in_jobseeker_govuk_one_login(jobseeker)
 
-        expect(current_path).to eq(jobseekers_saved_jobs_path)
+        expect(current_path).to eq(jobseekers_job_applications_path)
 
         visit organisation_jobs_with_type_path
         expect(current_path).to eq(new_publisher_session_path)
@@ -92,9 +92,9 @@ RSpec.describe "Users can only be signed in to one type of account" do
         expect(current_path).to eq(organisation_jobs_with_type_path)
 
         visit new_jobseeker_session_path
-        sign_in_jobseeker
+        sign_in_jobseeker_govuk_one_login(jobseeker)
 
-        expect(current_path).to eq(jobseekers_saved_jobs_path)
+        expect(current_path).to eq(jobseekers_job_applications_path)
 
         visit organisation_jobs_with_type_path
         expect(current_path).to eq(new_publishers_login_key_path)

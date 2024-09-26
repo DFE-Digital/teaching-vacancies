@@ -22,7 +22,10 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
       session.delete(:govuk_one_login_state)
       session.delete(:govuk_one_login_nonce)
 
-      sign_in_and_redirect jobseeker if jobseeker
+      if jobseeker
+        sign_out_except(:jobseeker)
+        sign_in_and_redirect jobseeker
+      end
     else
       error_redirect
     end
@@ -46,7 +49,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   # We need to build our own logic to redirect the user to the correct pages.
   def after_sign_in_path_for(resource)
     stored_location = stored_location_for(resource)
-    if user_signed_in_from_quick_apply_link?(stored_location)
+    if redirect_to_location?(stored_location)
       stored_location
     elsif session[:newly_created_user]
       session.delete(:newly_created_user)
@@ -59,7 +62,11 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
     end
   end
 
-  def user_signed_in_from_quick_apply_link?(stored_location)
-    stored_location&.include?("job_application/new")
+  def redirect_to_location?(stored_location)
+    return false if stored_location.blank?
+
+    stored_location.include?("/job_application/new") || # Signed-in from a quick apply link
+      stored_location.include?("/saved_job/") || # Signed-in from a vacancy page save/unsave action.
+      stored_location.include?("/jobseekers/subscriptions") # Signed-in from a job alert email link.
   end
 end
