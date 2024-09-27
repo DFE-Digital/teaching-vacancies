@@ -223,7 +223,7 @@ en:
         applications:
           one: this application
           other: these applications
-        subject: Your active job listings
+        subject:
           one: You have received a new application
           other: You have received %{count} new applications
         view_applications:
