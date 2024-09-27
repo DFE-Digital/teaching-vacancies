@@ -75,7 +75,7 @@ Rails.application.configure do
   config.middleware.insert_before 0, DfeSignIn::FakeSignOutEndpoint
 
   # https://medium.com/@atinders/easy-log-rotation-with-rails-5-7b8d3c173461
-  config.logger = Logger.new(config.paths['log'].first, 3, 100.megabytes.to_i)
+  config.logger = Logger.new(config.paths["log"].first, 3, 100.megabytes.to_i)
 
   config.log_level = :debug
 end

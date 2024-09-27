@@ -100,7 +100,7 @@ Rails.application.configure do
 
   # config.log_file_size = 100.megabytes
   # https://medium.com/@atinders/easy-log-rotation-with-rails-5-7b8d3c173461
-  config.logger = Logger.new(config.paths['log'].first, 3, 100.megabytes.to_i)
+  config.logger = Logger.new(config.paths["log"].first, 3, 100.megabytes.to_i)
 
   config.log_level = :debug
 end
