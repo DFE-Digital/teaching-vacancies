@@ -223,12 +223,13 @@ en:
         applications:
           one: this application
           other: these applications
-        subject:
-          one: You have received an application
-          other: You have received applications
+        subject: Your active job listings
+          one: You have received a new application
+          other: You have received %{count} new applications
         view_applications:
-          one: View %{count} new application
-          other: View %{count} new applications
+          one: View new application for %{job_title}
+          other: View %{count} new applications for %{job_title}
+        title: Your active job listings
     expired_vacancy_feedback_prompt_mailer:
       feedback_link_text: Tell us how you filled your vacancy.
 
