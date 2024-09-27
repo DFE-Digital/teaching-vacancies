@@ -77,8 +77,9 @@ attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], p
 3.times { FactoryBot.create(:vacancy, :published, **attrs) }
 
 # Jobseekers
+seed_count = ENV.fetch("PROFILE_SEED_COUNT", 300).to_i
 FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com", password: "password")
-800.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com", password: "password") }
+2 * seed_count.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com", password: "password") }
 
 # Job Applications
 Vacancy.listed.each do |vacancy|
@@ -98,7 +99,7 @@ outwood_trust_schools = outwood_grange.schools.all
 location_preference_names = outwood_trust_schools.map(&:postcode)
 location_preferences = (outwood_trust_schools + weydon_trust_schools).map(&:postcode)
 
-Jobseeker.first(400).each do |jobseeker|
+Jobseeker.first(seed_count).each do |jobseeker|
   Jobseeker.transaction do
     # FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications, :with_employment_history, jobseeker: jobseeker) do |jobseeker_profile|
     FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications, :with_employment_history,
