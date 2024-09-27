@@ -8,15 +8,20 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   def openid_connect
     if (govuk_one_login_user = Jobseekers::GovukOneLogin::UserFromAuthResponse.call(params, session))
       session[:govuk_one_login_id_token] = govuk_one_login_user.id_token
+      jobseeker = Jobseeker.find_by(govuk_one_login_id: govuk_one_login_user.id) ||
+                  Jobseeker.find_by(email: govuk_one_login_user.email) # Pre-migration to GovUK One Login Jobseeker still non-linked with a One Login account.
 
-      jobseeker = Jobseeker.find_by("lower(email) = ?", govuk_one_login_user.email.downcase)
-
+      # Completely new user
       if jobseeker.nil?
         session[:newly_created_user] = { value: "true", path: "/", expires: 1.hour.from_now }
         jobseeker = Jobseeker.create_from_govuk_one_login(email: govuk_one_login_user.email, govuk_one_login_id: govuk_one_login_user.id)
+      # User exists but is their first time signing-in with OneLogin
       elsif jobseeker.govuk_one_login_id.nil?
         session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
         jobseeker.update(govuk_one_login_id: govuk_one_login_user.id)
+      # User changed their email in OneLogin after having already signed in with us
+      elsif jobseeker.email.downcase != govuk_one_login_user.email.downcase
+        jobseeker.update(email: govuk_one_login_user.email)
       end
 
       session.delete(:govuk_one_login_state)

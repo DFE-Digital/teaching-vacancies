@@ -215,15 +215,16 @@ module AuthHelpers
   #            prior to calling this method
   # - error: If true, it will simulate an error in the GovUK One Login authentication flow. We simulate it by providing a
   #          wrong nonce in the callback response that doesn't match the one set in the user session.
-  #
-  def sign_in_jobseeker_govuk_one_login(jobseeker, navigate: false, session: nil, error: false)
+  # - email: The email to be used in the GovUK One Login user info response. If not provided, it will usethe given
+  #          jobseeker email)
+  def sign_in_jobseeker_govuk_one_login(jobseeker, navigate: false, session: nil, error: false, email: nil)
     if navigate
       visit new_jobseeker_session_path
       expect(page).to have_link(I18n.t("buttons.one_login_sign_in"),
                                 href: /^#{Jobseekers::GovukOneLogin::ENDPOINTS[:login]}/)
     end
     session ||= page.driver.request.session
-    stub_jobseeker_govuk_one_login_for(email: jobseeker.email,
+    stub_jobseeker_govuk_one_login_for(email: email.presence || jobseeker.email,
                                        one_login_id: jobseeker.govuk_one_login_id,
                                        nonce: error ? "wrong-nonce-causes-error" : session[:govuk_one_login_nonce])
     one_login_url = find("a", text: I18n.t("buttons.one_login_sign_in"))[:href]
