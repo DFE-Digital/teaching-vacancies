@@ -29,7 +29,7 @@ RSpec.describe Publishers::JobApplicationMailer do
       expect(mail.to).to eq([email])
       expect(mail.body.encoded).to include(vacancy.job_title)
                                .and include(organisation_job_job_applications_url(vacancy.id))
-                               .and include(I18n.t("publishers.job_application_mailer.applications_received.view_applications", count: 2))
+                               .and include(I18n.t("publishers.job_application_mailer.applications_received.view_applications", count: 2, job_title: vacancy.job_title))
     end
 
     it "triggers a `publisher_applications_received` email event" do
