@@ -2,7 +2,7 @@ class Publishers::JobseekerProfilesController < Publishers::BaseController
   def index
     @jobseeker_profile_search = Search::JobseekerProfileSearch.new(current_organisation: current_organisation, filters: jobseeker_profile_search_params)
     @pagy, @jobseeker_profiles = pagy(@jobseeker_profile_search.jobseeker_profiles)
-    @form = Publishers::JobseekerProfileSearchForm.new(jobseeker_profile_search_params)
+    @form = Publishers::JobseekerProfileSearchForm.new(jobseeker_profile_search_params.merge(current_organisation: current_organisation))
   end
 
   def show
