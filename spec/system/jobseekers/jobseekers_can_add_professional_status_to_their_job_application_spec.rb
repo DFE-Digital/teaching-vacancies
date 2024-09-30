@@ -42,7 +42,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
     end
 
     choose "Yes", name: "jobseekers_job_application_professional_status_form[has_teacher_reference_number]"
-    fill_in "What is your Teacher reference number (TRN)?", with: "1234567"
+    fill_in "What is your teacher reference number (TRN)?", with: "1234567"
 
     click_on "Save and continue"
 
@@ -60,7 +60,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
     choose("I'm on track to complete it")
     choose "Yes", name: "jobseekers_job_application_professional_status_form[has_teacher_reference_number]"
-    fill_in "What is your Teacher reference number (TRN)?", with: "1234567"
+    fill_in "What is your teacher reference number (TRN)?", with: "1234567"
 
     click_on "Save and continue"
 
