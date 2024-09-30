@@ -131,7 +131,11 @@ en:
               - all paid roles
               - voluntary work, if relevant to your application
             work_experience_advice: If you’re applying for a teaching job, you should include teaching and other experience, if you have it. 
-            gaps_advice: You’ll also need to explain any gaps in your work history, including between finishing full-time education and starting work.
+            gaps_advice: "You’ll also need to explain any gaps in your work history. This includes any gaps between:"
+            gaps_bullets:
+              - school and university
+              - university and employment
+              - different forms of employment
             reasons: You’ll need to provide the reason you left each role.
             gaps: >-
               If you had a gap between finishing full-time education and starting work that you have not explained then please %{link} to give details about it
