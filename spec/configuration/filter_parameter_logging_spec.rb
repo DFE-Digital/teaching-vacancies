@@ -5,7 +5,7 @@ RSpec.describe "Filter parameter logging configuration" do
   let(:filter_params) { Rails.application.config.filter_parameters }
 
   specify "all anonymised analytics fields should be filtered from logs" do
-    analytics_hidden_pii.values.each do |shared|
+    analytics_hidden_pii.each_value do |shared|
       shared.each do |field|
         expect(filter_params).to include(field.to_sym)
       end
