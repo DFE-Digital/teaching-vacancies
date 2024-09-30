@@ -696,10 +696,10 @@ en:
             statutory_induction_complete:
               inclusion: Select yes if you have completed your statutory induction year
             teacher_reference_number:
-              invalid: Enter a teacher reference number in the correct format
+              invalid: Enter a teacher reference number (TRN) in the correct format
               blank: Enter a teacher reference number (TRN)
             has_teacher_reference_number:
-              inclusion: Select yes if you have a teacher reference number. If you have qualified teacher status (QTS) you must select yes.
+              inclusion: Select yes if you have a teacher reference number (TRN). If you have qualified teacher status (QTS) you must select yes.
         jobseekers/profile/employment_form:
           attributes:
             current_role:
