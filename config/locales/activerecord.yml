@@ -699,7 +699,7 @@ en:
               invalid: Enter a teacher reference number (TRN) in the correct format
               blank: Enter a teacher reference number (TRN)
             has_teacher_reference_number:
-              inclusion: Select yes if you have a teacher reference number (TRN). If you have qualified teacher status (QTS) you must select yes.
+              inclusion: Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.
         jobseekers/profile/employment_form:
           attributes:
             current_role:
