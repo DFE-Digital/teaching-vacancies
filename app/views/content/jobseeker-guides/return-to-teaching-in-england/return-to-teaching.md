@@ -34,7 +34,7 @@ The Department for Education (DfE) has been taking action to help schools suppor
 * putting in place [behaviour hubs](https://behaviourhubs.co.uk/)
 
 ## Get a return to teaching adviser
-If you have previously taught in or trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
+If you have previously taught or trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
 
 Advisers can give you free one-to-one support with:
 
@@ -53,7 +53,7 @@ You can chat by phone, text or email, as little or as often as you need.
 To get a return to teaching adviser, you will need:
 
 * qualified teacher status (QTS)
-* previous paid teaching experience in the UK of at least one term
+* at least one term of paid teaching experience in the UK
 * a [Teacher Reference Number](https://www.gov.uk/guidance/teacher-reference-number-trn)
 
 If you qualified to teach outside the UK, you can [find out more about teaching in England as a non-UK citizen](https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas).
