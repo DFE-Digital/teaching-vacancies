@@ -587,7 +587,7 @@ en:
         teacher_reference_number: What is your Teacher reference number (TRN)?
         statutory_induction_complete: Have you completed your statutory induction period?
         completed_period_hint: New teachers before 2021 had to complete a 1 year statutory induction period. New teachers after 2021 have to complete a 2 year statutory induction period.
-        teacher_reference_number_hint: Schools will only be able to see your TRN if you apply for a role. You can %{link} if you do not know (for example, if you're a trainee teacher) or have forgotten it. Your TRN must be 7 digits.
+        teacher_reference_number_hint: Schools will only be able to see your TRN if you apply for a role. You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
         trn_link_text: find your TRN
 
 

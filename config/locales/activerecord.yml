@@ -542,7 +542,7 @@ en:
             street_address:
               blank: Enter your building and street
             teacher_reference_number:
-              invalid: Enter a teacher reference number in the correct format
+              invalid: Enter a teacher reference number (TRN) that is 7 digits long
             right_to_work_in_uk:
               inclusion: Select no if you have the right to work in the UK
         jobseekers/job_application/personal_statement_form:
@@ -557,10 +557,10 @@ en:
               less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
               not_a_number: Enter the year your QTS was awarded
             teacher_reference_number:
-              invalid: Enter a teacher reference number in the correct format
-              blank: Enter a teacher reference number (TRN)
+              invalid: Enter a teacher reference number (TRN) that is 7 digits long
+              blank: Enter a teacher reference number (TRN) that is 7 digits long
             has_teacher_reference_number:
-              inclusion: Select yes if you have a teacher reference number. If you have qualified teacher status (QTS) you must select yes.
+              inclusion: Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.
             statutory_induction_complete:
               inclusion: Select yes if you have completed your statutory induction year
         jobseekers/job_application/qualifications_form:
