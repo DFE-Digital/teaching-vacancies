@@ -4,11 +4,11 @@
   = govuk_back_link text: t("app.back_to_homepage"), href: root_path, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
 .campaign-header
-  .govuk-width-container
+  .govuk-width-container class="govuk-!-padding-left-6 govuk-!-padding-right-6"
     .govuk-grid-row class="govuk-!-padding-top-6 govuk-!-padding-bottom-2"
       .govuk-grid-column-one-half
         = image_tag("teaching_vacancies_logo.png", size: "250x122", alt: "The Teaching Vacancies logo")
-        h1.govuk-heading-l class="govuk-!-margin-top-4"
+        h1.govuk-heading-l class="govuk-!-margin-top-4 govuk-!-padding-top-6"
           = t("subscriptions.new_v2.banner.title")
       .govuk-grid-column-one-half
         = image_tag("subscription_campaign_banner.jpg", size: "450x300", alt: "A teacher in a class with pupils.")
