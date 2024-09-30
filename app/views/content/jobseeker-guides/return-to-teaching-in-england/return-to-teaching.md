@@ -48,15 +48,15 @@ You can chat by phone, text or email, as little or as often as you need.
 
 [Read a transcript of the video](https://teaching-vacancies.campaign.gov.uk/what-does-a-return-to-teaching-adviser-do-video-transcript)
 
-### Eligibility
+### Eligibility if you qualified outside the UK
 
-To get a return to teaching adviser, you will need:
+If you qualified as a teacher outside the UK, to get a return to teaching adviser you will need:
 
 * qualified teacher status (QTS)
 * at least one term of paid teaching experience in the UK
 * a [Teacher Reference Number](https://www.gov.uk/guidance/teacher-reference-number-trn)
 
-If you qualified to teach outside the UK, you can [find out more about teaching in England as a non-UK citizen](https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas).
+You can [find out more about teaching in England as a non-UK citizen](https://getintoteaching.education.gov.uk/non-uk-teachers/teach-in-england-if-you-trained-overseas).
 
 [Call us on 0800 389 2500 to check if you’re eligible for an adviser](tel:08003892500).
 
