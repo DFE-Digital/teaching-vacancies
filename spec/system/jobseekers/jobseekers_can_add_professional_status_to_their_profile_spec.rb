@@ -36,7 +36,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
           choose "Yes"
         end
         fill_in "Year QTS was awarded", with: "2032"
-        fill_in "What is your Teacher reference number (TRN)?", with: "ABC"
+        fill_in "What is your teacher reference number (TRN)?", with: "ABC"
         choose "Yes, I have completed a 1 or 2 year induction period"
         click_on "Save and continue"
         within "ul.govuk-list.govuk-error-summary__list" do
@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
           expect(page).to have_link("Enter a teacher reference number in the correct format", href: "#jobseekers-profile-qualified-teacher-status-form-teacher-reference-number-field-error")
         end
         fill_in "Year QTS was awarded", with: "2022"
-        fill_in "What is your Teacher reference number (TRN)?", with: "1234567"
+        fill_in "What is your teacher reference number (TRN)?", with: "1234567"
         choose "Yes, I have completed a 1 or 2 year induction period"
         click_on "Save and continue"
 
@@ -97,7 +97,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
       expect(find("#jobseekers-profile-qualified-teacher-status-form-teacher-reference-number-field").value).to eq("7777777")
 
       fill_in "Year QTS was awarded", with: "2000"
-      fill_in "What is your Teacher reference number (TRN)?", with: "1234567"
+      fill_in "What is your teacher reference number (TRN)?", with: "1234567"
       choose "I'm on track to complete it"
 
       click_on "Save and continue"
