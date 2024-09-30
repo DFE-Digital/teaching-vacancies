@@ -13,7 +13,7 @@
       .govuk-grid-column-one-half
         = image_tag("subscription_campaign_banner.jpg", size: "450x300", alt: "A teacher in a class with pupils.")
 
-.govuk-grid-row
+.govuk-grid-row class="govuk-!-padding-top-6"
   .govuk-grid-column-two-thirds
     = form_for @form, url: subscriptions_path do |f|
       = f.govuk_error_summary
