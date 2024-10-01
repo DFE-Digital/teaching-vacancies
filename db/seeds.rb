@@ -128,3 +128,6 @@ Jobseeker.first(seed_count).each do |jobseeker|
     end
   end
 end
+
+# still need to delete jobs without an organisation
+Vacancy.includes(:organisations).find_each.reject { |v| v.organisation.present? }.each(&:destroy)
