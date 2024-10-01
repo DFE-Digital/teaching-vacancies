@@ -32,6 +32,8 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
     true
   rescue Jobseekers::AccountTransfer::AccountNotFoundError, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
     Rails.logger.error("Account transfer failed: #{e.message}")
+    Rails.logger.error("Account transfer failed on #{e.record.class.name} with ID: #{e.record.id}")
+    Rails.logger.error("Validation errors: #{e.record.errors.full_messages.join(', ')}")
     false
   end
 end
