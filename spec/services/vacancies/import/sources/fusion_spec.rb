@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe Vacancies::Import::Sources::Fusion do
   let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
-  let!(:school_group) { create(:school_group, name: "E-ACT", uid: "12345", schools: schools) }
-  let(:schools) { [school1] }
+  let!(:school_group) { create(:school_group, name: "E-ACT", uid: "12345", schools: trust_schools) }
+  let(:trust_schools) { [school1] }
 
   let(:response_body) { file_fixture("vacancy_sources/fusion.json").read }
   let(:response) { double("FusionHttpResponse", success?: true, body: response_body) }
@@ -49,7 +49,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       expect(vacancy.external_advert_url).to eq("http://testurl.com")
       expect(vacancy.external_reference).to eq("0044")
 
-      expect(vacancy.organisations).to eq(schools)
+      expect(vacancy.organisations).to eq(trust_schools)
     end
 
     it "sets important dates" do
@@ -338,7 +338,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
           phases: %w[primary],
           external_source: "fusion",
           external_reference: "0044",
-          organisations: schools,
+          organisations: trust_schools,
           job_title: "Out of date",
         )
       end
@@ -349,15 +349,6 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
         expect(vacancy).to be_changed
 
         expect(vacancy.job_title).to eq("Class Teacher")
-      end
-    end
-
-    context "when multiple school" do
-      let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
-      let(:schools) { [school1, school2] }
-
-      it "assigns the vacancy job location to the central trust" do
-        expect(vacancy.readable_job_location).to eq(school_group.name)
       end
     end
 
@@ -373,13 +364,97 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       end
     end
 
-    context "when school associated with vacancy is of excluded type" do
-      before do
-        school1.update(detailed_school_type: "Other independent school")
+    describe "vacancy organisation parsing" do
+      let(:trust_uid) { school_group.uid }
+      let(:school_urns) { [school1.urn] }
+
+      let(:response_body) do
+        JSON.parse(super()).tap { |h|
+          h["result"].first["schoolUrns"] = school_urns
+          h["result"].first["trustUID"] = trust_uid
+        }.to_json
       end
 
-      it "does not import vacancy" do
-        expect(subject.count).to eq(0)
+      context "when the vacancy belongs to a single school" do
+        let(:school_urns) { [school1.urn] }
+
+        it "assigns the vacancy to the correct school and organisation" do
+          expect(vacancy.organisations.first).to eq(school1)
+
+          expect(vacancy.external_source).to eq("fusion")
+          expect(vacancy.external_advert_url).to eq("http://testurl.com")
+          expect(vacancy.external_reference).to eq("0044")
+        end
+      end
+
+      context "when associated with an out of scope school" do
+        let(:out_of_scope_school) { create(:school, detailed_school_type: "Other independent school", urn: "000000") }
+        let(:trust_schools) { [out_of_scope_school] }
+        let(:school_urns) { [out_of_scope_school.urn] }
+
+        it "does not import vacancy" do
+          expect(subject.count).to eq(0)
+        end
+      end
+
+      context "when the vacancy is associated with multiple schools from a trust" do
+        let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+        let(:trust_schools) { [school1, school2].sort_by(&:created_at) }
+        let(:school_urns) { [school1.urn, school2.urn] }
+
+        it "assigns the vacancy to both schools" do
+          expect(vacancy.organisations).to contain_exactly(school1, school2)
+        end
+
+        it "assigns the vacancy job location to the first school from the group" do
+          expect(vacancy.readable_job_location).to eq(school1.name)
+        end
+      end
+
+      context "when the vacancy belongs to the central trust office instead of a particular/multiple school" do
+        let(:school_urns) { [] }
+
+        before do
+          create(:school_group, name: "Wrong Trust", uid: "54321", schools: [])
+        end
+
+        it "the vacancy is valid" do
+          expect(vacancy).to be_valid
+        end
+
+        it "assigns the vacancy to the school group" do
+          expect(vacancy.organisations).to contain_exactly(school_group)
+        end
+
+        it "assigns the vacancy job location to the school group" do
+          expect(vacancy.readable_job_location).to eq(school_group.name)
+        end
+
+        context "when the provided central trust does not exist in our system" do
+          let(:trust_uid) { "invalid_trust_id" }
+
+          it "skips the vacancy" do
+            expect(vacancy).to be_nil
+          end
+        end
+      end
+
+      context "when the school doesn't belong to a school group" do
+        let(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+        let(:school_urns) { [school2.urn] }
+        let(:trust_uid) { nil }
+
+        it "the vacancy is valid" do
+          expect(vacancy).to be_valid
+        end
+
+        it "assigns the vacancy to the school" do
+          expect(vacancy.organisations).to contain_exactly(school2)
+        end
+
+        it "assigns the vacancy job location to the school" do
+          expect(vacancy.readable_job_location).to eq(school2.name)
+        end
       end
     end
   end
