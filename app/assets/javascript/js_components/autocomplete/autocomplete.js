@@ -18,6 +18,7 @@ const suggestionHTML = (text, inputValue) => {
 
 export default class extends Controller {
   #debouncing;
+
   #currentSearchValue;
 
   connect() {
@@ -61,7 +62,6 @@ export default class extends Controller {
         defaultValue: currentInputValue,
         displayMenu: position,
         source: this.debouncedSource.bind(this),
-        showNoOptionsFound: true,
         tNoResults: () => (this.#debouncing ? this.#currentSearchValue : 'No Results Found'),
         minLength: SHOW_SUGGESTIONS_THRESHOLD,
         templates: {
