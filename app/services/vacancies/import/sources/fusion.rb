@@ -15,7 +15,8 @@ class Vacancies::Import::Sources::Fusion
 
   def each
     results.each do |result|
-      schools = schools_for(result)
+      schools = find_schools(result)
+      next if vacancy_listed_at_excluded_trust_type?(schools, result["trustUID"])
       next if vacancy_listed_at_excluded_school_type?(schools)
 
       v = Vacancy.find_or_initialize_by(
@@ -62,16 +63,18 @@ class Vacancies::Import::Sources::Fusion
 
       # TODO: What about central office/multiple school vacancies?
       job_location: :at_one_school,
-    }.merge(organisation_fields(item, schools))
+    }.merge(organisation_fields(schools))
      .merge(start_date_fields(item))
   end
   # rubocop:enable Metrics/MethodLength
 
-  def organisation_fields(item, schools)
+  def organisation_fields(schools)
+    first_school = schools.first
+
     {
       organisations: schools,
-      readable_job_location: main_organisation(item)&.name,
-      about_school: main_organisation(item)&.description,
+      readable_job_location: first_school&.name,
+      about_school: first_school&.description,
     }
   end
 
@@ -104,20 +107,16 @@ class Vacancies::Import::Sources::Fusion
     true
   end
 
-  def schools_for(item)
-    if multi_academy_trust(item).present?
-      multi_academy_trust(item).schools.where(urn: item["schoolUrns"])
-    else
-      Organisation.where(urn: item["schoolUrns"])
-    end.to_a
-  end
+  def find_schools(item)
+    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"])
+    school_urns = item["schoolUrns"]&.split(",")
 
-  def multi_academy_trust(item)
-    SchoolGroup.trusts.find_by(uid: item["trustUID"])
-  end
+    return [] if multi_academy_trust.blank? && school_urns.blank?
+    return Organisation.where(urn: school_urns) if multi_academy_trust.blank?
+    return Array(multi_academy_trust) if school_urns.blank?
 
-  def main_organisation(item)
-    schools_for(item).one? ? schools_for(item).first : multi_academy_trust(item)
+    # When having both trust and schools, only return the schools that are in the trust if any. Otherwise, return the trust itself.
+    multi_academy_trust.schools.where(urn: school_urns).order(:created_at).presence || Array(multi_academy_trust)
   end
 
   def job_roles_for(item)
