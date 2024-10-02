@@ -77,7 +77,7 @@ attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], p
 3.times { FactoryBot.create(:vacancy, :published, **attrs) }
 
 # Jobseekers
-seed_count = ENV.fetch("PROFILE_SEED_COUNT", 300).to_i
+seed_count = ENV.fetch("PROFILE_SEED_COUNT", 3000).to_i
 Jobseeker.transaction do
   FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com", password: "password")
   (2 * seed_count).times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com", password: "password") }
