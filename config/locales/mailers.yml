@@ -175,6 +175,13 @@ en:
         outro: Or search on %{link_to}
         complete: complete your application
         apply_for_more_jobs: apply for more jobs on Teaching Vacancies
+      unapplied_saved_vacancy:
+        subject: "%{days} days left to apply for %{job_title}"
+        salutation: "Hi %{name}"
+        vacancy_closes: "%{job_title} at %{school} closes on %{date}"
+        saved_but_not_applied: You saved this job but have not applied to it yet
+        apply_for_link: "Apply for %{job_title} on Teaching Vacancies"
+        to_find_the_right_job: "To find the right job, remember to always check Teaching Vacancies"
 
     subscription_mailer:
       confirmation:

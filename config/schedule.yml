@@ -96,8 +96,13 @@ send_inactive_account_email:
   queue: low
 
 send_draft_applications_email:
-  cron: '20 11 * * *'
+  cron: '20 2 * * *'
   class: 'SendEmailForDraftJobApplicationsJob'
+  queue: default
+
+send_unapplied_saved_vacancies_email:
+  cron: '05 2 * * *'
+  class: 'SendEmailForUnappliedSavedVacanciesJob'
   queue: default
 
 send_account_confirmation_reminder_email:
