@@ -1,7 +1,7 @@
 .search-results-controls
 
-  = render "vacancies/search/keyword", f: f
-
+  - if local_assigns.fetch(:show_keyword, true)
+    = render "vacancies/search/keyword", f: f
   - unless @vacancies_search.organisation_slug.present?
     = render "vacancies/search/location", show_hint: false, f: f
     = render "vacancies/search/current_location", target: "location-field"

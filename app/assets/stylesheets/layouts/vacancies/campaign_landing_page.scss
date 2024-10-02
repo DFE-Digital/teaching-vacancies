@@ -1,0 +1,74 @@
+.vacancies_campaign_landing_page {
+  @import '../shared/search-results';
+
+  .custom-banner-background {
+    background-color: govuk-colour('light-grey');
+    width: 100vw;
+    position: relative;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    padding: govuk-spacing(4) 0;
+    margin-bottom: 30px;
+  }
+
+  .custom-banner {
+    padding: govuk-spacing(4) 0;
+  }
+
+  .search-results-controls {
+
+    @include govuk-media-query($from: tablet) {
+      margin-bottom: govuk-spacing(4);
+
+      .autocomplete, .govuk-form-group {
+        margin-bottom: 20px;
+      }
+
+      .location-search__radius {
+        .govuk-select[name='radius'] {
+          width: min-content;
+          min-width: 0;
+        }
+      }
+
+      .autocomplete__menu {
+        @include govuk-media-query($from: desktop) {
+          position: absolute;
+        }
+      }
+
+      &__submit {
+        .govuk-button {
+          margin-bottom: 0;
+        }
+      }
+
+      .govuk-hint {
+        display: none;
+      }
+    }
+
+    @include govuk-media-query($until: tablet) {
+      &__submit {
+        .govuk-button {
+          margin-bottom: govuk-spacing(3);
+        }
+      }
+    }
+
+    .location-search__radius {
+      margin-top: govuk-spacing(6);
+      flex-basis: 200px;
+
+      @include govuk-media-query($until: tablet) {
+        .govuk-select[name='radius'] {
+          width: 100%;
+        }
+      }
+
+      @include govuk-media-query($from: tablet) {
+        margin-top: 0;
+      }
+    }
+  }
+}
