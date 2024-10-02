@@ -2,7 +2,7 @@ class Publishers::JobListing::ExtendDeadlineForm < BaseForm
   include ActiveRecord::AttributeAssignment
   include DateAttributeAssignment
 
-  attr_accessor :expiry_time, :other_start_date_details, :start_date_type, :previous_deadline
+  attr_accessor :expiry_time, :other_start_date_details, :start_date_type, :previous_deadline, :extension_reason, :other_extension_reason_details
   attr_reader :expires_at, :starts_on, :earliest_start_date, :latest_start_date
 
   validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :previous_deadline }
@@ -12,6 +12,7 @@ class Publishers::JobListing::ExtendDeadlineForm < BaseForm
   validates :earliest_start_date, presence: true, date: { on_or_after: :today, on_or_before: :far_future, after: :expires_at, before: :latest_start_date }, if: -> { start_date_type == "date_range" }
   validates :latest_start_date, presence: true, date: { on_or_after: :today, on_or_before: :far_future, after: :earliest_start_date }, if: -> { start_date_type == "date_range" }
   validates :other_start_date_details, presence: true, if: -> { start_date_type == "other" }
+  validates :extension_reason, inclusion: { in: Vacancy.extension_reasons.keys }
 
   def attributes_to_save
     {
@@ -21,6 +22,8 @@ class Publishers::JobListing::ExtendDeadlineForm < BaseForm
       earliest_start_date: (earliest_start_date if start_date_type == "date_range"),
       latest_start_date: (latest_start_date if start_date_type == "date_range"),
       other_start_date_details: (other_start_date_details if start_date_type == "other"),
+      extension_reason: extension_reason,
+      other_extension_reason_details: other_extension_reason_details,
     }
   end
 
