@@ -37,7 +37,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
     click_on "Save and continue"
 
     within "ul.govuk-list.govuk-error-summary__list" do
-      expect(page).to have_link("Enter a teacher reference number (TRN)", href: "#jobseekers-job-application-professional-status-form-teacher-reference-number-field-error")
+      expect(page).to have_link("Enter a teacher reference number (TRN) that is 7 digits long", href: "#jobseekers-job-application-professional-status-form-teacher-reference-number-field-error")
       expect(page).to have_link("Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.", href: "#jobseekers-job-application-professional-status-form-has-teacher-reference-number-field-error")
     end
 

@@ -697,7 +697,7 @@ en:
               inclusion: Select yes if you have completed your statutory induction year
             teacher_reference_number:
               invalid: Enter a teacher reference number (TRN) that is 7 digits long
-              blank: Enter a teacher reference number (TRN)
+              blank: Enter a teacher reference number (TRN) that is 7 digits long
             has_teacher_reference_number:
               inclusion: Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.
         jobseekers/profile/employment_form:

@@ -28,7 +28,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         click_on "Save and continue"
         within "ul.govuk-list.govuk-error-summary__list" do
           expect(page).to have_link("Enter the year your QTS was awarded", href: "#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-year-field-error")
-          expect(page).to have_link("Enter a teacher reference number (TRN)", href: "#jobseekers-profile-qualified-teacher-status-form-teacher-reference-number-field-error")
+          expect(page).to have_link("Enter a teacher reference number (TRN) that is 7 digits long", href: "#jobseekers-profile-qualified-teacher-status-form-teacher-reference-number-field-error")
           expect(page).to have_link("Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.", href: "#jobseekers-profile-qualified-teacher-status-form-has-teacher-reference-number-field-error")
           expect(page).to have_link("Select yes if you have completed your statutory induction year", href: "#jobseekers-profile-qualified-teacher-status-form-statutory-induction-complete-field-error")
         end
