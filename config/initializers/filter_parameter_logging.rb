@@ -49,6 +49,7 @@ Rails.application.config.filter_parameters += %i[
   application_email
   contact_email
   contact_number
+  qualification_results_attributes
 ] + [
   /^age$/i,
 ]
