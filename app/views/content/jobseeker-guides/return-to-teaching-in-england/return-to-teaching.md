@@ -46,7 +46,7 @@ You can chat by phone, text or email, as little or as often as you need.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2NrLm_XId4k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-[Read a transcript of the video](https://teaching-vacancies.campaign.gov.uk/what-does-a-return-to-teaching-adviser-do-video-transcript)
+[Read a transcript of the video](https://teaching-vacancies.service.gov.uk/transcripts/jobseekers/return-to-teaching-video-transcript)
 
 ### Eligibility if you qualified outside the UK
 
