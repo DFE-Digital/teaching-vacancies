@@ -6,7 +6,6 @@ date_posted: 03/10/2024
 category_tags: transcript
 ---
 
-## What does a Return to Teaching Adviser do?: video transcript 
 Billy Bone, Return to Teaching Adviser 
 
 My role as a Return to Teaching Adviser is to offer one-to-one personal support for teachers who are looking to return to the classroom in certain subjects. 
