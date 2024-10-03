@@ -268,7 +268,6 @@ Rails.application.routes.draw do
   scope path: "jobseekers" do
     devise_scope :jobseeker do
       get "/auth/govuk_one_login/callback/", to: "jobseekers/govuk_one_login_callbacks#openid_connect"
-      get "/sign_out", to: "jobseekers/sessions#destroy", as: :jobseekers_sign_out # Handle GovukOneLogin sign out 'post_logout_redirect_uri'
     end
   end
 
