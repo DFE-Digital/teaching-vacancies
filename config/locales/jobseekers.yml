@@ -23,8 +23,8 @@ en:
           description: You can use your GOV.UK One Login to sign in to Teaching Vacancies.
           change_details_description: "You can change these details in your GOV.UK One Login:"
         find_account_details:
-          heading: Can't find your old account details?
-          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your old account details will not automatically be saved.
+          heading: Can't find your account details?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your account details will not automatically be saved.
           paragraph2: You can request to %{link}
           link_text: transfer your existing account information.
       confirmation:
