@@ -1,12 +1,9 @@
-# <%= @subject %>
-
-You have received <%= t('.applications', count: @job_applications_count) %> in the last 24 hours.
-
----
+# <%= t(".title") %>
 
 <%- @vacancies.each do |vacancy| %>
   <%= vacancy.job_title %>
   <%= vacancy_job_location(vacancy) %>
+  
   <%= publisher_job_applications_link(vacancy) %>
 
   ---

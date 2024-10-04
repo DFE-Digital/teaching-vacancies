@@ -58,6 +58,17 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
                     href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.school_offer.publisher", organisation: vacancy.organisation.type.downcase)
 
+  - if vacancy.flexi_working.present?
+    - summary_list.with_row(html_attributes: { id: "flexi_working" }) do |row|
+      - row.with_key
+        = t("jobs.flexi_working.publisher")
+      - row.with_value
+        .editor-rendered-content == vacancy.flexi_working
+      - unless vacancy.legacy_draft?
+        - row.with_action text: t("buttons.change"),
+                    href: organisation_job_build_path(vacancy.id, :about_the_role, "back_to_#{action_name}": "true"),
+                    visually_hidden_text: t("jobs.flexi_working.publisher", organisation: vacancy.organisation.type.downcase)
+
   - if vacancy.safeguarding_information.present?
     - unless vacancy.safeguarding_information_provided.nil?
       - summary_list.with_row(html_attributes: { id: "safeguarding_information_provided" }) do |row|

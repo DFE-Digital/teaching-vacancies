@@ -17,6 +17,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
       ect_status
       skills_and_experience
       school_offer
+      flexi_working
       safeguarding_information_provided
       safeguarding_information
       further_details_provided
