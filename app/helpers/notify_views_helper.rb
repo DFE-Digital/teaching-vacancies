@@ -71,7 +71,7 @@ module NotifyViewsHelper
 
   def publisher_job_applications_link(vacancy)
     url = organisation_job_job_applications_url(vacancy.id, **utm_params)
-    notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count))
+    notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count, job_title: vacancy.job_title))
   end
 
   def reset_password_link(token)

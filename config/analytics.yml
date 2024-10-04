@@ -413,6 +413,7 @@ shared:
     - is_parental_leave_cover
     - is_job_share
     - hourly_rate
+    - flexi_working
   failed_imported_vacancies:
     - id
     - import_errors

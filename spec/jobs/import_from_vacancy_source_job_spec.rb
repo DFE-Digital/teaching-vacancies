@@ -81,6 +81,7 @@ RSpec.describe ImportFromVacancySourceJob do
               how_to_apply: "Click button",
               job_advert: "Aut repellat vel. Nesciunt exercitationem et. Numquam a corrupti. Et minus hic. Perspiciatis dolor neque. Sit est nemo. Ut ex officiis. Illum et mollitia. Quia qui qui. Debitis totam odio. Consequatur eum iste. Aut ex et. Quo explicabo quae. Aut id laborum. Occaecati quod sit. Laudantium ipsum placeat. Et sed nesciunt. Ut iste maxime. Ea repudiandae rem. Qui fugit adipisci. Vero fugiat dolor. Nesciunt eum et. Molestias nulla facere. Aliquid dolore assumenda. Aut repudiandae iusto. Quia aut maxime. Consequatur voluptates facere. Facere eius asperiores. Fugiat occaecati assumenda. Maiores consequatur architecto. Perferendis sint ut. Est odio dolorem. Aliquid fugiat iusto. Eaque fugiat voluptas. Eos velit assumenda. Nesciunt minus quia. Cupiditate vero dolor. Quos temporibus consequuntur. Vel cupiditate eos. Dolore dolores repellat. Ex ipsam consequuntur. Dolores harum voluptatem. Temporibus neque quis. Vero soluta sunt. Voluptas laboriosam modi. Quod ut nostrum. Veniam voluptatem et. Explicabo necessitatibus ex. Ut architecto placeat. Neque velit et.",
               visa_sponsorship_available: false,
+              flexi_working: "Debitis id voluptate cumque iusto quod ut libero facere repellendus est perspiciatis rem labore voluptatibus",
               is_job_share: true)
       end
 
@@ -121,6 +122,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "external_reference" => "J3D1",
           "external_source" => "may_the_feed_be_with_you",
           "fixed_term_contract_duration" => "",
+          "flexi_working" => "Debitis id voluptate cumque iusto quod ut libero facere repellendus est perspiciatis rem labore voluptatibus",
           "full_time_details" => nil,
           "further_details" => "details",
           "further_details_provided" => true,
