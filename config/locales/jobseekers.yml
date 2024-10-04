@@ -14,7 +14,7 @@ en:
           email: Email address
           password: Account password
           password_placeholder: "**************"
-        data_to_change_in_govuk_one_login: 
+        data_to_change_in_govuk_one_login:
           email: email address
           password: password
           security_codes: how you get your security codes to sign in
@@ -139,7 +139,7 @@ en:
           title: Declarations — Application
           dbs_link_text: Disclosure and Barring Service (DBS) check
           description1: >-
-            You'll need to complete an enhanced %{link_text} if you're successful in this role. If you're outside the UK, you'll need to get a 
+            You'll need to complete an enhanced %{link_text} if you're successful in this role. If you're outside the UK, you'll need to get a
             criminal record check from your home country.
           description2: It's a criminal offence if you're barred by the DBS or court orders to apply for a role working with children.
           description3: Not all convictions or police cautions on a criminal record will stop you from working in a school. But you will have to declare any convictions.
@@ -158,7 +158,7 @@ en:
             jobs_bullets:
               - all paid roles
               - voluntary work, if relevant to your application
-            work_experience_advice: If you’re applying for a teaching job, you should include teaching and other experience, if you have it. 
+            work_experience_advice: If you’re applying for a teaching job, you should include teaching and other experience, if you have it.
             gaps_advice: "You’ll also need to explain any gaps in your work history. This includes any gaps between:"
             gaps_bullets:
               - school and university
@@ -598,21 +598,21 @@ en:
           new_email: New email address
           title: Update email address
       edit_password:
-        current_password: 
+        current_password:
           label: Old password
-          show: 
+          show:
             label: Show current password
             announcement: Your current password is visible
-          hide: 
+          hide:
             label: Hide current password
             announcement: Your current password is hidden
         description: Password reset for %{email}
-        new_password: 
+        new_password:
           label: New password
-          show: 
+          show:
             label: Show new password
             announcement: Your new password is visible
-          hide: 
+          hide:
             label: Hide new password
             announcement: Your new password is hidden
         title: Change password
@@ -986,7 +986,7 @@ en:
         resend_code_link_text: send the code again
         different_email_link_text: use a different email address
       errors:
-        account_merge_confirmation_code: 
+        account_merge_confirmation_code:
           confirmation_code_mismatch: Confirmation code does not match.
           confirmation_code_expired: Confirmation code has expired. Please request a new code.
     unlocks:
