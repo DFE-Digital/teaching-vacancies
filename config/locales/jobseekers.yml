@@ -921,8 +921,8 @@ en:
           link: Create an account
         title: Jobseeker sign in
         banner:
-          header: How your sign in has changed
-          body: Sign in to or create a GOV.UK One Login account to save and apply for jobs on Teaching Vacancies
+          header: How you sign in has changed
+          body: Sign in to or create a GOV.UK One Login account to save and apply for jobs on Teaching Vacancies.
         govuk_one_log_in:
           paragraph1: Create your GOV.UK One Login account using the same email address as your Teaching Vacancies account to automatically save your account details.
           paragraph2: If you use a different email address, you'll be able to transfer your account details after signing in.
