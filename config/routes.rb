@@ -46,6 +46,10 @@ Rails.application.routes.draw do
     Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "3-quick-ways-to-find-the-right-teaching-job")
   }
 
+  get "/transcripts/jobseekers/return-to-teaching-video-transcript", to: redirect { |_params, _request|
+    Rails.application.routes.url_helpers.post_path(section: "transcripts", subcategory: "jobseekers", post_name: "return-to-teaching-video")
+  }
+
   if Rails.application.config.maintenance_mode
     # If in maintenance mode, route *all* requests to maintenance page
     match "*path", to: "errors#maintenance", via: :all
@@ -275,15 +279,15 @@ Rails.application.routes.draw do
   get "/pages/*id" => "pages#show", as: :page, format: false
 
   get "/:section" => "posts#index",
-      constraints: { section: /(jobseeker-guides|get-help-hiring)/ },
+      constraints: { section: /(jobseeker-guides|get-help-hiring|transcripts)/ },
       as: :posts
 
   get "/:section/:subcategory" => "posts#subcategory",
-      constraints: { section: /(jobseeker-guides|get-help-hiring)/, subcategory: /get-help-applying-for-your-teaching-role|return-to-teaching-in-england|how-to-create-job-listings-and-accept-applications|how-to-setup-your-account/ },
+      constraints: { section: /(jobseeker-guides|get-help-hiring|transcripts)/, subcategory: /get-help-applying-for-your-teaching-role|return-to-teaching-in-england|how-to-create-job-listings-and-accept-applications|how-to-setup-your-account|jobseekers/ },
       as: :subcategory
 
   get "/:section/:subcategory/:post_name" => "posts#show",
-      constraints: { section: /(jobseeker-guides|get-help-hiring)/, subcategory: /get-help-applying-for-your-teaching-role|return-to-teaching-in-england|how-to-create-job-listings-and-accept-applications|how-to-setup-your-account/, post_name: /[\w-]+/ },
+      constraints: { section: /(jobseeker-guides|get-help-hiring|transcripts)/, subcategory: /get-help-applying-for-your-teaching-role|return-to-teaching-in-england|how-to-create-job-listings-and-accept-applications|how-to-setup-your-account|jobseekers/, post_name: /[\w-]+/ },
       as: :post
 
   get "/list-school-job" => "pages#show", defaults: { id: "list-school-job" }
