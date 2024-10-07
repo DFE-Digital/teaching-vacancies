@@ -98,17 +98,11 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def in_progress_steps
-    in_progress_steps = []
-
     if previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
-      in_progress_steps << "employment_history"
+      %w[employment_history]
+    else
+      []
     end
-
-    unless previous_application_has_professional_status_details?
-      in_progress_steps << "professional_status"
-    end
-
-    in_progress_steps
   end
 
   def form_fields_from_step(step)

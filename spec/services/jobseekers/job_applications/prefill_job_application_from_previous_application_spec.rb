@@ -70,7 +70,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
           it "does includes professional_status in in_progress steps" do
             expect(subject.completed_steps.include?("professional_status")).to eq false
             expect(subject.imported_steps.include?("professional_status")).to eq false
-            expect(subject.in_progress_steps.include?("professional_status")).to eq true
+            expect(subject.in_progress_steps.include?("professional_status")).to eq false
           end
         end
       end
