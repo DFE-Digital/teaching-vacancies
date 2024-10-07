@@ -53,25 +53,15 @@ You can list roles on Teaching Vacancies if you are a:
 You cannot advertise roles on Teaching Vacancies if you are a:
 
 * British overseas school
-
 * further education college
-
 * higher education institution
-
 * independent school
-
 * independent special school
-
 * institution funded by another government department
-
 * offshore schools
-
 * online provider
-
 * service children’s education
-
 * special post 16 institution
-
 * Welsh establishment
 
 ## Get support
