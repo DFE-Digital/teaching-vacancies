@@ -67,7 +67,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         context "when the previous application did not ask about professional_status" do
           let(:old_vacancy) { create(:vacancy, job_roles: ["it_support"]) }
 
-          it "does includes professional_status in in_progress steps" do
+          it "does not include professional_status in in_progress steps" do
             expect(subject.completed_steps.include?("professional_status")).to eq false
             expect(subject.imported_steps.include?("professional_status")).to eq false
             expect(subject.in_progress_steps.include?("professional_status")).to eq false
