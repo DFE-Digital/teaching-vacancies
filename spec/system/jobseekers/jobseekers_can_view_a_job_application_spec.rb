@@ -50,13 +50,13 @@ RSpec.describe "Jobseekers can view a job application" do
   context "when the vacancy is for a non-teaching role" do
     let(:vacancy) { create(:vacancy, organisations: [build(:school)], job_roles: ["other_support"]) }
 
-    it "displays all the relevant job application information (does not include professional status data)" do
+    it "displays all the relevant job application information" do
       expect(page).to have_content(vacancy.job_title)
       expect(page).to have_content(job_application.status)
 
       within ".navigation-list-component", text: I18n.t("jobseekers.job_applications.show.application_sections") do
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_details.heading"), href: "#personal_details")
-        expect(page).not_to have_link(I18n.t("jobseekers.job_applications.show.professional_status.heading"), href: "#professional_status")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.professional_status.heading"), href: "#professional_status")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.qualifications.heading"), href: "#qualifications")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.employment_history.heading"), href: "#employment_history")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_statement.heading"), href: "#personal_statement")
@@ -66,7 +66,7 @@ RSpec.describe "Jobseekers can view a job application" do
       end
 
       expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_details.heading"))
-      expect(page).not_to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.professional_status.heading"))
+      expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.professional_status.heading"))
       expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.qualifications.heading"))
       expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.employment_history.heading"))
       expect(page).to have_css(".review-component__section", text: I18n.t("jobseekers.job_applications.show.personal_statement.heading"))
