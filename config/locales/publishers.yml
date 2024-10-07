@@ -470,12 +470,14 @@ en:
           deadline:
             future: The current deadline is
             past: The previous deadline was
-          extend_heading: Extend closing date
-          relist_heading: Relist %{job_title}
-          extend_title: Extend closing date - %{job_title}
-          relist_title: Relist - %{job_title}
-          reason_extend_label: Why are you extending this job?
-          reason_relist_label: Why are you relisting this job?
+          extend:
+            heading: Extend closing date
+            title: Extend closing date - %{job_title}
+            reason_label: Why are you extending this job?
+          relist:
+            heading: Relist %{job_title}
+            title: Relist - %{job_title}
+            reason_label: Why are you relisting this job?
           extension_reason:
             no_applications: No applications
             didnt_find_right_candidate: Didn't find the right candidate
