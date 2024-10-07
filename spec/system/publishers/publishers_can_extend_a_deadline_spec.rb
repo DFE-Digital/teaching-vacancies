@@ -57,7 +57,7 @@ RSpec.describe "Publishers can extend a deadline" do
     end
 
     it "can be re-listed for publishing today" do
-      choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: Time.now.strftime("%d %m %Y")),
+      choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: Time.now.strftime("%d %B %Y")),
              name: "publishers_job_listing_relist_form[publish_on_day]"
 
       click_on I18n.t("buttons.relist_vacancy")
@@ -69,7 +69,7 @@ RSpec.describe "Publishers can extend a deadline" do
     end
 
     it "can be re-listed for publishing tomorrow" do
-      choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.tomorrow", date: 1.day.from_now.strftime("%d %m %Y")),
+      choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.tomorrow", date: 1.day.from_now.strftime("%d %B %Y")),
              name: "publishers_job_listing_relist_form[publish_on_day]"
 
       click_on I18n.t("buttons.relist_vacancy")
