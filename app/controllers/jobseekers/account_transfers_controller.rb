@@ -17,6 +17,7 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
         render :new
       end
     else
+      @email = @account_transfer_form.email
       render :new
     end
   end
