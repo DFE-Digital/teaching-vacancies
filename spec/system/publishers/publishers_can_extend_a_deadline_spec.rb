@@ -8,7 +8,8 @@ RSpec.describe "Publishers can extend a deadline" do
   let(:vacancy) { Vacancy.last }
 
   before do
-    Timecop.travel Date.new(2024, 10, 6)
+    # Travel to mid-day to avoid any timezone issues
+    Timecop.travel DateTime.new(2024, 10, 6, 12, 0, 0)
 
     create(:vacancy, vacancy_type, organisations: [organisation])
     login_publisher(publisher: publisher, organisation: organisation)
