@@ -1,19 +1,25 @@
-- content_for :page_title_prefix, t(".title", job_title: vacancy.job_title)
+- content_for :page_title_prefix, vacancy.expired? ? t(".relist_title", job_title: vacancy.job_title) : t(".extend_title", job_title: vacancy.job_title)
 
 - content_for :breadcrumbs do
   = govuk_back_link text: t("buttons.back"), href: organisation_job_path(vacancy.id)
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l = vacancy.job_title
-    h1.govuk-heading-xl = t(".heading")
+    - if vacancy.expired?
+      h1.govuk-heading-xl = t(".relist_heading", job_title: vacancy.job_title)
+    - else
+      span.govuk-caption-l = vacancy.job_title
+      h1.govuk-heading-xl = t(".extend_heading")
 
     = govuk_inset_text do
       = vacancy.expired? ? t(".deadline.past") : t(".deadline.future")
       strong =< format_time_to_datetime_at(vacancy.expires_at)
 
-    = form_for form, url: organisation_job_extend_deadline_path(vacancy.id), method: :patch do |f|
+    = form_for @form, url: vacancy.expired? ? relist_organisation_job_extend_deadline_path(vacancy.id) : organisation_job_extend_deadline_path(vacancy.id), method: :patch do |f|
       = f.govuk_error_summary
+
+      - if vacancy.expired?
+        = render "publish_date", f: f
 
       = f.govuk_date_field :expires_at,
         hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%d %m %Y")) }
@@ -45,7 +51,7 @@
             hint: -> { "For example 'Easter term'" },
             data: { "form-target": "inputText" }
 
-      = f.govuk_radio_buttons_fieldset :extension_reason, legend: { text: t(".extension_reason.label") } do
+      = f.govuk_radio_buttons_fieldset :extension_reason, legend: { text: vacancy.expired? ? t(".reason_relist_label") : t(".reason_extend_label") } do
         = f.govuk_radio_button :extension_reason, :no_applications, link_errors: true, label: { text: t(".extension_reason.no_applications") }
         = f.govuk_radio_button :extension_reason, :didnt_find_right_candidate, link_errors: true, label: { text: t(".extension_reason.didnt_find_right_candidate") }
         = f.govuk_radio_button :extension_reason, :other_extension_reason, label: { text: t(".extension_reason.other_extension_reason") } do
@@ -53,6 +59,6 @@
             label: { text: t(".extension_reason.other_details") },
             rows: 5
 
-      = f.govuk_submit t("buttons.extend_closing_date"), class: "govuk-!-margin-bottom-5"
+      = f.govuk_submit vacancy.expired? ? t("buttons.relist_vacancy") : t("buttons.extend_closing_date"), class: "govuk-!-margin-bottom-5"
 
     = govuk_link_to(t("buttons.cancel"), organisation_jobs_with_type_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
