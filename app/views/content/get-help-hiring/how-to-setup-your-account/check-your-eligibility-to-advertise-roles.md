@@ -19,34 +19,34 @@ You can [find out what type of school you work in](https://get-information-schoo
 
 ## Eligible school types
 
-| Type of school |
-| --------------- |
-| Academy 16 to 19 converter |
-| Academy 16 to 19 sponsor led |
-| Academy alternative provision converter |
-| Academy alternative provision sponsor led |
-| Academy converter |
-| Academy special converter |
-| Academy special sponsor led |
-| Academy sponsor led |
-| City technology college |
-| Community school |
-| Community special school |
-| Foundation school |
-| Foundation special school |
-| Free schools 16 to 19 |
-| Free schools alternative provision |
-| Free schools special |
-| Free schools |
-| Local authority nursery school |
-| Non-maintained special school |
-| Pupil referral unit |
-| Secure units |
-| Sixth form centres |
-| Studio schools |
-| University technical college |
-| Voluntary aided school |
-| Voluntary controlled school |
+You can list roles on Teaching Vacancies if you are a:
+
+* academy 16 to 19 converter
+* academy 16 to 19 sponsor led
+* academy alternative provision converter
+* academy alternative provision sponsor led
+* academy converter
+* academy special converter
+* academy special sponsor led
+* academy sponsor led
+* city technology college
+* community school
+* community special school
+* foundation school
+* foundation special school
+* free school 16 to 19
+* free school alternative provision
+* free school special
+* free school
+* local authority nursery school
+* non-maintained special school
+* pupil referral unit
+* secure unit
+* sixth form centre
+* studio school
+* university technical college
+* voluntary aided school
+* voluntary controlled school
 
 ## Establishments not eligible to list roles
 
