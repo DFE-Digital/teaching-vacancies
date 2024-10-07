@@ -4,7 +4,7 @@ title: Check your eligibility to advertise roles
 meta_description: Check if your school or trust is eligible to advertise roles on Teaching Vacancies.
 date_posted: 02/10/2024
 category_tags: how-to
-card-image: "/content-assets/get-help-hiring/how-to-setup-your-account/how-mat-can-use-TV.png"
+card-image: "/content-assets/get-help-hiring/how-to-setup-your-account/check-your-eligibility.png"
 ---
 
 
