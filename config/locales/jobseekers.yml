@@ -928,13 +928,6 @@ en:
           how_to_find_registered_email:
             summary: How to find your registered email address
             body: We sent a message to the email address associated with your Teaching Vacancies account informing you about this change.
-      locked:
-        description: You have been locked out of your account because you have made too many attempts to log in.
-        having_trouble_html: Still having trouble? %{request_support_link}.
-        heading: Too many password attempts
-        instructions: We have sent an email to your registered email address with instructions on how to unlock your account.
-        request_support_link: Request support
-        title: Too many password attempts
     subscriptions:
       index:
         button_create: Create a job alert
@@ -999,15 +992,6 @@ en:
     govuk_one_login_callbacks:
       openid_connect:
         error: "There was a problem signing in. Please try again."
-    unlocks:
-      new:
-        description: This link has already been used or is incorrect. If you still want to unlock your Teaching Vacancies account enter your email below.
-        form_submit: Request a new link
-        heading: Request a new link to unlock your account
-        title: Request a new link to unlock your account
-      show:
-        confirm: Confirm
-        title: Unlock your account
     unsubscribe_feedbacks:
       new:
         confirmation: You will no longer receive updates for this job alert.

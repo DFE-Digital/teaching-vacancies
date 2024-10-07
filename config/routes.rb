@@ -65,7 +65,6 @@ Rails.application.routes.draw do
     passwords: "jobseekers/passwords",
     registrations: "jobseekers/registrations",
     sessions: "jobseekers/sessions",
-    unlocks: "jobseekers/unlocks",
   }, path_names: {
     sign_in: "sign-in",
   }
@@ -85,7 +84,6 @@ Rails.application.routes.draw do
       get :confirm_destroy, to: "registrations#confirm_destroy", as: :confirm_destroy_account
       get :resend_instructions, to: "registrations#resend_instructions", as: :resend_instructions
       post :confirm_email_address, to: "confirmations#show"
-      post :unlock_account, to: "unlocks#show"
     end
 
     resources :job_applications, only: %i[index show destroy] do

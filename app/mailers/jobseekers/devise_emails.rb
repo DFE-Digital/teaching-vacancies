@@ -36,14 +36,6 @@ module Jobseekers::DeviseEmails
     )
   end
 
-  def unlock_instructions(record, token, _opts = {})
-    send_email(
-      jobseeker: record,
-      template: template,
-      token: token,
-    )
-  end
-
   def password_change(...)
     raise "Unused"
   end

@@ -103,11 +103,6 @@ module NotifyViewsHelper
     notify_link(url)
   end
 
-  def unlock_account_link(token)
-    url = jobseeker_unlock_url(unlock_token: token, **utm_params)
-    notify_link(url, t(".link"))
-  end
-
   def unsubscribe_link(subscription)
     url = unsubscribe_subscription_url(subscription.token, **utm_params)
     notify_link(url, t(".unsubscribe_link_text"))

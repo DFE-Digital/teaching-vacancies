@@ -4,7 +4,6 @@ class Jobseeker < ApplicationRecord
   devise(*%I[
     confirmable
     database_authenticatable
-    lockable
     recoverable
     registerable
     timeoutable

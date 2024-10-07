@@ -29,8 +29,4 @@ class Jobseekers::AccountPreview < ActionMailer::Preview
   def reset_password_instructions
     Jobseekers::AccountMailer.reset_password_instructions(Jobseeker.first, "fake_token")
   end
-
-  def unlock_instructions
-    Jobseekers::AccountMailer.unlock_instructions(Jobseeker.first, "fake_token")
-  end
 end

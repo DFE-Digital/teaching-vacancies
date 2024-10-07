@@ -121,21 +121,4 @@ RSpec.describe Jobseekers::AccountMailer do
       expect(:jobseeker_reset_password_instructions).to have_been_enqueued_as_analytics_events
     end
   end
-
-  describe "#unlock_instructions" do
-    let(:mail) { described_class.unlock_instructions(jobseeker, token) }
-    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
-
-    it "sends a `jobseeker_unlock_instructions` email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.unlock_instructions.subject"))
-      expect(mail.to).to eq([email])
-      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.unlock_instructions.heading"))
-                               .and include(jobseeker_unlock_path(unlock_token: token))
-    end
-
-    it "triggers a `jobseeker_unlock_instructions` email event" do
-      mail.deliver_now
-      expect(:jobseeker_unlock_instructions).to have_been_enqueued_as_analytics_events
-    end
-  end
 end
