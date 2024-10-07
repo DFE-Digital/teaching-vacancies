@@ -22,7 +22,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def job_application_sample
-    @job_application_sample ||= FactoryBot.build(:job_application, :job_application_sample)
+    @job_application_sample ||= SampleJobApplication.sample_job_application
   end
 
   def update
