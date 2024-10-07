@@ -19,7 +19,34 @@ You can [find out what type of school you work in](https://get-information-schoo
 
 ## Eligible school types
 
-Table?
+| Type of school |
+| --------------- |
+| Academy 16 to 19 converter |
+| Academy 16 to 19 sponsor led |
+| Academy alternative provision converter |
+| Academy alternative provision sponsor led |
+| Academy converter |
+| Academy special converter |
+| Academy special sponsor led |
+| Academy sponsor led |
+| City technology college |
+| Community school |
+| Community special school |
+| Foundation school |
+| Foundation special school |
+| Free schools 16 to 19 |
+| Free schools alternative provision |
+| Free schools special |
+| Free schools |
+| Local authority nursery school |
+| Non-maintained special school |
+| Pupil referral unit |
+| Secure units |
+| Sixth form centres |
+| Studio schools |
+| University technical college |
+| Voluntary aided school |
+| Voluntary controlled school |
 
 ## Establishments not eligible to list roles
 
