@@ -87,7 +87,6 @@ class JobApplication < ApplicationRecord
                                     head_of_year_or_phase head_of_department_or_curriculum sendco])
   end
 
-
   def deadline_passed?
     draft? && vacancy&.expired?
   end

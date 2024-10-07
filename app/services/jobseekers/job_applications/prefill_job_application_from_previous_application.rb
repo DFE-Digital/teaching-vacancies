@@ -101,14 +101,13 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     in_progress_steps = []
 
     if previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
-      %w[employment_history]
       in_progress_steps << "employment_history"
     end
 
     unless previous_application_has_professional_status_details?
       in_progress_steps << "professional_status"
     end
-    
+
     in_progress_steps
   end
 
