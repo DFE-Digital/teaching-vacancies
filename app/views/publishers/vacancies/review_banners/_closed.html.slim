@@ -4,5 +4,5 @@ h1.govuk-heading-l class="govuk-!-display-inline"
 = govuk_inset_text do
   = vacancy_review_form_heading_inset_text(vacancy, "closed")
   .govuk-button-group class="govuk-!-margin-top-4"
-    - %w[view copy extend_closing_date].each do |action|
-      = vacancy_review_form_heading_action_link(vacancy, action) unless vacancy.legacy? && action == "extend_closing_date"
+    - %w[view copy relist].each do |action|
+      = vacancy_review_form_heading_action_link(vacancy, action) unless vacancy.legacy? && action == "relist"

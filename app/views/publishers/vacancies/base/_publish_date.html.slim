@@ -1,0 +1,10 @@
+= f.govuk_radio_buttons_fieldset :publish_on_day, legend: { size: "m", tag: nil } do
+  = f.govuk_radio_button :publish_on_day, :today, link_errors: true,
+    label: { text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: Time.now.strftime("%d %m %Y")) }
+  = f.govuk_radio_button :publish_on_day, :tomorrow,
+    label: { text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.tomorrow", date: 1.day.from_now.strftime("%d %m %Y")) }
+  = f.govuk_radio_button :publish_on_day, :another_day,
+    label: { text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.another_day") } do
+    = f.govuk_date_field :publish_on,
+      legend: { tag: nil, text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on") },
+      hint: -> { t("helpers.hint.date", date: 1.week.from_now.to_fs(:publish_on_date)) }
