@@ -8,8 +8,7 @@ class JobApplicationPdfGenerator
 
   def generate
     Prawn::Document.new do |pdf|
-      font Rails.root.join("app", "assets", "fonts", "arial.ttf")
-
+      update_font_family(pdf)
       add_image_to_first_page(pdf)
       add_headers(pdf)
       pdf.stroke_horizontal_rule
