@@ -5,15 +5,23 @@ RSpec.describe "Publishers can extend a deadline" do
   let(:publisher) { create(:publisher) }
   let(:expires_at) { vacancy.expires_at + 1.month }
   let(:extension_reason) { Faker::Lorem.paragraph }
-  let!(:vacancy) { create(:vacancy, vacancy_type, organisations: [organisation]) }
+  let(:vacancy) { Vacancy.last }
 
   before do
+    Timecop.travel Date.new(2024, 10, 6)
+
+    create(:vacancy, vacancy_type, organisations: [organisation])
     login_publisher(publisher: publisher, organisation: organisation)
     visit organisation_jobs_with_type_path(vacancy_type)
     click_on vacancy.job_title
     click_on extend_expires_at
   end
-  after { logout }
+
+  after do
+    logout
+
+    Timecop.return
+  end
 
   context "when the vacancy has not expired" do
     let(:vacancy_type) { :published }
@@ -57,7 +65,7 @@ RSpec.describe "Publishers can extend a deadline" do
     end
 
     it "can be re-listed for publishing today" do
-      choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: Time.now.strftime("%d %B %Y")),
+      choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: "06 October 2024"),
              name: "publishers_job_listing_relist_form[publish_on_day]"
 
       click_on I18n.t("buttons.relist_vacancy")
@@ -69,7 +77,7 @@ RSpec.describe "Publishers can extend a deadline" do
     end
 
     it "can be re-listed for publishing tomorrow" do
-      choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.tomorrow", date: 1.day.from_now.strftime("%d %B %Y")),
+      choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.tomorrow", date: "07 October 2024"),
              name: "publishers_job_listing_relist_form[publish_on_day]"
 
       click_on I18n.t("buttons.relist_vacancy")
