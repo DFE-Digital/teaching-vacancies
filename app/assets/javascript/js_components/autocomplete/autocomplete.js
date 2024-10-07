@@ -41,6 +41,8 @@ export default class extends Controller {
         return dataSource({ query, populateResults });
       };
 
+      // Debouncing code inspired by https://github.com/alphagov/accessible-autocomplete/pull/611
+
       const handleQueryDebounced = debounce(async (query, populateResults) => {
         await handleQuery(query, populateResults);
       }, debounceMsValue);
