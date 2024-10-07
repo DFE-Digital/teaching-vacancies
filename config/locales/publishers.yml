@@ -470,16 +470,23 @@ en:
           deadline:
             future: The current deadline is
             past: The previous deadline was
-          heading: Extend closing date
-          title: Extend closing date - %{job_title}
+          extend:
+            heading: Extend closing date
+            title: Extend closing date - %{job_title}
+            reason_label: Why are you extending this job?
+          relist:
+            heading: Relist %{job_title}
+            title: Relist - %{job_title}
+            reason_label: Why are you relisting this job?
           extension_reason:
-            label: Why are you extending this job?
             no_applications: No applications
             didnt_find_right_candidate: Didn't find the right candidate
             other_extension_reason: Other
             other_details: Can you provide more details? (optional)
         update:
           success: "The deadline for %{job_title} has been extended"
+        relist:
+          success: "%{job_title} has been relisted"
       expired_feedbacks:
         new:
           description: >-
@@ -602,6 +609,7 @@ en:
             copy: Copy
             delete: Delete
             extend_closing_date: Extend closing date
+            relist: Relist
             preview: Preview
             publish: Publish job listing
             scheduled_complete_draft: Schedule job listing
