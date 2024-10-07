@@ -3,6 +3,19 @@ module PdfHelper
   include JobApplicationsHelper
   include QualificationsHelper
 
+  # Arial Unicode is a font that supports all characters.
+  def update_font_family(pdf)
+    pdf.font_families.update(
+      "Arial Unicode" =>
+        {
+          bold: Rails.root.join("app/assets/fonts/Arial-Unicode-Bold.ttf").to_s,
+          normal: Rails.root.join("app/assets/fonts/Arial-Unicode-Regular.ttf").to_s,
+          italic: Rails.root.join("app/assets/fonts/Arial-Unicode-Italic.ttf").to_s,
+        },
+    )
+    pdf.font("Arial Unicode", encoding: "UTF-8")
+  end
+
   def add_section_title(pdf, title)
     pdf.move_down 20
     pdf.text title, size: 18, style: :bold
