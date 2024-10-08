@@ -11,7 +11,6 @@ card-image: "/content-assets/get-help-hiring/how-to-setup-your-account/check-you
 To advertise your roles on Teaching Vacancies, you must be:
 
 * based in England
-
 * a state-funded school (or contain a state-funded school within your trust)
 
 
