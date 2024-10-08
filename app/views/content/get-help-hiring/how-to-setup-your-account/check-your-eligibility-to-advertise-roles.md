@@ -16,7 +16,7 @@ To advertise your roles on Teaching Vacancies, you must be:
 
 You can [find out what type of school you work in](https://get-information-schools.service.gov.uk/). 
 
-## Eligible school types
+## Eligible establishments
 
 You can list roles on Teaching Vacancies if you are a:
 
