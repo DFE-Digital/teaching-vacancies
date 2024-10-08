@@ -45,6 +45,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
       click_on "Save and continue"
       expect(delivered_emails.last.subject).to eq "Transfer your account data"
       expect(delivered_emails.last.body.raw_source).to include "Your verification code: #{old_jobseeker_account.reload.account_merge_confirmation_code}"
+      expect(page).not_to have_css('div.govuk-notification-banner__content p.govuk-notification-banner__heading', text: 'Email resent')
 
       fill_in "jobseekers_account_transfer_form[account_merge_confirmation_code]", with: "somethingincorrect"
       click_on "Confirm account transfer"
@@ -54,7 +55,13 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
         expect(page).to have_link("Confirmation code does not match.", href: "#jobseekers-account-transfer-form-account-merge-confirmation-code-field-error")
       end
 
-      fill_in "jobseekers_account_transfer_form[account_merge_confirmation_code]", with: old_jobseeker_account.account_merge_confirmation_code
+      old_jobseeker_account.update(account_merge_confirmation_code_generated_at: DateTime.current - 2.minutes)
+      find('details.govuk-details').click
+      find('a.govuk-link', text: 'send the code again').click
+
+      expect(page).to have_css('div.govuk-notification-banner__content p.govuk-notification-banner__heading', text: 'Email resent')
+
+      fill_in "jobseekers_account_transfer_form[account_merge_confirmation_code]", with: old_jobseeker_account.reload.account_merge_confirmation_code
       click_on "Confirm account transfer"
       expect(page).to have_content "Your account details have been transferred successfully!"
 
