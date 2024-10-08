@@ -14,7 +14,7 @@ To advertise your roles on Teaching Vacancies, you must be:
 * a state-funded school (or contain a state-funded school within your trust)
 
 
-You can [find out what type of school you work in](https://get-information-schools.service.gov.uk/). 
+You can [find out what type of establishment you work in](https://get-information-schools.service.gov.uk/). 
 
 ## Eligible establishments
 
