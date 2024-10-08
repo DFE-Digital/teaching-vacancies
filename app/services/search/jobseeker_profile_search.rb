@@ -1,17 +1,19 @@
 class Search::JobseekerProfileSearch
   attr_reader :filters
 
-  def initialize(filters)
+  def initialize(current_organisation:, filters:)
     @filters = filters
-    @current_organisation = filters[:current_organisation]
+    @current_organisation = current_organisation
   end
 
   def jobseeker_profiles # rubocop:disable Metrics/AbcSize
     scope = JobseekerProfile
-      .includes(:job_preferences)
-      .includes(:personal_details)
-      .active.not_hidden_from(current_organisation)
-      .where(job_preferences: { id: location_preferences_ids_matching_location_search })
+              .includes(:job_preferences)
+              .includes(:personal_details)
+              .joins(job_preferences: :locations)
+              .left_outer_joins(:personal_details)
+              .active.not_hidden_from(current_organisation)
+              .merge(location_preferences)
 
     scope = filter_by_qts(scope) if filters[:qualified_teacher_status].present?
     scope = scope.where("job_preferences.roles && ARRAY[?]::varchar[]", roles_filter) if roles_filter.present?
@@ -63,23 +65,17 @@ class Search::JobseekerProfileSearch
     filters[:right_to_work_in_uk].first == "true"
   end
 
-  def location_preferences_ids_matching_location_search
-    return location_preferences_containing_school(current_organisation) if current_organisation.school?
-
-    return location_preferences_containing_schools(schools_from_filters) if filters[:locations].present?
-
-    location_preferences_containing_schools(current_organisation.schools)
-  end
-
-  def location_preferences_containing_school(school)
-    JobPreferences::Location.containing(school.geopoint).pluck(:job_preferences_id)
-  end
-
-  def location_preferences_containing_schools(schools)
-    schools.flat_map { |school| JobPreferences::Location.containing(school.geopoint).uniq.pluck(:job_preferences_id) }
-  end
-
-  def schools_from_filters
-    School.where(id: filters[:locations])
+  def location_preferences
+    if current_organisation.school?
+      JobPreferences::Location.containing(current_organisation.geopoint)
+    elsif filters[:locations].present?
+      School.where(id: filters[:locations])
+            .map { |school| JobPreferences::Location.containing(school.geopoint) }
+            .reduce { |q, item| q.or(item) }
+    else
+      current_organisation.schools
+            .map { |school| JobPreferences::Location.containing(school.geopoint) }
+            .reduce { |q, item| q.or(item) }
+    end
   end
 end
