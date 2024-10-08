@@ -971,6 +971,7 @@ en:
         hint: If you have an account associated with this email address, we'll send you an email to verify your details.
       errors:
         recent_code_request: Please wait 1 minute before requesting another code.
+      success: Email resent
     account_transfers:
       new:
         page_title: Confirm account details transfer
