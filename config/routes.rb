@@ -62,7 +62,6 @@ Rails.application.routes.draw do
 
   devise_for :jobseekers, controllers: {
     confirmations: "jobseekers/confirmations",
-    passwords: "jobseekers/passwords",
     registrations: "jobseekers/registrations",
     sessions: "jobseekers/sessions",
   }, path_names: {
@@ -80,7 +79,6 @@ Rails.application.routes.draw do
   namespace :jobseekers do
     devise_scope :jobseeker do
       get :check_your_email, to: "registrations#check_your_email", as: :check_your_email
-      get :check_your_email_password, to: "passwords#check_your_email_password", as: :check_your_email_password
       get :confirm_destroy, to: "registrations#confirm_destroy", as: :confirm_destroy_account
       get :resend_instructions, to: "registrations#resend_instructions", as: :resend_instructions
       post :confirm_email_address, to: "confirmations#show"

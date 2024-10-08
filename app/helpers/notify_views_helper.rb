@@ -74,11 +74,6 @@ module NotifyViewsHelper
     notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count, job_title: vacancy.job_title))
   end
 
-  def reset_password_link(token)
-    url = edit_jobseeker_password_url(reset_password_token: token, **utm_params)
-    notify_link(url, t(".link"))
-  end
-
   def show_link(vacancy)
     url = job_url(vacancy, **utm_params)
     if vacancy.organisations.many?

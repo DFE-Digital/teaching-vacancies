@@ -25,8 +25,4 @@ class Jobseekers::AccountPreview < ActionMailer::Preview
   def inactive_account
     Jobseekers::AccountMailer.inactive_account(Jobseeker.first)
   end
-
-  def reset_password_instructions
-    Jobseekers::AccountMailer.reset_password_instructions(Jobseeker.first, "fake_token")
-  end
 end

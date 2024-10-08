@@ -104,21 +104,4 @@ RSpec.describe Jobseekers::AccountMailer do
       expect(:jobseeker_inactive_account).to have_been_enqueued_as_analytics_events
     end
   end
-
-  describe "#reset_password_instructions" do
-    let(:mail) { described_class.reset_password_instructions(jobseeker, token) }
-    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
-
-    it "sends a `jobseeker_reset_password_instructions` email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.reset_password_instructions.subject"))
-      expect(mail.to).to eq([email])
-      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.reset_password_instructions.heading"))
-                               .and include(edit_jobseeker_password_path(reset_password_token: token))
-    end
-
-    it "triggers a `jobseeker_reset_passwords_instructions` email event" do
-      mail.deliver_now
-      expect(:jobseeker_reset_password_instructions).to have_been_enqueued_as_analytics_events
-    end
-  end
 end
