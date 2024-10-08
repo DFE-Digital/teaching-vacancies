@@ -555,21 +555,6 @@ en:
         title: Application submitted – Application
       withdraw:
         success: You have withdrawn your application for %{job_title}
-    passwords:
-      check_your_email_password:
-        description: We have sent you an email with instructions on how to reset your password.
-        having_trouble_html: Still having trouble? %{request_support_link}.
-        request_support_link: Request support
-        title: Check your email
-      edit:
-        new_password: New password
-        title: Reset your password
-      expired_token:
-        description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
-        title: Your request is no longer valid
-      new:
-        description: Enter your email address and we will send you a link so that you can reset your password.
-        title: Reset your password
     registrations:
       check_your_email:
         description: You should have received a link by email. Follow the link to confirm your email address. The link will expire in 24 hours.

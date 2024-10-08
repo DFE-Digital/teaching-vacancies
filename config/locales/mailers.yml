@@ -51,14 +51,6 @@ en:
         link: Sign into Teaching Vacancies
         reactivate: If you want to keep your account and your data, please sign into your account before %{date}.
         subject: Your Teaching Vacancies account and data
-      reset_password_instructions:
-        heading: Reset your password for your Teaching Vacancies account
-        intro: You have requested to reset your password
-        link: Reset your password
-        not_requested:
-          body: If you did not make this request, please email %{mail_to}
-          heading: Not requested a password reset?
-        subject: Reset your password
       request_account_transfer:
         subject: Transfer your account data
         heading: Your verification code
