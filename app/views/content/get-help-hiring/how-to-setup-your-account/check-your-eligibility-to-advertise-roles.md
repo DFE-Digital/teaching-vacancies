@@ -18,7 +18,7 @@ You can [find out what type of establishment you work in](https://get-informatio
 
 ## Eligible establishments
 
-You can list roles on Teaching Vacancies if you are a:
+You can advertise roles on Teaching Vacancies if you are a:
 
 * academy 16 to 19 converter
 * academy 16 to 19 sponsor led
@@ -47,7 +47,7 @@ You can list roles on Teaching Vacancies if you are a:
 * voluntary aided school
 * voluntary controlled school
 
-## Establishments not eligible to list roles
+## Establishments not eligible to advertise roles
 
 You cannot advertise roles on Teaching Vacancies if you are a:
 
@@ -65,4 +65,4 @@ You cannot advertise roles on Teaching Vacancies if you are a:
 
 ## Get support
 
-For further support on if you are eligible to list your roles on Teaching Vacancies, [contact us](https://teaching-vacancies.service.gov.uk/support_request/new). 
+For further support on if you are eligible to advertise your roles on Teaching Vacancies, [contact us](https://teaching-vacancies.service.gov.uk/support_request/new). 
