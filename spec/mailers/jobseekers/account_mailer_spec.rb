@@ -31,44 +31,6 @@ RSpec.describe Jobseekers::AccountMailer do
     end
   end
 
-  describe "#confirmation_instructions" do
-    let(:mail) { described_class.confirmation_instructions(jobseeker, token) }
-    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
-
-    context "when the jobseeker is not pending reconfirmation" do
-      before { jobseeker.confirm }
-
-      it "sends a `jobseeker_confirmation_instructions` email" do
-        expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.subject"))
-        expect(mail.to).to eq([email])
-        expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.body"))
-                                 .and include(jobseeker_confirmation_path(confirmation_token: token))
-      end
-
-      it "triggers a `jobseeker_confirmation_instructions` email event" do
-        mail.deliver_now
-        expect(:jobseeker_confirmation_instructions).to have_been_enqueued_as_analytics_events
-      end
-    end
-
-    context "when the jobseeker is being reminded to confirm" do
-      let(:email_address) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
-      let(:jobseeker) { create(:jobseeker, email: email_address, confirmation_token: token, unconfirmed_email: email_address, confirmed_at: nil, confirmation_sent_at: 18.hours.ago) }
-
-      it "sends a `jobseeker_confirmation_instructions` email" do
-        expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.confirmation_instructions.reminder.subject"))
-        expect(mail.to).to eq([email_address])
-        expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.confirmation_instructions.body"))
-                                 .and include(jobseeker_confirmation_path(confirmation_token: token))
-      end
-
-      it "triggers a `jobseeker_confirmation_instructions` email event" do
-        mail.deliver_now
-        expect(:jobseeker_confirmation_instructions).to have_been_enqueued_as_analytics_events
-      end
-    end
-  end
-
   describe "#email_changed" do
     let(:mail) { described_class.email_changed(jobseeker) }
     let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }

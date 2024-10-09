@@ -10,9 +10,6 @@ RSpec.describe Jobseekers::SessionsController do
     before do
       # Required to test Devise controller independently of routing
       @request.env["devise.mapping"] = Devise.mappings[:jobseeker]
-
-      jobseeker.confirm
-
       session.merge!(unrelated_session_contents)
     end
 

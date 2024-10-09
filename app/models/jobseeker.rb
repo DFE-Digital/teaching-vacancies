@@ -2,7 +2,6 @@ class Jobseeker < ApplicationRecord
   has_encrypted :last_sign_in_ip, :current_sign_in_ip
 
   devise(*%I[
-    confirmable
     database_authenticatable
     registerable
     timeoutable
@@ -28,10 +27,6 @@ class Jobseeker < ApplicationRecord
 
   def account_closed?
     !!account_closed_on
-  end
-
-  def needs_email_confirmation?
-    !confirmed? || unconfirmed_email.present?
   end
 
   def generate_merge_verification_code

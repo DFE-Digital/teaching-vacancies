@@ -1,26 +1,4 @@
 module Jobseekers::DeviseEmails
-  def confirmation_instructions(record, token, _opts = {})
-    to = subject = nil
-
-    if !record.confirmed? && record.confirmation_sent_at < 12.hours.ago
-      to = record.unconfirmed_email
-      subject = t(".reminder.subject")
-      @confirmation_type = ".reminder"
-    elsif record.pending_reconfirmation?
-      to = record.unconfirmed_email
-      subject = t(".reconfirmation.subject")
-      @confirmation_type = ".reconfirmation"
-    end
-
-    send_email(
-      jobseeker: record,
-      subject: subject,
-      template: template,
-      to: to,
-      token: token,
-    )
-  end
-
   def email_changed(record, _opts = {})
     send_email(
       jobseeker: record,
@@ -52,11 +30,6 @@ module Jobseekers::DeviseEmails
   end
 
   def dfe_analytics_custom_data
-    case action_name
-    when "confirmation_instructions"
-      @jobseeker.pending_reconfirmation? ? { previous_email_identifier: DfE::Analytics.anonymise(@jobseeker.email) } : {}
-    else
-      {}
-    end
+    {}
   end
 end
