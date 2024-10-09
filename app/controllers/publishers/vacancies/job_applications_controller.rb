@@ -42,6 +42,27 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: job_application.name)
   end
 
+  require 'zip'
+
+  def download_selected
+    downloads = vacancy.job_applications.find params[:applications]
+
+    # pdfs = downloads.map { |ja| JobApplicationPdfGenerator.new(ja, vacancy).generate }
+
+    stringio = Zip::OutputStream.write_buffer do |zio|
+      downloads.each do |job_application|
+        zio.put_next_entry "job_application_#{job_application.id}.pdf"
+        zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
+      end
+    end
+    send_data(
+      stringio.string,
+      filename: "applications_#{vacancy.id}.zip",
+      type: "application/zip",
+      disposition: "attachment",
+      )
+  end
+
   private
 
   def job_applications
