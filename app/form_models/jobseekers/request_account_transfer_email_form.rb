@@ -1,5 +1,5 @@
 class Jobseekers::RequestAccountTransferEmailForm < BaseForm
-  attr_accessor :email
+  attr_accessor :email, :email_resent
 
   validates :email, presence: true
   validates :email, email_address: true
