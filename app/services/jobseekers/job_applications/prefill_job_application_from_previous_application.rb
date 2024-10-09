@@ -100,6 +100,8 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   def in_progress_steps
     if previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
       %w[employment_history]
+    elsif !previous_application_has_professional_status_details?
+      %w[professional_status]
     else
       []
     end
