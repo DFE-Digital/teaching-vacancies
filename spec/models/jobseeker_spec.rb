@@ -48,4 +48,47 @@ RSpec.describe Jobseeker do
       end
     end
   end
+
+  describe ".create_from_govuk_one_login" do
+    let(:email) { "notarealuser121342@gmail.com" }
+    let(:govuk_one_login_id) { "urn:fdc:gov.uk:2022:VtcZjnU4Sif2oyJZola3OkN0e3Jeku1cIMN38rFlhU4" }
+
+    subject(:create_from_govuk_one_login) do
+      described_class.create_from_govuk_one_login(email: email, govuk_one_login_id: govuk_one_login_id)
+    end
+
+    RSpec.shared_examples "invalid input" do
+      it "returns nil" do
+        expect(create_from_govuk_one_login).to be_nil
+      end
+
+      it "does not create a new jobseeker" do
+        expect { create_from_govuk_one_login }.not_to change(described_class, :count)
+      end
+    end
+
+    context "when no user email is provided" do
+      let(:email) { "" }
+
+      include_examples "invalid input"
+    end
+
+    context "when no govuk_one_login_id is provided" do
+      let(:govuk_one_login_id) { "" }
+
+      include_examples "invalid input"
+    end
+
+    context "when an email and govuk_on_login_id is provided" do
+      it "creates a new jobseeker" do
+        expect { create_from_govuk_one_login }.to change(described_class, :count).by(1)
+      end
+
+      it "returns the new jobseeker with the one login id and email" do
+        jobseeker = create_from_govuk_one_login
+        expect(jobseeker).to be_a(described_class)
+        expect(jobseeker).to have_attributes(email:, govuk_one_login_id:)
+      end
+    end
+  end
 end

@@ -12,10 +12,12 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
         flash[:success] = "Your account details have been transferred successfully!"
         redirect_to jobseekers_profile_path
       else
+        @email = @account_transfer_form.email
         flash[:error] = "Account transfer failed. Please try again."
         render :new
       end
     else
+      @email = @account_transfer_form.email
       render :new
     end
   end
@@ -31,6 +33,8 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
     true
   rescue Jobseekers::AccountTransfer::AccountNotFoundError, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
     Rails.logger.error("Account transfer failed: #{e.message}")
+    Rails.logger.error("Account transfer failed on #{e.record.class.name} with ID: #{e.record.id}")
+    Rails.logger.error("Validation errors: #{e.record.errors.full_messages.join(', ')}")
     false
   end
 end

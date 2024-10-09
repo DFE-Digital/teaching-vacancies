@@ -32,9 +32,11 @@ COPY . .
 # configuring it using the ENV variables we provide in storage.yml. However, at this point, these ENV vars have not been loaded,
 # causing the error. Below we define two throaway ENV vars to prevent the error from being thrown. These are then later overwritten,
 # when all of the ENV vars are loaded.
+ARG RAILS_MASTER_KEY
 
 ENV DOCUMENTS_S3_BUCKET=throwaway_value
 ENV SCHOOLS_IMAGES_LOGOS_S3_BUCKET=throwaway_value
+ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
 RUN RAILS_ENV=production SECRET_KEY_BASE=required-to-run-but-not-used RAILS_SERVE_STATIC_FILES=1 bundle exec rake assets:precompile
 

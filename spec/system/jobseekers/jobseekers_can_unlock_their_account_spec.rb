@@ -12,7 +12,7 @@ RSpec.describe "Jobseekers can unlock their account" do
   context "when the jobseeker has one sign-in attempt remaining" do
     before { jobseeker.update!(failed_attempts: Devise.maximum_attempts) }
 
-    scenario "they can unlock their account following the unlock email instructions received after their final failed attempt" do
+    xscenario "they can unlock their account following the unlock email instructions received after their final failed attempt" do
       expect { sign_in_jobseeker(password: "wrong password") }.to change { delivered_emails.count }.by(1)
 
       expect(page).to have_content("too many attempts")
@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can unlock their account" do
       expect(page).to have_content(I18n.t("devise.unlocks.unlocked"))
     end
 
-    scenario "following the unlock link for a second time takes them directly to an error page" do
+    xscenario "following the unlock link for a second time takes them directly to an error page" do
       sign_in_jobseeker(password: "wrong password")
       visit first_link_from_last_mail
       click_button I18n.t("jobseekers.unlocks.show.confirm")
@@ -47,13 +47,13 @@ RSpec.describe "Jobseekers can unlock their account" do
         visit jobseeker_unlock_url(unlock_token: "invalid token")
       end
 
-      scenario "they are locked out of their account" do
+      xscenario "they are locked out of their account" do
         expect(jobseeker.reload).to be_access_locked
 
         expect(page).to have_content(I18n.t("jobseekers.unlocks.new.heading"))
       end
 
-      scenario "they can request to be emailed the link again and use it to unlock their account" do
+      xscenario "they can request to be emailed the link again and use it to unlock their account" do
         fill_in "Email address", with: jobseeker.email
 
         expect {

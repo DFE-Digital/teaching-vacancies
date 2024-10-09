@@ -4,26 +4,11 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".title")
 
-    = form_for resource, url: new_jobseeker_session_path do |f|
-      = f.govuk_error_summary
+    = govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner" do |banner|
+        - banner.with_heading(text: t(".banner.header"))
+        p.govuk-body = t(".banner.body")
 
-      p.govuk-body = t(".description")
-      .govuk-grid-row
-        .govuk-grid-column-two-thirds
-          = f.govuk_email_field :email,
-                                label: { text: t("helpers.label.jobseekers_sign_in_form.email"), size: "s" },
-                                autocomplete: "email"
-          = f.govuk_password_field :password,
-                                   label: { text: t("helpers.label.jobseekers_sign_in_form.password"), size: "s" },
-                                   hint: nil,
-                                   autocomplete: "current-password"
-      = hidden_field_tag :redirected, true if redirected?
+    p.govuk-body = t(".govuk_one_log_in.paragraph1")
+    p.govuk-body = t(".govuk_one_log_in.paragraph2")
 
-      p.govuk-body = govuk_link_to(t(".forgotten"), new_jobseeker_password_path)
-
-      = f.govuk_submit t("buttons.sign_in")
-
-  .govuk-grid-column-one-third
-    h2.govuk-heading-m = t(".no_account.heading")
-
-    p.govuk-body = t(".no_account.content_html", link_to: govuk_link_to(t(".no_account.link"), new_jobseeker_registration_path))
+    = jobseeker_login_button(class: "govuk-!-margin-bottom-2")

@@ -383,14 +383,9 @@ en:
       body:
         sign_in: Sign in to see all your job alerts in one place and save the jobs you are interested in.
         sign_up: Create an account to see all your job alerts in one place and save the jobs you are interested in.
-      form:
-        email_address: Email address
       heading:
         sign_in: Sign in to your Teaching Vacancies account
         sign_up: Create a Teaching Vacancies account
-      link:
-        sign_in: Sign in
-        sign_up: Create an account
     link:
       help_text_html: "%{link} whenever a job matching this search is listed."
       home_page: Visit %{home_page_link}
