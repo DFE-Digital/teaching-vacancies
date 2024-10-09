@@ -3,7 +3,10 @@ import * as Sentry from '@sentry/browser';
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
-import { initAll } from 'govuk-frontend';
+import { initAll as govukInit } from 'govuk-frontend';
+import $ from 'jquery';
+import { initAll as mojInit } from '@ministryofjustice/frontend';
+
 import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 
@@ -61,4 +64,7 @@ application.register('tracked-link', TrackedLinkController);
 application.register('utils', UtilsController);
 
 Rails.start();
-initAll();
+govukInit();
+window.$ = $;
+mojInit();
+// window.MOJFrontend = MOJFrontend;

@@ -9,6 +9,9 @@ $govuk-assets-path: "/";
 @import 'leaflet/dist/leaflet';
 @import 'leaflet.markercluster/dist/MarkerCluster';
 @import 'leaflet-gesture-handling/dist/leaflet-gesture-handling';
+// oh dear this file is broken as it tries to import from node_modules
+//@import "@ministryofjustice/frontend/moj/all";
+@import "@ministryofjustice/frontend/moj/components/multi-select/multi-select";
 
 @import 'base/global';
 @import 'base/guide_card';

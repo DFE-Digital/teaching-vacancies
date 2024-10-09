@@ -25,14 +25,17 @@ module PdfHelper
   end
 
   def render_table(pdf, data)
-    pdf.table(data, cell_style: { borders: [] }) do
-      cells.padding = 12
-      cells.borders = []
+    pdf.table(data, cell_style: { borders: [], padding: 12 }) do
       columns(0).font_style = :bold
       columns(0).align = :left
       columns(1).align = :left
       columns(0).width = 150
     end
+    # data.each do |description, value|
+    #   pdf.text description, style: :bold
+    #   pdf.draw_text value, at: [150, pdf.cursor]
+    #   pdf.move_down 30
+    # end
   end
 
   def add_headers(pdf)
@@ -153,7 +156,7 @@ module PdfHelper
     if job_application.employments.none?
       render_no_employment_message(pdf)
     else
-      job_application.employments.sort_by { |r| r[:started_on] }.reverse.each_with_index do |employment, _index|
+      job_application.employments.sort_by { |r| r[:started_on] }.reverse_each do |employment|
         render_employment_entry(pdf, employment)
         render_employment_break(pdf, employment)
         render_unexplained_gap(pdf, employment)
