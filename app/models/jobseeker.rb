@@ -2,10 +2,7 @@ class Jobseeker < ApplicationRecord
   has_encrypted :last_sign_in_ip, :current_sign_in_ip
 
   devise(*%I[
-    confirmable
     database_authenticatable
-    lockable
-    recoverable
     registerable
     timeoutable
     trackable
@@ -30,10 +27,6 @@ class Jobseeker < ApplicationRecord
 
   def account_closed?
     !!account_closed_on
-  end
-
-  def needs_email_confirmation?
-    !confirmed? || unconfirmed_email.present?
   end
 
   def self.create_from_govuk_one_login(email:, govuk_one_login_id:)
