@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@sentry/browser": "8.33.0",
+    "@sentry/browser": "8.33.1",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
     "axios": "^1.7.7",
@@ -27,15 +27,15 @@
     "rails-ujs": "^5.2.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.4",
+    "@babel/core": "^7.25.7",
+    "@babel/preset-env": "^7.25.7",
     "concurrently": "^9.0.1",
     "dotenv": "^16.4.5",
     "esbuild": "^0.24.0",
     "esbuild-plugin-babel": "^0.2.3",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-import": "^2.31.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "29.7.0",
     "jsdom": "^25.0.1",
