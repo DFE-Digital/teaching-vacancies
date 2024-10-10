@@ -41,6 +41,8 @@ Dir[Rails.root.join("spec/page_objects/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 
+POSTGIS_TABLES = ["spatial_ref_sys"].freeze
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
@@ -128,6 +130,19 @@ RSpec.configure do |config|
   config.include VacancyHelpers
   config.include ViewComponent::TestHelpers, type: :component
   config.include WithEnv
+
+  # don't need the 'transaction' strategy here as we run fixtures inside transactions
+  # mostly by default
+  config.before(:suite) do
+    DatabaseCleaner.strategy = [:truncation, { except: POSTGIS_TABLES }]
+    DatabaseCleaner.clean
+  end
+
+  config.around(:each, js: true) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
 end
 
 VCR.configure do |config|
