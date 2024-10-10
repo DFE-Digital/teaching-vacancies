@@ -16,24 +16,22 @@ RSpec.describe Search::JobseekerProfileSearch do
       end
 
       context "when a job preference area contains the school" do
-        let(:location_in_london) { [51.5072, -0.1275] }
         let(:london_jobseeker_profile) { create(:jobseeker_profile) }
-        let(:london_job_preferences) { create(:job_preferences, jobseeker_profile: london_jobseeker_profile) }
-        let!(:london_location_preference) { create(:job_preferences_location, name: "London", radius: 200, job_preferences: london_job_preferences) }
+        let(:chester_jobseeker_profile) { create(:jobseeker_profile) }
 
-        let(:location_in_manchester) { [53.4807, -2.2426] }
-        let(:manchester_jobseeker_profile) { create(:jobseeker_profile) }
-        let(:manchester_job_preferences) { create(:job_preferences, jobseeker_profile: manchester_jobseeker_profile) }
-        let!(:manchester_location_preference) { create(:job_preferences_location, name: "Manchester", radius: 10, job_preferences: manchester_job_preferences) }
-
-        before { allow(Geocoding).to receive(:test_coordinates).and_return(location_in_london, location_in_manchester) }
-
-        it "returns the jobseeker profiles with preference areas that contain the school" do
-          expect(search.jobseeker_profiles).to eq([london_jobseeker_profile])
+        before do
+          create(:location_polygon, :london, name: "London")
+          create(:location_polygon, :chester, name: "Chester")
+          create(:job_preferences,
+                 jobseeker_profile: london_jobseeker_profile,
+                 locations: build_list(:job_preferences_location, 1, name: "London", radius: 200))
+          create(:job_preferences,
+                 jobseeker_profile: chester_jobseeker_profile,
+                 locations: build_list(:job_preferences_location, 1, name: "Chester", radius: 10))
         end
 
-        it "does not return jobseeker profiles with preference areas that don't contain the school" do
-          expect(search.jobseeker_profiles).not_to include(manchester_jobseeker_profile)
+        it "only returns the jobseeker profiles with preference areas that contain the school" do
+          expect(search.jobseeker_profiles).to eq([london_jobseeker_profile])
         end
       end
     end
