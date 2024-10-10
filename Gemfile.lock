@@ -833,6 +833,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  rubyzip
   sanitize
   selenium-webdriver
   sentry-rails
