@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_24_144355) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_02_105609) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -683,6 +683,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_144355) do
     t.boolean "is_job_share"
     t.string "hourly_rate"
     t.string "flexi_working"
+    t.integer "extension_reason"
+    t.string "other_extension_reason_details"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
     t.index ["geolocation", "expires_at", "publish_on"], name: "index_vacancies_on_geolocation_and_expires_at_and_publish_on", using: :gist

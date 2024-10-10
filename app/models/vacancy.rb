@@ -53,6 +53,7 @@ class Vacancy < ApplicationRecord
   enum start_date_type: { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
   enum status: { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
   enum receive_applications: { email: 0, website: 1 }
+  enum extension_reason: { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true

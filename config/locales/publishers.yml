@@ -472,6 +472,12 @@ en:
             past: The previous deadline was
           heading: Extend closing date
           title: Extend closing date - %{job_title}
+          extension_reason:
+            label: Why are you extending this job?
+            no_applications: No applications
+            didnt_find_right_candidate: Didn't find the right candidate
+            other_extension_reason: Other
+            other_details: Can you provide more details? (optional)
         update:
           success: "The deadline for %{job_title} has been extended"
       expired_feedbacks:
