@@ -17,7 +17,6 @@ RSpec.describe "Sidekiq configuration" do
       PerformancePlatformTransactionsQueueJob
       RemoveGoogleIndexQueueJob
       SeedDatabaseJob
-      SendEventToDataWarehouseJob
       SendJobListingEndedEarlyNotificationJob
       UpdateGoogleIndexQueueJob
       Noticed::DeliveryMethods::Base
