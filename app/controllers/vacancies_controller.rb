@@ -18,6 +18,17 @@ class VacanciesController < ApplicationController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
+  def campaign_landing_page
+    @form ||= Jobseekers::SearchForm.new(campaign_search_params.merge(landing_page: @landing_page))
+    @jobseeker_name = params[:email_name] || "Jobseeker"
+
+    @vacancies_search = Search::VacancySearch.new(@form.to_hash, sort: @form.sort)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
+
+    set_search_coordinates unless do_not_show_distance?
+    trigger_search_performed_event
+  end
+
   private
 
   def form
@@ -46,6 +57,36 @@ class VacanciesController < ApplicationController
 
   def set_headers
     response.set_header("X-Robots-Tag", "noarchive")
+  end
+
+  def campaign_search_params
+    params.permit(:email_name, :email_postcode, :email_location, :email_radius, :email_jobrole, :email_subject,
+                  :email_phase, :email_ECT, :email_fulltime, :email_parttime, :email_jobshare, :email_contact)
+          .tap do |campaign_params|
+      map_location_and_radius(campaign_params)
+      map_teaching_job_roles_subjects_phases(campaign_params)
+      campaign_params[:working_patterns] = extract_working_patterns(campaign_params)
+      campaign_params[:ect_statuses] = [campaign_params.delete(:email_ECT)].compact
+    end
+  end
+
+  def map_location_and_radius(campaign_params)
+    campaign_params[:location] = campaign_params.delete(:email_location)
+    campaign_params[:radius] = campaign_params.delete(:email_radius)
+  end
+
+  def map_teaching_job_roles_subjects_phases(campaign_params)
+    campaign_params[:teaching_job_roles] = [campaign_params.delete(:email_jobrole)].compact
+    campaign_params[:subjects] = [campaign_params.delete(:email_subject)].compact
+    campaign_params[:phases] = [campaign_params.delete(:email_phase)].compact
+  end
+
+  def extract_working_patterns(campaign_params)
+    working_patterns = []
+    working_patterns << "full_time" if ActiveModel::Type::Boolean.new.cast(campaign_params.delete(:email_fulltime)) == "true"
+    working_patterns << "part_time" if ActiveModel::Type::Boolean.new.cast(campaign_params.delete(:email_parttime)) == "true"
+    working_patterns << "job_share" if ActiveModel::Type::Boolean.new.cast(campaign_params.delete(:email_jobshare)) == "true"
+    working_patterns
   end
 
   def trigger_search_performed_event
