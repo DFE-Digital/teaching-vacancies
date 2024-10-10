@@ -1,6 +1,6 @@
 - label_text = local_assigns[:label_text].presence || t("jobs.search.location")
 
-.autocomplete data-source="getLocationSuggestions" data-controller="autocomplete"
+.autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" data-debouncems="400"
   = f.govuk_text_field :location,
     label: { text: label_text, size: "s" },
     autocomplete: "off",

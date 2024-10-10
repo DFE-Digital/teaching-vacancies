@@ -1,5 +1,5 @@
 - unless @organisation
-  .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete"
+  .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" data-debouncems="300"
     = f.govuk_text_field :location,
       label: { text: t("subscriptions.new.campaign.location"), size: "s" },
       form_group: { class: %w[location-finder__input govuk-!-margin-bottom-0] },
