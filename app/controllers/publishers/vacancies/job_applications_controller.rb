@@ -42,7 +42,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: job_application.name)
   end
 
-  require 'zip'
+  require "zip"
 
   def download_selected
     downloads = vacancy.job_applications.find params[:applications]
@@ -60,7 +60,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       filename: "applications_#{vacancy.id}.zip",
       type: "application/zip",
       disposition: "attachment",
-      )
+    )
   end
 
   private
