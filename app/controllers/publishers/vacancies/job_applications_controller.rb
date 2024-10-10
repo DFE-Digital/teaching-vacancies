@@ -2,6 +2,8 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
+  include ActionController::Live
+
   helper_method :employments, :form, :job_applications, :qualification_form_param_key, :sort, :sorted_job_applications
 
   def reject
@@ -47,23 +49,61 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def download_selected
     downloads = vacancy.job_applications.find params[:applications]
 
-    # pdfs = downloads.map { |ja| JobApplicationPdfGenerator.new(ja, vacancy).generate }
-
-    stringio = Zip::OutputStream.write_buffer do |zio|
-      downloads.each do |job_application|
-        zio.put_next_entry "job_application_#{job_application.id}.pdf"
-        zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
-      end
-    end
-    send_data(
-      stringio.string,
+    # stringio = Zip::OutputStream.write_buffer do |zio|
+    #   downloads.each do |job_application|
+    #     zio.put_next_entry "job_application_#{job_application.id}.pdf"
+    #     zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
+    #   end
+    # end
+    # send_data(
+    #   stringio.string,
+    #   filename: "applications_#{vacancy.id}.zip",
+    #   type: "application/zip",
+    #   disposition: "attachment",
+    # )
+    # This would seem to do streaming, but the User experience seems very similar
+    send_stream(
       filename: "applications_#{vacancy.id}.zip",
       type: "application/zip",
-      disposition: "attachment",
-    )
+      disposition: "inline",
+    ) do |stream|
+      io = StringIO.new
+      pos = 0
+      Zip::OutputStream.write_buffer(io) do |zio|
+        downloads.each do |job_application|
+          zio.put_next_entry "job_application_#{job_application.id}.pdf"
+          zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
+
+          io.seek pos
+          stream.write io.read
+          pos = io.size
+        end
+      end
+      io.seek pos
+      stream.write io.read
+    end
   end
 
   private
+
+  def generate_zip downloads
+    Enumerator.new do |yielder|
+      io = StringIO.new
+      pos = 0
+      Zip::OutputStream.write_buffer(io) do |zio|
+        downloads.each do |job_application|
+          zio.put_next_entry "job_application_#{job_application.id}.pdf"
+          zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
+
+          io.seek pos
+          yielder << io.read
+          pos = io.size
+        end
+      end
+      io.seek pos
+      yielder << io.read
+    end.lazy
+  end
 
   def job_applications
     @job_applications ||= vacancy.job_applications.not_draft
