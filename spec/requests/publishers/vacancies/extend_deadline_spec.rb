@@ -51,6 +51,7 @@ RSpec.describe "Extend deadline" do
         "starts_on(2i)" => starts_on.month.to_s,
         "starts_on(3i)" => starts_on.day.to_s,
         expiry_time: "9:00",
+        extension_reason: "no_applications",
       }
     end
 

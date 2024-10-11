@@ -414,6 +414,8 @@ shared:
     - is_job_share
     - hourly_rate
     - flexi_working
+    - extension_reason
+    - other_extension_reason_details
   failed_imported_vacancies:
     - id
     - import_errors
