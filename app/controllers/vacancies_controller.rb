@@ -60,7 +60,7 @@ class VacanciesController < ApplicationController
           landing_page: params[:landing_page_slug],
           filters_set_from_keywords: form.filters_from_keyword.present?,
         },
-        event_hidden_data: {
+        hidden_data: {
           location_polygon_used: @vacancies_search&.polygon&.id,
         },
       }
