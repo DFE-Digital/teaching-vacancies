@@ -26,6 +26,7 @@ gem "aws-sdk-s3", require: false
 gem "breasal"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.2"
+gem "factory_bot_rails"
 gem "faker"
 gem "friendly_id"
 gem "front_matter_parser"
@@ -99,7 +100,6 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "database_consistency", require: false
   gem "dotenv-rails"
-  gem "factory_bot_rails"
   gem "launchy", "~> 3.0"
   gem "parallel_tests"
   gem "pdf-inspector", require: "pdf/inspector"
