@@ -47,47 +47,59 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   require "zip"
 
   def download_selected
-    downloads = vacancy.job_applications.find params[:applications]
+    # This eliminates all the N+1 issues, but PDF generation still takes ~1.5 seconds per application
+    # writing a text string to the PDF seems to take 200ms, and 'closing' the document ~500ms
+    downloads = Vacancy
+                  .includes(:organisations, :publisher_organisation)
+                  .includes(job_applications: [:qualifications, :employments, :training_and_cpds, :references, { jobseeker: :jobseeker_profile }])
+                  .find(vacancy.id)
+                  .job_applications.select { |job_application| params[:applications].include?(job_application.id) }
 
-    # stringio = Zip::OutputStream.write_buffer do |zio|
-    #   downloads.each do |job_application|
-    #     zio.put_next_entry "job_application_#{job_application.id}.pdf"
-    #     zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
-    #   end
-    # end
-    # send_data(
-    #   stringio.string,
-    #   filename: "applications_#{vacancy.id}.zip",
-    #   type: "application/zip",
-    #   disposition: "attachment",
-    # )
-    # This would seem to do streaming, but the User experience seems very similar
-    send_stream(
+    stringio = Zip::OutputStream.write_buffer do |zio|
+      downloads.each do |job_application|
+        zio.put_next_entry "job_application_#{job_application.id}.pdf"
+        logger.debug "generate #{job_application.id}.pdf"
+        pdf = JobApplicationPdfGenerator.new(job_application, vacancy).generate
+        logger.debug "render #{job_application.id}.pdf"
+        zio.write pdf.render
+        logger.debug "finished #{job_application.id}.pdf"
+      end
+    end
+    send_data(
+      stringio.string,
       filename: "applications_#{vacancy.id}.zip",
       type: "application/zip",
       disposition: "inline",
-    ) do |stream|
-      io = StringIO.new
-      pos = 0
-      Zip::OutputStream.write_buffer(io) do |zio|
-        downloads.each do |job_application|
-          zio.put_next_entry "job_application_#{job_application.id}.pdf"
-          zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
-
-          io.seek pos
-          stream.write io.read
-          pos = io.size
-        end
-      end
-      io.seek pos
-      stream.write io.read
-    end
+    )
+    # This would seem to do streaming, but the User experience seems very similar
+    # and also it doesn't produce a valid Zip file
+    # send_stream(
+    #   filename: "applications_#{vacancy.id}.zip",
+    #   type: "application/zip",
+    #   disposition: "inline",
+    # ) do |stream|
+    #   io = StringIO.new
+    #   pos = 0
+    #   Zip::OutputStream.write_buffer(io) do |zio|
+    #     downloads.each do |job_application|
+    #       zio.put_next_entry "job_application_#{job_application.id}.pdf"
+    #       zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
+    #
+    #       io.seek pos
+    #       stream.write io.read
+    #       pos = io.size
+    #       io.seek pos
+    #     end
+    #   end
+    #   io.seek pos
+    #   stream.write io.read
+    # end
   end
 
   private
 
-  def generate_zip downloads
-    Enumerator.new do |yielder|
+  def generate_zip(downloads)
+    Enumerator.new { |yielder|
       io = StringIO.new
       pos = 0
       Zip::OutputStream.write_buffer(io) do |zio|
@@ -102,7 +114,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       end
       io.seek pos
       yielder << io.read
-    end.lazy
+    }.lazy
   end
 
   def job_applications
