@@ -37,7 +37,8 @@ Rails.application.configure do
                        "https://www.google-analytics.com",
                        "https://www.googletagmanager.com",
                        "https://www.recaptcha.net",
-                       "https://*.visualwebsiteoptimizer.com"
+                       "https://*.visualwebsiteoptimizer.com",
+                       "https://www.clarity.ms"
 
     policy.style_src   :self
   end
