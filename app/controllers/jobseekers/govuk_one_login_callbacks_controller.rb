@@ -20,7 +20,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
         session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
         jobseeker.update(govuk_one_login_id: govuk_one_login_user.id)
       # User changed their email in OneLogin after having already signed in with us
-      elsif jobseeker.email.downcase != govuk_one_login_user.email.downcase
+      elsif jobseeker.email != govuk_one_login_user.email
         jobseeker.update(email: govuk_one_login_user.email)
       end
 
