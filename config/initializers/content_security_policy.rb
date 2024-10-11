@@ -13,7 +13,8 @@ Rails.application.configure do
                        "https://*.sentry.io",
                        "https://*.google-analytics.com",
                        "https://*.analytics.google.com",
-                       "https://dev.visualwebsiteoptimizer.com"
+                       "https://dev.visualwebsiteoptimizer.com",
+                       "https://v.clarity.ms"
 
     policy.font_src    :self,
                        :data
