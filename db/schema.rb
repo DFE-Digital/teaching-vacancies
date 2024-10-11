@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_24_144355) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_11_114125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -320,6 +320,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_144355) do
     t.text "last_sign_in_ip_ciphertext"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
+    t.citext "email_for_type_change", default: "", null: false
     t.index ["confirmation_token"], name: "index_jobseekers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_jobseekers_on_reset_password_token", unique: true
