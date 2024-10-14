@@ -21,6 +21,7 @@ class VacanciesController < ApplicationController
   def campaign_landing_page
     @form ||= Jobseekers::SearchForm.new(campaign_search_params.merge(landing_page: @landing_page))
     @jobseeker_name = params[:email_name] || "Jobseeker"
+    @subject = params[:email_subject] || ""
 
     @vacancies_search = Search::VacancySearch.new(@form.to_hash, sort: @form.sort)
     @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
