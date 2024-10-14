@@ -37,8 +37,7 @@ RSpec.describe VacanciesController do
     let(:vacancy) { create(:vacancy, :external) }
 
     it "has the correct text" do
-      # expect(response.body).to have_content("View advert on school website (opens in new tab)")
-      expect(response.body).to have_content("View advert")
+      expect(response.body).to have_content("View advert on school website (opens in new tab)")
     end
   end
 end
