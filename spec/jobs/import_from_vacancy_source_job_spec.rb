@@ -66,6 +66,7 @@ RSpec.describe ImportFromVacancySourceJob do
               :published,
               :external,
               phases: [],
+              enable_job_applications: true,
               organisations: [school],
               job_title: "",
               about_school: "test",

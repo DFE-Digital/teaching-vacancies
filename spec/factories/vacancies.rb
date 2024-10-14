@@ -93,7 +93,7 @@ FactoryBot.define do
 
     trait :no_tv_applications do
       receive_applications { "website" }
-      application_link { Faker::Internet.url(host: "example.com") }
+      application_link { Faker::Internet.url(host: "contoso.com") }
       enable_job_applications { false }
     end
 
@@ -202,6 +202,7 @@ FactoryBot.define do
     end
 
     trait :external do
+      enable_job_applications { false }
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
       how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
       job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
@@ -209,6 +210,7 @@ FactoryBot.define do
       external_source { "may_the_feed_be_with_you" }
       external_reference { "J3D1" }
       external_advert_url { "https://example.com/jobs/123" }
+      phases { %w[secondary] }
     end
   end
 end
