@@ -7,11 +7,9 @@
 
       = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-      p.govuk-body = t(".about_title")
+      p.govuk-body = t(".using_application_form_html", link: govuk_link_to(t(".kcsie_guidance"), t(".kcsie_url")))
 
-      ul.govuk-list.govuk-list--bullet
-        - t(".about_items").each do |item|
-          li = item
+      p.govuk-body = t(".reason_for_our_form")
 
       = govuk_details(summary_text: "See what an application form looks like") do
         = job_application_review(job_application_sample, step_process: {}, show_tracks: false, show_sidebar: false, allow_edit: false) do |r|
@@ -21,7 +19,11 @@
         = f.hidden_field :enable_job_applications
       - else
         = f.govuk_radio_buttons_fieldset :enable_job_applications, legend: { size: "m", tag: nil } do
-          = f.govuk_radio_button :enable_job_applications, true, link_errors: true
+          = f.govuk_radio_button :enable_job_applications, true,
+            label: -> { safe_join([t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true"), govuk_tag(text: t(".kcsie_compliant"), colour: "green")]) },
+            hint: { text: t(".this_form_is_kept_up_to_date") },
+            link_errors: true
+          = f.govuk_radio_divider
           = f.govuk_radio_button :enable_job_applications, "false"
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
