@@ -52,7 +52,7 @@ class Jobseekers::SubscriptionForm < BaseForm
 
   def job_alert_params
     {
-      email: email,
+      email: email&.downcase,
       frequency: frequency,
       search_criteria: search_criteria_hash,
     }
