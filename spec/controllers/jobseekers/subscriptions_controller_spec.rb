@@ -2,10 +2,11 @@ require "rails_helper"
 
 RSpec.describe SubscriptionsController, recaptcha: true do
   describe "#create" do
+    let(:email) { "foo@example.net" }
     let(:params) do
       {
         jobseekers_subscription_form: {
-          email: "foo@example.net",
+          email: email,
           frequency: "daily",
           keyword: "english",
         }.symbolize_keys,
@@ -22,7 +23,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
       let(:recaptcha_score) { 0.9 }
       let(:job_alert_params) do
         {
-          email: "foo@example.net",
+          email: email,
           frequency: "daily",
           search_criteria: { keyword: "english" },
         }
@@ -37,6 +38,7 @@ RSpec.describe SubscriptionsController, recaptcha: true do
         allow(Subscription).to receive(:new).and_return(subscription)
         allow(subscription).to receive(:id).and_return("abc123")
         allow(subscription).to receive(:class).and_return(Subscription)
+        allow(subscription).to receive(:email).and_return(email)
         allow(Jobseekers::SubscriptionForm).to receive(:new).and_return(form)
         allow(form).to receive(:job_alert_params).and_return(job_alert_params)
         allow(form).to receive(:invalid?).and_return(!subscription_form_valid?)
