@@ -10,7 +10,7 @@ RSpec.describe Jobseekers::AccountTransfer do
   let!(:saved_jobs) { create_list(:saved_job, 3, jobseeker: account_to_transfer) }
   let!(:subscriptions) { create_list(:subscription, 2, email: account_to_transfer.email) }
 
-  subject { described_class.new(current_jobseeker, account_to_transfer.email) }
+  subject { described_class.new(current_jobseeker, account_to_transfer.email.upcase) }
 
   describe "#call" do
     context "when account to transfer exists" do

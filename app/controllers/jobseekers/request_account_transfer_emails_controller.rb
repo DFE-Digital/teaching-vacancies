@@ -7,7 +7,7 @@ class Jobseekers::RequestAccountTransferEmailsController < Jobseekers::BaseContr
     @request_account_transfer_email_form = Jobseekers::RequestAccountTransferEmailForm.new(request_account_transfer_email_form_params)
 
     if @request_account_transfer_email_form.valid?
-      jobseeker = Jobseeker.find_by(email: @request_account_transfer_email_form.email)
+      jobseeker = Jobseeker.find_by(email: @request_account_transfer_email_form.email.downcase)
       if jobseeker
         jobseeker.generate_merge_verification_code
         Jobseekers::AccountMailer.request_account_transfer(jobseeker).deliver_now
