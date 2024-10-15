@@ -2,9 +2,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
   include ReturnPathTracking::Helpers
 
   def new
-    if (attempted_path = params[:attempted_path])
-      flash.now[:alert] = t("jobseekers.forced_login.#{forced_login_resource(attempted_path)}_html")
-    elsif (login_failure = params[:login_failure])
+    if (login_failure = params[:login_failure])
       alert_text = t("devise.failure.#{login_failure}")
       trigger_jobseeker_sign_in_event(:failure, alert_text)
       flash.now[:alert] = alert_text
