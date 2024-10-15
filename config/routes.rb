@@ -370,6 +370,7 @@ Rails.application.routes.draw do
         get :reject
         get :withdrawn
         post :update_status
+        post :download_selected, on: :collection
       end
     end
   end
