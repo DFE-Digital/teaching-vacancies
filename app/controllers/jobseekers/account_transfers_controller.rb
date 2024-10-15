@@ -9,11 +9,11 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
 
     if @account_transfer_form.valid?
       if successfully_transfer_account_data?
-        flash[:success] = "Your account details have been transferred successfully!"
+        flash[:success] = I18n.t("jobseekers.account_transfers.create.success")
         redirect_to jobseekers_profile_path
       else
         @email = @account_transfer_form.email
-        flash[:error] = "Account transfer failed. Please try again."
+        flash[:error] = I18n.t("jobseekers.account_transfers.create.failure")
         render :new
       end
     else
