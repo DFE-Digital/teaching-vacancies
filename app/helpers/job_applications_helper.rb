@@ -157,6 +157,7 @@ module JobApplicationsHelper
     JobApplication.new(
       first_name: "Jane",
       last_name: "Smith",
+      national_insurance_number: "QQ 12 34 56 C",
       previous_names: "Churchill",
       street_address: "1 House Street",
       city: "Townington",
@@ -165,6 +166,10 @@ module JobApplicationsHelper
       phone_number: "07123456789",
       teacher_reference_number: "1234567",
       qualified_teacher_status: "yes",
+      statutory_induction_complete: "yes",
+      right_to_work_in_uk: "yes",
+      safeguarding_issue: "yes",
+      safeguarding_issue_details: Faker::Lorem.paragraph(sentence_count: 1),
       qualified_teacher_status_year: "2021",
       email_address: "jane.smith@gmail.com",
       support_needed: "yes",
@@ -202,19 +207,35 @@ module JobApplicationsHelper
         ],
       references:
         [
-          Reference.new(name: "Laura Davison", organisation: "Townington Secondary School", relationship: "Line manager", email: "l.davison@english.townington.ac.uk"),
-          Reference.new(name: "John Thompson", organisation: "Sheffield Secondary School", relationship: "Line manager", email: "john.thompson@english.sheffield.ac.uk"),
+          Reference.new(name: "Laura Davison",
+                        organisation: "Townington Secondary School",
+                        relationship: "Line manager",
+                        email: "l.davison@english.townington.ac.uk",
+                        job_title: %w[Headteacher Teacher].sample),
+          Reference.new(name: "John Thompson",
+                        organisation: "Sheffield Secondary School",
+                        relationship: "Line manager",
+                        email: "john.thompson@english.sheffield.ac.uk",
+                        job_title: %w[Headteacher Teacher].sample),
         ],
       qualifications:
         [
-          Qualification.new(category: :undergraduate, year: 2016, subject: "BA English Literature", grade: "2.1"),
-          Qualification.new(category: :other, year: 2019, subject: "PGCE English with QTS"),
-          Qualification.new(category: :a_level, year: 2012, qualification_results: [
+          Qualification.new(category: :undergraduate,
+                            institution: Faker::Educator.university,
+                            finished_studying: true,
+                            # finished_studying: Faker::Boolean.boolean,
+                            # finished_studying_details { finished_studying == false ? "Stopped due to illness" : "" }
+                            #
+                            year: 2016,
+                            subject: "BA English Literature",
+                            grade: "2.1"),
+          Qualification.new(category: :other, institution: Faker::Educator.university, year: 2019, subject: "PGCE English with QTS"),
+          Qualification.new(category: :a_level, institution: Faker::Educator.secondary_school, year: 2012, qualification_results: [
             QualificationResult.new(subject: "English Literature", grade: "A"),
             QualificationResult.new(subject: "History", grade: "B"),
             QualificationResult.new(subject: "French", grade: "A"),
           ]),
-          Qualification.new(category: :gcse, year: 2010, qualification_results: [
+          Qualification.new(category: :gcse, institution: Faker::Educator.secondary_school, year: 2010, qualification_results: [
             QualificationResult.new(subject: "Maths", grade: "A"),
             QualificationResult.new(subject: "English Literature", grade: "A"),
             QualificationResult.new(subject: "English Language", grade: "B"),
