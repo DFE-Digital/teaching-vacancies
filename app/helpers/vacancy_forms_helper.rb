@@ -56,7 +56,7 @@ module VacancyFormsHelper
     when "extend_closing_date"
       govuk_link_to(t("publishers.vacancies.show.heading_component.action.extend_closing_date"), organisation_job_extend_deadline_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     when "relist"
-      govuk_link_to(t("publishers.vacancies.show.heading_component.action.relist"), organisation_job_extend_deadline_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+      govuk_link_to(t("publishers.vacancies.show.heading_component.action.relist"), organisation_job_relist_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post)
     when "publish"
       govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     when "preview"

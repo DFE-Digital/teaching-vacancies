@@ -1,5 +1,8 @@
-class Publishers::JobListing::RelistForm < Publishers::JobListing::ExtendDeadlineForm
-  attr_reader :publish_on
+class Publishers::JobListing::RelistForm < BaseForm
+  include ActiveRecord::AttributeAssignment
+  include DateAttributeAssignment
+
+  attr_reader :publish_on, :expires_at
   attr_writer :publish_on_day
 
   validates(:publish_on, date: { on_or_after: :today, on_or_before: :far_future }, unless: lambda do
@@ -7,15 +10,30 @@ class Publishers::JobListing::RelistForm < Publishers::JobListing::ExtendDeadlin
   end)
   validates :publish_on_day, inclusion: { in: %w[today tomorrow another_day] }
 
+  attr_accessor :expiry_time, :extension_reason, :other_extension_reason_details
+
+  validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future }
+  validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
+
+  validates :extension_reason, inclusion: { in: Vacancy.extension_reasons.keys }
+
   def initialize(params = {})
     @params = params
     super
   end
 
   def attributes_to_save
-    super.merge(
+    {
       publish_on: publish_on,
-    )
+      expires_at: expires_at,
+      extension_reason: extension_reason,
+      other_extension_reason_details: other_extension_reason_details,
+    }
+  end
+
+  def expires_at=(value)
+    expires_on = date_from_multiparameter_hash(value)
+    @expires_at = datetime_from_date_and_time(expires_on, expiry_time)
   end
 
   def publish_on_day

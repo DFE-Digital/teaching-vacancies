@@ -120,8 +120,9 @@
               - unless vacancy.external? || vacancy.draft?
                 - if vacancy.expired?
                   - row.with_action(text: t("buttons.relist_vacancy"),
-                               href: organisation_job_extend_deadline_path(vacancy.id),
-                               visually_hidden_text: "for #{vacancy.job_title}")
+                               href: organisation_job_relist_path(vacancy.id),
+                               visually_hidden_text: "for #{vacancy.job_title}",
+                               html_attributes: { "data-method": "post" })
                   - row.with_action(text: t("buttons.copy_expired_listing"),
                                href: organisation_job_copy_path(vacancy.id),
                                visually_hidden_text: "for #{vacancy.job_title}",
