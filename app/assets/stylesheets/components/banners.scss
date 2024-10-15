@@ -1,0 +1,33 @@
+.full-width-banner {
+  @include full-width-mast;
+  
+  .govuk-width-container {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  .govuk-grid-column-one-half:nth-child(2) img {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .govuk-width-container {
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .govuk-grid-row,
+  .govuk-grid-column-one-half {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

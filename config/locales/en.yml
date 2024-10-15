@@ -426,6 +426,12 @@ en:
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated
+    new_v2:
+      banner:
+        title: Get jobs sent straight to your inbox
+      headings:
+        teaching_roles: Teaching and leadership roles
+        support_roles: Support roles
 
   sub_nav:
     jobs: Jobs
