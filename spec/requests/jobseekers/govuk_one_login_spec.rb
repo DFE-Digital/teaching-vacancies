@@ -22,7 +22,8 @@ RSpec.describe "Govuk One Login authentication response" do
 
       get auth_govuk_one_login_callback_path
       expect(response).to redirect_to(root_path)
-      expect(response.request.flash[:alert]).to include("There was a problem signing in. Please try again.")
+      expect(response.request.flash[:alert])
+        .to include(I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error"))
     end
 
     it "sets the OneLogin ID token in the user session" do

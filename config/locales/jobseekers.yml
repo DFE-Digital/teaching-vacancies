@@ -993,6 +993,9 @@ en:
         account_merge_confirmation_code:
           confirmation_code_mismatch: Confirmation code does not match.
           confirmation_code_expired: Confirmation code has expired. Please request a new code.
+    govuk_one_login_callbacks:
+      openid_connect:
+        error: "There was a problem signing in. Please try again."
     unlocks:
       new:
         description: This link has already been used or is incorrect. If you still want to unlock your Teaching Vacancies account enter your email below.
