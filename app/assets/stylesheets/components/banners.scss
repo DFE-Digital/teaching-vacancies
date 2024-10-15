@@ -1,0 +1,19 @@
+.full-width-banner {
+  @include full-width-mast;
+  
+  .govuk-width-container {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .govuk-grid-column-one-half:nth-child(2) img {
+    max-width: 100vw;
+    width: calc(100% - 20px);  /* Adjust width to account for padding */
+    margin-left: 10px;         /* Add equal margin on both sides */
+    margin-right: 10px;        /* Ensure right margin is the same */
+    border: none;
+  }
+}
