@@ -11,4 +11,6 @@
     p.govuk-body = t(".govuk_one_log_in.paragraph1")
     p.govuk-body = t(".govuk_one_log_in.paragraph2")
 
-    = jobseeker_login_button(class: "govuk-!-margin-bottom-2")
+    = jobseeker_login_button(class: "govuk-!-margin-bottom-6")
+
+    = govuk_details(summary_text: t(".govuk_one_log_in.how_to_find_registered_email.summary"), text: t(".govuk_one_log_in.how_to_find_registered_email.body"))

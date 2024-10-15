@@ -925,6 +925,9 @@ en:
         govuk_one_log_in:
           paragraph1: Create your GOV.UK One Login account using the same email address as your Teaching Vacancies account to automatically save your account details.
           paragraph2: If you use a different email address, you'll be able to transfer your account details after signing in.
+          how_to_find_registered_email:
+            summary: How to find your registered email address
+            body: We sent a message to the email address associated with your Teaching Vacancies account informing you about this change.
       locked:
         description: You have been locked out of your account because you have made too many attempts to log in.
         having_trouble_html: Still having trouble? %{request_support_link}.
