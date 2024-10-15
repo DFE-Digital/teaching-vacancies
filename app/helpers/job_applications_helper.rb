@@ -153,7 +153,11 @@ module JobApplicationsHelper
     end
   end
 
-  def job_application_sample(vacancy) # rubocop: disable Metrics/MethodLength
+  # These are only used to generate example data
+  POSSIBLE_DEGREE_GRADES = %w[2.1 2.2 Honours].freeze
+  POSSIBLE_OTHER_GRADES = %w[Pass Merit Distinction].freeze
+
+  def job_application_sample(vacancy) # rubocop: disable Metrics/MethodLength, Metrics/AbcSize
     JobApplication.new(
       first_name: "Jane",
       last_name: "Smith",
@@ -222,10 +226,6 @@ module JobApplicationsHelper
         [
           Qualification.new(category: :undergraduate,
                             institution: Faker::Educator.university,
-                            finished_studying: true,
-                            # finished_studying: Faker::Boolean.boolean,
-                            # finished_studying_details { finished_studying == false ? "Stopped due to illness" : "" }
-                            #
                             year: 2016,
                             subject: "BA English Literature",
                             grade: "2.1"),
@@ -244,7 +244,15 @@ module JobApplicationsHelper
             QualificationResult.new(subject: "Music", grade: "B"),
             QualificationResult.new(subject: "Geography", grade: "C"),
           ]),
-        ],
+        ].map do |qual|
+          qual.tap do |q|
+            q.finished_studying = (q.undergraduate? || q.postgraduate? || q.other? ? Faker::Boolean.boolean : nil)
+            q.finished_studying_details = (q.finished_studying == false ? "Stopped due to illness" : "")
+            if q.finished_studying?
+              q.grade = q.undergraduate? || q.postgraduate? ? POSSIBLE_DEGREE_GRADES.sample : POSSIBLE_OTHER_GRADES.sample
+            end
+          end
+        end,
       vacancy: vacancy,
     )
   end
