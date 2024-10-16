@@ -2,46 +2,45 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   include Jobseekers::GovukOneLogin::Errors
   # Devise redirects response from Govuk One Login to this method.
   # The request parameters contain the response from Govuk One Login from the user authentication through their portal.
-
-  # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/AbcSize
   def openid_connect
-    if (govuk_one_login_user = Jobseekers::GovukOneLogin::UserFromAuthResponse.call(params, session))
-      session[:govuk_one_login_id_token] = govuk_one_login_user.id_token
-      jobseeker = Jobseeker.find_by(govuk_one_login_id: govuk_one_login_user.id) ||
-                  Jobseeker.find_by(email: govuk_one_login_user.email) # Pre-migration to GovUK One Login Jobseeker still non-linked with a One Login account.
+    govuk_one_login_user = Jobseekers::GovukOneLogin::UserFromAuthResponse.call(params, session)
+    return error_redirect unless govuk_one_login_user
 
-      # Completely new user
-      if jobseeker.nil?
-        session[:newly_created_user] = { value: "true", path: "/", expires: 1.hour.from_now }
-        jobseeker = Jobseeker.create_from_govuk_one_login(email: govuk_one_login_user.email, govuk_one_login_id: govuk_one_login_user.id)
-      # User exists but is their first time signing-in with OneLogin
-      elsif jobseeker.govuk_one_login_id.nil?
-        session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
-        jobseeker.update(govuk_one_login_id: govuk_one_login_user.id)
-      # User changed their email in OneLogin after having already signed in with us
-      elsif jobseeker.email != govuk_one_login_user.email
-        jobseeker.update(email: govuk_one_login_user.email)
-      end
+    session[:govuk_one_login_id_token] = govuk_one_login_user.id_token
 
-      session.delete(:govuk_one_login_state)
-      session.delete(:govuk_one_login_nonce)
+    jobseeker = match_jobseeker_from_govuk_one_login(govuk_one_login_user)
 
-      if jobseeker
-        sign_out_except(:jobseeker)
-        sign_in_and_redirect jobseeker
-      end
-    else
-      error_redirect
+    session.delete(:govuk_one_login_state)
+    session.delete(:govuk_one_login_nonce)
+
+    if jobseeker
+      sign_out_except(:jobseeker)
+      sign_in_and_redirect jobseeker
     end
   rescue GovukOneLoginError => e
     Rails.logger.error(e.message)
     error_redirect
   end
-  # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/AbcSize
 
   private
+
+  def match_jobseeker_from_govuk_one_login(govuk_one_login_user)
+    id = govuk_one_login_user.id
+    email = govuk_one_login_user.email
+    jobseeker = Jobseeker.find_from_govuk_one_login(id:, email:)
+
+    if jobseeker.nil? # Completely new user
+      session[:newly_created_user] = { value: "true", path: "/", expires: 1.hour.from_now }
+      jobseeker = Jobseeker.create_from_govuk_one_login(id:, email:)
+    elsif jobseeker.govuk_one_login_id.nil? # User exists but is their first time signing-in with OneLogin
+      session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
+      jobseeker.update(govuk_one_login_id: id)
+    elsif jobseeker.email != email # User changed their email in OneLogin after having already signed in with us
+      jobseeker.update_email_from_govuk_one_login!(email)
+    end
+
+    jobseeker
+  end
 
   def error_redirect
     return if jobseeker_signed_in?
