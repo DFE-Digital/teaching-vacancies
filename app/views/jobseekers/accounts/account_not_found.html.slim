@@ -4,6 +4,10 @@
   .govuk-grid-column-two-thirds
     h1.govuk-heading-l = t(".page_title")
 
-    p.govuk-body = t(".could_not_find_account")
-    p.govuk-body = t(".continue_to_profile", link: govuk_link_to(t(".profile_link_text"), jobseekers_profile_path)).html_safe
-    p.govuk-body = t(".transfer_account", link: govuk_link_to(t(".transfer_account_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
+    p.govuk-body = t(".search_and_apply")
+    = govuk_button_link_to t(".search_for_jobs_button_text"), jobs_path
+
+    h2.govuk-heading-m = t(".secondary_header")
+
+    p.govuk-body = t(".transfer_account")
+    = govuk_button_link_to t(".transfer_account_button_text"), new_jobseekers_request_account_transfer_email_path
