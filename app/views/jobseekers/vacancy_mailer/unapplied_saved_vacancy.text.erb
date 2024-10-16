@@ -1,4 +1,4 @@
-<%= t(".salutation", name: @jobseeker.jobseeker_profile.first_name) %>
+<%= t(".salutation", name: @jobseeker.jobseeker_profile&.first_name) %>
 
 # <%= t(".vacancy_closes", job_title: @vacancy.job_title, school: @vacancy.organisation.name, date: @vacancy.expires_at.to_date.to_formatted_s) %>
 
