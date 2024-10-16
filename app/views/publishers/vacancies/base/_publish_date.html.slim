@@ -6,5 +6,5 @@
   = f.govuk_radio_button :publish_on_day, :another_day,
     label: { text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.another_day") } do
     = f.govuk_date_field :publish_on,
-      legend: { tag: nil, text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on") },
+      legend: { tag: nil, text: t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.another_day") },
       hint: -> { t("helpers.hint.date", date: 1.week.from_now.to_fs(:publish_on_date)) }

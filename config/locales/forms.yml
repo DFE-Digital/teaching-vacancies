@@ -776,7 +776,6 @@ en:
           email: By email
           website: Through a website
       publishers_job_listing_important_dates_form:
-        publish_on: Another date
         publish_on_day_options:
           another_day: Another date
           today: Today (%{date})
