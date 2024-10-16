@@ -43,11 +43,9 @@ en:
           specify_jobs: specify the types of teaching jobs you’re looking for
       account_found:
         page_title: Account found
-        email_found: We've found a Teaching Vacancies account using the same email address as your GOV.UK One Login account and have saved your information.
-        helpful_links: You can %{update_profile_link}, continue to %{search_and_apply_link} or %{create_alert_link}.
-        update_profile_link_text: update your profile details
-        search_and_apply_link_text: search and apply for jobs
-        create_alert_link_text: create a job alert
+        email_found: We've found a Teaching Vacancies account using this email address.
+        account_information_saved: Your account information including past applications has been saved.
+        search_for_jobs_button_text: Search for jobs
       account_not_found:
         search_and_apply: You can now search and apply for jobs.
         page_title: You have created a new Teaching Vacancies account
