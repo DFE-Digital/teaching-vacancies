@@ -40,7 +40,7 @@ RSpec.describe "Jobseekers can sign in to their account" do
     scenario "does not sign in the jobseeker and displays an error message" do
       sign_in_jobseeker_govuk_one_login(jobseeker, navigate: true, error: true)
       expect(page.current_path).to eq(root_path)
-      expect(page).to have_text("There was a problem signing in. Please try again.")
+      expect(page).to have_text(I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error"))
       expect(page).to have_link(text: I18n.t("nav.sign_in"))
     end
   end

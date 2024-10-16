@@ -63,7 +63,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
 
       fill_in "jobseekers_account_transfer_form[account_merge_confirmation_code]", with: old_jobseeker_account.reload.account_merge_confirmation_code
       click_on "Confirm account transfer"
-      expect(page).to have_content "Your account details have been transferred successfully!"
+      expect(page).to have_content I18n.t("jobseekers.account_transfers.create.success")
 
       expect_account_to_be_populated_with_old_account_data
     end
@@ -91,7 +91,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
       fill_in "jobseekers-account-transfer-form-account-merge-confirmation-code-field", with: old_jobseeker_account.reload.account_merge_confirmation_code
       click_on "Confirm account transfer"
 
-      expect(page).not_to have_content "Your account details have been transferred successfully!"
+      expect(page).not_to have_content I18n.t("jobseekers.account_transfers.create.failure")
       expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
       within "ul.govuk-list.govuk-error-summary__list" do
         expect(page).to have_link("Confirmation code has expired. Please request a new code.", href: "#jobseekers-account-transfer-form-account-merge-confirmation-code-field-error")

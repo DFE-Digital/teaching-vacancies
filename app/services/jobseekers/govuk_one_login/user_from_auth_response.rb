@@ -25,7 +25,7 @@ class Jobseekers::GovukOneLogin::UserFromAuthResponse
     validate_user_info(user_info_response, user_id)
 
     Jobseekers::GovukOneLogin::User.new(id: user_id,
-                                        email: user_info_response["email"],
+                                        email: user_info_response["email"].downcase,
                                         id_token: tokens_response["id_token"])
   end
 

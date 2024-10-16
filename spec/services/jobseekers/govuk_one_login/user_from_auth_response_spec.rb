@@ -25,7 +25,7 @@ RSpec.describe Jobseekers::GovukOneLogin::UserFromAuthResponse do
          "iss" => "#{Rails.application.config.govuk_one_login_base_url}/",
          "aud" => Rails.application.config.govuk_one_login_client_id }]
     end
-    let(:user_info_response) { { "email" => "user@example.com", "sub" => "sub_stub" } }
+    let(:user_info_response) { { "email" => "User@Example.com", "sub" => "sub_stub" } }
     let(:client) do
       instance_double(Jobseekers::GovukOneLogin::Client, tokens: tokens_response,
                                                          decode_id_token: decoded_id_token,
@@ -188,7 +188,7 @@ RSpec.describe Jobseekers::GovukOneLogin::UserFromAuthResponse do
         expect(result.id).to eq("sub_stub")
       end
 
-      it "contains the user email" do
+      it "contains the downcased user email" do
         expect(result.email).to eq("user@example.com")
       end
 

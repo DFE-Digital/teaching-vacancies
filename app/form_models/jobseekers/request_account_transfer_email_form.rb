@@ -6,7 +6,7 @@ class Jobseekers::RequestAccountTransferEmailForm < BaseForm
   validate :validate_recent_code_request, if: -> { email.present? }
 
   def validate_recent_code_request
-    jobseeker = Jobseeker.find_by(email: email)
+    jobseeker = Jobseeker.find_by(email: email.downcase)
     return if jobseeker.nil?
 
     return unless jobseeker.account_merge_confirmation_code_generated_at.present? && jobseeker.account_merge_confirmation_code_generated_at > 1.minute.ago
