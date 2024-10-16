@@ -482,6 +482,7 @@ en:
           success: "The deadline for %{job_title} has been extended"
       relist:
         edit:
+          caption: Relist job
           heading: Relist %{job_title}
           title: Relist - %{job_title}
           reason_label: Why are you relisting this job?

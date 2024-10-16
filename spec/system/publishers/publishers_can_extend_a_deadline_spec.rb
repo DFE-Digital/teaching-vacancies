@@ -3,14 +3,18 @@ require "rails_helper"
 RSpec.describe "Publishers can extend a deadline" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
-  let(:expires_at) { vacancy.expires_at + 1.month }
+  let(:expires_at) { vacancy.expires_at + 2.months }
   let(:extension_reason) { Faker::Lorem.paragraph }
   let(:vacancy) { Vacancy.last }
 
-  before do
+  around do |example|
     # Travel to mid-day to avoid any timezone issues
-    Timecop.travel DateTime.new(2024, 10, 6, 12, 0, 0)
+    Timecop.travel DateTime.new(2024, 10, 6, 12, 0, 0) do
+      example.run
+    end
+  end
 
+  before do
     create(:vacancy, vacancy_type, organisations: [organisation])
     login_publisher(publisher: publisher, organisation: organisation)
     visit organisation_jobs_with_type_path(vacancy_type)
@@ -20,8 +24,6 @@ RSpec.describe "Publishers can extend a deadline" do
 
   after do
     logout
-
-    Timecop.return
   end
 
   context "when the vacancy has not expired" do
@@ -101,6 +103,8 @@ RSpec.describe "Publishers can extend a deadline" do
         fill_in "publishers_job_listing_relist_form[publish_on(3i)]", with: publish_date.day
 
         click_on I18n.t("buttons.relist_vacancy")
+
+        expect(page).to have_content I18n.t("publishers.vacancies.relist.update.success", job_title: vacancy.job_title)
 
         expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
         expect(vacancy.reload).to have_attributes(extension_reason: "didnt_find_right_candidate",

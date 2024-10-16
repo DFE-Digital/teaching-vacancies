@@ -5,6 +5,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
+    span.govuk-caption-l = t(".caption")
     h1.govuk-heading-xl = t(".heading", job_title: vacancy.job_title)
 
     = form_for @form, url: organisation_job_relist_path(vacancy.id), method: :patch do |f|
