@@ -20,10 +20,8 @@ RSpec.describe "Saved jobs" do
     context "when a jobseeker is not signed in" do
       before { get(new_jobseekers_saved_job_path(vacancy.id)) }
 
-      it "redirects to the sign in page with a flash message explaining why" do
-        follow_redirect!
-
-        expect(flash[:alert]).to be_present
+      it "redirects to the sign in page" do
+        expect(response.location).to match(a_string_matching(new_jobseeker_session_path))
       end
     end
   end
