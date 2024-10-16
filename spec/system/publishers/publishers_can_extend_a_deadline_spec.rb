@@ -15,7 +15,7 @@ RSpec.describe "Publishers can extend a deadline" do
   end
 
   before do
-    create(:vacancy, vacancy_type, organisations: [organisation])
+    create(:vacancy, vacancy_type, organisations: [organisation], created_at: Date.yesterday)
     login_publisher(publisher: publisher, organisation: organisation)
     visit organisation_jobs_with_type_path(vacancy_type)
     click_on vacancy.job_title
@@ -51,14 +51,15 @@ RSpec.describe "Publishers can extend a deadline" do
   context "when the vacancy has expired" do
     let(:vacancy_type) { :expired }
     let(:extend_expires_at) { I18n.t("publishers.vacancies.show.heading_component.action.relist") }
+    let(:new_vacancy) { Vacancy.order(:created_at).last }
 
     before do
       fill_in "publishers_job_listing_relist_form[expires_at(1i)]", with: expires_at.year
       fill_in "publishers_job_listing_relist_form[expires_at(2i)]", with: expires_at.month
       fill_in "publishers_job_listing_relist_form[expires_at(3i)]", with: expires_at.day
-      choose "9am", name: "publishers_job_listing_relist_form[expiry_time]"
+      choose "9am", visible: false, name: "publishers_job_listing_relist_form[expiry_time]"
 
-      choose I18n.t("publishers.vacancies.extend_deadline.show.extension_reason.didnt_find_right_candidate")
+      choose I18n.t("publishers.vacancies.extend_deadline.show.extension_reason.didnt_find_right_candidate"), visible: false
     end
 
     it "returns an error without a publish date" do
@@ -67,16 +68,40 @@ RSpec.describe "Publishers can extend a deadline" do
       expect(page).to have_content("There is a problem")
     end
 
-    it "can be re-listed for publishing today" do
-      choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: "6 October 2024"),
-             name: "publishers_job_listing_relist_form[publish_on_day]"
+    context "when re-listing for publication today" do
+      before do
+        choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: "6 October 2024"), visible: false,
+                                                                                                                                         name: "publishers_job_listing_relist_form[publish_on_day]"
 
-      click_on I18n.t("buttons.relist_vacancy")
+        click_on I18n.t("buttons.relist_vacancy")
+      end
 
-      expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
-      expect(vacancy.reload).to have_attributes(extension_reason: "didnt_find_right_candidate",
-                                                publish_on: Date.today,
-                                                expires_at: expires_at)
+      it "creates a new vacancy" do
+        expect(page).to have_content I18n.t("publishers.vacancies.relist.update.success", job_title: new_vacancy.job_title)
+        expect(new_vacancy).not_to eq(vacancy)
+      end
+
+      it "publishes the relisted vacancy" do
+        expect(current_path).to eq(organisation_job_summary_path(new_vacancy.id))
+        expect(new_vacancy).to have_attributes(extension_reason: "didnt_find_right_candidate",
+                                               publish_on: Date.today,
+                                               expires_at: expires_at)
+      end
+
+      context "when looking at tabs" do
+        before do
+          click_on "Job listings"
+        end
+
+        it "shows the new vacancy" do
+          expect(page).to have_content "Closing date:22 November 2024 at 9am"
+        end
+
+        it "keeps the closed vacancy closed" do
+          click_on I18n.t("jobs.dashboard.expired.tab_heading")
+          expect(page).to have_content "Listing ended:22 September 2024 at 9am"
+        end
+      end
     end
 
     it "can be re-listed for publishing tomorrow" do
@@ -85,10 +110,9 @@ RSpec.describe "Publishers can extend a deadline" do
 
       click_on I18n.t("buttons.relist_vacancy")
 
-      expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
-      expect(vacancy.reload).to have_attributes(extension_reason: "didnt_find_right_candidate",
-                                                publish_on: Date.tomorrow,
-                                                expires_at: expires_at)
+      expect(new_vacancy).to have_attributes(extension_reason: "didnt_find_right_candidate",
+                                             publish_on: Date.tomorrow,
+                                             expires_at: expires_at)
     end
 
     context "when choosing another publish date" do
@@ -106,10 +130,9 @@ RSpec.describe "Publishers can extend a deadline" do
 
         expect(page).to have_content I18n.t("publishers.vacancies.relist.update.success", job_title: vacancy.job_title)
 
-        expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
-        expect(vacancy.reload).to have_attributes(extension_reason: "didnt_find_right_candidate",
-                                                  publish_on: publish_date,
-                                                  expires_at: expires_at)
+        expect(new_vacancy).to have_attributes(extension_reason: "didnt_find_right_candidate",
+                                               publish_on: publish_date,
+                                               expires_at: expires_at)
       end
     end
   end

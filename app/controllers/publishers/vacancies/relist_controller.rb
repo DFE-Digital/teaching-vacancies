@@ -1,7 +1,7 @@
 class Publishers::Vacancies::RelistController < Publishers::Vacancies::BaseController
   def create
     vacancy.status = :draft
-    CopyVacancy.new(vacancy).call
+    @vacancy = CopyVacancy.new(vacancy).call
 
     @form = Publishers::JobListing::RelistForm.new
 
@@ -11,10 +11,11 @@ class Publishers::Vacancies::RelistController < Publishers::Vacancies::BaseContr
   def update
     @form = Publishers::JobListing::RelistForm.new(relist_params)
     if @form.valid?
-      vacancy.update(@form.attributes_to_save)
+      vacancy.update(@form.attributes_to_save.merge(status: :published))
       update_google_index(vacancy)
       redirect_to organisation_job_summary_path(vacancy.id), success: t(".success", job_title: vacancy.job_title)
     else
+      @vacancy = vacancy
       render :edit
     end
   end
