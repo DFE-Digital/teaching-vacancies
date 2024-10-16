@@ -9,7 +9,7 @@ RSpec.describe "Publishers can extend a deadline" do
 
   around do |example|
     # Travel to mid-day to avoid any timezone issues
-    Timecop.travel DateTime.new(2024, 10, 6, 12, 0, 0) do
+    travel_to DateTime.new(2024, 10, 6, 12, 0, 0) do
       example.run
     end
   end

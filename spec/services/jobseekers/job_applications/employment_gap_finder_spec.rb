@@ -7,7 +7,7 @@ RSpec.describe Jobseekers::JobApplications::EmploymentGapFinder do
   let(:employments) { nil }
 
   around do |example|
-    Timecop.freeze do
+    freeze_time do
       example.run
     end
   end

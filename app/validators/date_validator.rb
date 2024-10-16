@@ -6,15 +6,13 @@ class DateValidator < ActiveModel::EachValidator
     on_or_before: :<=,
   }.freeze
 
-  def validate_each(record, attribute, value)
-    # This 'constant' has to be dynamic otherwise validation takes place
-    # against service boot time rather than current time
-    default_check_values = {
-      today: Date.current,
-      now: Time.current,
-      far_future: 2.years.from_now,
-    }.freeze
+  DEFAULT_CHECK_VALUES = {
+    today: -> { Date.current },
+    now: -> { Time.current },
+    far_future: -> { 2.years.from_now },
+  }.freeze
 
+  def validate_each(record, attribute, value)
     return record.errors.add(attribute, :blank) if value.blank?
     return record.errors.add(attribute, :invalid) if value.is_a?(Hash)
 
@@ -25,10 +23,10 @@ class DateValidator < ActiveModel::EachValidator
       restriction_option = options[restriction]
 
       raise ArgumentError, "give me something to work with!!" unless
-        default_check_values.key?(restriction_option) || record.respond_to?(restriction_option)
+        DEFAULT_CHECK_VALUES.key?(restriction_option) || record.respond_to?(restriction_option)
 
-      if default_check_values.key?(restriction_option)
-        value_to_compare = default_check_values[restriction_option]
+      if DEFAULT_CHECK_VALUES.key?(restriction_option)
+        value_to_compare = DEFAULT_CHECK_VALUES[restriction_option].call
       elsif record.respond_to?(restriction_option)
         value_to_compare = record.send(restriction_option)
       end
