@@ -49,12 +49,14 @@ en:
         search_and_apply_link_text: search and apply for jobs
         create_alert_link_text: create a job alert
       account_not_found:
+        search_and_apply: You can now search and apply for jobs.
         page_title: You have created a new Teaching Vacancies account
-        could_not_find_account: We could not find an existing Teaching Vacancies account using this email.
         continue_to_profile: If this is correct, you can %{link}
         profile_link_text: continue to your profile.
-        transfer_account: If you have a Teaching Vacancies account using a different email address, you can %{link}
-        transfer_account_link_text: transfer your existing account information.
+        transfer_account: If you have a Teaching Vacancies account using a different email address, you can transfer your existing account information.
+        search_for_jobs_button_text: Search for jobs
+        secondary_header: If you already had a Teaching Vacancies account
+        transfer_account_button_text: Transfer account
     account_feedbacks:
       create:
         success: Thank you for your feedback
