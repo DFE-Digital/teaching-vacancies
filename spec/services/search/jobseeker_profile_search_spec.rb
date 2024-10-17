@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Search::JobseekerProfileSearch do
-  subject(:search) { described_class.new(filters) }
+  subject(:search) { described_class.new(current_organisation: organisation, filters: filters) }
 
   context "when the results are only filtered by organisation" do
-    let(:filters) { { current_organisation: organisation, qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
+    let(:filters) { { qualified_teacher_status: [], roles: [], working_patterns: [], phases: [], key_stages: [], subjects: [] } }
 
     context "when the organisation is a school" do
       let(:organisation) { create(:school, geopoint: RGeo::Geographic.spherical_factory(srid: 4326).point(0.2861, 51.7094)) }

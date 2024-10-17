@@ -206,6 +206,9 @@ en:
     terms-and-conditions:
       page_description:
         Read Teaching Vacancies' terms of use for jobseekers and schools. You must agree to these to use the service.
+    savings-methodology:
+      page_description:
+        Read Teaching Vacancies' savings methodology.
 
   posts:
     index:
@@ -230,9 +233,9 @@ en:
     subcategory:
       get-help-hiring:
         how-to-create-job-listings-and-accept-applications: >-
-          Get support using your account
+          Get support using your account.
         how-to-setup-your-account: >-
-          Get support setting up your account
+          Get support setting up your account.
       jobseeker-guides:
         get-help-applying-for-your-teaching-role: >-
           Get advice from experienced teachers and school leaders on applying for your teaching role.
@@ -418,6 +421,12 @@ en:
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated
+    new_v2:
+      banner:
+        title: Get jobs sent straight to your inbox
+      headings:
+        teaching_roles: Teaching and leadership roles
+        support_roles: Support roles
 
   sub_nav:
     jobs: Jobs

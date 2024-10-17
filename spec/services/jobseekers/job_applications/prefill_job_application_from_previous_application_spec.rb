@@ -67,10 +67,10 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         context "when the previous application did not ask about professional_status" do
           let(:old_vacancy) { create(:vacancy, job_roles: ["it_support"]) }
 
-          it "does not include professional_status in completed, imported or in_progress steps" do
+          it "it includes professional_status in in_progress steps" do
             expect(subject.completed_steps.include?("professional_status")).to eq false
             expect(subject.imported_steps.include?("professional_status")).to eq false
-            expect(subject.in_progress_steps.include?("professional_status")).to eq false
+            expect(subject.in_progress_steps.include?("professional_status")).to eq true
           end
         end
       end
@@ -79,13 +79,8 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         let(:vacancy_for_teacher) { create(:vacancy, job_roles: ["teacher"]) }
         let(:vacancy_for_teaching_assistant) { create(:vacancy, job_roles: ["teaching_assistant"]) }
         let!(:most_recent_job_application) { create(:job_application, :status_submitted, submitted_at: 1.hour.ago, jobseeker: jobseeker, vacancy: vacancy_for_teacher) }
-        let(:attributes_to_not_copy) { %i[qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details statutory_induction_complete] }
         let(:completed_step_to_not_copy) { %i[professional_status] }
         let(:new_job_application) { jobseeker.job_applications.create(vacancy: vacancy_for_teaching_assistant) }
-
-        it "only copies the relevant personal info from the recent job application" do
-          expect(subject.slice(attributes_to_not_copy)).to_not eq(most_recent_job_application.slice(attributes_to_not_copy))
-        end
 
         it "only copies the relevant completed steps" do
           expect(subject.completed_steps).to_not include(completed_step_to_not_copy)

@@ -89,6 +89,7 @@ RSpec.describe PostsController do
             how-to-request-organisation-access
             how-mats-can-use-teaching-vacancies
             how-to-approve-access-for-hiring-staff
+            check-your-eligibility-to-advertise-roles
           ]
         end
 

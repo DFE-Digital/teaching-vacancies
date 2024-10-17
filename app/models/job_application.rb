@@ -82,7 +82,7 @@ class JobApplication < ApplicationRecord
     Jobseekers::JobApplicationMailer.application_submitted(self).deliver_later
   end
 
-  def ask_professional_status?
+  def for_a_teaching_role?
     vacancy.job_roles.intersect?(%w[teacher headteacher deputy_headteacher assistant_headteacher
                                     head_of_year_or_phase head_of_department_or_curriculum sendco])
   end

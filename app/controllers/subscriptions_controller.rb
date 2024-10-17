@@ -16,6 +16,11 @@ class SubscriptionsController < ApplicationController
     render("subscriptions/campaign/new", layout: "subscription_campaign") if campaign_link?
   end
 
+  def new_v2
+    @form = Jobseekers::SubscriptionForm.new(new_form_attributes_v2)
+    @organisation = Organisation.friendly.find(search_criteria_params[:organisation_slug]) if organisation_job_alert?
+  end
+
   def create
     @form = Jobseekers::SubscriptionForm.new(subscription_params)
     subscription = Subscription.new(@form.job_alert_params)
@@ -29,7 +34,7 @@ class SubscriptionsController < ApplicationController
         if jobseeker_signed_in?
           redirect_to jobseekers_subscriptions_path, success: t(".success")
         else
-          @jobseeker = Jobseeker.find_by(email: subscription.email)
+          @jobseeker = Jobseeker.find_by(email: subscription.email.downcase)
           store_return_location(jobseekers_subscriptions_path)
           render :confirm
         end
@@ -115,6 +120,16 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  def new_form_attributes_v2
+    if params[:search_criteria].present?
+      search_criteria_params
+    elsif campaign_link?
+      email.merge(campaign_attributes)
+    else
+      email.merge(radius: "v2_default")
+    end
+  end
+
   def notify_new_subscription(subscription)
     subscription.update(recaptcha_score: recaptcha_reply&.dig("score"))
     Jobseekers::SubscriptionMailer.confirmation(subscription.id).deliver_later
@@ -196,7 +211,7 @@ class SubscriptionsController < ApplicationController
     if jobseeker_signed_in?
       redirect_to jobseekers_subscriptions_path, success: t(".success")
     else
-      @jobseeker = Jobseeker.find_by(email: subscription.email)
+      @jobseeker = Jobseeker.find_by(email: subscription.email.downcase)
       store_return_location(jobseekers_subscriptions_path)
       render :confirm
     end

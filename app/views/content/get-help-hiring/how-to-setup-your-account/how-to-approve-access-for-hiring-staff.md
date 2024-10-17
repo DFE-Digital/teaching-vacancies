@@ -1,5 +1,5 @@
 ---
-order: 300
+order: 400
 title: How to approve access for hiring staff
 meta_description: Organisation approvers are able to manage who has access to post jobs on the Teaching Vacancies service. Find out how to add, manage and remove users.
 date_posted: 20/04/2022

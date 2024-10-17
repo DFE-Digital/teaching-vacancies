@@ -10,6 +10,7 @@ RSpec.describe Publishers::JobListing::ExtendDeadlineForm, type: :model do
   let(:earliest_start_date) { 18.months.from_now }
   let(:latest_start_date) { 19.months.from_now }
   let(:other_start_date_details) { nil }
+  let(:extension_reason) { "no_applications" }
 
   let(:params) do
     {
@@ -29,6 +30,7 @@ RSpec.describe Publishers::JobListing::ExtendDeadlineForm, type: :model do
       "latest_start_date(2i)" => latest_start_date.month.to_s,
       "latest_start_date(3i)" => latest_start_date.day.to_s,
       other_start_date_details: other_start_date_details,
+      extension_reason: extension_reason,
     }
   end
 

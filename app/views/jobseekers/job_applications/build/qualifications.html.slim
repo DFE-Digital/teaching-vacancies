@@ -10,7 +10,7 @@
 
     p.govuk-body
       = t(".description")
-      =< t(".description_extra") if job_application.ask_professional_status?
+      =< t(".description_extra") if job_application.for_a_teaching_role?
 
     - if job_application.qualifications.any?
       - qualifications_sort_and_group(job_application.qualifications).each_value do |qualification_group|
