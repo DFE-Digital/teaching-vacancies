@@ -24,9 +24,8 @@
     .preview-and-turn-on-profile
       h2.govuk-heading-m class="govuk-!-padding-top-6" = t(".preview_and_turn_#{@off_on}_profile")
       p = govuk_link_to t(".preview_profile"), jobseekers_profile_preview_path
-      if profile.active?
+      - if profile.active?
         p = t(".turn_off_profile_text")
-      else
-        p = t(".turn_on_profile_text", link: govuk_link_to(t(".turn_on_profile_link_text"), jobseekers_profile_hide_profile_path).html_safe
-      end
+      - else
+        p = t(".turn_on_profile_text", link: govuk_link_to(t(".turn_on_profile_link_text"), jobseekers_profile_hide_profile_path)).html_safe
       p = govuk_button_link_to(t(".turn_#{@off_on}_profile"), confirm_toggle_jobseekers_profile_path)
