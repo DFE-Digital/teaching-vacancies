@@ -63,19 +63,6 @@ en:
     account_survey:
       survey_link_text: Give feedback
       survey_text: Take our quick survey about your experience of using Teaching Vacancies
-    confirmations:
-      already_confirmed:
-        description: Your email address has already been confirmed.
-        title: Email already confirmed
-      new_with_email:
-        description: We need to email another link so you can activate your account.
-        title: Resend confirmation
-      new_hidden_email:
-        description: We need to email another link to %{email} so you can activate your account.
-        title: Link has expired
-      show:
-        confirm: Confirm
-        title: Confirm your email address
     employments:
       break: Gap in work history
       current_role: Is this your current role?
@@ -554,21 +541,6 @@ en:
         title: Application submitted – Application
       withdraw:
         success: You have withdrawn your application for %{job_title}
-    passwords:
-      check_your_email_password:
-        description: We have sent you an email with instructions on how to reset your password.
-        having_trouble_html: Still having trouble? %{request_support_link}.
-        request_support_link: Request support
-        title: Check your email
-      edit:
-        new_password: New password
-        title: Reset your password
-      expired_token:
-        description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
-        title: Your request is no longer valid
-      new:
-        description: Enter your email address and we will send you a link so that you can reset your password.
-        title: Reset your password
     registrations:
       check_your_email:
         description: You should have received a link by email. Follow the link to confirm your email address. The link will expire in 24 hours.
@@ -581,7 +553,6 @@ en:
         resend_link: resend the email
         restart_link: provide another email address
         title: Check your email
-        resent_email_confirmation: Email has been resent
       confirm_destroy:
         feedback_title: Tell us why you are closing your account
         page_title: Close account
@@ -927,13 +898,6 @@ en:
           how_to_find_registered_email:
             summary: How to find your registered email address
             body: We sent a message to the email address associated with your Teaching Vacancies account informing you about this change.
-      locked:
-        description: You have been locked out of your account because you have made too many attempts to log in.
-        having_trouble_html: Still having trouble? %{request_support_link}.
-        heading: Too many password attempts
-        instructions: We have sent an email to your registered email address with instructions on how to unlock your account.
-        request_support_link: Request support
-        title: Too many password attempts
     subscriptions:
       index:
         button_create: Create a job alert
@@ -998,15 +962,6 @@ en:
     govuk_one_login_callbacks:
       openid_connect:
         error: "There was a problem signing in. Please try again."
-    unlocks:
-      new:
-        description: This link has already been used or is incorrect. If you still want to unlock your Teaching Vacancies account enter your email below.
-        form_submit: Request a new link
-        heading: Request a new link to unlock your account
-        title: Request a new link to unlock your account
-      show:
-        confirm: Confirm
-        title: Unlock your account
     unsubscribe_feedbacks:
       new:
         confirmation: You will no longer receive updates for this job alert.
