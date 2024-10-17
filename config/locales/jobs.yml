@@ -281,7 +281,7 @@ en:
     contact_email_body: Regarding the job at %{url}
     contact_number: Phone number
     contact_number_provided: Do you want to give a contact phone number?
-    enable_job_applications: Do you want to use the application form?
+    enable_job_applications: Application form type
     further_details_provided: Do you want to add further details about the role?
     how_to_receive_applications: How do you want to receive applications?
     include_additional_documents: Do you want to upload any additional documents?
