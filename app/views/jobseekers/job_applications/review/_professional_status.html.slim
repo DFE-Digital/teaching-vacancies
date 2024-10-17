@@ -5,7 +5,7 @@
 
   - s.with_row do |row|
     - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review")
-    - row.with_value text: job_application.teacher_reference_number
+    - row.with_value text: job_application_jobseeker_profile_info(job_application)
 
   - s.with_row do |row|
     - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
