@@ -12,6 +12,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     return unless quick_apply?
 
+    if session[:user_exists_first_log_in]
+      @user_exists_first_log_in = true
+      session.delete(:user_exists_first_log_in)
+    end
+
     redirect_to about_your_application_jobseekers_job_job_application_path(vacancy.id)
   end
 
