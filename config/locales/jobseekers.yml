@@ -371,6 +371,10 @@ en:
           search_for_jobs: Search for other jobs
           continue: Continue application
       new_quick_apply:
+        one_login_banner:
+          title: Account found
+          paragraph1: We have found a teaching vacancies account using this email address.
+          paragraph2: Your account information including past applications has been saved.
         assistance:
           content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
           heading: Terms & Conditions
