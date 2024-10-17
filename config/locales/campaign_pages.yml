@@ -1,0 +1,24 @@
+en:
+  campaign_pages:
+    PRM1+ONECF:
+      banner_title: "%{name}, find your primary teacher job"
+    SEC1+ONECF:
+      banner_title: "%{name}, find your secondary teacher job"
+    ECT1+ONECF:
+      banner_title: "%{name}, find a job for new teachers like you"
+    SUB1+ONECF:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    PPT1+ONECF:
+      banner_title: "%{name}, find your part-time teaching job"
+    SPT1+ONECF:
+      banner_title: "%{name}, find your part-time teaching job"
+    PNT1+ONECF:
+      banner_title: "%{name}, it's not too late to find your perfect teaching job"
+    PNT2+ONECF:
+      banner_title: "%{name}, it's not too late to find your perfect teaching job"
+
+    ################################################################################################
+    # The following fake campaign page is used in automated tests, please don't remove it
+    ################################################################################################
+    FAKE1+CAMPAIGN:
+      banner_title: "%{name}, this is a fake campaign"

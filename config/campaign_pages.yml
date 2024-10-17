@@ -1,0 +1,80 @@
+shared:
+  PRM1+ONECF:
+    banner_image: "campaigns/primary_teacher.jpg"
+    teaching_job_roles:
+      - teacher
+    phases:
+      - primary
+    radius:
+      - 15
+  SEC1+ONECF:
+    banner_image: "campaigns/secondary_teacher.jpg"
+    teaching_job_roles:
+      - teacher
+    phases:
+      - secondary
+    radius:
+      - 15
+  ECT1+ONECF:
+    banner_image: "campaigns/ect_teacher.jpg"
+    ect_suitable: true
+    teaching_job_roles:
+      - teacher
+    radius:
+        - 15
+  SUB1+ONECF:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  PPT1+ONECF:
+    banner_image: "campaigns/primary_part_time.jpg"
+    teaching_job_roles:
+      - teacher
+    working_patterns:
+      - part_time
+      - job_share
+    radius:
+      - 15
+  SPT1+ONECF:
+    banner_image: "campaigns/secondary_part_time.jpg"
+    teaching_job_roles:
+      - teacher
+    phases:
+      - secondary
+    working_patterns:
+      - part_time
+      - job_share
+    radius:
+      - 15
+  PNT1+ONECF:
+    banner_image: "campaigns/primary_not_too_late.jpg"
+    teaching_job_roles:
+      - teacher
+    phases:
+      - primary
+    radius:
+      - 15
+  PNT2+ONECF:
+    banner_image: "campaigns/secondary_not_too_late.jpg"
+    teaching_job_roles:
+      - teacher
+    phases:
+      - secondary
+    radius:
+      - 15
+
+####################################################################################################
+# The data below is only used in automated tests, make sure you add your campaign pages to the
+# `shared` section above!
+####################################################################################################
+test:
+  FAKE1+CAMPAIGN:
+    banner_image: "fake_banner.jpg"
+    working_patterns:
+      - part_time
+    subjects:
+      - Potions
+      - Sorcery
+
