@@ -386,7 +386,7 @@ Rails.application.routes.draw do
   get "campaigns/",
       to: "vacancies#campaign_landing_page",
       as: :campaign_landing_page,
-      constraints: ->(params, _) { CampaignPage.exists?(params[:utm_content]) }
+      constraints: ->(request) { CampaignPage.exists?(request.params[:utm_content]) }
 
   get "teaching-jobs-in-:location_landing_page_name",
       to: "vacancies#index",

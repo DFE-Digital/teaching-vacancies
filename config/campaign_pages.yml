@@ -1,5 +1,5 @@
 shared:
-  PRM1+ONECF:
+  whentoapplybespoke+PRIMARY:
     banner_image: "campaigns/primary_teacher.jpg"
     teaching_job_roles:
       - teacher
@@ -7,7 +7,7 @@ shared:
       - primary
     radius:
       - 15
-  SEC1+ONECF:
+  whentoapplybespoke+SECONDARY:
     banner_image: "campaigns/secondary_teacher.jpg"
     teaching_job_roles:
       - teacher
@@ -15,20 +15,74 @@ shared:
       - secondary
     radius:
       - 15
-  ECT1+ONECF:
+  ectrolesbespoke:
     banner_image: "campaigns/ect_teacher.jpg"
     ect_suitable: true
     teaching_job_roles:
       - teacher
     radius:
         - 15
-  SUB1+ONECF:
+  mathsbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     radius:
       - 15
-  PPT1+ONECF:
+  dancedramamusicbespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  dancedramamusicbespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  computingbespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  chemistrybespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  businessandeconomicsbespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  re:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  biologybespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  englishbespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  psychologybespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius:
+      - 15
+  parttimebespoke+PRIMARY:
     banner_image: "campaigns/primary_part_time.jpg"
     teaching_job_roles:
       - teacher
@@ -37,7 +91,7 @@ shared:
       - job_share
     radius:
       - 15
-  SPT1+ONECF:
+  parttimebespoke+SECONDARY:
     banner_image: "campaigns/secondary_part_time.jpg"
     teaching_job_roles:
       - teacher
@@ -48,7 +102,7 @@ shared:
       - job_share
     radius:
       - 15
-  PNT1+ONECF:
+  stilltimebespoke+PRIMARY:
     banner_image: "campaigns/primary_not_too_late.jpg"
     teaching_job_roles:
       - teacher
@@ -56,7 +110,7 @@ shared:
       - primary
     radius:
       - 15
-  PNT2+ONECF:
+  stilltimebespoke+SECONDARY:
     banner_image: "campaigns/secondary_not_too_late.jpg"
     teaching_job_roles:
       - teacher
@@ -71,7 +125,7 @@ shared:
 ####################################################################################################
 test:
   FAKE1+CAMPAIGN:
-    banner_image: "fake_banner.jpg"
+    banner_image: "campaigns/secondary_not_too_late.jpg"
     working_patterns:
       - part_time
     subjects:

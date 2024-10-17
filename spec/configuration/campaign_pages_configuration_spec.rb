@@ -1,12 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Landing page configuration" do
-  it "each configured landing page follows the expected slug format" do
-    Rails.application.config.campaign_pages.each_key do |cp|
-      expect(cp.to_s).to match(/^[A-Z]+\d\+[A-Z]+$/), "expected '#{cp}' to only contain lowercase letters, numbers, and dashes"
-    end
-  end
-
   it "each configured landing page has a corresponding complete set of translations" do
     keys = %w[banner_title]
     Rails.application.config.campaign_pages.each_key do |cp|

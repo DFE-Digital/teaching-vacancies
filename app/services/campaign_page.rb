@@ -1,8 +1,8 @@
 class CampaignPage
   attr_reader :utm_content_code, :criteria, :banner_image
 
-  def self.exists?(utm_content_code)
-    Rails.application.config.campaign_pages.key?(utm_content_code.to_sym)
+  def self.exists?(utm_content)
+    Rails.application.config.campaign_pages.key?(utm_content.to_sym)
   end
 
   def self.[](utm_content_code)
