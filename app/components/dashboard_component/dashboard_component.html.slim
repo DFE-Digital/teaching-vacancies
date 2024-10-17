@@ -118,10 +118,20 @@
                   p.govuk-body-xs.external-notice
                     = t("jobs.manage.external_notice")
               - unless vacancy.external? || vacancy.draft?
-                - row.with_action(text: t("buttons.copy_listing"),
-                             href: organisation_job_copy_path(vacancy.id),
-                             visually_hidden_text: "for #{vacancy.job_title}",
-                             html_attributes: { "data-method": "post" })
+                - if vacancy.expired?
+                  - row.with_action(text: t("buttons.relist_vacancy"),
+                               href: organisation_job_relist_path(vacancy.id),
+                               visually_hidden_text: "for #{vacancy.job_title}",
+                               html_attributes: { "data-method": "post" })
+                  - row.with_action(text: t("buttons.copy_expired_listing"),
+                               href: organisation_job_copy_path(vacancy.id),
+                               visually_hidden_text: "for #{vacancy.job_title}",
+                               html_attributes: { "data-method": "post" })
+                - else
+                  - row.with_action(text: t("buttons.copy_listing"),
+                               href: organisation_job_copy_path(vacancy.id),
+                               visually_hidden_text: "for #{vacancy.job_title}",
+                               html_attributes: { "data-method": "post" })
 
     - unless @organisation.school_group?
       .govuk-grid-column-one-quarter
