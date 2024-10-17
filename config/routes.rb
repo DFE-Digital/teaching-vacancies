@@ -187,6 +187,8 @@ Rails.application.routes.draw do
     resource :account, only: %i[show] do
       member do
         get :confirmation
+        get :account_found
+        get :account_not_found
       end
     end
     resource :account_feedback, only: %i[new create]
@@ -266,6 +268,13 @@ Rails.application.routes.draw do
   end
 
   devise_for :support_users
+
+  scope path: "jobseekers" do
+    devise_scope :jobseeker do
+      get "/auth/govuk_one_login/callback/", to: "jobseekers/govuk_one_login_callbacks#openid_connect"
+      get "/sign_out", to: "jobseekers/sessions#destroy", as: :jobseekers_sign_out # Handle GovukOneLogin sign out 'post_logout_redirect_uri'
+    end
+  end
 
   devise_scope :publisher do
     get "/auth/dfe", to: "omniauth_callbacks#passthru"

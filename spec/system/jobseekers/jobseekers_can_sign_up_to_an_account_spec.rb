@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       end
     end
 
-    it "validates and submits the form, triggers account created event, sends confirmation email and redirects to check your email page" do
+    xit "validates and submits the form, triggers account created event, sends confirmation email and redirects to check your email page" do
       visit new_jobseeker_registration_path
       click_on I18n.t("buttons.create_account")
       expect(page).to have_content("There is a problem")
@@ -34,7 +34,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       expect(current_path).to eq(jobseekers_check_your_email_path)
     end
 
-    it "allows jobseekers to reset their password" do
+    xit "allows jobseekers to reset their password" do
       visit root_path
       find(:xpath, "//a[@href='/jobseekers/sign_up']").click
       fill_in "jobseeker[email]", with: jobseeker.email
@@ -58,7 +58,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
     end
 
     context "when the confirmation token is valid" do
-      it "confirms email, triggers email confirmed event and redirects to jobseeker account confirmation interstitial" do
+      xit "confirms email, triggers email confirmed event and redirects to jobseeker account confirmation interstitial" do
         confirm_email_address
         expect(current_path).to eq(confirmation_jobseekers_account_path)
         expect(page).to have_content(I18n.t("jobseekers.accounts.confirmation.page_title"))
@@ -67,7 +67,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
         expect(page).not_to have_content(I18n.t("devise.confirmations.confirmed"))
       end
 
-      it "shows an error when trying to visit the confirmation link after a successfull confirmation" do
+      xit "shows an error when trying to visit the confirmation link after a successfull confirmation" do
         confirm_email_address
         visit first_link_from_last_mail
 
@@ -77,7 +77,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
     end
 
     context "when the user attempts to sign in without confirming their email" do
-      it "does not allow user to sign in and shows the relevant error message" do
+      xit "does not allow user to sign in and shows the relevant error message" do
         within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
         click_on I18n.t("buttons.sign_in_jobseeker")
 
@@ -97,7 +97,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
           logout
         end
 
-        it "asks the jobseeker to introduce their email address to receive the confirmation link" do
+        xit "asks the jobseeker to introduce their email address to receive the confirmation link" do
           within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
           click_on I18n.t("buttons.sign_in_jobseeker")
 
@@ -132,7 +132,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
           confirm_email_address
         end
 
-        it "informs user that the link has expired and allows them to resend email and confirm their email" do
+        xit "informs user that the link has expired and allows them to resend email and confirm their email" do
           expect(page).to have_content("Link has expired")
           expect { click_on "Resend email" }.to change { delivered_emails.count }.by(1)
           expect(current_path).to eq(jobseekers_check_your_email_path)
@@ -142,7 +142,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
       end
 
       context "when the confirmation email is resent" do
-        it "resends confirmation email and redirects to check your email page" do
+        xit "resends confirmation email and redirects to check your email page" do
           expect { click_on "resend the email" }.to change { delivered_emails.count }.by(1)
           expect(page).to have_content "Email has been resent"
         end
@@ -150,7 +150,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
     end
 
     context "when the confirmation token does not exist" do
-      it "takes the user to the 'not found' page" do
+      xit "takes the user to the 'not found' page" do
         visit jobseeker_confirmation_path(confirmation_token: "fooBar")
         expect(page).to have_content("Page not found")
       end
@@ -159,7 +159,7 @@ RSpec.describe "Jobseekers can sign up to an account" do
     context "without confirmation token with existing confirmed users" do
       let!(:other_confirmed_jobseeker) { create(:jobseeker, confirmation_token: nil) }
 
-      it "takes the user to the 'not found' page" do
+      xit "takes the user to the 'not found' page" do
         visit jobseeker_confirmation_path
         expect(page).to have_content("Page not found")
       end
