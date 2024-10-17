@@ -2,9 +2,9 @@
 
 - if @user_exists_first_log_in
   = govuk_notification_banner title_text: t("banners.success"), classes: "govuk-notification-banner--success" do |notification_banner|
-    - notification_banner.with_heading(text: "Account found")
-    p.govuk-body = "We have found a teaching vacancies account using this email address."
-    p.govuk-body = "Your account information including past applications has been saved."
+    - notification_banner.with_heading(text:t(".one_login_banner.title"))
+    p.govuk-body = t(".one_login_banner.paragraph1")
+    p.govuk-body = t(".one_login_banner.paragraph2")
 
 span.govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
 h2.govuk-heading-xl = t("jobseekers.job_applications.heading")

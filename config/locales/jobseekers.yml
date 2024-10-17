@@ -356,11 +356,10 @@ en:
           into a %{profile_link} so schools can contact you about relevant roles.
         profile_link_text: candidate profile
         title: Application
-        cannot_see_past_applications:
-          title: Can't see your information from past applications?
-          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, information from your past applications will not automatically be saved.
-          paragraph2: You can request to %{link}
-          link_text: transfer information from your past applications.
+        one_login_banner:
+          title: Account found
+          paragraph1: We have found a teaching vacancies account using this email address.
+          paragraph2: Your account information including past applications has been saved.
       about_your_application:
         title: About your application
         warning:
