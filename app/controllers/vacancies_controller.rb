@@ -19,7 +19,8 @@ class VacanciesController < ApplicationController
   end
 
   def campaign_landing_page
-    @form ||= Jobseekers::SearchForm.new(campaign_search_params.merge(landing_page: @landing_page))
+    @campaign_page = CampaignPage[params[:utm_content]]
+    @form ||= Jobseekers::SearchForm.new(campaign_search_params.merge(landing_page: @campaign_page))
     @jobseeker_name = params[:email_name] || "Jobseeker"
     @subject = params[:email_subject] || ""
 

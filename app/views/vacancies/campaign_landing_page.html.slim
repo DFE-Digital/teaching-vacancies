@@ -19,11 +19,11 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       .custom-banner
         .govuk-grid-row
           .govuk-grid-column-one-third-at-desktop
-            h1.govuk-heading-l class="govuk-!-margin-bottom-4" = "#{@jobseeker_name}, find your #{@subject} teacher job"
+            h1.govuk-heading-l class="govuk-!-margin-bottom-4" = @campaign_page.banner_title(@jobseeker_name, @subject)
             = render "vacancies/search/fields_and_button", f: f, form: @form, show_keyword: false
 
           .govuk-grid-column-two-thirds-at-desktop
-            img src=image_path("primary_school_uncropped.jpg") class="govuk-!-margin-top-2" width="90%" height="90%" alt="Primary school classroom with children"
+            img src=image_path(@campaign_page.banner_image) class="govuk-!-margin-top-2" width="90%" height="90%" alt="Primary school classroom with children"
 
   .govuk-grid-row
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
