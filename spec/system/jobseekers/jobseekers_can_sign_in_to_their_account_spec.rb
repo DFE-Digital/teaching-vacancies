@@ -21,6 +21,22 @@ RSpec.describe "Jobseekers can sign in to their account" do
       expect(page).to have_css("h1", text: I18n.t("jobseekers.accounts.account_found.page_title"))
       expect(page).to have_link(text: I18n.t("nav.sign_out"))
     end
+
+    context "when the user sign-in following a vacancy quick apply link" do
+      let(:jobseeker) { create(:jobseeker, govuk_one_login_id: nil) }
+      let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
+
+      scenario "the user is sent to the quick application page" do
+        visit new_jobseekers_job_job_application_path(vacancy.id)
+        expect(current_path).to eq(new_jobseeker_session_path)
+
+        sign_in_jobseeker_govuk_one_login(jobseeker)
+        expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
+        expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.new.heading"))
+        expect(page).to have_css("p.govuk-notification-banner__heading", text: "Account found")
+        expect(page).to have_css("p.govuk-body", text: "We have found a teaching vacancies account using this email address.")
+      end
+    end
   end
 
   context "when signing in a jobseeker that hasn't an account in the service" do
