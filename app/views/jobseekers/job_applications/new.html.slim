@@ -2,7 +2,7 @@
 
 - if @user_exists_first_log_in
   = govuk_notification_banner title_text: t("banners.success"), classes: "govuk-notification-banner--success" do |notification_banner|
-    - notification_banner.with_heading(text:t(".one_login_banner.title"))
+    - notification_banner.with_heading(text: t(".one_login_banner.title"))
     p.govuk-body = t(".one_login_banner.paragraph1")
     p.govuk-body = t(".one_login_banner.paragraph2")
 
