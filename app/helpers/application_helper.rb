@@ -31,6 +31,7 @@ module ApplicationHelper
       { text: "Privacy policy", href: "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers", attr: { target: "_blank" } },
       { text: "Terms and Conditions", href: page_path("terms-and-conditions") },
       { text: "Accessibility", href: page_path("accessibility") },
+      { text: "Savings methodology", href: page_path("savings-methodology") },
     ]
   end
 

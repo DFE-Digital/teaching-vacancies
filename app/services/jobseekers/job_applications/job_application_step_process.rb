@@ -6,7 +6,7 @@ class Jobseekers::JobApplications::JobApplicationStepProcess < StepProcess
 
     super(current_step, {
       personal_details: %i[personal_details],
-      professional_status: professional_status_steps,
+      professional_status: %i[professional_status],
       qualifications: %i[qualifications],
       training_and_cpds: %i[training_and_cpds],
       employment_history: %i[employment_history],
@@ -17,11 +17,5 @@ class Jobseekers::JobApplications::JobApplicationStepProcess < StepProcess
       declarations: %i[declarations],
       review: %i[review],
     })
-  end
-
-  private
-
-  def professional_status_steps
-    job_application.ask_professional_status? ? %i[professional_status] : []
   end
 end

@@ -1,5 +1,5 @@
 ---
-order: 400
+order: 500
 title: How to request organisation access
 meta_description: To post jobs on Teaching Vacancies, you need access to the right organisation. Find out how to make a request and get approved for one or multiple schools.
 date_posted: 20/04/2022

@@ -45,6 +45,14 @@
             hint: -> { "For example 'Easter term'" },
             data: { "form-target": "inputText" }
 
+      = f.govuk_radio_buttons_fieldset :extension_reason, legend: { text: t(".extension_reason.label") } do
+        = f.govuk_radio_button :extension_reason, :no_applications, link_errors: true, label: { text: t(".extension_reason.no_applications") }
+        = f.govuk_radio_button :extension_reason, :didnt_find_right_candidate, link_errors: true, label: { text: t(".extension_reason.didnt_find_right_candidate") }
+        = f.govuk_radio_button :extension_reason, :other_extension_reason, label: { text: t(".extension_reason.other_extension_reason") } do
+          = f.govuk_text_area :other_extension_reason_details,
+            label: { text: t(".extension_reason.other_details") },
+            rows: 5
+
       = f.govuk_submit t("buttons.extend_closing_date"), class: "govuk-!-margin-bottom-5"
 
     = govuk_link_to(t("buttons.cancel"), organisation_jobs_with_type_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")

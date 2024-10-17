@@ -2,7 +2,7 @@
   = f.govuk_text_field :name,
     label: { text: t("organisations.search.name"), size: "s" }
 
-  .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" class="govuk-!-margin-bottom-4"
+  .autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" data-debouncems="400" class="govuk-!-margin-bottom-4"
     = f.govuk_text_field :location,
       label: { text: t("organisations.search.location"), size: "s" },
       class: %w[location-finder__input]

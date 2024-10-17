@@ -13,7 +13,7 @@ RSpec.describe Jobseekers::AlertMailer do
   let(:frequency) { :daily }
   let(:search_criteria) { { keyword: "English" } }
   let(:subscription) do
-    subscription = Subscription.create(email: email, frequency: frequency, search_criteria: search_criteria)
+    subscription = Subscription.create(email: email.upcase, frequency: frequency, search_criteria: search_criteria)
     # The hashing algorithm uses a random initialization vector to encrypt the token,
     # so is different every time, so we stub the token to be the same every time, so
     # it's clearer what we're testing when we test the unsubscribe link

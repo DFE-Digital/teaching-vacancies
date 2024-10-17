@@ -24,6 +24,7 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
 
   def profile_complete?
     return false unless (profile = current_jobseeker.jobseeker_profile)
+    return false unless profile.personal_details.present? && profile.job_preferences.present?
 
     profile.personal_details.complete? && profile.job_preferences.complete?
   end
