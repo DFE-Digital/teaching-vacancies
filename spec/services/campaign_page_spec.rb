@@ -22,7 +22,7 @@ RSpec.describe CampaignPage do
   describe ".[]" do
     it "returns a configured landing page instance if a landing page with the given slug exists" do
       expect(described_class["FAKE1+CAMPAIGN"].banner_image)
-        .to eq("fake_banner.jpg")
+        .to eq("campaigns/secondary_not_too_late.jpg")
       expect(described_class["FAKE1+CAMPAIGN"].criteria)
         .to eq({ working_patterns: %w[part_time], subjects: %w[Potions Sorcery] })
     end
