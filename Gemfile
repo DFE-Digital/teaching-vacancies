@@ -68,6 +68,8 @@ gem "rails_semantic_logger"
 gem "recaptcha"
 gem "redis"
 gem "rgeo-geojson"
+gem "rswag-api"
+gem "rswag-ui"
 gem "sanitize"
 gem "sentry-rails"
 gem "sentry-ruby"
@@ -114,6 +116,7 @@ group :development, :test do
   gem "rack-mini-profiler", require: false
   gem "rails-controller-testing"
   gem "rspec-rails"
+  gem "rswag-specs"
   gem "slim_lint", require: false
 end
 

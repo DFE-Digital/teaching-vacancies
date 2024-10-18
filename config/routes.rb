@@ -2,6 +2,8 @@ require "sidekiq/web"
 require "sidekiq/cron/web"
 
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => "/api-docs"
+  mount Rswag::Api::Engine => "/api-docs"
   if Rails.env.development?
     mount Sidekiq::Web, at: "/sidekiq"
   else
@@ -334,6 +336,9 @@ Rails.application.routes.draw do
       get "/location_suggestion(/:location)", to: "location_suggestion#show", as: :location_suggestion
       get "/organisations", to: "organisations#index", as: :organisations
       resources :markers, only: %i[show]
+    end
+    scope "v:api_version", api_version: /2/ do
+      resources :vacancies, only: %i[index show create update destroy], controller: "v2/vacancies", format: :json
     end
 
     resources :events, only: %i[create]
