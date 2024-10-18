@@ -109,6 +109,7 @@ group :development, :test do
   gem "rack-mini-profiler", require: false
   gem "rails-controller-testing"
   gem "rspec-rails"
+  gem "rswag"
   gem "rubocop-performance"
   gem "rubocop-rails"
   gem "rubocop-rspec"

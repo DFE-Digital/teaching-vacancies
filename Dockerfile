@@ -17,8 +17,11 @@ RUN gem install bundler:2.3.5 --no-document
 
 
 COPY Gemfile* ./
-RUN bundle config set --local without 'development test'
+# This is just a spike - need a more elegant solution for production
+# RUN bundle config set --local without 'development test'
 RUN bundle install --no-binstubs --retry=5 --jobs=4 --no-cache
+
+RUN rake rswag:specs:swaggerize
 
 COPY package.json yarn.lock ./
 RUN yarn install --check-files
