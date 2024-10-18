@@ -85,9 +85,9 @@ class VacanciesController < ApplicationController
 
   def extract_working_patterns(campaign_params)
     working_patterns = []
-    working_patterns << "full_time" if ActiveModel::Type::Boolean.new.cast(campaign_params.delete(:email_fulltime)) == "true"
-    working_patterns << "part_time" if ActiveModel::Type::Boolean.new.cast(campaign_params.delete(:email_parttime)) == "true"
-    working_patterns << "job_share" if ActiveModel::Type::Boolean.new.cast(campaign_params.delete(:email_jobshare)) == "true"
+    working_patterns << "full_time" if ActiveModel::Type::Boolean.new.cast(campaign_params.delete(:email_fulltime))
+    working_patterns << "part_time" if ActiveModel::Type::Boolean.new.cast(campaign_params.delete(:email_parttime))
+    working_patterns << "job_share" if ActiveModel::Type::Boolean.new.cast(campaign_params.delete(:email_jobshare))
     working_patterns
   end
 
