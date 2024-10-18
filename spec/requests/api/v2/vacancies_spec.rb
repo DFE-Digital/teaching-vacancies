@@ -16,6 +16,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
         end
 
         schema type: :object,
+               required: %i[data meta],
                additionalProperties: false,
                properties: {
                  data: {
@@ -23,7 +24,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
                    items: {
                      type: :object,
                      additionalProperties: false,
-                     required: %i[advertUrl expiresAt jobTitle jobAdvert salaryRange schoolUrns jobRoles workingPatterns contractType phase],
+                     required: %i[advertUrl expiresAt jobTitle jobAdvert salaryRange visaSponsorshipAvailable isJobShare schoolUrns jobRoles workingPatterns contractType phase],
                      properties: {
                        advertUrl: { type: :string, example: "https://example.com/jobs/123" },
                        publishOn: { type: :string, format: :date },
@@ -33,6 +34,11 @@ RSpec.describe "api/v2/vacancies", type: :request do
                        salaryRange: { type: :string, example: "£12,345 to £67, 890" },
                        additionalAllowances: { type: :string, example: "TLR2a" },
                        startDate: { type: :string, example: "Easter Term" },
+                       contactNumber: { type: :string, example: "01234 567890" },
+                       contactEmail: { type: :string, example: "someone@example.com" },
+                       visaSponsorshipAvailable: { type: :boolean },
+                       isJobShare: { type: :boolean },
+                       isParentalLeaveCover: { type: :boolean },
                        schoolUrns: {
                          type: :array,
                          minItems: 1,
@@ -88,12 +94,11 @@ RSpec.describe "api/v2/vacancies", type: :request do
                          minItems: 1,
                          items: {
                            type: :string,
-                           enum: ["Accounting", "Art and design", "biology", "business_studies", "chemistry", "citizenship", "classics",
-                                  "computing", "dance", "design_and_technology", "drama", "economics", "engineering", "english",
-                                  "food_technology", "french", "geography", "german", "health_and_social_care", "history",
-                                  "humanities", "ict", "languages", "law", "mandarin", "mathematics", "media_studies", "music",
-                                  "philosophy", "physical_education", "physics", "pshe", "psychology", "religious_education",
-                                  "science", "social_science", "sociology", "spanish", "statistics"],
+                           enum: ["Accounting", "Art and design", "Biology", "Business Studies", "Chemistry", "Citizenship", "Classics",
+                                  "Computing", "Dance", "Design And Technology", "Drama", "Economics", "Engineering", "English", "Food Technology",
+                                  "French", "Geography", "German", "health_and_social_care", "history", "Humanities", "ICT", "Languages", "Law", "Mandarin",
+                                  "Mathematics", "Media Studies", "Music", "Philosophy", "Physical Education", "Physics", "PSHE", "Psychology",
+                                  "Religious Education", "Science", "Social Science", "Sociology", "Spanish", "Statistics"],
                          },
                        },
                      },
@@ -141,6 +146,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
           salaryRange: { type: :string, example: "£12,345 to £67, 890" },
           additionalAllowances: { type: :string, example: "TLR2a" },
           startDate: { type: :string, example: "Easter Term" },
+          contactNumber: { type: :string, example: "01234 567890" },
           schoolUrns: {
             type: :array,
             minItems: 1,
@@ -196,12 +202,11 @@ RSpec.describe "api/v2/vacancies", type: :request do
             minItems: 1,
             items: {
               type: :string,
-              enum: ["Accounting", "Art and design", "biology", "business_studies", "chemistry", "citizenship", "classics",
-                     "computing", "dance", "design_and_technology", "drama", "economics", "engineering", "english",
-                     "food_technology", "french", "geography", "german", "health_and_social_care", "history",
-                     "humanities", "ict", "languages", "law", "mandarin", "mathematics", "media_studies", "music",
-                     "philosophy", "physical_education", "physics", "pshe", "psychology", "religious_education",
-                     "science", "social_science", "sociology", "spanish", "statistics"],
+              enum: ["Accounting", "Art and design", "Biology", "Business Studies", "Chemistry", "Citizenship", "Classics",
+                     "Computing", "Dance", "Design And Technology", "Drama", "Economics", "Engineering", "English", "Food Technology",
+                     "French", "Geography", "German", "health_and_social_care", "history", "Humanities", "ICT", "Languages", "Law", "Mandarin",
+                     "Mathematics", "Media Studies", "Music", "Philosophy", "Physical Education", "Physics", "PSHE", "Psychology",
+                     "Religious Education", "Science", "Social Science", "Sociology", "Spanish", "Statistics"],
             },
           },
         },

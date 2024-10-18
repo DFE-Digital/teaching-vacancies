@@ -5,6 +5,12 @@ json.jobTitle vacancy.job_title
 json.jobAdvert vacancy.skills_and_experience
 json.salaryRange vacancy.salary
 json.additionalAllowances vacancy.benefits_details
+json.startDate vacancy.starts_on
+json.contactNumber vacancy.contact_number
+json.contactEmail vacancy.application_email unless vacancy.application_email.nil?
+json.visaSponsorshipAvailable vacancy.visa_sponsorship_available
+json.isJobShare vacancy.is_job_share
+json.isParentalLeaveCover vacancy.is_parental_leave_cover unless vacancy.is_parental_leave_cover.nil?
 json.jobRoles vacancy.job_roles
 json.schoolUrns(vacancy.organisations.map { |x| x.urn.to_i })
 json.ectSuitable vacancy.ect_status == "ect_suitable"
@@ -15,33 +21,3 @@ if vacancy.key_stages.any?
   json.keyStages vacancy.key_stages
 end
 json.subjects vacancy.subjects
-# json.datePosted vacancy.publish_on.to_time.iso8601
-# json.description vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : vacancy.job_advert
-# json.occupationalCategory vacancy.job_roles.first
-# json.directApply vacancy.enable_job_applications
-
-# json.employmentType vacancy.working_patterns_for_job_schema
-
-# json.industry "Education"
-# json.jobLocation do
-#   json.set! "@type", "Place"
-#   json.address do
-#     json.set! "@type", "PostalAddress"
-#     json.addressLocality vacancy.organisation&.town
-#     json.addressRegion vacancy.organisation&.region
-#     json.streetAddress vacancy.organisation&.address
-#     json.postalCode vacancy.organisation&.postcode
-#     json.addressCountry "GB"
-#   end
-# end
-
-# json.url job_url(vacancy)
-
-# json.hiringOrganization do
-#   json.set! "@type", "Organization"
-#   json.name vacancy.organisation&.name
-#   json.identifier vacancy.organisation&.urn || vacancy.organisation&.uid
-#   json.description vacancy.about_school
-# end
-
-# json.validThrough vacancy.expires_at.iso8601
