@@ -6,7 +6,7 @@ json.jobAdvert vacancy.skills_and_experience
 json.salaryRange vacancy.salary
 json.additionalAllowances vacancy.benefits_details
 json.jobRoles vacancy.job_roles
-json.schoolUrns vacancy.organisations.map(&:urn).map(&:to_i)
+json.schoolUrns(vacancy.organisations.map { |x| x.urn.to_i })
 json.ectSuitable vacancy.ect_status == "ect_suitable"
 json.workingPatterns vacancy.working_patterns
 json.contractType vacancy.contract_type
