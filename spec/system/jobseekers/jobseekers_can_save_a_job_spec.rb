@@ -34,7 +34,7 @@ RSpec.describe "Jobseekers can save a job" do
       context "when the job is not already saved" do
         it "saves the job after signing in" do
           save_job
-          sign_in_jobseeker
+          sign_in_jobseeker_govuk_one_login(jobseeker)
           and_the_job_is_saved
         end
       end
@@ -44,7 +44,7 @@ RSpec.describe "Jobseekers can save a job" do
 
         it "does nothing after signing in" do
           save_job
-          sign_in_jobseeker
+          sign_in_jobseeker_govuk_one_login(jobseeker)
           and_the_job_is_saved
         end
       end

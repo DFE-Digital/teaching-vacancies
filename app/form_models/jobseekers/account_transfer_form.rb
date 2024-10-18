@@ -4,12 +4,12 @@ class Jobseekers::AccountTransferForm < BaseForm
   validates :email, presence: true
   validates :email, email_address: true
   validates :account_merge_confirmation_code, presence: true
-  validate :validate_jobseeker_email_and_code_match
+  validate :validate_jobseeker_email_and_code_match, if: -> { email.present? }
 
   private
 
   def validate_jobseeker_email_and_code_match
-    jobseeker = Jobseeker.find_by(email: email)
+    jobseeker = Jobseeker.find_by(email: email.downcase)
 
     if jobseeker.nil? || jobseeker.account_merge_confirmation_code != account_merge_confirmation_code
       errors.add(:account_merge_confirmation_code, :confirmation_code_mismatch, message: I18n.t("jobseekers.account_transfers.errors.account_merge_confirmation_code.confirmation_code_mismatch"))

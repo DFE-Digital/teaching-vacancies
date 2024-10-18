@@ -25,7 +25,7 @@ RSpec.describe "Jobseekers can close and reactivate their account" do
 
     within(".govuk-header__navigation") { click_link I18n.t("buttons.sign_in") }
     click_on I18n.t("buttons.sign_in_jobseeker")
-    sign_in_jobseeker(email: jobseeker.email, password: jobseeker.password)
+    sign_in_jobseeker_govuk_one_login(jobseeker)
 
     expect(current_path).to eq(jobseekers_job_applications_path)
   end

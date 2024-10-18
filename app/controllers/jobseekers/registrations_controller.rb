@@ -25,17 +25,6 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
     @resource = Jobseeker.find_by(id: session[:jobseeker_id])
   end
 
-  def resend_instructions
-    if session[:jobseeker_id].blank?
-      redirect_to new_jobseeker_confirmation_path
-    else
-      @resource = Jobseeker.find(session[:jobseeker_id])
-      @resource.send_confirmation_instructions
-      flash[:success] = t("jobseekers.registrations.check_your_email.resent_email_confirmation")
-      render :check_your_email
-    end
-  end
-
   protected
 
   def check_password_difference
@@ -81,8 +70,8 @@ class Jobseekers::RegistrationsController < Devise::RegistrationsController
     jobseekers_check_your_email_path
   end
 
-  def after_update_path_for(resource)
-    resource.pending_reconfirmation? && !password_update? ? jobseekers_check_your_email_path : jobseekers_account_path
+  def after_update_path_for(_resource)
+    jobseekers_account_path
   end
 
   def close_account_feedback_form_params

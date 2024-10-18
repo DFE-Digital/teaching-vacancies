@@ -4,7 +4,7 @@ class Jobseekers::AccountTransfer
 
   def initialize(current_jobseeker, email)
     @current_jobseeker = current_jobseeker
-    @account_to_transfer = Jobseeker.find_by(email: email)
+    @account_to_transfer = Jobseeker.find_by(email: email&.downcase)
   end
 
   def call

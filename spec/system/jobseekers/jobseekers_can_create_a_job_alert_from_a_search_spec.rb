@@ -49,25 +49,12 @@ RSpec.describe "Jobseekers can create a job alert from a search", recaptcha: tru
       end
 
       context "when jobseeker is signed out" do
-        scenario "renders a sign in prompt form that redirects to job alerts dashboard" do
+        scenario "renders a sign in prompt that sends the user to GovUK One Login and redirects them back to the job alerts dashboard" do
           within "div[data-account-prompt='sign-in']" do
             expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
-            fill_in "Password", with: jobseeker.password
-            within(".edit_jobseeker") do
-              click_on I18n.t("buttons.sign_in")
-            end
+            click_on I18n.t("buttons.sign_in")
           end
-          expect(current_path).to eq(jobseekers_subscriptions_path)
-        end
-
-        scenario "renders a sign in prompt form that redirects to sign in page on error then redirects to job alerts dashboard" do
-          within "div[data-account-prompt='sign-in']" do
-            expect(page).to have_content(I18n.t("subscriptions.jobseeker_account_prompt.heading.sign_in"))
-            within(".edit_jobseeker") do
-              click_on I18n.t("buttons.sign_in")
-            end
-          end
-          sign_in_jobseeker
+          sign_in_jobseeker_govuk_one_login(jobseeker)
           expect(current_path).to eq(jobseekers_subscriptions_path)
         end
       end

@@ -10,6 +10,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def new
     send_dfe_analytics_event
 
+    if session[:user_exists_first_log_in]
+      @user_exists_first_log_in = true
+      session.delete(:user_exists_first_log_in)
+    end
+
+    if session[:newly_created_user]
+      @newly_created_user = true
+      session.delete(:newly_created_user)
+    end
+
     return unless quick_apply?
 
     redirect_to about_your_application_jobseekers_job_job_application_path(vacancy.id)
