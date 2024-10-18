@@ -24,7 +24,8 @@ RSpec.describe "api/v2/vacancies", type: :request do
                    items: {
                      type: :object,
                      additionalProperties: false,
-                     required: %i[advertUrl expiresAt jobTitle jobAdvert salaryRange visaSponsorshipAvailable isJobShare schoolUrns jobRoles workingPatterns contractType phase],
+                     required: %i[advertUrl expiresAt jobTitle jobAdvert salaryRange visaSponsorshipAvailable
+                                  isJobShare schoolUrns jobRoles workingPatterns contractType phase],
                      properties: {
                        advertUrl: { type: :string, example: "https://example.com/jobs/123" },
                        publishOn: { type: :string, format: :date },
@@ -57,9 +58,10 @@ RSpec.describe "api/v2/vacancies", type: :request do
                          items: {
                            type: :string,
                            enum: %i[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher
-                                    deputy_headteacher headteacher teaching_assistant higher_level_teaching_assistant education_support sendco other_teaching_support
-                                    administration_hr_data_and_finance catering_cleaning_and_site_management it_support pastoral_health_and_welfare
-                                    other_leadership other_support],
+                                    deputy_headteacher headteacher teaching_assistant higher_level_teaching_assistant
+                                    education_support sendco other_teaching_support
+                                    administration_hr_data_and_finance catering_cleaning_and_site_management it_support
+                                    pastoral_health_and_welfare other_leadership other_support],
                          },
                        },
                        ectSuitable: {
