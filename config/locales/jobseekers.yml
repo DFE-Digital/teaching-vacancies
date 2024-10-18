@@ -750,7 +750,7 @@ en:
         set_up_profile_visibility: Set up who cannot view your profile
         turn_off_profile_text: When you turn off your profile it will not be visible to hiring staff in schools and trusts.
         turn_off_profile: Turn off profile
-        turn_on_profile_text: When you turn on your profile, school and trust hiring staff will be able to view your details and contact you by email. You can {%link}
+        turn_on_profile_text: When you turn on your profile, school and trust hiring staff will be able to view your details and contact you by email. You can %{link_text}
         turn_on_profile_link_text: hide your profile from specific schools or trusts.
         turn_on_profile: Turn on profile
       confirm_toggle:
