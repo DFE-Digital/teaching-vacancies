@@ -58,6 +58,9 @@ jobs:
       - name: Precompile assets
         run: bin/rails assets:precompile
 
+      - name: Generate Swagger (OpenAPI) docs
+        run: bundle exec rake rswag:specs:swaggerize
+
       - name: Run tests
         run: bundle exec rspec ${{ matrix.test_params.params }}
 

@@ -15,7 +15,7 @@
 # json.openapi "3.0.0"
 
 json.data @vacancies.each do |vacancy|
-  json.partial! "show", vacancy: VacancyPresenter.new(vacancy)
+  json.partial! "show", vacancy: vacancy
 end
 
 # json.links do
@@ -26,7 +26,7 @@ end
 #   json.next((api_jobs_url(page: @pagy.next, format: :json) if @pagy.next))
 # end
 #
-# json.meta do
-#   json.totalPages @pagy.pages
-#   json.count @pagy.count
-# end
+json.meta do
+  json.totalPages @pagy.pages
+  json.count @pagy.count
+end
