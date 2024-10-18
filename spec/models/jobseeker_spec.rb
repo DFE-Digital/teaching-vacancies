@@ -12,40 +12,7 @@ RSpec.describe Jobseeker do
     it "updates the email address of every subscription associated with their previous email address" do
       expect {
         jobseeker.update!(email: new_email_address)
-        jobseeker.confirm
       }.to change { subscription.reload.email }.to(new_email_address)
-    end
-  end
-
-  describe "#needs_email_confirmation?" do
-    subject(:jobseeker) { build_stubbed(:jobseeker) }
-
-    context "when the user is confirmed" do
-      before { jobseeker.confirmed_at = Time.current }
-
-      context "when the user does not have a new unconfirmed email address" do
-        before { jobseeker.unconfirmed_email = nil }
-        it { is_expected.not_to be_needs_email_confirmation }
-      end
-
-      context "when the user has a new unconfirmed email address" do
-        before { jobseeker.unconfirmed_email = "foobar@example.com" }
-        it { is_expected.to be_needs_email_confirmation }
-      end
-    end
-
-    context "when the user is not confirmed" do
-      before { jobseeker.confirmed_at = nil }
-
-      context "when the user does not have a new unconfirmed email address" do
-        before { jobseeker.unconfirmed_email = nil }
-        it { is_expected.to be_needs_email_confirmation }
-      end
-
-      context "when the user has a new unconfirmed email address" do
-        before { jobseeker.unconfirmed_email = "foobar@example.com" }
-        it { is_expected.to be_needs_email_confirmation }
-      end
     end
   end
 

@@ -61,11 +61,8 @@ Rails.application.routes.draw do
   draw :legacy_redirects
 
   devise_for :jobseekers, controllers: {
-    confirmations: "jobseekers/confirmations",
-    passwords: "jobseekers/passwords",
     registrations: "jobseekers/registrations",
     sessions: "jobseekers/sessions",
-    unlocks: "jobseekers/unlocks",
   }, path_names: {
     sign_in: "sign-in",
   }
@@ -81,11 +78,8 @@ Rails.application.routes.draw do
   namespace :jobseekers do
     devise_scope :jobseeker do
       get :check_your_email, to: "registrations#check_your_email", as: :check_your_email
-      get :check_your_email_password, to: "passwords#check_your_email_password", as: :check_your_email_password
       get :confirm_destroy, to: "registrations#confirm_destroy", as: :confirm_destroy_account
       get :resend_instructions, to: "registrations#resend_instructions", as: :resend_instructions
-      post :confirm_email_address, to: "confirmations#show"
-      post :unlock_account, to: "unlocks#show"
     end
 
     resources :job_applications, only: %i[index show destroy] do
@@ -186,7 +180,6 @@ Rails.application.routes.draw do
     resources :subscriptions, only: %i[index]
     resource :account, only: %i[show] do
       member do
-        get :confirmation
         get :account_found
         get :account_not_found
       end
