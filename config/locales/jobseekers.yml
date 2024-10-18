@@ -344,9 +344,15 @@ en:
         profile_link_text: candidate profile
         title: Application
         one_login_banner:
-          title: Account found
-          paragraph1: We have found a teaching vacancies account using this email address.
-          paragraph2: Your account information including past applications has been saved.
+          account_found:
+            title: Account found
+            paragraph1: We have found a teaching vacancies account using this email address.
+            paragraph2: Your account information including past applications has been saved.
+          account_not_found:
+            title: New account created
+            paragraph1: You've made a new Teaching Vacancies account.
+            paragraph2: If you already have an account using a different email address, you can %{link}
+            transfer_account_link_text: transfer your account information.
       about_your_application:
         title: About your application
         warning:
