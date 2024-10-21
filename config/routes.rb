@@ -362,6 +362,7 @@ Rails.application.routes.draw do
       end
       resource :statistics, only: %i[show update], controller: "publishers/vacancies/statistics"
       resource :copy, only: %i[create], controller: "publishers/vacancies/copy"
+      resource :relist, only: %i[create edit update], controller: "publishers/vacancies/relist"
       resource :end_listing, only: %i[show update], controller: "publishers/vacancies/end_listing"
       resource :extend_deadline, only: %i[show update], controller: "publishers/vacancies/extend_deadline"
 
