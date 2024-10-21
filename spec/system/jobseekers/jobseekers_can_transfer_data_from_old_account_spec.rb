@@ -121,11 +121,11 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
     visit jobseekers_job_applications_path
 
     expect(page).to have_content "Applications (0)"
-    expect(page).to have_content "You have not applied for any teaching jobs"
+    expect(page).to have_content "You have not applied for any jobs"
 
     visit jobseekers_saved_jobs_path
 
-    expect(page).to have_content "You have no saved teaching jobs"
+    expect(page).to have_content "You have no saved jobs"
 
     visit jobseekers_subscriptions_path
 
@@ -147,7 +147,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
 
     visit jobseekers_saved_jobs_path
 
-    expect(page).not_to have_content "You have no saved teaching jobs"
+    expect(page).not_to have_content "You have no saved jobs"
     expect(page).to have_content saved_job.vacancy.job_title
 
     visit jobseekers_subscriptions_path

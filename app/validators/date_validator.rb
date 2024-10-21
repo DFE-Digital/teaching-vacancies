@@ -7,9 +7,9 @@ class DateValidator < ActiveModel::EachValidator
   }.freeze
 
   DEFAULT_CHECK_VALUES = {
-    today: Date.current,
-    now: Time.current,
-    far_future: 2.years.from_now,
+    today: -> { Date.current },
+    now: -> { Time.current },
+    far_future: -> { 2.years.from_now },
   }.freeze
 
   def validate_each(record, attribute, value)
@@ -26,7 +26,7 @@ class DateValidator < ActiveModel::EachValidator
         DEFAULT_CHECK_VALUES.key?(restriction_option) || record.respond_to?(restriction_option)
 
       if DEFAULT_CHECK_VALUES.key?(restriction_option)
-        value_to_compare = DEFAULT_CHECK_VALUES[restriction_option]
+        value_to_compare = DEFAULT_CHECK_VALUES[restriction_option].call
       elsif record.respond_to?(restriction_option)
         value_to_compare = record.send(restriction_option)
       end

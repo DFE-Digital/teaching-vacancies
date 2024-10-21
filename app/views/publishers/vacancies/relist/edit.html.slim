@@ -1,0 +1,34 @@
+- content_for :page_title_prefix, t(".title", job_title: vacancy.job_title)
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: organisation_job_path(@vacancy.id)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = t(".caption")
+    h1.govuk-heading-xl = t(".heading", job_title: @vacancy.job_title)
+
+    = form_for @form, url: organisation_job_relist_path(@vacancy.id), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = render "publish_date", f: f
+
+      = f.govuk_date_field :expires_at,
+        hint: -> { t("helpers.hint.date", date: 1.month.from_now.strftime("%d %m %Y")) }
+
+      = f.govuk_collection_radio_buttons :expiry_time,
+        Vacancy::EXPIRY_TIME_OPTIONS,
+        ->(option) { option },
+        ->(option) { t("helpers.options.publishers_job_listing_extend_deadline_form.expiry_time.#{option}") }
+
+      = f.govuk_radio_buttons_fieldset :extension_reason, legend: { text: t(".reason_label") } do
+        = f.govuk_radio_button :extension_reason, :no_applications, link_errors: true, label: { text: t(".extension_reason.no_applications") }
+        = f.govuk_radio_button :extension_reason, :didnt_find_right_candidate, link_errors: true, label: { text: t(".extension_reason.didnt_find_right_candidate") }
+        = f.govuk_radio_button :extension_reason, :other_extension_reason, label: { text: t(".extension_reason.other_extension_reason") } do
+          = f.govuk_text_area :other_extension_reason_details,
+            label: { text: t(".extension_reason.other_details") },
+            rows: 5
+
+      = f.govuk_submit t("buttons.relist_vacancy"), class: "govuk-!-margin-bottom-5"
+
+    = govuk_link_to(t("buttons.cancel"), organisation_jobs_with_type_path, class: "govuk-link--no-visited-state govuk-!-font-size-19")
