@@ -13,11 +13,11 @@
 
     p.govuk-body A DfE Sign-in account is required to list jobs for free on Teaching Vacancies.
 
-    p.govuk-body You can request an account if you work:
+    p.govuk-body You can request an account if you work at (one of the following):
 
     ul.govuk-list.govuk-list--bullet class="govuk-!-margin-bottom-4"
-      li at a state-funded school or trust in England, or
-      li if you work at a local authority and list job vacancies on behalf of schools
+      li a state-funded school or trust in England
+      li a local authority and list job vacancies on behalf of schools
     p.govuk-body #{govuk_link_to("Check you're eligible to advertise roles on Teaching Vacancies", "/get-help-hiring/how-to-setup-your-account/check-your-eligibility-to-advertise-roles")}.
 
     = dsi_account_request_link
@@ -25,11 +25,11 @@
     h3.govuk-heading-m If you already have a DfE Sign-in account
 
     p.govuk-body
-      | #{govuk_link_to("Sign in", auth_dfe_path, method: :post)} to your account, then click 'Request access to a service'. Choose Teaching Vacancies from the
+      | #{govuk_link_to("Sign in", auth_dfe_path, method: :post)} to your account, then click 'request access to a service'. Choose Teaching Vacancies from the
       |  list.
 
     p.govuk-body
-      | Your request will be sent to your organisation's nominated approver. You will informed by email
+      | Your request will be sent to your organisation's nominated approver. You will be informed by email
       |  when approval has been given.
 
     p.govuk-body
