@@ -192,7 +192,7 @@ en:
       hint: Provide details about what your school can offer staff, for example, employee benefits, wellbeing support or professional development.
     flexi_working:
       hint: For example, remote working for planning, preparation and assessment (PPA) time, compressed hours or personal or family days
-      publisher: What flexible working opportunities can you offer?
+      publisher: What flexible working opportunities can you offer? (optional)
       jobseeker: Flexible working opportunities
     skills_and_experience:
       jobseeker: What skills and experience we're looking for
