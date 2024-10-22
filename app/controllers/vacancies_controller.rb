@@ -10,6 +10,16 @@ class VacanciesController < ApplicationController
   end
 
   def show
+    if session[:user_exists_first_log_in]
+      @user_exists_first_log_in = true
+      session.delete(:user_exists_first_log_in)
+    end
+
+    if session[:newly_created_user]
+      @newly_created_user = true
+      session.delete(:newly_created_user)
+    end
+    
     vacancy = Vacancy.listed.friendly.find(params[:id])
     @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy: vacancy)
     @job_application = current_jobseeker&.job_applications&.find_by(vacancy: vacancy)

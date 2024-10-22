@@ -572,6 +572,16 @@ en:
     show:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
       job_details: Job details
+      one_login_banner:
+        account_found:
+          title: Account found
+          paragraph1: We have found a teaching vacancies account using this email address.
+          paragraph2: Your account information including past applications has been saved.
+        account_not_found:
+          title: New account created
+          paragraph1: You've made a new Teaching Vacancies account.
+          paragraph2: If you already have an account using a different email address, you can %{link}
+          transfer_account_link_text: transfer your account information.
 
   vacancy_selector_component:
     job:

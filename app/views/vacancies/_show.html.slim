@@ -1,5 +1,17 @@
 - content_for :page_title_prefix, vacancy_listing_page_title_prefix(@vacancy)
 
+- if @user_exists_first_log_in
+  = govuk_notification_banner title_text: t("banners.success"), classes: "govuk-notification-banner--success" do |notification_banner|
+    - notification_banner.with_heading(text: t(".one_login_banner.account_found.title"))
+    p.govuk-body = t(".one_login_banner.account_found.paragraph1")
+    p.govuk-body = t(".one_login_banner.account_found.paragraph2")
+
+- if @newly_created_user
+  = govuk_notification_banner title_text: t("banners.success"), classes: "govuk-notification-banner--success" do |notification_banner|
+    - notification_banner.with_heading(text: t(".one_login_banner.account_not_found.title"))
+    p.govuk-body = t(".one_login_banner.account_not_found.paragraph1")
+    p.govuk-body = t(".one_login_banner.account_not_found.paragraph2", link: govuk_link_to(t(".one_login_banner.account_not_found.transfer_account_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
+
 - content_for :page_description, t(".page_description", job_title: @vacancy.job_title,
                                                         organisation: @vacancy.organisation_name,
                                                         deadline: format_date(@vacancy.expires_at, :date_only_shorthand))
