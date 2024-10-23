@@ -84,7 +84,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
                          items: {
                            type: :string,
                            enum: Vacancy.phases.keys,
-                         }
+                         },
                        },
                        key_stages: {
                          type: :array,
@@ -198,7 +198,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
             items: {
               type: :string,
               enum: Vacancy.phases.keys,
-            }
+            },
           },
           key_stages: {
             type: :array,
