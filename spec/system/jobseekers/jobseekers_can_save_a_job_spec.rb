@@ -37,8 +37,7 @@ RSpec.describe "Jobseekers can save a job" do
             save_job
             sign_in_jobseeker_govuk_one_login(jobseeker)
             and_the_job_is_saved
-            expect(page).not_to have_content "Account found"
-            expect(page).not_to have_content "Account not found"
+            expect(page).not_to have_content "New teaching vacancies account created"
           end
         end
       end
@@ -54,8 +53,7 @@ RSpec.describe "Jobseekers can save a job" do
               save_job
               sign_in_jobseeker_govuk_one_login(jobseeker)
               expect(page).not_to have_content "You have saved this job. View all your saved jobs on your account"
-              expect(page).to have_content "Account found"
-              expect(page).not_to have_content "Account not found"
+              expect(page).not_to have_content "New teaching vacancies account created"
             end
           end
         end
@@ -72,8 +70,8 @@ RSpec.describe "Jobseekers can save a job" do
               save_job
               sign_in_jobseeker_govuk_one_login(jobseeker)
               expect(page).not_to have_content "You have saved this job. View all your saved jobs on your account"
-              expect(page).not_to have_content "Account found"
-              expect(page).to have_content "New account created"
+              expect(page).to have_content "New teaching vacancies account created"
+              expect(page).to have_content "You have saved this job in your new Teaching Vacancies account."
             end
           end
         end

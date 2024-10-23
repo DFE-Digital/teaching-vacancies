@@ -9,7 +9,7 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   def new
     saved_job.save
     
-    if session[:user_exists_first_log_in] || session[:newly_created_user]
+    if session[:newly_created_user]
       redirect_to job_path(vacancy)
     else
       redirect_to job_path(vacancy), success: t(".success_html", link: jobseekers_saved_jobs_path)

@@ -578,9 +578,9 @@ en:
           paragraph1: We have found a teaching vacancies account using this email address.
           paragraph2: Your account information including past applications has been saved.
         account_not_found:
-          title: New account created
-          paragraph1: You've made a new Teaching Vacancies account.
-          paragraph2: If you already have an account using a different email address, you can %{link}
+          title: New Teaching Vacancies account created
+          paragraph1: You have saved this job in your new Teaching Vacancies account.
+          paragraph2: If you already had a Teaching Vacancies account using a different email address, you can %{link}
           transfer_account_link_text: transfer your account information.
 
   vacancy_selector_component:
