@@ -109,6 +109,22 @@ en:
             name: CLID
             purpose: Identifies the first-time Clarity saw this user on any site using Clarity
             expires: 12 months
+            twentieth:
+            name: ANONCHK
+            purpose: This cookie ensures that clicks from advertisement on the Bing search engine are verified and it is used for reporting purposes and for personalisation
+            expires: 10 minutes
+            twentyfirst:
+            name: MR
+            purpose: Indicates whether to refresh MUID
+            expires: 1 week
+            twentysecond:
+            name: MUID
+            purpose: Identifies unique web browsers visiting Microsoft sites. These cookies are used for advertising, site analytics, and other operational purposes
+            expires: 13 months
+            twentythird:
+            name: SM
+            purpose: Used in synchronizing the MUID across Microsoft domains
+            expires: 13 months
       marketing:
         heading: Cookies that help with our communications and marketing
         intro: >-
