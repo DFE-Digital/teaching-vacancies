@@ -14,8 +14,12 @@ class Jobseekers::SessionsController < Devise::SessionsController
 
     super do
       unless redirected?
-        store_return_location(jobseeker_root_path, scope: :jobseeker)
-        session[:after_sign_in] = true
+        if stored_location_for(:jobseeker) == '/jobseekers/edit'
+          store_return_location(edit_jobseeker_registration_path, scope: :jobseeker)
+        else
+          store_return_location(jobseeker_root_path, scope: :jobseeker)
+          session[:after_sign_in] = true
+        end
       end
     end
   end
