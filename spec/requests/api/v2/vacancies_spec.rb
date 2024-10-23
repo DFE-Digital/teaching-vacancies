@@ -28,7 +28,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
                      type: :object,
                      additionalProperties: false,
                      required: %i[external_advert_url expires_at starts_on job_title skills_and_experience salary external_reference
-                                  school_urns job_roles working_patterns contract_type phases publish_on],
+                                  job_roles working_patterns contract_type phases publish_on schools],
                      properties: {
                        external_advert_url: { type: :string, example: "https://example.com/jobs/123" },
                        publish_on: { type: :string, format: :date },
@@ -41,19 +41,43 @@ RSpec.describe "api/v2/vacancies", type: :request do
                        external_reference: { type: :string, example: "123GTZY" },
                        visa_sponsorship_available: { type: :boolean },
                        is_job_share: { type: :boolean },
-                       is_parental_leave_cover: { type: :boolean },
-                       school_visits: { type: :boolean },
-                       school_urns: {
-                         type: :array,
-                         minItems: 1,
-                         items: {
-                           type: :integer,
-                           example: 12_345,
-                         },
-                       },
-                       trust_uid: {
-                         type: :integer,
-                         example: 12_345,
+                       schools: {
+                         oneOf: [
+                           {
+                             type: :object,
+                             additionalProperties: false,
+                             required: %i[school_urns],
+                             properties: {
+                               school_urns: {
+                                 type: :array,
+                                 minItems: 1,
+                                 items: {
+                                   type: :integer,
+                                   example: 12_345,
+                                 },
+                               },
+                             },
+                           },
+                           {
+                             type: :object,
+                             additionalProperties: false,
+                             required: %i[trust_uid school_urns],
+                             properties: {
+                               trust_uid: {
+                                 type: :integer,
+                                 example: 12_345,
+                               },
+                               school_urns: {
+                                 type: :array,
+                                 minItems: 0,
+                                 items: {
+                                   type: :integer,
+                                   example: 12_345,
+                                 },
+                               },
+                             },
+                           },
+                         ],
                        },
                        job_roles: {
                          type: :array,
@@ -84,7 +108,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
                          items: {
                            type: :string,
                            enum: Vacancy.phases.keys,
-                         }
+                         },
                        },
                        key_stages: {
                          type: :array,
@@ -142,7 +166,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
         type: :object,
         additionalProperties: false,
         required: %i[external_advert_url expires_at job_title skills_and_experience salary visa_sponsorship_available reference
-                     is_job_share school_visits school_urns job_roles working_patterns contract_type phase],
+                     is_job_share job_roles working_patterns contract_type phase schools],
         properties: {
           external_advert_url: { type: :string, example: "https://example.com/jobs/123" },
           publish_on: { type: :string, format: :date },
@@ -155,19 +179,43 @@ RSpec.describe "api/v2/vacancies", type: :request do
           external_reference: { type: :string, example: "REF1234HYZ" },
           visa_sponsorship_available: { type: :boolean },
           is_job_share: { type: :boolean },
-          is_parental_leave_cover: { type: :boolean },
-          school_visits: { type: :boolean },
-          school_urns: {
-            type: :array,
-            minItems: 1,
-            items: {
-              type: :integer,
-              example: 12_345,
-            },
-          },
-          trust_uid: {
-            type: :integer,
-            example: 12_345,
+          schools: {
+            oneOf: [
+              {
+                type: :object,
+                additionalProperties: false,
+                required: %i[school_urns],
+                properties: {
+                  school_urns: {
+                    type: :array,
+                    minItems: 1,
+                    items: {
+                      type: :integer,
+                      example: 12_345,
+                    },
+                  },
+                },
+              },
+              {
+                type: :object,
+                additionalProperties: false,
+                required: %i[trust_uid school_urns],
+                properties: {
+                  trust_uid: {
+                    type: :integer,
+                    example: 12_345,
+                  },
+                  school_urns: {
+                    type: :array,
+                    minItems: 0,
+                    items: {
+                      type: :integer,
+                      example: 12_345,
+                    },
+                  },
+                },
+              },
+            ],
           },
           job_roles: {
             type: :array,
@@ -179,6 +227,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
           },
           ect_suitable: {
             type: :boolean,
+            description: "Whether or not this role is suitable for early career teachers (ECT). Defaults to false if not supplied",
           },
           working_patterns: {
             type: :array,
@@ -198,7 +247,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
             items: {
               type: :string,
               enum: Vacancy.phases.keys,
-            }
+            },
           },
           key_stages: {
             type: :array,
@@ -223,7 +272,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
         },
       }
 
-      response(200, "successful") do
+      response(201, "successful") do
         let(:api_version) { "2" }
 
         after do |example|
@@ -257,13 +306,14 @@ RSpec.describe "api/v2/vacancies", type: :request do
     parameter name: "api_version", in: :path, type: :string, description: "api_version"
     parameter name: "id", in: :path, type: :string, description: "id"
 
+    let(:id) { create(:vacancy, :external).id }
+
     get("show vacancy") do
       consumes "application/json"
       produces "application/json"
 
       response(200, "successful") do
         let(:api_version) { "2" }
-        let(:id) { "123" }
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -282,7 +332,6 @@ RSpec.describe "api/v2/vacancies", type: :request do
 
       response(200, "successful") do
         let(:api_version) { "2" }
-        let(:id) { "123" }
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -300,7 +349,6 @@ RSpec.describe "api/v2/vacancies", type: :request do
 
       response(204, "successful") do
         let(:api_version) { "2" }
-        let(:id) { "123" }
 
         run_test!
       end
