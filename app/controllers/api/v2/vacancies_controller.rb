@@ -31,7 +31,7 @@ class Api::V2::VacanciesController < Api::ApplicationController
     params.fetch(:vacancy)
           .permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
                   :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary,
-                  :job_roles, :working_patterns, :contract_type, :phase)
+                  :job_roles, :working_patterns, :contract_type, :phases)
           .merge(organisations: [School.first])
   end
 
