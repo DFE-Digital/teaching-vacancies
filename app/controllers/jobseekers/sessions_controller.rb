@@ -1,6 +1,6 @@
 class Jobseekers::SessionsController < Devise::SessionsController
   include ReturnPathTracking::Helpers
-
+  # rubocop:disable Metrics/MethodLength
   def new
     if (attempted_path = params[:attempted_path])
       alert_text = t("jobseekers.forced_login.#{forced_login_resource(attempted_path)}_html",
@@ -23,6 +23,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def create
     if sign_in_params.values.any?(&:blank?)
