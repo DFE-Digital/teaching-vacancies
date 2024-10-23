@@ -65,10 +65,21 @@ class VacanciesController < ApplicationController
     params.permit(:email_name, :email_postcode, :email_location, :email_radius, :email_jobrole, :email_subject,
                   :email_phase, :email_ECT, :email_fulltime, :email_parttime, :email_jobshare, :email_contact)
           .tap do |campaign_params|
+      sanitise_campaign_params(campaign_params)
       map_location_and_radius(campaign_params)
       map_teaching_job_roles_subjects_phases(campaign_params)
       campaign_params[:working_patterns] = extract_working_patterns(campaign_params)
       campaign_params[:ect_statuses] = [campaign_params.delete(:email_ECT)].compact
+    end
+  end
+
+  def sanitise_campaign_params(campaign_params)
+    campaign_params.each do |key, value|
+      campaign_params[key] = if value.blank? || value.strip.empty? || value == "%20"
+                               nil
+                             else
+                               value.strip
+                             end
     end
   end
 
