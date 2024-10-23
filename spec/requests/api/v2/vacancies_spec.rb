@@ -27,8 +27,8 @@ RSpec.describe "api/v2/vacancies", type: :request do
                    items: {
                      type: :object,
                      additionalProperties: false,
-                     required: %i[external_advert_url expires_at starts_on job_title skills_and_experience salary visa_sponsorship_available external_reference
-                                  school_visits school_urns job_roles working_patterns contract_type phase publish_on],
+                     required: %i[external_advert_url expires_at starts_on job_title skills_and_experience salary external_reference
+                                  school_urns job_roles working_patterns contract_type phases publish_on],
                      properties: {
                        external_advert_url: { type: :string, example: "https://example.com/jobs/123" },
                        publish_on: { type: :string, format: :date },
@@ -78,9 +78,13 @@ RSpec.describe "api/v2/vacancies", type: :request do
                          type: :string,
                          enum: Vacancy.contract_types.keys,
                        },
-                       phase: {
-                         type: :string,
-                         enum: Vacancy.phases.keys,
+                       phases: {
+                         type: :array,
+                         minItems: 1,
+                         items: {
+                           type: :string,
+                           enum: Vacancy.phases.keys,
+                         }
                        },
                        key_stages: {
                          type: :array,
@@ -188,9 +192,13 @@ RSpec.describe "api/v2/vacancies", type: :request do
             type: :string,
             enum: Vacancy.contract_types.keys,
           },
-          phase: {
-            type: :string,
-            enum: Vacancy.phases.keys,
+          phases: {
+            type: :array,
+            minItems: 1,
+            items: {
+              type: :string,
+              enum: Vacancy.phases.keys,
+            }
           },
           key_stages: {
             type: :array,
@@ -238,7 +246,7 @@ RSpec.describe "api/v2/vacancies", type: :request do
                        job_roles: source.job_roles,
                        working_patterns: source.working_patterns,
                        contract_type: source.contract_type,
-                       phase: source.phases.first } }
+                       phases: source.phases } }
         end
         run_test!
       end

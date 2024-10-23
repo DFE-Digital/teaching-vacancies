@@ -16,7 +16,7 @@ json.school_urns(vacancy.organisations.map { |x| x.urn.to_i })
 json.ect_suitable vacancy.ect_status == "ect_suitable"
 json.working_patterns vacancy.working_patterns
 json.contract_type vacancy.contract_type
-json.phase vacancy.phases.first
+json.phases vacancy.phases
 if vacancy.key_stages.any?
   json.key_stages vacancy.key_stages
 end
