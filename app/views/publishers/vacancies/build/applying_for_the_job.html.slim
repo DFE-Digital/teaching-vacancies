@@ -7,7 +7,7 @@
 
       = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-      p.govuk-body = t(".using_application_form_html", link: govuk_link_to(t(".kcsie_guidance"), t(".kcsie_url")))
+      p.govuk-body = t(".using_application_form_html", link: govuk_link_to(t(".kcsie_guidance"), t(".kcsie_url"), target: "_blank", rel: "noreferrer noopener"))
 
       p.govuk-body = t(".reason_for_our_form")
 

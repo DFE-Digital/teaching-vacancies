@@ -241,7 +241,7 @@ en:
         application_form: You can only upload a PDF or DOCX file under 10MB
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications_options:
-          "false": You'll need to provide additional details about how to apply
+          "false": You'll need to provide additional details about how to apply.
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 10MB
       publishers_job_listing_feedback_form:
