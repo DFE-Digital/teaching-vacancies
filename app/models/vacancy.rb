@@ -66,7 +66,12 @@ class Vacancy < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_one :equal_opportunities_report, dependent: :destroy
   has_many :organisation_vacancies, dependent: :destroy
-  has_many :organisations, through: :organisation_vacancies, dependent: :destroy, after_add: :refresh_geolocation, after_remove: :refresh_geolocation
+  has_many :organisations,
+           through: :organisation_vacancies,
+           dependent: :destroy,
+           validate: false, # If an organisation has some validation error, we do not want to block users from creating a vacancy.
+           after_add: :refresh_geolocation,
+           after_remove: :refresh_geolocation
   has_many :markers, dependent: :destroy
   has_many :feedbacks, dependent: :destroy, inverse_of: :vacancy
 
