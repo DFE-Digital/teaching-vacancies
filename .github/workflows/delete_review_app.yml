@@ -97,7 +97,7 @@ jobs:
 
     - name: Send failure message to twd_tv_dev channel
       if: failure()
-      uses: rtCamp/action-slack-notify@v2.3.0
+      uses: rtCamp/action-slack-notify@v2.3.2
       env:
         SLACK_CHANNEL: twd_tv_dev
         SLACK_USERNAME: CI Deployment

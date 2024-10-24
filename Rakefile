@@ -5,19 +5,19 @@
 require_relative "config/application"
 Rails.application.load_tasks
 
-if Rails.env.development? || Rails.env.test?
+if Rails.env.local?
   desc "Run Rubocop"
-  task :rubocop do
+  task rubocop: :environment do
     sh "bundle exec rubocop"
   end
 
   desc "Run Slim Lint"
-  task :slim_lint do
+  task slim_lint: :environment do
     sh "bundle exec slim-lint app/views app/components"
   end
 
   desc "Run Brakeman"
-  task :brakeman do
+  task brakeman: :environment do
     # CI env var makes Brakeman not put its output in a pager
     sh "CI=true bundle exec brakeman"
   end

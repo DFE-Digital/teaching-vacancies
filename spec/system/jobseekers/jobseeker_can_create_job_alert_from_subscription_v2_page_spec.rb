@@ -12,8 +12,8 @@ RSpec.describe "Jobseekers can create a job alert from the v2 page", recaptcha: 
 
   after { logout }
 
-  it "it does not create a job alert if no fields are filled in" do
-    click_on I18n.t("buttons.subscribe")
+  it "does not create a job alert if no fields are filled in" do
+    click_on I18n.t("buttons.subscribe_v2")
     expect(page).to have_content("There is a problem")
   end
 
@@ -26,13 +26,14 @@ RSpec.describe "Jobseekers can create a job alert from the v2 page", recaptcha: 
 
   def create_a_job_alert
     fill_in_subscription_fields
-    click_on I18n.t("buttons.subscribe")
+    click_on I18n.t("buttons.subscribe_v2")
   end
 
   def fill_in_subscription_fields
     fill_in "jobseekers_subscription_form[keyword]", with: search_criteria["keyword"]
     fill_in "jobseekers_subscription_form[location]", with: search_criteria["location"]
     select I18n.t("jobs.search.number_of_miles", count: search_criteria["radius"])
+
     choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.#{subscription.frequency}")
     search_criteria["working_patterns"].each do |working_pattern|
       check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{working_pattern}")
