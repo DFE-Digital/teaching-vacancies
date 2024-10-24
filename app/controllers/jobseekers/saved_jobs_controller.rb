@@ -8,7 +8,7 @@ class Jobseekers::SavedJobsController < Jobseekers::BaseController
   # This action is not 'create' because we need to redirect here when an unauthenticated jobseeker attempts to save a job
   def new
     saved_job.save
-    
+
     if session[:newly_created_user]
       redirect_to job_path(vacancy)
     else

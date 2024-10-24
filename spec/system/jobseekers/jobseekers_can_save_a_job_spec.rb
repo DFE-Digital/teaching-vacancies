@@ -74,7 +74,6 @@ RSpec.describe "Jobseekers can save a job" do
           end
         end
       end
-      
 
       context "when the job is already saved" do
         let!(:saved_job) { create(:saved_job, jobseeker: jobseeker, vacancy: vacancy) }
