@@ -91,6 +91,12 @@ en:
       title: "Teaching Assistant Jobs"
       heading: "%{count} teaching assistant jobs"
       meta_description: "Find full and part time teaching assistant jobs and classroom assistant vacancies. See which schools near you are currently hiring TAs and LSAs."
+    teaching-assistant-jobs-v2:
+      name: "Teaching assistant"
+      title: "Teaching Assistant Jobs"
+      heading: "%{count} teaching assistant jobs"
+      meta_description: "Find full and part time teaching assistant jobs and classroom assistant vacancies. See which schools near you are currently hiring TAs and LSAs."
+      banner_title: "Find your teaching assistant job"
     other-teaching-support-jobs:
       name: "Other teaching support"
       title: "Other Teaching Support Jobs"
@@ -324,6 +330,7 @@ en:
     ################################################################################################
     part-time-potions-and-sorcery-teacher-jobs:
       name: "Potions and Sorcery"
+      banner_title: "Spiffy Part Time Potions and Sorcery Jobs"
       title: "Spiffy Part Time Potions and Sorcery Jobs"
       heading: "%{count} amazing jobs APPLY NOW"
       meta_description: "Lorem ipsum dolor sit jobs, vacancies adipiscing elit."

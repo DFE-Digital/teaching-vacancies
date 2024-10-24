@@ -1,0 +1,9 @@
+.custom-banner-background
+  .govuk-width-container
+    .custom-banner
+      .govuk-grid-row
+        .govuk-grid-column-one-third-at-desktop
+          h1.govuk-heading-l class="govuk-!-margin-bottom-4" = @landing_page.banner_title
+          = render "vacancies/search/fields_and_button", f: f, form: @form, show_keyword: false
+        .govuk-grid-column-two-thirds-at-desktop
+          img src=image_path(@landing_page.banner_image) class="govuk-!-margin-top-2" width="90%" height="90%" alt="Primary school classroom with children"
