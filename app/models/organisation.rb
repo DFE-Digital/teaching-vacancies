@@ -55,7 +55,7 @@ class Organisation < ApplicationRecord
 
   alias_attribute :data, :gias_data
 
-  enum phase: {
+  enum :phase, {
     not_applicable: 0,
     nursery: 1,
     primary: 2,

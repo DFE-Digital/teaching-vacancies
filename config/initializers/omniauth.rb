@@ -1,4 +1,5 @@
 class OmniAuth::Strategies::Dfe < OmniAuth::Strategies::OpenIDConnect; end
+class OmniAuth::Strategies::GovukOneLogin < OmniAuth::Strategies::OpenIDConnect; end
 
 Rails.application.config.middleware.use OmniAuth::Builder do
   dfe_sign_in_issuer_uri    = URI(ENV.fetch("DFE_SIGN_IN_ISSUER", "example"))
@@ -25,6 +26,23 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       authorization_endpoint: "/auth",
       jwks_uri: "/certs",
       userinfo_endpoint: "/me",
+    },
+  )
+
+  provider(
+    :govuk_one_login,
+    name: :govuk_one_login,
+    scope: %i[openid email],
+    response_type: :code,
+    client_options: {
+      port: 443,
+      scheme: "https",
+      host: Rails.application.config.govuk_one_login_base_url,
+      identifier: Rails.application.config.govuk_one_login_client_id,
+      redirect_uri: "jobseekers/auth/govuk_one_login/callback",
+    },
+    authorize_params: {
+      prompt: "login",
     },
   )
 

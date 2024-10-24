@@ -10,9 +10,17 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def new
     send_dfe_analytics_event
 
-    return unless quick_apply?
+    if session[:newly_created_user]
+      @newly_created_user = true
+      session.delete(:newly_created_user)
+    end
 
-    redirect_to about_your_application_jobseekers_job_job_application_path(vacancy.id)
+    if quick_apply?
+      redirect_to about_your_application_jobseekers_job_job_application_path(vacancy.id)
+    elsif session[:user_exists_first_log_in]
+      @user_exists_first_log_in = true
+      session.delete(:user_exists_first_log_in)
+    end
   end
 
   def create
@@ -31,6 +39,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def new_quick_apply
+    if session[:user_exists_first_log_in]
+      @user_exists_first_log_in = true
+      session.delete(:user_exists_first_log_in)
+    end
+
     @has_previous_application = previous_application?
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
   end

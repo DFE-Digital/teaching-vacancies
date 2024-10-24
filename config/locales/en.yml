@@ -386,14 +386,9 @@ en:
       body:
         sign_in: Sign in to see all your job alerts in one place and save the jobs you are interested in.
         sign_up: Create an account to see all your job alerts in one place and save the jobs you are interested in.
-      form:
-        email_address: Email address
       heading:
         sign_in: Sign in to your Teaching Vacancies account
         sign_up: Create a Teaching Vacancies account
-      link:
-        sign_in: Sign in
-        sign_up: Create an account
     link:
       help_text_html: "%{link} whenever a job matching this search is listed."
       home_page: Visit %{home_page_link}
@@ -577,6 +572,16 @@ en:
     show:
       page_description: '%{job_title} job from %{organisation}. Apply by %{deadline}.'
       job_details: Job details
+      one_login_banner:
+        account_found:
+          title: Account found
+          paragraph1: We have found a teaching vacancies account using this email address.
+          paragraph2: Your account information including past applications has been saved.
+        account_not_found:
+          title: New Teaching Vacancies account created
+          paragraph1: You have saved this job in your new Teaching Vacancies account.
+          paragraph2: If you already had a Teaching Vacancies account using a different email address, you can %{link}
+          transfer_account_link_text: transfer your account information.
 
   vacancy_selector_component:
     job:

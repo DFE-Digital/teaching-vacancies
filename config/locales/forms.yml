@@ -61,6 +61,7 @@ en:
     hide_filters: Hide filters
     job_listing: Job listing
     make_changes: Make changes
+    one_login_sign_in: Continue to GOV.UK One Login
     preview_job_listing: Preview job listing
     profile_update:
       logo: Update organisation logo
@@ -351,7 +352,7 @@ en:
         close_account_reason_options:
           too_many_emails: "I'm getting too many emails"
           not_getting_any_value: "I'm not getting any value from the service"
-          not_looking_for_job: "I'm not looking for a teaching job"
+          not_looking_for_job: "I'm not looking for a teaching, leadership or school-based support job"
           other_close_account_reason: Other
       jobseekers_job_alert_further_feedback_form:
         comment: Would you like to add any further comments about the relevancy of the job alerts you have received?

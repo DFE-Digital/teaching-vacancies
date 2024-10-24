@@ -9,7 +9,7 @@ RSpec.describe Organisation do
   describe "email validation" do
     it "doesn't validate existing email" do
       org = described_class.new(email: "invalidaaddress")
-      org.save(validate: false)
+      org.save!(validate: false)
 
       expect(org).to be_valid
     end

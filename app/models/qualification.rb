@@ -10,7 +10,7 @@ class Qualification < ApplicationRecord
 
   SECONDARY_QUALIFICATIONS = %w[gcse as_level a_level other_secondary].freeze
 
-  enum category: { gcse: 0, as_level: 1, a_level: 2, other_secondary: 3, undergraduate: 4, postgraduate: 5, other: 6 }
+  enum :category, { gcse: 0, as_level: 1, a_level: 2, other_secondary: 3, undergraduate: 4, postgraduate: 5, other: 6 }
 
   before_validation :remove_inapplicable_data, :mark_emptied_qualification_results_for_destruction
 
