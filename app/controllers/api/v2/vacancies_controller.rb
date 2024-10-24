@@ -8,9 +8,11 @@ class Api::V2::VacanciesController < Api::ApplicationController
   def create
     @vacancy = Vacancy.create!(vacancy_params)
 
-    # logger.warn "Errors #{@vacancy.errors.messages}" if @vacancy.errors.any?
-
-    respond_to(&:json)
+    respond_to do |format|
+      format.json do
+        render status: :created
+      end
+    end
   end
 
   def update
