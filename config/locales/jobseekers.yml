@@ -317,6 +317,12 @@ en:
         page_title_with_count: Applications (%{count})
         skip_link: Skip to my job applications
         view_application: View application
+        one_login_banner:
+          header: Can't see your applications?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
+          paragraph2: You can request to %{link}
+          transfer_profile_link_text: transfer your existing profile.
+
       new:
         assistance:
           content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
