@@ -36,6 +36,6 @@ module ApplicationHelper
   end
 
   def include_google_tag_manager?
-    cookies["consented-to-additional-cookies"] == "yes" && Rails.configuration.app_role.production?
+    cookies["consented-to-additional-cookies-clarity-vwo"] == "yes" && Rails.configuration.app_role.production?
   end
 end
