@@ -9,7 +9,7 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
     scenario "gets signed in with their updated email in teaching vacancies" do
       sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email)
 
-      expect(page.current_path).to eq(jobseekers_job_applications_path)
+      expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
       expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
       expect(page).to have_link(text: I18n.t("nav.sign_out"))
       expect(one_login_jobseeker.reload.email).to eq(updated_email)
@@ -24,7 +24,7 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
       scenario "merges both accounts migrating the old account data into the new one" do
         sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email)
 
-        expect(page.current_path).to eq(jobseekers_job_applications_path)
+        expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
         expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
 
         # Has migrated the job application between accounts
@@ -41,11 +41,11 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
       scenario "gets signed in wile keeping their original email in teaching vacancies" do
         sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email)
 
-        expect(page.current_path).to eq(jobseekers_job_applications_path)
+        expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
         expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
 
         # Hasn't migrated the job application between accounts
-        expect(page).not_to have_content(pre_one_login_job_application.vacancy.job_title)
+        expect(page).to have_no_content(pre_one_login_job_application.vacancy.job_title)
         expect(page).to have_content(job_application.vacancy.job_title)
 
         expect(page).to have_link(text: I18n.t("nav.sign_out"))

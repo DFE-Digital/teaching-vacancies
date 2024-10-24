@@ -55,7 +55,7 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
         expect(page).to have_link("Confirmation code does not match.", href: "#jobseekers-account-transfer-form-account-merge-confirmation-code-field-error")
       end
 
-      old_jobseeker_account.update(account_merge_confirmation_code_generated_at: DateTime.current - 2.minutes)
+      old_jobseeker_account.update!(account_merge_confirmation_code_generated_at: Time.current - 2.minutes)
       find("details.govuk-details").click
       find("a.govuk-link", text: "send the code again").click
 

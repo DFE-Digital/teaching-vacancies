@@ -44,8 +44,8 @@ RSpec.describe "Govuk One Login authentication response" do
     end
 
     before do
+      allow_any_instance_of(ApplicationController).to receive(:stored_location_for).and_return(devise_stored_location) # rubocop:disable RSpec/AnyInstance
       allow(Jobseekers::GovukOneLogin::UserFromAuthResponse).to receive(:call).and_return(govuk_one_login_user)
-      allow_any_instance_of(ApplicationController).to receive(:stored_location_for).and_return(devise_stored_location)
       get root_path # Loads OneLogin Sign-in button and sets session values for user.
     end
 
@@ -65,7 +65,7 @@ RSpec.describe "Govuk One Login authentication response" do
       expect(session[:govuk_one_login_id_token]).to eq(govuk_one_login_user.id_token)
     end
 
-    it " deletes the OneLogin state and nonce used for authentication from the user session" do
+    it "deletes the OneLogin state and nonce used for authentication from the user session" do
       get auth_govuk_one_login_callback_path
 
       expect(session[:govuk_one_login_state]).to be_nil
@@ -94,13 +94,13 @@ RSpec.describe "Govuk One Login authentication response" do
     end
 
     context "when the OneLogin user matches a TV jobseeker" do
-      include_examples "post sign-in redirections"
-
-      let!(:jobseeker) { create(:jobseeker, email: govuk_one_login_user.email) }
-
       before do
         allow(govuk_one_login_user).to receive(:id).and_return(jobseeker.govuk_one_login_id)
       end
+
+      let!(:jobseeker) { create(:jobseeker, email: govuk_one_login_user.email) }
+
+      include_examples "post sign-in redirections"
 
       it "signs in the user as the existing jobseeker" do
         expect { get auth_govuk_one_login_callback_path }.not_to change(Jobseeker, :count)
@@ -133,7 +133,7 @@ RSpec.describe "Govuk One Login authentication response" do
       end
 
       context "when is not the first time the jobseeker is signing in via OneLogin" do
-        let!(:jobseeker) { create(:jobseeker, email: govuk_one_login_user.email, govuk_one_login_id: govuk_one_login_user.id) }
+        let(:jobseeker) { create(:jobseeker, email: govuk_one_login_user.email, govuk_one_login_id: govuk_one_login_user.id) }
 
         context "with no explicitly allowed url location to redirect to in devise session" do
           let(:devise_stored_location) { jobseeker_root_path }

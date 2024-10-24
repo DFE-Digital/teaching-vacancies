@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can view their account page" do
     end
 
     scenario "redirects to the jobseeker sign in page" do
-      expect(current_path).to eq(new_jobseeker_session_path)
+      expect(page).to have_current_path(new_jobseeker_session_path, ignore_query: true)
     end
   end
 end

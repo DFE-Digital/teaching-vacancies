@@ -5,7 +5,7 @@ RSpec.describe "Publishers are redirected after sign in" do
   let(:publisher) { create(:publisher) }
   let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
 
-  before { allow(AuthenticationFallback).to receive(:enabled?) { false } }
+  before { allow(AuthenticationFallback).to receive(:enabled?).and_return(false) }
 
   around do |example|
     previous_default_mock_auth = OmniAuth.config.mock_auth[:default]
@@ -31,7 +31,7 @@ RSpec.describe "Publishers are redirected after sign in" do
 
       sign_in_publisher
 
-      expect(current_path).to eq(organisation_job_path(vacancy))
+      expect(page).to have_current_path(organisation_job_path(vacancy), ignore_query: true)
     end
 
     scenario "then goes to a different page and signs in" do
@@ -40,17 +40,17 @@ RSpec.describe "Publishers are redirected after sign in" do
 
       sign_in_publisher(navigate: true)
 
-      expect(current_path).to eq(publisher_root_path)
+      expect(page).to have_current_path(publisher_root_path, ignore_query: true)
     end
   end
 
-  context "when the organisation's profile is incomplete " do
-    before { allow_any_instance_of(Organisation).to receive(:profile_complete?).and_return(false) }
+  context "when the organisation's profile is incomplete" do
+    before { allow_any_instance_of(Organisation).to receive(:profile_complete?).and_return(false) } # rubocop:disable RSpec/AnyInstance
 
     scenario "it redirects to the interstitial profile completion reminder page" do
       sign_in_publisher(navigate: true)
 
-      expect(current_path).to eq(publishers_organisation_profile_incomplete_path(organisation))
+      expect(page).to have_current_path(publishers_organisation_profile_incomplete_path(organisation), ignore_query: true)
       expect(page).to have_link(I18n.t("publishers.incomplete_profile.complete_link_text", organisation_type: :school), href: publishers_organisation_path(organisation))
     end
   end

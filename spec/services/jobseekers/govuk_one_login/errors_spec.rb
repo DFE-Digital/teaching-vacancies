@@ -4,12 +4,12 @@ RSpec.describe Jobseekers::GovukOneLogin::Errors do
   describe Jobseekers::GovukOneLogin::Errors::GovukOneLoginError do
     it "provides a default error message" do
       expect { raise described_class }
-        .to raise_error(Jobseekers::GovukOneLogin::Errors::GovukOneLoginError, "GovukOneLogin: Failed to authenticate with Govuk One Login")
+        .to raise_error(described_class, "GovukOneLogin: Failed to authenticate with Govuk One Login")
     end
 
     it "allows to customize the error message based on title and description" do
       expect { raise described_class.new("Custom error", "error message") }
-        .to raise_error(Jobseekers::GovukOneLogin::Errors::GovukOneLoginError, "Custom error: error message")
+        .to raise_error(described_class, "Custom error: error message")
     end
   end
 

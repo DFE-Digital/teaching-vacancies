@@ -6,13 +6,13 @@ RSpec.describe Jobseekers::GovukOneLogin::UserFromAuthResponse do
 
   describe ".call" do
     it "initializes a new instance and calls it" do
-      user_from_auth_response = instance_double(Jobseekers::GovukOneLogin::UserFromAuthResponse)
-      allow(Jobseekers::GovukOneLogin::UserFromAuthResponse).to receive(:new).and_return(user_from_auth_response)
+      user_from_auth_response = instance_double(described_class)
+      allow(described_class).to receive(:new).and_return(user_from_auth_response)
       allow(user_from_auth_response).to receive(:call)
 
       described_class.call(auth_response, user_session)
 
-      expect(Jobseekers::GovukOneLogin::UserFromAuthResponse).to have_received(:new).with(auth_response, user_session)
+      expect(described_class).to have_received(:new).with(auth_response, user_session)
       expect(user_from_auth_response).to have_received(:call)
     end
   end

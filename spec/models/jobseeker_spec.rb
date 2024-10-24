@@ -17,12 +17,12 @@ RSpec.describe Jobseeker do
   end
 
   describe ".create_from_govuk_one_login" do
-    let(:email) { "notarealuser121342@gmail.com" }
-    let(:govuk_one_login_id) { "urn:fdc:gov.uk:2022:VtcZjnU4Sif2oyJZola3OkN0e3Jeku1cIMN38rFlhU4" }
-
     subject(:create_from_govuk_one_login) do
       described_class.create_from_govuk_one_login(email: email, id: govuk_one_login_id)
     end
+
+    let(:email) { "notarealuser121342@gmail.com" }
+    let(:govuk_one_login_id) { "urn:fdc:gov.uk:2022:VtcZjnU4Sif2oyJZola3OkN0e3Jeku1cIMN38rFlhU4" }
 
     RSpec.shared_examples "invalid input" do
       it "returns nil" do
@@ -113,15 +113,15 @@ RSpec.describe Jobseeker do
     let!(:jobseeker) { create(:jobseeker) }
 
     it "returns false if not given a new email" do
-      expect(jobseeker.update_email_from_govuk_one_login!(nil)).to eq(false)
+      expect(jobseeker.update_email_from_govuk_one_login!(nil)).to be(false)
     end
 
     it "returns false if the new email is empty" do
-      expect(jobseeker.update_email_from_govuk_one_login!("")).to eq(false)
+      expect(jobseeker.update_email_from_govuk_one_login!("")).to be(false)
     end
 
     it "returns false if the new email is the same as the current email" do
-      expect(jobseeker.update_email_from_govuk_one_login!(jobseeker.email)).to eq(false)
+      expect(jobseeker.update_email_from_govuk_one_login!(jobseeker.email)).to be(false)
     end
 
     context "when the new email addres doesn't belong to other legacy jobseeker" do
@@ -151,12 +151,12 @@ RSpec.describe Jobseeker do
 
         it "sets the jobseeker email the legacy jobseeker's email matching the GovUK OneLogin change" do
           expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
-            .to change { jobseeker.email }.to(legacy_jobseeker.email)
+            .to change(jobseeker, :email).to(legacy_jobseeker.email)
         end
 
         it "deletes the legacy jobseeker" do
           expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
-            .to change(Jobseeker, :count).by(-1)
+            .to change(described_class, :count).by(-1)
           expect { legacy_jobseeker.reload }.to raise_error(ActiveRecord::RecordNotFound)
         end
       end
@@ -165,7 +165,7 @@ RSpec.describe Jobseeker do
         before { create(:job_application, jobseeker: jobseeker) }
 
         it "returns 'false'" do
-          expect(jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email)).to eq(false)
+          expect(jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email)).to be(false)
         end
 
         it "doesn't transfer the legacy jobseeker's data to the current jobseeker" do
@@ -175,12 +175,12 @@ RSpec.describe Jobseeker do
 
         it "doesn't update the jobseeker email" do
           expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
-            .not_to(change { jobseeker.email })
+            .not_to(change(jobseeker, :email))
         end
 
         it "doesn't delete the legacy jobseeker" do
           expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
-            .not_to(change(Jobseeker, :count))
+            .not_to(change(described_class, :count))
         end
       end
     end
