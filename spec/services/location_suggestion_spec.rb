@@ -28,6 +28,8 @@ RSpec.describe LocationSuggestion do
       stub_request(:get, request_url).to_return(body: request_body, status: request_status)
     end
 
+    # false assertion from rubocop
+    # rubocop:disable RSpec/UnspecifiedException
     context "the request is unsuccessful" do
       let(:request_status) { 400 }
 
@@ -48,6 +50,7 @@ RSpec.describe LocationSuggestion do
         end
       end
     end
+    # rubocop:enable RSpec/UnspecifiedException
 
     context "the request is successful" do
       it "returns the correct response" do

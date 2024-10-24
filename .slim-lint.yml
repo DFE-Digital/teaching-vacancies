@@ -6,3 +6,30 @@ linters:
     enabled: false
   LineLength:
     enabled: false
+  RuboCop:
+    ignored_cops:
+      - Style/IdenticalConditionalBranches
+      - Rails/Blank
+      - Rails/Date
+      - Rails/FindEach
+      - Rails/LinkToBlank
+      - Rails/PluralizationGrammar
+      - Rails/Presence
+      - Rails/Present
+      - Rails/TimeZone
+      - Rails/ToFormattedS
+      - # defaults from slim-lint:
+      - Layout/ArgumentAlignment
+      - Layout/ArrayAlignment
+      - Layout/EmptyLineAfterGuardClause
+      - Layout/FirstHashElementIndentation
+      - Layout/HashAlignment
+      - Layout/IndentationWidth
+      - Layout/TrailingEmptyLines
+      - Lint/Void
+      - Metrics/BlockLength
+      - Metrics/BlockNesting
+      - Naming/FileName
+      - Style/HashSyntax
+      - Style/Next
+      - Style/WordArray

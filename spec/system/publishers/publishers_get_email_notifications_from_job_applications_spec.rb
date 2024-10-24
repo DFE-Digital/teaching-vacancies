@@ -3,8 +3,9 @@ RSpec.describe "Publishers get email notifications from job applications" do
   include ActiveJob::TestHelper
 
   let(:organisation) { create(:school) }
-  let(:publisher) { create(:publisher, email: "test@example.com", organisations: [organisation]) }
-  let(:vacancy) { create(:vacancy, :published, publisher: publisher, organisations: [organisation], publish_on: 2.days.ago) }
+  let(:publisher) { create(:publisher, organisations: [organisation]) }
+  let(:job_title) { Faker::Adjective.positive }
+  let(:vacancy) { create(:vacancy, :published, publisher: publisher, organisations: [organisation], publish_on: 2.days.ago, job_title: job_title ) }
   let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 1.day.ago) }
 
   before do
@@ -21,11 +22,11 @@ RSpec.describe "Publishers get email notifications from job applications" do
     expect(ApplicationMailer.deliveries.count).to eq(1)
     email = ApplicationMailer.deliveries.first
     expect(email).to have_attributes(
-      to: ["test@example.com"],
+      to: [publisher.email],
       subject: I18n.t("publishers.job_application_mailer.applications_received.subject", count: 1),
     )
     email_links = get_email_markdown_links(email.body.to_s)
-    expect(email_links.first[:text]).to eq("View 1 new application")
+    expect(email_links.first[:text]).to eq("View new application for #{job_title}")
     expect(email_links.first[:href]).to match(%r{organisation/jobs/#{vacancy.id}/job_applications})
 
     visit email_links.first[:href]
