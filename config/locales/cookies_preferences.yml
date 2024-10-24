@@ -18,7 +18,7 @@ en:
         no_consent: No, do not use additional cookies
       analytics:
         heading: Cookies that measure website use
-        intro: "We use Google Analytics to measure how you use the service. These cookies collect information about:"
+        intro: "We use cookies to measure how you use the service. These cookies collect information about:"
         list:
           - the pages you visit
           - how long you spend on each page
