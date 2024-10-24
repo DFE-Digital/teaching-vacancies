@@ -30,6 +30,8 @@ import ShowHiddenContentController from './js_components/showHiddenContent/showH
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
 
+const MOJFrontend = require('@ministryofjustice/frontend/moj/all');
+
 Sentry.init({
   // `sentryConfig` is set from the application layout
   dsn: window.sentryConfig.dsn,
@@ -69,3 +71,12 @@ Rails.start();
 govukFrontend.initAll();
 window.$ = $;
 mojFrontend.initAll();
+
+if (typeof mojFrontend.MultiFileUpload !== 'undefined') {
+  // eslint-disable-next-line no-new
+  new MOJFrontend.MultiFileUpload({
+    container: document.querySelector('.moj-multi-file-upload'),
+    uploadUrl: '/ajax-upload-url',
+    deleteUrl: '/ajax-delete-url',
+  });
+}
