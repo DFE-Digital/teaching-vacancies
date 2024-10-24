@@ -24,13 +24,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     session[:back_to_review] = (session[:back_to_review] || []).push(job_application.id).uniq
   end
 
-  # rubocop:disable Style/GuardClause
   def about_your_application
     if profile.nil? || profile&.personal_details&.right_to_work_in_uk? || vacancy.visa_sponsorship_available?
       redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
     end
   end
-  # rubocop:enable Style/GuardClause
 
   def new_quick_apply
     @has_previous_application = previous_application?

@@ -1,7 +1,7 @@
 module ProfileSection
   extend ActiveSupport::Concern
 
-  class_methods do # rubocop:disable Metrics/BlockLength
+  class_methods do
     def prepare(**, &block)
       find_or_initialize_by(**).tap do |record|
         if record.new_record?
