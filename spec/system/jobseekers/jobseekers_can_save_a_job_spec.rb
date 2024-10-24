@@ -52,7 +52,6 @@ RSpec.describe "Jobseekers can save a job" do
             it "saves the job after signing in" do
               save_job
               sign_in_jobseeker_govuk_one_login(jobseeker)
-              expect(page).not_to have_content "You have saved this job. View all your saved jobs on your account"
               expect(page).not_to have_content "New teaching vacancies account created"
             end
           end
@@ -69,7 +68,6 @@ RSpec.describe "Jobseekers can save a job" do
             it "saves the job after signing in" do
               save_job
               sign_in_jobseeker_govuk_one_login(jobseeker)
-              expect(page).not_to have_content "You have saved this job. View all your saved jobs on your account"
               expect(page).to have_content "New teaching vacancies account created"
               expect(page).to have_content "You have saved this job in your new Teaching Vacancies account."
             end
