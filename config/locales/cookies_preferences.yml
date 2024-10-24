@@ -49,7 +49,7 @@ en:
             name: _vis_opt_exp_{CAMPAIGNID}_goal_{GOALID}
             purpose: This VWO cookie is created when a campaign goal is triggered. This cookie, when created, will always have a value of 1
             expires: 100 days
-          fifth: 
+          fifth:
             name: _vis_opt_test_cookie
             purpose: This VWO cookie is to read if cookies can be placed
             expires: Browser closes
@@ -109,19 +109,19 @@ en:
             name: CLID
             purpose: Identifies the first-time Clarity saw this user on any site using Clarity
             expires: 12 months
-            twentieth:
+          twentieth:
             name: ANONCHK
             purpose: This cookie ensures that clicks from advertisement on the Bing search engine are verified and it is used for reporting purposes and for personalisation
             expires: 10 minutes
-            twentyfirst:
+          twentyfirst:
             name: MR
             purpose: Indicates whether to refresh MUID
             expires: 1 week
-            twentysecond:
+          twentysecond:
             name: MUID
             purpose: Identifies unique web browsers visiting Microsoft sites. These cookies are used for advertising, site analytics, and other operational purposes
             expires: 13 months
-            twentythird:
+          twentythird:
             name: SM
             purpose: Used in synchronizing the MUID across Microsoft domains
             expires: 13 months
@@ -171,7 +171,7 @@ en:
           We also use additional cookies to measure how you use the service and to help us with our marketing and communications.
 
       heading: Cookies on Teaching Vacancies
-      subheading: 
+      subheading:
         settings: Cookie settings
         additional: Additional cookies settings
       title: Cookies
