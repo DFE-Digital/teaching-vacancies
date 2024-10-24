@@ -51,7 +51,7 @@ class Organisation < ApplicationRecord
 
   scope :visible_to_jobseekers, -> { schools.not_closed.not_out_of_scope.or(Organisation.trusts).registered_for_service }
 
-  validates :email, email_address: true
+  validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
   alias_attribute :data, :gias_data
 
