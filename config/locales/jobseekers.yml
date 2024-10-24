@@ -926,6 +926,11 @@ en:
         skip_link: Skip to my job alerts
         zero_subscriptions_body_html: '%{link_to} to be made aware of future listings.'
         zero_subscriptions_title: You have no job alerts set up
+        one_login_banner:
+          header: Can't see your job alerts?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
+          paragraph2: You can request to %{link}
+          transfer_profile_link_text: transfer your existing profile.
       feedbacks:
         relevance_feedbacks:
           submit_feedback:
