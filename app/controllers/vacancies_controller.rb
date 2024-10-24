@@ -10,11 +10,6 @@ class VacanciesController < ApplicationController
   end
 
   def show
-    if session[:user_exists_first_log_in]
-      @user_exists_first_log_in = true
-      session.delete(:user_exists_first_log_in)
-    end
-
     if session[:newly_created_user]
       @newly_created_user = true
       session.delete(:newly_created_user)
