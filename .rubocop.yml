@@ -1,14 +1,51 @@
+inherit_mode:
+  merge:
+    - Exclude
+
+inherit_from: .rubocop_todo.yml
+
+inherit_gem:
+  rubocop-govuk:
+#  Avoid the 'default' config as it disables lots of useful metrics
+#    - config/default.yml
+    - config/layout.yml
+    - config/naming.yml
+    - config/style.yml
+    - config/rake.yml
+    - config/rails.yml
+    - config/rspec.yml
+
 require:
+  - rubocop-capybara
+  - rubocop-factory_bot
   - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   NewCops: enable
+  UseCache: true
   Exclude:
     - "bin/**"
     - "config.ru"
     - "tmp/**/*"
     - "db/schema.rb"
-    - "db/migrate/20*"
+    - "db/migrate/2017*"
+    - "db/migrate/2018*"
+    - "db/migrate/2019*"
+    - "db/migrate/2020*"
+    - "db/migrate/2021*"
+    - "db/migrate/2022*"
+    - "db/migrate/2023*"
+    - "db/migrate/202401*"
+    - "db/migrate/202402*"
+    - "db/migrate/202403*"
+    - "db/migrate/202404*"
+    - "db/migrate/202405*"
+    - "db/migrate/202406*"
+    - "db/migrate/202407*"
+    - "db/migrate/202408*"
     - "vendor/**/*"
     - "node_modules/**/*"
 
@@ -99,25 +136,16 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
 
-##
-# Temporary rules
-# TODO: These have a lot of warnings, or relate to unfinished stylistic discussions within the team
-
-Lint/MissingSuper:
-  Enabled: false
-
-Naming/AccessorMethodName:
-  Enabled: false
-
-Naming/BlockForwarding:
-  # We do want to use this, but are blocked by Brakeman's parser not supporting 3.1 syntax
-  Enabled: false
+Layout/AccessModifierIndentation:
+  EnforcedStyle: indent
 
 Style/HashSyntax:
-  # This causes some issues in Slim templates that require a wider style discussion, and is
-  # currently unsupported by Brakeman's parser
-  Enabled: false
+  EnforcedStyle: ruby19
+  EnforcedShorthandSyntax: either
 
+# This is incompatible with our other migration checks
+Rails/BulkChangeTable:
+  Enabled: false
 ##
 # Tech Debt
 # TODO: `rubocop-govuk` previously had all these metrics disabled as they are "just heuristics".
@@ -131,14 +159,9 @@ Metrics/AbcSize:
     - "spec/**/*"
 
 Metrics/BlockLength:
-  Max: 25 # Default 25
   Exclude:
     - "config/**/*"
     - "spec/**/*"
-    - "app/models/concerns/indexable.rb"
-
-Metrics/ClassLength:
-  Max: 200 # Default 100
 
 Metrics/CyclomaticComplexity:
   Max: 18 # Default 7

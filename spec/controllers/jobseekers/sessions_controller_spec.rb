@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# rubocop:disable RSpec/InstanceVariable
 RSpec.describe Jobseekers::SessionsController do
   context "unrelated session contents" do
     let(:unrelated_session_contents) { { keep_me: { foo: "bar" } }.stringify_keys }
@@ -34,3 +35,4 @@ RSpec.describe Jobseekers::SessionsController do
     end
   end
 end
+# rubocop:enable RSpec/InstanceVariable

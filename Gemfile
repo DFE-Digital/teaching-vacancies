@@ -89,6 +89,10 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "listen"
+  gem "rubocop-factory_bot", require: false
+  gem "rubocop-govuk", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rspec_rails", require: false
   gem "solargraph"
   gem "spring"
   gem "spring-commands-rspec"
@@ -110,9 +114,6 @@ group :development, :test do
   gem "rack-mini-profiler", require: false
   gem "rails-controller-testing"
   gem "rspec-rails"
-  gem "rubocop-performance"
-  gem "rubocop-rails"
-  gem "rubocop-rspec"
   gem "slim_lint", require: false
 end
 

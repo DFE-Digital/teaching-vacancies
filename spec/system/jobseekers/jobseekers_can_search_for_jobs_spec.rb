@@ -118,7 +118,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
   context "jobseekers can sort jobs by closing date" do
     it "lists the jobs with the earliest closing date first" do
       visit jobs_path
-      select "Closing date", :from => "sort-by-field"
+      select "Closing date", from: "sort-by-field"
       click_button "Sort"
       expect(page).to have_select("sort_by", selected: "Closing date")
       expect("Maths 1").to appear_before("Physics Teacher")
@@ -228,13 +228,13 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
       it "jobseekers can then choose to sort by different sort option", js: true do
         expect(page).to have_select("sort_by", selected: "Distance")
 
-        select "Closing date", :from => "sort-by-field"
+        select "Closing date", from: "sort-by-field"
 
         expect(page).to have_select("sort_by", selected: "Closing date")
         expect("Maths 1").to appear_before("Physics Teacher")
         expect("Physics Teacher").to appear_before("Maths Teacher 2")
 
-        select "Newest job", :from => "sort-by-field"
+        select "Newest job", from: "sort-by-field"
 
         expect(page).to have_select("sort_by", selected: "Newest job")
         expect("Maths 1").to appear_before("Maths Teacher 2")

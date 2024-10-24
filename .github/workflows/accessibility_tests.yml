@@ -64,7 +64,7 @@ jobs:
 
       - name: Notify twd_tv_dev channel on Pa11y test failures
         if: failure()
-        uses: rtCamp/action-slack-notify@v2.3.0
+        uses: rtCamp/action-slack-notify@v2.3.2
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Accessiblity Tests
@@ -136,7 +136,7 @@ jobs:
 
       - name: Notify twd_tv_dev channel on Axe test failures
         if: failure()
-        uses: rtCamp/action-slack-notify@v2.3.0
+        uses: rtCamp/action-slack-notify@v2.3.2
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Accessiblity Tests
@@ -209,7 +209,7 @@ jobs:
           echo "SCHOOLS_RESULT=$(echo '${{steps.LHCIAction.outputs.links}}' | jq 'nth(2; .[])' | tr -d '"')" >> $GITHUB_ENV
 
       - name: Notify twd_tv_dev channel on Lighthouse results
-        uses: rtCamp/action-slack-notify@v2.3.0
+        uses: rtCamp/action-slack-notify@v2.3.2
         env:
           SLACK_CHANNEL: twd_tv_dev
           SLACK_USERNAME: CI Accessiblity Tests

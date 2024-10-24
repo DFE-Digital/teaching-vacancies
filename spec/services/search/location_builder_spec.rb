@@ -59,8 +59,8 @@ RSpec.describe Search::LocationBuilder do
       let(:location) { Search::LocationBuilder::NATIONWIDE_LOCATIONS.sample }
 
       it "does not set location filters" do
-        expect(subject.location).to be nil
-        expect(subject.polygon).to be nil
+        expect(subject.location).to be_nil
+        expect(subject.polygon).to be_nil
         expect(subject.location_filter).to eq({})
       end
     end

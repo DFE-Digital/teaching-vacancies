@@ -489,6 +489,16 @@ RSpec.describe Vacancy do
         it { is_expected.to be_valid }
       end
     end
+
+    describe "organisation association" do
+      it "is valid when an associated organisation has validation errors" do
+        publisher = build_stubbed(:publisher)
+        invalid_school = School.new(email: "invalid")
+        expect(invalid_school).not_to be_valid
+
+        expect(Vacancy.new(organisations: [invalid_school], publisher: publisher)).to be_valid
+      end
+    end
   end
 
   describe "#geolocation" do
