@@ -64,7 +64,7 @@ class JobApplication < ApplicationRecord
   scope :after_submission, -> { where(status: %w[submitted reviewed shortlisted unsuccessful withdrawn]) }
   scope :draft, -> { where(status: "draft") }
 
-  validates :email_address, email_address: true
+  validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 
   def name
     "#{first_name} #{last_name}"

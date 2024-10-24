@@ -36,6 +36,7 @@ en:
     continue: Continue
     continue_to_account: Continue to your account
     continue_to_dsi: Continue to DfE Sign-in
+    copy_expired_listing: Copy
     copy_listing: Copy job listing
     copy_url: Copy URL
     create_account: Create an account
@@ -64,6 +65,7 @@ en:
     profile_update:
       logo: Update organisation logo
       photo: Update organisation photo
+    relist_vacancy: Relist
     reject: Reject
     reminder_continue: Continue to create a job
     request_dsi_account: Request a DfE Sign-in account
@@ -239,7 +241,7 @@ en:
         application_form: You can only upload a PDF or DOCX file under 10MB
       publishers_job_listing_applying_for_the_job_form:
         enable_job_applications_options:
-          "false": You'll need to provide additional details about how to apply
+          "false": You'll need to provide additional details about how to apply.
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 10MB
       publishers_job_listing_feedback_form:
@@ -698,8 +700,8 @@ en:
         quick_apply: Only show quick apply jobs
         quick_apply_hint: Apply for jobs quickly using an online application form
         enable_job_applications_options:
-          false: "No"
-          true: "Yes"
+          true: "Teaching Vacancies application form"
+          false: "Use other application form method"
       publishers_job_listing_contract_type_form:
         contract_type_options:
           fixed_term: Fixed term (including maternity or parental leave cover)
@@ -983,7 +985,7 @@ en:
         further_details_provided: Do you want to add further details about the role?
         safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
       publishers_job_listing_applying_for_the_job_form:
-        enable_job_applications: Do you want to use the application form?
+        enable_job_applications: Select application form type
       publishers_job_listing_application_form_form:
         application_email: Email address to receive applications
       publishers_job_listing_contract_type_form:
@@ -1025,6 +1027,11 @@ en:
         expiry_time: Closing time
         publish_on: Another date
         publish_on_day: Publish date
+      publishers_job_listing_relist_form:
+        expires_at: Closing date
+        expiry_time: Closing time
+        publish_on_day: Publish date
+        another_day: Another date
       publishers_job_listing_include_additional_documents_form:
         include_additional_documents: Do you want to upload any additional documents?
       publishers_job_listing_start_date_form:

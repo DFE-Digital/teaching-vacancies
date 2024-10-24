@@ -1,10 +1,11 @@
-# rubocop:disable Metrics/AbcSize
 module PdfHelper
   include JobApplicationsHelper
   include QualificationsHelper
 
-  # Arial Unicode is a font that supports all characters.
+  # false rubocop assertion
+  # rubocop:disable Rails/SaveBang
   def update_font_family(pdf)
+    # Arial Unicode is a font that supports all characters.
     pdf.font_families.update(
       "Arial Unicode" =>
         {
@@ -15,6 +16,7 @@ module PdfHelper
     )
     pdf.font("Arial Unicode", encoding: "UTF-8")
   end
+  # rubocop:enable Rails/SaveBang
 
   def add_section_title(pdf, title)
     pdf.move_down 20
@@ -41,7 +43,7 @@ module PdfHelper
     pdf.move_down 20
   end
 
-  def add_personal_details(pdf)
+  def add_personal_details(pdf) # rubocop:disable Metrics/AbcSize
     personal_details = [
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.first_name"), job_application.first_name],
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.last_name"), job_application.last_name],
@@ -330,4 +332,3 @@ module PdfHelper
     end
   end
 end
-# rubocop:enable Metrics/AbcSize

@@ -14,7 +14,7 @@ en:
           password_placeholder: "**************"
       confirmation:
         page_title: Account created
-        apply_for_jobs_link_text: search and apply for teaching jobs
+        apply_for_jobs_link_text: search and apply for jobs
         apply_for_jobs: You can now %{apply_for_jobs_link_text} or %{create_a_profile_link_text}.
         create_a_profile_link_text: create a profile
         create_profile:
@@ -25,7 +25,7 @@ en:
           lead_in: "A profile will let you:"
           prefill: apply for roles more quickly by pre-filling your information
           share_your_qualifications: share your qualifications and experience with schools
-          specify_jobs: specify the types of teaching jobs you’re looking for
+          specify_jobs: specify the types of jobs you’re looking for
     account_feedbacks:
       create:
         success: Thank you for your feedback
@@ -296,8 +296,8 @@ en:
       index:
         continue_application: Continue application
         find_and_apply: Find and apply
-        no_job_applications: You have not applied for any teaching jobs
-        no_job_applications_body_html: "%{link_to} for a teaching job."
+        no_job_applications: You have not applied for any jobs
+        no_job_applications_body_html: "%{link_to} for a job."
         page_title: Applications
         page_title_with_count: Applications (%{count})
         skip_link: Skip to my job applications
@@ -601,12 +601,12 @@ en:
         continue: Continue application
         deadline_passed: Deadline passed
         delete: Delete
-        link_find: Find a teaching job
+        link_find: Find a job
         page_title: Saved jobs
         skip_link: Skip to my saved jobs
         view: View application
         zero_saved_jobs_body_html: '%{link_to} and start saving jobs you may want to review and apply for later.'
-        zero_saved_jobs_title: You have no saved teaching jobs
+        zero_saved_jobs_title: You have no saved jobs
       save: Save this job for later
       saved: Job saved
       success_html: >-
@@ -740,7 +740,7 @@ en:
           They can get in touch by email to invite you apply for roles.
         hide_profile: Hide profile from schools or trusts
         imported: You have recently submitted a job application, so some of your details have been imported into your profile.
-        page_description: Your profile allows schools to find and invite you to apply for their jobs.
+        page_description: Your profile allows schools to contact you, based on the details in your profile.
         page_title: Your profile
         preview_and_turn_off_profile: Preview and turn off profile
         preview_and_turn_on_profile: Preview and turn on profile
@@ -750,7 +750,8 @@ en:
         set_up_profile_visibility: Set up who cannot view your profile
         turn_off_profile_text: When you turn off your profile it will not be visible to hiring staff in schools and trusts.
         turn_off_profile: Turn off profile
-        turn_on_profile_text: When you turn on your profile it will be visible to hiring staff, and they can invite you to apply for roles.
+        turn_on_profile_text: When you turn on your profile, school and trust hiring staff will be able to view your details and contact you by email. You can %{link_text}
+        turn_on_profile_link_text: hide your profile from specific schools or trusts.
         turn_on_profile: Turn on profile
       confirm_toggle:
         confirm_turn_off: Confirm that you want to turn off your profile

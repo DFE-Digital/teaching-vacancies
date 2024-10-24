@@ -400,11 +400,12 @@ en:
               content_with_link_html: You can choose for candidates to apply for the job through Teaching Vacancies. %{link}
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
-          about_title: "This application form:"
-          about_items:
-            - provides a quick and simple experience for applicants
-            - makes it easy for you to view, shortlist or reject applications in one place
-            - is always up to date with the ‘keeping children safe in education’ guidelines
+          using_application_form_html: Use Teaching Vacancies' application form for an online form compliant with %{link}.
+          kcsie_guidance: keeping children safe in education (KCSIE) guidance
+          kcsie_url: "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2"
+          kcsie_compliant: KCSIE compliant
+          reason_for_our_form: Online application forms make it quicker and easier for candidates to apply and may lead to more applicants for your role.
+          this_form_is_kept_up_to_date: This form is kept up to date with keeping children safe in education (KCSIE) guidance.
           step_title: Applying for the job
         contact_details:
           step_title: Contact details
@@ -480,6 +481,20 @@ en:
             other_details: Can you provide more details? (optional)
         update:
           success: "The deadline for %{job_title} has been extended"
+      relist:
+        edit:
+          caption: Relist job
+          heading: Relist %{job_title}
+          title: Relist - %{job_title}
+          reason_label: Why are you relisting this job?
+          deadline: The previous deadline was
+          extension_reason:
+            no_applications: No applications
+            didnt_find_right_candidate: Didn't find the right candidate
+            other_extension_reason: Other
+            other_details: Can you provide more details? (optional)
+        update:
+          success: "%{job_title} has been relisted"
       expired_feedbacks:
         new:
           description: >-
@@ -602,6 +617,7 @@ en:
             copy: Copy
             delete: Delete
             extend_closing_date: Extend closing date
+            relist: Relist
             preview: Preview
             publish: Publish job listing
             scheduled_complete_draft: Schedule job listing
@@ -636,7 +652,7 @@ en:
         important_dates: Publish and closing dates
         start_date: Job start date
         application_process: Application process
-        applying_for_the_job: Using the application form
+        applying_for_the_job: Choose your application form
         how_to_receive_applications: How do you want to receive applications?
         application_link: Link to website
         application_form: Receiving applications
