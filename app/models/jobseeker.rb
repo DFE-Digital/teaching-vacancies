@@ -17,7 +17,8 @@ class Jobseeker < ApplicationRecord
   has_many :saved_jobs, dependent: :destroy
   has_one :jobseeker_profile
 
-  validates :email, presence: true, email_address: true
+  validates :email, presence: true
+  validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
   after_update :update_subscription_emails
 

@@ -103,8 +103,8 @@ class Vacancy < ApplicationRecord
   validates_with ExternalVacancyValidator, if: :external?
   validates :organisations, presence: true
 
-  validates :application_email, email_address: true
-  validates :contact_email, email_address: true
+  validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid
+  validates :contact_email, email_address: true, if: -> { contact_email_changed? }
 
   has_noticed_notifications
   has_paper_trail on: [:update],
