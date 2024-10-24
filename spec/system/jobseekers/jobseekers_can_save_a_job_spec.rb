@@ -31,11 +31,47 @@ RSpec.describe "Jobseekers can save a job" do
     end
 
     context "when they are not signed in to their account" do
-      context "when the job is not already saved" do
-        it "saves the job after signing in" do
-          save_job
-          sign_in_jobseeker_govuk_one_login(jobseeker)
-          and_the_job_is_saved
+      context "when user has already logged in via one login previously" do
+        context "when the job is not already saved" do
+          it "saves the job after signing in" do
+            save_job
+            sign_in_jobseeker_govuk_one_login(jobseeker)
+            and_the_job_is_saved
+            expect(page).not_to have_content "New Teaching Vacancies account created"
+          end
+        end
+      end
+
+      context "when jobseeker has not logged in via one login previously" do
+        context "when jobseeker has an existing TV account" do
+          before do
+            allow_any_instance_of(Jobseeker).to receive(:govuk_one_login_id) { nil }
+          end
+
+          context "when the job is not already saved" do
+            it "saves the job after signing in" do
+              save_job
+              sign_in_jobseeker_govuk_one_login(jobseeker)
+              expect(page).not_to have_content "New Teaching Vacancies account created"
+            end
+          end
+        end
+
+        context "when jobseeker does not have an existing TV account" do
+          let(:jobseeker) { build_stubbed(:jobseeker) }
+
+          before do
+            allow_any_instance_of(Jobseeker).to receive(:govuk_one_login_id) { nil }
+          end
+
+          context "when the job is not already saved" do
+            it "saves the job after signing in" do
+              save_job
+              sign_in_jobseeker_govuk_one_login(jobseeker)
+              expect(page).to have_content "New Teaching Vacancies account created"
+              expect(page).to have_content "You have saved this job in your new Teaching Vacancies account."
+            end
+          end
         end
       end
 
