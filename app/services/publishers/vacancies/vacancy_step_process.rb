@@ -31,6 +31,8 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
       steps = %i[school_visits visa_sponsorship contact_details]
       steps.insert(0, :how_to_receive_applications) unless vacancy.enable_job_applications
       steps.insert(1, application_method) if application_method.present?
+    elsif vacancy.organisations.any?(&:faith_school?)
+      steps = %i[applying_for_the_job religious_information school_visits visa_sponsorship contact_details]
     else
       steps = %i[applying_for_the_job school_visits visa_sponsorship contact_details]
       steps.insert(1, :how_to_receive_applications) unless vacancy.enable_job_applications

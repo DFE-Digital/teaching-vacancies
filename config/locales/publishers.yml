@@ -406,6 +406,7 @@ en:
           kcsie_compliant: KCSIE compliant
           reason_for_our_form: Online application forms make it quicker and easier for candidates to apply and may lead to more applicants for your role.
           this_form_is_kept_up_to_date: This form is kept up to date with keeping children safe in education (KCSIE) guidance.
+          ask_about_religion: You'll be able to ask candidates about their religion.
           step_title: Applying for the job
         contact_details:
           step_title: Contact details
@@ -448,6 +449,13 @@ en:
           edit: Change job listing - [Section %{section_number} of 4] - Teaching Vacancies - GOV.UK
         pay_package:
           step_title: Salary and allowances
+        religious_information:
+          catholic:
+            label: Their religion, place of worship and religious referee or baptism information
+            hint: This form has been approved by the Catholic Education Service.
+          other_religion: If they have a religious denomination or faith, how they'll meet your school's ethos and aims, and if they want to provide an optional religious referee or place of worship
+          no_religion: Do not ask applicants about their religion
+          what_would_you_like_to_ask: What would you like to ask applicants about their religion?
         review:
           step_title: Review the job listing
         working_patterns:
@@ -656,6 +664,7 @@ en:
         how_to_receive_applications: How do you want to receive applications?
         application_link: Link to website
         application_form: Receiving applications
+        religious_information: Applicants religious information
         school_visits: Do you want to offer school visits?
         contact_details: Contact details
         about_the_role: About the role

@@ -2,34 +2,28 @@ require "rails_helper"
 
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
-  let(:school) { create(:school, :not_applicable, name: "Salisbury School", safeguarding_information: nil) }
+  let(:vacancy) do
+    VacancyPresenter.new(build(:vacancy,
+                               :ect_suitable,
+                               job_roles: ["teacher"],
+                               phases: %w[secondary],
+                               key_stages: %w[ks3],
+                               publish_on: Date.current))
+  end
+  let(:created_vacancy) { Vacancy.last }
 
   before { login_publisher(publisher: publisher, organisation: school) }
+  after { logout }
 
-  scenario "Visiting the school page" do
-    visit organisation_jobs_with_type_path
+  context "non-faith school" do
+    let(:school) { create(:school, :not_applicable, name: "Salisbury School") }
 
-    expect(page).to have_content("Salisbury School")
-
-    click_on I18n.t("buttons.create_job")
-
-    expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
-  end
-
-  context "creating a new vacancy" do
-    let(:vacancy) do
-      VacancyPresenter.new(build(:vacancy,
-                                 :ect_suitable,
-                                 job_roles: ["teacher"],
-                                 phases: %w[secondary],
-                                 key_stages: %w[ks3],
-                                 publish_on: Date.current))
-    end
-    let(:created_vacancy) { Vacancy.last }
-
-    scenario "follows the flow" do
+    it "follows the flow" do
       visit organisation_jobs_with_type_path
+      expect(page).to have_content("Salisbury School")
+
       click_on I18n.t("buttons.create_job")
+      expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
       click_on I18n.t("buttons.save_and_continue")
@@ -352,6 +346,48 @@ RSpec.describe "Creating a vacancy" do
           click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
         end
       end
+    end
+  end
+
+  context "with a catholic school" do
+    let(:school) { create(:school, :catholic) }
+
+    it "follows the religious flow" do
+      visit organisation_jobs_with_type_path
+
+      fill_in_forms_until_start_date(vacancy)
+
+      fill_in_start_date_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
+
+      fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :religious_information))
+      choose I18n.t("publishers.vacancies.build.religious_information.catholic.label")
+      click_on I18n.t("buttons.save_and_continue")
+
+      fill_in_school_visits_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
+
+      fill_in_visa_sponsorship_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contact_details))
+
+      fill_in_contact_details_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
+
+      fill_in_about_the_role_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
+
+      fill_in_include_additional_documents_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+      expect(created_vacancy.reload.religion_type.to_sym).to eq(:catholic)
     end
   end
 end
