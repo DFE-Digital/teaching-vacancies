@@ -1,0 +1,14 @@
+- content_for :page_title_prefix, t("jobseekers.sessions.new.title")
+
+- content_for :breadcrumbs do
+  = govuk_back_link text: t("buttons.back"), href: page_path("sign-in")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t("jobseekers.sessions.new.title")
+    p = t("jobseekers.sessions.new.fallback.description")
+
+    = form_for Publisher.new, url: publishers_login_keys_path do |f|
+      = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds"
+
+      = f.govuk_submit t("buttons.submit")
