@@ -9,10 +9,10 @@ class Jobseekers::LoginKeysController < ApplicationController
     flash.now[:notice] = t(".notice")
   end
 
-  # def create
-  #   publisher = Publisher.find_by(email: params.dig(:publisher, :email).downcase.strip)
-  #   send_login_key(publisher: publisher) if publisher
-  # end
+  def create
+    jobseeker = Jobseeker.find_by(email: params.dig(:jobseeker, :email).downcase.strip)
+    send_login_key(jobseeker: jobseeker) if jobseeker
+  end
 
   # def show
   #   @publisher = Publisher.find(@login_key.publisher_id)
@@ -25,19 +25,17 @@ class Jobseekers::LoginKeysController < ApplicationController
   #   end
   # end
 
-  # def consume
-  #   @publisher = Publisher.find(@login_key.publisher_id)
-  #   @form = Publishers::LoginKeys::ChooseOrganisationForm.new(choose_organisation_form_params)
+  def consume
+    @jobseeker = jobseeker.find(@login_key.jobseeker_id)
 
-  #   if @form.valid?
-  #     org = Organisation.find(@form.organisation)
-  #     @login_key.destroy
-  #     session.update(publisher_id: @publisher.id)
-  #     redirect_to create_publisher_session_path(organisation_id: org.id)
-  #   else
-  #     render(:show)
-  #   end
-  # end
+    if @jobseeker
+      @login_key.destroy
+      session.update(jobseeker_id: @jobseeker.id)
+      redirect_to jobseeker_root_path
+    else
+      render(:new)
+    end
+  end
 
   private
 
@@ -46,7 +44,7 @@ class Jobseekers::LoginKeysController < ApplicationController
   end
 
   def check_login_key
-    @login_key = EmergencyLoginKey.find_by(id: params[:id])
+    @login_key = JobseekerEmergencyLoginKey.find_by(id: params[:id])
     failure = if @login_key.nil?
                 "no_key"
               elsif @login_key.expired?
@@ -68,14 +66,14 @@ class Jobseekers::LoginKeysController < ApplicationController
     redirect_to new_jobseeker_session_path
   end
 
-  def send_login_key(publisher:)
-    Publishers::AuthenticationFallbackMailer.sign_in_fallback(
-      login_key_id: generate_login_key(publisher: publisher).id,
-      publisher: publisher,
+  def send_login_key(jobseeker:)
+    Jobseekers::AuthenticationFallbackMailer.sign_in_fallback(
+      login_key_id: generate_login_key(jobseeker: jobseeker).id,
+      jobseeker: pubjobseekerlisher,
     ).deliver_later
   end
 
-  def generate_login_key(publisher:)
-    publisher.emergency_login_keys.create(not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
+  def generate_login_key(jobseeker:)
+    jobseeker.jobseeker_emergency_login_keys.create(not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
   end
 end

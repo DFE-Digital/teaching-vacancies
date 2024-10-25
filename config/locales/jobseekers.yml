@@ -1012,3 +1012,9 @@ en:
         new_search_html: You can create a new job alert by starting a %{link}
         new_search_link: new search
         title: Feedback received
+    temp_login:
+      email:
+        body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
+        heading: Sign in to Teaching Vacancies
+        subject: Sign in to Teaching Vacancies
+      heading: Temporary login
