@@ -82,6 +82,10 @@ Rails.application.routes.draw do
       get :resend_instructions, to: "registrations#resend_instructions", as: :resend_instructions
     end
 
+    resources :login_keys, only: %i[show new create] do
+      post :consume, on: :member
+    end
+
     resources :job_applications, only: %i[index show destroy] do
       resources :build, only: %i[show update], controller: "job_applications/build"
       resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
