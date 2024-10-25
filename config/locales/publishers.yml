@@ -449,6 +449,13 @@ en:
           edit: Change job listing - [Section %{section_number} of 4] - Teaching Vacancies - GOV.UK
         pay_package:
           step_title: Salary and allowances
+        religious_information:
+          catholic:
+            label: Their religion, place of worship and religious referee or baptism information
+            hint: This form has been approved by the Catholic Education Service.
+          other_religion: If they have a religious denomination or faith, how they'll meet your school's ethos and aims, and if they want to provide an optional religious referee or place of worship
+          no_religion: Do not ask applicants about their religion
+          what_would_you_like_to_ask: What would you like to ask applicants about their religion?
         review:
           step_title: Review the job listing
         working_patterns:

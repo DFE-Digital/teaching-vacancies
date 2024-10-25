@@ -57,6 +57,8 @@ class Vacancy < ApplicationRecord
 
   enum religion_type: { no_religion: 0, other_religion: 1, catholic: 2 }
 
+  enum religion_type: { no_religion: 0, other_religion: 1, catholic: 2 }
+
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
 
