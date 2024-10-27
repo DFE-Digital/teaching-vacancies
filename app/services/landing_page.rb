@@ -69,7 +69,7 @@ class LandingPage
     I18n.t(:banner_title, **translation_args)
   end
 
-  def v2?
+  def has_banner_image?
     @banner_image.present?
   end
 

@@ -88,9 +88,9 @@ RSpec.describe LandingPage do
     specify { expect(subject.banner_title).to eq("Spiffy Part Time Potions and Sorcery Jobs") }
   end
 
-  describe "v2?" do
+  describe "has_banner_image?" do
     it "returns true if the landing page has a banner image" do
-      expect(subject.v2?).to be(true)
+      expect(subject.has_banner_image?).to be(true)
     end
   end
 end

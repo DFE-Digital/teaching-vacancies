@@ -15,12 +15,13 @@
   h1 class="govuk-heading-l" role="heading" aria-level="1"
     = t("jobs.search_result_heading", count: number_with_delimiter(@vacancies_search.total_count))
 
-  - if @landing_page&.v2?
+  - if @landing_page&.has_banner_image?
     = render "vacancies/search/banner", f: f, form: @form, vacancies_search: @vacancies_search
 
   .govuk-grid-row
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
-      = render "vacancies/search/filters", f: f, form: @form, vacancies_search: @vacancies_search
+      = render "vacancies/search/filters", f: f, form: @form, vacancies_search: @vacancies_search, hidden_filters: @landing_page&.hidden_filters || []
+
       / When the user refines their search, this helps us figure out if they've changed the
       / keyword(s), or just adjusted the filters
       = f.hidden_field :previous_keyword, value: @vacancies_search.keyword
