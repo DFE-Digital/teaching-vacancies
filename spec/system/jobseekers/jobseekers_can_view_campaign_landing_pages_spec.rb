@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can view the bespoke campaign landing page" do
   let(:school) { create(:school) }
-  let!(:maths_job1) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 1, geolocation: "POINT(-0.019501 51.504949)") }
-  let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 3, geolocation: "POINT(-1.8964 52.4820)") }
+  let!(:maths_job1) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], working_patterns: ["part_time"], publish_on: Date.current - 1, job_title: "Maths 1", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 1, geolocation: "POINT(-0.019501 51.504949)") }
+  let!(:maths_job2) { create(:vacancy, :past_publish, :no_tv_applications, job_roles: ["teacher"], working_patterns: ["part_time"], publish_on: Date.current - 2, job_title: "Maths Teacher 2", subjects: %w[Mathematics], organisations: [school], phases: %w[secondary], expires_at: Date.current + 3, geolocation: "POINT(-1.8964 52.4820)") }
 
   it "contains the expected content and vacancies with personalized jobseeker name" do
     visit campaign_landing_page_path(email_name: "John", email_jobrole: "Teacher", email_subject: "Mathematics", utm_content: "FAKE1+CAMPAIGN")

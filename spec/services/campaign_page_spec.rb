@@ -24,7 +24,7 @@ RSpec.describe CampaignPage do
       expect(described_class["FAKE1+CAMPAIGN"].banner_image)
         .to eq("campaigns/secondary_not_too_late.jpg")
       expect(described_class["FAKE1+CAMPAIGN"].criteria)
-        .to eq({ working_patterns: %w[part_time], subjects: %w[Potions Sorcery] })
+        .to eq({ radius: 15, teaching_job_roles: ["teacher"], working_patterns: %w[part_time], subjects: %w[Potions Sorcery] })
     end
 
     it "raises an error if no landing page with the given slug has been configured" do

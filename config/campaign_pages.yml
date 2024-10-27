@@ -5,83 +5,70 @@ shared:
       - teacher
     phases:
       - primary
-    radius:
-      - 15
+    radius: 15
   whentoapplybespoke+SECONDARY:
     banner_image: "campaigns/secondary_teacher.jpg"
     teaching_job_roles:
       - teacher
     phases:
       - secondary
-    radius:
-      - 15
+    radius: 15
   ectrolesbespoke:
     banner_image: "campaigns/ect_teacher.jpg"
     ect_suitable: true
     teaching_job_roles:
       - teacher
-    radius:
-        - 15
+    radius: 15
   mathsbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   dancedramamusicbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   dancedramamusicbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   computingbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   chemistrybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   businessandeconomicsbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   re:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   biologybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   englishbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   psychologybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius:
-      - 15
+    radius: 15
   parttimebespoke+PRIMARY:
     banner_image: "campaigns/primary_part_time.jpg"
     teaching_job_roles:
@@ -89,8 +76,7 @@ shared:
     working_patterns:
       - part_time
       - job_share
-    radius:
-      - 15
+    radius: 15
   parttimebespoke+SECONDARY:
     banner_image: "campaigns/secondary_part_time.jpg"
     teaching_job_roles:
@@ -100,24 +86,21 @@ shared:
     working_patterns:
       - part_time
       - job_share
-    radius:
-      - 15
+    radius: 15
   stilltimebespoke+PRIMARY:
     banner_image: "campaigns/primary_not_too_late.jpg"
     teaching_job_roles:
       - teacher
     phases:
       - primary
-    radius:
-      - 15
+    radius: 15
   stilltimebespoke+SECONDARY:
     banner_image: "campaigns/secondary_not_too_late.jpg"
     teaching_job_roles:
       - teacher
     phases:
       - secondary
-    radius:
-      - 15
+    radius: 15
 
 ####################################################################################################
 # The data below is only used in automated tests, make sure you add your campaign pages to the
@@ -126,9 +109,11 @@ shared:
 test:
   FAKE1+CAMPAIGN:
     banner_image: "campaigns/secondary_not_too_late.jpg"
+    teaching_job_roles:
+      - teacher
     working_patterns:
       - part_time
     subjects:
       - Potions
       - Sorcery
-
+    radius: 15
