@@ -80,7 +80,6 @@ module TeachingVacancies
     config.local_authorities_extra_schools = config_for(:local_authorities_extra_schools)
 
     config.analytics = config_for(:analytics)
-    config.analytics_pii = config_for(:analytics_pii)
 
     config.big_query_dataset = ENV.fetch("BIG_QUERY_DATASET", nil)
 
