@@ -64,8 +64,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_28_151455) do
     t.uuid "publisher_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "owner_type"
-    t.uuid "owner_id"
+    t.string "owner_type", null: false
+    t.uuid "owner_id", null: false
     t.index ["owner_type", "owner_id"], name: "index_emergency_login_keys_on_owner"
     t.index ["publisher_id"], name: "index_emergency_login_keys_on_publisher_id"
   end
