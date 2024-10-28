@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe ClearEmergencyLoginKeysJob do
   subject(:job) { described_class.perform_later }
+
   let(:publisher) { create(:publisher) }
 
   it "deletes all EmergencyLoginKeys" do

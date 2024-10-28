@@ -6,7 +6,9 @@ class AddOwnerToEmergencyLoginKeys < ActiveRecord::Migration[7.1]
     # Make publisher_id nullable to avoid NOT NULL constraint issues before deleting this column
     change_column_null :emergency_login_keys, :publisher_id, true
     # Add polymorphic owner reference
+    # rubocop:disable Rails/NotNullColumn
     add_reference :emergency_login_keys, :owner, polymorphic: true, type: :uuid, null: false
+    # rubocop:enable Rails/NotNullColumn
   end
 
   def down
