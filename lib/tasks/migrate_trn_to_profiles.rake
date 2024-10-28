@@ -26,7 +26,7 @@ namespace :jobseeker_profile do
             if profile.teacher_reference_number.blank?
               profile.update(teacher_reference_number: application.teacher_reference_number, has_teacher_reference_number: "yes")
 
-              if profile.save
+              if profile.persisted?
                 puts "Migrated TRN for profile ID: #{profile.id} (jobseeker ID: #{application.jobseeker_id})"
               else
                 puts "Failed to save profile for jobseeker ID: #{application.jobseeker_id}. Errors: #{profile.errors.full_messages.join(', ')}"
