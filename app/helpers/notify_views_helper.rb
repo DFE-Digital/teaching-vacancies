@@ -13,7 +13,7 @@ module NotifyViewsHelper
   end
 
   def consume_jobseekers_login_key_link(token)
-    url = consume_jobseekers_login_key_url(token, **utm_params)
+    url = consume_jobseekers_login_key_url(token)
     notify_link(url)
   end
 

@@ -26,11 +26,11 @@ class Jobseekers::LoginKeysController < ApplicationController
   # end
 
   def consume
-    @jobseeker = jobseeker.find(@login_key.jobseeker_id)
+    @jobseeker = Jobseeker.find(@login_key.owner_id)
 
     if @jobseeker
       @login_key.destroy
-      session.update(jobseeker_id: @jobseeker.id)
+      sign_in(@jobseeker)
       redirect_to jobseeker_root_path
     else
       render(:new)
@@ -44,7 +44,7 @@ class Jobseekers::LoginKeysController < ApplicationController
   end
 
   def check_login_key
-    @login_key = JobseekerEmergencyLoginKey.find_by(id: params[:id])
+    @login_key = EmergencyLoginKey.find_by(id: params[:id])
     failure = if @login_key.nil?
                 "no_key"
               elsif @login_key.expired?
@@ -69,11 +69,11 @@ class Jobseekers::LoginKeysController < ApplicationController
   def send_login_key(jobseeker:)
     Jobseekers::AuthenticationFallbackMailer.sign_in_fallback(
       login_key_id: generate_login_key(jobseeker: jobseeker).id,
-      jobseeker: pubjobseekerlisher,
+      jobseeker:jobseeker,
     ).deliver_later
   end
 
   def generate_login_key(jobseeker:)
-    jobseeker.jobseeker_emergency_login_keys.create(not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
+    EmergencyLoginKey.create(owner: jobseeker, not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
   end
 end

@@ -83,7 +83,7 @@ Rails.application.routes.draw do
     end
 
     resources :login_keys, only: %i[show new create] do
-      post :consume, on: :member
+      get :consume, on: :member
     end
 
     resources :job_applications, only: %i[index show destroy] do
