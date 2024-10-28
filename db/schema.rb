@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_02_105609) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_28_104900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -61,9 +61,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_105609) do
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "not_valid_after", precision: nil, null: false
-    t.uuid "publisher_id", null: false
+    t.uuid "publisher_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "owner_type"
+    t.uuid "owner_id"
+    t.index ["owner_type", "owner_id"], name: "index_emergency_login_keys_on_owner"
     t.index ["publisher_id"], name: "index_emergency_login_keys_on_publisher_id"
   end
 
@@ -318,9 +321,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_105609) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
+    t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
-    t.string "govuk_one_login_id"
     t.index ["confirmation_token"], name: "index_jobseekers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
@@ -682,8 +685,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_105609) do
     t.boolean "include_additional_documents"
     t.boolean "visa_sponsorship_available"
     t.boolean "is_parental_leave_cover"
-    t.boolean "is_job_share"
     t.string "hourly_rate"
+    t.boolean "is_job_share"
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"
