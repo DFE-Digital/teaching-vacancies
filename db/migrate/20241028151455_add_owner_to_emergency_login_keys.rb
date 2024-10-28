@@ -8,13 +8,13 @@ class AddOwnerToEmergencyLoginKeys < ActiveRecord::Migration[7.1]
     # Migrate existing records.
     EmergencyLoginKey.reset_column_information
     EmergencyLoginKey.find_each do |key|
-      key.update!(owner_id: key.publisher_id, owner_type: 'Publisher') if key.publisher_id.present?
+      key.update!(owner_id: key.publisher_id, owner_type: "Publisher") if key.publisher_id.present?
     end
   end
 
   def down
     # Migrate data back from owner columns
-    EmergencyLoginKey.where(owner_type: 'Publisher').find_each do |key|
+    EmergencyLoginKey.where(owner_type: "Publisher").find_each do |key|
       key.update!(publisher_id: key.owner_id)
     end
 
