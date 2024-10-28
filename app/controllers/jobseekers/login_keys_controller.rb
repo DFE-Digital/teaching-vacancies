@@ -14,17 +14,6 @@ class Jobseekers::LoginKeysController < ApplicationController
     send_login_key(jobseeker: jobseeker) if jobseeker
   end
 
-  # def show
-  #   @publisher = Publisher.find(@login_key.publisher_id)
-
-  #   if @publisher.organisations.none?
-  #     render(partial: "error", locals: { failure: "no_orgs" })
-  #   else
-  #     @form = Publishers::LoginKeys::ChooseOrganisationForm.new
-  #     render(:show)
-  #   end
-  # end
-
   def consume
     @jobseeker = Jobseeker.find(@login_key.owner_id)
 
