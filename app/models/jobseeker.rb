@@ -12,7 +12,7 @@ class Jobseeker < ApplicationRecord
   has_many :feedbacks, dependent: :destroy, inverse_of: :jobseeker
   has_many :job_applications, dependent: :destroy
   has_many :saved_jobs, dependent: :destroy
-  has_many :emergency_login_keys
+  has_many :emergency_login_keys, as: :owner
   has_one :jobseeker_profile
 
   validates :email, presence: true
