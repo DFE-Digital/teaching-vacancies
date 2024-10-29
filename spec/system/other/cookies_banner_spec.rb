@@ -26,7 +26,7 @@ RSpec.describe "Cookies banner" do
 
   context "when user has set their cookies preferences" do
     before do
-      set_cookie("consented-to-additional-cookies-clarity-vwo", "yes")
+      set_cookie("consented-to-additional-cookies-v2", "yes")
     end
 
     scenario "does not display the cookies banner" do
