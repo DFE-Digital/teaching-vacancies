@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/BlockLength
 namespace :jobseeker_profile do
   desc "Migrate Teacher Reference Number (TRN) from job_applications to jobseeker_profiles, creating profiles if necessary"
   task migrate_teacher_reference_number_to_profiles: :environment do
@@ -31,4 +30,3 @@ namespace :jobseeker_profile do
     puts "Teacher Reference Number migration completed. Check 'failed_migrations.log' for any failures."
   end
 end
-# rubocop:enable Metrics/BlockLength
