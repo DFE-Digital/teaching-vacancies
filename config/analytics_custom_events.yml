@@ -29,6 +29,7 @@ shared:
   - publisher_job_application_data_expiry
   - publisher_prompt_for_feedback
   - publisher_sign_in_fallback
+  - publisher_vacancy_relisted
   - search_performed
   - successful_publisher_sign_in_attempt
   - support_user_sign_in_fallback
