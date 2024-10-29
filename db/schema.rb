@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_28_151455) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_29_111208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -61,13 +61,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_28_151455) do
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "not_valid_after", precision: nil, null: false
-    t.uuid "publisher_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "owner_type", null: false
     t.uuid "owner_id", null: false
     t.index ["owner_type", "owner_id"], name: "index_emergency_login_keys_on_owner"
-    t.index ["publisher_id"], name: "index_emergency_login_keys_on_publisher_id"
   end
 
   create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -713,7 +711,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_28_151455) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alert_runs", "subscriptions"
-  add_foreign_key "emergency_login_keys", "publishers"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "employments", "jobseeker_profiles"
   add_foreign_key "equal_opportunities_reports", "vacancies"
