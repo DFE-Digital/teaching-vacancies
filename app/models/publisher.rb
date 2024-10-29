@@ -1,5 +1,5 @@
 class Publisher < ApplicationRecord
-  has_many :emergency_login_keys
+  has_many :emergency_login_keys, as: :owner
   has_many :feedbacks, dependent: :destroy, inverse_of: :publisher
   has_many :notes, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
