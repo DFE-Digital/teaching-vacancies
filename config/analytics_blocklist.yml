@@ -96,6 +96,8 @@
   - publisher_id
   - created_at
   - updated_at
+  - owner_id
+  - owner_type
   :alert_runs:
   - id
   - subscription_id

@@ -15,7 +15,7 @@ class Publishers::LoginKeysController < ApplicationController
   end
 
   def show
-    @publisher = Publisher.find(@login_key.publisher_id)
+    @publisher = @login_key.owner
 
     if @publisher.organisations.none?
       render(partial: "error", locals: { failure: "no_orgs" })
@@ -26,7 +26,7 @@ class Publishers::LoginKeysController < ApplicationController
   end
 
   def consume
-    @publisher = Publisher.find(@login_key.publisher_id)
+    @publisher = @login_key.owner
     @form = Publishers::LoginKeys::ChooseOrganisationForm.new(choose_organisation_form_params)
 
     if @form.valid?
@@ -76,6 +76,6 @@ class Publishers::LoginKeysController < ApplicationController
   end
 
   def generate_login_key(publisher:)
-    publisher.emergency_login_keys.create(not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
+    EmergencyLoginKey.create(owner: publisher, not_valid_after: Time.current + EMERGENCY_LOGIN_KEY_DURATION)
   end
 end
