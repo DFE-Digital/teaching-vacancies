@@ -7,8 +7,4 @@ class Publishers::JobListing::ReligiousInformationForm < Publishers::JobListing:
     %i[religion_type]
   end
   attr_accessor(*fields)
-
-  def params_to_save
-    params
-  end
 end

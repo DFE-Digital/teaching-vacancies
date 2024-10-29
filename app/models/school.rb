@@ -54,7 +54,6 @@ class School < Organisation
   end
 
   def faith_school?
-    # Organisation.only_faith_schools.where(id: id).any?
     religious_character.present?
   end
 
