@@ -14,4 +14,10 @@
   .custom-banner {
     padding: govuk-spacing(4) 0;
   }
+
+  @media (max-width: 768px) {
+    .govuk-width-container {
+      width: auto;
+    }
+  }
 }
