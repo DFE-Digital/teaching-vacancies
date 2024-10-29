@@ -46,9 +46,7 @@ RSpec.describe "Users can only be signed in to one type of account" do
     context "when email fallback is enabled" do
       let(:authentication_fallback_enabled?) { true }
       let(:login_key) do
-        publisher.emergency_login_keys.create(
-          not_valid_after: Time.current + Publishers::LoginKeysController::EMERGENCY_LOGIN_KEY_DURATION,
-        )
+        EmergencyLoginKey.create(owner: publisher, not_valid_after: Time.current + Publishers::LoginKeysController::EMERGENCY_LOGIN_KEY_DURATION)
       end
 
       it "signs out from the jobseeker account when signing in as a publisher using DSI" do
