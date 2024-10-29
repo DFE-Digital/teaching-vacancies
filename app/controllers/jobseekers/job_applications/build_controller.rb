@@ -2,8 +2,8 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   include Wicked::Wizard
   include Jobseekers::QualificationFormConcerns
 
-  steps :personal_details, :professional_status, :qualifications, :training_and_cpds, :employment_history, :personal_statement, :references,
-        :equal_opportunities, :ask_for_support, :declarations
+  before_action :set_steps
+  before_action :setup_wizard
 
   helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
@@ -146,5 +146,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
         has_teacher_reference_number: form_params[:has_teacher_reference_number],
       )
     end
+  end
+
+  def set_steps
+    self.steps = step_process.steps - [:review]
   end
 end

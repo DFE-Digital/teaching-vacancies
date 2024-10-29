@@ -934,6 +934,22 @@ en:
         gender: How would you describe your gender?
         orientation: How would you describe your sexual orientation?
         religion: What is your religion or belief?
+      jobseekers_job_application_following_religion_form:
+        following_religion: Are you currently following a religion or faith?
+        "yes": "Yes"
+        "no": "No"
+      jobseekers_job_application_religion_details_form:
+        religious_reference_type: Can you provide a religious referee?
+        religious_reference_type_options:
+          referee: "Yes"
+          baptism_certificate: No, but I can provide a baptism certificate
+          baptism_date: No, but I can provide the date and address of my baptism
+          no_referee: "No"
+        religious_referee_name: Religious referee name
+        religious_referee_address: Religious referee address
+        religious_referee_role: Religious referee role
+        religious_referee_email: Religious referee email
+        religious_referee_phone: Religious referee phone number (optional)
       jobseekers_break_form:
         ended_on: End of gap
         started_on: Start of gap
@@ -976,7 +992,6 @@ en:
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
         has_teacher_reference_number: Do you have a teacher reference number (TRN)?
-
       jobseekers_profile_employment_form:
         current_role: Are you still working in this role?
         ended_on: End date

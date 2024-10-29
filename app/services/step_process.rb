@@ -7,7 +7,9 @@ class StepProcess
     @current_step = current_step.to_sym
     @step_groups = step_groups.compact_blank
 
-    raise MissingStepError, "Current step `#{current_step}` missing from steps (#{steps.join(', ')})" unless current_step.in?(steps)
+    unless current_step.in?(steps)
+      raise MissingStepError, "Current step `#{current_step}` missing from steps (#{steps.join(', ')})"
+    end
   end
 
   # Returns the keys of all individual steps in order
