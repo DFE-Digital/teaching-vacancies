@@ -12,6 +12,11 @@ module NotifyViewsHelper
     notify_link(url)
   end
 
+  def consume_jobseekers_login_key_link(token)
+    url = consume_jobseekers_login_key_url(token)
+    notify_link(url)
+  end
+
   def expired_vacancy_feedback_link(vacancy)
     url = new_organisation_job_expired_feedback_url(vacancy.signed_id)
     notify_link(url, I18n.t("publishers.expired_vacancy_feedback_prompt_mailer.feedback_link_text"))

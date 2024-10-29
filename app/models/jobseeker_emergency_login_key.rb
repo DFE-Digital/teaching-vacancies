@@ -1,5 +1,5 @@
-class EmergencyLoginKey < ApplicationRecord
-  belongs_to :owner, polymorphic: true
+class JobseekerEmergencyLoginKey < ApplicationRecord
+  belongs_to :jobseeker
   validates :not_valid_after, presence: true
 
   def expired?
