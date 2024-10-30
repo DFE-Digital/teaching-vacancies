@@ -18,7 +18,7 @@ class Jobseekers::LoginKeysController < ApplicationController
     @jobseeker = Jobseeker.find(@login_key.owner_id)
 
     if @jobseeker
-      @login_key.destroy
+      @login_key.destroy!
       sign_in(@jobseeker)
       redirect_to jobseeker_root_path
     else
@@ -58,7 +58,7 @@ class Jobseekers::LoginKeysController < ApplicationController
   def send_login_key(jobseeker:)
     Jobseekers::AuthenticationFallbackMailer.sign_in_fallback(
       login_key_id: generate_login_key(jobseeker: jobseeker).id,
-      jobseeker:jobseeker,
+      jobseeker: jobseeker,
     ).deliver_later
   end
 
