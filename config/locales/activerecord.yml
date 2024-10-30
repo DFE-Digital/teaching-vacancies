@@ -569,6 +569,12 @@ en:
               email: Enter a valid email address
             religious_reference_type:
               inclusion: Select if you can provide a religious referee
+            baptism_address:
+              blank: Enter the address of the baptism
+            baptism_date:
+              blank: Enter the baptism date
+            baptism_certificate:
+              blank: Upload your baptism certificate
         jobseekers/job_application/professional_status_form:
           attributes:
             qualified_teacher_status:

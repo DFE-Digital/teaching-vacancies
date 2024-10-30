@@ -11,6 +11,7 @@ class Jobseekers::JobApplication::ReligionDetailsForm < Jobseekers::JobApplicati
        religious_referee_role
        religious_referee_email
        religious_referee_phone
+       baptism_certificate
        baptism_address
        baptism_date]
   end
@@ -25,4 +26,18 @@ class Jobseekers::JobApplication::ReligionDetailsForm < Jobseekers::JobApplicati
 
   validates :baptism_address, :baptism_date,
             presence: true, if: -> { religious_reference_type == "baptism_date" }
+
+  validates :baptism_certificate, form_file: true, presence: true, if: -> { religious_reference_type == "baptism_certificate" }
+
+  def file_type
+    :document
+  end
+
+  def file_size_limit
+    5.megabytes
+  end
+
+  def content_types_allowed
+    %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze
+  end
 end

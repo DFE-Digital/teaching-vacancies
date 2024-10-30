@@ -11,26 +11,26 @@
     = form_for form, url: wizard_path, method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_text_field :faith, label: { size: "s", text: t(".faith.text") }, hint: { text: t(".faith.hint") }
+      = f.govuk_text_field :faith, label: { size: "s" }
 
       = f.govuk_text_area :place_of_worship, label: { size: "s", text: t(".place_of_worship.text") }, rows: 6, hint: { text: t(".place_of_worship.hint") }
 
       = f.govuk_radio_buttons_fieldset :religious_reference_type, hint: -> { t(".referee_type.hints_html") } do
-        = f.govuk_radio_button :religious_reference_type, :referee, link_errors: true, label: { text: t("helpers.legend.jobseekers_job_application_religion_details_form.religious_reference_type_options.referee") } do
+        = f.govuk_radio_button :religious_reference_type, :referee, link_errors: true do
           = f.govuk_text_field :religious_referee_name
           = f.govuk_text_area :religious_referee_address, rows: 6
           = f.govuk_text_field :religious_referee_role
           = f.govuk_text_field :religious_referee_email
           = f.govuk_text_field :religious_referee_phone
-        = f.govuk_radio_button :religious_reference_type, :baptism_certificate,  label: { text: t("helpers.legend.jobseekers_job_application_religion_details_form.religious_reference_type_options.baptism_certificate") } do
+        = f.govuk_radio_button :religious_reference_type, :baptism_certificate do
           = f.govuk_file_field :baptism_certificate,
-            label: { size: "m" },
-            accept: ".doc, .docx, .pdf",
+            label: { size: "s" },
+            accept: ".doc, .docx, .pdf .png",
             enctype: "multipart/form-data"
-        = f.govuk_radio_button :religious_reference_type, :baptism_date,  label: { text: t("helpers.legend.jobseekers_job_application_religion_details_form.religious_reference_type_options.baptism_date") } do
+        = f.govuk_radio_button :religious_reference_type, :baptism_date do
           = f.govuk_text_area :baptism_address, rows: 6
           = f.govuk_date_field :baptism_date
-        = f.govuk_radio_button :religious_reference_type, :no_referee,  label: { text: t("helpers.legend.jobseekers_job_application_religion_details_form.religious_reference_type_options.no_referee") }
+        = f.govuk_radio_button :religious_reference_type, :no_referee
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"

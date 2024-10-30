@@ -186,9 +186,6 @@ en:
         religion_details:
           heading: Religious information
           title: Religious information — Application
-          faith:
-            text: What is your religious denomination or faith?
-            hint: For example, Christian.
           place_of_worship:
             text: Address of place of worship (optional)
             hint: For example, Westminster Abbey, Dean's Yard, London.
