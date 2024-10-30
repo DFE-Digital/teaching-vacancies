@@ -62,7 +62,7 @@ RSpec.describe "Jobseekers can sign in with fallback email authentication" do
           visit consume_jobseekers_login_key_path(login_key)
           expect(page).to have_content("used")
           expect(page).to have_content("Sign in unsuccessful")
-          expect(page).to have_current_path(jobseeker_root_path)
+          expect(page).not_to have_current_path(jobseeker_root_path)
         end
       end
 
