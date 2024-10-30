@@ -1,4 +1,4 @@
-class Jobseekers::LoginKeysController < ApplicationController
+class Jobseekers::LoginKeysController < AuthenticationController
   EMERGENCY_LOGIN_KEY_DURATION = 10.minutes
 
   before_action :redirect_signed_in_jobseekers, only: %i[new create]
@@ -20,6 +20,7 @@ class Jobseekers::LoginKeysController < ApplicationController
     if @jobseeker
       @login_key.destroy!
       sign_in(@jobseeker)
+      trigger_jobseeker_sign_in_event(:success)
       redirect_to jobseeker_root_path
     else
       render(:new)
@@ -50,7 +51,7 @@ class Jobseekers::LoginKeysController < ApplicationController
   end
 
   def redirect_for_one_login_authentication
-    return if AuthenticationFallback.enabled?
+    return if ENV["AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS"] == "true"
 
     redirect_to new_jobseeker_session_path
   end

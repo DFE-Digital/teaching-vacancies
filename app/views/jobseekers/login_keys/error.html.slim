@@ -1,0 +1,7 @@
+- content_for :page_title_prefix, t("jobseekers.temp_login.denial.title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = govuk_notification_banner title_text: t("banners.important") do |banner|
+      - banner.with_heading text: t("jobseekers.temp_login.denial.title")
+      = t("jobseekers.temp_login.denial.#{failure}_html", try_again: govuk_link_to("try again", new_jobseeker_session_path))
