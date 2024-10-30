@@ -1,9 +1,9 @@
 class Jobseekers::LoginKeysController < ApplicationController
   EMERGENCY_LOGIN_KEY_DURATION = 10.minutes
 
-  before_action :redirect_signed_in_jobseekers, only: %i[new create show]
-  before_action :redirect_for_one_login_authentication, only: %i[new create show]
-  before_action :check_login_key, only: %i[show consume]
+  before_action :redirect_signed_in_jobseekers, only: %i[new create]
+  before_action :redirect_for_one_login_authentication, only: %i[new create]
+  before_action :check_login_key, only: %i[consume]
 
   def new
     flash.now[:notice] = t(".notice")

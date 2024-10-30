@@ -82,7 +82,7 @@ Rails.application.routes.draw do
       get :resend_instructions, to: "registrations#resend_instructions", as: :resend_instructions
     end
 
-    resources :login_keys, only: %i[show new create] do
+    resources :login_keys, only: %i[new create] do
       get :consume, on: :member
     end
 
