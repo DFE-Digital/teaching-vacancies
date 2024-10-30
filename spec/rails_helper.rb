@@ -94,6 +94,7 @@ RSpec.configure do |config|
     allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return(recaptcha_reply)
   end
 
+  # allow developers to see JS backed tests by default
   config.before(:each, type: :system, js: true) do
     if ENV.key? "CI"
       driven_by :chrome_headless

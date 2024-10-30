@@ -7,16 +7,11 @@
 
       = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-      = f.govuk_radio_buttons_fieldset :religion_type, legend: { size: "m", tag: "h2", text: t(".what_would_you_like_to_ask") } do
-        = f.govuk_radio_button :religion_type, :catholic,
-          label: { text: t(".catholic.label") },
-          hint: { text: t(".catholic.hint") },
-          link_errors: true
-        = f.govuk_radio_button :religion_type, :other_religion,
-          label: { text: t(".other_religion") }
+      = f.govuk_radio_buttons_fieldset :religion_type, legend: { size: "m", tag: "h2" } do
+        = f.govuk_radio_button :religion_type, :catholic, link_errors: true
+        = f.govuk_radio_button :religion_type, :other_religion
 
         = f.govuk_radio_divider
-        = f.govuk_radio_button :religion_type, :no_religion,
-          label: { text: t(".no_religion") }
+        = f.govuk_radio_button :religion_type, :no_religion
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
