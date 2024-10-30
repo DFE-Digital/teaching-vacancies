@@ -230,19 +230,6 @@
       "note": "Neither field_name or radius come directly from user input. field_name is hardcoded in the child classes of LocationQuery and radius comes from Search::RadiusBuilder#get_radius which sanitises the input."
     },
     {
-      "fingerprint": "abc123def456ghi789jkl",
-      "file": "app/controllers/jobseekers/login_keys_controller.rb",
-      "line": 36,
-      "warning_type": "Unscoped Find",
-      "message": "Unscoped call to `EmergencyLoginKey#find_by`",
-      "confidence": "Weak",
-      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
-      "code": "EmergencyLoginKey.find_by(id: params[:id])",
-      "user_input": "params[:id]",
-      "notes": "Token is a UUID, only valid for 10 mins, and deleted after use.",
-      "note": ""
-    },
-    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "bdb6e5e218cff279e924b58b25fb8cbadd3161da685319b6725256b791286670",
