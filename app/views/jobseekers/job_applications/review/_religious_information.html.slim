@@ -2,7 +2,7 @@
   = govuk_summary_list do |summary_list|
     - summary_list.with_row do |row|
       - row.with_key text: t("helpers.label.jobseekers_job_application_following_religion_form.following_religion")
-      - row.with_value text: job_application.following_religion ? t("helpers.label.jobseekers_job_application_following_religion_form.yes") :  t("helpers.label.jobseekers_job_application_following_religion_form.no")
+      - row.with_value text: job_application.following_religion ? t("helpers.label.jobseekers_job_application_following_religion_form.yes") : t("helpers.label.jobseekers_job_application_following_religion_form.no")
 
     - summary_list.with_row do |row|
       - row.with_key text: t("helpers.label.jobseekers_job_application_religion_details_form.faith")
@@ -51,4 +51,3 @@
         - summary_list.with_row do |row|
           - row.with_key text: t("helpers.legend.jobseekers_job_application_religion_details_form.baptism_date")
           - row.with_value text: job_application.baptism_date.to_formatted_s(:day_month_year)
-
