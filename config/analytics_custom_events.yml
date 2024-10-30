@@ -13,6 +13,7 @@ shared:
   - jobseeker_application_unsuccessful
   - jobseeker_confirmation_instructions
   - jobseeker_email_changed
+  - jobseeker_failed_govuk_one_login_sign_in
   - jobseeker_inactive_account
   - jobseeker_job_listing_ended_early
   - jobseeker_request_account_transfer
@@ -20,6 +21,7 @@ shared:
   - jobseeker_subscription_alert
   - jobseeker_subscription_confirmation
   - jobseeker_subscription_update
+  - jobseeker_successful_govuk_one_login_sign_in
   - jobseeker_draft_application_only
   - jobseeker_unapplied_saved_vacancy
   - publisher_applications_received

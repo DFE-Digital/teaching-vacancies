@@ -70,4 +70,32 @@ class AuthenticationController < ApplicationController
 
     DfE::Analytics::SendEvents.do([event])
   end
+
+  def trigger_jobseeker_failed_govuk_one_login_sign_in_event(jobseeker = nil)
+    event = DfE::Analytics::Event.new
+      .with_type(:jobseeker_failed_govuk_one_login_sign_in)
+      .with_request_details(request)
+      .with_response_details(response)
+      .with_user(jobseeker)
+      .with_data(
+        hidden_data: { email_identifier: jobseeker&.email,
+                       govuk_one_login_id: jobseeker&.govuk_one_login_id },
+      )
+
+    DfE::Analytics::SendEvents.do([event])
+  end
+
+  def trigger_jobseeker_successful_govuk_one_login_sign_in_event(jobseeker)
+    event = DfE::Analytics::Event.new
+      .with_type(:jobseeker_successful_govuk_one_login_sign_in)
+      .with_request_details(request)
+      .with_response_details(response)
+      .with_user(jobseeker)
+      .with_data(
+        hidden_data: { email_identifier: jobseeker&.email,
+                       govuk_one_login_id: jobseeker&.govuk_one_login_id },
+      )
+
+    DfE::Analytics::SendEvents.do([event])
+  end
 end

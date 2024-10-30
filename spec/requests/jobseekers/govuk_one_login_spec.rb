@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Govuk One Login authentication response" do
   describe "GET #openid_connect" do
@@ -49,14 +50,25 @@ RSpec.describe "Govuk One Login authentication response" do
       get root_path # Loads OneLogin Sign-in button and sets session values for user.
     end
 
-    it "redirects unsuccessful OneLogin responses to the root path with an error message" do
-      allow(Jobseekers::GovukOneLogin::UserFromAuthResponse).to receive(:call)
-        .and_raise(Jobseekers::GovukOneLogin::Errors::GovukOneLoginError)
+    context "when the OneLogin response is a failure" do
+      before do
+        allow(Jobseekers::GovukOneLogin::UserFromAuthResponse).to receive(:call)
+          .and_raise(Jobseekers::GovukOneLogin::Errors::GovukOneLoginError)
+      end
 
-      get auth_govuk_one_login_callback_path
-      expect(response).to redirect_to(root_path)
-      expect(response.request.flash[:alert])
-        .to include(I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error"))
+      it "redirects the unsigned jobseeker to the root path with an error message" do
+        get auth_govuk_one_login_callback_path
+
+        expect(response).to redirect_to(root_path)
+        expect(response.request.flash[:alert])
+          .to include(I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error"))
+      end
+
+      it "sends an analytics event for a failed OneLogin sign-in attempt" do
+        get auth_govuk_one_login_callback_path
+
+        expect(:jobseeker_failed_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_events
+      end
     end
 
     it "sets the OneLogin ID token in the user session" do
@@ -70,6 +82,12 @@ RSpec.describe "Govuk One Login authentication response" do
 
       expect(session[:govuk_one_login_state]).to be_nil
       expect(session[:govuk_one_login_nonce]).to be_nil
+    end
+
+    it "sends an analytics event for a successful OneLogin sign-in attempt" do
+      get auth_govuk_one_login_callback_path
+
+      expect(:jobseeker_successful_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_events
     end
 
     context "when the OneLogin user does not match a TV jobseeker" do

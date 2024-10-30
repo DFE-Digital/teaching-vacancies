@@ -15,9 +15,11 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
     if jobseeker
       sign_out_except(:jobseeker)
+      trigger_jobseeker_successful_govuk_one_login_sign_in_event(jobseeker)
       sign_in_and_redirect jobseeker
     end
   rescue GovukOneLoginError => e
+    trigger_jobseeker_failed_govuk_one_login_sign_in_event(jobseeker)
     Rails.logger.error(e.message)
     error_redirect
   end
