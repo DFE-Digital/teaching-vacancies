@@ -51,7 +51,7 @@ class Jobseekers::LoginKeysController < AuthenticationController
   end
 
   def redirect_for_one_login_authentication
-    return if ENV["AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS"] == "true"
+    return if AuthenticationFallbackForJobseekers.enabled?
 
     redirect_to new_jobseeker_session_path
   end

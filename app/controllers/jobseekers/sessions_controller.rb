@@ -2,7 +2,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
   include ReturnPathTracking::Helpers
 
   def new
-    if ENV["AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS"] == "true"
+    if AuthenticationFallbackForJobseekers.enabled?
       redirect_to new_jobseekers_login_key_path and return
     end
 
