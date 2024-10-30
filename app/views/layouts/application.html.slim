@@ -1,7 +1,7 @@
 doctype html
 html.govuk-template.app-html-class lang="en"
   head
-    = render "layouts/vwo_head" if if consented_to_extra_cookies?
+    = render "layouts/vwo_head" if consented_to_extra_cookies?
     = render "layouts/google_tag_manager_head" if consented_to_extra_cookies?
     = render "layouts/head_meta"
     = render "layouts/head_links"

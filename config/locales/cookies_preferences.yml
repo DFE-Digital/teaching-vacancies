@@ -78,7 +78,7 @@ en:
             purpose: Stores encrypted information about your time on the service
             expires: When you close your browser
           second:
-            name: consented-to-additional-cookies
+            name: consented-to-additional-cookies-v2
             purpose: Saves your cookie consent settings
             expires: 6 months
     new:
