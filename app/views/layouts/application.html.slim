@@ -1,8 +1,8 @@
 doctype html
 html.govuk-template.app-html-class lang="en"
   head
-    = render "layouts/vwo_head"
-    = render "layouts/google_tag_manager_head" if include_google_tag_manager?
+    = render "layouts/vwo_head" if consented_to_extra_cookies?
+    = render "layouts/google_tag_manager_head" if consented_to_extra_cookies?
     = render "layouts/head_meta"
     = render "layouts/head_links"
     title #{content_for :page_title_prefix} - #{t("app.title")} - GOV.UK
@@ -12,7 +12,7 @@ html.govuk-template.app-html-class lang="en"
 
   body class=body_class
     = render "layouts/cookies_banner"
-    = render "layouts/google_tag_manager_body" if include_google_tag_manager?
+    = render "layouts/google_tag_manager_body" if consented_to_extra_cookies?
     = render "layouts/add_js_enabled_class_to_body"
     = render "layouts/skip_links"
     = render EnvironmentBannerComponent.new
