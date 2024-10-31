@@ -29,10 +29,6 @@ class Jobseekers::LoginKeysController < AuthenticationController
 
   private
 
-  def choose_organisation_form_params
-    (params[:publishers_login_keys_choose_organisation_form] || params).permit(:organisation)
-  end
-
   def check_login_key
     @login_key = EmergencyLoginKey.find_by(id: params[:id])
     failure = if @login_key.nil?
