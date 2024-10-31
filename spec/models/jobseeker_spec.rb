@@ -129,6 +129,13 @@ RSpec.describe Jobseeker do
         expect { jobseeker.update_email_from_govuk_one_login!("new_email@contoso.com") }
           .to change { jobseeker.reload.email }.to("new_email@contoso.com")
       end
+
+      it "updates the email address of every subscription associated with their previous email address" do
+        subscription = create(:subscription, email: jobseeker.email)
+        expect {
+          jobseeker.update_email_from_govuk_one_login!("new_email@contoso.com")
+        }.to change { subscription.reload.email }.to("new_email@contoso.com")
+      end
     end
 
     context "when a legacy jobseeker with the new email address already exists" do
