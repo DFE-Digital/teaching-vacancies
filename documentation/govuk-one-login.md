@@ -62,6 +62,71 @@ integration configuration.
 - To access/edit this file, run `bin/rails credentials:edit`.
 - To access the credentials within the app: `Rails.application.credentials.one_login.private_key`
 
+## GOV.UK One Login contingency fallback playbook
+
+### Background
+
+This is a contingency plan for when GOV.UK One Login has an outage. The fallback authentication method relies on the email address we have stored in DB for the Jobseekers.
+
+It replaces the GOV.UK One Login sign in method with one whereby the user is prompted to enter their email address, and clicks a unique login link. This login link works only once and expires after a configurable time.
+
+### How to use
+
+Here are the steps to follow to use our contingency fallback sign-in method.
+
+First, decide whether to switch on the fallback authentication. This call should be made by the Product Owner/Manager if they are available.
+
+### Toggle Authentication Fallback
+
+- Switch on the fallback authentication by setting the environment variable `AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS` to `true`.
+- Switch off the fallback authentication by setting the environment variable `AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS` to `false`.
+
+#### Toggling Authentication Fallback Using an automated deployment
+
+Changing the environment variable within the `<env>_app_env.yml` follows the standard deployment procedure, and allows deployments to production to continue:
+- create a feature branch
+- edit the file [terraform/workspace-variables/production_app_env.yml](../terraform/workspace-variables/production_app_env.yml)
+- set the environment variable `AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS` to `true` or `false` as required
+- create a Pull Request
+- merge after approval
+
+#### Toggling Authentication Fallback Using manual steps
+
+The following method is included for completeness, but should be considered as a "panic mode" option only.
+It requires `SpaceDeveloper` permission on the `s189-teacher-services-cloud-production` subscription, and only persists until the next [Automated Deployment to staging and production](/deployments.md#build-and-deploy-to-staging-and-production---github-actions)
+
+- Block all deployments to `production` by requesting in the Slack channel `#tv_devs`
+- Log in in the [Azure Portal](https://portal.azure.com.mcas.ms/) and request access to the `s189-Contributor and Key Vault editor` role in the `s189-teacher-services-cloud-production` subscription.
+- Once having the access granted by one of the managers, login into Azure from the console:
+  ```bash
+  az login --tenant 9c7d9dd3-840c-4b3f-818e-552865082e16
+  ```
+- Get the credentials for the production cluster:
+  ```bash
+  make production get-cluster-credentials CONFIRM_PRODUCTION=YES
+  ```
+- Get the current environment value:
+  ```bash
+  kubectl -n tv-production exec deployment/teaching-vacancies-production -- env | grep AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS
+  ```
+- Get current environment variable value over one of the listed pods:
+
+
+- Update the environment variable with the [set env](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#-em-env-em-) command
+- Enable the fallback with:
+  ```bash
+  kubectl -n tv-production set env deployment/teaching-vacancies-production AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS=true
+  ```
+
+- Wait for a bit until the pods get automatically restarted with the new value. Check that the value changed:
+  ```bash
+  kubectl -n tv-production exec deployment/teaching-vacancies-production -- env | grep AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS
+  ```
+
+- When not needed anymore disable the fallback with:
+  ```bash
+  kubectl  -n tv-production set env  deployment/teaching-vacancies-production AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS=false
+  ```
 
 ## GOV.UK One Login flow
 
