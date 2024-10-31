@@ -147,7 +147,19 @@ RSpec.describe "Jobseekers can complete a job application" do
       expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/following_religion_form.attributes.following_religion.inclusion"))
     end
 
-    context "when on religious details step" do
+    context "when not following a religion" do
+      before do
+        choose "No"
+        click_on I18n.t("buttons.save_and_continue")
+      end
+
+      it "skips the religion details step" do
+        expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :references))
+        complete_from_references_page
+      end
+    end
+
+    context "when following a religion" do
       before do
         choose "Yes"
         click_on I18n.t("buttons.save_and_continue")

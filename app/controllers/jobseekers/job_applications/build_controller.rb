@@ -10,6 +10,8 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def show
     skip_step_if_missing
 
+    skip_step if step == :religion_details && !job_application.following_religion
+
     render_wizard
   end
 
@@ -18,7 +20,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
       job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
       update_or_create_jobseeker_profile! if step == :professional_status
 
-      return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if redirect_to_review?
+      return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if redirect_to_review? && step_process.last_of_group?
 
       render_wizard job_application
     else
