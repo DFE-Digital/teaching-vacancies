@@ -20,9 +20,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     let(:publisher) { create(:publisher, organisations: organisations, accepted_terms_at: 1.day.ago) }
 
     let(:login_key) do
-      publisher.emergency_login_keys.create(
-        not_valid_after: Time.current + Publishers::LoginKeysController::EMERGENCY_LOGIN_KEY_DURATION,
-      )
+      EmergencyLoginKey.create(owner: publisher, not_valid_after: Time.current + Publishers::LoginKeysController::EMERGENCY_LOGIN_KEY_DURATION)
     end
 
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }

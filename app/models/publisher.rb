@@ -1,5 +1,5 @@
 class Publisher < ApplicationRecord
-  has_many :emergency_login_keys
+  has_many :emergency_login_keys, as: :owner
   has_many :feedbacks, dependent: :destroy, inverse_of: :publisher
   has_many :notes, dependent: :destroy
   has_many :notifications, as: :recipient, dependent: :destroy, class_name: "Noticed::Notification"
@@ -10,7 +10,7 @@ class Publisher < ApplicationRecord
 
   has_encrypted :family_name, :given_name
 
-  validates :email, email_address: true
+  validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
   devise :timeoutable
   self.timeout_in = 120.minutes # Overrides default Devise configuration

@@ -66,7 +66,12 @@ class Vacancy < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_one :equal_opportunities_report, dependent: :destroy
   has_many :organisation_vacancies, dependent: :destroy
-  has_many :organisations, through: :organisation_vacancies, dependent: :destroy, after_add: :refresh_geolocation, after_remove: :refresh_geolocation
+  has_many :organisations,
+           through: :organisation_vacancies,
+           dependent: :destroy,
+           validate: false, # If an organisation has some validation error, we do not want to block users from creating a vacancy.
+           after_add: :refresh_geolocation,
+           after_remove: :refresh_geolocation
   has_many :markers, dependent: :destroy
   has_many :feedbacks, dependent: :destroy, inverse_of: :vacancy
 
@@ -96,10 +101,10 @@ class Vacancy < ApplicationRecord
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
   validates_with ExternalVacancyValidator, if: :external?
-  validates :organisations, :presence => true
+  validates :organisations, presence: true
 
-  validates :application_email, email_address: true
-  validates :contact_email, email_address: true
+  validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid
+  validates :contact_email, email_address: true, if: -> { contact_email_changed? }
 
   has_noticed_notifications
   has_paper_trail on: [:update],

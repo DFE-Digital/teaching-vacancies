@@ -8,7 +8,7 @@ class Subscription < ApplicationRecord
 
   scope :active, -> { where(active: true) }
 
-  validates :email, email_address: true
+  validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
   def self.encryptor
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET

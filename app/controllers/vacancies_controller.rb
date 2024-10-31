@@ -18,6 +18,20 @@ class VacanciesController < ApplicationController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
+  def campaign_landing_page
+    @campaign_page = CampaignPage[params[:utm_content]]
+    campaign_params = CampaignSearchParamsMerger.new(campaign_search_params, @campaign_page).merged_params
+    @form ||= Jobseekers::SearchForm.new(campaign_params.merge(landing_page: @campaign_page))
+    @jobseeker_name = params[:email_name] || "Jobseeker"
+    @subject = params[:email_subject] || ""
+
+    @vacancies_search = Search::VacancySearch.new(@form.to_hash, sort: @form.sort)
+    @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)
+
+    set_search_coordinates unless do_not_show_distance?
+    trigger_search_performed_event
+  end
+
   private
 
   def form
@@ -46,6 +60,11 @@ class VacanciesController < ApplicationController
 
   def set_headers
     response.set_header("X-Robots-Tag", "noarchive")
+  end
+
+  def campaign_search_params
+    params.permit(:email_name, :email_postcode, :email_location, :email_radius, :email_jobrole, :email_subject,
+                  :email_phase, :email_ECT, :email_fulltime, :email_parttime, :email_jobshare, :email_contact)
   end
 
   def trigger_search_performed_event

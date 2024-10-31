@@ -341,7 +341,7 @@ Rails.application.routes.draw do
     resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :documents, only: %i[index new create destroy], controller: "publishers/vacancies/documents" do
-        post :confirm, :on => :collection
+        post :confirm, on: :collection
       end
       resource :application_forms, only: %i[create destroy], controller: "publishers/vacancies/application_forms"
 
@@ -383,6 +383,11 @@ Rails.application.routes.draw do
   match "/422", as: :unprocessable_entity, to: "errors#unprocessable_entity", via: :all
   match "/500", as: :internal_server_error, to: "errors#internal_server_error", via: :all
   match "/maintenance", as: :maintenance, to: "errors#maintenance", via: :all
+
+  get "campaigns/",
+      to: "vacancies#campaign_landing_page",
+      as: :campaign_landing_page,
+      constraints: ->(request) { CampaignPage.exists?(request.params[:utm_content]) }
 
   get "teaching-jobs-in-:location_landing_page_name",
       to: "vacancies#index",

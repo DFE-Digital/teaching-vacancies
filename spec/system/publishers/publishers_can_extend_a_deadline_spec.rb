@@ -1,4 +1,5 @@
 require "rails_helper"
+require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Publishers can extend a deadline" do
   let(:organisation) { create(:school) }
@@ -86,6 +87,10 @@ RSpec.describe "Publishers can extend a deadline" do
         expect(new_vacancy).to have_attributes(extension_reason: "didnt_find_right_candidate",
                                                publish_on: Date.today,
                                                expires_at: expires_at)
+      end
+
+      it "sends an event to analytics" do
+        expect(:publisher_vacancy_relisted).to have_been_enqueued_as_analytics_events
       end
 
       context "when looking at tabs" do

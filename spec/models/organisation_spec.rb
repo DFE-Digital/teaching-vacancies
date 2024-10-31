@@ -6,6 +6,22 @@ RSpec.describe Organisation do
   it { is_expected.to have_many(:vacancies) }
   it { is_expected.to have_many(:organisation_vacancies) }
 
+  describe "email validation" do
+    it "doesn't validate existing email" do
+      org = described_class.new(email: "invalidaaddress")
+      org.save!(validate: false)
+
+      expect(org).to be_valid
+    end
+
+    it "validates new email" do
+      org = create(:school)
+      org.email = "invalidaaddress"
+
+      expect(org).not_to be_valid
+    end
+  end
+
   describe "#all_vacancies" do
     context "when the organisation is a school" do
       let!(:school1) { create(:school) }
