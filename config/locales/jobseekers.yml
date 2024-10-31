@@ -501,6 +501,9 @@ en:
         warning: You cannot review a non-draft job application
         training_and_cpds:
           none: You have not added any training.
+        religious_information:
+          heading: The school is a school with a religious character, please therefore provide the additional information requested as appropriate.
+          baptism_certificate: Baptism certficate
       show:
         application_sections: Application sections
         ask_for_support:

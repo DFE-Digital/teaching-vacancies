@@ -1,4 +1,6 @@
 - r.with_section :religion_details
+  p.govuk-body = t("jobseekers.job_applications.review.religious_information.heading")
+
   = govuk_summary_list do |summary_list|
     - summary_list.with_row do |row|
       - row.with_key text: t("helpers.label.jobseekers_job_application_following_religion_form.following_religion")
@@ -40,7 +42,7 @@
 
       - when "baptism_certificate"
         - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_job_application_religion_details_form.baptism_certificate")
+          - row.with_key text: t("jobseekers.job_applications.review.religious_information.baptism_certificate")
           - row.with_value text: job_application.baptism_certificate.filename
 
       - when "baptism_date"
