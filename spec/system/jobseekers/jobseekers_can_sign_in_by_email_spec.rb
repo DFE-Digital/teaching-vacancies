@@ -57,6 +57,8 @@ RSpec.describe "Jobseekers can sign in with fallback email authentication" do
 
           # Can sign out
           click_on(I18n.t("nav.sign_out"))
+          expect(page).to have_current_path(new_jobseekers_login_key_path)
+          expect(page).to have_content("Jobseeker sign in")
 
           within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("buttons.sign_in")) }
 
