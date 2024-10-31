@@ -153,7 +153,7 @@ RSpec.describe "Jobseekers can complete a job application" do
         click_on I18n.t("buttons.save_and_continue")
       end
 
-      it "produces the correct errors" do
+      it "produces the correct errors", :js do
         expect(page).to have_content(I18n.t("helpers.hint.jobseekers_job_application_religion_details_form.faith"))
         validates_step_complete
         expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religion_details_form.attributes.faith.blank"))
@@ -185,21 +185,34 @@ RSpec.describe "Jobseekers can complete a job application" do
             expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religion_details_form.attributes.religious_referee_email.blank"))
           end
 
-          it "allows jobseekers to specify a religious referee" do
-            fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_name"), with: referee_name
-            fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_address"), with: referee_address
-            fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_role"), with: referee_role
-            fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_email"), with: referee_email
-            fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_phone"), with: referee_phone
-            click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
-            complete_from_references_page
+          context "when on review page" do
+            before do
+              fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_name"), with: referee_name
+              fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_address"), with: referee_address
+              fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_role"), with: referee_role
+              fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_email"), with: referee_email
+              fill_in I18n.t("helpers.label.jobseekers_job_application_religion_details_form.religious_referee_phone"), with: referee_phone
+              click_on I18n.t("buttons.save_and_continue")
+              complete_from_references_page
+            end
 
-            expect(page).to have_content(referee_name)
-            expect(page).to have_content(referee_address)
-            expect(page).to have_content(referee_role)
-            expect(page).to have_content(referee_email)
-            expect(page).to have_content(referee_phone)
+            it "has the correct content" do
+              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
+
+              expect(page).to have_content(referee_name)
+              expect(page).to have_content(referee_address)
+              expect(page).to have_content(referee_role)
+              expect(page).to have_content(referee_email)
+              expect(page).to have_content(referee_phone)
+            end
+
+            it "can be submitted as an application" do
+              check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
+              check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
+              click_on I18n.t("buttons.submit_application")
+              click_on "View your applications"
+              expect(page).to have_content(vacancy.job_title)
+            end
           end
         end
 

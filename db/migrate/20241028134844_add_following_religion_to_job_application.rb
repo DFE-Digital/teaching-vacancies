@@ -1,6 +1,9 @@
 class AddFollowingReligionToJobApplication < ActiveRecord::Migration[7.1]
   def change
-    add_column :job_applications, :following_religion, :boolean, null: false, default: false
+    # we might need to know if this boolean is unknown - so it needs to be tri-state
+    # rubocop:disable Rails/ThreeStateBooleanColumn
+    add_column :job_applications, :following_religion, :boolean
+    # rubocop:enable Rails/ThreeStateBooleanColumn
     add_column :job_applications, :religious_reference_type, :integer
     add_column :job_applications, :faith, :string
     add_column :job_applications, :place_of_worship, :string

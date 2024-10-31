@@ -538,9 +538,9 @@ en:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
       jobseekers_job_application_following_religion_form:
-        following_religion: Are you currently following a religion or faith?
-        "yes": "Yes"
-        "no": "No"
+        following_religion_options:
+          "yes": "Yes"
+          "no": "No"
       jobseekers_job_application_religion_details_form:
         religious_reference_type_options:
           referee: "Yes"
@@ -959,8 +959,6 @@ en:
         religion: What is your religion or belief?
       jobseekers_job_application_following_religion_form:
         following_religion: Are you currently following a religion or faith?
-        "yes": "Yes"
-        "no": "No"
       jobseekers_job_application_religion_details_form:
         religious_reference_type: Can you provide a religious referee?
         baptism_date: What was the date of your baptism?

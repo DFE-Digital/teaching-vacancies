@@ -1,10 +1,11 @@
 class Jobseekers::JobApplication::FollowingReligionForm < Jobseekers::JobApplication::BaseForm
   include ActiveModel::Model
+  include ActiveModel::Attributes
 
   def self.fields
     %i[following_religion]
   end
-  attr_accessor(*fields)
+  attribute :following_religion, :boolean
 
-  validates :following_religion, inclusion: { in: %w[yes no] }
+  validates :following_religion, inclusion: { in: [true, false] }
 end
