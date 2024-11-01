@@ -539,6 +539,8 @@ en:
           your_address: Your address
         personal_statement:
           heading: Personal statement
+        religious_information:
+          heading: Religious Information
         professional_status:
           heading: Professional status
           statutory_induction_complete: Have you completed your statutory induction period?
