@@ -58,6 +58,29 @@
       "note": "Emergency login key cannot be scoped to already signed-in users"
     },
     {
+      "warning_type": "Unscoped Find",
+      "warning_code": 82,
+      "fingerprint": "45f63bba74cbeb3d95af943720b716a5b908236ab6adaa7fb459fd84056f84da",
+      "check_name": "UnscopedFind",
+      "message": "Unscoped call to `EmergencyLoginKey#find_by`",
+      "file": "app/controllers/jobseekers/login_keys_controller.rb",
+      "line": 36,
+      "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
+      "code": "EmergencyLoginKey.find_by(:id => params[:id])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Jobseekers::LoginKeysController",
+        "method": "check_login_key"
+      },
+      "user_input": "params[:id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        285
+      ],
+      "note": "Token is a UUID, only valid for 10 mins, and deleted after use."
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "549d2779be79702f98156c6ec1a388b35ff19d87b0978910d4fad9d59a424cb9",
@@ -133,7 +156,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped parameter value",
       "file": "app/views/posts/show.html.slim",
-      "line": 15,
+      "line": 16,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "MarkdownDocument.new(:section => params[:section], :subcategory => params[:subcategory], :post_name => params[:post_name]).content",
       "render_path": [
@@ -167,7 +190,7 @@
       "check_name": "UnscopedFind",
       "message": "Unscoped call to `JobseekerProfile#find`",
       "file": "app/controllers/publishers/jobseeker_profiles_controller.rb",
-      "line": 21,
+      "line": 20,
       "link": "https://brakemanscanner.org/docs/warning_types/unscoped_find/",
       "code": "JobseekerProfile.find(params[:id])",
       "render_path": null,
@@ -344,6 +367,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-07-12 17:07:35 +0100",
-  "brakeman_version": "6.1.2"
+  "updated": "2024-10-30 15:08:53 +0000",
+  "brakeman_version": "6.2.2"
 }

@@ -1,5 +1,10 @@
 en:
   jobseekers:
+    login_keys:
+      new:
+        notice: >-
+          There are some technical problems with our sign in page.
+          We’re working on fixing it, but in the meantime you can still access your account.
     accounts:
       header:
         accessible_signed_in_as: You are signed in as
@@ -921,6 +926,8 @@ en:
           how_to_find_registered_email:
             summary: How to find your registered email address
             body: We sent a message to the email address associated with your Teaching Vacancies account informing you about this change.
+        fallback:
+          description: Enter your email below and we will send you a link that will take you straight into your account.
     subscriptions:
       index:
         button_create: Create a job alert
@@ -1005,3 +1012,14 @@ en:
         new_search_html: You can create a new job alert by starting a %{link}
         new_search_link: new search
         title: Feedback received
+    temp_login:
+      email:
+        body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
+        heading: Sign in to Teaching Vacancies
+        subject: Sign in to Teaching Vacancies
+      heading: Temporary login
+      denial:
+        title: Sign in unsuccessful
+        expired_html: The login link you used has expired. Please %{try_again}.
+        no_key_html: The login link you used was not recognised. Please %{try_again}.
+

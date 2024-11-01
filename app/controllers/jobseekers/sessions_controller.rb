@@ -2,6 +2,10 @@ class Jobseekers::SessionsController < Devise::SessionsController
   include ReturnPathTracking::Helpers
 
   def new
+    if AuthenticationFallbackForJobseekers.enabled?
+      redirect_to new_jobseekers_login_key_path and return
+    end
+
     if (login_failure = params[:login_failure])
       alert_text = t("devise.failure.#{login_failure}")
       trigger_jobseeker_sign_in_event(:failure, alert_text)

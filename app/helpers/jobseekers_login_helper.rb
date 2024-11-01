@@ -10,8 +10,12 @@ module JobseekersLoginHelper
   end
 
   def jobseeker_logout_uri
-    params = generate_logout_params(session[:govuk_one_login_id_token])
-    govuk_one_login_uri(:logout, params)
+    if AuthenticationFallbackForJobseekers.enabled?
+      destroy_jobseeker_session_path
+    else
+      params = generate_logout_params(session[:govuk_one_login_id_token])
+      govuk_one_login_uri(:logout, params)
+    end
   end
 
   def jobseeker_login_button(class: "")
