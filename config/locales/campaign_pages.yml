@@ -1,0 +1,42 @@
+en:
+  campaign_pages:
+    whentoapplybespoke+PRIMARY:
+      banner_title: "%{name}, find your primary teacher job"
+    whentoapplybespoke+SECONDARY:
+      banner_title: "%{name}, find your secondary teacher job"
+    ectrolesbespoke:
+      banner_title: "%{name}, find a job for new teachers like you"
+    mathsbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    dancedramamusicbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    dancedramamusicbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    computingbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    chemistrybespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    businessandeconomicsbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    re:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    biologybespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    englishbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    psychologybespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    parttimebespoke+PRIMARY:
+      banner_title: "%{name}, find your part-time teaching job"
+    parttimebespoke+SECONDARY:
+      banner_title: "%{name}, find your part-time teaching job"
+    stilltimebespoke+PRIMARY:
+      banner_title: "%{name}, it's not too late to find your perfect teaching job"
+    stilltimebespoke+SECONDARY:
+      banner_title: "%{name}, it's not too late to find your perfect teaching job"
+
+    ################################################################################################
+    # The following fake campaign page is used in automated tests, please don't remove it
+    ################################################################################################
+    FAKE1+CAMPAIGN:
+      banner_title: "%{name}, this is a fake campaign"

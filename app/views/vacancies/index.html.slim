@@ -23,7 +23,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       = f.hidden_field :organisation_slug, value: @vacancies_search.organisation_slug
 
     .govuk-grid-column-two-thirds-at-desktop
-      = render "vacancies/search/fields_and_button", f: f, form: @form
+      = render "vacancies/search/fields_and_button", f: f, form: @form, show_keyword: true
       = render "vacancies/search/open_filters_button", form: @form
 
       #search-results

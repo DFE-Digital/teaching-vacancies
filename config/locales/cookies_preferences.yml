@@ -18,7 +18,7 @@ en:
         no_consent: No, do not use additional cookies
       analytics:
         heading: Cookies that measure website use
-        intro: "We use Google Analytics to measure how you use the service. These cookies collect information about:"
+        intro: "We use cookies to measure how you use the service. These cookies collect information about:"
         list:
           - the pages you visit
           - how long you spend on each page
@@ -45,6 +45,86 @@ en:
             name: _gat
             purpose: Used to manage the rate at which page view requests are made
             expires: 1 minute
+          fourth:
+            name: _vis_opt_exp_{CAMPAIGNID}_goal_{GOALID}
+            purpose: This VWO cookie is created when a campaign goal is triggered. This cookie, when created, will always have a value of 1
+            expires: 100 days
+          fifth:
+            name: _vis_opt_test_cookie
+            purpose: This VWO cookie is to read if cookies can be placed
+            expires: Browser closes
+          sixth:
+            name: _vis_opt_exp_{CAMPAIGNID}_combi
+            purpose: This VWO cookie is created when you are chosen for a particular variation for a test and ensures you see the same variation when you revisit a page in the future
+            expires: 100 days
+          seventh:
+            name: _vis_opt_exp_{CAMPAIGNID}_exclude
+            purpose: This VWO cookie is created when you are excluded from a test campaign due to the traffic percentage specifications
+            expires: 100 days
+          eighth:
+            name: _vis_opt_exp_{CAMPAIGNID}_split
+            purpose: This cookie is created when one of the variations is chosen for you, but you are not yet redirected to the variation page. It exists so that VWO can verify that the variation page corresponds to the chosen variation after landing on the page
+            expires: 100 days
+          ninth:
+            name: _vis_opt_s
+            purpose: This VWO cookie tracks sessions
+            expires: 100 days
+          tenth:
+            name: _vis_opt_out
+            purpose: This VWO cookie indicates that you should not be made part of any campaign
+            expires: 10 years
+          eleventh:
+            name: _vwo_uuid_v2
+            purpose: This VWO cookie generates a unique id for every visitor
+            expires: 1 year
+          twelfth:
+            name: _vwo_ds
+            purpose: This VWO cookie stores persistent visitor-level data for VWO Insights
+            expires: Depends on the retention period of the account
+          thirteenth:
+            name: _vwo_sn
+            purpose: This VWO cookie stores session-level information
+            expires: 30 minutes and reset again to 30 minutes on activity
+          fourteenth:
+            name: _vis_opt_exp_{CAMPAIGNID}_combi_choose
+            purpose: This VWO cookie stores the chosen combination. It’s a temporary cookie that gets deleted when the campaign changes are applied
+            expires: Persists until campaign changes are applied
+          fifteenth:
+            name: _vwo_referrer
+            purpose: This cookie stores referral info allowing VWO to identify the original Traffic source in case of the Split URL campaign
+            expires: 15 seconds
+          sixteenth:
+            name: _vwo
+            purpose: This VWO cookie is a jar of all the VWO cookies. It is currently created only for the Safari browser browser
+            expires: Expires in 2096 years
+          seventeenth:
+            name: _clck
+            purpose: Persists the Clarity User ID and preferences, unique to that site is attributed to the same user ID
+            expires: 12 months
+          eighteenth:
+            name: _clsk
+            purpose: Connects multiple page views by a user into a single Clarity session recording
+            expires: 1 day
+          nineteenth:
+            name: CLID
+            purpose: Identifies the first-time Clarity saw this user on any site using Clarity
+            expires: 12 months
+          twentieth:
+            name: ANONCHK
+            purpose: This cookie ensures that clicks from advertisement on the Bing search engine are verified and it is used for reporting purposes and for personalisation
+            expires: 10 minutes
+          twentyfirst:
+            name: MR
+            purpose: Indicates whether to refresh MUID
+            expires: 1 week
+          twentysecond:
+            name: MUID
+            purpose: Identifies unique web browsers visiting Microsoft sites. These cookies are used for advertising, site analytics, and other operational purposes
+            expires: 13 months
+          twentythird:
+            name: SM
+            purpose: Used in synchronizing the MUID across Microsoft domains
+            expires: 13 months
       marketing:
         heading: Cookies that help with our communications and marketing
         intro: >-
@@ -78,7 +158,7 @@ en:
             purpose: Stores encrypted information about your time on the service
             expires: When you close your browser
           second:
-            name: consented-to-additional-cookies
+            name: consented-to-additional-cookies-v2
             purpose: Saves your cookie consent settings
             expires: 6 months
     new:
@@ -91,7 +171,7 @@ en:
           We also use additional cookies to measure how you use the service and to help us with our marketing and communications.
 
       heading: Cookies on Teaching Vacancies
-      subheading: 
+      subheading:
         settings: Cookie settings
         additional: Additional cookies settings
       title: Cookies

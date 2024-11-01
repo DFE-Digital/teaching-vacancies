@@ -390,6 +390,11 @@ Rails.application.routes.draw do
   match "/500", as: :internal_server_error, to: "errors#internal_server_error", via: :all
   match "/maintenance", as: :maintenance, to: "errors#maintenance", via: :all
 
+  get "campaigns/",
+      to: "vacancies#campaign_landing_page",
+      as: :campaign_landing_page,
+      constraints: ->(request) { CampaignPage.exists?(request.params[:utm_content]) }
+
   get "teaching-jobs-in-:location_landing_page_name",
       to: "vacancies#index",
       as: :location_landing_page,
