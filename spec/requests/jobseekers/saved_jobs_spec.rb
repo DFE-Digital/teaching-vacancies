@@ -20,32 +20,8 @@ RSpec.describe "Saved jobs" do
     context "when a jobseeker is not signed in" do
       before { get(new_jobseekers_saved_job_path(vacancy.id)) }
 
-      it "redirects to the sign in page with a flash message explaining why" do
-        follow_redirect!
-
-        expect(flash[:alert]).to be_present
-      end
-    end
-  end
-
-  describe "GET #index" do
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    context "when a jobseeker has completed their profile" do
-      let!(:completed_profile) { create(:jobseeker_profile, :completed, jobseeker_id: jobseeker.id) }
-
-      before { get jobseekers_saved_jobs_path }
-
-      it "does not display a reminder to create a profile" do
-        expect(response).to_not render_template(partial: "_candidiate_profiles_banner")
-      end
-    end
-
-    context "when a jobseeker has not completed their profile" do
-      before { get jobseekers_saved_jobs_path }
-
-      it "displays a reminder to create a profile" do
-        expect(response).to render_template(partial: "_candidiate_profiles_banner")
+      it "redirects to the sign in page" do
+        expect(response.location).to match(a_string_matching(new_jobseeker_session_path))
       end
     end
   end

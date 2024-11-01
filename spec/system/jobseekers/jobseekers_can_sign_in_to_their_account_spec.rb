@@ -1,94 +1,80 @@
 require "rails_helper"
-require "dfe/analytics/rspec/matchers"
-
-RSpec.shared_examples "a sign in attempt" do
-  it "triggers a `jobseeker_sign_in_attempt` event" do
-    sign_in_jobseeker(email: email, password: password)
-    expect(:jobseeker_sign_in_attempt).to have_been_enqueued_as_analytics_events
-  end
-end
 
 RSpec.describe "Jobseekers can sign in to their account" do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:expected_data) do
-    {
-      email_identifier: anonymised_form_of(reported_email),
-      success: successful_attempt?,
-      errors: sign_in_errors,
-    }
+  context "when signing in an existing jobseeker already linked to a one login account" do
+    let(:jobseeker) { create(:jobseeker) }
+
+    scenario "signs in the jobseeker and send them back to their applications page" do
+      sign_in_jobseeker_govuk_one_login(jobseeker, navigate: true)
+      expect(page.current_path).to eq(jobseekers_job_applications_path)
+      expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
+      expect(page).to have_link(text: I18n.t("nav.sign_out"))
+    end
   end
 
-  let(:reported_email) { nil }
+  context "when signing in a jobseeker that has not yet linked their account to a one login account" do
+    let(:jobseeker) { create(:jobseeker, govuk_one_login_id: nil) }
 
-  before do
-    visit root_path
-    within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
-    click_on I18n.t("buttons.sign_in_jobseeker")
-  end
-
-  context "when entering correct details" do
-    let(:email) { jobseeker.email }
-    let(:password) { jobseeker.password }
-    let(:successful_attempt?) { "true" }
-    let(:sign_in_errors) { nil }
-    let(:reported_email) { email }
-
-    it "signs in the jobseeker" do
-      sign_in_jobseeker(email: email, password: password)
-      expect(current_path).to eq(jobseeker_root_path)
+    scenario "signs in the jobseeker and send them back to the 'account found' landing page" do
+      sign_in_jobseeker_govuk_one_login(jobseeker, navigate: true)
+      expect(page.current_path).to eq(account_found_jobseekers_account_path)
+      expect(page).to have_css("h1", text: I18n.t("jobseekers.accounts.account_found.page_title"))
+      expect(page).to have_link(text: I18n.t("nav.sign_out"))
     end
 
-    include_examples "a sign in attempt"
-  end
+    context "when the user sign-in following a vacancy quick apply link" do
+      let(:jobseeker) { create(:jobseeker, govuk_one_login_id: nil) }
+      let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
-  context "when entering incorrect details" do
-    let(:successful_attempt?) { "false" }
-    let(:sign_in_errors) { anything }
+      scenario "the user is sent to the quick application page" do
+        visit new_jobseekers_job_job_application_path(vacancy.id)
+        expect(current_path).to eq(new_jobseeker_session_path)
 
-    context "when details are missing" do
-      let(:email) { "" }
-      let(:password) { "" }
-
-      it "does not sign in the jobseeker and displays an error message" do
-        sign_in_jobseeker(email: email, password: password)
-        expect(current_path).to eq(jobseeker_session_path)
-        expect(page).to have_content(I18n.t("devise.failure.blank"))
+        sign_in_jobseeker_govuk_one_login(jobseeker)
+        expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
+        expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.new.heading"))
+        expect(page).to have_css("p.govuk-notification-banner__heading", text: "Account found")
+        expect(page).to have_css("p.govuk-body", text: "We have found a teaching vacancies account using this email address.")
       end
-
-      include_examples "a sign in attempt"
-    end
-
-    context "when the account does not exist" do
-      let(:email) { "fake@example.net" }
-      let(:password) { jobseeker.password }
-
-      it "does not sign in the jobseeker and displays a general error message" do
-        sign_in_jobseeker(email: email, password: password)
-        expect(current_path).to eq(jobseeker_session_path)
-        expect(page).to have_content(I18n.t("devise.failure.invalid"))
-      end
-
-      include_examples "a sign in attempt"
-    end
-
-    context "when the password is incorrect" do
-      let(:email) { jobseeker.email }
-      let(:password) { "incorrect_password" }
-
-      it "does not sign in the jobseeker and displays a general error message" do
-        sign_in_jobseeker(email: email, password: password)
-        expect(current_path).to eq(jobseeker_session_path)
-        expect(page).to have_content(I18n.t("devise.failure.invalid"))
-      end
-
-      include_examples "a sign in attempt"
     end
   end
 
-  context "when entering incorrect details followed by correct detail" do
-    let(:email) { jobseeker.email }
-    let(:password) { "incorrect_password" }
+  context "when signing in a jobseeker that hasn't an account in the service" do
+    let(:jobseeker) { build_stubbed(:jobseeker, govuk_one_login_id: nil) }
 
-    include_examples "a sign in attempt"
+    scenario "creates the account, signs in the jobseeker and sends them back to their new account landing page" do
+      expect { sign_in_jobseeker_govuk_one_login(jobseeker, navigate: true) }.to change(Jobseeker, :count).by(1)
+      expect(page.current_path).to eq(account_not_found_jobseekers_account_path)
+      expect(page).to have_css("h1", text: I18n.t("jobseekers.accounts.account_not_found.page_title"))
+      expect(page).to have_link(text: I18n.t("nav.sign_out"))
+    end
+  end
+
+  context "when there is an error signing in" do
+    let(:jobseeker) { create(:jobseeker) }
+
+    scenario "does not sign in the jobseeker and displays an error message" do
+      sign_in_jobseeker_govuk_one_login(jobseeker, navigate: true, error: true)
+      expect(page.current_path).to eq(root_path)
+      expect(page).to have_text(I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error"))
+      expect(page).to have_link(text: I18n.t("nav.sign_in"))
+    end
+  end
+
+  context "when the user sign-in following a vacancy quick apply link" do
+    let(:jobseeker) { create(:jobseeker) }
+    let(:old_vacancy) { create(:vacancy, organisations: [build(:school)]) }
+    let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
+
+    before { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: old_vacancy) }
+
+    scenario "the user is sent to the quick application page" do
+      visit new_jobseekers_job_job_application_path(vacancy.id)
+      expect(current_path).to eq(new_jobseeker_session_path)
+
+      sign_in_jobseeker_govuk_one_login(jobseeker)
+      expect(current_path).to eq(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+      expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.new_quick_apply.heading"))
+    end
   end
 end

@@ -43,7 +43,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
           it "starts a job application after signing in" do
             expect(current_path).not_to eq(new_jobseekers_job_job_application_path(vacancy.id))
 
-            sign_in_jobseeker
+            sign_in_jobseeker_govuk_one_login(jobseeker)
 
             expect(current_path).to eq(new_jobseekers_job_job_application_path(vacancy.id))
             expect(page).to have_css(".govuk-caption-l", text: vacancy.job_title)

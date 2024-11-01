@@ -1,5 +1,10 @@
 - content_for :page_title_prefix, t(".page_title")
 
+= govuk_notification_banner title_text: "Important", classes: "govuk-notification-banner govuk-!-margin-top-0 govuk-!-margin-bottom-5" do |banner|
+  - banner.with_heading(text: t(".one_login_banner.header"))
+  p.govuk-body = t(".one_login_banner.paragraph1")
+  p.govuk-body = t(".one_login_banner.paragraph2", link: govuk_link_to(t(".one_login_banner.transfer_profile_link_text"), new_jobseekers_request_account_transfer_email_path)).html_safe
+
 - if current_jobseeker.job_applications.any?
   - content_for :skip_links do
     = govuk_skip_link(href: "#applications-results", text: t(".skip_link"))

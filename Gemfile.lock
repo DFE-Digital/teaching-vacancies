@@ -797,6 +797,7 @@ DEPENDENCIES
   ipaddr
   jbuilder
   jsbundling-rails
+  jwt
   kramdown
   launchy (~> 3.0)
   listen

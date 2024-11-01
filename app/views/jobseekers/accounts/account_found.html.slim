@@ -1,0 +1,10 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-l = t(".page_title")
+
+    p.govuk-body = t(".email_found")
+    p.govuk-body = t(".account_information_saved")
+
+    = govuk_button_link_to t(".search_for_jobs_button_text"), jobs_path

@@ -321,8 +321,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_29_111208) do
     t.text "last_sign_in_ip_ciphertext"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
+    t.string "govuk_one_login_id"
     t.index ["confirmation_token"], name: "index_jobseekers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
+    t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
     t.index ["reset_password_token"], name: "index_jobseekers_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_jobseekers_on_unlock_token", unique: true
   end

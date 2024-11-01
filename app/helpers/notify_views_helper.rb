@@ -12,8 +12,8 @@ module NotifyViewsHelper
     notify_link(url)
   end
 
-  def email_confirmation_url(token)
-    url = jobseeker_confirmation_url(confirmation_token: token, **utm_params)
+  def consume_jobseekers_login_key_link(token)
+    url = consume_jobseekers_login_key_url(token)
     notify_link(url)
   end
 
@@ -74,11 +74,6 @@ module NotifyViewsHelper
     notify_link(url, t(".view_applications", count: vacancy.job_applications.submitted_yesterday.count, job_title: vacancy.job_title))
   end
 
-  def reset_password_link(token)
-    url = edit_jobseeker_password_url(reset_password_token: token, **utm_params)
-    notify_link(url, t(".link"))
-  end
-
   def show_link(vacancy)
     url = job_url(vacancy, **utm_params)
     if vacancy.organisations.many?
@@ -101,11 +96,6 @@ module NotifyViewsHelper
   def support_user_fallback_sign_in_link(signed_id)
     url = support_users_fallback_session_url(signed_id)
     notify_link(url)
-  end
-
-  def unlock_account_link(token)
-    url = jobseeker_unlock_url(unlock_token: token, **utm_params)
-    notify_link(url, t(".link"))
   end
 
   def unsubscribe_link(subscription)
