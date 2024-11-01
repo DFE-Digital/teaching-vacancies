@@ -110,11 +110,6 @@ send_unapplied_saved_vacancies_email:
   class: 'SendEmailForUnappliedSavedVacanciesJob'
   queue: default
 
-send_account_confirmation_reminder_email:
-  cron: '0 9 * * *'
-  class: 'SendAccountConfirmationReminderEmailJob'
-  queue: default
-
 send_job_application_data_expiry_notification:
   cron: '0 6 * * *'
   class: 'SendJobApplicationDataExpiryNotifierJob'
