@@ -238,14 +238,28 @@ RSpec.describe "Jobseekers can complete a job application" do
             expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religion_details_form.attributes.baptism_certificate.blank"))
           end
 
-          it "allows the certificate to be uploaded" do
-            page.attach_file("jobseekers-job-application-religion-details-form-baptism-certificate-field", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
+          context "with an uploaded baptism cerificate" do
+            before do
+              page.attach_file("jobseekers-job-application-religion-details-form-baptism-certificate-field", Rails.root.join("spec/fixtures/files/blank_job_spec.pdf"))
 
-            allow_any_instance_of(FormFileValidator).to receive(:virus_free?).and_return(true)
-            click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
-            complete_from_references_page
-            expect(page).to have_content("blank_job_spec.pdf")
+              allow_any_instance_of(FormFileValidator).to receive(:virus_free?).and_return(true)
+              click_on I18n.t("buttons.save_and_continue")
+            end
+
+            it "allows the certificate to be uploaded" do
+              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
+              complete_from_references_page
+              expect(page).to have_content("blank_job_spec.pdf")
+            end
+
+            it "can be submitted as an application" do
+              complete_from_references_page
+              check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
+              check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
+              click_on I18n.t("buttons.submit_application")
+              click_on "View your applications"
+              expect(page).to have_content(vacancy.job_title)
+            end
           end
         end
 
