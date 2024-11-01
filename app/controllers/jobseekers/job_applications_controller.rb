@@ -128,6 +128,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     attributes = job_application.attributes.slice(*step_form.fields.map(&:to_s))
     attributes.merge!(trn_params) if step == :professional_status
+    attributes.merge!(baptism_certificate: job_application.baptism_certificate) if step == :religion_details
 
     form = step_form.new(attributes)
 

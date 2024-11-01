@@ -45,7 +45,7 @@
         - when "baptism_certificate"
           - summary_list.with_row do |row|
             - row.with_key text: t("jobseekers.job_applications.review.religious_information.baptism_certificate")
-            - row.with_value text: job_application.baptism_certificate.filename
+            - row.with_value text: govuk_link_to("#{job_application.baptism_certificate.filename}  (#{number_to_human_size(job_application.baptism_certificate.byte_size)})", job_application.baptism_certificate, download: "true")
 
         - when "baptism_date"
           - summary_list.with_row do |row|
