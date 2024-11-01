@@ -186,9 +186,6 @@ en:
         religion_details:
           heading: Religious information
           title: Religious information — Application
-          place_of_worship:
-            text: Address of place of worship (optional)
-            hint: For example, Westminster Abbey, Dean's Yard, London.
           referee_type:
             text: Can you provide a religious referee?
             hints_html: >-

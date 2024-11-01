@@ -1,4 +1,4 @@
-# require "spec_helper"
+require "spec_helper"
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
@@ -32,6 +32,7 @@ Capybara.register_driver :chrome_headless do |app|
     Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
   end
 end
+
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox disable-gpu window-size=1400,1800])
 

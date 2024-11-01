@@ -165,7 +165,7 @@ RSpec.describe "Jobseekers can complete a job application" do
         click_on I18n.t("buttons.save_and_continue")
       end
 
-      it "produces the correct errors", :js do
+      it "produces the correct errors" do
         expect(page).to have_content(I18n.t("helpers.hint.jobseekers_job_application_religion_details_form.faith"))
         validates_step_complete
         expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religion_details_form.attributes.faith.blank"))
@@ -218,6 +218,10 @@ RSpec.describe "Jobseekers can complete a job application" do
               expect(page).to have_content(referee_phone)
             end
 
+            it "contains the entered information" do
+              expect(job_application.reload).to have_attributes(religious_reference_type: "referee")
+            end
+
             it "can be submitted as an application" do
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
@@ -249,7 +253,7 @@ RSpec.describe "Jobseekers can complete a job application" do
             it "allows the certificate to be uploaded" do
               expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
               complete_from_references_page
-              expect(page).to have_content("blank_job_spec.pdf")
+              expect(page).to have_content("blank_baptism_cert.pdf")
             end
 
             it "can be submitted as an application" do

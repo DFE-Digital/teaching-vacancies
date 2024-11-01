@@ -1,10 +1,11 @@
 class JobApplicationReviewComponent < ReviewComponent
   renders_many(:sections, lambda do |section_name, **kwargs|
-    if section_name == :religious_information
+    if section_name == :following_religion
       ReligiousInformationSection.new(@job_application,
+                                      name: section_name,
                                       allow_edit: @allow_edit)
     else
-      JobApplicationReviewComponent::Section.new(
+      Section.new(
         @job_application,
         allow_edit: @allow_edit,
         name: section_name,

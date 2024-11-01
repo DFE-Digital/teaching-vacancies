@@ -1,8 +1,8 @@
-- r.with_section :religious_information
+- r.with_section :following_religion
   p.govuk-body = t("jobseekers.job_applications.review.religious_information.heading")
 
   = govuk_summary_list do |summary_list|
-    - if job_application.following_religion.in? [true,false]
+    - if job_application.following_religion.in? [true, false]
       - summary_list.with_row do |row|
         - row.with_key text: t("helpers.legend.jobseekers_job_application_following_religion_form.following_religion")
         - row.with_value text: job_application.following_religion ? t("helpers.label.jobseekers_job_application_following_religion_form.following_religion_options.yes") : t("helpers.label.jobseekers_job_application_following_religion_form.following_religion_options.no")

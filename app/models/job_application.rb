@@ -27,6 +27,8 @@ class JobApplication < ApplicationRecord
     training_and_cpds: 9,
     employment_history: 3,
     personal_statement: 4,
+    following_religion: 10,
+    religion_details: 11,
     references: 5,
     equal_opportunities: 6,
     ask_for_support: 7,
