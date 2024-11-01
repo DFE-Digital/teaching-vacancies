@@ -621,6 +621,10 @@ en:
               incomplete: Complete your qualifications
             references:
               incomplete: Complete your references
+            following_religion:
+              incomplete: Complete your religious information
+            religion_details:
+              incomplete: Complete your religious information
             training_and_cpds:
               incomplete: Complete your training and CPD
         jobseekers/job_application/withdraw_form:

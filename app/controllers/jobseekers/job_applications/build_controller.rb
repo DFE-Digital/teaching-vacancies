@@ -20,7 +20,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
       job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
       update_or_create_jobseeker_profile! if step == :professional_status
 
-      return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if redirect_to_review? && step_process.last_of_group?
+      if redirect_to_review? && (step_process.last_of_group? || (step == :following_religion && !job_application.following_religion))
+        return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved")
+      end
 
       render_wizard job_application
     else

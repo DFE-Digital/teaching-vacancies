@@ -33,8 +33,12 @@ class Jobseekers::JobApplication::ReligionDetailsForm < Jobseekers::JobApplicati
     :document
   end
 
+  def valid_file_types
+    %i[PDF DOC DOCX]
+  end
+
   def file_size_limit
-    5.megabytes
+    10.megabytes
   end
 
   def content_types_allowed
