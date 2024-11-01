@@ -10,7 +10,8 @@
         - navigation.with_anchor text: t(".qualifications.heading"), href: "#qualifications"
         - navigation.with_anchor text: t(".employment_history.heading"), href: "#employment_history"
         - navigation.with_anchor text: t(".personal_statement.heading"), href: "#personal_statement"
-        - navigation.with_anchor text: t(".religious_information.heading"), href: "#following_religion"
+        - if vacancy.religion_type
+          - navigation.with_anchor text: t(".religious_information.heading"), href: "#following_religion"
         - navigation.with_anchor text: t(".references.heading"), href: "#references"
         - navigation.with_anchor text: t(".ask_for_support.heading"), href: "#ask_for_support"
         - navigation.with_anchor text: t(".declarations.heading"), href: "#declarations"
