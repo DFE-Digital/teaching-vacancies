@@ -148,12 +148,37 @@ module JobApplicationsHelper
     end
   end
 
+  def job_application_sample(vacancy)
+    JobApplication.new(job_application_attributes.merge(vacancy: vacancy))
+  end
+
+  def religious_job_application_sample(vacancy)
+    JobApplication.new(job_application_attributes.merge(
+                         religious_reference_type: "referee",
+                         religious_referee_name: Faker::Name.name,
+                         religious_referee_address: Faker::Address.full_address,
+                         religious_referee_role: "Priest",
+                         religious_referee_email: Faker::Internet.email,
+                         religious_referee_phone: Faker::PhoneNumber.phone_number,
+                         vacancy: vacancy,
+                       ))
+  end
+
+  def catholic_job_application_sample(vacancy)
+    JobApplication.new(job_application_attributes.merge(
+                         religious_reference_type: "baptism_date",
+                         baptism_address: Faker::Address.full_address,
+                         baptism_date: Faker::Date.between(from: Date.new(1990, 1, 1), to: Date.new(2004, 1, 1)),
+                         vacancy: vacancy,
+                       ))
+  end
+
   # These are only used to generate example data
   POSSIBLE_DEGREE_GRADES = %w[2.1 2.2 Honours].freeze
   POSSIBLE_OTHER_GRADES = %w[Pass Merit Distinction].freeze
 
-  def job_application_sample(vacancy) # rubocop: disable Metrics/MethodLength, Metrics/AbcSize
-    JobApplication.new(
+  def job_application_attributes # rubocop: disable Metrics/MethodLength, Metrics/AbcSize
+    {
       first_name: "Jane",
       last_name: "Smith",
       national_insurance_number: "QQ 12 34 56 C",
@@ -248,7 +273,6 @@ module JobApplicationsHelper
             end
           end
         end,
-      vacancy: vacancy,
-    )
+    }
   end
 end
