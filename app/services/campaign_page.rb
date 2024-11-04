@@ -1,5 +1,5 @@
 class CampaignPage
-  attr_reader :utm_content_code, :criteria, :banner_image
+  attr_reader :utm_content_code, :criteria, :banner_image, :hidden_filters
 
   def self.exists?(utm_content)
     Rails.application.config.campaign_pages.key?(utm_content.to_sym)
@@ -16,6 +16,7 @@ class CampaignPage
     @utm_content_code = utm_content_code.to_s
     @banner_image = Rails.application.config.campaign_pages[utm_content_code.to_sym][:banner_image]
     @criteria = criteria
+    @hidden_filters = criteria[:hidden_filters] || []
   end
 
   def banner_title(name, subject = nil)

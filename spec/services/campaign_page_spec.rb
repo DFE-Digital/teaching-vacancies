@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe CampaignPage do
-  subject { described_class["FAKE1+CAMPAIGN"] }
+  subject(:campaign_page) { described_class["FAKE1+CAMPAIGN"] }
 
   let(:search) { instance_double(Search::VacancySearch, total_count: 42) }
 
@@ -24,7 +24,7 @@ RSpec.describe CampaignPage do
       expect(described_class["FAKE1+CAMPAIGN"].banner_image)
         .to eq("campaigns/secondary_not_too_late.jpg")
       expect(described_class["FAKE1+CAMPAIGN"].criteria)
-        .to eq({ radius: 15, teaching_job_roles: ["teacher"], working_patterns: %w[part_time], subjects: %w[Potions Sorcery] })
+        .to eq({ radius: 15, teaching_job_roles: %w[teacher], working_patterns: %w[part_time], subjects: %w[Potions Sorcery] })
     end
 
     it "raises an error if no landing page with the given slug has been configured" do
@@ -35,7 +35,7 @@ RSpec.describe CampaignPage do
 
   describe "banner_title" do
     it "returns the banner title" do
-      expect(subject.banner_title("Severus")).to eq("Severus, this is a fake campaign")
+      expect(campaign_page.banner_title("Severus")).to eq("Severus, this is a fake campaign")
     end
   end
 end

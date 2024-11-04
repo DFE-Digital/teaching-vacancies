@@ -27,7 +27,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
 
   .govuk-grid-row
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
-      = render "vacancies/search/filters", f: f, form: @form, vacancies_search: @vacancies_search
+      = render "vacancies/search/filters", f: f, form: @form, vacancies_search: @vacancies_search, hidden_filters: @campaign_page&.hidden_filters || []
       / When the user refines their search, this helps us figure out if they've changed the
       / keyword(s), or just adjusted the filters
       = f.hidden_field :previous_keyword, value: @vacancies_search.keyword
