@@ -1,17 +1,37 @@
 en:
   jobseekers:
+    login_keys:
+      new:
+        notice: >-
+          There are some technical problems with our sign in page.
+          We’re working on fixing it, but in the meantime you can still access your account.
     accounts:
       header:
         accessible_signed_in_as: You are signed in as
       show:
         close_account: Close account
+        close_account_explanation: If you do not want to use your Teaching Vacancies account any more you can close your account.
         delete_account: Delete your account
         page_title: Your account
+        change_details_link_text: Change your sign in details in your GOV.UK One Login.
         summary_list:
           change: Change
           email: Email address
           password: Account password
           password_placeholder: "**************"
+        data_to_change_in_govuk_one_login:
+          email: email address
+          password: password
+          security_codes: how you get your security codes to sign in
+        change_sign_in:
+          heading: Change your sign in details
+          description: You can use your GOV.UK One Login to sign in to Teaching Vacancies.
+          change_details_description: "You can change these details in your GOV.UK One Login:"
+        find_account_details:
+          heading: Can't find your account details?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your account details will not automatically be saved.
+          paragraph2: You can request to %{link}
+          link_text: transfer your existing account information.
       confirmation:
         page_title: Account created
         apply_for_jobs_link_text: search and apply for jobs
@@ -26,6 +46,20 @@ en:
           prefill: apply for roles more quickly by pre-filling your information
           share_your_qualifications: share your qualifications and experience with schools
           specify_jobs: specify the types of jobs you’re looking for
+      account_found:
+        page_title: Account found
+        email_found: We've found a Teaching Vacancies account using this email address.
+        account_information_saved: Your account information including past applications has been saved.
+        search_for_jobs_button_text: Search for jobs
+      account_not_found:
+        search_and_apply: You can now search and apply for jobs.
+        page_title: You have created a new Teaching Vacancies account
+        continue_to_profile: If this is correct, you can %{link}
+        profile_link_text: continue to your profile.
+        transfer_account: If you have a Teaching Vacancies account using a different email address, you can transfer your existing account information.
+        search_for_jobs_button_text: Search for jobs
+        secondary_header: If you already had a Teaching Vacancies account
+        transfer_account_button_text: Transfer account
     account_feedbacks:
       create:
         success: Thank you for your feedback
@@ -34,19 +68,6 @@ en:
     account_survey:
       survey_link_text: Give feedback
       survey_text: Take our quick survey about your experience of using Teaching Vacancies
-    confirmations:
-      already_confirmed:
-        description: Your email address has already been confirmed.
-        title: Email already confirmed
-      new_with_email:
-        description: We need to email another link so you can activate your account.
-        title: Resend confirmation
-      new_hidden_email:
-        description: We need to email another link to %{email} so you can activate your account.
-        title: Link has expired
-      show:
-        confirm: Confirm
-        title: Confirm your email address
     employments:
       break: Gap in work history
       current_role: Is this your current role?
@@ -58,9 +79,8 @@ en:
       reason_for_leaving: Reason for leaving
       gap_with_duration: You have a gap in your work history (%{duration})
     forced_login:
-      create_account: create an account
-      job_application_html: You need to login or %{account_creation_link} with Teaching Vacancies to apply for this job.
-      saved_job_html: You need to login or %{account_creation_link} with Teaching Vacancies to save this job.
+      job_application_html: You need to login or create an account with Teaching Vacancies to apply for this job.
+      saved_job_html: You need to login or create an account with Teaching Vacancies to save this job.
     job_alert_feedbacks:
       edit:
         change_alert_link: Change your job alert criteria
@@ -111,7 +131,7 @@ en:
           title: Declarations — Application
           dbs_link_text: Disclosure and Barring Service (DBS) check
           description1: >-
-            You'll need to complete an enhanced %{link_text} if you're successful in this role. If you're outside the UK, you'll need to get a 
+            You'll need to complete an enhanced %{link_text} if you're successful in this role. If you're outside the UK, you'll need to get a
             criminal record check from your home country.
           description2: It's a criminal offence if you're barred by the DBS or court orders to apply for a role working with children.
           description3: Not all convictions or police cautions on a criminal record will stop you from working in a school. But you will have to declare any convictions.
@@ -130,7 +150,7 @@ en:
             jobs_bullets:
               - all paid roles
               - voluntary work, if relevant to your application
-            work_experience_advice: If you’re applying for a teaching job, you should include teaching and other experience, if you have it. 
+            work_experience_advice: If you’re applying for a teaching job, you should include teaching and other experience, if you have it.
             gaps_advice: "You’ll also need to explain any gaps in your work history. This includes any gaps between:"
             gaps_bullets:
               - school and university
@@ -302,6 +322,12 @@ en:
         page_title_with_count: Applications (%{count})
         skip_link: Skip to my job applications
         view_application: View application
+        one_login_banner:
+          header: Can't see your applications?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
+          paragraph2: You can request to %{link}
+          transfer_profile_link_text: transfer your existing profile.
+
       new:
         assistance:
           content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
@@ -328,6 +354,16 @@ en:
           into a %{profile_link} so schools can contact you about relevant roles.
         profile_link_text: candidate profile
         title: Application
+        one_login_banner:
+          account_found:
+            title: Account found
+            paragraph1: We have found a teaching vacancies account using this email address.
+            paragraph2: Your account information including past applications has been saved.
+          account_not_found:
+            title: New account created
+            paragraph1: You've made a new Teaching Vacancies account.
+            paragraph2: If you already have an account using a different email address, you can %{link}
+            transfer_account_link_text: transfer your account information.
       about_your_application:
         title: About your application
         warning:
@@ -339,6 +375,10 @@ en:
           search_for_jobs: Search for other jobs
           continue: Continue application
       new_quick_apply:
+        one_login_banner:
+          title: Account found
+          paragraph1: We have found a teaching vacancies account using this email address.
+          paragraph2: Your account information including past applications has been saved.
         assistance:
           content_html: You can find out more about our %{privacy_html} and our %{terms_html}.
           heading: Terms & Conditions
@@ -522,21 +562,6 @@ en:
         title: Application submitted – Application
       withdraw:
         success: You have withdrawn your application for %{job_title}
-    passwords:
-      check_your_email_password:
-        description: We have sent you an email with instructions on how to reset your password.
-        having_trouble_html: Still having trouble? %{request_support_link}.
-        request_support_link: Request support
-        title: Check your email
-      edit:
-        new_password: New password
-        title: Reset your password
-      expired_token:
-        description: The link has expired. You need to request that a new link is sent to your email address (%{email}).
-        title: Your request is no longer valid
-      new:
-        description: Enter your email address and we will send you a link so that you can reset your password.
-        title: Reset your password
     registrations:
       check_your_email:
         description: You should have received a link by email. Follow the link to confirm your email address. The link will expire in 24 hours.
@@ -549,12 +574,10 @@ en:
         resend_link: resend the email
         restart_link: provide another email address
         title: Check your email
-        resent_email_confirmation: Email has been resent
       confirm_destroy:
         feedback_title: Tell us why you are closing your account
         page_title: Close account
-        page_description_1: If you do not want to use your Teaching Vacancies account any more you can close your account.
-        page_description_2: You will no longer receive any job alerts you have subscribed to, and any job applications you have made will be withdrawn.
+        page_description: You will no longer receive any job alerts you have subscribed to, and any job applications you have made will be withdrawn.
       destroy:
         success: Your account has been closed. If you want to reactivate your account at any point, you can just sign back in with your email address and current password.
       edit:
@@ -566,21 +589,21 @@ en:
           new_email: New email address
           title: Update email address
       edit_password:
-        current_password: 
+        current_password:
           label: Old password
-          show: 
+          show:
             label: Show current password
             announcement: Your current password is visible
-          hide: 
+          hide:
             label: Hide current password
             announcement: Your current password is hidden
         description: Password reset for %{email}
-        new_password: 
+        new_password:
           label: New password
-          show: 
+          show:
             label: Show new password
             announcement: Your new password is visible
-          hide: 
+          hide:
             label: Hide new password
             announcement: Your new password is hidden
         title: Change password
@@ -607,6 +630,12 @@ en:
         view: View application
         zero_saved_jobs_body_html: '%{link_to} and start saving jobs you may want to review and apply for later.'
         zero_saved_jobs_title: You have no saved jobs
+        one_login_banner:
+          header: Can't see your saved jobs?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
+          paragraph2: You can request to %{link}
+          transfer_profile_link_text: transfer your existing profile.
+
       save: Save this job for later
       saved: Job saved
       success_html: >-
@@ -753,6 +782,11 @@ en:
         turn_on_profile_text: When you turn on your profile, school and trust hiring staff will be able to view your details and contact you by email. You can %{link_text}
         turn_on_profile_link_text: hide your profile from specific schools or trusts.
         turn_on_profile: Turn on profile
+        one_login_banner:
+          header: Can't see your profile details?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
+          paragraph2: You can request to %{link}
+          transfer_profile_link_text: transfer your existing profile.
       confirm_toggle:
         confirm_turn_off: Confirm that you want to turn off your profile
         confirm_turn_on: Confirm that you want to turn on your profile
@@ -882,14 +916,18 @@ en:
           content_html: "%{link_to} to save and apply for jobs you are interested in."
           heading: Don't have an account yet?
           link: Create an account
-        title: Sign in
-      locked:
-        description: You have been locked out of your account because you have made too many attempts to log in.
-        having_trouble_html: Still having trouble? %{request_support_link}.
-        heading: Too many password attempts
-        instructions: We have sent an email to your registered email address with instructions on how to unlock your account.
-        request_support_link: Request support
-        title: Too many password attempts
+        title: Jobseeker sign in
+        banner:
+          header: How you sign in has changed
+          body: Sign in to or create a GOV.UK One Login account to save and apply for jobs on Teaching Vacancies.
+        govuk_one_log_in:
+          paragraph1: Create your GOV.UK One Login account using the same email address as your Teaching Vacancies account to automatically save your account details.
+          paragraph2: If you use a different email address, you'll be able to transfer your account details after signing in.
+          how_to_find_registered_email:
+            summary: How to find your registered email address
+            body: We sent a message to the email address associated with your Teaching Vacancies account informing you about this change.
+        fallback:
+          description: Enter your email below and we will send you a link that will take you straight into your account.
     subscriptions:
       index:
         button_create: Create a job alert
@@ -908,6 +946,11 @@ en:
         skip_link: Skip to my job alerts
         zero_subscriptions_body_html: '%{link_to} to be made aware of future listings.'
         zero_subscriptions_title: You have no job alerts set up
+        one_login_banner:
+          header: Can't see your job alerts?
+          paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your existing profile will not automatically be saved.
+          paragraph2: You can request to %{link}
+          transfer_profile_link_text: transfer your existing profile.
       feedbacks:
         relevance_feedbacks:
           submit_feedback:
@@ -929,6 +972,7 @@ en:
         hint: If you have an account associated with this email address, we'll send you an email to verify your details.
       errors:
         recent_code_request: Please wait 1 minute before requesting another code.
+      success: Email resent
     account_transfers:
       new:
         page_title: Confirm account details transfer
@@ -939,23 +983,20 @@ en:
         email_sent: "Email sent to: %{email}"
         label: Enter the 6 digit verification code
         confirm: Confirm account transfer
-        help_with_code: Help with the code
+        help_with_code: Problems with the code?
         helpful_links: We can %{resend_code_link} or you can %{different_email_link}.
         resend_code_link_text: send the code again
         different_email_link_text: use a different email address
+      create:
+        success: Your account details have been transferred successfully!
+        failure: Account transfer failed. Please try again.
       errors:
-        account_merge_confirmation_code: 
+        account_merge_confirmation_code:
           confirmation_code_mismatch: Confirmation code does not match.
           confirmation_code_expired: Confirmation code has expired. Please request a new code.
-    unlocks:
-      new:
-        description: This link has already been used or is incorrect. If you still want to unlock your Teaching Vacancies account enter your email below.
-        form_submit: Request a new link
-        heading: Request a new link to unlock your account
-        title: Request a new link to unlock your account
-      show:
-        confirm: Confirm
-        title: Unlock your account
+    govuk_one_login_callbacks:
+      openid_connect:
+        error: "There was a problem signing in. Please try again."
     unsubscribe_feedbacks:
       new:
         confirmation: You will no longer receive updates for this job alert.
@@ -971,3 +1012,14 @@ en:
         new_search_html: You can create a new job alert by starting a %{link}
         new_search_link: new search
         title: Feedback received
+    temp_login:
+      email:
+        body: Click the link below to sign in to the Teaching Vacancies service. This link can only be used once.
+        heading: Sign in to Teaching Vacancies
+        subject: Sign in to Teaching Vacancies
+      heading: Temporary login
+      denial:
+        title: Sign in unsuccessful
+        expired_html: The login link you used has expired. Please %{try_again}.
+        no_key_html: The login link you used was not recognised. Please %{try_again}.
+

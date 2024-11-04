@@ -6,7 +6,7 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 138
+# Offense count: 132
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: link_or_button, strict
 Capybara/ClickLinkOrButtonStyle:
@@ -23,11 +23,8 @@ Capybara/ClickLinkOrButtonStyle:
     - 'spec/system/jobseekers/jobseekers_can_manage_their_job_alerts_from_the_dashboard_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_search_for_jobs_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_search_for_schools_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_sign_up_to_an_account_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_unlock_their_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_update_their_profile_from_job_applications_spec.rb'
     - 'spec/system/other/general_feedback_spec.rb'
-    - 'spec/system/other/users_are_redirected_after_sign_in_spec.rb'
     - 'spec/system/other/users_can_only_be_signed_in_to_one_type_of_account_spec.rb'
     - 'spec/system/publishers/publishers_can_contact_jobseekers_from_their_profile_spec.rb'
     - 'spec/system/publishers/publishers_can_manage_a_profile_spec.rb'
@@ -39,7 +36,7 @@ Capybara/ClickLinkOrButtonStyle:
     - 'spec/system/support_users/feedback_spec.rb'
     - 'spec/system/support_users/service_data_spec.rb'
 
-# Offense count: 343
+# Offense count: 326
 # This cop supports safe autocorrection (--autocorrect).
 Capybara/CurrentPathExpectation:
   Exclude:
@@ -49,7 +46,6 @@ Capybara/CurrentPathExpectation:
     - 'spec/system/jobseekers/jobseekers_can_add_qualifications_to_their_job_application_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_add_qualifications_to_their_profile_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_add_references_to_their_job_application_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_change_email_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_change_password_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_close_and_reactivate_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_complete_a_job_application_spec.rb'
@@ -61,7 +57,6 @@ Capybara/CurrentPathExpectation:
     - 'spec/system/jobseekers/jobseekers_can_give_application_feedback_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_give_job_alert_feedback_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_manage_a_profile_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_manage_their_account_details_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_manage_their_job_alerts_from_the_dashboard_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_manage_their_job_alerts_from_the_email_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_manage_their_job_applications_spec.rb'
@@ -71,16 +66,13 @@ Capybara/CurrentPathExpectation:
     - 'spec/system/jobseekers/jobseekers_can_search_from_home_page_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_sign_in_to_their_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_sign_out_from_their_account_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_sign_up_to_an_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_start_a_job_application_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_submit_a_job_application_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_unlock_their_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_unsubscribe_from_subscriptions_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_view_all_the_jobs_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_view_an_organisation_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_withdraw_a_job_application_spec.rb'
     - 'spec/system/jobseekers/jobseekers_session_timeout_spec.rb'
-    - 'spec/system/other/users_are_redirected_after_sign_in_spec.rb'
     - 'spec/system/other/users_can_only_be_signed_in_to_one_type_of_account_spec.rb'
     - 'spec/system/other/users_can_view_help_guides_spec.rb'
     - 'spec/system/publishers/publishers_are_reminded_of_application_functionality_spec.rb'
@@ -146,7 +138,6 @@ Capybara/NegationMatcher:
     - 'spec/system/jobseekers/jobseekers_can_search_for_jobs_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_search_for_schools_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_see_a_map_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_sign_up_to_an_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_submit_a_job_application_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_transfer_data_from_old_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_update_their_profile_from_job_applications_spec.rb'
@@ -329,9 +320,9 @@ Metrics/BlockLength:
 # Offense count: 19
 # Configuration parameters: CountComments, CountAsOne.
 Metrics/ClassLength:
-  Max: 179
+  Max: 188
 
-# Offense count: 93
+# Offense count: 91
 RSpec/AnyInstance:
   Exclude:
     - 'spec/controllers/jobseekers/subscriptions_controller_spec.rb'
@@ -370,11 +361,9 @@ RSpec/AnyInstance:
     - 'spec/system/jobseekers/jobseekers_can_create_a_job_alert_from_the_dashboard_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_give_job_alert_feedback_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_search_for_jobs_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_sign_up_to_an_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_view_an_organisation_spec.rb'
     - 'spec/system/other/general_feedback_spec.rb'
     - 'spec/system/other/get_help_spec.rb'
-    - 'spec/system/other/users_are_redirected_after_sign_in_spec.rb'
     - 'spec/system/publishers/publishers_can_delete_vacancies_spec.rb'
     - 'spec/system/publishers/publishers_can_edit_a_published_vacancy_as_a_school_spec.rb'
     - 'spec/system/publishers/publishers_can_manage_a_profile_spec.rb'
@@ -531,7 +520,7 @@ RSpec/EmptyLineAfterFinalLet:
     - 'spec/services/vacancies/import/sources/ark_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_update_their_profile_from_job_applications_spec.rb'
 
-# Offense count: 14
+# Offense count: 10
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowConsecutiveOneLiners.
 RSpec/EmptyLineAfterHook:
@@ -539,7 +528,6 @@ RSpec/EmptyLineAfterHook:
     - 'spec/form_models/publishers/job_listing/about_the_role_form_spec.rb'
     - 'spec/form_models/publishers/job_listing/contact_details_form_spec.rb'
     - 'spec/lib/dfe_sign_in/api/request_spec.rb'
-    - 'spec/models/jobseeker_spec.rb'
     - 'spec/system/support_users/feedback_spec.rb'
 
 # Offense count: 35
@@ -589,7 +577,7 @@ RSpec/ExampleWording:
     - 'spec/system/other/users_can_view_the_sub_navigation_spec.rb'
     - 'spec/system/publishers/publishers_can_search_for_jobseeker_profiles_spec.rb'
 
-# Offense count: 12
+# Offense count: 11
 # This cop supports safe autocorrection (--autocorrect).
 RSpec/ExcessiveDocstringSpacing:
   Exclude:
@@ -600,7 +588,6 @@ RSpec/ExcessiveDocstringSpacing:
     - 'spec/services/search/school_search_spec.rb'
     - 'spec/services/search/vacancy_search_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_see_a_map_spec.rb'
-    - 'spec/system/other/users_are_redirected_after_sign_in_spec.rb'
     - 'spec/system/publishers/publishers_can_manage_job_applications_for_a_vacancy_spec.rb'
 
 # Offense count: 15
@@ -610,7 +597,7 @@ RSpec/ExpectActual:
     - 'spec/system/jobseekers/jobseekers_can_search_for_jobs_spec.rb'
     - 'spec/system/publishers/publishers_can_manage_job_applications_for_a_vacancy_spec.rb'
 
-# Offense count: 64
+# Offense count: 59
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: method_call, block
@@ -634,14 +621,11 @@ RSpec/ExpectChange:
     - 'spec/requests/subscriptions_spec.rb'
     - 'spec/support/matchers/have_delivered_notification.rb'
     - 'spec/system/jobseekers/jobseeker_can_create_job_alert_from_subscription_v2_page_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_change_email_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_create_a_job_alert_from_a_mailing_campaign_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_create_a_job_alert_from_a_search_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_create_a_job_alert_from_the_dashboard_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_sign_up_to_an_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_start_a_job_application_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_submit_a_job_application_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_unlock_their_account_spec.rb'
     - 'spec/system/publishers/publishers_can_provide_feedback_on_expired_vacancies_via_prompt_email_spec.rb'
     - 'spec/system/publishers/publishers_can_unsubscribe_from_expired_vacancy_feedback_prompt_emails_spec.rb'
     - 'spec/system/support_users/fallback_sign_in_spec.rb'
@@ -813,7 +797,7 @@ RSpec/LetBeforeExamples:
   Exclude:
     - 'spec/system/jobseekers/jobseekers_can_apply_for_a_vacancy_spec.rb'
 
-# Offense count: 124
+# Offense count: 122
 RSpec/LetSetup:
   Exclude:
     - 'spec/components/dashboard_component_spec.rb'
@@ -833,7 +817,6 @@ RSpec/LetSetup:
     - 'spec/models/publisher_spec.rb'
     - 'spec/requests/jobseekers/job_applications/build_spec.rb'
     - 'spec/requests/jobseekers/job_applications_spec.rb'
-    - 'spec/requests/jobseekers/saved_jobs_spec.rb'
     - 'spec/requests/support_users/fallback_sessions_spec.rb'
     - 'spec/services/email_address_audit_spec.rb'
     - 'spec/services/jobseekers/job_applications/prefill_job_application_from_previous_application_spec.rb'
@@ -859,7 +842,6 @@ RSpec/LetSetup:
     - 'spec/system/jobseekers/jobseekers_can_save_a_job_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_search_for_jobs_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_search_from_home_page_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_sign_up_to_an_account_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_update_their_profile_from_job_applications_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_view_all_the_jobs_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_view_landing_pages_spec.rb'
@@ -1051,7 +1033,7 @@ RSpec/NoExpectationExample:
     - 'spec/jobs/send_email_for_draft_job_applications_job_spec.rb'
     - 'spec/jobs/send_email_for_unapplied_saved_vacancies_job_spec.rb'
 
-# Offense count: 92
+# Offense count: 91
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: not_to, to_not
@@ -1075,7 +1057,6 @@ RSpec/NotToNot:
     - 'spec/mailers/jobseekers/alert_mailer_spec.rb'
     - 'spec/models/subscription_spec.rb'
     - 'spec/models/vacancy_spec.rb'
-    - 'spec/requests/jobseekers/saved_jobs_spec.rb'
     - 'spec/requests/pages_spec.rb'
     - 'spec/services/copy_vacancy_spec.rb'
     - 'spec/services/image_manipulator_spec.rb'
@@ -1125,11 +1106,6 @@ RSpec/ReceiveMessages:
     - 'spec/services/vacancies/export/dwp_find_a_job/published_and_updated_vacancies/parsed_vacancy_spec.rb'
     - 'spec/services/zendesk_spec.rb'
 
-# Offense count: 2
-RSpec/RepeatedDescription:
-  Exclude:
-    - 'spec/system/jobseekers/jobseekers_can_view_their_dashboard_spec.rb'
-
 # Offense count: 8
 RSpec/RepeatedExampleGroupBody:
   Exclude:
@@ -1148,7 +1124,7 @@ RSpec/RepeatedExampleGroupDescription:
     - 'spec/lib/dfe_sign_in/api/request_spec.rb'
     - 'spec/services/search/vacancy_sort_spec.rb'
 
-# Offense count: 13
+# Offense count: 12
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: and_return, block
@@ -1159,7 +1135,6 @@ RSpec/ReturnFromStub:
     - 'spec/jobs/send_weekly_alert_email_job_spec.rb'
     - 'spec/requests/jobseekers/unsubscribe_feedbacks_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_search_for_jobs_spec.rb'
-    - 'spec/system/other/users_are_redirected_after_sign_in_spec.rb'
     - 'spec/system/publishers/publishers_can_sign_in_by_email_spec.rb'
     - 'spec/system/publishers/publishers_can_sign_in_with_dfe_spec.rb'
     - 'spec/system/publishers/publishers_can_visit_the_public_listings_spec.rb'
@@ -1412,13 +1387,12 @@ Rails/ApplicationRecord:
   Exclude:
     - 'app/models/failed_imported_vacancy.rb'
 
-# Offense count: 21
+# Offense count: 20
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: NilOrEmpty, NotPresent, UnlessPresent.
 Rails/Blank:
   Exclude:
     - 'app/components/editor_component.rb'
-    - 'app/controllers/jobseekers/confirmations_controller.rb'
     - 'app/controllers/jobseekers/job_applications_controller.rb'
     - 'app/controllers/jobseekers/registrations_controller.rb'
     - 'app/helpers/dates_helper.rb'
@@ -1487,7 +1461,7 @@ Rails/Delegate:
   Exclude:
     - 'app/form_models/publishers/job_listing/start_date_form.rb'
 
-# Offense count: 12
+# Offense count: 13
 # This cop supports safe autocorrection (--autocorrect).
 Rails/DurationArithmetic:
   Exclude:
@@ -1498,12 +1472,6 @@ Rails/DurationArithmetic:
     - 'spec/notifications/publishers/job_application_received_notifier_spec.rb'
     - 'spec/services/vacancies/export/dwp_find_a_job/published_and_updated_vacancies/query_spec.rb'
     - 'spec/system/jobseekers/jobseekers_can_transfer_data_from_old_account_spec.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Rails/ExpandedDateRange:
-  Exclude:
-    - 'app/jobs/send_account_confirmation_reminder_email_job.rb'
 
 # Offense count: 5
 # This cop supports safe autocorrection (--autocorrect).
@@ -1547,10 +1515,9 @@ Rails/HttpStatus:
   Exclude:
     - 'app/controllers/application_controller.rb'
 
-# Offense count: 4
+# Offense count: 2
 Rails/I18nLocaleTexts:
   Exclude:
-    - 'app/controllers/jobseekers/account_transfers_controller.rb'
     - 'app/controllers/jobseekers/profiles/job_preferences_controller.rb'
     - 'app/form_models/publishers/job_listing/job_role_form.rb'
 
@@ -1566,12 +1533,11 @@ Rails/IndexWith:
   Exclude:
     - 'app/services/ab_tests.rb'
 
-# Offense count: 7
+# Offense count: 6
 # Configuration parameters: Include.
 # Include: app/controllers/**/*.rb, app/mailers/**/*.rb
 Rails/LexicallyScopedActionFilter:
   Exclude:
-    - 'app/controllers/jobseekers/passwords_controller.rb'
     - 'app/controllers/jobseekers/registrations_controller.rb'
     - 'app/controllers/publishers/candidate_profiles_interstitials_controller.rb'
 
