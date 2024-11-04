@@ -1,4 +1,4 @@
-# TODO - this whole class could be replaced with https://github.com/igorkasyanchuk/active_storage_validations
+# TODO: - this whole class could be replaced with https://github.com/igorkasyanchuk/active_storage_validations
 # Possibly this could happen when we move over to Azure storage, which will do the virus check for us rather than the
 # upload/download from google cloud as we currently have it.
 class FormFileValidator < ActiveModel::EachValidator
