@@ -25,8 +25,13 @@ RSpec.describe LandingPage do
     it "returns a configured landing page instance if a landing page with the given slug exists" do
       expect(described_class["part-time-potions-and-sorcery-teacher-jobs"].slug)
         .to eq("part-time-potions-and-sorcery-teacher-jobs")
-      expect(described_class["part-time-potions-and-sorcery-teacher-jobs"].criteria)
-        .to eq({ working_patterns: %w[part_time], subjects: %w[Potions Sorcery] })
+      expect(described_class["part-time-potions-and-sorcery-teacher-jobs"].criteria).to eq(
+        {
+          working_patterns: %w[part_time],
+          subjects: %w[Potions Sorcery],
+          banner_image: "landing_pages/teaching_support_banner.jpg",
+        },
+      )
     end
 
     it "raises an error if no landing page with the given slug has been configured" do
@@ -39,7 +44,11 @@ RSpec.describe LandingPage do
     it "returns the first landing page exactly matching the given criteria, or nil if none matches" do
       expect(
         described_class
-          .matching(working_patterns: %w[part_time], subjects: %w[Potions Sorcery])
+          .matching(
+            working_patterns: %w[part_time],
+            subjects: %w[Potions Sorcery],
+            banner_image: "landing_pages/teaching_support_banner.jpg",
+          )
           .slug,
       ).to eq("part-time-potions-and-sorcery-teacher-jobs")
 
@@ -76,5 +85,12 @@ RSpec.describe LandingPage do
     specify { expect(subject.meta_description).to eq("Lorem ipsum dolor sit jobs, vacancies adipiscing elit.") }
     specify { expect(subject.name).to eq("Potions and Sorcery") }
     specify { expect(subject.title).to eq("Spiffy Part Time Potions and Sorcery Jobs") }
+    specify { expect(subject.banner_title).to eq("Spiffy Part Time Potions and Sorcery Jobs") }
+  end
+
+  describe "has_banner_image?" do
+    it "returns true if the landing page has a banner image" do
+      expect(subject.has_banner_image?).to be(true)
+    end
   end
 end

@@ -64,7 +64,11 @@ class VacanciesController < ApplicationController
   end
 
   def set_headers
-    response.set_header("X-Robots-Tag", "noarchive")
+    if params[:landing_page_slug] == "teaching-assistant-jobs-v2"
+      response.set_header("X-Robots-Tag", "noindex, noarchive")
+    else
+      response.set_header("X-Robots-Tag", "noarchive")
+    end
   end
 
   def campaign_search_params

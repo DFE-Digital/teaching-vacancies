@@ -53,6 +53,15 @@ shared:
   teaching-assistant-jobs:
     support_job_roles:
       - teaching_assistant
+  teaching-assistant-jobs-v2:
+    banner_image: "landing_pages/teaching_support_banner.jpg"
+    support_job_roles:
+      - teaching_assistant
+    hidden_filters:
+      - visa_sponsorship
+      - teaching_job_roles
+      - subjects
+      - ect_statuses
   administration-hr-data-finance-jobs:
     support_job_roles:
       - administration_hr_data_and_finance
@@ -214,6 +223,7 @@ shared:
 ####################################################################################################
 test:
   part-time-potions-and-sorcery-teacher-jobs:
+    banner_image: "landing_pages/teaching_support_banner.jpg"
     working_patterns:
       - part_time
     subjects:

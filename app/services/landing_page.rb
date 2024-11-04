@@ -2,7 +2,7 @@ class LandingPage
   COUNT_CACHE_DURATION = 3.hours
   COUNT_CACHE_VARIATION_SECONDS = 300
 
-  attr_reader :slug, :criteria
+  attr_reader :slug, :criteria, :banner_image, :hidden_filters
 
   def self.exists?(slug)
     Rails.application.config.landing_pages.key?(slug.to_sym)
@@ -33,7 +33,9 @@ class LandingPage
 
   def initialize(slug, criteria)
     @slug = slug.to_s
+    @banner_image = criteria[:banner_image]
     @criteria = criteria
+    @hidden_filters = criteria[:hidden_filters] || []
   end
 
   def count
@@ -61,6 +63,14 @@ class LandingPage
 
   def title
     I18n.t(:title, **translation_args)
+  end
+
+  def banner_title
+    I18n.t(:banner_title, **translation_args)
+  end
+
+  def has_banner_image?
+    @banner_image.present?
   end
 
   private
