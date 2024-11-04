@@ -53,6 +53,10 @@ class School < Organisation
     gias_data["ReligiousCharacter (name)"]
   end
 
+  def faith_school?
+    religious_character.present?
+  end
+
   def school_type
     read_attribute(:school_type).singularize
   end

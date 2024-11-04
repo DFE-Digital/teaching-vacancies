@@ -12,6 +12,7 @@ SetOrganisationSlugsJob.perform_later
 bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
+plymouth_cast = SchoolGroup.find_by!(uid: "4214")
 
 # Team users
 users = [
@@ -32,7 +33,7 @@ users = [
 ]
 
 users.each do |user|
-  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la], **user)
+  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, plymouth_cast], **user)
   SupportUser.create(user)
   FactoryBot.create(:jobseeker, email: user[:email], password: "password")
 end
@@ -110,3 +111,6 @@ Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
     end
   end
 end
+
+# still need to delete jobs without an organisation
+Vacancy.includes(:organisations).find_each.reject { |v| v.organisation.present? }.each(&:destroy)

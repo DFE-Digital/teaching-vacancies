@@ -266,6 +266,9 @@ en:
         salary_types_options:
           full_time: This is what the annual salary would be for someone working full time
           part_time: This is the annual amount someone will take home
+      publishers_job_listing_religious_information_form:
+        religion_type_options:
+          catholic: This form has been approved by the Catholic Education Service.
       publishers_job_listing_schools_form:
         add_school: Add a school to your account
         edit_schools_html: "Can't see the school you are looking for? %{link}"
@@ -856,6 +859,11 @@ en:
           part_time: Actual salary
           pay_scale: Pay scale
           hourly_rate: Hourly rate of pay
+      publishers_job_listing_religious_information_form:
+        religion_type_options:
+          catholic: Their religion, place of worship and religious referee or baptism information
+          other_religion: If they have a religious denomination or faith, how they'll meet your school's ethos and aims, and if they want to provide an optional religious referee or place of worship
+          no_religion: Do not ask applicants about their religion
       publishers_job_listing_school_visits_form:
         school_visits_options:
           false: "No"
@@ -1049,6 +1057,8 @@ en:
       publishers_job_listing_pay_package_form:
         salary_types: Salary details
         benefits: Do you want to include additional allowances?
+      publishers_job_listing_religious_information_form:
+        religion_type: What would you like to ask applicants about their religion?
       publishers_job_listing_school_visits_form:
         school_visits: Do you want to offer school visits?
       publishers_job_listing_working_patterns_form:
