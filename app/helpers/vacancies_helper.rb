@@ -9,6 +9,21 @@ module VacanciesHelper
     items.reject(&:blank?).map(&:humanize).join(", ")
   end
 
+  def vacancy_form_type(vacancy)
+    if vacancy.enable_job_applications
+      case vacancy.religion_type
+      when "catholic"
+        t("publishers.vacancies.application_form_type.catholic")
+      when "other_religion"
+        t("publishers.vacancies.application_form_type.other_religion")
+      else
+        t("publishers.vacancies.application_form_type.no_religion")
+      end
+    else
+      t("publishers.vacancies.application_form_type.other")
+    end
+  end
+
   def page_title_prefix(step_process, form_object)
     page_heading = t("publishers.vacancies.steps.#{step_process.current_step}")
     create_or_edit = step_process.vacancy.published? ? "edit" : "create"
