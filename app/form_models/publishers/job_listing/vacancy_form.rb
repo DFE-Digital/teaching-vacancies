@@ -12,4 +12,10 @@ class Publishers::JobListing::VacancyForm < BaseForm
   def params_to_save
     params.except(:current_organisation)
   end
+
+  class << self
+    def load_form(model)
+      model.slice(*fields)
+    end
+  end
 end

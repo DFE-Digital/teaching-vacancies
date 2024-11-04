@@ -104,11 +104,11 @@ module VacancyHelpers
   def fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
     return unless !local_authority_vacancy && vacancy.enable_job_applications?
 
-    choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true"))
+    find('label[for="publishers-job-listing-applying-for-the-job-form-application-form-type-no-religion-field"]').click
   end
 
   def fill_in_applying_for_the_job_disable_job_applications
-    choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.false"))
+    choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_html"))
   end
 
   def fill_in_how_to_receive_applications_form_fields(vacancy)

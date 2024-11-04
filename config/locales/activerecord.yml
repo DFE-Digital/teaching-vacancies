@@ -241,6 +241,8 @@ en:
       cannot_be_changed_once_listed: >-
         You cannot change how you want candidates to apply now that your listing is published
       inclusion: Select yes if you want candidates to use the application form
+    application_form_type:
+      blank: Select the type of application form you wish to use
   how_to_receive_applications_errors: &how_to_receive_applications_errors
     receive_applications:
       inclusion: Select how you want to receive applications
