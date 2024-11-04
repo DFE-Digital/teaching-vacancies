@@ -31,7 +31,7 @@
               - if option.by == @sort.by
                 = option.display_name.humanize
               - else
-                = govuk_link_to(safe_join([tag.span("#{t('jobs.sort_by.label')} ", class: "govuk-visually-hidden"), option.display_name.humanize]), organisation_jobs_with_type_path({sort_by: option.by, type: @selected_type}))
+                = govuk_link_to(safe_join([tag.span("#{t('jobs.sort_by.label')} ", class: "govuk-visually-hidden"), option.display_name.humanize]), organisation_jobs_with_type_path({ sort_by: option.by, type: @selected_type }))
 
     - if @organisation.school_group?
       .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-4"
