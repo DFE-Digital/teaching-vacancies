@@ -45,9 +45,11 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   end
 
   def error_redirect
-    return if jobseeker_signed_in?
-
-    flash[:alert] = I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error")
+    flash[:alert] = if jobseeker_signed_in?
+                      "You are already successfully signed in"
+                    else
+                      I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error")
+                    end
     redirect_to root_path
   end
 
