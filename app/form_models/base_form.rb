@@ -1,6 +1,13 @@
 class BaseForm
   attr_accessor :skip_after_validation_big_query_callback
 
+  IMAGE_VALIDATION_OPTIONS = {
+    file_type: :image,
+    content_types_allowed: %w[image/jpeg image/png].freeze,
+    file_size_limit: 5.megabytes,
+    valid_file_types: %i[JPG JPEG PNG].freeze,
+  }.freeze
+
   include ActiveModel::Model
   include ActiveModel::Validations::Callbacks
 

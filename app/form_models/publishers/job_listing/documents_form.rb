@@ -1,5 +1,5 @@
 class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyForm
-  validates :supporting_documents, form_file: true
+  validates :supporting_documents, form_file: DOCUMENT_VALIDATION_OPTIONS
   validate :document_presence
 
   attr_accessor :supporting_documents
@@ -10,22 +10,6 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyFor
 
   def self.optional?
     false
-  end
-
-  def file_type
-    :document
-  end
-
-  def content_types_allowed
-    %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze
-  end
-
-  def file_size_limit
-    10.megabytes
-  end
-
-  def valid_file_types
-    %i[PDF DOC DOCX]
   end
 
   def params_to_save

@@ -1,6 +1,7 @@
 class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::VacancyForm
   validate :application_form_presence
-  validates :application_form, form_file: true
+  validates :application_form, form_file: DOCUMENT_VALIDATION_OPTIONS
+
   validates :application_email, presence: true
   validate :other_application_email_presence
   validate :other_application_email_valid
@@ -29,22 +30,6 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
     return params[:other_application_email] if params[:other_application_email]
 
     @vacancy.application_email unless @vacancy.application_email == @current_publisher&.email
-  end
-
-  def file_type
-    :document
-  end
-
-  def content_types_allowed
-    %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze
-  end
-
-  def file_size_limit
-    10.megabytes
-  end
-
-  def valid_file_types
-    %i[PDF DOC DOCX]
   end
 
   def params_to_save
