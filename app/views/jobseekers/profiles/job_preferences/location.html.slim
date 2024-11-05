@@ -12,11 +12,11 @@
         | Location
       .govuk-form-group.autocomplete data-source="getLocationSuggestions" data-controller="autocomplete" data-debouncems="400"
         = f.govuk_text_field :location,
-          label: { text: "Location", size: "m" },
+          label: -> { tag.h2("Location") },
           hint: { text: t("activemodel.location.hint") },
           form_group: { classes: %w[location-finder__input govuk-!-margin-bottom-0] }
 
-      = f.govuk_collection_radio_buttons :radius, f.object.radius_options, :first, :last, legend: { text: "Search radius", size: "m" }
+      = f.govuk_collection_radio_buttons :radius, f.object.radius_options, :first, :last, legend: -> { tag.h2("Search radius") }
 
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path
