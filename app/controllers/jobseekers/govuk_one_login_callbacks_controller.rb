@@ -3,6 +3,11 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   # Devise redirects response from Govuk One Login to this method.
   # The request parameters contain the response from Govuk One Login from the user authentication through their portal.
   def openid_connect
+    if jobseeker_signed_in?
+      flash[:alert] = I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.already_signed_in")
+      redirect_to root_path and return
+    end
+
     govuk_one_login_user = Jobseekers::GovukOneLogin::UserFromAuthResponse.call(params, session)
     return error_redirect unless govuk_one_login_user
 
@@ -45,11 +50,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
   end
 
   def error_redirect
-    flash[:alert] = if jobseeker_signed_in?
-                      "You are already successfully signed in"
-                    else
-                      I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error")
-                    end
+    flash[:alert] = I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error")
     redirect_to root_path
   end
 
