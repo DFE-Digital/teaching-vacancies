@@ -25,7 +25,7 @@
         = f.govuk_radio_button :religious_reference_type, :baptism_certificate do
           = f.govuk_file_field :baptism_certificate,
             label: { size: "s" },
-            accept: ".doc, .docx, .pdf .png",
+            accept: BaseForm::VALID_DOCUMENT_TYPES.map(&:downcase).join(","),
             enctype: "multipart/form-data"
         = f.govuk_radio_button :religious_reference_type, :baptism_date do
           = f.govuk_text_area :baptism_address, rows: 6
