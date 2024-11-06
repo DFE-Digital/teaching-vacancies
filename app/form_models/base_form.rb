@@ -8,7 +8,7 @@ class BaseForm
     valid_file_types: %i[JPG JPEG PNG].freeze,
   }.freeze
 
-  VALID_DOCUMENT_TYPES = %i[PDF DOC DOCX]
+  VALID_DOCUMENT_TYPES = %i[PDF DOC DOCX].freeze
 
   DOCUMENT_VALIDATION_OPTIONS = {
     file_type: :document,
