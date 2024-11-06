@@ -997,6 +997,7 @@ en:
     govuk_one_login_callbacks:
       openid_connect:
         error: "There was a problem signing in. Please try again."
+        already_signed_in: You are already signed in
     unsubscribe_feedbacks:
       new:
         confirmation: You will no longer receive updates for this job alert.
