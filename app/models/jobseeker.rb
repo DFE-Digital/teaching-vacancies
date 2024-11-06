@@ -15,7 +15,7 @@ class Jobseeker < ApplicationRecord
   has_many :emergency_login_keys, as: :owner
   has_one :jobseeker_profile
 
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
   validates :govuk_one_login_id, uniqueness: true, allow_nil: true
 
