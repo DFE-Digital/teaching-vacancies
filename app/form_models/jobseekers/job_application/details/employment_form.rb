@@ -9,7 +9,7 @@ class Jobseekers::JobApplication::Details::EmploymentForm
   validates :organisation, :job_title, :main_duties, :reason_for_leaving, presence: true
   validates :started_on, date: { before: :today }
   validates :current_role, inclusion: { in: %w[yes no] }
-  validates :ended_on, date: { before: :today, after: :started_on }, if: -> { current_role == "no" }
+  validates :ended_on, date: { before: :today, on_or_after: :started_on }, if: -> { current_role == "no" }
 
   def started_on=(value)
     @started_on = date_from_multiparameter_hash(value)
