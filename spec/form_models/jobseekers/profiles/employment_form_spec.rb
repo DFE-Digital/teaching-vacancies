@@ -12,7 +12,6 @@ RSpec.describe Jobseekers::Profile::EmploymentForm, type: :model do
 
         it "adds an error to the form" do
           subject.valid?
-          binding.pry
           expect(subject.errors.added?(:ended_on, :on_or_after)).to be true
         end
       end
