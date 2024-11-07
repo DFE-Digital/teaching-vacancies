@@ -579,7 +579,7 @@ en:
         page_title: Close account
         page_description: You will no longer receive any job alerts you have subscribed to, and any job applications you have made will be withdrawn.
       destroy:
-        success: Your account has been closed. If you want to reactivate your account at any point, you can just sign back in with your email address and current password.
+        success: Your account has been closed. If you want to reactivate your account at any point, you can just sign back in with your email address.
       edit:
         edit_email_title: Update email address
         edit_password_title: Change password

@@ -15,7 +15,7 @@ en:
           and any job applications you have made will be withdrawn.
         reactivate: >-
           If you want to reactivate your account at any point
-          you can just sign back in with this email address and password.
+          you can just sign back in with this email address.
         delete: If you want us to delete your data, please email %{mail_to}
         subject: Your Teaching Vacancies account has been closed
       confirmation_instructions:
