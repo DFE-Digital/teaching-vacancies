@@ -5,15 +5,26 @@ class Api::V2::VacanciesController < Api::ApplicationController
     respond_to(&:json)
   end
 
+  def show
+    @vacancy = vacancy
+  end
+
+  # No idea why rubocop can't see the check after the create call
+  # rubocop:disable Rails/SaveBang
   def create
-    @vacancy = Vacancy.create!(vacancy_params)
+    @vacancy = Vacancy.create(vacancy_params)
 
     respond_to do |format|
       format.json do
-        render status: :created
+        if @vacancy.persisted?
+          render status: :created
+        else
+          render status: :bad_request
+        end
       end
     end
   end
+  # rubocop:enable Rails/SaveBang
 
   def update
     @vacancy = vacancy
@@ -23,22 +34,19 @@ class Api::V2::VacanciesController < Api::ApplicationController
 
   def destroy; end
 
-  def show
-    @vacancy = vacancy
-  end
-
   private
 
   def vacancy_params
-    params.fetch(:vacancy)
-          .permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
-                  :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary,
-                  :job_roles, :working_patterns, :contract_type, :phases)
-          .merge(organisations: [School.first])
+    p = params.fetch(:vacancy).permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
+                                      :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary,
+                                      :job_roles, :working_patterns, :contract_type, :phases, school_urns: [])
+
+    p.except(:school_urns)
+          .merge(organisations: p.fetch(:school_urns, []).map { School.find_by(urn: _1) }.compact)
   end
 
   def vacancy
-    FactoryBot.build(:vacancy)
+    FactoryBot.build(:vacancy, :external)
   end
 
   def vacancies
