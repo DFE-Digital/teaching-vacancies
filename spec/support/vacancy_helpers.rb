@@ -107,7 +107,7 @@ module VacancyHelpers
     choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true"))
   end
 
-  def fill_in_applying_for_the_job_disable_job_applications(vacancy)
+  def fill_in_applying_for_the_job_disable_job_applications
     choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.false"))
   end
 
