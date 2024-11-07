@@ -9,7 +9,7 @@
   <%= @job_application.further_instructions %>
 <% end %>
 
-<% if (["teacher", "head_of_year_or_phase", "head_of_department_or_curriculum", "sendco", "other_leadership"] && (ja.vacancy.job_roles)).any? %>
+<% if @vacancy.is_teaching_or_middle_leader_role? %>
   <%= t(".read_advice_from")
   <%= notify_link("/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview", t(".teaching_job_interview"))
   <%= notify_link("/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson", t(".teaching_interview_lession"))

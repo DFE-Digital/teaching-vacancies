@@ -7,7 +7,7 @@
   <%= @job_application.rejection_reasons %>
 <% end %>
 
-<% if (["teacher", "head_of_year_or_phase", "head_of_department_or_curriculum", "sendco", "other_leadership"] && (ja.vacancy.job_roles)).any? %>
+<% if @vacancy.is_teaching_or_middle_leader_role? %>
   <%= t(".advice", link: notify_link("jobseeker-guides/get-help-applying-for-your-teaching-role/write-a-great-teaching-job-application-in-five-steps", t(".application_advice_link_text"))
 <% end %>
 
