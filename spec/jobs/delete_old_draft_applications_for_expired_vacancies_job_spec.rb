@@ -1,8 +1,9 @@
 require "rails_helper"
 
-RSpec.describe WithdrawDraftApplicationsForExpiredVacanciesJob, type: :job do
+RSpec.describe DeleteOldDraftApplicationsForExpiredVacanciesJob do
   before do
     vacancy.save!
+    JobApplication.draft.first.update!(updated_at: 6.years.ago)
     described_class.perform_now
   end
 
@@ -11,16 +12,13 @@ RSpec.describe WithdrawDraftApplicationsForExpiredVacanciesJob, type: :job do
       build(:vacancy, :expired,
             job_applications: [
               build(:job_application, :status_draft),
+              build(:job_application, :status_draft),
               build(:job_application, :status_submitted),
             ])
     end
 
-    it "marks draft application as withdrawn" do
-      expect(JobApplication.all.map(&:status)).to match_array(%w[submitted withdrawn])
-    end
-
-    it "sets withdrawn_at" do
-      expect(JobApplication.all.map(&:withdrawn_at).filter_map { |datetime| datetime.to_date if datetime.present? }).to match_array([Date.today])
+    it "deletes the old draft application" do
+      expect(JobApplication.all.map(&:status)).to match_array(%w[submitted draft])
     end
   end
 
