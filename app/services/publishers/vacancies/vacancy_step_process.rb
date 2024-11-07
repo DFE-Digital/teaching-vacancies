@@ -27,7 +27,7 @@ class Publishers::Vacancies::VacancyStepProcess < StepProcess
   end
 
   def application_process_steps
-    if vacancy.published? || organisation.local_authority?
+    if vacancy.published?
       steps = %i[school_visits visa_sponsorship contact_details]
       steps.insert(0, :how_to_receive_applications) unless vacancy.enable_job_applications
       steps.insert(1, application_method) if application_method.present?
