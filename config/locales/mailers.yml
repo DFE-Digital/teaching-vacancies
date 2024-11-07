@@ -111,6 +111,8 @@ en:
         <<: *job_application_mailer_shared
         feedback: Feedback from the school
         heading: Unfortunately your application was not successful this time
+        advice: To improve your application for next time, read advice from experienced teachers and school leaders on 
+        application_advice_link_text: writing a great application.
         subject: Your job application has been unsuccessful
       job_listing_ended_early:
         body: |
