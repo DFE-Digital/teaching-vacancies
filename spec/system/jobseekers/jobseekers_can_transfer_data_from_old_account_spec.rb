@@ -79,6 +79,45 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
     end
   end
 
+  context "when the user tries to transfer data to their own account" do
+    it "does not allow the account transfer" do
+      visit jobseekers_profile_path
+
+      expect_account_to_have_no_data
+
+      visit new_jobseekers_request_account_transfer_email_path
+
+      fill_in "jobseekers_request_account_transfer_email_form[email]", with: jobseeker.email
+      click_on "Save and continue"
+      expect(delivered_emails.last.subject).to eq "Transfer your account data"
+      expect(delivered_emails.last.body.raw_source).to include "Your verification code: #{jobseeker.reload.account_merge_confirmation_code}"
+
+      # Before transfer, create some data in the jobseeker account
+      jobseeker.jobseeker_profile.destroy!
+      profile = create(:jobseeker_profile, :completed, jobseeker: jobseeker)
+      submitted_application = create(:job_application, :status_submitted, jobseeker: jobseeker)
+
+      # Attempt to transfer data to the same account
+      fill_in "jobseekers_account_transfer_form[account_merge_confirmation_code]", with: jobseeker.account_merge_confirmation_code
+      click_on "Confirm account transfer"
+      expect(page).to have_content I18n.t("jobseekers.account_transfers.create.failure")
+
+      # Jobseeker hasn't lost any data
+      click_on "Your profile"
+
+      expect(page).to have_content profile.first_name
+      expect(page).to have_content profile.last_name
+      expect(page).to have_content profile.qualifications.first.name
+      expect(page).to have_content profile.employments.first.organisation
+      expect(page).to have_content profile.training_and_cpds.first.name
+
+      click_on "Applications"
+
+      expect(page).to have_content "Applications (1)"
+      expect(page).to have_content submitted_application.vacancy.job_title
+    end
+  end
+
   context "when the confirmation code has expired" do
     before do
       visit new_jobseekers_request_account_transfer_email_path
