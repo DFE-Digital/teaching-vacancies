@@ -2,11 +2,9 @@ class Jobseeker < ApplicationRecord
   has_encrypted :last_sign_in_ip, :current_sign_in_ip
 
   devise(*%I[
-    database_authenticatable
     registerable
     timeoutable
     trackable
-    validatable
   ])
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :jobseeker
@@ -57,13 +55,7 @@ class Jobseeker < ApplicationRecord
   def self.create_from_govuk_one_login(id:, email:)
     return unless email.present? && id.present?
 
-    # OneLogin users won't need/use this password. But is required by validations for in-house Devise users.
-    # Eventually when all the users become OneLogin users, we should be able to remove the password requirement.
-    random_password = Devise.friendly_token
-    create!(email: email.downcase,
-            govuk_one_login_id: id,
-            password: random_password,
-            confirmed_at: Time.zone.now)
+    create!(email: email.downcase, govuk_one_login_id: id, confirmed_at: Time.zone.now)
   end
 
   # Either find the Jobseeker by their GovUK OneLogin id or uses the OneLogin email address to find possible Jobseekers

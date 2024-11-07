@@ -34,7 +34,7 @@ users = [
 users.each do |user|
   Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la], **user)
   SupportUser.create(user)
-  FactoryBot.create(:jobseeker, email: user[:email], password: "password")
+  FactoryBot.create(:jobseeker, email: user[:email])
 end
 
 # Vacancies at Bexleyheath school
@@ -76,8 +76,8 @@ attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], p
 3.times { FactoryBot.create(:vacancy, :published, **attrs) }
 
 # Jobseekers
-FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com", password: "password")
-JobApplication.statuses.count.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com", password: "password") }
+FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
+JobApplication.statuses.count.times { |i| FactoryBot.create(:jobseeker, email: "jobseeker#{i}@contoso.com") }
 
 # Job Applications
 Vacancy.listed.each do |vacancy|
