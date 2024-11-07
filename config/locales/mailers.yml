@@ -94,6 +94,9 @@ en:
         heading: You have been shortlisted for %{job_title} at %{organisation_name}
         instructions: What happens next
         subject: Your job application has been shortlisted
+        read_advice_from: "Read advice from experienced teachers and schools leaders on preparing for your:"
+        teaching_job_interview: "- teaching job interview"
+        teaching_interview_lession: "- teaching interview lesson"
       application_submitted:
         <<: *job_application_mailer_shared
         heading: Your application has been sent to %{organisation_name}
