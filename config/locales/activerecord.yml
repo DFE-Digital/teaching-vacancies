@@ -620,7 +620,7 @@ en:
             current_role:
               inclusion: Select yes if this is your current role
             ended_on:
-              after: End date must be after the start date
+              on_or_after: End date must be on or after the start date
               before: The date the role ended must be in the past
               blank: Enter the date you left this school or organisation
               invalid: Enter a date in the correct format
@@ -706,7 +706,7 @@ en:
             current_role:
               inclusion: Select yes if this is your current role
             ended_on:
-              after: End date must be after the start date
+              on_or_after: End date must be on or after the start date
               before: The date the role ended must be in the past
               blank: Enter the date you left this school or organisation
               invalid: Enter a date in the correct format
