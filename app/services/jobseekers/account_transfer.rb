@@ -1,5 +1,6 @@
 class Jobseekers::AccountTransfer
   class AccountNotFoundError < StandardError; end
+  class CannotDeleteCurrentAccountError < StandardError; end
   attr_reader :current_jobseeker, :account_to_transfer
 
   def initialize(current_jobseeker, email)
@@ -16,7 +17,7 @@ class Jobseekers::AccountTransfer
       transfer_job_applications
       transfer_saved_jobs
       update_subscriptions
-      account_to_transfer.reload.destroy
+      destroy_account_to_transfer
     end
   end
 
@@ -52,5 +53,11 @@ class Jobseekers::AccountTransfer
     Subscription.where(email: account_to_transfer.email).each do |subscription|
       subscription.update!(email: current_jobseeker.email)
     end
+  end
+
+  def destroy_account_to_transfer
+    raise CannotDeleteCurrentAccountError, "Cannot delete the currently logged in account" if @current_jobseeker == @account_to_transfer
+
+    account_to_transfer.reload.destroy
   end
 end
