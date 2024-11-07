@@ -57,6 +57,7 @@ class Jobseekers::AccountTransfer
 
   def destroy_account_to_transfer
     raise CannotDeleteCurrentAccountError, "Cannot delete the currently logged in account" if @current_jobseeker == @account_to_transfer
+
     account_to_transfer.reload.destroy
   end
 end
