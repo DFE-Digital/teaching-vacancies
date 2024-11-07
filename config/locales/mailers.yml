@@ -145,6 +145,8 @@ en:
         saved_but_not_applied: You saved this job but have not applied to it yet
         apply_for_link: "Apply for %{job_title} on Teaching Vacancies"
         to_find_the_right_job: "To find the right job, remember to always check Teaching Vacancies"
+        advice: Read advice from experienced teachers and school leaders on %{link}
+        application_advice_link_text: writing a great application.
 
     subscription_mailer:
       confirmation:
