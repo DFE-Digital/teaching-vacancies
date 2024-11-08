@@ -41,9 +41,12 @@ Rails.application.configure do
                        "https://*.visualwebsiteoptimizer.com",
                        "https://www.clarity.ms"
 
-    policy.style_src   :self
+    policy.style_src   :self,
+                       :unsafe_inline,
+                       "https://fonts.gstatic.com"
 
     policy.worker_src  :self,
+                       :blob,
                        "https://*.visualwebsiteoptimizer.com"
   end
 
