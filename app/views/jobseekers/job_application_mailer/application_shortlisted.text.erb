@@ -9,10 +9,10 @@
   <%= @job_application.further_instructions %>
 <% end %>
 
-<% if @vacancy.is_teaching_or_middle_leader_role? %>
-  <%= t(".read_advice_from")
-  <%= notify_link("/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview", t(".teaching_job_interview"))
-  <%= notify_link("/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson", t(".teaching_interview_lession"))
+<% if @vacancy.is_a_teaching_or_middle_leader_role? %>
+  <%= t(".read_advice_from") %>
+  <%= notify_link("/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview", t(".teaching_job_interview")) %>
+  <%= notify_link("/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson", t(".teaching_interview_lession")) %>
 <% end %>
 
 # <%= t(".more_info.heading") %>
