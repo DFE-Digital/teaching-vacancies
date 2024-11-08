@@ -94,6 +94,8 @@ en:
         title: Sign in to the support dashboard
 
     api_clients:
+      creation_success: API client created successfully
+      creation_failure: There was an error creating the API Client
       key_rotation_success: API key rotated successfully
       index:
         title: API clients

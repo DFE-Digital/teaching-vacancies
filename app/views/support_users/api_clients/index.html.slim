@@ -9,3 +9,5 @@ h1.govuk-heading-l = t(".title")
   - t.datetime "Created", :created_at
   - t.datetime "Last rotated", :last_rotated_at
 = govuk_pagination(pagy: @pagy)
+
+= link_to "Add new API client", new_support_users_api_client_path, class: "govuk-button govuk-button--secondary"

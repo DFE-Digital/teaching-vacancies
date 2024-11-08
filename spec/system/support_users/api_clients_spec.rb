@@ -24,6 +24,15 @@ RSpec.describe "API clients supportal section" do
     click_on "View API clients"
     expect(page).to have_css("h1", text: "API clients")
 
+    click_on "Add new API client"
+    expect(page).to have_css("h1", text: "New API Client")
+
+    fill_in "Name", with: "New API Client"
+    click_on "Create API Client"
+    expect(page).to have_content("API client created successfully")
+
+    click_on "Support dashboard"
+    click_on "View API clients"
     click_on api_client_name
     expect(page).to have_css("h1", text: api_client_name)
     click_on "Rotate API key"

@@ -1,8 +1,11 @@
 class ApiClient < ApplicationRecord
-  before_create :generate_api_key
+  before_validation :generate_api_key, on: :create
+
+  validates :name, presence: true
+  validates :api_key, presence: true
 
   def generate_api_key
-    self.api_key = SecureRandom.hex(20)
+    self.api_key ||= SecureRandom.hex(20)
   end
 
   def rotate_api_key!
