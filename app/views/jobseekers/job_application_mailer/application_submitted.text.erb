@@ -8,8 +8,8 @@
 
 <% if @vacancy.is_a_teaching_or_middle_leader_role? %>
   <%= t(".read_advice_from") %>
-  <%= notify_link("/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview", t(".teaching_job_interview")) %>
-  <%= notify_link("/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson", t(".teaching_interview_lession")) %>
+  <%= notify_link(jobseeker_guides_how_to_approach_a_teaching_job_interview_url, t(".teaching_job_interview")) %>
+  <%= notify_link(jobseeker_guides_prepare_for_a_teaching_job_interview_lesson_url, t(".teaching_interview_lesson")) %>
 <% end %>
 
 # <%= t(".more_info.heading") %>

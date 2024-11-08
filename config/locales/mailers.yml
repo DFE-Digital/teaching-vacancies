@@ -96,7 +96,7 @@ en:
         subject: Your job application has been shortlisted
         read_advice_from: "Read advice from experienced teachers and schools leaders on preparing for your:"
         teaching_job_interview: "- teaching job interview"
-        teaching_interview_lession: "- teaching interview lesson"
+        teaching_interview_lesson: "- teaching interview lesson"
       application_submitted:
         <<: *job_application_mailer_shared
         heading: Your application has been sent to %{organisation_name}
@@ -109,7 +109,7 @@ en:
         subject: Your job application has been submitted
         read_advice_from: "Read advice from experienced teachers and schools leaders on preparing for your:"
         teaching_job_interview: "- teaching job interview"
-        teaching_interview_lession: "- teaching interview lesson"
+        teaching_interview_lesson: "- teaching interview lesson"
       application_unsuccessful:
         <<: *job_application_mailer_shared
         feedback: Feedback from the school
