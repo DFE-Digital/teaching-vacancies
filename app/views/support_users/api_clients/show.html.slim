@@ -1,0 +1,15 @@
+- title = @api_client.name
+- content_for :page_title_prefix, title
+
+h1.govuk-heading-l = title
+
+= link_to "Rotate API key", rotate_key_support_users_api_client_path(@api_client), method: :post, class: "govuk-button govuk-button--secondary"
+
+= render DetailComponent.new do |detail|
+  - detail.with_body do
+    = govuk_summary_list do |summary_list|
+      - @api_client.class.column_names.each do |column_name|
+        - summary_list.with_row do |row|
+          - row.with_key text: column_name.humanize
+          - row.with_value text: @api_client.send(column_name)&.to_s
+

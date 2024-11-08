@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_29_111208) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_06_143103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -57,6 +57,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_29_111208) do
     t.datetime "updated_at", precision: nil, null: false
     t.integer "status", default: 0
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
+  end
+
+  create_table "api_clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "api_key", null: false
+    t.datetime "last_rotated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

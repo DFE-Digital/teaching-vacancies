@@ -262,6 +262,10 @@ Rails.application.routes.draw do
     namespace :service_data, path: "service-data" do
       resources :jobseeker_profiles, only: %i[index show]
     end
+
+    resources :api_clients do
+      post :rotate_key, on: :member
+    end
   end
 
   devise_for :support_users
