@@ -90,4 +90,6 @@ Rails.application.configure do
   config.i18n.raise
 
   config.log_file_size = 100.megabytes
+
+  config.log_level = :debug
 end

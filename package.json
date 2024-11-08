@@ -12,6 +12,7 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
+    "@ministryofjustice/frontend": "^2.2.4",
     "@sentry/browser": "8.38.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
@@ -21,6 +22,7 @@
     "dfe-frontend": "^2.0.1",
     "dompurify": "^3.2.0",
     "govuk-frontend": "^5.7.1",
+    "jquery": "^3.6.0",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",

@@ -14,6 +14,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       job_application.draft? || job_application.withdrawn?
   end
 
+  def index
+    @form = Publishers::JobApplication::TagForm.new
+  end
+
   def show
     redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, job_application) if job_application.withdrawn?
 
@@ -40,6 +44,26 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     job_application.update(form_params.merge(status: status))
     Jobseekers::JobApplicationMailer.send(:"application_#{status}", job_application).deliver_later
     redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: job_application.name)
+  end
+
+  def tag
+    tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
+    @form = Publishers::JobApplication::TagForm.new(tag_params.merge(job_applications: tag_params.fetch(:job_applications).compact_blank))
+    if @form.valid?
+      @job_applications = vacancy.job_applications.where(id: @form.job_applications)
+      render "tag"
+    else
+      render "index"
+    end
+  end
+
+  def update_tag
+    form_params = params.require(:publishers_job_application_status_form).permit(:status, job_applications: [])
+
+    JobApplication.find(form_params.fetch(:job_applications)).each do |job_application|
+      job_application.update!(status: form_params.fetch(:status))
+    end
+    redirect_to organisation_job_job_applications_path(vacancy.id)
   end
 
   private
