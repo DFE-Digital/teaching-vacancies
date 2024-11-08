@@ -13,4 +13,10 @@ class Jobseekers::RequestAccountTransferEmailForm < BaseForm
 
     errors.add(:email, :recent_code_request, message: I18n.t("jobseekers.request_account_transfer_emails.errors.recent_code_request"))
   end
+
+  def validate_account_to_transfer_is_not_the_currently_logged_in_user
+    return unless email.downcase == current_jobseeker.email.downcase
+
+    errors.add(:email, :recent_code_request, message: I18n.t("jobseekers.request_account_transfer_emails.errors.recent_code_request"))
+  end
 end
