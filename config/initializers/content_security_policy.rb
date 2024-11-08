@@ -33,7 +33,6 @@ Rails.application.configure do
     policy.object_src  :none
 
     policy.script_src  :self,
-                       :unsafe_inline, # Backwards compatibility; ignored by modern browsers as we set a nonce for scripts
                        "https://cdn.rollbar.com",
                        "https://www.google-analytics.com",
                        "https://www.googletagmanager.com",
@@ -41,9 +40,12 @@ Rails.application.configure do
                        "https://*.visualwebsiteoptimizer.com",
                        "https://www.clarity.ms"
 
-    policy.style_src   :self
+    policy.style_src   :self,
+                       :unsafe_inline,
+                       "https://fonts.gstatic.com/*"
 
     policy.worker_src  :self,
+                       :blob,
                        "https://*.visualwebsiteoptimizer.com"
   end
 
