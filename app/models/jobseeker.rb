@@ -54,7 +54,7 @@ class Jobseeker < ApplicationRecord
   def self.create_from_govuk_one_login(id:, email:)
     return unless email.present? && id.present?
 
-    create!(email: email.downcase, govuk_one_login_id: id, confirmed_at: Time.zone.now)
+    create!(email: email.downcase, govuk_one_login_id: id)
   end
 
   # Either find the Jobseeker by their GovUK OneLogin id or uses the OneLogin email address to find possible Jobseekers

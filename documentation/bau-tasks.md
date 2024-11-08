@@ -26,16 +26,3 @@ For backfilling the whole DB into analytics (**very resource/time intensive**), 
 ```
 bundle exec rails dfe:analytics:import_all_entities
 ```
-
-### Manually confirming unconfirmed Jobseeker users
-
-1. Log-in in a production Rails console.
-2. Locate the user:
-   ```
-   j = Jobseeker.find_by(email: email)
-   ```
-3. Manually set their confirmation date on DB:
-   ```
-   j.confirmed_at = Datetime.now
-   j.save
-   ```
