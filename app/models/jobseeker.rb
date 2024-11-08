@@ -1,6 +1,20 @@
 class Jobseeker < ApplicationRecord
   has_encrypted :last_sign_in_ip, :current_sign_in_ip
 
+  # https://github.com/fatkodima/online_migrations?tab=readme-ov-file#removing-a-column
+  # Active Record caches database columns at runtime, so if you drop a column, it can cause exceptions until your app reboots.
+  # Ignoring the columns that are going to be dropped avoids this issue.
+  self.ignored_columns += %w[encrypted_password
+                             reset_password_token
+                             reset_password_sent_at
+                             confirmation_token
+                             confirmed_at
+                             confirmation_sent_at
+                             unconfirmed_email
+                             failed_attempts
+                             unlock_token
+                             locked_at]
+
   devise(*%I[
     timeoutable
     trackable
