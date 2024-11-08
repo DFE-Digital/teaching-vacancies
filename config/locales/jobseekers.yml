@@ -14,11 +14,6 @@ en:
         delete_account: Delete your account
         page_title: Your account
         change_details_link_text: Change your sign in details in your GOV.UK One Login.
-        summary_list:
-          change: Change
-          email: Email address
-          password: Account password
-          password_placeholder: "**************"
         data_to_change_in_govuk_one_login:
           email: email address
           password: password
@@ -563,57 +558,12 @@ en:
       withdraw:
         success: You have withdrawn your application for %{job_title}
     registrations:
-      check_your_email:
-        description: You should have received a link by email. Follow the link to confirm your email address. The link will expire in 24 hours.
-        having_trouble_html: Still having trouble? %{mail_to} to our support team.
-        instructions_html: If it does not arrive in 5 minutes, check your junk folder or %{resend_link}.
-        report_it: Report it
-        request_support_link: Request support
-        resend_summary: Need us to resend the email?
-        resend_text_html: If you did not receive the email, you can %{resend_link} or %{restart_link}.<br><br>Need help? %{request_support_link}.
-        resend_link: resend the email
-        restart_link: provide another email address
-        title: Check your email
       confirm_destroy:
         feedback_title: Tell us why you are closing your account
         page_title: Close account
         page_description: You will no longer receive any job alerts you have subscribed to, and any job applications you have made will be withdrawn.
       destroy:
         success: Your account has been closed. If you want to reactivate your account at any point, you can just sign back in with your email address.
-      edit:
-        edit_email_title: Update email address
-        edit_password_title: Change password
-      edit_email:
-          current_password: Password
-          description: Enter your password and the new email address for your Teaching Vacancies account
-          new_email: New email address
-          title: Update email address
-      edit_password:
-        current_password:
-          label: Old password
-          show:
-            label: Show current password
-            announcement: Your current password is visible
-          hide:
-            label: Hide current password
-            announcement: Your current password is hidden
-        description: Password reset for %{email}
-        new_password:
-          label: New password
-          show:
-            label: Show new password
-            announcement: Your new password is visible
-          hide:
-            label: Hide new password
-            announcement: Your new password is hidden
-        title: Change password
-      new:
-        description: Create an account to save and apply for jobs.
-        sign_in:
-          content_html: You can %{link_to} here.
-          link: sign in
-          heading: Already have a jobseeker account?
-        title: Create a jobseeker account
     saved_jobs:
       destroy:
         success: Saved job removed

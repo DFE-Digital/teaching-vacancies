@@ -2,7 +2,6 @@ class Jobseeker < ApplicationRecord
   has_encrypted :last_sign_in_ip, :current_sign_in_ip
 
   devise(*%I[
-    registerable
     timeoutable
     trackable
   ])

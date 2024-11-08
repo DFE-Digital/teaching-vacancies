@@ -77,9 +77,8 @@ Rails.application.routes.draw do
 
   namespace :jobseekers do
     devise_scope :jobseeker do
-      get :check_your_email, to: "registrations#check_your_email", as: :check_your_email
+      delete "/", to: "registrations#destroy", as: :destroy_account
       get :confirm_destroy, to: "registrations#confirm_destroy", as: :confirm_destroy_account
-      get :resend_instructions, to: "registrations#resend_instructions", as: :resend_instructions
     end
 
     resources :login_keys, only: %i[new create] do

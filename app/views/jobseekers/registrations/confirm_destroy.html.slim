@@ -6,7 +6,7 @@
 
     p = t(".page_description")
 
-    = form_for @close_account_feedback_form, url: registration_path(current_jobseeker), method: :delete do |f|
+    = form_for @close_account_feedback_form, url: jobseekers_destroy_account_path, method: :delete do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset(:reason, legend: { size: "m" }) do
