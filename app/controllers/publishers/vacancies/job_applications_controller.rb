@@ -42,6 +42,26 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: job_application.name)
   end
 
+  def tag
+    job_applications = params[:job_applications].reject(&:blank?)
+    if job_applications.size == 0
+      render "index"
+    else
+      @job_applications = JobApplication.find job_applications
+      render "tag"
+    end
+  end
+
+  def update_tag
+    form_params = params.require(:publishers_job_application_status_form).permit(:status, job_applications: [])
+    status = form_params.fetch(:status)
+
+    JobApplication.find(form_params.fetch(:job_applications)).each do |job_application|
+      job_application.update!(status: status)
+    end
+    redirect_to organisation_job_job_applications_path(vacancy.id)
+  end
+
   private
 
   def job_applications

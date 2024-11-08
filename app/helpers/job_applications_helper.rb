@@ -109,14 +109,6 @@ module JobApplicationsHelper
     end
   end
 
-  def job_application_view_applicant(vacancy, job_application)
-    if job_application.withdrawn?
-      tag.span job_application.name
-    else
-      govuk_link_to job_application.name, organisation_job_job_application_path(vacancy.id, job_application)
-    end
-  end
-
   def job_application_page_title_prefix(form, title)
     if form.errors.any?
       "Error: #{title}"
