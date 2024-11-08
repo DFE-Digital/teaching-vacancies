@@ -13,8 +13,8 @@ Rails.application.configure do
                        "https://*.sentry.io",
                        "https://*.google-analytics.com",
                        "https://*.analytics.google.com",
-                       "https://dev.visualwebsiteoptimizer.com",
-                       "https://v.clarity.ms"
+                       "https://*.visualwebsiteoptimizer.com",
+                       "https://*.clarity.ms"
 
     policy.font_src    :self,
                        :data
@@ -43,7 +43,8 @@ Rails.application.configure do
 
     policy.style_src   :self
 
-    policy.worker_src  :self, :blob
+    policy.worker_src  :self,
+                       "https://*.visualwebsiteoptimizer.com"
   end
 
   # Generate session nonces for permitted importmap and inline scripts
