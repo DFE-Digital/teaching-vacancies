@@ -33,6 +33,7 @@ Rails.application.configure do
     policy.object_src  :none
 
     policy.script_src  :self,
+                       :unsafe_inline, # Backwards compatibility; ignored by modern browsers as we set a nonce for scripts
                        "https://cdn.rollbar.com",
                        "https://www.google-analytics.com",
                        "https://www.googletagmanager.com",
