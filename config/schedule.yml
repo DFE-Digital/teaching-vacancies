@@ -125,11 +125,6 @@ update_dsi_users_in_db:
   class: 'UpdateDSIUsersInDbJob'
   queue: low
 
-delete_jobseekers_with_incorrect_emails:
-  cron: '30 2 * * 1'
-  class: 'DeleteJobseekersWithIncorrectEmailsJob'
-  queue: low
-
 delete_old_feedback:
   cron: '0 3 * * *'
   class: 'DeleteOldFeedbackJob'

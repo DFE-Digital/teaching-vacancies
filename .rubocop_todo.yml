@@ -1275,7 +1275,6 @@ RSpec/VerifiedDoubles:
     - 'spec/form_models/publishers/vacancy_form_sequence_spec.rb'
     - 'spec/helpers/job_applications_helper_spec.rb'
     - 'spec/helpers/vacancies_helper_spec.rb'
-    - 'spec/jobs/delete_jobseekers_with_incorrect_emails_job_spec.rb'
     - 'spec/jobs/import_polygon_data_job_spec.rb'
     - 'spec/jobs/remove_google_index_queue_job_spec.rb'
     - 'spec/jobs/remove_invalid_subscriptions_job_spec.rb'
@@ -1332,7 +1331,6 @@ RSpecRails/HaveHttpStatus:
 RSpecRails/InferredSpecType:
   Exclude:
     - 'spec/helpers/feedbacks_helper_spec.rb'
-    - 'spec/jobs/delete_jobseekers_with_incorrect_emails_job_spec.rb'
     - 'spec/jobs/delete_old_non_draft_job_applications_job_spec.rb'
     - 'spec/jobs/send_email_for_draft_job_applications_job_spec.rb'
     - 'spec/jobs/send_email_for_unapplied_saved_vacancies_job_spec.rb'
