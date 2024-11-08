@@ -12,4 +12,3 @@ h1.govuk-heading-l = title
         - summary_list.with_row do |row|
           - row.with_key text: column_name.humanize
           - row.with_value text: @api_client.send(column_name)&.to_s
-

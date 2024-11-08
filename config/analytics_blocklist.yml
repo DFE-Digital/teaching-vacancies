@@ -106,6 +106,13 @@
   - created_at
   - updated_at
   - status
+  :api_clients:
+    - id
+    - name
+    - api_key
+    - last_rotated_at
+    - created_at
+    - updated_at
   :vacancies:
   - readable_job_location
   - readable_phases
