@@ -42,8 +42,6 @@ Rails.application.configure do
                        "https://www.clarity.ms"
 
     policy.style_src   :self
-
-    policy.worker_src  :self, :blob
   end
 
   # Generate session nonces for permitted importmap and inline scripts
