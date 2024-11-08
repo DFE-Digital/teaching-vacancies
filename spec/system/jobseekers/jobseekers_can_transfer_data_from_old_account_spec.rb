@@ -89,32 +89,10 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
 
       fill_in "jobseekers_request_account_transfer_email_form[email]", with: jobseeker.email
       click_on "Save and continue"
-      expect(delivered_emails.last.subject).to eq "Transfer your account data"
-      expect(delivered_emails.last.body.raw_source).to include "Your verification code: #{jobseeker.reload.account_merge_confirmation_code}"
 
-      # Before transfer, create some data in the jobseeker account
-      jobseeker.jobseeker_profile.destroy!
-      profile = create(:jobseeker_profile, :completed, jobseeker: jobseeker)
-      submitted_application = create(:job_application, :status_submitted, jobseeker: jobseeker)
-
-      # Attempt to transfer data to the same account
-      fill_in "jobseekers_account_transfer_form[account_merge_confirmation_code]", with: jobseeker.account_merge_confirmation_code
-      click_on "Confirm account transfer"
-      expect(page).to have_content I18n.t("jobseekers.account_transfers.create.failure")
-
-      # Jobseeker hasn't lost any data
-      click_on "Your profile"
-
-      expect(page).to have_content profile.first_name
-      expect(page).to have_content profile.last_name
-      expect(page).to have_content profile.qualifications.first.name
-      expect(page).to have_content profile.employments.first.organisation
-      expect(page).to have_content profile.training_and_cpds.first.name
-
-      click_on "Applications"
-
-      expect(page).to have_content "Applications (1)"
-      expect(page).to have_content submitted_application.vacancy.job_title
+      within "ul.govuk-list.govuk-error-summary__list" do
+        expect(page).to have_link("You entered the email of the account you are currently logged in to. The data in this account is already available to you and cannot be transferred.", href: "#jobseekers-request-account-transfer-email-form-email-field-error")
+      end
     end
   end
 

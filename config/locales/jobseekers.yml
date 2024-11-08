@@ -972,7 +972,7 @@ en:
         hint: If you have an account associated with this email address, we'll send you an email to verify your details.
       errors:
         recent_code_request: Please wait 1 minute before requesting another code.
-        cannot_transfer_logged_in_account: You cannot request to transfer data from the account you are currently logged in as.
+        cannot_transfer_logged_in_account: You entered the email of the account you are currently logged in to. The data in this account is already available to you and cannot be transferred.
       success: Email resent
     account_transfers:
       new:
