@@ -30,9 +30,11 @@ import UtilsController from './js_components/utils';
 Sentry.init({
   // `sentryConfig` is set from the application layout
   dsn: window.sentryConfig.dsn,
+  integrations: [Sentry.replayIntegration()],
+  replaysSessionSampleRate: 0.0,
+  replaysOnErrorSampleRate: 1.0,
   environment: window.sentryConfig.environment,
   release: window.sentryConfig.release,
-  integrations: [],
   tracesSampleRate: 0, // Disable tracing (performance monitoring, doesn't impact errors)
   ignoreErrors: [/'Object\.prototype\.hasOwnProperty\.call\([eo],"telephone"\)'/],
 });
