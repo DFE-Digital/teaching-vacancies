@@ -6,6 +6,6 @@
   |   environment: window.sentryConfig.environment,
   |   release: window.sentryConfig.release,
   |   integrations: [new Sentry.Replay()],
-  |   replaysSessionSampleRate: 1.0,  // Adjust the sampling rate for all sessions (0.1 = 10%)
+  |   replaysSessionSampleRate: 0,
   |   replaysOnErrorSampleRate: 1.0,  // Capture all sessions with errors
   | });
