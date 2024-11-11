@@ -31,7 +31,7 @@ Sentry.init({
   // `sentryConfig` is set from the application layout
   dsn: window.sentryConfig.dsn,
   integrations: [Sentry.replayIntegration()],
-  replaysSessionSampleRate: 0.0,
+  replaysSessionSampleRate: 1.0,
   replaysOnErrorSampleRate: 1.0,
   environment: window.sentryConfig.environment,
   release: window.sentryConfig.release,
