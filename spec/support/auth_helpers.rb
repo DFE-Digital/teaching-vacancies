@@ -136,10 +136,17 @@ module AuthHelpers
   # That limits when this stub can be used, as it needs to be called after the user has navigated to the
   # 'new_jobseeker_session_path'.
   def stub_jobseeker_govuk_one_login_for(email:, one_login_id:, nonce:)
+    stub_jobseeker_govuk_one_login_rsa_key
     stub_jobseeker_govuk_one_login_authorisation
     stub_jobseeker_govuk_one_login_tokens
     stub_jobseeker_govuk_one_login_jwt(nonce:, one_login_id:)
     stub_jobseeker_govuk_one_login_user_info(email:, one_login_id:)
+  end
+
+  def stub_jobseeker_govuk_one_login_rsa_key
+    allow(Rails.application.config).to receive(:govuk_one_login_private_key).and_return("private_key")
+    rsa_stub = OpenSSL::PKey::RSA.new(1024)
+    allow(OpenSSL::PKey::RSA).to receive(:new).and_return(rsa_stub)
   end
 
   def stub_jobseeker_govuk_one_login_authorisation

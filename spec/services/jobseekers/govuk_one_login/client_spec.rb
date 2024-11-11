@@ -18,6 +18,8 @@ RSpec.describe Jobseekers::GovukOneLogin::Client do
     let(:request_mock) { instance_double(Net::HTTP::Post, set_form_data: true) }
 
     before do
+      allow(Rails.application.config).to receive(:govuk_one_login_private_key).and_return("private_key")
+      allow(OpenSSL::PKey::RSA).to receive(:new).with("private_key").and_return(instance_double(OpenSSL::PKey::RSA))
       allow(JWT).to receive(:encode).and_return("jwt_assertion")
       allow(Net::HTTP::Post).to receive(:new).and_return(request_mock)
     end
