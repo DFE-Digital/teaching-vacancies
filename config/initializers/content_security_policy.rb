@@ -17,7 +17,8 @@ Rails.application.configure do
                        "https://*.clarity.ms"
 
     policy.font_src    :self,
-                       :data
+                       :data,
+                       "https://fonts.gstatic.com/*"
 
     policy.frame_src   :self,
                        "https://2673654.fls.doubleclick.net", # Floodlight
