@@ -13,6 +13,7 @@ Rails.application.configure do
                        "https://*.sentry.io",
                        "https://*.google-analytics.com",
                        "https://*.analytics.google.com",
+                       "https://www.google.com",
                        "https://*.visualwebsiteoptimizer.com",
                        "https://*.clarity.ms"
 
@@ -22,6 +23,7 @@ Rails.application.configure do
 
     policy.frame_src   :self,
                        "https://2673654.fls.doubleclick.net", # Floodlight
+                       "https://td.doubleclick.net",
                        "https://www.recaptcha.net",
                        "https://www.googletagmanager.com",
                        "https://www.youtube.com"
