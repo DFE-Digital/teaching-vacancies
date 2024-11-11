@@ -25,6 +25,7 @@ class Vacancies::Import::Sources::Broadbean
   def each
     items.each do |item|
       schools = find_schools(item)
+      next if schools.blank?
       next if vacancy_listed_at_excluded_school_type?(schools)
 
       v = Vacancy.find_or_initialize_by(
@@ -155,12 +156,14 @@ class Vacancies::Import::Sources::Broadbean
   end
 
   def find_schools(item)
-    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"])
-    school_urns = item["schoolUrns"]&.split(",")
+    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"]) if item["trustUID"].present?
 
-    return [] if multi_academy_trust.blank? && school_urns.blank?
-    return Organisation.where(urn: school_urns) if multi_academy_trust.blank?
-    return Array(multi_academy_trust) if school_urns.blank?
+    school_urns = item["schoolUrns"]&.split(",")
+    schools = Organisation.where(urn: school_urns) if school_urns.present?
+
+    return [] if multi_academy_trust.blank? && schools.blank?
+    return schools if multi_academy_trust.blank?
+    return Array(multi_academy_trust) if schools.blank?
 
     # When having both trust and schools, only return the schools that are in the trust if any. Otherwise, return the trust itself.
     multi_academy_trust.schools.where(urn: school_urns).order(:created_at).presence || Array(multi_academy_trust)

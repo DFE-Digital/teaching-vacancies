@@ -25,6 +25,7 @@ class Vacancies::Import::Sources::UnitedLearning
   def each
     items.each do |item|
       school = school_group.schools.find_by(urn: item["URN"])
+      next if school.blank?
       next if vacancy_listed_at_excluded_school_type?([school])
 
       v = Vacancy.find_or_initialize_by(

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Vacancies::Import::Sources::VacancyPoster do
   let(:response_body) { file_fixture("vacancy_sources/vacancy_poster.xml").read }
-  let(:response) { double("VacancyPosterHttpResponse", success?: true, body: response_body) }
+  let(:response) { instance_double(Net::HTTPResponse, body: response_body) }
 
   let!(:school1) { create(:school, name: "Test School", urn: "123456", phase: :primary) }
   let(:schools) { [school1] }
@@ -17,7 +17,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
         job_advert: "What is the job role? Castle Wood is an outstanding special school.",
         salary: "£80000",
         job_roles: [job_role],
-        key_stages: ["ks5"],
+        key_stages: %w[ks5],
         working_patterns: %w[full_time],
         contract_type: "permanent",
         phases: %w[primary],
@@ -54,6 +54,14 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
       expect(vacancy.external_reference).to eq("TEST002")
 
       expect(vacancy.organisations).to eq(schools)
+    end
+
+    context "when there is no school matching the source URN" do
+      let(:response_body) { super().gsub("123456", "wrong_urn") }
+
+      it "does not import vacancy" do
+        expect(subject.count).to eq(0)
+      end
     end
 
     describe "working_patterns mapping" do
@@ -93,7 +101,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
         let(:response_body) { super().gsub("full_time", "job_share") }
 
         it "maps job_share to part time" do
-          expect(vacancy.working_patterns).to eq ["part_time"]
+          expect(vacancy.working_patterns).to eq %w[part_time]
         end
 
         it "sets is_job_share to true" do
@@ -118,7 +126,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
           let(:job_role) { role }
 
           it "maps the source role to '[deputy_headteacher]' in the vacancy" do
-            expect(vacancy.job_roles).to eq(["deputy_headteacher"])
+            expect(vacancy.job_roles).to eq(%w[deputy_headteacher])
           end
         end
       end
@@ -128,7 +136,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
           let(:job_role) { role }
 
           it "maps the source role to '[assistant_headteacher]' in the vacancy" do
-            expect(vacancy.job_roles).to eq(["assistant_headteacher"])
+            expect(vacancy.job_roles).to eq(%w[assistant_headteacher])
           end
         end
       end
@@ -138,7 +146,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
           let(:job_role) { role }
 
           it "maps the source role to '[headteacher]' in the vacancy" do
-            expect(vacancy.job_roles).to eq(["headteacher"])
+            expect(vacancy.job_roles).to eq(%w[headteacher])
           end
         end
       end
@@ -156,7 +164,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
           let(:job_role) { role }
 
           it "maps the source role to '[head_of_year_or_phase]' in the vacancy" do
-            expect(vacancy.job_roles).to eq(["head_of_year_or_phase"])
+            expect(vacancy.job_roles).to eq(%w[head_of_year_or_phase])
           end
         end
       end
@@ -165,7 +173,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
         let(:job_role) { "head_of_department_or_curriculum" }
 
         it "maps the source role to '[head_of_department_or_curriculum]' in the vacancy" do
-          expect(vacancy.job_roles).to eq(["head_of_department_or_curriculum"])
+          expect(vacancy.job_roles).to eq(%w[head_of_department_or_curriculum])
         end
       end
 
@@ -182,7 +190,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
           let(:job_role) { role }
 
           it "maps the source role to '[education_support]' in the vacancy" do
-            expect(vacancy.job_roles).to eq(["education_support"])
+            expect(vacancy.job_roles).to eq(%w[education_support])
           end
         end
       end
@@ -196,7 +204,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
           let(:phase) { phase }
 
           it "maps the phase to '[sixth_form_or_college]' in the vacancy" do
-            expect(vacancy.phases).to eq(["sixth_form_or_college"])
+            expect(vacancy.phases).to eq(%w[sixth_form_or_college])
           end
         end
       end
@@ -205,7 +213,7 @@ RSpec.describe Vacancies::Import::Sources::VacancyPoster do
         let(:phase) { "through_school" }
 
         it "maps the phase to '[through]' in the vacancy" do
-          expect(vacancy.phases).to eq(["through"])
+          expect(vacancy.phases).to eq(%w[through])
         end
       end
     end
