@@ -9,6 +9,6 @@ class ApiClient < ApplicationRecord
   end
 
   def rotate_api_key!
-    update(api_key: SecureRandom.hex(20), last_rotated_at: Time.current)
+    update!(api_key: SecureRandom.hex(20), last_rotated_at: Time.current)
   end
 end
