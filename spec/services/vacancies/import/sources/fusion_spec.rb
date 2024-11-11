@@ -20,7 +20,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
         job_title: "Class Teacher",
         job_advert: "Lorem Ipsum dolor sit amet",
         salary: "£25,714.00 to £41,604.00",
-        job_roles: ["teacher"],
+        job_roles: %w[teacher],
         key_stages: %w[ks1 ks2],
         working_patterns: %w[full_time],
         contract_type: "fixed_term",
@@ -71,7 +71,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       end
 
       context "when the source role is 'senior_leader'" do
-        let(:source_roles) { ["senior_leader"] }
+        let(:source_roles) { %w[senior_leader] }
 
         it "maps the source role to '[headteacher, assistant_headteacher, deputy_headteacher]' in the vacancy" do
           expect(vacancy.job_roles).to contain_exactly("headteacher", "assistant_headteacher", "deputy_headteacher")
@@ -79,7 +79,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
       end
 
       context "when the source role is 'middle_leader'" do
-        let(:source_roles) { ["middle_leader"] }
+        let(:source_roles) { %w[middle_leader] }
 
         it "maps the source role to '[head_of_year_or_phase, head_of_department_or_curriculum]' in the vacancy" do
           expect(vacancy.job_roles).to contain_exactly("head_of_year_or_phase", "head_of_department_or_curriculum")
@@ -91,16 +91,16 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
           let(:source_roles) { [role] }
 
           it "maps the source role to '[head_of_year_or_phase]' in the vacancy" do
-            expect(vacancy.job_roles).to eq(["head_of_year_or_phase"])
+            expect(vacancy.job_roles).to eq(%w[head_of_year_or_phase])
           end
         end
       end
 
       context "when the source role is 'learning_support'" do
-        let(:source_roles) { ["learning_support"] }
+        let(:source_roles) { %w[learning_support] }
 
         it "maps the source role to 'other_support' in the vacancy" do
-          expect(vacancy.job_roles).to eq(["other_support"])
+          expect(vacancy.job_roles).to eq(%w[other_support])
         end
       end
 
@@ -170,7 +170,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
         end
 
         it "maps job_share to part time" do
-          expect(vacancy.working_patterns).to eq ["part_time"]
+          expect(vacancy.working_patterns).to eq %w[part_time]
         end
 
         it "sets is_job_share to true" do
@@ -273,7 +273,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
           let(:phase) { phase }
 
           it "maps the phase to '[sixth_form_or_college]' in the vacancy" do
-            expect(vacancy.phases).to eq(["sixth_form_or_college"])
+            expect(vacancy.phases).to eq(%w[sixth_form_or_college])
           end
         end
       end
@@ -282,7 +282,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
         let(:phase) { "through_school" }
 
         it "maps the phase to '[through]' in the vacancy" do
-          expect(vacancy.phases).to eq(["through"])
+          expect(vacancy.phases).to eq(%w[through])
         end
       end
     end
@@ -292,7 +292,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
 
       context "when vacancy is a job share" do
         it "sets vacancy to part time and is_job_share to true" do
-          expect(vacancy.working_patterns).to eq(["part_time"])
+          expect(vacancy.working_patterns).to eq(%w[part_time])
           expect(vacancy.is_job_share).to eq(true)
         end
       end
@@ -391,6 +391,15 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
         let(:out_of_scope_school) { create(:school, detailed_school_type: "Other independent school", urn: "000000") }
         let(:trust_schools) { [out_of_scope_school] }
         let(:school_urns) { [out_of_scope_school.urn] }
+
+        it "does not import vacancy" do
+          expect(subject.count).to eq(0)
+        end
+      end
+
+      context "when the school URN doesn't belong to any school" do
+        let(:school_urns) { %w[123456789] }
+        let(:trust_uid) { nil }
 
         it "does not import vacancy" do
           expect(subject.count).to eq(0)

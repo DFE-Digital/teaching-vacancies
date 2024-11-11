@@ -1,8 +1,9 @@
 require "cgi"
 
 class Vacancies::Import::Sources::VacancyPoster
+  include Vacancies::Import::Shared
+
   FEED_URL = ENV.fetch("VACANCY_SOURCE_VACANCY_POSTER_FEED_URL").freeze
-  VENTRUS_TRUST_UID = "".freeze
   SOURCE_NAME = "vacancy_poster".freeze
 
   class FeedItem
@@ -23,6 +24,9 @@ class Vacancies::Import::Sources::VacancyPoster
 
   def each
     items.each do |item|
+      schools = find_schools(item)
+      next if invalid_school?(schools, item["trustUID"])
+
       v = Vacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: item["reference"]&.strip,
@@ -35,7 +39,7 @@ class Vacancies::Import::Sources::VacancyPoster
       v.publish_on ||= Date.today
 
       begin
-        v.assign_attributes(attributes_for(item))
+        v.assign_attributes(attributes_for(item, schools))
       rescue ArgumentError => e
         v.errors.add(:base, e)
       end
@@ -44,7 +48,13 @@ class Vacancies::Import::Sources::VacancyPoster
     end
   end
 
-  def attributes_for(item)
+  def invalid_school?(schools, trust_uid)
+    schools.blank? ||
+      vacancy_listed_at_excluded_trust_type?(schools, trust_uid) ||
+      vacancy_listed_at_excluded_school_type?(schools)
+  end
+
+  def attributes_for(item, schools)
     {
       job_title: item["jobTitle"],
       job_advert: job_advert_for(item),
@@ -62,7 +72,7 @@ class Vacancies::Import::Sources::VacancyPoster
       phases: phase_for(item),
       visa_sponsorship_available: false,
       is_job_share: job_share_for?(item),
-    }.merge(organisation_fields(item))
+    }.merge(organisation_fields(schools))
   end
 
   def working_patterns_for(item)
@@ -92,8 +102,7 @@ class Vacancies::Import::Sources::VacancyPoster
     item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
   end
 
-  def organisation_fields(item)
-    schools = find_schools(item)
+  def organisation_fields(schools)
     first_school = schools.first
 
     {
@@ -104,12 +113,14 @@ class Vacancies::Import::Sources::VacancyPoster
   end
 
   def find_schools(item)
-    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"]&.strip)
-    school_urn = item["schoolUrns"]&.strip
+    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"].strip) if item["trustUID"].present?
 
-    return [] if multi_academy_trust.blank? && school_urn.blank?
-    return Organisation.where(urn: school_urn) if multi_academy_trust.blank?
-    return Array(multi_academy_trust) if school_urn.blank?
+    school_urn = item["schoolUrns"]&.strip
+    schools = Organisation.where(urn: school_urn) if school_urn.present?
+
+    return [] if multi_academy_trust.blank? && schools.blank?
+    return schools if multi_academy_trust.blank?
+    return Array(multi_academy_trust) if schools.blank?
 
     # When having both trust and schools, only return the schools that are in the trust if any. Otherwise, return the trust itself.
     multi_academy_trust.schools.where(urn: school_urn).order(:created_at).presence || Array(multi_academy_trust)
