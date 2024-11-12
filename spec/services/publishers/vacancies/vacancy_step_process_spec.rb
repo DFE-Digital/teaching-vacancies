@@ -111,7 +111,6 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         let(:organisation) { build_stubbed(:local_authority) }
 
         it "has the expected steps" do
-          # expect(subject.steps).not_to include(:applying_for_the_job)
           expect(subject.steps).to include(:how_to_receive_applications)
         end
       end
