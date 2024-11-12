@@ -5,6 +5,7 @@ module JobApplicationsHelper
     shortlisted: "shortlisted",
     unsuccessful: "rejected",
     withdrawn: "withdrawn",
+    interviewing: "interviewing",
   }.freeze
 
   JOBSEEKER_STATUS_MAPPINGS = {
@@ -25,6 +26,7 @@ module JobApplicationsHelper
     shortlisted: "green",
     unsuccessful: "red",
     withdrawn: "yellow",
+    interviewing: "turquoise",
   }.freeze
 
   def job_application_qualified_teacher_status_info(job_application)

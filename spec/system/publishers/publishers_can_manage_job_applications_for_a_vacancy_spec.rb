@@ -22,6 +22,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
        build(:job_application, :status_shortlisted, last_name: "Billy"),
        build(:job_application, :status_unsuccessful, last_name: "Dave"),
        build(:job_application, :status_withdrawn, last_name: "Ethan"),
+       build(:job_application, :status_interviewing, last_name: "Freddy"),
        build(:job_application, :status_draft)]
     end
     let(:job_application_submitted) { JobApplication.find_by!(status: "submitted") }
@@ -29,6 +30,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     let(:job_application_shortlisted) { JobApplication.find_by!(status: "shortlisted") }
     let(:job_application_unsuccessful) { JobApplication.find_by!(status: "unsuccessful") }
     let(:job_application_withdrawn) {  JobApplication.find_by!(status: "withdrawn") }
+    let(:job_application_interviewing) {  JobApplication.find_by!(status: "interviewing") }
 
     before { visit organisation_job_job_applications_path(vacancy.id) }
 
@@ -46,7 +48,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
 
       it "shows a card for each application that has been submitted and no draft applications", :js do
-        expect(page.find(".govuk-table__body")).to have_css(".govuk-table__row", count: 5)
+        expect(page.find(".govuk-table__body")).to have_css(".govuk-table__row", count: 6)
       end
     end
 
