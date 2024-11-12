@@ -14,6 +14,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       job_application.draft? || job_application.withdrawn?
   end
 
+  def index
+    @form = Publishers::JobApplication::TagForm.new
+  end
+
   def show
     redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, job_application) if job_application.withdrawn?
 
@@ -43,21 +47,21 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def tag
-    job_applications = params[:job_applications].reject(&:blank?)
-    if job_applications.size == 0
-      render "index"
-    else
-      @job_applications = JobApplication.find job_applications
+    tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
+    @form = Publishers::JobApplication::TagForm.new(tag_params.merge(job_applications: tag_params.fetch(:job_applications).compact_blank))
+    if @form.valid?
+      @job_applications = JobApplication.find @form.job_applications
       render "tag"
+    else
+      render "index"
     end
   end
 
   def update_tag
     form_params = params.require(:publishers_job_application_status_form).permit(:status, job_applications: [])
-    status = form_params.fetch(:status)
 
     JobApplication.find(form_params.fetch(:job_applications)).each do |job_application|
-      job_application.update!(status: status)
+      job_application.update!(status: form_params.fetch(:status))
     end
     redirect_to organisation_job_job_applications_path(vacancy.id)
   end

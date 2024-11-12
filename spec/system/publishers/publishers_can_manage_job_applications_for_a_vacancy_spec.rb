@@ -9,6 +9,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     login_publisher(publisher: publisher, organisation: organisation)
     create(:vacancy, vacancy_trait, expires_at: expired_at, organisations: [organisation], job_applications: job_applications)
   end
+
   after { logout }
 
   context "when a vacancy has expired and it has applications" do
@@ -47,6 +48,11 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       it "shows a card for each application that has been submitted and no draft applications", :js do
         expect(page.find(".govuk-table__body")).to have_css(".govuk-table__row", count: 5)
       end
+    end
+
+    scenario "not selecting anything", :js do
+      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
+      expect(page).to have_content(I18n.t("activemodel.errors.models.publishers/job_application/tag_form.attributes.job_applications.too_short"))
     end
 
     scenario "Changing multiple statuses at once", :js do

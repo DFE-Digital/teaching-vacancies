@@ -1,4 +1,7 @@
-= form_with(url: tag_organisation_job_job_applications_path(vacancy.id), method: :get) do |f|
+= form_with(model: form, url: tag_organisation_job_job_applications_path(vacancy.id), method: :get, scope: :publishers_job_application_tag_form) do |f|
+
+  = f.govuk_error_summary
+
   = f.govuk_check_boxes_fieldset :job_applications, legend: { text: heading } do
     = govuk_table(html_attributes: { data: { module: "moj-multi-select", multi_select_checkbox: "#multi_select_#{multi_select}" } }) do |table|
 

@@ -15,6 +15,7 @@ RSpec.describe "Draft job applications for publishers" do
     before do
       login_publisher(publisher: publisher)
     end
+
     after { logout }
 
     describe "on the 'manage jobs' page", :js do

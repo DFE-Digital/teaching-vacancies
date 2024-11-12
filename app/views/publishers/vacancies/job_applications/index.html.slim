@@ -19,27 +19,27 @@
       = govuk_tabs do |tabs|
         - tabs.with_tab(label: "All (#{sorted_job_applications.size})") do
           - if sorted_job_applications.any?
-            = render "candidates", vacancy: vacancy, candidates: sorted_job_applications, heading: "All Applications", multi_select: "all"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: sorted_job_applications, heading: "All Applications", multi_select: "all"
           - else
             = render EmptySectionComponent.new title: t(".no_applicants")
         - tabs.with_tab(label: "New (#{new_ones.size})")
           - if new_ones.any?
-            = render "candidates", vacancy: vacancy, candidates: new_ones, heading: "New Applications", multi_select: "new"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: new_ones, heading: "New Applications", multi_select: "new"
           - else
             = render EmptySectionComponent.new title: t(".no_new")
         - tabs.with_tab(label: "Not Considering (#{rejected.size})")
           - if rejected.any?
-            = render "candidates", vacancy: vacancy, candidates: rejected, heading: "Not being considered", multi_select: "rej"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: rejected, heading: "Not being considered", multi_select: "rej"
           - else
             = render EmptySectionComponent.new title: t(".no_rejected")
         - tabs.with_tab(label: "Shortlisted (#{shortlisted.size})")
           - if shortlisted.any?
-            = render "candidates", vacancy: vacancy, candidates: shortlisted, heading: "Shortlisted Applications", multi_select: "short"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: shortlisted, heading: "Shortlisted Applications", multi_select: "short"
           - else
             = render EmptySectionComponent.new title: t(".no_shortlisted")
         - tabs.with_tab(label: "Interviewing (#{interviewing.size})")
           - if interviewing.any?
-            = render "candidates", vacancy: vacancy, candidates: interviewing, heading: "Interviewing Applications", multi_select: "inter"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: interviewing, heading: "Interviewing Applications", multi_select: "inter"
           - else
             = render EmptySectionComponent.new title: t(".no_interviewing")
 
