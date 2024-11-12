@@ -2,13 +2,15 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   include Wicked::Wizard
   include Jobseekers::QualificationFormConcerns
 
-  steps :personal_details, :professional_status, :qualifications, :training_and_cpds, :employment_history, :personal_statement, :references,
-        :equal_opportunities, :ask_for_support, :declarations
+  before_action :set_steps
+  before_action :setup_wizard
 
   helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
   def show
     skip_step_if_missing
+
+    skip_step if step == :religion_details && !job_application.following_religion
 
     render_wizard
   end
@@ -18,7 +20,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
       job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
       update_or_create_jobseeker_profile! if step == :professional_status
 
-      return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if redirect_to_review?
+      if redirect_to_review? && (step_process.last_of_group? || (step == :following_religion && !job_application.following_religion))
+        return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved")
+      end
 
       render_wizard job_application
     else
@@ -146,5 +150,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
         has_teacher_reference_number: form_params[:has_teacher_reference_number],
       )
     end
+  end
+
+  def set_steps
+    self.steps = step_process.steps - [:review]
   end
 end
