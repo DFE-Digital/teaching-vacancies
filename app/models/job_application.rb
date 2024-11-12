@@ -12,6 +12,8 @@ class JobApplication < ApplicationRecord
     training_and_cpds: 9,
     employment_history: 3,
     personal_statement: 4,
+    following_religion: 10,
+    religion_details: 11,
     references: 5,
     equal_opportunities: 6,
     ask_for_support: 7,
@@ -25,6 +27,8 @@ class JobApplication < ApplicationRecord
     training_and_cpds: 9,
     employment_history: 3,
     personal_statement: 4,
+    following_religion: 10,
+    religion_details: 11,
     references: 5,
     equal_opportunities: 6,
     ask_for_support: 7,
@@ -41,6 +45,10 @@ class JobApplication < ApplicationRecord
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
   enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5 }, default: 0
+
+  RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
+
+  enum religious_reference_type: RELIGIOUS_REFERENCE_TYPES
 
   has_encrypted :first_name, :last_name, :previous_names, :street_address, :city, :postcode,
                 :phone_number, :teacher_reference_number, :national_insurance_number,
@@ -65,6 +73,8 @@ class JobApplication < ApplicationRecord
   scope :draft, -> { where(status: "draft") }
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
+
+  has_one_attached :baptism_certificate, service: :amazon_s3_documents
 
   def name
     "#{first_name} #{last_name}"
