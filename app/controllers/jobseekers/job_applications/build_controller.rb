@@ -12,7 +12,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
       job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
       update_or_create_jobseeker_profile! if step == :professional_status
 
-      if redirect_to_review?
+      if redirect_to_review? && (step_process.last_of_group? || (step == :following_religion && !job_application.following_religion))
         redirect_to jobseekers_job_application_review_path(job_application), success: t("messages.jobseekers.job_applications.saved")
       else
         redirect_to jobseekers_job_application_apply_path job_application
@@ -139,5 +139,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
         has_teacher_reference_number: form_params[:has_teacher_reference_number],
       )
     end
+  end
+
+  def set_steps
+    self.steps = step_process.steps - [:review]
   end
 end

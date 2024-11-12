@@ -249,12 +249,5 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def quick_apply?
     previous_application? || profile.present?
   end
-
-  def trn_params
-    {
-      teacher_reference_number: current_jobseeker&.jobseeker_profile&.teacher_reference_number,
-      has_teacher_reference_number: current_jobseeker&.jobseeker_profile&.has_teacher_reference_number,
-    }
-  end
 end
 # rubocop:enable Metrics/ClassLength
