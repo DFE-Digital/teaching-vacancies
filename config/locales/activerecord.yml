@@ -480,6 +480,31 @@ en:
           attributes:
             training_and_cpds_section_completed:
               blank: Select yes if you have completed this section
+        jobseekers/job_application/following_religion_form:
+          attributes:
+            following_religion:
+              inclusion: Select yes if you follow a specific religion or faith
+        jobseekers/job_application/religion_details_form:
+          attributes:
+            faith:
+              blank: Enter your religious denomination or faith
+            religious_referee_name:
+              blank: Enter your referee name
+            religious_referee_address:
+              blank: Enter your referee address
+            religious_referee_role:
+              blank: Enter your referee role
+            religious_referee_email:
+              blank: Enter your referee email address
+              email: Enter a valid email address
+            religious_reference_type:
+              inclusion: Select if you can provide a religious referee
+            baptism_address:
+              blank: Enter the address of the baptism
+            baptism_date:
+              blank: Enter the baptism date
+            baptism_certificate:
+              blank: Upload your baptism certificate
         jobseekers/job_application/pre_submit_form:
           ask_for_support:
             incomplete: Complete the questions on interview support
@@ -499,6 +524,10 @@ en:
             incomplete: Complete your qualifications
           references:
             incomplete: Complete your references
+          following_religion:
+            incomplete: Complete your religious information
+          religion_details:
+            incomplete: Complete your religious information
           training_and_cpds:
             incomplete: Complete your training and CPD
         jobseekers/job_application/review_form:
