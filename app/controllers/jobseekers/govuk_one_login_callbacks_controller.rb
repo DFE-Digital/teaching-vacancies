@@ -22,6 +22,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
     if jobseeker
       sign_out_except(:jobseeker)
       trigger_jobseeker_successful_govuk_one_login_sign_in_event(jobseeker)
+      Jobseekers::ReactivateAccount.reactivate(jobseeker) if jobseeker.account_closed?
       sign_in_and_redirect jobseeker
     end
   rescue GovukOneLoginError => e
