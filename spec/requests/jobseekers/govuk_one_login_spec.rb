@@ -45,7 +45,7 @@ RSpec.describe "Govuk One Login authentication response" do
     end
 
     before do
-      allow_any_instance_of(ApplicationController).to receive(:stored_location_for).and_return(devise_stored_location) # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(ApplicationController).to receive(:stored_location_for).and_return(devise_stored_location)
       allow(Jobseekers::GovukOneLogin::UserFromAuthResponse).to receive(:call).and_return(govuk_one_login_user)
       get root_path # Loads OneLogin Sign-in button and sets session values for user.
     end

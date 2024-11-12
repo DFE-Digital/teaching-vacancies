@@ -126,8 +126,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def step_valid?(step)
     step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
 
-    attributes = job_application.attributes.slice(*step_form.fields.map(&:to_s))
-    attributes.merge!(trn_params) if step == :professional_status
+    attributes = step_form.storable_fields.index_with do |field|
+      case field
+      when :teacher_reference_number
+        current_jobseeker&.jobseeker_profile&.teacher_reference_number
+      when :has_teacher_reference_number
+        current_jobseeker&.jobseeker_profile&.has_teacher_reference_number
+      else
+        job_application.public_send(field)
+      end
+    end
 
     form = step_form.new(attributes)
 
@@ -231,12 +239,5 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def quick_apply?
     previous_application? || profile.present?
-  end
-
-  def trn_params
-    {
-      teacher_reference_number: current_jobseeker&.jobseeker_profile&.teacher_reference_number,
-      has_teacher_reference_number: current_jobseeker&.jobseeker_profile&.has_teacher_reference_number,
-    }
   end
 end
