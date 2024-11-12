@@ -4,9 +4,16 @@ class Jobseekers::JobApplications::BaseController < Jobseekers::BaseController
   helper_method :job_application
 
   def step_process
-    Jobseekers::JobApplications::JobApplicationStepProcess.new(
-      job_application: job_application,
-    )
+    if vacancy.religion_type.present?
+      Jobseekers::JobApplications::ReligiousJobApplicationStepProcess.new(
+        job_application: job_application,
+      )
+    else
+      Jobseekers::JobApplications::JobApplicationStepProcess.new(
+
+        job_application: job_application,
+      )
+    end
   end
 
   def job_application

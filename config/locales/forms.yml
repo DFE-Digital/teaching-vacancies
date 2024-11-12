@@ -166,6 +166,10 @@ en:
           Department for Education services.
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
+      jobseekers_job_application_religion_details_form:
+        baptism_date: For example 27 3 2007
+        faith: For example, Christian.
+        place_of_worship: For example, Westminster Abbey, Dean's Yard, London.
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
@@ -189,8 +193,6 @@ en:
         started_on: For example, %{date}
         reason_for_leaving: If you're still in the role, give a brief summary of your reasons for wanting to leave.
 
-      jobseekers_qualifications_degree_form:
-        institution: For example, a university or college
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
       jobseekers_unsubscribe_feedback_form:
@@ -433,6 +435,25 @@ en:
         training_and_cpds_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
+      jobseekers_job_application_following_religion_form:
+        following_religion_options:
+          "yes": "Yes"
+          "no": "No"
+      jobseekers_job_application_religion_details_form:
+        religious_reference_type_options:
+          referee: "Yes"
+          baptism_certificate: No, but I can provide a baptism certificate
+          baptism_date: No, but I can provide the date and address of my baptism
+          no_referee: "No"
+        religious_referee_name: Religious referee name
+        religious_referee_address: Religious referee address
+        religious_referee_role: Religious referee role
+        religious_referee_email: Religious referee email
+        religious_referee_phone: Religious referee phone number (optional)
+        baptism_certificate: Upload a file
+        baptism_address: Address of baptism location
+        faith: What is your religious denomination or faith?
+        place_of_worship: Address of place of worship (optional)
       jobseekers_job_application_review_form:
         update_profile_options:
           qualifications: Update qualifications on profile
@@ -840,6 +861,11 @@ en:
         gender: How would you describe your gender?
         orientation: How would you describe your sexual orientation?
         religion: What is your religion or belief?
+      jobseekers_job_application_following_religion_form:
+        following_religion: Are you currently following a religion or faith?
+      jobseekers_job_application_religion_details_form:
+        religious_reference_type: Can you provide a religious referee?
+        baptism_date: What was the date of your baptism?
       jobseekers_break_form:
         ended_on: End of gap
         started_on: Start of gap
@@ -873,7 +899,6 @@ en:
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
         has_teacher_reference_number: Do you have a teacher reference number (TRN)?
-
       jobseekers_profile_employment_form:
         current_role: Are you still working in this role?
         ended_on: End date
