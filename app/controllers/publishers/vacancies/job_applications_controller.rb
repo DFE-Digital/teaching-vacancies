@@ -50,7 +50,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
     @form = Publishers::JobApplication::TagForm.new(tag_params.merge(job_applications: tag_params.fetch(:job_applications).compact_blank))
     if @form.valid?
-      @job_applications = JobApplication.find @form.job_applications
+      @job_applications = vacancy.job_applications.where(id: @form.job_applications)
       render "tag"
     else
       render "index"
