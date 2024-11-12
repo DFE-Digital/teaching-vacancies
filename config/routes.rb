@@ -77,9 +77,8 @@ Rails.application.routes.draw do
 
   namespace :jobseekers do
     devise_scope :jobseeker do
-      get :check_your_email, to: "registrations#check_your_email", as: :check_your_email
+      delete "/", to: "registrations#destroy", as: :destroy_account
       get :confirm_destroy, to: "registrations#confirm_destroy", as: :confirm_destroy_account
-      get :resend_instructions, to: "registrations#resend_instructions", as: :resend_instructions
     end
 
     resources :login_keys, only: %i[new create] do
@@ -269,6 +268,9 @@ Rails.application.routes.draw do
   scope path: "jobseekers" do
     devise_scope :jobseeker do
       get "/auth/govuk_one_login/callback/", to: "jobseekers/govuk_one_login_callbacks#openid_connect"
+      get "/sign-in", to: "jobseekers/sessions#new", as: :new_jobseeker_session
+      post "/sign-in", to: "jobseekers/sessions#create", as: :create_jobseeker_session
+      delete "/sign_out", to: "jobseekers/sessions#destroy", as: :destroy_jobseeker_session # Handle AuthenticationFallbackForJobseekers sign out
       get "/sign_out", to: "jobseekers/sessions#destroy", as: :jobseekers_sign_out # Handle GovukOneLogin sign out 'post_logout_redirect_uri'
     end
   end

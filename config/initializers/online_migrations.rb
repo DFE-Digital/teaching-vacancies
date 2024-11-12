@@ -90,7 +90,7 @@ OnlineMigrations.configure do |config|
 
   # The Active Support backtrace cleaner that will be used to clean the
   # backtrace of a migration job that errors.
-  config.background_migrations.backtrace_cleaner = Rails.backtrace_cleaner
+  config.backtrace_cleaner = Rails.backtrace_cleaner
 
   # The callback to perform when an error occurs in the migration job.
   # config.background_migrations.error_handler = ->(error, errored_job) do

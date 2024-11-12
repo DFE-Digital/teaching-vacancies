@@ -39,8 +39,6 @@ RSpec.describe "Service Data supportal section" do
       expect(page).to have_row("Id", jobseeker.id)
       expect(page).to have_row("Email", jobseeker.email)
       expect(page).to have_row("Sign in count", "0")
-      expect(page).to have_row("Failed attempts", "0")
-      expect(page).to have_row("Confirmed at", jobseeker.confirmed_at)
     end
 
     within(summary_card("Personal Details")) do

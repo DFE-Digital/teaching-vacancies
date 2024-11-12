@@ -15,36 +15,9 @@ en:
           and any job applications you have made will be withdrawn.
         reactivate: >-
           If you want to reactivate your account at any point
-          you can just sign back in with this email address and password.
+          you can just sign back in with this email address.
         delete: If you want us to delete your data, please email %{mail_to}
         subject: Your Teaching Vacancies account has been closed
-      confirmation_instructions:
-        body: Select the link to confirm your email and activate the account.
-        heading: Activate your Teaching Vacancies account
-        intro: You have requested a Teaching Vacancies account using this email.
-        link: Verify email and create account
-        not_requested:
-          body: If you have not requested an account, you can ignore this email.
-          heading: Not requested this email?
-        subject: Verify your email with Teaching Vacancies
-        what_to_do: What to do now
-        reconfirmation:
-          heading: Confirm your new email address for your Teaching Vacancies account
-          intro: You have requested to change your email address to this address
-          link: Confirm new email address
-          subject: Confirm your new email for Teaching Vacancies
-        reminder:
-          heading: This is a reminder to verify your account with Teaching Vacancies
-          intro: You have requested to create an account with this email address.
-          link: Verify email and create account
-          subject: "Reminder: verify your account with teaching vacancies"
-      email_changed:
-        heading: The email for your Teaching Vacancies account has been updated
-        intro: Your email has been successfully updated
-        not_requested:
-          body: If you did not make this request, please email %{mail_to}
-          heading: Not requested this?
-        subject: Email updated
       inactive_account:
         intro: We will delete your Teaching Vacancies account and data unless you sign into your account in the next 2 weeks.
         explanation: This is because you have not used your account for 5 years.
