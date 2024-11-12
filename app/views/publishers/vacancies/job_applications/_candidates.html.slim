@@ -19,7 +19,7 @@
               - row.with_cell(text: tag.span(application.name))
             - else
               / sadly govuk_check_box doesn't seem to support govuk-checkboxes--small natively, but wrapping in a div seems to work
-              - row.with_cell(text: tag.div(f.govuk_check_box(:job_applications, application.id, link_errors: (index == 0), label: { hidden: true, text: "Select #{application.name}" }),
+              - row.with_cell(text: tag.div(f.govuk_check_box(:job_applications, application.id, link_errors: index.zero?, label: { hidden: true, text: "Select #{application.name}" }),
                                             class: "govuk-checkboxes--small moj-multi-select__checkbox"))
               - row.with_cell(text: govuk_link_to(application.name, organisation_job_job_application_path(vacancy.id, application)))
 
