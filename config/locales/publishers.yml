@@ -569,6 +569,8 @@ en:
         notes:
           create:
             success: A note has been added
+          destroy:
+            success: Note deleted
           index:
             heading: Notes
             page_title: Application notes
