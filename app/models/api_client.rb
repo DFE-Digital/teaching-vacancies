@@ -6,6 +6,7 @@ class ApiClient < ApplicationRecord
 
   def generate_api_key
     self.api_key ||= SecureRandom.hex(20)
+    self.last_rotated_at ||= Time.current
   end
 
   def rotate_api_key!

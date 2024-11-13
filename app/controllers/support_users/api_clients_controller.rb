@@ -1,4 +1,4 @@
-class SupportUsers::ApiClientsController < ApplicationController
+class SupportUsers::ApiClientsController < SupportUsers::BaseController
   def index
     api_clients = ApiClient.all
     @pagy, @api_clients = pagy(api_clients)
