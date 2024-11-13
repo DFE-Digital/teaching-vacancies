@@ -77,6 +77,7 @@ en:
     save_and_finish_later: Save and finish later
     save_changes: Save changes
     save_employment: Save role
+    save_note: Save note
     save_qualification:
       one: Save qualification
       other: Save qualifications
