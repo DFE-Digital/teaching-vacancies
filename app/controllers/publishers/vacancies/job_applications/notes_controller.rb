@@ -8,7 +8,7 @@ class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vaca
 
     if @notes_form.valid?
       Note.create(notes_attributes)
-      redirect_to organisation_job_job_application_notes_path, success: t(".success")
+      redirect_to organisation_job_job_application_path(id: job_application.id), success: t(".success")
     else
       render :index
     end
