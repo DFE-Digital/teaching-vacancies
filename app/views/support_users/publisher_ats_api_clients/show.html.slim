@@ -3,7 +3,7 @@
 
 h1.govuk-heading-l = title
 
-= link_to "Rotate API key", rotate_key_support_users_api_client_path(@api_client), method: :post, class: "govuk-button govuk-button--secondary"
+= link_to "Rotate ATS API key", rotate_key_support_users_publisher_ats_api_client_path(@api_client), method: :post, class: "govuk-button govuk-button--secondary"
 
 = render DetailComponent.new do |detail|
   - detail.with_body do

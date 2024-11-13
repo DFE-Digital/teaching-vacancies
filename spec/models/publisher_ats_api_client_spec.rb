@@ -1,10 +1,10 @@
 require "rails_helper"
 
-RSpec.describe ApiClient do
+RSpec.describe PublisherAtsApiClient do
   describe "#generate_api_key" do
     subject(:generate_api_key) { api_client.generate_api_key }
 
-    let(:api_client) { build(:api_client, api_key: nil) }
+    let(:api_client) { build(:publisher_ats_api_client, api_key: nil) }
 
     it "generates a new API key" do
       expect { generate_api_key }.to change(api_client, :api_key).from(nil).to(be_present)
@@ -19,7 +19,7 @@ RSpec.describe ApiClient do
   describe "#rotate_api_key!" do
     subject(:rotate_api_key) { api_client.rotate_api_key! }
 
-    let(:api_client) { create(:api_client, last_rotated_at: 1.day.ago) }
+    let(:api_client) { create(:publisher_ats_api_client, last_rotated_at: 1.day.ago) }
     let(:old_key) { api_client.api_key }
 
     it "updates the API key with a new value" do

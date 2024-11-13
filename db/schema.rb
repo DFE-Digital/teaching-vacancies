@@ -59,14 +59,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_06_143103) do
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
   end
 
-  create_table "api_clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.string "api_key", null: false
-    t.datetime "last_rotated_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "not_valid_after", precision: nil, null: false
     t.datetime "created_at", precision: nil, null: false
@@ -492,6 +484,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_06_143103) do
     t.text "phone_number_ciphertext"
     t.boolean "right_to_work_in_uk"
     t.index ["jobseeker_profile_id"], name: "index_personal_details_jobseeker_profile_id", unique: true
+  end
+
+  create_table "publisher_ats_api_clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "api_key", null: false
+    t.datetime "last_rotated_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

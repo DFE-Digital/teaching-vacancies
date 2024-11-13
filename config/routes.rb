@@ -263,7 +263,7 @@ Rails.application.routes.draw do
       resources :jobseeker_profiles, only: %i[index show]
     end
 
-    resources :api_clients do
+    resources :publisher_ats_api_clients do
       post :rotate_key, on: :member
     end
   end

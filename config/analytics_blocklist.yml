@@ -106,7 +106,7 @@
   - created_at
   - updated_at
   - status
-  :api_clients:
+  :publisher_ats_api_clients:
     - id
     - name
     - api_key

@@ -4,10 +4,10 @@ h1.govuk-heading-l = t(".title")
 = supportal_table(entries: @api_clients) do |t|
   - t.column "API client" do |api_client|
     - capture do
-      = govuk_link_to(api_client.name, support_users_api_client_path(api_client))
+      = govuk_link_to(api_client.name, support_users_publisher_ats_api_client_path(api_client))
   - t.string "API key", :api_key
   - t.datetime "Created", :created_at
   - t.datetime "Last rotated", :last_rotated_at
 = govuk_pagination(pagy: @pagy)
 
-= link_to "Add new API client", new_support_users_api_client_path, class: "govuk-button govuk-button--secondary"
+= link_to "Add new API client", new_support_users_publisher_ats_api_client_path, class: "govuk-button govuk-button--secondary"
