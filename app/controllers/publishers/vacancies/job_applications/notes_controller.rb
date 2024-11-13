@@ -17,8 +17,7 @@ class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vaca
   def destroy
     note = job_application.notes.find(params[:id])
     note.destroy
-
-    redirect_to organisation_job_job_application_notes_path(vacancy.id, job_application)
+    redirect_to organisation_job_job_application_path(id: job_application.id), success: t(".success")
   end
 
   private
