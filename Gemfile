@@ -95,6 +95,7 @@ group :development do
   gem "rubocop-rspec_rails", require: false
   gem "solargraph"
   gem "spring"
+  gem "spring-commands-parallel-tests"
   gem "spring-commands-rspec"
   gem "spring-watcher-listen"
   gem "web-console"
