@@ -108,6 +108,7 @@ en:
     subscribe_campaign: Set up job alert
     unsubscribe: Unsubscribe
     update_alert: Update alert
+    update_application_status: Update application status
     update_job: Update listing
     update_password: Update password
     upload_files: Upload files
