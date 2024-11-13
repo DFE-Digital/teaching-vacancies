@@ -97,5 +97,13 @@ RSpec.describe Jobseekers::AccountTransfer do
         expect(Jobseeker.exists?(account_to_transfer.id)).to eq true
       end
     end
+
+    context "when jobseeker tries to import data from an account they are currently logged in as" do
+      it "raises an error and does not delete the current jobseeker" do
+        service = described_class.new(current_jobseeker, current_jobseeker.email)
+        expect { service.call }.to raise_error(Jobseekers::AccountTransfer::CannotDeleteCurrentAccountError)
+        expect(Jobseeker.exists?(current_jobseeker.id)).to eq true
+      end
+    end
   end
 end

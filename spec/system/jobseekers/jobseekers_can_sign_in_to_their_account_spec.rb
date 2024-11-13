@@ -12,6 +12,18 @@ RSpec.describe "Jobseekers can sign in to their account" do
     end
   end
 
+  context "when signing in a user that has a closed account" do
+    let(:jobseeker) { create(:jobseeker, account_closed_on: Date.yesterday) }
+
+    it "allows them to sign in and reactivates their account" do
+      sign_in_jobseeker_govuk_one_login(jobseeker, navigate: true)
+      expect(page.current_path).to eq(jobseekers_job_applications_path)
+      expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
+      expect(page).to have_link(text: I18n.t("nav.sign_out"))
+      expect(jobseeker.reload.account_closed_on).to be_nil
+    end
+  end
+
   context "when signing in a jobseeker that has not yet linked their account to a one login account" do
     let(:jobseeker) { create(:jobseeker, govuk_one_login_id: nil) }
 

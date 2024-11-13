@@ -79,6 +79,23 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
     end
   end
 
+  context "when the user tries to transfer data to their own account" do
+    it "does not allow the account transfer" do
+      visit jobseekers_profile_path
+
+      expect_account_to_have_no_data
+
+      visit new_jobseekers_request_account_transfer_email_path
+
+      fill_in "jobseekers_request_account_transfer_email_form[email]", with: jobseeker.email
+      click_on "Save and continue"
+
+      within "ul.govuk-list.govuk-error-summary__list" do
+        expect(page).to have_link("You entered the email of the account you are currently logged in to. The data in this account is already available to you and cannot be transferred.", href: "#jobseekers-request-account-transfer-email-form-email-field-error")
+      end
+    end
+  end
+
   context "when the confirmation code has expired" do
     before do
       visit new_jobseekers_request_account_transfer_email_path

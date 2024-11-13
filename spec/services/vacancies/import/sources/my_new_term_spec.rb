@@ -400,6 +400,15 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
       end
     end
 
+    context "when the school URN doesn't belong to any school" do
+      let(:school_urns) { ["123456789"] }
+      let(:trust_uid) { nil }
+
+      it "does not import vacancy" do
+        expect(subject.count).to eq(0)
+      end
+    end
+
     context "when the vacancy is associated with multiple schools from a trust" do
       let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
       let(:trust_schools) { [in_scope_school, school2].sort_by(&:created_at) }

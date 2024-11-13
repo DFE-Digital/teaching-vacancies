@@ -1,5 +1,7 @@
 class Jobseekers::AccountTransfer
-  class AccountNotFoundError < StandardError; end
+  class AccountTransferError < StandardError; end
+  class AccountNotFoundError < AccountTransferError; end
+  class CannotDeleteCurrentAccountError < AccountTransferError; end
   attr_reader :current_jobseeker, :account_to_transfer
 
   def initialize(current_jobseeker, email)
@@ -9,6 +11,7 @@ class Jobseekers::AccountTransfer
 
   def call
     raise AccountNotFoundError, "Account with email not found" unless account_to_transfer
+    raise CannotDeleteCurrentAccountError, "Cannot delete the currently logged in account" if current_jobseeker == account_to_transfer
 
     ActiveRecord::Base.transaction do
       transfer_profile

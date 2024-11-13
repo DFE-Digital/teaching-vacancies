@@ -1,7 +1,6 @@
 class Publishers::JobApplicationReceivedNotifier < Noticed::Event
-  deliver_by :database
   delegate :created_at, to: :record
-  param :vacancy, :job_application
+  required_param :vacancy, :job_application
 
   notification_methods do
     include ActionView::Helpers::UrlHelper
