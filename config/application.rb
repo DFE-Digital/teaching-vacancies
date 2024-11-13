@@ -94,7 +94,6 @@ module TeachingVacancies
     config.maintenance_mode = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MAINTENANCE_MODE", nil))
 
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
-    config.assets.excluded_paths << Rails.root.join("app/assets/stylesheets")
 
     config.view_component.preview_paths << "#{Rails.root}/app/components/previews"
     config.view_component.preview_route = "/components"

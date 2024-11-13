@@ -1,7 +1,9 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import * as esbuild from 'esbuild';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import babel from 'esbuild-plugin-babel';
 
-const watch = process.argv[process.argv.length - 1] == '--watch';
+const watch = process.argv[process.argv.length - 1] === '--watch';
 
 // Custom `esbuild` configuration to enable Babel plugin for IE11-compatible transpilation
 // TODO: When we decide we are happy to target ES6 and don't need Babel anymore, this file can be
@@ -14,22 +16,22 @@ const watch = process.argv[process.argv.length - 1] == '--watch';
 const config = {
   bundle: true,
   entryPoints: ['app/assets/javascript/application.js'],
-  minify: true,
+  minify: false,
   outdir: 'app/assets/builds',
   plugins: [
     babel({
       config: {
         presets: ['@babel/preset-env'],
-        targets: '> 0.25%, not dead, IE 11'
-      }
-    })
+        targets: '> 0.25%, not dead, IE 11',
+      },
+    }),
   ],
   publicPath: 'assets',
-  target: ['ie11']
+  target: ['ie11'],
 };
 
 if (watch) {
-  let ctx = await esbuild.context(config);
+  const ctx = await esbuild.context(config);
   await ctx.watch();
 } else {
   await esbuild.build(config);
