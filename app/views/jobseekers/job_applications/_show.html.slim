@@ -15,7 +15,7 @@
         - navigation.with_anchor text: t(".declarations.heading"), href: "#declarations"
 
   - r.with_sidebar(classes: %w[govuk-!-display-none-print]) do
-    h2.govuk-heading-m = t(".notes.heading")
+    h2.govuk-heading-m = t("publishers.vacancies.job_applications.show.notes.heading")
     - job_application.notes.each do |note|
       p.govuk-body-m = note.content
       p.govuk-body-s By #{note.publisher.given_name} #{note.publisher.family_name}, #{note.created_at}
