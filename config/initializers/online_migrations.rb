@@ -98,4 +98,12 @@ OnlineMigrations.configure do |config|
   #     notification.add_metadata(:background_migration, { name: errored_job.migration_name })
   #   end
   # end
+
+  # Migration Timeouts
+  #
+  # It’s extremely important to set a short lock timeout for migrations. This way, if a migration can't acquire a lock
+  # in a timely manner, other statements won't be stuck behind it.
+  # We also recommend setting a long statement timeout so migrations can run for a while.
+  #
+  config.statement_timeout = 1.hour
 end
