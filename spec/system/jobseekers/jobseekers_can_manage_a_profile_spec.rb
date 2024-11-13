@@ -13,7 +13,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     end
   end
 
-  describe "navigation to profile" do
+  context "with a jobseeker" do
     before { login_as(jobseeker, scope: :jobseeker) }
 
     after { logout }
@@ -28,392 +28,374 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       expect(page).to have_current_path(jobseekers_profile_path)
     end
-  end
 
-  describe "changing personal details" do
-    let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
+    describe "changing personal details" do
+      context "when filling in the profile for the first time" do
+        let(:first_name) { "Frodo" }
+        let(:last_name) { "Baggins" }
+        let(:phone_number) { "07777777777" }
 
-    context "when filling in the profile for the first time" do
-      let(:first_name) { "Frodo" }
-      let(:last_name) { "Baggins" }
-      let(:phone_number) { "07777777777" }
+        before { visit jobseekers_profile_path }
 
-      before do
-        login_as(jobseeker, scope: :jobseeker)
+        it "allows the jobseeker to fill in their personal details" do
+          click_link("Add personal details")
+          fill_in "personal_details_form[first_name]", with: first_name
+          fill_in "personal_details_form[last_name]", with: last_name
+          click_on I18n.t("buttons.save_and_continue")
 
-        visit jobseekers_profile_path
-      end
+          expect(page).to have_content("Do you want to provide a phone number?")
+          choose "Yes"
+          fill_in "personal_details_form[phone_number]", with: phone_number
+          click_on I18n.t("buttons.save_and_continue")
 
-      after { logout }
+          expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
+          choose "Yes"
+          click_on I18n.t("buttons.save_and_continue")
 
-      it "allows the jobseeker to fill in their personal details" do
-        click_link("Add personal details")
-        fill_in "personal_details_form[first_name]", with: first_name
-        fill_in "personal_details_form[last_name]", with: last_name
-        click_on I18n.t("buttons.save_and_continue")
+          click_on I18n.t("buttons.return_to_profile")
 
-        expect(page).to have_content("Do you want to provide a phone number?")
-        choose "Yes"
-        fill_in "personal_details_form[phone_number]", with: phone_number
-        click_on I18n.t("buttons.save_and_continue")
-
-        expect(page).to have_content("Do you need Skilled Worker visa sponsorship?")
-        choose "Yes"
-        click_on I18n.t("buttons.save_and_continue")
-
-        click_on I18n.t("buttons.return_to_profile")
-
-        expect(page).to have_content("#{first_name} #{last_name}")
-        expect(page).to have_content(phone_number)
-        expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
-      end
-
-      it "does not display a notice to inform the user about prefilling" do
-        expect(page).not_to have_content("your details have been imported into your profile")
-      end
-    end
-
-    context "when editing a profile that has already been completed" do
-      let(:new_first_name) { "Samwise" }
-      let(:new_last_name) { "Gamgee" }
-      let(:old_phone_number) { "07777777777" }
-
-      before do
-        profile.personal_details.update!(
-          first_name: "Frodo",
-          last_name: "Baggins",
-          phone_number_provided: true,
-          phone_number: old_phone_number,
-          completed_steps: { "name" => "completed", "phone_number" => "completed" },
-        )
-
-        login_as(jobseeker, scope: :jobseeker)
-        visit jobseekers_profile_path
-      end
-
-      after { logout }
-
-      it "allows the jobseeker to edit their profile" do
-        row = page.find(".govuk-summary-list__key", text: "Name").find(:xpath, "..")
-
-        within(row) do
-          click_link "Change"
+          expect(page).to have_content("#{first_name} #{last_name}")
+          expect(page).to have_content(phone_number)
+          expect(page).to have_content("Yes, I will need to apply for a visa giving me the right to work in the UK")
         end
 
-        fill_in "personal_details_form[first_name]", with: new_first_name
-        fill_in "personal_details_form[last_name]", with: new_last_name
-        click_on I18n.t("buttons.save_and_continue")
-
-        choose "No"
-        click_on I18n.t("buttons.save_and_continue")
-
-        choose "No"
-        click_on I18n.t("buttons.save_and_continue")
-
-        expect(page).to have_content("#{new_first_name} #{new_last_name}")
-        expect(page).to have_content("Do you want to provide a phone number?No")
-        expect(page).not_to have_content(old_phone_number)
-        expect(page).to have_content("No, I already have the right to work in the UK")
-      end
-    end
-  end
-
-  describe "personal details if the jobseeker has a previous job application" do
-    let(:previous_application) { jobseeker.job_applications.last }
-
-    before do
-      create(:job_application, :status_submitted, jobseeker:)
-      login_as(jobseeker, scope: :jobseeker)
-      visit jobseekers_profile_path
-    end
-
-    after { logout }
-
-    it "prefills the form with the jobseeker's personal details" do
-      expect(page).to have_content(previous_application.first_name)
-      expect(page).to have_content(previous_application.last_name)
-      expect(page).to have_content(previous_application.phone_number)
-    end
-
-    it "adds a notice to inform the user" do
-      expect(page).to have_content("your details have been imported into your profile")
-    end
-  end
-
-  describe "personal details if the jobseeker has a blank previous job application" do
-    let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
-
-    before do
-      login_as(jobseeker, scope: :jobseeker)
-      visit jobseekers_profile_path
-    end
-
-    after { logout }
-
-    it "prefills the form with the jobseeker's provided personal details" do
-      expect(page).to have_content(previous_application.phone_number)
-    end
-
-    it "still shows the summary rows for the blank attributes" do
-      expect(page).to have_content("Name")
-    end
-  end
-
-  describe "#about_you" do
-    let(:jobseeker_about_you) { "I am an amazing teacher" }
-
-    before do
-      login_as(jobseeker, scope: :jobseeker)
-      visit jobseekers_profile_path
-    end
-
-    after { logout }
-
-    it "allows the jobseeker to add #about_you" do
-      click_link("Add details about you")
-
-      fill_in "jobseekers_profile_about_you_form[about_you]", with: jobseeker_about_you
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(page).to have_content(jobseeker_about_you)
-
-      click_link I18n.t("buttons.return_to_profile")
-      expect(page).to have_content(jobseeker_about_you)
-    end
-  end
-
-  describe "changing the jobseekers's QTS status" do
-    before do
-      login_as(jobseeker, scope: :jobseeker)
-      visit jobseekers_profile_path
-    end
-
-    after { logout }
-
-    it "allows the jobseeker to edit their QTS status to yes with year achieved" do
-      click_link("Add qualified teacher status")
-      within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
-        choose "Yes"
-      end
-      within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
-        choose "Yes"
-      end
-      fill_in "jobseekers_profile_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"
-      fill_in "What is your teacher reference number (TRN)?", with: "1234567"
-      choose "Yes, I have completed a 1 or 2 year induction period"
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(page).to have_content("2019")
-    end
-
-    it "allows the jobseeker to edit their QTS status to no" do
-      click_link("Add qualified teacher status")
-
-      choose "I’m on track to receive QTS"
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(page).to have_content("I’m on track to receive QTS")
-      expect(page).not_to have_content("2019")
-    end
-  end
-
-  describe "QTS if the jobseeker has a previous job application" do
-    let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
-
-    before do
-      login_as(jobseeker, scope: :jobseeker)
-      visit jobseekers_profile_path
-    end
-
-    after { logout }
-
-    it "prefills the form with the jobseeker's personal details" do
-      expect(page).to have_content("Year QTS awarded#{previous_application.qualified_teacher_status_year}")
-    end
-  end
-
-  describe "work history" do
-    describe "adding an employment history entry to a profile" do
-      let(:profile) { jobseeker.jobseeker_profile }
-
-      before do
-        create(:jobseeker_profile, jobseeker:)
-        login_as(jobseeker, scope: :jobseeker)
-        visit jobseekers_profile_path
-      end
-
-      after { logout }
-
-      it "raises errors for missing fields" do
-        click_link("Add roles")
-        click_on I18n.t("buttons.save_and_continue")
-
-        expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
-
-        within "ul.govuk-list.govuk-error-summary__list" do
-          expect(page).to have_link("Enter a school or other organisation", href: "#jobseekers-profile-employment-form-organisation-field-error")
-          expect(page).to have_link("Enter your job title", href: "#jobseekers-profile-employment-form-job-title-field-error")
-          expect(page).to have_link("Enter your main duties for this role", href: "#jobseekers-profile-employment-form-main-duties-field-error")
-          expect(page).to have_link("Enter your reason for leaving the role", href: "#jobseekers-profile-employment-form-reason-for-leaving-field-error")
-          expect(page).to have_link("Enter a date in the correct format", href: "#jobseekers-profile-employment-form-started-on-field-error")
-          expect(page).to have_link("Select yes if this is your current role", href: "#jobseekers-profile-employment-form-current-role-field-error")
+        it "does not display a notice to inform the user about prefilling" do
+          expect(page).not_to have_content("your details have been imported into your profile")
         end
       end
 
-      it "associates an 'employment' with their jobseeker profile" do
-        expect { add_jobseeker_profile_employment }.to change { profile.employments.count }.by(1)
+      context "when editing a profile that has already been completed" do
+        let(:profile) { create(:jobseeker_profile, :with_personal_details, jobseeker:) }
+
+        let(:new_first_name) { "Samwise" }
+        let(:new_last_name) { "Gamgee" }
+        let(:old_phone_number) { "07777777777" }
+
+        before do
+          profile.personal_details.update!(
+            first_name: "Frodo",
+            last_name: "Baggins",
+            phone_number_provided: true,
+            phone_number: old_phone_number,
+            completed_steps: { "name" => "completed", "phone_number" => "completed" },
+          )
+
+          visit jobseekers_profile_path
+        end
+
+        it "allows the jobseeker to edit their profile" do
+          row = page.find(".govuk-summary-list__key", text: "Name").find(:xpath, "..")
+
+          within(row) do
+            click_link "Change"
+          end
+
+          fill_in "personal_details_form[first_name]", with: new_first_name
+          fill_in "personal_details_form[last_name]", with: new_last_name
+          click_on I18n.t("buttons.save_and_continue")
+
+          choose "No"
+          click_on I18n.t("buttons.save_and_continue")
+
+          choose "No"
+          click_on I18n.t("buttons.save_and_continue")
+
+          expect(page).to have_content("#{new_first_name} #{new_last_name}")
+          expect(page).to have_content("Do you want to provide a phone number?No")
+          expect(page).not_to have_content(old_phone_number)
+          expect(page).to have_content("No, I already have the right to work in the UK")
+        end
+      end
+    end
+
+    describe "personal details if the jobseeker has a previous job application" do
+      let(:previous_application) { jobseeker.job_applications.last }
+
+      before do
+        create(:job_application, :status_submitted, jobseeker:)
+        visit jobseekers_profile_path
       end
 
-      context "when the form to add a new employment history entry is submitted" do
-        it "redirects to the review page" do
-          add_jobseeker_profile_employment
+      it "prefills the form with the jobseeker's personal details" do
+        expect(page).to have_content(previous_application.first_name)
+        expect(page).to have_content(previous_application.last_name)
+        expect(page).to have_content(previous_application.phone_number)
+      end
 
+      it "adds a notice to inform the user" do
+        expect(page).to have_content("your details have been imported into your profile")
+      end
+    end
+
+    describe "personal details if the jobseeker has a blank previous job application" do
+      let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
+
+      before do
+        visit jobseekers_profile_path
+      end
+
+      it "prefills the form with the jobseeker's provided personal details" do
+        expect(page).to have_content(previous_application.phone_number)
+      end
+
+      it "still shows the summary rows for the blank attributes" do
+        expect(page).to have_content("Name")
+      end
+    end
+
+    describe "#about_you" do
+      let(:jobseeker_about_you) { "I am an amazing teacher" }
+
+      before do
+        visit jobseekers_profile_path
+      end
+
+      it "allows the jobseeker to add #about_you" do
+        click_link("Add details about you")
+
+        fill_in "jobseekers_profile_about_you_form[about_you]", with: jobseeker_about_you
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content(jobseeker_about_you)
+
+        click_link I18n.t("buttons.return_to_profile")
+        expect(page).to have_content(jobseeker_about_you)
+      end
+    end
+
+    describe "changing the jobseekers's QTS status" do
+      before do
+        visit jobseekers_profile_path
+      end
+
+      it "allows the jobseeker to edit their QTS status to yes with year achieved" do
+        click_link("Add qualified teacher status")
+        within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
+          choose "Yes"
+        end
+        within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+          choose "Yes"
+        end
+        fill_in "jobseekers_profile_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"
+        fill_in "What is your teacher reference number (TRN)?", with: "1234567"
+        choose "Yes, I have completed a 1 or 2 year induction period"
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content("2019")
+      end
+
+      it "allows the jobseeker to edit their QTS status to no" do
+        click_link("Add qualified teacher status")
+
+        choose "I’m on track to receive QTS"
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(page).to have_content("I’m on track to receive QTS")
+        expect(page).not_to have_content("2019")
+      end
+    end
+
+    describe "QTS if the jobseeker has a previous job application" do
+      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+
+      before do
+        visit jobseekers_profile_path
+      end
+
+      it "prefills the form with the jobseeker's personal details" do
+        expect(page).to have_content("Year QTS awarded#{previous_application.qualified_teacher_status_year}")
+      end
+    end
+
+    describe "work history" do
+      describe "adding an employment history entry to a profile" do
+        let(:profile) { jobseeker.jobseeker_profile }
+
+        before do
+          create(:jobseeker_profile, jobseeker:)
+          visit jobseekers_profile_path
+        end
+
+        describe "errors" do
+          before do
+            click_link("Add roles")
+          end
+
+          it "raises errors for missing fields" do
+            click_on I18n.t("buttons.save_and_continue")
+
+            expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
+
+            within "ul.govuk-list.govuk-error-summary__list" do
+              expect(all("a").map { |l| [l.text, l[:href]] })
+                .to eq([
+                  ["Enter a school or other organisation", "#jobseekers-profile-employment-form-organisation-field-error"],
+                  ["Enter your job title", "#jobseekers-profile-employment-form-job-title-field-error"],
+                  ["Enter your main duties for this role", "#jobseekers-profile-employment-form-main-duties-field-error"],
+                  ["Enter a date in the correct format", "#jobseekers-profile-employment-form-started-on-field-error"],
+                  ["Select yes if this is your current role", "#jobseekers-profile-employment-form-current-role-field-error"],
+                ])
+            end
+          end
+
+          it "makes reason mandatory when non current" do
+            choose "No", name: "jobseekers_profile_employment_form[current_role]"
+            click_on I18n.t("buttons.save_and_continue")
+
+            expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
+
+            within "ul.govuk-list.govuk-error-summary__list" do
+              expect(page).to have_link("Enter your reason for leaving the role", href: "#jobseekers-profile-employment-form-reason-for-leaving-field-error")
+            end
+          end
+        end
+
+        it "associates an 'employment' with their jobseeker profile" do
+          expect { add_jobseeker_profile_employment }.to change { profile.employments.count }.by(1)
+        end
+
+        context "when the form to add a new employment history entry is submitted" do
+          it "redirects to the review page" do
+            add_jobseeker_profile_employment
+
+            expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+          end
+
+          it "displays every employment history entry on the review page" do
+            add_jobseeker_profile_employment
+            click_link "Return to profile"
+
+            profile.employments.each do |employment|
+              expect(page).to have_content(employment.organisation)
+              expect(page).to have_content(employment.job_title)
+              expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
+              expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year)) unless employment.current_role == "yes"
+              expect(page).to have_content(employment.main_duties)
+              expect(page).to have_content(employment.reason_for_leaving)
+            end
+          end
+
+          it "asks user to account for any gaps in employment" do
+            add_jobseeker_profile_employment_with_a_gap
+            click_link "Return to profile"
+
+            expect(page).to have_content "You have a gap in your work history (about 1 year)"
+            expect(page).to have_content "Add another job or add a reason for this gap"
+            click_link "add a reason for this gap"
+
+            click_button "Continue"
+
+            expect(page).to have_selector(".govuk-error-summary__list", text: "Enter a reason for this gap")
+
+            fill_in "jobseekers_break_form[reason_for_break]", with: "I was travelling"
+
+            click_button "Continue"
+
+            expect(page).to have_css(".govuk-inset-text", text: "Gap in work history")
+
+            gap = Employment.find_by(employment_type: "break")
+
+            within(".govuk-inset-text") do
+              expect(page).to have_content("I was travelling")
+              expect(page).to have_content("#{Date::MONTHNAMES[gap.started_on.month]} #{gap.started_on.year} to #{Date::MONTHNAMES[gap.ended_on.month]} #{gap.ended_on.year}")
+            end
+
+            click_on "Change Gap in work history #{gap.started_on} to #{gap.ended_on}"
+
+            fill_in "Enter reasons for gap in work history", with: ""
+            click_on I18n.t("buttons.continue")
+
+            expect(page).to have_content("There is a problem")
+
+            fill_in "Enter reasons for gap in work history", with: "I was ill"
+            click_on I18n.t("buttons.continue")
+
+            expect(page).to have_content("I was ill")
+
+            click_on "Delete Gap in work history #{gap.started_on} to #{gap.ended_on}"
+            click_on I18n.t("buttons.confirm_destroy")
+
+            expect(page).not_to have_content("I was ill")
+            expect(page).to have_content "You have a gap in your work history (about 1 year)"
+            expect(page).to have_content "Add another job or add a reason for this gap"
+          end
+        end
+      end
+
+      describe "changing an existing employment history entry" do
+        let(:profile) { create(:jobseeker_profile, jobseeker:) }
+        let(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile) }
+        let(:new_employment) { build(:employment, organisation: "NASA", job_title: "Chief ET locator", reason_for_leaving: "Relocating") }
+
+        before do
+          visit edit_jobseekers_profile_work_history_path(employment)
+        end
+
+        it "shows the old data" do
+          expect(page).to have_content(employment.main_duties)
+          expect(page).to have_content(employment.reason_for_leaving)
+        end
+
+        it "successfully changes the employment record" do
+          fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: new_employment.organisation
+          fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: new_employment.job_title
+          fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: new_employment.reason_for_leaving
+          fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: new_employment.main_duties
+          fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.subjects"), with: new_employment.subjects
+
+          click_on I18n.t("buttons.save_and_continue")
+          expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
+
+          expect(profile.employments.count).to eq(1)
+          expect(profile.employments.first).to have_attributes(organisation: new_employment.organisation,
+                                                               job_title: new_employment.job_title,
+                                                               subjects: new_employment.subjects,
+                                                               main_duties: new_employment.main_duties,
+                                                               reason_for_leaving: new_employment.reason_for_leaving)
+        end
+      end
+
+      describe "deleting an employment history entry" do
+        let!(:profile) { create(:jobseeker_profile, jobseeker:) }
+        let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
+
+        it "deletes the employment record" do
+          visit review_jobseekers_profile_work_history_index_path
+
+          within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.delete") }
+
+          expect(profile.employments.any?).to be false
           expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
         end
-
-        it "displays every employment history entry on the review page" do
-          add_jobseeker_profile_employment
-          click_link "Return to profile"
-
-          profile.employments.each do |employment|
-            expect(page).to have_content(employment.organisation)
-            expect(page).to have_content(employment.job_title)
-            expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
-            expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year)) unless employment.current_role == "yes"
-            expect(page).to have_content(employment.main_duties)
-            expect(page).to have_content(employment.reason_for_leaving)
-          end
-        end
-
-        it "asks user to account for any gaps in employment" do
-          add_jobseeker_profile_employment_with_a_gap
-          click_link "Return to profile"
-
-          expect(page).to have_content "You have a gap in your work history (about 1 year)"
-          expect(page).to have_content "Add another job or add a reason for this gap"
-          click_link "add a reason for this gap"
-
-          click_button "Continue"
-
-          expect(page).to have_selector(".govuk-error-summary__list", text: "Enter a reason for this gap")
-
-          fill_in "jobseekers_break_form[reason_for_break]", with: "I was travelling"
-
-          click_button "Continue"
-
-          expect(page).to have_css(".govuk-inset-text", text: "Gap in work history")
-
-          gap = Employment.find_by(employment_type: "break")
-
-          within(".govuk-inset-text") do
-            expect(page).to have_content("I was travelling")
-            expect(page).to have_content("#{Date::MONTHNAMES[gap.started_on.month]} #{gap.started_on.year} to #{Date::MONTHNAMES[gap.ended_on.month]} #{gap.ended_on.year}")
-          end
-
-          click_on "Change Gap in work history #{gap.started_on} to #{gap.ended_on}"
-
-          fill_in "Enter reasons for gap in work history", with: ""
-          click_on I18n.t("buttons.continue")
-
-          expect(page).to have_content("There is a problem")
-
-          fill_in "Enter reasons for gap in work history", with: "I was ill"
-          click_on I18n.t("buttons.continue")
-
-          expect(page).to have_content("I was ill")
-
-          click_on "Delete Gap in work history #{gap.started_on} to #{gap.ended_on}"
-          click_on I18n.t("buttons.confirm_destroy")
-
-          expect(page).not_to have_content("I was ill")
-          expect(page).to have_content "You have a gap in your work history (about 1 year)"
-          expect(page).to have_content "Add another job or add a reason for this gap"
-        end
-      end
-    end
-
-    describe "changing an existing employment history entry" do
-      let!(:profile) { create(:jobseeker_profile, jobseeker:) }
-      let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile) }
-      let(:new_employer) { "NASA" }
-      let(:new_job_role) { "Chief ET locator" }
-      let(:new_reason_for_leaving) { "Relocating" }
-
-      before do
-        login_as(jobseeker, scope: :jobseeker)
-        visit jobseekers_profile_path
       end
 
-      after { logout }
+      context "if the jobseeker has a previous job application" do
+        let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
 
-      it "successfully changes the employment record" do
-        within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.change") }
+        before { visit jobseekers_profile_path }
 
-        expect(current_path).to eq(edit_jobseekers_profile_work_history_path(employment))
-
-        fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: new_employer
-        fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: new_job_role
-        fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: new_reason_for_leaving
-
-        click_on I18n.t("buttons.save_and_continue")
-
-        expect(profile.employments.count).to eq(1)
-        expect(profile.employments.first.organisation).to eq(new_employer)
-        expect(profile.employments.first.job_title).to eq(new_job_role)
-        expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
-      end
-    end
-
-    describe "deleting an employment history entry" do
-      let!(:profile) { create(:jobseeker_profile, jobseeker:) }
-      let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
-
-      before { login_as(jobseeker, scope: :jobseeker) }
-
-      after { logout }
-
-      it "deletes the employment record" do
-        visit review_jobseekers_profile_work_history_index_path
-
-        within(".govuk-summary-card", match: :first) { click_link I18n.t("buttons.delete") }
-
-        expect(profile.employments.any?).to be false
-        expect(current_path).to eq(review_jobseekers_profile_work_history_index_path)
-      end
-    end
-
-    context "if the jobseeker has a previous job application" do
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
-
-      before { login_as(jobseeker, scope: :jobseeker) }
-
-      after { logout }
-
-      it "prefills the form with the jobseeker's work history" do
-        visit jobseekers_profile_path
-        previous_application.employments.each do |employment|
-          if employment.job?
-            expect(page).to have_content(employment.organisation)
-          elsif employment.break?
-            expect(page).to have_content("You have a gap in your work history")
+        it "prefills the form with the jobseeker's work history" do
+          previous_application.employments.each do |employment|
+            if employment.job?
+              expect(page).to have_content(employment.organisation)
+            elsif employment.break?
+              expect(page).to have_content("You have a gap in your work history")
+            end
           end
         end
       end
     end
-  end
 
-  describe "qualifications" do
-    context "if the jobseeker has a previous job application" do
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
+    describe "qualifications" do
+      context "if the jobseeker has a previous job application" do
+        let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, create_details: true) }
 
-      before { login_as(jobseeker, scope: :jobseeker) }
+        before { visit jobseekers_profile_path }
 
-      after { logout }
-
-      it "prefills the form with the jobseeker's qualifications" do
-        visit jobseekers_profile_path
-        previous_application.qualifications.each do |qualification|
-          expect(page).to have_content(qualification.name)
+        it "prefills the form with the jobseeker's qualifications" do
+          previous_application.qualifications.each do |qualification|
+            expect(page).to have_content(qualification.name)
+          end
         end
       end
     end
