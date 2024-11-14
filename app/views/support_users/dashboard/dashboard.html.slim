@@ -18,6 +18,14 @@ nav
 
 hr.govuk-section-break.govuk-section-break--l
 
+h2.govuk-heading-m = t("support_users.dashboard.api_clients_heading")
+nav
+  ul.govuk-list
+    li
+      = govuk_link_to t("support_users.dashboard.api_clients_link"), support_users_publisher_ats_api_clients_path
+
+hr.govuk-section-break.govuk-section-break--l
+
 h2.govuk-heading-m = t("support_users.dashboard.development_tools_heading")
 nav
   ul.govuk-list

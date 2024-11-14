@@ -473,6 +473,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
     t.index ["jobseeker_profile_id"], name: "index_personal_details_jobseeker_profile_id", unique: true
   end
 
+  create_table "publisher_ats_api_clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "api_key", null: false
+    t.datetime "last_rotated_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "publisher_id", null: false
     t.uuid "organisation_id", null: false
