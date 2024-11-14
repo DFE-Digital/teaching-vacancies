@@ -1,8 +1,4 @@
 class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vacancies::JobApplications::BaseController
-  def index
-    @notes_form = Publishers::JobApplication::NotesForm.new
-  end
-
   def create
     @notes_form = Publishers::JobApplication::NotesForm.new(notes_form_params)
 
