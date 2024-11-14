@@ -32,8 +32,24 @@ Capybara.register_driver :chrome_headless do |app|
     Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
   end
 end
+
+Capybara.register_driver :chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new(args: %w[no-sandbox disable-gpu window-size=1400,1800])
+
+  if ENV["SELENIUM_HUB_URL"]
+    Capybara::Selenium::Driver.new(app, browser: :remote, url: ENV.fetch("SELENIUM_HUB_URL", nil), options:)
+  else
+    Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
+  end
+end
 Capybara.javascript_driver = :chrome_headless
 Capybara.server = :puma, { Silent: true, Threads: "0:1" }
+Capybara.configure do |config|
+  # Allow us to use the `choose(label_text)` method in browser tests
+  # even when the radio button element attached to the label is hidden
+  # (as it is using the standard govuk radio element)
+  config.automatic_label_click = true
+end
 
 Rails.root.glob("spec/support/**/*.rb").each { |f| require f }
 Rails.root.glob("spec/components/shared_examples/**/*.rb").each { |f| require f }
@@ -79,8 +95,13 @@ RSpec.configure do |config|
     allow_any_instance_of(ApplicationController).to receive(:recaptcha_reply).and_return(recaptcha_reply)
   end
 
+  # allow developers to see JS backed tests by default
   config.before(:each, type: :system, js: true) do
-    driven_by :chrome_headless
+    if ENV.key? "CI"
+      driven_by :chrome_headless
+    else
+      driven_by :chrome
+    end
   end
 
   config.before(:each, geocode: true) do
