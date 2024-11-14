@@ -2,16 +2,9 @@
 
 = render "header"
 
-.job-application-notes class="govuk-!-display-none"
-  h2.govuk-heading-m = t(".notes.heading")
-  - job_application.notes.each do |note|
-    p.govuk-body-m = note.content
-    p.govuk-body-s By #{note.publisher.given_name} #{note.publisher.family_name}, #{note.created_at}
-    hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
-
 .govuk-grid-row class="govuk-!-margin-top-4"
   .govuk-grid-column-two-thirds
     .govuk-button-group class="govuk-!-display-none-print"
       = govuk_button_link_to t("buttons.update_application_status"), organisation_job_job_applications_path(vacancy.id, job_application.id), class: "govuk-button--secondary"
 
-= render "jobseekers/job_applications/show", allow_edit: false
+= render "application_details_and_notes", allow_edit: false
