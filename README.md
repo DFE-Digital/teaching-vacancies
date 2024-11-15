@@ -166,6 +166,33 @@ yarn run js:lint
 yarn run sass:lint
 ```
 
+### RSpec parallel testing
+The service include [parallel_tests](https://github.com/grosser/parallel_tests) gem, that allows to split the RSpec test
+suite run accross multiple CPU cores.
+
+Each group will run against a separate database.
+To set it up:
+
+```
+RAILS_ENV=test rails parallel:create
+```
+
+To run the test suite in parallel:
+
+```
+RAILS_ENV=test rake parallel:spec
+```
+
+or
+```
+RAILS_ENV=test rails parallel:spec
+```
+
+or using Spring binstub:
+```
+parallel_rspec
+```
+
 ## Visual regression testing
 
 The visual layout and appearance of defined scenarios (pages and common content) can be tested using [BackstopJS](https://github.com/garris/BackstopJS)
