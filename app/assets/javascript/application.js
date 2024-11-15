@@ -30,7 +30,7 @@ import ShowHiddenContentController from './js_components/showHiddenContent/showH
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
 
-import DfeMultiSelect from './dfe-multi-select.js';
+import DfeMultiSelect from './dfe-multi-select';
 
 Sentry.init({
   // `sentryConfig` is set from the application layout
