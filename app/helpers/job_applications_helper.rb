@@ -82,10 +82,11 @@ module JobApplicationsHelper
               classes: "govuk-!-margin-bottom-2"
   end
 
-  def publisher_job_application_status_tag(status)
+  def publisher_job_application_status_tag(status, classes: [])
+    classes << "govuk-!-margin-bottom-2"
     govuk_tag text: PUBLISHER_STATUS_MAPPINGS[status.to_sym],
               colour: JOB_APPLICATION_STATUS_TAG_COLOURS[status.to_sym],
-              classes: "govuk-!-margin-bottom-2"
+              classes: classes.join(" ")
   end
 
   def status_tag_colour(status)
