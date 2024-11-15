@@ -3,8 +3,10 @@ import * as Sentry from '@sentry/browser';
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
-import { initAll as govukInit } from 'govuk-frontend';
+// import { initAll as govukInit } from 'govuk-frontend';
+import * as govukFrontend from 'govuk-frontend';
 import $ from 'jquery';
+import * as mojFrontend from '@ministryofjustice/frontend';
 
 import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
@@ -28,8 +30,6 @@ import PanelController from './js_components/panel/panel';
 import ShowHiddenContentController from './js_components/showHiddenContent/showHiddenContent';
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
-
-const MOJFrontend = require('@ministryofjustice/frontend/moj/all');
 
 Sentry.init({
   // `sentryConfig` is set from the application layout
@@ -65,15 +65,18 @@ application.register('tracked-link', TrackedLinkController);
 application.register('utils', UtilsController);
 
 Rails.start();
-govukInit();
+govukFrontend.initAll();
 window.$ = $;
-MOJFrontend.initAll();
+mojFrontend.initAll();
 
-if (typeof MOJFrontend.MultiFileUpload !== 'undefined') {
-  // eslint-disable-next-line no-new
-  new MOJFrontend.MultiFileUpload({
-    container: document.querySelector('.moj-multi-file-upload'),
-    uploadUrl: '/ajax-upload-url',
-    deleteUrl: '/ajax-delete-url',
-  });
+if (typeof mojFrontend.MultiFileUpload !== 'undefined') {
+  const hasUploads = document.querySelector('.moj-multi-file-upload');
+  if (hasUploads !== null) {
+    // eslint-disable-next-line no-new
+    new mojFrontend.MultiFileUpload({
+      container: document.querySelector('.moj-multi-file-upload'),
+      uploadUrl: '/ajax-upload-url',
+      deleteUrl: '/ajax-delete-url',
+    });
+  }
 }
