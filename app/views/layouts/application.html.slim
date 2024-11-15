@@ -32,4 +32,5 @@ html.govuk-template.app-html-class lang="en"
         = yield
       = content_for :after_main
     = render "layouts/footer"
-    = javascript_include_tag "application", defer: true, type: 'module'
+    / = javascript_include_tag "application", defer: true, type: 'module'
+    = javascript_include_tag "application", "data-turbo-track": "reload", type: 'module'
