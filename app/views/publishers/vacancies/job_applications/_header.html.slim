@@ -8,6 +8,7 @@ span.govuk-caption-l
 
 h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
   = job_application.name
+  = publisher_job_application_status_tag(job_application.status, classes: ["govuk-!-margin-left-2"])
 
 = tabs do |tabs|
   - tabs.with_navigation_item text: t(".tabs.application"), link: organisation_job_job_application_path(vacancy.id, job_application)
