@@ -4,7 +4,7 @@
     = yield
 
     .with_anchor-link-list class="govuk-!-display-none-print"
-      = navigation_list(title: t(".application_sections")) do |navigation|
+      = navigation_list(title: t("jobseekers.job_applications.show.application_sections")) do |navigation|
         - navigation.with_anchor text: t("jobseekers.job_applications.build.personal_details.heading"), href: "#personal_details"
         - navigation.with_anchor text: t("jobseekers.job_applications.build.professional_status.heading"), href: "#professional_status"
         - navigation.with_anchor text: t("jobseekers.job_applications.build.qualifications.heading"), href: "#qualifications"
