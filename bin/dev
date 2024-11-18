@@ -6,4 +6,6 @@ then
   gem install foreman
 fi
 
+# override foreman environment handling so that our dotenv params load properly
+# https://github.com/ddollar/foreman/issues/561
 foreman start -e /dev/null -f Procfile.dev "$@"
