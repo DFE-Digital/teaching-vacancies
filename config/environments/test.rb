@@ -13,7 +13,7 @@ Rails.application.configure do
 
   # `cache_classes` should be false under Spring as of Rails 7 - if we revisit our use of Spring,
   # we should turn this back to true and stop setting `action_view.cache_template_loading`.
-  config.cache_classes = false
+  config.enable_reloading = false
   config.action_view.cache_template_loading = true
 
   # Eager loading loads your whole application. When running a single test locally,
@@ -69,6 +69,9 @@ Rails.application.configure do
   config.middleware.insert_before 0, DfeSignIn::FakeSignOutEndpoint
 
   config.log_file_size = 100.megabytes
+
+  # Raise error when a before_action's only/except options reference missing actions
+  config.action_controller.raise_on_missing_callback_actions = true
 end
 
 # Avoid OmniAuth output in tests:
