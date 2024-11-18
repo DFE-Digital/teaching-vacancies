@@ -566,6 +566,7 @@ en:
           contact_details: Contact details
           application_status: Application status
           update_application_status: Update application status
+          download_selected: Download selected
         notes:
           create:
             success: A note has been added
