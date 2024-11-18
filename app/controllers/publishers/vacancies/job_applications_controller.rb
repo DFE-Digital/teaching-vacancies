@@ -52,7 +52,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     if @form.valid?
       if params["download_selected"] == "true"
         downloads = JobApplication
-                      .includes([:qualifications, :employments, :training_and_cpds, :references, { jobseeker: :jobseeker_profile }, {vacancy: [:organisations, :publisher_organisation]}])
+                      .includes([:qualifications, :employments, :training_and_cpds, :references, { jobseeker: :jobseeker_profile }, { vacancy: %i[organisations publisher_organisation] }])
                       .where(vacancy: vacancy.id)
                       .select { |job_application| @form.job_applications.include?(job_application.id) }
         download_selected downloads
@@ -78,7 +78,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   require "zip"
 
-  def download_selected downloads
+  def download_selected(downloads)
     stringio = Zip::OutputStream.write_buffer do |zio|
       downloads.each do |job_application|
         zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
@@ -86,12 +86,9 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
         zio.write pdf.render
       end
     end
-    send_data(
-      stringio.string,
-      filename: "applications_#{vacancy.job_title}.zip",
-      type: "application/zip",
-      # disposition: "inline",
-      )
+    send_data(stringio.string,
+              filename: "applications_#{vacancy.job_title}.zip",
+              type: "application/zip")
   end
 
   def job_applications

@@ -80,7 +80,7 @@ class JobApplication < ApplicationRecord
     submitted!
     Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: self).deliver(vacancy.publisher)
     Jobseekers::JobApplicationMailer.application_submitted(self).deliver_later
-  #   todo: create PDF in background so that it can be downloaded quickly
+    #   todo: create PDF in background so that it can be downloaded quickly
   end
 
   def for_a_teaching_role?
