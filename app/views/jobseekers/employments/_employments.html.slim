@@ -21,7 +21,8 @@
               - row.with_value text: employment.ended_on.to_formatted_s(:month_year)
           - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
             - row.with_key text: t("jobseekers.employments.main_duties")
-            - row.with_value text: employment.main_duties
+            - row.with_value do
+              = simple_format(employment.main_duties)
           - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
             - row.with_key text: t("jobseekers.employments.reason_for_leaving")
             - row.with_value text: employment.reason_for_leaving
