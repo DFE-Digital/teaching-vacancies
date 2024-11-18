@@ -242,12 +242,91 @@ RSpec.describe Vacancies::Import::Sources::Ventrus do
       end
     end
 
-    context "when multiple school" do
+    context "when the vacancy is associated with multiple schools from the trust" do
       let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
       let(:schools) { [school1, school2] }
 
+      let(:response_body) { super().gsub("111111", "111111,222222") }
+
+      it "assigns the vacancy to both schools" do
+        expect(vacancy.organisations).to contain_exactly(school1, school2)
+      end
+
       it "assigns the vacancy job location to the central trust" do
         expect(vacancy.readable_job_location).to eq(school1.name)
+      end
+    end
+
+    context "when the vacancy belongs to the central trust office instead of a particular/multiple school" do
+      let(:response_body) { super().gsub("111111", "") }
+
+      it "the vacancy is valid" do
+        expect(vacancy).to be_valid
+      end
+
+      it "assigns the vacancy to the school group" do
+        expect(vacancy.organisations).to contain_exactly(school_group)
+      end
+
+      it "assigns the vacancy job location to the school group" do
+        expect(vacancy.readable_job_location).to eq(school_group.name)
+      end
+    end
+
+    context "when the school doesn't belong to Ventrus school group" do
+      let(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+      let(:response_body) { super().gsub("111111", "222222") }
+
+      it "assigns the vacancy to the school group" do
+        expect(vacancy.organisations).to contain_exactly(school_group)
+      end
+
+      it "assigns the vacancy job location to the school group" do
+        expect(vacancy.readable_job_location).to eq(school_group.name)
+      end
+
+      context "when the school group is not provided" do
+        let(:response_body) { super().gsub("4243", "") }
+
+        it "does not import vacancy" do
+          expect(subject.count).to eq(0)
+        end
+      end
+
+      context "when the school group is different to Ventrus" do
+        let(:response_body) { super().gsub("4243", "4444") }
+
+        it "does not import vacancy" do
+          expect(subject.count).to eq(0)
+        end
+      end
+    end
+
+    context "when the school URN doesn't belong to any school" do
+      let(:response_body) { super().gsub("111111", "123456789") }
+
+      it "assigns the vacancy to the school group" do
+        expect(vacancy.organisations).to contain_exactly(school_group)
+      end
+
+      it "assigns the vacancy job location to the school group" do
+        expect(vacancy.readable_job_location).to eq(school_group.name)
+      end
+
+      context "when the school group is not provided" do
+        let(:response_body) { super().gsub("4243", "") }
+
+        it "does not import vacancy" do
+          expect(subject.count).to eq(0)
+        end
+      end
+
+      context "when the school group is different to Ventrus" do
+        let(:response_body) { super().gsub("4243", "4444") }
+
+        it "does not import vacancy" do
+          expect(subject.count).to eq(0)
+        end
       end
     end
 
