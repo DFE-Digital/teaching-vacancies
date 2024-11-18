@@ -37,6 +37,16 @@ module NotifyViewsHelper
     notify_link(url, text)
   end
 
+  def teaching_job_interview_link(text)
+    url = jobseeker_guides_how_to_approach_a_teaching_job_interview_url
+    notify_link(url, text)
+  end
+
+  def teaching_job_interview_lesson_link(text)
+    url = jobseeker_guides_prepare_for_a_teaching_job_interview_lesson_url
+    notify_link(url, text)
+  end
+
   def invitation_to_apply_vacancy_link(vacancy)
     url = job_url(vacancy)
     url_with_utm_params = job_url(vacancy, **utm_params)
