@@ -81,8 +81,8 @@ en:
       shared: &job_application_mailer_shared
         intro: Your application for %{job_title} at %{organisation_name}
         paragraph1: The school will be in touch to let you know what the next steps are. If you have any further questions, you can contact them at %{email}.
-        paragraph2: Search and %{link}
-        apply_link_text: apply for more jobs on Teaching Vacancies.
+        paragraph2: Search and %{link}.
+        apply_link_text: apply for more jobs on Teaching Vacancies
         more_info:
           heading: Still have questions?
           description: If you would like more information you can contact the school at %{email}.
@@ -94,6 +94,10 @@ en:
         heading: You have been shortlisted for %{job_title} at %{organisation_name}
         instructions: What happens next
         subject: Your job application has been shortlisted
+        read_advice_from: "Read advice from experienced teachers and school leaders on preparing for your:"
+        teaching_job_interview: "teaching job interview"
+        teaching_interview_lesson: "teaching interview lesson"
+        guidance: "- %{link}"
       application_submitted:
         <<: *job_application_mailer_shared
         heading: Your application has been sent to %{organisation_name}
@@ -104,10 +108,16 @@ en:
             touch to let you know.
           link_text: view your application
         subject: Your job application has been submitted
+        read_advice_from: "Read advice from experienced teachers and school leaders on preparing for your:"
+        teaching_job_interview: "teaching job interview"
+        teaching_interview_lesson: "teaching interview lesson"
+        guidance: "- %{link}"
       application_unsuccessful:
         <<: *job_application_mailer_shared
         feedback: Feedback from the school
         heading: Unfortunately your application was not successful this time
+        advice: To improve your application for next time, read advice from experienced teachers and school leaders on %{link}.
+        application_advice_link_text: writing a great application
         subject: Your job application has been unsuccessful
       job_listing_ended_early:
         body: |
@@ -130,6 +140,8 @@ en:
         subject: Apply for %{job_title} before %{date}
         intro: The deadline to apply for %{job_title} at %{school} is %{date}
         body: You started an application for this role, but have not submitted it yet. If you want to apply, there is still time to %{link_to}.
+        advice: Read advice from experienced teachers and school leaders on %{link}.
+        application_advice_link_text: writing a great application
         outro: Or search on %{link_to}
         complete: complete your application
         apply_for_more_jobs: apply for more jobs on Teaching Vacancies
@@ -137,9 +149,11 @@ en:
         subject: "%{days} days left to apply for %{job_title}"
         salutation: "Hi %{name}"
         vacancy_closes: "%{job_title} at %{school} closes on %{date}"
-        saved_but_not_applied: You saved this job but have not applied to it yet
+        saved_but_not_applied: You saved this job but have not applied to it yet.
         apply_for_link: "Apply for %{job_title} on Teaching Vacancies"
-        to_find_the_right_job: "To find the right job, remember to always check Teaching Vacancies"
+        to_find_the_right_job: "To find the right job, remember to always check Teaching Vacancies."
+        advice: Read advice from experienced teachers and school leaders on %{link}.
+        application_advice_link_text: writing a great application
 
     subscription_mailer:
       confirmation:

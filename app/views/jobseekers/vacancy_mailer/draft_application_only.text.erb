@@ -2,6 +2,10 @@
 
 <%= t(".body", link_to: notify_link(jobseekers_job_application_review_url(@job_application), t(".complete"))) %>
 
+<% if @vacancy.is_a_teaching_or_middle_leader_role? %>
+  <%= t(".advice", link: writing_job_application_advice_link(t(".application_advice_link_text"))) %>
+<% end %>
+
 <%= t(".outro", link_to: home_page_link) %>
 
 <%= t("shared.jobseeker_footer", home_page_link: home_page_link) %>

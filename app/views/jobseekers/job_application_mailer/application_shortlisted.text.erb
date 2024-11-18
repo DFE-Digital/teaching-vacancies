@@ -9,6 +9,12 @@
   <%= @job_application.further_instructions %>
 <% end %>
 
+<% if @vacancy.is_a_teaching_or_middle_leader_role? %>
+  <%= t(".read_advice_from") %>
+  <%= t(".guidance", link: teaching_job_interview_link(t(".teaching_job_interview"))) %>
+  <%= t(".guidance", link: teaching_job_interview_lesson_link(t(".teaching_interview_lesson"))) %>
+<% end %>
+
 # <%= t(".more_info.heading") %>
 
 <%= t(".more_info.description", email: notify_mail_to(@contact_email)) %>
