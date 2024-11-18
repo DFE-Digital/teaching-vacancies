@@ -590,7 +590,7 @@ en:
             heading: Notes
         tag:
           page_title: Update application status
-          what_application_status_single: What application status do you want to asign to %{name}?
+          what_application_status_single: What application status do you want to assign to %{name}?
           what_application_status_multiple: What application status do you want to assign to these applicants?
           applicants: Applicants
         update_status:

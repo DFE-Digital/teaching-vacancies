@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  helper_method :employments, :form, :job_applications, :qualification_form_param_key, :sort, :sorted_job_applications
+  helper_method :employments, :form, :job_applications, :qualification_form_param_key
 
   def reject
     raise ActionController::RoutingError, "Cannot reject a draft or withdrawn application" if
@@ -48,7 +48,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def tag
     tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
-    @form = Publishers::JobApplication::TagForm.new(tag_params.merge(job_applications: tag_params.fetch(:job_applications).compact_blank))
+    @form = Publishers::JobApplication::TagForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
     if @form.valid?
       @job_applications = vacancy.job_applications.where(id: @form.job_applications)
       render "tag"
@@ -58,10 +58,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def update_tag
-    form_params = params.require(:publishers_job_application_status_form).permit(:status, job_applications: [])
+    update_tag_params = params.require(:publishers_job_application_status_form).permit(:status, job_applications: [])
 
-    JobApplication.find(form_params.fetch(:job_applications)).each do |job_application|
-      job_application.update!(status: form_params.fetch(:status))
+    JobApplication.find(update_tag_params.fetch(:job_applications)).each do |job_application|
+      job_application.update!(status: update_tag_params.fetch(:status))
     end
     redirect_to organisation_job_job_applications_path(vacancy.id)
   end
@@ -70,10 +70,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def job_applications
     @job_applications ||= vacancy.job_applications.not_draft
-  end
-
-  def sorted_job_applications
-    sort.by_db_column? ? job_applications.order(sort.by => sort.order) : job_applications_sorted_by_virtual_attribute
   end
 
   def job_applications_sorted_by_virtual_attribute
@@ -98,9 +94,5 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     return "shortlisted" if form_params.key?("further_instructions")
 
     "unsuccessful" if form_params.key?("rejection_reasons")
-  end
-
-  def sort
-    @sort ||= Publishers::JobApplicationSort.new.update(sort_by: params[:sort_by])
   end
 end
