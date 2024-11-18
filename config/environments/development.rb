@@ -62,6 +62,10 @@ Rails.application.configure do
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
 
+  # Specify if an `ArgumentError` should be raised if `Rails.cache` `fetch` or
+  # `write` are given an invalid `expires_at` or `expires_in` time.
+  config.active_support.raise_on_invalid_cache_expiration_time = true
+
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = false
 

@@ -28,6 +28,8 @@ module TeachingVacancies
   class Application < Rails::Application
     config.load_defaults 7.0
 
+    config.add_autoload_paths_to_load_path = false
+
     config.time_zone = "Europe/London"
 
     # Automatically add `id: uuid` on any generated migrations
@@ -37,6 +39,17 @@ module TeachingVacancies
 
     config.action_view.sanitized_allowed_tags = %w[p br strong em ul li h1 h2 h3 h4 h5]
     config.action_view.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder
+
+    # Given we are using Lockbox, this ensures that Rails does not include unnecessary support for SHA-1,
+    # which is deprecated and considered insecure.
+    config.active_record.encryption.support_sha1_for_non_deterministic_encryption = false
+
+    # Disable deprecated singular associations names.
+    config.active_record.allow_deprecated_singular_associations_name = false
+
+    # No longer run after_commit callbacks on the first of multiple Active Record
+    # instances to save changes to the same database row within a transaction.
+    config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction = false
 
     # Settings in config/environments/* take precedence over those
     # specified here.
@@ -57,6 +70,23 @@ module TeachingVacancies
 
     config.active_storage.routes_prefix = "/attachments"
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
+
+    # Specify the default serializer used by `MessageEncryptor` and `MessageVerifier`
+    # instances.
+    #
+    # The legacy default is `:marshal`, which is a potential vector for
+    # deserialization attacks in cases where a message signing secret has been
+    # leaked.
+    #
+    # In Rails 7.1, the new default is `:json_allow_marshal` which serializes and
+    # deserializes with `ActiveSupport::JSON`, but can fall back to deserializing
+    # with `Marshal` so that legacy messages can still be read.
+    #
+    # In Rails 7.2, the default will become `:json` which serializes and
+    # deserializes with `ActiveSupport::JSON` only.
+    config.active_support.message_serializer = :json_allow_marshal
+
+    config.active_support.use_message_serializer_for_metadata = true
 
     config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info").to_sym
 
@@ -109,6 +139,9 @@ module TeachingVacancies
     # and have no way of disabling the foreign host redirect protection in that instance. Until
     # we figure out a way around that, this keeps the pre-Rails 7 default around.
     Rails.application.config.action_controller.raise_on_open_redirects = false
+
+    # Do not treat an `ActionController::Parameters` instance as equal to an equivalent `Hash` by default.
+    Rails.application.config.action_controller.allow_deprecated_parameters_hash_equality = false
 
     Rails.autoloaders.main.ignore(Rails.root.join("app/frontend"))
 
