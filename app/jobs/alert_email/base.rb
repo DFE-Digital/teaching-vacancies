@@ -2,7 +2,7 @@ class AlertEmail::Base < ApplicationJob
   def perform
     return if DisableExpensiveJobs.enabled?
 
-    subscriptions.each do |subscription|
+    subscriptions.find_each do |subscription|
       next if subscription.alert_run_today?
 
       vacancies = vacancies_for_subscription(subscription)
