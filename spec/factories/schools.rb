@@ -36,7 +36,8 @@ FactoryBot.define do
     school_type { "LA maintained school" }
     postcode { Faker::Address.postcode }
     town { Faker::Address.city.delete("'") }
-    urn { Faker::Number.number(digits: 6) }
+    # URN is validated unique for a school
+    sequence(:urn) { |n| n + 100_000 }
     url { Faker::Internet.url(host: "example.com") }
 
     after(:build) do |school|
