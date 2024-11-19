@@ -76,7 +76,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         find(".govuk-checkboxes__item").click
       end
       click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
-      find(".govuk-tag--purple").click
+      find("span.govuk-tag--purple").click
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("New (3)")
     end
