@@ -24,6 +24,7 @@ class Vacancies::Import::Sources::Ventrus
   def each
     items.each do |item|
       schools = find_schools(item)
+      next if schools.blank?
       next if vacancy_listed_at_excluded_school_type?(schools)
 
       v = Vacancy.find_or_initialize_by(
@@ -101,12 +102,19 @@ class Vacancies::Import::Sources::Ventrus
     }
   end
 
+  # All the vacancies in the feed must belong to Ventrus trust schools
   def find_schools(item)
-    multi_academy_trust = SchoolGroup.trusts.find_by(uid: VENTRUS_TRUST_UID)
+    return [] if item["TrustUID"] != VENTRUS_TRUST_UID
 
-    multi_academy_trust&.schools&.where(urn: item["URN"]).presence ||
-      Organisation.where(urn: item["URN"]).presence ||
-      Array(multi_academy_trust)
+    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["TrustUID"])
+    return [] if multi_academy_trust.blank?
+
+    school_urns = item["URN"]&.split(",")
+    schools = Organisation.where(urn: school_urns) if school_urns.present?
+    return Array(multi_academy_trust) if schools.blank?
+
+    # When having both trust and schools, only return the schools that are in the trust if any. Otherwise, return the trust itself.
+    multi_academy_trust.schools.where(urn: school_urns).order(:created_at).presence || Array(multi_academy_trust)
   end
 
   def job_roles_for(item)
