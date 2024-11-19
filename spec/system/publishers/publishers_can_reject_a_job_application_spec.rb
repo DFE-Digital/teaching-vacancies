@@ -14,7 +14,7 @@ RSpec.describe "Publishers can reject a job application" do
 
   it "rejects the job application after confirmation" do
     click_on "Update application status"
-    expect(page).not_to have_css("strong.govuk-tag.govuk-tag--red.application-status", text: "rejected")
+    expect(page).to have_no_css("strong.govuk-tag.govuk-tag--red.application-status", text: "rejected")
     check "Select #{job_application.name}"
     click_on "Update application status"
     choose "Not considering"
