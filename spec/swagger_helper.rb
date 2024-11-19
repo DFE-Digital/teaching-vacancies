@@ -13,11 +13,11 @@ RSpec.configure do |config|
   # document below. You can override this behavior by adding a openapi_spec tag to the
   # the root example_group in your specs, e.g. describe '...', openapi_spec: 'v2/swagger.json'
   config.openapi_specs = {
-    "v2/swagger.yaml" => {
+    "v1/swagger.yaml" => {
       openapi: "3.0.1",
       info: {
-        title: "API V2",
-        version: "v2",
+        title: "Teaching Vacancies ATS API",
+        version: "v1",
       },
       paths: {},
       # servers: [

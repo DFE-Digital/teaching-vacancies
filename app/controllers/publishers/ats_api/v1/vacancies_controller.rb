@@ -1,4 +1,4 @@
-class Api::V2::VacanciesController < Api::ApplicationController
+class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   def index
     @pagy, @vacancies = pagy(vacancies, items: 100)
 
