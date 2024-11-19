@@ -665,6 +665,14 @@ en:
       publishers_job_application_notes_form:
         content: Add a note
 
+      publishers_job_application_status_form:
+        status_options:
+          submitted_html: New <span class="govuk-tag govuk-tag--blue">New</span>
+          unsuccessful_html: Not Considering <span class="govuk-tag govuk-tag--red">Not Considering</span>
+          reviewed_html: Reviewed <span class="govuk-tag govuk-tag--purple">Reviewed</span>
+          shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--green">Shortlisted</span>
+          interviewing_html: Interviewing <span class="govuk-tag govuk-tag--turquoise">Interviewing</span>
+
       publishers_job_application_update_status_form:
         further_instructions_html: Any further instructions? (optional<span class='govuk-visually-hidden'> field</span>)</span>
         rejection_reasons_html: What are the reasons for the rejection? (optional<span class='govuk-visually-hidden'> field</span>)</span>

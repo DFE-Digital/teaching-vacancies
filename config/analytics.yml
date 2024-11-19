@@ -114,6 +114,7 @@ shared:
     - draft_at
     - shortlisted_at
     - unsuccessful_at
+    - interviewing_at
     - withdrawn_at
     - first_name
     - last_name

@@ -1,0 +1,29 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- if @job_applications.size == 1
+  h1.govuk-heading-l class="govuk-!-display-inline"
+    = t(".what_application_status_single", name: @job_applications.first.name)
+- else
+  h1.govuk-heading-l class="govuk-!-display-inline"
+    = t(".what_application_status_multiple")
+  = govuk_inset_text do
+    = t(".applicants")
+
+    p.govuk-body
+      ul
+        - @job_applications.each do |ja|
+          li = ja.name
+
+= form_with(url: update_tag_organisation_job_job_applications_path(vacancy.id), scope: :publishers_job_application_status_form) do |f|
+  - @job_applications.each do |ja|
+    = f.hidden_field :job_applications, multiple: true, value: ja.id
+
+  = f.govuk_radio_buttons_fieldset :status do
+    = f.govuk_radio_button :status, :submitted
+    = f.govuk_radio_button :status, :unsuccessful
+    = f.govuk_radio_button :status, :reviewed
+    = f.govuk_radio_button :status, :shortlisted
+    = f.govuk_radio_divider
+    = f.govuk_radio_button :status, :interviewing
+
+  = f.govuk_submit t("buttons.save_and_continue")
