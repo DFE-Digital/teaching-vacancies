@@ -96,7 +96,11 @@ location_preference_names = weydon_trust_schools.map(&:postcode)
 
 Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
   Jobseeker.transaction do
-    FactoryBot.create(:jobseeker_profile, :with_personal_details, :with_qualifications,
+    FactoryBot.create(:jobseeker_profile, :with_personal_details,
+                      qualifications: FactoryBot.build_list(:qualification, 1,
+                                                 job_application: FactoryBot.build(:job_application,
+                                                                                   vacancy: FactoryBot.build(:vacancy,
+                                                                                                             organisations: weydon_trust_schools))),
                       employments: FactoryBot.build_list(:employment, 1,
                                                          job_application: FactoryBot.build(:job_application,
                                                                                            vacancy: FactoryBot.build(:vacancy,
@@ -105,15 +109,6 @@ Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
       FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
         FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
       end
-
-      # :with_qualifications trait also creates a job_application through the factory, which in turn creates a vacancy that has no associated organisation and causes review app to break on the jobs page and causes smoke test failures.
-      jobseeker_profile.qualifications.each do |qualification|
-        vacancy_without_org_id = qualification.job_application.vacancy_id
-        OrganisationVacancy.create!(vacancy_id: vacancy_without_org_id, organisation_id: weydon_trust_schools.first.id)
-      end
     end
   end
 end
-
-# still need to delete jobs without an organisation
-Vacancy.includes(:organisations).find_each.reject { |v| v.organisation.present? }.each(&:destroy)

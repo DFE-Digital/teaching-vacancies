@@ -77,11 +77,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
     t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "employment_type", default: 0
-    t.text "reason_for_break", default: ""
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
+    t.integer "employment_type", default: 0
+    t.text "reason_for_break", default: ""
     t.uuid "jobseeker_profile_id"
     t.text "reason_for_leaving"
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
@@ -195,7 +195,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "jobseeker_id", null: false
-    t.uuid "vacancy_id", null: true
+    t.uuid "vacancy_id", null: false
     t.integer "completed_steps", default: [], null: false, array: true
     t.datetime "submitted_at", precision: nil
     t.datetime "draft_at", precision: nil
@@ -309,9 +309,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
+    t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
-    t.string "govuk_one_login_id"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
   end
@@ -678,8 +678,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
     t.boolean "include_additional_documents"
     t.boolean "visa_sponsorship_available"
     t.boolean "is_parental_leave_cover"
-    t.boolean "is_job_share"
     t.string "hourly_rate"
+    t.boolean "is_job_share"
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"
@@ -744,7 +744,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
   add_foreign_key "references", "job_applications"
   add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "saved_jobs", "vacancies"
-  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
+  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id", validate: false
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
   add_foreign_key "training_and_cpds", "job_applications"
   add_foreign_key "training_and_cpds", "jobseeker_profiles"
