@@ -379,6 +379,8 @@ Rails.application.routes.draw do
         get :reject
         get :withdrawn
         post :update_status
+        get :tag, on: :collection
+        post :update_tag, on: :collection
       end
     end
   end

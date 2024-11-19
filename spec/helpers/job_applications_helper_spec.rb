@@ -125,32 +125,6 @@ RSpec.describe JobApplicationsHelper do
     end
   end
 
-  describe "#job_application_view_applicant" do
-    subject { helper.job_application_view_applicant(vacancy, job_application) }
-
-    let(:vacancy) { create(:vacancy, :published) }
-
-    context "when job application is withdrawn" do
-      let(:job_application) { create(:job_application, :status_withdrawn) }
-
-      it "renders the applicant name" do
-        expect(subject).to include(CGI.escapeHTML(job_application.name))
-      end
-
-      it "does not render a link" do
-        expect(subject).to have_no_link(job_application.name)
-      end
-    end
-
-    context "when job application is not withdrawn" do
-      let(:job_application) { create(:job_application, :status_submitted) }
-
-      it "renders the applicant name as a link" do
-        expect(subject).to have_link(job_application.name)
-      end
-    end
-  end
-
   describe "#job_application_page_title_prefix" do
     subject { helper.job_application_page_title_prefix(form, title) }
 

@@ -5,6 +5,7 @@ module JobApplicationsHelper
     shortlisted: "shortlisted",
     unsuccessful: "rejected",
     withdrawn: "withdrawn",
+    interviewing: "interviewing",
   }.freeze
 
   JOBSEEKER_STATUS_MAPPINGS = {
@@ -25,6 +26,7 @@ module JobApplicationsHelper
     shortlisted: "green",
     unsuccessful: "red",
     withdrawn: "yellow",
+    interviewing: "turquoise",
   }.freeze
 
   def job_application_qualified_teacher_status_info(job_application)
@@ -101,14 +103,6 @@ module JobApplicationsHelper
       t("buttons.save")
     else
       t("buttons.save_and_continue")
-    end
-  end
-
-  def job_application_view_applicant(vacancy, job_application)
-    if job_application.withdrawn?
-      tag.span job_application.name
-    else
-      govuk_link_to job_application.name, organisation_job_job_application_path(vacancy.id, job_application)
     end
   end
 
