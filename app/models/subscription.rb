@@ -23,10 +23,10 @@ class Subscription < ApplicationRecord
 
   def self.find_and_verify_by_token(token)
     data = begin
-             encryptor(serializer: :json_allow_marshal).decrypt_and_verify(token)
-           rescue ActiveSupport::MessageEncryptor::InvalidMessage
-             encryptor(serializer: :marshal).decrypt_and_verify(token)
-           end
+      encryptor(serializer: :json_allow_marshal).decrypt_and_verify(token)
+    rescue ActiveSupport::MessageEncryptor::InvalidMessage
+      encryptor(serializer: :marshal).decrypt_and_verify(token)
+    end
     find(data.symbolize_keys[:id])
   rescue ActiveSupport::MessageEncryptor::InvalidMessage
     raise ActiveRecord::RecordNotFound
