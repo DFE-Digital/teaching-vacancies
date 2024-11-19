@@ -1,5 +1,4 @@
 require "rails_helper"
-require "message_encryptor"
 require "dfe/analytics/rspec/matchers"
 
 RSpec.shared_examples "a successful Publisher sign in" do
