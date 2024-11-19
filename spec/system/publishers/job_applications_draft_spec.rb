@@ -16,16 +16,18 @@ RSpec.describe "Draft job applications for publishers" do
       login_publisher(publisher: publisher)
     end
 
-    describe "on the 'manage jobs' page" do
+    after { logout }
+
+    describe "on the 'manage jobs' page", :js do
       before do
         visit organisation_jobs_with_type_path
         click_on vacancy.job_title
         click_on "Applications"
-        expect(page).to have_css(".govuk-summary-list__row", count: 1)
+        expect(page.find(".govuk-table__body")).to have_css(".govuk-table__row", count: 1)
       end
 
       it "shows a status 'tag' of 'unread'" do
-        expect(page).to have_css(".govuk-summary-list__row .govuk-tag", text: "unread")
+        expect(page).to have_css(".govuk-tag", text: "unread")
       end
 
       it "has a link to view the application" do
@@ -33,7 +35,7 @@ RSpec.describe "Draft job applications for publishers" do
       end
     end
 
-    describe "on the application page" do
+    describe "on the application page", :js do
       before do
         visit organisation_jobs_with_type_path
         click_on vacancy.job_title
