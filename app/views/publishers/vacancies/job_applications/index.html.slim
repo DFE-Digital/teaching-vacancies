@@ -2,34 +2,40 @@
 
 = render "publishers/vacancies/review_banner"
 
-- if vacancy.within_data_access_period? && job_applications.many?
-  .govuk-grid-row
-    .govuk-grid-column-full
-      = render SortComponent.new path: method(:organisation_job_job_applications_path), sort: sort, url_params: { job_id: vacancy.id }
-
 .govuk-grid-row
   .govuk-grid-column-full
-    - if job_applications.any? && vacancy.within_data_access_period?
-      = govuk_summary_list do |summary_list|
-        - sorted_job_applications.each do |application|
-          - summary_list.with_row classes: "application-#{application.status}" do |row|
-            - row.with_key do
-              = job_application_view_applicant(vacancy, application)
-
-            - row.with_value do
-              = publisher_job_application_status_tag(application.status)
-              dl
-                dt = "#{t('.received')}:"
-                dd = application.submitted_at.strftime("%d %B %Y at %H:%M")
-
-            - if application.status.in?(%w[reviewed shortlisted submitted])
-              - if application.reviewed? || application.submitted?
-                - row.with_action text: t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
-              - row.with_action text: t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, application.id), visually_hidden_text: " #{application.name}"
-
-    - elsif !vacancy.within_data_access_period?
+    - if vacancy.within_data_access_period?
+      - applications = job_applications.group_by(&:status)
+      - new_ones = applications.fetch("submitted", []) + applications.fetch("reviewed", [])
+      - rejected = applications.fetch("unsuccessful", [])
+      - shortlisted = applications.fetch("shortlisted", [])
+      - interviewing = applications.fetch("interviewing", [])
+      = govuk_tabs do |tabs|
+        - tabs.with_tab(label: "All (#{job_applications.size})") do
+          - if job_applications.any?
+            = render "candidates", form: @form, vacancy: vacancy, candidates: job_applications, heading: "All Applications", multi_select: "all"
+          - else
+            = render EmptySectionComponent.new title: t(".no_applicants")
+        - tabs.with_tab(label: "New (#{new_ones.size})")
+          - if new_ones.any?
+            = render "candidates", form: @form, vacancy: vacancy, candidates: new_ones, heading: "New Applications", multi_select: "new"
+          - else
+            = render EmptySectionComponent.new title: t(".no_new")
+        - tabs.with_tab(label: "Not Considering (#{rejected.size})")
+          - if rejected.any?
+            = render "candidates", form: @form, vacancy: vacancy, candidates: rejected, heading: "Not being considered", multi_select: "rej"
+          - else
+            = render EmptySectionComponent.new title: t(".no_rejected")
+        - tabs.with_tab(label: "Shortlisted (#{shortlisted.size})")
+          - if shortlisted.any?
+            = render "candidates", form: @form, vacancy: vacancy, candidates: shortlisted, heading: "Shortlisted Applications", multi_select: "short"
+          - else
+            = render EmptySectionComponent.new title: t(".no_shortlisted")
+        - tabs.with_tab(label: "Interviewing (#{interviewing.size})")
+          - if interviewing.any?
+            = render "candidates", form: @form, vacancy: vacancy, candidates: interviewing, heading: "Interviewing Applications", multi_select: "inter"
+          - else
+            = render EmptySectionComponent.new title: t(".no_interviewing")
+    - else
       = govuk_inset_text do
         p = t(".expired_more_than_year")
-
-    - else
-        = render EmptySectionComponent.new title: t(".no_applicants")

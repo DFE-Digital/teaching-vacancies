@@ -193,6 +193,15 @@ FactoryBot.define do
     status { :withdrawn }
   end
 
+  trait :status_interviewing do
+    transient do
+      submitted_at { 4.days.ago }
+      interviewing_at { 2.days.ago }
+    end
+
+    status { :interviewing }
+  end
+
   trait :job_application_sample do
     first_name { "Jane" }
     last_name { "Smith" }

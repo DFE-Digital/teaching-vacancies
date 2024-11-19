@@ -749,6 +749,11 @@ en:
               blank: Enter a note
               too_long: A note must not be more than 150 characters
 
+        publishers/job_application/tag_form:
+          attributes:
+            job_applications:
+              too_short: You must select an application to change
+
         support_request_form:
           attributes:
             email_address:
