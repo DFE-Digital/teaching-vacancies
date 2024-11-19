@@ -185,6 +185,9 @@ GEM
     database_consistency (1.7.26)
       activerecord (>= 3.2)
     date (3.4.0)
+    debug (1.9.2)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     debug_inspector (1.2.0)
     declarative (0.0.20)
     devise (4.9.4)
@@ -793,6 +796,7 @@ DEPENDENCIES
   climate_control
   cssbundling-rails
   database_consistency
+  debug (>= 1.0.0)
   devise
   dfe-analytics!
   dotenv-rails

@@ -105,6 +105,7 @@ group :development, :test do
   gem "brakeman"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "database_consistency", require: false
+  gem "debug", ">= 1.0.0", require: false
   gem "dotenv-rails"
   gem "launchy", "~> 3.0"
   gem "parallel_tests"
