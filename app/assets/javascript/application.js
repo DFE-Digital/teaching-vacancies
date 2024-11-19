@@ -3,7 +3,10 @@ import * as Sentry from '@sentry/browser';
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
-import { initAll } from 'govuk-frontend';
+import * as govukFrontend from 'govuk-frontend';
+import $ from 'jquery';
+import * as mojFrontend from '@ministryofjustice/frontend';
+
 import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 
@@ -26,6 +29,8 @@ import PanelController from './js_components/panel/panel';
 import ShowHiddenContentController from './js_components/showHiddenContent/showHiddenContent';
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
+
+import DfeMultiSelect from './dfe-multi-select';
 
 Sentry.init({
   // `sentryConfig` is set from the application layout
@@ -61,4 +66,20 @@ application.register('tracked-link', TrackedLinkController);
 application.register('utils', UtilsController);
 
 Rails.start();
-initAll();
+govukFrontend.initAll();
+window.$ = $;
+mojFrontend.initAll();
+
+const $multiSelects = document.querySelectorAll('[data-module="dfe-multi-select"]');
+
+if ($multiSelects !== null) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const $multiSelect of $multiSelects) {
+    // eslint-disable-next-line no-new
+    new DfeMultiSelect({
+      container: $multiSelect.querySelector($multiSelect.getAttribute('data-multi-select-checkbox')),
+      checkboxes: $multiSelect.querySelectorAll('tbody .govuk-checkboxes__input'),
+      id_prefix: $multiSelect.getAttribute('data-multi-select-idprefix'),
+    });
+  }
+}
