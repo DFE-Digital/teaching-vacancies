@@ -44,7 +44,7 @@ RSpec.describe "Draft job applications for publishers" do
       end
 
       it "has the application status of 'reviewed'" do
-        expect(page).to have_css(".application-status .govuk-tag", text: "reviewed")
+        expect(page).to have_css(".application-status.govuk-tag", text: "reviewed")
       end
 
       it "does not show the section status indicators" do
