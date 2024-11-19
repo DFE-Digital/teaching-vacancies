@@ -10,7 +10,7 @@ class Subscription < ApplicationRecord
 
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
-  def self.encryptor
+  def self.encryptor(serializer: :json_allow_marshal)
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
     key_generator_salt = SUBSCRIPTION_KEY_GENERATOR_SALT
 
@@ -18,19 +18,23 @@ class Subscription < ApplicationRecord
       .new(key_generator_secret, hash_digest_class: SUBSCRIPTION_KEY_GENERATOR_DIGEST_CLASS)
       .generate_key(key_generator_salt, 32)
 
-    ActiveSupport::MessageEncryptor.new(key_generator)
+    ActiveSupport::MessageEncryptor.new(key_generator, serializer: serializer)
   end
 
   def self.find_and_verify_by_token(token)
-    data = encryptor.decrypt_and_verify(token)
-    find(data[:id])
+    data = begin
+             encryptor(serializer: :json_allow_marshal).decrypt_and_verify(token)
+           rescue ActiveSupport::MessageEncryptor::InvalidMessage
+             encryptor(serializer: :marshal).decrypt_and_verify(token)
+           end
+    find(data.symbolize_keys[:id])
   rescue ActiveSupport::MessageEncryptor::InvalidMessage
     raise ActiveRecord::RecordNotFound
   end
 
   def token
     token_values = { id: id }
-    self.class.encryptor.encrypt_and_sign(token_values)
+    self.class.encryptor(serializer: :json_allow_marshal).encrypt_and_sign(token_values)
   end
 
   def unsubscribe
