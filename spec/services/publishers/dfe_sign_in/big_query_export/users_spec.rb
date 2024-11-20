@@ -12,8 +12,8 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Users do
 
   subject { described_class.new(bigquery: bigquery_stub) }
 
-  let(:bigquery_stub) { instance_double("Google::Cloud::Bigquery::Project") }
-  let(:dataset_stub) { instance_double("Google::Cloud::Bigquery::Dataset") }
+  let(:bigquery_stub) { instance_double(Google::Cloud::Bigquery::Project) }
+  let(:dataset_stub) { instance_double(Google::Cloud::Bigquery::Dataset) }
 
   let(:api_request) { instance_double(DfeSignIn::API::Request) }
   let(:number_of_pages) { 1 }
@@ -69,7 +69,7 @@ RSpec.describe Publishers::DfeSignIn::BigQueryExport::Users do
   end
 
   context "when the user table exists in the dataset" do
-    let(:table_stub) { instance_double("Google::Cloud::Bigquery::Table") }
+    let(:table_stub) { instance_double(Google::Cloud::Bigquery::Table) }
 
     it "deletes the table first before inserting new table data" do
       expect(table_stub).to receive(:delete).and_return(true)

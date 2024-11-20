@@ -4,7 +4,7 @@ require "dfe_sign_in/api/response"
 
 RSpec.describe DfeSignIn::API::Response do
   let(:api_response) { JSON.parse(response_file) }
-  let(:request) { instance_double("DfeSignIn::API::Request", perform: api_response) }
+  let(:request) { instance_double(DfeSignIn::API::Request, perform: api_response) }
 
   subject(:response) { described_class.new(request) }
 
