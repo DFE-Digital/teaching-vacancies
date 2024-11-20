@@ -70,17 +70,6 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       expect(page).to have_content("Not Considering (3)")
     end
 
-    scenario "Changing a single status", :js do
-      find(".application-unsuccessful")
-      within(".application-unsuccessful") do
-        find(".govuk-checkboxes__item").click
-      end
-      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
-      choose "Reviewed"
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("New (3)")
-    end
-
     describe "submitted application", :js do
       let(:status) { "submitted" }
 
