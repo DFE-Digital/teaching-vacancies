@@ -26,4 +26,6 @@
             - row.with_cell(text: application.email_address)
             - row.with_cell(text: publisher_job_application_status_tag(application.status))
 
-  = f.govuk_submit t(".update_application_status"), secondary: true
+  .govuk-button-group
+    = f.govuk_submit t(".download_selected"), name: "download_selected", value: "true"
+    = f.govuk_submit t(".update_application_status"), name: "update_application_status", value: "true", secondary: true
