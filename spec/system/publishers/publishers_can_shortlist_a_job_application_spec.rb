@@ -15,13 +15,13 @@ RSpec.describe "Publishers can shortlist a job application" do
   it "shortlists the job application", :js do
     click_on "Update application status"
     expect(page).to have_no_css("strong.govuk-tag.govuk-tag--green.application-status", text: "shortlisted")
-    check "Select #{job_application.name}"
+    all(".govuk-checkboxes__item").first.click
     click_on "Update application status"
     choose "Shortlisted"
     click_on "Save and continue"
 
     expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
-    expect(page).to have_no_css("strong.govuk-tag.govuk-tag--green.application-status", text: "shortlisted")
+    expect(page).to have_css("strong.govuk-tag.govuk-tag--green.application-status", text: "shortlisted")
     expect(job_application.reload.status).to eq("shortlisted")
   end
 end
