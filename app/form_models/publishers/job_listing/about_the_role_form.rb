@@ -77,14 +77,4 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
 
     errors.add(:job_advert, :blank)
   end
-
-  def remove_html_tags(field)
-    regex = /<("[^"]*"|'[^']*'|[^'">])*>/
-
-    field&.gsub(regex, "")
-  end
-
-  def number_of_words_exceeds_permitted_length?(number, attribute)
-    remove_html_tags(attribute)&.split&.length&.>(number)
-  end
 end
