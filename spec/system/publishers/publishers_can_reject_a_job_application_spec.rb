@@ -15,13 +15,13 @@ RSpec.describe "Publishers can reject a job application" do
   it "rejects the job application after confirmation", :js do
     click_on "Update application status"
     expect(page).to have_no_css("strong.govuk-tag.govuk-tag--red.application-status", text: "rejected")
-    check "Select #{job_application.name}"
+    all(".govuk-checkboxes__item").first.click
     click_on "Update application status"
-    choose "Not considering"
+    choose "Not Considering"
     click_on "Save and continue"
 
     expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
     expect(page).to have_css("strong.govuk-tag.govuk-tag--red.application-status", text: "rejected")
-    expect(job_application.reload.status).to eq("rejected")
+    expect(job_application.reload.status).to eq("unsuccessful")
   end
 end
