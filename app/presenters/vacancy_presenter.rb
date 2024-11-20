@@ -137,8 +137,10 @@ class VacancyPresenter < BasePresenter
   end
 
   def normalize_bullets(text, normalized_bullet)
+    return unless text
+
     # `⁃` is a hyphen bullet, not an en-dash or a hyphen.
-    text&.gsub("⁃", normalized_bullet)&.gsub("·", normalized_bullet)&.gsub("∙", normalized_bullet)
+    text.gsub("⁃", normalized_bullet).gsub("·", normalized_bullet).gsub("∙", normalized_bullet)
   end
 
   def normalize_newlines(text)

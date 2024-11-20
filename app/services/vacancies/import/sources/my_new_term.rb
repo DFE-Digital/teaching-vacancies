@@ -153,12 +153,14 @@ class Vacancies::Import::Sources::MyNewTerm
 
   def key_stages_for(item)
     item["keyStages"].presence&.map do |key_stage|
-      key_stage&.gsub("key_stage_1", "ks1")
-      &.gsub("key_stage_2", "ks2")
-      &.gsub("key_stage_3", "ks3")
-      &.gsub("key_stage_4", "ks4")
-      &.gsub("key_stage_5", "ks5")
-      &.gsub(/\s+/, "")
+      next if key_stage.blank?
+
+      key_stage.gsub("key_stage_1", "ks1")
+               .gsub("key_stage_2", "ks2")
+               .gsub("key_stage_3", "ks3")
+               .gsub("key_stage_4", "ks4")
+               .gsub("key_stage_5", "ks5")
+               .gsub(/\s+/, "")
     end
   end
 
