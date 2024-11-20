@@ -90,7 +90,7 @@ ruby:
     - filters_component.with_remove_filter_links do |rb|
       - filter_types.each do |filter_type|
         - unless hidden_filters.include?(filter_type[:key].to_s)
-          - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }))
+          - rb.with_group(**filter_type, remove_filter_link: { url_helper: :jobs_path, params: vacancies_search.remove_filter_params })
 
     - unless hidden_filters&.include?("visa_sponsorship")
       - filters_component.with_group key: "visa_sponsorship_availability", component: f.govuk_collection_check_boxes(:visa_sponsorship_availability, form.visa_sponsorship_availability_options, :first, :last, small: true, legend: { text: t("jobs.filters.visa_sponsorship_availability.legend") }, hint: nil)
