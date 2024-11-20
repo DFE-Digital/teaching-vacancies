@@ -13,6 +13,12 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
   end
   attr_accessor(*fields)
 
+  class << self
+    def unstorable_fields
+      %i[has_teacher_reference_number]
+    end
+  end
+
   def statutory_induction_complete_options
     [
       ["yes", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.yes")],

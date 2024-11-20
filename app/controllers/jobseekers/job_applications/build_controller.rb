@@ -49,17 +49,17 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def form_attributes
     attributes = case action_name
                  when "show"
-                   job_application.attributes.slice(*form_class.fields.map(&:to_s))
+                   form_class.load(job_application.attributes.symbolize_keys)
                  when "update"
                    form_params
                  end
 
     if step == :professional_status
-      attributes.merge!(jobseeker_profile_attributes)
-      attributes.merge!(trn_params)
+      attributes.merge(jobseeker_profile_attributes)
+                .merge(trn_params)
+    else
+      attributes
     end
-
-    attributes
   end
 
   def form_params
@@ -99,7 +99,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_fields
-    form_params.except(*form_class.unstorable_fields)
+    form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
   end
 
   def step_incomplete?

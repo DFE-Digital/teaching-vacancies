@@ -108,7 +108,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def form_fields_from_step(step)
-    "jobseekers/job_application/#{step}_form".camelize.constantize.fields
+    "jobseekers/job_application/#{step}_form".camelize.constantize.storable_fields
   end
 
   def previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?

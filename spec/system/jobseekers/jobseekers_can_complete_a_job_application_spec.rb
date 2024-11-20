@@ -37,9 +37,10 @@ RSpec.describe "Jobseekers can complete a job application" do
     validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
     fill_in_undergraduate_degree
     click_on I18n.t("buttons.save_qualification.one")
+    choose "Yes, I've completed this section"
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(page).to have_content("Training and continuing professional development (CPD)")
+    expect(page).to have_content("No training or CPD specified")
     validates_step_complete
     click_on "Add training"
     click_on "Save and continue"

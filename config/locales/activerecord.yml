@@ -546,6 +546,8 @@ en:
               invalid: Enter a teacher reference number (TRN) that is 7 digits long
             right_to_work_in_uk:
               inclusion: Select no if you have the right to work in the UK
+            has_ni_number:
+              inclusion: Select yes if you have a National Insurance number
         jobseekers/job_application/personal_statement_form:
           attributes:
             personal_statement:
