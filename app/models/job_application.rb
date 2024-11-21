@@ -48,7 +48,7 @@ class JobApplication < ApplicationRecord
 
   RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
 
-  enum religious_reference_type: RELIGIOUS_REFERENCE_TYPES
+  enum :religious_reference_type, RELIGIOUS_REFERENCE_TYPES
 
   has_encrypted :first_name, :last_name, :previous_names, :street_address, :city, :postcode,
                 :phone_number, :teacher_reference_number, :national_insurance_number,
