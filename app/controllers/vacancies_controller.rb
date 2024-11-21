@@ -1,5 +1,9 @@
 class VacanciesController < ApplicationController
+  include ReturnPathTracking::Helpers
+
   before_action :set_landing_page, only: %i[index]
+
+  before_action :store_jobseeker_location, only: %i[show], if: :storable_location?
 
   def index
     @vacancies_search = Search::VacancySearch.new(form.to_hash, sort: form.sort)
@@ -118,5 +122,9 @@ class VacanciesController < ApplicationController
     # actually in London which could potentially confuse jobseekers.
     normalised_query = form.to_hash[:location]&.strip&.downcase
     normalised_query.nil? || LocationQuery::NATIONWIDE_LOCATIONS.include?(normalised_query) || @vacancies_search.polygon.present?
+  end
+
+  def store_jobseeker_location
+    store_return_location(scope: :jobseeker)
   end
 end

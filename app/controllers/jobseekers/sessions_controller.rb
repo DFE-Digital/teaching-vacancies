@@ -14,7 +14,7 @@ class Jobseekers::SessionsController < Devise::SessionsController
 
     super do
       unless redirected?
-        store_return_location(request.referer, scope: :jobseeker)
+        store_return_location(jobseeker_root_path, scope: :jobseeker)
         session[:after_sign_in] = true
       end
     end

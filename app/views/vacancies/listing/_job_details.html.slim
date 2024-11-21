@@ -116,7 +116,7 @@ section#job-details class="govuk-!-margin-bottom-5"
       - if current_jobseeker.present?
         = govuk_button_link_to t("buttons.download_application_form", size: number_to_human_size(vacancy.application_form.byte_size)), job_document_path(vacancy, vacancy.application_form.id)
       - else
-        = govuk_button_link_to t("buttons.sign_in_to_download"), new_jobseeker_session_path
+        = govuk_button_link_to t("buttons.sign_in_to_download"), new_jobseeker_session_path(redirected: true)
 
       .govuk-body = t("vacancies.international_teacher_advice.text_html", link: tracked_link_to(t("vacancies.international_teacher_advice.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers", link_type: :international_teacher_advice_link_job_listing))
 
