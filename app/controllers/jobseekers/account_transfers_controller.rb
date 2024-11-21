@@ -31,10 +31,13 @@ class Jobseekers::AccountTransfersController < Jobseekers::BaseController
   def successfully_transfer_account_data?
     Jobseekers::AccountTransfer.new(current_jobseeker, @account_transfer_form.email).call
     true
-  rescue Jobseekers::AccountTransfer::AccountNotFoundError, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+  rescue Jobseekers::AccountTransfer::AccountTransferError, ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
     Rails.logger.error("Account transfer failed: #{e.message}")
-    Rails.logger.error("Account transfer failed on #{e.record.class.name} with ID: #{e.record.id}")
-    Rails.logger.error("Validation errors: #{e.record.errors.full_messages.join(', ')}")
+
+    if e.respond_to?(:record)
+      Rails.logger.error("Account transfer failed on #{e.record.class.name} with ID: #{e.record.id}")
+      Rails.logger.error("Validation errors: #{e.record.errors.full_messages.join(', ')}")
+    end
     false
   end
 end

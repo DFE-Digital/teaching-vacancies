@@ -80,6 +80,18 @@ RSpec.describe Vacancies::Import::Sources::Every do
     it "assigns the vacancy job location to the school" do
       expect(vacancy.readable_job_location).to eq(school2.name)
     end
+
+    context "when the school URN doesn't belong to any school" do
+      let(:response_body) do
+        hash = JSON.parse(super())
+        hash["result"].first["schoolUrns"] = ["123456789"]
+        hash.to_json
+      end
+
+      it "does not import vacancy" do
+        expect(subject.count).to eq(0)
+      end
+    end
   end
 
   context "when visa_sponsorship_available is not provided" do

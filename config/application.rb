@@ -94,7 +94,6 @@ module TeachingVacancies
     config.maintenance_mode = ActiveModel::Type::Boolean.new.cast(ENV.fetch("MAINTENANCE_MODE", nil))
 
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets")
-    config.assets.excluded_paths << Rails.root.join("app/assets/stylesheets")
 
     config.view_component.preview_paths << "#{Rails.root}/app/components/previews"
     config.view_component.preview_route = "/components"
@@ -104,7 +103,7 @@ module TeachingVacancies
     # GovUK One Login
     config.govuk_one_login_base_url = ENV.fetch("GOVUK_ONE_LOGIN_BASE_URL", nil)
     config.govuk_one_login_client_id = ENV.fetch("GOVUK_ONE_LOGIN_CLIENT_ID", nil)
-    config.govuk_one_login_private_key = Rails.application.credentials.one_login.private_key
+    config.govuk_one_login_private_key = Rails.application.credentials.one_login&.private_key
 
     # TODO: We use Devise's `after_sign_out_path_for` to redirect users to DSI after signing out,
     # and have no way of disabling the foreign host redirect protection in that instance. Until

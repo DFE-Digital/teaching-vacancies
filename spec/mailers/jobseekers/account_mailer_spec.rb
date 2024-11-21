@@ -31,22 +31,6 @@ RSpec.describe Jobseekers::AccountMailer do
     end
   end
 
-  describe "#email_changed" do
-    let(:mail) { described_class.email_changed(jobseeker) }
-    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
-
-    it "sends a `jobseeker_email_changed` email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.account_mailer.email_changed.subject"))
-      expect(mail.to).to eq([email])
-      expect(mail.body.encoded).to include(I18n.t("jobseekers.account_mailer.email_changed.heading"))
-    end
-
-    it "triggers a `jobseeker_email_changed` email event" do
-      mail.deliver_now
-      expect(:jobseeker_email_changed).to have_been_enqueued_as_analytics_events
-    end
-  end
-
   describe "#inactive_account" do
     let(:mail) { described_class.inactive_account(jobseeker) }
     let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }

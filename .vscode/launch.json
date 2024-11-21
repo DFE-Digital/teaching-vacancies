@@ -5,15 +5,25 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Rails Server",
-      "type": "Ruby",
+      //Start Rails server
+      "name": "Debug Rails",
+      "type": "rdbg",
       "request": "launch",
-      "program": "${workspaceRoot}/bin/rails",
-      "args": [
-        "server",
-        "-b",
-        "0.0.0.0"
-      ]
+      // "command": "bundle exec rails", #bundle exec rails won't stop in the debugger
+      "command": "bin/rails",
+      "script": "s",
+      "args": ["-b","0.0.0.0"],
+    },
+    {
+      // Run tests on the active rspec file
+      "name": "Debug Rspec with current file",
+      "type": "rdbg",
+      "request": "launch",
+      "command": "bundle exec rspec",
+      "script": "${file}",
+      "args": [],
+      // Confirm the executed command in the window. Make it easy to specify options such as execution of
+      "askParameters": true
     }
   ]
 }

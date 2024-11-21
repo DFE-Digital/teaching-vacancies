@@ -1,8 +1,7 @@
 class Publishers::JobApplicationDataExpiryNotifier < Noticed::Event
-  deliver_by :database
   deliver_by :email, mailer: "Publishers::JobApplicationDataExpiryMailer", method: :job_application_data_expiry
   delegate :created_at, to: :record
-  param :vacancy, :publisher
+  required_param :vacancy, :publisher
 
   notification_methods do
     include ActionView::Helpers::UrlHelper

@@ -36,7 +36,8 @@
         "Shopify.ruby-extensions-pack",
         "GitHub.copilot",
         "donjayamanne.git-extension-pack",
-        "bierner.markdown-mermaid"
+        "bierner.markdown-mermaid",
+        "KoichiSasada.vscode-rdbg"
       ],
       "settings": {
         // Get highlighting for local env files

@@ -25,7 +25,7 @@ gem "array_enum"
 gem "aws-sdk-s3", require: false
 gem "breasal"
 gem "devise"
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.2"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.0"
 gem "factory_bot_rails"
 gem "faker"
 gem "friendly_id"
@@ -34,8 +34,8 @@ gem "geocoder"
 gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
-gem "govuk-components", "~> 5.7.0"
-gem "govuk_design_system_formbuilder", "~> 5.7.0"
+gem "govuk-components", "~> 5.7.1"
+gem "govuk_design_system_formbuilder", "~> 5.7.1"
 gem "high_voltage"
 gem "httparty"
 gem "ipaddr"
@@ -97,6 +97,7 @@ group :development do
   gem "rubocop-rspec_rails", require: false
   gem "solargraph"
   gem "spring"
+  gem "spring-commands-parallel-tests"
   gem "spring-commands-rspec"
   gem "spring-watcher-listen"
   gem "web-console"
@@ -106,6 +107,7 @@ group :development, :test do
   gem "brakeman"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "database_consistency", require: false
+  gem "debug", ">= 1.0.0", require: false
   gem "dotenv-rails"
   gem "launchy", "~> 3.0"
   gem "parallel_tests"

@@ -57,8 +57,8 @@ RSpec.describe Vacancies::Import::Sources::UnitedLearning do
     context "whente there is no school matching the source URN" do
       let!(:school) { create(:school, name: "Test School", urn: "wrong_urn", phase: :secondary) }
 
-      it "the vacancy does not has any associated organisation" do
-        expect(vacancy.organisations).to be_empty
+      it "does not import vacancy" do
+        expect(subject.count).to eq(0)
       end
     end
 

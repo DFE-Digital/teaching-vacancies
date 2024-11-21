@@ -6,6 +6,10 @@
 
 <%= notify_link(job_url(@vacancy), t(".apply_for_link", job_title: @vacancy.job_title)) %>
 
+<% if @vacancy.is_a_teaching_or_middle_leader_role? %>
+  <%= t(".advice", link: writing_job_application_advice_link(t(".application_advice_link_text"))) %>
+<% end %>
+
 <%= t(".to_find_the_right_job") %>
 
 <%= t("shared.jobseeker_footer", home_page_link: home_page_link) %>

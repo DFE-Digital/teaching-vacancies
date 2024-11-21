@@ -22,6 +22,7 @@ class Vacancies::Import::Sources::MyNewTerm
   def each
     results.each do |result|
       schools = find_schools(result)
+      next if schools.blank?
       next if vacancy_listed_at_excluded_trust_type?(schools, result["trustUID"])
       next if vacancy_listed_at_excluded_school_type?(schools)
 
@@ -107,12 +108,14 @@ class Vacancies::Import::Sources::MyNewTerm
   end
 
   def find_schools(item)
-    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"])
-    school_urns = item["schoolUrns"]&.split(",")
+    multi_academy_trust = SchoolGroup.trusts.find_by(uid: item["trustUID"]) if item["trustUID"].present?
 
-    return [] if multi_academy_trust.blank? && school_urns.blank?
-    return Organisation.where(urn: school_urns) if multi_academy_trust.blank?
-    return Array(multi_academy_trust) if school_urns.blank?
+    school_urns = item["schoolUrns"]&.split(",")
+    schools = Organisation.where(urn: school_urns) if school_urns.present?
+
+    return [] if multi_academy_trust.blank? && schools.blank?
+    return schools if multi_academy_trust.blank?
+    return Array(multi_academy_trust) if schools.blank?
 
     # When having both trust and schools, only return the schools that are in the trust if any. Otherwise, return the trust itself.
     multi_academy_trust.schools.where(urn: school_urns).order(:created_at).presence || Array(multi_academy_trust)
@@ -150,12 +153,14 @@ class Vacancies::Import::Sources::MyNewTerm
 
   def key_stages_for(item)
     item["keyStages"].presence&.map do |key_stage|
-      key_stage&.gsub("key_stage_1", "ks1")
-      &.gsub("key_stage_2", "ks2")
-      &.gsub("key_stage_3", "ks3")
-      &.gsub("key_stage_4", "ks4")
-      &.gsub("key_stage_5", "ks5")
-      &.gsub(/\s+/, "")
+      next if key_stage.blank?
+
+      key_stage.gsub("key_stage_1", "ks1")
+               .gsub("key_stage_2", "ks2")
+               .gsub("key_stage_3", "ks3")
+               .gsub("key_stage_4", "ks4")
+               .gsub("key_stage_5", "ks5")
+               .gsub(/\s+/, "")
     end
   end
 

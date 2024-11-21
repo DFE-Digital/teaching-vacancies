@@ -19,10 +19,4 @@ end
         max_chars: 75,
         required: true
 
-      = govuk_inset_text do
-        - if vacancy.phases.many?
-          = t("publishers.vacancies.build.job_title.phase_inset_text.multiple_phases")
-        - else
-          = t("publishers.vacancies.build.job_title.phase_inset_text.phase", phase: vacancy.phases.first&.humanize&.downcase)
-
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f

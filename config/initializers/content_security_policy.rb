@@ -13,14 +13,17 @@ Rails.application.configure do
                        "https://*.sentry.io",
                        "https://*.google-analytics.com",
                        "https://*.analytics.google.com",
-                       "https://dev.visualwebsiteoptimizer.com",
-                       "https://v.clarity.ms"
+                       "https://www.google.com",
+                       "https://*.visualwebsiteoptimizer.com",
+                       "https://*.clarity.ms"
 
     policy.font_src    :self,
-                       :data
+                       :data,
+                       "https://fonts.gstatic.com/*"
 
     policy.frame_src   :self,
                        "https://2673654.fls.doubleclick.net", # Floodlight
+                       "https://td.doubleclick.net",
                        "https://www.recaptcha.net",
                        "https://www.googletagmanager.com",
                        "https://www.youtube.com"
@@ -41,7 +44,13 @@ Rails.application.configure do
                        "https://*.visualwebsiteoptimizer.com",
                        "https://www.clarity.ms"
 
-    policy.style_src   :self
+    policy.style_src   :self,
+                       :unsafe_inline,
+                       "https://fonts.gstatic.com/*"
+
+    policy.worker_src  :self,
+                       :blob,
+                       "https://*.visualwebsiteoptimizer.com"
   end
 
   # Generate session nonces for permitted importmap and inline scripts

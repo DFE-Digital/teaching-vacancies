@@ -7,8 +7,10 @@ en:
       user_feedback_link: View user feedback
       development_tools_heading: Developer tools
       service_data_heading: Service data
+      api_clients_heading: ATS API clients
       service_data_link: View service data
       sidekiq_link: View Sidekiq dashboard
+      api_clients_link: View ATS API clients
 
     fallback_sessions:
       create:
@@ -90,3 +92,10 @@ en:
         main_login_guidance_html: This service is only for internal use at the Department for Education. If you are looking for a job or want to post a job listing, you need to %{link} instead.
         main_login_link_text: sign in to Teaching Vacancies
         title: Sign in to the support dashboard
+
+    publisher_ats_api_clients:
+      creation_success: ATS API client created successfully
+      creation_failure: There was an error creating the ATS API Client
+      key_rotation_success: ATS API key rotated successfully
+      index:
+        title: ATS API clients

@@ -53,7 +53,8 @@
 
                   - summary_list.with_row do |row|
                     - row.with_key text: t("jobseekers.job_applications.employments.main_duties")
-                    - row.with_value text: employment.main_duties
+                    - row.with_value do
+                      = simple_format(employment.main_duties)
 
                   - summary_list.with_row do |row|
                     - row.with_key text: t("jobseekers.job_applications.employments.reason_for_leaving")

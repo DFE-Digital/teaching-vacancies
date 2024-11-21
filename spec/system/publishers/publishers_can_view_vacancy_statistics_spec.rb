@@ -13,7 +13,7 @@ RSpec.describe "Publishers can view a job application" do
     create(:job_application, :status_withdrawn, vacancy: vacancy)
 
     login_publisher(publisher: publisher, organisation: organisation)
-    vacancy_stats = instance_double("Publishers::VacancyStats", number_of_unique_views: 42)
+    vacancy_stats = instance_double(Publishers::VacancyStats, number_of_unique_views: 42)
     allow(Publishers::VacancyStats).to receive(:new).with(vacancy).and_return(vacancy_stats)
     visit organisation_job_statistics_path(vacancy.id)
   end

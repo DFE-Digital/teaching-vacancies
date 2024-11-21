@@ -15,14 +15,4 @@ class Publishers::Organisation::SafeguardingInformationForm < BaseForm
   def safeguarding_information_does_not_exceed_maximum_words
     errors.add(:safeguarding_information, :length) if number_of_words_exceeds_permitted_length?(100, safeguarding_information)
   end
-
-  def remove_html_tags(field)
-    regex = /<("[^"]*"|'[^']*'|[^'">])*>/
-
-    field&.gsub(regex, "")
-  end
-
-  def number_of_words_exceeds_permitted_length?(number, attribute)
-    remove_html_tags(attribute)&.split&.length&.>(number)
-  end
 end

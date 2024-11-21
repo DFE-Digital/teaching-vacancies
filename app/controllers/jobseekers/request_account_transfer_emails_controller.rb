@@ -4,7 +4,7 @@ class Jobseekers::RequestAccountTransferEmailsController < Jobseekers::BaseContr
   end
 
   def create
-    @request_account_transfer_email_form = Jobseekers::RequestAccountTransferEmailForm.new(request_account_transfer_email_form_params)
+    @request_account_transfer_email_form = Jobseekers::RequestAccountTransferEmailForm.new(request_account_transfer_email_form_params.merge({ current_jobseeker_email: current_jobseeker.email }))
 
     if @request_account_transfer_email_form.valid?
       jobseeker = Jobseeker.find_by(email: @request_account_transfer_email_form.email.downcase)

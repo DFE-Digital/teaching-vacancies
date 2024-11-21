@@ -16,6 +16,7 @@ class Vacancies::Import::Sources::Every
   def each
     results.each do |result|
       schools = schools_for(result)
+      next if schools.blank?
       next if vacancy_listed_at_excluded_school_type?(schools)
 
       v = Vacancy.find_or_initialize_by(

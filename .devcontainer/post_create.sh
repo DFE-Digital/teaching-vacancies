@@ -33,6 +33,9 @@ chmod 600 $HOME/.pgpass
 log 'Create test database'
 RAILS_ENV=test bundle exec rails db:create
 
+log 'Create parallel tests databases'
+RAILS_ENV=test bundle exec rails parallel:create
+
 log 'Run `rails db:prepare`'
 bundle exec rails db:prepare
 

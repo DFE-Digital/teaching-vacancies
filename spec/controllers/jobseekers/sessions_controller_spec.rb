@@ -5,7 +5,7 @@ RSpec.describe Jobseekers::SessionsController do
   context "unrelated session contents" do
     let(:unrelated_session_contents) { { keep_me: { foo: "bar" } }.stringify_keys }
 
-    let(:credentials) { { email: "test@example.com", password: "password" } }
+    let(:credentials) { { email: "test@example.com" } }
     let!(:jobseeker) { Jobseeker.create(credentials) }
 
     before do

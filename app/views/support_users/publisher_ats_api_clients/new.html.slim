@@ -1,0 +1,10 @@
+h1.govuk-heading-l New ATS API Client
+
+= form_with model: @api_client, url: support_users_publisher_ats_api_clients_path, local: true do |form|
+  .govuk-form-group
+    = form.label :name, class: "govuk-label"
+    = form.text_field :name, class: "govuk-input", required: true
+
+  .govuk-button-group
+    = form.submit "Create ATS API Client", class: "govuk-button"
+    = link_to "Cancel", support_users_publisher_ats_api_clients_path, class: "govuk-button govuk-button--secondary"
