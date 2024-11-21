@@ -64,7 +64,7 @@ gem "prawn-table"
 gem "puma"
 gem "rack-attack"
 gem "rack-cors"
-gem "rackup", "= 1.0.0" # Temporal dependency until puma resolves a bug with a version > v6.4.3. Remove this line after that
+gem "rackup", "< 1.0.1", require: false # Temporal dependency until puma resolves a bug with a version > v6.4.3. Remove this line after that
 gem "rails_semantic_logger"
 gem "recaptcha"
 gem "redis"
