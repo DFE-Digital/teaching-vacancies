@@ -849,6 +849,7 @@ DEPENDENCIES
   rack-cors
   rack-mini-profiler
   rack_session_access
+  rackup (= 1.0.0)
   rails-controller-testing
   rails_semantic_logger
   railties (~> 7.1.2)
