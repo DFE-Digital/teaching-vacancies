@@ -6,8 +6,13 @@ RSpec.describe VacanciesController do
   render_views
 
   before do
+    # The application form is behind a login now
+    sign_in create(:jobseeker), scope: :jobseeker
+
     get :show, params: { id: vacancy }
   end
+
+  after { sign_out }
 
   describe "Apply Button" do
     let(:vacancy) { create(:vacancy) }
