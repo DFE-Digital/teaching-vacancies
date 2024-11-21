@@ -26,8 +26,8 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
   context "with national_insurance_number" do
     let(:form) do
       described_class.new(valid_params.merge(
-                                       has_ni_number: "yes", national_insurance_number: national_insurance_number,
-                                     ))
+                            has_ni_number: "yes", national_insurance_number: national_insurance_number,
+                          ))
     end
 
     context "with valid NI number" do
