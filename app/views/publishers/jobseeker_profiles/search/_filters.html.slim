@@ -72,7 +72,7 @@ ruby:
             options: { scrollable: true })
         - filters_component.with_remove_filter_links do |rb|
           - filter_types.each do |filter_type|
-            - rb.with_group(**filter_type.merge(remove_filter_link: { url_helper: :publishers_jobseeker_profiles_path, params: @jobseeker_profile_search.filters }))
+            - rb.with_group(**filter_type, remove_filter_link: { url_helper: :publishers_jobseeker_profiles_path, params: @jobseeker_profile_search.filters })
         = render "publishers/jobseeker_profiles/search/job_roles_filters", filters_component: filters_component, f: f, form: @form
         - filters_component.with_group key: "right_to_work_in_uk", component: f.govuk_collection_check_boxes(:right_to_work_in_uk, f.object.right_to_work_in_uk_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.right_to_work_in_uk") }, hint: nil)
         - filters_component.with_group key: "qualified_teacher_status", component: f.govuk_collection_check_boxes(:qualified_teacher_status, f.object.qts_options, :first, :last, small: true, legend: { text: t("publishers.jobseeker_profiles.filters.qualified_teacher_status") }, hint: nil)

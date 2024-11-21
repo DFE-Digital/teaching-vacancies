@@ -34,4 +34,16 @@ class BaseForm
   def event_data
     errors.each_with_object({ form_name: self.class.name.underscore }) { |error, data| data[error.attribute] = error.type }
   end
+
+  def number_of_words_exceeds_permitted_length?(number, attribute)
+    number_of_words = remove_html_tags(attribute)&.split&.length
+
+    number_of_words&.>(number)
+  end
+
+  def remove_html_tags(field)
+    regex = /<("[^"]*"|'[^']*'|[^'">])*>/
+
+    field&.gsub(regex, "")
+  end
 end

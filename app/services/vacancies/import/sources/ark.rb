@@ -29,7 +29,7 @@ class Vacancies::Import::Sources::Ark
 
     def supp_value
       query = ".//category[@domain='School/Network']/@suppValue"
-      @xml_node.xpath(query)&.first&.value&.presence
+      @xml_node.xpath(query)&.first&.value.presence
     end
   end
 
