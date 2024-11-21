@@ -184,7 +184,6 @@ en:
       jobseekers_job_application_catholic_religion_details_form:
         baptism_date: For example 27 3 2007
         faith: For example, Christian.
-        place_of_worship: For example, Westminster Abbey, Dean's Yard, London.
         religious_reference_type_html: >-
           <p class="govuk-hint">If you are a practising Catholic, you should nominate your Parish Priest where you regularly worship as your referee.</p>
           <p class="govuk-hint">If you are not a practising Catholic, you can provide a copy of your baptism certificate, or the date and address of your baptism.</p>
