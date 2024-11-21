@@ -479,7 +479,7 @@ GEM
     rack_session_access (0.2.0)
       builder (>= 2.0.0)
       rack (>= 1.0.0)
-    rackup (1.0.1)
+    rackup (1.0.0)
       rack (< 3)
       webrick
     rails (7.2.2)
@@ -844,6 +844,7 @@ DEPENDENCIES
   rack-cors
   rack-mini-profiler
   rack_session_access
+  rackup (< 1.0.1)
   rails-controller-testing
   rails_semantic_logger
   railties (~> 7.2)
