@@ -27,6 +27,14 @@ RSpec.describe PostsController do
 
       expect(response).to render_template("index")
     end
+
+    context "when section is 'transcripts'" do
+      it "responds with a 404 not found" do
+        get :index, params: { section: "transcripts" }
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
   end
 
   describe "#subcategory" do

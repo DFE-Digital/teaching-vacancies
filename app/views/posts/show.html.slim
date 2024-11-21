@@ -2,12 +2,13 @@
 - content_for :page_title_prefix, @post.title
 - content_for :page_description, @post.meta_description
 
-- content_for :breadcrumbs do
-  nav aria-label="breadcrumb" role="navigation"
-    = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
-                                       params[:section].titleize.capitalize => posts_path(section: params[:section]),
-                                       formatted_subcategory => subcategory_path(section: params[:section], subcategory: params[:subcategory]),
-                                       @post.title => "" }
+- unless params[:section] == "transcripts"
+  - content_for :breadcrumbs do
+    nav aria-label="breadcrumb" role="navigation"
+      = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
+                                        params[:section].titleize.capitalize => posts_path(section: params[:section]),
+                                        formatted_subcategory => subcategory_path(section: params[:section], subcategory: params[:subcategory]),
+                                        @post.title => "" }
 
 .govuk-grid-row.post
   .govuk-grid-column-two-thirds
