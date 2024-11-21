@@ -49,7 +49,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def form_attributes
     attributes = case action_name
                  when "show"
-                   form_class.load(job_application.attributes.symbolize_keys)
+                   form_class.load(job_application.attributes)
                  when "update"
                    form_params
                  end
