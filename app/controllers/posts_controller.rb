@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def index
+    return not_found if params[:section] == "transcripts"
     @subcategories = MarkdownDocument.all_subcategories(params[:section])
-    not_found if params[:section] == "transcripts"
   end
 
   def subcategory
