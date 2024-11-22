@@ -1,12 +1,2 @@
-- unless Rails.env.test?
-  = javascript_tag(nonce: true) do
-    | window.sentryConfig = { dsn: "#{ENV.fetch("SENTRY_FRONTEND_DSN", nil)}", environment: "#{Rails.application.config.app_role}", release: "#{ENV.fetch("COMMIT_SHA", nil)}" };
-
-    | Sentry.init({
-    |   dsn: window.sentryConfig.dsn,
-    |   environment: window.sentryConfig.environment,
-    |   release: window.sentryConfig.release,
-    |   integrations: [new Sentry.Replay()],
-    |   replaysSessionSampleRate: 0,
-    |   replaysOnErrorSampleRate: 1.0,  // Capture all sessions with errors
-    | });
+= javascript_tag(nonce: true) do
+  | window.sentryConfig = { dsn: "#{ENV.fetch("SENTRY_FRONTEND_DSN", nil)}", environment: "#{Rails.application.config.app_role}", release: "#{ENV.fetch("COMMIT_SHA", nil)}" };
