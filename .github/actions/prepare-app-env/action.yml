@@ -42,7 +42,7 @@ runs:
 
     - name: Set up yarn cache
       if: ${{ inputs.skip-node == 'false' }}
-      uses: actions/cache@v3
+      uses: actions/cache@v4.1.2
       with:
         path: ${{ steps.yarn-cache.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
