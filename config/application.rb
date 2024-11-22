@@ -26,7 +26,7 @@ require "rack-mini-profiler" if ENV.fetch("RACK_MINI_PROFILER", nil) == "true" &
 
 module TeachingVacancies
   class Application < Rails::Application
-    config.load_defaults 7.0
+    config.load_defaults 7.1
 
     config.add_autoload_paths_to_load_path = false
 
