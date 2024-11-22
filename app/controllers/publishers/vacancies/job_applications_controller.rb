@@ -21,6 +21,8 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def show
     redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, job_application) if job_application.withdrawn?
 
+    @notes_form = Publishers::JobApplication::NotesForm.new
+
     raise ActionController::RoutingError, "Cannot view a draft application" if job_application.draft?
 
     job_application.reviewed! if job_application.submitted?
