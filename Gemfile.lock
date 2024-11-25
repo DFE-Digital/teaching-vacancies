@@ -355,14 +355,14 @@ GEM
       rake
     mini_magick (5.0.1)
     mini_mime (1.1.5)
-    minitest (5.25.1)
+    minitest (5.25.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
     mutex_m (0.3.0)
     net-http (0.5.0)
       uri
-    net-imap (0.5.0)
+    net-imap (0.5.1)
       date
       net-protocol
     net-protocol (0.2.2)
@@ -711,14 +711,10 @@ GEM
     uber (0.1.0)
     unicode (0.4.4.5)
     unicode-display_width (2.6.0)
-    unicode-emoji (3.7.0)
-      unicode-version (~> 1.0)
-    unicode-version (1.4.0)
     uri (1.0.1)
-    valid_email2 (6.0.0)
+    valid_email2 (7.0.0)
       activemodel (>= 6.0)
       mail (~> 2.5)
-      unicode-emoji (~> 3.7.0)
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
