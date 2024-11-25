@@ -532,7 +532,7 @@ RSpec.describe Vacancy do
     end
 
     context "if all organisations have no geopoint" do
-      let(:organisations) { [create(:school, geopoint: nil), create(:school, geopoint: nil)] }
+      let(:organisations) { create_list(:school, 2, geopoint: nil) }
 
       it "is set to nil" do
         expect(subject.geolocation).to be_nil

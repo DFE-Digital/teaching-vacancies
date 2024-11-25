@@ -180,14 +180,6 @@ Capybara/RSpec/HaveSelector:
     - 'spec/system/publishers/publishers_can_search_for_jobseeker_profiles_spec.rb'
     - 'spec/system/support_users/feedback_spec.rb'
 
-# Offense count: 14
-# This cop supports safe autocorrection (--autocorrect).
-Capybara/RedundantWithinFind:
-  Exclude:
-    - 'spec/system/jobseekers/jobseekers_can_add_professional_status_to_their_profile_spec.rb'
-    - 'spec/system/jobseekers/jobseekers_can_manage_a_profile_spec.rb'
-    - 'spec/system/support_users/feedback_spec.rb'
-
 # Offense count: 35
 # This cop supports safe autocorrection (--autocorrect).
 Capybara/SpecificFinders:
@@ -225,32 +217,6 @@ FactoryBot/AssociationStyle:
     - 'spec/factories/schools.rb'
 
 # Offense count: 5
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Include, EnforcedStyle, ExplicitOnly.
-# Include: **/*_spec.rb, **/spec/**/*, **/test/**/*, **/features/support/factories/**/*.rb
-# SupportedStyles: require_parentheses, omit_parentheses
-FactoryBot/ConsistentParenthesesStyle:
-  Exclude:
-    - 'spec/factories/job_applications.rb'
-
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AutoCorrect, Include, EnforcedStyle, ExplicitOnly.
-# Include: **/*_spec.rb, **/spec/**/*, **/test/**/*, **/features/support/factories/**/*.rb
-# SupportedStyles: create_list, n_times
-FactoryBot/CreateList:
-  Exclude:
-    - 'spec/jobs/remove_stale_vacancies_job_spec.rb'
-    - 'spec/models/vacancy_spec.rb'
-
-# Offense count: 1
-# Configuration parameters: Include, MaxAmount.
-# Include: **/*_spec.rb, **/spec/**/*, **/test/**/*, **/features/support/factories/**/*.rb
-FactoryBot/ExcessiveCreateList:
-  Exclude:
-    - 'spec/requests/api/vacancies_spec.rb'
-
-# Offense count: 5
 # Configuration parameters: Include.
 # Include: **/*_spec.rb, **/spec/**/*, **/test/**/*, **/features/support/factories/**/*.rb
 FactoryBot/FactoryAssociationWithStrategy:
@@ -283,14 +249,6 @@ Layout/MultilineHashKeyLineBreaks:
   Exclude:
     - 'app/models/vacancy.rb'
     - 'spec/form_models/jobseekers/job_application/details/employment_form_spec.rb'
-
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: space, compact, no_space
-Layout/SpaceInsideParens:
-  Exclude:
-    - 'spec/system/publishers/publishers_get_email_notifications_from_job_applications_spec.rb'
 
 # Offense count: 13
 # Configuration parameters: AllowedParentClasses.

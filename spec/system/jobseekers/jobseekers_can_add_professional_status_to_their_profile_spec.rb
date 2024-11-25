@@ -22,7 +22,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         within "ul.govuk-list.govuk-error-summary__list" do
           expect(page).to have_link("Select yes if you have qualified teacher status (QTS)", href: "#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-field-error")
         end
-        within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
+        within("fieldset", text: "Do you have qualified teacher status (QTS)?") do
           choose "Yes"
         end
         click_on "Save and continue"
@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
           expect(page).to have_link("Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.", href: "#jobseekers-profile-qualified-teacher-status-form-has-teacher-reference-number-field-error")
           expect(page).to have_link("Select yes if you have completed your statutory induction year", href: "#jobseekers-profile-qualified-teacher-status-form-statutory-induction-complete-field-error")
         end
-        within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+        within("fieldset", text: "Do you have a teacher reference number (TRN)?") do
           choose "Yes"
         end
         fill_in "Year QTS was awarded", with: "2032"
@@ -66,7 +66,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         within "ul.govuk-list.govuk-error-summary__list" do
           expect(page).to have_link("Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.", href: "#jobseekers-profile-qualified-teacher-status-form-has-teacher-reference-number-field-error")
         end
-        within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+        within("fieldset", text: "Do you have a teacher reference number (TRN)?") do
           choose "No"
         end
         click_on "Save and continue"
@@ -84,14 +84,14 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
       expect_page_to_have_professional_status_information(qts: "yes", year: "2020", trn: "7777777", statutory_induction_complete: "yes")
       click_on "Change qualified teacher status"
 
-      within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
+      within("fieldset", text: "Do you have qualified teacher status (QTS)?") do
         expect(find("#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-yes-field")).to be_checked
       end
-      within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+      within("fieldset", text: "Do you have a teacher reference number (TRN)?") do
         expect(find("#jobseekers-profile-qualified-teacher-status-form-has-teacher-reference-number-yes-field")).to be_checked
       end
       expect(find("#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-year-field").value).to eq("2020")
-      within(find("fieldset", text: "Have you completed your statutory induction period?")) do
+      within("fieldset", text: "Have you completed your statutory induction period?") do
         expect(find("#jobseekers-profile-qualified-teacher-status-form-statutory-induction-complete-yes-field")).to be_checked
       end
       expect(find("#jobseekers-profile-qualified-teacher-status-form-teacher-reference-number-field").value).to eq("7777777")
@@ -106,11 +106,11 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
       click_on "Change qualified teacher status"
 
-      within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
+      within("fieldset", text: "Do you have qualified teacher status (QTS)?") do
         choose "No"
       end
 
-      within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+      within("fieldset", text: "Do you have a teacher reference number (TRN)?") do
         choose "No"
       end
 

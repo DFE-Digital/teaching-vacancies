@@ -61,6 +61,7 @@ RSpec.describe "Api::Vacancies" do
       expect(json[:data]).to include(vacancy_json_ld(VacancyPresenter.new(published_vacancy)))
     end
 
+    # rubocop:disable FactoryBot/ExcessiveCreateList
     context "when there are more vacancies than the per-page limit" do
       before do
         stub_const("Api::VacanciesController::MAX_API_RESULTS_PER_PAGE", per_page)
@@ -94,6 +95,7 @@ RSpec.describe "Api::Vacancies" do
         expect(json[:meta]).to include(count: 16)
       end
     end
+    # rubocop:enable FactoryBot/ExcessiveCreateList
 
     it "does not retrieve incomplete or deleted vacancies" do
       create(:vacancy, :draft)

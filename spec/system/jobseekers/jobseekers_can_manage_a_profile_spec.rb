@@ -170,10 +170,10 @@ RSpec.describe "Jobseekers can manage their profile" do
 
       it "allows the jobseeker to edit their QTS status to yes with year achieved" do
         click_link("Add qualified teacher status")
-        within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
+        within("fieldset", text: "Do you have qualified teacher status (QTS)?") do
           choose "Yes"
         end
-        within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
+        within("fieldset", text: "Do you have a teacher reference number (TRN)?") do
           choose "Yes"
         end
         fill_in "jobseekers_profile_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"

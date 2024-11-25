@@ -4,16 +4,16 @@ RSpec.shared_examples "has a satisfaction rating table" do |data_testid, number_
   it "has the correct values" do
     expect(page).to have_selector("table[data-testid='#{data_testid}']")
 
-    within(find("table[data-testid='#{data_testid}']")) do
-      within(find("tr[data-testid='#{testid_for 1.month.ago}']")) do
+    within("table[data-testid='#{data_testid}']") do
+      within("tr[data-testid='#{testid_for 1.month.ago}']") do
         (1..number_of_options).each do |n|
           expect(find("td:nth-child(#{n + 1})").text).to eq(n.to_s)
         end
       end
     end
 
-    within(find("table[data-testid='#{data_testid}']")) do
-      within(find("tr[data-testid='#{testid_for 3.month.ago}']")) do
+    within("table[data-testid='#{data_testid}']") do
+      within("tr[data-testid='#{testid_for 3.month.ago}']") do
         (1..number_of_options).each do |n|
           expect(find("td:nth-child(#{n + 1})").text).to eq((n + number_of_options).to_s)
         end
