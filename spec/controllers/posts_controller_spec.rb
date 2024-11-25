@@ -111,7 +111,7 @@ RSpec.describe PostsController do
       context "when section is 'transcripts'" do
         it "responds with a 404 not found" do
           get :subcategory, params: { section: "transcripts", subcategory: "jobseekers" }
-  
+
           expect(response).to have_http_status(:not_found)
         end
       end
