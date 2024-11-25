@@ -29,7 +29,8 @@ RSpec.describe "ats-api/v1/vacancies" do
                    items: {
                      type: :object,
                      additionalProperties: false,
-                     required: %i[external_advert_url
+                     required: %i[id
+                                  external_advert_url
                                   expires_at
                                   starts_on
                                   job_title
@@ -43,6 +44,7 @@ RSpec.describe "ats-api/v1/vacancies" do
                                   publish_on
                                   schools],
                      properties: {
+                       id: { type: :string, example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66" },
                        external_advert_url: { type: :string, example: "https://example.com/jobs/123" },
                        publish_on: { type: :string, format: :date },
                        expires_at: { type: :string, format: :date },
@@ -441,7 +443,7 @@ RSpec.describe "ats-api/v1/vacancies" do
 
   path "/ats-api/v{api_version}/vacancies/{id}" do
     parameter name: "api_version", in: :path, type: :string, description: "api_version"
-    parameter name: "id", in: :path, type: :string, description: "id"
+    parameter name: "id", in: :path, type: :string, description: "id of the vacancy"
 
     let(:id) { create(:vacancy, :external).id }
 
@@ -463,6 +465,7 @@ RSpec.describe "ats-api/v1/vacancies" do
         schema type: :object,
                additionalProperties: false,
                properties: {
+                 id: { type: :string },
                  external_advert_url: { type: :string },
                  publish_on: { type: :string },
                  expires_at: { type: :string },
