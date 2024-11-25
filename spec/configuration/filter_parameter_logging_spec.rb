@@ -7,7 +7,10 @@ RSpec.describe "Filter parameter logging configuration" do
   specify "all anonymised analytics fields should be filtered from logs" do
     analytics_hidden_pii.each_value do |shared|
       shared.each do |field|
-        expect(filter_params).to include(field.to_sym)
+        matched = filter_params.any? do |pattern|
+          pattern.is_a?(Regexp) ? pattern.match?(field.to_s) : pattern == field.to_sym
+        end
+        expect(matched).to be(true), "Expected #{field} to be included in filter parameters"
       end
     end
   end

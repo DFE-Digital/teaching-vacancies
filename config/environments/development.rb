@@ -1,8 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  # Settings specified here will take precedence over those in
-  # config/application.rb.
+  # Settings specified here will take precedence over those in config/application.rb.
 
   # The application uses multiple services for storing files. This sets up a default value which gets overridden
   # in every specific use case.
@@ -14,10 +13,10 @@ Rails.application.configure do
   # If developing through Github codespaces: allow the port forwarding domain to access the app.
   config.action_controller.forgery_protection_origin_check = false if ENV["GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN"].present?
 
-  # In the development environment your application's code is reloaded on
-  # every request. This slows down response time but is perfect for development
+  # In the development environment your application's code is reloaded any time
+  # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
+  config.enable_reloading = true
 
   # Do not eager load code on boot.
   config.eager_load = false
@@ -39,6 +38,7 @@ Rails.application.configure do
   BetterErrors::Middleware.allow_ip! "192.168.0.0/16"
 
   # Enable/disable caching. By default caching is disabled.
+  # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
@@ -62,6 +62,10 @@ Rails.application.configure do
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
 
+  # Specify if an `ArgumentError` should be raised if `Rails.cache` `fetch` or
+  # `write` are given an invalid `expires_at` or `expires_in` time.
+  config.active_support.raise_on_invalid_cache_expiration_time = true
+
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = false
 
@@ -76,6 +80,9 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
+  # Highlight code that enqueued background job in logs.
+  config.active_job.verbose_enqueue_logs = true
+
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
@@ -86,6 +93,9 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   config.action_view.annotate_rendered_view_with_filenames = true
+
+  # Raise error when a before_action's only/except options reference missing actions
+  config.action_controller.raise_on_missing_callback_actions = true
 
   config.i18n.raise
 

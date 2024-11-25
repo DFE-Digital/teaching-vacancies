@@ -11,9 +11,8 @@ Rails.application.configure do
   # Configure the domains permitted to access coordinates API
   config.allowed_cors_origin = proc { "https://allowed.test.website" }
 
-  # `cache_classes` should be false under Spring as of Rails 7 - if we revisit our use of Spring,
-  # we should turn this back to true and stop setting `action_view.cache_template_loading`.
-  config.cache_classes = false
+  config.enable_reloading = true
+
   config.action_view.cache_template_loading = true
 
   # Eager loading loads your whole application. When running a single test locally,
@@ -54,6 +53,10 @@ Rails.application.configure do
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
 
+  # Specify if an `ArgumentError` should be raised if `Rails.cache` `fetch` or
+  # `write` are given an invalid `expires_at` or `expires_in` time.
+  config.active_support.raise_on_invalid_cache_expiration_time = true
+
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
 
@@ -69,6 +72,9 @@ Rails.application.configure do
   config.middleware.insert_before 0, DfeSignIn::FakeSignOutEndpoint
 
   config.log_file_size = 100.megabytes
+
+  # Raise error when a before_action's only/except options reference missing actions
+  config.action_controller.raise_on_missing_callback_actions = true
 end
 
 # Avoid OmniAuth output in tests:

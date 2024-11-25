@@ -1,4 +1,9 @@
 require "rails_helper"
+require "nokogiri"
+
+def normalize_html(html)
+  Nokogiri::HTML.fragment(html).to_html
+end
 
 RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
   context "when the field has undesired tags" do
@@ -7,7 +12,7 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
     let(:sanitized_text) { "<p> call();Sanitized content</p>" }
 
     it "sanitizes and transforms the field into safe HTML" do
-      expect(subject.public_send(field)).to eq(sanitized_text)
+      expect(normalize_html(subject.public_send(field))).to eq(normalize_html(sanitized_text))
     end
   end
 
@@ -31,7 +36,7 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
     end
 
     it "does not reformat text" do
-      expect(subject.public_send(field)).to eq(well_formatted_html)
+      expect(normalize_html(subject.public_send(field))).to eq(normalize_html(well_formatted_html))
     end
   end
 
@@ -51,15 +56,17 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
     let(:well_formatted_html) do
       "<p> Sentence one. Sentence two.\n<br />" \
       "Paragraph two. Qualifications:\n<br />" \
-      "<ul>\n<br /><li>    Skill one.</li>\n<br />" \
-      "<li>    Skill two.</li>\n<br />" \
-      "<li>    Skill three.</li>\n<br /></ul>" \
+      "<ul>" \
+      "<li>    Skill one.</li>" \
+      "<li>    Skill two.</li>" \
+      "<li>    Skill three.</li>" \
+      "</ul>" \
       "\n<br />Penultimate paragraph.\n<br />" \
       "Last paragraph </p>"
     end
 
     it "transforms badly formatted inline bullet point symbols into validly formatted <li> tags" do
-      expect(subject.public_send(field)).to eq(well_formatted_html)
+      expect(normalize_html(subject.public_send(field))).to eq(normalize_html(well_formatted_html))
     end
   end
 
@@ -87,7 +94,7 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
       end
 
       it "does not reformat text" do
-        expect(subject.public_send(field)).to eq(well_formatted_html)
+        expect(normalize_html(subject.public_send(field))).to eq(normalize_html(well_formatted_html))
       end
     end
 
@@ -107,15 +114,17 @@ RSpec.shared_examples "a fields that outputs the correct HTML" do |field|
       let(:well_formatted_html) do
         "<p> Sentence one. Sentence two. </p>\n\n" \
         "<p>Paragraph two. Qualifications: </p>\n\n" \
-        "<p><ul>\n<br /><li>  Skill one.</li>\n<br />" \
-        "<li>  Skill two.</li>\n<br />" \
-        "<li>  Skill three.</li>\n<br />" \
-        "</ul></p>\n\n<p>Penultimate paragraph. </p>\n\n" \
+        "<p></p><ul>\n" \
+        "<li>  Skill one.</li>\n" \
+        "<li>  Skill two.</li>\n" \
+        "<li>  Skill three.</li>\n" \
+        "</ul>\n\n" \
+        "<p>Penultimate paragraph. </p>\n\n" \
         "<p>Last paragraph  </p>"
       end
 
       it "transforms badly formatted inline bullet point symbols into validly formatted <li> tags" do
-        expect(subject.public_send(field)).to eq(well_formatted_html)
+        expect(normalize_html(subject.public_send(field))).to eq(normalize_html(well_formatted_html))
       end
     end
   end
