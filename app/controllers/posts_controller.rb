@@ -6,6 +6,8 @@ class PostsController < ApplicationController
   end
 
   def subcategory
+    return not_found if params[:section] == "transcripts"
+
     @posts = MarkdownDocument.all(params[:section], params[:subcategory])
     render :subcategory
   end

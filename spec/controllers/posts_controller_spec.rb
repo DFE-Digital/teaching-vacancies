@@ -107,6 +107,14 @@ RSpec.describe PostsController do
           expect(assigns(:posts).map(&:post_name).sort).to eq(post_names.sort)
         end
       end
+
+      context "when section is 'transcripts'" do
+        it "responds with a 404 not found" do
+          get :subcategory, params: { section: "transcripts", subcategory: "jobseekers" }
+  
+          expect(response).to have_http_status(:not_found)
+        end
+      end
     end
 
     it "renders the subcategory template" do
