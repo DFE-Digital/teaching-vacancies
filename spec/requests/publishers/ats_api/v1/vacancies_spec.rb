@@ -6,11 +6,11 @@ RSpec.describe "ats-api/v1/vacancies" do
   path "/ats-api/v{api_version}/vacancies" do
     parameter name: "api_version", in: :path, type: :string, description: "api_version"
 
-    get("list vacancies") do
+    get("list vacancies created from the ATS") do
       consumes "application/json"
       produces "application/json"
 
-      response(200, "successful") do
+      response(200, "vacancies successfully listed") do
         let(:api_version) { "1" }
         let(:page) { nil }
 
@@ -367,7 +367,7 @@ RSpec.describe "ats-api/v1/vacancies" do
         },
       }
 
-      response(201, "successful") do
+      response(201, "vacancy successfully created") do
         let(:api_version) { "1" }
 
         after do |example|
@@ -451,7 +451,7 @@ RSpec.describe "ats-api/v1/vacancies" do
       consumes "application/json"
       produces "application/json"
 
-      response(200, "successful") do
+      response(200, "vacancy successfully retrieved") do
         let(:api_version) { "1" }
 
         after do |example|
@@ -531,7 +531,7 @@ RSpec.describe "ats-api/v1/vacancies" do
       consumes "application/json"
       produces "application/json"
 
-      response(200, "successful") do
+      response(200, "vacancy successfully updated") do
         let(:api_version) { "1" }
 
         run_test!
@@ -541,7 +541,7 @@ RSpec.describe "ats-api/v1/vacancies" do
     delete("delete vacancy") do
       consumes "application/json"
 
-      response(204, "successful") do
+      response(204, "vacancy successfully deleted") do
         let(:api_version) { "1" }
 
         run_test!
