@@ -58,6 +58,8 @@ class JobApplication < ApplicationRecord
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :job_application
 
+  has_one_attached :pdf_version, service: :amazon_s3_documents
+
   has_noticed_notifications
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
@@ -80,6 +82,7 @@ class JobApplication < ApplicationRecord
     submitted!
     Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: self).deliver(vacancy.publisher)
     Jobseekers::JobApplicationMailer.application_submitted(self).deliver_later
+    MakeJobApplicationPdfJob.perform_later self
   end
 
   def for_a_teaching_role?

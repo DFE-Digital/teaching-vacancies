@@ -23,14 +23,24 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def download_pdf
-    pdf = JobApplicationPdfGenerator.new(job_application, vacancy).generate
+    if job_application.pdf_version.attached?
+      send_data(
+        job_application.pdf_version.attachment.download,
+        filename: "job_application_#{job_application.id}.pdf",
+        type: "application/pdf",
+        disposition: "inline",
+        )
+    else
+      pdf = JobApplicationPdfGenerator.new(job_application, vacancy).generate
+      pdf_data = pdf.render
 
-    send_data(
-      pdf.render,
-      filename: "job_application_#{job_application.id}.pdf",
-      type: "application/pdf",
-      disposition: "inline",
-    )
+      send_data(
+        pdf_data,
+        filename: "job_application_#{job_application.id}.pdf",
+        type: "application/pdf",
+        disposition: "inline",
+        )
+    end
   end
 
   def update_status

@@ -107,6 +107,26 @@ RSpec.describe "Job applications" do
     end
   end
 
+  describe "download pdf" do
+    context "without cache" do
+      it "allows the PDF to be downloaded" do
+        get(organisation_job_job_application_download_pdf_path(vacancy.id, job_application.id))
+        expect(response.body).to satisfy { |body| body.size > 128000 }
+      end
+    end
+
+    context "with cache" do
+      before do
+        MakeJobApplicationPdfJob.perform_now job_application
+      end
+
+      it "allows the PDF to be downloaded" do
+        get(organisation_job_job_application_download_pdf_path(vacancy.id, job_application.id))
+        expect(response.body).to satisfy { |body| body.size > 128000 }
+      end
+    end
+  end
+
   describe "GET #index" do
     context "when the vacancy does not belong to the current organisation" do
       let(:vacancy) { create(:vacancy, :published, organisations: [build(:school)]) }

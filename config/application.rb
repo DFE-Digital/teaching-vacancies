@@ -57,6 +57,8 @@ module TeachingVacancies
 
     config.active_storage.routes_prefix = "/attachments"
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
+    # avoid default of :vips for now - we already have mini_magick
+    config.active_storage.variant_processor = :mini_magick
 
     config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info").to_sym
 
