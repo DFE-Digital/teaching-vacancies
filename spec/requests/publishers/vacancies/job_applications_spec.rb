@@ -111,7 +111,7 @@ RSpec.describe "Job applications" do
     context "without cache" do
       it "allows the PDF to be downloaded" do
         get(organisation_job_job_application_download_pdf_path(vacancy.id, job_application.id))
-        expect(response.body).to satisfy { |body| body.size > 128000 }
+        expect(response.body).to(satisfy { |body| body.size > 128_000 })
       end
     end
 
@@ -122,7 +122,7 @@ RSpec.describe "Job applications" do
 
       it "allows the PDF to be downloaded" do
         get(organisation_job_job_application_download_pdf_path(vacancy.id, job_application.id))
-        expect(response.body).to satisfy { |body| body.size > 128000 }
+        expect(response.body).to(satisfy { |body| body.size > 128_000 })
       end
     end
   end

@@ -29,7 +29,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
         filename: "job_application_#{job_application.id}.pdf",
         type: "application/pdf",
         disposition: "inline",
-        )
+      )
     else
       pdf = JobApplicationPdfGenerator.new(job_application, vacancy).generate
       pdf_data = pdf.render
@@ -39,7 +39,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
         filename: "job_application_#{job_application.id}.pdf",
         type: "application/pdf",
         disposition: "inline",
-        )
+      )
     end
   end
 
