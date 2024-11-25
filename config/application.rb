@@ -70,6 +70,8 @@ module TeachingVacancies
 
     config.active_storage.routes_prefix = "/attachments"
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
+    # avoid default of :vips for now - we already have mini_magick
+    config.active_storage.variant_processor = :mini_magick
 
     # Specify the default serializer used by `MessageEncryptor` and `MessageVerifier`
     # instances.
