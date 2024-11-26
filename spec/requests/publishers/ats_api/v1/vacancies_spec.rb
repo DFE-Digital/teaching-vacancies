@@ -2,10 +2,8 @@ require "swagger_helper"
 
 # rubocop:disable RSpec/EmptyExampleGroup
 # rubocop:disable RSpec/ScatteredSetup
-RSpec.describe "ats-api/v1/vacancies" do
-  path "/ats-api/v{api_version}/vacancies" do
-    parameter name: "api_version", in: :path, type: :string, description: "api_version"
-
+RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
+  path "/ats-api/v1/vacancies" do
     get("list vacancies") do
       tags "Vacancies"
       description "list all the vacancies created from the client's ATS"
@@ -14,7 +12,6 @@ RSpec.describe "ats-api/v1/vacancies" do
       produces "application/json"
 
       response(200, "vacancies successfully listed") do
-        let(:api_version) { "1" }
         let(:page) { nil }
 
         before do
@@ -374,8 +371,6 @@ RSpec.describe "ats-api/v1/vacancies" do
       }
 
       response(201, "vacancy successfully created") do
-        let(:api_version) { "1" }
-
         after do |example|
           example.metadata[:response][:content] = {
             "application/json" => {
@@ -402,8 +397,6 @@ RSpec.describe "ats-api/v1/vacancies" do
       end
 
       response(400, "error") do
-        let(:api_version) { "1" }
-
         after do |example|
           example.metadata[:response][:content] = {
             "application/json" => {
@@ -447,8 +440,7 @@ RSpec.describe "ats-api/v1/vacancies" do
     end
   end
 
-  path "/ats-api/v{api_version}/vacancies/{id}" do
-    parameter name: "api_version", in: :path, type: :string, description: "api_version"
+  path "/ats-api/v1/vacancies/{id}" do
     parameter name: "id", in: :path, type: :string, description: "id of the vacancy"
 
     let(:id) { create(:vacancy, :external).id }
@@ -461,7 +453,6 @@ RSpec.describe "ats-api/v1/vacancies" do
       produces "application/json"
 
       response(200, "vacancy successfully retrieved") do
-        let(:api_version) { "1" }
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -544,7 +535,6 @@ RSpec.describe "ats-api/v1/vacancies" do
       produces "application/json"
 
       response(200, "vacancy successfully updated") do
-        let(:api_version) { "1" }
 
         run_test!
       end
@@ -557,7 +547,6 @@ RSpec.describe "ats-api/v1/vacancies" do
       consumes "application/json"
 
       response(204, "vacancy successfully deleted") do
-        let(:api_version) { "1" }
 
         run_test!
       end
