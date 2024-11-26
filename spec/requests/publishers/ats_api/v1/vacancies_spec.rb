@@ -468,6 +468,15 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         run_test!
       end
 
+      response(422, "Validation error") do
+        schema "$ref" => "#/components/schemas/validation_error"
+
+        let(:vacancy) do
+          { vacancy: { external_advert_url: nil, job_title: nil } }
+        end
+        run_test!
+      end
+
       response(500, "Internal server error") do
         schema "$ref" => "#/components/schemas/internal_server_error"
 
@@ -618,6 +627,16 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         schema "$ref" => "#/components/schemas/not_found_error"
 
         let(:id) { "123" }
+        run_test!
+      end
+
+      response(422, "Validation error") do
+        schema "$ref" => "#/components/schemas/validation_error"
+
+        let(:id) { create(:vacancy, :external).id }
+        let(:vacancy) do
+          { vacancy: { external_advert_url: nil, job_title: nil } }
+        end
         run_test!
       end
 

@@ -87,6 +87,23 @@ RSpec.configure do |config|
               },
             },
           },
+          validation_error: {
+            type: "object",
+            properties: {
+              errors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    error: { type: "string", example: "validation error" },
+                    field: { type: "string", example: "job_title" },
+                    message: { type: "string", example: "can't be blank" },
+                  },
+                  required: %w[error field message],
+                },
+              },
+            },
+          },
         },
       },
     },
