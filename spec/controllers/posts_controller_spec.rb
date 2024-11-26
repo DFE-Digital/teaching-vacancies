@@ -27,6 +27,14 @@ RSpec.describe PostsController do
 
       expect(response).to render_template("index")
     end
+
+    context "when section is 'transcripts'" do
+      it "responds with a 404 not found" do
+        get :index, params: { section: "transcripts" }
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
   end
 
   describe "#subcategory" do
@@ -97,6 +105,14 @@ RSpec.describe PostsController do
           get :subcategory, params: { section: "get-help-hiring", subcategory: "how-to-setup-your-account" }
 
           expect(assigns(:posts).map(&:post_name).sort).to eq(post_names.sort)
+        end
+      end
+
+      context "when section is 'transcripts'" do
+        it "responds with a 404 not found" do
+          get :subcategory, params: { section: "transcripts", subcategory: "jobseekers" }
+
+          expect(response).to have_http_status(:not_found)
         end
       end
     end

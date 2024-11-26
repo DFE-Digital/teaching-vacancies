@@ -7,17 +7,6 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
   let(:vacancy) { build_stubbed(:vacancy) }
 
   describe "enable job applications override" do
-    context "when the current organisation given is a local authority" do
-      let(:organisation) { build_stubbed(:local_authority) }
-
-      it "overrides enable_job_applications and sets it to false" do
-        subject.valid?
-
-        expect(subject.enable_job_applications).to eq(false)
-        expect(subject.errors).to_not include(:enable_job_applications)
-      end
-    end
-
     context "when the current organisation given is not a local authority" do
       context "when the vacancy is in draft" do
         let(:vacancy) { build_stubbed(:vacancy, :draft, job_roles: ["teacher"]) }
@@ -29,8 +18,6 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
         end
 
         it "is not valid" do
-          subject.valid?
-
           expect(subject).to_not be_valid
           expect(subject.errors).to include(:enable_job_applications)
         end
@@ -50,8 +37,6 @@ RSpec.describe Publishers::JobListing::ApplyingForTheJobForm, type: :model do
         end
 
         it "is valid" do
-          subject.valid?
-
           expect(subject).to be_valid
           expect(subject.errors).to_not include(:enable_job_applications)
         end

@@ -14,6 +14,8 @@ RSpec.describe "Creating a vacancy" do
     allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
   end
 
+  after { logout }
+
   scenario "publishes a vacancy" do
     visit organisation_jobs_with_type_path
     click_on I18n.t("buttons.create_job")
@@ -98,6 +100,11 @@ RSpec.describe "Creating a vacancy" do
 
     fill_in_start_date_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
+
+    fill_in_applying_for_the_job_disable_job_applications
+    click_on I18n.t("buttons.save_and_continue")
+
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :how_to_receive_applications))
 
     click_on I18n.t("buttons.save_and_continue")

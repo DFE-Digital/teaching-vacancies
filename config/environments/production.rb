@@ -1,6 +1,7 @@
+require "active_support/core_ext/integer/time"
+
 Rails.application.configure do
-  # Settings specified here will take precedence over those in
-  # config/application.rb.
+  # Settings specified here will take precedence over those in config/application.rb.
 
   # The application uses multiple services for storing files. This sets up a default value which gets overridden
   # in every specific use case.
@@ -10,12 +11,11 @@ Rails.application.configure do
   config.allowed_cors_origin = proc { "https://#{DOMAIN}" }
 
   # Code is not reloaded between requests.
-  config.cache_classes = true
+  config.enable_reloading = false
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
-  # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
@@ -30,6 +30,9 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+
+  # This will affect assets in /public to be cached in Cloudfront
+  config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{1.year.seconds}" }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
@@ -48,9 +51,6 @@ Rails.application.configure do
   config.ssl_options = { redirect: { exclude: ->(request) { request.path.include?("check") } } }
 
   config.cache_store = :redis_cache_store, { url: config.redis_cache_url, pool_size: ENV.fetch("RAILS_MAX_THREADS", 5) }
-
-  # This will affect assets in /public to be cached in Cloudfront
-  config.public_file_server.headers = { "Cache-Control" => "public, max-age=#{1.year.seconds}" }
 
   # Use a real queuing backend for Active Job
   # (and separate queues per environment)
@@ -84,6 +84,14 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Enable DNS rebinding protection and other `Host` header attacks.
+  # config.hosts = [
+  #   "example.com",     # Allow requests from example.com
+  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
+  # ]
+  # Skip DNS rebinding protection for the default health check endpoint.
+  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   config.action_dispatch.trusted_proxies = [
     ActionDispatch::RemoteIp::TRUSTED_PROXIES,

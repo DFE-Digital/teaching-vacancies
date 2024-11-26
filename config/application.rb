@@ -26,9 +26,15 @@ require "rack-mini-profiler" if ENV.fetch("RACK_MINI_PROFILER", nil) == "true" &
 
 module TeachingVacancies
   class Application < Rails::Application
-    config.load_defaults 7.0
+    config.load_defaults 7.2
+
+    config.add_autoload_paths_to_load_path = false
 
     config.time_zone = "Europe/London"
+
+    # Enables YJIT as of Ruby 3.3, to bring sizeable performance improvements.
+    # If you are deploying to a memory constrained environment you may want to set this to `false`.
+    config.yjit = true
 
     # Automatically add `id: uuid` on any generated migrations
     config.generators do |g|
@@ -37,6 +43,20 @@ module TeachingVacancies
 
     config.action_view.sanitized_allowed_tags = %w[p br strong em ul li h1 h2 h3 h4 h5]
     config.action_view.default_form_builder = GOVUKDesignSystemFormBuilder::FormBuilder
+
+    # Given we are using Lockbox, this ensures that Rails does not include unnecessary support for SHA-1,
+    # which is deprecated and considered insecure.
+    config.active_record.encryption.support_sha1_for_non_deterministic_encryption = false
+
+    # No longer run after_commit callbacks on the first of multiple Active Record
+    # instances to save changes to the same database row within a transaction.
+    config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction = false
+
+    # Enable validation of migration timestamps globally
+    config.active_record.validate_migration_timestamps = true
+
+    # Enable automatic decoding of PostgreSQL DATE columns for manual queries
+    config.active_record.postgresql_adapter_decode_dates = true
 
     # Settings in config/environments/* take precedence over those
     # specified here.
@@ -48,6 +68,10 @@ module TeachingVacancies
 
     config.active_job.queue_adapter = :sidekiq
 
+    # Controls whether Active Job's `#perform_later` and similar methods automatically defer
+    # the job queuing to after the current Active Record transaction is committed.
+    config.active_job.enqueue_after_transaction_commit = :default
+
     config.action_mailer.delivery_method = :notify
     config.action_mailer.deliver_later_queue_name = :high
     config.action_mailer.notify_settings = {
@@ -57,6 +81,24 @@ module TeachingVacancies
 
     config.active_storage.routes_prefix = "/attachments"
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
+    config.active_storage.web_image_content_types = %w[image/png image/jpeg image/gif image/webp]
+
+    # Specify the default serializer used by `MessageEncryptor` and `MessageVerifier`
+    # instances.
+    #
+    # The legacy default is `:marshal`, which is a potential vector for
+    # deserialization attacks in cases where a message signing secret has been
+    # leaked.
+    #
+    # In Rails 7.1, the new default is `:json_allow_marshal` which serializes and
+    # deserializes with `ActiveSupport::JSON`, but can fall back to deserializing
+    # with `Marshal` so that legacy messages can still be read.
+    #
+    # In Rails 7.2, the default will become `:json` which serializes and
+    # deserializes with `ActiveSupport::JSON` only.
+    config.active_support.message_serializer = :json_allow_marshal
+
+    config.active_support.use_message_serializer_for_metadata = true
 
     config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info").to_sym
 

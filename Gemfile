@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby "3.3.5"
 
-RAILS_VERSION = "~> 7.1.2".freeze
+RAILS_VERSION = "~> 7.2".freeze
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "actionpack-action_caching"
@@ -18,7 +18,7 @@ gem "propshaft"
 gem "railties", RAILS_VERSION
 
 gem "activerecord-import"
-gem "activerecord-postgis-adapter"
+gem "activerecord-postgis-adapter", ">= 10.0.1"
 gem "activerecord-session_store"
 gem "addressable"
 gem "array_enum"
