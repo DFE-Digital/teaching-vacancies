@@ -45,11 +45,11 @@ FactoryBot.define do
     end
 
     trait :visa_sponsorship_required do
-      visa_sponsorship_availability { ["true"] }
+      visa_sponsorship_availability { %w[true] }
     end
 
     trait :ect_suitable do
-      ect_statuses { ["ect_suitable"] }
+      ect_statuses { %w[ect_suitable] }
     end
 
     factory :daily_subscription do

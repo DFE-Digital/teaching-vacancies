@@ -1,6 +1,4 @@
 class Subscription < ApplicationRecord
-  MAXIMUM_RESULTS_PER_RUN = 500
-
   enum :frequency, { daily: 0, weekly: 1 }
 
   has_many :alert_runs, dependent: :destroy
@@ -39,11 +37,6 @@ class Subscription < ApplicationRecord
 
   def unsubscribe
     update(email: nil, active: false, unsubscribed_at: Time.current)
-  end
-
-  def vacancies_for_range(date_from, date_to)
-    criteria = search_criteria.symbolize_keys.merge(from_date: date_from, to_date: date_to)
-    Search::VacancySearch.new(criteria).vacancies.limit(MAXIMUM_RESULTS_PER_RUN)
   end
 
   def alert_run_today
