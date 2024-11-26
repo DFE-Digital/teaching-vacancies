@@ -221,6 +221,7 @@ GEM
       net-http
     fastimage (2.3.1)
     ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x86_64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
     friendly_id (5.5.1)
       activerecord (>= 4.0.0)
@@ -368,6 +369,8 @@ GEM
     net-ssh (7.2.3)
     nio4r (2.7.4)
     nokogiri (1.16.7-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.7-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
@@ -679,14 +682,6 @@ GEM
       thor (~> 1.0)
       tilt (~> 2.0)
       yard (~> 0.9, >= 0.9.24)
-    spring (4.2.1)
-    spring-commands-parallel-tests (1.0.1)
-      spring (>= 0.9.1)
-    spring-commands-rspec (1.0.4)
-      spring (>= 0.9.1)
-    spring-watcher-listen (2.1.0)
-      listen (>= 2.7, < 4.0)
-      spring (>= 4)
     stringio (3.1.2)
     swd (2.0.3)
       activesupport (>= 3)
@@ -761,6 +756,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
+  x86_64-darwin-23
   x86_64-linux
 
 DEPENDENCIES
@@ -867,10 +863,6 @@ DEPENDENCIES
   slim-rails
   slim_lint
   solargraph
-  spring
-  spring-commands-parallel-tests
-  spring-commands-rspec
-  spring-watcher-listen
   tzinfo-data
   valid_email2
   validate_url
