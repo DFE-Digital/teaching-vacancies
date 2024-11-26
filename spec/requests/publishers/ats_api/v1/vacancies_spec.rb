@@ -6,7 +6,10 @@ RSpec.describe "ats-api/v1/vacancies" do
   path "/ats-api/v{api_version}/vacancies" do
     parameter name: "api_version", in: :path, type: :string, description: "api_version"
 
-    get("list vacancies created from the ATS") do
+    get("list vacancies") do
+      tags "Vacancies"
+      description "list all the vacancies created from the client's ATS"
+
       consumes "application/json"
       produces "application/json"
 
@@ -208,7 +211,10 @@ RSpec.describe "ats-api/v1/vacancies" do
       end
     end
 
-    post("create vacancy") do
+    post("create a vacancy") do
+      tags "Vacancies"
+      description "create a vacancy for the client's ATS"
+
       consumes "application/json"
       produces "application/json"
 
@@ -448,6 +454,9 @@ RSpec.describe "ats-api/v1/vacancies" do
     let(:id) { create(:vacancy, :external).id }
 
     get("show vacancy") do
+      tags "Vacancies"
+      description "show the vacancy with the given id"
+
       consumes "application/json"
       produces "application/json"
 
@@ -528,6 +537,9 @@ RSpec.describe "ats-api/v1/vacancies" do
     end
 
     put("update vacancy") do
+      tags "Vacancies"
+      description "update the vacancy with the given id"
+
       consumes "application/json"
       produces "application/json"
 
@@ -539,6 +551,9 @@ RSpec.describe "ats-api/v1/vacancies" do
     end
 
     delete("delete vacancy") do
+      tags "Vacancies"
+      description "update the vacancy with the given id"
+
       consumes "application/json"
 
       response(204, "vacancy successfully deleted") do
