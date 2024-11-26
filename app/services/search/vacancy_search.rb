@@ -4,13 +4,14 @@ class Search::VacancySearch
 
   attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort
 
-  def initialize(search_criteria, sort: nil)
+  def initialize(search_criteria, sort: nil, scope: Vacancy.live)
     @search_criteria = search_criteria
     @keyword = search_criteria[:keyword]
     @location = search_criteria[:location]
     @radius = search_criteria[:radius]
     @organisation_slug = search_criteria[:organisation_slug]
     @sort = sort || Search::VacancySort.new(keyword: keyword, location: location)
+    @scope = scope
   end
 
   def active_criteria
@@ -56,7 +57,7 @@ class Search::VacancySearch
 
   def scope
     sort_by_distance = sort.by == "distance"
-    scope = Vacancy.live.includes(:organisations)
+    scope = @scope.includes(:organisations)
     scope = scope.where(id: organisation.all_vacancies.pluck(:id)) if organisation
     scope = scope.search_by_location(location, radius, polygon:, sort_by_distance:) if location
     scope = scope.search_by_filter(search_criteria) if search_criteria.any?

@@ -104,7 +104,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.before(:each) do
+  config.before do
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
   end
 
