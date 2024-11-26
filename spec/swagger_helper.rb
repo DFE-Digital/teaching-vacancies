@@ -30,6 +30,15 @@ RSpec.configure do |config|
       #     },
       #   },
       # ],
+      components: {
+        securitySchemes: {
+          api_key: {
+            type: :apiKey,
+            name: "X-Api-Key",
+            in: :header,
+          },
+        },
+      },
     },
   }
 

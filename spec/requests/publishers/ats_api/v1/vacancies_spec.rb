@@ -2,6 +2,7 @@ require "swagger_helper"
 
 # rubocop:disable RSpec/EmptyExampleGroup
 # rubocop:disable RSpec/ScatteredSetup
+# rubocop:disable RSpec/VariableName
 RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   path "/ats-api/v1/vacancies" do
     get("list vacancies") do
@@ -11,7 +12,10 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
+      security [api_key: []]
+
       response(200, "vacancies successfully listed") do
+        let(:"X-Api-Key") { "foobar" }
         let(:page) { nil }
 
         before do
@@ -206,6 +210,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         run_test!
       end
+
+      response(401, "Invalid credentials") do
+        let(:"X-Api-Key") { "bar-foo" }
+        let(:page) { nil }
+        run_test!
+      end
     end
 
     post("create a vacancy") do
@@ -214,6 +224,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
       consumes "application/json"
       produces "application/json"
+
+      security [api_key: []]
 
       parameter name: :vacancy, in: :body, schema: {
         type: :object,
@@ -437,6 +449,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
         run_test!
       end
+
+      response(401, "Invalid credentials") do
+        let(:"X-Api-Key") { "bar-foo" }
+        run_test!
+      end
     end
   end
 
@@ -452,8 +469,9 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
-      response(200, "vacancy successfully retrieved") do
+      security [api_key: []]
 
+      response(200, "vacancy successfully retrieved") do
         after do |example|
           example.metadata[:response][:content] = {
             "application/json" => {
@@ -525,6 +543,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         run_test!
       end
+
+      response(401, "Invalid credentials") do
+        let(:"X-Api-Key") { "bar-foo" }
+        run_test!
+      end
     end
 
     put("update vacancy") do
@@ -534,8 +557,14 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       consumes "application/json"
       produces "application/json"
 
-      response(200, "vacancy successfully updated") do
+      security [api_key: []]
 
+      response(200, "vacancy successfully updated") do
+        run_test!
+      end
+
+      response(401, "Invalid credentials") do
+        let(:"X-Api-Key") { "bar-foo" }
         run_test!
       end
     end
@@ -546,12 +575,19 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
       consumes "application/json"
 
-      response(204, "vacancy successfully deleted") do
+      security [api_key: []]
 
+      response(204, "vacancy successfully deleted") do
+        run_test!
+      end
+
+      response(401, "Invalid credentials") do
+        let(:"X-Api-Key") { "bar-foo" }
         run_test!
       end
     end
   end
 end
+# rubocop:enable RSpec/VariableName
 # rubocop:enable RSpec/ScatteredSetup
 # rubocop:enable RSpec/EmptyExampleGroup
