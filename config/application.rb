@@ -26,11 +26,15 @@ require "rack-mini-profiler" if ENV.fetch("RACK_MINI_PROFILER", nil) == "true" &
 
 module TeachingVacancies
   class Application < Rails::Application
-    config.load_defaults 7.1
+    config.load_defaults 7.2
 
     config.add_autoload_paths_to_load_path = false
 
     config.time_zone = "Europe/London"
+
+    # Enables YJIT as of Ruby 3.3, to bring sizeable performance improvements.
+    # If you are deploying to a memory constrained environment you may want to set this to `false`.
+    config.yjit = true
 
     # Automatically add `id: uuid` on any generated migrations
     config.generators do |g|
@@ -44,12 +48,15 @@ module TeachingVacancies
     # which is deprecated and considered insecure.
     config.active_record.encryption.support_sha1_for_non_deterministic_encryption = false
 
-    # Disable deprecated singular associations names.
-    config.active_record.allow_deprecated_singular_associations_name = false
-
     # No longer run after_commit callbacks on the first of multiple Active Record
     # instances to save changes to the same database row within a transaction.
     config.active_record.run_commit_callbacks_on_first_saved_instances_in_transaction = false
+
+    # Enable validation of migration timestamps globally
+    config.active_record.validate_migration_timestamps = true
+
+    # Enable automatic decoding of PostgreSQL DATE columns for manual queries
+    config.active_record.postgresql_adapter_decode_dates = true
 
     # Settings in config/environments/* take precedence over those
     # specified here.
@@ -61,6 +68,10 @@ module TeachingVacancies
 
     config.active_job.queue_adapter = :sidekiq
 
+    # Controls whether Active Job's `#perform_later` and similar methods automatically defer
+    # the job queuing to after the current Active Record transaction is committed.
+    config.active_job.enqueue_after_transaction_commit = :default
+
     config.action_mailer.delivery_method = :notify
     config.action_mailer.deliver_later_queue_name = :high
     config.action_mailer.notify_settings = {
@@ -70,6 +81,7 @@ module TeachingVacancies
 
     config.active_storage.routes_prefix = "/attachments"
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
+    config.active_storage.web_image_content_types = %w[image/png image/jpeg image/gif image/webp]
 
     # Specify the default serializer used by `MessageEncryptor` and `MessageVerifier`
     # instances.
@@ -139,9 +151,6 @@ module TeachingVacancies
     # and have no way of disabling the foreign host redirect protection in that instance. Until
     # we figure out a way around that, this keeps the pre-Rails 7 default around.
     Rails.application.config.action_controller.raise_on_open_redirects = false
-
-    # Do not treat an `ActionController::Parameters` instance as equal to an equivalent `Hash` by default.
-    Rails.application.config.action_controller.allow_deprecated_parameters_hash_equality = false
 
     Rails.autoloaders.main.ignore(Rails.root.join("app/frontend"))
 
