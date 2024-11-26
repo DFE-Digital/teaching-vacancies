@@ -212,8 +212,19 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Invalid credentials") do
+        schema "$ref" => "#/components/schemas/unauthorized_error"
+
         let(:"X-Api-Key") { "bar-foo" }
-        let(:page) { nil }
+        run_test!
+      end
+
+      response(500, "Internal server error") do
+        schema "$ref" => "#/components/schemas/internal_server_error"
+
+        before do
+          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+        end
+
         run_test!
       end
     end
@@ -451,7 +462,19 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Invalid credentials") do
+        schema "$ref" => "#/components/schemas/unauthorized_error"
+
         let(:"X-Api-Key") { "bar-foo" }
+        run_test!
+      end
+
+      response(500, "Internal server error") do
+        schema "$ref" => "#/components/schemas/internal_server_error"
+
+        before do
+          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+        end
+
         run_test!
       end
     end
@@ -545,7 +568,28 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Invalid credentials") do
+        schema "$ref" => "#/components/schemas/unauthorized_error"
+
         let(:"X-Api-Key") { "bar-foo" }
+        run_test!
+      end
+
+      response(404, "Vacancy not found") do
+        schema "$ref" => "#/components/schemas/not_found_error"
+
+        let(:id) { "123" }
+        run_test!
+      end
+
+      response(500, "Internal server error") do
+        schema "$ref" => "#/components/schemas/internal_server_error"
+
+        let(:id) { "123" }
+
+        before do
+          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+        end
+
         run_test!
       end
     end
@@ -564,7 +608,28 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Invalid credentials") do
+        schema "$ref" => "#/components/schemas/unauthorized_error"
+
         let(:"X-Api-Key") { "bar-foo" }
+        run_test!
+      end
+
+      response(404, "Vacancy not found") do
+        schema "$ref" => "#/components/schemas/not_found_error"
+
+        let(:id) { "123" }
+        run_test!
+      end
+
+      response(500, "Internal server error") do
+        schema "$ref" => "#/components/schemas/internal_server_error"
+
+        let(:id) { "123" }
+
+        before do
+          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+        end
+
         run_test!
       end
     end
@@ -582,7 +647,28 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Invalid credentials") do
+        schema "$ref" => "#/components/schemas/unauthorized_error"
+
         let(:"X-Api-Key") { "bar-foo" }
+        run_test!
+      end
+
+      response(404, "Vacancy not found") do
+        schema "$ref" => "#/components/schemas/not_found_error"
+
+        let(:id) { "123" }
+        run_test!
+      end
+
+      response(500, "Internal server error") do
+        schema "$ref" => "#/components/schemas/internal_server_error"
+
+        let(:id) { "123" }
+
+        before do
+          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+        end
+
         run_test!
       end
     end

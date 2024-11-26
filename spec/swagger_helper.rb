@@ -38,6 +38,56 @@ RSpec.configure do |config|
             in: :header,
           },
         },
+        schemas: {
+          unauthorized_error: {
+            type: "object",
+            properties: {
+              errors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    error: { type: "string", example: "unauthorized" },
+                    message: { type: "string", example: "Invalid API key" },
+                  },
+                  required: %w[error message],
+                },
+              },
+            },
+          },
+          not_found_error: {
+            type: "object",
+            properties: {
+              errors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    error: { type: "string", example: "not found" },
+                    message: { type: "string", example: "The vacancy ID does not match any vacancy for your ATS" },
+                  },
+                  required: %w[error message],
+                },
+              },
+            },
+          },
+          internal_server_error: {
+            type: "object",
+            properties: {
+              errors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    error: { type: "string", example: "internal server error" },
+                    message: { type: "string", example: "There was an internal error processing this request" },
+                  },
+                  required: %w[error message],
+                },
+              },
+            },
+          },
+        },
       },
     },
   }
