@@ -44,10 +44,10 @@ RSpec.describe Search::VacancySearch do
   let(:location_builder) { instance_double(Search::LocationBuilder, polygon:) }
 
   before do
+    allow(Vacancy).to receive(:live).and_return(scope)
     allow(subject).to receive(:organisation).and_return(school)
     allow(school).to receive_message_chain(:all_vacancies, :pluck).and_return(vacancy_ids)
     allow(Search::LocationBuilder).to receive(:new).with(location, radius).and_return(location_builder)
-    allow(Vacancy).to receive(:live).and_return(scope)
     allow(scope).to receive(:includes).with(:organisations).and_return(scope)
     allow(scope).to receive(:search_by_location).with("Louth", 10, { polygon:, sort_by_distance: false }).and_return(scope)
     allow(scope).to receive(:search_by_filter).and_return(scope)

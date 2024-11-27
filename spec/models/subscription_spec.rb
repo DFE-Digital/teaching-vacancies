@@ -82,30 +82,6 @@ RSpec.describe Subscription do
     end
   end
 
-  context "vacancies_for_range" do
-    let!(:expired_now) { Time.current }
-    let(:date_yesterday) { Time.zone.yesterday.to_time }
-    let(:date_today) { Date.current.to_time }
-    let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { keyword: "english" }) }
-    let(:vacancies) { double("vacancies", limit: limited_vacancies) }
-    let(:limited_vacancies) { double("limited vacancies") }
-    let(:vacancy_search) { double(vacancies: vacancies) }
-
-    it "searches with an appropriate date range" do
-      expect(Search::VacancySearch).to receive(:new).with(
-        {
-          keyword: "english",
-          from_date: date_yesterday,
-          to_date: date_today,
-        },
-      ).and_return(vacancy_search)
-
-      travel_to(expired_now) do
-        expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(limited_vacancies)
-      end
-    end
-  end
-
   describe "alert_run_today?" do
     let(:subscription) { create(:subscription, frequency: :daily) }
     subject { subscription.alert_run_today? }
