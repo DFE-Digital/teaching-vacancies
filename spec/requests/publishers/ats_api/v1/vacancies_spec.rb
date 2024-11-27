@@ -272,45 +272,9 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         run_test!
       end
 
-      response(400, "error") do
-        after do |example|
-          example.metadata[:response][:content] = {
-            "application/json" => {
-              example: JSON.parse(response.body, symbolize_names: true),
-            },
-          }
-        end
+      response(400, "Bad Request error") do
+        schema "$ref" => "#/components/schemas/bad_request_error"
 
-        schema type: :object,
-               additionalProperties: false,
-               properties: {
-                 errors: {
-                   type: :object,
-                   properties: {
-                     organisations: {
-                       type: :array,
-                       minItems: 1,
-                       items: {
-                         type: :string,
-                       },
-                     },
-                   },
-                 },
-               }
-
-        let(:source) { build(:vacancy) }
-        let(:vacancy) do
-          { vacancy: { external_advert_url: source.external_advert_url,
-                       expires_at: source.expires_at,
-                       job_title: source.job_title,
-                       skills_and_experience: source.skills_and_experience,
-                       salary: source.salary,
-                       school_urns: [],
-                       job_roles: source.job_roles,
-                       working_patterns: source.working_patterns,
-                       contract_type: source.contract_type,
-                       phases: source.phases } }
-        end
         run_test!
       end
 
@@ -409,6 +373,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
       response(200, "vacancy successfully updated") do
         schema "$ref" => "#/components/schemas/vacancy"
+
+        run_test!
+      end
+
+      response(400, "Bad Request error") do
+        schema "$ref" => "#/components/schemas/bad_request_error"
 
         run_test!
       end

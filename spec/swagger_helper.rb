@@ -205,6 +205,22 @@ RSpec.configure do |config|
               },
             },
           },
+          bad_request_error: {
+            type: "object",
+            properties: {
+              errors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    error: { type: "string", example: "Bad request" },
+                    message: { type: "string", example: "Request body could not be read properly" },
+                  },
+                  required: %w[error message],
+                },
+              },
+            },
+          },
           unauthorized_error: {
             type: "object",
             properties: {
@@ -213,7 +229,7 @@ RSpec.configure do |config|
                 items: {
                   type: "object",
                   properties: {
-                    error: { type: "string", example: "unauthorized" },
+                    error: { type: "string", example: "Unauthorized" },
                     message: { type: "string", example: "Invalid API key" },
                   },
                   required: %w[error message],
@@ -229,8 +245,8 @@ RSpec.configure do |config|
                 items: {
                   type: "object",
                   properties: {
-                    error: { type: "string", example: "not found" },
-                    message: { type: "string", example: "The vacancy ID does not match any vacancy for your ATS" },
+                    error: { type: "string", example: "Not found" },
+                    message: { type: "string", example: "The given ID does not match any vacancy for your ATS" },
                   },
                   required: %w[error message],
                 },
@@ -245,7 +261,7 @@ RSpec.configure do |config|
                 items: {
                   type: "object",
                   properties: {
-                    error: { type: "string", example: "internal server error" },
+                    error: { type: "string", example: "Internal server error" },
                     message: { type: "string", example: "There was an internal error processing this request" },
                   },
                   required: %w[error message],
@@ -261,7 +277,7 @@ RSpec.configure do |config|
                 items: {
                   type: "object",
                   properties: {
-                    error: { type: "string", example: "validation error" },
+                    error: { type: "string", example: "Validation error" },
                     field: { type: "string", example: "job_title" },
                     message: { type: "string", example: "can't be blank" },
                   },
