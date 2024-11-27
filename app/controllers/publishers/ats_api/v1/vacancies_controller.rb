@@ -1,4 +1,6 @@
 class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
+  before_action :authenticate_client!
+
   def index
     @pagy, @vacancies = pagy(vacancies, items: 100)
 
@@ -51,5 +53,17 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   def vacancies
     Vacancy.includes(:organisations).live.order(publish_on: :desc)
+  end
+
+  def client
+    @client ||= PublisherAtsApiClient.find_by(api_key: request.headers["X-Api-Key"])
+  end
+
+  def authenticate_client!
+    return if client
+
+    render status: :unauthorized,
+           json: { error: "unauthorized", message: "Invalid API key" },
+           content_type: "application/json"
   end
 end

@@ -4,6 +4,9 @@ require "swagger_helper"
 # rubocop:disable RSpec/ScatteredSetup
 # rubocop:disable RSpec/VariableName
 RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
+  let!(:client) { create(:publisher_ats_api_client) }
+  let(:"X-Api-Key") { client.api_key }
+
   path "/ats-api/v1/vacancies" do
     get("list vacancies") do
       tags "Vacancies"
@@ -13,17 +16,9 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       produces "application/json"
 
       security [api_key: []]
+      parameter name: :page, in: :query, type: :number, description: "page number (1-based), defaults to 1"
 
       response(200, "vacancies successfully listed") do
-        let(:"X-Api-Key") { "foobar" }
-        let(:page) { nil }
-
-        before do
-          create(:vacancy, :external)
-        end
-
-        parameter name: :page, in: :query, type: :number, description: "page number (1-based), defaults to 1"
-
         schema type: :object,
                required: %i[data meta],
                additionalProperties: false,
@@ -48,6 +43,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                  },
                }
 
+        let(:page) { nil }
+
+        before do
+          create(:vacancy, :external)
+        end
+
         after do |example|
           example.metadata[:response][:content] = {
             "application/json" => {
@@ -62,7 +63,9 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(401, "Invalid credentials") do
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
-        let(:"X-Api-Key") { "bar-foo" }
+        let(:"X-Api-Key") { "wrong-key" }
+        let(:page) { nil }
+
         run_test!
       end
 
@@ -314,7 +317,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(401, "Invalid credentials") do
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
-        let(:"X-Api-Key") { "bar-foo" }
+        let(:"X-Api-Key") { "wrong-key" }
+
         run_test!
       end
 
@@ -370,7 +374,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(401, "Invalid credentials") do
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
-        let(:"X-Api-Key") { "bar-foo" }
+        let(:"X-Api-Key") { "wrong-key" }
         run_test!
       end
 
@@ -412,7 +416,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(401, "Invalid credentials") do
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
-        let(:"X-Api-Key") { "bar-foo" }
+        let(:"X-Api-Key") { "wrong-key" }
         run_test!
       end
 
@@ -461,7 +465,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(401, "Invalid credentials") do
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
-        let(:"X-Api-Key") { "bar-foo" }
+        let(:"X-Api-Key") { "wrong-key" }
         run_test!
       end
 
