@@ -104,6 +104,14 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:each) do
+    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
+  end
+
+  config.before(:each, disable_expensive_jobs: true) do
+    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true)
+  end
+
   config.before(:each, geocode: true) do
     allow(Geocoder).to receive(:search).and_call_original
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)

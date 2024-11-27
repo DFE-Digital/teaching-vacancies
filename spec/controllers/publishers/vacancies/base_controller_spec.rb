@@ -5,17 +5,13 @@ RSpec.describe Publishers::Vacancies::BaseController do
     let!(:vacancy) { create(:vacancy) }
 
     context "when DisableExpensiveJobs is not enabled" do
-      before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
-
       it "does perform the task" do
         expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
         controller.send(:update_google_index, vacancy)
       end
     end
 
-    context "when DisableExpensiveJobs is enabled" do
-      before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true) }
-
+    context "when DisableExpensiveJobs is enabled", :disable_expensive_jobs do
       it "does NOT perform the task" do
         expect(UpdateGoogleIndexQueueJob).not_to receive(:perform_later)
         controller.send(:update_google_index, vacancy)
@@ -35,9 +31,7 @@ RSpec.describe Publishers::Vacancies::BaseController do
       end
     end
 
-    context "when DisableExpensiveJobs is enabled" do
-      before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true) }
-
+    context "when DisableExpensiveJobs is enabled", :disable_expensive_jobs do
       it "does NOT perform the task" do
         expect(RemoveGoogleIndexQueueJob).not_to receive(:perform_later)
         controller.send(:remove_google_index, vacancy)
