@@ -244,7 +244,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         },
       }
 
-      response(201, "vacancy successfully created") do
+      response(201, "Vacancy successfully created") do
         after do |example|
           example.metadata[:response][:content] = {
             "application/json" => {
