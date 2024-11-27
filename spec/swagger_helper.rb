@@ -286,6 +286,22 @@ RSpec.configure do |config|
               },
             },
           },
+          conflict_error: {
+            type: "object",
+            properties: {
+              errors: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    error: { type: "string", example: "Conflict error" },
+                    message: { type: "string", example: "A vacancy with the provided external reference already exists" },
+                  },
+                  required: %w[error message],
+                },
+              },
+            },
+          },
         },
       },
     },

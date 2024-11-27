@@ -286,6 +286,17 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         run_test!
       end
 
+      response(409, "Conflict error") do
+        schema "$ref" => "#/components/schemas/conflict_error"
+
+        header "Link", schema: { type: :string },
+                       required: true,
+                       description: "Link to the existing vacancy",
+                       example: '</ats-api/v1/vacancies/123>; rel="existing"'
+
+        run_test!
+      end
+
       response(422, "Validation error") do
         schema "$ref" => "#/components/schemas/validation_error"
 
