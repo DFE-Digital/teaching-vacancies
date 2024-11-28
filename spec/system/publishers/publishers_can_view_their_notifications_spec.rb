@@ -21,7 +21,7 @@ RSpec.describe "Publishers can view their notifications" do
   end
 
   context "when paginating" do
-    let(:job_application2) { create(:job_application, :status_submitted, vacancy: vacancy) }
+    let(:job_application2) { create(:job_application, :status_submitted, vacancy: vacancy, created_at: 1.minute.ago) }
 
     before do
       stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 1)
@@ -35,23 +35,23 @@ RSpec.describe "Publishers can view their notifications" do
 
       click_on strip_tags(I18n.t("nav.notifications_html", count: 2))
 
-      # sleep 60
-      within first(".notification") do
+      sleep 10
+      within ".notification" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
 
       click_on "Next"
-      # sleep 100
       find(".govuk-pagination__prev")
 
-      within first(".notification") do
+      sleep 10
+      within ".notification" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
 
       click_on "Previous"
       find(".govuk-pagination__next")
 
-      within first(".notification") do
+      within ".notification" do
         expect(page).not_to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
     end
