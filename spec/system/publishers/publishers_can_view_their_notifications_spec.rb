@@ -38,6 +38,7 @@ RSpec.describe "Publishers can view their notifications" do
       end
 
       click_on "Next"
+      sleep 10
       find(".govuk-pagination__prev")
 
       within first(".notification") do
