@@ -21,10 +21,12 @@ RSpec.describe "Publishers can view their notifications" do
   end
 
   context "when paginating" do
+    let(:job_application2) { create(:job_application, :status_submitted, vacancy: vacancy) }
+
     before do
       stub_const("Publishers::NotificationsController::NOTIFICATIONS_PER_PAGE", 1)
       Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
-      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application).deliver(vacancy.publisher)
+      Publishers::JobApplicationReceivedNotifier.with(vacancy: vacancy, job_application: job_application2).deliver(vacancy.publisher)
       visit root_path
     end
 
@@ -33,12 +35,13 @@ RSpec.describe "Publishers can view their notifications" do
 
       click_on strip_tags(I18n.t("nav.notifications_html", count: 2))
 
+      # sleep 60
       within first(".notification") do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
 
       click_on "Next"
-      sleep 10
+      # sleep 100
       find(".govuk-pagination__prev")
 
       within first(".notification") do
