@@ -10,6 +10,7 @@ class AlertEmail::Base < ApplicationJob
     phases: ->(vacancy, value) { (vacancy.phases & value).any? },
     working_patterns: ->(vacancy, value) { (vacancy.working_patterns & value).any? },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
+    keyword: ->(vacancy, value) { vacancy.searchable_content.include? value.downcase.strip },
   }.freeze
 
   def perform # rubocop:disable Metrics/AbcSize
@@ -24,7 +25,6 @@ class AlertEmail::Base < ApplicationJob
     subscriptions.find_each.reject { |sub| already_run_ids.include?(sub.id) }.each do |subscription|
       scope = default_scope
       criteria = subscription.search_criteria.symbolize_keys
-      scope, criteria = handle_keywords(scope, criteria)
       scope, criteria = handle_location(scope, criteria)
 
       vacancies = scope.select do |vacancy|
@@ -37,14 +37,6 @@ class AlertEmail::Base < ApplicationJob
   end
 
   private
-
-  def handle_keywords(scope, criteria)
-    if criteria.key?(:keyword)
-      [scope.search_by_full_text(criteria[:keyword]), criteria.except(:keyword)]
-    else
-      [scope, criteria]
-    end
-  end
 
   def handle_location(scope, criteria)
     if criteria.key?(:location)
