@@ -10,4 +10,10 @@ class Jobseekers::JobApplication::BaseForm < BaseForm
   def self.storable_fields
     fields - unstorable_fields
   end
+
+  class << self
+    def load(attrs)
+      attrs.symbolize_keys.slice(*fields)
+    end
+  end
 end
