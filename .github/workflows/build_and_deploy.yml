@@ -67,7 +67,7 @@ jobs:
         id: swagger-cache
         with:
           path: 'swagger'
-          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/requests/publishers/ats_api/v1/**') }}
+          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
 
   build:
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
@@ -137,7 +137,7 @@ jobs:
         id: swagger-cache
         with:
           path: 'swagger'
-          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/requests/publishers/ats_api/v1/**') }}
+          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
           fail-on-cache-miss: true
 
       - name: Build and push docker image from builder target
