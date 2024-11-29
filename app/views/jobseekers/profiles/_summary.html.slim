@@ -2,7 +2,7 @@ p class="govuk-!-margin-bottom-3" = jobseeker_status(profile)
 
 - if (job_preferences = profile.job_preferences).present?
 
-  div.govuk-!-margin-bottom-5.govuk-section-separator
+  .govuk-heading-m class="govuk-!-margin-bottom-5"
     = t(".job_preferences")
     = govuk_summary_list do |summary_list|
       - if (roles = job_preferences.roles).present?
@@ -27,11 +27,11 @@ p class="govuk-!-margin-bottom-3" = jobseeker_status(profile)
           - row.with_value text: humanize_array(patterns)
 
 - if profile.about_you.present?
-  div.govuk-section-separator govuk-!-padding-bottom-2
+  .govuk-heading-m class="govuk-!-padding-bottom-2"
     = t(".about")
   p = simple_format profile.about_you
 
-div.govuk-section-separator govuk-!-padding-bottom-3
+.govuk-heading-m class="govuk-!-padding-bottom-3"
   = t(".contact_details")
 dl.govuk-summary-list
   .govuk-summary-list__row
@@ -43,8 +43,7 @@ dl.govuk-summary-list
       dd.govuk-summary-list__value = phone_number
 
 - if profile.employments.any?
-  div.govuk-section-separator
-    = t(".work_history")
+  .govuk-heading-m = t(".work_history")
   - profile.employments.order(:started_on).reverse_each do |employment|
     h3.govuk-heading-s class="govuk-!-padding-bottom-0 govuk-!-margin-bottom-0"
       = employment.organisation
@@ -52,18 +51,17 @@ dl.govuk-summary-list
     - if employment.subjects.present?
       p class="govuk-!-margin-bottom-0" = employment.subjects
     p.govuk-hint #{employment.started_on.to_formatted_s(:month_year)} to #{employment.ended_on&.to_formatted_s(:month_year) || "present"}
-    hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible
+    - class_name = "govuk-!-margin-bottom-3"
+    hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible[class=class_name]
 
 - if profile.qualifications.any?
-  div.govuk-section-separator govuk-!-padding-bottom-3
-    = t(".qualifications")
+  .govuk-heading-m class="govuk-!-padding-bottom-3" = t(".qualifications")
   = render "jobseekers/qualifications/preview_qualifications", qualifications: profile.qualifications
 
 - if profile.training_and_cpds.any?
-  div.govuk-section-separator govuk-!-padding-bottom-3
-    = t(".training_and_cpd")
+  .govuk-heading-m class="govuk-!-padding-bottom-3" = t(".training_and_cpd")
   - profile.training_and_cpds.each do |training|
-    h3.govuk-heading-s class="govuk-!-padding-bottom-0"
+    .govuk-heading-s class="govuk-!-padding-bottom-0"
       = training.name
       - if training.grade
         p class="govuk-body govuk-!-margin-bottom-0"

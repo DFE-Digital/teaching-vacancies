@@ -19,5 +19,5 @@ h1.govuk-heading-xl = t("jobseekers.job_applications.heading")
     = govuk_button_to t("buttons.start_application"), quick_apply_jobseekers_job_job_application_path(vacancy.id)
 
   .govuk-grid-column-one-third
-    p.govuk-heading-m = t(".assistance.heading")
+    .govuk-heading-m = t(".assistance.heading")
     p.govuk-body-s = t(".assistance.content_html", privacy_html: govuk_link_to(t(".assistance.privacy"), "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers"), terms_html: govuk_link_to(t(".assistance.terms"), page_path("terms-and-conditions")))
