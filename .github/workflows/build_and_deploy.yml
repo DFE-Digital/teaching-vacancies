@@ -51,23 +51,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Prepare application environment
-        uses: ./.github/actions/prepare-app-env
-        with:
-          skip-node: true
-
-      - name: Set up test database
-        run: bin/rails db:create db:schema:load
-
-      - name: Generate Swagger (OpenAPI) docs
-        run: bundle exec rake rswag:specs:swaggerize
-
       - name: Cache swagger docs
         uses: actions/cache@v4
         id: swagger-cache
         with:
           path: 'swagger'
           key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
+
+      - name: Prepare application environment
+        if: steps.swagger-cache.outputs.cache-hit != 'true'
+        uses: ./.github/actions/prepare-app-env
+        with:
+          skip-node: true
+
+      - name: Set up test database
+        if: steps.swagger-cache.outputs.cache-hit != 'true'
+        run: bin/rails db:create db:schema:load
+
+      - name: Generate Swagger (OpenAPI) docs
+        if: steps.swagger-cache.outputs.cache-hit != 'true'
+        run: bundle exec rake rswag:specs:swaggerize
 
   build:
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
