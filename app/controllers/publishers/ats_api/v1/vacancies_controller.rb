@@ -63,7 +63,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     return if client
 
     render status: :unauthorized,
-           json: { error: "unauthorized", message: "Invalid API key" },
+           json: { error: "Invalid API key" },
            content_type: "application/json"
   end
 end

@@ -208,66 +208,37 @@ RSpec.configure do |config|
           bad_request_error: {
             type: "object",
             properties: {
-              errors: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    error: { type: "string", example: "Bad request" },
-                    message: { type: "string", example: "Request body could not be read properly" },
-                  },
-                  required: %w[error message],
-                },
-              },
+              error: { type: "string", example: "Request body could not be read properly" },
             },
+            required: %w[error],
           },
           unauthorized_error: {
             type: "object",
             properties: {
-              errors: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    error: { type: "string", example: "Unauthorized" },
-                    message: { type: "string", example: "Invalid API key" },
-                  },
-                  required: %w[error message],
-                },
-              },
+              error: { type: "string", example: "Invalid API key" },
             },
+            required: %w[error],
           },
           not_found_error: {
             type: "object",
             properties: {
-              errors: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    error: { type: "string", example: "Not found" },
-                    message: { type: "string", example: "The given ID does not match any vacancy for your ATS" },
-                  },
-                  required: %w[error message],
-                },
-              },
+              error: { type: "string", example: "The given ID does not match any vacancy for your ATS" },
             },
+            required: %w[error],
           },
           internal_server_error: {
             type: "object",
             properties: {
-              errors: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    error: { type: "string", example: "Internal server error" },
-                    message: { type: "string", example: "There was an internal error processing this request" },
-                  },
-                  required: %w[error message],
-                },
-              },
+              error: { type: "string", example: "There was an internal error processing this request" },
             },
+            required: %w[error],
+          },
+          conflict_error: {
+            type: "object",
+            properties: {
+              error: { type: "string", example: "A vacancy with the provided external reference already exists" },
+            },
+            required: %w[error],
           },
           validation_error: {
             type: "object",
@@ -277,27 +248,9 @@ RSpec.configure do |config|
                 items: {
                   type: "object",
                   properties: {
-                    error: { type: "string", example: "Validation error" },
-                    field: { type: "string", example: "job_title" },
-                    message: { type: "string", example: "can't be blank" },
+                    error: { type: "string", example: "job_title: can't be blank" },
                   },
-                  required: %w[error field message],
-                },
-              },
-            },
-          },
-          conflict_error: {
-            type: "object",
-            properties: {
-              errors: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    error: { type: "string", example: "Conflict error" },
-                    message: { type: "string", example: "A vacancy with the provided external reference already exists" },
-                  },
-                  required: %w[error message],
+                  required: %w[error],
                 },
               },
             },
