@@ -5,7 +5,7 @@ Geocoder.configure(
   http_headers: { "User-Agent" => "Teaching Vacancies Service teaching.vacancies@education.gov.uk" },
 
   google: {
-    api_key: Rails.env.test? ? "placeholder_key" : ENV.fetch("GOOGLE_LOCATION_SEARCH_API_KEY", ""),
+    api_key: ENV.fetch("GOOGLE_LOCATION_SEARCH_API_KEY", "placeholder_key"),
     always_raise: [Geocoder::OverQueryLimitError],
   },
 

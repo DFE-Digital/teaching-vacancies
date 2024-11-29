@@ -1,0 +1,313 @@
+---
+- !ruby/object:School
+  concise_attributes:
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: id
+    value_before_type_cast: '00990114-731e-496d-ad18-3d61eb1c8e9d'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: type
+    value_before_type_cast: School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: name
+    value_before_type_cast: St Luke's Halsall Church of England Primary School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: description
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: urn
+    value_before_type_cast: '104921'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: uid
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: phase
+    value_before_type_cast: 2
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url
+    value_before_type_cast: http://www.stlukeshalsall.co.uk
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: minimum_age
+    value_before_type_cast: 3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: maximum_age
+    value_before_type_cast: 11
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address
+    value_before_type_cast: Cooks Road
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: town
+    value_before_type_cast: Liverpool
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: county
+    value_before_type_cast: Merseyside
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: postcode
+    value_before_type_cast: L23 2TB
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: locality
+    value_before_type_cast: Crosby
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data
+    value_before_type_cast: '{"URN":"104921","LA (code)":"343","LA (name)":"Sefton","EstablishmentNumber":"3343","EstablishmentName":"St
+      Luke''s Halsall Church of England Primary School","TypeOfEstablishment (code)":"02","TypeOfEstablishment
+      (name)":"Voluntary aided school","EstablishmentTypeGroup (code)":"4","EstablishmentTypeGroup
+      (name)":"Local authority maintained schools","EstablishmentStatus (code)":"1","EstablishmentStatus
+      (name)":"Open","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
+      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"00","ReasonEstablishmentClosed
+      (name)":"Not applicable","CloseDate":"","PhaseOfEducation (code)":"2","PhaseOfEducation
+      (name)":"Primary","StatutoryLowAge":"3","StatutoryHighAge":"11","Boarders (code)":"1","Boarders
+      (name)":"No boarders","NurseryProvision (name)":"Has Nursery Classes","OfficialSixthForm
+      (code)":"2","OfficialSixthForm (name)":"Does not have a sixth form","Gender
+      (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"02","ReligiousCharacter
+      (name)":"Church of England","ReligiousEthos (name)":"Does not apply","Diocese
+      (code)":"CE22","Diocese (name)":"Diocese of Liverpool","AdmissionsPolicy (code)":"0","AdmissionsPolicy
+      (name)":"Not applicable","SchoolCapacity":"210","SpecialClasses (code)":"2","SpecialClasses
+      (name)":"No Special Classes","CensusDate":"18-01-2024","NumberOfPupils":"229","NumberOfBoys":"123","NumberOfGirls":"106","PercentageFSM":"14.60","TrustSchoolFlag
+      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
+      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
+      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"10068597","FEHEIdentifier":"","FurtherEducationType
+      (name)":"Not applicable","OfstedLastInsp":"27-03-2024","OfstedSpecialMeasures
+      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"24-09-2024","Street":"Cooks
+      Road","Locality":"Crosby","Address3":"","Town":"Liverpool","County (name)":"Merseyside","Postcode":"L23
+      2TB","SchoolWebsite":"http://www.stlukeshalsall.co.uk","TelephoneNum":"01519245142","HeadTitle
+      (name)":"Mr","HeadFirstName":"Richard J","HeadLastName":"Miller","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
+      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
+      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
+      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
+      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
+      applicable","SEN1 (name)":"","SEN2 (name)":"","SEN3 (name)":"","SEN4 (name)":"","SEN5
+      (name)":"","SEN6 (name)":"","SEN7 (name)":"","SEN8 (name)":"","SEN9 (name)":"","SEN10
+      (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
+      (name)":"","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
+      (code)":"B","GOR (name)":"North West","DistrictAdministrative (code)":"E08000014","DistrictAdministrative
+      (name)":"Sefton","AdministrativeWard (code)":"E05000934","AdministrativeWard
+      (name)":"Blundellsands","ParliamentaryConstituency (code)":"E14001463","ParliamentaryConstituency
+      (name)":"Sefton Central","UrbanRural (code)":"A1","UrbanRural (name)":"(England/Wales)
+      Urban major conurbation","GSSLACode (name)":"E08000014","Easting":"331909","Northing":"400144","MSOA
+      (name)":"Sefton 022","LSOA (name)":"Sefton 022D","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
+      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","OfstedRating
+      (name)":"Good","Country (name)":"","UPRN":"41020675","SiteName":"","QABName
+      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
+      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02001450","LSOA
+      (code)":"E01006939","FSM":"33","AccreditationExpiryDate":""}'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: created_at
+    value_before_type_cast: 2024-11-28 16:23:38.159026000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: updated_at
+    value_before_type_cast: 2024-11-28 23:00:39.433225000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: readable_phases
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url_override
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: region
+    value_before_type_cast: North West
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: detailed_school_type
+    value_before_type_cast: Voluntary aided school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: school_type
+    value_before_type_cast: Local authority maintained schools
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_code
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: group_type
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_within
+    value_before_type_cast: Sefton
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: establishment_status
+    value_before_type_cast: Open
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E610000099E2E18CEC3808C056B550A22DBF4A40
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data_hash
+    value_before_type_cast: 44cb6eddddab6e3459fa8e7377dec703f435fe059ba246a028116bbcc1896b66
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: slug
+    value_before_type_cast: st-luke-s-halsall-church-of-england-primary-school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: email
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: safeguarding_information
+    value_before_type_cast: |-
+      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
+
+      Our recruitment process follows the keeping children safe in education guidance.
+
+      Offers of employment may be subject to the following checks (where relevant):
+      childcare disqualification
+      Disclosure and Barring Service (DBS)
+      medical
+      online and social media
+      prohibition from teaching
+      right to work
+      satisfactory references
+      suitability to work with children
+
+      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: searchable_content
+    value_before_type_cast: "'church':5A 'england':7A 'halsall':4A 'luke':2A 'of':6A
+      'primary':8A 's':3A 'school':9A 'st':1A"
+  new_record: false
+  active_record_yaml_version: 2
+- !ruby/object:School
+  concise_attributes:
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: id
+    value_before_type_cast: '018d51b1-fa0b-4073-9b44-16077a007092'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: type
+    value_before_type_cast: School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: name
+    value_before_type_cast: Abbot's Lea School
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: description
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: urn
+    value_before_type_cast: '104736'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: uid
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: phase
+    value_before_type_cast: 0
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url
+    value_before_type_cast: http://www.abbotsleaschool.co.uk
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: minimum_age
+    value_before_type_cast: 3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: maximum_age
+    value_before_type_cast: 19
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address
+    value_before_type_cast: Beaconsfield Road
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: town
+    value_before_type_cast: Liverpool
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: county
+    value_before_type_cast: Merseyside
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: postcode
+    value_before_type_cast: L25 6EE
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: locality
+    value_before_type_cast: Woolton
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: address3
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data
+    value_before_type_cast: '{"URN":"104736","LA (code)":"341","LA (name)":"Liverpool","EstablishmentNumber":"7025","EstablishmentName":"Abbot''s
+      Lea School","TypeOfEstablishment (code)":"07","TypeOfEstablishment (name)":"Community
+      special school","EstablishmentTypeGroup (code)":"5","EstablishmentTypeGroup
+      (name)":"Special schools","EstablishmentStatus (code)":"1","EstablishmentStatus
+      (name)":"Open","ReasonEstablishmentOpened (code)":"00","ReasonEstablishmentOpened
+      (name)":"Not applicable","OpenDate":"","ReasonEstablishmentClosed (code)":"00","ReasonEstablishmentClosed
+      (name)":"Not applicable","CloseDate":"","PhaseOfEducation (code)":"0","PhaseOfEducation
+      (name)":"Not applicable","StatutoryLowAge":"3","StatutoryHighAge":"19","Boarders
+      (code)":"1","Boarders (name)":"No boarders","NurseryProvision (name)":"Has Nursery
+      Classes","OfficialSixthForm (code)":"1","OfficialSixthForm (name)":"Has a sixth
+      form","Gender (code)":"3","Gender (name)":"Mixed","ReligiousCharacter (code)":"00","ReligiousCharacter
+      (name)":"Does not apply","ReligiousEthos (name)":"Does not apply","Diocese (code)":"0000","Diocese
+      (name)":"Not applicable","AdmissionsPolicy (code)":"0","AdmissionsPolicy (name)":"Not
+      applicable","SchoolCapacity":"272","SpecialClasses (code)":"1","SpecialClasses
+      (name)":"Has Special Classes","CensusDate":"18-01-2024","NumberOfPupils":"271","NumberOfBoys":"229","NumberOfGirls":"42","PercentageFSM":"57.10","TrustSchoolFlag
+      (code)":"0","TrustSchoolFlag (name)":"Not applicable","Trusts (code)":"","Trusts
+      (name)":"","SchoolSponsorFlag (name)":"Not applicable","SchoolSponsors (name)":"","FederationFlag
+      (name)":"Not under a federation","Federations (code)":"","Federations (name)":"","UKPRN":"10017283","FEHEIdentifier":"","FurtherEducationType
+      (name)":"Not applicable","OfstedLastInsp":"10-07-2024","OfstedSpecialMeasures
+      (code)":"0","OfstedSpecialMeasures (name)":"Not applicable","LastChangedDate":"15-11-2024","Street":"Beaconsfield
+      Road","Locality":"Woolton","Address3":"","Town":"Liverpool","County (name)":"Merseyside","Postcode":"L25
+      6EE","SchoolWebsite":"www.abbotsleaschool.co.uk","TelephoneNum":"01514281161","HeadTitle
+      (name)":"Mrs","HeadFirstName":"Ania","HeadLastName":"Hildrey","HeadPreferredJobTitle":"Headteacher","BSOInspectorateName
+      (name)":"Not applicable","InspectorateReport":"","DateOfLastInspectionVisit":"","NextInspectionVisit":"","TeenMoth
+      (name)":"Not applicable","TeenMothPlaces":"","CCF (name)":"Not applicable","SENPRU
+      (name)":"Not applicable","EBD (name)":"Not applicable","PlacesPRU":"","FTProv
+      (name)":"","EdByOther (name)":"Not applicable","Section41Approved (name)":"Not
+      applicable","SEN1 (name)":"SpLD - Specific Learning Difficulty","SEN2 (name)":"OTH
+      - Other Difficulty/Disability","SEN3 (name)":"SLCN - Speech, language and Communication","SEN4
+      (name)":"ASD - Autistic Spectrum Disorder","SEN5 (name)":"SEMH - Social, Emotional
+      and Mental Health","SEN6 (name)":"MSI - Multi-Sensory Impairment","SEN7 (name)":"MLD
+      - Moderate Learning Difficulty","SEN8 (name)":"SLD - Severe Learning Difficulty","SEN9
+      (name)":"","SEN10 (name)":"","SEN11 (name)":"","SEN12 (name)":"","SEN13 (name)":"","TypeOfResourcedProvision
+      (name)":"Not applicable","ResourcedProvisionOnRoll":"","ResourcedProvisionCapacity":"","SenUnitOnRoll":"","SenUnitCapacity":"","GOR
+      (code)":"B","GOR (name)":"North West","DistrictAdministrative (code)":"E08000012","DistrictAdministrative
+      (name)":"Liverpool","AdministrativeWard (code)":"E05015339","AdministrativeWard
+      (name)":"Woolton Village","ParliamentaryConstituency (code)":"E14001337","ParliamentaryConstituency
+      (name)":"Liverpool Garston","UrbanRural (code)":"A1","UrbanRural (name)":"(England/Wales)
+      Urban major conurbation","GSSLACode (name)":"E08000012","Easting":"341418","Northing":"387532","MSOA
+      (name)":"Liverpool 047","LSOA (name)":"Liverpool 047E","InspectorateName (name)":"","SENStat":"","SENNoStat":"","BoardingEstablishment
+      (name)":"","PropsName":"","PreviousLA (code)":"999","PreviousLA (name)":"","PreviousEstablishmentNumber":"","OfstedRating
+      (name)":"Outstanding","Country (name)":"","UPRN":"38168369","SiteName":"","QABName
+      (code)":"0","QABName (name)":"Not applicable","EstablishmentAccredited (code)":"0","EstablishmentAccredited
+      (name)":"Not applicable","QABReport":"","CHNumber":"","MSOA (code)":"E02001393","LSOA
+      (code)":"E01006796","FSM":"129","AccreditationExpiryDate":""}'
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: created_at
+    value_before_type_cast: 2024-11-28 16:23:32.158796000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: updated_at
+    value_before_type_cast: 2024-11-28 23:00:40.696169000 Z
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: readable_phases
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: url_override
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: region
+    value_before_type_cast: North West
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: detailed_school_type
+    value_before_type_cast: Community special school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: school_type
+    value_before_type_cast: Special schools
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_code
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: group_type
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: local_authority_within
+    value_before_type_cast: Liverpool
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: establishment_status
+    value_before_type_cast: Open
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: geopoint
+    value_before_type_cast: 0101000020E61000001FC70D2B9C0E07C0C6F7A6F7D0B04A40
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: gias_data_hash
+    value_before_type_cast: b2542be41bd99b95f7a228c46682ba209d17d48946e058feceae0fa2aca90664
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: slug
+    value_before_type_cast: abbot-s-lea-school
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: email
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: safeguarding_information
+    value_before_type_cast: |-
+      Our organisation is committed to safeguarding and promoting the welfare of children, young people and vulnerable adults. We expect all staff, volunteers and trustees to share this commitment.
+
+      Our recruitment process follows the keeping children safe in education guidance.
+
+      Offers of employment may be subject to the following checks (where relevant):
+      childcare disqualification
+      Disclosure and Barring Service (DBS)
+      medical
+      online and social media
+      prohibition from teaching
+      right to work
+      satisfactory references
+      suitability to work with children
+
+      You must tell us about any unspent conviction, cautions, reprimands or warnings under the Rehabilitation of Offenders Act 1974 (Exceptions) Order 1975.
+  - !ruby/object:ActiveModel::Attribute::FromDatabase
+    name: searchable_content
+    value_before_type_cast: "'abbot':1A 'lea':3A 's':2A 'school':4A"
+  new_record: false
+  active_record_yaml_version: 2

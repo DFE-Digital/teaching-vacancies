@@ -76,6 +76,11 @@ RSpec.configure do |config|
     stub_request(:get, %r{maps.googleapis.com/maps/api/place/autocomplete}).to_return(status: 200, body: '{"predictions": []}', headers: {})
   end
 
+  config.before(:each, geocode: true) do
+    allow(Geocoder).to receive(:search).and_call_original
+    allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
+  end
+
   config.before(:each, type: :system) do
     driven_by :rack_test
     Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
@@ -110,11 +115,6 @@ RSpec.configure do |config|
 
   config.before(:each, disable_expensive_jobs: true) do
     allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true)
-  end
-
-  config.before(:each, geocode: true) do
-    allow(Geocoder).to receive(:search).and_call_original
-    allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
 
   config.around(:each, :with_csrf_protection) do |example|
@@ -166,6 +166,34 @@ VCR.configure do |config|
   config.ignore_localhost = true
   config.ignore_hosts "ea-edubase-api-prod.azurewebsites.net", "selenium-chrome"
   config.ignore_hosts IPSocket.getaddress(Socket.gethostname) if ENV.fetch("DEVCONTAINER", nil) == "true"
+
+  # defaults to method and URI
+  config.default_cassette_options = {
+    match_requests_on: %i[
+      method
+      uri_without_key_parameter
+    ],
+  }
+
+  # we redact the 'key' parameter on map searches, so we need to exclude it from matches too.
+  # as it defaults to matching the uri (which includes the query params)
+  config.register_request_matcher :uri_without_key_parameter do |r1, r2|
+    if r1.parsed_uri.host == "maps.googleapis.com"
+      r1.parsed_uri.host == r2.parsed_uri.host &&
+        r1.parsed_uri.scheme == r2.parsed_uri.scheme &&
+        r1.parsed_uri.port == r2.parsed_uri.port &&
+        r1.parsed_uri.path == r2.parsed_uri.path &&
+        URI::QueryParams.parse(r1.parsed_uri.query).except("key") == URI::QueryParams.parse(r2.parsed_uri.query).except("key")
+    else
+      r1.uri == r2.uri
+    end
+  end
+
+  config.filter_sensitive_data("<GOOGLE_LOCATION_SEARCH_API_KEY>") do |interaction|
+    if interaction.request.parsed_uri.host == "maps.googleapis.com"
+      URI::QueryParams.parse(interaction.request.parsed_uri.query)["key"]
+    end
+  end
 end
 
 Shoulda::Matchers.configure do |config|
