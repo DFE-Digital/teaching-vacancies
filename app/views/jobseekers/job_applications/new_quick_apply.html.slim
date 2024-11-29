@@ -7,11 +7,11 @@
     p.govuk-body = t(".one_login_banner.paragraph2")
 
 span.govuk-caption-l = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
-h2.govuk-heading-xl = t("jobseekers.job_applications.heading")
+h1.govuk-heading-xl = t("jobseekers.job_applications.heading")
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    h1.govuk-heading-l = t(".heading")
+    h2.govuk-heading-l = t(".heading")
     p.govuk-body = (@has_previous_application ? t(".description1") : t(".description1_profile"))
     p.govuk-body = t(".description2")
     p.govuk-body = t(".description3")
@@ -19,5 +19,5 @@ h2.govuk-heading-xl = t("jobseekers.job_applications.heading")
     = govuk_button_to t("buttons.start_application"), quick_apply_jobseekers_job_job_application_path(vacancy.id)
 
   .govuk-grid-column-one-third
-    h2.govuk-heading-m = t(".assistance.heading")
+    p.govuk-heading-m = t(".assistance.heading")
     p.govuk-body-s = t(".assistance.content_html", privacy_html: govuk_link_to(t(".assistance.privacy"), "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers"), terms_html: govuk_link_to(t(".assistance.terms"), page_path("terms-and-conditions")))
