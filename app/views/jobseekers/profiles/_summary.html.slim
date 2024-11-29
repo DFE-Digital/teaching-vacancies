@@ -2,7 +2,7 @@ p class="govuk-!-margin-bottom-3" = jobseeker_status(profile)
 
 - if (job_preferences = profile.job_preferences).present?
 
-  .govuk-heading-m class="govuk-!-margin-bottom-5"
+  h2.govuk-heading-m class="govuk-!-margin-bottom-5"
     = t(".job_preferences")
     = govuk_summary_list do |summary_list|
       - if (roles = job_preferences.roles).present?
@@ -27,11 +27,11 @@ p class="govuk-!-margin-bottom-3" = jobseeker_status(profile)
           - row.with_value text: humanize_array(patterns)
 
 - if profile.about_you.present?
-  .govuk-heading-m class="govuk-!-padding-bottom-2"
+  h2.govuk-heading-m class="govuk-!-padding-bottom-2"
     = t(".about")
   p = simple_format profile.about_you
 
-.govuk-heading-m class="govuk-!-padding-bottom-3"
+h2.govuk-heading-m class="govuk-!-padding-bottom-3"
   = t(".contact_details")
 dl.govuk-summary-list
   .govuk-summary-list__row
@@ -43,7 +43,7 @@ dl.govuk-summary-list
       dd.govuk-summary-list__value = phone_number
 
 - if profile.employments.any?
-  .govuk-heading-m = t(".work_history")
+  h2.govuk-heading-m = t(".work_history")
   - profile.employments.order(:started_on).reverse_each do |employment|
     h3.govuk-heading-s class="govuk-!-padding-bottom-0 govuk-!-margin-bottom-0"
       = employment.organisation
@@ -55,13 +55,13 @@ dl.govuk-summary-list
     hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible[class=class_name]
 
 - if profile.qualifications.any?
-  .govuk-heading-m class="govuk-!-padding-bottom-3" = t(".qualifications")
+  h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".qualifications")
   = render "jobseekers/qualifications/preview_qualifications", qualifications: profile.qualifications
 
 - if profile.training_and_cpds.any?
-  .govuk-heading-m class="govuk-!-padding-bottom-3" = t(".training_and_cpd")
+  h2.govuk-heading-m class="govuk-!-padding-bottom-3" = t(".training_and_cpd")
   - profile.training_and_cpds.each do |training|
-    .govuk-heading-s class="govuk-!-padding-bottom-0"
+    h3.govuk-heading-s class="govuk-!-padding-bottom-0"
       = training.name
       - if training.grade
         p class="govuk-body govuk-!-margin-bottom-0"
