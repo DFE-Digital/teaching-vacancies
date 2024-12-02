@@ -83,7 +83,7 @@ class Gias::ImportTrusts
     end
   end
 
-  def update_geolocation_for_changed_postcodes # rubocop:disable Metrics/MethodLength
+  def update_geolocation_for_changed_postcodes
     # TODO: This is the slowest part of the whole import flow, and should be moved into individual
     #       background jobs in the future
     log_benchmark("Updating geolocation for #{trusts_with_changed_postcode.size} trusts with new or changed postcodes") do

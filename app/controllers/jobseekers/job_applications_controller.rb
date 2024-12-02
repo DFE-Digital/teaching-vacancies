@@ -124,9 +124,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def step_valid?(step)
-    step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
+    form_class = if step.in? %i[catholic_following_religion non_catholic_following_religion]
+                  Jobseekers::JobApplication::FollowingReligionForm
+                else
+                  "jobseekers/job_application/#{step}_form".camelize.constantize
+                end
 
-    attributes = step_form.storable_fields.index_with do |field|
+    attributes = form_class.storable_fields.index_with do |field|
       case field
       when :teacher_reference_number
         current_jobseeker&.jobseeker_profile&.teacher_reference_number
@@ -137,7 +141,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       end
     end
 
-    form = step_form.new(attributes)
+    form = form_class.new(form_class.load(attributes))
 
     form.valid?.tap do
       job_application.errors.merge!(form.errors)

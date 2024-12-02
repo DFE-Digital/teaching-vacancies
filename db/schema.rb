@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_14_134844) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_14_162136) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -257,6 +257,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_14_134844) do
     t.string "religious_referee_phone"
     t.string "baptism_address"
     t.date "baptism_date"
+    t.string "ethos_and_aims"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
