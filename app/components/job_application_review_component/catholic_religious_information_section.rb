@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
-class JobApplicationReviewComponent::ReligiousInformationSection < JobApplicationReviewComponent::Section
+class JobApplicationReviewComponent::CatholicReligiousInformationSection < JobApplicationReviewComponent::Section
   def initialize(job_application, allow_edit:, name:)
     # only include the details form if we follow a religion
     forms = if job_application.following_religion
-              %w[FollowingReligionForm ReligionDetailsForm]
+              %w[FollowingReligionForm CatholicReligionDetailsForm]
             else
               %w[FollowingReligionForm]
             end
