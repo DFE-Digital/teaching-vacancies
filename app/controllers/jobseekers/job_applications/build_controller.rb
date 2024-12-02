@@ -105,7 +105,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_fields
-    form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
+    # This version doesn't work with date fields
+    # form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
+    form_params.except(*form_class.unstorable_fields)
   end
 
   def step_incomplete?
