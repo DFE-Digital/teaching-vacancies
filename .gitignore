@@ -106,3 +106,4 @@ dump.rdb
 # devops files
 bin/terrafile
 bin/konduit.sh
+/swagger/v2/swagger.yaml
