@@ -46,10 +46,6 @@ Rails.application.routes.draw do
     Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "3-quick-ways-to-find-the-right-teaching-job")
   }
 
-  get "/transcripts/jobseekers/return-to-teaching-video-transcript", to: redirect { |_params, _request|
-    Rails.application.routes.url_helpers.post_path(section: "transcripts", subcategory: "jobseekers", post_name: "return-to-teaching-video")
-  }
-
   if Rails.application.config.maintenance_mode
     # If in maintenance mode, route *all* requests to maintenance page
     match "*path", to: "errors#maintenance", via: :all
