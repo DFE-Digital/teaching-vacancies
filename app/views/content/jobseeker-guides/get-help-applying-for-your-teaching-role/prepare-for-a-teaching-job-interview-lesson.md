@@ -7,7 +7,7 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-your-teaching-interview-lesson.jpg"
 ---
 
-![Two young children concentrating on the teacher talking through some instructions.](/content-assets/jobseeker-guides/prepare-for-a-teaching-interview-lesson-800x300.jpg)
+![Students in a science classroom with a teacher.](/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-your-teaching-interview-lesson.jpg)
 
 The interview lesson is an opportunity to demonstrate your teaching ability so it’s important to be prepared. We’ve spoken to experienced teachers to get their top tips for success.
 

@@ -7,7 +7,7 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-your-teaching-job-interview.jpg"
 ---
 
-![A teacher stands in front of a classroom having an engaging discussion with teenagers in her class.](/content-assets/jobseeker-guides/how-to-approach-a-teaching-job-interview-2-800x300.jpg)
+![Three teachers stood talking in a school corridor.](/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-your-teaching-job-interview.jpg)
 
 Congratulations, you’ve been invited to an interview for a teaching job! What’s next? We’ve spoken to experienced teachers to get their top tips for success including how to prepare answers to interview questions.
 

@@ -6,7 +6,7 @@ date_posted: 15/03/2022
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-write-your-teacher-training-personal-statement.jpg"
 ---
-![A teacher talking to students while they're working.](/content-assets/jobseeker-guides/How_to_write_your_teacher_training_personal_statement.jpg)
+![Students sat around a table talking to a teacher.](/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-write-your-teacher-training-personal-statement.jpg)
 
 Your personal statement is your first opportunity to show the school you’re a great fit for the job, and gets you closer to being shortlisted for an interview. The more you show how your skills and interests match the school’s ethos and values, the better. We've spoken to a range of teachers to get their top tips for success.
 

@@ -7,7 +7,7 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/find-your-teaching-role-at-the-right-school.jpg"
 ---
 
-![A close up photo of a teacher kneeling next to a student's desk and helping them with a difficult task.](/content-assets/jobseeker-guides/find-a-teaching-role-at-the-right-school-2-800x300.jpg)
+![Classroom of students with their hands raised and a teacher at the front of the classroom.](/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/find-your-teaching-role-at-the-right-school.jpg)
 
 
 When searching for your perfect teaching role you'll need to think about the location, size and setting of the school you'd like to work in. 
