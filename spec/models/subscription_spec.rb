@@ -189,7 +189,7 @@ RSpec.describe Subscription do
           end
         end
 
-        context "with a polygon (Basildon)", :geocode, :vcr do
+        context "with a polygon (Basildon)" do
           let(:subscription) { create(:daily_subscription, location: "Basildon", radius: radius) }
 
           context "with a small radius" do
