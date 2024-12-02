@@ -79,7 +79,7 @@ end
 
 # Avoid OmniAuth output in tests:
 # I, [2018-04-03T15:01:45.960289 #297]  INFO -- omniauth: (azureactivedirectory) Request phase initiated.
-OmniAuth.config.logger = Logger.new("/dev/null")
+OmniAuth.config.logger = Logger.new(File::NULL)
 OmniAuth.config.on_failure = proc { |env|
   OmniAuth::FailureEndpoint.new(env).redirect_to_failure
 }
