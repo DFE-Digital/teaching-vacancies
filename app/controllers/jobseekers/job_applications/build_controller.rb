@@ -12,7 +12,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
       job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
       update_or_create_jobseeker_profile! if step == :professional_status
 
-      if redirect_to_review? && (step_process.last_of_group? || (step == :following_religion && !job_application.following_religion))
+      if redirect_to_review? && (step_process.last_of_group? || (step.in?(%i[catholic_following_religion non_catholic_following_religion]) && !job_application.following_religion))
         redirect_to jobseekers_job_application_review_path(job_application), success: t("messages.jobseekers.job_applications.saved")
       else
         redirect_to jobseekers_job_application_apply_path job_application
@@ -41,7 +41,11 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def form_class
-    "jobseekers/job_application/#{step}_form".camelize.constantize
+    if step.in? %i[catholic_following_religion non_catholic_following_religion]
+      Jobseekers::JobApplication::FollowingReligionForm
+    else
+      "jobseekers/job_application/#{step}_form".camelize.constantize
+    end
   end
 
   def form_attributes
@@ -101,7 +105,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_fields
-    form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
+    # This version doesn't work with date fields
+    # form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
+    form_params.except(*form_class.unstorable_fields)
   end
 
   def step_incomplete?
@@ -142,6 +148,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def set_steps
-    self.steps = step_process.steps - [:review]
+    self.steps = step_process.all_possible_steps - [:review]
   end
 end
