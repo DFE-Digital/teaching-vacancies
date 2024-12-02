@@ -1,4 +1,4 @@
-class Jobseekers::JobApplication::ReligionDetailsForm < Jobseekers::JobApplication::BaseForm
+class Jobseekers::JobApplication::CatholicReligionDetailsForm < Jobseekers::JobApplication::BaseForm
   include ActiveRecord::AttributeAssignment
   include DateAttributeAssignment
 

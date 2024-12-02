@@ -117,7 +117,6 @@ class Vacancies::Import::Sources::Ark
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def job_roles_for(item)
     roles = item.fetch_by_attribute("category", "domain", "Role Type")&.strip&.split(",")
     return [] if roles.blank?
@@ -140,7 +139,6 @@ class Vacancies::Import::Sources::Ark
         .gsub(/School Marketing and Comms|Governance|Exam Invigilator/, "other_support"))
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def ect_status_for(item)
     item["ectSuitable"] == "yes" ? "ect_suitable" : "ect_unsuitable"
