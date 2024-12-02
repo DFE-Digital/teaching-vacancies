@@ -51,7 +51,7 @@ queue_applications_received:
   queue: default
 
 queue_daily_alerts:
-  cron: '0 15 * * *'
+  cron: '0 16 * * *'
   class: 'SendDailyAlertEmailJob'
   queue: default
 
