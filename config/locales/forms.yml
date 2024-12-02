@@ -166,10 +166,18 @@ en:
           Department for Education services.
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
-      jobseekers_job_application_religion_details_form:
+      jobseekers_job_application_catholic_religion_details_form:
         baptism_date: For example 27 3 2007
         faith: For example, Christian.
+        religious_reference_type_html: >-
+          <p class="govuk-hint">If you are a practising Catholic, you should nominate your Parish Priest where you regularly worship as your referee.</p>
+          <p class="govuk-hint">If you are not a practising Catholic, you can provide a copy of your baptism certificate, or the date and address of your baptism.</p>
+          <p class="govuk-hint">Make sure your referee has consented to providing a reference.</p>
+      jobseekers_job_application_non_catholic_religion_details_form:
+        faith: For example, Christian.
         place_of_worship: For example, Westminster Abbey, Dean's Yard, London.
+      jobseekers_job_application_school_ethos_form:
+        ethos_and_aims: For example, through running after school clubs or supporting the school's local community.
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
@@ -439,7 +447,7 @@ en:
         following_religion_options:
           "yes": "Yes"
           "no": "No"
-      jobseekers_job_application_religion_details_form:
+      jobseekers_job_application_catholic_religion_details_form:
         religious_reference_type_options:
           referee: "Yes"
           baptism_certificate: No, but I can provide a baptism certificate
@@ -454,6 +462,19 @@ en:
         baptism_address: Address of baptism location
         faith: What is your religious denomination or faith?
         place_of_worship: Address of place of worship (optional)
+      jobseekers_job_application_non_catholic_religion_details_form:
+        religious_reference_type_options:
+          "referee": "Yes"
+          "no_referee": "No"
+        religious_referee_name: Religious referee name
+        religious_referee_address: Religious referee address
+        religious_referee_role: Religious referee role
+        religious_referee_email: Religious referee email
+        religious_referee_phone: Religious referee phone number (optional)
+        faith: What is your religious denomination or faith?
+        place_of_worship: Address of place of worship (optional)
+      jobseekers_job_application_school_ethos_form:
+        ethos_and_aims: How will you support the school's ethos and aims?
       jobseekers_job_application_review_form:
         update_profile_options:
           qualifications: Update qualifications on profile
@@ -863,9 +884,11 @@ en:
         religion: What is your religion or belief?
       jobseekers_job_application_following_religion_form:
         following_religion: Are you currently following a religion or faith?
-      jobseekers_job_application_religion_details_form:
+      jobseekers_job_application_catholic_religion_details_form:
         religious_reference_type: Can you provide a religious referee?
         baptism_date: What was the date of your baptism?
+      jobseekers_job_application_non_catholic_religion_details_form:
+        religious_reference_type: Can you provide a religious referee?
       jobseekers_break_form:
         ended_on: End of gap
         started_on: Start of gap

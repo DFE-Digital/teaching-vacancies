@@ -7,10 +7,15 @@ class JobApplicationReviewComponent < ApplicationComponent
   renders_one :sidebar, ReviewComponent::Sidebar
 
   renders_many(:sections, lambda do |section_name, **kwargs|
-    if section_name == :following_religion
-      ReligiousInformationSection.new(@job_application,
-                                      name: section_name,
-                                      allow_edit: @allow_edit)
+    case section_name
+    when :catholic_following_religion
+      CatholicReligiousInformationSection.new(@job_application,
+                                              name: section_name,
+                                              allow_edit: @allow_edit)
+    when :school_ethos
+      NonCatholicReligiousInformationSection.new(@job_application,
+                                                 name: section_name,
+                                                 allow_edit: @allow_edit)
     else
       Section.new(
         @job_application,

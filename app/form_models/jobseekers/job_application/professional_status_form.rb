@@ -65,5 +65,9 @@ module Jobseekers
 
       completed_attribute(:professional_status)
     end
+
+    def load(attrs)
+      super(attrs.merge(has_teacher_reference_number: attrs[:teacher_reference_number].present? ? "yes" : "no"))
+    end
   end
 end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can give job application feedback after submitting the application" do
+RSpec.describe "Jobseekers can give job application feedback after submitting the application", :js do
   let(:jobseeker) { create(:jobseeker, jobseeker_profile: jobseeker_profile) }
   let(:jobseeker_profile) { create(:jobseeker_profile, :with_trn) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
@@ -19,6 +19,7 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
     check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
 
     click_on I18n.t("buttons.submit_application")
+    sleep 100
     click_on I18n.t("buttons.submit_feedback")
 
     expect(page).to have_content("There is a problem")

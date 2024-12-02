@@ -141,12 +141,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def step_valid?(step)
-    step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
+    form_class = if step.in? %i[catholic_following_religion non_catholic_following_religion]
+                  Jobseekers::JobApplication::FollowingReligionForm
+                else
+                  "jobseekers/job_application/#{step}_form".camelize.constantize
+                end
 
-    attributes = step_form.load_form(job_application)
+    attributes = form_class.load_form(job_application)
     attributes.merge!(trn_params) if step == :professional_status
 
-    form = step_form.new(attributes)
+    form = form_class.new(form_class.load(attributes))
 
     form.valid?.tap do
       job_application.errors.merge!(form.errors)

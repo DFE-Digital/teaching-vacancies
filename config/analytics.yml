@@ -157,6 +157,7 @@ shared:
     - religious_referee_phone
     - baptism_address
     - baptism_date
+    - ethos_and_aims
   job_preferences_locations:
     - id
     - job_preferences_id
