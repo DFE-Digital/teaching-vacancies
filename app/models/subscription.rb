@@ -87,24 +87,21 @@ class Subscription < ApplicationRecord
       if query.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(query)
         vacancies
       else
-        radius_in_metres = convert_miles_to_metres radius_in_miles
-        LocationPolygon.with_name(query)
-        # polygon = nil
-        # if polygon.present?
-        #   vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
-        #   # vacancies.select {|v| v.organisations.map(&:geopoint).any? { |point| polygon.area.intersects? point.buffer(radius_in_metres) } }
-        # else
-        coordinates = Geocoding.new(query).coordinates
-        search_point = RGeo::Geographic.spherical_factory.point(coordinates.second, coordinates.first)
-        vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
-        # end
+        polygon = LocationPolygon.buffered(radius_in_miles).with_name(query)
+        if polygon.present?
+          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
+        else
+          radius_in_metres = convert_miles_to_metres radius_in_miles
+          coordinates = Geocoding.new(query).coordinates
+          search_point = RGeo::Geographic.spherical_factory.point(coordinates.second, coordinates.first)
+          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
+        end
       end
     end
   end
 
   def handle_location(scope, criteria)
     if criteria.key?(:location)
-      # [scope.search_by_location(criteria[:location], criteria[:radius]), criteria.except(:location, :radius)]
       [self.class.limit_by_location(scope, criteria[:location], criteria[:radius]), criteria.except(:location, :radius)]
 
     else
