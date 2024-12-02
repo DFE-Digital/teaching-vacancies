@@ -89,9 +89,15 @@ class Subscription < ApplicationRecord
       else
         #TODO: add polygon support? 'within?' function for polygons doesn't support distance like ST_Within function does
         radius_in_metres = convert_miles_to_metres radius_in_miles
-        coordinates = Geocoding.new(query).coordinates
-        search_point = RGeo::Geographic.spherical_factory.point(coordinates.second, coordinates.first)
-        vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
+
+        polygon = LocationPolygon.with_name(query)
+        if polygon.present?
+          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| point.buffer(radius_in_metres).intersects?(polygon.area) } }
+        else
+          coordinates = Geocoding.new(query).coordinates
+          search_point = RGeo::Geographic.spherical_factory.point(coordinates.second, coordinates.first)
+          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
+        end
       end
     end
   end
