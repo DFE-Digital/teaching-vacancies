@@ -10,7 +10,6 @@ class Jobseekers::JobApplications::BaseController < Jobseekers::BaseController
       )
     else
       Jobseekers::JobApplications::JobApplicationStepProcess.new(
-
         job_application: job_application,
       )
     end
