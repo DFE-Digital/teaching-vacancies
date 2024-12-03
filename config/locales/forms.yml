@@ -1068,7 +1068,7 @@ en:
         expiry_time:
           "8:00": 8am
           "9:00": 9am
-          "12:00": 12pm (midday)
+          "12:00": 12pm
           "15:00": 3pm
           "23:59": 11:59pm
       publishers_job_listing_extend_deadline_form:
