@@ -8,7 +8,14 @@
     = form_for form, url: submit_category_jobseekers_job_application_qualifications_path(job_application), method: :post do |f|
       = f.govuk_error_summary
 
-      = f.govuk_collection_radio_buttons :category, Qualification.categories.keys, :to_s
+      = f.govuk_radio_buttons_fieldset(:category, legend: { size: "s" }) do
+        = f.govuk_radio_button :category, :gcse, link_errors: true do
+        = f.govuk_radio_button :category, :as_level
+        = f.govuk_radio_button :category, :a_level
+        = f.govuk_radio_button :category, :other_secondary
+        = f.govuk_radio_button :category, :undergraduate
+        = f.govuk_radio_button :category, :postgraduate, hint: { text: t(".hints.qualification_categories.postgraduate") }
+        = f.govuk_radio_button :category, :other
 
       = f.govuk_submit t("buttons.continue")
       = govuk_button_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :qualifications), class: "govuk-button--secondary govuk-!-margin-left-3"
