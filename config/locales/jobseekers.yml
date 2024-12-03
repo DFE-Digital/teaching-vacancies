@@ -399,7 +399,7 @@ en:
             a_level: Edit A Levels
             other_secondary: Edit secondary qualifications
             undergraduate: Edit undergraduate degree
-            postgraduate: Edit postgraduate degree
+            postgraduate: Edit postgraduate qualification
             other: Edit qualification or course
           title: Edit qualification — Application
         new:
@@ -410,7 +410,7 @@ en:
             a_level: Add A Levels
             other_secondary: Add secondary qualifications
             undergraduate: Add an undergraduate degree
-            postgraduate: Add a postgraduate degree
+            postgraduate: Add a postgraduate qualification
             other: Add a qualification or course
           title: Add a qualification — Application
         select_category:
@@ -781,7 +781,7 @@ en:
             a_level: Add A Levels
             other_secondary: Add secondary qualifications
             undergraduate: Add an undergraduate degree
-            postgraduate: Add a postgraduate degree
+            postgraduate: Add a postgraduate qualification
             other: Add a qualification or course
           title: Add a qualification — Profile
         edit:
