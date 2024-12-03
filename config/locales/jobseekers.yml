@@ -201,11 +201,6 @@ en:
           step_title: Professional status
           title: Professional status — Application
         qualifications:
-          description: >-
-            Enter your qualifications as completely as you can, including all GCSEs, A levels (or equivalents),
-            undergraduate and postgraduate degrees.
-          description_extra: >-
-            Please also specify any other qualifications where you showed skills that might help you in this role.
           heading: Qualifications
           no_qualifications: No qualifications specified
           step_title: Education and qualifications
