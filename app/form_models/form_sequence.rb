@@ -27,9 +27,6 @@ class FormSequence
   def validate_step(step_name)
     step_form_class = File.join(@form_prefix, "#{step_name}_form").camelize.constantize
 
-    # params = @model
-    #   .slice(*step_form_class.fields)
-    #   .merge(current_organisation: @organisation)
     params = step_form_class.load_form(@model)
       .merge(current_organisation: @organisation)
 

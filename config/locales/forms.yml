@@ -254,9 +254,6 @@ en:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
         application_form: You can only upload a PDF or DOCX file under 10MB
-#      publishers_job_listing_applying_for_the_job_form:
-#        enable_job_applications_options:
-#          "false": You'll need to provide additional details about how to apply.
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 10MB
       publishers_job_listing_feedback_form:
@@ -746,12 +743,6 @@ en:
         application_email_options:
           other: Another email address
         other_application_email: Email address
-#      publishers_job_listing_applying_for_the_job_form:
-#        quick_apply: Only show quick apply jobs
-#        quick_apply_hint: Apply for jobs quickly using an online application form
-#        enable_job_applications_options:
-#          true: "Teaching Vacancies application form"
-#          false: "Use other application form method"
       publishers_job_listing_contract_type_form:
         contract_type_options:
           fixed_term: Fixed term (including maternity or parental leave cover)
@@ -1041,8 +1032,6 @@ en:
         ect_status: Is this role suitable for an early career teacher (ECT)?
         further_details_provided: Do you want to add further details about the role?
         safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
-#      publishers_job_listing_applying_for_the_job_form:
-#        enable_job_applications: Select application form type
       publishers_job_listing_application_form_form:
         application_email: Email address to receive applications
       publishers_job_listing_contract_type_form:
