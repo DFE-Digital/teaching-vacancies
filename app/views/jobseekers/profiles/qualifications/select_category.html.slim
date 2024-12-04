@@ -10,9 +10,8 @@
     = form_for form, url: submit_category_jobseekers_profile_qualifications_path, method: :post do |f|
       = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :category, legend: { text: "Qualification type", size: "l", tag: "h1" } do
-        = f.govuk_radio_buttons_fieldset(:category, legend: { size: "s" }) do
-        = f.govuk_radio_button :category, :gcse, link_errors: true do
+      = f.govuk_radio_buttons_fieldset(:category, legend: { size: "s" }) do
+        = f.govuk_radio_button :category, :gcse, link_errors: true
         = f.govuk_radio_button :category, :as_level
         = f.govuk_radio_button :category, :a_level
         = f.govuk_radio_button :category, :other_secondary
