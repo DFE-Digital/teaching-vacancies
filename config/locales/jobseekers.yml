@@ -391,9 +391,6 @@ en:
         qualifications_shared: &qualifications_shared
           caption: Education and qualifications
           subjects_and_grades: Subjects and grades
-          hints:
-            qualification_categories:
-              postgraduate: For example, A PGCE, master’s or PhD.
         edit:
           <<: *qualifications_shared
           heading:
@@ -799,9 +796,6 @@ en:
         select_category:
           page_title: Qualification type
           caption: Qualifications
-          hints:
-            qualification_categories:
-              postgraduate: For example, A PGCE, master’s or PhD.
         subjects_and_grades: Subjects and grades
       qualified_teacher_status:
         edit:

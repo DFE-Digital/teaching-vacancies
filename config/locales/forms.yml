@@ -213,6 +213,9 @@ en:
           Department for Education services.
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
+      jobseekers_qualifications_category_form:
+        category_options:
+          postgraduate: For example, A PGCE, master’s or PhD.
 
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
