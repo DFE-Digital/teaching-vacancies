@@ -18,7 +18,7 @@ RSpec.describe "Creating a vacancy" do
   context "non-faith school" do
     let(:school) { create(:school, :not_applicable, name: "Salisbury School") }
 
-    it "follows the flow", :js do
+    it "follows the flow" do
       visit organisation_jobs_with_type_path
       expect(page).to have_content("Salisbury School")
 
@@ -78,7 +78,7 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
-      # expect_correct_pay_package_options(vacancy)
+      expect_correct_pay_package_options(vacancy)
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
@@ -104,6 +104,8 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
+      # No religious options when not a faith school
+      expect(all(".govuk-radios__item").count).to eq(2)
       fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
