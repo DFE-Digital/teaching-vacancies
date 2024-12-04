@@ -213,6 +213,9 @@ en:
           Department for Education services.
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
+      jobseekers_qualifications_category_form:
+        category_options:
+          postgraduate: For example, A PGCE, master’s or PhD.
 
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
@@ -418,7 +421,7 @@ en:
           a_level: A Levels
           other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
-          postgraduate: Postgraduate degree
+          postgraduate: Postgraduate qualification
           other: Other qualification or course
         finished_studying_details: Please give details
         finished_studying_options:
@@ -558,7 +561,7 @@ en:
           a_level: A Levels
           other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
-          postgraduate: Postgraduate degree
+          postgraduate: Postgraduate qualification
           other: Other qualification or course
       jobseekers_qualifications_degree_form:
         <<: *jobseekers_qualifications_shared_labels

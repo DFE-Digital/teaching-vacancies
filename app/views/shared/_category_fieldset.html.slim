@@ -1,0 +1,8 @@
+= form.govuk_radio_buttons_fieldset(:category, legend: { size: "s" }) do
+  = form.govuk_radio_button :category, :gcse, link_errors: true
+  = form.govuk_radio_button :category, :as_level
+  = form.govuk_radio_button :category, :a_level
+  = form.govuk_radio_button :category, :other_secondary
+  = form.govuk_radio_button :category, :undergraduate
+  = form.govuk_radio_button :category, :postgraduate
+  = form.govuk_radio_button :category, :other
