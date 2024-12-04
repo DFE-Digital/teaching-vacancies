@@ -5,7 +5,7 @@ DfE::Analytics.configure do |config|
 
   # Whether to use ActiveJob or dispatch events immediately.
   #
-  config.async = true
+  config.async = ActiveModel::Type::Boolean.new.cast(ENV.fetch("DFE_ANALYTICS_ASYNC", false))
 
   # Which ActiveJob queue to put events on
   #
