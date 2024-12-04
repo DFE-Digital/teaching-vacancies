@@ -9,13 +9,13 @@ class Subscription < ApplicationRecord
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
   FILTERS = {
-    teaching_job_roles: ->(vacancy, value) { (vacancy.job_roles & value).any? },
-    support_job_roles: ->(vacancy, value) { (vacancy.job_roles & value).any? },
+    teaching_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
+    support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
     visa_sponsorship_availability: ->(vacancy, value) { value.include? vacancy.visa_sponsorship_available.to_s },
     ect_statuses: ->(vacancy, value) { value.include?(vacancy.ect_status) },
-    subjects: ->(vacancy, value) { (vacancy.subjects & value).any? },
-    phases: ->(vacancy, value) { (vacancy.phases & value).any? },
-    working_patterns: ->(vacancy, value) { (vacancy.working_patterns & value).any? },
+    subjects: ->(vacancy, value) { vacancy.subjects.intersect?(value) },
+    phases: ->(vacancy, value) { vacancy.phases.intersect?(value) },
+    working_patterns: ->(vacancy, value) { vacancy.working_patterns.intersect?(value) },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
     keyword: ->(vacancy, value) { vacancy.searchable_content.include? value.downcase.strip },
   }.freeze
