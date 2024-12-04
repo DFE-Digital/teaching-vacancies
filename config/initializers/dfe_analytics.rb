@@ -1,7 +1,7 @@
 DfE::Analytics.configure do |config|
   # Whether to log events instead of sending them to BigQuery.
   #
-  config.log_only = false
+  config.log_only = ActiveModel::Type::Boolean.new.cast(ENV.fetch("DFE_ANALYTICS_LOG_ONLY", false))
 
   # Whether to use ActiveJob or dispatch events immediately.
   #
