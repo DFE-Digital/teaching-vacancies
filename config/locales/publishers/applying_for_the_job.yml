@@ -18,8 +18,4 @@ en:
           no_religion_html: Online application form %{tag}
           other_religion_html: Online application form with questions about religion %{tag}
           catholic_html: Catholic Education Service Approved online application form %{tag}
-          other_html: Use other application form
-
-    legend:
-      publishers_job_listing_applying_for_the_job_form:
-        application_form_type: Choose your application form
+          other: Use other application form

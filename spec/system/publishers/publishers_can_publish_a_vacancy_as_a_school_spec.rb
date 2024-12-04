@@ -390,7 +390,7 @@ RSpec.describe "Creating a vacancy" do
 
     context "when not using the web form" do
       before do
-        choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_html"))
+        choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other"))
         click_on I18n.t("buttons.save_and_continue")
       end
 
