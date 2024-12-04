@@ -3,6 +3,7 @@
 - content_for :page_description, "All posts under the subcategory: #{formatted_subcategory}"
 
 - content_for :breadcrumbs do
+  nav aria-label="Breadcrumbs"
   = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
     params[:section].titleize.capitalize => posts_path(section: params[:section]),
     formatted_subcategory => "" }
