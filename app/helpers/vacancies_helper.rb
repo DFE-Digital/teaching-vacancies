@@ -12,9 +12,9 @@ module VacanciesHelper
   def vacancy_form_type(vacancy)
     if vacancy.enable_job_applications
       case vacancy.religion_type
-      when 'catholic'
+      when "catholic"
         t("publishers.vacancies.application_form_type.catholic")
-      when 'other_religion'
+      when "other_religion"
         t("publishers.vacancies.application_form_type.other_religion")
       else
         t("publishers.vacancies.application_form_type.no_religion")

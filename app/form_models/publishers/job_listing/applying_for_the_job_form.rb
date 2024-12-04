@@ -13,9 +13,9 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
   class << self
     def load_form(model)
       if model.enable_job_applications
-        { application_form_type: model.religion_type || 'no_religion' }
+        { application_form_type: model.religion_type || "no_religion" }
       elsif model.enable_job_applications == false
-        { application_form_type: 'other' }
+        { application_form_type: "other" }
       else
         {}
       end
@@ -23,20 +23,18 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
   end
 
   def params_to_save
-    if application_form_type == 'other'
+    if application_form_type == "other"
       {
         religion_type: nil,
-        enable_job_applications: false
+        enable_job_applications: false,
       }
     else
       {
         religion_type: application_form_type,
-        enable_job_applications: true
+        enable_job_applications: true,
       }
     end
   end
-
-  private
 
   # def override_enable_job_applications!
   #   # If a Publisher publishes a vacancy for a job role that does not allow enabling job applications
