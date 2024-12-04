@@ -8,10 +8,10 @@ class AlertEmail::Base < ApplicationJob
     # really fast (1 week's worth of vacancies is around 2000, so not worth leaving on disk for each of 100k daily subscriptions
     default_scope = Vacancy.includes(:organisations).live.order(publish_on: :desc).search_by_filter(from_date: from_date, to_date: Date.current)
 
-    already_run_ids = AlertRun.for_today.map(&:subscription_id)
+    already_run_ids = AlertRun.for_today.pluck(:subscription_id)
 
     subscriptions.find_each.reject { |sub| already_run_ids.include?(sub.id) }.each do |subscription|
-      vacancies = subscription.vacancies_matching default_scope
+      vacancies = subscription.vacancies_matching(default_scope).first(MAXIMUM_RESULTS_PER_RUN)
 
       Jobseekers::AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later if vacancies.any?
     end
