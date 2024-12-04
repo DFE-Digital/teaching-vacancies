@@ -416,6 +416,7 @@ en:
             postgraduate: Add a postgraduate qualification
             other: Add a qualification or course
           title: Add a qualification — Application
+          hint: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
         select_category:
           <<: *qualifications_shared
           heading: Add a qualification
@@ -787,6 +788,7 @@ en:
             postgraduate: Add a postgraduate qualification
             other: Add a qualification or course
           title: Add a qualification — Profile
+          hint: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
         edit:
           page_title: Qualifications
         review:
