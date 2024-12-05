@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Jobseekers can create a job alert from the v2 page", recaptcha: true do
   let(:jobseeker) { create(:jobseeker) }
-  let(:subscription) { build(:subscription) }
+  let(:subscription) { build(:subscription, :with_some_criteria) }
   let(:search_criteria) { subscription.search_criteria }
 
   before do

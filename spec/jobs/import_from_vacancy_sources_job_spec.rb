@@ -29,9 +29,7 @@ RSpec.describe ImportFromVacancySourcesJob do
       end
     end
 
-    context "when DisableExpensiveJobs is enabled" do
-      before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true) }
-
+    context "when DisableExpensiveJobs is enabled", :disable_expensive_jobs do
       it "does not enqueue any jobs" do
         expect { described_class.perform_now }.not_to have_enqueued_job(ImportFromVacancySourceJob)
       end
