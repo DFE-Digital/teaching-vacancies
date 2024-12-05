@@ -12,8 +12,8 @@
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :following_religion do
-        = f.govuk_radio_button :following_religion, true, link_errors: true, label: { text: t("helpers.label.jobseekers_job_application_following_religion_form.following_religion_options.yes") }
-        = f.govuk_radio_button :following_religion, false, label: { text: t("helpers.label.jobseekers_job_application_following_religion_form.following_religion_options.no") }
+        = f.govuk_radio_button :following_religion, "true", link_errors: true
+        = f.govuk_radio_button :following_religion, "false"
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
