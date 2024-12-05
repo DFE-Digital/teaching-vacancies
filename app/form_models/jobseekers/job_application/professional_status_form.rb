@@ -17,6 +17,10 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
     def unstorable_fields
       %i[has_teacher_reference_number]
     end
+
+    def load(attrs)
+      super(attrs.merge(has_teacher_reference_number: attrs[:teacher_reference_number].present? ? "yes" : "no"))
+    end
   end
 
   def statutory_induction_complete_options

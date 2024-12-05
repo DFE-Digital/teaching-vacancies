@@ -3,7 +3,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   include OrganisationsHelper
 
   steps :job_location, :job_title, :job_role, :education_phases, :key_stages, :subjects, :contract_type, :working_patterns,
-        :pay_package, :important_dates, :start_date, :applying_for_the_job, :how_to_receive_applications, :application_link,
+        :pay_package, :important_dates, :start_date, :applying_for_the_job, :how_to_receive_applications, :application_link, :religious_information,
         :application_form, :school_visits, :visa_sponsorship, :contact_details, :about_the_role, :include_additional_documents, :documents
 
   helper_method :form

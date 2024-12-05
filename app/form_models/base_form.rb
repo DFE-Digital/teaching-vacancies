@@ -8,6 +8,15 @@ class BaseForm
     valid_file_types: %i[JPG JPEG PNG].freeze,
   }.freeze
 
+  VALID_DOCUMENT_TYPES = %i[PDF DOC DOCX].freeze
+
+  DOCUMENT_VALIDATION_OPTIONS = {
+    file_type: :document,
+    content_types_allowed: %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze,
+    file_size_limit: 10.megabytes,
+    valid_file_types: VALID_DOCUMENT_TYPES,
+  }.freeze
+
   include ActiveModel::Model
   include ActiveModel::Validations::Callbacks
 
