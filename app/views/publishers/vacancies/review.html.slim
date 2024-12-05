@@ -1,6 +1,7 @@
 - content_for :page_title_prefix, review_page_title_prefix(vacancy)
 
 - content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: organisation_job_build_path(vacancy.id, step_process.previous_step)
 
 .govuk-grid-row

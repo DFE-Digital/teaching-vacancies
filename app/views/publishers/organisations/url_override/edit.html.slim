@@ -1,6 +1,7 @@
 - content_for :page_title_prefix, @organisation.name.titlecase
 
 - content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: publishers_organisation_path(@organisation)
 
 .govuk-grid-row

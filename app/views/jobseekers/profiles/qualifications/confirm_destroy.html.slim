@@ -1,6 +1,7 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(form, t(".other.page_title"))
 
 - content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
 
 .govuk-grid-row
