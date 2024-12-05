@@ -554,7 +554,11 @@ en:
           attributes:
             personal_statement:
               blank: Enter your personal statement
-        jobseekers/job_application/following_religion_form:
+        jobseekers/job_application/catholic_following_religion_form:
+          attributes:
+            following_religion:
+              inclusion: Select yes if you follow a specific religion or faith
+        jobseekers/job_application/non_catholic_following_religion_form:
           attributes:
             following_religion:
               inclusion: Select yes if you follow a specific religion or faith
@@ -644,7 +648,11 @@ en:
               incomplete: Complete your qualifications
             references:
               incomplete: Complete your references
-            following_religion:
+            school_ethos:
+              incomplete: Complete the question about how you meet the schools ethos and aims
+            catholic_following_religion:
+              incomplete: Complete your religious information
+            non_catholic_following_religion:
               incomplete: Complete your religious information
             catholic_religion_details:
               incomplete: Complete your religious information
