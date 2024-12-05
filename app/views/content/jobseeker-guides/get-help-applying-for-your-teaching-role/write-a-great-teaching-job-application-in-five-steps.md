@@ -7,7 +7,7 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/write-a-great-teaching-job-application-in-5-steps.jpg"
 ---
 
-![3 teachers sat on sofas having an engaging and relaxed conversation in a canteen area of a school.](/content-assets/jobseeker-guides/write-a-great-teaching-job-application-800x300.jpg)
+![Science teacher at the front of a classroom of students.](/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/write-a-great-teaching-job-application-in-5-steps.jpg)
 
 Make a great first impression and get an interview for the teaching job you want with this advice from experienced teaching staff. We’ve spoken to experienced teachers to get their top tips for success.
 
