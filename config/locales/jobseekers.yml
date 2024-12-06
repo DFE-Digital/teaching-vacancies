@@ -89,7 +89,8 @@ en:
       update:
         success: Thank you for providing additional feedback on your job alert
     job_applications:
-      apply: Apply for this job
+      apply:
+        review_application: Review application
       applying_for_the_job_heading: Applying for the job
       applying_for_the_job_paragraph: Please complete the online application.
       no_cvs: CVs are not accepted.
@@ -462,7 +463,7 @@ en:
         deadline_passed: The deadline for this job listing has passed
         employment_history:
           none: You have not added any roles or employment history.
-        heading: Review your application
+        heading: Your application
         personal_statement:
           blank: You have not added a personal statement.
         references:

@@ -1,6 +1,7 @@
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
+  before_action :set_job_application
   before_action :raise_unless_vacancy_enable_job_applications,
                 :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
   before_action :redirect_unless_draft_job_application, only: %i[review]
@@ -25,7 +26,16 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def create
     new_job_application = current_jobseeker.job_applications.create(vacancy:)
-    redirect_to jobseekers_job_application_build_path(new_job_application, :personal_details)
+    # redirect_to jobseekers_job_application_build_path(new_job_application, :personal_details)
+    redirect_to jobseekers_job_application_apply_path(new_job_application)
+  end
+
+  def pre_submit
+    if all_steps_valid?
+      render :review
+    else
+      render :apply
+    end
   end
 
   def review
@@ -104,6 +114,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   private
 
+  def job_application
+    @job_application
+  end
+
   def prefill_job_application_with_available_data
     Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
   end
@@ -140,8 +154,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     @employments ||= job_application.employments.order(:started_on)
   end
 
-  def job_application
-    @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id] || params[:id])
+  def set_job_application
+    @job_application = current_jobseeker.job_applications.find(params[:job_application_id] || params[:id])
   end
 
   def redirect_if_job_application_exists
