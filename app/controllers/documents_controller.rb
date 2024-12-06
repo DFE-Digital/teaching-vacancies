@@ -30,12 +30,10 @@ class DocumentsController < ApplicationController
       .with_request_details(request)
       .with_response_details(response)
       .with_user(current_user)
-      .with_data(
-        vacancy_id: vacancy.id,
-        document_type: application_form? ? :application_form : :supporting_document,
-        document_id: file.id,
-        filename: file.filename,
-      )
+      .with_data(data: { vacancy_id: vacancy.id,
+                         document_type: application_form? ? :application_form : :supporting_document,
+                         document_id: file.id,
+                         filename: file.filename })
 
     DfE::Analytics::SendEvents.do([event])
   end

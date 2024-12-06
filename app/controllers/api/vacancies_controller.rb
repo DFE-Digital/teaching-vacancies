@@ -27,7 +27,7 @@ class Api::VacanciesController < Api::ApplicationController
       .with_request_details(request)
       .with_response_details(response)
       .with_user(current_user)
-      .with_data(event_data)
+      .with_data(data: event_data)
 
     DfE::Analytics::SendEvents.do([event])
   end
