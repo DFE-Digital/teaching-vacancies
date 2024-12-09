@@ -12,7 +12,11 @@ class Jobseekers::JobApplication::BaseForm < BaseForm
   end
 
   class << self
-    def load(attrs)
+    def load_form(model)
+      load_form_attributes(model.attributes)
+    end
+
+    def load_form_attributes(attrs)
       attrs.symbolize_keys.slice(*fields)
     end
   end

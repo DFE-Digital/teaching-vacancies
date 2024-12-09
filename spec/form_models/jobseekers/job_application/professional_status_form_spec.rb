@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model do
+  subject {
+    Jobseekers::JobApplication::ProfessionalStatusForm.new(professional_status_section_completed: true)
+  }
+
   it { is_expected.to validate_inclusion_of(:qualified_teacher_status).in_array(%w[yes no on_track]) }
   it { is_expected.to validate_inclusion_of(:statutory_induction_complete).in_array(%w[yes no on_track]) }
 
