@@ -10,7 +10,7 @@ RSpec.describe EqualOpportunitiesReport do
 
     it "triggers an event with the correct data" do
       subject.trigger_event
-      expect(:equal_opportunities_report_published).to have_been_enqueued_as_analytics_events
+      expect(:equal_opportunities_report_published).to have_been_enqueued_as_analytics_event
     end
   end
 end

@@ -55,7 +55,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
 
       it "triggers a `jobseeker_subscription_confirmation` email event with the anonymised jobseeker id" do
         mail.deliver_now
-        expect(:jobseeker_subscription_confirmation).to have_been_enqueued_as_analytics_events
+        expect(:jobseeker_subscription_confirmation).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template])
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
 
       it "triggers a `jobseeker_subscription_confirmation` email event without the anonymised jobseeker id" do
         mail.deliver_now
-        expect(:jobseeker_subscription_confirmation).to have_been_enqueued_as_analytics_events
+        expect(:jobseeker_subscription_confirmation).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template])
       end
     end
 
@@ -108,7 +108,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
 
       it "triggers a `jobseeker_subscription_update` email event with the anonymised jobseeker id" do
         mail.deliver_now
-        expect(:jobseeker_subscription_update).to have_been_enqueued_as_analytics_events
+        expect(:jobseeker_subscription_update).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template])
       end
     end
 
@@ -117,7 +117,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
 
       it "triggers a `jobseeker_subscription_update` email event without the anonymised jobseeker id" do
         mail.deliver_now
-        expect(:jobseeker_subscription_update).to have_been_enqueued_as_analytics_events
+        expect(:jobseeker_subscription_update).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template])
       end
     end
   end

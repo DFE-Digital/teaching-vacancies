@@ -29,7 +29,7 @@ RSpec.describe Publishers::AuthenticationFallbackMailer do
 
     it "triggers a `publisher_sign_in_fallback` email event" do
       mail.deliver_now
-      expect(:publisher_sign_in_fallback).to have_been_enqueued_as_analytics_events
+      expect(:publisher_sign_in_fallback).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template])
     end
   end
 end
