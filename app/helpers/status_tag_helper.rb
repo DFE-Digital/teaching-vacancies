@@ -1,5 +1,6 @@
 module StatusTagHelper
-  def review_section_tag(resource, steps, form_classes)
+  def review_section_tag(resource, form_classes)
+    steps = form_classes.map(&:target_name)
     if resource.is_a?(JobApplication) && steps.all? { |step| job_application_step_imported?(resource, step) }
       imported
     elsif form_classes.all?(&:optional?)

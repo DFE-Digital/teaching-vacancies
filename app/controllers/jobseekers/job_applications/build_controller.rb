@@ -20,7 +20,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
       return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if redirect_to_review?
 
-      render_wizard job_application
+      redirect_to jobseekers_job_application_apply_path job_application
     else
       render_wizard
     end

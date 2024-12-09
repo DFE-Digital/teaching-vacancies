@@ -45,15 +45,6 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
     end
   end
 
-  context "if 'train tracks' are on" do
-    let(:show_tracks) { true }
-
-    it "renders the 'train tracks' component" do
-      render_inline(component)
-      expect(page).to have_css(".steps-component")
-    end
-  end
-
   context "if 'train tracks' are off" do
     let(:show_tracks) { false }
 

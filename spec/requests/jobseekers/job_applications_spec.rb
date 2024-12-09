@@ -16,7 +16,7 @@ RSpec.describe "Job applications" do
       end
     end
 
-    context "when the jobseeker is signed in " do
+    context "when the jobseeker is signed in" do
       before { sign_in(jobseeker, scope: :jobseeker) }
 
       context "when the job is not live" do
@@ -118,7 +118,7 @@ RSpec.describe "Job applications" do
         .to change { jobseeker.job_applications.count }.by(1)
 
       expect(response)
-        .to redirect_to(jobseekers_job_application_build_path(jobseeker.job_applications.first.id, :personal_details))
+        .to redirect_to(jobseekers_job_application_apply_path(jobseeker.job_applications.first))
     end
   end
 
@@ -223,7 +223,7 @@ RSpec.describe "Job applications" do
           .to change { jobseeker.job_applications.count }.by(1)
 
         expect(response)
-          .to redirect_to(jobseekers_job_application_review_path(jobseeker.job_applications.draft.first.id))
+          .to redirect_to(jobseekers_job_application_apply_path(jobseeker.job_applications.draft.first.id))
       end
     end
   end

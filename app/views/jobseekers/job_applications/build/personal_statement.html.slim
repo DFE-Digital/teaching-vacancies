@@ -39,9 +39,6 @@
           = t("jobseekers.job_applications.cancel_caption")
 
   .govuk-grid-column-one-third
-    - if current_jobseeker.job_applications.not_draft.none?
-      = render "steps"
-
     .help-guide--desktop class="govuk-!-margin-top-6"
       h3.govuk-heading-m = t(".personal_statement_guide.title")
       p.govuk-body = t(".personal_statement_guide.description_desktop")
