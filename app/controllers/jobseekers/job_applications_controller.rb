@@ -1,6 +1,8 @@
+# rubocop:disable Metrics/ClassLength
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
+  before_action :set_job_application, only: %i[review apply pre_submit submit show confirm_destroy destroy confirm_withdraw withdraw]
   before_action :raise_unless_vacancy_enable_job_applications,
                 :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
   before_action :redirect_unless_draft_job_application, only: %i[review]
@@ -25,7 +27,15 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def create
     new_job_application = current_jobseeker.job_applications.create(vacancy:)
-    redirect_to jobseekers_job_application_build_path(new_job_application, :personal_details)
+    redirect_to jobseekers_job_application_apply_path(new_job_application)
+  end
+
+  def pre_submit
+    if all_steps_valid?
+      redirect_to jobseekers_job_application_review_path(@job_application)
+    else
+      render :apply
+    end
   end
 
   def review
@@ -48,12 +58,14 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
   end
 
+  def apply; end
+
   def quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
 
     new_job_application = prefill_job_application_with_available_data
 
-    redirect_to jobseekers_job_application_review_path(new_job_application), notice: t("jobseekers.job_applications.new_quick_apply.import_from_previous_application")
+    redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new_quick_apply.import_from_previous_application")
   end
 
   def submit
@@ -104,6 +116,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   private
 
+  attr_reader :job_application
+
   def prefill_job_application_with_available_data
     Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
   end
@@ -126,7 +140,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def step_valid?(step)
     step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
 
-    attributes = step_form.load(job_application.attributes)
+    attributes = step_form.load_form(job_application)
     attributes.merge!(trn_params) if step == :professional_status
 
     form = step_form.new(attributes)
@@ -140,8 +154,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     @employments ||= job_application.employments.order(:started_on)
   end
 
-  def job_application
-    @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id] || params[:id])
+  def set_job_application
+    @job_application = current_jobseeker.job_applications.find(params[:job_application_id] || params[:id])
   end
 
   def redirect_if_job_application_exists
@@ -240,3 +254,4 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     }
   end
 end
+# rubocop:enable Metrics/ClassLength

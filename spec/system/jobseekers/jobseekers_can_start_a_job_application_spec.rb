@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
 
           expect { click_on I18n.t("buttons.start_application") }.to change { JobApplication.count }.by(1)
 
-          expect(current_path).to eq(jobseekers_job_application_build_path(created_job_application, :personal_details))
+          expect(current_path).to eq(jobseekers_job_application_apply_path(created_job_application))
         end
       end
 
@@ -50,7 +50,7 @@ RSpec.describe "Jobseekers can start or continue a job application" do
 
             expect { click_on I18n.t("buttons.start_application") }.to change { JobApplication.count }.by(1)
 
-            expect(current_path).to eq(jobseekers_job_application_build_path(created_job_application, :personal_details))
+            expect(current_path).to eq(jobseekers_job_application_apply_path(created_job_application))
           end
         end
       end

@@ -95,7 +95,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
       end
 
       it "sets qualifications section completed to true" do
-        expect(subject.qualifications_section_completed).to eq(true)
+        expect(subject.completed_steps).to(include("qualifications"))
       end
 
       it "copies employments from the recent job application" do
@@ -113,13 +113,13 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         end
 
         it "sets employment history section completed to false" do
-          expect(subject.employment_history_section_completed).to eq(false)
+          expect(subject.in_progress_steps).to(include("employment_history"))
         end
       end
 
       context "when the application is from after we added gap validation for employment history section" do
         it "sets employment history section completed to true" do
-          expect(subject.employment_history_section_completed).to eq(true)
+          expect(subject.completed_steps).to(include("employment_history"))
         end
       end
 
@@ -136,7 +136,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         expect(subject.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
           .to eq(recent_job_application.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
 
-        expect(subject.training_and_cpds_section_completed).to eq(true)
+        expect(subject.completed_steps).to include("training_and_cpds")
       end
 
       it "does not copy declarations attributes from the recent job application" do

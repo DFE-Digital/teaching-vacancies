@@ -53,10 +53,12 @@ RSpec.describe "Jobseekers can add references to their job application" do
       click_on I18n.t("buttons.save_reference")
 
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
-      expect(page).not_to have_content("John")
-      expect(page).not_to have_content("Yes")
-      expect(page).to have_content("Jason")
-      expect(page).to have_content("No")
+      within ".govuk-summary-card" do
+        expect(page).not_to have_content("John")
+        expect(page).not_to have_content("Yes")
+        expect(page).to have_content("Jason")
+        expect(page).to have_content("No")
+      end
     end
   end
 end

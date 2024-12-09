@@ -3,13 +3,11 @@
 = render "banner", vacancy: vacancy, back_path: back_path
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
-    - if current_jobseeker.job_applications.not_draft.none?
-      = render "caption"
+  div
     h2.govuk-heading-l = t(".heading")
     p.govuk-body = t(".description")
 
-    = form_for form, url: wizard_path, method: :patch do |f|
+    = form_for form, url: jobseekers_job_application_build_path(job_application, :personal_details), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_text_field :first_name, label: { size: "s" }, width: "one-half", aria: { required: true }
@@ -38,11 +36,9 @@
           = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half"
         = f.govuk_radio_button :has_ni_number, :no
 
+      = f.govuk_collection_radio_buttons :personal_details_section_completed, %w[true false], :to_s
+
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
         span.govuk-caption-m
           = t("jobseekers.job_applications.cancel_caption")
-
-  - if current_jobseeker.job_applications.not_draft.none?
-    .govuk-grid-column-one-third
-      = render "steps"

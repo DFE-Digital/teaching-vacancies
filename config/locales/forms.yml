@@ -145,11 +145,6 @@ en:
 
       jobseekers_close_account_feedback_form:
         close_account_reason_comment: Your feedback will help us improve the service
-      jobseekers_job_application_declarations_form:
-        right_to_work_in_uk_html: >-
-          You can find out whether you have the right to work in the UK on the
-          <a href="https://www.gov.uk/" target="_blank" class="govuk-link">GOV.UK website (opens in new tab)</a>. You can apply for this role even if you do not have the
-          right to work in the UK.
       jobseekers_break_form:
         reason_for_break: "For example, 'I was unemployed', 'I had health issues' or 'I was caring for a child'"
       jobseekers_job_application_details_employment_form:
@@ -165,30 +160,12 @@ en:
           hint1: One of your referees should be your current or most recent employer.
           hint2: If you do not have an employer referee, you can provide a personal referee.
           hint3: Your employer reference does not have to be paid employment and can include voluntary work.
-      jobseekers_job_application_employment_history_form:
-        employment_history_section_completed: Ensure you've added all your employment history.
-      jobseekers_job_application_equal_opportunities_form:
-        gender: If the options below do not reflect how you identify, please select ‘Other gender identity’.
-        ethnicity: If the options below do not reflect how you identify, please select ‘Other ethnic group’.
-        ethnicity_options:
-          asian: Includes Indian, Pakistani, Bangladeshi or Chinese
-          mixed: Includes White and Black Caribbean, White and Black African or White and Asian
-          white: Includes English, Welsh, Scottish, Northern Irish, British, Irish Gypsy or Irish Traveller
-        orientation: If the options below do not reflect how you identify, please select ‘Other sexual orientation’.
-        religion: >-
-          You can select ‘Other religion or belief’ if your beliefs are not represented by one of the given options.
       jobseekers_job_application_feedback_form:
         email: >-
           We'll only use this to tell you about opportunities to take part in user research that helps us improve
           Department for Education services.
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
-      jobseekers_job_application_personal_details_form:
-        has_ni_number: >-
-          You can find this on your National Insurance card,
-          benefit letter, payslip or P60. It's made up of 2 letters, 6 numbers and a final letter.
-        phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
-        previous_names: For example maiden name or name at birth, if different from the name you have now.
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
@@ -371,16 +348,6 @@ en:
         user_participation_response_options:
           interested: 'Yes'
           uninterested: 'No'
-      jobseekers_job_application_ask_for_support_form:
-        support_needed_details: Tell us any information you think is relevant
-        support_needed_options:
-          "no": No, I do not need support
-          "yes": Yes, I would like to share some information about the support that I need
-      jobseekers_job_application_declarations_form:
-        close_relationships_details: Please give details
-        close_relationships_options:
-          "no": "No"
-          "yes": "Yes"
       jobseekers_break_form:
         reason_for_break: Enter reasons for gap in work history
       jobseekers_job_application_details_employment_form:
@@ -393,10 +360,6 @@ en:
         subjects_review: Subjects and key stages taught
         subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
         reason_for_leaving: Reason for leaving role
-      jobseekers_job_application_employment_history_form:
-        employment_history_section_completed_options:
-          false: No, I'll come back to it later
-          true: Yes, I've completed this section
       jobseekers_job_preferences_form:
         role_options:
           education_support: Learning support or cover supervisor
@@ -448,51 +411,6 @@ en:
         is_most_recent_employer_options:
           "true": "Yes"
           "false": "No"
-      jobseekers_job_application_equal_opportunities_form:
-        age_options:
-          under_twenty_five: Under 25
-          twenty_five_to_twenty_nine: 25 to 29
-          thirty_to_thirty_nine: 30 to 39
-          forty_to_forty_nine: 40 to 49
-          fifty_to_fifty_nine: 50 to 59
-          sixty_and_over: 60 and over
-          prefer_not_to_say: Prefer not to say
-        disability_options:
-          "no": "No"
-          "yes": "Yes"
-          prefer_not_to_say: Prefer not to say
-        ethnicity_description_html: Please describe your ethnic group (optional<span class='govuk-visually-hidden'> field</span>)
-        ethnicity_options:
-          asian: Asian or Asian British
-          black: Black African, Caribbean or Black British
-          mixed: Mixed or multiple ethnic group
-          other: Other ethnic group
-          prefer_not_to_say: Prefer not to say
-          white: White
-        gender_description_html: Please describe your gender identity (optional<span class='govuk-visually-hidden'> field</span>)
-        gender_options:
-          man: Man
-          other: Other gender identity
-          prefer_not_to_say: Prefer not to say
-          woman: Woman
-        orientation_description_html: Please describe your sexual orientation (optional<span class='govuk-visually-hidden'> field</span>)
-        orientation_options:
-          bisexual: Bisexual
-          gay_or_lesbian: Gay or lesbian
-          heterosexual: Heterosexual
-          other: Other sexual orientation
-          prefer_not_to_say: Prefer not to say
-        religion_description_html: Please describe your religion or belief (optional<span class='govuk-visually-hidden'> field</span>)
-        religion_options:
-          buddhist: Buddhist
-          christian: Christian
-          hindu: Hindu
-          jewish: Jewish
-          muslim: Muslim
-          none: No religion, atheist or agnostic
-          other: Other religion or belief
-          prefer_not_to_say: Prefer not to say
-          sikh: Sikh
       jobseekers_job_application_feedback_form:
         email: What is your email address?
         comment_html: Do you have any suggestions on how we should improve the service? (optional<span class='govuk-visually-hidden'> field</span>)</span>
@@ -505,43 +423,6 @@ en:
         user_participation_response_options:
           interested: 'Yes'
           uninterested: 'No'
-      jobseekers_job_application_personal_details_form:
-        city: Town or city
-        country: Country
-        email_address: Email address
-        first_name: First name
-        last_name: Last name
-        national_insurance_number_review: National Insurance number
-        national_insurance_number: What is your National Insurance number?
-        phone_number: Phone number
-        previous_names_review: Previous names
-        previous_names_html: Previous names (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        street_address: Building and street
-        teacher_reference_number_review: Teacher reference number (TRN)
-        teacher_reference_number_html: Teacher reference number (TRN) (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        has_ni_number_options:
-          "yes": "Yes"
-          "no": No, I do not have one or do not want to provide it yet
-      jobseekers_job_application_personal_statement_form:
-        personal_statement: Your personal statement
-      jobseekers_job_application_professional_status_form:
-        qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        qualified_teacher_status_options:
-          "no": "No"
-          on_track: I'm on track to receive my QTS
-          non_teacher: I'm not looking for a teaching job
-          "yes": "Yes"
-        statutory_induction_complete_options:
-          "no": "No, I have not completed my induction period"
-          "yes": "Yes, I have completed my induction period"
-        qualified_teacher_status_year: Year QTS was awarded
-        hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}.
-        completed_period_hint: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs).
-        link_text: how to get QTS
-      jobseekers_job_application_qualifications_form:
-        qualifications_section_completed_options:
-          false: No, I'll come back to it later
-          true: Yes, I've completed this section
       jobseekers_job_application_training_and_cpds_form:
         training_and_cpds_section_completed_options:
           false: No, I'll come back to it later
@@ -935,12 +816,6 @@ en:
 
       jobseekers_close_account_feedback_form:
         reason: Tell us why you are closing your account
-      jobseekers_job_application_ask_for_support_form:
-        support_needed: Do you want to ask for support so that you can attend an interview?
-      jobseekers_job_application_declarations_form:
-        close_relationships: Do you have any family or close relationship with people within %{organisation}?
-        right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
-        safeguarding_issue: Do you want to declare any substantiated safeguarding issues, such as a criminal record or professional misconduct?
       jobseekers_job_application_details_reference_form:
         phone_number: Phone number
         is_most_recent_employer: Is this your current or most recent employer?
@@ -975,17 +850,6 @@ en:
       jobseekers_job_application_personal_details_form:
         your_address: Your address
         has_ni_number: Do you have a national insurance number?
-      jobseekers_job_application_professional_status_form:
-        has_teacher_reference_number: "Do you have a teacher reference number (TRN)?"
-        has_teacher_reference_number_options:
-          "yes": "Yes"
-          "no": "No"
-        teacher_reference_number: What is your teacher reference number (TRN)?
-        statutory_induction_complete: Have you completed your induction period?
-        qualified_teacher_status: Do you have qualified teacher status (QTS)?
-        statutory_induction_complete_details: Additional induction details
-      jobseekers_job_application_qualifications_form:
-        qualifications_section_completed: Have you completed this section?
       jobseekers_job_application_training_and_cpds_form:
         training_and_cpds_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:

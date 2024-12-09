@@ -93,12 +93,6 @@ module JobApplicationsHelper
     JOB_APPLICATION_STATUS_TAG_COLOURS[status]
   end
 
-  def job_application_review_edit_section_text(job_application, step)
-    return t("buttons.change") if step.to_s.in?(job_application.completed_steps)
-
-    t("buttons.complete_section")
-  end
-
   def job_application_build_submit_button_text
     if redirect_to_review?
       t("buttons.save")
@@ -175,7 +169,6 @@ module JobApplicationsHelper
     In the classroom, I always strive to modify my approach to suit a range of abilities and motivation. By planning lessons around my students’ interests, I have been able to inspire even the most unmotivated readers into a love of books. For example, teaching descriptive writing by looking at their favourite sports and persuasive writing via marketing materials for their favourite shops. Furthermore, I have worked with dozens of students for whom English is their second language and nothing motivates me more than seeing that lightbulb moment happen when they can see their own progress. Last year, 95% of my GCSE students passed with grade 5 or above, and I have a proven track record for ensuring all of my KS3 students improve by at least two grades over years 7 to 9.<br />
     Moreover, I believe that good teaching doesn’t just happen in the classroom. I am a strong advocate for student wellbeing and pastoral support and have greatly enjoyed leading a morning form class for the last three years. Also, in my current school I have contributed to the English department by running a weekly book club, and organising several school trips to literary locations such as Haworth and Stratford Upon Avon, as well as visits to see plays on the curriculum.<br />
     I really resonate with your school’s ethos around inclusion and leaving no student behind, and I hope to be an asset to your English department, while continuing to grow as a teacher.",
-      employment_history_section_completed: true,
       employments:
         [
           Employment.new(

@@ -49,34 +49,6 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
     end
   end
 
-  describe "The section heading" do
-    before do
-      render_inline(component)
-    end
-
-    it "renders the heading component" do
-      expect(page).to have_css("li > ##{name} > .review-component__section__heading")
-    end
-
-    it "renders the title" do
-      expect(page).to have_css(
-        ".review-component__section__heading > .review-component__section__heading__title > h3",
-        text: component.t("jobseekers.job_applications.build.personal_details.heading"),
-      )
-    end
-
-    it "renders a link to the form for that section" do
-      url = Rails.application.routes.url_helpers.jobseekers_job_application_build_path(job_application, :personal_details)
-      text = component.t("buttons.change")
-
-      expect(page).to have_css(".review-component__section__heading a[href='#{url}']", text: text)
-    end
-
-    it "renders a status tag as the content" do
-      expect(page).to have_css(".review-component__section__heading .review-component__section__heading__status .govuk-tag")
-    end
-  end
-
   describe "The main list" do
     it "does not render the list by default" do
       render_inline(component)

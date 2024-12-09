@@ -11,6 +11,7 @@ RSpec.describe "Jobseekers can disclose close relationships or safeguarding issu
 
   it "allows jobseekers to add their declarations" do
     visit jobseekers_job_application_build_path(job_application, :declarations)
+    choose I18n.t("helpers.label.jobseekers_job_application_declarations_form.declarations_section_completed_options.true")
 
     click_on "Save and continue"
 

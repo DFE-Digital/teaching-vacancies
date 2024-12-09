@@ -1,0 +1,70 @@
+- content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
+
+= job_application_review(@job_application) do |r|
+  - r.with_header do
+    = render "banner"
+
+  - r.with_above do
+    - unless vacancy.listed?
+      = govuk_notification_banner title_text: t("banners.important") do
+        p.govuk-body = t(".deadline_passed")
+
+    - unless review_form.errors.any?
+      = render "shared/error_messages", model: @job_application, presenter: ErrorSummaryPresenter.new(@job_application.errors)
+
+  h2.govuk-heading-m = t(".heading")
+
+  = govuk_task_list do |task_list|
+    - task_list.with_item(title: t("jobseekers.job_applications.build.personal_details.heading"), href: jobseekers_job_application_build_path(job_application, :personal_details),
+      html_attributes: { id: :personal_details },
+      status: review_section_tag(job_application, [Jobseekers::JobApplication::PersonalDetailsForm]))
+
+    - task_list.with_item(title: t("jobseekers.job_applications.build.professional_status.heading"), href: jobseekers_job_application_build_path(job_application, :professional_status),
+      html_attributes: { id: :professional_status },
+      status: review_section_tag(job_application, [Jobseekers::JobApplication::ProfessionalStatusForm]))
+
+    - task_list.with_item(title: t("jobseekers.job_applications.build.qualifications.heading"), href: jobseekers_job_application_build_path(job_application, :qualifications),
+      html_attributes: { id: :qualifications },
+      status: review_section_tag(job_application, [Jobseekers::JobApplication::QualificationsForm]))
+
+    - task_list.with_item(title: t("jobseekers.job_applications.build.training_and_cpds.heading"), href: jobseekers_job_application_build_path(job_application, :training_and_cpds),
+      html_attributes: { id: :training_and_cpds },
+      status: review_section_tag(job_application, [Jobseekers::JobApplication::TrainingAndCpdsForm]))
+
+    - task_list.with_item(title: t("jobseekers.job_applications.build.employment_history.heading"), href: jobseekers_job_application_build_path(job_application, :employment_history),
+      html_attributes: { id: :employment_history },
+      status: review_section_tag(job_application, [Jobseekers::JobApplication::EmploymentHistoryForm]))
+
+    - task_list.with_item(title: t("jobseekers.job_applications.build.personal_statement.heading"), href: jobseekers_job_application_build_path(job_application, :personal_statement),
+      html_attributes: { id: :personal_statement },
+      status: review_section_tag(job_application, [Jobseekers::JobApplication::PersonalStatementForm]))
+
+    - task_list.with_item(title: t("jobseekers.job_applications.build.references.heading"), href: jobseekers_job_application_build_path(job_application, :references),
+      html_attributes: { id: :references },
+      status: review_section_tag(job_application, [Jobseekers::JobApplication::ReferencesForm]))
+
+    - if jobseeker_signed_in?
+      - task_list.with_item(title: t("jobseekers.job_applications.build.equal_opportunities.heading"), href: jobseekers_job_application_build_path(job_application, :equal_opportunities),
+        html_attributes: { id: :equal_opportunities },
+        status: review_section_tag(job_application, [Jobseekers::JobApplication::EqualOpportunitiesForm]))
+
+    - task_list.with_item(title: t("jobseekers.job_applications.build.ask_for_support.heading"), href: jobseekers_job_application_build_path(job_application, :ask_for_support),
+      classes: "ask_for_support",
+      html_attributes: { id: :ask_for_support },
+      status: review_section_tag(job_application, [Jobseekers::JobApplication::AskForSupportForm]))
+
+    - task_list.with_item(title: t("jobseekers.job_applications.build.declarations.heading"), href: jobseekers_job_application_build_path(job_application, :declarations),
+      html_attributes: { id: :declarations },
+      status: review_section_tag(job_application, [Jobseekers::JobApplication::DeclarationsForm]))
+
+  h2.govuk-heading-m = t(".review_and_submit")
+
+  p.govuk-body = t(".you_will_have")
+
+  - r.with_below do
+    - unless @job_application.deadline_passed?
+      = form_for review_form, url: jobseekers_job_application_pre_submit_path(job_application), method: :post do |f|
+        = f.govuk_error_summary
+
+        - if vacancy.listed?
+          = f.govuk_submit t(".review_application")

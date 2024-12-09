@@ -4,8 +4,6 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    - if current_jobseeker.job_applications.not_draft.none?
-      = render "caption"
     h2.govuk-heading-l = t(".heading")
     p.govuk-body = t(".description")
 
@@ -28,10 +26,12 @@
       h3.govuk-heading-s = t(".additional_instructions")
       = govuk_inset_text text: job_application.vacancy.personal_statement_guidance
 
-    = form_for form, url: wizard_path, method: :patch do |f|
+    = form_for form, url: jobseekers_job_application_build_path(job_application, :personal_statement), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_text_area :personal_statement, label: { size: "s" }, rows: 15, required: true, aria: { required: true }, hint: { text: t(".hint") }
+
+      = f.govuk_collection_radio_buttons :personal_statement_section_completed, %w[true false], :to_s
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
@@ -39,9 +39,6 @@
           = t("jobseekers.job_applications.cancel_caption")
 
   .govuk-grid-column-one-third
-    - if current_jobseeker.job_applications.not_draft.none?
-      = render "steps"
-
     .help-guide--desktop class="govuk-!-margin-top-6"
       h3.govuk-heading-m = t(".personal_statement_guide.title")
       p.govuk-body = t(".personal_statement_guide.description_desktop")

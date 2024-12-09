@@ -1,14 +1,11 @@
-= form_for form, url: wizard_path, method: :patch do |f|
+= form_for form, url: jobseekers_job_application_build_path(job_application, :employment_history), method: :patch do |f|
   = f.govuk_error_summary(presenter: WorkHistoryErrorSummaryPresenter.new(form.errors.messages, form.unexplained_employment_gaps))
-
   - content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
 
   = render "banner", vacancy: vacancy, back_path: back_path
 
   .govuk-grid-row
-    .govuk-grid-column-two-thirds
-      - if current_jobseeker.job_applications.not_draft.none?
-        = render "caption"
+    div
       h2.govuk-heading-l = t(".heading")
 
       p.govuk-body = t(".description.opening")
@@ -51,16 +48,10 @@
                 = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_job_application_break_path(job_application, started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
 
       - unexplained_employment_gaps_present = job_application.unexplained_employment_gaps.present?
-      = f.govuk_radio_buttons_fieldset(:employment_history_section_completed, legend: { size: "m" }) do
-        = f.govuk_radio_button :employment_history_section_completed, "true", label: { text: t("helpers.label.jobseekers_job_application_employment_history_form.employment_history_section_completed_options.true") }, link_errors: true
-        = f.govuk_radio_button :employment_history_section_completed, "false", label: { text: t("helpers.label.jobseekers_job_application_employment_history_form.employment_history_section_completed_options.false") }
-      end
+      = f.govuk_collection_radio_buttons :employment_history_section_completed, %w[true false], :to_s
+
       = f.hidden_field :unexplained_employment_gaps_present, value: unexplained_employment_gaps_present
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
         span.govuk-caption-m
           = t("jobseekers.job_applications.cancel_caption")
-
-  - if current_jobseeker.job_applications.not_draft.none?
-    .govuk-grid-column-one-third
-      = render "steps"

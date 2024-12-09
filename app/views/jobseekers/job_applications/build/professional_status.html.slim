@@ -3,13 +3,11 @@
 = render "banner", vacancy: vacancy, back_path: back_path
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
-    - if current_jobseeker.job_applications.not_draft.none?
-      = render "caption"
+  div
     h2.govuk-heading-l = t(".heading")
     p.govuk-body = t(".introduction")
 
-    = form_for form, url: wizard_path, method: :patch do |f|
+    = form_for form, url: jobseekers_job_application_build_path(job_application, :professional_status), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :qualified_teacher_status, hint: -> { tag.p(t("helpers.label.jobseekers_job_application_professional_status_form.hint", link: govuk_link_to(t("helpers.label.jobseekers_job_application_professional_status_form.link_text"), "https://www.gov.uk/guidance/qualified-teacher-status-qts", target: "_blank")).html_safe) } do
@@ -29,9 +27,7 @@
         = f.govuk_radio_button :statutory_induction_complete, "no" do
           = f.govuk_text_area :statutory_induction_complete_details, label: -> { tag.p(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete_details", link: govuk_link_to(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete_details_hint_text"), "https://www.gov.uk/government/publications/induction-for-early-career-teachers-england", target: "_blank")).html_safe) }
 
+      = f.govuk_collection_radio_buttons :professional_status_section_completed, %w[true false], :to_s
+
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
-
-  - if current_jobseeker.job_applications.not_draft.none?
-    .govuk-grid-column-one-third
-      = render "steps"
