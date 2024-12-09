@@ -1,19 +1,23 @@
 - r.with_section :qualifications
-  - if job_application.qualifications.none?
-    - if jobseeker_signed_in?
-      p.govuk-body = t("jobseekers.job_applications.review.qualifications.none")
-    - elsif publisher_signed_in?
-      p.govuk-body = t("jobseekers.job_applications.show.qualifications.none")
-  - else
-    - qualifications_sort_and_group(job_application.qualifications).each_value do |qualification_group|
-      - qualification_group.each do |qualification|
-        h3 class="govuk-heading-s" class="govuk-!-margin-top-0 govuk-!-margin-bottom-1"
-          - if qualifications_group_category_other?(qualification_group)
-            = qualification.name
-          - else
-            = t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification_group.first[:category]}")
-        div class="govuk-!-margin-bottom-6"
-          - if qualification.secondary?
-            = render "jobseekers/job_applications/review/qualifications/secondary_qualification", qualification: qualification
-          - else
-            = render "jobseekers/job_applications/review/qualifications/qualification", qualification: qualification
+  - govuk_summary_card(title: t("jobseekers.job_applications.build.qualifications.heading")) do |card|
+    - if job_application.persisted?
+      - card.with_action { job_application_review_edit_link(t("jobseekers.job_applications.build.qualifications.heading"), "Change", jobseekers_job_application_build_path(job_application, :qualifications)) }
+
+    - if job_application.qualifications.none?
+      - if jobseeker_signed_in?
+        p.govuk-body = t("jobseekers.job_applications.review.qualifications.none")
+      - elsif publisher_signed_in?
+        p.govuk-body = t("jobseekers.job_applications.show.qualifications.none")
+    - else
+      - qualifications_sort_and_group(job_application.qualifications).each_value do |qualification_group|
+        - qualification_group.each do |qualification|
+          h3 class="govuk-heading-s" class="govuk-!-margin-top-0 govuk-!-margin-bottom-1"
+            - if qualifications_group_category_other?(qualification_group)
+              = qualification.name
+            - else
+              = t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification_group.first[:category]}")
+          div class="govuk-!-margin-bottom-6"
+            - if qualification.secondary?
+              = render "jobseekers/job_applications/review/qualifications/secondary_qualification", qualification: qualification
+            - else
+              = render "jobseekers/job_applications/review/qualifications/qualification", qualification: qualification

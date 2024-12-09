@@ -18,6 +18,6 @@ RSpec.describe "Jobseekers can quick apply for a job" do
 
     click_on I18n.t("buttons.start_application")
 
-    expect(current_path).to eq(jobseekers_job_application_review_path(jobseeker.job_applications.draft.first.id))
+    expect(current_path).to eq(jobseekers_job_application_apply_path(jobseeker.job_applications.draft.first.id))
   end
 end

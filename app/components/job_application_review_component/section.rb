@@ -23,8 +23,15 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
 
   def build_list
     list = nil
-    govuk_summary_list { |l| list = l }
+    govuk_summary_card(title: heading_text) do |l|
+      l.with_action { edit_link(heading_text, "Change", error_path) }
+      list = l
+    end
     list
+  end
+
+  def edit_link title, text, href
+    govuk_link_to text, href, aria: { label: "#{text} #{title}" }, classes: "govuk-!-display-none-print" if text && href
   end
 
   def constantize_form(form_class_name)

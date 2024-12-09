@@ -1,6 +1,6 @@
 - content_for :page_title_prefix, job_application_page_title_prefix(review_form, t(".title"))
 
-= job_application_review(@job_application, step_process: step_process, show_tracks: current_jobseeker.job_applications.not_draft.none?) do |r|
+= job_application_review(@job_application, step_process: step_process, show_sidebar: false, show_tracks: false) do |r|
   - r.with_header do
     = render "banner"
 
