@@ -21,7 +21,6 @@ RSpec.describe "Jobseekers can sign in with fallback email authentication" do
 
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
-    # rubocop:disable RSpec/AnyInstance
     before do
       allow_any_instance_of(Jobseekers::LoginKeysController)
         .to receive(:generate_login_key)
@@ -31,7 +30,6 @@ RSpec.describe "Jobseekers can sign in with fallback email authentication" do
         .with(login_key_id: login_key.id, jobseeker: jobseeker)
         .and_return(message_delivery)
     end
-    # rubocop:enable RSpec/AnyInstance
 
     context "when a jobseeker tries to sign in" do
       it "can sign in, sign out" do

@@ -23,7 +23,7 @@ module VacancyFormsHelper
     end
   end
 
-  def vacancy_review_form_heading_inset_text(vacancy, status) # rubocop:disable Metrics/MethodLength
+  def vacancy_review_form_heading_inset_text(vacancy, status)
     case status
     when "published"
       t("publishers.vacancies.show.heading_component.inset_text.published", publish_date: format_date(vacancy.publish_on),

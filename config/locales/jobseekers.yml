@@ -171,6 +171,28 @@ en:
           optional: You can select ‘prefer not to say’ if you would rather not answer any question.
           step_title: Equal opportunities
           title: Equal opportunities — Application
+        catholic_following_religion:
+          heading: Religious information
+          title: Religious information — Application
+          is_a_catholic_school: "%{name} is a Catholic school."
+          preference_to_catholics: Schools, academies and colleges of a religious character can give preference to Catholic applicants when recruiting for teaching roles.
+          preference_for_support_staff: They can also give preference to Catholic applicants for support staff roles where there is a genuine occupational requirement.
+          non_catholics_apply: Non-Catholics are still encouraged to apply.
+        non_catholic_following_religion:
+          heading: Religious information
+          title: Religious information — Application
+        catholic_religion_details:
+          heading: Religious information
+          title: Religious information — Application
+        non_catholic_religion_details:
+          heading: Religious information
+          title: Religious information — Application
+        school_ethos:
+          heading: Religious information
+          title: Religious information — Application
+          has_a_religious_character: "%{name} has a religious character."
+          preference_to_religious_applicants: Schools, academies and colleges of a religious character can give preference to religious applicants when recruiting for teaching roles, but non-religious candidates are still encouraged to apply.
+          ethos_and_aims: How will you support the school's ethos and aims?
         personal_details:
           description: Provide some basic details about yourself, like how to contact you about this application.
           heading: Personal details
@@ -216,6 +238,8 @@ en:
           no_references: No referees specified
           step_title: References
           title: References — Application
+        religious_information:
+          step_title: Religious Information
         review:
           step_title: Review your application
       cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft applications.
@@ -471,6 +495,9 @@ en:
         warning: You cannot review a non-draft job application
         training_and_cpds:
           none: You have not added any training.
+        religious_information:
+          heading: The school is a school with a religious character, please therefore provide the additional information requested as appropriate.
+          baptism_certificate: Baptism certficate
       show:
         application_sections: Application sections
         ask_for_support:
@@ -506,6 +533,8 @@ en:
           your_address: Your address
         personal_statement:
           heading: Personal statement
+        religious_information:
+          heading: Religious Information
         professional_status:
           heading: Professional status
           statutory_induction_complete: Have you completed your statutory induction period?

@@ -21,7 +21,7 @@
         = f.govuk_radio_buttons_fieldset :enable_job_applications, legend: { size: "m", tag: nil } do
           = f.govuk_radio_button :enable_job_applications, true,
             label: -> { safe_join([t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true"), govuk_tag(text: t(".kcsie_compliant"), colour: "green")]) },
-            hint: { text: t(".this_form_is_kept_up_to_date") },
+            hint: { text: vacancy.organisations.any?(&:faith_school?) ? t(".ask_about_religion") : t(".this_form_is_kept_up_to_date") },
             link_errors: true
           = f.govuk_radio_divider
           = f.govuk_radio_button :enable_job_applications, "false"
