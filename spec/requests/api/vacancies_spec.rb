@@ -122,7 +122,7 @@ RSpec.describe "Api::Vacancies" do
 
     it "still monitors API usage if the request is for an entity that is not found" do
       get api_job_path("slug-that-does-not-exist", api_version: 1), params: { format: :json }
-      expect(:api_queried).to have_been_enqueued_as_analytics_events
+      expect(:api_queried).to have_been_enqueued_as_analytics_event
     end
 
     context "sets headers" do
@@ -139,7 +139,7 @@ RSpec.describe "Api::Vacancies" do
 
     it "triggers an api_queried event" do
       subject
-      expect(:api_queried).to have_been_enqueued_as_analytics_events
+      expect(:api_queried).to have_been_enqueued_as_analytics_event
     end
 
     it "never redirects to latest url" do

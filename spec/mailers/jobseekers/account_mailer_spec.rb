@@ -27,7 +27,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
     it "triggers a `jobseeker_account_closed` email event" do
       mail.deliver_now
-      expect(:jobseeker_account_closed).to have_been_enqueued_as_analytics_events
+      expect(:jobseeker_account_closed).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template])
     end
   end
 
@@ -47,7 +47,7 @@ RSpec.describe Jobseekers::AccountMailer do
 
     it "triggers a `jobseeker_inactive_account` email event" do
       mail.deliver_now
-      expect(:jobseeker_inactive_account).to have_been_enqueued_as_analytics_events
+      expect(:jobseeker_inactive_account).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template])
     end
   end
 end

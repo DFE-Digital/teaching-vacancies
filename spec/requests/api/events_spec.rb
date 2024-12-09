@@ -13,7 +13,7 @@ RSpec.describe "Events API" do
     end
 
     it "triggers an event" do
-      expect(:tracked_link_clicked).to have_been_enqueued_as_analytics_events
+      expect(:tracked_link_clicked).to have_been_enqueued_as_analytics_event(with_data: event_data)
     end
 
     it "requires a CSRF token", with_csrf_protection: true do
