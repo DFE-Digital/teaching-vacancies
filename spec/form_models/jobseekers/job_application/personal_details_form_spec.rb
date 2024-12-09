@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
+  subject do
+    described_class.new(personal_details_section_completed: true)
+  end
+
   let(:valid_params) do
     {
       city: "city",
@@ -12,6 +16,7 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
       phone_number: "01234 12345678",
       email_address: "david@gmail.com",
       right_to_work_in_uk: "yes",
+      personal_details_section_completed: true,
     }
   end
 

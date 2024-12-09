@@ -1,16 +1,10 @@
 class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications::BaseController
-  include Wicked::Wizard
   include Jobseekers::QualificationFormConcerns
-
-  steps :personal_details, :professional_status, :qualifications, :training_and_cpds, :employment_history, :personal_statement, :references,
-        :equal_opportunities, :ask_for_support, :declarations
 
   helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
   def show
-    skip_step_if_missing
-
-    render_wizard
+    render step
   end
 
   def update
@@ -18,11 +12,13 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
       job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
       update_or_create_jobseeker_profile! if step == :professional_status
 
-      return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if redirect_to_review?
-
-      render_wizard job_application
+      if redirect_to_review?
+        redirect_to jobseekers_job_application_review_path(job_application), success: t("messages.jobseekers.job_applications.saved")
+      else
+        redirect_to jobseekers_job_application_apply_path job_application
+      end
     else
-      render_wizard
+      render step
     end
   end
 
@@ -30,16 +26,18 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def back_path
     @back_path ||= if redirect_to_review?
-                     finish_wizard_path
-                   elsif step == :personal_details
-                     new_jobseekers_job_job_application_path(vacancy.id)
+                     jobseekers_job_application_review_path(job_application)
                    else
-                     jobseekers_job_application_build_path(job_application.id, step_process.previous_step)
+                     jobseekers_job_application_apply_path job_application
                    end
   end
 
   def form
     @form ||= form_class.new(form_attributes)
+  end
+
+  def step
+    params[:id].to_sym
   end
 
   def form_class
@@ -49,7 +47,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def form_attributes
     attributes = case action_name
                  when "show"
-                   form_class.load(job_application.attributes)
+                   form_class.load_form(job_application)
                  when "update"
                    form_params
                  end
@@ -83,7 +81,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def redirect_to_review?
-    current_jobseeker.job_applications.not_draft.any? || session[:back_to_review]&.include?(job_application.id)
+    session[:back_to_review]&.include?(job_application.id)
   end
 
   def update_params
@@ -105,20 +103,11 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def step_incomplete?
-    return false unless step.in? %i[qualifications employment_history training_and_cpds]
-
     form_params["#{step}_section_completed"] == "false"
   end
 
   def vacancy
     @vacancy ||= job_application.vacancy
-  end
-
-  def skip_step_if_missing
-    # Calling step_process will initialize a StepProcess, which will raise if the current step is missing.
-    step_process
-  rescue StepProcess::MissingStepError
-    skip_step unless step == "wicked_finish"
   end
 
   def jobseeker_profile_attributes

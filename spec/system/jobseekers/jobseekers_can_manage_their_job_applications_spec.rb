@@ -52,7 +52,7 @@ RSpec.describe "Jobseekers can manage their job applications" do
             click_on draft_job_application.vacancy.job_title
           end
 
-          expect(current_path).to eq(jobseekers_job_application_review_path(draft_job_application))
+          expect(current_path).to eq(jobseekers_job_application_apply_path(draft_job_application))
         end
 
         it "can not continue a draft application that has passed the deadline" do

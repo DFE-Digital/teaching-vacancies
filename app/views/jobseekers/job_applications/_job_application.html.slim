@@ -1,4 +1,4 @@
-- job_application_link = job_application.draft? ? jobseekers_job_application_review_path(job_application) : jobseekers_job_application_path(job_application)
+- job_application_link = job_application.draft? ? jobseekers_job_application_apply_path(job_application) : jobseekers_job_application_path(job_application)
 
 = render CardComponent.new do |card|
   - card.with_header do
