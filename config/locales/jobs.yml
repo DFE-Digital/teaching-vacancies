@@ -366,7 +366,7 @@ en:
       external_notice: This job listing was imported from your organisation's recruitment system and cannot be changed on Teaching Vacancies.
       external_tag: Imported
       expired:
-        expired_on: Listing ended
+        expired_on: Ended on
         no_jobs:
           no_filters: You currently have no jobs that have passed the deadline.
           with_filters: There are no jobs that have passed the deadline for the schools you have selected.
