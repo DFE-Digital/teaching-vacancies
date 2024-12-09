@@ -1,11 +1,15 @@
 - r.with_section :training_and_cpds
-  - if job_application.training_and_cpds.none?
-    - if jobseeker_signed_in?
-      p.govuk-body = t("jobseekers.job_applications.review.training_and_cpds.none")
-    - elsif publisher_signed_in?
-      p.govuk-body = t("jobseekers.job_applications.show.training_and_cpds.none")
-  - else
-    - job_application.training_and_cpds.each do |training|
+  - govuk_summary_card(title: t("jobseekers.job_applications.build.training_and_cpds.heading")) do |card|
+    - if job_application.persisted?
+      - card.with_action { job_application_review_edit_link(t("jobseekers.job_applications.build.training_and_cpds.heading"), "Change", jobseekers_job_application_build_path(job_application, :training_and_cpds)) }
+
+    - if job_application.training_and_cpds.none?
+      - if jobseeker_signed_in?
+        p.govuk-body = t("jobseekers.job_applications.review.training_and_cpds.none")
+      - elsif publisher_signed_in?
+        p.govuk-body = t("jobseekers.job_applications.show.training_and_cpds.none")
+    - else
+      - job_application.training_and_cpds.each do |training|
         p class="govuk-!-margin-bottom-1"
           = training.name
           - if training.grade.present?

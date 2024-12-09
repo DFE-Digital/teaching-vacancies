@@ -1,5 +1,9 @@
 - r.with_section :personal_statement
-  - if job_application.personal_statement.present?
-    .govuk-body.review-component__section__body--border = simple_format(job_application.personal_statement)
-  - else
-    p.govuk-body = t(".personal_statement.blank")
+  - govuk_summary_card(title: t("jobseekers.job_applications.build.personal_statement.heading")) do |card|
+    - if job_application.persisted?
+      - card.with_action { job_application_review_edit_link(t("jobseekers.job_applications.build.personal_statement.heading"), "Change", jobseekers_job_application_build_path(job_application, :personal_statement)) }
+
+    - if job_application.personal_statement.present?
+      .govuk-body.review-component__section__body--border = simple_format(job_application.personal_statement)
+    - else
+      p.govuk-body = t(".personal_statement.blank")

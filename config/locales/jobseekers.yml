@@ -89,7 +89,11 @@ en:
       update:
         success: Thank you for providing additional feedback on your job alert
     job_applications:
-      apply: Apply for this job
+      apply:
+        apply: Apply for this job
+        heading: Review your application
+        review_application: Review application
+        title: Review your application — Application
       applying_for_the_job_heading: Applying for the job
       applying_for_the_job_paragraph: Please complete the online application.
       no_cvs: CVs are not accepted.
