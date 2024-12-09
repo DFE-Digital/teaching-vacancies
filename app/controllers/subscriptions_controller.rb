@@ -137,7 +137,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def trigger_create_job_alert_clicked_event
-    trigger_dfe_analytics_event(:vacancy_create_job_alert_clicked, { vacancy_id: vacancy_id })
+    trigger_dfe_analytics_event(:vacancy_create_job_alert_clicked, data: { vacancy_id: vacancy_id })
   end
 
   def trigger_dfe_analytics_event(type, data)

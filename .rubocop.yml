@@ -146,6 +146,11 @@ Style/HashSyntax:
 # This is incompatible with our other migration checks
 Rails/BulkChangeTable:
   Enabled: false
+
+# Incompatible with DfE-Analytics custom matcher we have extended (have_been_enqueued_as_analytics_event)
+RSpec/ExpectActual:
+  Enabled: false
+
 ##
 # Tech Debt
 # TODO: `rubocop-govuk` previously had all these metrics disabled as they are "just heuristics".

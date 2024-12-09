@@ -67,7 +67,7 @@ RSpec.describe "Govuk One Login authentication response" do
       it "sends an analytics event for a failed OneLogin sign-in attempt" do
         get auth_govuk_one_login_callback_path
 
-        expect(:jobseeker_failed_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_events
+        expect(:jobseeker_failed_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_event
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe "Govuk One Login authentication response" do
     it "sends an analytics event for a successful OneLogin sign-in attempt" do
       get auth_govuk_one_login_callback_path
 
-      expect(:jobseeker_successful_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_events
+      expect(:jobseeker_successful_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_event
     end
 
     context "when the OneLogin user does not match a TV jobseeker" do

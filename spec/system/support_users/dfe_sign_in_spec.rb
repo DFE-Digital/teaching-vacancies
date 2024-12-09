@@ -19,7 +19,7 @@ RSpec.shared_examples "a failed Support User sign in" do |options|
     visit new_support_user_session_path
 
     sign_in_support_user
-    expect(:failed_dsi_sign_in_attempt).to have_been_enqueued_as_analytics_events
+    expect(:failed_dsi_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "dsi" })
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])
