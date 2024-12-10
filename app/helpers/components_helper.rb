@@ -9,7 +9,6 @@ module ComponentsHelper
     landing_page_link_group: "LandingPageLinkGroupComponent",
     map: "MapComponent",
     navigation_list: "NavigationListComponent",
-    review: "ReviewComponent",
     editor: "EditorComponent",
     searchable_collection: "SearchableCollectionComponent",
     supportal_table: "SupportalTableComponent",

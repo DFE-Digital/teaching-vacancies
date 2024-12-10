@@ -5,8 +5,7 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
 
   let(:args) { [job_application] }
   let(:kwargs) do
-    {
-    }
+    {}
   end
 
   let(:job_application) { create(:job_application) }
