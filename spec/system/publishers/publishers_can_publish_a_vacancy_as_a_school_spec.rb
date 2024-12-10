@@ -2,34 +2,28 @@ require "rails_helper"
 
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
-  let(:school) { create(:school, :not_applicable, name: "Salisbury School", safeguarding_information: nil) }
+  let(:vacancy) do
+    VacancyPresenter.new(build(:vacancy,
+                               :ect_suitable,
+                               job_roles: ["teacher"],
+                               phases: %w[secondary],
+                               key_stages: %w[ks3],
+                               publish_on: Date.current))
+  end
+  let(:created_vacancy) { Vacancy.last }
 
   before { login_publisher(publisher: publisher, organisation: school) }
+  after { logout }
 
-  scenario "Visiting the school page" do
-    visit organisation_jobs_with_type_path
+  context "non-faith school" do
+    let(:school) { create(:school, :not_applicable, name: "Salisbury School") }
 
-    expect(page).to have_content("Salisbury School")
-
-    click_on I18n.t("buttons.create_job")
-
-    expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
-  end
-
-  context "creating a new vacancy" do
-    let(:vacancy) do
-      VacancyPresenter.new(build(:vacancy,
-                                 :ect_suitable,
-                                 job_roles: ["teacher"],
-                                 phases: %w[secondary],
-                                 key_stages: %w[ks3],
-                                 publish_on: Date.current))
-    end
-    let(:created_vacancy) { Vacancy.last }
-
-    scenario "follows the flow" do
+    it "follows the flow" do
       visit organisation_jobs_with_type_path
+      expect(page).to have_content("Salisbury School")
+
       click_on I18n.t("buttons.create_job")
+      expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
       click_on I18n.t("buttons.save_and_continue")
@@ -353,5 +347,83 @@ RSpec.describe "Creating a vacancy" do
         end
       end
     end
+  end
+
+  context "with a catholic school" do
+    let(:school) { create(:school, :catholic) }
+
+    before do
+      visit organisation_jobs_with_type_path
+
+      fill_in_forms_until_start_date(vacancy)
+
+      fill_in_start_date_form_fields(vacancy)
+      click_on I18n.t("buttons.save_and_continue")
+    end
+
+    context "when using the web form" do
+      before do
+        fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
+        click_on I18n.t("buttons.save_and_continue")
+      end
+
+      scenario "catholic" do
+        expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :religious_information))
+        choose I18n.t("helpers.label.publishers_job_listing_religious_information_form.religion_type_options.catholic")
+        click_on I18n.t("buttons.save_and_continue")
+
+        fill_from_visits_to_review(vacancy)
+        expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+        expect(created_vacancy.reload.religion_type.to_sym).to eq(:catholic)
+      end
+
+      scenario "Church of England" do
+        expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :religious_information))
+        choose I18n.t("helpers.label.publishers_job_listing_religious_information_form.religion_type_options.other_religion")
+        click_on I18n.t("buttons.save_and_continue")
+
+        fill_from_visits_to_review(vacancy)
+        expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+        expect(created_vacancy.reload.religion_type.to_sym).to eq(:other_religion)
+      end
+
+      scenario "No religion questions" do
+        expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :religious_information))
+        choose I18n.t("helpers.label.publishers_job_listing_religious_information_form.religion_type_options.no_religion")
+        click_on I18n.t("buttons.save_and_continue")
+
+        fill_from_visits_to_review(vacancy)
+        expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
+        expect(created_vacancy.reload.religion_type.to_sym).to eq(:no_religion)
+      end
+    end
+
+    context "when not using the web form" do
+      before do
+        choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.false"))
+        click_on I18n.t("buttons.save_and_continue")
+      end
+
+      it "doesnt ask religion questions" do
+        expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :how_to_receive_applications))
+      end
+    end
+  end
+
+  def fill_from_visits_to_review(vacancy)
+    fill_in_school_visits_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    fill_in_visa_sponsorship_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    fill_in_contact_details_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    fill_in_about_the_role_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    fill_in_include_additional_documents_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
   end
 end
