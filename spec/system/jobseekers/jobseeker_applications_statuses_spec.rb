@@ -69,7 +69,7 @@ RSpec.describe "Jobseekers applications statuses" do
       end
 
       context "when the jobseeker completes a section" do
-        it "shows the section as complete", :js do
+        it "shows the section as complete" do
           visit job_path(vacancy)
           within ".banner-buttons" do
             click_on I18n.t("jobseekers.job_applications.banner_links.apply")

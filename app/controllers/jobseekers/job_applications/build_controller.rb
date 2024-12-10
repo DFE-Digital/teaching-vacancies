@@ -1,16 +1,12 @@
 class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications::BaseController
-  include Wicked::Wizard
   include Jobseekers::QualificationFormConcerns
-
-  steps :personal_details, :professional_status, :qualifications, :training_and_cpds, :employment_history, :personal_statement, :references,
-        :equal_opportunities, :ask_for_support, :declarations
 
   helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
   def show
     skip_step_if_missing
 
-    render_wizard
+    render step
   end
 
   def update
@@ -22,7 +18,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
       redirect_to jobseekers_job_application_apply_path job_application
     else
-      render_wizard
+      render step
     end
   end
 
@@ -42,6 +38,10 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     @form ||= form_class.new(form_attributes)
   end
 
+  def step
+    params[:id].to_sym
+  end
+
   def form_class
     "jobseekers/job_application/#{step}_form".camelize.constantize
   end
@@ -49,7 +49,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def form_attributes
     attributes = case action_name
                  when "show"
-                   form_class.load(job_application.attributes)
+                   form_class.load_form(job_application.attributes)
                  when "update"
                    form_params
                  end

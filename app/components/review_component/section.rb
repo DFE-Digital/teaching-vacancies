@@ -29,10 +29,6 @@ class ReviewComponent::Section < ApplicationComponent
   def before_render
     with_field_div_sets(@forms.map { |f| { form: f } })
 
-    # with_heading(title: heading_text, link_to: [error_link_text, error_path], allow_edit: allow_edit?) do
-    #   review_section_tag(@record, @forms.map(&:target_name), @forms)
-    # end
-
     @list = build_list
   end
 

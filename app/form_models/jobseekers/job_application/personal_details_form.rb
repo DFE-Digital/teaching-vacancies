@@ -24,7 +24,7 @@ class Jobseekers::JobApplication::PersonalDetailsForm < Jobseekers::JobApplicati
       %i[has_ni_number]
     end
 
-    def load(attrs)
+    def load_form(attrs)
       super(attrs.except(:has_ni_number)).merge(has_ni_number: attrs[:national_insurance_number].present? ? "yes" : "no")
     end
   end

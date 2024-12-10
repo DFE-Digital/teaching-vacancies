@@ -27,13 +27,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def create
     new_job_application = current_jobseeker.job_applications.create(vacancy:)
-    # redirect_to jobseekers_job_application_build_path(new_job_application, :personal_details)
     redirect_to jobseekers_job_application_apply_path(new_job_application)
   end
 
   def pre_submit
     if all_steps_valid?
-      render :review
+      redirect_to jobseekers_job_application_review_path(@job_application)
     else
       render :apply
     end
@@ -141,7 +140,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def step_valid?(step)
     step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
 
-    attributes = step_form.load(job_application.attributes)
+    attributes = step_form.load_form(job_application.attributes)
     attributes.merge!(trn_params) if step == :professional_status
 
     form = step_form.new(attributes)

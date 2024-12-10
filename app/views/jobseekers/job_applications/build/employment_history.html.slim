@@ -1,4 +1,4 @@
-= form_for form, url: wizard_path, method: :patch do |f|
+= form_for form, url: jobseekers_job_application_build_path(job_application, :employment_history), method: :patch do |f|
   = f.govuk_error_summary
   - content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
 

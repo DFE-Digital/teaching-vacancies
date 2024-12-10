@@ -12,7 +12,7 @@
     p.govuk-body = t(".anonymity")
     p.govuk-body = t(".optional")
 
-    = form_for form, url: wizard_path, method: :patch do |f|
+    = form_for form, url: jobseekers_job_application_build_path(job_application, :equal_opportunities), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :disability do
