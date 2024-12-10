@@ -82,13 +82,13 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
         .with_request_details(request)
         .with_response_details(response)
         .with_user(current_publisher)
-        .with_data(
+        .with_data(data: {
           vacancy_id: vacancy.id,
           document_type: "supporting_document",
           name: name,
           size: size,
           content_type: content_type,
-        )
+        })
 
       DfE::Analytics::SendEvents.do([event])
     end
