@@ -1,4 +1,4 @@
-= job_application_review(job_application, step_process: step_process, show_tracks: false, allow_edit: local_assigns[:allow_edit]) do |r|
+= job_application_review(job_application, allow_edit: local_assigns[:allow_edit]) do |r|
   - render "jobseekers/job_applications/job_application_review_sections", r: r
   - r.with_above do
     = yield

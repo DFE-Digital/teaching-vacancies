@@ -1,32 +1,36 @@
 - r.with_section :references
-  - if job_application.references.none?
-    - if jobseeker_signed_in?
-      p.govuk-body = t("jobseekers.job_applications.review.employment_history.none")
-    - elsif publisher_signed_in?
-      p.govuk-body = t("jobseekers.job_applications.show.employment_history.none")
-  - else
-    - job_application.references.sort_by(&:created_at).each do |reference|
-      = govuk_summary_list html_attributes: { id: reference.name } do |summary_list|
-        - summary_list.with_row do |row|
-          - row.with_key text: reference.name
+  - govuk_summary_card(title: t("jobseekers.job_applications.build.references.heading")) do |card|
+    - if job_application.persisted?
+      - card.with_action { job_application_review_edit_link(t("jobseekers.job_applications.build.references.heading"), "Change", jobseekers_job_application_build_path(job_application, :references)) }
 
-        - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.job_title")
-          - row.with_value text: reference.job_title
-
-        - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.organisation")
-          - row.with_value text: reference.organisation
-
-        - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.relationship")
-          - row.with_value text: reference.relationship
-
-        - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.email")
-          - row.with_value text: reference.email
-
-        - if reference.phone_number?
+    - if job_application.references.none?
+      - if jobseeker_signed_in?
+        p.govuk-body = t("jobseekers.job_applications.review.employment_history.none")
+      - elsif publisher_signed_in?
+        p.govuk-body = t("jobseekers.job_applications.show.employment_history.none")
+    - else
+      - job_application.references.sort_by(&:created_at).each do |reference|
+        = govuk_summary_list html_attributes: { id: reference.name } do |summary_list|
           - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.legend.jobseekers_job_application_details_reference_form.phone_number")
-            - row.with_value text: reference.phone_number
+            - row.with_key text: reference.name
+
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.job_title")
+            - row.with_value text: reference.job_title
+
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.organisation")
+            - row.with_value text: reference.organisation
+
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.relationship")
+            - row.with_value text: reference.relationship
+
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.email")
+            - row.with_value text: reference.email
+
+          - if reference.phone_number?
+            - summary_list.with_row do |row|
+              - row.with_key text: t("helpers.legend.jobseekers_job_application_details_reference_form.phone_number")
+              - row.with_value text: reference.phone_number

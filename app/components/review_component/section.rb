@@ -4,10 +4,10 @@ class ReviewComponent::Section < ApplicationComponent
   include FormsHelper
   include StatusTagHelper
 
-  renders_one :heading, ReviewComponent::Section::Heading
+  # renders_one :heading, ReviewComponent::Section::Heading
   renders_many :field_div_sets, ->(f = nil, form: nil) { render_divs_for_fields(f || form) }
 
-  delegate :with_row, to: :@list
+  delegate :with_row, to: :summary_list
 
   def initialize(record, name:, id: nil, forms: [], **)
     super(**)
@@ -22,12 +22,12 @@ class ReviewComponent::Section < ApplicationComponent
 
   private
 
+  def summary_list
+    @summary_list ||= @list.with_summary_list
+  end
+
   def before_render
     with_field_div_sets(@forms.map { |f| { form: f } })
-
-    with_heading(title: heading_text, link_to: [error_link_text, error_path], allow_edit: allow_edit?) do
-      review_section_tag(@record, @forms.map(&:target_name), @forms)
-    end
 
     @list = build_list
   end
@@ -37,7 +37,7 @@ class ReviewComponent::Section < ApplicationComponent
     # affect the contents of `@list.rows`.
     super_content = super
 
-    if @list.rows.any?
+    if summary_list.rows.any?
       render(@list)
     else
       super_content

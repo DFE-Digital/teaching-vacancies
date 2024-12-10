@@ -27,6 +27,10 @@ module JobApplicationsHelper
     withdrawn: "yellow",
   }.freeze
 
+  def job_application_review_edit_link(title, text, href)
+    govuk_link_to text, href, aria: { label: "#{text} #{title}" }, classes: "govuk-!-display-none-print" if text && href
+  end
+
   def job_application_qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
     when "yes"
