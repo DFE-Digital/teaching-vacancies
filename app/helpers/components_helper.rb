@@ -15,7 +15,6 @@ module ComponentsHelper
     supportal_table: "SupportalTableComponent",
     tabs: "TabsComponent",
     vacancy_form_page_heading: "VacancyFormPageHeadingComponent",
-    vacancy_selector: "VacancySelectorComponent",
     validatable_summary_list: "ValidatableSummaryListComponent",
   }.each do |name, klass|
     define_method(name) do |*args, **kwargs, &block|
