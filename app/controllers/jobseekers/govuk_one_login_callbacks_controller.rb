@@ -79,6 +79,7 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
     stored_location.include?("/job_application/new") || # Signed-in from a quick apply link
       stored_location.include?("/saved_job/") || # Signed-in from a vacancy page save/unsave action.
+      stored_location.include?("/jobs/") || # Signed-in from a job page (in order to download)
       stored_location.include?("/jobseekers/subscriptions") # Signed-in from a job alert email link.
   end
 end

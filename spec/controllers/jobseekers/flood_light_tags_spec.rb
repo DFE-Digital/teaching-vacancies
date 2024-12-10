@@ -1,13 +1,18 @@
 require "rails_helper"
 
-# Please notify performance analyst if you change this test
+# Please notify performance analyst (currently Brandon) if you change this test
 # as it reflects the binding between the application and the Floodlight tags in GA
 RSpec.describe VacanciesController do
   render_views
 
   before do
+    # The application form is behind a login now
+    sign_in create(:jobseeker), scope: :jobseeker
+
     get :show, params: { id: vacancy }
   end
+
+  after { sign_out :jobseeker }
 
   describe "Apply Button" do
     let(:vacancy) { create(:vacancy) }
