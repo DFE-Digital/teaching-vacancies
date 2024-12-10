@@ -523,7 +523,7 @@ en:
         training_and_cpds:
           none: You have not added any training.
         religious_information:
-          heading: The school is a school with a religious character, please therefore provide the additional information requested as appropriate.
+          heading: This school has a religious character and has asked applicants to provide religious information as part of the application, where possible.
           baptism_certificate: Baptism certficate
       show:
         application_sections: Application sections
