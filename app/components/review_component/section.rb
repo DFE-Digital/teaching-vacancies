@@ -4,7 +4,7 @@ class ReviewComponent::Section < ApplicationComponent
   include FormsHelper
   include StatusTagHelper
 
-  renders_one :heading, ReviewComponent::Section::Heading
+  # renders_one :heading, ReviewComponent::Section::Heading
   renders_many :field_div_sets, ->(f = nil, form: nil) { render_divs_for_fields(f || form) }
 
   delegate :with_row, to: :summary_list
