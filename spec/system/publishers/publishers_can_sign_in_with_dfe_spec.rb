@@ -8,7 +8,7 @@ RSpec.shared_examples "a successful Publisher sign in" do
 
   scenario "it signs in the user successfully" do
     sign_in_publisher
-    expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "dsi" })
+    expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "dsi" }) # rubocop:disable RSpec/ExpectActual
 
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.sign_out")) }
     within(".govuk-header__navigation") { expect(page).to have_selector(:link_or_button, I18n.t("nav.manage_jobs")) }
@@ -20,7 +20,7 @@ RSpec.shared_examples "a failed Publisher sign in" do |options|
     visit new_publisher_session_path
     sign_in_publisher
 
-    expect(:failed_dsi_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "dsi" })
+    expect(:failed_dsi_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "dsi" }) # rubocop:disable RSpec/ExpectActual
 
     expect(page).to have_content(/The email you're signed in with isn't authorised to list jobs for this school/i)
     expect(page).to have_content(options[:email])

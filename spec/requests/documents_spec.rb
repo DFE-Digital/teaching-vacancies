@@ -17,7 +17,7 @@ RSpec.describe "Documents" do
       it "triggers a `vacancy_document_downloaded` event" do
         get job_document_path(vacancy, document.id)
 
-        expect(:vacancy_document_downloaded).to have_been_enqueued_as_analytics_event(
+        expect(:vacancy_document_downloaded).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
           with_data: { vacancy_id: vacancy.id,
                        document_type: "supporting_document",
                        document_id: document.id,
@@ -42,7 +42,7 @@ RSpec.describe "Documents" do
       it "triggers a `vacancy_document_downloaded` event" do
         get job_document_path(vacancy, document.id)
 
-        expect(:vacancy_document_downloaded).to have_been_enqueued_as_analytics_event(
+        expect(:vacancy_document_downloaded).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
           with_data: { vacancy_id: vacancy.id,
                        document_type: "application_form",
                        document_id: document.id,

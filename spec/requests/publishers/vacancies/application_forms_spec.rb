@@ -32,7 +32,7 @@ RSpec.describe "Documents" do
     context "when the form is valid" do
       it "triggers an event" do
         request
-        expect(:supporting_document_created).to have_been_enqueued_as_analytics_event(
+        expect(:supporting_document_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
           with_data: { vacancy_id: vacancy.id,
                        document_type: "application_form",
                        name: "blank_job_spec.pdf",
@@ -162,7 +162,7 @@ RSpec.describe "Documents" do
         it "sends a supporting_document_replaced event" do
           request
 
-          expect(:supporting_document_replaced).to have_been_enqueued_as_analytics_event(
+          expect(:supporting_document_replaced).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
             with_data: { vacancy_id: vacancy.id,
                          document_type: "application_form",
                          name: "blank_job_spec.pdf",
