@@ -6,8 +6,6 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
   let(:args) { [job_application] }
   let(:kwargs) do
     {
-      show_tracks: show_tracks,
-      step_process: step_process,
     }
   end
 
@@ -42,15 +40,6 @@ RSpec.describe JobApplicationReviewComponent, type: :component do
       expect(page).to have_css("ul.review-component__sections li", count: 2)
       expect(page).to have_css("p#above + ul.review-component__sections")
       expect(page).to have_css("ul.review-component__sections + p#below")
-    end
-  end
-
-  context "if 'train tracks' are off" do
-    let(:show_tracks) { false }
-
-    it "does not render the 'train tracks' component" do
-      render_inline(component)
-      expect(page).not_to have_css(".steps-component")
     end
   end
 end
