@@ -25,13 +25,12 @@ class FormSequence
   end
 
   def validate_step(step_name)
-    step_form = File.join(@form_prefix, "#{step_name}_form").camelize.constantize
+    step_form_class = File.join(@form_prefix, "#{step_name}_form").camelize.constantize
 
-    params = @model
-      .slice(*step_form.fields)
+    params = step_form_class.load_form(@model)
       .merge(current_organisation: @organisation)
 
-    step_form.new(params, @model).tap do |form|
+    step_form_class.new(params, @model).tap do |form|
       form.valid?
       @model.errors.merge!(
         form.errors.tap do |errors|
