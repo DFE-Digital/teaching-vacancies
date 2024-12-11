@@ -238,9 +238,6 @@ en:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
         application_form: You can only upload a PDF or DOCX file under 10MB
-      publishers_job_listing_applying_for_the_job_form:
-        enable_job_applications_options:
-          "false": You'll need to provide additional details about how to apply.
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 10MB
       publishers_job_listing_feedback_form:
@@ -264,9 +261,6 @@ en:
         salary_types_options:
           full_time: This is what the annual salary would be for someone working full time
           part_time: This is the annual amount someone will take home
-      publishers_job_listing_religious_information_form:
-        religion_type_options:
-          catholic: This form has been approved by the Catholic Education Service.
       publishers_job_listing_schools_form:
         add_school: Add a school to your account
         edit_schools_html: "Can't see the school you are looking for? %{link}"
@@ -649,12 +643,6 @@ en:
         application_email_options:
           other: Another email address
         other_application_email: Email address
-      publishers_job_listing_applying_for_the_job_form:
-        quick_apply: Only show quick apply jobs
-        quick_apply_hint: Apply for jobs quickly using an online application form
-        enable_job_applications_options:
-          true: "Teaching Vacancies application form"
-          false: "Use other application form method"
       publishers_job_listing_contract_type_form:
         contract_type_options:
           fixed_term: Fixed term (including maternity or parental leave cover)
@@ -808,11 +796,6 @@ en:
           part_time: Actual salary
           pay_scale: Pay scale
           hourly_rate: Hourly rate of pay
-      publishers_job_listing_religious_information_form:
-        religion_type_options:
-          catholic: Their religion, place of worship and religious referee or baptism information
-          other_religion: If they have a religious denomination or faith, how they'll meet your school's ethos and aims, and if they want to provide an optional religious referee or place of worship
-          no_religion: Do not ask applicants about their religion
       publishers_job_listing_school_visits_form:
         school_visits_options:
           false: "No"
@@ -934,8 +917,6 @@ en:
         ect_status: Is this role suitable for an early career teacher (ECT)?
         further_details_provided: Do you want to add further details about the role?
         safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
-      publishers_job_listing_applying_for_the_job_form:
-        enable_job_applications: Select application form type
       publishers_job_listing_application_form_form:
         application_email: Email address to receive applications
       publishers_job_listing_contract_type_form:
@@ -998,8 +979,6 @@ en:
       publishers_job_listing_pay_package_form:
         salary_types: Salary details
         benefits: Do you want to include additional allowances?
-      publishers_job_listing_religious_information_form:
-        religion_type: What would you like to ask applicants about their religion?
       publishers_job_listing_school_visits_form:
         school_visits: Do you want to offer school visits?
       publishers_job_listing_working_patterns_form:
