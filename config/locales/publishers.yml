@@ -377,8 +377,8 @@ en:
         show:
           page_title: Activity log
       application_form_type:
-        catholic: CES Approved Teaching Vacancies
-        other_religion: Teaching Vacancies with religion questions
+        catholic: CES Approved Teaching Vacancies Form
+        other_religion: Teaching Vacancies form with religion questions
         no_religion: Teaching Vacancies
         other: Other
       banner:
