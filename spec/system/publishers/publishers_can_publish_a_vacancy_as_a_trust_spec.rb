@@ -138,11 +138,7 @@ RSpec.describe "Creating a vacancy" do
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_content("There is a problem")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
-
-    fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
+    find('label[for="publishers-job-listing-applying-for-the-job-form-application-form-type-no-religion-field"]').click
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
 

@@ -83,7 +83,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
   def applying_for_the_job_params(params)
     if params[:publishers_job_listing_applying_for_the_job_form]
       params.require(:publishers_job_listing_applying_for_the_job_form)
-            .permit(:enable_job_applications)
+            .permit(:application_form_type)
     else
       {}
     end.merge(completed_steps: completed_steps, current_organisation: current_organisation)
@@ -102,10 +102,6 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
     params.require(:publishers_job_listing_application_link_form)
           .permit(:application_link)
           .merge(completed_steps: completed_steps, current_organisation: current_organisation)
-  end
-
-  def religious_information_params(params)
-    params.require(:publishers_job_listing_religious_information_form).permit(:religion_type)
   end
 
   def school_visits_params(params)
