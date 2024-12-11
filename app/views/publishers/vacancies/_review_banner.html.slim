@@ -1,4 +1,5 @@
 - content_for :breadcrumbs do
+  nav aria-label="Breadcrumbs"
   = govuk_breadcrumbs breadcrumbs: { "#{t("jobs.dashboard.#{vacancy.publication_status}.tab_heading")}": organisation_jobs_with_type_path(vacancy.publication_status),
                                     "#{vacancy.job_title}": "" }
 

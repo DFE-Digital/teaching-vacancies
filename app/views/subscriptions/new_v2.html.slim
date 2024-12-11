@@ -1,6 +1,7 @@
 - content_for :page_title_prefix, t("subscriptions.new.title")
 
 - content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("app.back_to_homepage"), href: root_path, html_attributes: { "aria-label" => "Back navigation", role: "navigation" }
 
 .campaign-header.full-width-banner
