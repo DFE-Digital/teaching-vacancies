@@ -154,22 +154,27 @@ module JobApplicationsHelper
 
   def religious_job_application_sample(vacancy)
     JobApplication.new(job_application_attributes.merge(
+                         following_religion: true,
+                         faith: "Anglican",
                          religious_reference_type: "referee",
                          religious_referee_name: Faker::Name.name,
                          religious_referee_address: Faker::Address.full_address,
+                         ethos_and_aims: Faker::Lorem.paragraph(sentence_count: 2),
                          religious_referee_role: "Priest",
                          religious_referee_email: Faker::Internet.email,
                          religious_referee_phone: Faker::PhoneNumber.phone_number,
-                         vacancy: vacancy,
+                         vacancy: vacancy.tap { |v| v.assign_attributes(religion_type: "other_religion") },
                        ))
   end
 
   def catholic_job_application_sample(vacancy)
     JobApplication.new(job_application_attributes.merge(
+                         following_religion: true,
+                         faith: "Roman Catholic",
                          religious_reference_type: "baptism_date",
                          baptism_address: Faker::Address.full_address,
                          baptism_date: Faker::Date.between(from: Date.new(1990, 1, 1), to: Date.new(2004, 1, 1)),
-                         vacancy: vacancy,
+                         vacancy: vacancy.tap { |v| v.assign_attributes(religion_type: "catholic") },
                        ))
   end
 
