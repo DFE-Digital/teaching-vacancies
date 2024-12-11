@@ -190,7 +190,7 @@ en:
           is_a_catholic_school: "%{name} is a Catholic school."
           preference_to_catholics: Schools, academies and colleges of a religious character can give preference to Catholic applicants when recruiting for teaching roles.
           preference_for_support_staff: They can also give preference to Catholic applicants for support staff roles where there is a genuine occupational requirement.
-          non_catholics_apply: Non-Catholics are still encouraged to apply.
+          non_catholics_apply: Applicants who do not follow a faith or religion are still encouraged to apply.
         non_catholic_following_religion:
           heading: Religious information
           title: Religious information — Application
