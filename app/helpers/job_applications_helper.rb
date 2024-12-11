@@ -163,7 +163,7 @@ module JobApplicationsHelper
                          religious_referee_role: "Priest",
                          religious_referee_email: Faker::Internet.email,
                          religious_referee_phone: Faker::PhoneNumber.phone_number,
-                         vacancy: vacancy.tap { |v| v.assign_attributes(religion_type: "other_religion") },
+                         vacancy: vacancy.dup.tap { |v| v.assign_attributes(religion_type: "other_religion") },
                        ))
   end
 
@@ -174,7 +174,7 @@ module JobApplicationsHelper
                          religious_reference_type: "baptism_date",
                          baptism_address: Faker::Address.full_address,
                          baptism_date: Faker::Date.between(from: Date.new(1990, 1, 1), to: Date.new(2004, 1, 1)),
-                         vacancy: vacancy.tap { |v| v.assign_attributes(religion_type: "catholic") },
+                         vacancy: vacancy.dup.tap { |v| v.assign_attributes(religion_type: "catholic") },
                        ))
   end
 
