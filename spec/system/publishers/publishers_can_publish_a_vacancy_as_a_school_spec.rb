@@ -104,10 +104,8 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
-
+      # No religious options when not a faith school
+      expect(all(".govuk-radios__item").count).to eq(2)
       fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
@@ -362,14 +360,8 @@ RSpec.describe "Creating a vacancy" do
     end
 
     context "when using the web form" do
-      before do
-        fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
-        click_on I18n.t("buttons.save_and_continue")
-      end
-
       scenario "catholic" do
-        expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :religious_information))
-        choose I18n.t("helpers.label.publishers_job_listing_religious_information_form.religion_type_options.catholic")
+        find('label[for="publishers-job-listing-applying-for-the-job-form-application-form-type-catholic-field"]').click
         click_on I18n.t("buttons.save_and_continue")
 
         fill_from_visits_to_review(vacancy)
@@ -378,8 +370,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "Church of England" do
-        expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :religious_information))
-        choose I18n.t("helpers.label.publishers_job_listing_religious_information_form.religion_type_options.other_religion")
+        find('label[for="publishers-job-listing-applying-for-the-job-form-application-form-type-other-religion-field"]').click
         click_on I18n.t("buttons.save_and_continue")
 
         fill_from_visits_to_review(vacancy)
@@ -388,8 +379,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "No religion questions" do
-        expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :religious_information))
-        choose I18n.t("helpers.label.publishers_job_listing_religious_information_form.religion_type_options.no_religion")
+        find('label[for="publishers-job-listing-applying-for-the-job-form-application-form-type-no-religion-field"]').click
         click_on I18n.t("buttons.save_and_continue")
 
         fill_from_visits_to_review(vacancy)
@@ -400,12 +390,13 @@ RSpec.describe "Creating a vacancy" do
 
     context "when not using the web form" do
       before do
-        choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.false"))
+        choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other"))
         click_on I18n.t("buttons.save_and_continue")
       end
 
       it "doesnt ask religion questions" do
         expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :how_to_receive_applications))
+        expect(created_vacancy.reload).to have_attributes(enable_job_applications: false, religion_type: nil)
       end
     end
   end
