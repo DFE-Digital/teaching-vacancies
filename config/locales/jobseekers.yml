@@ -204,7 +204,7 @@ en:
           heading: Religious information
           title: Religious information — Application
           has_a_religious_character: "%{name} has a religious character."
-          preference_to_religious_applicants: Schools, academies and colleges of a religious character can give preference to religious applicants when recruiting for teaching roles, but non-religious candidates are still encouraged to apply.
+          preference_to_religious_applicants: Schools, academies and colleges of a religious character can give preference to religious applicants when recruiting for teaching roles, but candidates who do not follow a faith or religion are still encouraged to apply.
           ethos_and_aims: How will you support the school's ethos and aims?
         personal_details:
           description: Provide some basic details about yourself, like how to contact you about this application.
