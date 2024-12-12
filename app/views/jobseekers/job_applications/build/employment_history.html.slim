@@ -1,5 +1,5 @@
 = form_for form, url: wizard_path, method: :patch do |f|
-  = f.govuk_error_summary(presenter: WorkHistoryErrorSummaryPresenter)
+  = f.govuk_error_summary(presenter: WorkHistoryErrorSummaryPresenter.new(form.errors.messages, form.unexplained_employment_gaps))
 
   - content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
 
@@ -43,7 +43,7 @@
                 span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
 
           - if (gap = job_application.unexplained_employment_gaps[employment]).present?
-            = govuk_inset_text classes: "govuk-inset-text--red" do
+            = govuk_inset_text classes: "govuk-inset-text--red", id: "gap-#{gap[:started_on].strftime('%Y%m%d')}-#{gap[:ended_on].strftime('%Y%m%d')}" do
               p.govuk-body.text-red class="govuk-!-margin-bottom-0" = t(".gap_with_duration", from: gap[:started_on].to_formatted_s(:month_year), to: gap[:ended_on].to_formatted_s(:month_year), duration: distance_of_time_in_words(gap[:started_on], gap[:ended_on]))
               p.govuk-body
                 = govuk_link_to t(employments.job.none? ? "buttons.add_job" : "buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application)
