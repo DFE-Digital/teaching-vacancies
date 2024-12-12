@@ -54,14 +54,14 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
                    form_params
                  end
 
-    attributes = attributes.merge(unexplained_employment_gaps: job_application.unexplained_employment_gaps)
+    attributes[:unexplained_employment_gaps] = job_application.unexplained_employment_gaps if step == :employment_history
 
     if step == :professional_status
-      attributes.merge(jobseeker_profile_attributes)
-                .merge(trn_params)
-    else
-      attributes
+      attributes.merge!(jobseeker_profile_attributes)
+                .merge!(trn_params)
     end
+
+    attributes
   end
 
   def form_params
