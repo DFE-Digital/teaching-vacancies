@@ -473,7 +473,7 @@ en:
         publishers/terms_and_conditions_form:
           attributes:
             terms:
-              blank: Tick the box to agree to the Terms and Conditions
+              blank: Tick the box to agree to the terms and conditions
 
         # Job application
         jobseekers/job_application/ask_for_support_form:
