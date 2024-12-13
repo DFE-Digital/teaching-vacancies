@@ -6,7 +6,7 @@ RSpec.describe "Job applications" do
   let(:jobseeker) { create(:jobseeker) }
 
   describe "GET #new" do
-    let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+    before { create(:jobseeker_profile, jobseeker: jobseeker) }
 
     context "when the jobseeker is not signed in" do
       before { get(new_jobseekers_job_job_application_path(vacancy.id)) }
@@ -45,7 +45,7 @@ RSpec.describe "Job applications" do
         end
 
         context "when a non-draft job application already exists and the user does not have right to work in UK" do
-          let(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+          let(:jobseeker_profile) { JobseekerProfile.last }
           let!(:personal_details) { create(:personal_details, right_to_work_in_uk: false, jobseeker_profile: jobseeker_profile) }
           let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
           let(:new_vacancy) { create(:vacancy, organisations: [build(:school)]) }
@@ -281,7 +281,7 @@ RSpec.describe "Job applications" do
         end
       end
 
-      xcontext "when the review form is valid" do
+      context "when the review form is valid" do
         let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker, has_teacher_reference_number: "yes", teacher_reference_number: "1234567") }
 
         it "submits the job application and sends email" do
