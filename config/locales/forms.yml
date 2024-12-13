@@ -53,6 +53,7 @@ en:
     download_application_form: Download an application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)
     edit: Edit
+    edit_withdrawn: Edit to resubmit
     end_listing: Close job listing
     end_listing_early: End job listing early
     extend_closing_date: Extend closing date

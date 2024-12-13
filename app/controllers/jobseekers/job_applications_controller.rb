@@ -102,6 +102,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     end
   end
 
+  def edit_withdrawn
+    raise ActionController::RoutingError, "Cannot withdraw non-reviewed/shortlisted/submitted application" unless job_application.withdrawn?
+
+    job_application.draft!
+    redirect_to jobseekers_job_application_review_path(job_application)
+  end
+
   private
 
   def prefill_job_application_with_available_data
