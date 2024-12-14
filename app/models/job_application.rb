@@ -38,6 +38,8 @@ class JobApplication < ApplicationRecord
     professional_status: 3,
     training_and_cpds: 4,
     references: 5,
+    equal_opportunities: 6,
+    personal_statement: 7,
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
