@@ -155,7 +155,7 @@ en:
             gaps: >-
               If you had a gap between finishing full-time education and starting work that you have not explained then please %{link} to give details about it
             gaps_link_text: click here
-          gap_with_duration: You have a gap in your work history (%{duration})
+          gap_with_duration: You have a gap in your work history from %{from} to %{to} (%{duration})
           heading: Work history
           no_employments: No employment specified
           step_title: Employment history
