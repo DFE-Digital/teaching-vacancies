@@ -68,9 +68,9 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   def qualification_params
     case action_name
     when "new", "select_category", "submit_category", "confirm_destroy"
-      (params[qualification_form_param_key(category)] || params).permit(:category)
+      (params[qualification_form_param_key(@category)] || params).permit(:category)
     when "create", "edit", "update"
-      params.require(qualification_form_param_key(category))
+      params.require(qualification_form_param_key(@category))
             .permit(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, qualification_results_attributes: %i[id subject grade])
     end
   end
@@ -88,6 +88,6 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   end
 
   def secondary?
-    category.in?(Qualification::SECONDARY_QUALIFICATIONS)
+    @category.in?(Qualification::SECONDARY_QUALIFICATIONS)
   end
 end
