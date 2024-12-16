@@ -1,7 +1,9 @@
 class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesController
   include Jobseekers::QualificationFormConcerns
 
-  helper_method :category, :form, :jobseeker_profile, :qualification, :secondary?, :qualification_form_param_key
+  helper_method :form, :jobseeker_profile, :qualification, :secondary?, :qualification_form_param_key
+
+  before_action :set_category
 
   def submit_category
     if form.valid?
@@ -45,13 +47,13 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   private
 
   def form
-    @form ||= category_form_class(category).new(form_attributes)
+    @form ||= category_form_class(@category).new(form_attributes)
   end
 
   def form_attributes
     case action_name
     when "new"
-      { category: category }
+      { category: @category }
     when "select_category", "confirm_destroy"
       {}
     when "edit"
@@ -73,8 +75,8 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     end
   end
 
-  def category
-    @category ||= action_name.in?(%w[edit update confirm_destroy]) ? qualification.category : category_param
+  def set_category
+    @category = action_name.in?(%w[edit update confirm_destroy]) ? qualification.category : category_param
   end
 
   def category_param
