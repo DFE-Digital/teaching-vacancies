@@ -53,8 +53,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       new_employment = employment.dup
       new_employment.update(job_application: new_job_application, salary: "")
     end
-
-    new_job_application.employment_history_section_completed = !previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
   end
 
   def copy_references
@@ -69,8 +67,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       new_training = training.dup
       new_training.update(job_application: new_job_application)
     end
-
-    new_job_application.training_and_cpds_section_completed = true
   end
 
   def set_status_of_each_step

@@ -69,6 +69,9 @@ class JobApplication < ApplicationRecord
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
 
+  # TODO: drop these columns once this been released
+  self.ignored_columns += %w[training_and_cpds_section_completed employment_history_section_completed]
+
   def name
     "#{first_name} #{last_name}"
   end

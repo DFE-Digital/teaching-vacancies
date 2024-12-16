@@ -1,21 +1,38 @@
-class Jobseekers::JobApplication::EmploymentHistoryForm < Jobseekers::JobApplication::BaseForm
-  include ActiveModel::Model
+module Jobseekers
+  module JobApplication
+    class EmploymentHistoryForm < Jobseekers::JobApplication::BaseForm
+      include ActiveModel::Model
+      include ActiveModel::Attributes
+      include CompletedFormAttribute
 
-  def self.fields
-    %i[employment_history_section_completed unexplained_employment_gaps_present]
-  end
-  attr_accessor(*fields)
+      FIELDS = %i[unexplained_employment_gaps_present].freeze
 
-  validates :employment_history_section_completed, presence: true
-  validate :employment_history_does_not_contain_gaps
+      class << self
+        def fields
+          FIELDS + [:employment_history_section_completed]
+        end
 
-  def employment_history_does_not_contain_gaps
-    return unless unexplained_employment_gaps_present == "true" && employment_history_section_completed == "true"
+        def unstorable_fields
+          %i[unexplained_employment_gaps_present] + [:employment_history_section_completed]
+        end
 
-    errors.add(:employment_history_section_completed, "You must provide your full work history, including the reason for any gaps in employment.")
-  end
+        def load_form(model)
+          load_form_attributes(model.attributes.merge(completed_attrs(model, :employment_history)))
+        end
+      end
+      attr_accessor(*FIELDS)
 
-  def self.unstorable_fields
-    %i[unexplained_employment_gaps_present]
+      validate :employment_history_does_not_contain_gaps
+
+      def employment_history_does_not_contain_gaps
+        return unless unexplained_employment_gaps_present == "true" && employment_history_section_completed
+
+        errors.add(:employment_history_section_completed, "You must provide your full work history, including the reason for any gaps in employment.")
+      end
+
+      attribute :employment_history_section_completed, :boolean
+
+      validates :employment_history_section_completed, inclusion: { in: [true, false], allow_nil: false }
+    end
   end
 end

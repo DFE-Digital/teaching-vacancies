@@ -47,8 +47,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
       new_employment = employment.dup
       new_employment.update(job_application: new_job_application, salary: "")
     end
-
-    new_job_application.employment_history_section_completed = false
   end
 
   def copy_training_and_cpds
@@ -56,8 +54,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
       new_training = training.dup
       new_training.update(job_application: new_job_application)
     end
-
-    new_job_application.training_and_cpds_section_completed = false
   end
 
   # rubocop:disable Metrics/AbcSize

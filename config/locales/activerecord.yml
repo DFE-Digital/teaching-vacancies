@@ -484,10 +484,6 @@ en:
               blank: Give details about what support you might need
               # TODO: Update content once confirmed
               present: If you don't need support, extra information must be blank
-        jobseekers/job_application/employment_history_form:
-          attributes:
-            employment_history_section_completed:
-              blank: Select yes if you have completed this section
         jobseekers/job_application/qualifications_form:
           attributes:
             qualifications_section_completed:

@@ -102,7 +102,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def step_incomplete?
     # if step.in? %i[declarations equal_opportunities personal_details professional_status personal_statement references qualifications employment_history training_and_cpds]
-      form_params["#{step}_section_completed"] == "false"
+    form_params["#{step}_section_completed"] == "false"
     # else
     #   false
     # end

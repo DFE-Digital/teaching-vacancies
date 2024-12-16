@@ -1,10 +1,26 @@
-class Jobseekers::JobApplication::TrainingAndCpdsForm < Jobseekers::JobApplication::BaseForm
-  include ActiveModel::Model
+module Jobseekers
+  module JobApplication
+    class TrainingAndCpdsForm < Jobseekers::JobApplication::BaseForm
+      include ActiveModel::Model
+      include ActiveModel::Attributes
+      include CompletedFormAttribute
 
-  def self.fields
-    %i[training_and_cpds_section_completed]
+      class << self
+        def fields
+          %i[training_and_cpds_section_completed]
+        end
+
+        def unstorable_fields
+          %i[training_and_cpds_section_completed]
+        end
+
+        def load_form(model)
+          load_form_attributes(model.attributes.merge(completed_attrs(model, :training_and_cpds)))
+        end
+      end
+      attribute :training_and_cpds_section_completed, :boolean
+
+      validates :training_and_cpds_section_completed, inclusion: { in: [true, false], allow_nil: false }
+    end
   end
-  attr_accessor(*fields)
-
-  validates :training_and_cpds_section_completed, presence: true
 end
