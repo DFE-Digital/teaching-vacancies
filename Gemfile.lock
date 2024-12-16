@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 82c94b22afd8e799d445394ffc387e41f8fd9366
-  tag: v1.15.2
+  revision: 322a89542ae675e2e27b404ef9b3689966cb75c3
+  tag: v1.15.3
   specs:
-    dfe-analytics (1.15.2)
+    dfe-analytics (1.15.3)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
       multi_xml (~> 0.6.0)
@@ -175,7 +175,7 @@ GEM
       unicode (>= 0.4.4.5)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
-    csv (3.3.0)
+    csv (3.3.1)
     database_consistency (1.7.26)
       activerecord (>= 3.2)
     date (3.4.0)
@@ -209,7 +209,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
-    faraday (2.12.1)
+    faraday (2.12.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -328,7 +328,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     lockbox (2.0.0)
-    logger (1.6.2)
+    logger (1.6.3)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
