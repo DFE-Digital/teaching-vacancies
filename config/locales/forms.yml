@@ -142,11 +142,6 @@ en:
 
       jobseekers_close_account_feedback_form:
         close_account_reason_comment: Your feedback will help us improve the service
-      jobseekers_job_application_declarations_form:
-        right_to_work_in_uk_html: >-
-          You can find out whether you have the right to work in the UK on the
-          <a href="https://www.gov.uk/" target="_blank" class="govuk-link">GOV.UK website (opens in new tab)</a>. You can apply for this role even if you do not have the
-          right to work in the UK.
       jobseekers_break_form:
         reason_for_break: "For example, 'I was unemployed', 'I had health issues' or 'I was caring for a child'"
       jobseekers_job_application_details_employment_form:
@@ -353,11 +348,6 @@ en:
         support_needed_options:
           "no": No, I do not need support
           "yes": Yes, I would like to share some information about the support that I need
-      jobseekers_job_application_declarations_form:
-        close_relationships_details: Please give details
-        close_relationships_options:
-          "no": "No"
-          "yes": "Yes"
       jobseekers_break_form:
         reason_for_break: Enter reasons for gap in work history
       jobseekers_job_application_details_employment_form:
@@ -823,10 +813,6 @@ en:
         reason: Tell us why you are closing your account
       jobseekers_job_application_ask_for_support_form:
         support_needed: Do you want to ask for support so that you can attend an interview?
-      jobseekers_job_application_declarations_form:
-        close_relationships: Do you have any family or close relationship with people within %{organisation}?
-        right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
-        safeguarding_issue: Do you want to declare any safeguarding issues, such as a criminal record or professional misconduct?
       jobseekers_job_application_details_reference_form:
         phone_number: Phone number
       jobseekers_job_application_employment_history_form:

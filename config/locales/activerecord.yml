@@ -484,16 +484,6 @@ en:
               blank: Give details about what support you might need
               # TODO: Update content once confirmed
               present: If you don't need support, extra information must be blank
-        jobseekers/job_application/declarations_form:
-          attributes:
-            close_relationships:
-              inclusion: Select yes if you have a close relationship with people within the organisation
-            close_relationships_details:
-              blank: Give details about any close relationships with people within the organisation
-            safeguarding_issue:
-              inclusion: Select yes if you have a safeguarding issue to declare
-            safeguarding_issue_details:
-              blank: Provide details about your safeguarding issue
         jobseekers/job_application/employment_history_form:
           attributes:
             employment_history_section_completed:
