@@ -27,9 +27,7 @@ module Jobseekers
       validates :safeguarding_issue, inclusion: { in: %w[yes no] }, if: -> { declarations_section_completed }
       validates :safeguarding_issue_details, presence: true, if: -> { safeguarding_issue == "yes" && declarations_section_completed }
 
-      attribute :declarations_section_completed, :boolean
-
-      validates :declarations_section_completed, inclusion: { in: [true, false], allow_nil: false }
+      completed_attribute(:declarations)
     end
   end
 end

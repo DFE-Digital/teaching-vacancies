@@ -22,10 +22,9 @@ module Jobseekers
       end
       attr_accessor(*FIELDS)
 
-      attribute :personal_statement_section_completed, :boolean
-
       validates :personal_statement, presence: true, if: -> { personal_statement_section_completed }
-      validates :personal_statement_section_completed, inclusion: { in: [true, false], allow_nil: false }
+
+      completed_attribute(:personal_statement)
     end
   end
 end

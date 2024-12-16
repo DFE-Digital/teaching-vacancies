@@ -15,8 +15,7 @@ module Jobseekers
         end
       end
 
-      attribute :qualifications_section_completed, :boolean
-      validates :qualifications_section_completed, inclusion: { in: [true, false], allow_nil: false }
+      completed_attribute(:qualifications)
     end
   end
 end

@@ -29,8 +29,7 @@ module Jobseekers
       validates :ethnicity, inclusion: { in: %w[asian black mixed other prefer_not_to_say white] }, if: -> { equal_opportunities_section_completed }
       validates :religion, inclusion: { in: %w[buddhist christian hindu jewish muslim none other prefer_not_to_say sikh] }, if: -> { equal_opportunities_section_completed }
 
-      attribute :equal_opportunities_section_completed, :boolean
-      validates :equal_opportunities_section_completed, inclusion: { in: [true, false], allow_nil: false }
+      completed_attribute(:equal_opportunities)
     end
   end
 end

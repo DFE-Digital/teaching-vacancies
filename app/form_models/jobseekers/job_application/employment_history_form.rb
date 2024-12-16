@@ -30,8 +30,7 @@ module Jobseekers
         errors.add(:employment_history_section_completed, "You must provide your full work history, including the reason for any gaps in employment.")
       end
 
-      attribute :employment_history_section_completed, :boolean
-      validates :employment_history_section_completed, inclusion: { in: [true, false], allow_nil: false }
+      completed_attribute(:employment_history)
     end
   end
 end

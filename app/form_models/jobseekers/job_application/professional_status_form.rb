@@ -59,9 +59,7 @@ module Jobseekers
       validates :has_teacher_reference_number, inclusion: { in: %w[yes] }, if: -> { qualified_teacher_status == "yes" && professional_status_section_completed }
       validates :has_teacher_reference_number, inclusion: { in: %w[yes no] }, if: -> { qualified_teacher_status.in?(%w[no on_track]) && professional_status_section_completed }
 
-      attribute :professional_status_section_completed, :boolean
-
-      validates :professional_status_section_completed, inclusion: { in: [true, false], allow_nil: false }
+      completed_attribute(:professional_status)
     end
   end
 end

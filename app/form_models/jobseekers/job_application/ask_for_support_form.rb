@@ -25,9 +25,7 @@ module Jobseekers
       validates :support_needed, inclusion: { in: %w[yes no] }, if: -> { ask_for_support_section_completed }
       validates :support_needed_details, presence: true, if: -> { support_needed == "yes" && ask_for_support_section_completed }
 
-      attribute :ask_for_support_section_completed, :boolean
-
-      validates :ask_for_support_section_completed, inclusion: { in: [true, false], allow_nil: false }
+      completed_attribute(:ask_for_support)
     end
   end
 end

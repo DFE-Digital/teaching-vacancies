@@ -52,8 +52,7 @@ module Jobseekers
       validates :email_address, email_address: true
       validates :right_to_work_in_uk, inclusion: { in: %w[yes no] }, if: -> { personal_details_section_completed }
 
-      attribute :personal_details_section_completed, :boolean
-      validates :personal_details_section_completed, inclusion: { in: [true, false], allow_nil: false }
+      completed_attribute(:personal_details)
     end
   end
 end

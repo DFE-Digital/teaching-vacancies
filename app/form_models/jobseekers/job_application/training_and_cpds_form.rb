@@ -14,9 +14,8 @@ module Jobseekers
           load_form_attributes(model.attributes.merge(completed_attrs(model, :training_and_cpds)))
         end
       end
-      attribute :training_and_cpds_section_completed, :boolean
 
-      validates :training_and_cpds_section_completed, inclusion: { in: [true, false], allow_nil: false }
+      completed_attribute(:training_and_cpds)
     end
   end
 end

@@ -19,9 +19,7 @@ module Jobseekers
         end
       end
 
-      attribute :references_section_completed, :boolean
-
-      validates :references_section_completed, inclusion: { in: [true, false], allow_nil: false }
+      completed_attribute(:references)
     end
   end
 end
