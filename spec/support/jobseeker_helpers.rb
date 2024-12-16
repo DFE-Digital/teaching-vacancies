@@ -12,6 +12,7 @@ module JobseekerHelpers
   def fill_in_ask_for_support
     choose "Yes", name: "jobseekers_job_application_ask_for_support_form[support_needed]"
     fill_in "Tell us any information you think is relevant", with: "Some details about support"
+    choose I18n.t("helpers.label.jobseekers_job_application_ask_for_support_form.ask_for_support_section_completed_options.true")
   end
 
   def fill_in_current_role(job_title: "The Best Teacher", start_month: "07", start_year: "2020")

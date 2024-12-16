@@ -341,11 +341,6 @@ en:
         user_participation_response_options:
           interested: 'Yes'
           uninterested: 'No'
-      jobseekers_job_application_ask_for_support_form:
-        support_needed_details: Tell us any information you think is relevant
-        support_needed_options:
-          "no": No, I do not need support
-          "yes": Yes, I would like to share some information about the support that I need
       jobseekers_break_form:
         reason_for_break: Enter reasons for gap in work history
       jobseekers_job_application_details_employment_form:
@@ -418,10 +413,6 @@ en:
         user_participation_response_options:
           interested: 'Yes'
           uninterested: 'No'
-      jobseekers_job_application_qualifications_form:
-        qualifications_section_completed_options:
-          false: No, I'll come back to it later
-          true: Yes, I've completed this section
       jobseekers_job_application_training_and_cpds_form:
         training_and_cpds_section_completed_options:
           false: No, I'll come back to it later
@@ -805,8 +796,6 @@ en:
 
       jobseekers_close_account_feedback_form:
         reason: Tell us why you are closing your account
-      jobseekers_job_application_ask_for_support_form:
-        support_needed: Do you want to ask for support so that you can attend an interview?
       jobseekers_job_application_details_reference_form:
         phone_number: Phone number
       jobseekers_job_application_equal_opportunities_form:
@@ -835,8 +824,6 @@ en:
       jobseekers_job_application_feedback_form:
         rating: How satisfied are you with your experience of using Teaching Vacancies?
         user_participation_response: Would you like to participate in our research?
-      jobseekers_job_application_qualifications_form:
-        qualifications_section_completed: Have you completed this section?
       jobseekers_job_application_training_and_cpds_form:
         training_and_cpds_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:

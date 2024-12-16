@@ -31,7 +31,6 @@ module Jobseekers
       end
 
       attribute :employment_history_section_completed, :boolean
-
       validates :employment_history_section_completed, inclusion: { in: [true, false], allow_nil: false }
     end
   end

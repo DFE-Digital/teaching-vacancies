@@ -38,8 +38,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
         new_result.update(qualification: new_qualification)
       end
     end
-
-    new_job_application.qualifications_section_completed = false
   end
 
   def copy_employments

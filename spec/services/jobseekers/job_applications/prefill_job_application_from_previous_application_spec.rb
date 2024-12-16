@@ -95,7 +95,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
       end
 
       it "sets qualifications section completed to true" do
-        expect(subject.qualifications_section_completed).to eq(true)
+        expect(subject.completed_steps).to(include("qualifications"))
       end
 
       it "copies employments from the recent job application" do

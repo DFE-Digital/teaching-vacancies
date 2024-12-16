@@ -20,10 +20,6 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerPr
       .to eq(jobseeker_profile.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
   end
 
-  it "sets qualifications section completed to false" do
-    expect(subject.qualifications_section_completed).to eq(false)
-  end
-
   it "adds qualifications to in progress steps" do
     expect(subject.in_progress_steps).to include("qualifications")
   end

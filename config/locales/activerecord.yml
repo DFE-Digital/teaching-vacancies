@@ -476,18 +476,6 @@ en:
               blank: Tick the box to agree to the Terms and Conditions
 
         # Job application
-        jobseekers/job_application/ask_for_support_form:
-          attributes:
-            support_needed:
-              inclusion: Select yes if you would like interview support
-            support_needed_details:
-              blank: Give details about what support you might need
-              # TODO: Update content once confirmed
-              present: If you don't need support, extra information must be blank
-        jobseekers/job_application/qualifications_form:
-          attributes:
-            qualifications_section_completed:
-              blank: Select yes if you have completed this section
         jobseekers/job_application/training_and_cpds_form:
           attributes:
             training_and_cpds_section_completed:
