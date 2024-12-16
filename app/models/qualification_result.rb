@@ -8,6 +8,7 @@ class QualificationResult < ApplicationRecord
     self.class.new(
       grade:,
       subject:,
+      awarding_body:,
     )
   end
 

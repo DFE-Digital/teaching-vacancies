@@ -16,4 +16,12 @@ module QualificationsHelper
   def qualifications_group_category_other?(qualifications)
     qualifications.all? { |qualification| qualification.category == "other" }
   end
+
+  def display_secondary_qualification res
+    if res.awarding_body.blank?
+      "#{res.subject} – #{res.grade}"
+    else
+      "#{res.subject} – #{res.grade} (#{res.awarding_body})"
+    end
+  end
 end
