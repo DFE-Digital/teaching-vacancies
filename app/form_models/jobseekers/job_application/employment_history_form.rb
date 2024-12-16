@@ -8,12 +8,12 @@ module Jobseekers
       FIELDS = %i[unexplained_employment_gaps_present].freeze
 
       class << self
-        def fields
-          FIELDS + [:employment_history_section_completed]
+        def storable_fields
+          []
         end
 
         def unstorable_fields
-          %i[unexplained_employment_gaps_present] + [:employment_history_section_completed]
+          %i[unexplained_employment_gaps_present employment_history_section_completed]
         end
 
         def load_form(model)

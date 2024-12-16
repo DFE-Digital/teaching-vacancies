@@ -6,10 +6,6 @@ module Jobseekers
       include CompletedFormAttribute
 
       class << self
-        def fields
-          [:qualifications_section_completed]
-        end
-
         def unstorable_fields
           [:qualifications_section_completed]
         end

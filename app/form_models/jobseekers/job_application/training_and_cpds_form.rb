@@ -6,10 +6,6 @@ module Jobseekers
       include CompletedFormAttribute
 
       class << self
-        def fields
-          %i[training_and_cpds_section_completed]
-        end
-
         def unstorable_fields
           %i[training_and_cpds_section_completed]
         end

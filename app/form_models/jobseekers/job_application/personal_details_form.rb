@@ -25,8 +25,8 @@ module Jobseekers
       end
 
       class << self
-        def fields
-          FIELDS + %i[national_insurance_number has_ni_number personal_details_section_completed]
+        def storable_fields
+          FIELDS + %i[national_insurance_number]
         end
 
         def unstorable_fields

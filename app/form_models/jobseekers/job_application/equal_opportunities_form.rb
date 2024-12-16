@@ -8,8 +8,8 @@ module Jobseekers
       FIELDS = %i[disability age gender gender_description orientation orientation_description ethnicity ethnicity_description religion religion_description].freeze
 
       class << self
-        def fields
-          FIELDS + [:equal_opportunities_section_completed]
+        def storable_fields
+          FIELDS
         end
 
         def unstorable_fields

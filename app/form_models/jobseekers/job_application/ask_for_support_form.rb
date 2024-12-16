@@ -8,8 +8,8 @@ module Jobseekers
       FIELDS = %i[support_needed support_needed_details].freeze
 
       class << self
-        def fields
-          FIELDS + [:ask_for_support_section_completed]
+        def storable_fields
+          FIELDS
         end
 
         def unstorable_fields

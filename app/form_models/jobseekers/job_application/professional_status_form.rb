@@ -17,8 +17,8 @@ module Jobseekers
       attr_accessor(*FIELDS)
 
       class << self
-        def fields
-          FIELDS + [:professional_status_section_completed]
+        def storable_fields
+          FIELDS
         end
 
         def unstorable_fields

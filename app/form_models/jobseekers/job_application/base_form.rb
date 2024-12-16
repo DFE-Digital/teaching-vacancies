@@ -3,7 +3,7 @@ module Jobseekers
     class BaseForm < ::BaseForm
   class << self
     def fields
-      []
+      storable_fields + unstorable_fields
     end
 
     def unstorable_fields
@@ -11,7 +11,7 @@ module Jobseekers
     end
 
     def storable_fields
-      fields - unstorable_fields
+      []
     end
 
     def load_form(model)
