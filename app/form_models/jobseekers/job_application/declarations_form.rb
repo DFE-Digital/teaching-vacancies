@@ -2,7 +2,7 @@ class Jobseekers::JobApplication::DeclarationsForm < Jobseekers::JobApplication:
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  FIELDS = %i[close_relationships close_relationships_details right_to_work_in_uk safeguarding_issue safeguarding_issue_details]
+  FIELDS = %i[close_relationships close_relationships_details right_to_work_in_uk safeguarding_issue safeguarding_issue_details].freeze
 
   class << self
     def fields
@@ -14,11 +14,11 @@ class Jobseekers::JobApplication::DeclarationsForm < Jobseekers::JobApplication:
     end
 
     def load_form(model)
-      new_attrs = { }
-      if model.completed_steps.include?('declarations')
-        new_attrs.merge!(declarations_section_completed: true)
-      elsif model.in_progress_steps.include?('declarations')
-        new_attrs.merge!(declarations_section_completed: false)
+      new_attrs = {}
+      if model.completed_steps.include?("declarations")
+        new_attrs[:declarations_section_completed] = true
+      elsif model.in_progress_steps.include?("declarations")
+        new_attrs[:declarations_section_completed] = false
       end
       load_form_attributes(model.attributes.merge(new_attrs))
     end

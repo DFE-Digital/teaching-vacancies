@@ -2,7 +2,7 @@ class Jobseekers::JobApplication::EqualOpportunitiesForm < Jobseekers::JobApplic
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  FIELDS = %i[disability age gender gender_description orientation orientation_description ethnicity ethnicity_description religion religion_description]
+  FIELDS = %i[disability age gender gender_description orientation orientation_description ethnicity ethnicity_description religion religion_description].freeze
 
   class << self
     def fields
@@ -14,11 +14,11 @@ class Jobseekers::JobApplication::EqualOpportunitiesForm < Jobseekers::JobApplic
     end
 
     def load_form(model)
-      new_attrs = { }
-      if model.completed_steps.include?('equal_opportunities')
-        new_attrs.merge!(equal_opportunities_section_completed: true)
-      elsif model.in_progress_steps.include?('equal_opportunities')
-        new_attrs.merge!(equal_opportunities_section_completed: false)
+      new_attrs = {}
+      if model.completed_steps.include?("equal_opportunities")
+        new_attrs[:equal_opportunities_section_completed] = true
+      elsif model.in_progress_steps.include?("equal_opportunities")
+        new_attrs[:equal_opportunities_section_completed] = false
       end
       load_form_attributes(model.attributes.merge(new_attrs))
     end

@@ -16,15 +16,14 @@ class Jobseekers::JobApplication::ReferencesForm < Jobseekers::JobApplication::B
     end
 
     def load_form(model)
-      new_attrs = { }
-      if model.completed_steps.include?('references')
-        new_attrs.merge!(references_section_completed: true)
-      elsif model.in_progress_steps.include?('references')
-        new_attrs.merge!(references_section_completed: false)
+      new_attrs = {}
+      if model.completed_steps.include?("references")
+        new_attrs[:references_section_completed] = true
+      elsif model.in_progress_steps.include?("references")
+        new_attrs[:references_section_completed] = false
       end
       load_form_attributes(model.attributes.merge(new_attrs))
     end
-
   end
 
   attribute :references_section_completed, :boolean

@@ -25,15 +25,14 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
     end
 
     def load_form(model)
-      new_attrs = { }
-      if model.completed_steps.include?('professional_status')
-        new_attrs.merge!(professional_status_section_completed: true)
-      elsif model.in_progress_steps.include?('professional_status')
-        new_attrs.merge!(professional_status_section_completed: false)
+      new_attrs = {}
+      if model.completed_steps.include?("professional_status")
+        new_attrs[:professional_status_section_completed] = true
+      elsif model.in_progress_steps.include?("professional_status")
+        new_attrs[:professional_status_section_completed] = false
       end
       load_form_attributes(model.attributes.merge(new_attrs))
     end
-
   end
 
   def statutory_induction_complete_options

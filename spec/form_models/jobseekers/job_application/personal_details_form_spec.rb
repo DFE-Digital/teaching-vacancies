@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
-  subject {
-    Jobseekers::JobApplication::PersonalDetailsForm.new(personal_details_section_completed: true)
-  }
+  subject do
+    described_class.new(personal_details_section_completed: true)
+  end
 
   let(:valid_params) do
     {
