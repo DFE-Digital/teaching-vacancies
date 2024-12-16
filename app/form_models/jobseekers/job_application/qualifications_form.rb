@@ -1,6 +1,6 @@
 module Jobseekers
   module JobApplication
-    class Jobseekers::JobApplication::QualificationsForm < Jobseekers::JobApplication::BaseForm
+    class QualificationsForm < BaseForm
       include ActiveModel::Model
       include ActiveModel::Attributes
       include CompletedFormAttribute

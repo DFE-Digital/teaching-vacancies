@@ -1,6 +1,6 @@
 module Jobseekers
   module JobApplication
-    class TrainingAndCpdsForm < Jobseekers::JobApplication::BaseForm
+    class TrainingAndCpdsForm < BaseForm
       include ActiveModel::Model
       include ActiveModel::Attributes
       include CompletedFormAttribute

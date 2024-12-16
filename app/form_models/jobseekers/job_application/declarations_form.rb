@@ -1,6 +1,6 @@
 module Jobseekers
   module JobApplication
-    class DeclarationsForm < Jobseekers::JobApplication::BaseForm
+    class DeclarationsForm < BaseForm
       include ActiveModel::Model
       include ActiveModel::Attributes
       include CompletedFormAttribute
@@ -22,10 +22,10 @@ module Jobseekers
       end
       attr_accessor(*FIELDS)
 
-      validates :close_relationships, inclusion: { in: %w[yes no] }
-      validates :close_relationships_details, presence: true, if: -> { close_relationships == "yes" }
-      validates :safeguarding_issue, inclusion: { in: %w[yes no] }
-      validates :safeguarding_issue_details, presence: true, if: -> { safeguarding_issue == "yes" }
+      validates :close_relationships, inclusion: { in: %w[yes no] }, if: -> { declarations_section_completed }
+      validates :close_relationships_details, presence: true, if: -> { close_relationships == "yes" && declarations_section_completed }
+      validates :safeguarding_issue, inclusion: { in: %w[yes no] }, if: -> { declarations_section_completed }
+      validates :safeguarding_issue_details, presence: true, if: -> { safeguarding_issue == "yes" && declarations_section_completed }
 
       attribute :declarations_section_completed, :boolean
 

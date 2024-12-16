@@ -1,17 +1,19 @@
-class Jobseekers::JobApplication::BaseForm < BaseForm
-  def self.fields
-    []
-  end
-
-  def self.unstorable_fields
-    []
-  end
-
-  def self.storable_fields
-    fields - unstorable_fields
-  end
-
+module Jobseekers
+  module JobApplication
+    class BaseForm < ::BaseForm
   class << self
+    def fields
+      []
+    end
+
+    def unstorable_fields
+      []
+    end
+
+    def storable_fields
+      fields - unstorable_fields
+    end
+
     def load_form(model)
       load_form_attributes(model.attributes)
     end
@@ -21,3 +23,5 @@ class Jobseekers::JobApplication::BaseForm < BaseForm
     end
   end
 end
+  end
+  end

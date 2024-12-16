@@ -1,6 +1,6 @@
 module Jobseekers
   module JobApplication
-    class AskForSupportForm < Jobseekers::JobApplication::BaseForm
+    class AskForSupportForm < BaseForm
       include ActiveModel::Model
       include ActiveModel::Attributes
       include CompletedFormAttribute
@@ -22,8 +22,8 @@ module Jobseekers
       end
       attr_accessor(*FIELDS)
 
-      validates :support_needed, inclusion: { in: %w[yes no] }
-      validates :support_needed_details, presence: true, if: -> { support_needed == "yes" }
+      validates :support_needed, inclusion: { in: %w[yes no] }, if: -> { ask_for_support_section_completed }
+      validates :support_needed_details, presence: true, if: -> { support_needed == "yes" && ask_for_support_section_completed }
 
       attribute :ask_for_support_section_completed, :boolean
 

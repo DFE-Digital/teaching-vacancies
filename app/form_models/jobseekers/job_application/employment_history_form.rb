@@ -1,6 +1,6 @@
 module Jobseekers
   module JobApplication
-    class EmploymentHistoryForm < Jobseekers::JobApplication::BaseForm
+    class EmploymentHistoryForm < BaseForm
       include ActiveModel::Model
       include ActiveModel::Attributes
       include CompletedFormAttribute

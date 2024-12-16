@@ -1,6 +1,6 @@
 module Jobseekers
   module JobApplication
-    class PersonalStatementForm < Jobseekers::JobApplication::BaseForm
+    class PersonalStatementForm < BaseForm
       include ActiveModel::Model
       include ActiveModel::Attributes
       include CompletedFormAttribute

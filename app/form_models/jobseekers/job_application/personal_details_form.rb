@@ -1,6 +1,6 @@
 module Jobseekers
   module JobApplication
-    class PersonalDetailsForm < Jobseekers::JobApplication::BaseForm
+    class PersonalDetailsForm < BaseForm
       include ActiveModel::Model
       include ActiveModel::Attributes
       include CompletedFormAttribute
@@ -23,8 +23,6 @@ module Jobseekers
       def national_insurance_number
         @national_insurance_number if has_ni_number == "yes"
       end
-
-      attribute :personal_details_section_completed, :boolean
 
       class << self
         def fields
@@ -54,6 +52,7 @@ module Jobseekers
       validates :email_address, email_address: true
       validates :right_to_work_in_uk, inclusion: { in: %w[yes no] }, if: -> { personal_details_section_completed }
 
+      attribute :personal_details_section_completed, :boolean
       validates :personal_details_section_completed, inclusion: { in: [true, false], allow_nil: false }
     end
   end
