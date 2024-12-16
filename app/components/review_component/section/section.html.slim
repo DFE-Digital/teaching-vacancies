@@ -3,6 +3,14 @@ li
     = field_div_set
 
   = tag.div(id: id, **html_attributes) do
-    = heading
     .review-component__section__body
-      = content
+      = govuk_summary_card(title: heading_text) do |card|
+        - card.with_action { edit_link }
+        - if rows.any?
+          - card.with_summary_list do |summary_list|
+            - rows.each do |row_data|
+              - summary_list.with_row do |row|
+                - row.with_key text: row_data.key if row_data.key.present?
+                - row.with_value text: row_data.value if row_data.value.present?
+        - else
+          = content

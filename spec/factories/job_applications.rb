@@ -27,14 +27,6 @@ FactoryBot.define do
     qualified_teacher_status_year { "1990" }
     statutory_induction_complete { "yes" }
 
-    # Education and qualifications
-    qualifications_section_completed { true }
-
-    # Employment history
-    employment_history_section_completed { true }
-
-    training_and_cpds_section_completed { true }
-
     # Personal statement
     personal_statement { Faker::Lorem.paragraph(sentence_count: 8) }
 
@@ -108,14 +100,6 @@ FactoryBot.define do
     qualified_teacher_status { "" }
     qualified_teacher_status_year { "" }
     statutory_induction_complete { "" }
-
-    # Education and qualifications
-    qualifications_section_completed { nil }
-
-    # Employment history
-    employment_history_section_completed { nil }
-
-    training_and_cpds_section_completed { nil }
 
     # Personal statement
     personal_statement { "" }
