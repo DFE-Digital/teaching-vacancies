@@ -33,14 +33,13 @@ RSpec.describe "Deadline-passed job applications for jobseekers" do
       end
 
       it "has a link to view the application" do
-        expect(page).to have_link(job_application.vacancy.job_title, href: jobseekers_job_application_review_path(job_application))
+        expect(page).to have_link(job_application.vacancy.job_title, href: jobseekers_job_application_apply_path(job_application))
       end
     end
 
     describe "on the application page" do
       before do
-        visit jobseekers_job_applications_path
-        click_on job_application.vacancy.job_title
+        visit jobseekers_job_application_review_path(job_application)
       end
 
       it "has the application status of 'deadline passed'" do
