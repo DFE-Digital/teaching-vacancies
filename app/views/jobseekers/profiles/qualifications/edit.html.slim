@@ -11,7 +11,7 @@
 
       = f.govuk_fieldset legend: { text: t(".page_title"), tag: "h1", size: "l" } do
 
-        = render "jobseekers/qualifications/fields", f: f
+        = render "jobseekers/qualifications/fields", f: f, category: @category
 
       = f.govuk_submit t("buttons.save_and_continue")
 

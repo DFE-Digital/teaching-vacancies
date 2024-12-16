@@ -2,7 +2,7 @@
 
 - case category
 - when "gcse", "as_level", "a_level", "other_secondary"
-  = render "jobseekers/qualifications/fields/secondary_school", f: f
+  = render "jobseekers/qualifications/fields/secondary_school", f: f, category: category
 - when "undergraduate", "postgraduate", "degree"
   = render "jobseekers/qualifications/fields/degree", f: f
 - when "other"
