@@ -11,7 +11,7 @@ RSpec.describe "Jobseekers can complete a job application" do
 
   after { logout }
 
-  it "allows jobseekers to complete an application and go to review page", :js do
+  it "allows jobseekers to complete an application and go to review page" do
     visit jobseekers_job_application_build_path(job_application, :personal_details)
     expect(page).to have_content(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
     expect(page).to have_field("Email address", with: jobseeker.email)
