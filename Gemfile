@@ -16,6 +16,7 @@ gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "propshaft"
 gem "railties", RAILS_VERSION
+gem "turbo-rails"
 
 gem "activerecord-import"
 gem "activerecord-postgis-adapter", ">= 10.0.1"

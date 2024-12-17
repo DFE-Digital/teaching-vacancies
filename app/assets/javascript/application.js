@@ -5,6 +5,8 @@ import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
 import { initAll } from 'govuk-frontend';
 import { Application } from '@hotwired/stimulus';
+// eslint-disable-next-line no-unused-vars,import/no-unresolved
+import * as Turbo from '@hotwired/turbo';
 import Rails from 'rails-ujs';
 
 // view components

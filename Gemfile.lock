@@ -698,6 +698,9 @@ GEM
     trailblazer-option (0.1.2)
     ttfunk (1.8.0)
       bigdecimal (~> 3.1)
+    turbo-rails (2.0.11)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
@@ -864,6 +867,7 @@ DEPENDENCIES
   slim-rails
   slim_lint
   solargraph
+  turbo-rails
   tzinfo-data
   valid_email2
   validate_url

@@ -1,12 +1,12 @@
 class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesController
   include Jobseekers::QualificationFormConcerns
 
-  helper_method :form, :jobseeker_profile, :qualification, :secondary?, :qualification_form_param_key
+  helper_method :jobseeker_profile, :qualification, :secondary?, :qualification_form_param_key
 
-  before_action :set_category
+  before_action :set_form_and_category, except: %i[review destroy]
 
   def submit_category
-    if form.valid?
+    if @form.valid?
       redirect_to new_jobseekers_profile_qualification_path(qualification_params)
     else
       render :select_category
@@ -16,7 +16,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   def new; end
 
   def create
-    if form.valid?
+    if @form.valid?
       profile.qualifications.create(qualification_params)
       redirect_to review_jobseekers_profile_qualifications_path
     else
@@ -29,7 +29,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   def review; end
 
   def update
-    if form.valid?
+    if @form.valid?
       qualification.update(qualification_params)
       redirect_to review_jobseekers_profile_qualifications_path
     else
@@ -45,10 +45,6 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   def confirm_destroy; end
 
   private
-
-  def form
-    @form ||= category_form_class(@category).new(form_attributes)
-  end
 
   def form_attributes
     case action_name
@@ -75,8 +71,9 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     end
   end
 
-  def set_category
+  def set_form_and_category
     @category = action_name.in?(%w[edit update confirm_destroy]) ? qualification.category : category_param
+    @form = category_form_class(@category).new(form_attributes)
   end
 
   def category_param

@@ -1,12 +1,12 @@
 class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseController
   include Jobseekers::QualificationFormConcerns
 
-  helper_method :back_path, :form, :job_application, :qualification, :secondary?, :qualification_form_param_key
+  helper_method :back_path, :job_application, :qualification, :secondary?, :qualification_form_param_key
 
-  before_action :set_category
+  before_action :set_category_and_form, except: %i[destroy]
 
   def submit_category
-    if form.valid?
+    if @form.valid?
       redirect_to new_jobseekers_job_application_qualification_path(qualification_params)
     else
       render :select_category
@@ -14,7 +14,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def create
-    if form.valid?
+    if @form.valid?
       job_application.qualifications.create(qualification_params)
       redirect_to back_path
     else
@@ -23,7 +23,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def update
-    if form.valid?
+    if @form.valid?
       qualification.update(qualification_params)
       redirect_to back_path
     else
@@ -37,10 +37,6 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   private
-
-  def form
-    @form ||= category_form_class(@category).new(form_attributes)
-  end
 
   def form_attributes
     case action_name
@@ -67,8 +63,9 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     end
   end
 
-  def set_category
+  def set_category_and_form
     @category = action_name.in?(%w[edit update]) ? qualification.category : category_param
+    @form = category_form_class(@category).new(form_attributes)
   end
 
   def category_param
