@@ -10,7 +10,7 @@ class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vaca
       Note.create(notes_attributes)
       redirect_to organisation_job_job_application_notes_path, success: t(".success")
     else
-      render :index
+      render :index, status: :unprocessable_entity
     end
   end
 

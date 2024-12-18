@@ -21,8 +21,10 @@ RSpec.describe "Jobseekers can add qualifications to their profile", :js do
         validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
         fill_in_undergraduate_degree
         click_on I18n.t("buttons.save_qualification.one")
+        within ".govuk-summary-card" do
+          expect(page).to have_content("Undergraduate degree")
+        end
         expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
-        expect(page).to have_content("Undergraduate degree")
         expect(page).to have_content("University of Life")
         expect(page).not_to have_content("Subjects and grades")
         expect(page).not_to have_content("School, college, or other organisation")
@@ -35,8 +37,10 @@ RSpec.describe "Jobseekers can add qualifications to their profile", :js do
         validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
         fill_in_other_qualification
         click_on I18n.t("buttons.save_qualification.one")
+        within ".govuk-summary-card" do
+          expect(page).to have_content("Superteacher Certificate")
+        end
         expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
-        expect(page).to have_content("Superteacher Certificate")
         expect(page).to have_content("Teachers Academy")
         expect(page).to have_content("I expect to finish next year")
         expect(page).to have_content("Not finished yet")
@@ -49,11 +53,14 @@ RSpec.describe "Jobseekers can add qualifications to their profile", :js do
         select_qualification_category("GCSEs")
         expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_profile_path)
         expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.gcse"))
+        page.refresh
         validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
         fill_in_gcses
         click_on I18n.t("buttons.save_qualification.other")
+        within ".govuk-summary-card" do
+          expect(page).to have_content("GCSEs")
+        end
         expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
-        expect(page).to have_content("GCSEs")
         expect(page).to have_content("Churchill School for Gifted Macaques")
         expect(page).to have_content("Maths – 110%")
         expect(page).to have_content("PE – 90%")
@@ -66,11 +73,14 @@ RSpec.describe "Jobseekers can add qualifications to their profile", :js do
         click_on "Add qualifications"
         select_qualification_category("Other secondary qualification")
         expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.other_secondary"))
+        page.refresh
         validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
         fill_in_custom_secondary_qualifications
         click_on I18n.t("buttons.save_qualification.other")
+        within ".govuk-summary-card" do
+          expect(page).to have_content("Welsh Baccalaureate")
+        end
         expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
-        expect(page).to have_content("Welsh Baccalaureate")
         expect(page).to have_content("Happy Rainbows School for High Achievers")
         expect(page).to have_content("Science – 5")
         expect(page).to have_content("German – 4")

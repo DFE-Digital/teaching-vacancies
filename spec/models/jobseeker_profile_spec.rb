@@ -65,7 +65,7 @@ RSpec.describe JobseekerProfile, type: :model do
     it "does not delete qualifications unrelated to the profile" do
       unrelated_qualification = create(:qualification)
       profile.replace_qualifications!(new_qualifications)
-      expect { unrelated_qualification.reload }.not_to raise_error(ActiveRecord::RecordNotFound)
+      expect { unrelated_qualification.reload }.not_to raise_error
     end
   end
 

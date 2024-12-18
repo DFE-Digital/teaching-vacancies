@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can add notes to a job application", js: true do
+RSpec.describe "Publishers can add notes to a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
@@ -18,7 +18,7 @@ RSpec.describe "Publishers can add notes to a job application", js: true do
     expect(page).to have_content(note.content)
   end
 
-  it "allows notes to be added to job applications" do
+  it "allows notes to be added to job applications", :js do
     visit organisation_job_job_application_notes_path(vacancy.id, job_application)
 
     expect(page.has_field?("publishers-job-application-notes-form-content-field")).to eq(false)

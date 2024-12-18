@@ -51,12 +51,14 @@ RSpec.describe "Jobseekers can add qualifications to their job application", :js
       select_qualification_category("GCSE")
       expect(page).to have_link(I18n.t("buttons.cancel"), href: select_category_jobseekers_job_application_qualifications_path(job_application))
       expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.gcse"))
+      page.refresh
       validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
-      # sleep 100
       fill_in_gcses
       click_on I18n.t("buttons.save_qualification.other")
+      within ".govuk-summary-card" do
+        expect(page).to have_content("GCSEs")
+      end
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
-      expect(page).to have_content("GCSEs")
       expect(page).to have_content("Churchill School for Gifted Macaques")
       expect(page).to have_content("Maths – 110%")
       expect(page).to have_content("PE – 90%")
@@ -66,11 +68,14 @@ RSpec.describe "Jobseekers can add qualifications to their job application", :js
     it "allows jobseekers to add a custom secondary qualification" do
       select_qualification_category("Other secondary qualification")
       expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.other_secondary"))
+      page.refresh
       validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
       fill_in_custom_secondary_qualifications
       click_on I18n.t("buttons.save_qualification.other")
+      within ".govuk-summary-card" do
+        expect(page).to have_content("Welsh Baccalaureate")
+      end
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
-      expect(page).to have_content("Welsh Baccalaureate")
       expect(page).to have_content("Happy Rainbows School for High Achievers")
       expect(page).to have_content("Science – 5")
       expect(page).to have_content("German – 4")
@@ -110,15 +115,19 @@ RSpec.describe "Jobseekers can add qualifications to their job application", :js
 
       it "allows jobseekers to edit the qualification and its results" do
         visit jobseekers_job_application_build_path(job_application, :qualifications)
+        expect(qualification.qualification_results.count).to eq(5)
         click_on I18n.t("buttons.change")
         fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
         empty_second_qualification_result
         fill_in "School", with: "St Nicholas School"
-        expect { click_on I18n.t("buttons.save_qualification.one") }.to change { qualification.qualification_results.count }.by(-1)
+        click_on I18n.t("buttons.save_qualification.one")
+        within ".govuk-summary-card" do
+          expect(page).to have_content("Nicholas")
+          expect(page).to have_content("Hard Knocks")
+        end
+        expect(qualification.qualification_results.count).to eq(4)
         expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
         expect(page).not_to have_content("John")
-        expect(page).to have_content("Nicholas")
-        expect(page).to have_content("Hard Knocks")
       end
     end
 
