@@ -90,6 +90,7 @@ Rails.application.routes.draw do
       resources :qualifications, only: %i[new create edit update destroy], controller: "job_applications/qualifications" do
         collection do
           get :select_category
+          get :new_school
           post :submit_category
         end
       end

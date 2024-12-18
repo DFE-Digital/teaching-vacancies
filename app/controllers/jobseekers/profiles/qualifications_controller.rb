@@ -3,7 +3,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   helper_method :jobseeker_profile, :qualification, :secondary?, :qualification_form_param_key
 
-  before_action :set_form_and_category, except: %i[review destroy]
+  before_action :set_form_and_category, except: %i[review confirm_destroy destroy]
 
   def submit_category
     if @form.valid?
@@ -42,7 +42,10 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     redirect_to review_jobseekers_profile_qualifications_path, success: t(".success")
   end
 
-  def confirm_destroy; end
+  def confirm_destroy
+    @category = qualification.category
+    @form = Jobseekers::Qualifications::DeleteForm.new
+  end
 
   private
 
@@ -50,7 +53,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     case action_name
     when "new"
       { category: @category }
-    when "select_category", "confirm_destroy"
+    when "select_category"
       {}
     when "edit"
       qualification
@@ -72,7 +75,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
   end
 
   def set_form_and_category
-    @category = action_name.in?(%w[edit update confirm_destroy]) ? qualification.category : category_param
+    @category = action_name.in?(%w[edit update]) ? qualification.category : category_param
     @form = category_form_class(@category).new(form_attributes)
   end
 

@@ -3,13 +3,15 @@ require "rails_helper"
 RSpec.describe "Jobseekers can add qualifications to their job application", :js do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
-  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
+  let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy, qualifications: qualifications) }
 
   before { login_as(jobseeker, scope: :jobseeker) }
 
   after { logout }
 
   context "adding a qualification" do
+    let(:qualifications) { [] }
+
     before do
       visit jobseekers_job_application_build_path(job_application, :qualifications)
       click_on I18n.t("buttons.add_qualification")
@@ -84,16 +86,18 @@ RSpec.describe "Jobseekers can add qualifications to their job application", :js
   end
 
   context "when editing a qualification" do
+    before do
+      visit jobseekers_job_application_build_path(job_application, :qualifications)
+    end
+
     context "when the qualification does not have qualification results" do
-      let!(:qualification) do
-        create(:qualification,
-               category: "undergraduate",
-               institution: "Life University",
-               job_application: job_application)
+      let(:qualifications) do
+        build_list(:qualification, 1,
+                   category: "undergraduate",
+                   institution: "Life University")
       end
 
       it "allows jobseekers to edit the qualification" do
-        visit jobseekers_job_application_build_path(job_application, :qualifications)
         click_on I18n.t("buttons.change")
         expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
         fill_in "Awarding body", with: "University of Life"
@@ -106,15 +110,15 @@ RSpec.describe "Jobseekers can add qualifications to their job application", :js
     end
 
     context "when the qualification has qualification results" do
-      let!(:qualification) do
-        create(:qualification,
-               category: "other_secondary",
-               institution: "John Mason School",
-               job_application: job_application)
+      let(:qualifications) do
+        build_list(:qualification, 1,
+                   qualification_results: build_list(:qualification_result, 5),
+                   category: "other_secondary",
+                   institution: "John Mason School")
       end
+      let(:qualification) { job_application.qualifications.first }
 
       it "allows jobseekers to edit the qualification and its results" do
-        visit jobseekers_job_application_build_path(job_application, :qualifications)
         expect(qualification.qualification_results.count).to eq(5)
         click_on I18n.t("buttons.change")
         fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
@@ -131,26 +135,27 @@ RSpec.describe "Jobseekers can add qualifications to their job application", :js
       end
     end
 
-    it "has an 'add another subject' link" do
-      create(:qualification,
-             category: "gcse",
-             results_count: 1,
-             job_application: job_application)
+    context "with a GCSE" do
+      let(:qualifications) do
+        build_list(:qualification, 1,
+                   qualification_results: build_list(:qualification_result, 1),
+                   category: "gcse")
+      end
 
-      visit jobseekers_job_application_build_path(job_application, :qualifications)
+      it "has an 'add another subject' link" do
+        expect(page).to have_css(".detail-component", count: 1)
+        subject_list = page.find("dt.govuk-summary-list__key", text: "Subjects and grades").sibling("dd")
+        expect(subject_list).to have_css(".govuk-body", count: 1)
 
-      expect(page).to have_css(".detail-component", count: 1)
-      subject_list = page.find("dt.govuk-summary-list__key", text: "Subjects and grades").sibling("dd")
-      expect(subject_list).to have_css(".govuk-body", count: 1)
+        click_on "Add another subject"
+        fill_in "Subject 2", with: "A second subject"
+        fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "B"
+        click_on "Save qualifications"
 
-      click_on "Add another subject"
-      fill_in "Subject 2", with: "A second subject"
-      fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "B"
-      click_on "Save qualifications"
-
-      expect(page).to have_css(".detail-component", count: 1)
-      subject_list = page.find("dt.govuk-summary-list__key", text: "Subjects and grades").sibling("dd")
-      expect(subject_list).to have_css(".govuk-body", count: 2)
+        expect(page).to have_css(".detail-component", count: 1)
+        subject_list = page.find("dt.govuk-summary-list__key", text: "Subjects and grades").sibling("dd")
+        expect(subject_list).to have_css(".govuk-body", count: 2)
+      end
     end
   end
 
