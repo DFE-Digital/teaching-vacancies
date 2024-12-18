@@ -57,6 +57,7 @@ class Vacancy < ApplicationRecord
 
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
+  belongs_to :publisher_ats_api_client, optional: true
 
   has_many_attached :supporting_documents, service: :amazon_s3_documents
   has_one_attached :application_form, service: :amazon_s3_documents
@@ -101,6 +102,7 @@ class Vacancy < ApplicationRecord
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
   validates_with ExternalVacancyValidator, if: :external?
+  validates :external_reference, uniqueness: { scope: :publisher_ats_api_client_id }
   validates :organisations, presence: true
 
   validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid

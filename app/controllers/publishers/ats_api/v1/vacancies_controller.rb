@@ -2,7 +2,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   before_action :authenticate_client!
 
   def index
-    @pagy, @vacancies = pagy(vacancies, items: 100)
+    @pagy, @vacancies = pagy(vacancies.where(publisher_ats_api_client: client), items: 100)
 
     respond_to(&:json)
   end
