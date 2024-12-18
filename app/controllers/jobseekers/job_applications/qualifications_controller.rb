@@ -9,7 +9,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     if @form.valid?
       redirect_to new_jobseekers_job_application_qualification_path(qualification_params)
     else
-      render :select_category
+      render :select_category, status: :unprocessable_entity
     end
   end
 
@@ -18,7 +18,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
       job_application.qualifications.create(qualification_params)
       redirect_to back_path
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -27,7 +27,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
       qualification.update(qualification_params)
       redirect_to back_path
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

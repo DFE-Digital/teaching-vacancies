@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can add qualifications to their job application" do
+RSpec.describe "Jobseekers can add qualifications to their job application", :js do
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, :status_draft, jobseeker: jobseeker, vacancy: vacancy) }
@@ -23,8 +23,8 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
       fill_in_undergraduate_degree
       click_on I18n.t("buttons.save_qualification.one")
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
       expect(page).to have_content(I18n.t("buttons.add_another_qualification"))
+      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
       expect(page).to have_content("Undergraduate degree")
       expect(page).to have_content("University of Life")
       expect(page).not_to have_content("Subjects and grades")
@@ -37,8 +37,10 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
       fill_in_other_qualification
       click_on I18n.t("buttons.save_qualification.one")
+      within ".govuk-summary-card" do
+        expect(page).to have_content("Superteacher Certificate")
+      end
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
-      expect(page).to have_content("Superteacher Certificate")
       expect(page).to have_content("Teachers Academy")
       expect(page).to have_content("I expect to finish next year")
       expect(page).not_to have_content("Grade")
@@ -50,6 +52,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       expect(page).to have_link(I18n.t("buttons.cancel"), href: select_category_jobseekers_job_application_qualifications_path(job_application))
       expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.gcse"))
       validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
+      # sleep 100
       fill_in_gcses
       click_on I18n.t("buttons.save_qualification.other")
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
@@ -90,8 +93,10 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
         expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :qualifications))
         fill_in "Awarding body", with: "University of Life"
         click_on I18n.t("buttons.save_qualification.one")
+        within ".govuk-summary-card" do
+          expect(page).to have_content("University of Life")
+        end
         expect(page).not_to have_content("Life University")
-        expect(page).to have_content("University of Life")
       end
     end
 

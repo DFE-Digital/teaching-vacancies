@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can add qualifications to their profile" do
+RSpec.describe "Jobseekers can add qualifications to their profile", :js do
   let(:jobseeker) { create(:jobseeker) }
   let!(:profile) { create(:jobseeker_profile, jobseeker:) }
 

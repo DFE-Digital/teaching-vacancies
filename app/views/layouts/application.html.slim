@@ -1,15 +1,17 @@
 doctype html
 html.govuk-template.app-html-class lang="en"
   head
-    = render "layouts/vwo_head" if consented_to_extra_cookies?
-    = render "layouts/clarity_head" if consented_to_extra_cookies?
-    = render "layouts/google_tag_manager_head" if consented_to_extra_cookies?
+    - unless Rails.env.local?
+      = render "layouts/vwo_head" if consented_to_extra_cookies?
+      = render "layouts/clarity_head" if consented_to_extra_cookies?
+      = render "layouts/google_tag_manager_head" if consented_to_extra_cookies?
     = render "layouts/head_meta"
     = render "layouts/head_links"
     title #{content_for :page_title_prefix} - #{t("app.title")} - GOV.UK
     = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tags
     = render "layouts/sentry_js_config"
+    = javascript_include_tag "application", defer: true
 
   body class=body_class
     = render "layouts/cookies_banner"
@@ -32,4 +34,3 @@ html.govuk-template.app-html-class lang="en"
         = yield
       = content_for :after_main
     = render "layouts/footer"
-    = javascript_include_tag "application", defer: true
