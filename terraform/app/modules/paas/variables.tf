@@ -96,6 +96,15 @@ variable "enable_logit" {}
 
 variable "aks_web_app_memory" {}
 
+variable "enable_dfe_analytics_federated_auth" {
+  description = "Create the resources in Google cloud for federated authentication and enable in application"
+  default     = false
+}
+variable "dataset_name" {
+  description = "dfe analytics dataset name in Google Bigquery"
+  default     = "not in use"
+}
+
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
 
