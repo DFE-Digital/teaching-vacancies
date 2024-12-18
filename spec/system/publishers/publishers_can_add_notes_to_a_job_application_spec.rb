@@ -30,7 +30,9 @@ RSpec.describe "Publishers can add notes to a job application" do
     fill_in "Add a note", with: ""
     click_on I18n.t("buttons.save")
 
-    expect(page).to have_content(I18n.t("activemodel.errors.models.publishers/job_application/notes_form.attributes.content.blank"))
+    within ".govuk-error-summary" do
+      expect(page).to have_content(I18n.t("activemodel.errors.models.publishers/job_application/notes_form.attributes.content.blank"))
+    end
 
     fill_in "Add a note", with: note_content
     click_on I18n.t("buttons.save")
