@@ -414,6 +414,7 @@ en:
             other: Add a qualification or course
           title: Add a qualification — Application
           hint: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
+          add_another_school: Add another school
         new_secondary_school:
           <<: *qualifications_shared
           title: Add a qualification — Application

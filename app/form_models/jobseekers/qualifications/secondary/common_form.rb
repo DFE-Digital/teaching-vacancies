@@ -48,8 +48,14 @@ module Jobseekers::Qualifications::Secondary
 
     def pad_qualification_results
       @qualification_results ||= []
-      # we just need 1 empty qualification result form that we can clone
-      @qualification_results += [QualificationResultForm.new]
+      # we just need 1 empty hidden qualification result form that we can clone
+      # but if the collection is empty we need 1 to show and 1 hidden one to clone
+      if @qualification_results.empty?
+        @qualification_results += [QualificationResultForm.new]
+        @qualification_results += [QualificationResultForm.new]
+      else
+        @qualification_results += [QualificationResultForm.new]
+      end
     end
   end
 end

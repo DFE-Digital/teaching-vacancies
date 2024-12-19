@@ -1,0 +1,19 @@
+= f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_qualifications_shared_legends.subjects") }, class: "subjects-and-grades", data: { controller: "manage-qualifications" } do
+  = f.fields_for :qualification_results, f.object.qualification_results.first do |result_form|
+    .inline-fields-container.subject-row data-manage-qualifications-target="row"
+      = result_form.govuk_text_field :subject, label: { text: "Subject 1" }, aria: { required: true }, form_group: { classes: "govuk-!-width-one-half" }
+      = result_form.govuk_text_field :grade, aria: { required: true }, form_group: { classes: "govuk-!-width-one-quarter" }, label: { text: "Grade" }
+      = result_form.govuk_text_field :awarding_body, aria: { required: false }, form_group: { classes: "govuk-!-width-one-quarter" }, label: { text: "Awarding Body (optional)" }
+  - f.object.qualification_results[1..].each_with_index do |result, idx|
+    = f.fields_for :qualification_results, result do |result_form|
+      .inline-fields-container.subject-row class="#{result.empty? ? "js-hidden" : ""}" data-manage-qualifications-target="row"
+        = result_form.govuk_text_field :subject, label: { text: "Subject #{idx + 2}" }, aria: { required: false }, form_group: { classes: "govuk-!-width-one-half" }
+        = result_form.govuk_text_field :grade, aria: { required: false }, form_group: { classes: "govuk-!-width-one-quarter" }, label: { text: "Grade" }
+        = result_form.govuk_text_field :awarding_body, aria: { required: false }, form_group: { classes: "govuk-!-width-one-quarter" }, label: { text: "Awarding Body (optional)" }
+        .govuk-form-group.button_to
+          button.govuk-button.js-action.govuk-button--secondary class="govuk-!-margin-bottom-0" data-action="manage-qualifications#deleteRow" type="button"
+            = "#{t('buttons.delete_subject')} #{idx + 2}"
+
+  span class="govuk-!-margin-bottom-6 govuk-!-margin-top-0 js-action button_to"
+    button.govuk-button.govuk-button--secondary id="add_subject" data-action="manage-qualifications#addRow" type="button"
+      = t("buttons.add_another_subject")
