@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.3.6"
 
 RAILS_VERSION = "~> 7.2".freeze
-gem "actioncable", RAILS_VERSION
+# gem "actioncable", RAILS_VERSION
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "actionpack-action_caching"

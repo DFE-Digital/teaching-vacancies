@@ -5,7 +5,9 @@ import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
 import { initAll } from 'govuk-frontend';
 import { Application } from '@hotwired/stimulus';
-import '@hotwired/turbo-rails';
+// import '@hotwired/turbo-rails';
+import { Turbo } from '@hotwired/turbo-rails';
+
 import Rails from 'rails-ujs';
 
 // view components
@@ -39,6 +41,8 @@ Sentry.init({
   tracesSampleRate: 0, // Disable tracing (performance monitoring, doesn't impact errors)
   ignoreErrors: [/'Object\.prototype\.hasOwnProperty\.call\([eo],"telephone"\)'/],
 });
+
+Turbo.session.drive = false;
 
 const application = Application.start();
 
