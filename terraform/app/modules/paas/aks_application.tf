@@ -13,17 +13,21 @@ module "application_configuration" {
   config_variables = merge(
     var.app_env_values,
     {
-      ENVIRONMENT_NAME = var.environment
-      PGSSLMODE        = local.postgres_ssl_mode
-      DOMAIN           = local.web_app_domain
+      ENVIRONMENT_NAME    = var.environment
+      PGSSLMODE           = local.postgres_ssl_mode
+      DOMAIN              = local.web_app_domain
+      BIGQUERY_DATASET    = var.dataset_name
+      BIGQUERY_PROJECT_ID = "teacher-vacancy-service"
+      BIGQUERY_TABLE_NAME = "events-dfe-analytics"
     },
     local.dfe_sign_in_map,
     local.disable_emails_map,
     local.disable_analytics_map
   )
   secret_variables = merge({
-    REDIS_URL    = module.redis-cache.url
-    DATABASE_URL = module.postgres.url
+    REDIS_URL                = module.redis-cache.url
+    DATABASE_URL             = module.postgres.url,
+    GOOGLE_CLOUD_CREDENTIALS = var.enable_dfe_analytics_federated_auth ? module.dfe_analytics[0].google_cloud_credentials : null
     },
     local.app_env_api_keys,
     local.app_env_secrets,
@@ -68,9 +72,10 @@ module "worker_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image = var.app_docker_image
-  command      = ["/bin/sh", "-c", "bundle exec sidekiq -C config/sidekiq.yml"]
-  max_memory   = var.aks_worker_app_memory
-  replicas     = var.aks_worker_app_instances
-  enable_logit = var.enable_logit
+  docker_image   = var.app_docker_image
+  command        = ["/bin/sh", "-c", "bundle exec sidekiq -C config/sidekiq.yml"]
+  max_memory     = var.aks_worker_app_memory
+  replicas       = var.aks_worker_app_instances
+  enable_logit   = var.enable_logit
+  enable_gcp_wif = true
 }
