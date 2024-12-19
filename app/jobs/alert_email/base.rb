@@ -14,6 +14,6 @@ class AlertEmail::Base < ApplicationJob
   end
 
   def vacancies_for_subscription(subscription)
-    subscription.vacancies_for_range(from_date, Date.current)
+    subscription.vacancies_for_range(from_date, Date.yesterday)
   end
 end
