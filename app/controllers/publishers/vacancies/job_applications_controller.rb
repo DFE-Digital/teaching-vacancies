@@ -50,20 +50,25 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def tag
     tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
-    @form = Publishers::JobApplication::TagForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
-    if @form.valid?
-      if params["download_selected"] == "true"
+    if params["download_selected"] == "true"
+      @form = Publishers::JobApplication::DownloadForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
+      if @form.valid?
         downloads = JobApplication
                       .includes([:qualifications, :employments, :training_and_cpds, :references, { jobseeker: :jobseeker_profile }, { vacancy: %i[organisations publisher_organisation] }])
                       .where(vacancy: vacancy.id)
                       .select { |job_application| @form.job_applications.include?(job_application.id) }
         download_selected downloads
       else
-        @job_applications = vacancy.job_applications.where(id: @form.job_applications)
-        render "tag"
+        render "index"
       end
     else
-      render "index"
+      @form = Publishers::JobApplication::TagForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
+      if @form.valid?
+        @job_applications = vacancy.job_applications.where(id: @form.job_applications)
+        render "tag"
+      else
+        render "index"
+      end
     end
   end
 
