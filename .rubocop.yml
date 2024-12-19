@@ -170,13 +170,18 @@ Metrics/CyclomaticComplexity:
     - "spec/**/*"
 
 Metrics/MethodLength:
-  Max: 18 # Default 10
+  Max: 19 # Default 10
+  Exclude:
+    - "config/**/*"
+    - "spec/**/*"
+
+Metrics/ClassLength:
+  Max: 194
   Exclude:
     - "config/**/*"
     - "spec/**/*"
 
 Metrics/ModuleLength:
-  Max: 130 # Default 100
   Exclude:
     - "app/helpers/**/*"
     - "spec/**/*"
@@ -188,3 +193,7 @@ Metrics/PerceivedComplexity:
   Max: 18 # Default 8
   Exclude:
     - "spec/**/*"
+
+# We have lots of these, not easily avoidable in a lot of cases
+RSpec/AnyInstance:
+  Enabled: false

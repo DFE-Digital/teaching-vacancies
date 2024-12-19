@@ -43,7 +43,6 @@ class Vacancies::Import::Sources::Fusion
 
   private
 
-  # rubocop:disable Metrics/MethodLength
   def attributes_for(item, schools)
     {
       job_title: item["jobTitle"],
@@ -67,7 +66,6 @@ class Vacancies::Import::Sources::Fusion
     }.merge(organisation_fields(schools))
      .merge(start_date_fields(item))
   end
-  # rubocop:enable Metrics/MethodLength
 
   def organisation_fields(schools)
     first_school = schools.first

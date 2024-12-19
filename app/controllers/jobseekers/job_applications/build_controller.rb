@@ -2,8 +2,8 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   include Wicked::Wizard
   include Jobseekers::QualificationFormConcerns
 
-  steps :personal_details, :professional_status, :qualifications, :training_and_cpds, :employment_history, :personal_statement, :references,
-        :equal_opportunities, :ask_for_support, :declarations
+  before_action :set_steps
+  before_action :setup_wizard
 
   helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
@@ -18,7 +18,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
       job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
       update_or_create_jobseeker_profile! if step == :professional_status
 
-      return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved") if redirect_to_review?
+      if redirect_to_review? && (step_process.last_of_group? || (step.in?(%i[catholic_following_religion non_catholic_following_religion]) && !job_application.following_religion))
+        return redirect_to finish_wizard_path, success: t("messages.jobseekers.job_applications.saved")
+      end
 
       render_wizard job_application
     else
@@ -43,7 +45,11 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def form_class
-    "jobseekers/job_application/#{step}_form".camelize.constantize
+    if step.in? %i[catholic_following_religion non_catholic_following_religion]
+      Jobseekers::JobApplication::FollowingReligionForm
+    else
+      "jobseekers/job_application/#{step}_form".camelize.constantize
+    end
   end
 
   def form_attributes
@@ -99,7 +105,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_fields
-    form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
+    # This version doesn't work with date fields
+    # form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
+    form_params.except(*form_class.unstorable_fields)
   end
 
   def step_incomplete?
@@ -146,5 +154,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
         has_teacher_reference_number: form_params[:has_teacher_reference_number],
       )
     end
+  end
+
+  def set_steps
+    self.steps = step_process.all_possible_steps - [:review]
   end
 end
