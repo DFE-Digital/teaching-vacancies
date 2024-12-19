@@ -50,12 +50,10 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def tag
     tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
-    @form = Publishers::JobApplication::TagForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
-    if @form.valid?
-      @job_applications = vacancy.job_applications.where(id: @form.job_applications)
-      render "tag"
+    if params["download_selected"] == "true"
+      download_selected(tag_params)
     else
-      render "index"
+      prepare_to_tag(tag_params)
     end
   end
 
@@ -69,6 +67,38 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   private
+
+  def prepare_to_tag(tag_params)
+    @form = Publishers::JobApplication::TagForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
+    if @form.valid?
+      @job_applications = vacancy.job_applications.where(id: @form.job_applications)
+      render "tag"
+    else
+      render "index"
+    end
+  end
+
+  require "zip"
+
+  def download_selected(tag_params)
+    @form = Publishers::JobApplication::DownloadForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
+    if @form.valid?
+      downloads = JobApplication
+                    .includes([:qualifications, :employments, :training_and_cpds, :references, { jobseeker: :jobseeker_profile }, { vacancy: %i[organisations publisher_organisation] }])
+                    .where(vacancy: vacancy.id, id: @form.job_applications)
+      stringio = Zip::OutputStream.write_buffer do |zio|
+        downloads.each do |job_application|
+          zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
+          zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
+        end
+      end
+      send_data(stringio.string,
+                filename: "applications_#{vacancy.job_title}.zip",
+                type: "application/zip")
+    else
+      render "index"
+    end
+  end
 
   def job_applications
     @job_applications ||= vacancy.job_applications.not_draft
