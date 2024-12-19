@@ -765,6 +765,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  actioncable (~> 7.2)
   actionmailer (~> 7.2)
   actionpack (~> 7.2)
   actionpack-action_caching

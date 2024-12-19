@@ -12,6 +12,7 @@ gem "activemodel", RAILS_VERSION
 gem "activerecord", RAILS_VERSION
 gem "activestorage", RAILS_VERSION
 gem "activesupport", RAILS_VERSION
+gem "actioncable", RAILS_VERSION
 gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "propshaft"
