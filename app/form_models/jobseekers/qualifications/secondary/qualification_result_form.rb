@@ -1,7 +1,7 @@
 class Jobseekers::Qualifications::Secondary::QualificationResultForm
   include ActiveModel::Model
 
-  attr_accessor :id, :subject, :grade
+  attr_accessor :id, :subject, :grade, :awarding_body
 
   validates :subject, presence: true
   validates :grade, presence: true

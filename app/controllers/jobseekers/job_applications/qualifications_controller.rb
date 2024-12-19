@@ -1,31 +1,39 @@
 class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseController
   include Jobseekers::QualificationFormConcerns
 
-  helper_method :back_path, :category, :form, :job_application, :qualification, :secondary?, :qualification_form_param_key
+  helper_method :back_path, :job_application, :qualification, :secondary?, :qualification_form_param_key
+
+  before_action :set_category_and_form, except: %i[destroy]
 
   def submit_category
-    if form.valid?
+    if @form.valid?
       redirect_to new_jobseekers_job_application_qualification_path(qualification_params)
     else
-      render :select_category
+      render :select_category, status: :unprocessable_entity
     end
   end
 
+  def new; end
+
+  def new_school
+    @school_number = params[:school_number].to_i
+  end
+
   def create
-    if form.valid?
+    if @form.valid?
       job_application.qualifications.create(qualification_params)
       redirect_to back_path
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    if form.valid?
+    if @form.valid?
       qualification.update(qualification_params)
       redirect_to back_path
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -36,14 +44,10 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
 
   private
 
-  def form
-    @form ||= category_form_class(category).new(form_attributes)
-  end
-
   def form_attributes
     case action_name
     when "new"
-      { category: category }
+      { category: @category }
     when "select_category"
       {}
     when "edit"
@@ -58,15 +62,16 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   def qualification_params
     case action_name
     when "new", "select_category", "submit_category"
-      (params[qualification_form_param_key(category)] || params).permit(:category)
+      (params[qualification_form_param_key(@category)] || params).permit(:category)
     when "create", "edit", "update"
-      params.require(qualification_form_param_key(category))
-            .permit(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, qualification_results_attributes: %i[id subject grade])
+      params.require(qualification_form_param_key(@category))
+            .permit(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, qualification_results_attributes: %i[id subject grade awarding_body])
     end
   end
 
-  def category
-    @category ||= action_name.in?(%w[edit update]) ? qualification.category : category_param
+  def set_category_and_form
+    @category = action_name.in?(%w[edit update]) ? qualification.category : category_param
+    @form = category_form_class(@category).new(form_attributes)
   end
 
   def category_param
@@ -86,6 +91,6 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def secondary?
-    category.in?(Qualification::SECONDARY_QUALIFICATIONS)
+    @category.in?(Qualification::SECONDARY_QUALIFICATIONS)
   end
 end

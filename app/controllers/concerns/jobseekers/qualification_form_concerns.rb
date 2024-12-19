@@ -8,8 +8,6 @@ module Jobseekers::QualificationFormConcerns
   def category_form_class(category)
     name = if %w[select_category submit_category].include?(action_name)
              "CategoryForm"
-           elsif %w[confirm_destroy].include?(action_name)
-             "DeleteForm"
            else
              case category
              when "gcse", "a_level", "as_level"

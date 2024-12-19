@@ -5,6 +5,7 @@ import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
 import { initAll } from 'govuk-frontend';
 import { Application } from '@hotwired/stimulus';
+import '@hotwired/turbo-rails';
 import Rails from 'rails-ujs';
 
 // view components
