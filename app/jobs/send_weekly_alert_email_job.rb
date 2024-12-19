@@ -6,6 +6,6 @@ class SendWeeklyAlertEmailJob < AlertEmail::Base
   end
 
   def from_date
-    1.week.ago.to_date
+    8.days.ago.to_date
   end
 end
