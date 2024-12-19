@@ -107,7 +107,7 @@ module JobseekerHelpers
   def fill_in_gcses
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Maths"
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][grade]", with: "110%"
-    click_on 'Add another subject'
+    click_on "Add another subject"
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][subject]", with: "PE"
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "90%"
     fill_in "School, college, or other organisation", with: "Churchill School for Gifted Macaques"
@@ -118,7 +118,7 @@ module JobseekerHelpers
     fill_in "Qualification name", with: "Welsh Baccalaureate"
     fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Science"
     fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][0][grade]", with: "5"
-    click_on 'Add another subject'
+    click_on "Add another subject"
     fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: "German"
     fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: "4"
     fill_in "School, college, or other organisation", with: "Happy Rainbows School for High Achievers"

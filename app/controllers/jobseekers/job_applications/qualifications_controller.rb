@@ -13,8 +13,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     end
   end
 
-  def new
-  end
+  def new; end
 
   def new_school
     @school_number = params[:school_number].to_i

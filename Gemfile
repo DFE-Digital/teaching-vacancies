@@ -3,6 +3,7 @@ source "https://rubygems.org"
 ruby "3.3.6"
 
 RAILS_VERSION = "~> 7.2".freeze
+gem "actioncable", RAILS_VERSION
 gem "actionmailer", RAILS_VERSION
 gem "actionpack", RAILS_VERSION
 gem "actionpack-action_caching"
@@ -12,7 +13,6 @@ gem "activemodel", RAILS_VERSION
 gem "activerecord", RAILS_VERSION
 gem "activestorage", RAILS_VERSION
 gem "activesupport", RAILS_VERSION
-gem "actioncable", RAILS_VERSION
 gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "propshaft"
