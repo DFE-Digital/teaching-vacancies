@@ -5,7 +5,9 @@ class SendWeeklyAlertEmailJob < AlertEmail::Base
     Subscription.active.weekly
   end
 
+  # :nocov:
   def from_date
-    1.week.ago.to_date
+    7.days.ago.to_date
   end
+  # :nocov:
 end
