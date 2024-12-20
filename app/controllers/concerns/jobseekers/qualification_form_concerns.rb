@@ -7,15 +7,15 @@ module Jobseekers::QualificationFormConcerns
 
   def category_form_class(category)
     name = case category
-             when "gcse", "a_level", "as_level"
-               "Secondary::CommonForm"
-             when "other_secondary"
-               "Secondary::OtherForm"
-             when "undergraduate", "postgraduate"
-               "DegreeForm"
-             when "other"
-               "OtherForm"
-             end
+           when "gcse", "a_level", "as_level"
+             "Secondary::CommonForm"
+           when "other_secondary"
+             "Secondary::OtherForm"
+           when "undergraduate", "postgraduate"
+             "DegreeForm"
+           when "other"
+             "OtherForm"
+           end
     "Jobseekers::Qualifications::#{name}".constantize
   end
 end
