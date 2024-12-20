@@ -62,7 +62,7 @@ Rails.application.configure do
 
   config.middleware.use RackSessionAccess::Middleware
 
-  config.big_query_dataset = "test_dataset"
+  config.bigquery_dataset = "test_dataset"
 
   # Use test geocoder lookup, unless otherwise specified
   config.geocoder_lookup = :test

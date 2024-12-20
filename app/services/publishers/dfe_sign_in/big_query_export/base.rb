@@ -11,7 +11,7 @@ module Publishers::DfeSignIn::BigQueryExport
     attr_reader :dataset
 
     def initialize(bigquery: Google::Cloud::Bigquery.new)
-      @dataset = bigquery.dataset(Rails.configuration.big_query_dataset)
+      @dataset = bigquery.dataset(Rails.configuration.bigquery_dataset)
     end
 
     private
