@@ -9,7 +9,7 @@ en:
   helpers:
     legend:
       jobseekers_job_application_references_form:
-        personal_statement_section_completed: Have you completed this section?
+        references_section_completed: Have you completed this section?
     label:
       jobseekers_job_application_references_form:
         references_section_completed_options:
