@@ -1,7 +1,5 @@
 module Jobseekers::Qualifications::Secondary
   class CommonForm < ::Jobseekers::Qualifications::QualificationForm
-    MAXIMUM_NUMBER_OF_RESULTS = 6
-
     attr_accessor :qualification_results
 
     validate :at_least_one_qualification_result
@@ -12,6 +10,10 @@ module Jobseekers::Qualifications::Secondary
     def initialize(attributes = nil)
       super
       pad_qualification_results
+    end
+
+    def secondary?
+      true
     end
 
     def qualification_results_attributes=(attrs)
@@ -26,10 +28,6 @@ module Jobseekers::Qualifications::Secondary
     # for the fields happens in the `QualificationResultForm`.
     def read_attribute_for_validation(attr)
       super unless /^qualification_results_attributes_/.match?(attr)
-    end
-
-    def highest_present_result_index
-      @highest_present_result_index ||= qualification_results.map.with_index { |result, index| index unless result.empty? }.compact.last || 0
     end
 
     private
@@ -53,12 +51,15 @@ module Jobseekers::Qualifications::Secondary
     end
 
     def pad_qualification_results
-      # Ensures the number of QualificationResults present in the form are the highest of:
-      #   - however many are already there (in case we lower the maximum number in the future), or
-      #   - the maximum number we want to have
-      # by padding the qualification results with empty objects
       @qualification_results ||= []
-      @qualification_results += [QualificationResultForm.new] * [MAXIMUM_NUMBER_OF_RESULTS - qualification_results.count, 0].max
+      # we just need 1 empty hidden qualification result form that we can clone
+      # but if the collection is empty we need 1 to show and 1 hidden one to clone
+      if @qualification_results.empty?
+        @qualification_results += [QualificationResultForm.new]
+        @qualification_results += [QualificationResultForm.new]
+      else
+        @qualification_results += [QualificationResultForm.new]
+      end
     end
   end
 end
