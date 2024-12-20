@@ -10,7 +10,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def submit_category
-    @category = submit_category_params[:category]
+    @category = category_param
     @form = Jobseekers::Qualifications::CategoryForm.new(submit_category_params)
 
     if @form.valid?
