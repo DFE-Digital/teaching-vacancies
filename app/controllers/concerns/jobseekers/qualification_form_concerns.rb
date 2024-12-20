@@ -6,12 +6,7 @@ module Jobseekers::QualificationFormConcerns
   end
 
   def category_form_class(category)
-    name = if %w[select_category submit_category].include?(action_name)
-             "CategoryForm"
-           elsif %w[confirm_destroy].include?(action_name)
-             "DeleteForm"
-           else
-             case category
+    name = case category
              when "gcse", "a_level", "as_level"
                "Secondary::CommonForm"
              when "other_secondary"
@@ -21,7 +16,6 @@ module Jobseekers::QualificationFormConcerns
              when "other"
                "OtherForm"
              end
-           end
     "Jobseekers::Qualifications::#{name}".constantize
   end
 end
