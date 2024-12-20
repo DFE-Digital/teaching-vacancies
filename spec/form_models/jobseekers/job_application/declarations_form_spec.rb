@@ -1,6 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplication::DeclarationsForm, type: :model do
+  subject do
+    described_class.new(declarations_section_completed: true)
+  end
+
   it { is_expected.to validate_inclusion_of(:close_relationships).in_array(%w[yes no]) }
 
   context "when close_relationships is yes" do

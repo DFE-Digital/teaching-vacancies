@@ -14,6 +14,7 @@ RSpec.describe "Jobseekers can prefill applications" do
   context "when the jobseeker has a completed profile" do
     let(:profile) { create(:jobseeker_profile, :completed, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020") }
     let(:jobseeker) { profile.jobseeker }
+    let(:current_job_application) { JobApplication.order(:created_at).last }
 
     context "and when the jobseeker also has a previous application" do
       let(:reference) { create(:reference, job_title: "Reference4Testing") }
@@ -23,7 +24,7 @@ RSpec.describe "Jobseekers can prefill applications" do
       let(:qualification2) { create(:qualification) }
       let(:training) { create(:training_and_cpd) }
       let!(:previous_application) do
-        create(:job_application, :status_submitted, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020",
+        create(:job_application, :status_submitted, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", created_at: 1.year.ago,
                                                     references: [reference], employments: [employment1, employment2], qualifications: [qualification1, qualification2])
       end
 
@@ -38,38 +39,47 @@ RSpec.describe "Jobseekers can prefill applications" do
 
         expect(page).to have_content("Your details have been imported from your last job application.")
 
-        expect(page).to have_content(previous_application.first_name)
-        expect(page).to have_content(previous_application.last_name)
-        expect(page).to have_content(previous_application.phone_number)
+        expect(current_job_application.first_name).to eq(previous_application.first_name)
+        expect(current_job_application.last_name).to eq(previous_application.last_name)
+        expect(current_job_application.phone_number).to eq(previous_application.phone_number)
         within("#personal_details") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
+        click_on "Personal statement"
         expect(page).to have_content(previous_application.personal_statement)
-        within("#personal_statement.review-component__section") do
+        click_on "Back"
+        within("#personal_statement") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
         # qualified teacher status
-        expect(page).to have_content("Yes, awarded in 2020")
+        expect(current_job_application.qualified_teacher_status).to eq("yes")
+        expect(current_job_application.qualified_teacher_status_year).to eq("2020")
         # skilled worker visa sponsorship
-        expect(page).to have_content("No, I already have the right to work in the UK")
+        expect(current_job_application.right_to_work_in_uk).to eq("yes")
+
         within("#professional_status") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
         # references
+        click_on "References"
         expect(page).to have_content(reference.job_title)
         expect(page).to have_content(reference.organisation)
         expect(page).to have_content(reference.relationship)
+        click_on "Back"
         # work history
+        click_on "Work history"
         expect(page).to have_content(employment1.main_duties)
         expect(page).to have_content(employment1.organisation)
         expect(page).to have_content(employment2.main_duties)
         expect(page).to have_content(employment2.organisation)
+        click_on "Back"
         within("#employment_history") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
+        click_on "Qualifications"
         previous_application.qualifications.each do |qualification|
           expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification.category}"))
           expect(page).to have_content(qualification.institution)
@@ -77,22 +87,27 @@ RSpec.describe "Jobseekers can prefill applications" do
             expect(page).to have_content("(#{qualification.grade})")
           end
         end
+        click_on "Back"
 
         within("#qualifications") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
+        click_on I18n.t("jobseekers.job_applications.build.training_and_cpds.heading")
         expect(page).to have_content(training.name)
         expect(page).to have_content(training.provider)
         expect(page).to have_content(training.grade)
         expect(page).to have_content(training.year_awarded)
+        click_on "Back"
 
         within("#training_and_cpds") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
 
+        click_on I18n.t("jobseekers.job_applications.build.ask_for_support.heading")
         expect(page).to have_content(previous_application.support_needed.capitalize)
         expect(page).to have_content(previous_application.support_needed_details)
+        click_on "Back"
         within("#ask_for_support") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
         end
@@ -109,10 +124,13 @@ RSpec.describe "Jobseekers can prefill applications" do
 
         click_on I18n.t("buttons.start_application")
 
-        expect(page).to have_content(profile.personal_details.first_name)
-        expect(page).to have_content(profile.personal_details.last_name)
-        expect(page).to have_content(profile.personal_details.phone_number)
-        expect(page).to have_content(profile.qualified_teacher_status_year)
+        expect(current_job_application.first_name).to eq(profile.personal_details.first_name)
+        expect(current_job_application.last_name).to eq(profile.personal_details.last_name)
+        expect(current_job_application.phone_number).to eq(profile.personal_details.phone_number)
+
+        expect(current_job_application.qualified_teacher_status_year).to eq(profile.qualified_teacher_status_year)
+
+        click_on "Qualifications"
         expect(page).to have_content(profile.qualifications.first.institution)
         profile.qualifications.each do |qualification|
           expect(page).to have_content(I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{qualification.category}"))
@@ -121,8 +139,12 @@ RSpec.describe "Jobseekers can prefill applications" do
             expect(page).to have_content("(#{qualification.grade})")
           end
         end
+        click_on "Back"
+
+        click_on "Work history"
         expect(page).to have_content(profile.employments.first.job_title)
         expect(page).to have_content(profile.employments.first.subjects)
+        click_on "Back"
       end
     end
   end
@@ -137,6 +159,7 @@ RSpec.describe "Jobseekers can prefill applications" do
 
       click_on I18n.t("buttons.start_application")
 
+      click_on "Personal details"
       expect(page).to have_field("jobseekers_job_application_personal_details_form[first_name]")
       expect(page.find("#jobseekers-job-application-personal-details-form-first-name-field").value).to be_blank
     end
