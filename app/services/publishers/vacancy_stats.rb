@@ -18,7 +18,7 @@ class Publishers::VacancyStats
         # with the Vacancy anonymised id to the new views associated with the real Vacancy id.
         sql = <<~SQL
           SELECT SUM(#{field}) AS #{field}
-          FROM `#{Rails.configuration.big_query_dataset}.#{TABLE_NAME}`
+          FROM `#{Rails.configuration.bigquery_dataset}.#{TABLE_NAME}`
           WHERE id IN ("#{vacancy.id}", "#{StringAnonymiser.new(vacancy.id)}")
           AND publish_on = "#{vacancy.publish_on.iso8601}"
         SQL
