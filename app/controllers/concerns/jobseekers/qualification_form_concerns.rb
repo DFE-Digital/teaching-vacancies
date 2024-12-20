@@ -6,19 +6,15 @@ module Jobseekers::QualificationFormConcerns
   end
 
   def category_form_class(category)
-    name = if %w[select_category submit_category].include?(action_name)
-             "CategoryForm"
-           else
-             case category
-             when "gcse", "a_level", "as_level"
-               "Secondary::CommonForm"
-             when "other_secondary"
-               "Secondary::OtherForm"
-             when "undergraduate", "postgraduate"
-               "DegreeForm"
-             when "other"
-               "OtherForm"
-             end
+    name = case category
+           when "gcse", "a_level", "as_level"
+             "Secondary::CommonForm"
+           when "other_secondary"
+             "Secondary::OtherForm"
+           when "undergraduate", "postgraduate"
+             "DegreeForm"
+           when "other"
+             "OtherForm"
            end
     "Jobseekers::Qualifications::#{name}".constantize
   end

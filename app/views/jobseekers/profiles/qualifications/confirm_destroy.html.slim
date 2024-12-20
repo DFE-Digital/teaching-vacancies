@@ -7,7 +7,7 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
 
-    - if secondary?
+    - if qualification.secondary?
       span.govuk-caption-l = t(".secondary.caption")
       h1.govuk-heading-l = t(".secondary.page_title")
     - else
@@ -16,7 +16,7 @@
 
     = form_for form, url: jobseekers_profile_qualification_path(params[:qualification_id]), method: :delete do |f|
       = govuk_summary_list do |summary_list|
-        - if secondary?
+        - if qualification.secondary?
           - summary_list.with_row do |row|
             - row.with_key text: "Type"
             - row.with_value text: t("helpers.label.jobseekers_qualifications_shared_labels.category_options.#{qualification.category}")
@@ -40,7 +40,7 @@
             - row.with_key text: "Grade"
             - row.with_value text: qualification.grade
 
-      - if secondary?
+      - if qualification.secondary?
         = f.govuk_submit t(".secondary.caption")
       - else
         = f.govuk_submit t(".other.caption")

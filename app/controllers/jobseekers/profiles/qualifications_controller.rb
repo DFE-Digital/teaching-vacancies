@@ -1,13 +1,21 @@
 class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesController
   include Jobseekers::QualificationFormConcerns
 
-  helper_method :jobseeker_profile, :qualification, :secondary?, :qualification_form_param_key
+  helper_method :jobseeker_profile, :qualification, :qualification_form_param_key
 
-  before_action :set_form_and_category, except: %i[review confirm_destroy destroy]
+  before_action :set_form_and_category, except: %i[review confirm_destroy destroy select_category submit_category]
+
+  def select_category
+    @category = category_param
+    @form = Jobseekers::Qualifications::CategoryForm.new
+  end
 
   def submit_category
+    @category = category_param
+    @form = Jobseekers::Qualifications::CategoryForm.new(submit_category_params)
+
     if @form.valid?
-      redirect_to new_jobseekers_profile_qualification_path(qualification_params)
+      redirect_to new_jobseekers_profile_qualification_path(submit_category_params)
     else
       render :select_category, status: :unprocessable_entity
     end
@@ -53,20 +61,23 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     case action_name
     when "new"
       { category: @category }
-    when "select_category"
-      {}
     when "edit"
       qualification
         .slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, :qualification_results)
         .reject { |_, v| v.blank? && v != false }
-    when "create", "update", "submit_category"
+    when "create", "update"
       qualification_params
     end
   end
 
+  def submit_category_params
+    key = ActiveModel::Naming.param_key(Jobseekers::Qualifications::CategoryForm)
+    (params[key] || params).permit(:category)
+  end
+
   def qualification_params
     case action_name
-    when "new", "select_category", "submit_category", "confirm_destroy"
+    when "new", "confirm_destroy"
       (params[qualification_form_param_key(@category)] || params).permit(:category)
     when "create", "edit", "update"
       params.require(qualification_form_param_key(@category))
@@ -87,7 +98,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
     @qualification ||= profile.qualifications.find(params[:id] || params[:qualification_id])
   end
 
-  def secondary?
-    @category.in?(Qualification::SECONDARY_QUALIFICATIONS)
-  end
+  # def secondary?
+  #   @category.in?(Qualification::SECONDARY_QUALIFICATIONS)
+  # end
 end

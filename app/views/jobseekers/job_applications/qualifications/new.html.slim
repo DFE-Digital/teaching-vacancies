@@ -14,5 +14,5 @@
       = turbo_frame_tag "secondary_school_1" do
         p = govuk_button_link_to t(".add_another_school"), new_school_jobseekers_job_application_qualifications_path(job_application, category: @category, school_number: 1)
 
-      = f.govuk_submit t("buttons.save_qualification.#{secondary? ? 'other' : 'one'}")
+      = f.govuk_submit t("buttons.save_qualification.#{f.object.secondary? ? 'other' : 'one'}")
       = govuk_button_link_to t("buttons.cancel"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-button--secondary govuk-!-margin-left-3"
