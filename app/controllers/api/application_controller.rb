@@ -1,4 +1,6 @@
 class Api::ApplicationController < ApplicationController
+  rescue_from StandardError, with: :handle_internal_server_error
+
   private
 
   def set_headers
@@ -8,5 +10,12 @@ class Api::ApplicationController < ApplicationController
 
   def verify_json_request
     not_found unless request.format.json?
+  end
+
+  def handle_internal_server_error(exception)
+    Rails.logger.error(exception.message) # Log the error
+    Rails.logger.error(exception.backtrace.join("\n")) # Log the backtrace
+
+    render json: { error: "Internal server error", message: exception.message }, status: :internal_server_error
   end
 end
