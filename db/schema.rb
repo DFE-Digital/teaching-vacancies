@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_17_145653) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -683,10 +683,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"
+    t.uuid "publisher_ats_api_client_id"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
     t.index ["geolocation", "expires_at", "publish_on"], name: "index_vacancies_on_geolocation_and_expires_at_and_publish_on", using: :gist
     t.index ["publish_on"], name: "index_vacancies_on_publish_on"
+    t.index ["publisher_ats_api_client_id"], name: "index_vacancies_on_publisher_ats_api_client_id"
     t.index ["publisher_id"], name: "index_vacancies_on_publisher_id"
     t.index ["publisher_organisation_id"], name: "index_vacancies_on_publisher_organisation_id"
     t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
@@ -749,5 +751,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
   add_foreign_key "training_and_cpds", "job_applications"
   add_foreign_key "training_and_cpds", "jobseeker_profiles"
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
+  add_foreign_key "vacancies", "publisher_ats_api_clients"
   add_foreign_key "vacancies", "publishers"
 end

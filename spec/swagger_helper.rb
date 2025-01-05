@@ -64,11 +64,11 @@ RSpec.configure do |config|
               job_title: { type: :string, example: "Teacher of Geography" },
               skills_and_experience: { type: :string, example: "We're looking for a dedicated Teacher of Geography" },
               salary: { type: :string, example: "£12,345 to £67, 890" },
-              benefits_details: { type: :string, example: "TLR2a" },
-              starts_on: { type: :string, example: "Summer Term" },
-              external_reference: { type: :string, example: "123GTZY" },
-              visa_sponsorship_available: { type: :boolean },
-              is_job_share: { type: :boolean },
+              benefits_details: { type: :string, example: "TLR2a", nullable: true },
+              starts_on: { type: :string, example: "Summer Term", nullable: true },
+              external_reference: { type: :string, example: "123GTZY", nullable: true },
+              visa_sponsorship_available: { type: :boolean, nullable: true },
+              is_job_share: { type: :boolean, nullable: true },
               schools: {
                 oneOf: [
                   {
@@ -205,6 +205,18 @@ RSpec.configure do |config|
               },
             },
           },
+          create_vacancy_response: {
+            type: :object,
+            properties: {
+              id: { type: :string, example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66" },
+              errors: {
+                type: :array,
+                items: { type: :string },
+                nullable: true,
+              },
+             },
+            required: %w[id],
+          },
           bad_request_error: {
             type: "object",
             properties: {
@@ -265,4 +277,5 @@ RSpec.configure do |config|
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.openapi_format = :yaml
+  config.openapi_no_additional_properties = false # Allow additional properties
 end

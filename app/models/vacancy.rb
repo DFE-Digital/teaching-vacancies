@@ -102,7 +102,6 @@ class Vacancy < ApplicationRecord
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
   validates_with ExternalVacancyValidator, if: :external?
-  validates :external_reference, uniqueness: { scope: :publisher_ats_api_client_id }
   validates :organisations, presence: true
 
   validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid
@@ -130,7 +129,7 @@ class Vacancy < ApplicationRecord
   end
 
   def external?
-    external_source.present?
+    external_source.present? || external_reference.present? || external_advert_url.present?
   end
 
   def organisation
