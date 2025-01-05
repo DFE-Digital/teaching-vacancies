@@ -138,6 +138,16 @@ class Vacancy < ApplicationRecord
     organisations.find(&:trust?) || publisher_organisation || organisations.first&.school_groups&.first
   end
 
+  def schools
+    organisations.filter_map do |organisation|
+      if organisation.is_a?(School)
+        { school_urns: [organisation.urn] }
+      elsif organisation.is_a?(SchoolGroup) && organisation.uid.present?
+        { trust_uid: organisation.uid, school_urns: organisation.schools.pluck(:urn) }
+      end
+    end
+  end
+
   def location
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
   end

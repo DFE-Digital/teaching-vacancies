@@ -1,13 +1,12 @@
 require "swagger_helper"
 
-# rubocop:disable RSpec/EmptyExampleGroup
-# rubocop:disable RSpec/ScatteredSetup
 # rubocop:disable RSpec/VariableName
 RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   let!(:client) { create(:publisher_ats_api_client) }
   let(:"X-Api-Key") { client.api_key }
 
   path "/ats-api/v1/vacancies" do
+
     get("list vacancies") do
       tags "Vacancies"
       description "list all the vacancies created from the client's ATS"
@@ -72,12 +71,38 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(500, "Internal server error") do
         schema "$ref" => "#/components/schemas/internal_server_error"
 
+        let(:page) { nil }
+
         before do
-          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+          allow(Vacancy).to receive(:live).and_raise(StandardError.new("Simulated server error"))
         end
 
         run_test!
       end
+    end
+
+    it "only returns vacancies for the authenticated client" do
+      other_client = create(:publisher_ats_api_client)
+      school = create(:school)
+      create_list(:vacancy, 2, publisher_ats_api_client: client, organisations: [school])
+      create_list(:vacancy, 3, publisher_ats_api_client: other_client, organisations: [school])
+
+      get "/ats-api/v1/vacancies", headers: { "X-Api-Key" => client.api_key, "Accept" => "application/json" }
+
+      expect(response).to have_http_status(:ok)
+      body = response.parsed_body
+      expect(body["data"].size).to eq(2)
+    end
+
+    it "returns paginated results" do
+      create_list(:vacancy, 10, publisher_ats_api_client: client)
+
+      get "/ats-api/v1/vacancies", headers: { "X-Api-Key" => client.api_key, "Accept" => "application/json" }
+
+      expect(response).to have_http_status(:ok)
+      body = response.parsed_body
+      expect(body["data"].size).to eq(10)
+      expect(body["meta"]["totalPages"]).to eq(1)
     end
 
     post("create a vacancy") do
@@ -253,21 +278,28 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           }
         end
 
-        schema "$ref" => "#/components/schemas/vacancy"
+        schema "$ref" => "#/components/schemas/create_vacancy_response"
 
         let(:school) { create(:school) }
         let(:source) { build(:vacancy, :external) }
+        let(:school_urns) { [school].map { |school| school.urn.to_i } }
         let(:vacancy) do
-          { vacancy: { external_advert_url: source.external_advert_url,
-                       expires_at: source.expires_at,
-                       job_title: source.job_title,
-                       skills_and_experience: source.skills_and_experience,
-                       salary: source.salary,
-                       school_urns: [school].map { |x| x.urn.to_i },
-                       job_roles: source.job_roles,
-                       working_patterns: source.working_patterns,
-                       contract_type: source.contract_type,
-                       phases: source.phases } }
+          {
+            vacancy: {
+              external_advert_url: source.external_advert_url,
+              external_reference: source.external_reference,
+              job_advert: source.job_advert,
+              expires_at: source.expires_at,
+              job_title: source.job_title,
+              skills_and_experience: source.skills_and_experience,
+              salary: source.salary,
+              school_urns: school_urns,
+              job_roles: source.job_roles,
+              working_patterns: source.working_patterns,
+              contract_type: source.contract_type,
+              phases: source.phases,
+            },
+          }
         end
         run_test!
       end
@@ -300,9 +332,28 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(422, "Validation error") do
         schema "$ref" => "#/components/schemas/validation_error"
 
+        let(:school) { create(:school) }
+        let(:source) { build(:vacancy, :external) }
+        let(:school_urns) { [school].map { |school| school.urn.to_i } }
         let(:vacancy) do
-          { vacancy: { external_advert_url: nil, job_title: nil } }
+          {
+            vacancy: {
+              external_advert_url: source.external_advert_url,
+              external_reference: source.external_reference,
+              job_advert: source.job_advert,
+              expires_at: source.expires_at,
+              job_title: nil,
+              skills_and_experience: source.skills_and_experience,
+              salary: source.salary,
+              school_urns: school_urns,
+              job_roles: source.job_roles,
+              working_patterns: source.working_patterns,
+              contract_type: source.contract_type,
+              phases: source.phases,
+            },
+          }
         end
+
         run_test!
       end
 
@@ -472,5 +523,3 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   end
 end
 # rubocop:enable RSpec/VariableName
-# rubocop:enable RSpec/ScatteredSetup
-# rubocop:enable RSpec/EmptyExampleGroup

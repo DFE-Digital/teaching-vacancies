@@ -11,22 +11,18 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     @vacancy = vacancy
   end
 
-  # No idea why rubocop can't see the check after the create call
-  # rubocop:disable Rails/SaveBang
   def create
-    @vacancy = Vacancy.create(vacancy_params)
+    @vacancy = Vacancy.new(vacancy_params)
 
-    respond_to do |format|
-      format.json do
-        if @vacancy.persisted?
-          render status: :created
-        else
-          render status: :bad_request
-        end
-      end
+    if @vacancy.save
+      render status: :created
+    else
+      render json: {
+        errors: @vacancy.errors.full_messages.map { |msg| { error: msg } },
+      }, status: :unprocessable_entity
     end
   end
-  # rubocop:enable Rails/SaveBang
+
 
   def update
     @vacancy = vacancy
@@ -40,11 +36,22 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   def vacancy_params
     p = params.fetch(:vacancy).permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
-                                      :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary,
-                                      :job_roles, :working_patterns, :contract_type, :phases, school_urns: [])
+                                      :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
+                                      job_roles: [], working_patterns: [], phases: [], school_urns: [], trust_uid: nil)
 
-    p.except(:school_urns)
-          .merge(organisations: p.fetch(:school_urns, []).map { School.find_by(urn: _1) }.compact)
+    organisations = if p[:trust_uid].present?
+                      SchoolGroup.trusts.find_by(uid: p[:trust_uid]).schools.where(urn: p[:school_urns])
+                    else
+                      School.where(urn: p[:school_urns])
+                    end
+
+    raise ActiveRecord::RecordNotFound, "No valid organisations found" if organisations.blank?
+
+    p[:publish_on] ||= Time.zone.today.to_s
+    p[:working_patterns] ||= []
+    p[:phases] ||= []
+
+    p.except(:school_urns, :trust_uid).merge(organisations: organisations)
   end
 
   def vacancy
@@ -52,7 +59,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def vacancies
-    Vacancy.includes(:organisations).live.order(publish_on: :desc)
+    Vacancy.live.includes(:organisations).order(publish_on: :desc)
   end
 
   def client

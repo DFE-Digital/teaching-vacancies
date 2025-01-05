@@ -540,6 +540,57 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "#external?" do
+    subject { vacancy.external? }
+
+    let(:vacancy) { build(:vacancy) }
+
+    context "when external_source is present" do
+      before { vacancy.external_source = "some_source" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when external_reference is present" do
+      before { vacancy.external_reference = "some_reference" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when external_advert_url is present" do
+      before { vacancy.external_advert_url = "https://example.com" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when none of the external attributes are present" do
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#schools" do
+    let(:vacancy) { create(:vacancy, organisations: organisations) }
+
+    context "when the organisation is a school" do
+      let(:school) { create(:school, urn: "100001") }
+      let(:organisations) { [school] }
+
+      it "returns an array with school_urns" do
+        expect(vacancy.schools).to eq([{ school_urns: ["100001"] }])
+      end
+    end
+
+    context "when the organisation is a school group with a UID" do
+      let(:organisations) { [school_group] }
+      let(:school_group) { create(:trust, uid: "12345") }
+      let!(:school) { create(:school, school_groups: [school_group], urn: "100002") }
+      let!(:school2) { create(:school, school_groups: [school_group], urn: "100003") }
+
+      it "returns an array with trust_uid and school_urns" do
+        expect(vacancy.schools).to contain_exactly({ trust_uid: "12345", school_urns: %w[100002 100003] })      end
+    end
+  end
+
   describe "#distance_in_miles_to" do
     let(:test_coordinates) { Geocoding.new("Stonehenge").coordinates }
     subject { create(:vacancy, organisations: organisations) }
