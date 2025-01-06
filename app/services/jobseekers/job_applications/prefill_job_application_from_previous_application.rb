@@ -49,8 +49,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
        catholic_religion_details
        school_ethos
        non_catholic_religion_details]
-      .select { |step| relevant_steps.include?(step) }
-      .map { |step| form_fields_from_step(step) }
+      .filter_map { |step| form_fields_from_step(step) if relevant_steps.include?(step) }
       .flatten - jobseeker_profile_fields
   end
 
