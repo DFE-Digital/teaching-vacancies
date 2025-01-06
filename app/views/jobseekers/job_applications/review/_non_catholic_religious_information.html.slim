@@ -8,8 +8,8 @@
 
     - if job_application.following_religion.in? [true, false]
       - summary_list.with_row do |row|
-        - row.with_key text: t("helpers.legend.jobseekers_job_application_following_religion_form.following_religion")
-        - row.with_value text: job_application.following_religion ? t("helpers.label.jobseekers_job_application_following_religion_form.following_religion_options.yes") : t("helpers.label.jobseekers_job_application_following_religion_form.following_religion_options.no")
+        - row.with_key text: t("helpers.legend.jobseekers_job_application_non_catholic_following_religion_form.following_religion")
+        - row.with_value text: t("helpers.label.jobseekers_job_application_non_catholic_following_religion_form.following_religion_options.#{job_application.following_religion}")
 
     - if job_application.following_religion
       - summary_list.with_row do |row|
@@ -22,7 +22,7 @@
 
       - summary_list.with_row do |row|
         - row.with_key text: t("helpers.legend.jobseekers_job_application_catholic_religion_details_form.religious_reference_type")
-        - row.with_value text: job_application.religious_reference_type == "referee" ? t("helpers.label.jobseekers_job_application_following_religion_form.following_religion_options.yes") : t("helpers.label.jobseekers_job_application_following_religion_form.following_religion_options.no")
+        - row.with_value text: t("helpers.label.jobseekers_job_application_non_catholic_following_religion_form.following_religion_options.#{job_application.religious_reference_type == 'referee'}")
 
       - if job_application.religious_reference_type == "referee"
         - summary_list.with_row do |row|
