@@ -41,11 +41,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def form_class
-    if step.in? %i[catholic_following_religion non_catholic_following_religion]
-      Jobseekers::JobApplication::FollowingReligionForm
-    else
-      "jobseekers/job_application/#{step}_form".camelize.constantize
-    end
+    "jobseekers/job_application/#{step}_form".camelize.constantize
   end
 
   def form_attributes

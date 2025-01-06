@@ -7,5 +7,5 @@ class Jobseekers::JobApplication::FollowingReligionForm < Jobseekers::JobApplica
   end
   attribute :following_religion, :boolean
 
-  validates :following_religion, inclusion: { in: [true, false] }
+  validates :following_religion, inclusion: { in: [true, false], allow_nil: false }
 end

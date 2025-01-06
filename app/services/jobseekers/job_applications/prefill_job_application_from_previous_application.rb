@@ -44,7 +44,8 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
        professional_status
        ask_for_support
        personal_statement
-       following_religion
+       catholic_following_religion
+       non_catholic_following_religion
        catholic_religion_details
        school_ethos
        non_catholic_religion_details]
