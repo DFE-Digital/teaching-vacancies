@@ -223,6 +223,7 @@ GEM
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
+    ffi (1.17.0-x86_64-linux-musl)
     friendly_id (5.5.1)
       activerecord (>= 4.0.0)
     front_matter_parser (1.0.1)
@@ -375,6 +376,8 @@ GEM
     nokogiri (1.18.1-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.18.1-x86_64-linux-gnu)
+      racc (~> 1.4)
+    nokogiri (1.18.1-x86_64-linux-musl)
       racc (~> 1.4)
     noticed (2.4.3)
       rails (>= 6.1.0)
@@ -760,6 +763,7 @@ PLATFORMS
   arm64-darwin-23
   x86_64-darwin-23
   x86_64-linux
+  x86_64-linux-musl
 
 DEPENDENCIES
   actionmailer (~> 7.2)
