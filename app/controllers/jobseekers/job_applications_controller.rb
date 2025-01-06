@@ -124,11 +124,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def step_valid?(step)
-    form_class = if step.in? %i[catholic_following_religion non_catholic_following_religion]
-                   Jobseekers::JobApplication::FollowingReligionForm
-                 else
-                   "jobseekers/job_application/#{step}_form".camelize.constantize
-                 end
+    form_class = "jobseekers/job_application/#{step}_form".camelize.constantize
 
     attributes = form_class.storable_fields.index_with do |field|
       case field
