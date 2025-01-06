@@ -26,6 +26,21 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   end
   attr_accessor(*fields)
 
+  def params_to_save
+    {
+      job_advert:,
+      about_school:,
+      ect_status:,
+      skills_and_experience:,
+      school_offer:,
+      flexi_working: normalize_flexi_working,
+      safeguarding_information_provided:,
+      safeguarding_information:,
+      further_details_provided:,
+      further_details:,
+    }
+  end
+
   private
 
   def organisation_type
@@ -76,5 +91,11 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     return if remove_html_tags(job_advert).present?
 
     errors.add(:job_advert, :blank)
+  end
+
+  def normalize_flexi_working
+    stripped_value = remove_html_tags(flexi_working)&.strip
+
+    self.flexi_working = stripped_value.present? ? flexi_working : nil
   end
 end
