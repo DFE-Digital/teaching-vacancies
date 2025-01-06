@@ -54,6 +54,8 @@ gem "omniauth"
 gem "omniauth_openid_connect"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "online_migrations"
+#  needed for activerecord-import 2.x
+gem "ostruct"
 gem "pagy", "< 9"
 gem "paper_trail"
 gem "paper_trail-globalid"
