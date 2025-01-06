@@ -380,6 +380,7 @@ Rails.application.routes.draw do
         get :withdrawn
         post :update_status
         get :tag, on: :collection
+        get :tag_single, on: :member
         post :update_tag, on: :collection
       end
     end

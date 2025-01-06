@@ -48,12 +48,16 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: job_application.name)
   end
 
+  def tag_single
+    prepare_to_tag([params.fetch(:id)])
+  end
+
   def tag
     tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
     if params["download_selected"] == "true"
       download_selected(tag_params)
     else
-      prepare_to_tag(tag_params)
+      prepare_to_tag(tag_params.fetch(:job_applications).compact_blank)
     end
   end
 
@@ -68,8 +72,8 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   private
 
-  def prepare_to_tag(tag_params)
-    @form = Publishers::JobApplication::TagForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
+  def prepare_to_tag(job_applications)
+    @form = Publishers::JobApplication::TagForm.new(job_applications: job_applications)
     if @form.valid?
       @job_applications = vacancy.job_applications.where(id: @form.job_applications)
       render "tag"
