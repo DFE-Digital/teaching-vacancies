@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     it "validates first religion step" do
       expect(page).to have_content(I18n.t("jobseekers.job_applications.build.catholic_following_religion.preference_to_catholics"))
       validates_step_complete
-      expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/following_religion_form.attributes.following_religion.inclusion"))
+      expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_following_religion_form.attributes.following_religion.inclusion"))
     end
 
     context "without a religion" do
@@ -204,7 +204,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
       it "show the correct error" do
         validates_step_complete
-        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/following_religion_form.attributes.following_religion.inclusion"))
+        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_following_religion_form.attributes.following_religion.inclusion"))
       end
 
       context "when completing following religion question" do
