@@ -124,6 +124,8 @@ module TeachingVacancies
     config.analytics = config_for(:analytics)
     config.analytics_pii = config_for(:analytics_pii)
 
+    config.bigquery_dataset = ENV.fetch("BIGQUERY_DATASET", nil)
+
     config.enforce_local_authority_allowlist = ActiveModel::Type::Boolean.new.cast(ENV.fetch("ENFORCE_LOCAL_AUTHORITY_ALLOWLIST", nil))
 
     config.geocoder_lookup = :default
