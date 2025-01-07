@@ -316,6 +316,7 @@ shared:
     - job_application_id
     - created_at
     - updated_at
+    - is_most_recent_employer
   saved_jobs:
     - id
     - jobseeker_id
