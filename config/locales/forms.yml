@@ -442,8 +442,8 @@ en:
         relationship: Relationship to applicant
         phone_number_html: Phone number (optional)
         is_most_recent_employer_options:
-          "true": "Yes"
-          "false": "No"
+          "yes": "Yes"
+          "no": "No"
       jobseekers_job_application_equal_opportunities_form:
         age_options:
           under_twenty_five: Under 25
