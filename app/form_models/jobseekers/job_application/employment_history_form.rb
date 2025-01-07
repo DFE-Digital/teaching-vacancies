@@ -2,6 +2,7 @@ module Jobseekers
   module JobApplication
     class EmploymentHistoryForm < BaseForm
       include ActiveModel::Model
+      include ActionView::Helpers::DateHelper
       include ActiveModel::Attributes
       include CompletedFormAttribute
 
@@ -20,14 +21,17 @@ module Jobseekers
           load_form_attributes(model.attributes.merge(completed_attrs(model, :employment_history)))
         end
       end
-      attr_accessor(*FIELDS)
+      attr_accessor(*FIELDS, :unexplained_employment_gaps)
 
-      validate :employment_history_does_not_contain_gaps
+      validate :employment_history_gaps_are_explained
 
-      def employment_history_does_not_contain_gaps
+      def employment_history_gaps_are_explained
         return unless unexplained_employment_gaps_present == "true" && employment_history_section_completed
 
-        errors.add(:employment_history_section_completed, "You must provide your full work history, including the reason for any gaps in employment.")
+        unexplained_employment_gaps.each_value do |details|
+          gap_duration = distance_of_time_in_words(details[:started_on], details[:ended_on] || Time.zone.today)
+          errors.add(:base, "You have a gap in your work history (#{gap_duration}).")
+        end
       end
 
       completed_attribute(:employment_history)

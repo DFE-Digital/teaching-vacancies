@@ -1,4 +1,4 @@
-= job_application_review(job_application, step_process: step_process, show_tracks: false, allow_edit: local_assigns[:allow_edit]) do |r|
+= job_application_review(job_application, allow_edit: local_assigns[:allow_edit]) do |r|
   - render "jobseekers/job_applications/job_application_review_sections", r: r
   - r.with_above do
 
@@ -20,10 +20,10 @@
 
       .govuk-summary-card__content
         - job_application.notes.each do |note|
-            p.govuk-body-m = note.content
-            p.govuk-body-s By #{note.publisher.given_name} #{note.publisher.family_name}, #{note.created_at}
-            = govuk_link_to(t("buttons.delete"), organisation_job_job_application_note_path(vacancy.id, job_application, note), method: :delete)
-            hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
+          p.govuk-body-m = note.content
+          p.govuk-body-s By #{note.publisher.given_name} #{note.publisher.family_name}, #{note.created_at}
+          = govuk_link_to(t("buttons.delete"), organisation_job_job_application_note_path(vacancy.id, job_application, note), method: :delete)
+          hr.govuk-section-break.govuk-section-break--l.govuk-section-break--visible
 
         = form_for @notes_form, url: organisation_job_job_application_notes_path(vacancy.id, job_application), html: { data: { "show-hidden-content-target": "content" } } do |f|
           = f.govuk_error_summary
