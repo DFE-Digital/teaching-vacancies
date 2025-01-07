@@ -45,14 +45,18 @@ RSpec.describe "Jobseekers can add references to their job application" do
       click_on I18n.t("buttons.change")
 
       fill_in "Name", with: ""
+      choose("Yes")
       validates_step_complete(button: I18n.t("buttons.save_reference"))
 
       fill_in "Name", with: "Jason"
+      choose("No")
       click_on I18n.t("buttons.save_reference")
 
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :references))
       expect(page).not_to have_content("John")
+      expect(page).not_to have_content("yes")
       expect(page).to have_content("Jason")
+      expect(page).to have_content("no")
     end
   end
 end
