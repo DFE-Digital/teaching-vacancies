@@ -216,4 +216,24 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       end
     end
   end
+
+  describe "flexi_working" do
+    let(:vacancy) { build_stubbed(:vacancy, :at_one_school, job_roles: ["teacher"], job_advert: "Test") }
+
+    context "when flexi working is blank except for html tags" do
+      let(:params) { { flexi_working: "<p><br></p>" } }
+
+      it "sets flexi_working as nil in params_to_save" do
+        expect(subject.params_to_save[:flexi_working]).to be_nil
+      end
+    end
+
+    context "when flexi working has text and html tags" do
+      let(:params) { { flexi_working: "<p>hello<br> world</p>" } }
+
+      it "params_to_save includes flexi_working value" do
+        expect(subject.params_to_save[:flexi_working]).to eq "<p>hello<br> world</p>"
+      end
+    end
+  end
 end
