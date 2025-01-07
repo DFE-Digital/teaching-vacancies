@@ -684,6 +684,8 @@ en:
               invalid:  Enter a phone number in the correct format
             relationship:
               blank: Enter the referee's relationship to you, for example line manager
+            is_most_recent_employer:
+              inclusion: Select yes if referee is your most recent employer
         jobseekers/profile/about_you_form:
           attributes:
             about_you:
