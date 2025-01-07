@@ -206,12 +206,7 @@ en:
           step_title: Education and qualifications
           title: Education and qualifications — Application
         references:
-          description1_html: >-
-            <strong>2 referees are required for this application.</strong> One of these must be your
-            current or most recent employer. If you are shortlisted, your referees may be contacted before your interview.
-          description2: >-
-            If you do not currently work with children, but have done so in the past, you must include a referee from
-            the last time you did so.
+          description: You need 2 referees for this application but you may add more.
           heading: References
           no_references: No referees specified
           step_title: References
@@ -435,6 +430,12 @@ en:
           description: If you are shortlisted, your referees may be contacted before your interview.
           heading: Add a referee
           title: Add a referee — Application
+          work_in_school_heading: If you work in a school
+          work_in_school_guidance: Your reference must be confirmed by your headteacher but does not have to be provided by them.
+          trainee_teacher_heading: If you are a trainee teacher
+          trainee_teacher_guidance: You should provide a reference where you can show your experience working with children. You can include references from school placements or from your course provider.
+          work_with_children_heading: If you used to work with children
+          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one referee from your current or most recent employer and one from the last time you worked with children.
         organisation: Organisation
         phone_number: Phone number
         relationship: Relationship to applicant
