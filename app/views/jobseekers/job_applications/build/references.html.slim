@@ -7,8 +7,7 @@
     = render "caption"
     h2.govuk-heading-l = t(".heading")
 
-    p.govuk-body = t(".description1_html")
-    p.govuk-body = t(".description2")
+    p.govuk-body = t(".description")
 
     - if job_application.references.any?
       - job_application.references.each do |reference|
