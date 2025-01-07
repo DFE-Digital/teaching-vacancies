@@ -49,6 +49,7 @@ en:
     delete_photo: Delete photo
     delete_subject: Delete subject
     dismiss: Dismiss
+    download_pdf_application: Download application
     download_application: View a printable version of this application
     download_application_form: Download an application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)
@@ -77,6 +78,7 @@ en:
     save_and_finish_later: Save and finish later
     save_changes: Save changes
     save_employment: Save role
+    save_note: Save note
     save_qualification:
       one: Save qualification
       other: Save qualifications
@@ -108,6 +110,7 @@ en:
     subscribe_campaign: Set up job alert
     unsubscribe: Unsubscribe
     update_alert: Update alert
+    update_application_status: Update application status
     update_job: Update listing
     update_password: Update password
     upload_files: Upload files
@@ -664,6 +667,14 @@ en:
 
       publishers_job_application_notes_form:
         content: Add a note
+
+      publishers_job_application_status_form:
+        status_options:
+          submitted_html: New <span class="govuk-tag govuk-tag--blue">New</span>
+          unsuccessful_html: Not Considering <span class="govuk-tag govuk-tag--red">Not Considering</span>
+          reviewed_html: Reviewed <span class="govuk-tag govuk-tag--purple">Reviewed</span>
+          shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--green">Shortlisted</span>
+          interviewing_html: Interviewing <span class="govuk-tag govuk-tag--turquoise">Interviewing</span>
 
       publishers_job_application_update_status_form:
         further_instructions_html: Any further instructions? (optional<span class='govuk-visually-hidden'> field</span>)</span>
