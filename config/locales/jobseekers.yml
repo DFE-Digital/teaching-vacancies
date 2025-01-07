@@ -422,6 +422,12 @@ en:
           description: If you are shortlisted, your referees may be contacted before your interview.
           heading: Edit a referee
           title: Edit a referee — Application
+          work_in_school_heading: If you work in a school
+          work_in_school_guidance: Your reference must be confirmed by your headteacher but does not have to be provided by them.
+          trainee_teacher_heading: If you are a trainee teacher
+          trainee_teacher_guidance: You should provide a reference where you can show your experience working with children. You can include references from school placements or from your course provider.
+          work_with_children_heading: If you used to work with children
+          work_with_children_guidance: If you do not currently work with children but have in the past, you should provide one referee from your current or most recent employer and one from the last time you worked with children.
         email: Email address
         job_title: Job title
         name: Name
