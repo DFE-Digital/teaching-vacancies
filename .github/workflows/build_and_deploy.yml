@@ -22,6 +22,10 @@ on:
       - reopened
 
 concurrency: workflow-Build-and-deploy-${{ github.event.pull_request.number }}
+permissions:
+  id-token: write
+  packages: write
+  pull-requests: write
 
 env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
