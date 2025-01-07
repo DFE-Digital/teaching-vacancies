@@ -5,5 +5,5 @@
 = f.govuk_email_field :email, label: { size: "s" }, width: "two-thirds", required: true
 = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "two-thirds"
 = f.govuk_radio_buttons_fieldset(:is_most_recent_employer, legend: { size: "m" }) do
-  = f.govuk_radio_button :is_most_recent_employer, :true, link_errors: true
-  = f.govuk_radio_button :is_most_recent_employer, :false
+  = f.govuk_radio_button :is_most_recent_employer, :yes, link_errors: true
+  = f.govuk_radio_button :is_most_recent_employer, :no
