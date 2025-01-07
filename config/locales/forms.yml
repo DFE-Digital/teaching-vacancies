@@ -441,6 +441,9 @@ en:
         organisation: Organisation
         relationship: Relationship to applicant
         phone_number_html: Phone number (optional)
+        is_most_recent_employer_options:
+          "true": "Yes"
+          "false": "No"
       jobseekers_job_application_equal_opportunities_form:
         age_options:
           under_twenty_five: Under 25
@@ -935,6 +938,7 @@ en:
         safeguarding_issue: Do you want to declare any safeguarding issues, such as a criminal record or professional misconduct?
       jobseekers_job_application_details_reference_form:
         phone_number: Phone number
+        is_most_recent_employer: Is this your current or most recent employer?
       jobseekers_job_application_employment_history_form:
         employment_history_section_completed: Have you completed this section?
       jobseekers_job_application_equal_opportunities_form:
