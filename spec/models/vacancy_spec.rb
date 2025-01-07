@@ -587,7 +587,8 @@ RSpec.describe Vacancy do
       let!(:school2) { create(:school, school_groups: [school_group], urn: "100003") }
 
       it "returns an array with trust_uid and school_urns" do
-        expect(vacancy.schools).to contain_exactly({ trust_uid: "12345", school_urns: %w[100002 100003] })      end
+        expect(vacancy.schools.sort).to eq([{ trust_uid: "12345", school_urns: %w[100002 100003].sort }])
+      end
     end
   end
 
