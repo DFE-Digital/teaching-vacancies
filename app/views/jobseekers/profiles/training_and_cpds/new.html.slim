@@ -6,6 +6,14 @@
     h1.govuk-heading-xl = "Add training and continuing professional development (CPD)"
 
     = form_for form, url: jobseekers_profile_training_and_cpds_path(profile), method: :post do |f|
+      p.govuk-body = t(".description")
+      p.govuk-body = t(".example_intro")
+      ul.govuk-list.govuk-list--bullet
+        li = t(".example1")
+        li = t(".example2")
+        li = t(".example3")
+        li = t(".example4")
+
       = f.govuk_error_summary
 
       = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }
