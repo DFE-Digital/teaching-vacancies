@@ -172,6 +172,7 @@ module PdfHelper
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def add_references(pdf)
     pdf.start_new_page
 
@@ -189,6 +190,7 @@ module PdfHelper
           ["Organisation:", reference.organisation],
           ["Relationship:", reference.relationship],
           ["Email:", reference.email],
+          ["Current or most recent employer:", reference.is_most_recent_employer],
         ]
 
         reference_data << ["Phone Number:", reference.phone_number] if reference.phone_number.present?
@@ -197,6 +199,7 @@ module PdfHelper
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def add_ask_for_support(pdf)
     pdf.start_new_page
