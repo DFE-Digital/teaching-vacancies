@@ -30,3 +30,7 @@
           - summary_list.with_row do |row|
             - row.with_key text: t("helpers.legend.jobseekers_job_application_details_reference_form.phone_number")
             - row.with_value text: reference.phone_number
+
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.legend.jobseekers_job_application_details_reference_form.is_most_recent_employer")
+          - row.with_value text: reference.is_most_recent_employer
