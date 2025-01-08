@@ -82,55 +82,6 @@ RSpec.describe Subscription do
     end
   end
 
-  context "vacancies_for_range" do
-    let!(:expired_now) { Time.current }
-    let(:date_yesterday) { Time.zone.yesterday.to_time }
-    let(:date_today) { Date.current.to_time }
-    let(:subscription) { create(:subscription, frequency: :daily, search_criteria: { keyword: "english" }) }
-    let(:vacancies) { double("vacancies", limit: limited_vacancies) }
-    let(:limited_vacancies) { double("limited vacancies") }
-    let(:vacancy_search) { double(vacancies: vacancies) }
-
-    it "searches with an appropriate date range" do
-      expect(Search::VacancySearch).to receive(:new).with(
-        {
-          keyword: "english",
-          from_date: date_yesterday,
-          to_date: date_today,
-        },
-      ).and_return(vacancy_search)
-
-      travel_to(expired_now) do
-        expect(subscription.vacancies_for_range(date_yesterday, date_today)).to eq(limited_vacancies)
-      end
-    end
-  end
-
-  describe "alert_run_today?" do
-    let(:subscription) { create(:subscription, frequency: :daily) }
-    subject { subscription.alert_run_today? }
-
-    context "when an alert has run today" do
-      before do
-        subscription.alert_runs.find_or_create_by(run_on: Date.current)
-      end
-
-      it { expect(subject).to eq(true) }
-    end
-
-    context "when an alert ran yesterday" do
-      before do
-        subscription.alert_runs.find_or_create_by(run_on: Time.zone.yesterday)
-      end
-
-      it { expect(subject).to eq(false) }
-    end
-
-    context "when an alert has never run" do
-      it { expect(subject).to eq(false) }
-    end
-  end
-
   describe "create_alert_run" do
     let(:subscription) { create(:subscription, frequency: :daily) }
 
@@ -149,6 +100,245 @@ RSpec.describe Subscription do
 
         expect(subscription.alert_runs.count).to eq(1)
         expect(subscription.alert_runs.first.id).to eq(alert_run.id)
+      end
+    end
+  end
+
+  describe "#vacancies_matching" do
+    let(:vacancies) { subscription.vacancies_matching(default_scope) }
+    let(:default_scope) { Vacancy.includes(:organisations).live.order(publish_on: :desc) }
+
+    context "with vacancies" do
+      before do
+        YAML.unsafe_load_file(Rails.root.join("spec/fixtures/polygons.yml")).map(&:attributes).each { |s| LocationPolygon.create!(s) }
+        YAML.unsafe_load_file(Rails.root.join("spec/fixtures/liverpool_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
+        YAML.unsafe_load_file(Rails.root.join("spec/fixtures/basildon_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
+        create(:vacancy, :published_slugged, slug: "liv", contact_number: "0", organisations: [liverpool_school], job_roles: %w[headteacher], visa_sponsorship_available: false, ect_status: :ect_unsuitable, subjects: %w[German], phases: %w[secondary], working_patterns: %w[full_time])
+        create(:vacancy, :published_slugged, slug: "bas", contact_number: "1", organisations: [basildon_school], job_roles: %w[headteacher], phases: %w[secondary], subjects: nil, ect_status: :ect_unsuitable)
+      end
+
+      let(:liverpool_school) { School.find_by!(town: "Liverpool") }
+      let(:basildon_school) { School.find_by!(town: "Basildon") }
+
+      context "with keyword" do
+        let(:subscription) { create(:daily_subscription, keyword: keyword) }
+        let(:nice_job) { Vacancy.find_by!(contact_number: "9") }
+
+        before do
+          create(:vacancy, :published_slugged, contact_number: "9", job_title: "This is a Really Nice job", job_roles: %w[headteacher], phases: %w[secondary], working_patterns: %w[full_time])
+        end
+
+        context "with plain keyword" do
+          let(:keyword) { "nice" }
+
+          it "only finds the nice job" do
+            expect(vacancies).to eq([nice_job])
+          end
+        end
+
+        context "with keyword caps and trailing space" do
+          let(:keyword) { "Nice " }
+
+          it "only finds the nice job" do
+            expect(vacancies).to eq([nice_job])
+          end
+        end
+      end
+
+      context "with location" do
+        before do
+          YAML.unsafe_load_file(Rails.root.join("spec/fixtures/st_albans_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
+          create(:vacancy, :published_slugged, slug: "sta", contact_number: "2", organisations: [st_albans_school])
+        end
+
+        let(:st_albans_school) { School.find_by!(town: "St Albans") }
+        let(:liverpool_vacancy) { Vacancy.find_by!(contact_number: "0") }
+        let(:basildon_vacancy) { Vacancy.find_by!(contact_number: "1") }
+        let(:st_albans_vacancy) { Vacancy.find_by!(contact_number: "2") }
+
+        context "with nationwide location" do
+          let(:subscription) { create(:daily_subscription, location: "england") }
+
+          it "finds everything" do
+            expect(vacancies.map(&:slug)).to contain_exactly(liverpool_vacancy.slug, basildon_vacancy.slug, st_albans_vacancy.slug)
+          end
+        end
+
+        context "with a polygon (Basildon)" do
+          let(:subscription) { create(:daily_subscription, location: "Basildon", radius: radius) }
+
+          context "with a small radius" do
+            let(:radius) { 4 }
+
+            it "finds just basildon" do
+              expect(vacancies.map(&:slug)).to eq([basildon_vacancy.slug])
+            end
+          end
+
+          context "with a medium radius" do
+            let(:radius) { 50 }
+
+            it "finds basildon and st albans" do
+              expect(vacancies.map(&:slug)).to contain_exactly(st_albans_vacancy.slug, basildon_vacancy.slug)
+            end
+          end
+
+          context "with a large radius" do
+            let(:radius) { 200 }
+
+            it "finds liverpool as well" do
+              expect(vacancies.map(&:slug)).to contain_exactly(liverpool_vacancy.slug, st_albans_vacancy.slug, basildon_vacancy.slug)
+            end
+          end
+        end
+
+        context "without a polygon (basildon postcode)", :geocode, :vcr do
+          let(:subscription) { create(:daily_subscription, location: "Basildon SS14 3WB", radius: radius) }
+
+          context "with a small radius" do
+            let(:radius) { 4 }
+
+            it "finds just basildon" do
+              expect(vacancies).to eq([basildon_vacancy])
+            end
+          end
+
+          context "with a medium radius" do
+            let(:radius) { 50 }
+
+            it "finds basildon and st albans" do
+              expect(vacancies).to contain_exactly(st_albans_vacancy, basildon_vacancy)
+            end
+          end
+
+          context "with a large radius" do
+            let(:radius) { 200 }
+
+            it "finds liverpool as well" do
+              expect(vacancies).to contain_exactly(liverpool_vacancy, st_albans_vacancy, basildon_vacancy)
+            end
+          end
+        end
+      end
+
+      context "with teaching job roles" do
+        before do
+          create(:vacancy, :published_slugged, contact_number: "teach1", job_roles: %w[teacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+        end
+
+        let(:teacher_vacancy) { Vacancy.find_by!(contact_number: "teach1") }
+        let(:subscription) { create(:subscription, teaching_job_roles: %w[teacher], frequency: :daily) }
+
+        it "only finds the teaching job" do
+          expect(vacancies).to eq([teacher_vacancy])
+        end
+      end
+
+      context "with support job roles" do
+        before do
+          create(:vacancy, :published_slugged, contact_number: "2", job_roles: %w[it_support], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+        end
+
+        let(:support_vacancy) { Vacancy.find_by!(contact_number: "2") }
+        let(:subscription) { create(:subscription, support_job_roles: %w[it_support], frequency: :daily) }
+
+        it "only finds the support job" do
+          expect(vacancies).to eq([support_vacancy])
+        end
+      end
+
+      context "with visa sponsorship" do
+        before do
+          create(:vacancy, :published_slugged, contact_number: "3", visa_sponsorship_available: true, job_roles: %w[headteacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+        end
+
+        let(:visa_job) { Vacancy.find_by!(contact_number: "3") }
+        let(:subscription) { create(:subscription, :visa_sponsorship_required, frequency: :daily) }
+
+        it "only finds the visa job" do
+          expect(vacancies).to eq([visa_job])
+        end
+      end
+
+      context "with ECT" do
+        before do
+          create(:vacancy, :published_slugged, contact_number: "4", ect_status: :ect_suitable, job_roles: %w[headteacher teacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, ect_status: nil, job_roles: %w[headteacher teacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+        end
+
+        let(:subscription) { create(:subscription, :ect_suitable, frequency: :daily) }
+        let(:ect_job) { Vacancy.find_by!(contact_number: "4") }
+
+        it "only finds the ECT job" do
+          expect(vacancies).to eq([ect_job])
+        end
+      end
+
+      context "with subjects filter" do
+        before do
+          create(:vacancy, :published_slugged, contact_number: "5", job_roles: %w[headteacher], subjects: %w[French], phases: %w[secondary], working_patterns: %w[full_time])
+        end
+
+        let(:french_job) { Vacancy.find_by!(contact_number: "5") }
+        let(:subscription) { create(:subscription, subjects: %w[French], frequency: :daily) }
+
+        it "only finds the French job" do
+          expect(vacancies).to eq([french_job])
+        end
+      end
+
+      context "with phases filter" do
+        before do
+          create(:vacancy, :published_slugged, contact_number: "6", job_roles: %w[headteacher], phases: %w[primary], working_patterns: %w[full_time])
+        end
+
+        let(:subscription) { create(:subscription, phases: %w[primary], frequency: :daily) }
+        let(:primary_job) { Vacancy.find_by!(contact_number: "6") }
+
+        it "only finds the primary school job" do
+          expect(vacancies).to eq([primary_job])
+        end
+      end
+
+      context "with working patterns filter" do
+        before do
+          create(:vacancy, :published_slugged, contact_number: "7", job_roles: %w[headteacher], phases: %w[secondary], working_patterns: %w[part_time])
+        end
+
+        let(:subscription) { create(:daily_subscription, working_patterns: %w[part_time]) }
+        let(:part_time_job) { Vacancy.find_by!(contact_number: "7") }
+
+        it "only finds the part_time job" do
+          expect(vacancies).to eq([part_time_job])
+        end
+      end
+
+      context "with organisation filter" do
+        before do
+          create(:vacancy, :published_slugged, contact_number: "8", organisations: [new_org], job_roles: %w[headteacher], phases: %w[secondary], working_patterns: %w[full_time])
+        end
+
+        let(:new_org) { create(:school) }
+        let(:new_org_job) { Vacancy.find_by!(contact_number: "8") }
+        let(:subscription) { create(:subscription, organisation_slug: new_org.slug, frequency: :daily) }
+
+        it "only finds the new_publisher job" do
+          expect(vacancies).to eq([new_org_job])
+        end
+      end
+    end
+
+    context "with old and new vacancies" do
+      before do
+        create(:vacancy, :published_slugged, contact_number: "2", publish_on: Date.current)
+        create(:vacancy, :published_slugged, contact_number: "1", publish_on: 1.day.ago)
+      end
+
+      let(:expected_vacancies) { [Vacancy.find_by!(contact_number: "2"), Vacancy.find_by!(contact_number: "1")] }
+      let(:subscription) { create(:daily_subscription) }
+
+      it "sends the vacancies in publish order descending" do
+        expect(vacancies).to eq(expected_vacancies)
       end
     end
   end
