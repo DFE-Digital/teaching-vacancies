@@ -88,6 +88,14 @@ en:
         success: Thank you for your feedback on your job alert
       update:
         success: Thank you for providing additional feedback on your job alert
+    shared:
+      training_shared: &training_shared
+        description: Include any training you've completed within the last 3 years relevant to the role you're applying for.
+        example_intro: "For example you could include:"
+        example1: safeguarding training
+        example2: Prevent duty training
+        example3: first aid courses
+        example4: Team Teach
     job_applications:
       apply: Apply for this job
       applying_for_the_job_heading: Applying for the job
@@ -251,10 +259,12 @@ en:
         step_title: Training and continuing professional development (CPD)
         title: Add training and continuing professional development (CPD)
         new:
+          <<: *training_shared
           hint: For example, 1998
           caption: Training and continuing professional development (CPD)
           heading: Add training and continuing professional development (CPD)
         edit:
+          <<: *training_shared
           hint: For example, 1998
           caption: Training and continuing professional development (CPD)
           heading: Edit training and continuing professional development (CPD)
@@ -766,13 +776,6 @@ en:
         summary:
           about_you_title: About You
       training_and_cpds:
-        training_shared: &training_shared
-          description: Include any training you've completed within the last 3 years relevant to the role you're applying for.
-          example_intro: "For example you could include:"
-          example1: safeguarding training
-          example2: Prevent duty training
-          example3: first aid courses
-          example4: Team Teach
         new:
           <<: *training_shared
           hint: For example, 1998
