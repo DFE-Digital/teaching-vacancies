@@ -69,7 +69,7 @@ RSpec.describe SendWeeklyAlertEmailJob do
     let(:job) { described_class.new }
 
     it "gets vacancies in the last week" do
-      expect(subscription).to receive(:vacancies_for_range).with(1.week.ago.to_date, Date.current) { Vacancy.none }
+      expect(subscription).to receive(:vacancies_for_range).with(8.days.ago.to_date, Date.yesterday) { Vacancy.none }
       job.vacancies_for_subscription(subscription)
     end
   end

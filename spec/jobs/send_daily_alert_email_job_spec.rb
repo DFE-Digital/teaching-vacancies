@@ -69,7 +69,7 @@ RSpec.describe SendDailyAlertEmailJob do
     let(:job) { described_class.new }
 
     it "gets vacancies in the last day" do
-      expect(subscription).to receive(:vacancies_for_range).with(Time.zone.yesterday, Date.current) { Vacancy.none }
+      expect(subscription).to receive(:vacancies_for_range).with(2.days.ago.to_date, Date.yesterday) { Vacancy.none }
       job.vacancies_for_subscription(subscription)
     end
   end
