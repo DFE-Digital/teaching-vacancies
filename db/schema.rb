@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_13_141402) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_08_105814) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -605,6 +605,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_141402) do
     t.datetime "updated_at", null: false
     t.uuid "jobseeker_profile_id"
     t.uuid "job_application_id"
+    t.string "course_length"
     t.index ["job_application_id"], name: "index_training_and_cpds_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_training_and_cpds_on_jobseeker_profile_id"
   end
