@@ -1,5 +1,5 @@
 class Api::ApplicationController < ApplicationController
-  rescue_from StandardError, with: :handle_internal_server_error
+  rescue_from StandardError, with: :render_server_error
 
   private
 
@@ -12,10 +12,15 @@ class Api::ApplicationController < ApplicationController
     not_found unless request.format.json?
   end
 
-  def handle_internal_server_error(exception)
-    Rails.logger.error(exception.message)
-    Rails.logger.error(exception.backtrace.join("\n"))
-
+  def render_server_error(exception)
     render json: { error: "Internal server error", message: exception.message }, status: :internal_server_error
+  end
+
+  def render_not_found
+    render json: { error: "The given ID does not match any vacancy for your ATS" }, status: :not_found
+  end
+
+  def render_bad_request
+    render json: { error: "Request body could not be read properly" }, status: :bad_request
   end
 end

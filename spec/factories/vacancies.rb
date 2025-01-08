@@ -63,6 +63,7 @@ FactoryBot.define do
     status { :published }
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
     working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
+    key_stages { factory_rand_sample(%w[early_years ks1 ks2 ks3 ks4 ks5], 1..3) }
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     visa_sponsorship_available { false }
     organisations { build_list(:school, 1) }

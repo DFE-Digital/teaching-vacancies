@@ -80,8 +80,8 @@ RSpec.configure do |config|
                         type: :array,
                         minItems: 1,
                         items: {
-                          type: :integer,
-                          example: 12_345,
+                          type: :string,
+                          example: "12345",
                         },
                       },
                     },
@@ -92,15 +92,15 @@ RSpec.configure do |config|
                     required: %i[trust_uid school_urns],
                     properties: {
                       trust_uid: {
-                        type: :integer,
-                        example: 12_345,
+                        type: :string,
+                        example: "12345",
                       },
                       school_urns: {
                         type: :array,
                         minItems: 0,
                         items: {
-                          type: :integer,
-                          example: 12_345,
+                          type: :string,
+                          example: "12345",
                         },
                       },
                     },
@@ -111,8 +111,8 @@ RSpec.configure do |config|
                     required: %i[trust_uid],
                     properties: {
                       trust_uid: {
-                        type: :integer,
-                        example: 12_345,
+                        type: :string,
+                        example: "12345",
                       },
                     },
                   },

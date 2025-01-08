@@ -44,9 +44,10 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                }
 
         let(:page) { nil }
+        let(:school) { create(:school) }
 
         before do
-          create(:vacancy, :external)
+          create_list(:vacancy, 2, :external, publisher_ats_api_client: client, organisations: [school])
         end
 
         after do |example|
@@ -450,158 +451,158 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
     end
   end
 
-  # path "/ats-api/v1/vacancies/{id}" do
-  #   parameter name: "id", in: :path, type: :string, description: "id of the vacancy"
-  #
-  #   let(:id) { create(:vacancy, :external).id }
-  #
-  #   get("show vacancy") do
-  #     tags "Vacancies"
-  #     description "show the vacancy with the given id"
-  #
-  #     consumes "application/json"
-  #     produces "application/json"
-  #
-  #     security [api_key: []]
-  #
-  #     response(200, "vacancy successfully retrieved") do
-  #       after do |example|
-  #         example.metadata[:response][:content] = {
-  #           "application/json" => {
-  #             example: JSON.parse(response.body, symbolize_names: true),
-  #           },
-  #         }
-  #       end
-  #
-  #       schema "$ref" => "#/components/schemas/vacancy"
-  #
-  #       run_test!
-  #     end
-  #
-  #     response(401, "Invalid credentials") do
-  #       schema "$ref" => "#/components/schemas/unauthorized_error"
-  #
-  #       let(:"X-Api-Key") { "wrong-key" }
-  #       run_test!
-  #     end
-  #
-  #     response(404, "Vacancy not found") do
-  #       schema "$ref" => "#/components/schemas/not_found_error"
-  #
-  #       let(:id) { "123" }
-  #       run_test!
-  #     end
-  #
-  #     response(500, "Internal server error") do
-  #       schema "$ref" => "#/components/schemas/internal_server_error"
-  #
-  #       let(:id) { "123" }
-  #
-  #       before do
-  #         allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
-  #       end
-  #
-  #       run_test!
-  #     end
-  #   end
-  #
-  #   put("update vacancy") do
-  #     tags "Vacancies"
-  #     description "update the vacancy with the given id"
-  #
-  #     consumes "application/json"
-  #     produces "application/json"
-  #
-  #     security [api_key: []]
-  #
-  #     response(200, "vacancy successfully updated") do
-  #       schema "$ref" => "#/components/schemas/vacancy"
-  #
-  #       run_test!
-  #     end
-  #
-  #     response(400, "Bad Request error") do
-  #       schema "$ref" => "#/components/schemas/bad_request_error"
-  #
-  #       run_test!
-  #     end
-  #
-  #     response(401, "Invalid credentials") do
-  #       schema "$ref" => "#/components/schemas/unauthorized_error"
-  #
-  #       let(:"X-Api-Key") { "wrong-key" }
-  #       run_test!
-  #     end
-  #
-  #     response(404, "Vacancy not found") do
-  #       schema "$ref" => "#/components/schemas/not_found_error"
-  #
-  #       let(:id) { "123" }
-  #       run_test!
-  #     end
-  #
-  #     response(422, "Validation error") do
-  #       schema "$ref" => "#/components/schemas/validation_error"
-  #
-  #       let(:id) { create(:vacancy, :external).id }
-  #       let(:vacancy) do
-  #         { vacancy: { external_advert_url: nil, job_title: nil } }
-  #       end
-  #       run_test!
-  #     end
-  #
-  #     response(500, "Internal server error") do
-  #       schema "$ref" => "#/components/schemas/internal_server_error"
-  #
-  #       let(:id) { "123" }
-  #
-  #       before do
-  #         allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
-  #       end
-  #
-  #       run_test!
-  #     end
-  #   end
-  #
-  #   delete("delete vacancy") do
-  #     tags "Vacancies"
-  #     description "update the vacancy with the given id"
-  #
-  #     consumes "application/json"
-  #
-  #     security [api_key: []]
-  #
-  #     response(204, "vacancy successfully deleted") do
-  #       run_test!
-  #     end
-  #
-  #     response(401, "Invalid credentials") do
-  #       schema "$ref" => "#/components/schemas/unauthorized_error"
-  #
-  #       let(:"X-Api-Key") { "wrong-key" }
-  #       run_test!
-  #     end
-  #
-  #     response(404, "Vacancy not found") do
-  #       schema "$ref" => "#/components/schemas/not_found_error"
-  #
-  #       let(:id) { "123" }
-  #       run_test!
-  #     end
-  #
-  #     response(500, "Internal server error") do
-  #       schema "$ref" => "#/components/schemas/internal_server_error"
-  #
-  #       let(:id) { "123" }
-  #
-  #       before do
-  #         allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
-  #       end
-  #
-  #       run_test!
-  #     end
-  #   end
-  # end
+  path "/ats-api/v1/vacancies/{id}" do
+    parameter name: "id", in: :path, type: :string, description: "id of the vacancy"
+
+    let(:id) { create(:vacancy, :external).id }
+
+    get("show vacancy") do
+      tags "Vacancies"
+      description "show the vacancy with the given id"
+
+      consumes "application/json"
+      produces "application/json"
+
+      security [api_key: []]
+
+      response(200, "vacancy successfully retrieved") do
+        after do |example|
+          example.metadata[:response][:content] = {
+            "application/json" => {
+              example: JSON.parse(response.body, symbolize_names: true),
+            },
+          }
+        end
+
+        schema "$ref" => "#/components/schemas/vacancy"
+
+        run_test!
+      end
+
+      response(401, "Invalid credentials") do
+        schema "$ref" => "#/components/schemas/unauthorized_error"
+
+        let(:"X-Api-Key") { "wrong-key" }
+        run_test!
+      end
+
+      response(404, "Vacancy not found") do
+        schema "$ref" => "#/components/schemas/not_found_error"
+
+        let(:id) { "123" }
+        run_test!
+      end
+
+      response(500, "Internal server error") do
+        schema "$ref" => "#/components/schemas/internal_server_error"
+
+        let(:id) { "123" }
+
+        before do
+          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+        end
+
+        run_test!
+      end
+    end
+
+    # put("update vacancy") do
+    #   tags "Vacancies"
+    #   description "update the vacancy with the given id"
+    #
+    #   consumes "application/json"
+    #   produces "application/json"
+    #
+    #   security [api_key: []]
+    #
+    #   response(200, "vacancy successfully updated") do
+    #     schema "$ref" => "#/components/schemas/vacancy"
+    #
+    #     run_test!
+    #   end
+    #
+    #   response(400, "Bad Request error") do
+    #     schema "$ref" => "#/components/schemas/bad_request_error"
+    #
+    #     run_test!
+    #   end
+    #
+    #   response(401, "Invalid credentials") do
+    #     schema "$ref" => "#/components/schemas/unauthorized_error"
+    #
+    #     let(:"X-Api-Key") { "wrong-key" }
+    #     run_test!
+    #   end
+    #
+    #   response(404, "Vacancy not found") do
+    #     schema "$ref" => "#/components/schemas/not_found_error"
+    #
+    #     let(:id) { "123" }
+    #     run_test!
+    #   end
+    #
+    #   response(422, "Validation error") do
+    #     schema "$ref" => "#/components/schemas/validation_error"
+    #
+    #     let(:id) { create(:vacancy, :external).id }
+    #     let(:vacancy) do
+    #       { vacancy: { external_advert_url: nil, job_title: nil } }
+    #     end
+    #     run_test!
+    #   end
+    #
+    #   response(500, "Internal server error") do
+    #     schema "$ref" => "#/components/schemas/internal_server_error"
+    #
+    #     let(:id) { "123" }
+    #
+    #     before do
+    #       allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+    #     end
+    #
+    #     run_test!
+    #   end
+    # end
+
+    # delete("delete vacancy") do
+    #   tags "Vacancies"
+    #   description "update the vacancy with the given id"
+    #
+    #   consumes "application/json"
+    #
+    #   security [api_key: []]
+    #
+    #   response(204, "vacancy successfully deleted") do
+    #     run_test!
+    #   end
+    #
+    #   response(401, "Invalid credentials") do
+    #     schema "$ref" => "#/components/schemas/unauthorized_error"
+    #
+    #     let(:"X-Api-Key") { "wrong-key" }
+    #     run_test!
+    #   end
+    #
+    #   response(404, "Vacancy not found") do
+    #     schema "$ref" => "#/components/schemas/not_found_error"
+    #
+    #     let(:id) { "123" }
+    #     run_test!
+    #   end
+    #
+    #   response(500, "Internal server error") do
+    #     schema "$ref" => "#/components/schemas/internal_server_error"
+    #
+    #     let(:id) { "123" }
+    #
+    #     before do
+    #       allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+    #     end
+    #
+    #     run_test!
+    #   end
+    # end
+  end
 end
 # rubocop:enable RSpec/VariableName
 # rubocop:enable RSpec/ScatteredSetup
