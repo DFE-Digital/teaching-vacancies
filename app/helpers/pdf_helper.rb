@@ -119,7 +119,7 @@ module PdfHelper
       ["Qualification Name:", qualification.name],
       ["Institution:", qualification.institution],
       ["Grade:", qualification.grade],
-      ["Year Awarded:", qualification.year],
+      ["Date completed:", qualification.year],
     ].reject { |row| row[1].blank? }
 
     render_table(pdf, general_qualification_data)

@@ -12,7 +12,7 @@
         = render DetailComponent.new title: training.name do |detail|
           - detail.with_body do
             = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
-              - attributes = %w[name provider grade year_awarded]
+              - attributes = %w[name provider grade year_awarded course_length]
               - attributes.each do |attribute|
                 - if training[attribute].present?
                   - summary_list.with_row do |row|
