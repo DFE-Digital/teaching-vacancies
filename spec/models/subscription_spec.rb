@@ -112,10 +112,13 @@ RSpec.describe Subscription do
       before do
         YAML.unsafe_load_file(Rails.root.join("spec/fixtures/polygons.yml")).map(&:attributes).each { |s| LocationPolygon.create!(s) }
         YAML.unsafe_load_file(Rails.root.join("spec/fixtures/liverpool_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
+        YAML.unsafe_load_file(Rails.root.join("spec/fixtures/basildon_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
         create(:vacancy, :published_slugged, slug: "liv", contact_number: "0", organisations: [liverpool_school], job_roles: %w[headteacher], visa_sponsorship_available: false, ect_status: :ect_unsuitable, subjects: %w[German], phases: %w[secondary], working_patterns: %w[full_time])
+        create(:vacancy, :published_slugged, slug: "bas", contact_number: "1", organisations: [basildon_school], job_roles: %w[headteacher], phases: %w[secondary], subjects: nil, ect_status: :ect_unsuitable)
       end
 
       let(:liverpool_school) { School.find_by!(town: "Liverpool") }
+      let(:basildon_school) { School.find_by!(town: "Basildon") }
 
       context "with keyword" do
         let(:subscription) { create(:daily_subscription, keyword: keyword) }
@@ -144,13 +147,10 @@ RSpec.describe Subscription do
 
       context "with location" do
         before do
-          YAML.unsafe_load_file(Rails.root.join("spec/fixtures/basildon_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
           YAML.unsafe_load_file(Rails.root.join("spec/fixtures/st_albans_schools.yml")).map(&:attributes).each { |s| School.create!(s) }
-          create(:vacancy, :published_slugged, slug: "bas", contact_number: "1", organisations: [basildon_school])
           create(:vacancy, :published_slugged, slug: "sta", contact_number: "2", organisations: [st_albans_school])
         end
 
-        let(:basildon_school) { School.find_by!(town: "Basildon") }
         let(:st_albans_school) { School.find_by!(town: "St Albans") }
         let(:liverpool_vacancy) { Vacancy.find_by!(contact_number: "0") }
         let(:basildon_vacancy) { Vacancy.find_by!(contact_number: "1") }
@@ -223,10 +223,10 @@ RSpec.describe Subscription do
 
       context "with teaching job roles" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "1", job_roles: %w[teacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, contact_number: "teach1", job_roles: %w[teacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
         end
 
-        let(:teacher_vacancy) { Vacancy.find_by!(contact_number: "1") }
+        let(:teacher_vacancy) { Vacancy.find_by!(contact_number: "teach1") }
         let(:subscription) { create(:subscription, teaching_job_roles: %w[teacher], frequency: :daily) }
 
         it "only finds the teaching job" do
