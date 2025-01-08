@@ -618,6 +618,7 @@ en:
         grade: Grade (optional)
         year_awarded: Year awarded
         year_completed_hint: For example, 1998
+        course_length: Course length
 
 
       personal_details_form:
