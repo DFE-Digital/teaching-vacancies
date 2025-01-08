@@ -19,35 +19,27 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def create
-    @vacancy = Vacancy.new(create_vacancy_params)
+    result = Publishers::AtsApi::V1::CreateVacancyService.new(permitted_vacancy_params).call
 
-    if Vacancy.exists?(external_reference: @vacancy.external_reference)
-      existing_vacancy = Vacancy.find_by(external_reference: @vacancy.external_reference)
-      headers["Link"] = "<#{vacancy_url(existing_vacancy)}>; rel=\"existing\""
-      render json: {
-        error: "A vacancy with the provided external reference already exists",
-      }, status: :conflict
-      return
+    if result[:headers]
+      headers.merge!(result[:headers])
     end
 
-    if @vacancy.save
-      render json: { id: @vacancy.id }, status: :created
-    else
-      render_validation_errors(@vacancy)
-    end
+    render result.slice(:json, :status)
   end
 
   def update
-    @vacancy = vacancy
+    vacancy = Vacancy.find(params[:id])
+    result = Publishers::AtsApi::V1::UpdateVacancyService.new(vacancy, params.fetch(:vacancy)).call
 
-    respond_to(&:json)
+    render result.slice(:json, :status)
   end
 
   def destroy; end
 
   private
 
-  def required_create_vacancy_keys
+  def required_vacancy_keys
     %i[
       external_advert_url
       expires_at
@@ -66,39 +58,12 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def permitted_vacancy_params
-    missing_keys = required_create_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
+    missing_keys = required_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
     raise ActionController::ParameterMissing, "Missing required parameters: #{missing_keys.join(', ')}" if missing_keys.any?
 
     params.fetch(:vacancy).permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
                                       :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
                                       job_roles: [], working_patterns: [], phases: [], schools: [:trust_uid, { school_urns: [] }])
-  end
-
-  def create_vacancy_params
-    organisations = fetch_organisations(permitted_vacancy_params[:schools])
-    raise ActiveRecord::RecordNotFound, "No valid organisations found" if organisations.blank?
-
-    permitted_vacancy_params[:publish_on] ||= Time.zone.today.to_s
-    permitted_vacancy_params[:working_patterns] ||= []
-    permitted_vacancy_params[:phases] ||= []
-
-    permitted_vacancy_params.except(:schools, :trust_uid).merge(organisations: organisations)
-  end
-
-  def fetch_organisations(school_params)
-    return [] unless school_params
-
-    if school_params[:trust_uid].present?
-      SchoolGroup.trusts.find_by(uid: school_params[:trust_uid]).schools.where(urn: school_params[:school_urns])
-    else
-      School.where(urn: school_params[:school_urns])
-    end
-  end
-
-  def render_validation_errors(vacancy)
-    render json: {
-      errors: vacancy.errors.full_messages.map { |msg| { error: msg } },
-    }, status: :unprocessable_entity
   end
 
   def vacancies
