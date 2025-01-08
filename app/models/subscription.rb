@@ -55,10 +55,6 @@ class Subscription < ApplicationRecord
     alert_runs.find_by(run_on: Date.current)
   end
 
-  def alert_run_today?
-    alert_run_today.present?
-  end
-
   def create_alert_run
     alert_runs.find_or_create_by(run_on: Date.current)
   end
