@@ -41,13 +41,13 @@ class Jobseekers::JobApplications::TrainingAndCpdsController < Jobseekers::Profi
     when "create", "update"
       training_and_cpd_form_params
     when "edit"
-      training_and_cpd.slice(:name, :provider, :grade, :year_awarded)
+      training_and_cpd.slice(:name, :provider, :grade, :year_awarded, :course_length)
     end
   end
 
   def training_and_cpd_form_params
     params.require(:jobseekers_training_and_cpd_form)
-          .permit(:name, :provider, :grade, :year_awarded)
+          .permit(:name, :provider, :grade, :year_awarded, :course_length)
   end
 
   def training_and_cpd
