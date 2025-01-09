@@ -67,7 +67,8 @@ class Subscription < ApplicationRecord
 
   def vacancies_matching(default_scope)
     scope = default_scope
-    criteria = search_criteria.symbolize_keys
+    # ignore legacy sorting criteria
+    criteria = search_criteria.symbolize_keys.except(:jobs_sort)
     scope, criteria = handle_location(scope, criteria)
 
     scope.select do |vacancy|
