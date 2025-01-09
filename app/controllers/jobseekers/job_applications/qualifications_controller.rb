@@ -3,7 +3,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
 
   helper_method :back_path, :job_application, :qualification, :qualification_form_param_key
 
-  before_action :set_category_and_form, except: %i[destroy edit new select_category submit_category]
+  before_action :set_category_and_form, only: %i[create update]
 
   def select_category
     @form = Jobseekers::Qualifications::CategoryForm.new
@@ -70,7 +70,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def set_category_and_form
-    @category = action_name.in?(%w[edit update]) ? qualification.category : category_param
+    @category = action_name.in?(%w[update]) ? qualification.category : category_param
     @form = category_form_class(@category).new(qualification_params)
   end
 
