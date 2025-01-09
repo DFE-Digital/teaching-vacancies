@@ -147,6 +147,17 @@ shared:
     - training_and_cpds_section_completed
     - imported_steps
     - following_religion
+    - religious_reference_type
+    - faith
+    - place_of_worship
+    - religious_referee_name
+    - religious_referee_address
+    - religious_referee_role
+    - religious_referee_email
+    - religious_referee_phone
+    - baptism_address
+    - baptism_date
+    - ethos_and_aims
   job_preferences_locations:
     - id
     - job_preferences_id
