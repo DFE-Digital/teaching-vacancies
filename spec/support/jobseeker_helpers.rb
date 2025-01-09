@@ -110,7 +110,7 @@ module JobseekerHelpers
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Maths"
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][grade]", with: "110%"
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][awarding_body]", with: "Cambridge Board"
-    find("#add_subject").click
+    find_by_id("add_subject").click
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][subject]", with: "PE"
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "90%"
     fill_in "School, college, or other organisation", with: "Churchill School for Gifted Macaques"

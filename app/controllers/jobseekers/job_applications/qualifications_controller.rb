@@ -1,9 +1,9 @@
 class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseController
   include Jobseekers::QualificationFormConcerns
 
-  helper_method :back_path, :job_application, :qualification, :qualification_form_param_key
+  helper_method :back_path, :job_application, :qualification_form_param_key
 
-  before_action :set_category_and_form, only: %i[create update]
+  before_action :set_qualification, only: %i[edit update destroy]
 
   def select_category
     @form = Jobseekers::Qualifications::CategoryForm.new
@@ -26,8 +26,8 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def edit
-    @category = qualification.category
-    edit_attributes = qualification
+    @category = @qualification.category
+    edit_attributes = @qualification
                         .slice(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, :qualification_results)
                         .reject { |_, v| v.blank? && v != false }
 
@@ -35,6 +35,9 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def create
+    @category = category_param
+    @form = category_form_class(@category).new(qualification_params)
+
     if @form.valid?
       job_application.qualifications.create(qualification_params)
       redirect_to back_path
@@ -44,8 +47,11 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def update
+    @category = @qualification.category
+    @form = category_form_class(@category).new(qualification_params)
+
     if @form.valid?
-      qualification.update(qualification_params)
+      @qualification.update(qualification_params)
       redirect_to back_path
     else
       render :edit, status: :unprocessable_entity
@@ -53,7 +59,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
   end
 
   def destroy
-    qualification.destroy
+    @qualification.destroy
     redirect_to back_path, success: t(".success")
   end
 
@@ -69,11 +75,6 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
           .permit(:category, :finished_studying, :finished_studying_details, :grade, :institution, :name, :subject, :year, qualification_results_attributes: %i[id subject grade awarding_body])
   end
 
-  def set_category_and_form
-    @category = action_name.in?(%w[update]) ? qualification.category : category_param
-    @form = category_form_class(@category).new(qualification_params)
-  end
-
   def category_param
     params.permit(:category)[:category]
   end
@@ -86,7 +87,7 @@ class Jobseekers::JobApplications::QualificationsController < Jobseekers::BaseCo
     @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
   end
 
-  def qualification
-    @qualification ||= job_application.qualifications.find(params[:id])
+  def set_qualification
+    @qualification = job_application.qualifications.find(params[:id])
   end
 end
