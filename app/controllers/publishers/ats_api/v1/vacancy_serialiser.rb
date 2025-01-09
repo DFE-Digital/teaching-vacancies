@@ -3,6 +3,8 @@ class Publishers::AtsApi::V1::VacancySerialiser
     @vacancy = vacancy
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def call
     {
       id: vacancy.id,
@@ -27,6 +29,8 @@ class Publishers::AtsApi::V1::VacancySerialiser
       subjects: vacancy.subjects,
     }
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   private
 

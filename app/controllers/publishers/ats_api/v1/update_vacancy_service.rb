@@ -19,7 +19,6 @@ module Publishers
 
         attr_reader :vacancy, :params
 
-
         def permitted_params
           organisations = fetch_organisations(params[:schools])
           raise ActiveRecord::RecordNotFound, "No valid organisations found" if organisations.blank?

@@ -214,7 +214,7 @@ RSpec.configure do |config|
                 items: { type: :string },
                 nullable: true,
               },
-             },
+            },
             required: %w[id],
           },
           bad_request_error: {

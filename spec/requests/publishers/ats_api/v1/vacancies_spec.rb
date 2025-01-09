@@ -7,7 +7,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   let(:"X-Api-Key") { client.api_key }
 
   path "/ats-api/v1/vacancies" do
-
     get("list vacancies") do
       tags "Vacancies"
       description "list all the vacancies created from the client's ATS"
@@ -350,7 +349,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                        required: true,
                        description: "Link to the existing vacancy",
                        example: '</ats-api/v1/vacancies/123>; rel="existing"'
-
 
         let(:school) { create(:school) }
         let(:source) { create(:vacancy, :external, external_reference: "Ext-ref") }

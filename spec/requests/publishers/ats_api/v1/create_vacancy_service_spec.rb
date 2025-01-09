@@ -20,7 +20,7 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
       contract_type: "fixed_term",
       phases: %w[primary],
       working_patterns: working_patterns,
-      expires_at: Date.today + 30,
+      expires_at: Time.zone.today + 30,
       skills_and_experience: "Expert in teaching",
       salary: "£30,000 - £40,000",
       schools: school_urns,
@@ -80,8 +80,8 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
               { error: "job_advert: Enter a job advert" },
               { error: "job_roles: Select a job role" },
               { error: "working_patterns: Select a working pattern" },
-            ]
-          }
+            ],
+          },
         }
       end
 

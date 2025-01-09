@@ -583,8 +583,11 @@ RSpec.describe Vacancy do
     context "when the organisation is a school group with a UID" do
       let(:organisations) { [school_group] }
       let(:school_group) { create(:trust, uid: "12345") }
-      let!(:school) { create(:school, school_groups: [school_group], urn: "100002") }
-      let!(:school2) { create(:school, school_groups: [school_group], urn: "100003") }
+
+      before do
+        create(:school, school_groups: [school_group], urn: "100002")
+        create(:school, school_groups: [school_group], urn: "100003")
+      end
 
       it "returns an array with trust_uid and school_urns" do
         expect(vacancy.schools.sort).to eq([{ trust_uid: "12345", school_urns: %w[100002 100003].sort }])

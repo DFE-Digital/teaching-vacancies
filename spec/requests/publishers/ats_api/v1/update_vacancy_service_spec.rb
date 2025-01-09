@@ -61,8 +61,8 @@ RSpec.describe Publishers::AtsApi::V1::UpdateVacancyService do
               { error: "job_advert: Enter a job advert" },
               { error: "job_roles: Select a job role" },
               { error: "working_patterns: Select a working pattern" },
-            ]
-          }
+            ],
+          },
         }
       end
 
