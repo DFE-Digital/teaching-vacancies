@@ -3,7 +3,7 @@ class Jobseekers::Profiles::QualificationsController < Jobseekers::ProfilesContr
 
   helper_method :jobseeker_profile, :qualification, :qualification_form_param_key
 
-  before_action :set_form_and_category, except: %i[review confirm_destroy destroy select_category submit_category]
+  before_action :set_form_and_category, only: %i[new create edit update]
 
   def select_category
     @form = Jobseekers::Qualifications::CategoryForm.new
