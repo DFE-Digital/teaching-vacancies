@@ -88,10 +88,9 @@ class Subscription < ApplicationRecord
       if query.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(query)
         vacancies
       else
-        polygon = LocationPolygon.buffered(radius_in_miles).with_name(query)
-        if polygon.present?
-          polygon_area = polygon.area
-          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.valid? && polygon_area.contains?(point) } }
+        polygon_area = LocationPolygon.buffered(radius_in_miles).with_name(query)&.area
+        if polygon_area.present? && polygon_area.valid?
+          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.contains?(point) } }
         else
           radius_in_metres = convert_miles_to_metres radius_in_miles
           coordinates = Geocoding.new(query).coordinates
