@@ -8,9 +8,7 @@ module Publishers
         end
 
         def call
-          validate_full_payload!
-
-          if @vacancy.update(permitted_params)
+          if vacancy.update(permitted_params)
             success_response
           else
             validation_error_response
@@ -21,41 +19,32 @@ module Publishers
 
         attr_reader :vacancy, :params
 
-        def validate_full_payload!
-          missing_keys = required_keys - params.keys.map(&:to_sym)
-          if missing_keys.any?
-            raise ActionController::ParameterMissing, "Missing required parameters: #{missing_keys.join(', ')}"
-          end
-        end
-
-        def required_keys
-          %i[
-            external_advert_url
-            expires_at
-            job_title
-            skills_and_experience
-            salary
-            visa_sponsorship_available
-            external_reference
-            is_job_share
-            job_roles
-            working_patterns
-            contract_type
-            phases
-            schools
-          ]
-        end
 
         def permitted_params
-          params.permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
-                        :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
-                        job_roles: [], working_patterns: [], phases: [], schools: [:trust_uid, { school_urns: [] }])
+          organisations = fetch_organisations(params[:schools])
+          raise ActiveRecord::RecordNotFound, "No valid organisations found" if organisations.blank?
+
+          params[:publish_on] ||= Time.zone.today.to_s
+          params[:working_patterns] ||= []
+          params[:phases] ||= []
+
+          params.except(:schools, :trust_uid).merge(organisations: organisations)
+        end
+
+        def fetch_organisations(school_params)
+          return [] unless school_params
+
+          if school_params[:trust_uid].present?
+            SchoolGroup.trusts.find_by(uid: school_params[:trust_uid]).schools.where(urn: school_params[:school_urns])
+          else
+            School.where(urn: school_params[:school_urns])
+          end
         end
 
         def success_response
           {
             status: :ok,
-            json: Publishers::AtsApi::V1::VacancySerialiser.new(vacancy: @vacancy).call,
+            json: Publishers::AtsApi::V1::VacancySerialiser.new(vacancy: vacancy).call,
           }
         end
 
@@ -63,7 +52,7 @@ module Publishers
           {
             status: :unprocessable_entity,
             json: {
-              errors: @vacancy.errors.messages.flat_map do |attribute, messages|
+              errors: vacancy.errors.messages.flat_map do |attribute, messages|
                 messages.map { |message| { error: "#{attribute}: #{message}" } }
               end,
             },

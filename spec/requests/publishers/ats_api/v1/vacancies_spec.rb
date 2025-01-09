@@ -157,8 +157,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                     type: :array,
                     minItems: 1,
                     items: {
-                      type: :integer,
-                      example: 12_345,
+                      type: :string,
+                      example: "12345",
                     },
                   },
                 },
@@ -169,15 +169,15 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                 required: %i[trust_uid school_urns],
                 properties: {
                   trust_uid: {
-                    type: :integer,
-                    example: 12_345,
+                    type: :string,
+                    example: "12345",
                   },
                   school_urns: {
                     type: :array,
                     minItems: 0,
                     items: {
-                      type: :integer,
-                      example: 12_345,
+                      type: :string,
+                      example: "12345",
                     },
                   },
                 },
@@ -556,8 +556,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                     type: :array,
                     minItems: 1,
                     items: {
-                      type: :integer,
-                      example: 12_345,
+                      type: :string,
+                      example: "12345",
                     },
                   },
                 },
@@ -568,15 +568,15 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                 required: %i[trust_uid school_urns],
                 properties: {
                   trust_uid: {
-                    type: :integer,
-                    example: 12_345,
+                    type: :string,
+                    example: "12345",
                   },
                   school_urns: {
                     type: :array,
                     minItems: 0,
                     items: {
-                      type: :integer,
-                      example: 12_345,
+                      type: :string,
+                      example: "12345",
                     },
                   },
                 },
@@ -672,133 +672,201 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         },
       }
 
-      parameter name: :vacancy, in: :body, schema: {
-        type: :object,
-        additionalProperties: false,
-        required: %i[external_advert_url
-                     expires_at
-                     job_title
-                     job_advert
-                     skills_and_experience
-                     salary
-                     visa_sponsorship_available
-                     external_reference
-                     is_job_share
-                     job_roles
-                     working_patterns
-                     contract_type
-                     phases
-                     schools],
-        properties: {
-          external_advert_url: { type: :string, example: "https://example.com/jobs/123" },
-          expires_at: { type: :string, format: :date },
-          job_title: { type: :string, example: "Updated Job Title" },
-          job_advert: { type: :string, example: "Updated Job Advert" },
-          skills_and_experience: { type: :string, example: "Updated skills and experience" },
-          salary: { type: :string, example: "Updated salary" },
-          visa_sponsorship_available: { type: :boolean },
-          external_reference: { type: :string, example: "Updated reference" },
-          is_job_share: { type: :boolean },
-          job_roles: { type: :array, items: { type: :string }, example: ["teacher"] },
-          working_patterns: { type: :array, items: { type: :string }, example: ["full_time"] },
-          contract_type: { type: :string, example: "permanent" },
-          phases: { type: :array, items: { type: :string }, example: ["primary"] },
-          schools: {
-            oneOf: [
-              { type: :object, required: %w[school_urns], properties: { school_urns: { type: :array, items: { type: :integer }, example: [12345] } } },
-              { type: :object, required: %w[trust_uid school_urns], properties: { trust_uid: { type: :integer, example: 12345 }, school_urns: { type: :array, items: { type: :integer }, example: [12345] } } },
-            ],
-          },
-        },
-      }
-
       response(200, "vacancy successfully updated") do
         schema "$ref" => "#/components/schemas/vacancy"
+
+        let(:vacancy) do
+          {
+            vacancy: {
+              external_advert_url: "https://example.com/jobs/123",
+              expires_at: "2022-01-01",
+              job_title: "Teacher of Geography",
+              job_advert: "Teacher of Geography",
+              skills_and_experience: "We're looking for a dedicated Teacher of Geography",
+              salary: "£12,345 to £67,890",
+              visa_sponsorship_available: true,
+              external_reference: "REF1234HYZ",
+              is_job_share: true,
+              job_roles: %w[teacher],
+              working_patterns: %w[full_time],
+              contract_type: "permanent",
+              phases: %w[secondary],
+              schools: {
+                school_urns: [create(:school).urn],
+              },
+            },
+          }
+        end
 
         run_test!
       end
 
-      # response(400, "Bad Request error") do
-      #   schema "$ref" => "#/components/schemas/bad_request_error"
-      #
-      #   run_test!
-      # end
+      response(400, "Bad Request error") do
+        schema "$ref" => "#/components/schemas/bad_request_error"
 
-      # response(401, "Invalid credentials") do
-      #   schema "$ref" => "#/components/schemas/unauthorized_error"
-      #
-      #   let(:"X-Api-Key") { "wrong-key" }
-      #   run_test!
-      # end
-      #
-      # response(404, "Vacancy not found") do
-      #   schema "$ref" => "#/components/schemas/not_found_error"
-      #
-      #   let(:id) { "123" }
-      #   run_test!
-      # end
+        let(:school) { create(:school) }
+        let(:source) { build(:vacancy, :external) }
+        let(:school_urns) { [school].map { |school| school.urn.to_i } }
+        let(:vacancy) do
+          {
+            vacancy: {
+              skills_and_experience: source.skills_and_experience,
+              salary: source.salary,
+              school_urns: school_urns,
+              job_roles: source.job_roles,
+              working_patterns: source.working_patterns,
+              contract_type: source.contract_type,
+              phases: source.phases,
+            },
+          }
+        end
 
-      # response(422, "Validation error") do
-      #   schema "$ref" => "#/components/schemas/validation_error"
-      #
-      #   let(:id) { create(:vacancy, :external).id }
-      #   let(:vacancy) do
-      #     { vacancy: { external_advert_url: nil, job_title: nil } }
-      #   end
-      #   run_test!
-      # end
-      #
-      # response(500, "Internal server error") do
-      #   schema "$ref" => "#/components/schemas/internal_server_error"
-      #
-      #   let(:id) { "123" }
-      #
-      #   before do
-      #     allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
-      #   end
-      #
-      #   run_test!
-      # end
+        run_test!
+      end
+
+      response(401, "Invalid credentials") do
+        schema "$ref" => "#/components/schemas/unauthorized_error"
+
+        let(:vacancy) { {} }
+
+        let(:"X-Api-Key") { "wrong-key" }
+        run_test!
+      end
+
+      response(404, "Vacancy not found") do
+        schema "$ref" => "#/components/schemas/not_found_error"
+
+        let(:id) { "123" }
+
+        let(:vacancy) do
+          {
+            vacancy: {
+              external_advert_url: "https://example.com/jobs/123",
+              expires_at: "2022-01-01",
+              job_title: "Teacher of Geography",
+              job_advert: "Teacher of Geography",
+              skills_and_experience: "We're looking for a dedicated Teacher of Geography",
+              salary: "£12,345 to £67,890",
+              visa_sponsorship_available: true,
+              external_reference: "REF1234HYZ",
+              is_job_share: true,
+              job_roles: %w[teacher],
+              working_patterns: %w[full_time],
+              contract_type: "permanent",
+              phases: %w[secondary],
+              schools: {
+                school_urns: [create(:school).urn],
+              },
+            },
+          }
+        end
+        run_test!
+      end
+
+      response(422, "Validation error") do
+        schema "$ref" => "#/components/schemas/validation_error"
+
+        let(:id) { create(:vacancy, :external).id }
+
+        let(:vacancy) do
+          {
+            vacancy: {
+              external_advert_url: "https://example.com/jobs/123",
+              expires_at: "2022-01-01",
+              job_title: nil,
+              job_advert: nil,
+              skills_and_experience: "We're looking for a dedicated Teacher of Geography",
+              salary: "£12,345 to £67,890",
+              visa_sponsorship_available: true,
+              external_reference: "REF1234HYZ",
+              is_job_share: true,
+              job_roles: %w[teacher],
+              working_patterns: %w[full_time],
+              contract_type: "permanent",
+              phases: %w[secondary],
+              schools: {
+                school_urns: [create(:school).urn],
+              },
+            },
+          }
+        end
+        run_test!
+      end
+
+      response(500, "Internal server error") do
+        schema "$ref" => "#/components/schemas/internal_server_error"
+
+        let(:id) { "123" }
+
+        let(:vacancy) do
+          {
+            vacancy: {
+              external_advert_url: "https://example.com/jobs/123",
+              expires_at: "2022-01-01",
+              job_title: "Teacher of Geography",
+              job_advert: "Teacher of Geography",
+              skills_and_experience: "We're looking for a dedicated Teacher of Geography",
+              salary: "£12,345 to £67,890",
+              visa_sponsorship_available: true,
+              external_reference: "REF1234HYZ",
+              is_job_share: true,
+              job_roles: %w[teacher],
+              working_patterns: %w[full_time],
+              contract_type: "permanent",
+              phases: %w[secondary],
+              schools: {
+                school_urns: [create(:school).urn],
+              },
+            },
+          }
+        end
+
+        before do
+          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+        end
+
+        run_test!
+      end
     end
 
-    # delete("delete vacancy") do
-    #   tags "Vacancies"
-    #   description "update the vacancy with the given id"
-    #
-    #   consumes "application/json"
-    #
-    #   security [api_key: []]
-    #
-    #   response(204, "vacancy successfully deleted") do
-    #     run_test!
-    #   end
-    #
-    #   response(401, "Invalid credentials") do
-    #     schema "$ref" => "#/components/schemas/unauthorized_error"
-    #
-    #     let(:"X-Api-Key") { "wrong-key" }
-    #     run_test!
-    #   end
-    #
-    #   response(404, "Vacancy not found") do
-    #     schema "$ref" => "#/components/schemas/not_found_error"
-    #
-    #     let(:id) { "123" }
-    #     run_test!
-    #   end
-    #
-    #   response(500, "Internal server error") do
-    #     schema "$ref" => "#/components/schemas/internal_server_error"
-    #
-    #     let(:id) { "123" }
-    #
-    #     before do
-    #       allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
-    #     end
-    #
-    #     run_test!
-    #   end
-    # end
+    delete("delete vacancy") do
+      tags "Vacancies"
+      description "update the vacancy with the given id"
+
+      consumes "application/json"
+
+      security [api_key: []]
+
+      response(204, "vacancy successfully deleted") do
+        run_test!
+      end
+
+      response(401, "Invalid credentials") do
+        schema "$ref" => "#/components/schemas/unauthorized_error"
+
+        let(:"X-Api-Key") { "wrong-key" }
+        run_test!
+      end
+
+      response(404, "Vacancy not found") do
+        schema "$ref" => "#/components/schemas/not_found_error"
+
+        let(:id) { "123" }
+        run_test!
+      end
+
+      response(500, "Internal server error") do
+        schema "$ref" => "#/components/schemas/internal_server_error"
+
+        let(:id) { "123" }
+
+        before do
+          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+        end
+
+        run_test!
+      end
+    end
   end
 end
 # rubocop:enable RSpec/VariableName

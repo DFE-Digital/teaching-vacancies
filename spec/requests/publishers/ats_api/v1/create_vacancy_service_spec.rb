@@ -3,17 +3,44 @@ require "rails_helper"
 RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
   subject(:service) { described_class.new(params) }
 
+  let(:school) { create(:school) }
+  let(:external_reference) { "new-ref" }
+  let(:school_urns) { { school_urns: [school.urn] } }
+  let(:job_title) { "A job title" }
+  let(:job_advert) { "A job advert" }
+  let(:job_roles) { %w[teacher] }
+  let(:working_patterns) { %w[full_time] }
   let(:params) do
     {
-      external_reference: "existing-ref",
-      schools: { school_urns: [school.urn] },
+      external_reference: external_reference,
+      job_title: job_title,
+      job_advert: job_advert,
+      external_advert_url: "https://example.com",
+      job_roles: job_roles,
+      contract_type: "fixed_term",
+      phases: %w[primary],
+      working_patterns: working_patterns,
+      expires_at: Date.today + 30,
+      skills_and_experience: "Expert in teaching",
+      salary: "£30,000 - £40,000",
+      schools: school_urns,
     }
   end
-  let(:school) { create(:school) }
-  let(:school_group) { create(:school_group, schools: [school]) }
 
   describe "#call" do
+    context "when the vacancy is successfully created" do
+      it "returns a success response" do
+        expect(service.call).to eq(status: :created, json: { id: Vacancy.last.id })
+      end
+
+      it "creates a vacancy with the correct external reference" do
+        service.call
+        expect(Vacancy.last.external_reference).to eq("new-ref")
+      end
+    end
+
     context "when a vacancy with the same external reference exists" do
+      let(:external_reference) { "existing-ref" }
       let!(:existing_vacancy) { create(:vacancy, :external, external_reference: "existing-ref") }
       let(:expected_response) do
         {
@@ -31,60 +58,18 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
     end
 
     context "when organisations are invalid" do
-      let(:params) do
-        {
-          external_reference: "new-ref",
-          schools: { school_urns: [9999] },
-        }
-      end
+      let(:school_urns) { { school_urns: [9999] } }
 
       it "raises ActiveRecord::RecordNotFound" do
         expect { service.call }.to raise_error(ActiveRecord::RecordNotFound, "No valid organisations found")
       end
     end
 
-    context "when the vacancy is successfully created" do
-      let(:params) do
-        {
-          external_reference: "new-ref",
-          job_title: "Teacher",
-          job_advert: "A job advert",
-          external_advert_url: "https://example.com",
-          job_roles: %w[teacher],
-          contract_type: "fixed_term",
-          phases: %w[primary],
-          working_patterns: %w[full_time],
-          expires_at: Date.today + 30,
-          skills_and_experience: "Expert in teaching",
-          salary: "£30,000 - £40,000",
-          schools: { school_urns: [school.urn] },
-        }
-      end
-
-      it "returns a success response" do
-        expect(service.call).to eq(status: :created, json: { id: Vacancy.last.id })
-      end
-
-      it "creates a vacancy with the correct external reference" do
-        service.call
-        expect(Vacancy.last.external_reference).to eq("new-ref")
-      end
-    end
-
     context "when the vacancy fails validation" do
-      let(:params) do
-        {
-          external_reference: "new-ref",
-          job_title: nil,
-          expires_at: Date.today + 30,
-          external_advert_url: "https://example.com",
-          skills_and_experience: "Expert in teaching",
-          contract_type: "fixed_term",
-          salary: "£30,000 - £40,000",
-          phases: %w[primary],
-          schools: { school_urns: [school.urn] },
-        }
-      end
+      let(:job_title) { nil }
+      let(:job_advert) { nil }
+      let(:job_roles) { [] }
+      let(:working_patterns) { [] }
 
       let(:expected_response) do
         {

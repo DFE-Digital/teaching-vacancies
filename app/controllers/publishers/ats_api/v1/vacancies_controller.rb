@@ -30,12 +30,17 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   def update
     vacancy = Vacancy.find(params[:id])
-    result = Publishers::AtsApi::V1::UpdateVacancyService.new(vacancy, params.fetch(:vacancy)).call
+    result = Publishers::AtsApi::V1::UpdateVacancyService.new(vacancy, permitted_vacancy_params).call
 
     render result.slice(:json, :status)
   end
 
-  def destroy; end
+  def destroy
+    vacancy = Vacancy.find(params[:id])
+    vacancy.destroy!
+
+    head :no_content
+  end
 
   private
 
@@ -62,8 +67,8 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     raise ActionController::ParameterMissing, "Missing required parameters: #{missing_keys.join(', ')}" if missing_keys.any?
 
     params.fetch(:vacancy).permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
-                                      :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
-                                      job_roles: [], working_patterns: [], phases: [], schools: [:trust_uid, { school_urns: [] }])
+                                  :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
+                                  job_roles: [], working_patterns: [], phases: [], schools: [:trust_uid, { school_urns: [] }])
   end
 
   def vacancies
