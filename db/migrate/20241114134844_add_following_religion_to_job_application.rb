@@ -5,14 +5,15 @@ class AddFollowingReligionToJobApplication < ActiveRecord::Migration[7.1]
     add_column :job_applications, :following_religion, :boolean
     # rubocop:enable Rails/ThreeStateBooleanColumn
     add_column :job_applications, :religious_reference_type, :integer
-    add_column :job_applications, :faith, :string
-    add_column :job_applications, :place_of_worship, :string
-    add_column :job_applications, :religious_referee_name, :string
-    add_column :job_applications, :religious_referee_address, :string
-    add_column :job_applications, :religious_referee_role, :string
-    add_column :job_applications, :religious_referee_email, :string
-    add_column :job_applications, :religious_referee_phone, :string
-    add_column :job_applications, :baptism_address, :string
-    add_column :job_applications, :baptism_date, :date
+    add_column :job_applications, :faith_ciphertext, :string
+    add_column :job_applications, :place_of_worship_ciphertext, :string
+    add_column :job_applications, :religious_referee_name_ciphertext, :string
+    add_column :job_applications, :religious_referee_address_ciphertext, :string
+    add_column :job_applications, :religious_referee_role_ciphertext, :string
+    add_column :job_applications, :religious_referee_email_ciphertext, :string
+    add_column :job_applications, :religious_referee_phone_ciphertext, :string
+    add_column :job_applications, :baptism_address_ciphertext, :string
+    # This is a date, but lockbox needs all encrypted storage to be strings
+    add_column :job_applications, :baptism_date_ciphertext, :string
   end
 end
