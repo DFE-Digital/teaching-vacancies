@@ -11,4 +11,8 @@ class SchoolGroup < Organisation
 
     super && schools.all?(&:profile_complete?)
   end
+
+  def faith_school?
+    false
+  end
 end

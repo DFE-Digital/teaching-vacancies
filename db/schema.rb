@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_13_141402) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_14_162136) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -247,6 +247,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_141402) do
     t.boolean "training_and_cpds_section_completed"
     t.integer "imported_steps", default: [], null: false, array: true
     t.datetime "interviewing_at"
+    t.boolean "following_religion"
+    t.integer "religious_reference_type"
+    t.string "faith"
+    t.string "place_of_worship"
+    t.string "religious_referee_name"
+    t.string "religious_referee_address"
+    t.string "religious_referee_role"
+    t.string "religious_referee_email"
+    t.string "religious_referee_phone"
+    t.string "baptism_address"
+    t.date "baptism_date"
+    t.string "ethos_and_aims"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -684,6 +696,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_13_141402) do
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"
+    t.integer "religion_type"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
     t.index ["geolocation", "expires_at", "publish_on"], name: "index_vacancies_on_geolocation_and_expires_at_and_publish_on", using: :gist
