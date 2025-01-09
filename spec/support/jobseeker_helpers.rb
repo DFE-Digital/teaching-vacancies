@@ -44,11 +44,12 @@ module JobseekerHelpers
     fill_in "jobseekers_job_application_details_employment_form[ended_on(2i)]", with: end_month
   end
 
-  def fill_in_training_and_cpds(name: "Fire safety", provider: "TrainingProvider ltd", grade: "Pass", year_awarded: "2020")
+  def fill_in_training_and_cpds(name: "Fire safety", provider: "TrainingProvider ltd", grade: "Pass", year_awarded: "2020", course_length: "1 year")
     fill_in "Name of course or training", with: name
     fill_in "Training provider", with: provider
     fill_in "Grade", with: grade
     fill_in "Year awarded", with: year_awarded
+    fill_in "Course length", with: course_length
   end
 
   def fill_in_break_in_employment(start_year: "2020", start_month: "08", end_year: "2020", end_month: "12")
