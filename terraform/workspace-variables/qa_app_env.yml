@@ -2,7 +2,7 @@
 APP_ROLE: qa
 AUTHENTICATION_FALLBACK: false
 AUTHENTICATION_FALLBACK_FOR_JOBSEEKERS: false
-BIG_QUERY_DATASET: staging_dataset
+BIGQUERY_DATASET: staging_dataset
 DFE_SIGN_IN_ISSUER: https://test-oidc.signin.education.gov.uk
 DFE_SIGN_IN_REDIRECT_URL: https://qa.teaching-vacancies.service.gov.uk/auth/dfe/callback
 DFE_SIGN_IN_REGISTRATION_URL: https://test-profile.signin.education.gov.uk/register

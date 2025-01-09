@@ -12,17 +12,14 @@ RSpec.describe "Publishers can shortlist a job application" do
     visit organisation_job_job_application_path(vacancy.id, job_application.id)
   end
 
-  it "shortlists the job application after confirmation" do
-    click_on I18n.t("buttons.shortlist")
-
-    expect(current_path).to eq(organisation_job_job_application_shortlist_path(vacancy.id, job_application.id))
-
-    fill_in "publishers_job_application_update_status_form[further_instructions]", with: "Some further instructions"
-    click_on I18n.t("buttons.shortlist")
+  it "shortlists the job application", :js do
+    click_on "Update application status"
+    expect(page).to have_no_css("strong.govuk-tag.govuk-tag--green.application-status", text: "shortlisted")
+    choose "Shortlisted"
+    click_on "Save and continue"
 
     expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
-    expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.update_status.shortlisted",
-                                        name: job_application.name))
+    expect(page).to have_css("strong.govuk-tag.govuk-tag--green.application-status", text: "shortlisted")
     expect(job_application.reload.status).to eq("shortlisted")
   end
 end

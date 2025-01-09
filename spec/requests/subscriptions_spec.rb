@@ -89,7 +89,9 @@ RSpec.describe "Subscriptions" do
     it "triggers a `job_alert_subscription_created` event" do
       subject
 
-      expect(:job_alert_subscription_created).to have_been_enqueued_as_analytics_events
+      expect(:job_alert_subscription_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+      )
     end
 
     context "with unsafe params" do
@@ -137,7 +139,9 @@ RSpec.describe "Subscriptions" do
     it "triggers a `job_alert_subscription_updated` event" do
       subject
 
-      expect(:job_alert_subscription_updated).to have_been_enqueued_as_analytics_events
+      expect(:job_alert_subscription_updated).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+      )
     end
 
     context "with unsafe params" do
@@ -163,7 +167,9 @@ RSpec.describe "Subscriptions" do
     it "triggers a `job_alert_subscription_unsubscribed` event" do
       subject
 
-      expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_analytics_events
+      expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+        with_data: %i[autopopulated frequency recaptcha_score search_criteria subscription_identifier],
+      )
     end
   end
 end

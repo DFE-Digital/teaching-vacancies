@@ -1,11 +1,7 @@
 require "rails_helper"
 
 RSpec.describe RemoveInvalidSubscriptionsJob do
-  before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(disable_expensive_jobs_enabled?) }
-
   context "when DisableExpensiveJobs is not enabled" do
-    let(:disable_expensive_jobs_enabled?) { false }
-
     let(:email_address1) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     let(:email_address2) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     let(:email_address3) { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
@@ -38,9 +34,7 @@ RSpec.describe RemoveInvalidSubscriptionsJob do
     end
   end
 
-  context "when DisabledExpensiveJobs is enabled" do
-    let(:disable_expensive_jobs_enabled?) { true }
-
+  context "when DisabledExpensiveJobs is enabled", :disable_expensive_jobs do
     it "does not perform the job" do
       expect(Notifications::Client).not_to receive(:new)
 

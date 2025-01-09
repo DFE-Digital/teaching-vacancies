@@ -44,10 +44,6 @@ Advisers can give you free one-to-one support with:
 
 You can chat by phone, text or email, as little or as often as you need.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/2NrLm_XId4k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
-[Read a transcript of the video](/transcripts/jobseekers/return-to-teaching-video-transcript)
-
 ### Eligibility if you qualified outside the UK
 
 If you qualified as a teacher outside the UK, to get a return to teaching adviser you will need:

@@ -33,7 +33,7 @@ RSpec.describe "Job applications" do
         it "triggers a `vacancy_apply_clicked` event" do
           get new_jobseekers_job_job_application_path(vacancy.id)
 
-          expect(:vacancy_apply_clicked).to have_been_enqueued_as_analytics_events
+          expect(:vacancy_apply_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual
         end
 
         context "when a job application for the job already exists" do

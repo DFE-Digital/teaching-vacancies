@@ -1,4 +1,5 @@
 - content_for :breadcrumbs do
+  nav aria-label="Breadcrumbs"
   = govuk_breadcrumbs breadcrumbs: { "#{t('jobs.dashboard.published.tab_heading')}": organisation_jobs_with_type_path(:published),
                                      "#{vacancy.job_title}": organisation_job_job_applications_path(vacancy.id),
                                      "#{job_application.name}": "" }
@@ -8,11 +9,7 @@ span.govuk-caption-l
 
 h1.govuk-heading-xl class="govuk-!-margin-bottom-5 govuk-!-margin-top-0"
   = job_application.name
-
-.application-status class="govuk-!-display-none-print"
-  span.govuk-body class="govuk-!-margin-right-5" = t(".status_heading")
-  = publisher_job_application_status_tag(job_application.status)
+  = publisher_job_application_status_tag(job_application.status, classes: ["govuk-!-margin-left-2"])
 
 = tabs do |tabs|
   - tabs.with_navigation_item text: t(".tabs.application"), link: organisation_job_job_application_path(vacancy.id, job_application)
-  - tabs.with_navigation_item text: t(".tabs.notes"), link: organisation_job_job_application_notes_path(vacancy.id, job_application), active: controller_name == "notes"

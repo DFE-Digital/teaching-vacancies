@@ -489,19 +489,19 @@ en:
     intro_html: >-
       Before listing any role at your school on Teaching Vacancies you must first read our %{link} and
       agree to abide by them.
-    intro_link_text: Terms and Conditions
+    intro_link_text: terms and conditions
     schools_section_html: 'Of particular importance is the section %{link} which includes:'
     schools_section_link_text: ‘terms and conditions for schools, trusts and local authorities’
-    label: I agree to all of the Terms and Conditions of the Teaching Vacancies service.
-    page_title: Terms and Conditions
-    please_accept: Please accept the Terms and Conditions
+    label: I agree to all of the terms and conditions of the Teaching Vacancies service.
+    page_title: Terms and conditions
+    please_accept: Please accept the terms and conditions
     read_html: >-
       Read our <a href='/pages/terms-and-conditions' class='govuk-link' target='blank'>terms and conditions</a>
     summary_list:
-      - Using the Service
-      - Unacceptable use
-      - Access to the Service
-      - Listing data
+      - using the service
+      - unacceptable use
+      - access to the service
+      - listing data
 
   updates:
     heading: Updates

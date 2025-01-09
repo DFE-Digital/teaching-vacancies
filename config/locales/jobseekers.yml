@@ -155,7 +155,7 @@ en:
             gaps: >-
               If you had a gap between finishing full-time education and starting work that you have not explained then please %{link} to give details about it
             gaps_link_text: click here
-          gap_with_duration: You have a gap in your work history (%{duration})
+          gap_with_duration: You have a gap in your work history from %{from} to %{to} (%{duration})
           heading: Work history
           no_employments: No employment specified
           step_title: Employment history
@@ -201,11 +201,6 @@ en:
           step_title: Professional status
           title: Professional status — Application
         qualifications:
-          description: >-
-            Enter your qualifications as completely as you can, including all GCSEs, A levels (or equivalents),
-            undergraduate and postgraduate degrees.
-          description_extra: >-
-            Please also specify any other qualifications where you showed skills that might help you in this role.
           heading: Qualifications
           no_qualifications: No qualifications specified
           step_title: Education and qualifications
@@ -404,7 +399,7 @@ en:
             a_level: Edit A Levels
             other_secondary: Edit secondary qualifications
             undergraduate: Edit undergraduate degree
-            postgraduate: Edit postgraduate degree
+            postgraduate: Edit postgraduate qualification
             other: Edit qualification or course
           title: Edit qualification — Application
         new:
@@ -415,9 +410,10 @@ en:
             a_level: Add A Levels
             other_secondary: Add secondary qualifications
             undergraduate: Add an undergraduate degree
-            postgraduate: Add a postgraduate degree
+            postgraduate: Add a postgraduate qualification
             other: Add a qualification or course
           title: Add a qualification — Application
+          hint: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
         select_category:
           <<: *qualifications_shared
           heading: Add a qualification
@@ -786,9 +782,10 @@ en:
             a_level: Add A Levels
             other_secondary: Add secondary qualifications
             undergraduate: Add an undergraduate degree
-            postgraduate: Add a postgraduate degree
+            postgraduate: Add a postgraduate qualification
             other: Add a qualification or course
           title: Add a qualification — Profile
+          hint: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
         edit:
           page_title: Qualifications
         review:

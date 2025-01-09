@@ -49,6 +49,7 @@ en:
     delete_photo: Delete photo
     delete_subject: Delete subject
     dismiss: Dismiss
+    download_pdf_application: Download application
     download_application: View a printable version of this application
     download_application_form: Download an application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)
@@ -77,6 +78,7 @@ en:
     save_and_finish_later: Save and finish later
     save_changes: Save changes
     save_employment: Save role
+    save_note: Save note
     save_qualification:
       one: Save qualification
       other: Save qualifications
@@ -92,6 +94,7 @@ en:
       one: Open filters (%{count} applied)
       other: Open filters (%{count} applied)
     sign_in: Sign in
+    sign_in_to_download: Sign in to download application form
     sign_in_jobseeker: Sign in as a jobseeker
     sign_in_publisher: Sign in as hiring staff
     skip_this_step: Skip this step
@@ -107,6 +110,7 @@ en:
     subscribe_campaign: Set up job alert
     unsubscribe: Unsubscribe
     update_alert: Update alert
+    update_application_status: Update application status
     update_job: Update listing
     update_password: Update password
     upload_files: Upload files
@@ -213,6 +217,9 @@ en:
           Department for Education services.
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
+      jobseekers_qualifications_category_form:
+        category_options:
+          postgraduate: For example, A PGCE, master’s or PhD.
 
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
@@ -418,7 +425,7 @@ en:
           a_level: A Levels
           other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
-          postgraduate: Postgraduate degree
+          postgraduate: Postgraduate qualification
           other: Other qualification or course
         finished_studying_details: Please give details
         finished_studying_options:
@@ -558,7 +565,7 @@ en:
           a_level: A Levels
           other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
-          postgraduate: Postgraduate degree
+          postgraduate: Postgraduate qualification
           other: Other qualification or course
       jobseekers_qualifications_degree_form:
         <<: *jobseekers_qualifications_shared_labels
@@ -660,6 +667,14 @@ en:
 
       publishers_job_application_notes_form:
         content: Add a note
+
+      publishers_job_application_status_form:
+        status_options:
+          submitted_html: New <span class="govuk-tag govuk-tag--blue">New</span>
+          unsuccessful_html: Not Considering <span class="govuk-tag govuk-tag--red">Not Considering</span>
+          reviewed_html: Reviewed <span class="govuk-tag govuk-tag--purple">Reviewed</span>
+          shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--green">Shortlisted</span>
+          interviewing_html: Interviewing <span class="govuk-tag govuk-tag--turquoise">Interviewing</span>
 
       publishers_job_application_update_status_form:
         further_instructions_html: Any further instructions? (optional<span class='govuk-visually-hidden'> field</span>)</span>

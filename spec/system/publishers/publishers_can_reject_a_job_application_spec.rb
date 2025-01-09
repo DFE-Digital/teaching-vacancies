@@ -12,17 +12,14 @@ RSpec.describe "Publishers can reject a job application" do
     visit organisation_job_job_application_path(vacancy.id, job_application.id)
   end
 
-  it "rejects the job application after confirmation" do
-    click_on I18n.t("buttons.reject")
-
-    expect(current_path).to eq(organisation_job_job_application_reject_path(vacancy.id, job_application.id))
-
-    fill_in "publishers_job_application_update_status_form[rejection_reasons]", with: "Some rejection reasons"
-    click_on I18n.t("buttons.confirm_rejection")
+  it "rejects the job application after confirmation", :js do
+    click_on "Update application status"
+    expect(page).to have_no_css("strong.govuk-tag.govuk-tag--red.application-status", text: "rejected")
+    choose "Not Considering"
+    click_on "Save and continue"
 
     expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
-    expect(page).to have_content(I18n.t("publishers.vacancies.job_applications.update_status.unsuccessful",
-                                        name: job_application.name))
+    expect(page).to have_css("strong.govuk-tag.govuk-tag--red.application-status", text: "rejected")
     expect(job_application.reload.status).to eq("unsuccessful")
   end
 end

@@ -9,9 +9,7 @@ RSpec.describe ExportVacanciesClosedEarlySinceYesterdayToDwpFindAJobServiceJob d
     allow(Vacancies::Export::DwpFindAJob::ClosedEarly).to receive(:new).and_return(service)
   end
 
-  context "when DisableExpensiveJobs is enabled" do
-    before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(true) }
-
+  context "when DisableExpensiveJobs is enabled", :disable_expensive_jobs do
     it "does not call the service" do
       perform_enqueued_jobs { job }
       expect(Vacancies::Export::DwpFindAJob::ClosedEarly).not_to have_received(:new)

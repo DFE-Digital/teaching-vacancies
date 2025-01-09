@@ -246,6 +246,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_17_145653) do
     t.text "safeguarding_issue_details"
     t.boolean "training_and_cpds_section_completed"
     t.integer "imported_steps", default: [], null: false, array: true
+    t.datetime "interviewing_at"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
