@@ -22,12 +22,12 @@
           - row.with_value text: training_and_cpd.course_length
 
         - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.grade")
-          - row.with_value text: training_and_cpd.grade
-
-        - summary_list.with_row do |row|
           - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.year_awarded")
           - row.with_value text: training_and_cpd.year_awarded
+
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_training_and_cpd_form.grade")
+          - row.with_value text: training_and_cpd.grade
 
       = f.govuk_submit "Delete training"
 
