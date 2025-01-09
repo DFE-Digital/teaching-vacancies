@@ -260,12 +260,12 @@ en:
         title: Add training and continuing professional development (CPD)
         new:
           <<: *training_shared
-          hint: For example, 1998
+          hint: For example, 2024.
           caption: Training and continuing professional development (CPD)
           heading: Add training and continuing professional development (CPD)
         edit:
           <<: *training_shared
-          hint: For example, 1998
+          hint: For example, 2024.
           caption: Training and continuing professional development (CPD)
           heading: Edit training and continuing professional development (CPD)
         destroy:
@@ -778,10 +778,10 @@ en:
       training_and_cpds:
         new:
           <<: *training_shared
-          hint: For example, 1998
+          hint: For example, 2024.
         edit:
           <<: *training_shared
-          hint: For example, 1998
+          hint: For example, 2024.
         destroy:
           success: Training deleted
       qualifications:
