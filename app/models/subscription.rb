@@ -16,6 +16,8 @@ class Subscription < ApplicationRecord
     visa_sponsorship_availability: ->(vacancy, value) { value.include? vacancy.visa_sponsorship_available.to_s },
     ect_statuses: ->(vacancy, value) { value.include?(vacancy.ect_status) },
     subjects: ->(vacancy, value) { (vacancy.subjects || []).intersect?(value) },
+    # legacy 'subject' criteria appears to be 1 single value
+    subject: ->(vacancy, value) { (vacancy.subjects || []).include?(value) },
     phases: ->(vacancy, value) { vacancy.phases.intersect?(value) },
     working_patterns: ->(vacancy, value) { vacancy.working_patterns.intersect?(value) },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
