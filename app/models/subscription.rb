@@ -16,6 +16,8 @@ class Subscription < ApplicationRecord
     visa_sponsorship_availability: ->(vacancy, value) { value.include? vacancy.visa_sponsorship_available.to_s },
     ect_statuses: ->(vacancy, value) { value.include?(vacancy.ect_status) },
     subjects: ->(vacancy, value) { (vacancy.subjects || []).intersect?(value) },
+    # legacy 'subject' criteria appears to be 1 single value
+    subject: ->(vacancy, value) { (vacancy.subjects || []).include?(value) },
     phases: ->(vacancy, value) { vacancy.phases.intersect?(value) },
     working_patterns: ->(vacancy, value) { vacancy.working_patterns.intersect?(value) },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
@@ -86,10 +88,9 @@ class Subscription < ApplicationRecord
       if query.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(query)
         vacancies
       else
-        polygon = LocationPolygon.buffered(radius_in_miles).with_name(query)
-        if polygon.present?
-          polygon_area = polygon.area
-          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.valid? && polygon_area.contains?(point) } }
+        polygon_area = LocationPolygon.buffered(radius_in_miles).with_name(query)&.area
+        if polygon_area.present? && polygon_area.valid?
+          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.contains?(point) } }
         else
           radius_in_metres = convert_miles_to_metres radius_in_miles
           coordinates = Geocoding.new(query).coordinates
