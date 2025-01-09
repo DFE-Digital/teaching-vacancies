@@ -88,7 +88,8 @@ class Subscription < ApplicationRecord
       else
         polygon = LocationPolygon.buffered(radius_in_miles).with_name(query)
         if polygon.present?
-          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
+          polygon_area = polygon.area
+          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.valid? && polygon_area.contains?(point) } }
         else
           radius_in_metres = convert_miles_to_metres radius_in_miles
           coordinates = Geocoding.new(query).coordinates
