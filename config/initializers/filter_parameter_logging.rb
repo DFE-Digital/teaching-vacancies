@@ -51,6 +51,17 @@ Rails.application.config.filter_parameters += %i[
   contact_number
   qualification_results_attributes
   govuk_one_login_id
+  religious_reference_type
+  religious_referee_name
+  religious_referee_address
+  religious_referee_role
+  religious_referee_email
+  religious_referee_phone
+  ethos_and_aims
+  baptism_address
+  baptism_date
+  faith
+  place_of_worship
 ] + [
   /^age$/i,
 ]
