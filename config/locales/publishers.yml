@@ -401,7 +401,7 @@ en:
               content_with_no_link: You can choose for candidates to apply for the job through Teaching Vacancies.
               link: Preview the application form
           using_application_form_html: Use Teaching Vacancies' application form for an online form compliant with %{link}.
-          kcsie_guidance: keeping children safe in education (KCSIE) guidance
+          kcsie_guidance: keeping children safe in education (KCSIE) guidance (opens in new tab)
           kcsie_url: "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2"
           kcsie_compliant: KCSIE compliant
           reason_for_our_form: Online application forms make it quicker and easier for candidates to apply and may lead to more applicants for your role.
@@ -702,8 +702,8 @@ en:
         the_below_url_will_change: If you edit the job title in your listing, the below URL will change and you may need to reshare the link
         share_page_url: Share page URL
         button_copy: Copy URL
-        facebook_share: Share on Facebook
-        x_share: Share on X (formerly known as Twitter)
+        facebook_share: Share on Facebook (opens in new tab)
+        x_share: Share on X, formerly known as Twitter (opens in new tab)
         job_url_copied: URL Copied
       statistics:
         show:
