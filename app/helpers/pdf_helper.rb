@@ -190,10 +190,10 @@ module PdfHelper
           ["Organisation:", reference.organisation],
           ["Relationship:", reference.relationship],
           ["Email:", reference.email],
-          ["Current or most recent employer:", t("helpers.label.jobseekers_job_application_details_reference_form.is_most_recent_employer_options.#{reference.is_most_recent_employer}")],
         ]
 
         reference_data << ["Phone Number:", reference.phone_number] if reference.phone_number.present?
+        reference_data << ["Current or most recent employer:", I18n.t("helpers.label.jobseekers_job_application_details_reference_form.is_most_recent_employer_options.#{reference.is_most_recent_employer}")] unless reference.is_most_recent_employer.nil?
 
         render_table(pdf, reference_data)
       end
