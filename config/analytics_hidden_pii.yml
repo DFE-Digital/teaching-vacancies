@@ -28,6 +28,17 @@ shared:
     - rejection_reasons
     - gaps_in_employment_details
     - email_address
+    - religious_reference_type
+    - faith
+    - place_of_worship
+    - religious_referee_name
+    - religious_referee_address
+    - religious_referee_role
+    - religious_referee_email
+    - religious_referee_phone
+    - baptism_address
+    - baptism_date
+    - ethos_and_aims
   jobseeker_profiles:
     - id
     - jobseeker_id
