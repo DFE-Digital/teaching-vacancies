@@ -86,6 +86,16 @@
   - in_progress_steps
   - employment_history_section_completed
   - qualifications_section_completed
+  - place_of_worship_ciphertext
+  - religious_referee_name_ciphertext
+  - religious_referee_address_ciphertext
+  - religious_referee_role_ciphertext
+  - religious_referee_email_ciphertext
+  - religious_referee_phone_ciphertext
+  - faith_ciphertext
+  - baptism_address_ciphertext
+  - baptism_date_ciphertext
+  - ethos_and_aims_ciphertext
   :employments:
   - organisation_ciphertext
   - job_title_ciphertext
