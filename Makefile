@@ -5,7 +5,6 @@ LOCAL_BRANCH		:=$$(git rev-parse --abbrev-ref HEAD)
 LOCAL_SHA			:=$$(git rev-parse HEAD)
 LOCAL_TAG			:=dev-$(LOCAL_BRANCH)-$(LOCAL_SHA)
 
-TERRAFILE_VERSION=0.8
 ARM_TEMPLATE_TAG=1.1.6
 RG_TAGS={"Product" : "Teaching vacancies"}
 REGION=UK South
@@ -43,10 +42,6 @@ local: ## local # Same values as the deployed dev environment, adapted for local
 		$(eval env=dev)
 		$(eval local_override=-d file:terraform/workspace-variables/local_app_env.yml -d file:terraform/workspace-variables/my_app_env.yml)
 		$(eval local_filter=| sed -e '/APP_ROLE=/d' -e '/RAILS_ENV=/d')
-
-bin/terrafile: ## Install terrafile to manage terraform modules
-	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
-		| tar xz -C ./bin terrafile
 
 .PHONY: review
 review: test-cluster ## review # Requires `pr_id=NNNN`
@@ -128,8 +123,10 @@ ci:	## Run in automation environment
 	$(eval export SKIP_AZURE_LOGIN=true)
 
 .PHONY: terraform-app-init
-terraform-app-init: bin/terrafile set-azure-account
-	./bin/terrafile -p terraform/app/vendor/modules -f terraform/workspace-variables/$(var_file)_Terrafile
+terraform-app-init: set-azure-account
+	rm -rf terraform/app/vendor/modules/aks
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/app/vendor/modules/aks
+
 	terraform -chdir=terraform/app init -upgrade -reconfigure -input=false $(backend_config)
 
 	$(eval export TF_VAR_azure_resource_prefix=${AZURE_RESOURCE_PREFIX})

@@ -473,7 +473,7 @@ en:
         publishers/terms_and_conditions_form:
           attributes:
             terms:
-              blank: Tick the box to agree to the Terms and Conditions
+              blank: Tick the box to agree to the terms and conditions
 
         # Job application
         jobseekers/job_application/ask_for_support_form:
@@ -750,6 +750,16 @@ en:
             content:
               blank: Enter a note
               too_long: A note must not be more than 150 characters
+
+        publishers/job_application/tag_form:
+          attributes:
+            job_applications:
+              too_short: You must select an application to change
+
+        publishers/job_application/download_form:
+          attributes:
+            job_applications:
+              too_short: You must select an application to download
 
         support_request_form:
           attributes:

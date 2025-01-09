@@ -29,49 +29,4 @@ FactoryBot.define do
 
     job_application
   end
-
-  trait :category_undergraduate do
-    results_count { 1 }
-    category { 4 }
-    year { 2016 }
-    subject { "BA English Literature " }
-    grade { "2.1" }
-  end
-
-  trait :category_other do
-    results_count { 1 }
-    category { 6 }
-    year { 2019 }
-    subject { "PGCE English with QTS " }
-  end
-
-  trait :category_a_level do
-    category { 2 }
-    year { 2012 }
-
-    qualification_results do
-      [
-        association(:qualification_result, :category_alevel_sample1),
-        association(:qualification_result, :category_alevel_sample2),
-        association(:qualification_result, :category_alevel_sample3),
-      ]
-    end
-  end
-
-  trait :category_gcse do
-    category { 0 }
-    year { 2010 }
-
-    qualification_results do
-      [
-        association(:qualification_result, :category_gcse_sample1),
-        association(:qualification_result, :category_gcse_sample2),
-        association(:qualification_result, :category_gcse_sample3),
-        association(:qualification_result, :category_gcse_sample4),
-        association(:qualification_result, :category_gcse_sample5),
-        association(:qualification_result, :category_gcse_sample6),
-        association(:qualification_result, :category_gcse_sample7),
-      ]
-    end
-  end
 end

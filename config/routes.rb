@@ -49,10 +49,6 @@ Rails.application.routes.draw do
     Rails.application.routes.url_helpers.post_path(section: "jobseeker-guides", subcategory: "get-help-applying-for-your-teaching-role", post_name: "3-quick-ways-to-find-the-right-teaching-job")
   }
 
-  get "/transcripts/jobseekers/return-to-teaching-video-transcript", to: redirect { |_params, _request|
-    Rails.application.routes.url_helpers.post_path(section: "transcripts", subcategory: "jobseekers", post_name: "return-to-teaching-video")
-  }
-
   if Rails.application.config.maintenance_mode
     # If in maintenance mode, route *all* requests to maintenance page
     match "*path", to: "errors#maintenance", via: :all
@@ -386,12 +382,15 @@ Rails.application.routes.draw do
       resource :extend_deadline, only: %i[show update], controller: "publishers/vacancies/extend_deadline"
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
-        resources :notes, only: %i[index create destroy], controller: "publishers/vacancies/job_applications/notes"
+        resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
         get :download_pdf
         get :shortlist
         get :reject
         get :withdrawn
         post :update_status
+        get :tag, on: :collection
+        get :tag_single, on: :member
+        post :update_tag, on: :collection
       end
     end
   end

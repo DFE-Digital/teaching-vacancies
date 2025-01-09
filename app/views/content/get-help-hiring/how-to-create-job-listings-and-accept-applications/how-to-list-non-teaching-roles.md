@@ -6,7 +6,6 @@ date_posted: 19/03/2024
 category_tags: how-to
 card-image: "/content-assets/get-help-hiring/how-to-create-job-listings-and-accept-applications/how-to-list-non-teaching-roles.png"
 ---
-![3 teachers sat on sofas having an engaging and relaxed conversation in a canteen area of a school.](/content-assets/jobseeker-guides/write-a-great-teaching-job-application-800x300.jpg)
 
 You can use Teaching Vacancies to recruit for all roles in your school or trust.
 

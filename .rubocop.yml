@@ -146,6 +146,7 @@ Style/HashSyntax:
 # This is incompatible with our other migration checks
 Rails/BulkChangeTable:
   Enabled: false
+
 ##
 # Tech Debt
 # TODO: `rubocop-govuk` previously had all these metrics disabled as they are "just heuristics".

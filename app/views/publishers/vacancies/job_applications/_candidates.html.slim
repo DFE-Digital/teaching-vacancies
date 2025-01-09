@@ -1,0 +1,31 @@
+= form_with(model: form, url: tag_organisation_job_job_applications_path(vacancy.id), method: :get, scope: :publishers_job_application_tag_form) do |f|
+
+  = f.govuk_error_summary
+
+  = f.govuk_check_boxes_fieldset :job_applications, legend: { text: heading } do
+    = govuk_table(html_attributes: { data: { module: "moj-multi-select", multi_select_checkbox: "#multi_select_#{multi_select}", multi_select_idprefix: "id_all_#{multi_select}" } }) do |table|
+
+      - table.with_head do |head|
+        - head.with_row do |row|
+          - row.with_cell(html_attributes: { id: "multi_select_#{multi_select}" })
+          - row.with_cell(text: t(".name"))
+          - row.with_cell(text: t(".contact_details"))
+          - row.with_cell(text: t(".application_status"))
+      - table.with_body do |body|
+        - candidates.each_with_index do |application, index|
+          - body.with_row(html_attributes: { class: "application-#{application.status}" }) do |row|
+            - if application.withdrawn?
+              - row.with_cell(text: "")
+              - row.with_cell(text: tag.span(application.name))
+            - else
+              / sadly govuk_check_box doesn't seem to support govuk-checkboxes--small natively, but wrapping in a div seems to work
+              - row.with_cell(text: tag.div(f.govuk_check_box(:job_applications, application.id, link_errors: index.zero?, label: { hidden: true, text: "Select #{application.name}" }),
+                                            class: "govuk-checkboxes--small"))
+              - row.with_cell(text: govuk_link_to(application.name, organisation_job_job_application_path(vacancy.id, application)))
+
+            - row.with_cell(text: application.email_address)
+            - row.with_cell(text: publisher_job_application_status_tag(application.status))
+
+  .govuk-button-group
+    = f.govuk_submit t(".download_selected"), name: "download_selected", value: "true"
+    = f.govuk_submit t(".update_application_status"), name: "update_application_status", value: "true", secondary: true

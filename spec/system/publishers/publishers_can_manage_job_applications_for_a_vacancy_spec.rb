@@ -2,21 +2,35 @@ require "rails_helper"
 
 RSpec.describe "Publishers can manage job applications for a vacancy" do
   let(:organisation) { create(:school, name: "A school with a vacancy") }
-  let!(:vacancy) { create(:vacancy, vacancy_trait, organisations: [organisation]) }
+  let(:vacancy) { Vacancy.last }
   let(:publisher) { create(:publisher) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
+    create(:vacancy, vacancy_trait, expires_at: expired_at, organisations: [organisation], job_applications: job_applications)
   end
+
+  after { logout }
 
   context "when a vacancy has expired and it has applications" do
     let(:vacancy_trait) { :expired }
+    let(:expired_at) { 2.weeks.ago }
 
-    let!(:job_application_submitted) { create(:job_application, :status_submitted, vacancy: vacancy, last_name: "Alan") }
-    let!(:job_application_reviewed) { create(:job_application, :status_reviewed, vacancy: vacancy, last_name: "Charlie") }
-    let!(:job_application_shortlisted) { create(:job_application, :status_shortlisted, vacancy: vacancy, last_name: "Billy") }
-    let!(:job_application_unsuccessful) { create(:job_application, :status_unsuccessful, vacancy: vacancy, last_name: "Dave") }
-    let!(:job_application_draft) { create(:job_application, :status_draft, vacancy: vacancy) }
+    let(:job_applications) do
+      [build(:job_application, :status_submitted, last_name: "Alan"),
+       build(:job_application, :status_reviewed, last_name: "Charlie"),
+       build(:job_application, :status_shortlisted, last_name: "Billy"),
+       build(:job_application, :status_unsuccessful, last_name: "Dave"),
+       build(:job_application, :status_withdrawn, last_name: "Ethan"),
+       build(:job_application, :status_interviewing, last_name: "Freddy"),
+       build(:job_application, :status_draft)]
+    end
+    let(:job_application_submitted) { JobApplication.find_by!(status: "submitted") }
+    let(:job_application_reviewed) { JobApplication.find_by!(status: "reviewed") }
+    let(:job_application_shortlisted) { JobApplication.find_by!(status: "shortlisted") }
+    let(:job_application_unsuccessful) { JobApplication.find_by!(status: "unsuccessful") }
+    let(:job_application_withdrawn) {  JobApplication.find_by!(status: "withdrawn") }
+    let(:job_application_interviewing) { JobApplication.find_by!(status: "interviewing") }
 
     before { visit organisation_job_job_applications_path(vacancy.id) }
 
@@ -27,59 +41,60 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         end
       end
 
-      it "shows breadcrumbs with vacancy title " do
+      it "shows breadcrumbs with vacancy title" do
         within(".govuk-breadcrumbs") do
           expect(page).to have_content(vacancy.job_title)
         end
       end
 
-      it "shows a card for each application that has been submitted and no draft applications" do
-        expect(page).to have_css(".govuk-summary-list__row", count: 4)
-      end
-
-      context "when sorting the job applications by a virtual attribute" do
-        before do
-          click_on I18n.t("publishers.vacancies.job_applications.index.sort_by.applicant_last_name").humanize
-        end
-
-        it "sorts the job applications" do
-          expect("Alan").to appear_before("Billy")
-          expect("Billy").to appear_before("Charlie")
-          expect("Charlie").to appear_before("Dave")
-        end
+      it "shows a card for each application that has been submitted and no draft applications", :js do
+        expect(page.find(".govuk-table__body")).to have_css(".govuk-table__row", count: 6)
       end
     end
 
-    describe "submitted application" do
+    scenario "not selecting anything", :js do
+      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
+      expect(page).to have_content(I18n.t("activemodel.errors.models.publishers/job_application/tag_form.attributes.job_applications.too_short"))
+    end
+
+    scenario "Changing multiple statuses at once", :js do
+      within(".application-reviewed") do
+        find(".govuk-checkboxes__item").click
+      end
+      within(".application-submitted") do
+        find(".govuk-checkboxes__item").click
+      end
+      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
+      find(".govuk-tag--red").click
+      click_on I18n.t("buttons.save_and_continue")
+      expect(page).to have_content("Not Considering (3)")
+    end
+
+    scenario "Changing a single status", :js do
+      # ensure only 1 visible CTA button
+      click_on I18n.t("cookies_preferences.banner.buttons.reject")
+      find(".application-unsuccessful")
+      within(".application-unsuccessful") do
+        find(".govuk-checkboxes__item").click
+      end
+      click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
+      find(".govuk-tag--purple").click
+      find(".govuk-button").click
+      expect(page).to have_content("New (3)")
+    end
+
+    describe "submitted application", :js do
       let(:status) { "submitted" }
 
       it "shows applicant name that links to application" do
-        within(".application-#{status} .govuk-summary-list__key") do
+        within(".application-#{status}") do
           expect(page).to have_link("#{job_application_submitted.first_name} #{job_application_submitted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_submitted.id))
         end
       end
 
-      it "shows blue submitted tag" do
-        within(".application-#{status} .govuk-summary-list__value") do
+      it "shows blue submitted tag", :js do
+        within(".application-#{status}") do
           expect(page).to have_css(".govuk-tag--blue", text: "unread")
-        end
-      end
-
-      it "shows date application was received" do
-        within(".application-#{status} .govuk-summary-list__value") do
-          expect(page).to have_content(job_application_submitted.submitted_at.strftime("%d %B %Y at %H:%M"))
-        end
-      end
-
-      it "has action to reject application" do
-        within(".application-#{status} .govuk-summary-list__actions") do
-          expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_submitted.id))
-        end
-      end
-
-      it "has action to shortlist application" do
-        within(".application-#{status} .govuk-summary-list__actions") do
-          expect(page).to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_submitted.id))
         end
       end
     end
@@ -87,33 +102,15 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     describe "reviewed application" do
       let(:status) { "reviewed" }
 
-      it "shows applicant name that links to application" do
-        within(".application-#{status} .govuk-summary-list__key") do
+      it "shows applicant name that links to application", :js do
+        within(".application-#{status}") do
           expect(page).to have_link("#{job_application_reviewed.first_name} #{job_application_reviewed.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_reviewed.id))
         end
       end
 
-      it "shows blue submitted tag" do
-        within(".application-#{status} .govuk-summary-list__value") do
+      it "shows purple reviewed tag", :js do
+        within(".application-#{status}") do
           expect(page).to have_css(".govuk-tag--purple", text: "reviewed")
-        end
-      end
-
-      it "shows date application was received" do
-        within(".application-#{status} .govuk-summary-list__value") do
-          expect(page).to have_content(job_application_reviewed.submitted_at.strftime("%d %B %Y at %H:%M"))
-        end
-      end
-
-      it "has action to reject application" do
-        within(".application-#{status} .govuk-summary-list__actions") do
-          expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_reviewed.id))
-        end
-      end
-
-      it "has action to shortlist application" do
-        within(".application-#{status} .govuk-summary-list__actions") do
-          expect(page).to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_reviewed.id))
         end
       end
     end
@@ -121,28 +118,15 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     describe "shortlisted application" do
       let(:status) { "shortlisted" }
 
-      it "shows applicant name that links to application" do
-        within(".application-#{status} .govuk-summary-list__key") do
+      it "shows applicant name that links to application", :js do
+        within(".application-#{status}") do
           expect(page).to have_link("#{job_application_shortlisted.first_name} #{job_application_shortlisted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_shortlisted.id))
         end
       end
 
-      it "shows green shortlisted tag" do
-        within(".application-#{status} .govuk-summary-list__value") do
+      it "shows green shortlisted tag", :js do
+        within(".application-#{status}") do
           expect(page).to have_css(".govuk-tag--green", text: "shortlisted")
-        end
-      end
-
-      it "shows date application was received" do
-        within(".application-#{status} .govuk-summary-list__value") do
-          expect(page).to have_content(job_application_shortlisted.submitted_at.strftime("%d %B %Y at %H:%M"))
-        end
-      end
-
-      it "has action to reject application only" do
-        within(".application-#{status} .govuk-summary-list__actions") do
-          expect(page).to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_shortlisted.id))
-          expect(page).not_to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_shortlisted.id))
         end
       end
     end
@@ -150,33 +134,24 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     describe "unsuccessful application" do
       let(:status) { "unsuccessful" }
 
-      it "shows applicant name that links to application" do
-        within(".application-#{status} .govuk-summary-list__key") do
+      it "shows applicant name that links to application", :js do
+        within(".application-#{status}") do
           expect(page).to have_link("#{job_application_unsuccessful.first_name} #{job_application_unsuccessful.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_unsuccessful.id))
         end
       end
 
-      it "shows red shortlisted tag" do
-        within(".application-#{status} .govuk-summary-list__value") do
+      it "shows red rejected tag", :js do
+        within(".application-#{status}") do
           expect(page).to have_css(".govuk-tag--red", text: "rejected")
         end
-      end
-
-      it "shows date application was received" do
-        within(".application-#{status} .govuk-summary-list__value") do
-          expect(page).to have_content(job_application_unsuccessful.submitted_at.strftime("%d %B %Y at %H:%M"))
-        end
-      end
-
-      it "has no actions" do
-        expect(page).not_to have_link(I18n.t("buttons.reject"), href: organisation_job_job_application_reject_path(vacancy.id, job_application_unsuccessful.id))
-        expect(page).not_to have_link(I18n.t("buttons.shortlist"), href: organisation_job_job_application_shortlist_path(vacancy.id, job_application_unsuccessful.id))
       end
     end
   end
 
   context "when a vacancy is active and it has no applications" do
     let(:vacancy_trait) { :published }
+    let(:job_applications) { [] }
+    let(:expired_at) { 1.month.from_now }
 
     before { visit organisation_job_job_applications_path(vacancy.id) }
 
@@ -187,7 +162,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         end
       end
 
-      it "shows breadcrumbs with vacancy title " do
+      it "shows breadcrumbs with vacancy title" do
         within(".govuk-breadcrumbs") do
           expect(page).to have_content(vacancy.job_title)
         end
@@ -200,18 +175,15 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
   end
 
   context "when a vacancy has expired more than 1 year ago and it has applications" do
-    let!(:vacancy) { create(:vacancy, :expired, expires_at: 1.year.ago, organisations: [organisation]) }
-    let!(:job_application_submitted) { create(:job_application, :status_submitted, vacancy: vacancy) }
+    let(:vacancy_trait) { :expired }
+    let(:expired_at) { 1.year.ago }
+    let(:job_applications) { build_list(:job_application, 1, :status_submitted) }
 
     before { visit organisation_job_job_applications_path(vacancy.id) }
 
     describe "the summary section" do
       it "shows no application cards" do
-        expect(page).not_to have_css(".govuk-summary-list__row")
-      end
-
-      it "shows no sort applications control" do
-        expect(page).not_to have_css("#sort-column-field")
+        expect(page).not_to have_css(".govuk-table__row")
       end
 
       it "shows text to tell user can no longer see applications" do

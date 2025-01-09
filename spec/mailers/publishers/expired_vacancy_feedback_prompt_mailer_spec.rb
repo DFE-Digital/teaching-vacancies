@@ -38,7 +38,7 @@ RSpec.describe Publishers::ExpiredVacancyFeedbackPromptMailer do
 
     it "triggers a `publisher_prompt_for_feedback` email event" do
       mail.deliver_now
-      expect(:publisher_prompt_for_feedback).to have_been_enqueued_as_analytics_events
+      expect(:publisher_prompt_for_feedback).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
 end

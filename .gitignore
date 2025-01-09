@@ -60,7 +60,6 @@ terraform/app/vendor/
 terraform/domains/environment_domains/vendor
 terraform.tfstate*
 tokens
-bin/terrafile
 
 # ENV files
 .env*
@@ -104,6 +103,5 @@ dump.rdb
 .idea
 
 # devops files
-bin/terrafile
 bin/konduit.sh
 /swagger/v2/swagger.yaml

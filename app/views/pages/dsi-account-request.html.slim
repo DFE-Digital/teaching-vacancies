@@ -2,6 +2,7 @@
   | Request a Teaching Vacancies account
 
 - content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: new_publisher_session_path
 
 .govuk-grid-row

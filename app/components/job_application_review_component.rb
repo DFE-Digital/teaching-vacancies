@@ -8,6 +8,8 @@ class JobApplicationReviewComponent < ReviewComponent
     )
   end)
 
+  attr_reader :job_application
+
   def initialize(job_application, step_process:, allow_edit: nil, classes: [], html_attributes: {}, **)
     super(
       classes: classes,

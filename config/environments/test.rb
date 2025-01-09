@@ -62,7 +62,7 @@ Rails.application.configure do
 
   config.middleware.use RackSessionAccess::Middleware
 
-  config.big_query_dataset = "test_dataset"
+  config.bigquery_dataset = "test_dataset"
 
   # Use test geocoder lookup, unless otherwise specified
   config.geocoder_lookup = :test
@@ -79,7 +79,7 @@ end
 
 # Avoid OmniAuth output in tests:
 # I, [2018-04-03T15:01:45.960289 #297]  INFO -- omniauth: (azureactivedirectory) Request phase initiated.
-OmniAuth.config.logger = Logger.new("/dev/null")
+OmniAuth.config.logger = Logger.new(File::NULL)
 OmniAuth.config.on_failure = proc { |env|
   OmniAuth::FailureEndpoint.new(env).redirect_to_failure
 }

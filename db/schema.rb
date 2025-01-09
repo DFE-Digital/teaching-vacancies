@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_13_141402) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -246,6 +246,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_12_153920) do
     t.text "safeguarding_issue_details"
     t.boolean "training_and_cpds_section_completed"
     t.integer "imported_steps", default: [], null: false, array: true
+    t.datetime "interviewing_at"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end

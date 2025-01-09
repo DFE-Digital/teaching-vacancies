@@ -27,7 +27,13 @@ RSpec.describe "Documents" do
 
       it "triggers an event" do
         request
-        expect(:supporting_document_created).to have_been_enqueued_as_analytics_events
+        expect(:supporting_document_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+          with_data: { vacancy_id: vacancy.id,
+                       document_type: "supporting_document",
+                       name: "blank_job_spec.pdf",
+                       size: vacancy.supporting_documents.first.byte_size,
+                       content_type: "application/pdf" },
+        )
       end
 
       it "renders the index page" do
@@ -105,7 +111,13 @@ RSpec.describe "Documents" do
 
     it "triggers an event" do
       request
-      expect(:supporting_document_deleted).to have_been_enqueued_as_analytics_events
+      expect(:supporting_document_deleted).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+        with_data: { vacancy_id: vacancy.id,
+                     document_type: "supporting_document",
+                     name: "blank_job_spec.pdf",
+                     size: vacancy.supporting_documents.first.byte_size,
+                     content_type: "application/pdf" },
+      )
     end
 
     it "removes the document" do

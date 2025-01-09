@@ -3,6 +3,7 @@
 - content_for :page_description, "All posts under the subcategory: #{formatted_subcategory}"
 
 - content_for :breadcrumbs do
+  nav aria-label="Breadcrumbs"
   = govuk_breadcrumbs breadcrumbs: { t("breadcrumbs.home") => root_path,
     params[:section].titleize.capitalize => posts_path(section: params[:section]),
     formatted_subcategory => "" }
@@ -14,7 +15,6 @@
 .dfe-grid-container
   - @posts.sort.each do |post|
     .dfe-card
-      img src=image_path(post.card_image) alt="" class="hf-card-image"
+      img src=image_path(post.card_image) alt=""
       .dfe-card-container
-        .govuk-heading-m
-          .govuk-heading-m = govuk_link_to(post.title, post_path(section: post.section, subcategory: post.subcategory, post_name: post.post_name))
+        .govuk-heading-m = govuk_link_to(post.title, post_path(section: post.section, subcategory: post.subcategory, post_name: post.post_name))

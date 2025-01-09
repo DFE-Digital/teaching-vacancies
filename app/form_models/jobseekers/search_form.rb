@@ -146,15 +146,15 @@ class Jobseekers::SearchForm
     ]
   end
 
-  # rubocop:disable Style/OpenStructUse
+  QuickApplyOptions = Struct.new(:value, :text, :hint, keyword_init: true)
+
   def set_quick_apply_options
     @quick_apply_options = [
-      OpenStruct.new(
+      QuickApplyOptions.new(
         value: "quick_apply",
         text: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply"),
         hint: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply_hint"),
       ),
     ]
   end
-  # rubocop:enable Style/OpenStructUse
 end

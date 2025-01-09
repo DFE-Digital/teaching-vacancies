@@ -1,24 +1,19 @@
 class Publishers::Vacancies::JobApplications::NotesController < Publishers::Vacancies::JobApplications::BaseController
-  def index
-    @notes_form = Publishers::JobApplication::NotesForm.new
-  end
-
   def create
     @notes_form = Publishers::JobApplication::NotesForm.new(notes_form_params)
 
     if @notes_form.valid?
       Note.create(notes_attributes)
-      redirect_to organisation_job_job_application_notes_path, success: t(".success")
+      redirect_to organisation_job_job_application_path(id: job_application.id), success: t(".success")
     else
-      render :index
+      redirect_to organisation_job_job_application_path(id: job_application.id), warning: t(".failure")
     end
   end
 
   def destroy
     note = job_application.notes.find(params[:id])
     note.destroy
-
-    redirect_to organisation_job_job_application_notes_path(vacancy.id, job_application)
+    redirect_to organisation_job_job_application_path(id: job_application.id), success: t(".success")
   end
 
   private

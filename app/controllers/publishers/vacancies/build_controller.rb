@@ -6,7 +6,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
         :pay_package, :important_dates, :start_date, :applying_for_the_job, :how_to_receive_applications, :application_link,
         :application_form, :school_visits, :visa_sponsorship, :contact_details, :about_the_role, :include_additional_documents, :documents
 
-  helper_method :form, :job_application_sample
+  helper_method :form
 
   before_action :strip_checkbox_params, only: %i[update]
   before_action :set_school_options
@@ -19,10 +19,6 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
     return redirect_to(new_organisation_job_document_path(vacancy.id, back_to_review: params[:back_to_review], back_to_show: params[:back_to_show])) if current_step == :documents
 
     render_wizard
-  end
-
-  def job_application_sample
-    @job_application_sample ||= FactoryBot.build(:job_application, :job_application_sample)
   end
 
   def update
