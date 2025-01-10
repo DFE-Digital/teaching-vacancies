@@ -97,9 +97,9 @@ Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
   Jobseeker.transaction do
     FactoryBot.create(:jobseeker_profile, :with_personal_details,
                       qualifications: FactoryBot.build_list(:qualification, 1,
-                                                 job_application: FactoryBot.build(:job_application,
-                                                                                   vacancy: FactoryBot.build(:vacancy,
-                                                                                                             organisations: weydon_trust_schools))),
+                                                            job_application: FactoryBot.build(:job_application,
+                                                                                              vacancy: FactoryBot.build(:vacancy,
+                                                                                                                        organisations: weydon_trust_schools))),
                       employments: FactoryBot.build_list(:employment, 1,
                                                          job_application: FactoryBot.build(:job_application,
                                                                                            vacancy: FactoryBot.build(:vacancy,
