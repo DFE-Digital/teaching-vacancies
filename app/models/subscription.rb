@@ -11,8 +11,10 @@ class Subscription < ApplicationRecord
   FILTERS = {
     teaching_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
     support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
-    # support_job_roles used to be called this, and there are still actuve subscriptions with this name
+    # support_job_roles used to be called both of these in the past, and there are still active subscriptions with this name
     teaching_support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
+    non_teaching_support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
+
     visa_sponsorship_availability: ->(vacancy, value) { value.include? vacancy.visa_sponsorship_available.to_s },
     ect_statuses: ->(vacancy, value) { value.include?(vacancy.ect_status) },
     #  legacy criteria ->  value always 'true'
