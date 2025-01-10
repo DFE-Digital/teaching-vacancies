@@ -86,15 +86,21 @@ class Subscription < ApplicationRecord
 
   extend DistanceHelper
 
+  # 2D Cartesian factory backed by the GEOS C API (see https://github.com/rgeo/rgeo/blob/main/doc/Factory-Compatibility.md)
+  # we transform our polygons into this factory
+  #   a) because the SphericalFactory#make_valid method doesn't work
+  #   b) 2D Cartesian mapping is fine for this implmentation, as we're UK only and don't care (enough) about the Earth being spherical for job searches
+  GEOS_FACTORY = RGeo::Geos.factory
+
   class << self
     def limit_by_location(vacancies, location, radius_in_miles)
       query = location.strip.downcase
       if query.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(query)
         vacancies
       else
-        polygon_area = LocationPolygon.buffered(radius_in_miles).with_name(query)&.area
-        if polygon_area.present? && polygon_area.valid?
-          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.contains?(point) } }
+        polygon = LocationPolygon.buffered(radius_in_miles).with_name(query)
+        if polygon.present?
+          limit_by_polygon vacancies, polygon
         else
           radius_in_metres = convert_miles_to_metres radius_in_miles
           coordinates = Geocoding.new(query).coordinates
@@ -102,6 +108,11 @@ class Subscription < ApplicationRecord
           vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
         end
       end
+    end
+
+    def limit_by_polygon(vacancies, polygon)
+      polygon_area = polygon.area.transform(GEOS_FACTORY).make_valid
+      vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.contains?(point) } }
     end
   end
 
