@@ -106,7 +106,7 @@ module PdfHelper
     secondary_qualification_data = [
       ["Name:", qualification.name],
       ["Grade:", qualification.grade],
-      ["Year Awarded:", qualification.year],
+      ["Date completed:", qualification.year],
     ].reject { |row| row[1].blank? }
 
     render_table(pdf, secondary_qualification_data)

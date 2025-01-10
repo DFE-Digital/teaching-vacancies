@@ -48,7 +48,7 @@ module JobseekerHelpers
     fill_in "Name of course or training", with: name
     fill_in "Training provider", with: provider
     fill_in "Grade", with: grade
-    fill_in "Year awarded", with: year_awarded
+    fill_in "Date completed", with: year_awarded
     fill_in "Course length", with: course_length
   end
 
