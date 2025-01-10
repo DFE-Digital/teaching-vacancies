@@ -93,14 +93,15 @@ class Subscription < ApplicationRecord
   GEOS_FACTORY = RGeo::Geos.factory
 
   class << self
-    def limit_by_location(vacancies, location, radius_in_miles)
+    def limit_by_location(vacancies, location, radius_in_miles) # rubocop:disable Metrics/AbcSize
       query = location.strip.downcase
       if query.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(query)
         vacancies
       else
         polygon = LocationPolygon.buffered(radius_in_miles).with_name(query)
         if polygon.present?
-          limit_by_polygon vacancies, polygon
+          polygon_area = polygon.area.transform(GEOS_FACTORY).make_valid
+          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.contains?(point) } }
         else
           radius_in_metres = convert_miles_to_metres radius_in_miles
           coordinates = Geocoding.new(query).coordinates
@@ -108,11 +109,6 @@ class Subscription < ApplicationRecord
           vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
         end
       end
-    end
-
-    def limit_by_polygon(vacancies, polygon)
-      polygon_area = polygon.area.transform(GEOS_FACTORY).make_valid
-      vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.contains?(point) } }
     end
   end
 
