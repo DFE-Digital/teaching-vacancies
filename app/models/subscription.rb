@@ -86,20 +86,13 @@ class Subscription < ApplicationRecord
 
   extend DistanceHelper
 
-  # 2D Cartesian factory backed by the GEOS C API (see https://github.com/rgeo/rgeo/blob/main/doc/Factory-Compatibility.md)
-  # we transform our polygons into this factory
-  #   a) because the SphericalFactory#make_valid method doesn't work
-  #   b) 2D Cartesian mapping is fine for this implmentation, as we're UK only and don't care (enough) about the Earth being spherical for job searches
-  GEOS_FACTORY = RGeo::Geos.factory
-
   class << self
     def limit_by_location(vacancies, location, radius_in_miles)
       if location.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(location)
         vacancies
       else
-        polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
-        if polygon.present?
-          polygon_area = polygon.area.transform(GEOS_FACTORY).make_valid
+        polygon_area = LocationPolygon.buffered(radius_in_miles).with_name(location)&.area
+        if polygon_area.present? && polygon_area.invalid_reason.nil?
           vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.contains?(point) } }
         else
           radius_in_metres = convert_miles_to_metres radius_in_miles
