@@ -16,7 +16,7 @@ class Subscription < ApplicationRecord
     visa_sponsorship_availability: ->(vacancy, value) { value.include? vacancy.visa_sponsorship_available.to_s },
     ect_statuses: ->(vacancy, value) { value.include?(vacancy.ect_status) },
     #  legacy criteria ->  value always 'true'
-    newly_qualified_teacher: ->(vacancy, value) { vacancy.ect_status.to_sym == :ect_suitable && value == "true" },
+    newly_qualified_teacher: ->(vacancy, value) { value == "true" && vacancy.ect_status.to_s == "ect_suitable" },
     subjects: ->(vacancy, value) { (vacancy.subjects || []).intersect?(value) },
     # legacy 'subject' criteria appears to be 1 single value
     subject: ->(vacancy, value) { (vacancy.subjects || []).include?(value) },
