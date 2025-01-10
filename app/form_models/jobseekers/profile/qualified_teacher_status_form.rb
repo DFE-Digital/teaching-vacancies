@@ -5,11 +5,12 @@ class Jobseekers::Profile::QualifiedTeacherStatusForm < BaseForm
   validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: false, if: -> { qualified_teacher_status == "yes" || has_teacher_reference_number == "yes" }
   validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true, if: -> { qualified_teacher_status == "no" || qualified_teacher_status == "on_track" }
   validates :statutory_induction_complete, inclusion: { in: %w[yes no on_track] }, if: -> { qualified_teacher_status == "yes" }
+
   validates :has_teacher_reference_number, inclusion: { in: %w[yes] }, if: -> { qualified_teacher_status == "yes" }
   validates :has_teacher_reference_number, inclusion: { in: %w[yes no] }, if: -> { qualified_teacher_status == "no" || qualified_teacher_status == "on_track" }
 
   def self.fields
-    %i[qualified_teacher_status qualified_teacher_status_year teacher_reference_number statutory_induction_complete has_teacher_reference_number]
+    %i[qualified_teacher_status qualified_teacher_status_year teacher_reference_number statutory_induction_complete has_teacher_reference_number statutory_induction_complete_details]
   end
 
   def statutory_induction_complete_options
