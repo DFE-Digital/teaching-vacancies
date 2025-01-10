@@ -161,6 +161,10 @@ en:
         year: Year qualification was awarded
       jobseekers_job_application_details_reference_form:
         phone_number: Please only give a phone number that your referee is happy to be contacted on.
+        is_most_recent_employer_hints:
+          hint1: One of your referees should be your current or most recent employer.
+          hint2: If you do not have an employer referee, you can provide a personal referee.
+          hint3: Your employer reference does not have to be paid employment and can include voluntary work.
       jobseekers_job_application_employment_history_form:
         employment_history_section_completed: Ensure you've added all your employment history.
       jobseekers_job_application_equal_opportunities_form:
@@ -441,6 +445,9 @@ en:
         organisation: Organisation
         relationship: Relationship to applicant
         phone_number_html: Phone number (optional)
+        is_most_recent_employer_options:
+          "true": "Yes"
+          "false": "No"
       jobseekers_job_application_equal_opportunities_form:
         age_options:
           under_twenty_five: Under 25
@@ -935,6 +942,7 @@ en:
         safeguarding_issue: Do you want to declare any safeguarding issues, such as a criminal record or professional misconduct?
       jobseekers_job_application_details_reference_form:
         phone_number: Phone number
+        is_most_recent_employer: Is this your current or most recent employer?
       jobseekers_job_application_employment_history_form:
         employment_history_section_completed: Have you completed this section?
       jobseekers_job_application_equal_opportunities_form:

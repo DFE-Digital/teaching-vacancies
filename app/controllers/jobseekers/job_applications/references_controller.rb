@@ -39,7 +39,7 @@ class Jobseekers::JobApplications::ReferencesController < Jobseekers::BaseContro
     when "new"
       {}
     when "edit"
-      reference.slice(:name, :job_title, :organisation, :relationship, :email, :phone_number)
+      reference.slice(:name, :job_title, :organisation, :relationship, :email, :phone_number, :is_most_recent_employer)
     when "create", "update"
       reference_params
     end
@@ -55,6 +55,6 @@ class Jobseekers::JobApplications::ReferencesController < Jobseekers::BaseContro
 
   def reference_params
     params.require(:jobseekers_job_application_details_reference_form)
-          .permit(:name, :job_title, :organisation, :relationship, :email, :phone_number)
+          .permit(:name, :job_title, :organisation, :relationship, :email, :phone_number, :is_most_recent_employer)
   end
 end

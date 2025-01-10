@@ -7,8 +7,7 @@
     = render "caption"
     h2.govuk-heading-l = t(".heading")
 
-    p.govuk-body = t(".description1_html")
-    p.govuk-body = t(".description2")
+    p.govuk-body = t(".description")
 
     - if job_application.references.any?
       - job_application.references.each do |reference|
@@ -21,6 +20,11 @@
                   - summary_list.with_row do |row|
                     - row.with_key text: t("jobseekers.job_applications.references.#{attribute}")
                     - row.with_value text: reference[attribute]
+
+              - unless reference["is_most_recent_employer"].nil?
+                - summary_list.with_row do |row|
+                  - row.with_key text: t("jobseekers.job_applications.references.is_most_recent_employer")
+                  - row.with_value text: t("helpers.label.jobseekers_job_application_details_reference_form.is_most_recent_employer_options.#{reference['is_most_recent_employer']}")
 
           - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, reference), class: "govuk-link--no-visited-state"
           - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, reference), method: :delete
