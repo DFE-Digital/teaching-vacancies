@@ -9,7 +9,7 @@ jobs:
   backend-tests:
     name: Run RSpec (${{ matrix.test_params.name }})
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
@@ -47,6 +47,9 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
+      - name: Install geos libraries
+        run: sudo apt install libgeos-dev
+
       - name: Checkout code
         uses: actions/checkout@v4
 
