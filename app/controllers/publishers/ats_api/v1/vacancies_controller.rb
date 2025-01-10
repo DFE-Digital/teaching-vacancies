@@ -1,58 +1,83 @@
 class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   before_action :authenticate_client!
 
-  def index
-    @pagy, @vacancies = pagy(vacancies, items: 100)
+  rescue_from StandardError, with: :render_server_error
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  rescue_from ActionController::ParameterMissing, with: :render_bad_request
 
-    respond_to(&:json)
+  def index
+    @pagy, @vacancies = pagy(vacancies.where(publisher_ats_api_client: client), items: 100)
+
+    render json: {
+      data: @vacancies.map { |vacancy| render_vacancy(vacancy) },
+      meta: { totalPages: @pagy.pages, count: @pagy.page },
+    }
   end
 
   def show
-    @vacancy = vacancy
+    vacancy = Vacancy.find(params[:id])
+    render json: render_vacancy(vacancy)
   end
 
-  # No idea why rubocop can't see the check after the create call
-  # rubocop:disable Rails/SaveBang
   def create
-    @vacancy = Vacancy.create(vacancy_params)
+    result = Publishers::AtsApi::V1::CreateVacancyService.new(permitted_vacancy_params).call
 
-    respond_to do |format|
-      format.json do
-        if @vacancy.persisted?
-          render status: :created
-        else
-          render status: :bad_request
-        end
-      end
+    if result[:headers]
+      headers.merge!(result[:headers])
     end
+
+    render result.slice(:json, :status)
   end
-  # rubocop:enable Rails/SaveBang
 
   def update
-    @vacancy = vacancy
+    vacancy = Vacancy.find(params[:id])
+    result = Publishers::AtsApi::V1::UpdateVacancyService.new(vacancy, permitted_vacancy_params).call
 
-    respond_to(&:json)
+    render result.slice(:json, :status)
   end
 
-  def destroy; end
+  def destroy
+    vacancy = Vacancy.find(params[:id])
+    vacancy.destroy!
+
+    head :no_content
+  end
 
   private
 
-  def vacancy_params
-    p = params.fetch(:vacancy).permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
-                                      :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary,
-                                      :job_roles, :working_patterns, :contract_type, :phases, school_urns: [])
-
-    p.except(:school_urns)
-          .merge(organisations: p.fetch(:school_urns, []).map { School.find_by(urn: _1) }.compact)
+  def required_vacancy_keys
+    %i[
+      external_advert_url
+      expires_at
+      job_title
+      skills_and_experience
+      salary
+      visa_sponsorship_available
+      external_reference
+      is_job_share
+      job_roles
+      working_patterns
+      contract_type
+      phases
+      schools
+    ]
   end
 
-  def vacancy
-    FactoryBot.build(:vacancy, :external)
+  def permitted_vacancy_params
+    missing_keys = required_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
+    raise ActionController::ParameterMissing, "Missing required parameters: #{missing_keys.join(', ')}" if missing_keys.any?
+
+    params.fetch(:vacancy).permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
+                                  :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
+                                  job_roles: [], working_patterns: [], phases: [], schools: [:trust_uid, { school_urns: [] }])
   end
 
   def vacancies
-    Vacancy.includes(:organisations).live.order(publish_on: :desc)
+    Vacancy.live.includes(:organisations).order(publish_on: :desc)
+  end
+
+  def render_vacancy(vacancy)
+    Publishers::AtsApi::V1::VacancySerialiser.new(vacancy: vacancy).call
   end
 
   def client
