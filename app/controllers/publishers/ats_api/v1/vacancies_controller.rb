@@ -1,6 +1,7 @@
 class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   before_action :authenticate_client!
 
+  rescue_from StandardError, with: :render_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from ActionController::ParameterMissing, with: :render_bad_request
 

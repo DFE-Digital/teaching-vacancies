@@ -1,6 +1,4 @@
 class Api::ApplicationController < ApplicationController
-  rescue_from StandardError, with: :render_server_error
-
   private
 
   def set_headers
