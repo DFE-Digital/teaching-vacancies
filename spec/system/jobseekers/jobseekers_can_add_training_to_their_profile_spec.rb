@@ -23,17 +23,18 @@ RSpec.describe "Jobseekers can add training to their profile" do
           expect(page).to have_link("Enter the name of the course or training", href: "#jobseekers-training-and-cpd-form-name-field-error")
           expect(page).to have_link("Enter the name of the provider of the training", href: "#jobseekers-training-and-cpd-form-provider-field-error")
           expect(page).to have_link("Enter the year the course or training was awarded", href: "#jobseekers-training-and-cpd-form-year-awarded-field-error")
+          expect(page).to have_link("Enter the length of the course", href: "#jobseekers-training-and-cpd-form-course-length-field-error")
         end
 
-        fill_in_and_submit_training_form("Rock climbing instructional course", "TeachTrain ltd", "A", "2024")
+        fill_in_and_submit_training_form("Rock climbing instructional course", "TeachTrain ltd", "A", "2024", "6 months")
 
-        expect_page_to_have_values("Rock climbing instructional course", "TeachTrain ltd", "A", "2024")
+        expect_page_to_have_values("Rock climbing instructional course", "TeachTrain ltd", "A", "2024", "6 months")
 
         click_link "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
-        expect_page_to_have_values("Rock climbing instructional course", "TeachTrain ltd", "A", "2024")
+        expect_page_to_have_values("Rock climbing instructional course", "TeachTrain ltd", "A", "2024", "6 months")
       end
     end
 
@@ -44,21 +45,21 @@ RSpec.describe "Jobseekers can add training to their profile" do
       end
 
       it "allows jobseeker to edit training" do
-        expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020")
+        expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020", "1 year")
 
         within(".govuk-summary-card__title-wrapper", text: "Rock climbing") do
           click_link("Change")
         end
 
-        fill_in_and_submit_training_form("Teaching piano to young adults", "PianoWorx", "A", "2021")
+        fill_in_and_submit_training_form("Teaching piano to young adults", "PianoWorx", "A", "2021", "1 year")
 
-        expect_page_to_have_values("Teaching piano to young adults", "PianoWorx", "A", "2021")
+        expect_page_to_have_values("Teaching piano to young adults", "PianoWorx", "A", "2021", "1 year")
 
         click_link "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
-        expect_page_to_have_values("Teaching piano to young adults", "PianoWorx", "A", "2021")
+        expect_page_to_have_values("Teaching piano to young adults", "PianoWorx", "A", "2021", "1 year")
       end
     end
 
@@ -69,7 +70,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
       end
 
       it "allows users to delete training" do
-        expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020")
+        expect_page_to_have_values("Rock climbing", "TeachTrainLtd", "Pass", "2020", "1 year")
 
         within(".govuk-summary-card__title-wrapper", text: "Rock climbing") do
           click_link("Delete")
@@ -88,19 +89,21 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect(page).to_not have_css(".govuk-summary-list__value", text: "TeachTrainLtd")
         expect(page).to_not have_css(".govuk-summary-list__value", text: "Pass")
         expect(page).to_not have_css(".govuk-summary-list__value", text: "2020")
+        expect(page).to_not have_css(".govuk-summary-list__value", text: "1 year")
       end
     end
   end
 
-  def fill_in_and_submit_training_form(name, provider, grade, year)
+  def fill_in_and_submit_training_form(name, provider, grade, year, course_length)
     fill_in "Name", with: name
     fill_in "Training provider", with: provider
     fill_in "Grade", with: grade
-    fill_in "Year awarded", with: year
+    fill_in "Date completed", with: year
+    fill_in "Course length", with: course_length
     click_on "Save and continue"
   end
 
-  def expect_page_to_have_values(name, provider, grade, year)
+  def expect_page_to_have_values(name, provider, grade, year, course_length)
     expect(page).to have_css(".govuk-summary-list__key", text: "Name of course or training")
     expect(page).to have_css(".govuk-summary-list__value", text: name)
 
@@ -110,7 +113,10 @@ RSpec.describe "Jobseekers can add training to their profile" do
     expect(page).to have_css(".govuk-summary-list__key", text: "Grade (optional)")
     expect(page).to have_css(".govuk-summary-list__value", text: grade)
 
-    expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
+    expect(page).to have_css(".govuk-summary-list__key", text: "Date completed")
     expect(page).to have_css(".govuk-summary-list__value", text: year)
+
+    expect(page).to have_css(".govuk-summary-list__key", text: "Course length")
+    expect(page).to have_css(".govuk-summary-list__value", text: course_length)
   end
 end
