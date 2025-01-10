@@ -985,7 +985,7 @@ en:
         teacher_reference_number: What is your teacher reference number (TRN)?
         statutory_induction_complete: Have you completed your induction period?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
-        statutory_induction_complete_details:
+        statutory_induction_complete_details: Additional induction details
       jobseekers_job_application_qualifications_form:
         qualifications_section_completed: Have you completed this section?
       jobseekers_job_application_training_and_cpds_form:

@@ -832,7 +832,7 @@ en:
           year_title: Year QTS awarded
           trn_title: Teacher reference number (TRN)
           completed_statutory_induction_title: Have you completed your induction period?
-          completed_statutory_induction_details_title: Additional statutory induction details
+          completed_statutory_induction_details_title: Additional induction details
       employments:
         edit:
           caption: Work history
