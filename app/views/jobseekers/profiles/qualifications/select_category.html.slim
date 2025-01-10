@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".page_title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".page_title"))
 
 - content_for :breadcrumbs do
   nav.govuk-breadcrumbs aria-label="Breadcrumbs"
@@ -8,7 +8,7 @@
   .govuk-grid-column-two-thirds
     span.govuk-caption-l = t(".caption")
 
-    = form_for form, url: submit_category_jobseekers_profile_qualifications_path, method: :post do |f|
+    = form_for @form, url: submit_category_jobseekers_profile_qualifications_path, method: :post do |f|
       = f.govuk_error_summary
 
       = render "shared/category_fieldset", form: f
