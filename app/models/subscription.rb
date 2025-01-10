@@ -94,7 +94,7 @@ class Subscription < ApplicationRecord
         else
           radius_in_metres = convert_miles_to_metres radius_in_miles
           coordinates = Geocoding.new(query).coordinates
-          search_point = RGeo::Geographic.spherical_factory.point(coordinates.second, coordinates.first)
+          search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
           vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
         end
       end
@@ -103,7 +103,7 @@ class Subscription < ApplicationRecord
 
   def handle_location(scope, criteria)
     if criteria.key?(:location)
-      [self.class.limit_by_location(scope, criteria[:location], criteria[:radius]), criteria.except(:location, :radius)]
+      [self.class.limit_by_location(scope, criteria[:location], criteria[:radius] || 10), criteria.except(:location, :radius)]
 
     else
       [scope, criteria]
