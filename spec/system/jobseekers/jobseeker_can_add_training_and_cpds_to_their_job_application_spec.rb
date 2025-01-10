@@ -71,7 +71,7 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
     fill_in "Name", with: name
     fill_in "Training provider", with: provider
     fill_in "Grade", with: grade
-    fill_in "Year awarded", with: year
+    fill_in "Date completed", with: year
     fill_in "Course length", with: course_length
     click_on "Save and continue"
   end
@@ -86,7 +86,7 @@ RSpec.describe "Jobseeker can add training and cpds to their job application" do
     expect(page).to have_css(".govuk-summary-list__key", text: "Grade (optional)")
     expect(page).to have_css(".govuk-summary-list__value", text: grade)
 
-    expect(page).to have_css(".govuk-summary-list__key", text: "Year awarded")
+    expect(page).to have_css(".govuk-summary-list__key", text: "Date completed")
     expect(page).to have_css(".govuk-summary-list__value", text: year)
 
     expect(page).to have_css(".govuk-summary-list__key", text: "Course length")
