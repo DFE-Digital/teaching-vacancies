@@ -107,7 +107,7 @@ module PdfHelper
       secondary_qualification_data = [
         ["Subject:", result.subject],
         ["Grade:", result.grade],
-        (["Awarding Body:", result.awarding_body] unless result.awarding_body.blank?),
+        (["Awarding Body:", result.awarding_body] if result.awarding_body.present?),
         ["Date completed:", qualification.year],
       ].compact
       render_table(pdf, secondary_qualification_data)
