@@ -1,0 +1,93 @@
+en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/job_application/equal_opportunities_form:
+          attributes:
+            age:
+              inclusion: Select an age range or ‘Prefer not to say’
+            disability:
+              inclusion: Select yes if you consider yourself to have a disability
+            ethnicity:
+              inclusion: Select an ethnic group or ‘Prefer not to say’
+            ethnicity_description:
+              blank: Describe your ethnic group
+            gender:
+              inclusion: Select a gender or ‘Prefer not to say’
+            gender_description:
+              blank: Describe your gender identity
+            orientation:
+              inclusion: Select a sexual orientation or ‘Prefer not to say’
+            orientation_description:
+              blank: Describe your sexual orientation
+            religion:
+              inclusion: Select a religion or ‘Prefer not to say’
+            religion_description:
+              blank: Describe your religion or belief
+            equal_opportunities_section_completed:
+              inclusion: Select yes if you have completed this section
+  helpers:
+    legend:
+      jobseekers_job_application_equal_opportunities_form:
+        equal_opportunities_section_completed: Have you completed this section?
+    label:
+      jobseekers_job_application_equal_opportunities_form:
+        age_options:
+          under_twenty_five: Under 25
+          twenty_five_to_twenty_nine: 25 to 29
+          thirty_to_thirty_nine: 30 to 39
+          forty_to_forty_nine: 40 to 49
+          fifty_to_fifty_nine: 50 to 59
+          sixty_and_over: 60 and over
+          prefer_not_to_say: Prefer not to say
+        disability_options:
+          "no": "No"
+          "yes": "Yes"
+          prefer_not_to_say: Prefer not to say
+        ethnicity_description_html: Please describe your ethnic group (optional<span class='govuk-visually-hidden'> field</span>)
+        ethnicity_options:
+          asian: Asian or Asian British
+          black: Black African, Caribbean or Black British
+          mixed: Mixed or multiple ethnic group
+          other: Other ethnic group
+          prefer_not_to_say: Prefer not to say
+          white: White
+        gender_description_html: Please describe your gender identity (optional<span class='govuk-visually-hidden'> field</span>)
+        gender_options:
+          man: Man
+          other: Other gender identity
+          prefer_not_to_say: Prefer not to say
+          woman: Woman
+        orientation_description_html: Please describe your sexual orientation (optional<span class='govuk-visually-hidden'> field</span>)
+        orientation_options:
+          bisexual: Bisexual
+          gay_or_lesbian: Gay or lesbian
+          heterosexual: Heterosexual
+          other: Other sexual orientation
+          prefer_not_to_say: Prefer not to say
+        religion_description_html: Please describe your religion or belief (optional<span class='govuk-visually-hidden'> field</span>)
+        religion_options:
+          buddhist: Buddhist
+          christian: Christian
+          hindu: Hindu
+          jewish: Jewish
+          muslim: Muslim
+          none: No religion, atheist or agnostic
+          other: Other religion or belief
+          prefer_not_to_say: Prefer not to say
+          sikh: Sikh
+        equal_opportunities_section_completed_options:
+          false: No, I'll come back to it later
+          true: Yes, I've completed this section
+    hint:
+      jobseekers_job_application_equal_opportunities_form:
+        gender: If the options below do not reflect how you identify, please select ‘Other gender identity’.
+        ethnicity: If the options below do not reflect how you identify, please select ‘Other ethnic group’.
+        ethnicity_options:
+          asian: Includes Indian, Pakistani, Bangladeshi or Chinese
+          mixed: Includes White and Black Caribbean, White and Black African or White and Asian
+          white: Includes English, Welsh, Scottish, Northern Irish, British, Irish Gypsy or Irish Traveller
+        orientation: If the options below do not reflect how you identify, please select ‘Other sexual orientation’.
+        religion: >-
+          You can select ‘Other religion or belief’ if your beliefs are not represented by one of the given options.
+

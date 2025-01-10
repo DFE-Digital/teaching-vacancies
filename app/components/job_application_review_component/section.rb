@@ -2,13 +2,14 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   include JobApplicationsHelper
   include VacanciesHelper
 
-  def initialize(job_application, allow_edit: nil, forms: [], classes: [], html_attributes: {}, **)
+  def initialize(job_application, name:, id: nil, allow_edit: nil, forms: [], classes: [], html_attributes: {})
     super(
       job_application,
       forms: forms,
+      name: name,
+      id: id,
       classes: classes,
-      html_attributes: html_attributes,
-      **,
+      html_attributes: html_attributes
     )
 
     @allow_edit = allow_edit
@@ -21,10 +22,11 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
     t("jobseekers.job_applications.build.#{@name}.heading")
   end
 
-  def build_list
-    list = nil
-    govuk_summary_list { |l| list = l }
-    list
+  def edit_link
+    title = heading_text
+    text = "Change"
+    href = error_path
+    govuk_link_to text, href, aria: { label: "#{text} #{title}" }, classes: "govuk-!-display-none-print" if text && href
   end
 
   def constantize_form(form_class_name)

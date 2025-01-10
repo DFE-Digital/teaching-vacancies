@@ -1,10 +1,21 @@
-class Jobseekers::JobApplication::QualificationsForm < Jobseekers::JobApplication::BaseForm
-  include ActiveModel::Model
+module Jobseekers
+  module JobApplication
+    class QualificationsForm < BaseForm
+      include ActiveModel::Model
+      include ActiveModel::Attributes
+      include CompletedFormAttribute
 
-  def self.fields
-    %i[qualifications_section_completed]
+      class << self
+        def unstorable_fields
+          [:qualifications_section_completed]
+        end
+
+        def load_form(model)
+          load_form_attributes(model.attributes.merge(completed_attrs(model, :qualifications)))
+        end
+      end
+
+      completed_attribute(:qualifications)
+    end
   end
-  attr_accessor(*fields)
-
-  validates :qualifications_section_completed, presence: true
 end

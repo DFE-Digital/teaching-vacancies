@@ -9,14 +9,11 @@ module ComponentsHelper
     landing_page_link_group: "LandingPageLinkGroupComponent",
     map: "MapComponent",
     navigation_list: "NavigationListComponent",
-    review: "ReviewComponent",
     editor: "EditorComponent",
     searchable_collection: "SearchableCollectionComponent",
     supportal_table: "SupportalTableComponent",
     tabs: "TabsComponent",
     vacancy_form_page_heading: "VacancyFormPageHeadingComponent",
-    vacancy_review: "VacancyReviewComponent",
-    vacancy_selector: "VacancySelectorComponent",
     validatable_summary_list: "ValidatableSummaryListComponent",
   }.each do |name, klass|
     define_method(name) do |*args, **kwargs, &block|
