@@ -91,7 +91,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         expect(find("#jobseekers-profile-qualified-teacher-status-form-has-teacher-reference-number-yes-field")).to be_checked
       end
       expect(find("#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-year-field").value).to eq("2020")
-      within(find("fieldset", text: "Have you completed your statutory induction period?")) do
+      within(find("fieldset", text: "Have you completed your induction period?")) do
         expect(find("#jobseekers-profile-qualified-teacher-status-form-statutory-induction-complete-yes-field")).to be_checked
       end
       expect(find("#jobseekers-profile-qualified-teacher-status-form-teacher-reference-number-field").value).to eq("7777777")
@@ -136,7 +136,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
     return unless qts == "yes"
 
-    expect(page).to have_css(".govuk-summary-list__key", text: "Have you completed your statutory induction period?")
+    expect(page).to have_css(".govuk-summary-list__key", text: "Have you completed your induction period?")
     expect(page).to have_css(".govuk-summary-list__value", text: I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.#{statutory_induction_complete}"))
   end
 end
