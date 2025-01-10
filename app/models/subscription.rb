@@ -93,18 +93,17 @@ class Subscription < ApplicationRecord
   GEOS_FACTORY = RGeo::Geos.factory
 
   class << self
-    def limit_by_location(vacancies, location, radius_in_miles) # rubocop:disable Metrics/AbcSize
-      query = location.strip.downcase
-      if query.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(query)
+    def limit_by_location(vacancies, location, radius_in_miles)
+      if location.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(location)
         vacancies
       else
-        polygon = LocationPolygon.buffered(radius_in_miles).with_name(query)
+        polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
         if polygon.present?
           polygon_area = polygon.area.transform(GEOS_FACTORY).make_valid
           vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.contains?(point) } }
         else
           radius_in_metres = convert_miles_to_metres radius_in_miles
-          coordinates = Geocoding.new(query).coordinates
+          coordinates = Geocoding.new(location).coordinates
           search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
           vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
         end
@@ -114,7 +113,7 @@ class Subscription < ApplicationRecord
 
   def handle_location(scope, criteria)
     if criteria.key?(:location)
-      [self.class.limit_by_location(scope, criteria[:location], criteria[:radius] || 10), criteria.except(:location, :radius)]
+      [self.class.limit_by_location(scope, criteria[:location].strip.downcase, criteria[:radius] || 10), criteria.except(:location, :radius)]
 
     else
       [scope, criteria]
