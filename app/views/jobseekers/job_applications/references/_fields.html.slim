@@ -6,4 +6,7 @@
 = f.govuk_phone_field :phone_number, label: { size: "s" }, width: "two-thirds"
 = f.govuk_radio_buttons_fieldset(:is_most_recent_employer, legend: { size: "m" }) do
   = f.govuk_radio_button :is_most_recent_employer, "true", link_errors: true
-  = f.govuk_radio_button :is_most_recent_employer, "false"
+  = f.govuk_radio_button :is_most_recent_employer, "false" do
+    p.govuk-body = t("helpers.hint.jobseekers_job_application_details_reference_form.is_most_recent_employer_hints.hint1")
+    p.govuk-body = t("helpers.hint.jobseekers_job_application_details_reference_form.is_most_recent_employer_hints.hint2")
+    p.govuk-body = t("helpers.hint.jobseekers_job_application_details_reference_form.is_most_recent_employer_hints.hint3")
