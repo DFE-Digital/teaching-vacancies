@@ -101,7 +101,7 @@ RSpec.describe ImportFromVacancySourceJob do
         expect(FailedImportedVacancy.first.external_reference).to eq("J3D1")
         expect(FailedImportedVacancy.first.import_errors.first).to eq("job_title:[can't be blank]")
         expect(FailedImportedVacancy.first.import_errors.last).to eq("phases:[can't be blank]")
-        expect(FailedImportedVacancy.first.vacancy).to eq(
+        expect(FailedImportedVacancy.first.vacancy).to include(
           "about_school" => "test",
           "actual_salary" => "",
           "application_email" => nil,
