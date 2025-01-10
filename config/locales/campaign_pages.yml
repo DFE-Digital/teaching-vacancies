@@ -2,11 +2,29 @@ en:
   campaign_pages:
     whentoapplybespoke+PRIMARY:
       banner_title: "%{name}, find your primary teacher job"
+    mostvacanciesbespoke%2BPRIMARY:
+      banner_title: "%{name}, find your primary teacher job"
+    mostvacanciesbespoke%2BSECONDARY:
+      banner_title: "%{name}, find your secondary teacher job"
     whentoapplybespoke+SECONDARY:
       banner_title: "%{name}, find your secondary teacher job"
     ectrolesbespoke:
       banner_title: "%{name}, find a job for new teachers like you"
     mathsbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    geographybespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    languagesbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    pebespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    physicsbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    historybespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    designandtechnologybespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
+    sciencebespoke:
       banner_title: "%{name}, find the right %{subject} teacher job for you"
     dancedramamusicbespoke:
       banner_title: "%{name}, find the right %{subject} teacher job for you"

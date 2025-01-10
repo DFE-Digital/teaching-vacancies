@@ -6,6 +6,20 @@ shared:
     phases:
       - primary
     radius: 15
+  mostvacanciesbespoke%2BPRIMARY:
+    banner_image: "campaigns/primary_teacher.jpg"
+    teaching_job_roles:
+      - teacher
+    phases:
+      - primary
+    radius: 15
+  mostvacanciesbespoke%2BSECONDARY:
+    banner_image: "campaigns/primary_teacher.jpg"
+    teaching_job_roles:
+      - teacher
+    phases:
+      - primary
+    radius: 15
   whentoapplybespoke+SECONDARY:
     banner_image: "campaigns/secondary_teacher.jpg"
     teaching_job_roles:
@@ -20,6 +34,41 @@ shared:
       - teacher
     radius: 15
   mathsbespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius: 15
+  geographybespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius: 15
+  languagesbespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius: 15
+  pebespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius: 15
+  physicsbespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius: 15
+  historybespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius: 15
+  designandtechnologybespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    radius: 15
+  sciencebespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
