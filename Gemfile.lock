@@ -146,7 +146,7 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
-    brakeman (6.2.2)
+    brakeman (7.0.0)
       racc
     breasal (0.0.1)
     builder (3.3.0)
