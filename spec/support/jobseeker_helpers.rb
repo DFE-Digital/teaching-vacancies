@@ -102,6 +102,7 @@ module JobseekerHelpers
     fill_in "Relationship to applicant", with: "Colleague"
     fill_in "Email address", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
     fill_in "Phone number", with: "09999 123456"
+    choose("Yes")
   end
 
   def fill_in_gcses

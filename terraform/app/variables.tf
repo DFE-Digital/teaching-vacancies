@@ -163,6 +163,16 @@ variable "azure_maintenance_window" { default = null }
 
 variable "enable_logit" { default = false }
 
+variable "enable_dfe_analytics_federated_auth" {
+  description = "Create the resources in Google cloud for federated authentication and enable in application"
+  default     = false
+}
+
+variable "dataset_name" {
+  description = "dfe analytics dataset name in Google Bigquery"
+  default     = "not in use"
+}
+
 locals {
   app_env_values             = yamldecode(file("${path.module}/../workspace-variables/${var.app_environment}_app_env.yml"))
   infra_secrets              = yamldecode(data.aws_ssm_parameter.infra_secrets.value)

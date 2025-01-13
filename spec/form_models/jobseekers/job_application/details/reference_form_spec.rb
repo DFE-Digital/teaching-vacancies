@@ -13,4 +13,13 @@ RSpec.describe Jobseekers::JobApplication::Details::ReferenceForm, type: :model 
   it { is_expected.to allow_value("").for(:phone_number) }
   it { is_expected.to allow_value("01234 123456").for(:phone_number) }
   it { is_expected.not_to allow_value("01234 12345678").for(:phone_number) }
+
+  describe "is_most_recent_employer validation" do
+    it { is_expected.to allow_value("true").for(:is_most_recent_employer) }
+    it { is_expected.to allow_value("false").for(:is_most_recent_employer) }
+    it { is_expected.to allow_value(true).for(:is_most_recent_employer) }
+    it { is_expected.to allow_value(false).for(:is_most_recent_employer) }
+    it { is_expected.not_to allow_value(nil).for(:is_most_recent_employer) }
+    it { is_expected.not_to allow_value("abcdefg").for(:is_most_recent_employer) }
+  end
 end

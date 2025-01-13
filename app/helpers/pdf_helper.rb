@@ -172,6 +172,7 @@ module PdfHelper
     end
   end
 
+  # rubocop:disable Metrics/MethodLength
   def add_references(pdf)
     pdf.start_new_page
 
@@ -192,11 +193,13 @@ module PdfHelper
         ]
 
         reference_data << ["Phone Number:", reference.phone_number] if reference.phone_number.present?
+        reference_data << ["Current or most recent employer:", I18n.t("helpers.label.jobseekers_job_application_details_reference_form.is_most_recent_employer_options.#{reference.is_most_recent_employer}")] unless reference.is_most_recent_employer.nil?
 
         render_table(pdf, reference_data)
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def add_ask_for_support(pdf)
     pdf.start_new_page
