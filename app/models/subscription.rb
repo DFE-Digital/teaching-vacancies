@@ -95,9 +95,9 @@ class Subscription < ApplicationRecord
 
   class << self
     def limit_by_location(vacancies, location, radius_in_miles)
-      polygon_area = LocationPolygon.buffered(radius_in_miles).with_name(location)&.area
-      if !location.in?(INVALID_POLYGONS) && polygon_area.present? && polygon_area.invalid_reason.nil?
-        vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon_area.contains?(point) } }
+      polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
+      if polygon.present? && !polygon.name.in?(INVALID_POLYGONS) && polygon.area.invalid_reason.nil?
+        vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
       else
         radius_in_metres = convert_miles_to_metres radius_in_miles
         coordinates = Geocoding.new(location).coordinates
