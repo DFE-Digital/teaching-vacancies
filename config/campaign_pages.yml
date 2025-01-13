@@ -18,7 +18,7 @@ shared:
     teaching_job_roles:
       - teacher
     phases:
-      - primary
+      - secondary
     radius: 15
   whentoapplybespoke+SECONDARY:
     banner_image: "campaigns/secondary_teacher.jpg"
@@ -37,86 +37,116 @@ shared:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - maths
     radius: 15
   geographybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - geography
     radius: 15
   languagesbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - languages
     radius: 15
   pebespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - physical_education
     radius: 15
   physicsbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - physics
     radius: 15
   historybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - history
     radius: 15
   designandtechnologybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - design_and_technology
     radius: 15
   sciencebespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - science
     radius: 15
   dancedramamusicbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
-    radius: 15
-  dancedramamusicbespoke:
-    banner_image: "campaigns/subjects.jpg"
-    teaching_job_roles:
-      - teacher
+    subjects:
+      - dance
+      - drama
+      - music
     radius: 15
   computingbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - computing
     radius: 15
   chemistrybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - chemistry
     radius: 15
   businessandeconomicsbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - business_studies
+      - economics
     radius: 15
   re:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - religious_education
     radius: 15
   biologybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - biology
     radius: 15
   englishbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - english
     radius: 15
   psychologybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
+    subjects:
+      - psychology
     radius: 15
   parttimebespoke+PRIMARY:
     banner_image: "campaigns/primary_part_time.jpg"
