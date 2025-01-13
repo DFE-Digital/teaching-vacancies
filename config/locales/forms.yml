@@ -598,7 +598,7 @@ en:
           on_track: "I’m on track to receive QTS"
           non_teacher: "I'm not looking for a teaching job"
         statutory_induction_complete_options:
-          "no": "No I have not completed my induction period"
+          "no": "No, I have not completed my induction period"
           on_track: I'm on track to complete it
           "yes": "Yes, I have completed my induction period"
         has_teacher_reference_number_options:

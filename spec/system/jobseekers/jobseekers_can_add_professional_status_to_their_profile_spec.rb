@@ -37,7 +37,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         end
         fill_in "Year QTS was awarded", with: "2032"
         fill_in "What is your teacher reference number (TRN)?", with: "ABC"
-        choose "Yes, I have completed a 1 or 2 year induction period"
+        choose "Yes, I have completed my induction period"
         click_on "Save and continue"
         within "ul.govuk-list.govuk-error-summary__list" do
           expect(page).to have_link("The year your QTS was awarded must be the current year or in the past", href: "#jobseekers-profile-qualified-teacher-status-form-qualified-teacher-status-year-field-error")
@@ -45,7 +45,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         end
         fill_in "Year QTS was awarded", with: "2022"
         fill_in "What is your teacher reference number (TRN)?", with: "1234567"
-        choose "Yes, I have completed a 1 or 2 year induction period"
+        choose "Yes, I have completed my induction period"
         click_on "Save and continue"
 
         expect_page_to_have_professional_status_information(qts: "yes", year: "2022", trn: "1234567", statutory_induction_complete: "yes")
@@ -98,11 +98,12 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
       fill_in "Year QTS was awarded", with: "2000"
       fill_in "What is your teacher reference number (TRN)?", with: "1234567"
-      choose "I'm on track to complete it"
+      choose "No, I have not completed my induction period"
+      fill_in "jobseekers-profile-qualified-teacher-status-form-statutory-induction-complete-details-field", with: "I am working on it."
 
       click_on "Save and continue"
 
-      expect_page_to_have_professional_status_information(qts: "yes", year: "2000", trn: "1234567", statutory_induction_complete: "on_track")
+      expect_page_to_have_professional_status_information(qts: "yes", year: "2000", trn: "1234567", statutory_induction_complete: "no", statutory_induction_complete_details: "I am working on it.")
 
       click_on "Change qualified teacher status"
 
@@ -120,7 +121,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
     end
   end
 
-  def expect_page_to_have_professional_status_information(qts:, year:, trn:, statutory_induction_complete:)
+  def expect_page_to_have_professional_status_information(qts:, year:, trn:, statutory_induction_complete:, statutory_induction_complete_details: nil)
     expect(page).to have_css(".govuk-summary-list__key", text: "Do you have qualified teacher status (QTS)?")
     expect(page).to have_css(".govuk-summary-list__value", text: I18n.t("helpers.label.jobseekers_profile_qualified_teacher_status_form.qualified_teacher_status_options.#{qts}"))
 
