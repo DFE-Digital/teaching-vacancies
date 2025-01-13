@@ -1,141 +1,153 @@
+#
+# MONTHLY CRON JOBS
+#
 clear_emergency_login_keys:
-  cron: '30 0 1 * *'
+  cron: '30 0 1 * *' # "At 00:30 on day-of-month 1."
   class: 'ClearEmergencyLoginKeysJob'
   queue: low
 
+#
+# WEEKLY CRON JOBS
+#
+queue_weekly_alerts:
+  cron: '0 18 * * 5' # "At 18:00 on Friday."
+  class: 'SendWeeklyAlertEmailJob'
+  queue: default
+
+import_polygon_data:
+  cron: '0 23 * * 0' # "At 23:00 on Sunday."
+  class: 'ImportPolygonDataJob'
+  queue: low
+
+#
+# DAILY CRON JOBS
+#
+remove_stale_vacancies:
+  cron: '0 00 * * *' # "At 00:00."
+  class: 'RemoveStaleVacanciesJob'
+  queue: low
+
+update_dsi_users_in_db:
+  cron: '0 0 * * *' # "At 00:00."
+  class: 'UpdateDSIUsersInDbJob'
+  queue: low
+
+export_users:
+  cron: '0 01 * * *' # "At 01:00."
+  class: 'ExportDSIUsersToBigQueryJob'
+  queue: low
+
+stream_equal_opportunities_report_publication_job:
+  cron: '30 01 * * *' # "At 01:30."
+  class: 'StreamEqualOpportunitiesReportPublicationJob'
+  queue: low
+
+send_entity_table_checks_to_bigquery:
+  cron: "30 1 * * *" # "At 01:30."
+  class: "DfE::Analytics::EntityTableCheckJob"
+  queue: low
+
+reset_sessions:
+  cron: '0 02 * * *' # "At 02:00."
+  class: 'ResetSessionsJob'
+  queue: low
+
+send_unapplied_saved_vacancies_email:
+  cron: '05 2 * * *' # "At 02:05."
+  class: 'SendEmailForUnappliedSavedVacanciesJob'
+  queue: default
+
+send_draft_applications_email:
+  cron: '20 2 * * *' # "At 02:20."
+  class: 'SendEmailForDraftJobApplicationsJob'
+  queue: default
+
+delete_old_feedback:
+  cron: '0 3 * * *' # "At 03:00."
+  class: 'DeleteOldFeedbackJob'
+  queue: default
+
+remove_vacancies_that_expired_yesterday_from_google_index:
+  cron: '0 04 * * *' # "At 04:00."
+  class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
+  queue: low
+
+remove_invalid_subscriptions:
+  cron: '0 05 * * *' # "At 05:00."
+  class: 'RemoveInvalidSubscriptionsJob'
+  queue: low
+
+delete_old_applications:
+  cron: '0 05 * * *' # "At 05:00."
+  class: 'DeleteOldNonDraftJobApplicationsJob'
+  queue: low
+
+refresh_markers:
+  cron: '0 6 * * *' # "At 06:00."
+  class: 'RefreshMarkersJob'
+  queue: low
+
+send_job_application_data_expiry_notification:
+  cron: '0 6 * * *' # "At 06:00."
+  class: 'SendJobApplicationDataExpiryNotifierJob'
+  queue: default
+
+queue_applications_received:
+  cron: '0 6 * * *' # "At 06:00."
+  class: 'SendApplicationsReceivedYesterdayJob'
+  queue: default
+
+send_inactive_account_email:
+  cron: '0 8 * * *' # "At 08:00."
+  class: 'SendInactiveAccountEmailJob'
+  queue: low
+
 destroy_inactive_accounts:
-  cron: '10 8 * * *'
+  cron: '10 8 * * *' # "At 08:10."
   class: 'DestroyInactiveAccountsJob'
   queue: low
 
 email_feedback_prompt:
-  cron: '0 09 * * *'
+  cron: '0 09 * * *' # "At 09:00."
   class: 'SendExpiredVacancyFeedbackPromptJob'
   queue: low
 
-export_users:
-  cron: '0 01 * * *'
-  class: 'ExportDSIUsersToBigQueryJob'
+withdraw_stale_drafts:
+  cron: '0 10 * * *' # At 10:00.
+  class: 'DeleteOldDraftApplicationsForExpiredVacanciesJob'
+  queue: low
+
+queue_daily_alerts:
+  cron: '0 15 * * *' # "At 15:00."
+  class: 'SendDailyAlertEmailJob'
+  queue: default
+
+export_vacancies_closed_early_to_dwp_find_a_job_service:
+  cron: '30 21 * * *' # "At 21:30."
+  class: 'ExportVacanciesClosedEarlySinceYesterdayToDwpFindAJobServiceJob'
+  queue: low
+
+import_organisation_data:
+  cron: '0 22 * * *' # "At 22:00."
+  class: 'ImportOrganisationDataJob'
+  queue: low
+
+refresh_organisations_gias_data_hash:
+  cron: '0 23 * * *' # "At 23:00."
+  class: 'RefreshOrganisationsGiasDataHashJob'
   queue: low
 
 # Internal querying & parsing of Find a Job export data depends on this running time.
 # Be careful if changing this time as you will need to adapt the code.
 export_vacancies_published_and_updated_to_dwp_find_a_job_service:
-  cron: '30 23 * * *'
+  cron: '30 23 * * *' # "At 23:30."
   class: 'ExportVacanciesPublishedAndUpdatedSinceYesterdayToDwpFindAJobServiceJob'
   queue: low
 
-export_vacancies_closed_early_to_dwp_find_a_job_service:
-  cron: '30 21 * * *'
-  class: 'ExportVacanciesClosedEarlySinceYesterdayToDwpFindAJobServiceJob'
-  queue: low
-
-import_organisation_data:
-  cron: '0 22 * * *'
-  class: 'ImportOrganisationDataJob'
-  queue: low
-
-import_polygon_data:
-  cron: '0 23 * * 0'
-  class: 'ImportPolygonDataJob'
-  queue: low
-
+#
+# HOURLY CRON JOBS
+#
 import_from_vacancy_sources:
-  cron: '55 6-21 * * *'
+  cron: '55 6-21 * * *' # "Every hour between 06:55 and 21:55."
   class: 'ImportFromVacancySourcesJob'
   queue: default
-
-queue_applications_received:
-  cron: '0 6 * * *'
-  class: 'SendApplicationsReceivedYesterdayJob'
-  queue: default
-
-queue_daily_alerts:
-  cron: '0 15 * * *'
-  class: 'SendDailyAlertEmailJob'
-  queue: default
-
-queue_weekly_alerts:
-  cron: '0 18 * * 5'
-  class: 'SendWeeklyAlertEmailJob'
-  queue: default
-
-refresh_markers:
-  cron: '0 6 * * *'
-  class: 'RefreshMarkersJob'
-  queue: low
-
-refresh_organisations_gias_data_hash:
-  cron: '0 23 * * *'
-  class: 'RefreshOrganisationsGiasDataHashJob'
-  queue: low
-
-remove_invalid_subscriptions:
-  cron: '0 05 * * *'
-  class: 'RemoveInvalidSubscriptionsJob'
-  queue: low
-
-remove_stale_vacancies:
-  cron: '0 00 * * *'
-  class: 'RemoveStaleVacanciesJob'
-  queue: low
-
-delete_old_applications:
-  cron: '0 05 * * *'
-  class: 'DeleteOldNonDraftJobApplicationsJob'
-  queue: low
-
-withdraw_stale_drafts:
-  cron: '0 10 * * *'
-  class: 'DeleteOldDraftApplicationsForExpiredVacanciesJob'
-  queue: low
-
-remove_vacancies_that_expired_yesterday_from_google_index:
-  cron: '0 04 * * *'
-  class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
-  queue: low
-
-reset_sessions:
-  cron: '0 02 * * *'
-  class: 'ResetSessionsJob'
-  queue: low
-
-send_inactive_account_email:
-  cron: '0 8 * * *'
-  class: 'SendInactiveAccountEmailJob'
-  queue: low
-
-send_draft_applications_email:
-  cron: '20 2 * * *'
-  class: 'SendEmailForDraftJobApplicationsJob'
-  queue: default
-
-send_unapplied_saved_vacancies_email:
-  cron: '05 2 * * *'
-  class: 'SendEmailForUnappliedSavedVacanciesJob'
-  queue: default
-
-send_job_application_data_expiry_notification:
-  cron: '0 6 * * *'
-  class: 'SendJobApplicationDataExpiryNotifierJob'
-  queue: default
-
-stream_equal_opportunities_report_publication_job:
-  cron: '30 01 * * *'
-  class: 'StreamEqualOpportunitiesReportPublicationJob'
-  queue: low
-
-update_dsi_users_in_db:
-  cron: '0 0 * * *'
-  class: 'UpdateDSIUsersInDbJob'
-  queue: low
-
-delete_old_feedback:
-  cron: '0 3 * * *'
-  class: 'DeleteOldFeedbackJob'
-  queue: default
-
-send_entity_table_checks_to_bigquery:
-  cron: "30 1 * * *"
-  class: "DfE::Analytics::EntityTableCheckJob"
-  queue: low
