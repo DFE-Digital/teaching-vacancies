@@ -6,6 +6,12 @@
     h1.govuk-heading-xl = t(".heading")
 
     p.govuk-body = t(".description")
+    h2.govuk-heading-m = t(".work_in_school_heading")
+    p.govuk-body = t(".work_in_school_guidance")
+    h2.govuk-heading-m = t(".trainee_teacher_heading")
+    p.govuk-body = t(".trainee_teacher_guidance")
+    h2.govuk-heading-m = t(".work_with_children_heading")
+    p.govuk-body = t(".work_with_children_guidance")
 
     = form_for form, url: jobseekers_job_application_reference_path(job_application, reference), method: :patch do |f|
       = f.govuk_error_summary

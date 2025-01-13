@@ -11,9 +11,17 @@ class Subscription < ApplicationRecord
   FILTERS = {
     teaching_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
     support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
+    # support_job_roles used to be called both of these in the past, and there are still active subscriptions with this name
+    teaching_support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
+    non_teaching_support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
+
     visa_sponsorship_availability: ->(vacancy, value) { value.include? vacancy.visa_sponsorship_available.to_s },
     ect_statuses: ->(vacancy, value) { value.include?(vacancy.ect_status) },
+    #  legacy criteria ->  value always 'true'
+    newly_qualified_teacher: ->(vacancy, value) { value == "true" && vacancy.ect_status.to_s == "ect_suitable" },
     subjects: ->(vacancy, value) { (vacancy.subjects || []).intersect?(value) },
+    # legacy 'subject' criteria appears to be 1 single value
+    subject: ->(vacancy, value) { (vacancy.subjects || []).include?(value) },
     phases: ->(vacancy, value) { vacancy.phases.intersect?(value) },
     working_patterns: ->(vacancy, value) { vacancy.working_patterns.intersect?(value) },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
@@ -65,43 +73,51 @@ class Subscription < ApplicationRecord
 
   def vacancies_matching(default_scope)
     scope = default_scope
-    criteria = search_criteria.symbolize_keys
-    scope, criteria = handle_location(scope, criteria)
+    # ignore legacy sorting criteria - legacy job_title is too specific and will typically filter everything
+    criteria = search_criteria.symbolize_keys.except(:jobs_sort, :job_title, :minimum_salary)
+    scope, criteria = self.class.handle_location(scope, criteria)
 
     scope.select do |vacancy|
       criteria.all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
     end
   end
 
-  private
-
   extend DistanceHelper
+
+  # These polygons seem to be extremely invalid - they respond to the 'invalid_reason' call by throwing an exception,
+  # as opposed to the other 31 invalid ones in the production database, which are just 'invalid'
+  INVALID_POLYGONS = ["somerset, bath and bristol",
+                      "devon, plymouth and torbay",
+                      "essex, southend and thurrock",
+                      "leicestershire and rutland",
+                      "lincolnshire and lincoln",
+                      "derbyshire and derby"].freeze
 
   class << self
     def limit_by_location(vacancies, location, radius_in_miles)
-      query = location.strip.downcase
-      if query.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(query)
-        vacancies
+      polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
+      if polygon.present? && !polygon.name.in?(INVALID_POLYGONS) && polygon.area.invalid_reason.nil?
+        vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
       else
-        polygon = LocationPolygon.buffered(radius_in_miles).with_name(query)
-        if polygon.present?
-          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
-        else
-          radius_in_metres = convert_miles_to_metres radius_in_miles
-          coordinates = Geocoding.new(query).coordinates
-          search_point = RGeo::Geographic.spherical_factory.point(coordinates.second, coordinates.first)
-          vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
-        end
+        radius_in_metres = convert_miles_to_metres radius_in_miles
+        coordinates = Geocoding.new(location).coordinates
+        search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
+        vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
       end
     end
-  end
 
-  def handle_location(scope, criteria)
-    if criteria.key?(:location)
-      [self.class.limit_by_location(scope, criteria[:location], criteria[:radius]), criteria.except(:location, :radius)]
-
-    else
-      [scope, criteria]
+    def handle_location(scope, criteria)
+      if criteria.key?(:location)
+        location = criteria[:location].strip.downcase
+        if location.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(location)
+          [scope, criteria.except(:location, :radius)]
+        else
+          [limit_by_location(scope, location, criteria[:radius] || 10), criteria.except(:location, :radius)]
+        end
+      else
+        # ignore 'radius' keys that don't have a 'location' key
+        [scope, criteria.except(:radius)]
+      end
     end
   end
 end

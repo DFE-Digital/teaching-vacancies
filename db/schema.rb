@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_17_145653) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_07_110428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -543,6 +543,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_17_145653) do
     t.text "organisation_ciphertext"
     t.text "email_ciphertext"
     t.text "phone_number_ciphertext"
+    t.boolean "is_most_recent_employer"
     t.index ["job_application_id"], name: "index_references_on_job_application_id"
   end
 

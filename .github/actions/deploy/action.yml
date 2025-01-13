@@ -43,6 +43,11 @@ runs:
       with:
         azure-credentials: ${{ inputs.azure-credentials }}
 
+    - uses: google-github-actions/auth@v2
+      with:
+        project_id: teacher-vacancy-service
+        workload_identity_provider: projects/689616473831/locations/global/workloadIdentityPools/teaching-vacancies/providers/teaching-vacancies
+
     - name: Pin Terraform version
       uses: hashicorp/setup-terraform@v2
       with:

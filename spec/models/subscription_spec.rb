@@ -199,7 +199,7 @@ RSpec.describe Subscription do
             let(:radius) { 4 }
 
             it "finds just basildon" do
-              expect(vacancies).to eq([basildon_vacancy])
+              expect(vacancies.map(&:slug)).to eq([basildon_vacancy.slug])
             end
           end
 
@@ -207,7 +207,7 @@ RSpec.describe Subscription do
             let(:radius) { 50 }
 
             it "finds basildon and st albans" do
-              expect(vacancies).to contain_exactly(st_albans_vacancy, basildon_vacancy)
+              expect(vacancies.map(&:slug)).to contain_exactly(st_albans_vacancy.slug, basildon_vacancy.slug)
             end
           end
 
