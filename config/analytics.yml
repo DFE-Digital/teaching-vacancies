@@ -146,6 +146,7 @@ shared:
     - safeguarding_issue_details
     - training_and_cpds_section_completed
     - imported_steps
+    - statutory_induction_complete_details
   job_preferences_locations:
     - id
     - job_preferences_id
@@ -167,6 +168,7 @@ shared:
     - statutory_induction_complete
     - teacher_reference_number
     - has_teacher_reference_number
+    - statutory_induction_complete_details
   jobseeker_profile_excluded_organisations:
     - id
     - jobseeker_profile_id
