@@ -9,7 +9,7 @@ class Jobseekers::Profiles::QualifiedTeacherStatusController < Jobseekers::Profi
                      teacher_reference_number: form.updated_teacher_reference_number,
                      statutory_induction_complete: form.statutory_induction_complete,
                      has_teacher_reference_number: form.has_teacher_reference_number,
-                     statutory_induction_complete_details: statutory_induction_complete_details)
+                     statutory_induction_complete_details: form.statutory_induction_complete_details)
       redirect_to jobseekers_profile_qualified_teacher_status_path
     else
       render :edit
@@ -19,10 +19,6 @@ class Jobseekers::Profiles::QualifiedTeacherStatusController < Jobseekers::Profi
   private
 
   helper_method :form
-
-  def form
-    @form ||= Jobseekers::Profile::QualifiedTeacherStatusForm.new(form_attributes)
-  end
 
   def form_attributes
     case action_name

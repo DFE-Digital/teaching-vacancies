@@ -9,6 +9,14 @@ class Jobseekers::Profile::QualifiedTeacherStatusForm < BaseForm
   validates :has_teacher_reference_number, inclusion: { in: %w[yes] }, if: -> { qualified_teacher_status == "yes" }
   validates :has_teacher_reference_number, inclusion: { in: %w[yes no] }, if: -> { qualified_teacher_status == "no" || qualified_teacher_status == "on_track" }
 
+  def initialize(attributes = {})
+    super
+
+    if attributes[:statutory_induction_complete] == "yes"
+      self.statutory_induction_complete_details = nil
+    end
+  end
+
   def self.fields
     %i[qualified_teacher_status qualified_teacher_status_year teacher_reference_number statutory_induction_complete has_teacher_reference_number statutory_induction_complete_details]
   end

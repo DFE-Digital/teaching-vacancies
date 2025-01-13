@@ -23,7 +23,7 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
   def statutory_induction_complete_options
     [
       ["yes", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.yes")],
-      ["no", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.no")]
+      ["no", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.no")],
     ]
   end
 
@@ -31,6 +31,9 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
     jobseeker_profile = attributes.delete(:jobseeker_profile)
     super
 
+    if attributes[:statutory_induction_complete] == "yes"
+      self.statutory_induction_complete_details = nil
+    end
     return unless jobseeker_profile
 
     self.teacher_reference_number ||= jobseeker_profile.teacher_reference_number
