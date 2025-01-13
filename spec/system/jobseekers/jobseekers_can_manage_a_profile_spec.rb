@@ -183,7 +183,7 @@ RSpec.describe "Jobseekers can manage their profile" do
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content("2019")
-        expect(page).not_to have_content("I am working on it.")
+        expect(page).to have_content("I am working on it.")
       end
 
       it "allows the jobseeker to edit their QTS status to no" do

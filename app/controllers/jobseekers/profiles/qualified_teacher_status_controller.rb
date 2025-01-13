@@ -20,6 +20,10 @@ class Jobseekers::Profiles::QualifiedTeacherStatusController < Jobseekers::Profi
 
   helper_method :form
 
+  def form
+    @form ||= Jobseekers::Profile::QualifiedTeacherStatusForm.new(form_attributes)
+  end
+
   def form_attributes
     case action_name
     when "edit"
