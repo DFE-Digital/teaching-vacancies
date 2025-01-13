@@ -74,7 +74,7 @@ class Subscription < ApplicationRecord
   def vacancies_matching(default_scope)
     scope = default_scope
     # ignore legacy sorting criteria - legacy job_title is too specific and will typically filter everything
-    criteria = search_criteria.symbolize_keys.except(:jobs_sort, :job_title)
+    criteria = search_criteria.symbolize_keys.except(:jobs_sort, :job_title, :minimum_salary)
     scope, criteria = self.class.handle_location(scope, criteria)
 
     scope.select do |vacancy|
