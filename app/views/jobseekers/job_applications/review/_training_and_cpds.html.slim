@@ -11,5 +11,6 @@
           - if training.grade.present?
             span class="govuk-!-display-inline-block govuk-!-margin-left-1"
               = "(#{training.grade})"
+        p class="govuk-!-margin-bottom-1" = training.course_length
         p.govuk-caption-m
           = "#{training.provider}, #{training.year_awarded}"

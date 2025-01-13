@@ -616,8 +616,9 @@ en:
         name: Name of course or training
         provider: Training provider
         grade: Grade (optional)
-        year_awarded: Year awarded
+        year_awarded: Date completed
         year_completed_hint: For example, 1998
+        course_length: Course length
 
 
       personal_details_form:
