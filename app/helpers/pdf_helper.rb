@@ -178,7 +178,6 @@ module PdfHelper
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def add_references(pdf)
     pdf.start_new_page
 
@@ -205,7 +204,6 @@ module PdfHelper
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def add_ask_for_support(pdf)
     pdf.start_new_page
