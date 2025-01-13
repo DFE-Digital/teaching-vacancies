@@ -82,6 +82,11 @@ delete_old_applications:
   class: 'DeleteOldNonDraftJobApplicationsJob'
   queue: low
 
+delete_old_alert_runs:
+  cron: '10 5 * * *' # "At 05:10."
+  class: 'DeleteOldAlertRunsJob'
+  queue: low
+
 refresh_markers:
   cron: '0 6 * * *' # "At 06:00."
   class: 'RefreshMarkersJob'
