@@ -45,10 +45,11 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         end
         fill_in "Year QTS was awarded", with: "2022"
         fill_in "What is your teacher reference number (TRN)?", with: "1234567"
-        choose "Yes, I have completed my induction period"
+        choose "No, I have not completed my induction period"
+        fill_in "jobseekers-profile-qualified-teacher-status-form-statutory-induction-complete-details-field", with: "Don't have time to explain"
         click_on "Save and continue"
 
-        expect_page_to_have_professional_status_information(qts: "yes", year: "2022", trn: "1234567", statutory_induction_complete: "yes")
+        expect_page_to_have_professional_status_information(qts: "yes", year: "2022", trn: "1234567", statutory_induction_complete: "no", statutory_induction_complete_details: "Don't have time to explain")
       end
     end
 
@@ -139,5 +140,10 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
     expect(page).to have_css(".govuk-summary-list__key", text: "Have you completed your induction period?")
     expect(page).to have_css(".govuk-summary-list__value", text: I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.#{statutory_induction_complete}"))
+
+    if statutory_induction_complete_details.present? && statutory_induction_complete == "no"
+      expect(page).to have_css(".govuk-summary-list__key", text: "Additional induction details")
+      expect(page).to have_css(".govuk-summary-list__value", text: statutory_induction_complete_details)
+    end
   end
 end
