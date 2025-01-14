@@ -23,10 +23,22 @@ class Subscription < ApplicationRecord
     # legacy 'subject' criteria appears to be 1 single value
     subject: ->(vacancy, value) { (vacancy.subjects || []).include?(value) },
     phases: ->(vacancy, value) { vacancy.phases.intersect?(value) },
-    working_patterns: ->(vacancy, value) { vacancy.working_patterns.intersect?(value) },
+    working_patterns: ->(vacancy, value) { working_pattern_match?(vacancy, value) },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
     keyword: ->(vacancy, value) { vacancy.searchable_content.include? value.downcase.strip },
   }.freeze
+
+  class << self
+    def working_pattern_match?(vacancy, working_patterns)
+      if working_patterns == %w[job_share]
+        vacancy.is_job_share
+      elsif working_patterns.include?("job_share")
+        vacancy.is_job_share || vacancy.working_patterns.intersect?(working_patterns - %w[job_share])
+      else
+        vacancy.working_patterns.intersect?(working_patterns)
+      end
+    end
+  end
 
   def self.encryptor(serializer: :json_allow_marshal)
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
