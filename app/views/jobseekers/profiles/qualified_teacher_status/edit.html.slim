@@ -21,9 +21,9 @@
           = f.govuk_text_field :teacher_reference_number
         = f.govuk_radio_button :has_teacher_reference_number, "no"
 
-      = f.govuk_radio_buttons_fieldset :statutory_induction_complete, hint: { text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.completed_period_hint") },legend: { size: "l", tag: "h1", text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete") } do
+      = f.govuk_radio_buttons_fieldset :statutory_induction_complete, hint: { text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.completed_period_hint") }, legend: { size: "l", tag: "h1", text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete") } do
         = f.govuk_radio_button :statutory_induction_complete, "yes", link_errors: true
-        = f.govuk_radio_button :statutory_induction_complete, "no" do 
+        = f.govuk_radio_button :statutory_induction_complete, "no" do
           = f.govuk_text_area :statutory_induction_complete_details, label: -> { tag.p(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete_details", link: govuk_link_to(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete_details_hint_text"), "https://www.gov.uk/government/publications/induction-for-early-career-teachers-england", target: "_blank")).html_safe) }
 
       = f.govuk_submit t("buttons.save_and_continue")
