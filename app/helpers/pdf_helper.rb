@@ -72,7 +72,7 @@ module PdfHelper
       [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete"), job_application.statutory_induction_complete.humanize],
     ]
 
-    if job_application.statutory_induction_complete_details.present?
+    if job_application.statutory_induction_complete_details.present? && job_application.statutory_induction_complete == "no"
       professional_status << [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete_details"), job_application.statutory_induction_complete_details]
     end
 
