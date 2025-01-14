@@ -103,13 +103,15 @@ module PdfHelper
     pdf.move_down 5
     pdf.text "Secondary Qualification", size: 12, style: :italic
 
-    secondary_qualification_data = [
-      ["Name:", qualification.name],
-      ["Grade:", qualification.grade],
-      ["Year Awarded:", qualification.year],
-    ].reject { |row| row[1].blank? }
-
-    render_table(pdf, secondary_qualification_data)
+    qualification.qualification_results.each do |result|
+      secondary_qualification_data = [
+        ["Subject:", result.subject],
+        ["Grade:", result.grade],
+        (["Awarding Body:", result.awarding_body] if result.awarding_body.present?),
+        ["Date completed:", qualification.year],
+      ].compact
+      render_table(pdf, secondary_qualification_data)
+    end
   end
 
   def add_general_qualification_details(pdf, qualification)
@@ -119,7 +121,7 @@ module PdfHelper
       ["Qualification Name:", qualification.name],
       ["Institution:", qualification.institution],
       ["Grade:", qualification.grade],
-      ["Year Awarded:", qualification.year],
+      ["Date completed:", qualification.year],
     ].reject { |row| row[1].blank? }
 
     render_table(pdf, general_qualification_data)

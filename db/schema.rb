@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_07_110428) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_110428) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "status", default: 0
+    t.index ["run_on"], name: "index_alert_runs_on_run_on"
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
   end
 
@@ -513,6 +514,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_110428) do
     t.string "grade", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "awarding_body"
     t.index ["qualification_id"], name: "index_qualification_results_on_qualification_id"
   end
 
@@ -606,6 +608,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_07_110428) do
     t.datetime "updated_at", null: false
     t.uuid "jobseeker_profile_id"
     t.uuid "job_application_id"
+    t.string "course_length"
     t.index ["job_application_id"], name: "index_training_and_cpds_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_training_and_cpds_on_jobseeker_profile_id"
   end

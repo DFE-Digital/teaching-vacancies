@@ -437,7 +437,7 @@ en:
           true: "Yes"
         grade: Grade
         subject: Subject
-        year: Year qualification(s) was/were awarded
+        year: Year awarded
       jobseekers_job_application_details_reference_form:
         email: Email address
         job_title: Job title
@@ -616,8 +616,9 @@ en:
         name: Name of course or training
         provider: Training provider
         grade: Grade (optional)
-        year_awarded: Year awarded
+        year_awarded: Date completed
         year_completed_hint: For example, 1998
+        course_length: Course length
 
 
       personal_details_form:

@@ -303,6 +303,7 @@ shared:
     - qualification_id
     - subject
     - grade
+    - awarding_body
     - created_at
     - updated_at
   references:
@@ -439,6 +440,7 @@ shared:
     - updated_at
     - jobseeker_profile_id
     - job_application_id
+    - course_length
   :noticed_notifications:
     - id
     - type

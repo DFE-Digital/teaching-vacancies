@@ -28,11 +28,13 @@ RSpec.describe "Accessign the service data jobseeker profiles" do
     end
 
     it "gets their access to a Jobseeker Profile logged" do
-      allow(Rails.logger).to receive(:info).with(anything)
-      expect(Rails.logger).to receive(:info)
-        .with("[Service Data] #{support_user.email} accessed Profile ID #{jobseeker_profile.id} at #{Time.current}")
+      freeze_time do
+        allow(Rails.logger).to receive(:info).with(anything)
+        expect(Rails.logger).to receive(:info)
+                                  .with("[Service Data] #{support_user.email} accessed Profile ID #{jobseeker_profile.id} at #{Time.current}")
 
-      get support_users_service_data_jobseeker_profile_path(jobseeker_profile)
+        get support_users_service_data_jobseeker_profile_path(jobseeker_profile)
+      end
     end
   end
 
