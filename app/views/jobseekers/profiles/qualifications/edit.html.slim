@@ -6,12 +6,12 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for form, url: jobseekers_profile_qualification_path(params[:id]), method: :patch do |f|
+    = form_for @form, url: jobseekers_profile_qualification_path(params[:id]), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_fieldset legend: { text: t(".page_title"), tag: "h1", size: "l" } do
 
-        = render "jobseekers/qualifications/fields", f: f
+        = render "jobseekers/qualifications/fields", f: f, category: @category
 
       = f.govuk_submit t("buttons.save_and_continue")
 

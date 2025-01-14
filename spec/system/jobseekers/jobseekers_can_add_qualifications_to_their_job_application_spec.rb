@@ -55,7 +55,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
       expect(page).to have_content("GCSEs")
       expect(page).to have_content("Churchill School for Gifted Macaques")
-      expect(page).to have_content("Maths – 110%")
+      expect(page).to have_content("Maths – 110% (Cambridge Board)")
       expect(page).to have_content("PE – 90%")
       expect(page).to have_content("2020")
     end

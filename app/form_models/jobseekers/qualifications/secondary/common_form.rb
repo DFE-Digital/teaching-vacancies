@@ -14,6 +14,10 @@ module Jobseekers::Qualifications::Secondary
       pad_qualification_results
     end
 
+    def secondary?
+      true
+    end
+
     def qualification_results_attributes=(attrs)
       @qualification_results = attrs.map { |_, params| QualificationResultForm.new(params) }
     end
