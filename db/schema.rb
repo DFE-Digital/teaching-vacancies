@@ -13,10 +13,13 @@
 ActiveRecord::Schema[7.2].define(version: 2025_01_13_131902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
+  enable_extension "citext"
   enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
+  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -75,11 +78,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_131902) do
     t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "employment_type", default: 0
+    t.text "reason_for_break", default: ""
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
-    t.integer "employment_type", default: 0
-    t.text "reason_for_break", default: ""
     t.uuid "jobseeker_profile_id"
     t.text "reason_for_leaving"
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
@@ -681,8 +684,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_131902) do
     t.boolean "include_additional_documents"
     t.boolean "visa_sponsorship_available"
     t.boolean "is_parental_leave_cover"
-    t.string "hourly_rate"
     t.boolean "is_job_share"
+    t.string "hourly_rate"
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"
@@ -747,7 +750,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_131902) do
   add_foreign_key "references", "job_applications"
   add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "saved_jobs", "vacancies"
-  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id", validate: false
+  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
   add_foreign_key "training_and_cpds", "job_applications"
   add_foreign_key "training_and_cpds", "jobseeker_profiles"
