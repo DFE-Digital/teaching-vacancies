@@ -15,7 +15,7 @@ RSpec.describe Jobseekers::Profile::QualifiedTeacherStatusForm, type: :model do
       it { is_expected.to validate_presence_of(:teacher_reference_number) }
       it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
       it { is_expected.not_to allow_value("12345").for(:teacher_reference_number) }
-      it { is_expected.to validate_inclusion_of(:statutory_induction_complete).in_array(%w[yes no on_track]) }
+      it { is_expected.to validate_inclusion_of(:statutory_induction_complete).in_array(%w[yes no]) }
       it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array(%w[yes]) }
     end
 
