@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Publishers::AtsApi::V1::VacancySerialiser do
   describe "#call" do
-    subject(:serialiser) { described_class.new(vacancy: vacancy).call }
+    subject(:serialiser) { described_class.new(vacancy: vacancy) }
 
     let(:school) { create(:school, urn: "12345") }
     let(:vacancy) { create(:vacancy, :external, ect_status: :ect_suitable, organisations: [school]) }
@@ -35,7 +35,7 @@ RSpec.describe Publishers::AtsApi::V1::VacancySerialiser do
     end
 
     it "serializes the vacancy correctly" do
-      expect(serialiser).to eq(expected_serialised_vacancy)
+      expect(serialiser.call).to eq(expected_serialised_vacancy)
     end
 
     context "when the vacancy is not suitable for an ECT" do
@@ -43,7 +43,7 @@ RSpec.describe Publishers::AtsApi::V1::VacancySerialiser do
       let(:ect_suitable) { false }
 
       it "serializes the vacancy correctly" do
-        expect(serialiser).to eq(expected_serialised_vacancy)
+        expect(serialiser.call).to eq(expected_serialised_vacancy)
       end
     end
 
@@ -53,14 +53,14 @@ RSpec.describe Publishers::AtsApi::V1::VacancySerialiser do
       let(:vacancy) { create(:vacancy, :external, ect_status: :ect_suitable, organisations: [school_group]) }
 
       it "serializes the vacancy correctly" do
-        expect(serialiser).to eq(expected_serialised_vacancy)
+        expect(serialiser.call).to eq(expected_serialised_vacancy)
       end
     end
 
     context "when the vacancy is at multiple schools and a trust central branch" do
       let(:school_group) { create(:trust) }
       let(:schools) { create_list(:school, 3) }
-      let(:organisation_urns) { { trust_uid: school_group.uid, school_urns: schools.map(&:urn) } }
+      let(:organisation_urns) { { trust_uid: school_group.uid, school_urns: schools.map(&:urn).sort } }
       let(:vacancy) { create(:vacancy, :external, ect_status: :ect_suitable, organisations: schools + [school_group]) }
 
       before do
@@ -68,7 +68,10 @@ RSpec.describe Publishers::AtsApi::V1::VacancySerialiser do
       end
 
       it "serializes the vacancy correctly" do
-        expect(serialiser).to eq(expected_serialised_vacancy)
+        serialised_vacancy = serialiser.call
+        serialised_vacancy[:schools][:school_urns] = serialised_vacancy[:schools][:school_urns].sort
+
+        expect(serialised_vacancy).to eq(expected_serialised_vacancy)
       end
     end
   end

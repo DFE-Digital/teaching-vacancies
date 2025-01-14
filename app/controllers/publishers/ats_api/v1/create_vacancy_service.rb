@@ -2,7 +2,6 @@ module Publishers
   module AtsApi
     module V1
       class CreateVacancyService
-
         InvalidOrganisationError = Class.new(StandardError)
 
         def initialize(params)
