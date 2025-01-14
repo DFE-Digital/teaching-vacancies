@@ -40,8 +40,4 @@ class Jobseekers::Profiles::QualifiedTeacherStatusController < Jobseekers::Profi
   def form_params
     params.require(:jobseekers_profile_qualified_teacher_status_form).permit(form_class.fields)
   end
-
-  def statutory_induction_complete_details
-    form.statutory_induction_complete == "yes" ? nil : form.statutory_induction_complete_details
-  end
 end
