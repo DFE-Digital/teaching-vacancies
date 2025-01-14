@@ -551,14 +551,10 @@ RSpec.describe Vacancy do
       it { is_expected.to be true }
     end
 
-    context "when external_reference is present" do
-      before { vacancy.external_reference = "some_reference" }
+    context "when ats api client id is present" do
+      let(:publisher_api_client) { build(:publisher_ats_api_client) }
 
-      it { is_expected.to be true }
-    end
-
-    context "when external_advert_url is present" do
-      before { vacancy.external_advert_url = "https://example.com" }
+      before { vacancy.publisher_ats_api_client = publisher_api_client }
 
       it { is_expected.to be true }
     end
@@ -568,7 +564,7 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#schools" do
+  describe "#organisation_urns" do
     let(:vacancy) { create(:vacancy, organisations: organisations) }
 
     context "when the organisation is a school" do
@@ -576,7 +572,7 @@ RSpec.describe Vacancy do
       let(:organisations) { [school] }
 
       it "returns an array with school_urns" do
-        expect(vacancy.schools).to eq([{ school_urns: ["100001"] }])
+        expect(vacancy.organisation_urns).to eq([{ school_urns: ["100001"] }])
       end
     end
 
@@ -590,7 +586,7 @@ RSpec.describe Vacancy do
       end
 
       it "returns an array with trust_uid and school_urns" do
-        expect(vacancy.schools.sort).to eq([{ trust_uid: "12345", school_urns: %w[100002 100003].sort }])
+        expect(vacancy.organisation_urns.sort).to eq([{ trust_uid: "12345", school_urns: %w[100002 100003].sort }])
       end
     end
   end

@@ -4,6 +4,7 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
   subject(:service) { described_class.new(params) }
 
   let(:school) { create(:school) }
+  let(:publisher_ats_api_client_id) { create(:publisher_ats_api_client).id }
   let(:external_reference) { "new-ref" }
   let(:school_urns) { { school_urns: [school.urn] } }
   let(:job_title) { "A job title" }
@@ -24,6 +25,7 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
       skills_and_experience: "Expert in teaching",
       salary: "£30,000 - £40,000",
       schools: school_urns,
+      publisher_ats_api_client_id: publisher_ats_api_client_id,
     }
   end
 
@@ -61,7 +63,11 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
       let(:school_urns) { { school_urns: [9999] } }
 
       it "raises ActiveRecord::RecordNotFound" do
-        expect { service.call }.to raise_error(ActiveRecord::RecordNotFound, "No valid organisations found")
+        expect { service.call }
+          .to raise_error(
+            Publishers::AtsApi::V1::CreateVacancyService::InvalidOrganisationError,
+            "No valid organisations found",
+          )
       end
     end
 

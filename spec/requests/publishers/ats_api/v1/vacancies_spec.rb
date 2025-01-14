@@ -85,8 +85,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
     it "only returns vacancies for the authenticated client" do
       other_client = create(:publisher_ats_api_client)
       school = create(:school)
-      create_list(:vacancy, 2, publisher_ats_api_client: client, organisations: [school])
-      create_list(:vacancy, 3, publisher_ats_api_client: other_client, organisations: [school])
+      create_list(:vacancy, 2, :external, publisher_ats_api_client: client, organisations: [school])
+      create_list(:vacancy, 3, :external, publisher_ats_api_client: other_client, organisations: [school])
 
       get "/ats-api/v1/vacancies", headers: { "X-Api-Key" => client.api_key, "Accept" => "application/json" }
 
@@ -96,7 +96,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
     end
 
     it "returns paginated results" do
-      create_list(:vacancy, 10, publisher_ats_api_client: client)
+      create_list(:vacancy, 10, :external, publisher_ats_api_client: client)
 
       get "/ats-api/v1/vacancies", headers: { "X-Api-Key" => client.api_key, "Accept" => "application/json" }
 
@@ -297,6 +297,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               salary: source.salary,
               visa_sponsorship_available: source.visa_sponsorship_available,
               external_reference: source.external_reference,
+              publisher_ats_api_client_id: client.id,
               is_job_share: source.is_job_share,
               job_roles: source.job_roles,
               working_patterns: source.working_patterns,

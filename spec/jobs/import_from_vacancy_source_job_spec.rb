@@ -101,7 +101,7 @@ RSpec.describe ImportFromVacancySourceJob do
         expect(FailedImportedVacancy.first.external_reference).to eq("J3D1")
         expect(FailedImportedVacancy.first.import_errors.first).to eq("job_title:[can't be blank]")
         expect(FailedImportedVacancy.first.import_errors.last).to eq("phases:[can't be blank]")
-        expect(FailedImportedVacancy.first.vacancy).to include(
+        expect(FailedImportedVacancy.first.vacancy).to eq(
           "about_school" => "test",
           "actual_salary" => "",
           "application_email" => nil,
@@ -151,6 +151,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "phases" => [],
           "publish_on" => Date.today.strftime("%Y-%m-%d"),
           "publisher_id" => nil,
+          "publisher_ats_api_client_id" => nil,
           "publisher_organisation_id" => nil,
           "readable_job_location" => nil,
           "readable_phases" => [],

@@ -129,7 +129,7 @@ class Vacancy < ApplicationRecord
   end
 
   def external?
-    external_source.present? || external_reference.present? || external_advert_url.present?
+    external_source.present? || publisher_ats_api_client.present?
   end
 
   def organisation
@@ -138,7 +138,7 @@ class Vacancy < ApplicationRecord
     organisations.find(&:trust?) || publisher_organisation || organisations.first&.school_groups&.first
   end
 
-  def schools
+  def organisation_urns
     organisations.filter_map do |organisation|
       if organisation.is_a?(School)
         { school_urns: [organisation.urn] }

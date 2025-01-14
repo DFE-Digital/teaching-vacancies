@@ -2,6 +2,9 @@ module Publishers
   module AtsApi
     module V1
       class CreateVacancyService
+
+        InvalidOrganisationError = Class.new(StandardError)
+
         def initialize(params)
           @params = params
         end
@@ -26,7 +29,7 @@ module Publishers
 
         def permitted_params
           organisations = fetch_organisations(params[:schools])
-          raise ActiveRecord::RecordNotFound, "No valid organisations found" if organisations.blank?
+          raise InvalidOrganisationError, "No valid organisations found" if organisations.blank?
 
           params[:publish_on] ||= Time.zone.today.to_s
           params[:working_patterns] ||= []
@@ -39,7 +42,7 @@ module Publishers
           return [] unless school_params
 
           if school_params[:trust_uid].present?
-            SchoolGroup.trusts.find_by(uid: school_params[:trust_uid]).schools.where(urn: school_params[:school_urns])
+            SchoolGroup.trusts.find_by(uid: school_params[:trust_uid]).organisation_urns.where(urn: school_params[:school_urns])
           else
             School.where(urn: school_params[:school_urns])
           end

@@ -23,10 +23,6 @@ module Publishers
           organisations = fetch_organisations(params[:schools])
           raise ActiveRecord::RecordNotFound, "No valid organisations found" if organisations.blank?
 
-          params[:publish_on] ||= Time.zone.today.to_s
-          params[:working_patterns] ||= []
-          params[:phases] ||= []
-
           params.except(:schools, :trust_uid).merge(organisations: organisations)
         end
 
