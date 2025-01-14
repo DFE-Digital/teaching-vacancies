@@ -1,5 +1,5 @@
 p class="govuk-!-margin-bottom-1"
-  = qualification.qualification_results.map { |result| "#{result.subject} (#{result.grade.upcase})" }.join(", ")
+  = qualification.qualification_results.map { |result| display_secondary_qualification(result) }.join(", ")
 
 p.govuk-caption-m
   - if qualification.display_attributes.include?("institution")

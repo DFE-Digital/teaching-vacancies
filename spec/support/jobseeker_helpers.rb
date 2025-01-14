@@ -109,10 +109,12 @@ module JobseekerHelpers
   def fill_in_gcses
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Maths"
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][grade]", with: "110%"
+    fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][awarding_body]", with: "Cambridge Board"
+    find_by_id("add_subject").click
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][subject]", with: "PE"
     fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: "90%"
     fill_in "School, college, or other organisation", with: "Churchill School for Gifted Macaques"
-    fill_in "Year qualification(s) was/were awarded", with: "2020"
+    fill_in I18n.t("helpers.label.jobseekers_qualifications_shared_labels.year"), with: "2020"
   end
 
   def fill_in_custom_secondary_qualifications
@@ -122,7 +124,7 @@ module JobseekerHelpers
     fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: "German"
     fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: "4"
     fill_in "School, college, or other organisation", with: "Happy Rainbows School for High Achievers"
-    fill_in "Year qualification(s) was/were awarded", with: "2020"
+    fill_in I18n.t("helpers.label.jobseekers_qualifications_shared_labels.year"), with: "2020"
   end
 
   def fill_in_undergraduate_degree
