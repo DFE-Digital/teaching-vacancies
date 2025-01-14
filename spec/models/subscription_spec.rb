@@ -312,7 +312,7 @@ RSpec.describe Subscription do
         let(:share_job) { Vacancy.find_by!(contact_number: "9js") }
 
         it "finds the part_time and job share jobs" do
-          expect(vacancies.map(&:contact_number)).to match_array([part_time_job.contact_number, share_job.contact_number])
+          expect(vacancies.map(&:contact_number)).to contain_exactly(part_time_job.contact_number, share_job.contact_number)
         end
       end
 
