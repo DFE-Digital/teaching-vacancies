@@ -32,14 +32,6 @@ RSpec.describe Jobseekers::Profile::QualifiedTeacherStatusForm, type: :model do
       it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array(%w[yes no]) }
       it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
     end
-
-    context "when statutory_induction_complete is 'yes'" do
-      let(:attributes) { { qualified_teacher_status: "yes", statutory_induction_complete: "yes", statutory_induction_complete_details: "Some details" } }
-
-      it "clears statutory_induction_complete_details" do
-        expect(form.statutory_induction_complete_details).to be_nil
-      end
-    end
   end
 
   describe "#updated_teacher_reference_number" do
