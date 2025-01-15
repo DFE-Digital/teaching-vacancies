@@ -66,7 +66,7 @@ FactoryBot.define do
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     visa_sponsorship_available { false }
     organisations { build_list(:school, 1) }
-    is_job_share { [true, false].sample }
+    is_job_share { false }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
 
     trait :legacy_vacancy do
@@ -82,6 +82,10 @@ FactoryBot.define do
       school_offer { nil }
       school_visits_details { Faker::Lorem.paragraph(sentence_count: 4) }
       skills_and_experience { nil }
+    end
+
+    trait :for_seed_data do
+      is_job_share { [true, false].sample }
     end
 
     trait :without_any_money do
