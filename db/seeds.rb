@@ -48,7 +48,7 @@ attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.reada
 # Vacancies at a school that belongs to Weydon Multi Academy Trust
 school = weydon_trust.schools.first
 attrs = { organisations: [school], phases: ["secondary"], publisher_organisation: school, publisher: Publisher.all.sample }
-6.times { FactoryBot.create(:vacancy, :for_seed_data,  :published, **attrs) }
+6.times { FactoryBot.create(:vacancy, :for_seed_data, :published, **attrs) }
 2.times { FactoryBot.create(:vacancy, :for_seed_data, :published, :no_tv_applications, **attrs) }
 4.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }
 2.times { FactoryBot.create(:vacancy, :for_seed_data, :draft, **attrs) }
