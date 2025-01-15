@@ -533,7 +533,6 @@ en:
           "yes": "Yes"
         statutory_induction_complete_options:
           "no": "No, I have not completed my induction period"
-          on_track: I'm on track to complete it
           "yes": "Yes, I have completed my induction period"
         qualified_teacher_status_year: Year QTS was awarded
         hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}.
@@ -599,7 +598,6 @@ en:
           non_teacher: "I'm not looking for a teaching job"
         statutory_induction_complete_options:
           "no": "No, I have not completed my induction period"
-          on_track: I'm on track to complete it
           "yes": "Yes, I have completed my induction period"
         has_teacher_reference_number_options:
           "yes": "Yes"
