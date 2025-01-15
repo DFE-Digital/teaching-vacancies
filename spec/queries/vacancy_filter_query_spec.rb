@@ -47,7 +47,7 @@ RSpec.describe VacancyFilterQuery do
   let!(:faith_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 13", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, publisher_organisation: faith_school, organisations: [faith_school, faith_school2]) }
   let!(:non_faith_vacancy1) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school1]) }
   let!(:non_faith_vacancy2) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 15", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school2]) }
-  let!(:non_faith_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school3], visa_sponsorship_available: true) }
+  let!(:non_faith_vacancy3) { create(:vacancy, :no_tv_applications, is_job_share: true, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school3], visa_sponsorship_available: true) }
 
   describe "#call" do
     it "queries based on the given filters" do
