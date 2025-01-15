@@ -536,7 +536,7 @@ en:
           "yes": "Yes, I have completed my induction period"
         qualified_teacher_status_year: Year QTS was awarded
         hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}.
-        completed_period_hint: New teachers before 2021 had to complete a 1 year induction period. New teachers after 2021 have to complete a 2 year induction period.
+        completed_period_hint: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs).
         link_text: how to get QTS
       jobseekers_job_application_qualifications_form:
         qualifications_section_completed_options:
@@ -607,7 +607,7 @@ en:
         statutory_induction_complete: Have you completed your induction period?
         statutory_induction_complete_details: Provide more detail, for example, if you have started but not completed your induction, or you are %{link} (optional)
         statutory_induction_complete_details_hint_text: exempt from completing an induction
-        completed_period_hint: New teachers before 2021 had to complete a 1 year induction period. New teachers after 2021 have to complete a 2 year induction period.
+        completed_period_hint: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs).
         teacher_reference_number_hint: Schools will only be able to see your TRN if you apply for a role. You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
         trn_link_text: find your TRN
 
