@@ -41,6 +41,7 @@ class JobApplication < ApplicationRecord
     equal_opportunities: 6,
     personal_statement: 7,
     declarations: 8,
+    ask_for_support: 9,
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table

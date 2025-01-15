@@ -29,6 +29,7 @@ en:
         statutory_induction_complete: Have you completed your induction period?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
         statutory_induction_complete_details: Additional induction details
+        professional_status_section_completed: Have you completed this section?
     label:
       jobseekers_job_application_professional_status_form:
         qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>

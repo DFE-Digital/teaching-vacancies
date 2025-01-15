@@ -57,9 +57,11 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     if step == :professional_status
       attributes.merge(jobseeker_profile_attributes)
                 .merge(trn_params)
+    elsif step == :references
+      attributes.merge(references: job_application.references)
+    else
+      attributes
     end
-
-    attributes
   end
 
   def form_params

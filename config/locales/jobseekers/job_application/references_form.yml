@@ -6,6 +6,8 @@ en:
           attributes:
             references_section_completed:
               inclusion: Select yes if you have completed this section
+            references:
+              too_short: You must provide a minimum of %{count} references
   helpers:
     legend:
       jobseekers_job_application_references_form:
