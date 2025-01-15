@@ -207,6 +207,7 @@ en:
           heading: Professional status
           step_title: Professional status
           title: Professional status — Application
+          introduction: If you have no teaching experience and are applying for a support role, you should answer no to these questions.
         qualifications:
           heading: Qualifications
           no_qualifications: No qualifications specified
@@ -527,7 +528,7 @@ en:
           heading: Personal statement
         professional_status:
           heading: Professional status
-          statutory_induction_complete: Have you completed your statutory induction period?
+          statutory_induction_complete: Have you completed your induction period?
           qualified_teacher_status: Do you have qualified teacher status (QTS)?
         qualifications:
           heading: Qualifications
@@ -830,7 +831,8 @@ en:
           status_title: Do you have qualified teacher status (QTS)?
           year_title: Year QTS awarded
           trn_title: Teacher reference number (TRN)
-          completed_statutory_induction_title: Have you completed your statutory induction period?
+          completed_statutory_induction_title: Have you completed your induction period?
+          completed_statutory_induction_details_title: Additional induction details
       employments:
         edit:
           caption: Work history

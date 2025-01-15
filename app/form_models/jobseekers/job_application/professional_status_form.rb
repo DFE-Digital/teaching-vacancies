@@ -9,6 +9,7 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
       statutory_induction_complete
       teacher_reference_number
       has_teacher_reference_number
+      statutory_induction_complete_details
     ]
   end
   attr_accessor(*fields)
@@ -23,7 +24,6 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
     [
       ["yes", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.yes")],
       ["no", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.no")],
-      ["on_track", I18n.t("helpers.label.jobseekers_job_application_professional_status_form.statutory_induction_complete_options.on_track")],
     ]
   end
 
@@ -31,6 +31,9 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
     jobseeker_profile = attributes.delete(:jobseeker_profile)
     super
 
+    if attributes[:statutory_induction_complete] == "yes"
+      self.statutory_induction_complete_details = nil
+    end
     return unless jobseeker_profile
 
     self.teacher_reference_number ||= jobseeker_profile.teacher_reference_number
@@ -40,7 +43,7 @@ class Jobseekers::JobApplication::ProfessionalStatusForm < Jobseekers::JobApplic
   validates :qualified_teacher_status, inclusion: { in: %w[yes no on_track] }
   validates :qualified_teacher_status_year, numericality: { less_than_or_equal_to: proc { Time.current.year } },
                                             if: -> { qualified_teacher_status == "yes" }
-  validates :statutory_induction_complete, inclusion: { in: %w[yes no on_track] }
+  validates :statutory_induction_complete, inclusion: { in: %w[yes no] }
 
   validates :teacher_reference_number, presence: true, if: -> { qualified_teacher_status == "yes" }
   validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: false, if: -> { qualified_teacher_status == "yes" || has_teacher_reference_number == "yes" }

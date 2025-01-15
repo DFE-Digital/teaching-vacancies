@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
     choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
     fill_in "Year QTS was awarded", with: "2022"
     fill_in "Please provide more detail (optional field)", with: "It was hard work but I made it"
-    choose("I'm on track to complete it")
+    choose("Yes, I have completed my induction period")
 
     click_on "Save and continue"
 
@@ -58,7 +58,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
     fill_in "Year QTS was awarded", with: "2022"
     fill_in "Please provide more detail (optional field)", with: "It was hard work but I made it"
 
-    choose("I'm on track to complete it")
+    choose("Yes, I have completed my induction period")
     choose "Yes", name: "jobseekers_job_application_professional_status_form[has_teacher_reference_number]"
     fill_in "What is your teacher reference number (TRN)?", with: "1234567"
 

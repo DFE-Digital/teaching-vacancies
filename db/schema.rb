@@ -248,6 +248,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.boolean "training_and_cpds_section_completed"
     t.integer "imported_steps", default: [], null: false, array: true
     t.datetime "interviewing_at"
+    t.string "statutory_induction_complete_details"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -298,6 +299,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.text "teacher_reference_number_ciphertext"
     t.string "statutory_induction_complete"
     t.string "has_teacher_reference_number"
+    t.string "statutory_induction_complete_details"
     t.index ["jobseeker_id"], name: "index_jobseeker_profiles_jobseeker_id", unique: true
   end
 
