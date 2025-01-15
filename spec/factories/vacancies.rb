@@ -49,7 +49,7 @@ FactoryBot.define do
     include_additional_documents { false }
     job_title { Rails.env.production? ? factory_sample(job_titles) : generate(:job_title) }
     listed_elsewhere { nil }
-    job_roles { [factory_sample(Vacancy.job_roles.keys)] }
+    job_roles { %w[teacher] }
     ect_status { factory_sample(Vacancy.ect_statuses.keys) if job_roles.include?("teacher") }
     pay_scale { factory_sample(salaries) }
     publish_on { Date.current }
@@ -61,9 +61,9 @@ FactoryBot.define do
     start_date_type { "specific_date" }
     starts_on { 1.year.from_now.to_date }
     status { :published }
+    # Subjects are ignored when phases are primary-only
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
-    working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
-    working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
+    working_patterns { %w[full_time] }
     visa_sponsorship_available { false }
     organisations { build_list(:school, 1) }
     is_job_share { false }
@@ -85,7 +85,10 @@ FactoryBot.define do
     end
 
     trait :for_seed_data do
+      job_roles { [factory_sample(Vacancy.job_roles.keys)] }
       is_job_share { [true, false].sample }
+      working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
+      working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     end
 
     trait :without_any_money do

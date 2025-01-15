@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# Most tests for search are in vacancy_filter_query_spec.rb
 RSpec.describe Search::VacancySearch do
   subject { described_class.new(form_hash, sort: sort) }
 
@@ -41,46 +42,6 @@ RSpec.describe Search::VacancySearch do
 
   before do
     allow(subject).to receive(:organisation).and_return(school)
-  end
-
-  describe "working patterns search" do
-    before do
-      create(:vacancy, organisations: [school], is_job_share: false, working_patterns: %w[part_time])
-      create(:vacancy, organisations: [school], is_job_share: false, working_patterns: %w[full_time])
-      create(:vacancy, organisations: [school], is_job_share: true, working_patterns: [])
-    end
-
-    context "with job share filter" do
-      let(:form_hash) { { working_patterns: %w[job_share] } }
-
-      it "returns one job" do
-        expect(subject.vacancies.count).to eq(1)
-      end
-    end
-
-    context "with part time filter" do
-      let(:form_hash) { { working_patterns: %w[part_time] } }
-
-      it "returns one job" do
-        expect(subject.vacancies.count).to eq(1)
-      end
-    end
-
-    context "with part time full time filter" do
-      let(:form_hash) { { working_patterns: %w[part_time full_time] } }
-
-      it "returns two jobs" do
-        expect(subject.vacancies.count).to eq(2)
-      end
-    end
-
-    context "with part time job share filter" do
-      let(:form_hash) { { working_patterns: %w[part_time job_share] } }
-
-      it "returns two jobs" do
-        expect(subject.vacancies.count).to eq(2)
-      end
-    end
   end
 
   context "when clearing filters" do
