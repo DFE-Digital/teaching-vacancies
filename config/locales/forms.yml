@@ -585,6 +585,7 @@ en:
         institution: School, college, university or other organisation
         name: Qualification or course name
         year: Year qualification was awarded
+        awarding_body: Awarding body (optional)
       jobseekers_qualifications_secondary_common_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: School, college, or other organisation

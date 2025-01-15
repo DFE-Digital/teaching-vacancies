@@ -1,7 +1,7 @@
 class Jobseekers::Qualifications::QualificationForm
   include ActiveModel::Model
 
-  attr_accessor :category, :finished_studying, :finished_studying_details, :name, :institution, :year
+  attr_accessor :category, :finished_studying, :finished_studying_details, :name, :institution, :year, :awarding_body
 
   validates :category, presence: true
   validates :finished_studying_details, presence: true, if: -> { finished_studying == "false" }
