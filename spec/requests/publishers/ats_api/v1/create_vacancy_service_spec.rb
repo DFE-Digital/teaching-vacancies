@@ -63,11 +63,10 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
       let(:school_urns) { { school_urns: [9999] } }
 
       it "raises ActiveRecord::RecordNotFound" do
-        expect { create_vacancy_service }
-          .to raise_error(
-            Publishers::AtsApi::V1::CreateVacancyService::InvalidOrganisationError,
-            "No valid organisations found",
-          )
+        expect { create_vacancy_service }.to raise_error(
+          Publishers::AtsApi::V1::CreateVacancyService::InvalidOrganisationError,
+          "No valid organisations found",
+        )
       end
     end
 

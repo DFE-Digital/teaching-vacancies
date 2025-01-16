@@ -2,6 +2,8 @@ module Publishers
   module AtsApi
     module V1
       class CreateVacancyService
+        extend OrganisationFetcher
+
         InvalidOrganisationError = Class.new(StandardError)
 
         class << self
@@ -26,20 +28,7 @@ module Publishers
             raise InvalidOrganisationError, "No valid organisations found" if organisations.blank?
 
             params[:publish_on] ||= Time.zone.today.to_s
-            params[:working_patterns] ||= []
-            params[:phases] ||= []
-
-            params.except(:schools, :trust_uid).merge(organisations: organisations)
-          end
-
-          def fetch_organisations(school_params)
-            return [] unless school_params
-
-            if school_params[:trust_uid].present?
-              SchoolGroup.trusts.find_by(uid: school_params[:trust_uid])&.schools&.where(urn: school_params[:school_urns]) || []
-            else
-              School.where(urn: school_params[:school_urns])
-            end
+            params.except(:schools).merge(organisations: organisations)
           end
 
           def conflict_vacancy(vacancy)

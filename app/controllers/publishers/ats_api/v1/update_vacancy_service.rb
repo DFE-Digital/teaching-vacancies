@@ -2,6 +2,8 @@ module Publishers
   module AtsApi
     module V1
       class UpdateVacancyService
+        extend OrganisationFetcher
+
         class << self
           def call(vacancy, params)
             if vacancy.update(sanitised_params(params))
@@ -19,17 +21,7 @@ module Publishers
             organisations = fetch_organisations(params[:schools])
             raise ActiveRecord::RecordNotFound, "No valid organisations found" if organisations.blank?
 
-            params.except(:schools, :trust_uid).merge(organisations: organisations)
-          end
-
-          def fetch_organisations(school_params)
-            return [] unless school_params
-
-            if school_params[:trust_uid].present?
-              SchoolGroup.trusts.find_by(uid: school_params[:trust_uid]).schools.where(urn: school_params[:school_urns])
-            else
-              School.where(urn: school_params[:school_urns])
-            end
+            params.except(:schools).merge(organisations: organisations)
           end
 
           def format_errors(errors)
