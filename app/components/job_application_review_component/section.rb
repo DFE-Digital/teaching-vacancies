@@ -26,7 +26,7 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
     title = heading_text
     text = "Change"
     href = error_path
-    govuk_link_to text, href, aria: { label: "#{text} #{title}" }, classes: "govuk-!-display-none-print" if href
+    govuk_link_to text, href, aria: { label: "#{text} #{title}" }, classes: "govuk-!-display-none-print" if href && allow_edit?
   end
 
   def constantize_form(form_class_name)

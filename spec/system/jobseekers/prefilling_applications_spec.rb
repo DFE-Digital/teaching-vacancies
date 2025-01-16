@@ -43,14 +43,14 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(current_job_application.last_name).to eq(previous_application.last_name)
         expect(current_job_application.phone_number).to eq(previous_application.phone_number)
         within("#personal_details") do
-          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
 
         click_on "Personal statement"
         expect(page).to have_content(previous_application.personal_statement)
         click_on "Back"
         within("#personal_statement") do
-          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
 
         # qualified teacher status
@@ -60,7 +60,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(current_job_application.right_to_work_in_uk).to eq("yes")
 
         within("#professional_status") do
-          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
         # references
         click_on "References"
@@ -76,7 +76,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(page).to have_content(employment2.organisation)
         click_on "Back"
         within("#employment_history") do
-          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
 
         click_on "Qualifications"
@@ -90,7 +90,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         click_on "Back"
 
         within("#qualifications") do
-          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
 
         click_on I18n.t("jobseekers.job_applications.build.training_and_cpds.heading")
@@ -101,7 +101,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         click_on "Back"
 
         within("#training_and_cpds") do
-          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
 
         click_on I18n.t("jobseekers.job_applications.build.ask_for_support.heading")
@@ -109,7 +109,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(page).to have_content(previous_application.support_needed_details)
         click_on "Back"
         within("#ask_for_support") do
-          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: "imported")
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
       end
     end
