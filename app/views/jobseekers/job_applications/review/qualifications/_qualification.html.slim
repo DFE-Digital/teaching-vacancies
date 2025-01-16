@@ -1,5 +1,5 @@
 p class="govuk-!-margin-bottom-1"
-  - if qualification.display_attributes.include?("subject")
+  - if qualification.display_attributes.include?("subject") && qualification[:subject].present?
     span class="govuk-!-display-inline-block"
       = qualification[:subject]
   - if qualification.display_attributes.include?("type")
@@ -7,7 +7,10 @@ p class="govuk-!-margin-bottom-1"
       = qualification[:type]
   - if qualification.display_attributes.include?("grade")
     span class="govuk-!-display-inline-block govuk-!-margin-left-1"
-      = "(#{qualification[:grade]})"
+      = "- #{qualification[:grade]}"
+  - if qualification.display_attributes.include?("awarding_body") && qualification[:awarding_body].present?
+    span class="govuk-!-display-inline-block govuk-!-margin-left-1"
+      = " (#{qualification[:awarding_body]})"
   - if qualification.finished_studying == false
     span class="govuk-!-display-inline-block govuk-!-margin-left-1"
       = "(#{t('helpers.label.jobseekers_qualifications_shared_labels.finished_studying_options.false').downcase} #{qualification.finished_studying_details&.downcase})"
@@ -15,6 +18,6 @@ p.govuk-caption-m
   - if qualification.display_attributes.include?("institution")
     span class="govuk-!-display-inline-block"
       = qualification[:institution]
-  - if qualification.display_attributes.include?("year")
+  - if qualification.display_attributes.include?("year") && qualification[:year].present?
     span class="govuk-!-display-inline-block"
       = ", #{qualification[:year]}"
