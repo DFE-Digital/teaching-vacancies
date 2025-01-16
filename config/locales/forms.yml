@@ -224,6 +224,7 @@ en:
       jobseekers_qualifications_category_form:
         category_options:
           postgraduate: For example, A PGCE, master’s or PhD.
+          other: For example, BTECs, diplomas or qualifications from outside of the UK.
 
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
@@ -430,7 +431,7 @@ en:
           other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
-          other: Other qualification or course
+          other: Other qualification
         finished_studying_details: Please give details
         finished_studying_options:
           false: "Not finished yet"
@@ -573,7 +574,7 @@ en:
           other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
-          other: Other qualification or course
+          other: Other qualification
       jobseekers_qualifications_degree_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: Awarding body

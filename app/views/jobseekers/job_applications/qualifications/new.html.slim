@@ -5,6 +5,8 @@
     span.govuk-caption-l = t(".caption")
     h1.govuk-heading-xl = t(".heading.#{@category}")
     p = t(".hint")
+    - if @category == "other"
+      p = t(".hint_for_other_qualifications")
 
     = form_for @form, url: jobseekers_job_application_qualifications_path(job_application, category: @category), method: :post do |f|
       = f.govuk_error_summary link_base_errors_to: :subject

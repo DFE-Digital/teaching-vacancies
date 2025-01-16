@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
     end
 
     it "allows jobseekers to add a custom qualification or course (category 'other')" do
-      select_qualification_category("Other qualification or course")
+      select_qualification_category("Other qualification")
       expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.other"))
       validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
       fill_in_other_qualification
