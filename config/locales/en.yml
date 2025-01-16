@@ -330,12 +330,12 @@ en:
       remove_filter_hidden: "Remove this filter "
       return_to_results: Return to results
     status_tags:
-      action_required: action required
-      complete: complete
-      in_progress: in progress
-      not_started: not started
-      optional: optional
-      imported: imported
+      action_required: Action required
+      complete: Complete
+      in_progress: Incomplete
+      not_started: Not started
+      optional: Optional
+      imported: Imported
 
   stats:
     intro: >-
