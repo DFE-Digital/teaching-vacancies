@@ -4,7 +4,7 @@ module Publishers
       class UpdateVacancyService
         class << self
           def call(vacancy, params)
-            if vacancy.update(permitted_params(params))
+            if vacancy.update(sanitised_params(params))
               { success: true }
             else
               { success: false, errors: format_errors(vacancy.errors.messages) }
@@ -15,7 +15,7 @@ module Publishers
 
           attr_reader :vacancy, :params
 
-          def permitted_params(params)
+          def sanitised_params(params)
             organisations = fetch_organisations(params[:schools])
             raise ActiveRecord::RecordNotFound, "No valid organisations found" if organisations.blank?
 

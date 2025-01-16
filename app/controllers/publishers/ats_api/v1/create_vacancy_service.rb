@@ -6,7 +6,7 @@ module Publishers
 
         class << self
           def call(params)
-            vacancy = Vacancy.new(permitted_params(params))
+            vacancy = Vacancy.new(sanitised_params(params))
 
             if (conflict = conflict_vacancy(vacancy))
               return conflict_response(conflict)
@@ -21,7 +21,7 @@ module Publishers
 
           private
 
-          def permitted_params(params)
+          def sanitised_params(params)
             organisations = fetch_organisations(params[:schools])
             raise InvalidOrganisationError, "No valid organisations found" if organisations.blank?
 

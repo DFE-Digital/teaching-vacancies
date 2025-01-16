@@ -95,7 +95,6 @@
   - in_progress_steps
   - employment_history_section_completed
   - qualifications_section_completed
-  - faith
   - place_of_worship
   - religious_referee_name
   - religious_referee_address
@@ -129,7 +128,6 @@
   - searchable_content
   - google_index_removed
   - expired_vacancy_feedback_email_sent_at
-  - religion_type
   - publisher_ats_api_client_id
   :qualifications:
   - finished_studying_details_ciphertext
