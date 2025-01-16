@@ -12,8 +12,8 @@ RSpec.describe QualificationsMigration, type: :model do
     profile_qualification.qualification_results.destroy_all
     application_qualification.qualification_results.destroy_all
 
-    QualificationResult.create!(qualification: profile_qualification, subject: "Science", grade: "A")
-    QualificationResult.create!(qualification: application_qualification, subject: "History", grade: "B")
+    QualificationResult.create!(qualification: profile_qualification, subject: "Science", grade: "A", awarding_body: "Oxford exam board")
+    QualificationResult.create!(qualification: application_qualification, subject: "History", grade: "B", awarding_body: "AXA")
   end
 
   describe ".perform" do
@@ -30,6 +30,7 @@ RSpec.describe QualificationsMigration, type: :model do
       expect(new_qualifications.count).to eq(2)
       expect(new_qualifications.pluck(:subject)).to contain_exactly("Science", "History")
       expect(new_qualifications.pluck(:grade)).to contain_exactly("A", "B")
+      expect(new_qualifications.pluck(:awarding_body)).to contain_exactly("Oxford exam board", "AXA")
     end
 
     it "ensures new qualifications maintain their associations" do
