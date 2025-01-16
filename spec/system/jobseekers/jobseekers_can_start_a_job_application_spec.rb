@@ -70,9 +70,8 @@ RSpec.describe "Jobseekers can start or continue a job application" do
 
       after { logout }
 
-      it "redirects to the job application review page" do
-        expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
-        expect(page).to have_content(I18n.t("jobseekers.job_applications.review.heading"))
+      it "redirects to the job application apply page" do
+        expect(current_path).to eq(jobseekers_job_application_apply_path(job_application))
       end
     end
 
