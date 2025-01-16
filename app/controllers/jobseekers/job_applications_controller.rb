@@ -31,7 +31,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def pre_submit
-    if all_steps_valid?
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+    if @form.valid? && all_steps_valid?
       redirect_to jobseekers_job_application_review_path(@job_application)
     else
       render :apply
@@ -58,7 +59,9 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
   end
 
-  def apply; end
+  def apply
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+  end
 
   def quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?

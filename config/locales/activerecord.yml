@@ -480,32 +480,33 @@ en:
           attributes:
             training_and_cpds_section_completed:
               blank: Select yes if you have completed this section
+        jobseekers/job_application/pre_submit_form:
+          ask_for_support:
+            incomplete: Complete the questions on interview support
+          employment_history:
+            incomplete: Complete your employment history
+          equal_opportunities:
+            incomplete: Complete the questions on equal opportunities
+          declarations:
+            incomplete: Complete the declarations
+          personal_details:
+            incomplete: Complete your personal details
+          personal_statement:
+            incomplete: Complete your personal statement
+          professional_status:
+            incomplete: Complete the questions about your professional status
+          qualifications:
+            incomplete: Complete your qualifications
+          references:
+            incomplete: Complete your references
+          training_and_cpds:
+            incomplete: Complete your training and CPD
         jobseekers/job_application/review_form:
           attributes:
             confirm_data_accurate:
               accepted:  You must confirm that your information is accurate and complete
             confirm_data_usage:
               accepted: You must consent to share your data in order to apply for this job
-            ask_for_support:
-              incomplete: Complete the questions on interview support
-            employment_history:
-              incomplete: Complete your employment history
-            equal_opportunities:
-              incomplete: Complete the questions on equal opportunities
-            declarations:
-              incomplete: Complete the declarations
-            personal_details:
-              incomplete: Complete your personal details
-            personal_statement:
-              incomplete: Complete your personal statement
-            professional_status:
-              incomplete: Complete the questions about your professional status
-            qualifications:
-              incomplete: Complete your qualifications
-            references:
-              incomplete: Complete your references
-            training_and_cpds:
-              incomplete: Complete your training and CPD
         jobseekers/job_application/withdraw_form:
           attributes:
             withdraw_reason:

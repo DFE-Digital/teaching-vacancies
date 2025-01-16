@@ -9,7 +9,7 @@
       = govuk_notification_banner title_text: t("banners.important") do
         p.govuk-body = t(".deadline_passed")
 
-    - unless review_form.errors.any?
+    - unless @form.errors.any?
       = render "shared/error_messages", model: @job_application, presenter: ErrorSummaryPresenter.new(@job_application.errors)
 
   h2.govuk-heading-m = t(".heading")
@@ -63,7 +63,7 @@
 
   - r.with_below do
     - unless @job_application.deadline_passed?
-      = form_for review_form, url: jobseekers_job_application_pre_submit_path(job_application), method: :post do |f|
+      = form_for @form, url: jobseekers_job_application_pre_submit_path(job_application), method: :post do |f|
         = f.govuk_error_summary
 
         - if vacancy.listed?
