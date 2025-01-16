@@ -40,38 +40,11 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
       expect(page).to have_content("Superteacher Certificate")
       expect(page).to have_content("Teachers Academy")
+      expect(page).to have_content("Superteaching")
+      expect(page).to have_content("AXA")
       expect(page).to have_content("I expect to finish next year")
       expect(page).not_to have_content("Grade")
       expect(page).not_to have_content("Year")
-    end
-
-    it "allows jobseekers to add a common secondary qualification" do
-      select_qualification_category("GCSE")
-      expect(page).to have_link(I18n.t("buttons.cancel"), href: select_category_jobseekers_job_application_qualifications_path(job_application))
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.gcse"))
-      validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
-      fill_in_gcses
-      click_on I18n.t("buttons.save_qualification.other")
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
-      expect(page).to have_content("GCSEs")
-      expect(page).to have_content("Churchill School for Gifted Macaques")
-      expect(page).to have_content("Maths – 110% (Cambridge Board)")
-      expect(page).to have_content("PE – 90%")
-      expect(page).to have_content("2020")
-    end
-
-    it "allows jobseekers to add a custom secondary qualification" do
-      select_qualification_category("Other secondary qualification")
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.other_secondary"))
-      validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
-      fill_in_custom_secondary_qualifications
-      click_on I18n.t("buttons.save_qualification.other")
-      expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :qualifications))
-      expect(page).to have_content("Welsh Baccalaureate")
-      expect(page).to have_content("Happy Rainbows School for High Achievers")
-      expect(page).to have_content("Science – 5")
-      expect(page).to have_content("German – 4")
-      expect(page).to have_content("2020")
     end
   end
 

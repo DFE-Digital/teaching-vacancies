@@ -20,9 +20,10 @@
                     - row.with_value text: safe_join(qualification.qualification_results.map { |res| tag.div(display_secondary_qualification(res), class: "govuk-body govuk-!-margin-bottom-1") })
 
                 - qualification.display_attributes.each do |attribute|
-                  - summary_list.with_row do |row|
-                    - row.with_key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
-                    - row.with_value text: qualification[attribute]
+                  - if qualification[attribute].present?
+                    - summary_list.with_row do |row|
+                      - row.with_key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
+                      - row.with_value text: qualification[attribute]
 
                 - if qualification.finished_studying == false
                   - summary_list.with_row do |row|

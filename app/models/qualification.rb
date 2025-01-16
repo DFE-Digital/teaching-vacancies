@@ -52,7 +52,7 @@ class Qualification < ApplicationRecord
     elsif finished_studying?
       %w[subject institution grade year]
     else
-      %w[subject institution]
+      %w[subject institution grade awarding_body]
     end
   end
 

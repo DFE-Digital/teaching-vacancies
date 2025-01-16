@@ -138,6 +138,8 @@ module JobseekerHelpers
   def fill_in_other_qualification
     fill_in "Qualification or course name", with: "Superteacher Certificate"
     fill_in "School, college, university or other organisation", with: "Teachers Academy"
+    fill_in "Awarding body (optional)", with: "AXA"
+    fill_in "Subject", with: "Superteaching"
     choose "No", name: "jobseekers_qualifications_other_form[finished_studying]"
     fill_in "Please give details", with: "I expect to finish next year"
   end
