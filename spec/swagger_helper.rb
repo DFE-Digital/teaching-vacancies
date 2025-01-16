@@ -42,20 +42,21 @@ RSpec.configure do |config|
           vacancy: {
             type: :object,
             additionalProperties: false,
-            required: %i[id
-                         external_advert_url
-                         expires_at
-                         starts_on
-                         job_title
-                         skills_and_experience
-                         salary
-                         external_reference
-                         job_roles
-                         working_patterns
-                         contract_type
-                         phases
-                         publish_on
-                         schools],
+            required: %i[
+              external_advert_url
+              expires_at
+              starts_on
+              job_title
+              skills_and_experience
+              salary
+              external_reference
+              job_roles
+              working_patterns
+              contract_type
+              phases
+              publish_on
+              schools
+            ],
             properties: {
               id: { type: :string, example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66" },
               external_advert_url: { type: :string, example: "https://example.com/jobs/123" },
@@ -209,11 +210,6 @@ RSpec.configure do |config|
             type: :object,
             properties: {
               id: { type: :string, example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66" },
-              errors: {
-                type: :array,
-                items: { type: :string },
-                nullable: true,
-              },
             },
             required: %w[id],
           },
@@ -249,6 +245,7 @@ RSpec.configure do |config|
             type: "object",
             properties: {
               error: { type: "string", example: "A vacancy with the provided external reference already exists" },
+              link: { type: "string", example: "https://example.com/vacancies/123" },
             },
             required: %w[error],
           },
@@ -258,14 +255,12 @@ RSpec.configure do |config|
               errors: {
                 type: "array",
                 items: {
-                  type: "object",
-                  properties: {
-                    error: { type: "string", example: "job_title: can't be blank" },
-                  },
-                  required: %w[error],
+                  type: "string",
+                  example: "job_title: can't be blank",
                 },
               },
             },
+            required: %w[errors],
           },
         },
       },

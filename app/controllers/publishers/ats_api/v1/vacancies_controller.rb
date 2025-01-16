@@ -1,5 +1,6 @@
 class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   before_action :authenticate_client!
+  before_action :validate_payload, only: %i[create update]
 
   rescue_from StandardError, with: :render_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
@@ -9,32 +10,31 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   def index
     @pagy, @vacancies = pagy(vacancies.where(publisher_ats_api_client: client), items: 100)
 
-    render json: {
-      data: @vacancies.map { |vacancy| render_vacancy(vacancy) },
-      meta: { totalPages: @pagy.pages, count: @pagy.page },
-    }
+    respond_to(&:json)
   end
 
   def show
-    vacancy = Vacancy.find(params[:id])
-    render json: render_vacancy(vacancy)
+    @vacancy = Vacancy.find(params[:id])
+
+    respond_to(&:json)
   end
 
   def create
-    result = Publishers::AtsApi::V1::CreateVacancyService.new(permitted_vacancy_params).call
-
-    if result[:headers]
-      headers.merge!(result[:headers])
-    end
+    result = Publishers::AtsApi::V1::CreateVacancyService.call(permitted_vacancy_params)
 
     render result.slice(:json, :status)
   end
 
   def update
     vacancy = Vacancy.find(params[:id])
-    result = Publishers::AtsApi::V1::UpdateVacancyService.new(vacancy, permitted_vacancy_params).call
+    result = Publishers::AtsApi::V1::UpdateVacancyService.call(vacancy, permitted_vacancy_params)
 
-    render result.slice(:json, :status)
+    if result[:success]
+      @vacancy = vacancy
+      render :show
+    else
+      render json: { errors: result[:errors] }, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -65,9 +65,6 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def permitted_vacancy_params
-    missing_keys = required_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
-    raise ActionController::ParameterMissing, "Missing required parameters: #{missing_keys.join(', ')}" if missing_keys.any?
-
     params.fetch(:vacancy)
           .permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
                   :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
@@ -77,10 +74,6 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   def vacancies
     Vacancy.live.includes(:organisations).order(publish_on: :desc)
-  end
-
-  def render_vacancy(vacancy)
-    Publishers::AtsApi::V1::VacancySerialiser.new(vacancy: vacancy).call
   end
 
   def client
@@ -93,6 +86,11 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     render status: :unauthorized,
            json: { error: "Invalid API key" },
            content_type: "application/json"
+  end
+
+  def validate_payload
+    missing_keys = required_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
+    raise ActionController::ParameterMissing, "Missing required parameters: #{missing_keys.join(', ')}" if missing_keys.any?
   end
 
   def render_server_error(exception)

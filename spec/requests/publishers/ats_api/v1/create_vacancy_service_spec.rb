@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
-  subject(:service) { described_class.new(params) }
+  subject(:create_vacancy_service) { described_class.call(params) }
 
   let(:school) { create(:school) }
   let(:publisher_ats_api_client_id) { create(:publisher_ats_api_client).id }
@@ -32,11 +32,11 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
   describe "#call" do
     context "when the vacancy is successfully created" do
       it "returns a success response" do
-        expect(service.call).to eq(status: :created, json: { id: Vacancy.last.id })
+        expect(create_vacancy_service).to eq(status: :created, json: { id: Vacancy.last.id })
       end
 
       it "creates a vacancy with the correct external reference" do
-        service.call
+        create_vacancy_service
         expect(Vacancy.last.external_reference).to eq("new-ref")
       end
     end
@@ -49,13 +49,13 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
           status: :conflict,
           json: {
             error: "A vacancy with the provided external reference already exists",
+            link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
           },
-          headers: { "Link" => "<#{Rails.application.routes.url_helpers.vacancy_url(existing_vacancy)}>; rel=\"existing\"" },
         }
       end
 
       it "returns a conflict response" do
-        expect(service.call).to eq(expected_response)
+        expect(create_vacancy_service).to eq(expected_response)
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
       let(:school_urns) { { school_urns: [9999] } }
 
       it "raises ActiveRecord::RecordNotFound" do
-        expect { service.call }
+        expect { create_vacancy_service }
           .to raise_error(
             Publishers::AtsApi::V1::CreateVacancyService::InvalidOrganisationError,
             "No valid organisations found",
@@ -82,17 +82,17 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
           status: :unprocessable_entity,
           json: {
             errors: [
-              { error: "job_title: can't be blank" },
-              { error: "job_advert: Enter a job advert" },
-              { error: "job_roles: Select a job role" },
-              { error: "working_patterns: Select a working pattern" },
+              "job_title: can't be blank",
+              "job_advert: Enter a job advert",
+              "job_roles: Select a job role",
+              "working_patterns: Select a working pattern",
             ],
           },
         }
       end
 
       it "returns a validation error response" do
-        expect(service.call).to eq(expected_response)
+        expect(create_vacancy_service).to eq(expected_response)
       end
     end
   end

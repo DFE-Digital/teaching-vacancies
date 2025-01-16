@@ -11,7 +11,7 @@ json.is_job_share vacancy.is_job_share if vacancy.is_job_share.present?
 json.external_reference vacancy.external_reference
 json.job_roles vacancy.job_roles
 json.schools do
-  json.school_urns(vacancy.organisations.map { |x| x.urn.to_i })
+  json.school_urns(vacancy.organisations.map(&:urn))
 end
 json.ect_suitable vacancy.ect_status == "ect_suitable"
 json.working_patterns vacancy.working_patterns

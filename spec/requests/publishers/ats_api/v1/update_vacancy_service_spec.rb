@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::AtsApi::V1::UpdateVacancyService do
-  subject(:service) { described_class.new(vacancy, params) }
+  subject(:udpate_vacancy_service) { described_class.call(vacancy, params) }
 
   let(:vacancy) { create(:vacancy, :external, organisations: [school]) }
   let(:school) { create(:school) }
@@ -30,7 +30,7 @@ RSpec.describe Publishers::AtsApi::V1::UpdateVacancyService do
   describe "#call" do
     context "when the update is successful" do
       it "updates only the attributes that differ from the original vacancy" do
-        service.call
+        udpate_vacancy_service
         vacancy.reload
 
         expect(vacancy.working_patterns).to eq(%w[full_time])
@@ -42,7 +42,7 @@ RSpec.describe Publishers::AtsApi::V1::UpdateVacancyService do
       let(:school_urns) { { school_urns: [9999] } }
 
       it "raises ActiveRecord::RecordNotFound" do
-        expect { service.call }.to raise_error(ActiveRecord::RecordNotFound, "No valid organisations found")
+        expect { udpate_vacancy_service }.to raise_error(ActiveRecord::RecordNotFound, "No valid organisations found")
       end
     end
 
@@ -54,20 +54,18 @@ RSpec.describe Publishers::AtsApi::V1::UpdateVacancyService do
 
       let(:expected_response) do
         {
-          status: :unprocessable_entity,
-          json: {
-            errors: [
-              { error: "job_title: can't be blank" },
-              { error: "job_advert: Enter a job advert" },
-              { error: "job_roles: Select a job role" },
-              { error: "working_patterns: Select a working pattern" },
-            ],
-          },
+          success: false,
+          errors: [
+            "job_title: can't be blank",
+            "job_advert: Enter a job advert",
+            "job_roles: Select a job role",
+            "working_patterns: Select a working pattern",
+          ],
         }
       end
 
       it "returns a validation error response" do
-        expect(service.call).to eq(expected_response)
+        expect(udpate_vacancy_service).to eq(expected_response)
       end
     end
   end
