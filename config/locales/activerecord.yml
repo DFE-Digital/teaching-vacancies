@@ -550,14 +550,14 @@ en:
           references:
             incomplete: Complete your references
           school_ethos:
-              incomplete: Complete the question about how you meet the schools ethos and aims
-            catholic_following_religion:
-              incomplete: Complete your religious information
-            non_catholic_following_religion:
+            incomplete: Complete the question about how you meet the schools ethos and aims
+          catholic_following_religion:
+            incomplete: Complete your religious information
+          non_catholic_following_religion:
             incomplete: Complete your religious information
           catholic_religion_details:
-              incomplete: Complete your religious information
-            non_catholic_religion_details:
+            incomplete: Complete your religious information
+          non_catholic_religion_details:
             incomplete: Complete your religious information
           training_and_cpds:
             incomplete: Complete your training and CPD

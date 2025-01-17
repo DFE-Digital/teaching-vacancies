@@ -2,9 +2,12 @@ class Jobseekers::JobApplication::FollowingReligionForm < Jobseekers::JobApplica
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  def self.fields
-    %i[following_religion]
+  class << self
+    def storable_fields
+      %i[following_religion]
+    end
   end
+
   attribute :following_religion, :boolean
 
   validates :following_religion, inclusion: { in: [true, false], allow_nil: false }

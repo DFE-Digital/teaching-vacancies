@@ -1,4 +1,4 @@
-class Jobseekers::JobApplications::JobApplicationStepProcess < StepProcess
+class Jobseekers::JobApplications::JobApplicationStepProcess
   attr_reader :job_application
 
   PRE_RELIGION_STEPS = { personal_details: %i[personal_details],
@@ -20,7 +20,7 @@ class Jobseekers::JobApplications::JobApplicationStepProcess < StepProcess
 
   ALL_NON_CATHOLIC_STEPS = %i[school_ethos non_catholic_following_religion non_catholic_religion_details].freeze
 
-  def initialize(current_step, job_application:)
+  def initialize(job_application:)
     @job_application = job_application
 
     religious_steps = case job_application.vacancy.religion_type
@@ -32,13 +32,25 @@ class Jobseekers::JobApplications::JobApplicationStepProcess < StepProcess
                         []
                       end
 
-    step_groups = if religious_steps.any?
-                    PRE_RELIGION_STEPS.merge(religious_information: religious_steps).merge(POST_RELIGION_STEPS)
-                  else
-                    PRE_RELIGION_STEPS.merge(POST_RELIGION_STEPS)
-                  end
+    @step_groups = if religious_steps.any?
+                     PRE_RELIGION_STEPS.merge(religious_information: religious_steps).merge(POST_RELIGION_STEPS)
+                   else
+                     PRE_RELIGION_STEPS.merge(POST_RELIGION_STEPS)
+                   end
+  end
 
-    super(current_step, step_groups)
+  # Returns the keys of all individual steps in order
+  def steps
+    @step_groups.values.flatten
+  end
+
+  def next_step(step)
+    steps[steps.index(step) + 1]
+  end
+
+  def last_of_group?(step)
+    group = @step_groups.values.detect { |g| g.include?(step) }
+    step == group.last
   end
 
   def all_possible_steps

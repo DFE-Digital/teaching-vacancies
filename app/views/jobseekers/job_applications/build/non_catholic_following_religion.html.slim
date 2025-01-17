@@ -3,12 +3,10 @@
 = render "banner", vacancy: vacancy, back_path: back_path
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
-    - if current_jobseeker.job_applications.not_draft.none?
-      = render "caption"
+  div
     h2.govuk-heading-l = t(".heading")
 
-    = form_for form, url: wizard_path, method: :patch do |f|
+    = form_for form, url: jobseekers_job_application_build_path(job_application, :non_catholic_following_religion), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :following_religion do
@@ -17,7 +15,3 @@
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
-
-  - if current_jobseeker.job_applications.not_draft.none?
-    .govuk-grid-column-one-third
-      = render "steps"

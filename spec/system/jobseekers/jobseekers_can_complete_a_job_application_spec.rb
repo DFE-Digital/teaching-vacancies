@@ -29,7 +29,8 @@ RSpec.describe "Jobseekers can complete a job application" do
     choose I18n.t("helpers.label.jobseekers_job_application_qualifications_form.qualifications_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
     expect(page).not_to have_content("There is a problem")
-    click_on (I18n.t("jobseekers.job_applications.build.qualifications.heading"))
+
+    click_on I18n.t("jobseekers.job_applications.build.qualifications.heading")
     click_on I18n.t("buttons.add_qualification")
     validates_step_complete(button: I18n.t("buttons.continue"))
     select_qualification_category("Undergraduate degree")
@@ -40,7 +41,8 @@ RSpec.describe "Jobseekers can complete a job application" do
     choose "Yes, I've completed this section"
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.training_and_cpds.heading"))expect(page).to have_content("No training or CPD specified")
+    click_on(I18n.t("jobseekers.job_applications.build.training_and_cpds.heading"))
+    expect(page).to have_content("No training or CPD specified")
     validates_step_complete
     click_on "Add training"
     click_on "Save and continue"
@@ -77,7 +79,8 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("buttons.save_reference")
     click_on I18n.t("buttons.add_another_reference")
     fill_in_reference
-    click_on I18n.t("buttons.save_reference")choose I18n.t("helpers.label.jobseekers_job_application_references_form.references_section_completed_options.true")
+    click_on I18n.t("buttons.save_reference")
+    choose I18n.t("helpers.label.jobseekers_job_application_references_form.references_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
 
     click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
@@ -93,7 +96,8 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
     validates_step_complete
     fill_in_declarations
-    click_on I18n.t("buttons.save_and_continue")click_on "Review application"
+    click_on I18n.t("buttons.save_and_continue")
+    click_on "Review application"
 
     expect(current_path).to eq(jobseekers_job_application_review_path(job_application))
   end

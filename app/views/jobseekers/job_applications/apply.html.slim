@@ -39,6 +39,16 @@
       html_attributes: { id: :personal_statement },
       status: review_section_tag(job_application, [Jobseekers::JobApplication::PersonalStatementForm]))
 
+    - case job_application.vacancy.religion_type
+      - when "catholic"
+        - task_list.with_item(title: t("jobseekers.job_applications.build.religious_information.step_title"), href: jobseekers_job_application_build_path(job_application, :catholic_following_religion),
+          html_attributes: { id: :religious_information },
+          status: review_section_tag(job_application, [Jobseekers::JobApplication::FollowingReligionForm]))
+      - when "other_religion"
+        - task_list.with_item(title: t("jobseekers.job_applications.build.religious_information.step_title"), href: jobseekers_job_application_build_path(job_application, :school_ethos),
+          html_attributes: { id: :religious_information },
+          status: review_section_tag(job_application, [Jobseekers::JobApplication::FollowingReligionForm]))
+
     - task_list.with_item(title: t("jobseekers.job_applications.build.references.heading"), href: jobseekers_job_application_build_path(job_application, :references),
       html_attributes: { id: :references },
       status: review_section_tag(job_application, [Jobseekers::JobApplication::ReferencesForm]))
