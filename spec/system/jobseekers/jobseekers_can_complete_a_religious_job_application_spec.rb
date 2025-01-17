@@ -21,6 +21,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
     before do
       fill_in_past_personal_statement
+      click_on I18n.t("jobseekers.job_applications.build.religious_information.step_title")
     end
 
     it "validates first religion step" do
@@ -36,7 +37,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
       end
 
       it "skips the religion details step" do
-        expect(page).to have_current_path(jobseekers_job_application_build_path(job_application, :references))
+        expect(page).to have_current_path(jobseekers_job_application_apply_path(job_application))
         complete_from_references_page
       end
     end
@@ -131,7 +132,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               expect(page).to have_content("blank_baptism_cert.pdf")
             end
 
-            it "can be submitted as an application" do
+            it "can be submitted as an application", :js do
               complete_from_references_page
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
@@ -188,6 +189,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
     before do
       fill_in_past_personal_statement
+      click_on I18n.t("jobseekers.job_applications.build.religious_information.step_title")
     end
 
     it "validates ethos and aims step" do
@@ -290,13 +292,15 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     fill_in_personal_details
     click_on I18n.t("buttons.save_and_continue")
 
+    click_on(I18n.t("jobseekers.job_applications.build.professional_status.heading"))
     fill_in_professional_status
     click_on I18n.t("buttons.save_and_continue")
 
+    click_on(I18n.t("jobseekers.job_applications.build.qualifications.heading"))
     choose I18n.t("helpers.label.jobseekers_job_application_qualifications_form.qualifications_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on I18n.t("buttons.back")
+    click_on(I18n.t("jobseekers.job_applications.build.qualifications.heading"))
     click_on I18n.t("buttons.add_qualification")
 
     select_qualification_category("Undergraduate degree")
@@ -304,12 +308,14 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     click_on I18n.t("buttons.save_qualification.one")
     click_on I18n.t("buttons.save_and_continue")
 
+    click_on(I18n.t("jobseekers.job_applications.build.training_and_cpds.heading"))
     click_on "Add training"
     fill_in_training_and_cpds
     click_on "Save and continue"
     choose "Yes, I've completed this section"
     click_on "Save and continue"
 
+    click_on(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
     click_on I18n.t("buttons.add_work_history")
     fill_in_employment_history
     click_on I18n.t("buttons.save_employment")
@@ -319,27 +325,34 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     choose I18n.t("helpers.label.jobseekers_job_application_employment_history_form.employment_history_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
 
+    click_on(I18n.t("jobseekers.job_applications.build.personal_statement.heading"))
     fill_in_personal_statement
     click_on I18n.t("buttons.save_and_continue")
   end
 
   def complete_from_references_page
+    click_on(I18n.t("jobseekers.job_applications.build.references.heading"))
     click_on I18n.t("buttons.add_reference")
     fill_in_reference
     click_on I18n.t("buttons.save_reference")
     click_on I18n.t("buttons.add_another_reference")
     fill_in_reference
     click_on I18n.t("buttons.save_reference")
+    choose I18n.t("helpers.label.jobseekers_job_application_references_form.references_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
 
+    click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))
     fill_in_equal_opportunities
     click_on I18n.t("buttons.save_and_continue")
 
+    click_on(I18n.t("jobseekers.job_applications.build.ask_for_support.heading"))
     fill_in_ask_for_support
     click_on I18n.t("buttons.save_and_continue")
 
+    click_on(I18n.t("jobseekers.job_applications.build.declarations.heading"))
     fill_in_declarations
     click_on I18n.t("buttons.save_and_continue")
+    click_on "Review application"
   end
 
   def submit_application_from_review

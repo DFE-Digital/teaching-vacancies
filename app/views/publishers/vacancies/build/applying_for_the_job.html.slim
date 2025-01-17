@@ -26,13 +26,13 @@
             label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_religion_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) }
 
           = govuk_details(summary_text: t(".preview_religious_application_form")) do
-            = job_application_review(religious_job_application_sample(vacancy), step_process: {}, show_tracks: false, show_sidebar: false, allow_edit: false) do |r|
+            = job_application_review(religious_job_application_sample(vacancy), show_sidebar: false, allow_edit: false) do |r|
               - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: r.job_application
 
           = f.govuk_radio_button :application_form_type, :catholic,
           label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) }
           = govuk_details(summary_text: t(".preview_catholic_application_form")) do
-            = job_application_review(catholic_job_application_sample(vacancy), step_process: {}, show_tracks: false, show_sidebar: false, allow_edit: false) do |r|
+            = job_application_review(catholic_job_application_sample(vacancy), show_sidebar: false, allow_edit: false) do |r|
               - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: r.job_application
 
         = f.govuk_radio_divider
