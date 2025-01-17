@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe UpdateVacancyService do
+RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   subject(:udpate_vacancy_service) { described_class.call(vacancy, params) }
 
   let(:vacancy) { create(:vacancy, :external, organisations: [school]) }
