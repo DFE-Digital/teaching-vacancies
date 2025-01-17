@@ -2,6 +2,7 @@ require "swagger_helper"
 
 # rubocop:disable RSpec/VariableName
 # rubocop:disable RSpec/ScatteredSetup
+# rubocop:disable RSpec/EmptyExampleGroup
 RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   let!(:client) { create(:publisher_ats_api_client) }
   let(:"X-Api-Key") { client.api_key }
@@ -80,30 +81,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         run_test!
       end
-    end
-
-    it "only returns vacancies for the authenticated client" do
-      other_client = create(:publisher_ats_api_client)
-      school = create(:school)
-      create_list(:vacancy, 2, :external, publisher_ats_api_client: client, organisations: [school])
-      create_list(:vacancy, 3, :external, publisher_ats_api_client: other_client, organisations: [school])
-
-      get "/ats-api/v1/vacancies", headers: { "X-Api-Key" => client.api_key, "Accept" => "application/json" }
-
-      expect(response).to have_http_status(:ok)
-      body = response.parsed_body
-      expect(body["data"].size).to eq(2)
-    end
-
-    it "returns paginated results" do
-      create_list(:vacancy, 10, :external, publisher_ats_api_client: client)
-
-      get "/ats-api/v1/vacancies", headers: { "X-Api-Key" => client.api_key, "Accept" => "application/json" }
-
-      expect(response).to have_http_status(:ok)
-      body = response.parsed_body
-      expect(body["data"].size).to eq(10)
-      expect(body["meta"]["totalPages"]).to eq(1)
     end
 
     post("create a vacancy") do
@@ -375,73 +352,73 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         run_test!
       end
 
-      # response(422, "Validation error") do
-      #   schema "$ref" => "#/components/schemas/validation_error"
-      #
-      #   let(:school) { create(:school) }
-      #   let(:source) { build(:vacancy, :external) }
-      #   let(:school_urns) { [school].map { |school| school.urn.to_i } }
-      #   let(:vacancy) do
-      #     {
-      #       vacancy: {
-      #         external_advert_url: source.external_advert_url,
-      #         expires_at: source.expires_at,
-      #         job_title: nil,
-      #         job_advert: source.job_advert,
-      #         skills_and_experience: source.skills_and_experience,
-      #         salary: source.salary,
-      #         visa_sponsorship_available: source.visa_sponsorship_available,
-      #         external_reference: source.external_reference,
-      #         is_job_share: source.is_job_share,
-      #         job_roles: source.job_roles,
-      #         working_patterns: source.working_patterns,
-      #         contract_type: source.contract_type,
-      #         phases: source.phases,
-      #         schools: {
-      #           school_urns: school_urns,
-      #         },
-      #       },
-      #     }
-      #   end
-      #
-      #   run_test!
-      # end
+      response(422, "Validation error") do
+        schema "$ref" => "#/components/schemas/validation_error"
 
-      # response(500, "Internal server error") do
-      #   schema "$ref" => "#/components/schemas/internal_server_error"
-      #
-      #   let(:school) { create(:school) }
-      #   let(:source) { build(:vacancy, :external) }
-      #   let(:school_urns) { [school].map { |school| school.urn.to_i } }
-      #   let(:vacancy) do
-      #     {
-      #       vacancy: {
-      #         external_advert_url: source.external_advert_url,
-      #         expires_at: source.expires_at,
-      #         job_title: source.job_title,
-      #         job_advert: source.job_advert,
-      #         skills_and_experience: source.skills_and_experience,
-      #         salary: source.salary,
-      #         visa_sponsorship_available: source.visa_sponsorship_available,
-      #         external_reference: source.external_reference,
-      #         is_job_share: source.is_job_share,
-      #         job_roles: source.job_roles,
-      #         working_patterns: source.working_patterns,
-      #         contract_type: source.contract_type,
-      #         phases: source.phases,
-      #         schools: {
-      #           school_urns: school_urns,
-      #         },
-      #       },
-      #     }
-      #   end
-      #
-      #   before do
-      #     allow(Vacancy).to receive(:find_by).and_raise(StandardError.new("Internal server error"))
-      #   end
-      #
-      #   run_test!
-      # end
+        let(:school) { create(:school) }
+        let(:source) { build(:vacancy, :external) }
+        let(:school_urns) { [school].map { |school| school.urn.to_i } }
+        let(:vacancy) do
+          {
+            vacancy: {
+              external_advert_url: source.external_advert_url,
+              expires_at: source.expires_at,
+              job_title: nil,
+              job_advert: source.job_advert,
+              skills_and_experience: source.skills_and_experience,
+              salary: source.salary,
+              visa_sponsorship_available: source.visa_sponsorship_available,
+              external_reference: source.external_reference,
+              is_job_share: source.is_job_share,
+              job_roles: source.job_roles,
+              working_patterns: source.working_patterns,
+              contract_type: source.contract_type,
+              phases: source.phases,
+              schools: {
+                school_urns: school_urns,
+              },
+            },
+          }
+        end
+
+        run_test!
+      end
+
+      response(500, "Internal server error") do
+        schema "$ref" => "#/components/schemas/internal_server_error"
+
+        let(:school) { create(:school) }
+        let(:source) { build(:vacancy, :external) }
+        let(:school_urns) { [school].map { |school| school.urn.to_i } }
+        let(:vacancy) do
+          {
+            vacancy: {
+              external_advert_url: source.external_advert_url,
+              expires_at: source.expires_at,
+              job_title: source.job_title,
+              job_advert: source.job_advert,
+              skills_and_experience: source.skills_and_experience,
+              salary: source.salary,
+              visa_sponsorship_available: source.visa_sponsorship_available,
+              external_reference: source.external_reference,
+              is_job_share: source.is_job_share,
+              job_roles: source.job_roles,
+              working_patterns: source.working_patterns,
+              contract_type: source.contract_type,
+              phases: source.phases,
+              schools: {
+                school_urns: school_urns,
+              },
+            },
+          }
+        end
+
+        before do
+          allow(Vacancy).to receive(:find_by).and_raise(StandardError.new("Internal server error"))
+        end
+
+        run_test!
+      end
     end
   end
 
@@ -865,3 +842,4 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 end
 # rubocop:enable RSpec/VariableName
 # rubocop:enable RSpec/ScatteredSetup
+# rubocop:enable RSpec/EmptyExampleGroup

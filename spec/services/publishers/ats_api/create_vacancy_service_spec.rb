@@ -72,7 +72,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
 
       it "raises ActiveRecord::RecordNotFound" do
         expect { create_vacancy_service }.to raise_error(
-           Publishers::AtsApi::CreateVacancyService::InvalidOrganisationError,
+          Publishers::AtsApi::CreateVacancyService::InvalidOrganisationError,
           "No valid organisations found",
         )
       end
