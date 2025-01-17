@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
+RSpec.describe CreateVacancyService do
   subject(:create_vacancy_service) { described_class.call(params) }
 
   let(:school) { create(:school) }
@@ -72,7 +72,7 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
 
       it "raises ActiveRecord::RecordNotFound" do
         expect { create_vacancy_service }.to raise_error(
-          Publishers::AtsApi::V1::CreateVacancyService::InvalidOrganisationError,
+          CreateVacancyService::InvalidOrganisationError,
           "No valid organisations found",
         )
       end

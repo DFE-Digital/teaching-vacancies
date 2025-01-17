@@ -5,7 +5,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   rescue_from StandardError, with: :render_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from ActionController::ParameterMissing, with: :render_bad_request
-  rescue_from Publishers::AtsApi::V1::CreateVacancyService::InvalidOrganisationError, with: :render_bad_request
+  rescue_from CreateVacancyService::InvalidOrganisationError, with: :render_bad_request
 
   def index
     @pagy, @vacancies = pagy(vacancies.where(publisher_ats_api_client: client), items: 100)
@@ -20,14 +20,14 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def create
-    result = Publishers::AtsApi::V1::CreateVacancyService.call(permitted_vacancy_params)
+    result = CreateVacancyService.call(permitted_vacancy_params)
 
     render result.slice(:json, :status)
   end
 
   def update
     vacancy = Vacancy.find(params[:id])
-    result = Publishers::AtsApi::V1::UpdateVacancyService.call(vacancy, permitted_vacancy_params)
+    result = UpdateVacancyService.call(vacancy, permitted_vacancy_params)
 
     if result[:success]
       @vacancy = vacancy
