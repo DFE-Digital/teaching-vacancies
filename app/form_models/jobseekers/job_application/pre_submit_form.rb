@@ -9,10 +9,10 @@ module Jobseekers
 
       validate :all_steps_completed?
 
-      def all_steps_completed?
-        all_steps.each do |step|
-          next if step.in?(completed_steps)
+      private
 
+      def all_steps_completed?
+        (all_steps - completed_steps).each do |step|
           errors.add(
             :base,
             :"#{step}.incomplete",
