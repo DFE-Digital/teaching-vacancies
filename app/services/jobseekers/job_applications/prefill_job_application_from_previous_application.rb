@@ -25,9 +25,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def attributes_to_copy
-    # %i[personal_details professional_status ask_for_support personal_statement].select { |step| relevant_steps.include?(step) }
-    #                                                                            .map { |step| form_fields_from_step(step) }
-    #                                                                            .flatten - jobseeker_profile_fields
     %i[personal_details professional_status ask_for_support personal_statement].map { |step| form_fields_from_step(step) }
                                                                                .flatten - jobseeker_profile_fields
   end
