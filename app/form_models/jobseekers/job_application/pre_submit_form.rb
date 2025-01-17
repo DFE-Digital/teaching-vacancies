@@ -15,12 +15,10 @@ module Jobseekers
 
           errors.add(
             :base,
-            # I18n.t("activemodel.errors.models.jobseekers/job_application/review_form.attributes.#{step}.incomplete"),
-            "#{step}.incomplete".to_sym,
-            )
+            :"#{step}.incomplete",
+          )
         end
       end
     end
   end
 end
-
