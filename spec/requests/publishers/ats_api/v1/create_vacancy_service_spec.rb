@@ -43,7 +43,15 @@ RSpec.describe Publishers::AtsApi::V1::CreateVacancyService do
 
     context "when a vacancy with the same external reference exists" do
       let(:external_reference) { "existing-ref" }
-      let!(:existing_vacancy) { create(:vacancy, :external, external_reference: "existing-ref") }
+      let!(:existing_vacancy) do
+        create(
+          :vacancy,
+          :external,
+          external_reference: "existing-ref",
+          publisher_ats_api_client_id: publisher_ats_api_client_id,
+        )
+      end
+
       let(:expected_response) do
         {
           status: :conflict,

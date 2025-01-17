@@ -32,7 +32,10 @@ module Publishers
           end
 
           def conflict_vacancy(vacancy)
-            Vacancy.find_by(external_reference: vacancy.external_reference)
+            Vacancy.find_by(
+              publisher_ats_api_client_id: vacancy.publisher_ats_api_client_id,
+              external_reference: vacancy.external_reference,
+            )
           end
 
           def conflict_response(conflict_vacancy)
