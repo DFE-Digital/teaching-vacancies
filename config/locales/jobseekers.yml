@@ -795,6 +795,9 @@ en:
           description: Include any training you've completed within the last 3 years.
         destroy:
           success: Training deleted
+      professional_body_memberships:
+        destroy:
+          success: Professional body membership deleted
       qualifications:
         confirm_destroy:
           secondary:

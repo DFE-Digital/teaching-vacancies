@@ -495,8 +495,6 @@ en:
         completed_period_hint: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs).
         teacher_reference_number_hint: Schools will only be able to see your TRN if you apply for a role. You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
         trn_link_text: find your TRN
-
-
       jobseekers_training_and_cpd_form:
         name: Name of course or training
         provider: Training provider
@@ -504,8 +502,14 @@ en:
         year_awarded: Date completed
         year_completed_hint: For example, 1998
         course_length: Course length
-
-
+      jobseekers_professional_body_membership_form:
+        name: Name of professional body
+        membership_type: Membership type of level (optional)
+        membership_number: Membership or registration number (optional)
+        date_membership_obtained: Date obtained (optional)
+        exam_taken_options:
+          "true": "Yes"
+          "false": "No"
       personal_details_form:
         email: Email
         change_email_html: Select to %{link}
@@ -865,7 +869,8 @@ en:
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
         has_teacher_reference_number: Do you have a teacher reference number (TRN)?
-
+      jobseekers_professional_body_membership_form:
+        exam_taken: Did you take an exam for this membership?
       jobseekers_profile_employment_form:
         current_role: Are you still working in this role?
         ended_on: End date

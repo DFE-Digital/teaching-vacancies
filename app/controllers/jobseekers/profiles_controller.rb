@@ -42,6 +42,13 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       page_path: -> { new_jobseekers_profile_training_and_cpd_path },
     },
     {
+      title: "Professional Body Memberships",
+      display_summary: -> { profile.professional_body_memberships.present? },
+      key: "professional_body_memberships",
+      link_text: "Add professional body membership",
+      page_path: -> { new_jobseekers_profile_professional_body_membership_path },
+    },
+    {
       title: "Work history",
       display_summary: -> { profile.employments.any? },
       key: "employments",
