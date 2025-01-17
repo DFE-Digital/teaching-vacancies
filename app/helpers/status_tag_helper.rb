@@ -7,6 +7,7 @@ module StatusTagHelper
     in_progress: "yellow",
     imported: "blue",
   }.freeze
+
   # rubocop:disable Lint/DuplicateBranch
   def review_section_tag(resource, form_classes)
     steps = form_classes.map(&:target_name)

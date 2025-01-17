@@ -104,12 +104,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     # The step process is needed in order to filter out the steps that are not relevant to the new job application,
     # for eg. professional status - see https://github.com/DFE-Digital/teaching-vacancies/blob/75cec792d9e229fb866bdafc017f82501bd01001/app/services/jobseekers/job_applications/job_application_step_process.rb#L23
     # The review step is used as a current step is required.
-    step_process = if vacancy.religion_type.present?
-                     Jobseekers::JobApplications::ReligiousJobApplicationStepProcess.new(job_application: new_job_application)
-                   else
-                     Jobseekers::JobApplications::JobApplicationStepProcess.new(job_application: new_job_application)
-                   end
-    step_process.steps
+    Jobseekers::JobApplications::JobApplicationStepProcess.new(job_application: new_job_application).steps
   end
 
   def completed_steps

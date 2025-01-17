@@ -9,13 +9,15 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def update
     if form.valid?
-      job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
+      job_application.update!(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
       update_or_create_jobseeker_profile! if step == :professional_status
 
-      if redirect_to_review? && (step_process.last_of_group? || (step.in?(%i[catholic_following_religion non_catholic_following_religion]) && !job_application.following_religion))
+      if redirect_to_review?
         redirect_to jobseekers_job_application_review_path(job_application), success: t("messages.jobseekers.job_applications.saved")
-      else
+      elsif steps_complete?
         redirect_to jobseekers_job_application_apply_path job_application
+      else
+        redirect_to jobseekers_job_application_build_path(job_application, step_process.next_step(step))
       end
     else
       render step
@@ -23,6 +25,10 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   private
+
+  def steps_complete?
+    step_process.last_of_group?(step) || (step.in?(%i[catholic_following_religion non_catholic_following_religion]) && !job_application.following_religion)
+  end
 
   def back_path
     @back_path ||= if redirect_to_review?
@@ -52,13 +58,14 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
                    form_params
                  end
 
-    attributes[:unexplained_employment_gaps] = job_application.unexplained_employment_gaps if step == :employment_history
-
-    if step == :professional_status
+    case step
+    when :professional_status
       attributes.merge(jobseeker_profile_attributes)
                 .merge(trn_params)
-    elsif step == :references
+    when :references
       attributes.merge(references: job_application.references)
+    when :employment_history
+      attributes.merge(unexplained_employment_gaps: job_application.unexplained_employment_gaps)
     else
       attributes
     end
@@ -141,9 +148,5 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
         has_teacher_reference_number: form_params[:has_teacher_reference_number],
       )
     end
-  end
-
-  def set_steps
-    self.steps = step_process.all_possible_steps - [:review]
   end
 end
