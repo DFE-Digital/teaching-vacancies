@@ -20,21 +20,45 @@ RSpec.configure do |config|
         version: "v1",
         description: <<~DESCRIPTION,
           # Teaching Vacancies ATS API
-          Integrating with Teaching Vacancies will allow you to post job listings directly from your
-          Application Tracking System (ATS) and HR systems to our website on behalf of schools or trusts.
-          This document introduces our preferred integration patterns, and the data required for each listing
-          and is intended to help you evaluate the effort required to build an integration.
-          We’ve replaced our old RSS feed integration with a new HTTP API. This new approach is push-based;
-          to integrate with Teaching Vacancies, you (the ATS or HR system) call our API to publish, update,
-           or remove job listings on behalf of schools or trusts.
+
+          This document outlines the API’s key features, the data required for each listing,
+          and the steps needed to set up an integration.
+
+          This documentation describes each endpoint’s request parameters, response formats, and possible errors,
+          so you can seamlessly integrate Teaching Vacancies into your ATS workflow.
+
+          ## Introduction
+
+          The **Teaching Vacancies ATS API** enables you to manage job listings on behalf of schools or trusts
+          through your own Applicant Tracking System (ATS) or HR software.
+
+          By calling this API, you can:
+
+          - **List** all your active vacancies (with pagination)
+          - **Retrieve** details for a single vacancy
+          - **Create** new vacancies
+          - **Update** existing vacancies
+          - **Delete** vacancies when they’re no longer needed
+
+          ![API Diagram](/teaching_vacancies_api_diagram.jpg)
 
           ## Authentication
 
-          You’ll need a valid API key (`X-Api-Key`) for all endpoints.
+          Each request requires a valid API key in the `X-Api-Key` header to ensure only authorised
+          clients can manage vacancies.
+
+          Include this key in the X-Api-Key header of each request.
+          If the key is missing or invalid, the API will respond with an HTTP 401 (Unauthorized) status.
+
+          This ensures that only approved clients can create, update, or remove job listings.
+          If you ever need a new or replacement key, let us know, and we’ll assist you with the process.
 
           **Base URL**: `/ats-api/v1`
+
           **Supported Formats**: JSON
+
           **Authentication**: API key in `X-Api-Key`
+
         DESCRIPTION
       },
       paths: {},
