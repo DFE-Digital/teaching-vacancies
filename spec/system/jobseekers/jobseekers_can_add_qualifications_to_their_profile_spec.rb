@@ -81,7 +81,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
 
   context "when editing a qualification" do
     context "when the qualification does not have qualification results" do
-      let!(:qualification) do
+      before do
         create(:qualification,
                category: "undergraduate",
                institution: "Life University",
@@ -95,6 +95,16 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         click_on I18n.t("buttons.save_and_continue")
         expect(page).not_to have_content("Life University")
         expect(page).to have_content("University of Life")
+      end
+
+      it "can be deleted" do
+        visit review_jobseekers_profile_qualifications_path
+        click_on "Delete"
+        click_on "Delete Qualification"
+        within ".govuk-notification-banner" do
+          expect(page).to have_content "Qualification deleted"
+        end
+        expect(profile.qualifications).to eq([])
       end
     end
 
