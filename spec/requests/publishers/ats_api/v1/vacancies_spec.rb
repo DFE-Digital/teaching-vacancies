@@ -10,7 +10,13 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   path "/ats-api/v1/vacancies" do
     get("list vacancies") do
       tags "Vacancies"
-      description "list all the vacancies created from the client's ATS"
+      description <<~DESC
+        Returns a **paginated list** of vacancies that were created through
+        the client's ATS. Each vacancy includes key details such as `job_title`,
+        `expires_at`, and other metadata. By default, up to 100 vacancies are
+        returned per page, and the response includes pagination information so
+        you can retrieve subsequent pages if needed.
+      DESC
 
       consumes "application/json"
       produces "application/json"
@@ -19,6 +25,13 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       parameter name: :page, in: :query, type: :number, description: "page number (1-based), defaults to 1"
 
       response(200, "vacancies successfully listed") do
+        description <<~DESC
+          **200 OK** indicates a successful retrieval of vacancy data.
+          The response body contains:
+          - `data`: an array of vacancy objects (see the Vacancy schema).
+          - `meta`: pagination details, including `totalPages` and `count`.
+        DESC
+
         schema type: :object,
                required: %i[data meta],
                additionalProperties: false,
@@ -62,6 +75,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Invalid credentials") do
+        description <<~DESC
+          **401 Unauthorised** occurs when the provided API key (`X-Api-Key`)
+          is incorrect or missing.
+        DESC
+
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
         let(:"X-Api-Key") { "wrong-key" }
@@ -71,6 +89,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(500, "Internal server error") do
+        description <<~DESC
+          **500 Internal Server Error** indicates an unexpected issue on the server.
+          The response body contains an error message that can be used for debugging.
+        DESC
+
         schema "$ref" => "#/components/schemas/internal_server_error"
 
         let(:page) { nil }
@@ -85,7 +108,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
     post("create a vacancy") do
       tags "Vacancies"
-      description "create a vacancy for the client's ATS"
+      description <<~DESC
+        Creates a **new vacancy** for the client's ATS. The request body must
+        include all required vacancy fields (e.g., `job_title`, `expires_at`,
+        `job_advert`). If successful, the API returns the created vacancy data.
+      DESC
 
       consumes "application/json"
       produces "application/json"
@@ -250,6 +277,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       }
 
       response(201, "Vacancy successfully created") do
+        description "Indicates that the vacancy was created and returns the newly created resource."
+
         after do |example|
           example.metadata[:response][:content] = {
             "application/json" => {
@@ -290,6 +319,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(400, "Bad Request error") do
+        description "The request body is missing required parameters or has invalid data."
+
         schema "$ref" => "#/components/schemas/bad_request_error"
 
         let(:school) { create(:school) }
@@ -312,6 +343,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Invalid credentials") do
+        description "Occurs when the provided API key is incorrect or missing."
+
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
         let(:vacancy) { {} }
@@ -321,6 +354,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(409, "Conflict error") do
+        description "An existing vacancy with the same external_reference already exists."
+
         schema "$ref" => "#/components/schemas/conflict_error"
 
         let(:school) { create(:school) }
@@ -353,6 +388,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(422, "Validation error") do
+        description "A server-side issue occurred while creating the vacancy."
+
         schema "$ref" => "#/components/schemas/validation_error"
 
         let(:school) { create(:school) }
@@ -385,6 +422,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(500, "Internal server error") do
+        description "A server-side issue occurred while creating the vacancy."
+
         schema "$ref" => "#/components/schemas/internal_server_error"
 
         let(:school) { create(:school) }
@@ -429,7 +468,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
     get("show vacancy") do
       tags "Vacancies"
-      description "show the vacancy with the given id"
+      description "Retrieves details for a single vacancy by its unique ID, if it belongs to the requesting client."
 
       consumes "application/json"
       produces "application/json"
@@ -437,6 +476,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       security [api_key: []]
 
       response(200, "vacancy successfully retrieved") do
+        description "Returns the vacancy's attributes in JSON format."
+
         after do |example|
           example.metadata[:response][:content] = {
             "application/json" => {
@@ -451,6 +492,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Invalid credentials") do
+        description "Occurs when the provided API key is incorrect or missing."
+
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
         let(:"X-Api-Key") { "wrong-key" }
@@ -458,6 +501,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(404, "Vacancy not found") do
+        description "No vacancy was found with the provided ID that belongs to this client."
+
         schema "$ref" => "#/components/schemas/not_found_error"
 
         let(:id) { "123" }
@@ -465,6 +510,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(500, "Internal server error") do
+        description "An unexpected error occurred on the server."
+
         schema "$ref" => "#/components/schemas/internal_server_error"
 
         before do
@@ -477,7 +524,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
     put("update vacancy") do
       tags "Vacancies"
-      description "update the vacancy with the given id"
+      description "Updates an existing vacancy. The request body must include all required fields."
 
       consumes "application/json"
       produces "application/json"
@@ -642,6 +689,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       }
 
       response(200, "vacancy successfully updated") do
+        description "Indicates the vacancy was updated. Returns the updated resource data."
+
         schema "$ref" => "#/components/schemas/vacancy"
 
         let(:vacancy) do
@@ -671,6 +720,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(400, "Bad Request error") do
+        description "Missing or invalid fields in the request body."
+
         schema "$ref" => "#/components/schemas/bad_request_error"
 
         let(:school) { create(:school) }
@@ -694,6 +745,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Invalid credentials") do
+        description "Occurs when the provided API key is incorrect or missing."
+
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
         let(:vacancy) { {} }
@@ -703,6 +756,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(404, "Vacancy not found") do
+        description "No vacancy was found with the provided ID that belongs to this client."
+
         schema "$ref" => "#/components/schemas/not_found_error"
 
         let(:id) { "123" }
@@ -733,6 +788,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(422, "Validation error") do
+        description "The payload is syntactically correct but fails a data validation rule."
+
         schema "$ref" => "#/components/schemas/validation_error"
 
         let(:id) { create(:vacancy, :external, publisher_ats_api_client: client).id }
@@ -763,6 +820,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(500, "Internal server error") do
+        description "An unexpected error occurred on the server."
+
         schema "$ref" => "#/components/schemas/internal_server_error"
 
         let(:vacancy) do
@@ -798,17 +857,21 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
     delete("delete vacancy") do
       tags "Vacancies"
-      description "update the vacancy with the given id"
+      description "Deletes a vacancy with the given ID, if it belongs to the client's ATS. Returns 204 on success."
 
       consumes "application/json"
 
       security [api_key: []]
 
       response(204, "vacancy successfully deleted") do
+        description "Indicates the vacancy was removed from the system."
+
         run_test!
       end
 
       response(401, "Invalid credentials") do
+        description "Occurs when the provided API key is incorrect or missing."
+
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
         let(:"X-Api-Key") { "wrong-key" }
@@ -816,6 +879,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(404, "Vacancy not found") do
+        description "No vacancy was found with the provided ID that belongs to this client."
+
         schema "$ref" => "#/components/schemas/not_found_error"
 
         let(:id) { "123" }
@@ -823,6 +888,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(500, "Internal server error") do
+        description "An unexpected error occurred on the server."
+
         schema "$ref" => "#/components/schemas/internal_server_error"
 
         before do
