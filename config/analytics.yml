@@ -144,7 +144,6 @@ shared:
     - withdrawn_by_closing_account
     - safeguarding_issue
     - safeguarding_issue_details
-    - training_and_cpds_section_completed
     - imported_steps
     - statutory_induction_complete_details
   job_preferences_locations:

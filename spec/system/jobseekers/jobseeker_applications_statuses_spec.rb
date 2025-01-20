@@ -23,11 +23,11 @@ RSpec.describe "Jobseekers applications statuses" do
 
         click_button "Start application"
 
-        expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "in progress")
-        expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "in progress")
-        expect(page).to have_css("#qualifications .review-component__section__heading__status", text: "in progress")
-        expect(page).to have_css("#training_and_cpds .review-component__section__heading__status", text: "in progress")
-        expect(page).to have_css("#employment_history .review-component__section__heading__status", text: "in progress")
+        expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.in_progress"))
+        expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.in_progress"))
+        expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.in_progress"))
+        expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.in_progress"))
+        expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.in_progress"))
       end
     end
 
@@ -42,11 +42,11 @@ RSpec.describe "Jobseekers applications statuses" do
 
         click_button "Start application"
 
-        expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "not started")
-        expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "not started")
-        expect(page).to have_css("#qualifications .review-component__section__heading__status", text: "not started")
-        expect(page).to have_css("#training_and_cpds .review-component__section__heading__status", text: "not started")
-        expect(page).to have_css("#employment_history .review-component__section__heading__status", text: "not started")
+        expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.not_started"))
+        expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.not_started"))
+        expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.not_started"))
+        expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.not_started"))
+        expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.not_started"))
       end
     end
 
@@ -61,15 +61,15 @@ RSpec.describe "Jobseekers applications statuses" do
 
         click_button "Start application"
 
-        expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "not started")
-        expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "not started")
-        expect(page).to have_css("#qualifications .review-component__section__heading__status", text: "in progress")
-        expect(page).to have_css("#training_and_cpds .review-component__section__heading__status", text: "not started")
-        expect(page).to have_css("#employment_history .review-component__section__heading__status", text: "in progress")
+        expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.not_started"))
+        expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.not_started"))
+        expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.in_progress"))
+        expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.not_started"))
+        expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.in_progress"))
       end
 
       context "when the jobseeker completes a section" do
-        it "shows the section as complete" do
+        it "shows the section as complete", :js do
           visit job_path(vacancy)
           within ".banner-buttons" do
             click_on I18n.t("jobseekers.job_applications.banner_links.apply")
@@ -78,43 +78,43 @@ RSpec.describe "Jobseekers applications statuses" do
           click_button "Start application"
 
           within("#personal_details") do
-            click_link("Complete section")
+            click_link("Personal details")
           end
 
           fill_in_personal_details
-          click_on "Save"
+          click_on "Save and continue"
 
-          expect(page).to have_css("#personal_details .review-component__section__heading__status", text: "complete")
+          expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.complete"))
 
           within("#professional_status") do
-            click_link("Complete section")
+            click_link("Professional status")
           end
 
           fill_in_professional_status
-          click_on "Save"
+          click_on "Save and continue"
 
-          expect(page).to have_css("#professional_status .review-component__section__heading__status", text: "complete")
+          expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.complete"))
 
           within("#qualifications") do
-            click_link("Complete section")
+            click_link("Qualifications")
           end
 
           choose "Yes, I've completed this section"
-          click_on "Save"
+          click_on "Save and continue"
 
-          expect(page).to have_css("#qualifications .review-component__section__heading__status", text: "complete")
+          expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.complete"))
 
           within("#training_and_cpds") do
-            click_link("Complete section")
+            click_link(I18n.t("jobseekers.job_applications.build.training_and_cpds.heading"))
           end
 
           choose "Yes, I've completed this section"
-          click_on "Save"
+          click_on "Save and continue"
 
-          expect(page).to have_css("#training_and_cpds .review-component__section__heading__status", text: "complete")
+          expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.complete"))
 
           within("#employment_history") do
-            click_link("Complete section")
+            click_link(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
           end
 
           click_on "Add another job"
@@ -122,9 +122,9 @@ RSpec.describe "Jobseekers applications statuses" do
           click_on "Save role"
 
           choose "Yes, I've completed this section"
-          click_on "Save"
+          click_on "Save and continue"
 
-          expect(page).to have_css("#employment_history .review-component__section__heading__status", text: "complete")
+          expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.complete"))
         end
       end
     end

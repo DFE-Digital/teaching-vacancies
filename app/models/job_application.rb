@@ -37,6 +37,11 @@ class JobApplication < ApplicationRecord
     personal_details: 2,
     professional_status: 3,
     training_and_cpds: 4,
+    references: 5,
+    equal_opportunities: 6,
+    personal_statement: 7,
+    declarations: 8,
+    ask_for_support: 9,
   }
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
@@ -65,6 +70,9 @@ class JobApplication < ApplicationRecord
   scope :draft, -> { where(status: "draft") }
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid
+
+  # TODO: drop these columns once this been released
+  self.ignored_columns += %w[training_and_cpds_section_completed employment_history_section_completed qualifications_section_completed]
 
   def name
     "#{first_name} #{last_name}"
@@ -110,7 +118,7 @@ class JobApplication < ApplicationRecord
 
   def fill_in_report
     report = vacancy.equal_opportunities_report || vacancy.build_equal_opportunities_report
-    Jobseekers::JobApplication::EqualOpportunitiesForm.fields.each do |attr|
+    Jobseekers::JobApplication::EqualOpportunitiesForm.storable_fields.each do |attr|
       attr_value = public_send(attr)
       next unless attr_value.present?
 
@@ -126,7 +134,7 @@ class JobApplication < ApplicationRecord
   end
 
   def reset_equal_opportunities_attributes
-    Jobseekers::JobApplication::EqualOpportunitiesForm.fields.each { |attr| self[attr] = "" }
+    Jobseekers::JobApplication::EqualOpportunitiesForm.storable_fields.each { |attr| self[attr] = "" }
   end
 
   def reset_support_needed_details

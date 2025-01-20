@@ -1,0 +1,18 @@
+en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/job_application/qualifications_form:
+          attributes:
+            qualifications_section_completed:
+              inclusion: Select yes if you have completed this section
+  helpers:
+    legend:
+      jobseekers_job_application_qualifications_form:
+        qualifications_section_completed: Have you completed this section?
+    label:
+      jobseekers_job_application_qualifications_form:
+        qualifications_section_completed_options:
+          false: No, I'll come back to it later
+          true: Yes, I've completed this section
+

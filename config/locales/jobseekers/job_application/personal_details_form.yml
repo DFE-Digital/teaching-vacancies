@@ -1,0 +1,68 @@
+en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/job_application/personal_details_form:
+          attributes:
+            city:
+              blank: Enter your town or city
+            country:
+              blank: Enter your country
+            email_address:
+              blank: Enter your email address
+              invalid: Enter a valid email address in the correct format, like name@example.com
+            first_name:
+              blank: Enter your first name
+            last_name:
+              blank: Enter your last name
+            national_insurance_number:
+              invalid: Enter a National Insurance number in the correct format
+            phone_number:
+              blank: Enter your phone number
+              invalid: Enter a phone number in the correct format
+            postcode:
+              blank: Enter your postcode
+            street_address:
+              blank: Enter your building and street
+            teacher_reference_number:
+              invalid: Enter a teacher reference number (TRN) that is 7 digits long
+            right_to_work_in_uk:
+              inclusion: Select no if you have the right to work in the UK
+            has_ni_number:
+              inclusion: Select yes if you have a National Insurance number
+            personal_details_section_completed:
+              inclusion: Select yes if you have completed this section
+  helpers:
+    legend:
+      jobseekers_job_application_personal_details_form:
+        your_address: Your address
+        has_ni_number: Do you have a national insurance number?
+        personal_details_section_completed: Have you completed this section?
+    label:
+      jobseekers_job_application_personal_details_form:
+        city: Town or city
+        country: Country
+        email_address: Email address
+        first_name: First name
+        last_name: Last name
+        national_insurance_number_review: National Insurance number
+        national_insurance_number: What is your National Insurance number?
+        phone_number: Phone number
+        previous_names_review: Previous names
+        previous_names_html: Previous names (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        street_address: Building and street
+        teacher_reference_number_review: Teacher reference number (TRN)
+        teacher_reference_number_html: Teacher reference number (TRN) (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        has_ni_number_options:
+          "yes": "Yes"
+          "no": No, I do not have one or do not want to provide it yet
+        personal_details_section_completed_options:
+          false: No, I'll come back to it later
+          true: Yes, I've completed this section
+    hint:
+      jobseekers_job_application_personal_details_form:
+        has_ni_number: >-
+          You can find this on your National Insurance card,
+          benefit letter, payslip or P60. It's made up of 2 letters, 6 numbers and a final letter.
+        phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
+        previous_names: For example maiden name or name at birth, if different from the name you have now.

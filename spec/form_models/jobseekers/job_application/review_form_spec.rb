@@ -26,8 +26,8 @@ RSpec.describe Jobseekers::JobApplication::ReviewForm, type: :model do
     it "is invalid" do
       expect(subject).not_to be_valid
       incomplete_steps.each do |incomplete_step|
-        expect(subject.errors.messages_for(incomplete_step))
-          .to include(I18n.t("activemodel.errors.models.jobseekers/job_application/review_form.attributes.#{incomplete_step}.incomplete"))
+        expect(subject.errors.messages_for(:base))
+          .to include(I18n.t("activemodel.errors.models.jobseekers/job_application/pre_submit_form.#{incomplete_step}.incomplete"))
       end
     end
   end

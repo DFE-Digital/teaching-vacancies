@@ -1,0 +1,21 @@
+en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/job_application/employment_history_form:
+          attributes:
+            employment_history_section_completed:
+              inclusion: Select yes if you have completed this section
+  helpers:
+    legend:
+      jobseekers_job_application_employment_history_form:
+        employment_history_section_completed: Have you completed this section?
+    label:
+      jobseekers_job_application_employment_history_form:
+        employment_history_section_completed_options:
+          false: No, I'll come back to it later
+          true: Yes, I've completed this section
+    hint:
+      jobseekers_job_application_employment_history_form:
+        employment_history_section_completed: Ensure you've added all your employment history.
+

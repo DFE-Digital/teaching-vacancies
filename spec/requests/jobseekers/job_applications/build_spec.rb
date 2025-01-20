@@ -41,7 +41,7 @@ RSpec.describe "Job applications build" do
             .to change { job_application.reload.first_name }.from("").to("Cool name")
             .and change { job_application.completed_steps }.from([]).to(["personal_details"])
 
-          expect(response).to redirect_to(jobseekers_job_application_review_path(job_application))
+          expect(response).to redirect_to(jobseekers_job_application_apply_path(job_application))
         end
       end
 
@@ -66,7 +66,7 @@ RSpec.describe "Job applications build" do
               .to change { job_application.reload.first_name }.from("").to("Cool name")
               .and change { job_application.completed_steps }.from([]).to(["personal_details"])
 
-            expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :professional_status))
+            expect(response).to redirect_to(jobseekers_job_application_apply_path(job_application))
           end
         end
       end

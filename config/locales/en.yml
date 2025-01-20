@@ -330,12 +330,12 @@ en:
       remove_filter_hidden: "Remove this filter "
       return_to_results: Return to results
     status_tags:
-      action_required: action required
-      complete: complete
-      in_progress: in progress
-      not_started: not started
-      optional: optional
-      imported: imported
+      action_required: Action required
+      complete: Complete
+      in_progress: Incomplete
+      not_started: Not started
+      optional: Optional
+      imported: Imported
 
   stats:
     intro: >-
@@ -582,8 +582,3 @@ en:
           paragraph1: You have saved this job in your new Teaching Vacancies account.
           paragraph2: If you already had a Teaching Vacancies account using a different email address, you can %{link}
           transfer_account_link_text: transfer your account information.
-
-  vacancy_selector_component:
-    job:
-      expires_on: "Closing date: %{date}"
-      not_set: not set
