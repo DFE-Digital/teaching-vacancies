@@ -19,8 +19,6 @@ RSpec.configure do |config|
         title: "Teaching Vacancies ATS API",
         version: "v1",
         description: <<~DESCRIPTION,
-          # Teaching Vacancies ATS API
-
           This document outlines the API’s key features, the data required for each listing,
           and the steps needed to set up an integration.
 
@@ -39,8 +37,6 @@ RSpec.configure do |config|
           - **Create** new vacancies
           - **Update** existing vacancies
           - **Delete** vacancies when they’re no longer needed
-
-          ![API Diagram](/teaching_vacancies_api_diagram.jpg)
 
           ## Authentication
 
