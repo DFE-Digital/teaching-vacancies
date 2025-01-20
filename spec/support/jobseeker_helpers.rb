@@ -12,6 +12,7 @@ module JobseekerHelpers
   def fill_in_ask_for_support
     choose "Yes", name: "jobseekers_job_application_ask_for_support_form[support_needed]"
     fill_in "Tell us any information you think is relevant", with: "Some details about support"
+    choose I18n.t("helpers.label.jobseekers_job_application_ask_for_support_form.ask_for_support_section_completed_options.true")
   end
 
   def fill_in_current_role(job_title: "The Best Teacher", start_month: "07", start_year: "2020")
@@ -30,6 +31,7 @@ module JobseekerHelpers
     fill_in "Please give details", with: "Some details of the relationship"
     choose "Yes, I want to share something"
     fill_in "Give any relevant information", with: "Criminal record"
+    choose I18n.t("helpers.label.jobseekers_job_application_declarations_form.declarations_section_completed_options.true")
   end
 
   def fill_in_employment_history(job_title: "The Best Teacher", start_month: "09", start_year: "2019", end_month: "07", end_year: "2020")
@@ -68,6 +70,8 @@ module JobseekerHelpers
     choose "Mixed", name: "jobseekers_job_application_equal_opportunities_form[ethnicity]"
     choose "Other", name: "jobseekers_job_application_equal_opportunities_form[religion]"
     fill_in strip_tags(I18n.t("helpers.label.jobseekers_job_application_equal_opportunities_form.religion_description_html")), with: "Jainism"
+
+    choose I18n.t("helpers.label.jobseekers_job_application_equal_opportunities_form.equal_opportunities_section_completed_options.true")
   end
 
   def fill_in_personal_details
@@ -82,10 +86,13 @@ module JobseekerHelpers
     choose I18n.t("jobseekers.profiles.personal_details.work.options.true")
     choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.has_ni_number_options.yes")
     fill_in I18n.t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number"), with: "AB 12 12 12 A"
+
+    choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.true")
   end
 
   def fill_in_personal_statement
     fill_in "Your personal statement", with: "A brilliant, glowing statement about your person"
+    choose I18n.t("helpers.label.jobseekers_job_application_personal_statement_form.personal_statement_section_completed_options.true")
   end
 
   def fill_in_professional_status
@@ -94,6 +101,8 @@ module JobseekerHelpers
     choose "Yes", name: "jobseekers_job_application_professional_status_form[has_teacher_reference_number]"
     fill_in "What is your teacher reference number (TRN)?", with: "1234567"
     choose "Yes", name: "jobseekers_job_application_professional_status_form[statutory_induction_complete]"
+
+    choose I18n.t("helpers.label.jobseekers_job_application_professional_status_form.professional_status_section_completed_options.true")
   end
 
   def fill_in_reference

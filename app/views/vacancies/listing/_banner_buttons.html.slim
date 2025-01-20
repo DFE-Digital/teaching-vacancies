@@ -4,7 +4,7 @@
       - if job_application
         - if job_application.draft?
           = banner_button text: t("jobseekers.job_applications.banner_links.draft"),
-            href: jobseekers_job_application_review_path(job_application),
+            href: jobseekers_job_application_apply_path(job_application),
             icon: "green-tick"
         - elsif job_application.withdrawn?
           = banner_button text: t("jobseekers.job_applications.banner_links.withdrawn"),

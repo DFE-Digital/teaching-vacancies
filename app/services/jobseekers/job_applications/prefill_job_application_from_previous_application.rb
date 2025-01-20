@@ -25,8 +25,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def attributes_to_copy
-    %i[personal_details professional_status ask_for_support personal_statement].select { |step| relevant_steps.include?(step) }
-                                                                               .map { |step| form_fields_from_step(step) }
+    %i[personal_details professional_status ask_for_support personal_statement].map { |step| form_fields_from_step(step) }
                                                                                .flatten - jobseeker_profile_fields
   end
 
@@ -44,8 +43,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
         new_result.update(qualification: new_qualification)
       end
     end
-
-    new_job_application.qualifications_section_completed = true
   end
 
   def copy_employments
@@ -53,8 +50,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       new_employment = employment.dup
       new_employment.update(job_application: new_job_application, salary: "")
     end
-
-    new_job_application.employment_history_section_completed = !previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
   end
 
   def copy_references
@@ -69,8 +64,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       new_training = training.dup
       new_training.update(job_application: new_job_application)
     end
-
-    new_job_application.training_and_cpds_section_completed = true
   end
 
   def set_status_of_each_step
@@ -87,7 +80,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     # The step process is needed in order to filter out the steps that are not relevant to the new job application,
     # for eg. professional status - see https://github.com/DFE-Digital/teaching-vacancies/blob/75cec792d9e229fb866bdafc017f82501bd01001/app/services/jobseekers/job_applications/job_application_step_process.rb#L23
     # The review step is used as a current step is required.
-    Jobseekers::JobApplications::JobApplicationStepProcess.new(:review, job_application: new_job_application).steps
+    Jobseekers::JobApplications::JobApplicationStepProcess.new(job_application: new_job_application).steps
   end
 
   def completed_steps

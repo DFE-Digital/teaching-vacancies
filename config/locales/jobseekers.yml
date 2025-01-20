@@ -96,7 +96,13 @@ en:
         example3: first aid courses
         example4: Team Teach
     job_applications:
-      apply: Apply for this job
+      apply:
+        apply: Apply for this job
+        heading: Your application
+        review_application: Review application
+        review_and_submit: Review and submit your application
+        you_will_have: You will have the opportunity to review your application in full before you submit it.
+        title: Review your application — Application
       applying_for_the_job_heading: Applying for the job
       applying_for_the_job_paragraph: Please complete the online application.
       no_cvs: CVs are not accepted.
@@ -207,6 +213,7 @@ en:
           heading: Professional status
           step_title: Professional status
           title: Professional status — Application
+          introduction: If you have no teaching experience and are applying for a support role, you should answer no to these questions.
         qualifications:
           heading: Qualifications
           no_qualifications: No qualifications specified
@@ -220,7 +227,7 @@ en:
           title: References — Application
         review:
           step_title: Review your application
-      cancel_caption: If you click cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft applications.
+      cancel_caption: If you select cancel you will lose any unsaved information from this step. Completed details from previous steps will be saved in your draft applications.
       caption: "%{job_title} at %{organisation}"
       closing_date: Closing date
       confirm_destroy:
@@ -527,7 +534,7 @@ en:
           heading: Personal statement
         professional_status:
           heading: Professional status
-          statutory_induction_complete: Have you completed your statutory induction period?
+          statutory_induction_complete: Have you completed your induction period?
           qualified_teacher_status: Do you have qualified teacher status (QTS)?
         qualifications:
           heading: Qualifications
@@ -830,7 +837,8 @@ en:
           status_title: Do you have qualified teacher status (QTS)?
           year_title: Year QTS awarded
           trn_title: Teacher reference number (TRN)
-          completed_statutory_induction_title: Have you completed your statutory induction period?
+          completed_statutory_induction_title: Have you completed your induction period?
+          completed_statutory_induction_details_title: Additional induction details
       employments:
         edit:
           caption: Work history

@@ -10,3 +10,8 @@
   - s.with_row do |row|
     - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
     - row.with_value text: job_application.statutory_induction_complete.humanize
+
+  - if job_application.statutory_induction_complete_details.present? && job_application.statutory_induction_complete == "no"
+    - s.with_row do |row|
+      - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete_details")
+      - row.with_value text: job_application.statutory_induction_complete_details

@@ -476,130 +476,37 @@ en:
               blank: Tick the box to agree to the terms and conditions
 
         # Job application
-        jobseekers/job_application/ask_for_support_form:
-          attributes:
-            support_needed:
-              inclusion: Select yes if you would like interview support
-            support_needed_details:
-              blank: Give details about what support you might need
-              # TODO: Update content once confirmed
-              present: If you don't need support, extra information must be blank
-        jobseekers/job_application/declarations_form:
-          attributes:
-            close_relationships:
-              inclusion: Select yes if you have a close relationship with people within the organisation
-            close_relationships_details:
-              blank: Give details about any close relationships with people within the organisation
-            safeguarding_issue:
-              inclusion: Select yes if you have a safeguarding issue to declare
-            safeguarding_issue_details:
-              blank: Provide details about your safeguarding issue
-        jobseekers/job_application/employment_history_form:
-          attributes:
-            employment_history_section_completed:
-              blank: Select yes if you have completed this section
-        jobseekers/job_application/equal_opportunities_form:
-          attributes:
-            age:
-              inclusion: Select an age range or ‘Prefer not to say’
-            disability:
-              inclusion: Select yes if you consider yourself to have a disability
-            ethnicity:
-              inclusion: Select an ethnic group or ‘Prefer not to say’
-            ethnicity_description:
-              blank: Describe your ethnic group
-            gender:
-              inclusion: Select a gender or ‘Prefer not to say’
-            gender_description:
-              blank: Describe your gender identity
-            orientation:
-              inclusion: Select a sexual orientation or ‘Prefer not to say’
-            orientation_description:
-              blank: Describe your sexual orientation
-            religion:
-              inclusion: Select a religion or ‘Prefer not to say’
-            religion_description:
-              blank: Describe your religion or belief
-        jobseekers/job_application/personal_details_form:
-          attributes:
-            city:
-              blank: Enter your town or city
-            country:
-              blank: Enter your country
-            email_address:
-              blank: Enter your email address
-              invalid: Enter a valid email address in the correct format, like name@example.com
-            first_name:
-              blank: Enter your first name
-            last_name:
-              blank: Enter your last name
-            national_insurance_number:
-              invalid: Enter a National Insurance number in the correct format
-            phone_number:
-              blank: Enter your phone number
-              invalid: Enter a phone number in the correct format
-            postcode:
-              blank: Enter your postcode
-            street_address:
-              blank: Enter your building and street
-            teacher_reference_number:
-              invalid: Enter a teacher reference number (TRN) that is 7 digits long
-            right_to_work_in_uk:
-              inclusion: Select no if you have the right to work in the UK
-            has_ni_number:
-              inclusion: Select yes if you have a National Insurance number
-        jobseekers/job_application/personal_statement_form:
-          attributes:
-            personal_statement:
-              blank: Enter your personal statement
-        jobseekers/job_application/professional_status_form:
-          attributes:
-            qualified_teacher_status:
-              inclusion: Select yes if you have qualified teacher status
-            qualified_teacher_status_year:
-              less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
-              not_a_number: Enter the year your QTS was awarded
-            teacher_reference_number:
-              invalid: Enter a teacher reference number (TRN) that is 7 digits long
-              blank: Enter a teacher reference number (TRN) that is 7 digits long
-            has_teacher_reference_number:
-              inclusion: Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.
-            statutory_induction_complete:
-              inclusion: Select yes if you have completed your statutory induction year
-        jobseekers/job_application/qualifications_form:
-          attributes:
-            qualifications_section_completed:
-              blank: Select yes if you have completed this section
         jobseekers/job_application/training_and_cpds_form:
           attributes:
             training_and_cpds_section_completed:
               blank: Select yes if you have completed this section
+        jobseekers/job_application/pre_submit_form:
+          ask_for_support:
+            incomplete: Complete the questions on interview support
+          employment_history:
+            incomplete: Complete your employment history
+          equal_opportunities:
+            incomplete: Complete the questions on equal opportunities
+          declarations:
+            incomplete: Complete the declarations
+          personal_details:
+            incomplete: Complete your personal details
+          personal_statement:
+            incomplete: Complete your personal statement
+          professional_status:
+            incomplete: Complete the questions about your professional status
+          qualifications:
+            incomplete: Complete your qualifications
+          references:
+            incomplete: Complete your references
+          training_and_cpds:
+            incomplete: Complete your training and CPD
         jobseekers/job_application/review_form:
           attributes:
             confirm_data_accurate:
               accepted:  You must confirm that your information is accurate and complete
             confirm_data_usage:
               accepted: You must consent to share your data in order to apply for this job
-            ask_for_support:
-              incomplete: Complete the questions on interview support
-            employment_history:
-              incomplete: Complete your employment history
-            equal_opportunities:
-              incomplete: Complete the questions on equal opportunities
-            declarations:
-              incomplete: Complete the declarations
-            personal_details:
-              incomplete: Complete your personal details
-            personal_statement:
-              incomplete: Complete your personal statement
-            professional_status:
-              incomplete: Complete the questions about your professional status
-            qualifications:
-              incomplete: Complete your qualifications
-            references:
-              incomplete: Complete your references
-            training_and_cpds:
-              incomplete: Complete your training and CPD
         jobseekers/job_application/withdraw_form:
           attributes:
             withdraw_reason:

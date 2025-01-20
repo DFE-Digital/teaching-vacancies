@@ -21,8 +21,6 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:employment_history_section_completed) }
-
     context "when employment history gaps are present" do
       it "adds errors for each unexplained gap" do
         expect(form).not_to be_valid

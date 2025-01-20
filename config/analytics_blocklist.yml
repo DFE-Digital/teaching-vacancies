@@ -93,8 +93,6 @@
   - rejection_reasons_ciphertext
   - gaps_in_employment_details_ciphertext
   - in_progress_steps
-  - employment_history_section_completed
-  - qualifications_section_completed
   :employments:
   - organisation_ciphertext
   - job_title_ciphertext

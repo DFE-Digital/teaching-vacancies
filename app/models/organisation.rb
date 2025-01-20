@@ -32,7 +32,7 @@ class Organisation < ApplicationRecord
   scope :within_polygon, ->(location_polygon) { where("ST_Intersects(?, geopoint)", location_polygon.area.to_s) if location_polygon }
   scope :within_area, lambda { |coordinates, radius|
     point = "POINT(#{coordinates&.second} #{coordinates&.first})"
-    where("ST_DWithin(geopoint, ?, ?)", point, radius) if coordinates && radius
+    where("ST_DWithin(geopoint, ?, ?, false)", point, radius) if coordinates && radius
   }
   scope :in_vacancy_ids, ->(ids) { joins(:organisation_vacancies).where(organisation_vacancies: { vacancy_id: ids }).distinct }
 

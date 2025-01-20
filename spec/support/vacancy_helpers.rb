@@ -283,7 +283,7 @@ module VacancyHelpers
     if vacancy.enable_job_applications?
       sponsorship_inset_text = vacancy.visa_sponsorship_available ? "Skilled Worker visas can be sponsored." : "Visas cannot be sponsored"
       expect(page).to have_content sponsorship_inset_text
-      expect(page).to have_link(I18n.t("jobseekers.job_applications.apply"), href: new_jobseekers_job_job_application_path(vacancy.id))
+      expect(page).to have_link(I18n.t("jobseekers.job_applications.apply.apply"), href: new_jobseekers_job_job_application_path(vacancy.id))
     else
       expect(page).to have_content(I18n.t("jobs.apply_via_website"))
       expect(page).to have_link(I18n.t("jobs.apply"), href: vacancy.application_link)

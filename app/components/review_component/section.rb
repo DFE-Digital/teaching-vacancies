@@ -1,13 +1,24 @@
-# This is an abstract class.  See VacancyReviewComponent::Section or
-# JobApplicationReviewComponent::Section for specific implementations.
+# This is an abstract class.
+# See JobApplicationReviewComponent::Section for specific implementation.
 class ReviewComponent::Section < ApplicationComponent
   include FormsHelper
   include StatusTagHelper
 
-  renders_one :heading, ReviewComponent::Section::Heading
   renders_many :field_div_sets, ->(f = nil, form: nil) { render_divs_for_fields(f || form) }
 
-  delegate :with_row, to: :@list
+  class RowData
+    attr_reader :key, :value
+
+    def with_key(text:)
+      @key = text
+    end
+
+    def with_value(text:)
+      @value = text
+    end
+  end
+
+  attr_reader :rows
 
   def initialize(record, name:, id: nil, forms: [], **)
     super(**)
@@ -18,30 +29,19 @@ class ReviewComponent::Section < ApplicationComponent
     @id = id || name
     @name = name
     @record = record
+    @rows = []
+  end
+
+  def with_row
+    row_data = RowData.new
+    yield(row_data) if block_given?
+    @rows << row_data
   end
 
   private
 
   def before_render
     with_field_div_sets(@forms.map { |f| { form: f } })
-
-    with_heading(title: heading_text, link_to: [error_link_text, error_path], allow_edit: allow_edit?) do
-      review_section_tag(@record, @forms.map(&:target_name), @forms)
-    end
-
-    @list = build_list
-  end
-
-  def content
-    # Calling `super` here has side-effects which
-    # affect the contents of `@list.rows`.
-    super_content = super
-
-    if @list.rows.any?
-      render(@list)
-    else
-      super_content
-    end
   end
 
   attr_reader :id
@@ -63,10 +63,6 @@ class ReviewComponent::Section < ApplicationComponent
   end
 
   def error_path
-    raise "Not implemented"
-  end
-
-  def error_link_text
     raise "Not implemented"
   end
 

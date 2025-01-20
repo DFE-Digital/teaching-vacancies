@@ -20,10 +20,6 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerPr
       .to eq(jobseeker_profile.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
   end
 
-  it "sets qualifications section completed to false" do
-    expect(subject.qualifications_section_completed).to eq(false)
-  end
-
   it "adds qualifications to in progress steps" do
     expect(subject.in_progress_steps).to include("qualifications")
   end
@@ -35,10 +31,6 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerPr
       .to eq(jobseeker_profile.employments.map { |employment| employment.slice(*attributes_to_copy) })
   end
 
-  it "sets employment history section completed to false" do
-    expect(subject.employment_history_section_completed).to eq(false)
-  end
-
   it "adds employment history to in progress steps" do
     expect(subject.in_progress_steps).to include("employment_history")
   end
@@ -48,10 +40,6 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerPr
 
     expect(subject.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
       .to eq(jobseeker_profile.training_and_cpds.map { |training| training.slice(*attributes_to_copy) })
-  end
-
-  it "sets training and cpds section completed to false" do
-    expect(subject.training_and_cpds_section_completed).to eq(false)
   end
 
   it "adds training and cpds to in progress steps" do
