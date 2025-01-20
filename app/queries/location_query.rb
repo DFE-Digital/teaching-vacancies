@@ -32,7 +32,7 @@ class LocationQuery < ApplicationQuery
   def handle_polygon_location(field_name, polygon, radius, sort_by_distance)
     @scope = scope.joins("
       INNER JOIN location_polygons
-      ON ST_DWithin(#{field_name}, location_polygons.area, #{radius})
+      ON ST_DWithin(#{field_name}, location_polygons.area, #{radius}, false)
     ").where("location_polygons.id = ?", polygon.id)
 
     sort_by_polygon_distance(field_name) if sort_by_distance
@@ -48,7 +48,7 @@ class LocationQuery < ApplicationQuery
     return scope.none if coordinates == [0, 0]
 
     point = "POINT(#{coordinates.second} #{coordinates.first})"
-    @scope = scope.where("ST_DWithin(#{field_name}, ?, ?)", point, radius)
+    @scope = scope.where("ST_DWithin(#{field_name}, ?, ?, false)", point, radius)
 
     sort_by_coordinates_distance(field_name, point) if sort_by_distance
 
@@ -56,12 +56,14 @@ class LocationQuery < ApplicationQuery
   end
 
   def sort_by_polygon_distance(field_name)
-    @scope = scope.select("vacancies.*, ST_Distance(#{field_name}, ST_Centroid(location_polygons.area)) AS distance")
-                  .order(Arel.sql("ST_Distance(#{field_name}, ST_Centroid(location_polygons.area))"))
+    @scope = scope.select("vacancies.*, ST_Distance(#{field_name}, ST_Centroid(location_polygons.area), false) AS distance")
+                  # why not using 'distance' alias? is not defined when calling this query with a 'pluck'
+                  .order(Arel.sql("ST_Distance(#{field_name}, ST_Centroid(location_polygons.area), false)"))
   end
 
   def sort_by_coordinates_distance(field_name, point)
-    @scope = scope.select("vacancies.*, ST_Distance(#{field_name}, '#{point}') AS distance")
-                  .order(Arel.sql("ST_Distance(#{field_name}, '#{point}')"))
+    @scope = scope.select("vacancies.*, ST_Distance(#{field_name}, '#{point}', false) AS distance")
+                  # why not using 'distance' alias? is not defined when calling this query with a 'pluck'
+                  .order(Arel.sql("ST_Distance(#{field_name}, '#{point}', false)"))
   end
 end

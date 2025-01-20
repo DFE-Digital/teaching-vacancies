@@ -37,7 +37,7 @@ RSpec.describe VacancyLocationQuery do
 
       before do
         expect(default_scope).to receive(:joins).with(
-          /\s*INNER JOIN location_polygons\s*ON\s*ST_DWithin\(vacancies.geolocation, location_polygons.area, 67578\)\s*/i,
+          /\s*INNER JOIN location_polygons\s*ON\s*ST_DWithin\(vacancies.geolocation, location_polygons.area, 67578, false\)\s*/i,
         ).and_return(join_scope)
 
         expect(join_scope).to receive(:where).with("location_polygons.id = ?", location_polygon.id).and_return(where_scope)
@@ -60,7 +60,7 @@ RSpec.describe VacancyLocationQuery do
         expect(Geocoding).to receive(:new).with("louth").and_return(geocoder)
 
         expect(default_scope).to receive(:where).with(
-          "ST_DWithin(vacancies.geolocation, ?, ?)",
+          "ST_DWithin(vacancies.geolocation, ?, ?, false)",
           "POINT(7 -7)",
           143_201,
         ).and_return(where_scope)
