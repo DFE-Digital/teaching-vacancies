@@ -3,11 +3,11 @@ class Jobseekers::Profile::QualifiedTeacherStatusForm < BaseForm
   validates :qualified_teacher_status_year, numericality: { less_than_or_equal_to: proc { Time.current.year } }, if: -> { qualified_teacher_status == "yes" }
   validates :teacher_reference_number, presence: true, if: -> { qualified_teacher_status == "yes" }
   validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: false, if: -> { qualified_teacher_status == "yes" || has_teacher_reference_number == "yes" }
-  validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true, if: -> { qualified_teacher_status == "no" || qualified_teacher_status == "on_track" }
+  validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true, if: -> { %w[no on_track].include?(qualified_teacher_status) }
   validates :statutory_induction_complete, inclusion: { in: %w[yes no] }, if: -> { qualified_teacher_status == "yes" }
 
   validates :has_teacher_reference_number, inclusion: { in: %w[yes] }, if: -> { qualified_teacher_status == "yes" }
-  validates :has_teacher_reference_number, inclusion: { in: %w[yes no] }, if: -> { qualified_teacher_status == "no" || qualified_teacher_status == "on_track" }
+  validates :has_teacher_reference_number, inclusion: { in: %w[yes no] }, if: -> { %w[no on_track].include?(qualified_teacher_status) }
 
   def initialize(attributes = {})
     super
