@@ -42,20 +42,21 @@ RSpec.configure do |config|
           vacancy: {
             type: :object,
             additionalProperties: false,
-            required: %i[id
-                         external_advert_url
-                         expires_at
-                         starts_on
-                         job_title
-                         skills_and_experience
-                         salary
-                         external_reference
-                         job_roles
-                         working_patterns
-                         contract_type
-                         phases
-                         publish_on
-                         schools],
+            required: %i[
+              external_advert_url
+              expires_at
+              starts_on
+              job_title
+              skills_and_experience
+              salary
+              external_reference
+              job_roles
+              working_patterns
+              contract_type
+              phases
+              publish_on
+              schools
+            ],
             properties: {
               id: { type: :string, example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66" },
               external_advert_url: { type: :string, example: "https://example.com/jobs/123" },
@@ -80,8 +81,8 @@ RSpec.configure do |config|
                         type: :array,
                         minItems: 1,
                         items: {
-                          type: :integer,
-                          example: 12_345,
+                          type: :string,
+                          example: "12345",
                         },
                       },
                     },
@@ -92,15 +93,15 @@ RSpec.configure do |config|
                     required: %i[trust_uid school_urns],
                     properties: {
                       trust_uid: {
-                        type: :integer,
-                        example: 12_345,
+                        type: :string,
+                        example: "12345",
                       },
                       school_urns: {
                         type: :array,
                         minItems: 0,
                         items: {
-                          type: :integer,
-                          example: 12_345,
+                          type: :string,
+                          example: "12345",
                         },
                       },
                     },
@@ -111,8 +112,8 @@ RSpec.configure do |config|
                     required: %i[trust_uid],
                     properties: {
                       trust_uid: {
-                        type: :integer,
-                        example: 12_345,
+                        type: :string,
+                        example: "12345",
                       },
                     },
                   },
@@ -205,6 +206,13 @@ RSpec.configure do |config|
               },
             },
           },
+          create_vacancy_response: {
+            type: :object,
+            properties: {
+              id: { type: :string, example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66" },
+            },
+            required: %w[id],
+          },
           bad_request_error: {
             type: "object",
             properties: {
@@ -237,6 +245,7 @@ RSpec.configure do |config|
             type: "object",
             properties: {
               error: { type: "string", example: "A vacancy with the provided external reference already exists" },
+              link: { type: "string", example: "https://example.com/vacancies/123" },
             },
             required: %w[error],
           },
@@ -246,14 +255,12 @@ RSpec.configure do |config|
               errors: {
                 type: "array",
                 items: {
-                  type: "object",
-                  properties: {
-                    error: { type: "string", example: "job_title: can't be blank" },
-                  },
-                  required: %w[error],
+                  type: "string",
+                  example: "job_title: can't be blank",
                 },
               },
             },
+            required: %w[errors],
           },
         },
       },
@@ -265,4 +272,5 @@ RSpec.configure do |config|
   # the key, this may want to be changed to avoid putting yaml in json files.
   # Defaults to json. Accepts ':json' and ':yaml'.
   config.openapi_format = :yaml
+  # config.openapi_no_additional_properties = false # Allow additional properties
 end

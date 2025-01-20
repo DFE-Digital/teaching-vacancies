@@ -1,58 +1,80 @@
 class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   before_action :authenticate_client!
+  before_action :validate_payload, only: %i[create update]
+
+  rescue_from StandardError, with: :render_server_error
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  rescue_from ActionController::ParameterMissing, with: :render_bad_request
+  rescue_from Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError, with: :render_unprocessable_entity
 
   def index
-    @pagy, @vacancies = pagy(vacancies, items: 100)
+    @pagy, @vacancies = pagy(vacancies.where(publisher_ats_api_client: client), items: 100)
 
     respond_to(&:json)
   end
 
   def show
-    @vacancy = vacancy
-  end
-
-  # No idea why rubocop can't see the check after the create call
-  # rubocop:disable Rails/SaveBang
-  def create
-    @vacancy = Vacancy.create(vacancy_params)
-
-    respond_to do |format|
-      format.json do
-        if @vacancy.persisted?
-          render status: :created
-        else
-          render status: :bad_request
-        end
-      end
-    end
-  end
-  # rubocop:enable Rails/SaveBang
-
-  def update
-    @vacancy = vacancy
+    @vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
 
     respond_to(&:json)
   end
 
-  def destroy; end
+  def create
+    result = Publishers::AtsApi::CreateVacancyService.call(permitted_vacancy_params)
+
+    render result.slice(:json, :status)
+  end
+
+  def update
+    vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
+
+    result = Publishers::AtsApi::UpdateVacancyService.call(vacancy, permitted_vacancy_params)
+
+    if result[:success]
+      @vacancy = vacancy
+      render :show
+    else
+      render json: { errors: result[:errors] }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
+    vacancy.destroy!
+
+    head :no_content
+  end
 
   private
 
-  def vacancy_params
-    p = params.fetch(:vacancy).permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
-                                      :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary,
-                                      :job_roles, :working_patterns, :contract_type, :phases, school_urns: [])
-
-    p.except(:school_urns)
-          .merge(organisations: p.fetch(:school_urns, []).map { School.find_by(urn: _1) }.compact)
+  def required_vacancy_keys
+    %i[
+      external_advert_url
+      expires_at
+      job_title
+      skills_and_experience
+      salary
+      visa_sponsorship_available
+      external_reference
+      is_job_share
+      job_roles
+      working_patterns
+      contract_type
+      phases
+      schools
+    ]
   end
 
-  def vacancy
-    FactoryBot.build(:vacancy, :external)
+  def permitted_vacancy_params
+    params.fetch(:vacancy)
+          .permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
+                  :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
+                  job_roles: [], working_patterns: [], phases: [], schools: [:trust_uid, { school_urns: [] }])
+          .merge(publisher_ats_api_client_id: client.id)
   end
 
   def vacancies
-    Vacancy.includes(:organisations).live.order(publish_on: :desc)
+    Vacancy.live.includes(:organisations).order(publish_on: :desc)
   end
 
   def client
@@ -65,5 +87,26 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     render status: :unauthorized,
            json: { error: "Invalid API key" },
            content_type: "application/json"
+  end
+
+  def validate_payload
+    missing_keys = required_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
+    raise ActionController::ParameterMissing, "Missing required parameters: #{missing_keys.join(', ')}" if missing_keys.any?
+  end
+
+  def render_server_error(exception)
+    render json: { error: "Internal server error", message: exception.message }, status: :internal_server_error
+  end
+
+  def render_not_found
+    render json: { error: "The given ID does not match any vacancy for your ATS" }, status: :not_found
+  end
+
+  def render_bad_request(exception = nil)
+    render json: { error: exception&.message.presence || "Request body could not be read properly" }, status: :bad_request
+  end
+
+  def render_unprocessable_entity(exception)
+    render json: { error: exception.message }, status: :unprocessable_entity
   end
 end
