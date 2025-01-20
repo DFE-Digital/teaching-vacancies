@@ -647,8 +647,8 @@ en:
           attributes:
             name: 
               blank: Enter the name of the professional body.
-          exam_taken:
-            inclusion: Select yes if your professional body membership required you to take an exam.
+            exam_taken:
+              inclusion: Select yes if your professional body membership required you to take an exam.
         jobseekers/account_transfer_form:
           attributes:
             email:
