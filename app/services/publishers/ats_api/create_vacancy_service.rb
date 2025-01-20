@@ -3,8 +3,6 @@ module Publishers
     class CreateVacancyService
       extend OrganisationFetcher
 
-      InvalidOrganisationError = Class.new(StandardError)
-
       class << self
         def call(params)
           vacancy = Vacancy.new(sanitised_params(params))
@@ -24,7 +22,6 @@ module Publishers
 
         def sanitised_params(params)
           organisations = fetch_organisations(params[:schools])
-          raise InvalidOrganisationError, "No valid organisations found" if organisations.blank?
 
           params[:publish_on] ||= Time.zone.today.to_s
           params.except(:schools).merge(organisations: organisations)

@@ -41,8 +41,11 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
     context "when organisations are invalid" do
       let(:school_urns) { { school_urns: [9999] } }
 
-      it "raises ActiveRecord::RecordNotFound" do
-        expect { udpate_vacancy_service }.to raise_error(ActiveRecord::RecordNotFound, "No valid organisations found")
+      it "raises Publishers::AtsApi::CreateVacancyService::InvalidOrganisationError" do
+        expect { udpate_vacancy_service }.to raise_error(
+          Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
+          "No valid organisations found",
+        )
       end
     end
 

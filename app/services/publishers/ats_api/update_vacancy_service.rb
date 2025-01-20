@@ -18,7 +18,6 @@ module Publishers
 
         def sanitised_params(params)
           organisations = fetch_organisations(params[:schools])
-          raise ActiveRecord::RecordNotFound, "No valid organisations found" if organisations.blank?
 
           params.except(:schools).merge(organisations: organisations)
         end

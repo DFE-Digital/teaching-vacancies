@@ -5,7 +5,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   rescue_from StandardError, with: :render_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from ActionController::ParameterMissing, with: :render_bad_request
-  rescue_from Publishers::AtsApi::CreateVacancyService::InvalidOrganisationError, with: :render_bad_request
+  rescue_from Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError, with: :render_unprocessable_entity
 
   def index
     @pagy, @vacancies = pagy(vacancies.where(publisher_ats_api_client: client), items: 100)
@@ -14,7 +14,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def show
-    @vacancy = Vacancy.find(params[:id])
+    @vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
 
     respond_to(&:json)
   end
@@ -26,7 +26,8 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def update
-    vacancy = Vacancy.find(params[:id])
+    vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
+
     result = Publishers::AtsApi::UpdateVacancyService.call(vacancy, permitted_vacancy_params)
 
     if result[:success]
@@ -38,7 +39,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def destroy
-    vacancy = Vacancy.find(params[:id])
+    vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
     vacancy.destroy!
 
     head :no_content
@@ -103,5 +104,9 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   def render_bad_request(exception = nil)
     render json: { error: exception&.message.presence || "Request body could not be read properly" }, status: :bad_request
+  end
+
+  def render_unprocessable_entity(exception)
+    render json: { error: exception.message }, status: :unprocessable_entity
   end
 end

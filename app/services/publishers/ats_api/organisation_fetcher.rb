@@ -1,6 +1,8 @@
 module Publishers
   module AtsApi
     module OrganisationFetcher
+      InvalidOrganisationError = Class.new(StandardError)
+
       def fetch_organisations(school_params)
         return [] unless school_params
 
@@ -12,7 +14,7 @@ module Publishers
         multi_academy_trust = SchoolGroup.trusts.find_by(uid: trust_uid)
         schools = ::Organisation.where(urn: school_urns) if school_urns.present?
 
-        return [] if multi_academy_trust.blank? && schools.blank?
+        raise InvalidOrganisationError, "No valid organisations found" if multi_academy_trust.blank? && schools.blank?
         return schools.to_a if multi_academy_trust.blank?
         return Array(multi_academy_trust) if schools.blank?
 

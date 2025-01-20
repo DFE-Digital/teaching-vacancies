@@ -425,7 +425,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   path "/ats-api/v1/vacancies/{id}" do
     parameter name: "id", in: :path, type: :string, description: "id of the vacancy"
 
-    let(:id) { create(:vacancy, :external).id }
+    let(:id) { create(:vacancy, :external, publisher_ats_api_client: client).id }
 
     get("show vacancy") do
       tags "Vacancies"
@@ -467,10 +467,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(500, "Internal server error") do
         schema "$ref" => "#/components/schemas/internal_server_error"
 
-        let(:id) { "123" }
-
         before do
-          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+          allow(Vacancy).to receive(:find_by!).and_raise(StandardError.new("Internal server error"))
         end
 
         run_test!
@@ -737,7 +735,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(422, "Validation error") do
         schema "$ref" => "#/components/schemas/validation_error"
 
-        let(:id) { create(:vacancy, :external).id }
+        let(:id) { create(:vacancy, :external, publisher_ats_api_client: client).id }
 
         let(:vacancy) do
           {
@@ -767,8 +765,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(500, "Internal server error") do
         schema "$ref" => "#/components/schemas/internal_server_error"
 
-        let(:id) { "123" }
-
         let(:vacancy) do
           {
             vacancy: {
@@ -793,7 +789,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
 
         before do
-          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+          allow(Vacancy).to receive(:find_by!).and_raise(StandardError.new("Internal server error"))
         end
 
         run_test!
@@ -829,10 +825,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(500, "Internal server error") do
         schema "$ref" => "#/components/schemas/internal_server_error"
 
-        let(:id) { "123" }
-
         before do
-          allow(Vacancy).to receive(:find).and_raise(StandardError.new("Internal server error"))
+          allow(Vacancy).to receive(:find_by!).and_raise(StandardError.new("Internal server error"))
         end
 
         run_test!
