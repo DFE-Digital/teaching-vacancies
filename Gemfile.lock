@@ -378,7 +378,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.2-x86_64-linux-musl)
       racc (~> 1.4)
-    noticed (2.6.0)
+    noticed (2.4.3)
       rails (>= 6.1.0)
     notifications-ruby-client (6.0.0)
       jwt (>= 1.5, < 3)
@@ -828,7 +828,7 @@ DEPENDENCIES
   net-pop!
   net-sftp
   nokogiri
-  noticed (~> 2.6.0)
+  noticed (~> 2.4.3)
   omniauth
   omniauth-rails_csrf_protection (~> 1.0)
   omniauth_openid_connect
