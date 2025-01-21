@@ -4,8 +4,8 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l Delete professional body membership
-    h1.govuk-heading-l Confirm that you want to delete this professional body membership
+    span.govuk-caption-l = t(".caption")
+    h1.govuk-heading-l = t(".heading")
 
     = form_for form, url: jobseekers_profile_professional_body_membership_path(professional_body_membership), method: :delete do |f|
       = govuk_summary_list classes: "govuk-!-margin-bottom-10" do |summary_list|

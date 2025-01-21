@@ -798,6 +798,17 @@ en:
       professional_body_memberships:
         destroy:
           success: Professional body membership deleted
+        new:
+          page_title: Professional body membership
+          heading: Add professional body membership
+        edit:
+          page_title: Professional body membership
+          heading: Edit professional body membership
+        review:
+          page_title: Professional body membership
+        confirm_destroy:
+          caption: Delete professional body membership
+          heading: Confirm that you want to delete this professional body membership
       qualifications:
         confirm_destroy:
           secondary:

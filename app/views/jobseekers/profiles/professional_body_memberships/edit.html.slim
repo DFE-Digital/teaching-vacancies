@@ -1,9 +1,9 @@
-- content_for :page_title_prefix, "Professional body membership"
+- content_for :page_title_prefix, t(".page_title")
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    span.govuk-caption-l Training and continuing professional development (CPD)
-    h1.govuk-heading-xl = "Edit professional body membership"
+    span.govuk-caption-l = t(".page_title")
+    h1.govuk-heading-xl = t(".heading")
 
     = form_for form, url: jobseekers_profile_professional_body_membership_path, method: :put do |f|
       = f.govuk_error_summary
