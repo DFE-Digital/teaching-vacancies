@@ -41,13 +41,13 @@
 
     - case job_application.vacancy.religion_type
       - when "catholic"
-        - task_list.with_item(title: t("jobseekers.job_applications.build.religious_information.step_title"), href: jobseekers_job_application_build_path(job_application, :catholic_following_religion),
+        - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(job_application, :catholic),
           html_attributes: { id: :religious_information },
-          status: review_section_tag(job_application, [Jobseekers::JobApplication::FollowingReligionForm]))
+          status: review_section_tag(job_application, [Jobseekers::JobApplication::CatholicForm]))
       - when "other_religion"
-        - task_list.with_item(title: t("jobseekers.job_applications.build.religious_information.step_title"), href: jobseekers_job_application_build_path(job_application, :school_ethos),
+        - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(job_application, :non_catholic),
           html_attributes: { id: :religious_information },
-          status: review_section_tag(job_application, [Jobseekers::JobApplication::FollowingReligionForm]))
+          status: review_section_tag(job_application, [Jobseekers::JobApplication::NonCatholicForm]))
 
     - task_list.with_item(title: t("jobseekers.job_applications.build.references.heading"), href: jobseekers_job_application_build_path(job_application, :references),
       html_attributes: { id: :references },

@@ -482,16 +482,10 @@ en:
           attributes:
             training_and_cpds_section_completed:
               blank: Select yes if you have completed this section
-        jobseekers/job_application/catholic_following_religion_form:
+        jobseekers/job_application/religious_information_form:
           attributes:
             following_religion:
               inclusion: Select yes if you follow a specific religion or faith
-        jobseekers/job_application/non_catholic_following_religion_form:
-          attributes:
-            following_religion:
-              inclusion: Select yes if you follow a specific religion or faith
-        jobseekers/job_application/catholic_religion_details_form:
-          attributes:
             faith:
               blank: Enter your religious denomination or faith
             religious_referee_name:
@@ -511,8 +505,16 @@ en:
               blank: Enter the baptism date
             baptism_certificate:
               blank: Upload your baptism certificate
-        jobseekers/job_application/non_catholic_religion_details_form:
+        jobseekers/job_application/catholic_form:
           attributes:
+            catholic_section_completed:
+              inclusion: Select yes if you have completed this section
+        jobseekers/job_application/non_catholic_form:
+          attributes:
+            non_catholic_section_completed:
+              inclusion: Select yes if you have completed this section
+            following_religion:
+              inclusion: Select yes if you follow a specific religion or faith
             faith:
               blank: Enter your religious denomination or faith
             religious_referee_name:
@@ -526,8 +528,6 @@ en:
               invalid: Enter a valid email address
             religious_reference_type:
               inclusion: Select yes if you can provide a religious referee
-        jobseekers/job_application/school_ethos_form:
-          attributes:
             ethos_and_aims:
               blank: Enter how you will support the ethos and aims of the school
         jobseekers/job_application/pre_submit_form:
@@ -561,6 +561,8 @@ en:
             incomplete: Complete your religious information
           training_and_cpds:
             incomplete: Complete your training and CPD
+          religious:
+            incomplete: Complete your religious information
         jobseekers/job_application/review_form:
           attributes:
             confirm_data_accurate:
