@@ -11,7 +11,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
   after { logout }
 
   describe "changing professional body memberships details" do
-    context "adding professional body memberships" do
+    context "when adding professional body memberships" do
       before { visit jobseekers_profile_path }
 
       it "allows jobseekers to add professional body memberships" do
@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
 
         expect_page_to_have_values("Teachers Union", "Platinum", "100", "2020", "Yes")
 
-        click_link "Return to profile"
+        click_on "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
@@ -35,7 +35,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
       end
     end
 
-    context "editing training" do
+    context "when editing training" do
       before do
         create(:professional_body_membership, jobseeker_profile: profile)
         visit jobseekers_profile_path
@@ -45,7 +45,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
         expect_page_to_have_values("Teachers Union", "Platinum", "100", "2020", "Yes")
 
         within(".govuk-summary-card__title-wrapper", text: "Teachers Union") do
-          click_link("Change")
+          click_on("Change")
         end
 
         fill_in_and_submit_form(name: "Head teachers club")
@@ -53,7 +53,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
         expect(page).to have_css(".govuk-summary-list__key", text: "Name of professional body")
         expect(page).to have_css(".govuk-summary-list__value", text: "Head teachers club")
 
-        click_link "Return to profile"
+        click_on "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
@@ -62,7 +62,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
       end
     end
 
-    context "deleting training" do
+    context "when deleting training" do
       before do
         create(:professional_body_membership, jobseeker_profile: profile)
         visit jobseekers_profile_path
@@ -72,19 +72,19 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
         expect_page_to_have_values("Teachers Union", "Platinum", "100", "2020", "Yes")
 
         within(".govuk-summary-card__title-wrapper", text: "Teachers Union") do
-          click_link("Delete")
+          click_on("Delete")
         end
 
         expect(page).to have_content "Confirm that you want to delete this professional body membership"
 
-        click_button "Delete professional body membership"
+        click_on "Delete professional body membership"
 
         expect(page).to have_current_path(review_jobseekers_profile_professional_body_memberships_path)
 
         expect(page).to have_css("h2.govuk-notification-banner__title", text: "Success")
         expect(page).to have_css(".govuk-notification-banner__content", text: "Professional body membership deleted")
 
-        expect(page).to_not have_css(".govuk-summary-list__value", text: "Teachers Union")
+        expect(page).to have_no_css(".govuk-summary-list__value", text: "Teachers Union")
       end
     end
   end

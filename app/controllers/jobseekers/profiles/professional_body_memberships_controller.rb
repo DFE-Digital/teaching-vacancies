@@ -1,13 +1,12 @@
 class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::ProfilesController
   helper_method :jobseeker_profile, :form, :professional_body_membership
 
-  def edit; end
-
   def new; end
+  def edit; end
 
   def create
     if form.valid?
-      profile.professional_body_memberships.create(professional_body_memberships_form_params)
+      profile.professional_body_memberships.create!(professional_body_memberships_form_params)
       redirect_to review_jobseekers_profile_professional_body_memberships_path
     else
       render :new
@@ -16,7 +15,7 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
 
   def update
     if form.valid?
-      professional_body_membership.update(professional_body_memberships_form_params)
+      professional_body_membership.update!(professional_body_memberships_form_params)
       redirect_to review_jobseekers_profile_professional_body_memberships_path
     else
       render :edit
@@ -26,7 +25,7 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
   def confirm_destroy; end
 
   def destroy
-    professional_body_membership.destroy
+    professional_body_membership.destroy!
     redirect_to review_jobseekers_profile_professional_body_memberships_path, success: t(".success")
   end
 

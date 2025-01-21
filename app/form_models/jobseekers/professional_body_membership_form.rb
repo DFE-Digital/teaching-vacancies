@@ -1,4 +1,3 @@
-
 class Jobseekers::ProfessionalBodyMembershipForm
   include ActiveModel::Model
 
