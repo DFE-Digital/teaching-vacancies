@@ -10,7 +10,7 @@ class Search::KeywordFilterGeneration::QueryTransformer < Parslet::Transform
 
     new
       .apply(parsed_query)[:query]
-      .each_with_object(Hash.new([])) do |item, acc|
+      .each_with_object(Hash.new { |h, k| h[k] = [] }) do |item, acc|
         item.each { |k, v| acc[k] |= v }
       end
   end

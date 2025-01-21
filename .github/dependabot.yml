@@ -21,6 +21,11 @@ updates:
       # Our current Redis service instance is 6.0 on Azure.
       - dependency-name: "redis"
         update-types: ["version-update:semver-major"]
+
+      # TODO: Remove this ignore config once manually upgraded to noticed >= 2.4
+      # Noticed requires to be manually upgraded resolving some current issues prior to be able to push to v2.5 or greater.
+      - dependency-name: "noticed"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
     groups:
       gem-dependencies:
         update-types:
