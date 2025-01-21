@@ -45,7 +45,7 @@ class Jobseekers::ProfilesController < Jobseekers::BaseController
       title: "Professional Body Memberships",
       display_summary: -> { profile.professional_body_memberships.present? },
       key: "professional_body_memberships",
-      link_text: "Add professional body membership",
+      link_text: "Add membership",
       page_path: -> { new_jobseekers_profile_professional_body_membership_path },
     },
     {

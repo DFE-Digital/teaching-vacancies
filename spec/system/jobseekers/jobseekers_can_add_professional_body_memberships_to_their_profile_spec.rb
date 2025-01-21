@@ -15,7 +15,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
       before { visit jobseekers_profile_path }
 
       it "allows jobseekers to add professional body memberships" do
-        click_on "Add professional body membership"
+        click_on "Add membership"
         click_on "Save and continue"
 
         expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
