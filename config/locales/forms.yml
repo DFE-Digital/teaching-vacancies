@@ -169,6 +169,8 @@ en:
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
+      jobseekers_qualifications_other_form:
+        awarding_body: For example, a university or college
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
         email: >-
@@ -201,6 +203,7 @@ en:
       jobseekers_qualifications_category_form:
         category_options:
           postgraduate: For example, A PGCE, master’s or PhD.
+          other: For example, BTECs, diplomas or qualifications from outside of the UK.
 
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
@@ -393,7 +396,7 @@ en:
           other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
-          other: Other qualification or course
+          other: Other qualification
         finished_studying_details: Please give details
         finished_studying_options:
           false: "Not finished yet"
@@ -453,7 +456,7 @@ en:
           other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
-          other: Other qualification or course
+          other: Other qualification
       jobseekers_qualifications_degree_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: Awarding body
@@ -464,6 +467,7 @@ en:
         institution: School, college, university or other organisation
         name: Qualification or course name
         year: Year qualification was awarded
+        awarding_body: Awarding body (optional)
       jobseekers_qualifications_secondary_common_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: School, college, or other organisation

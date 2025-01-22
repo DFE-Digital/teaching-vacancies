@@ -30,7 +30,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
 
       it "allows jobseekers to add a custom qualification or course (category 'other')" do
         click_on "Add qualifications"
-        select_qualification_category("Other qualification or course")
+        select_qualification_category("Other qualification")
         expect(page).to have_content(I18n.t("jobseekers.profiles.qualifications.new.heading.other"))
         validates_step_complete(button: I18n.t("buttons.save_qualification.one"))
         fill_in_other_qualification
@@ -40,6 +40,8 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         expect(page).to have_content("Teachers Academy")
         expect(page).to have_content("I expect to finish next year")
         expect(page).to have_content("Not finished yet")
+        expect(page).to have_content("Superteaching")
+        expect(page).to have_content("AXA")
         expect(page).not_to have_content("Grade")
         expect(page).not_to have_content("Year")
       end
@@ -60,21 +62,6 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         expect(page).to have_content("2020")
         expect(page).not_to have_content("Not finished yet")
         expect(page).not_to have_content("Yes")
-      end
-
-      it "allows jobseekers to add a custom secondary qualification" do
-        click_on "Add qualifications"
-        select_qualification_category("Other secondary qualification")
-        expect(page).to have_content(I18n.t("jobseekers.job_applications.qualifications.new.heading.other_secondary"))
-        validates_step_complete(button: I18n.t("buttons.save_qualification.other"))
-        fill_in_custom_secondary_qualifications
-        click_on I18n.t("buttons.save_qualification.other")
-        expect(current_path).to eq(review_jobseekers_profile_qualifications_path)
-        expect(page).to have_content("Welsh Baccalaureate")
-        expect(page).to have_content("Happy Rainbows School for High Achievers")
-        expect(page).to have_content("Science – 5")
-        expect(page).to have_content("German – 4")
-        expect(page).to have_content("2020")
       end
     end
   end

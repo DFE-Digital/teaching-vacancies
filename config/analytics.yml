@@ -299,6 +299,7 @@ shared:
     - year
     - job_application_id
     - jobseeker_profile_id
+    - awarding_body
   qualification_results:
     - id
     - qualification_id
