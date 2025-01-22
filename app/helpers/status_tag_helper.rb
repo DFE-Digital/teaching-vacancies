@@ -11,14 +11,12 @@ module StatusTagHelper
   # rubocop:disable Lint/DuplicateBranch
   def review_section_tag(resource, form_classes)
     steps = form_classes.map(&:target_name)
-    if steps.all? { |step| resource.in_progress_steps.include?(step.to_s) }
+    if steps.all? { |step| resource.in_progress_steps.include?(step.to_s) } || steps.none? { |step| step_completed?(resource, step) }
       incomplete
     elsif steps.all? { |step| resource.imported_steps.include?(step.to_s) }
       imported
     elsif form_classes.all?(&:optional?)
       optional
-    elsif steps.none? { |step| step_completed?(resource, step) }
-      incomplete
     elsif step_forms_contain_errors?(resource, form_classes)
       action_required
     else
