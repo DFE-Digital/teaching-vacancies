@@ -33,8 +33,17 @@ RSpec.describe Jobseekers::ProfessionalBodyMembershipForm, type: :model do
       end
     end
 
-    context "when only attribute present is name" do
-      let(:form) { described_class.new(name: name) }
+    context "when exam_taken is not present" do
+      let(:exam_taken) { nil }
+
+      it "is not valid" do
+        expect(form).not_to be_valid
+        expect(form.errors[:exam_taken]).to include("Select yes if your professional body membership required you to take an exam.")
+      end
+    end
+
+    context "when only attributes present are name and exam_taken" do
+      let(:form) { described_class.new(name: name, exam_taken: exam_taken) }
 
       it "is valid" do
         expect(form).to be_valid
