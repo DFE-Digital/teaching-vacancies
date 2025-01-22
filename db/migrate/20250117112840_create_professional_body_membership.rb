@@ -1,5 +1,4 @@
 class CreateProfessionalBodyMembership < ActiveRecord::Migration[7.2]
-  # rubocop:disable Rails/ThreeStateBooleanColumn
   def change
     create_table :professional_body_memberships, id: :uuid do |t|
       t.timestamps
@@ -7,9 +6,8 @@ class CreateProfessionalBodyMembership < ActiveRecord::Migration[7.2]
       t.string :membership_type
       t.string :membership_number
       t.integer :year_membership_obtained
-      t.boolean :exam_taken
+      t.boolean :exam_taken, default: false, null: false
       t.references :jobseeker_profile, type: :uuid, foreign_key: true
     end
-    # rubocop:enable Rails/ThreeStateBooleanColumn
   end
 end
