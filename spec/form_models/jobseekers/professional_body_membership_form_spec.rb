@@ -6,7 +6,7 @@ RSpec.describe Jobseekers::ProfessionalBodyMembershipForm, type: :model do
       name: name,
       membership_type: membership_type,
       membership_number: membership_number,
-      date_membership_obtained: date_membership_obtained,
+      year_membership_obtained: year_membership_obtained,
       exam_taken: exam_taken,
     )
   end
@@ -14,7 +14,7 @@ RSpec.describe Jobseekers::ProfessionalBodyMembershipForm, type: :model do
   let(:name) { "Sample Body" }
   let(:membership_type) { "Full Membership" }
   let(:membership_number) { "12345" }
-  let(:date_membership_obtained) { Time.zone.today }
+  let(:year_membership_obtained) { Time.zone.today }
   let(:exam_taken) { true }
 
   describe "validations" do

@@ -16,10 +16,10 @@
             - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.membership_number")
             - row.with_value text: professional_body_membership.membership_number
 
-        - if professional_body_membership.date_membership_obtained.present?
+        - if professional_body_membership.year_membership_obtained.present?
           - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.date_membership_obtained")
-            - row.with_value text: professional_body_membership.date_membership_obtained
+            - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.year_membership_obtained")
+            - row.with_value text: professional_body_membership.year_membership_obtained
 
         - if professional_body_membership.exam_taken.present?
           - summary_list.with_row do |row|

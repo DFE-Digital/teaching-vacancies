@@ -89,11 +89,11 @@ RSpec.describe "Jobseekers can add professional body memberships to their profil
     end
   end
 
-  def fill_in_and_submit_form(name: "Teachers Union", membership_level: "Platinum", membership_number: "100", date_membership_obtained: "2020", exam_taken: "Yes")
+  def fill_in_and_submit_form(name: "Teachers Union", membership_level: "Platinum", membership_number: "100", year_membership_obtained: "2020", exam_taken: "Yes")
     fill_in "Name of professional body", with: name
     fill_in "Membership type or level (optional)", with: membership_level
     fill_in "Membership or registration number (optional)", with: membership_number
-    fill_in "Date obtained (optional)", with: date_membership_obtained
+    fill_in "Date obtained (optional)", with: year_membership_obtained
     choose exam_taken
     click_on "Save and continue"
   end

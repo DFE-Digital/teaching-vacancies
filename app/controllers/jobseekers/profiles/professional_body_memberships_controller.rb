@@ -6,7 +6,7 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
   end
 
   def edit
-    @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_membership.slice(:name, :membership_type, :membership_number, :date_membership_obtained, :exam_taken))
+    @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_membership.slice(:name, :membership_type, :membership_number, :year_membership_obtained, :exam_taken))
   end
 
   def create
@@ -41,7 +41,7 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
 
   def professional_body_memberships_form_params
     params.require(:jobseekers_professional_body_membership_form)
-          .permit(:name, :membership_type, :membership_number, :date_membership_obtained, :exam_taken)
+          .permit(:name, :membership_type, :membership_number, :year_membership_obtained, :exam_taken)
   end
 
   def professional_body_membership

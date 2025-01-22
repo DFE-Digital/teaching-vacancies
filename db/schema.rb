@@ -482,7 +482,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_112840) do
     t.string "name"
     t.string "membership_type"
     t.string "membership_number"
-    t.string "date_membership_obtained"
+    t.integer "year_membership_obtained"
     t.boolean "exam_taken"
     t.uuid "jobseeker_profile_id"
     t.index ["jobseeker_profile_id"], name: "index_professional_body_memberships_on_jobseeker_profile_id"
