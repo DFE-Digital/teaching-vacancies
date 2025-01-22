@@ -18,36 +18,37 @@ RSpec.describe VacancyFilterQuery do
   let(:non_faith_school2) { create(:school, name: "nonfaith2", gias_data: { "ReligiousCharacter (name)" => "Does not apply" }) }
   let(:non_faith_school3) { create(:school, name: "nonfaith3", gias_data: { "ReligiousCharacter (name)" => "None" }) }
 
-  let!(:vacancy1) { create(:vacancy, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], phases: %w[secondary], job_roles: ["teacher"], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true) }
-  let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], working_patterns: %w[part_time], phases: %w[sixth_form_or_college], job_roles: ["teacher"], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true) }
-  let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", subjects: %w[English Spanish], working_patterns: %w[part_time], phases: %w[primary], job_roles: ["sendco"], ect_status: nil, organisations: [local_authority_school], enable_job_applications: true) }
-  let!(:vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 4", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil) }
-  let!(:vacancy5) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 5", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["head_of_year_or_phase"], ect_status: nil, organisations: [academies]) }
-  let!(:vacancy6) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 6", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["head_of_department_or_curriculum"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:vacancy7) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 7", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["headteacher"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:vacancy8) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 8", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["assistant_headteacher"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:vacancy9) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 9", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["deputy_headteacher"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:teaching_assistant_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 10", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teaching_assistant"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:hlta_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 11", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["higher_level_teaching_assistant"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:education_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 12", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["education_support"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:sendco_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 13", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["sendco"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:administration_hr_data_and_finance_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 15", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["administration_hr_data_and_finance"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:it_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 16", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["it_support"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:pastoral_health_and_welfare_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 17", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["pastoral_health_and_welfare"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:other_leadership_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 18", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["other_leadership"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:other_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["other_support"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:catering_cleaning_and_site_management_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", subjects: %w[], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["catering_cleaning_and_site_management"], ect_status: nil, publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  # Subjects are ignored when phases are primary-only
+  let!(:vacancy1) { create(:vacancy, job_title: "Vacancy 1", subjects: %w[English Spanish], working_patterns: %w[part_time full_time], phases: %w[secondary], ect_status: "ect_suitable", organisations: [academy], enable_job_applications: true, visa_sponsorship_available: true) }
+  let!(:vacancy2) { create(:vacancy, job_title: "Vacancy 2", subjects: %w[English Spanish], phases: %w[sixth_form_or_college], ect_status: "ect_unsuitable", organisations: [free_school], enable_job_applications: true) }
+  let!(:vacancy3) { create(:vacancy, job_title: "Vacancy 3", phases: %w[primary], job_roles: ["sendco"], organisations: [local_authority_school], enable_job_applications: true) }
+  let!(:vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 4", phases: %w[primary]) }
+  let!(:vacancy5) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 5", phases: %w[primary], job_roles: ["head_of_year_or_phase"], organisations: [academies]) }
+  let!(:vacancy6) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 6", phases: %w[primary], job_roles: ["head_of_department_or_curriculum"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:vacancy7) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 7", phases: %w[primary], job_roles: ["headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:vacancy8) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 8", phases: %w[primary], job_roles: ["assistant_headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:vacancy9) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 9", phases: %w[primary], job_roles: ["deputy_headteacher"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:teaching_assistant_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 10", phases: %w[primary], job_roles: ["teaching_assistant"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:hlta_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 11", phases: %w[primary], job_roles: ["higher_level_teaching_assistant"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:education_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 12", phases: %w[primary], job_roles: ["education_support"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:sendco_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 13", phases: %w[primary], job_roles: ["sendco"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:administration_hr_data_and_finance_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 15", phases: %w[primary], job_roles: ["administration_hr_data_and_finance"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:it_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 16", phases: %w[primary], job_roles: ["it_support"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:pastoral_health_and_welfare_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 17", phases: %w[primary], job_roles: ["pastoral_health_and_welfare"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:other_leadership_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 18", phases: %w[primary], job_roles: ["other_leadership"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:other_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", phases: %w[primary], job_roles: ["other_support"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:catering_cleaning_and_site_management_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", phases: %w[primary], job_roles: ["catering_cleaning_and_site_management"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
 
-  let!(:special_vacancy1) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 7", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [special_school1]) }
-  let!(:special_vacancy2) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 8", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [special_school2]) }
-  let!(:special_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 9", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [special_school3]) }
-  let!(:special_vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 10", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [special_school4]) }
-  let!(:special_vacancy5) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 11", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [special_school5]) }
-  let!(:special_vacancy6) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 12", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [special_school6]) }
-  let!(:faith_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 13", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, publisher_organisation: faith_school, organisations: [faith_school, faith_school2]) }
-  let!(:non_faith_vacancy1) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school1]) }
-  let!(:non_faith_vacancy2) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 15", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school2]) }
-  let!(:non_faith_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", subjects: %w[English Spanish], working_patterns: %w[full_time], phases: %w[primary], job_roles: ["teacher"], ect_status: nil, organisations: [non_faith_school3], visa_sponsorship_available: true) }
+  let!(:special_vacancy1) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 7", phases: %w[primary], organisations: [special_school1]) }
+  let!(:special_vacancy2) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 8", phases: %w[primary], organisations: [special_school2]) }
+  let!(:special_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 9", phases: %w[primary], organisations: [special_school3]) }
+  let!(:special_vacancy4) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 10", phases: %w[primary], organisations: [special_school4]) }
+  let!(:special_vacancy5) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 11", phases: %w[primary], organisations: [special_school5]) }
+  let!(:special_vacancy6) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 12", phases: %w[primary], organisations: [special_school6]) }
+  let!(:faith_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 13", phases: %w[primary], publisher_organisation: faith_school, organisations: [faith_school, faith_school2]) }
+  let!(:non_faith_vacancy1) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", phases: %w[primary], organisations: [non_faith_school1]) }
+  let!(:non_faith_vacancy2) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 15", phases: %w[primary], organisations: [non_faith_school2]) }
+  let!(:non_faith_vacancy3) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 14", phases: %w[primary], organisations: [non_faith_school3], visa_sponsorship_available: true) }
 
   describe "#call" do
     it "queries based on the given filters" do
@@ -164,35 +165,49 @@ RSpec.describe VacancyFilterQuery do
       end
     end
 
-    context "when working_patterns filter is selected" do
-      context "when job_share is selected" do
-        it "will return vacancies where is_job_share is true" do
-          filters = {
-            working_patterns: %w[job_share],
-          }
+    describe "working patterns search" do
+      before do
+        create(:vacancy, slug: "pt1", organisations: [free_school], is_job_share: false, working_patterns: %w[part_time])
+        create(:vacancy, slug: "ft1", organisations: [free_school], is_job_share: true, working_patterns: %w[full_time])
+      end
 
-          expect(subject.call(filters).map(&:is_job_share).uniq).to contain_exactly(true)
+      context "with job share filter" do
+        let(:filters) { { working_patterns: %w[job_share] } }
+
+        it "returns one job" do
+          expect(subject.call(filters).count).to eq(1)
         end
       end
 
-      context "when part time is selected" do
-        it "will return vacancies where working patterns include part_time" do
-          filters = {
-            working_patterns: %w[part_time],
-          }
+      context "with part time filter" do
+        let(:filters) { { working_patterns: %w[part_time] } }
 
-          expect(subject.call(filters)).to contain_exactly(vacancy1, vacancy2, vacancy3)
+        it "returns pt jobs" do
+          expect(subject.call(filters).map(&:slug)).to contain_exactly("vacancy-1", "pt1")
         end
       end
 
-      context "when full time is selected" do
-        it "will return vacancies where working patterns include full_time" do
-          filters = {
-            working_patterns: %w[full_time],
-          }
+      context "with part time full time filter" do
+        let(:filters) { { working_patterns: %w[part_time full_time] } }
 
-          expect(subject.call(filters)).not_to include(vacancy2, vacancy3)
-          expect(subject.call(filters).count).to eq 27
+        it "returns many jobs" do
+          expect(subject.call(filters).count).to eq(31)
+        end
+      end
+
+      context "with full time filter" do
+        let(:filters) { { working_patterns: %w[full_time] } }
+
+        it "returns fewer jobs" do
+          expect(subject.call(filters).count).to eq(30)
+        end
+      end
+
+      context "with part time job share filter" do
+        let(:filters) { { working_patterns: %w[part_time job_share] } }
+
+        it "returns two jobs" do
+          expect(subject.call(filters).map(&:slug)).to contain_exactly("vacancy-1", "pt1", "ft1")
         end
       end
     end

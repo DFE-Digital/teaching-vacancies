@@ -302,14 +302,17 @@ RSpec.describe Subscription do
 
       context "with working patterns filter" do
         before do
-          create(:vacancy, :published_slugged, contact_number: "7", job_roles: %w[headteacher], phases: %w[secondary], working_patterns: %w[part_time])
+          create(:vacancy, :published_slugged, contact_number: "7", job_roles: %w[headteacher], phases: %w[secondary], is_job_share: false, working_patterns: %w[part_time])
+          create(:vacancy, :published_slugged, contact_number: "8ft", job_roles: %w[headteacher], phases: %w[secondary], is_job_share: false, working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, contact_number: "9js", job_roles: %w[headteacher], phases: %w[secondary], is_job_share: true, working_patterns: [])
         end
 
-        let(:subscription) { create(:daily_subscription, working_patterns: %w[part_time]) }
+        let(:subscription) { create(:daily_subscription, working_patterns: %w[part_time job_share]) }
         let(:part_time_job) { Vacancy.find_by!(contact_number: "7") }
+        let(:share_job) { Vacancy.find_by!(contact_number: "9js") }
 
-        it "only finds the part_time job" do
-          expect(vacancies).to eq([part_time_job])
+        it "finds the part_time and job share jobs" do
+          expect(vacancies.map(&:contact_number)).to contain_exactly(part_time_job.contact_number, share_job.contact_number)
         end
       end
 
