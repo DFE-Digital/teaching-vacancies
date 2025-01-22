@@ -643,12 +643,6 @@ en:
               blank: Enter the year the course or training was awarded
             course_length:
               blank: Enter the length of the course
-        jobseekers/professional_body_membership_form:
-          attributes:
-            name: 
-              blank: Enter the name of the professional body.
-            exam_taken:
-              inclusion: Select yes if your professional body membership required you to take an exam.
         jobseekers/account_transfer_form:
           attributes:
             email:

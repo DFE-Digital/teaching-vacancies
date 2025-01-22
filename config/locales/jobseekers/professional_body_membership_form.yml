@@ -1,0 +1,40 @@
+en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/professional_body_membership_form:
+          attributes:
+            name: 
+              blank: Enter the name of the professional body.
+            exam_taken:
+              inclusion: Select yes if your professional body membership required you to take an exam.
+  helpers:
+    label:
+      jobseekers_professional_body_membership_form:
+        name: Name of professional body
+        membership_type: Membership type or level (optional)
+        membership_number: Membership or registration number (optional)
+        date_membership_obtained: Date obtained (optional)
+        exam_taken: Did you take an exam for this membership?
+        exam_taken_options:
+          "true": "Yes"
+          "false": "No"
+    legend:
+      jobseekers_professional_body_membership_form:
+        exam_taken: Did you take an exam for this membership?
+  jobseekers:
+    profiles:
+      professional_body_memberships:
+        destroy:
+          success: Professional body membership deleted
+        new:
+          page_title: Professional body membership
+          heading: Add professional body membership
+        edit:
+          page_title: Professional body membership
+          heading: Edit professional body membership
+        review:
+          page_title: Professional body membership
+        confirm_destroy:
+          caption: Delete professional body membership
+          heading: Confirm that you want to delete this professional body membership
