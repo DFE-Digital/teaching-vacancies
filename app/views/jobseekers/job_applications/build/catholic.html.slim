@@ -31,6 +31,9 @@
               = f.govuk_text_field :religious_referee_email
               = f.govuk_text_field :religious_referee_phone
             = f.govuk_radio_button :religious_reference_type, :baptism_certificate do
+              - if f.object.baptism_certificate.attached?
+                p.govuk-body
+                  = govuk_link_to("#{f.object.baptism_certificate.filename}  (#{number_to_human_size(f.object.baptism_certificate.byte_size)})", f.object.baptism_certificate, download: "true")
               = f.govuk_file_field :baptism_certificate,
                 label: { size: "s" },
                 accept: BaseForm::VALID_DOCUMENT_TYPES.map(&:downcase).join(",")
