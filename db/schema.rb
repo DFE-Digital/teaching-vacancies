@@ -544,6 +544,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_112840) do
     t.uuid "job_application_id"
     t.text "finished_studying_details_ciphertext"
     t.uuid "jobseeker_profile_id"
+    t.string "awarding_body"
     t.index ["job_application_id"], name: "index_qualifications_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_qualifications_on_jobseeker_profile_id"
   end
