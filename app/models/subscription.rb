@@ -71,8 +71,7 @@ class Subscription < ApplicationRecord
     Organisation.find_by(slug: search_criteria["organisation_slug"]) if search_criteria["organisation_slug"]
   end
 
-  def vacancies_matching(default_scope)
-    scope = default_scope
+  def vacancies_matching(scope)
     # ignore legacy sorting criteria - legacy job_title is too specific and will typically filter everything
     criteria = search_criteria.symbolize_keys.except(:jobs_sort, :job_title, :minimum_salary)
 
