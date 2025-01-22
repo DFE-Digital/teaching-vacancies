@@ -14,8 +14,7 @@ module Jobseekers
         statutory_induction_complete_details
       ].freeze
 
-      attr_accessor(*FIELDS)
-      attr_accessor(:has_teacher_reference_number)
+      attr_accessor(*FIELDS, :has_teacher_reference_number)
 
       class << self
         def storable_fields
