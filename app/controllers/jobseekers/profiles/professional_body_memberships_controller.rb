@@ -1,11 +1,18 @@
 class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::ProfilesController
-  helper_method :jobseeker_profile, :form, :professional_body_membership
+  helper_method :jobseeker_profile, :professional_body_membership
 
-  def new; end
-  def edit; end
+  def new
+    @form = Jobseekers::ProfessionalBodyMembershipForm.new
+  end
+
+  def edit
+    @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_membership.slice(:name, :membership_type, :membership_number, :date_membership_obtained, :exam_taken))
+  end
 
   def create
-    if form.valid?
+    @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_memberships_form_params)
+
+    if @form.valid?
       profile.professional_body_memberships.create!(professional_body_memberships_form_params)
       redirect_to review_jobseekers_profile_professional_body_memberships_path
     else
@@ -14,7 +21,8 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
   end
 
   def update
-    if form.valid?
+    @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_memberships_form_params)
+    if @form.valid?
       professional_body_membership.update!(professional_body_memberships_form_params)
       redirect_to review_jobseekers_profile_professional_body_memberships_path
     else
@@ -22,26 +30,13 @@ class Jobseekers::Profiles::ProfessionalBodyMembershipsController < Jobseekers::
     end
   end
 
-  def confirm_destroy; end
+  def confirm_destroy
+    @form = Jobseekers::ProfessionalBodyMembershipForm.new
+  end
 
   def destroy
     professional_body_membership.destroy!
     redirect_to review_jobseekers_profile_professional_body_memberships_path, success: t(".success")
-  end
-
-  def form
-    @form ||= Jobseekers::ProfessionalBodyMembershipForm.new(form_attributes)
-  end
-
-  def form_attributes
-    case action_name
-    when "new"
-      {}
-    when "create", "update"
-      professional_body_memberships_form_params
-    when "edit"
-      professional_body_membership.slice(:name, :membership_type, :membership_number, :date_membership_obtained, :exam_taken)
-    end
   end
 
   def professional_body_memberships_form_params
