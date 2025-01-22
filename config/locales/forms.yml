@@ -192,6 +192,8 @@ en:
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
+      jobseekers_qualifications_other_form:
+        awarding_body: For example, a university or college
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
         email: >-
