@@ -1,6 +1,8 @@
 class CampaignPage
   attr_reader :utm_content_code, :criteria, :banner_image, :hidden_filters
 
+  LANGUAGE_SUBJECTS = %w[English Spanish German French].freeze
+
   def self.exists?(utm_content)
     Rails.application.config.campaign_pages.key?(utm_content.to_sym)
   end
@@ -20,6 +22,7 @@ class CampaignPage
   end
 
   def banner_title(name, subject = nil)
+    subject = subject.downcase unless LANGUAGE_SUBJECTS.include?(subject)
     I18n.t("campaign_pages.#{utm_content_code}.banner_title", name: name, subject: subject)
   end
 end
