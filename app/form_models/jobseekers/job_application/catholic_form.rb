@@ -14,10 +14,7 @@ module Jobseekers
         end
 
         def load_form(model)
-          # baptism_certificate is an upload so is not an attribute
-          load_form_attributes(model.attributes
-                                    .merge(completed_attrs(model, :catholic))
-                                    .merge(baptism_certificate: model.baptism_certificate))
+          model.slice(*storable_fields).merge(completed_attrs(model, :catholic))
         end
       end
 

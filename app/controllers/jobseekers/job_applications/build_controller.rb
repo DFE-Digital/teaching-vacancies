@@ -55,15 +55,15 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
                  when "show"
                    form_class.load_form(job_application)
                  when "update"
-                   form_params
+                   form_class.load_form(job_application).merge(form_params)
                  end
 
     case step
     when :professional_status
       attributes.merge(jobseeker_profile_attributes)
                 .merge(trn_params)
-    when :references
-      attributes.merge(references: job_application.references)
+    # when :references
+    #   attributes.merge(references: job_application.references)
     when :employment_history
       attributes.merge(unexplained_employment_gaps: job_application.unexplained_employment_gaps)
     else
@@ -128,8 +128,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def trn_params
-    return {} unless step == :professional_status
-
     {
       teacher_reference_number: form_params[:teacher_reference_number] || current_jobseeker&.jobseeker_profile&.teacher_reference_number,
       has_teacher_reference_number: form_params[:has_teacher_reference_number] || current_jobseeker&.jobseeker_profile&.has_teacher_reference_number,

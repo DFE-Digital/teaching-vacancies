@@ -37,7 +37,7 @@ module Jobseekers
           new_attrs = {
             has_ni_number: model.national_insurance_number.present? ? "yes" : "no",
           }.merge(completed_attrs(model, :personal_details))
-          load_form_attributes(model.attributes.merge(new_attrs))
+          super.merge(new_attrs)
         end
       end
 

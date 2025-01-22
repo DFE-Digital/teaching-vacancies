@@ -11,11 +11,11 @@ module Jobseekers
         qualified_teacher_status_details
         statutory_induction_complete
         teacher_reference_number
-        has_teacher_reference_number
         statutory_induction_complete_details
       ].freeze
 
       attr_accessor(*FIELDS)
+      attr_accessor(:has_teacher_reference_number)
 
       class << self
         def storable_fields
@@ -27,7 +27,8 @@ module Jobseekers
         end
 
         def load_form(model)
-          load_form_attributes(model.attributes.merge(completed_attrs(model, :professional_status)))
+          super.merge(completed_attrs(model, :professional_status))
+               .merge(has_teacher_reference_number: model[:teacher_reference_number].present? ? "yes" : "no")
         end
       end
 
@@ -64,10 +65,6 @@ module Jobseekers
       validates :has_teacher_reference_number, inclusion: { in: %w[yes no] }, if: -> { qualified_teacher_status.in?(%w[no on_track]) && professional_status_section_completed }
 
       completed_attribute(:professional_status)
-    end
-
-    def load(attrs)
-      super(attrs.merge(has_teacher_reference_number: attrs[:teacher_reference_number].present? ? "yes" : "no"))
     end
   end
 end
