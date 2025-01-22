@@ -71,15 +71,14 @@ class Subscription < ApplicationRecord
     Organisation.find_by(slug: search_criteria["organisation_slug"]) if search_criteria["organisation_slug"]
   end
 
-  def vacancies_matching(default_scope)
-    scope = default_scope
+  def vacancies_matching(scope)
     # ignore legacy sorting criteria - legacy job_title is too specific and will typically filter everything
     criteria = search_criteria.symbolize_keys.except(:jobs_sort, :job_title, :minimum_salary)
-    scope, criteria = self.class.handle_location(scope, criteria)
 
-    scope.select do |vacancy|
-      criteria.all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
+    vacancies = scope.select do |vacancy|
+      criteria.except(:location, :radius).all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
     end
+    self.class.handle_location(vacancies, criteria)
   end
 
   extend DistanceHelper
@@ -110,13 +109,12 @@ class Subscription < ApplicationRecord
       if criteria.key?(:location)
         location = criteria[:location].strip.downcase
         if location.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(location)
-          [scope, criteria.except(:location, :radius)]
+          scope
         else
-          [limit_by_location(scope, location, criteria[:radius] || 10), criteria.except(:location, :radius)]
+          limit_by_location(scope, location, criteria[:radius] || 10)
         end
       else
-        # ignore 'radius' keys that don't have a 'location' key
-        [scope, criteria.except(:radius)]
+        scope
       end
     end
   end
