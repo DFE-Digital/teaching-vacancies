@@ -1,6 +1,7 @@
 class CampaignPage
   attr_reader :utm_content_code, :criteria, :banner_image, :hidden_filters
 
+  # Language subjects need to be uppercase.
   LANGUAGE_SUBJECTS = %w[English Spanish German French].freeze
 
   def self.exists?(utm_content)
@@ -22,7 +23,8 @@ class CampaignPage
   end
 
   def banner_title(name, subject = nil)
-    subject = subject.downcase unless LANGUAGE_SUBJECTS.include?(subject)
-    I18n.t("campaign_pages.#{utm_content_code}.banner_title", name: name, subject: subject)
+    subject = subject&.downcase unless LANGUAGE_SUBJECTS.include?(subject)
+    title = I18n.t("campaign_pages.#{utm_content_code}.banner_title", name: name, subject: subject)
+    title.squeeze(" ").strip
   end
 end
