@@ -195,9 +195,10 @@ en:
           banner_documents_html: >-
             Documents supplied with %{job_link} listing that may be of some help with your personal statement.
           banner_no_documents_html: >-
-            It may be helpful to refer back to %{job_link} when writing your personal statement.
+            It may be helpful to refer back to %{job_link} and include any relevant personal qualities and experiences.
           description: >-
             Explain why you are suitable for this role.
+          job_description: job description
           heading: Personal statement
           applying_for_a_teaching_role: If you're applying for a teaching role
           you_could_provide: "You could include information about:"
