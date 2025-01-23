@@ -15,12 +15,6 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::VacancyFor
     %i[start_date_type starts_on earliest_start_date latest_start_date other_start_date_details]
   end
 
-  def self.optional?
-    form_section = new({}, Vacancy.new)
-    form_section.skip_after_validation_big_query_callback = true
-    form_section.valid?
-  end
-
   def params_to_save
     {
       start_date_type: start_date_type,

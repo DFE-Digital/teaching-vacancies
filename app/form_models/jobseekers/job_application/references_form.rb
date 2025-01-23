@@ -10,10 +10,6 @@ module Jobseekers
           %i[references_section_completed references]
         end
 
-        def optional?
-          false
-        end
-
         def load_form(model)
           super.merge(references: model.references)
                                     .merge(completed_attrs(model, :references))

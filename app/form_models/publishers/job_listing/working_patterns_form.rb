@@ -8,10 +8,6 @@ class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::Vaca
   end
   attr_accessor(*fields)
 
-  def self.optional?
-    false
-  end
-
   def params_to_save
     { working_patterns:, working_patterns_details:, is_job_share: }
   end
