@@ -565,12 +565,6 @@ en:
             incomplete: Complete your religious information
           professional_body_memberships:
             incomplete: Complete your professional body memberships
-        jobseekers/job_application/review_form:
-          attributes:
-            confirm_data_accurate:
-              accepted:  You must confirm that your information is accurate and complete
-            confirm_data_usage:
-              accepted: You must consent to share your data in order to apply for this job
         jobseekers/job_application/withdraw_form:
           attributes:
             withdraw_reason:

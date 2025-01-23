@@ -22,13 +22,9 @@
         = f.govuk_error_summary
 
         - if current_jobseeker.jobseeker_profile.present?
-          = f.govuk_check_boxes_fieldset(:update_profile,
-                                         multiple: true,
-                                         legend: { text: t(".confirmation.update_your_profile.heading"), size: "m" },
-                                         hint: { text: t(".confirmation.update_your_profile.hint") }) do
-            = f.govuk_check_box :update_profile, "qualifications"
-            = f.govuk_check_box :update_profile, "work_history"
-            = f.govuk_check_box :update_profile, "training_and_cpds"
+          = f.govuk_check_boxes_fieldset(:update_profile) do
+            p.govuk-body = open_in_new_tab_link_to t(".view_your_profile"), jobseekers_profile_path
+            = f.govuk_check_box :update_profile, "1"
 
         h3.govuk-heading-m = t(".confirmation.heading")
 

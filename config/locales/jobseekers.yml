@@ -494,6 +494,7 @@ en:
         relationship: Relationship to applicant
         is_most_recent_employer: Current or most recent employer
       review:
+        view_your_profile: View your profile
         confirmation:
           heading: Confirmation
           update_your_profile:
