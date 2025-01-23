@@ -13,7 +13,7 @@
         div class="govuk-!-margin-top-3"
           = render SupportingDocumentComponent.with_collection(job_application.vacancy.supporting_documents)
       - else
-        = t(".banner_no_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’ #{t(".job_description")}", job_path(job_application.vacancy)))
+        = t(".banner_no_documents_html", job_link: open_in_new_tab_link_to("‘#{job_application.vacancy.job_title}’ #{t('.job_description')}", job_path(job_application.vacancy)))
 
     h2.govuk-heading-l = t(".applying_for_a_teaching_role")
 
