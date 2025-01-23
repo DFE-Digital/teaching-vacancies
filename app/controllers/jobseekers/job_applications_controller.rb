@@ -129,9 +129,11 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     profile = job_application.jobseeker.jobseeker_profile
     return unless profile.present?
 
-    profile.replace_qualifications!(job_application.qualifications.map(&:duplicate)) if form.update_profile_qualifications?
-    profile.replace_employments!(job_application.employments.map(&:duplicate)) if form.update_profile_work_history?
-    profile.replace_training_and_cpds!(job_application.training_and_cpds.map(&:duplicate)) if form.update_profile_training_and_cpds?
+    if form.update_profile?
+      profile.replace_qualifications!(job_application.qualifications.map(&:duplicate))
+      profile.replace_employments!(job_application.employments.map(&:duplicate))
+      profile.replace_training_and_cpds!(job_application.training_and_cpds.map(&:duplicate))
+    end
   end
 
   def all_steps_valid?
