@@ -248,6 +248,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_112840) do
     t.integer "imported_steps", default: [], null: false, array: true
     t.datetime "interviewing_at"
     t.string "statutory_induction_complete_details"
+    t.boolean "following_religion"
+    t.integer "religious_reference_type"
+    t.string "faith_ciphertext"
+    t.string "place_of_worship_ciphertext"
+    t.string "religious_referee_name_ciphertext"
+    t.string "religious_referee_address_ciphertext"
+    t.string "religious_referee_role_ciphertext"
+    t.string "religious_referee_email_ciphertext"
+    t.string "religious_referee_phone_ciphertext"
+    t.string "baptism_address_ciphertext"
+    t.string "baptism_date_ciphertext"
+    t.string "ethos_and_aims_ciphertext"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -704,6 +716,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_112840) do
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"
+    t.integer "religion_type"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
     t.index ["geolocation", "expires_at", "publish_on"], name: "index_vacancies_on_geolocation_and_expires_at_and_publish_on", using: :gist
