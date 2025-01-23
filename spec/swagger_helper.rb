@@ -42,6 +42,7 @@ RSpec.configure do |config|
 
           This ensures that only approved clients can create, update, or remove job listings.
           If you ever need a new or replacement key, let us know, and we’ll assist you with the process.
+          You can reach us at [teachingvacancies.ats@education.gov.uk](mailto:teachingvacancies.ats@education.gov.uk).
 
           **Base URL**: `/ats-api/v1`
 
@@ -100,9 +101,9 @@ RSpec.configure do |config|
               },
               expires_at: {
                 type: :string,
-                format: :date,
-                example: "2025-03-13",
-                description: "The end date of the vacancy. Must be after the start date.",
+                format: :datetime,
+                example: "2025-03-13T15:30:00Z",
+                description: "The end datetime of the vacancy. Must be after the start date.",
               },
               job_title: {
                 type: :string,
