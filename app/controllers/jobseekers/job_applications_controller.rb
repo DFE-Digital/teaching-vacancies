@@ -2,7 +2,7 @@
 class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
 
-  before_action :set_job_application, only: %i[review apply pre_submit submit show confirm_destroy destroy confirm_withdraw withdraw]
+  before_action :set_job_application, only: %i[review apply pre_submit submit post_submit show confirm_destroy destroy confirm_withdraw withdraw]
   before_action :raise_unless_vacancy_enable_job_applications,
                 :redirect_if_job_application_exists, only: %i[new create new_quick_apply quick_apply]
   before_action :redirect_unless_draft_job_application, only: %i[review]
@@ -78,10 +78,14 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     if review_form.valid? && all_steps_valid?
       update_jobseeker_profile!(job_application, review_form)
       job_application.submit!
-      @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
+      redirect_to jobseekers_job_application_post_submit_path job_application
     else
       render :review
     end
+  end
+
+  def post_submit
+    @application_feedback_form = Jobseekers::JobApplication::FeedbackForm.new
   end
 
   def show
@@ -129,7 +133,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     profile = job_application.jobseeker.jobseeker_profile
     return unless profile.present?
 
-    if form.update_profile?
+    if form.update_profile
       profile.replace_qualifications!(job_application.qualifications.map(&:duplicate))
       profile.replace_employments!(job_application.employments.map(&:duplicate))
       profile.replace_training_and_cpds!(job_application.training_and_cpds.map(&:duplicate))
