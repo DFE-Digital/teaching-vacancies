@@ -98,7 +98,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
     context "when the qualification has qualification results" do
       let!(:qualification) do
         create(:qualification,
-               category: "other_secondary",
+               category: "a_level",
                institution: "John Mason School",
                jobseeker_profile_id: profile.id)
       end
@@ -106,7 +106,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
       it "allows jobseekers to edit the qualification and its results" do
         visit review_jobseekers_profile_qualifications_path
         click_on "Change"
-        fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
+        fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
         empty_second_qualification_result
         fill_in "School", with: "St Nicholas School"
         click_on I18n.t("buttons.save_and_continue")
@@ -136,7 +136,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
   end
 
   def empty_second_qualification_result
-    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: ""
-    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: ""
+    fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][subject]", with: ""
+    fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: ""
   end
 end

@@ -9,8 +9,6 @@ module Jobseekers::QualificationFormConcerns
     name = case category
            when "gcse", "a_level", "as_level"
              "Secondary::CommonForm"
-           when "other_secondary"
-             "Secondary::OtherForm"
            when "undergraduate", "postgraduate"
              "DegreeForm"
            when "other"

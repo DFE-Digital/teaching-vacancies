@@ -71,7 +71,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
     context "when the qualification has qualification results" do
       let!(:qualification) do
         create(:qualification,
-               category: "other_secondary",
+               category: "a_level",
                institution: "John Mason School",
                job_application: job_application)
       end
@@ -79,7 +79,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
       it "allows jobseekers to edit the qualification and its results" do
         visit jobseekers_job_application_build_path(job_application, :qualifications)
         click_on I18n.t("buttons.change")
-        fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
+        fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][0][subject]", with: "Hard Knocks"
         empty_second_qualification_result
         fill_in "School", with: "St Nicholas School"
         expect { click_on I18n.t("buttons.save_qualification.one") }.to change { qualification.qualification_results.count }.by(-1)
@@ -114,7 +114,7 @@ RSpec.describe "Jobseekers can add qualifications to their job application" do
   end
 
   def empty_second_qualification_result
-    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][subject]", with: ""
-    fill_in "jobseekers_qualifications_secondary_other_form[qualification_results_attributes][1][grade]", with: ""
+    fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][subject]", with: ""
+    fill_in "jobseekers_qualifications_secondary_common_form[qualification_results_attributes][1][grade]", with: ""
   end
 end
