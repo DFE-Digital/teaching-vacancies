@@ -9,11 +9,11 @@ module StatusTagHelper
   }.freeze
 
   # rubocop:disable Lint/DuplicateBranch
-  def review_section_tag(resource, step)
-    if step_completed?(resource, step)
-      complete
-    elsif resource.imported_steps.include?(step.to_s)
+  def review_section_tag(job_application, step)
+    if job_application.imported_steps.include?(step.to_s) && job_application.completed_steps.include?(step.to_s)
       imported
+    elsif job_application.completed_steps.include?(step.to_s)
+      complete
     else
       incomplete
     end
@@ -21,10 +21,6 @@ module StatusTagHelper
   # rubocop:enable Lint/DuplicateBranch
 
   private
-
-  def step_completed?(resource, step)
-    resource.completed_steps.include?(step.to_s)
-  end
 
   def complete
     govuk_tag(text: t("shared.status_tags.complete"), colour: "green")
