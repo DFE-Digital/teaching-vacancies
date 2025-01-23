@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can update their profile from job applications" do
     scenario "jobseekers can update their profile qualifications using the job application information on submission" do
       check I18n.t("helpers.label.jobseekers_job_application_review_form.update_profile_options.1")
       click_on I18n.t("buttons.submit_application")
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
+      expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
 
       click_link "Your profile"
       expect(page).to have_css("h3.govuk-summary-card__title", text: "Application qualification")
