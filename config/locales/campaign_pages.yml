@@ -57,4 +57,4 @@ en:
     # The following fake campaign page is used in automated tests, please don't remove it
     ################################################################################################
     FAKE1+CAMPAIGN:
-      banner_title: "%{name}, this is a fake campaign"
+      banner_title: "%{name}, find the right %{subject} fake job for you"
