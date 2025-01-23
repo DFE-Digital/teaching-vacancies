@@ -462,3 +462,13 @@ shared:
     - created_at
     - updated_at
     - notifications_count
+  :professional_body_memberships:
+    - id
+    - created_at
+    - updated_at
+    - name
+    - membership_type
+    - membership_number
+    - year_membership_obtained
+    - exam_taken
+    - jobseeker_profile_id

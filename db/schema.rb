@@ -9,8 +9,7 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema[7.2].define(version: 2025_01_15_153941) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_17_112840) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -477,6 +476,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_15_153941) do
     t.index ["jobseeker_profile_id"], name: "index_personal_details_jobseeker_profile_id", unique: true
   end
 
+  create_table "professional_body_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "membership_type"
+    t.string "membership_number"
+    t.integer "year_membership_obtained"
+    t.boolean "exam_taken", default: false, null: false
+    t.uuid "jobseeker_profile_id"
+    t.index ["jobseeker_profile_id"], name: "index_professional_body_memberships_on_jobseeker_profile_id"
+  end
+
   create_table "publisher_ats_api_clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "api_key", null: false
@@ -744,6 +755,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_15_153941) do
   add_foreign_key "organisation_vacancies", "organisations"
   add_foreign_key "organisation_vacancies", "vacancies"
   add_foreign_key "personal_details", "jobseeker_profiles"
+  add_foreign_key "professional_body_memberships", "jobseeker_profiles"
   add_foreign_key "publisher_preferences", "organisations"
   add_foreign_key "publisher_preferences", "publishers"
   add_foreign_key "qualification_results", "qualifications"
