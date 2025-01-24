@@ -1,0 +1,23 @@
+en:
+  helpers:
+    label:
+      jobseekers_job_application_professional_body_memberships_form:
+        professional_body_membership_section_completed_options:
+          "true": "Yes"
+          "false": "No"
+    legend:
+      jobseekers_job_application_professional_body_memberships_form:
+        professional_body_membership_section_completed: Have you completed this section?
+  jobseekers:
+    job_applications:
+      build:
+        professional_body_memberships:
+          no_professional_body_memberships: No professional body memberships specified
+      professional_body_memberships:
+        heading: Professional body memberships
+        new:
+          heading: Add professional body memberships
+          page_title: Professional body memberships
+        edit:
+          heading: Edit professional body memberships
+          page_title: Professional body memberships

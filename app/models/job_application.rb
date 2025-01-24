@@ -10,6 +10,7 @@ class JobApplication < ApplicationRecord
     professional_status: 1,
     qualifications: 2,
     training_and_cpds: 9,
+    professional_body_memberships: 10,
     employment_history: 3,
     personal_statement: 4,
     catholic: 10,
@@ -70,6 +71,7 @@ class JobApplication < ApplicationRecord
 
   has_many :notes, dependent: :destroy
   has_many :qualifications, dependent: :destroy
+  has_many :professional_body_memberships, dependent: :destroy
   has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
   has_many :training_and_cpds, dependent: :destroy
