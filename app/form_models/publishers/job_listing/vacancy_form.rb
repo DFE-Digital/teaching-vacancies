@@ -4,7 +4,7 @@ class Publishers::JobListing::VacancyForm < BaseForm
   DOCUMENT_VALIDATION_OPTIONS = {
     file_type: :document,
     content_types_allowed: %w[application/pdf application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document].freeze,
-    file_size_limit: 10.megabytes,
+    file_size_limit: 20.megabytes,
     valid_file_types: %i[PDF DOC DOCX],
   }.freeze
 

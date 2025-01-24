@@ -1,16 +1,51 @@
 require "google/apis/drive_v3"
 
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
-  helper_method :documents_form, :confirmation_form
+  helper_method :confirmation_form
+
+  before_action :set_documents_form, only: %i[new create]
+
+  skip_before_action :verify_authenticity_token,
+                     only: %i[new_document]
+
+  def index
+
+  end
+
+  def new_document
+    to_be_deleted = params[:delete]
+    if to_be_deleted.present?
+      render json: {
+        success: true,
+      }
+    else
+      document = params[:documents]
+
+      render json: {
+        success: {
+          messageHtml: "#{document.original_filename} uploaded with honours",
+          messageText: "#{document.original_filename} uploaded with honours",
+        },
+        file: {
+          filename: document.original_filename,
+          originalname: document.original_filename,
+        },
+      }
+    end
+  end
+
+  def new
+
+  end
 
   def create
-    if documents_form.valid?
-      documents_form.supporting_documents.each do |document|
+    if @documents_form.valid?
+      @documents_form.supporting_documents.each do |document|
         vacancy.supporting_documents.attach(document)
         send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
       end
 
-      vacancy.update(documents_form.params_to_save)
+      vacancy.update(@documents_form.params_to_save)
 
       render :index
     else
@@ -42,8 +77,8 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     :documents
   end
 
-  def documents_form
-    @documents_form ||= Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
+  def set_documents_form
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
   end
 
   def documents_form_params

@@ -356,6 +356,7 @@ Rails.application.routes.draw do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :documents, only: %i[index new create destroy], controller: "publishers/vacancies/documents" do
         post :confirm, on: :collection
+        post '/new', on: :collection, to: "publishers/vacancies/documents#new_document"
       end
       resource :application_forms, only: %i[create destroy], controller: "publishers/vacancies/application_forms"
 

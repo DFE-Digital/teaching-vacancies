@@ -69,3 +69,24 @@ Rails.start();
 govukFrontend.initAll();
 window.$ = $;
 mojFrontend.initAll();
+
+if (typeof mojFrontend.MultiFileUpload !== 'undefined') {
+  // const hasUploads = document.querySelector('.moj-multi-file-upload');
+  // if (hasUploads !== null) {
+  //   // eslint-disable-next-line no-new
+  //   new mojFrontend.MultiFileUpload({
+  //     container: document.querySelector('.moj-multi-file-upload'),
+  //     uploadUrl: '/ajax-upload-url',
+  //     deleteUrl: '/ajax-delete-url',
+  //   });
+  // }
+  const uploadSelectors = document.querySelectorAll('.moj-multi-file-upload');
+  uploadSelectors.forEach((container) => {
+    // eslint-disable-next-line no-new
+    new mojFrontend.MultiFileUpload({
+      container,
+      uploadUrl: container.dataset.uploadUrl,
+      deleteUrl: container.dataset.deleteUrl,
+    });
+  });
+}
