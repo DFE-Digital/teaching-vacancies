@@ -8,9 +8,9 @@ class Qualification < ApplicationRecord
   accepts_nested_attributes_for :qualification_results
   has_encrypted :finished_studying_details
 
-  SECONDARY_QUALIFICATIONS = %w[gcse as_level a_level other_secondary].freeze
+  SECONDARY_QUALIFICATIONS = %w[gcse as_level a_level].freeze
 
-  enum :category, { gcse: 0, as_level: 1, a_level: 2, other_secondary: 3, undergraduate: 4, postgraduate: 5, other: 6 }
+  enum :category, { gcse: 0, as_level: 1, a_level: 2, undergraduate: 4, postgraduate: 5, other: 6 }
 
   before_validation :remove_inapplicable_data, :mark_emptied_qualification_results_for_destruction
 
@@ -29,7 +29,7 @@ class Qualification < ApplicationRecord
   end
 
   def name
-    return read_attribute(:name) if read_attribute(:name).present? || other? || other_secondary?
+    return read_attribute(:name) if read_attribute(:name).present? || other?
 
     I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{category}")
   end

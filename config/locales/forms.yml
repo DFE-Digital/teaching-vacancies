@@ -393,7 +393,6 @@ en:
           gcse: GCSEs
           as_level: AS Levels
           a_level: A Levels
-          other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
           other: Other qualification
@@ -453,7 +452,6 @@ en:
           gcse: GCSEs
           as_level: AS Levels
           a_level: A Levels
-          other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
           other: Other qualification
@@ -471,10 +469,6 @@ en:
       jobseekers_qualifications_secondary_common_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: School, college, or other organisation
-      jobseekers_qualifications_secondary_other_form:
-        <<: *jobseekers_qualifications_shared_labels
-        institution: School, college, or other organisation
-        name: Qualification name
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status_options:
           "yes": "Yes"

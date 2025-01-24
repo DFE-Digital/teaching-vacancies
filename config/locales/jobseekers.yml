@@ -415,7 +415,6 @@ en:
             gcse: Edit GCSEs
             as_level: Edit AS Levels
             a_level: Edit A Levels
-            other_secondary: Edit secondary qualifications
             undergraduate: Edit undergraduate degree
             postgraduate: Edit postgraduate qualification
             other: Edit qualification
@@ -426,7 +425,6 @@ en:
             gcse: Add GCSEs
             as_level: Add AS Levels
             a_level: Add A Levels
-            other_secondary: Add secondary qualifications
             undergraduate: Add an undergraduate degree
             postgraduate: Add a postgraduate qualification
             other: Add a qualification
@@ -816,7 +814,6 @@ en:
             gcse: Add GCSEs
             as_level: Add AS Levels
             a_level: Add A Levels
-            other_secondary: Add secondary qualifications
             undergraduate: Add an undergraduate degree
             postgraduate: Add a postgraduate qualification
             other: Add a qualification
