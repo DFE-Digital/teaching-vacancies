@@ -30,6 +30,8 @@ import ShowHiddenContentController from './js_components/showHiddenContent/showH
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
 
+import './clarity_cookies';
+
 Sentry.init({
   // `sentryConfig` is set from the application layout
   dsn: window.sentryConfig.dsn,

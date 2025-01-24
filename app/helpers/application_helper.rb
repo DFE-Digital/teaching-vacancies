@@ -36,6 +36,7 @@ module ApplicationHelper
   end
 
   def consented_to_extra_cookies?
-    cookies["consented-to-additional-cookies-v2"] == "yes" && Rails.configuration.app_role.production?
+    # consented value can be 'yes' or 'clarity'
+    cookies["consented-to-additional-cookies-v2"] != "no" && Rails.configuration.app_role.production?
   end
 end
