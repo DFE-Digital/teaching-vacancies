@@ -88,9 +88,10 @@ RSpec.describe Publishers::DocumentVirusCheck do
       let(:error) { Google::Apis::ClientError.new("Out to lunch") }
 
       before do
-        expect(drive_service).to receive(:get_file)
-          .with("0xDECAFBAD", acknowledge_abuse: false, download_dest: "0xDECAFBAD")
-          .and_raise(error)
+        expect(drive_service)
+          .to receive(:get_file)
+                .with("0xDECAFBAD", acknowledge_abuse: false, download_dest: "0xDECAFBAD")
+                .and_raise(error)
       end
 
       it "re-raises the error and deletes the file from Google Drive" do

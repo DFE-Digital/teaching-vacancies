@@ -461,6 +461,9 @@ en:
       documents:
         index:
           summary_list_heading: Files added
+          make_sure: Make sure all the files you want to be added are marked 'uploaded' before leaving the page
+        new:
+          make_sure: Make sure all the files you want to be added are marked 'uploaded' before leaving the page
       end_listing:
         show:
           heading: Close early
@@ -738,7 +741,7 @@ en:
         contact_details: Contact details
         about_the_role: About the role
         include_additional_documents: Do you want to upload any additional documents?
-        documents: Additional documents
+        documents: Upload additional documents
         review_heading: Review the job listing
         visa_sponsorship: Can you offer Skilled Worker visa sponsorship to non-UK citizens for this role?
       submit:

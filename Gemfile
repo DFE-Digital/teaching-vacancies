@@ -20,6 +20,7 @@ gem "railties", RAILS_VERSION
 gem "activerecord-import"
 gem "activerecord-postgis-adapter", ">= 10.0.1"
 gem "activerecord-session_store"
+gem "active_storage_validations"
 gem "addressable"
 gem "array_enum"
 gem "aws-sdk-s3", require: false

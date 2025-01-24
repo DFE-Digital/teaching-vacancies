@@ -27,17 +27,6 @@ RSpec.describe "Documents" do
         }
       end
 
-      it "triggers an event", :dfe_analytics do
-        request
-        expect(:supporting_document_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
-          with_data: { vacancy_id: vacancy.id,
-                       document_type: "supporting_document",
-                       name: "blank_job_spec.pdf",
-                       size: vacancy.supporting_documents.first.byte_size,
-                       content_type: "application/pdf" },
-        )
-      end
-
       it "renders the index page" do
         expect(request).to render_template(:index)
       end
@@ -50,9 +39,11 @@ RSpec.describe "Documents" do
     end
 
     context "when the form is invalid" do
+      let(:vacancy) { create(:vacancy, include_additional_documents: true, organisations: [organisation]) }
+
       let(:request) do
         post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { documents: [fixture_file_upload("mime_types/invalid_plain_text_file.txt")] },
+          publishers_job_listing_documents_form: { documents: [] },
         }
       end
 
@@ -60,13 +51,38 @@ RSpec.describe "Documents" do
         expect(request).to render_template(:new)
       end
     end
+  end
+
+  describe "POST #upload" do
+    before do
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
+    end
+
+    context "when the form is valid" do
+      let(:request) do
+        post upload_organisation_job_documents_path(vacancy.id), params: {
+          documents: fixture_file_upload("blank_job_spec.pdf", "application/pdf"),
+        }
+      end
+
+      it "triggers an event", :dfe_analytics do
+        request
+        expect(:supporting_document_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+          with_data: { vacancy_id: vacancy.id,
+                       document_type: "supporting_document",
+                       name: "blank_job_spec.pdf",
+                       size: vacancy.supporting_documents.first.byte_size,
+                       content_type: "application/pdf" },
+        )
+      end
+    end
 
     context "MIME type inspection" do
       let(:valid_file_types) { "PDF, DOC or DOCX" }
 
       before do
-        post organisation_job_documents_path(vacancy.id), params: {
-          publishers_job_listing_documents_form: { supporting_documents: [file] },
+        post upload_organisation_job_documents_path(vacancy.id), params: {
+          documents: file,
         }
       end
 
@@ -84,7 +100,7 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("mime_types/valid_word_document.docx") }
 
         it "is accepted" do
-          expect(response.body).not_to include(I18n.t("jobs.file_type_error_message", filename: "valid_word_document.docx", valid_file_types: valid_file_types))
+          expect(response.body).not_to include("has an invalid content type")
         end
       end
 
@@ -92,7 +108,7 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("mime_types/zip_file_pretending_to_be_a_pdf.pdf") }
 
         it "is rejected even if the file extension suggests it is valid" do
-          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "zip_file_pretending_to_be_a_pdf.pdf", valid_file_types: valid_file_types))
+          expect(response.body).to include("has an invalid content type")
         end
       end
 
@@ -100,7 +116,7 @@ RSpec.describe "Documents" do
         let(:file) { fixture_file_upload("mime_types/invalid_plain_text_file.txt") }
 
         it "is rejected even if the file extension suggests it is valid" do
-          expect(response.body).to include(I18n.t("jobs.file_type_error_message", filename: "invalid_plain_text_file.txt", valid_file_types: valid_file_types))
+          expect(response.body).to include("has an invalid content type")
         end
       end
     end
@@ -147,37 +163,27 @@ RSpec.describe "Documents" do
     end
   end
 
-  describe "#confirm" do
-    let(:request) do
-      post confirm_organisation_job_documents_path(vacancy.id), params: {
-        publishers_job_listing_documents_confirmation_form: { upload_additional_document: upload_additional_document },
-      }
+  describe "POST #delete_uploaded_file" do
+    let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [organisation]) }
+    let(:document) { vacancy.supporting_documents.first }
+    let(:request) { post remove_organisation_job_documents_path(vacancy.id, params: { delete: document.filename }, format: :json) }
+
+    it "triggers an event", :dfe_analytics do
+      request
+      expect(:supporting_document_deleted).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+        with_data: { vacancy_id: vacancy.id,
+                     document_type: "supporting_document",
+                     name: "blank_job_spec.pdf",
+                     size: vacancy.supporting_documents.first.byte_size,
+                     content_type: "application/pdf" },
+      )
     end
 
-    context "when upload_additional_document is false" do
-      let(:upload_additional_document) { "false" }
+    it "removes the document" do
+      request
 
-      context "when upload_additional_document is false" do
-        it "redirects to the next step" do
-          expect(request).to redirect_to(organisation_job_path(vacancy.id))
-        end
-      end
-    end
-
-    context "when upload_additional_document is true" do
-      let(:upload_additional_document) { "true" }
-
-      it "redirects to the new documents form" do
-        expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
-      end
-    end
-
-    context "when upload_additional_document is not set" do
-      let(:upload_additional_document) { nil }
-
-      it "renders the documents index page" do
-        expect(request).to render_template(:index)
-      end
+      expect(response.parsed_body).to eq("success" => true)
+      expect(vacancy.reload.supporting_documents).to be_empty
     end
   end
 end

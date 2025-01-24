@@ -1,19 +1,24 @@
-- content_for :page_title_prefix, page_title_prefix(step_process, documents_form)
+- content_for :page_title_prefix, page_title_prefix(step_process, @documents_form)
 
-.govuk-grid-row
-  .govuk-grid-column-two-thirds data-controller="upload-documents"
-    = form_for documents_form, url: organisation_job_documents_path(vacancy.id) do |f|
-      = f.govuk_error_summary
+= form_for @documents_form, url: organisation_job_documents_path(vacancy.id) do |f|
+  = f.govuk_error_summary
 
-      - if params["back_to_#{action_name}"]
-        = f.hidden_field "back_to_#{action_name}", value: "true"
+  - if params["back_to_#{action_name}"]
+    = f.hidden_field "back_to_#{action_name}", value: "true"
 
+  h2 = vacancy_form_page_heading(vacancy, step_process, back_path: back_path)
+
+  p.govuk-body = t(".make_sure")
+
+  = tag.div(class: "app-multi-file-upload", data: { upload: upload_organisation_job_documents_path(vacancy.id), delete: remove_organisation_job_documents_path(vacancy.id) }) do
+    .moj-multi-file__uploaded-files
+      h2 class="govuk-heading-m" = "Files added"
+      .govuk-summary-list class="moj-multi-file-upload__list"
+
+    .moj-multi-file-upload__upload
       = f.govuk_file_field :supporting_documents,
-        label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
-        hint: { text: t("helpers.hint.publishers_job_listing_documents_form.documents") },
-        accept: ".doc, .docx, .pdf",
-        multiple: true,
-        include_hidden: false,
-        enctype: "multipart/form-data"
+        label: -> { "" },
+        class: "moj-multi-file-upload__input",
+        accept: ".doc, .docx, .pdf"
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+  = render "publishers/vacancies/vacancy_form_partials/submit", f: f

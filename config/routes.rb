@@ -368,7 +368,9 @@ Rails.application.routes.draw do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :wizard, only: %i[show update], controller: "publishers/vacancies/wizard"
       resources :documents, only: %i[index new create destroy], controller: "publishers/vacancies/documents" do
-        post :confirm, on: :collection
+        # API for MoJ multi-select component
+        post :upload, on: :collection, to: "publishers/vacancies/documents#upload_file", format: "json"
+        post :remove, on: :collection, to: "publishers/vacancies/documents#delete_uploaded_file", format: "json"
       end
       resource :application_forms, only: %i[create destroy], controller: "publishers/vacancies/application_forms"
 
