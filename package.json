@@ -23,7 +23,6 @@
     "dompurify": "^3.2.3",
     "govuk-frontend": "^5.8.0",
     "jquery": "^3.6.0",
-    "jquery": "^3.6.0",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
