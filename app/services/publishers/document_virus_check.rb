@@ -40,14 +40,6 @@ class Publishers::DocumentVirusCheck
 
   attr_reader :file, :api_client
 
-  def uploaded_file
-    @uploaded_file ||= drive_service.create_file(
-      { alt: "media", name: "virus-check-#{Time.zone.now.strftime('%F-%H.%M.%S.%3N')}" },
-      fields: "id, web_view_link, web_content_link, mime_type",
-      upload_source: file.path,
-    )
-  end
-
   def drive_service
     return unless api_client.authorization
 
