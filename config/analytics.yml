@@ -208,6 +208,7 @@ shared:
     - name
     - location_type
     - area
+    - centroid
     - created_at
     - updated_at
   notifications:

@@ -77,11 +77,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_112840) do
     t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "employment_type", default: 0
-    t.text "reason_for_break", default: ""
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
+    t.integer "employment_type", default: 0
+    t.text "reason_for_break", default: ""
     t.uuid "jobseeker_profile_id"
     t.text "reason_for_leaving"
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
@@ -312,9 +312,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_112840) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
+    t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
-    t.string "govuk_one_login_id"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
   end
@@ -333,7 +333,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_112840) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
+    t.geography "centroid", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
+    t.index ["centroid"], name: "index_location_polygons_on_centroid", using: :gist
     t.index ["name"], name: "index_location_polygons_on_name"
   end
 
@@ -697,8 +699,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_17_112840) do
     t.boolean "include_additional_documents"
     t.boolean "visa_sponsorship_available"
     t.boolean "is_parental_leave_cover"
-    t.boolean "is_job_share"
     t.string "hourly_rate"
+    t.boolean "is_job_share"
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"

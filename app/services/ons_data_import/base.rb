@@ -18,17 +18,26 @@ class OnsDataImport::Base
         geometry = feature["geometry"].to_json
 
         Rails.logger.info("Persisting new area data for '#{name}' (#{type})")
-        ActiveRecord::Base.connection.exec_update("
-          UPDATE location_polygons
-          SET area=ST_GeomFromGeoJSON(#{ActiveRecord::Base.connection.quote(geometry)}),
-              location_type=#{ActiveRecord::Base.connection.quote(type)}
-          WHERE id='#{location_polygon.id}'
-        ")
+        set_area_data(location_polygon, geometry, type)
       end
     end
   end
 
   private
+
+  def set_area_data(location_polygon, geometry, type)
+    ActiveRecord::Base.connection.exec_update("
+      WITH geom AS (
+        SELECT ST_GeomFromGeoJSON(#{ActiveRecord::Base.connection.quote(geometry)}) AS geo
+      )
+      UPDATE location_polygons
+      SET area=geom.geo,
+          location_type=#{ActiveRecord::Base.connection.quote(type)},
+          centroid=ST_Centroid(geom.geo)
+      FROM geom
+      WHERE id='#{location_polygon.id}'
+    ")
+  end
 
   def arcgis_features(offset)
     params = [

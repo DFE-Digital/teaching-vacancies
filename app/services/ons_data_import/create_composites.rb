@@ -7,13 +7,16 @@ class OnsDataImport::CreateComposites
       quoted_constituents = constituents.map { |c| ActiveRecord::Base.connection.quote(c.downcase) }
 
       ActiveRecord::Base.connection.exec_update("
+        WITH composite_area AS (
+          SELECT ST_Union(area::geometry)::geography AS geo
+          FROM location_polygons
+          WHERE name IN (#{quoted_constituents.join(', ')})
+        )
         UPDATE location_polygons
-        SET area=(
-              SELECT ST_Union(area::geometry)::geography
-              FROM location_polygons
-              WHERE name IN (#{quoted_constituents.join(', ')})
-            ),
-            location_type='composite'
+        SET area=composite_area.geo,
+            location_type='composite',
+            centroid=ST_Centroid(composite_area.geo)
+        FROM composite_area
         WHERE id='#{composite.id}'
       ")
     end
