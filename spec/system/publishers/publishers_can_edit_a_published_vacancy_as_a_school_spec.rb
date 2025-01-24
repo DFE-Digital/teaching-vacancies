@@ -1,4 +1,5 @@
 require "rails_helper"
+
 RSpec.describe "Publishers can edit a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
