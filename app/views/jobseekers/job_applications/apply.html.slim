@@ -30,7 +30,7 @@
     - task_list.with_item(title: t("jobseekers.job_applications.build.training_and_cpds.heading"), href: jobseekers_job_application_build_path(job_application, :training_and_cpds),
       html_attributes: { id: :training_and_cpds },
       status: review_section_tag(job_application, [Jobseekers::JobApplication::TrainingAndCpdsForm]))
-    
+
     - task_list.with_item(title: t("jobseekers.job_applications.build.professional_body_memberships.heading"), href: jobseekers_job_application_build_path(job_application, :professional_body_memberships),
       html_attributes: { id: :professional_body_memberships },
       status: review_section_tag(job_application, [Jobseekers::JobApplication::ProfessionalBodyMembershipsForm]))

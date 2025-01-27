@@ -13,7 +13,7 @@ class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobse
     @form = Jobseekers::ProfessionalBodyMembershipForm.new(professional_body_memberships_form_params)
 
     if @form.valid?
-      job_application.professional_body_memberships.create(professional_body_memberships_form_params)
+      job_application.professional_body_memberships.create!(professional_body_memberships_form_params)
       redirect_to back_path
     else
       render :new
@@ -36,7 +36,7 @@ class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobse
   end
 
   def destroy
-    professional_body_membership.destroy
+    professional_body_membership.destroy!
     redirect_to back_path, success: t(".success")
   end
 
