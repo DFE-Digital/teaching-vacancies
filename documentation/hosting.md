@@ -212,7 +212,6 @@ kubectl scale --replicas=4 deployment teaching-vacancies-production-worker -n tv
 - Create file `terraform/workspace-variables/<env>_app_env.yml`
 - Create SSM parameters of type `SecureString`:
   - `/teaching-vacancies/<env>/app/BIG_QUERY_API_JSON_KEY`
-  - `/teaching-vacancies/<env>/app/GOOGLE_API_JSON_KEY`
   - `/teaching-vacancies/<env>/app/secrets`
   - `/teaching-vacancies/<env>/infra/secrets`
 - Add a target to the Makefile

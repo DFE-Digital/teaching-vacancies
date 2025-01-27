@@ -48,10 +48,10 @@ __Once you are inside:__
 1. Update `DFE_SIGN_IN_SECRET` and `DFE_SIGN_IN_PASSWORD` in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/secrets` files
 
 ### Google API Keys
-There are several different API keys in use in different environments. There are keys for Google Maps, as well as service accounts for Google Analytics, BigQuery and Google Drive.
+There are several different API keys in use in different environments. There are keys for Google Location, Search Index and Drive, as well as service accounts for Google Analytics and BigQuery.
 - `GOOGLE_LOCATION_SEARCH_API_KEY` is used for both the Google Places API and the Google Geocoding API
 - `GOOGLE_MAPS_API_KEY` is used for Google Maps
-- `GOOGLE_API_JSON_KEY` is used for analytics, indexing and drive
+- `GOOGLE_APIS_KEY` is used for Google Web Search indexing and Drive APIs
 - `BIG_QUERY_API_JSON_KEY` is used for writing tables into BigQuery
 
 __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. They will need to be normalized in to `JSON` strings to be used in ENV variables.__
@@ -93,7 +93,7 @@ __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. The
     jq -c . teacher-vacancy-service-<some UID>.json | pbcopy
     ```
 1. Copy the full body of the new key as a json string (not necessary if you used `...| pbcopy` in the `jq` example, above)
-1. Paste the full string of the new key in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/BIG_QUERY_API_JSON_KEY` or `/teaching-vacancies/<env>/app/GOOGLE_API_JSON_KEY` files
+1. Paste the full string of the new key in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table) `/teaching-vacancies/<env>/app/BIG_QUERY_API_JSON_KEY` file
 1. Do a rolling restart on the updated environment for the application
 1. Check that everything works as expected
 1. Delete the old key from the 'Keys' section in the Service Account window

@@ -31,6 +31,6 @@ class GoogleIndexing
   end
 
   def api_key_empty?
-    GOOGLE_API_JSON_KEY.empty? || JSON.parse(GOOGLE_API_JSON_KEY).empty?
+    GOOGLE_APIS_KEY.empty? || JSON.parse(GOOGLE_APIS_KEY).empty?
   end
 end

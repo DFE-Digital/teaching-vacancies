@@ -9,7 +9,7 @@ RSpec.describe GoogleIndexing do
 
   context "Successful requests" do
     before(:each) do
-      stub_const("GOOGLE_API_JSON_KEY", '{ "key": "value" }')
+      stub_const("GOOGLE_APIS_KEY", '{ "key": "value" }')
     end
 
     context "Requesting a url index update" do
@@ -43,7 +43,7 @@ RSpec.describe GoogleIndexing do
 
   context "When no GOOGLE_API key is set" do
     it "logs an error and aborts execution" do
-      stub_const("GOOGLE_API_JSON_KEY", "")
+      stub_const("GOOGLE_APIS_KEY", "")
       expect(GoogleIndexing::API::IndexingService).not_to receive(:new)
       GoogleIndexing.new(url)
     end

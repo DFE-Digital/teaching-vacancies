@@ -13,7 +13,7 @@ RSpec.describe UpdateGoogleIndexQueueJob do
   end
 
   it "aborts execution when no Google credentials are set" do
-    stub_const("GOOGLE_API_JSON_KEY", "")
+    stub_const("GOOGLE_APIS_KEY", "")
     Sidekiq::Testing.inline! do
       expect(GoogleIndexing).to receive(:new).and_raise(SystemExit, "No Google API")
 
