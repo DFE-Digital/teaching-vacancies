@@ -21,3 +21,5 @@ en:
         edit:
           heading: Edit professional body memberships
           page_title: Professional body memberships
+        destroy:
+          success: Professional body membership deleted

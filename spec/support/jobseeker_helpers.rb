@@ -143,6 +143,14 @@ module JobseekerHelpers
     fill_in "Please give details", with: "I expect to finish next year"
   end
 
+  def fill_in_professional_body_membership
+    fill_in "Name of professional body", with: "Teachers Union"
+    fill_in "Membership type or level (optional)", with: "Gold"
+    fill_in "Membership or registration number (optional)", with: "42"
+    fill_in "Date obtained (optional)", with: "2020"
+    choose "Yes"
+  end
+
   def expect_work_history_to_be_ordered_most_recent_first
     start_dates = all(".govuk-summary-list__row dt", text: "Start date").map { |dt| dt.find("+ dd").text }
 
