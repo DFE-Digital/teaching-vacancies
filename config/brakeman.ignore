@@ -26,13 +26,13 @@
     {
       "warning_type": "SQL Injection",
       "warning_code": 0,
-      "fingerprint": "247ffca0a9eb003f3adee0fc7c76367a73fedf3282be496fa76f54a99d496c50",
+      "fingerprint": "15db60bfa4ee24da38dd0c72ed69b7287f3130bde4f784ab8279d2f288ba24e6",
       "check_name": "SQL",
       "message": "Possible SQL injection",
       "file": "app/queries/location_query.rb",
       "line": 61,
       "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "Arel.sql(\"ST_Distance(#{field_name}, ST_Centroid(location_polygons.area), false)\")",
+      "code": "Arel.sql(\"ST_Distance(#{field_name}, location_polygons.centroid, false)\")",
       "render_path": null,
       "location": {
         "type": "method",
