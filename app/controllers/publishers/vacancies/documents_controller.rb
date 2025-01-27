@@ -3,48 +3,18 @@ require "google/apis/drive_v3"
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
   helper_method :confirmation_form
 
-  before_action :set_documents_form, only: %i[new create]
-
   skip_before_action :verify_authenticity_token,
-                     only: %i[new_document]
+                     only: %i[upload_file delete_uploaded_file]
 
-  def index
-
-  end
-
-  def new_document
-    to_be_deleted = params[:delete]
-    if to_be_deleted.present?
-      render json: {
-        success: true,
-      }
-    else
-      document = params[:documents]
-
-      render json: {
-        success: {
-          messageHtml: "#{document.original_filename} uploaded with honours",
-          messageText: "#{document.original_filename} uploaded with honours",
-        },
-        file: {
-          filename: document.original_filename,
-          originalname: document.original_filename,
-        },
-      }
-    end
-  end
+  def index; end
 
   def new
-
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
   end
 
   def create
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params.merge(supporting_documents: vacancy.supporting_documents), vacancy)
     if @documents_form.valid?
-      @documents_form.supporting_documents.each do |document|
-        vacancy.supporting_documents.attach(document)
-        send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
-      end
-
       vacancy.update(@documents_form.params_to_save)
 
       render :index
@@ -61,6 +31,27 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     redirect_to after_document_delete_path, flash: { success: t("jobs.file_delete_success_message", filename: document.filename) }
   end
 
+  def upload_file
+    document = params.require(:documents)
+
+    if vacancy.supporting_documents.attach(document)
+      upload_success document
+    else
+      upload_failure document
+    end
+  end
+
+  def delete_uploaded_file
+    vacancy.supporting_documents.select { |d| d.filename == params.require(:delete) }.each do |document|
+      document.purge
+      send_dfe_analytics_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
+    end
+
+    render json: {
+      success: true,
+    }
+  end
+
   def confirm
     return render :index unless confirmation_form.valid?
 
@@ -73,12 +64,34 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   private
 
-  def step
-    :documents
+  def upload_success(document)
+    send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
+    render json: {
+      success: {
+        messageHtml: t("jobs.file_upload_success_message", filename: document.original_filename),
+        messageText: t("jobs.file_upload_success_message", filename: document.original_filename),
+      },
+      file: {
+        filename: document.original_filename,
+        originalname: document.original_filename,
+      },
+    }
   end
 
-  def set_documents_form
-    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
+  def upload_failure(document)
+    render json: {
+      error: {
+        message: "#{document.original_filename} #{vacancy.errors[:supporting_documents].first}",
+      },
+      file: {
+        filename: document.original_filename,
+        originalname: document.original_filename,
+      },
+    }
+  end
+
+  def step
+    :documents
   end
 
   def documents_form_params
