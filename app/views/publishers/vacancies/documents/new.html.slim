@@ -8,7 +8,7 @@ div
       - if params["back_to_#{action_name}"]
         = f.hidden_field "back_to_#{action_name}", value: "true"
 
-      .moj-multi-file-upload data-uploadUrl="#{organisation_job_documents_path(vacancy.id, action: :create)}" data-deleteUrl="#{organisation_job_documents_path(vacancy.id, action: :destroy)}"
+      = tag.div(class: "moj-multi-file-upload", data: { upload: upload_organisation_job_documents_path(vacancy.id), delete: remove_organisation_job_documents_path(vacancy.id) }) do
         .moj-multi-file__uploaded-files
           h2 class="govuk-heading-m" = "Files added"
           .govuk-summary-list class="moj-multi-file-upload__list"
@@ -18,11 +18,5 @@ div
             label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
             class: "moj-multi-file-upload__input",
             accept: ".doc, .docx, .pdf"
-
-      / = f.govuk_file_field :supporting_documents,
-      /   label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
-      /   accept: ".doc, .docx, .pdf",
-      /   multiple: true,
-      /   include_hidden: false
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
