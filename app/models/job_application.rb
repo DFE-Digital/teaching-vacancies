@@ -75,6 +75,7 @@ class JobApplication < ApplicationRecord
   has_many :employments, dependent: :destroy
   has_many :references, dependent: :destroy
   has_many :training_and_cpds, dependent: :destroy
+  has_many :professional_body_memberships, dependent: :destroy
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :job_application
 
