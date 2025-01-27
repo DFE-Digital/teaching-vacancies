@@ -1,18 +1,15 @@
-class Jobseekers::JobApplication::ReviewForm < Jobseekers::JobApplication::PreSubmitForm
-  attr_accessor :confirm_data_accurate, :confirm_data_usage, :update_profile
+module Jobseekers
+  module JobApplication
+    class ReviewForm < PreSubmitForm
+      attr_accessor :confirm_data_accurate, :confirm_data_usage
 
-  validates_acceptance_of :confirm_data_accurate, :confirm_data_usage,
-                          acceptance: true,
-                          if: :all_steps_completed?
-  def update_profile_qualifications?
-    update_profile&.include?("qualifications")
-  end
+      validates_acceptance_of :confirm_data_accurate, :confirm_data_usage,
+                              acceptance: true,
+                              if: :all_steps_completed?
 
-  def update_profile_work_history?
-    update_profile&.include?("work_history")
-  end
+      include ActiveModel::Attributes
 
-  def update_profile_training_and_cpds?
-    update_profile&.include?("training_and_cpds")
+      attribute :update_profile, :boolean
+    end
   end
 end

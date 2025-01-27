@@ -1,0 +1,27 @@
+en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/job_application/review_form:
+          attributes:
+            confirm_data_accurate:
+              accepted:  You must confirm that your information is accurate and complete
+            confirm_data_usage:
+              accepted: You must consent to share your data in order to apply for this job
+  helpers:
+    legend:
+      jobseekers_job_application_review_form:
+        update_profile: Update your profile
+
+    hint:
+      jobseekers_job_application_review_form:
+        update_profile: If you turn on your profile, schools can use it to contact you about roles. You can update your existing profile to match this application.
+
+    label:
+      jobseekers_job_application_review_form:
+        update_profile_options:
+          "1": Update my profile
+        confirm_data_accurate_options:
+          "1": I confirm that the above information is accurate and complete
+        confirm_data_usage_options:
+          "1": I consent to my data being shared with these organisations

@@ -29,7 +29,7 @@ RSpec.describe "Jobseekers can submit a job application" do
         .to change { JobApplication.first.status }.from("draft").to("submitted")
         .and change { delivered_emails.count }.by(1)
 
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
+      expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
 
       visit first_link_from_last_mail
       expect(current_path).to eq(jobseekers_job_applications_path)
