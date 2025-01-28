@@ -32,24 +32,26 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def upload_file
-    document = params.require(:documents)
+    @document = params.require(:documents)
 
-    if vacancy.supporting_documents.attach(document)
-      upload_success document
-    else
-      upload_failure document
+    respond_to do |format|
+      if vacancy.supporting_documents.attach(@document)
+        send_dfe_analytics_event(:supporting_document_created, @document.original_filename, @document.size, @document.content_type)
+        format.json { render "upload_success" }
+      else
+        format.json { render "upload_error" }
+      end
     end
   end
 
   def delete_uploaded_file
-    vacancy.supporting_documents.select { |d| d.filename == params.require(:delete) }.each do |document|
+    filename = params.require(:delete)
+    vacancy.supporting_documents.select { |d| d.filename == filename }.each do |document|
       document.purge
       send_dfe_analytics_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
     end
 
-    render json: {
-      success: true,
-    }
+    respond_to(&:json)
   end
 
   def confirm
@@ -64,25 +66,8 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   private
 
-  def upload_success(document)
-    send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
-    render json: {
-      success: {
-        messageHtml: t("jobs.file_upload_success_message", filename: document.original_filename),
-        messageText: t("jobs.file_upload_success_message", filename: document.original_filename),
-      },
-      file: {
-        filename: document.original_filename,
-        originalname: document.original_filename,
-      },
-    }
-  end
-
-  def upload_failure(document)
-    render json: {
-      error: {
-        message: "#{document.original_filename} #{vacancy.errors[:supporting_documents].first}",
-      },
+  def file_json(document)
+    {
       file: {
         filename: document.original_filename,
         originalname: document.original_filename,
