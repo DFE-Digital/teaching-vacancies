@@ -261,7 +261,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_103408) do
     t.string "baptism_address_ciphertext"
     t.string "baptism_date_ciphertext"
     t.string "ethos_and_aims_ciphertext"
-    t.boolean "professional_body_membership_section_completed"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
