@@ -63,7 +63,7 @@ RSpec.describe "Documents" do
         }
       end
 
-      it "triggers an event" do
+      it "triggers an event", :dfe_analytics do
         request
         expect(:supporting_document_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
           with_data: { vacancy_id: vacancy.id,
@@ -158,6 +158,30 @@ RSpec.describe "Documents" do
       it "redirects to the documents index page" do
         expect(request).to redirect_to(organisation_job_documents_path(vacancy.id))
       end
+    end
+  end
+
+  describe "POST #delete_uploaded_file" do
+    let(:vacancy) { create(:vacancy, :with_supporting_documents, organisations: [organisation]) }
+    let(:document) { vacancy.supporting_documents.first }
+    let(:request) { post remove_organisation_job_documents_path(vacancy.id, params: { delete: document.filename }, format: :json) }
+
+    it "triggers an event", :dfe_analytics do
+      request
+      expect(:supporting_document_deleted).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
+        with_data: { vacancy_id: vacancy.id,
+                     document_type: "supporting_document",
+                     name: "blank_job_spec.pdf",
+                     size: vacancy.supporting_documents.first.byte_size,
+                     content_type: "application/pdf" },
+      )
+    end
+
+    it "removes the document" do
+      request
+
+      expect(response.parsed_body).to eq("success" => true)
+      expect(vacancy.reload.supporting_documents).to be_empty
     end
   end
 

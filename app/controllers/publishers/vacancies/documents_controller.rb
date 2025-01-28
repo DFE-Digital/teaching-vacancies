@@ -66,15 +66,6 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   private
 
-  def file_json(document)
-    {
-      file: {
-        filename: document.original_filename,
-        originalname: document.original_filename,
-      },
-    }
-  end
-
   def step
     :documents
   end
