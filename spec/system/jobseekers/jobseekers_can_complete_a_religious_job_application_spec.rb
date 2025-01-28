@@ -21,18 +21,19 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
     before do
       fill_in_past_personal_statement
-      click_on I18n.t("jobseekers.job_applications.build.religious_information.step_title")
+      click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
+      choose "Yes, I've completed this section"
     end
 
     it "validates first religion step" do
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.build.catholic_following_religion.preference_to_catholics"))
+      expect(page).to have_content(I18n.t("jobseekers.job_applications.build.catholic.preference_to_catholics"))
       validates_step_complete
-      expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_following_religion_form.attributes.following_religion.inclusion"))
+      expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.following_religion.inclusion"))
     end
 
     context "without a religion" do
       before do
-        choose "No"
+        find("label[for='jobseekers-job-application-catholic-form-following-religion-false-field']").click
         click_on I18n.t("buttons.save_and_continue")
       end
 
@@ -44,42 +45,44 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
     context "with a religion" do
       before do
-        choose "Yes"
-        click_on I18n.t("buttons.save_and_continue")
+        find("label[for='jobseekers-job-application-catholic-form-following-religion-true-field']").click
+        choose "Yes, I've completed this section"
       end
 
       it "produces the correct errors" do
         validates_step_complete
-        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_religion_details_form.attributes.faith.blank"))
-        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_religion_details_form.attributes.religious_reference_type.inclusion"))
+        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.faith.blank"))
+        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_reference_type.inclusion"))
       end
 
       context "with a denomination" do
         before do
-          fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.faith"), with: "follower of #{Faker::Religion::Bible.character}"
-          fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.place_of_worship"), with: "#{Faker::Address.city} Church"
+          fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.faith"), with: "follower of #{Faker::Religion::Bible.character}"
+          fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.place_of_worship"), with: "#{Faker::Address.city} Church"
         end
 
         context "with a referee" do
           before do
-            choose I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.religious_reference_type_options.referee")
+            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-referee-field']").click
           end
 
           it "produces the correct error messages" do
             validates_step_complete
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_religion_details_form.attributes.religious_referee_name.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_religion_details_form.attributes.religious_referee_role.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_religion_details_form.attributes.religious_referee_address.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_religion_details_form.attributes.religious_referee_email.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_name.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_role.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_address.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.religious_referee_email.blank"))
           end
 
           context "when on review page" do
             before do
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.religious_referee_name"), with: referee_name
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.religious_referee_address"), with: referee_address
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.religious_referee_role"), with: referee_role
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.religious_referee_email"), with: referee_email
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.religious_referee_phone"), with: referee_phone
+              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_name"), with: referee_name
+              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_address"), with: referee_address
+              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_role"), with: referee_role
+              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_email"), with: referee_email
+              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_referee_phone"), with: referee_phone
+
+              choose "Yes, I've completed this section"
               click_on I18n.t("buttons.save_and_continue")
               complete_from_references_page
             end
@@ -110,17 +113,17 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
         context "with a baptism certificate" do
           before do
-            choose I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.religious_reference_type_options.baptism_certificate")
+            choose I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.baptism_certificate")
           end
 
           it "produces the correct errors" do
             validates_step_complete
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_religion_details_form.attributes.baptism_certificate.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.baptism_certificate.blank"))
           end
 
           context "with an uploaded baptism cerificate" do
             before do
-              page.attach_file("jobseekers-job-application-catholic-religion-details-form-baptism-certificate-field", Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf"))
+              page.attach_file("jobseekers-job-application-catholic-form-baptism-certificate-field", Rails.root.join("spec/fixtures/files/blank_baptism_cert.pdf"))
 
               allow_any_instance_of(FormFileValidator).to receive(:virus_free?).and_return(true)
               click_on I18n.t("buttons.save_and_continue")
@@ -132,7 +135,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               expect(page).to have_content("blank_baptism_cert.pdf")
             end
 
-            it "can be submitted as an application", :js do
+            it "can be submitted as an application" do
               complete_from_references_page
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
@@ -145,19 +148,19 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
         context "with an address and date of baptism" do
           before do
-            choose I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.religious_reference_type_options.baptism_date")
+            choose I18n.t("helpers.label.jobseekers_job_application_catholic_form.religious_reference_type_options.baptism_date")
           end
 
           let(:baptism_address) { Faker::Address.full_address }
 
           it "produces the correct errors" do
             validates_step_complete
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_religion_details_form.attributes.baptism_address.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_religion_details_form.attributes.baptism_date.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.baptism_address.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.baptism_date.blank"))
           end
 
           it "allows jobseekers to specify a baptism address and date" do
-            fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.baptism_address"), with: baptism_address
+            fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_form.baptism_address"), with: baptism_address
             fill_in "Day", with: 7
             fill_in "Month", with: 3
             fill_in "Year", with: 2007
@@ -172,7 +175,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
         context "without a referee" do
           before do
-            choose I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.religious_reference_type_options.no_referee")
+            find("label[for='jobseekers-job-application-catholic-form-religious-reference-type-no-referee-field']").click
           end
 
           it "allows jobseeker to not specify a religious referee" do
@@ -189,36 +192,37 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
     before do
       fill_in_past_personal_statement
-      click_on I18n.t("jobseekers.job_applications.build.religious_information.step_title")
+      click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
+      choose "Yes, I've completed this section"
     end
 
     it "validates ethos and aims step" do
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.build.school_ethos.preference_to_religious_applicants"))
+      expect(page).to have_content(I18n.t("jobseekers.job_applications.build.non_catholic.preference_to_religious_applicants"))
       validates_step_complete
-      expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/school_ethos_form.attributes.ethos_and_aims.blank"))
+      sleep 20
+      expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.ethos_and_aims.blank"))
     end
 
     context "when on page 2" do
       before do
-        fill_in I18n.t("helpers.label.jobseekers_job_application_school_ethos_form.ethos_and_aims"), with: Faker::Lorem.sentence
-        click_on I18n.t("buttons.save_and_continue")
+        fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.ethos_and_aims"), with: Faker::Lorem.sentence
       end
 
       it "show the correct error" do
         validates_step_complete
-        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_following_religion_form.attributes.following_religion.inclusion"))
+        expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.following_religion.inclusion"))
       end
 
       context "when completing following religion question" do
         before do
-          choose following_religion
-          click_on I18n.t("buttons.save_and_continue")
+          find("label[for='jobseekers-job-application-non-catholic-form-following-religion-#{following_religion}-field']").click
         end
 
         context "when not following a religion" do
-          let(:following_religion) { "No" }
+          let(:following_religion) { false }
 
           it "completes the religious journey" do
+            click_on I18n.t("buttons.save_and_continue")
             expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
             complete_from_references_page
             submit_application_from_review
@@ -227,27 +231,28 @@ RSpec.describe "Jobseekers can complete a religious job application" do
         end
 
         context "when following a religion" do
-          let(:following_religion) { "Yes" }
+          let(:following_religion) { true }
 
           it "displays the non catholic details form" do
-            expect(page).to have_content(I18n.t("helpers.label.jobseekers_job_application_non_catholic_religion_details_form.faith"))
+            expect(page).to have_content(I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.faith"))
           end
 
           it "errors correctly" do
             validates_step_complete
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_religion_details_form.attributes.faith.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_religion_details_form.attributes.religious_reference_type.inclusion"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.faith.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.religious_reference_type.inclusion"))
           end
 
           context "with a faith" do
             before do
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.faith"), with: "follower of #{Faker::Religion::Bible.character}"
-              fill_in I18n.t("helpers.label.jobseekers_job_application_catholic_religion_details_form.place_of_worship"), with: "#{Faker::Address.city} Church"
+              fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.faith"), with: "follower of #{Faker::Religion::Bible.character}"
+              fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.place_of_worship"), with: "#{Faker::Address.city} Church"
             end
 
             context "without a referee" do
               before do
-                choose "No"
+                sleep 5
+                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-no-referee-field']").click
               end
 
               it "completes the journey" do
@@ -261,20 +266,19 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
             context "when entering a referee" do
               before do
-                choose "Yes"
+                find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-referee-field']").click
               end
 
               it "errors when not entered" do
-                click_on I18n.t("buttons.save_and_continue")
                 validates_step_complete
               end
 
               it "can complete the journey" do
-                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_religion_details_form.religious_referee_name"), with: referee_name
-                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_religion_details_form.religious_referee_address"), with: referee_address
-                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_religion_details_form.religious_referee_role"), with: referee_role
-                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_religion_details_form.religious_referee_email"), with: referee_email
-                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_religion_details_form.religious_referee_phone"), with: referee_phone
+                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_name"), with: referee_name
+                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_address"), with: referee_address
+                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_role"), with: referee_role
+                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_email"), with: referee_email
+                fill_in I18n.t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_phone"), with: referee_phone
                 click_on I18n.t("buttons.save_and_continue")
                 complete_from_references_page
                 submit_application_from_review

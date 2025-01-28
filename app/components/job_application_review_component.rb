@@ -8,11 +8,11 @@ class JobApplicationReviewComponent < ApplicationComponent
 
   renders_many(:sections, lambda do |section_name, **kwargs|
     case section_name
-    when :catholic_following_religion
+    when :catholic
       CatholicReligiousInformationSection.new(@job_application,
                                               name: section_name,
                                               allow_edit: @allow_edit)
-    when :school_ethos
+    when :non_catholic
       NonCatholicReligiousInformationSection.new(@job_application,
                                                  name: section_name,
                                                  allow_edit: @allow_edit)

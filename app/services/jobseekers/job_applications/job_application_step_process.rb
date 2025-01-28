@@ -16,27 +16,19 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
     review: %i[review],
   }.freeze
 
-  ALL_CATHOLIC_STEPS = %i[catholic_following_religion catholic_religion_details].freeze
-
-  ALL_NON_CATHOLIC_STEPS = %i[school_ethos non_catholic_following_religion non_catholic_religion_details].freeze
-
   def initialize(job_application:)
     @job_application = job_application
 
     religious_steps = case job_application.vacancy.religion_type
                       when "catholic"
-                        catholic_steps job_application
+                        { catholic: [:catholic] }
                       when "other_religion"
-                        other_religion_steps job_application
+                        { non_catholic: [:non_catholic] }
                       else
-                        []
+                        {}
                       end
 
-    @step_groups = if religious_steps.any?
-                     PRE_RELIGION_STEPS.merge(religious_information: religious_steps).merge(POST_RELIGION_STEPS)
-                   else
-                     PRE_RELIGION_STEPS.merge(POST_RELIGION_STEPS)
-                   end
+    @step_groups = PRE_RELIGION_STEPS.merge(religious_steps).merge(POST_RELIGION_STEPS)
   end
 
   # Returns the keys of all individual steps in order
@@ -56,30 +48,12 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
   def all_possible_steps
     steps = case job_application.vacancy.religion_type
             when "catholic"
-              PRE_RELIGION_STEPS.merge(religious_information: ALL_CATHOLIC_STEPS).merge(POST_RELIGION_STEPS)
+              PRE_RELIGION_STEPS.merge(religious_information: [:religious_information]).merge(POST_RELIGION_STEPS)
             when "other_religion"
-              PRE_RELIGION_STEPS.merge(religious_information: ALL_NON_CATHOLIC_STEPS).merge(POST_RELIGION_STEPS)
+              PRE_RELIGION_STEPS.merge(non_catholic: [:non_catholic]).merge(POST_RELIGION_STEPS)
             else
               PRE_RELIGION_STEPS.merge(POST_RELIGION_STEPS)
             end
     steps.values.flatten
-  end
-
-  private
-
-  def catholic_steps(job_application)
-    if job_application.following_religion || job_application.following_religion.nil?
-      ALL_CATHOLIC_STEPS
-    else
-      ALL_CATHOLIC_STEPS - [:catholic_religion_details]
-    end
-  end
-
-  def other_religion_steps(job_application)
-    if job_application.following_religion || job_application.following_religion.nil?
-      ALL_NON_CATHOLIC_STEPS
-    else
-      ALL_NON_CATHOLIC_STEPS - [:non_catholic_religion_details]
-    end
   end
 end

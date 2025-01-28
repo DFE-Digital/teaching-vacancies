@@ -17,7 +17,7 @@ module Jobseekers
         end
 
         def load_form(model)
-          load_form_attributes(model.attributes.merge(completed_attrs(model, :equal_opportunities)))
+          super.merge(completed_attrs(model, :equal_opportunities))
         end
       end
       attr_accessor(*FIELDS)

@@ -55,15 +55,12 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
                  when "show"
                    form_class.load_form(job_application)
                  when "update"
-                   form_params
+                   form_class.load_form(job_application).merge(form_params)
                  end
 
     case step
     when :professional_status
-      attributes.merge(jobseeker_profile_attributes)
-                .merge(trn_params)
-    when :references
-      attributes.merge(references: job_application.references)
+      attributes.merge(trn_params)
     when :employment_history
       attributes.merge(unexplained_employment_gaps: job_application.unexplained_employment_gaps)
     else
@@ -108,7 +105,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_fields
-    # This version doesn't work with date fields
+    # This version doesn't work with date fields as they are submitted in 3 parts (hence form_params doesn't contain the right key)
     # form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
     form_params.except(*form_class.unstorable_fields)
   end
@@ -121,15 +118,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     @vacancy ||= job_application.vacancy
   end
 
-  def jobseeker_profile_attributes
-    {
-      jobseeker_profile: current_jobseeker.jobseeker_profile,
-    }
-  end
-
   def trn_params
-    return {} unless step == :professional_status
-
     {
       teacher_reference_number: form_params[:teacher_reference_number] || current_jobseeker&.jobseeker_profile&.teacher_reference_number,
       has_teacher_reference_number: form_params[:has_teacher_reference_number] || current_jobseeker&.jobseeker_profile&.has_teacher_reference_number,
