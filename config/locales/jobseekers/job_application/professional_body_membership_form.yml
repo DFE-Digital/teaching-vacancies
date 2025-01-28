@@ -13,6 +13,9 @@ en:
       show:
         professional_body_memberships:
           none: You have not added any professional body memberships
+      review:
+        professional_body_memberships:
+          none: No professional body memberships specified
       build:
         professional_body_memberships:
           no_professional_body_memberships: No professional body memberships specified

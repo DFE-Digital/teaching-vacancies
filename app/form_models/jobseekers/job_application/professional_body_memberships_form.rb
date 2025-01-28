@@ -7,15 +7,14 @@ module Jobseekers
 
       class << self
         def unstorable_fields
-          %i[professional_body_membership_section_completed]
+          %i[professional_body_memberships_section_completed]
         end
-
         def load_form(model)
-          load_form_attributes(model.attributes.merge(completed_attrs(model, :professional_body_membership)))
+          load_form_attributes(model.attributes.merge(completed_attrs(model, :professional_body_memberships)))
         end
       end
 
-      completed_attribute(:professional_body_membership)
+      completed_attribute(:professional_body_memberships)
     end
   end
 end
