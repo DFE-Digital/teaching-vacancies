@@ -57,11 +57,8 @@ RSpec.describe "Jobseekers can add professional body memberships to their job ap
 
     it "allows jobseekers to delete the professional body membership" do
       click_on I18n.t("buttons.delete")
-      expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :professional_body_memberships))
-      fill_in "Name of professional body", with: "Teaching staff union"
-      click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_no_content("Teachers Union")
-      expect(page).to have_content("COnfirmation message")
+      expect(page).to have_content("Professional body membership deleted")
     end
   end
 

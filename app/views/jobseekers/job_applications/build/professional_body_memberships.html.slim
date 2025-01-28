@@ -31,7 +31,7 @@
 
     = form_for form, url: jobseekers_job_application_build_path(job_application, :professional_body_memberships), method: :patch do |f|
       = f.govuk_error_summary
-      = f.govuk_collection_radio_buttons :professional_body_membership_section_completed, %w[true false], :to_s
+      = f.govuk_collection_radio_buttons :professional_body_memberships_section_completed, %w[true false], :to_s
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
         span.govuk-caption-m

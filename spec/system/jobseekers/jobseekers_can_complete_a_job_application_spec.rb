@@ -52,6 +52,17 @@ RSpec.describe "Jobseekers can complete a job application" do
     choose "Yes, I've completed this section"
     click_on "Save and continue"
 
+    click_on(I18n.t("jobseekers.job_applications.build.professional_body_memberships.heading"))
+    expect(page).to have_content("No professional body memberships")
+    validates_step_complete
+    click_on "Add membership"
+    click_on "Save and continue"
+    expect(page).to have_content("There is a problem")
+    fill_in_professional_body_membership
+    click_on "Save and continue"
+    choose "Yes, I've completed this section"
+    click_on "Save and continue"
+
     click_on(I18n.t("jobseekers.job_applications.build.employment_history.heading"))
     validates_step_complete
     click_on I18n.t("buttons.add_work_history")
