@@ -158,7 +158,6 @@ shared:
     - baptism_address
     - baptism_date
     - ethos_and_aims
-    - professional_body_membership_section_completed
   job_preferences_locations:
     - id
     - job_preferences_id
