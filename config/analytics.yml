@@ -223,14 +223,6 @@ shared:
     - centroid
     - created_at
     - updated_at
-  notifications:
-    - id
-    - recipient_type
-    - recipient_id
-    - type
-    - read_at
-    - created_at
-    - updated_at
   organisations:
     - id
     - type

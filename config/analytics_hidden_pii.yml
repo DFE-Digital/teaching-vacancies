@@ -52,8 +52,6 @@ shared:
     - govuk_one_login_id
   job_preferences:
     - jobseeker_profile_id
-  notifications:
-    - recipient_id
   organisations:
     - email
   organisation_publishers:
