@@ -8,24 +8,3 @@ en:
     legend:
       jobseekers_job_application_professional_body_memberships_form:
         professional_body_memberships_section_completed: Have you completed this section?
-  jobseekers:
-    job_applications:
-      show:
-        professional_body_memberships:
-          none: You have not added any professional body memberships
-      review:
-        professional_body_memberships:
-          none: No professional body memberships specified
-      build:
-        professional_body_memberships:
-          no_professional_body_memberships: No professional body memberships specified
-      professional_body_memberships:
-        heading: Professional body memberships
-        new:
-          heading: Add professional body memberships
-          page_title: Professional body memberships
-        edit:
-          heading: Edit professional body memberships
-          page_title: Professional body memberships
-        destroy:
-          success: Professional body membership deleted

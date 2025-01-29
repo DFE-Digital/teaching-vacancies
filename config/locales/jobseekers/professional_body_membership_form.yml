@@ -38,3 +38,23 @@ en:
         confirm_destroy:
           caption: Delete professional body membership
           heading: Confirm that you want to delete this professional body membership
+    job_applications:
+      show:
+        professional_body_memberships:
+          none: You have not added any professional body memberships
+      review:
+        professional_body_memberships:
+          none: No professional body memberships specified
+      build:
+        professional_body_memberships:
+          no_professional_body_memberships: No professional body memberships specified
+      professional_body_memberships:
+        heading: Professional body memberships
+        new:
+          heading: Add professional body memberships
+          page_title: Professional body memberships
+        edit:
+          heading: Edit professional body memberships
+          page_title: Professional body memberships
+        destroy:
+          success: Professional body membership deleted
