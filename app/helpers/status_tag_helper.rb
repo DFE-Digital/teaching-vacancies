@@ -1,8 +1,5 @@
 module StatusTagHelper
   STATUS_COLOURS = {
-    optional: "grey",
-    not_started: "grey",
-    action_required: "red",
     complete: "green",
     in_progress: "yellow",
     imported: "blue",
