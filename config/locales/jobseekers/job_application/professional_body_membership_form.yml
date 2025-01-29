@@ -1,0 +1,10 @@
+en:
+  helpers:
+    label:
+      jobseekers_job_application_professional_body_memberships_form:
+        professional_body_memberships_section_completed_options:
+          "true": "Yes, I've completed this section"
+          "false": "No, I'll come back to it later"
+    legend:
+      jobseekers_job_application_professional_body_memberships_form:
+        professional_body_memberships_section_completed: Have you completed this section?
