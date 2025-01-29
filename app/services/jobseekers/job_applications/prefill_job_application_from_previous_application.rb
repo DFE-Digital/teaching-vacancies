@@ -13,6 +13,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     copy_employments
     copy_references
     copy_training_and_cpds
+    copy_professional_body_memberships
     set_status_of_each_step
     new_job_application.save
     new_job_application
@@ -69,6 +70,13 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     end
   end
 
+  def copy_professional_body_memberships
+    recent_job_application.professional_body_memberships.each do |professional_body_membership|
+      new_professional_body_membership = professional_body_membership.dup
+      new_professional_body_membership.update(job_application: new_job_application)
+    end
+  end
+
   def copy_employments
     recent_job_application.employments.each do |employment|
       new_employment = employment.dup
@@ -108,7 +116,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def completed_steps
-    completed_steps = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds following_religion religion_details].select { |step| relevant_steps.include?(step.to_sym) }
+    completed_steps = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].select { |step| relevant_steps.include?(step.to_sym) }
     completed_steps << "employment_history" unless previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
     completed_steps << "professional_status" if previous_application_has_professional_status_details?
     completed_steps

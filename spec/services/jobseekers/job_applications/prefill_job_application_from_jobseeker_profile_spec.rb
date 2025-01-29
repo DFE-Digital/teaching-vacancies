@@ -45,4 +45,11 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerPr
   it "adds training and cpds to in progress steps" do
     expect(subject.in_progress_steps).to include("training_and_cpds")
   end
+
+  it "copies professional body memberships from jobseeker profile" do
+    attributes_to_copy = %i[name membership_type membership_number year_membership_obtained]
+
+    expect(subject.professional_body_memberships.map { |professional_body_membership| professional_body_membership.slice(*attributes_to_copy) })
+      .to eq(jobseeker_profile.professional_body_memberships.map { |professional_body_membership| professional_body_membership.slice(*attributes_to_copy) })
+  end
 end

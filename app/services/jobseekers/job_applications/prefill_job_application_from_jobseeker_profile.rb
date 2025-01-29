@@ -12,6 +12,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
     copy_qualifications
     copy_employments
     copy_training_and_cpds
+    copy_professional_body_memberships
     set_status_of_each_step
     new_job_application.save
     new_job_application
@@ -51,6 +52,13 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
     jobseeker_profile.training_and_cpds.each do |training|
       new_training = training.dup
       new_training.update(job_application: new_job_application)
+    end
+  end
+
+  def copy_professional_body_memberships
+    jobseeker_profile.professional_body_memberships.each do |professional_body_membership|
+      new_professional_body_membership = professional_body_membership.dup
+      new_professional_body_membership.update(job_application: new_job_application)
     end
   end
 
