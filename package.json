@@ -13,7 +13,7 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@ministryofjustice/frontend": "^3.3.1",
-    "@sentry/browser": "8.50.0",
+    "@sentry/browser": "8.52.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
     "axios": "^1.7.9",
@@ -30,8 +30,8 @@
     "rails-ujs": "^5.2.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
+    "@babel/core": "^7.26.7",
+    "@babel/preset-env": "^7.26.7",
     "concurrently": "^9.1.2",
     "dotenv": "^16.4.7",
     "esbuild": "^0.24.2",
