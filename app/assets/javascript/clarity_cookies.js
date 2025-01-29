@@ -2,8 +2,6 @@ import { Cookie } from 'tough-cookie';
 
 const cookies = document.cookie.split(';').map(Cookie.parse);
 
-console.log(document.cookie);
-
 // change clarity consent cookie value from default 'yes' to 'clarity'
 // to remind ourselves that we have called the clarity consent API
 cookies.forEach((cookie) => {
