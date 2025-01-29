@@ -239,6 +239,9 @@ en:
           step_title: Personal statement
           title: Personal statement — Application
         process_title: Application steps
+        professional_body_memberships:
+          heading: Professional body memberships
+          no_training: No memberships specified
         professional_status:
           heading: Professional status
           step_title: Professional status
