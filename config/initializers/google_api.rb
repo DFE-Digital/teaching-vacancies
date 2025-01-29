@@ -1,7 +1,6 @@
 require "google/apis/indexing_v3"
 
 GOOGLE_APIS_KEY = ENV.fetch("GOOGLE_APIS_KEY", "")
-GOOGLE_MAPS_API_KEY = ENV.fetch("GOOGLE_MAPS_API_KEY", "")
 GOOGLE_LOCATION_SEARCH_API_KEY = ENV.fetch("GOOGLE_LOCATION_SEARCH_API_KEY", "")
 
 if GOOGLE_APIS_KEY.empty?
