@@ -467,7 +467,7 @@ GEM
       date
       stringio
     public_suffix (6.0.1)
-    puma (6.5.0)
+    puma (6.6.0)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
@@ -642,14 +642,14 @@ GEM
       websocket (~> 1.0)
     semantic_logger (4.16.0)
       concurrent-ruby (~> 1.0)
-    sentry-rails (5.22.2)
+    sentry-rails (5.22.3)
       railties (>= 5.0)
-      sentry-ruby (~> 5.22.2)
-    sentry-ruby (5.22.2)
+      sentry-ruby (~> 5.22.3)
+    sentry-ruby (5.22.3)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sentry-sidekiq (5.22.2)
-      sentry-ruby (~> 5.22.2)
+    sentry-sidekiq (5.22.3)
+      sentry-ruby (~> 5.22.3)
       sidekiq (>= 3.0)
     shoulda-matchers (6.4.0)
       activesupport (>= 5.2.0)
