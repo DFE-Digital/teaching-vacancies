@@ -15,11 +15,7 @@ module Jobseekers
         end
 
         def load_form(model)
-          load_form_attributes(model.attributes)
-        end
-
-        def load_form_attributes(attrs)
-          attrs.symbolize_keys.slice(*fields)
+          model.slice(*storable_fields)
         end
       end
     end

@@ -15,7 +15,8 @@ module Jobseekers
         end
 
         def load_form(model)
-          load_form_attributes(model.attributes.merge(references: model.references).merge(completed_attrs(model, :references)))
+          super.merge(references: model.references)
+                                    .merge(completed_attrs(model, :references))
         end
       end
 

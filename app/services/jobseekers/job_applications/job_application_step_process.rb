@@ -1,28 +1,59 @@
-module Jobseekers
-  module JobApplications
-    class JobApplicationStepProcess
-      def initialize(job_application:)
-        @job_application = job_application
+class Jobseekers::JobApplications::JobApplicationStepProcess
+  attr_reader :job_application
 
-        @step_groups = {
-          personal_details: %i[personal_details],
-          professional_status: %i[professional_status],
-          qualifications: %i[qualifications],
-          training_and_cpds: %i[training_and_cpds],
-          employment_history: %i[employment_history],
-          personal_statement: %i[personal_statement],
-          references: %i[references],
-          equal_opportunities: %i[equal_opportunities],
-          ask_for_support: %i[ask_for_support],
-          declarations: %i[declarations],
-          review: %i[review],
-        }
-      end
+  PRE_RELIGION_STEPS = { personal_details: %i[personal_details],
+                         professional_status: %i[professional_status],
+                         qualifications: %i[qualifications],
+                         training_and_cpds: %i[training_and_cpds],
+                         employment_history: %i[employment_history],
+                         personal_statement: %i[personal_statement] }.freeze
 
-      # Returns the keys of all individual steps in order
-      def steps
-        @step_groups.values.flatten
-      end
-    end
+  POST_RELIGION_STEPS = {
+    references: %i[references],
+    equal_opportunities: %i[equal_opportunities],
+    ask_for_support: %i[ask_for_support],
+    declarations: %i[declarations],
+    review: %i[review],
+  }.freeze
+
+  def initialize(job_application:)
+    @job_application = job_application
+
+    religious_steps = case job_application.vacancy.religion_type
+                      when "catholic"
+                        { catholic: [:catholic] }
+                      when "other_religion"
+                        { non_catholic: [:non_catholic] }
+                      else
+                        {}
+                      end
+
+    @step_groups = PRE_RELIGION_STEPS.merge(religious_steps).merge(POST_RELIGION_STEPS)
+  end
+
+  # Returns the keys of all individual steps in order
+  def steps
+    @step_groups.values.flatten
+  end
+
+  def next_step(step)
+    steps[steps.index(step) + 1]
+  end
+
+  def last_of_group?(step)
+    group = @step_groups.values.detect { |g| g.include?(step) }
+    step == group.last
+  end
+
+  def all_possible_steps
+    steps = case job_application.vacancy.religion_type
+            when "catholic"
+              PRE_RELIGION_STEPS.merge(religious_information: [:religious_information]).merge(POST_RELIGION_STEPS)
+            when "other_religion"
+              PRE_RELIGION_STEPS.merge(non_catholic: [:non_catholic]).merge(POST_RELIGION_STEPS)
+            else
+              PRE_RELIGION_STEPS.merge(POST_RELIGION_STEPS)
+            end
+    steps.values.flatten
   end
 end

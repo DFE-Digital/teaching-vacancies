@@ -241,6 +241,8 @@ en:
       cannot_be_changed_once_listed: >-
         You cannot change how you want candidates to apply now that your listing is published
       inclusion: Select yes if you want candidates to use the application form
+    application_form_type:
+      blank: Select the type of application form you wish to use
   how_to_receive_applications_errors: &how_to_receive_applications_errors
     receive_applications:
       inclusion: Select how you want to receive applications
@@ -480,6 +482,54 @@ en:
           attributes:
             training_and_cpds_section_completed:
               blank: Select yes if you have completed this section
+        jobseekers/job_application/religious_information_form:
+          attributes:
+            following_religion:
+              inclusion: Select yes if you follow a specific religion or faith
+            faith:
+              blank: Enter your religious denomination or faith
+            religious_referee_name:
+              blank: Enter your referee name
+            religious_referee_address:
+              blank: Enter your referee address
+            religious_referee_role:
+              blank: Enter your referee role
+            religious_referee_email:
+              blank: Enter your referee email address
+              invalid: Enter a valid email address
+            religious_reference_type:
+              inclusion: Select if you can provide a religious referee
+            baptism_address:
+              blank: Enter the address of the baptism
+            baptism_date:
+              blank: Enter the baptism date
+            baptism_certificate:
+              blank: Upload your baptism certificate
+        jobseekers/job_application/catholic_form:
+          attributes:
+            catholic_section_completed:
+              inclusion: Select yes if you have completed this section
+        jobseekers/job_application/non_catholic_form:
+          attributes:
+            non_catholic_section_completed:
+              inclusion: Select yes if you have completed this section
+            following_religion:
+              inclusion: Select yes if you follow a specific religion or faith
+            faith:
+              blank: Enter your religious denomination or faith
+            religious_referee_name:
+              blank: Enter your referee name
+            religious_referee_address:
+              blank: Enter your referee address
+            religious_referee_role:
+              blank: Enter your referee role
+            religious_referee_email:
+              blank: Enter your referee email address
+              invalid: Enter a valid email address
+            religious_reference_type:
+              inclusion: Select yes if you can provide a religious referee
+            ethos_and_aims:
+              blank: Enter how you will support the ethos and aims of the school
         jobseekers/job_application/pre_submit_form:
           ask_for_support:
             incomplete: Complete the questions on interview support
@@ -499,8 +549,20 @@ en:
             incomplete: Complete your qualifications
           references:
             incomplete: Complete your references
+          school_ethos:
+            incomplete: Complete the question about how you meet the schools ethos and aims
+          catholic_following_religion:
+            incomplete: Complete your religious information
+          non_catholic_following_religion:
+            incomplete: Complete your religious information
+          catholic_religion_details:
+            incomplete: Complete your religious information
+          non_catholic_religion_details:
+            incomplete: Complete your religious information
           training_and_cpds:
             incomplete: Complete your training and CPD
+          religious:
+            incomplete: Complete your religious information
         jobseekers/job_application/review_form:
           attributes:
             confirm_data_accurate:

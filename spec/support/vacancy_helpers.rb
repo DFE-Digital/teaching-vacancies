@@ -104,11 +104,11 @@ module VacancyHelpers
   def fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
     return unless !local_authority_vacancy && vacancy.enable_job_applications?
 
-    choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true"))
+    find('label[for="publishers-job-listing-applying-for-the-job-form-application-form-type-no-religion-field"]').click
   end
 
   def fill_in_applying_for_the_job_disable_job_applications
-    choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.false"))
+    choose strip_tags(I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other"))
   end
 
   def fill_in_how_to_receive_applications_form_fields(vacancy)
@@ -203,7 +203,7 @@ module VacancyHelpers
     expect(page).to have_content(vacancy.actual_salary) if vacancy.salary_types.include?("part_time")
     expect(page).to have_content(vacancy.pay_scale) if vacancy.salary_types.include?("pay_scale")
 
-    expect(page.html).to include(vacancy.benefits_details) if vacancy.benefits?
+    expect(page).to have_content(strip_tags(vacancy.benefits_details)) if vacancy.benefits?
 
     expect(page).to have_content(vacancy.publish_on.to_formatted_s.strip)
     expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
@@ -387,19 +387,57 @@ module VacancyHelpers
 
   def expect_correct_pay_package_options(vacancy)
     if vacancy.contract_type == "casual"
-      expect(page).not_to have_field("Full-time equivalent salary", type: "checkbox")
-      expect(page).not_to have_field("Actual salary", type: "checkbox")
-      expect(page).not_to have_field("Pay scale", type: "checkbox")
-      expect(page).to have_field("Hourly rate of pay", type: "checkbox")
+      expect(page).not_to have_content("Full-time equivalent salary")
+      expect(page).not_to have_content("Actual salary")
+      expect(page).not_to have_content("Pay scale")
+      expect(page).to have_content("Hourly rate of pay")
     else
-      expect(page).to have_field("Full-time equivalent salary", type: "checkbox")
-      expect(page).to have_field("Pay scale", type: "checkbox")
-      expect(page).to have_field("Hourly rate of pay", type: "checkbox")
+      expect(page).to have_content("Full-time equivalent salary")
+      expect(page).to have_content("Pay scale")
+      expect(page).to have_content("Hourly rate of pay")
       if vacancy.working_patterns.include? "part_time"
-        expect(page).to have_field("Actual salary", type: "checkbox")
+        expect(page).to have_content("Actual salary")
       else
-        expect(page).not_to have_field("Actual salary", type: "checkbox")
+        expect(page).not_to have_content("Actual salary")
       end
     end
+  end
+
+  def fill_in_forms_until_start_date(vacancy)
+    click_on I18n.t("buttons.create_job")
+    expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :job_title), ignore_query: true)
+
+    fill_in_job_title_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :job_role), ignore_query: true)
+
+    fill_in_job_role_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :key_stages), ignore_query: true)
+
+    fill_in_key_stages_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :subjects), ignore_query: true)
+
+    fill_in_subjects_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :contract_type), ignore_query: true)
+
+    fill_in_contract_type_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :working_patterns), ignore_query: true)
+
+    fill_in_working_patterns_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :pay_package), ignore_query: true)
+
+    fill_in_pay_package_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :important_dates), ignore_query: true)
+
+    fill_in_important_dates_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :start_date), ignore_query: true)
   end
 end

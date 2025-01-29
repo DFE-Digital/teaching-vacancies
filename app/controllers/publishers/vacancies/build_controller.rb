@@ -43,7 +43,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   def form_attributes
     case action_name
     when "show"
-      vacancy.slice(*form_class.fields)
+      form_class.load_form(vacancy)
     when "update"
       form_params
     end

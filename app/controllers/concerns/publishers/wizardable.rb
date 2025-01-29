@@ -1,4 +1,4 @@
-module Publishers::Wizardable
+module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
   STRIP_CHECKBOXES = {
     job_location: %i[organisation_ids],
     education_phases: %i[phases],
@@ -83,7 +83,7 @@ module Publishers::Wizardable
   def applying_for_the_job_params(params)
     if params[:publishers_job_listing_applying_for_the_job_form]
       params.require(:publishers_job_listing_applying_for_the_job_form)
-            .permit(:enable_job_applications)
+            .permit(:application_form_type)
     else
       {}
     end.merge(completed_steps: completed_steps, current_organisation: current_organisation)

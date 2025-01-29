@@ -1,29 +1,42 @@
 - content_for :page_title_prefix, page_title_prefix(step_process, form)
 
 .govuk-grid-row
-  .govuk-grid-column-two-thirds
-    = form_for form, url: wizard_path(current_step), method: :patch do |f|
-      = f.govuk_error_summary
+  = form_for form, url: wizard_path(current_step), method: :patch do |f|
+    = f.govuk_error_summary
 
-      = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
+    = vacancy_form_page_heading(vacancy, step_process, back_path: back_path, fieldset: false)
 
-      p.govuk-body = t(".using_application_form_html", link: govuk_link_to(t(".kcsie_guidance"), t(".kcsie_url"), target: "_blank", rel: "noreferrer noopener"))
+    - if vacancy.listed?
+      = f.hidden_field :application_form_type, :other
+    - else
+      = f.govuk_radio_buttons_fieldset :application_form_type, legend: nil do
+        p.govuk-body = t(".using_application_form")
 
-      p.govuk-body = t(".reason_for_our_form")
+        p.govuk-body = t(".reason_for_our_form")
 
-      = govuk_details(summary_text: "See what an application form looks like") do
-        = job_application_review(job_application_sample(vacancy), show_sidebar: false, allow_edit: false) do |r|
-          - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: r.job_application
+        = f.govuk_radio_button :application_form_type, :no_religion,
+          label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.no_religion_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) },
+          link_errors: true
+        = govuk_details(summary_text: t(".preview_online_application_form")) do
+          = job_application_review(job_application_sample(vacancy), show_sidebar: false, allow_edit: false) do |r|
+            - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: r.job_application
 
-      - if vacancy.listed?
-        = f.hidden_field :enable_job_applications
-      - else
-        = f.govuk_radio_buttons_fieldset :enable_job_applications, legend: { size: "m", tag: nil } do
-          = f.govuk_radio_button :enable_job_applications, true,
-            label: -> { safe_join([t("helpers.label.publishers_job_listing_applying_for_the_job_form.enable_job_applications_options.true"), govuk_tag(text: t(".kcsie_compliant"), colour: "green")]) },
-            hint: { text: t(".this_form_is_kept_up_to_date") },
-            link_errors: true
-          = f.govuk_radio_divider
-          = f.govuk_radio_button :enable_job_applications, "false"
+        - if vacancy.organisations.any?(&:faith_school?)
+          = f.govuk_radio_button :application_form_type, :other_religion,
+            label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.other_religion_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) }
 
-      = render "publishers/vacancies/vacancy_form_partials/submit", f: f
+          = govuk_details(summary_text: t(".preview_religious_application_form")) do
+            = job_application_review(religious_job_application_sample(vacancy), show_sidebar: false, allow_edit: false) do |r|
+              - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: r.job_application
+
+          = f.govuk_radio_button :application_form_type, :catholic,
+          label: -> { t("helpers.label.publishers_job_listing_applying_for_the_job_form.application_form_type_options.catholic_html", tag: govuk_tag(text: t(".kcsie_compliant"), colour: "green")) }
+          = govuk_details(summary_text: t(".preview_catholic_application_form")) do
+            = job_application_review(catholic_job_application_sample(vacancy), show_sidebar: false, allow_edit: false) do |r|
+              - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: r.job_application
+
+        = f.govuk_radio_divider
+
+        = f.govuk_radio_button :application_form_type, :other
+
+    = render "publishers/vacancies/vacancy_form_partials/submit", f: f
