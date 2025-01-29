@@ -47,6 +47,7 @@ FactoryBot.define do
       qualifications { [build(:qualification, jobseeker_profile: instance)] }
       employments { [build(:employment, jobseeker_profile: instance)] }
       training_and_cpds { [build(:training_and_cpd, jobseeker_profile: instance)] }
+      professional_body_memberships { [build(:professional_body_membership, jobseeker_profile: instance)] }
     end
   end
 end
