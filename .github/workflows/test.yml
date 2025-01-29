@@ -52,7 +52,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spec-
 
-      - name: Run tests
+      - name: Run tests in parallel
         run: bundle exec rake parallel:spec
 
       - name: Upload Capybara failures screenshots
