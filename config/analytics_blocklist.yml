@@ -38,8 +38,6 @@
   - first_name_ciphertext
   - last_name_ciphertext
   - phone_number_ciphertext
-  :notifications:
-  - params
   :notes:
   - id
   - content
