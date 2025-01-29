@@ -9,17 +9,13 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-
 ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
-  enable_extension "citext"
   enable_extension "fuzzystrmatch"
-  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
-  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -326,9 +322,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
-    t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
+    t.string "govuk_one_login_id"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
   end
@@ -489,6 +485,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
     t.integer "year_membership_obtained"
     t.boolean "exam_taken", default: false, null: false
     t.uuid "jobseeker_profile_id"
+    t.uuid "job_application_id"
+    t.index ["job_application_id"], name: "index_professional_body_memberships_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_professional_body_memberships_on_jobseeker_profile_id"
   end
 
@@ -762,6 +760,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
   add_foreign_key "organisation_vacancies", "organisations"
   add_foreign_key "organisation_vacancies", "vacancies"
   add_foreign_key "personal_details", "jobseeker_profiles"
+  add_foreign_key "professional_body_memberships", "job_applications"
   add_foreign_key "professional_body_memberships", "jobseeker_profiles"
   add_foreign_key "publisher_preferences", "organisations"
   add_foreign_key "publisher_preferences", "publishers"
@@ -771,7 +770,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
   add_foreign_key "references", "job_applications"
   add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "saved_jobs", "vacancies"
-  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
+  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id", validate: false
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
   add_foreign_key "training_and_cpds", "job_applications"
   add_foreign_key "training_and_cpds", "jobseeker_profiles"
