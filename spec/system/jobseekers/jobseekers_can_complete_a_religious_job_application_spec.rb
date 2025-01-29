@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     let(:religion_type) { :catholic }
 
     before do
-      fill_in_past_personal_statement
+      fill_in_application_up_to_and_including_personal_statement
       click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
       choose "Yes, I've completed this section"
     end
@@ -191,7 +191,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     let(:religion_type) { :other_religion }
 
     before do
-      fill_in_past_personal_statement
+      fill_in_application_up_to_and_including_personal_statement
       click_on I18n.t("jobseekers.job_applications.build.catholic.step_title")
       choose "Yes, I've completed this section"
     end
@@ -291,7 +291,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     end
   end
 
-  def fill_in_past_personal_statement
+  def fill_in_application_up_to_and_including_personal_statement
     visit jobseekers_job_application_build_path(job_application, :personal_details)
     fill_in_personal_details
     click_on I18n.t("buttons.save_and_continue")
@@ -315,6 +315,13 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     click_on(I18n.t("jobseekers.job_applications.build.training_and_cpds.heading"))
     click_on "Add training"
     fill_in_training_and_cpds
+    click_on "Save and continue"
+    choose "Yes, I've completed this section"
+    click_on "Save and continue"
+
+    click_on(I18n.t("jobseekers.job_applications.build.professional_body_memberships.heading"))
+    click_on "Add membership"
+    fill_in_professional_body_membership
     click_on "Save and continue"
     choose "Yes, I've completed this section"
     click_on "Save and continue"
