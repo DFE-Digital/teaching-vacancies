@@ -23,9 +23,11 @@ RSpec.describe "Jobseekers can prefill applications" do
       let(:qualification1) { create(:qualification) }
       let(:qualification2) { create(:qualification) }
       let(:training) { create(:training_and_cpd) }
+      let(:professional_body_membership) { create(:professional_body_membership) }
       let!(:previous_application) do
         create(:job_application, :status_submitted, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", created_at: 1.year.ago,
-                                                    references: [reference], employments: [employment1, employment2], qualifications: [qualification1, qualification2])
+                                                    references: [reference], employments: [employment1, employment2], qualifications: [qualification1, qualification2],
+                                                    professional_body_memberships: [professional_body_membership])
       end
 
       it "prefills the new application with the previous application details, not the profile details and marks steps as `imported`" do
@@ -101,6 +103,17 @@ RSpec.describe "Jobseekers can prefill applications" do
         click_on "Back"
 
         within("#training_and_cpds") do
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
+        end
+
+        click_on I18n.t("jobseekers.job_applications.build.professional_body_memberships.heading")
+        expect(page).to have_content(professional_body_membership.name)
+        expect(page).to have_content(professional_body_membership.membership_type)
+        expect(page).to have_content(professional_body_membership.membership_number)
+        expect(page).to have_content(professional_body_membership.year_membership_obtained)
+        click_on "Back"
+
+        within("#professional_body_memberships") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
 
