@@ -11,7 +11,7 @@ module Jobseekers
         end
 
         def load_form(model)
-          load_form(model.attributes.merge(completed_attrs(model, :professional_body_memberships)))
+          super.merge(completed_attrs(model, :professional_body_memberships))
         end
       end
 
