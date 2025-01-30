@@ -10,6 +10,8 @@ RSpec.describe "Publishers can add notes to a job application", js: true do
 
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
+  after { logout }
+
   it "shows the current notes" do
     visit organisation_job_job_application_path(vacancy.id, job_application)
 
