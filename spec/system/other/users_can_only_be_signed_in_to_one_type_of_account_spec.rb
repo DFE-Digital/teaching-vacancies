@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Users can only be signed in to one type of account" do
-  let(:school) { create(:school, urn: "110627") }
+  let(:school) { create(:school, :with_image, urn: "110627") }
 
   let(:jobseeker) { create(:jobseeker) }
   let!(:publisher) { create(:publisher, organisations: [school]) }

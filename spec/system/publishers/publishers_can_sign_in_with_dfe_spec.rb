@@ -56,7 +56,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
   end
 
   context "with valid credentials that match a school" do
-    let!(:organisation) { create(:school, urn: "110627") }
+    let!(:organisation) { create(:school, :with_image, urn: "110627") }
 
     before do
       stub_publisher_authentication_step email: dsi_email_address
