@@ -88,7 +88,7 @@ module Jobseekers
 
     step :working_patterns do
       attribute :working_patterns, array: true
-
+      attribute :working_pattern_details
       validates :working_patterns, presence: true
 
       def options

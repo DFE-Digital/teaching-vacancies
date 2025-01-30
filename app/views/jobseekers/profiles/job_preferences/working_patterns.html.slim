@@ -9,5 +9,6 @@
   .govuk-grid-row
     .govuk-grid-column-two-thirds
       = f.govuk_collection_check_boxes :working_patterns, @step.options, :first, :last, legend: { size: "l", text: "Working patterns" }, caption: { text: "Job preferences", size: "l" }
+      = f.govuk_text_area :working_pattern_details, label: { text: "Provide more details about your working pattern preference (optional)", size: "s" }, hint: { text: "For example, if you're looking for a role that's 2 days a week, or Monday to Wednesday." }
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path

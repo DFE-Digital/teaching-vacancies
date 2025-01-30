@@ -365,6 +365,7 @@ en:
         subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
         reason_for_leaving: Reason for leaving role
       jobseekers_job_preferences_form:
+        working_patterns_details: Provide more details about your working pattern preference (optional)
         role_options:
           education_support: Learning support or cover supervisor
           head_of_year_or_phase: Head of year or phase
