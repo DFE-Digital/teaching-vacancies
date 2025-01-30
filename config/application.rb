@@ -66,6 +66,8 @@ module TeachingVacancies
     # Use custom error pages
     config.exceptions_app = routes
 
+    config.active_job.queue_adapter = :sidekiq
+
     # Controls whether Active Job's `#perform_later` and similar methods automatically defer
     # the job queuing to after the current Active Record transaction is committed.
     config.active_job.enqueue_after_transaction_commit = :default
