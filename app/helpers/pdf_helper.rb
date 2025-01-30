@@ -166,7 +166,7 @@ module PdfHelper
           ["Membership type or level:", membership.membership_type],
           ["Membership or registration number:", membership.membership_number],
           ["Date obtained:", membership.year_membership_obtained],
-          ["Exam taken for this membership:", I18n.t("helpers.label.jobseekers_professional_body_membership_form.exam_taken_options.#{professional_body_membership.exam_taken}")],
+          ["Exam taken for this membership:", I18n.t("helpers.label.jobseekers_professional_body_membership_form.exam_taken_options.#{membership.exam_taken}")],
         ].reject { |row| row[1].blank? }
 
         render_table(pdf, professional_body_membership_data)
