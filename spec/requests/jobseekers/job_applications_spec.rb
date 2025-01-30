@@ -30,7 +30,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the job is live" do
-        it "triggers a `vacancy_apply_clicked` event" do
+        it "triggers a `vacancy_apply_clicked` event", :dfe_analytics do
           get new_jobseekers_job_job_application_path(vacancy.id)
 
           expect(:vacancy_apply_clicked).to have_been_enqueued_as_analytics_event(with_data: { vacancy_id: vacancy.id }) # rubocop:disable RSpec/ExpectActual

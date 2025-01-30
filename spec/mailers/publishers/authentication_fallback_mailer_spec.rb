@@ -27,7 +27,7 @@ RSpec.describe Publishers::AuthenticationFallbackMailer do
                   .and include("/login_keys/#{login_key.id}")
     end
 
-    it "triggers a `publisher_sign_in_fallback` email event" do
+    it "triggers a `publisher_sign_in_fallback` email event", :dfe_analytics do
       mail.deliver_now
       expect(:publisher_sign_in_fallback).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end

@@ -12,7 +12,7 @@ RSpec.describe "Events API" do
            headers: { "Referer" => "http://example.com/foo?bar" }
     end
 
-    it "triggers an event" do
+    it "triggers an event", :dfe_analytics do
       expect(:tracked_link_clicked).to have_been_enqueued_as_analytics_event(with_data: event_data) # rubocop:disable RSpec/ExpectActual
     end
 
