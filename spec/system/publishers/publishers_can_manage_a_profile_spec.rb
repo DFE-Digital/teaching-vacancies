@@ -389,7 +389,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
   end
 
   describe "deleting the organisation's logo" do
-    let(:organisation) { create(:school) }
+    let(:organisation) { create(:school, :with_image) }
     let(:image_file_name) { "blank_image.png" }
 
     before do
@@ -440,7 +440,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
   end
 
   describe "deleting the organisation's photo" do
-    let(:organisation) { create(:school) }
+    let(:organisation) { create(:school, :with_image) }
     let(:image_file_name) { "blank_image.png" }
 
     before do
