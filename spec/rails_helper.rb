@@ -82,9 +82,9 @@ RSpec.configure do |config|
   end
 
   config.around(:each, :dfe_analytics) do |example|
-    ENV['ENABLE_DFE_ANALYTICS'] = 'true'
+    ENV["ENABLE_DFE_ANALYTICS"] = "true"
     example.run
-    ENV.delete 'ENABLE_DFE_ANALYTICS'
+    ENV.delete "ENABLE_DFE_ANALYTICS"
   end
 
   config.before(:each, type: :system) do
