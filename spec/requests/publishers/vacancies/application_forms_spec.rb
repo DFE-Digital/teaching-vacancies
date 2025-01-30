@@ -30,7 +30,7 @@ RSpec.describe "Documents" do
     end
 
     context "when the form is valid" do
-      it "triggers an event" do
+      it "triggers an event", :dfe_analytics do
         request
         expect(:supporting_document_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
           with_data: { vacancy_id: vacancy.id,
@@ -159,7 +159,7 @@ RSpec.describe "Documents" do
           expect(vacancy.reload.application_form.id).not_to eq(old_file_id)
         end
 
-        it "sends a supporting_document_replaced event" do
+        it "sends a supporting_document_replaced event", :dfe_analytics do
           request
 
           expect(:supporting_document_replaced).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual

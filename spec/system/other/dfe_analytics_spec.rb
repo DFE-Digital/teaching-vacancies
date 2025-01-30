@@ -1,7 +1,7 @@
 require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
-RSpec.describe "dfe analytics integration" do
+RSpec.describe "dfe analytics integration", :dfe_analytics do
   context "events being sent from creating new entities" do
     it "sends a DFE Analytics web request event" do
       expect {  create(:vacancy) }.to have_sent_analytics_event_types(:create_entity)

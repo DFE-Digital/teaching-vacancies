@@ -14,7 +14,7 @@ RSpec.describe "Documents" do
         expect(response.status).to eq(301)
       end
 
-      it "triggers a `vacancy_document_downloaded` event" do
+      it "triggers a `vacancy_document_downloaded` event", :dfe_analytics do
         get job_document_path(vacancy, document.id)
 
         expect(:vacancy_document_downloaded).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
@@ -39,7 +39,7 @@ RSpec.describe "Documents" do
         expect(response.status).to eq(301)
       end
 
-      it "triggers a `vacancy_document_downloaded` event" do
+      it "triggers a `vacancy_document_downloaded` event", :dfe_analytics do
         get job_document_path(vacancy, document.id)
 
         expect(:vacancy_document_downloaded).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual

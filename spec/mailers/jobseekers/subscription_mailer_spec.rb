@@ -53,7 +53,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       let(:jobseeker) { create(:jobseeker, email: email) }
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
-      it "triggers a `jobseeker_subscription_confirmation` email event with the anonymised jobseeker id" do
+      it "triggers a `jobseeker_subscription_confirmation` email event with the anonymised jobseeker id", :dfe_analytics do
         mail.deliver_now
         expect(:jobseeker_subscription_confirmation).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end
@@ -62,7 +62,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
     context "when the subscription email does not match a jobseeker account" do
       let(:user_anonymised_jobseeker_id) { nil }
 
-      it "triggers a `jobseeker_subscription_confirmation` email event without the anonymised jobseeker id" do
+      it "triggers a `jobseeker_subscription_confirmation` email event without the anonymised jobseeker id", :dfe_analytics do
         mail.deliver_now
         expect(:jobseeker_subscription_confirmation).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end
@@ -106,7 +106,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
       let(:jobseeker) { create(:jobseeker, email: email) }
       let(:user_anonymised_jobseeker_id) { anonymised_form_of(jobseeker.id) }
 
-      it "triggers a `jobseeker_subscription_update` email event with the anonymised jobseeker id" do
+      it "triggers a `jobseeker_subscription_update` email event with the anonymised jobseeker id", :dfe_analytics do
         mail.deliver_now
         expect(:jobseeker_subscription_update).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end
@@ -115,7 +115,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
     context "when the subscription email does not match a jobseeker account" do
       let(:user_anonymised_jobseeker_id) { nil }
 
-      it "triggers a `jobseeker_subscription_update` email event without the anonymised jobseeker id" do
+      it "triggers a `jobseeker_subscription_update` email event without the anonymised jobseeker id", :dfe_analytics do
         mail.deliver_now
         expect(:jobseeker_subscription_update).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
       end

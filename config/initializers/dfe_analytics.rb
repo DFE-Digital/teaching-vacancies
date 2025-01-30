@@ -1,11 +1,12 @@
 DfE::Analytics.configure do |config|
+  config.enable_analytics = proc { !Rails.env.local? || ENV['ENABLE_DFE_ANALYTICS'] == 'true' }
   # Whether to log events instead of sending them to BigQuery.
   #
-  config.log_only = false
+  config.log_only = Rails.env.local?
 
   # Whether to use ActiveJob or dispatch events immediately.
   #
-  config.async = true
+  config.async = !Rails.env.local?
 
   # Which ActiveJob queue to put events on
   #

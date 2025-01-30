@@ -32,7 +32,7 @@ RSpec.describe "Jobseekers can sign in with fallback email authentication" do
     end
 
     context "when a jobseeker tries to sign in" do
-      it "can sign in, sign out" do
+      it "can sign in, sign out", :dfe_analytics do
         freeze_time do
           visit root_path
           within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }

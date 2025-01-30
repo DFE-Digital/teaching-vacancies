@@ -81,6 +81,12 @@ RSpec.configure do |config|
     allow(Rails.application.config).to receive(:geocoder_lookup).and_return(:default)
   end
 
+  config.around(:each, :dfe_analytics) do |example|
+    ENV['ENABLE_DFE_ANALYTICS'] = 'true'
+    example.run
+    ENV.delete 'ENABLE_DFE_ANALYTICS'
+  end
+
   config.before(:each, type: :system) do
     driven_by :rack_test
     Capybara.default_host = "http://#{ENV.fetch('DOMAIN', 'localhost:3000')}"
