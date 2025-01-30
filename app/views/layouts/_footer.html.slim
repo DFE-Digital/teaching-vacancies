@@ -16,9 +16,9 @@
               li.govuk-footer__list-item
                 = link_to t("footer.jobseeker_guides"), posts_path(section: "jobseeker-guides"), class: "govuk-footer__link"
               li.govuk-footer__list-item
-                = link_to t("footer.return_to_teaching"), post_path(section: "jobseeker-guides", subcategory: "return-to-teaching-in-england", post_name: "return-to-teaching"), class: "govuk-footer__link", target: "_blank"
+                = link_to t("footer.return_to_teaching"), post_path(section: "jobseeker-guides", subcategory: "return-to-teaching-in-england", post_name: "return-to-teaching"), class: "govuk-footer__link"
               li.govuk-footer__list-item
-                = tracked_link_to(t("footer.international_teacher_advice_link_text"), "https://getintoteaching.education.gov.uk/non-uk-teachers", class: "govuk-footer__link", target: "_blank", link_type: :international_teacher_advice_link_footer)
+                = tracked_link_to(t("footer.international_teacher_advice_link_text"), "https://getintoteaching.education.gov.uk/non-uk-teachers", class: "govuk-footer__link", link_type: :international_teacher_advice_link_footer)
       .govuk-grid-column-one-half
         .govuk-grid-row
           .govuk-grid-column-full
@@ -27,7 +27,7 @@
             ul.govuk-footer__list
               - if publisher_signed_in?
                 li.govuk-footer__list-item
-                  = button_to(t("footer.list_a_teaching_job"), organisation_jobs_path, class: "govuk-footer__link govuk-body-s")
+                  = button_to(t("footer.list_a_teaching_job"), organisation_jobs_path, class: "govuk-footer__link govuk-body-m")
                 li.govuk-footer__list-item
                   = link_to t("footer.manage_job_listings"), organisation_jobs_with_type_path, class: "govuk-footer__link"
               - else
