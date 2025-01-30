@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Publishers are redirected after sign in" do
-  let!(:organisation) { create(:school) }
+  let!(:organisation) { create(:school, :with_image) }
   let(:publisher) { create(:publisher) }
   let(:vacancy) { create(:vacancy, publisher: publisher, organisations: [organisation]) }
 

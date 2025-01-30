@@ -15,7 +15,7 @@ RSpec.describe "School viewing public listings" do
     set_up_omniauth_config
   end
 
-  let!(:school) { create(:school, urn: "110627") }
+  let!(:school) { create(:school, :with_image, urn: "110627") }
 
   context "when signed in with DfE Sign In" do
     before do
