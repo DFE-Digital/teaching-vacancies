@@ -33,7 +33,7 @@ RSpec.describe Publishers::JobApplicationMailer do
                                .and include(I18n.t("publishers.job_application_mailer.applications_received.view_applications", count: 2, job_title: vacancy.job_title))
     end
 
-    it "triggers a `publisher_applications_received` email event" do
+    it "triggers a `publisher_applications_received` email event", :dfe_analytics do
       mail.deliver_now
       expect(:publisher_applications_received).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end

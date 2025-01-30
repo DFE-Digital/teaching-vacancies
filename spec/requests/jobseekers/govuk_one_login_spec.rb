@@ -64,7 +64,7 @@ RSpec.describe "Govuk One Login authentication response" do
           .to include(I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error"))
       end
 
-      it "sends an analytics event for a failed OneLogin sign-in attempt" do
+      it "sends an analytics event for a failed OneLogin sign-in attempt", :dfe_analytics do
         get auth_govuk_one_login_callback_path
 
         expect(:jobseeker_failed_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_event
@@ -84,7 +84,7 @@ RSpec.describe "Govuk One Login authentication response" do
       expect(session[:govuk_one_login_nonce]).to be_nil
     end
 
-    it "sends an analytics event for a successful OneLogin sign-in attempt" do
+    it "sends an analytics event for a successful OneLogin sign-in attempt", :dfe_analytics do
       get auth_govuk_one_login_callback_path
 
       expect(:jobseeker_successful_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_event

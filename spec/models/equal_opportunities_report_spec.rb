@@ -8,7 +8,7 @@ RSpec.describe EqualOpportunitiesReport do
   describe "#trigger_event" do
     let(:equal_opportunities_report_data_example) { { "table_name" => "equal_opportunities_reports", "total_submissions" => 1 } }
 
-    it "triggers an event with the correct data" do
+    it "triggers an event with the correct data", :dfe_analytics do
       subject.trigger_event
       expect(:equal_opportunities_report_published).to have_been_enqueued_as_analytics_event
     end
