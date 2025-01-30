@@ -31,10 +31,6 @@ class Jobseekers::JobApplications::ProfessionalBodyMembershipsController < Jobse
     end
   end
 
-  def confirm_destroy
-    @form = Jobseekers::ProfessionalBodyMembershipForm.new
-  end
-
   def destroy
     professional_body_membership.destroy!
     redirect_to back_path, success: t(".success")
