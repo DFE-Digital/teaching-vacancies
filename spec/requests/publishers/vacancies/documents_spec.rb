@@ -25,7 +25,7 @@ RSpec.describe "Documents" do
         }
       end
 
-      it "triggers an event" do
+      it "triggers an event", :dfe_analytics do
         request
         expect(:supporting_document_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
           with_data: { vacancy_id: vacancy.id,
@@ -109,7 +109,7 @@ RSpec.describe "Documents" do
     let(:document) { vacancy.supporting_documents.first }
     let(:request) { delete organisation_job_document_path(id: document.id, job_id: vacancy.id) }
 
-    it "triggers an event" do
+    it "triggers an event", :dfe_analytics do
       request
       expect(:supporting_document_deleted).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
         with_data: { vacancy_id: vacancy.id,

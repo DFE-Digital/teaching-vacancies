@@ -15,7 +15,7 @@ RSpec.shared_examples "a successful Support User sign in" do
 end
 
 RSpec.shared_examples "a failed Support User sign in" do |options|
-  scenario "it does not sign-in the user, and tells the user what to do" do
+  scenario "it does not sign-in the user, and tells the user what to do", :dfe_analytics do
     visit new_support_user_session_path
 
     sign_in_support_user

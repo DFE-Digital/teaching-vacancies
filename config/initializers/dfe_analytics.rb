@@ -1,4 +1,6 @@
 DfE::Analytics.configure do |config|
+  # only enable analytics in review apps/qa/prod or tests where :dfe_analytics tag is present
+  config.enable_analytics = proc { !Rails.env.local? || ENV['ENABLE_DFE_ANALYTICS'] == 'true' }
   # Whether to log events instead of sending them to BigQuery.
   #
   config.log_only = false

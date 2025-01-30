@@ -69,6 +69,8 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = false
 
+  config.active_job.queue_adapter = :inline
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 

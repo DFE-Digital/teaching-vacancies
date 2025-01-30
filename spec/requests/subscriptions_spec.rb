@@ -86,7 +86,7 @@ RSpec.describe "Subscriptions" do
       expect(created_subscription.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
     end
 
-    it "triggers a `job_alert_subscription_created` event" do
+    it "triggers a `job_alert_subscription_created` event", :dfe_analytics do
       subject
 
       expect(:job_alert_subscription_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
@@ -136,7 +136,7 @@ RSpec.describe "Subscriptions" do
       expect(subscription.reload.search_criteria.symbolize_keys).to eq({ keyword: "english", location: "London", radius: "0" })
     end
 
-    it "triggers a `job_alert_subscription_updated` event" do
+    it "triggers a `job_alert_subscription_updated` event", :dfe_analytics do
       subject
 
       expect(:job_alert_subscription_updated).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
@@ -164,7 +164,7 @@ RSpec.describe "Subscriptions" do
 
     subject { delete subscription_path(subscription.token) }
 
-    it "triggers a `job_alert_subscription_unsubscribed` event" do
+    it "triggers a `job_alert_subscription_unsubscribed` event", :dfe_analytics do
       subject
 
       expect(:job_alert_subscription_unsubscribed).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual

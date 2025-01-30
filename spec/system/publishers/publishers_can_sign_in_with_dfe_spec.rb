@@ -6,7 +6,7 @@ RSpec.shared_examples "a successful Publisher sign in" do
     visit new_publisher_session_path
   end
 
-  scenario "it signs in the user successfully" do
+  scenario "it signs in the user successfully", :dfe_analytics do
     sign_in_publisher
     expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "dsi" }) # rubocop:disable RSpec/ExpectActual
 
@@ -16,7 +16,7 @@ RSpec.shared_examples "a successful Publisher sign in" do
 end
 
 RSpec.shared_examples "a failed Publisher sign in" do |options|
-  scenario "it does not sign-in the user, and tells the user what to do" do
+  scenario "it does not sign-in the user, and tells the user what to do", :dfe_analytics do
     visit new_publisher_session_path
     sign_in_publisher
 
