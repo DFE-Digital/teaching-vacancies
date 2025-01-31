@@ -74,6 +74,12 @@ jobs:
           path: /home/runner/work/teaching-vacancies/teaching-vacancies/tmp/capybara/*.png
           if-no-files-found: ignore # If only non-capybara tests fail there will be no screenshots
 
+  coverage-report:
+    name: Run coverage reports
+
+    runs-on: ubuntu-22.04
+
+    steps:
       - name: Merge coverage reports
         run: bundle exec rake coverage:report
 
