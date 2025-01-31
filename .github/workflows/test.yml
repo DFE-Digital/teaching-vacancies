@@ -18,7 +18,7 @@ jobs:
       DATABASE_URL: postgis://postgres:postgres@localhost:5432
       RAILS_ENV: test
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      PARALLEL_TEST_PROCESSORS: 5
+      PARALLEL_TEST_PROCESSORS: 4
       PARALLEL_TEST_FIRST_IS_1: true
 
     services:
