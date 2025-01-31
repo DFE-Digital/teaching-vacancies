@@ -66,6 +66,9 @@ jobs:
       - name: Run tests
         run: bundle exec rspec ${{ matrix.test_params.params }}
 
+      - name: Merge coverage reports
+        run: bundle exec rake coverage:report
+
       - name: Upload Capybara failures screenshots
         if: failure()
         uses: actions/upload-artifact@v4
