@@ -16,7 +16,7 @@ class Geocoding
 
     Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
       Geocoder.coordinates(location, lookup: :google, components: "country:gb").tap do |coords|
-         trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: coords)
+        trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: coords)
       end
     rescue Geocoder::OverQueryLimitError
       trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: "OVER_QUERY_LIMIT")
