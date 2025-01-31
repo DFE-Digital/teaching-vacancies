@@ -93,15 +93,19 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def update_params
     if step_incomplete?
       update_fields.merge(
-        completed_steps: job_application.completed_steps.delete_if { |completed_step| completed_step == step.to_s },
+        completed_steps: remove_current_step(job_application.completed_steps),
         in_progress_steps: job_application.in_progress_steps.append(step.to_s).uniq,
       )
     else
       update_fields.merge(
         completed_steps: job_application.completed_steps.append(step.to_s).uniq,
-        in_progress_steps: job_application.in_progress_steps.delete_if { |in_progress_step| in_progress_step == step.to_s },
+        in_progress_steps: remove_current_step(job_application.in_progress_steps),
       )
-    end
+    end.merge(imported_steps: remove_current_step(job_application.imported_steps))
+  end
+
+  def remove_current_step(steps)
+    steps.delete_if { |the_step| the_step == step.to_s }
   end
 
   def update_fields
