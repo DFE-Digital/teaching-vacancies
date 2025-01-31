@@ -2,34 +2,57 @@ require "rails_helper"
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
-  # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
-  # to ensure that it's configured to serve Swagger from the same folder
   config.openapi_root = Rails.root.join("swagger").to_s
 
-  # Define one or more Swagger documents and provide global metadata for each one
-  # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
-  # be generated at the provided relative path under openapi_root
-  # By default, the operations defined in spec files are added to the first
-  # document below. You can override this behavior by adding a openapi_spec tag to the
-  # the root example_group in your specs, e.g. describe '...', openapi_spec: 'v2/swagger.json'
   config.openapi_specs = {
     "v1/swagger.yaml" => {
       openapi: "3.0.1",
       info: {
         title: "Teaching Vacancies ATS API",
         version: "v1",
+        description: <<~DESCRIPTION,
+          This document outlines the API’s key features, the data required for each listing,
+          and the steps needed to set up an integration.
+
+          This documentation describes each endpoint’s request parameters, response formats, and possible errors,
+          so you can seamlessly integrate Teaching Vacancies into your ATS workflow.
+
+          ## Introduction
+
+          <img src="/teaching_vacancies_api_diagram.jpg" alt="diagram" width="960" height="540">
+
+          The **Teaching Vacancies ATS API** enables you to manage job listings on behalf of schools or trusts
+          through your own Applicant Tracking System (ATS) or HR software.
+
+          By calling this API, you can:
+
+          - **List** all your active vacancies (with pagination)
+          - **Retrieve** details for a single vacancy
+          - **Create** new vacancies
+          - **Update** existing vacancies
+          - **Delete** vacancies if they need to be removed before their expiration date
+
+          ## Authentication
+
+          Each request requires a valid API key in the `X-Api-Key` header to ensure only authorised
+          clients can manage vacancies.
+
+          Include this key in the `X-Api-Key` header of each request.
+          If the key is missing or invalid, the API will respond with an `HTTP 401` (Unauthorized) status.
+
+          This ensures that only approved clients can create, update, or remove job listings.
+          If you ever need a new or replacement key, let us know, and we’ll assist you with the process.
+          You can reach us at [teachingvacancies.ats@education.gov.uk](mailto:teachingvacancies.ats@education.gov.uk).
+
+          **Base URL**: `/ats-api/v1`
+
+          **Supported Formats**: JSON
+
+          **Authentication**: API key in `X-Api-Key`
+
+        DESCRIPTION
       },
       paths: {},
-      # servers: [
-      #   {
-      #     url: "https://{defaultHost}",
-      #     variables: {
-      #       defaultHost: {
-      #         default: "localhost:3000",
-      #       },
-      #     },
-      #   },
-      # ],
       components: {
         securitySchemes: {
           api_key: {
@@ -58,18 +81,70 @@ RSpec.configure do |config|
               schools
             ],
             properties: {
-              id: { type: :string, example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66" },
-              external_advert_url: { type: :string, example: "https://example.com/jobs/123" },
-              publish_on: { type: :string, format: :date },
-              expires_at: { type: :string, format: :date },
-              job_title: { type: :string, example: "Teacher of Geography" },
-              skills_and_experience: { type: :string, example: "We're looking for a dedicated Teacher of Geography" },
-              salary: { type: :string, example: "£12,345 to £67, 890" },
-              benefits_details: { type: :string, example: "TLR2a" },
-              starts_on: { type: :string, example: "Summer Term" },
-              external_reference: { type: :string, example: "123GTZY" },
-              visa_sponsorship_available: { type: :boolean },
-              is_job_share: { type: :boolean },
+              id: {
+                type: :string,
+                format: :uuid,
+                example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66",
+                description: "The unique identifier for the vacancy.",
+              },
+              external_advert_url: {
+                type: :string,
+                format: :uri,
+                example: "https://example.com/jobs/123",
+                description: "The URL where the job is advertised externally.",
+              },
+              publish_on: {
+                type: :string,
+                format: :date,
+                example: "2025-01-01",
+                description: "The date on which the vacancy should be published.",
+              },
+              expires_at: {
+                type: :string,
+                format: :datetime,
+                example: "2025-03-13T15:30:00Z",
+                description: "The end datetime of the vacancy. Must be after the start date.",
+              },
+              job_title: {
+                type: :string,
+                example: "Teacher of Geography",
+                description: "The title of the vacancy.",
+              },
+              skills_and_experience: {
+                type: :string,
+                example: "We're looking for a dedicated Teacher of Geography",
+                description: "Details about the required skills, experience, and qualifications.",
+              },
+              salary: {
+                type: :string,
+                example: "£12,345 to £67,890",
+                description: "Compensation for the role.",
+              },
+              benefits_details: {
+                type: :string,
+                example: "TLR2a",
+                description: "Any additional benefits or allowances, e.g. TLR payments.",
+              },
+              starts_on: {
+                type: :string,
+                example: "Easter",
+                description: "The start date (or approximate start timeframe) of the job.",
+              },
+              external_reference: {
+                type: :string,
+                example: "123GTZY",
+                description: "An external reference or identifier for your own tracking.",
+              },
+              visa_sponsorship_available: {
+                type: :boolean,
+                example: false,
+                description: "Indicates if a visa sponsorship is available for this role.",
+              },
+              is_job_share: {
+                type: :boolean,
+                example: true,
+                description: "Whether the role is open to a job share.",
+              },
               schools: {
                 oneOf: [
                   {
@@ -82,10 +157,12 @@ RSpec.configure do |config|
                         minItems: 1,
                         items: {
                           type: :string,
-                          example: "12345",
+                          example: "123456",
+                          description: "The unique reference number (URN) for an individual school.",
                         },
                       },
                     },
+                    description: "Schema for a vacancy belonging to one or more schools by URN.",
                   },
                   {
                     type: :object,
@@ -95,6 +172,7 @@ RSpec.configure do |config|
                       trust_uid: {
                         type: :string,
                         example: "12345",
+                        description: "Unique identifier for a trust.",
                       },
                       school_urns: {
                         type: :array,
@@ -102,9 +180,11 @@ RSpec.configure do |config|
                         items: {
                           type: :string,
                           example: "12345",
+                          description: "URNs of individual schools under the trust (optional).",
                         },
                       },
                     },
+                    description: "Schema for a vacancy belonging to a trust, possibly linked to multiple schools.",
                   },
                   {
                     type: :object,
@@ -114,10 +194,13 @@ RSpec.configure do |config|
                       trust_uid: {
                         type: :string,
                         example: "12345",
+                        description: "Unique identifier for a trust.",
                       },
                     },
+                    description: "Schema for a vacancy belonging to a trust without any specific school URNs.",
                   },
                 ],
+                description: "Specifies which school(s) or trust the vacancy belongs to.",
               },
               job_roles: {
                 type: :array,
@@ -125,10 +208,14 @@ RSpec.configure do |config|
                 items: {
                   type: :string,
                   enum: Vacancy.job_roles.keys,
+                  description: "Valid job role, e.g. 'teacher', 'senior_leader', etc.",
                 },
+                description: "An array of one or more job roles associated with the vacancy.",
               },
               ect_suitable: {
                 type: :boolean,
+                example: true,
+                description: "Indicates whether the vacancy is suitable for ECTs (Early Career Teachers).",
               },
               working_patterns: {
                 type: :array,
@@ -136,11 +223,15 @@ RSpec.configure do |config|
                 items: {
                   type: :string,
                   enum: Vacancy.working_patterns.keys,
+                  description: "Valid working pattern, e.g. 'full_time', 'part_time', etc.",
                 },
+                description: "An array of one or more working patterns for the vacancy.",
               },
               contract_type: {
                 type: :string,
                 enum: Vacancy.contract_types.keys,
+                example: "permanent",
+                description: "The type of contract, e.g. 'permanent', 'fixed_term'.",
               },
               phases: {
                 type: :array,
@@ -148,7 +239,9 @@ RSpec.configure do |config|
                 items: {
                   type: :string,
                   enum: Vacancy.phases.keys,
+                  description: "Valid phase, e.g. 'primary', 'secondary', etc.",
                 },
+                description: "One or more phases of education that the vacancy covers.",
               },
               key_stages: {
                 type: :array,
@@ -156,108 +249,146 @@ RSpec.configure do |config|
                 items: {
                   type: :string,
                   enum: Vacancy.key_stages.keys,
+                  description: "Valid key stage, e.g. 'ks1', 'ks2', etc.",
                 },
+                description: "One or more key stages relevant to the vacancy.",
               },
               subjects: {
                 type: :array,
                 minItems: 1,
                 items: {
                   type: :string,
-                  enum: ["Accounting",
-                         "Art and design",
-                         "Biology",
-                         "Business Studies",
-                         "Chemistry",
-                         "Citizenship",
-                         "Classics",
-                         "Computing",
-                         "Dance",
-                         "Design And Technology",
-                         "Drama",
-                         "Economics",
-                         "Engineering",
-                         "English",
-                         "Food Technology",
-                         "French",
-                         "Geography",
-                         "German",
-                         "health_and_social_care",
-                         "history",
-                         "Humanities",
-                         "ICT",
-                         "Languages",
-                         "Law",
-                         "Mandarin",
-                         "Mathematics",
-                         "Media Studies",
-                         "Music",
-                         "Philosophy",
-                         "Physical Education",
-                         "Physics",
-                         "PSHE",
-                         "Psychology",
-                         "Religious Education",
-                         "Science",
-                         "Social Science",
-                         "Sociology",
-                         "Spanish",
-                         "Statistics"],
+                  enum: [
+                    "Accounting",
+                    "Art and design",
+                    "Biology",
+                    "Business Studies",
+                    "Chemistry",
+                    "Citizenship",
+                    "Classics",
+                    "Computing",
+                    "Dance",
+                    "Design And Technology",
+                    "Drama",
+                    "Economics",
+                    "Engineering",
+                    "English",
+                    "Food Technology",
+                    "French",
+                    "Geography",
+                    "German",
+                    "health_and_social_care",
+                    "history",
+                    "Humanities",
+                    "ICT",
+                    "Languages",
+                    "Law",
+                    "Mandarin",
+                    "Mathematics",
+                    "Media Studies",
+                    "Music",
+                    "Philosophy",
+                    "Physical Education",
+                    "Physics",
+                    "PSHE",
+                    "Psychology",
+                    "Religious Education",
+                    "Science",
+                    "Social Science",
+                    "Sociology",
+                    "Spanish",
+                    "Statistics",
+                  ],
+                  description: "Valid subject for the job, e.g. 'Biology', 'English', etc.",
                 },
+                description: "An array of subjects relevant to the vacancy.",
               },
             },
           },
           create_vacancy_response: {
             type: :object,
             properties: {
-              id: { type: :string, example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66" },
+              id: {
+                type: :string,
+                format: :uuid,
+                example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66",
+                description: "The unique identifier of the vacancy that was just created.",
+              },
             },
             required: %w[id],
           },
           bad_request_error: {
-            type: "object",
+            type: :object,
             properties: {
-              error: { type: "string", example: "Request body could not be read properly" },
+              error: {
+                type: :string,
+                example: "Request body could not be read properly",
+                description: "A description of the bad request error.",
+              },
             },
             required: %w[error],
           },
           unauthorized_error: {
-            type: "object",
+            type: :object,
             properties: {
-              error: { type: "string", example: "Invalid API key" },
+              error: {
+                type: :string,
+                example: "Invalid API key",
+                description: "A description of the unauthorised error.",
+              },
             },
             required: %w[error],
           },
           not_found_error: {
-            type: "object",
+            type: :object,
             properties: {
-              error: { type: "string", example: "The given ID does not match any vacancy for your ATS" },
+              error: {
+                type: :string,
+                example: "The given ID does not match any vacancy for your ATS",
+                description: "A description of the resource not found error.",
+              },
             },
             required: %w[error],
           },
           internal_server_error: {
-            type: "object",
+            type: :object,
             properties: {
-              error: { type: "string", example: "There was an internal error processing this request" },
+              error: {
+                type: :string,
+                example: "There was an internal error processing this request",
+                description: "A description of the internal server error.",
+              },
             },
             required: %w[error],
           },
           conflict_error: {
-            type: "object",
+            type: :object,
             properties: {
-              error: { type: "string", example: "A vacancy with the provided external reference already exists" },
-              link: { type: "string", example: "https://example.com/vacancies/123" },
+              error: {
+                type: :string,
+                example: "A vacancy with the provided external reference already exists",
+                description: "A description of the conflict error.",
+              },
+              link: {
+                type: :string,
+                format: :uri,
+                example: "https://example.com/vacancies/123",
+                description: "A link to the existing conflicting resource (if applicable).",
+              },
             },
             required: %w[error],
           },
           validation_error: {
-            type: "object",
+            type: :object,
             properties: {
               errors: {
-                type: "array",
+                type: :array,
                 items: {
-                  type: "string",
+                  type: :string,
                   example: "job_title: can't be blank",
+                  description: "A message describing a specific validation error.",
                 },
+                description: "An array of validation errors.",
               },
             },
             required: %w[errors],
@@ -267,10 +398,5 @@ RSpec.configure do |config|
     },
   }
 
-  # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.
-  # The openapi_specs configuration option has the filename including format in
-  # the key, this may want to be changed to avoid putting yaml in json files.
-  # Defaults to json. Accepts ':json' and ':yaml'.
   config.openapi_format = :yaml
-  # config.openapi_no_additional_properties = false # Allow additional properties
 end

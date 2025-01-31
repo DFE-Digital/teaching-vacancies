@@ -10,6 +10,6 @@ Rswag::Ui.configure do |c|
   c.openapi_endpoint "/ats-api-docs/v1/swagger.yaml", "ATS API V1 Docs"
 
   # Add Basic Auth in case your API is private
-  # c.basic_auth_enabled = true
-  # c.basic_auth_credentials 'username', 'password'
+  c.basic_auth_enabled = true
+  c.basic_auth_credentials ENV.fetch("SWAGGER_USERNAME", nil), ENV.fetch("SWAGGER_PASSWORD", nil)
 end
