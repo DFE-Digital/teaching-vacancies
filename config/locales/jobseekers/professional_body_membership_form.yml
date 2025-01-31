@@ -32,6 +32,7 @@ en:
           none: No memberships specified
       build:
         professional_body_memberships:
+          list_heading: Professional body memberships
           heading: Professional body memberships (optional)
           no_training: No memberships specified
           no_professional_body_memberships: No memberships specified

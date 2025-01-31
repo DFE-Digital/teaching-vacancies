@@ -319,7 +319,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     choose "Yes, I've completed this section"
     click_on "Save and continue"
 
-    click_on(I18n.t("jobseekers.job_applications.build.professional_body_memberships.heading"))
+    click_on(I18n.t("jobseekers.job_applications.build.professional_body_memberships.list_heading"))
     click_on "Add membership"
     fill_in_professional_body_membership
     click_on "Save and continue"
