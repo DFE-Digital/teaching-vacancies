@@ -297,7 +297,6 @@ Layout/SpaceInsideParens:
 # Configuration parameters: AllowedParentClasses.
 Lint/MissingSuper:
   Exclude:
-    - 'app/components/account_survey_link_component.rb'
     - 'app/components/vacancy_form_page_heading_component.rb'
     - 'app/form_models/jobseekers/subscription_form.rb'
     - 'app/queries/marker_location_query.rb'
