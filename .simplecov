@@ -1,5 +1,7 @@
 # default to coverage 'off' as it makes no sense
 # unless most of the tests are being run
+# however setting merge_timeout super-large is a possible option
+# e.g. COVERAGE=1 MERGE_TIMEOUT=86400
 if ENV.fetch("COVERAGE", 0).to_i.positive?
   require "simplecov"
   require "simplecov-lcov"
@@ -14,11 +16,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
   end
 
   SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
-  # SimpleCov.formatter = if ENV.key? "CI"
-  #                         SimpleCov::Formatter::LcovFormatter
-  #                       else
-  #                         SimpleCov::Formatter::MergedFormatter
-  #                       end
   SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
 
   SimpleCov.start :rails do
@@ -28,6 +25,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # This line would enable template coverage,
     # but slim templates don't seem to work very well
     # enable_coverage_for_eval
+    merge_timeout ENV["MERGE_TIMEOUT"].to_i if ENV.key? "MERGE_TIMEOUT"
 
     add_filter %r{.rake$}
     add_filter "app/services/custom_log_formatter.rb"
