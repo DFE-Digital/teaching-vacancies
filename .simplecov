@@ -2,6 +2,9 @@
 # unless most of the tests are being run
 # however setting merge_timeout super-large is a possible option
 # e.g. COVERAGE=1 MERGE_TIMEOUT=86400
+# merge_timeout just keeps coverage data around a long time
+# as it doesn't change very often - would probably need guard support
+# for this to be valuable so that only changed files have tests run
 if ENV.fetch("COVERAGE", 0).to_i.positive?
   require "simplecov"
   require "simplecov-lcov"
