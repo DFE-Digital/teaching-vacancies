@@ -64,6 +64,8 @@ jobs:
         run: bin/rails assets:precompile
 
       - name: Run tests
+        env:
+          TEST_ENV_NUMBER: ${{ strategy.job-index }} + 1
         run: bundle exec rspec ${{ matrix.test_params.params }}
 
       - name: Upload Capybara failures screenshots
