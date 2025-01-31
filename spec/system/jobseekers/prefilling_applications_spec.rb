@@ -107,7 +107,7 @@ RSpec.describe "Jobseekers can prefill applications" do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
 
-        click_on I18n.t("jobseekers.job_applications.build.professional_body_memberships.heading")
+        click_on I18n.t("jobseekers.job_applications.build.professional_body_memberships.list_heading")
         expect(page).to have_content(professional_body_membership.name)
         expect(page).to have_content(professional_body_membership.membership_type)
         expect(page).to have_content(professional_body_membership.membership_number)
@@ -155,7 +155,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         end
         click_on "Back"
 
-        click_on I18n.t("jobseekers.job_applications.build.professional_body_memberships.heading")
+        click_on I18n.t("jobseekers.job_applications.build.professional_body_memberships.list_heading")
         expect(page).to have_content(profile.professional_body_memberships.first.name)
         expect(page).to have_content(profile.professional_body_memberships.first.membership_type)
         expect(page).to have_content(profile.professional_body_memberships.first.membership_number)
