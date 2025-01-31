@@ -66,9 +66,6 @@ jobs:
       - name: Run tests
         run: bundle exec rspec ${{ matrix.test_params.params }}
 
-      - name: Merge coverage reports
-        run: bundle exec rake coverage:report
-
       - name: Upload Capybara failures screenshots
         if: failure()
         uses: actions/upload-artifact@v4
@@ -76,6 +73,19 @@ jobs:
           name: capybara-screenshots-${{ matrix.test_params.name }}
           path: /home/runner/work/teaching-vacancies/teaching-vacancies/tmp/capybara/*.png
           if-no-files-found: ignore # If only non-capybara tests fail there will be no screenshots
+
+      - name: Merge coverage reports
+        run: bundle exec rake coverage:report
+
+      - name: Upload Coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage report
+          path: coverage
+
+      - name: Check coverage
+        run: bundle exec undercover -c origin/main
+
   frontend-tests:
     name: Run frontend JS unit tests
 
