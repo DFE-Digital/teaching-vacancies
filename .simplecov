@@ -47,7 +47,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     add_group "Presenters", "app/presenters"
     add_group "Notifiers", "app/notifiers"
 
-    minimum_coverage line: 93.93, branch: 77.91 unless ENV.key? 'CI'
+    minimum_coverage line: 93.93, branch: 77.91 unless ENV.key? "CI"
   end
 end
-
