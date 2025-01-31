@@ -2,7 +2,7 @@ require "rails_helper"
 require "geocoding"
 
 # rubocop:disable RSpec/ExpectActual
-RSpec.describe Geocoding, geocode: true do
+RSpec.describe Geocoding, :dfe_analytics, geocode: true do
   subject { described_class.new(location) }
 
   let(:google_coordinates) { [54.5399146, -1.0435559] }
@@ -29,7 +29,7 @@ RSpec.describe Geocoding, geocode: true do
         subject.coordinates
       end
 
-      it "does not trigger a Google Geocoding API hit event", :dfe_analytics do
+      it "does not trigger a Google Geocoding API hit event" do
         subject.coordinates
         expect(:google_geocoding_api_hit).not_to have_been_enqueued_as_analytics_event
       end
@@ -41,7 +41,7 @@ RSpec.describe Geocoding, geocode: true do
           expect(subject.coordinates).to eq(google_coordinates)
         end
 
-        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+        it "triggers a Google Geocoding API hit event" do
           subject.coordinates
           expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
             with_data: { type: "coordinates", location: location, result: google_coordinates.to_s },
@@ -54,7 +54,7 @@ RSpec.describe Geocoding, geocode: true do
           expect(subject.coordinates).to eq(no_match)
         end
 
-        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+        it "triggers a Google Geocoding API hit event" do
           subject.coordinates
           expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
             with_data: { type: "coordinates", location: location, result: nil },
@@ -68,7 +68,7 @@ RSpec.describe Geocoding, geocode: true do
           subject.coordinates
         end
 
-        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+        it "triggers a Google Geocoding API hit event" do
           subject.coordinates
           expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
             with_data: { type: "coordinates", location: location, result: "OVER_QUERY_LIMIT" },
@@ -113,7 +113,7 @@ RSpec.describe Geocoding, geocode: true do
         subject.postcode_from_coordinates
       end
 
-      it "does not trigger a Google Geocoding API hit event", :dfe_analytics do
+      it "does not trigger a Google Geocoding API hit event" do
         subject.postcode_from_coordinates
         expect(:google_geocoding_api_hit).not_to have_been_enqueued_as_analytics_event
       end
@@ -125,7 +125,7 @@ RSpec.describe Geocoding, geocode: true do
           expect(subject.postcode_from_coordinates).to eq(postcode)
         end
 
-        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+        it "triggers a Google Geocoding API hit event" do
           subject.postcode_from_coordinates
           expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
             with_data: { type: "postcode", location: google_coordinates.to_s, result: postcode },
@@ -138,7 +138,7 @@ RSpec.describe Geocoding, geocode: true do
           expect(subject.postcode_from_coordinates).to be_nil
         end
 
-        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+        it "triggers a Google Geocoding API hit event" do
           subject.postcode_from_coordinates
           expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
             with_data: { type: "postcode", location: google_coordinates.to_s, result: nil },
@@ -153,7 +153,7 @@ RSpec.describe Geocoding, geocode: true do
         subject.postcode_from_coordinates
       end
 
-      it "triggers a Google Geocoding API hit event", :dfe_analytics do
+      it "triggers a Google Geocoding API hit event" do
         subject.postcode_from_coordinates
         expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
           with_data: { type: "postcode", location: google_coordinates.to_s, result: "OVER_QUERY_LIMIT" },
