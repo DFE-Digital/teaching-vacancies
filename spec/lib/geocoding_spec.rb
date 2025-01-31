@@ -1,6 +1,7 @@
 require "rails_helper"
 require "geocoding"
 
+# rubocop:disable RSpec/ExpectActual
 RSpec.describe Geocoding, geocode: true do
   subject { described_class.new(location) }
 
@@ -27,6 +28,11 @@ RSpec.describe Geocoding, geocode: true do
         expect(Geocoder).not_to receive(:coordinates)
         subject.coordinates
       end
+
+      it "does not trigger a Google Geocoding API hit event", :dfe_analytics do
+        subject.coordinates
+        expect(:google_geocoding_api_hit).not_to have_been_enqueued_as_analytics_event
+      end
     end
 
     context "when location does not have a cache entry" do
@@ -34,11 +40,25 @@ RSpec.describe Geocoding, geocode: true do
         it "returns the coordinates" do
           expect(subject.coordinates).to eq(google_coordinates)
         end
+
+        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+          subject.coordinates
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
+            with_data: { type: "coordinates", location: location, result: google_coordinates.to_s },
+          )
+        end
       end
 
       context "when Geocoder with `lookup: :google` returns an empty response", vcr: { cassette_name: "geocoder_google_empty" } do
         it "returns no_match" do
           expect(subject.coordinates).to eq(no_match)
+        end
+
+        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+          subject.coordinates
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
+            with_data: { type: "coordinates", location: location, result: nil },
+          )
         end
       end
 
@@ -46,6 +66,13 @@ RSpec.describe Geocoding, geocode: true do
         it "logs an error" do
           expect(Rails.logger).to receive(:error).with("Google Geocoding API responded with OVER_QUERY_LIMIT")
           subject.coordinates
+        end
+
+        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+          subject.coordinates
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
+            with_data: { type: "coordinates", location: location, result: "OVER_QUERY_LIMIT" },
+          )
         end
 
         context "when Geocoder with `lookup: :uk_ordnance_survey_names` returns a valid response" do
@@ -85,6 +112,11 @@ RSpec.describe Geocoding, geocode: true do
         expect(Geocoder).not_to receive(:search)
         subject.postcode_from_coordinates
       end
+
+      it "does not trigger a Google Geocoding API hit event", :dfe_analytics do
+        subject.postcode_from_coordinates
+        expect(:google_geocoding_api_hit).not_to have_been_enqueued_as_analytics_event
+      end
     end
 
     context "when the coordinates do not have a cache entry" do
@@ -92,11 +124,25 @@ RSpec.describe Geocoding, geocode: true do
         it "returns the postcode" do
           expect(subject.postcode_from_coordinates).to eq(postcode)
         end
+
+        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+          subject.postcode_from_coordinates
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
+            with_data: { type: "postcode", location: google_coordinates.to_s, result: postcode },
+          )
+        end
       end
 
       context "when Geocoder with `lookup: :google` returns an empty response", vcr: { cassette_name: "geocoder_google_postcode_lookup_empty" } do
         it "returns no match" do
           expect(subject.postcode_from_coordinates).to be_nil
+        end
+
+        it "triggers a Google Geocoding API hit event", :dfe_analytics do
+          subject.postcode_from_coordinates
+          expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
+            with_data: { type: "postcode", location: google_coordinates.to_s, result: nil },
+          )
         end
       end
     end
@@ -105,6 +151,13 @@ RSpec.describe Geocoding, geocode: true do
       it "logs an error" do
         expect(Rails.logger).to receive(:error).with("Google Geocoding API responded with OVER_QUERY_LIMIT")
         subject.postcode_from_coordinates
+      end
+
+      it "triggers a Google Geocoding API hit event", :dfe_analytics do
+        subject.postcode_from_coordinates
+        expect(:google_geocoding_api_hit).to have_been_enqueued_as_analytics_event(
+          with_data: { type: "postcode", location: google_coordinates.to_s, result: "OVER_QUERY_LIMIT" },
+        )
       end
 
       context "when Geocoder with `lookup: :nominatim` returns a valid response" do
@@ -127,3 +180,4 @@ RSpec.describe Geocoding, geocode: true do
     end
   end
 end
+# rubocop:enable RSpec/ExpectActual
