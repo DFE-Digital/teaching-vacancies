@@ -52,7 +52,7 @@ ruby:
         summary_list.with_row do |row|
           row.with_key text: "Working pattern details"
           row.with_value text: multistep.working_pattern_details
-          row.with_action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name), visually_hidden_text: attribute.to_s.humanize)
+          row.with_action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name), visually_hidden_text: "working pattern details")
         end
       end
     end
