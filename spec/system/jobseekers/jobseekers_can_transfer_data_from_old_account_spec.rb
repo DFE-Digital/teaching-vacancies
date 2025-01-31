@@ -177,6 +177,6 @@ RSpec.describe "Jobseekers can transfer data from an old account" do
     visit jobseekers_subscriptions_path
 
     expect(page).not_to have_content "You have no job alerts set up"
-    expect(page).to have_content subscription.search_criteria["keyword"]
+    expect(page).to have_content subscription.search_criteria.fetch("keyword", "")
   end
 end

@@ -197,7 +197,7 @@ module VacancyHelpers
     vacancy.working_patterns.each do |working_pattern|
       expect(page).to have_content(/#{working_pattern.humanize}/i)
     end
-    expect(page).to have_content(vacancy.working_patterns_details)
+    expect(page).to have_content(vacancy.working_patterns_details) if vacancy.working_patterns_details.present?
 
     expect(page).to have_content(vacancy.salary) if vacancy.salary_types.include?("full_time")
     expect(page).to have_content(vacancy.actual_salary) if vacancy.salary_types.include?("part_time")
