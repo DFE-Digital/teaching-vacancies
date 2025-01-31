@@ -2,7 +2,7 @@ class Api::LocationSuggestionController < Api::ApplicationController
   before_action :verify_json_request, only: %i[show]
   before_action :check_valid_params, only: %i[show]
 
-  # Try to reduce our Google Places API bill
+  # By caching this action, we considerably reduce our Google Places API bill
   caches_action :show
 
   def show
