@@ -29,12 +29,13 @@ en:
           none: You have not added any professional body memberships
       review:
         professional_body_memberships:
-          none: No professional body memberships specified
+          none: No memberships specified
       build:
         professional_body_memberships:
-          no_professional_body_memberships: No professional body memberships specified
+          heading: Professional body memberships (optional)
+          no_training: No memberships specified
+          no_professional_body_memberships: No memberships specified
       professional_body_memberships:
-        heading: Professional body memberships
         new:
           heading: Add professional body memberships
           page_title: Professional body memberships

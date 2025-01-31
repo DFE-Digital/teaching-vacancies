@@ -53,7 +53,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on "Save and continue"
 
     click_on(I18n.t("jobseekers.job_applications.build.professional_body_memberships.heading"))
-    expect(page).to have_content("No professional body memberships")
+    expect(page).to have_content("No memberships")
     validates_step_complete
     click_on "Add membership"
     click_on "Save and continue"
