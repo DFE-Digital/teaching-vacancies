@@ -28,7 +28,7 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     # but slim templates don't seem to work very well
     # enable_coverage_for_eval
 
-    add_filter "lib/tasks/*.rake"
+    add_filter %r{.rake$}
     add_filter "app/services/custom_log_formatter.rb"
     add_filter "app/controllers/robots_controller.rb"
     add_filter "app/controllers/sha_controller.rb"
