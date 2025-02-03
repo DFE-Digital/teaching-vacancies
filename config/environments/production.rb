@@ -75,7 +75,7 @@ Rails.application.configure do
   config.rails_semantic_logger.format = :json
   config.rails_semantic_logger.add_file_appender = false
   config.rails_semantic_logger.filter = proc do |log|
-    Rails.logger.info "FILTER CHECK: log.name=#{log.name.inspect}"
+    puts "FILTER CHECK: log.name=#{log.name.inspect}"
     log.name != "DfE::Analytics::SendEvents"
   end
 
