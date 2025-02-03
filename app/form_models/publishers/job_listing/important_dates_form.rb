@@ -17,12 +17,6 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
     %i[publish_on expires_at]
   end
 
-  def self.optional?
-    form_section = new({}, Vacancy.new)
-    form_section.skip_after_validation_big_query_callback = true
-    form_section.valid?
-  end
-
   def initialize(params, vacancy, current_publisher = nil)
     @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
 

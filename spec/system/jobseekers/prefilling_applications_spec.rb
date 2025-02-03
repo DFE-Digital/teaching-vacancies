@@ -28,7 +28,7 @@ RSpec.describe "Jobseekers can prefill applications" do
                                                     references: [reference], employments: [employment1, employment2], qualifications: [qualification1, qualification2])
       end
 
-      it "prefills the new application with the previous application details, not the profile details and marks steps as `imported`" do
+      it "prefills the new application with the previous application details, not the profile details and marks steps as imported`" do
         visit job_path(vacancy.id)
 
         within ".banner-buttons" do
@@ -46,11 +46,12 @@ RSpec.describe "Jobseekers can prefill applications" do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
 
+        # saving converts 'imported' sections to 'completed'
         click_on "Personal statement"
         expect(page).to have_content(previous_application.personal_statement)
-        click_on "Back"
+        click_on "Save and continue"
         within("#personal_statement") do
-          expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
+          expect(page).to have_css("strong.govuk-tag.govuk-tag--green", text: I18n.t("shared.status_tags.complete"))
         end
 
         # qualified teacher status
