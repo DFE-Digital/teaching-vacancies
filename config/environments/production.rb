@@ -75,8 +75,10 @@ Rails.application.configure do
   config.rails_semantic_logger.format = :json
   config.rails_semantic_logger.add_file_appender = false
   config.rails_semantic_logger.filter = proc do |log|
-    log.message.exclude?("DfE::Analytics::SendEvents")
+    Rails.logger.info "FILTER CHECK: log.name=#{log.name.inspect}"
+    log.name != "DfE::Analytics::SendEvents"
   end
+
 
   config.active_record.logger = nil # Don't log SQL in production
   config.semantic_logger.backtrace_level = :error
