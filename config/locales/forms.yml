@@ -356,8 +356,7 @@ en:
         reason_for_break: Enter reasons for gap in work history
       jobseekers_job_application_details_employment_form:
         current_role_options:
-          "no": "No"
-          "yes": "Yes"
+          "yes": I currently work here
         job_title: Job title
         main_duties: Main duties
         organisation: School or other organisation
@@ -510,8 +509,7 @@ en:
           true: "Yes"
       jobseekers_profile_employment_form:
         current_role_options:
-          "no": "No"
-          "yes": "Yes"
+          "yes": I currently work here
         job_title: Role
         main_duties: Main duties
         reason_for_leaving: Reason for leaving role

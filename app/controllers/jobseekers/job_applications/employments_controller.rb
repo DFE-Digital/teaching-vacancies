@@ -1,8 +1,17 @@
 class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseController
-  helper_method :back_path, :employment, :form, :job_application
+  helper_method :back_path, :employment, :job_application
+
+  def new
+    @form = Jobseekers::JobApplication::Details::EmploymentForm.new
+  end
+
+  def edit
+    @form = Jobseekers::JobApplication::Details::EmploymentForm.new(employment.slice(*employment_attrs))
+  end
 
   def create
-    if form.valid?
+    @form = Jobseekers::JobApplication::Details::EmploymentForm.new(employment_params)
+    if @form.valid?
       job_application.employments.job.create(employment_params)
       redirect_to back_path
     else
@@ -11,7 +20,9 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   end
 
   def update
-    if form.valid?
+    @form = Jobseekers::JobApplication::Details::EmploymentForm.new(employment_params)
+
+    if @form.valid?
       employment.update(employment_params)
       redirect_to back_path
     else
@@ -36,26 +47,15 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
 
   def employment_params
     params.require(:jobseekers_job_application_details_employment_form)
-          .permit(:organisation, :job_title, :subjects, :main_duties, :started_on, :current_role, :ended_on, :reason_for_leaving)
+      .permit(*employment_attrs)
           .merge("started_on(3i)" => "1", "ended_on(3i)" => "1")
-  end
-
-  def form
-    @form ||= Jobseekers::JobApplication::Details::EmploymentForm.new(form_attributes)
-  end
-
-  def form_attributes
-    case action_name
-    when "new"
-      {}
-    when "edit"
-      employment.slice(:organisation, :job_title, :subjects, :main_duties, :started_on, :current_role, :ended_on, :reason_for_leaving)
-    when "create", "update"
-      employment_params
-    end
   end
 
   def job_application
     @job_application ||= current_jobseeker.job_applications.draft.find(params[:job_application_id])
+  end
+
+  def employment_attrs
+    %i[organisation job_title started_on current_role ended_on main_duties subjects reason_for_leaving].freeze
   end
 end
