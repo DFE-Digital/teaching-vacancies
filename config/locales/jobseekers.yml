@@ -696,6 +696,10 @@ en:
           add_a_school: Add a school or trust
           hide_profile: Do you want to hide your profile from a school or trust?
       job_preferences:
+        working_patterns:
+          working_pattern_details:
+            label: Provide more details about your working pattern preference (optional)
+            hint: For example, if you're looking for a role that's 2 days a week, or Monday to Wednesday.
         summary:
           key_stages:
             one: Key stage
