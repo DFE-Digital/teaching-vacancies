@@ -239,7 +239,6 @@ RSpec.describe "Jobseekers can manage their profile" do
           end
 
           it "makes reason mandatory when non current" do
-            # choose "No", name: "jobseekers_profile_employment_form[current_role]"
             click_on I18n.t("buttons.save_and_continue")
 
             expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
