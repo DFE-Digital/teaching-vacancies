@@ -209,6 +209,7 @@ shared:
     - created_at
     - updated_at
     - jobseeker_profile_id
+    - working_pattern_details
   local_authority_publisher_schools:
     - id
     - publisher_preference_id
