@@ -63,6 +63,8 @@ FactoryBot.define do
     status { :published }
     # Subjects are ignored when phases are primary-only
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
+    key_stages { factory_rand_sample(%w[early_years ks1 ks2 ks3 ks4 ks5], 1..3) }
+    working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     working_patterns { %w[full_time] }
     visa_sponsorship_available { false }
     organisations { build_list(:school, 1) }
@@ -214,6 +216,7 @@ FactoryBot.define do
       how_to_apply { Faker::Lorem.paragraph(sentence_count: 4) }
       job_advert { Faker::Lorem.paragraph(sentence_count: factory_rand(50..300)) }
       personal_statement_guidance { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
+      publisher_ats_api_client
       external_source { "may_the_feed_be_with_you" }
       external_reference { "J3D1" }
       external_advert_url { "https://example.com/jobs/123" }

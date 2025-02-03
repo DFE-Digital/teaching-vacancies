@@ -34,6 +34,13 @@
   - organisation_ciphertext
   - email_ciphertext
   - phone_number_ciphertext
+  :publisher_ats_api_clients:
+  - id
+  - name
+  - api_key
+  - last_rotated_at
+  - created_at
+  - updated_at
   :personal_details:
   - first_name_ciphertext
   - last_name_ciphertext
@@ -54,6 +61,8 @@
   - updated_at
   :jobseeker_profiles:
   - teacher_reference_number_ciphertext
+  :job_preferences:
+  - willing_to_relocate
   :job_applications:
   - qualified_teacher_status_details
   - disability
@@ -101,11 +110,10 @@
   :emergency_login_keys:
   - id
   - not_valid_after
-  - publisher_id
   - created_at
   - updated_at
-  - owner_id
   - owner_type
+  - owner_id
   :alert_runs:
   - id
   - subscription_id
@@ -114,19 +122,13 @@
   - created_at
   - updated_at
   - status
-  :publisher_ats_api_clients:
-    - id
-    - name
-    - api_key
-    - last_rotated_at
-    - created_at
-    - updated_at
   :vacancies:
   - readable_job_location
   - readable_phases
   - searchable_content
   - google_index_removed
   - expired_vacancy_feedback_email_sent_at
+  - publisher_ats_api_client_id
   :qualifications:
   - finished_studying_details_ciphertext
   :feedbacks:
@@ -148,14 +150,11 @@
   - dismissed_new_features_page_at
   - unsubscribed_from_expired_vacancy_prompt_at
   :jobseekers:
-  - encrypted_password
   - current_sign_in_ip_ciphertext
   - last_sign_in_ip_ciphertext
+  - account_merge_confirmation_code
   - last_sign_in_ip
   - current_sign_in_ip
-  - account_merge_confirmation_code
-  :job_preferences:
-  - willing_to_relocate
   :organisations:
   - gias_data_hash
   - slug

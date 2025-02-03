@@ -41,6 +41,9 @@ jobs:
       - name: Set up test database
         run: bundle exec rake db:create db:schema:load parallel:create parallel:load_schema
 
+      - name: Generate Swagger (OpenAPI) docs
+        run: bundle exec rake rswag:specs:swaggerize
+
       - name: Precompile assets
         run: bin/rails assets:precompile
 
@@ -62,6 +65,7 @@ jobs:
           name: capybara-screenshots
           path: /home/runner/work/teaching-vacancies/teaching-vacancies/tmp/capybara/*.png
           if-no-files-found: ignore # If only non-capybara tests fail there will be no screenshots
+
   frontend-tests:
     name: Run frontend JS unit tests
 

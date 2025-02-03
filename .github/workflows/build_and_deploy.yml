@@ -31,10 +31,55 @@ env:
  DOCKER_REPOSITORY: ghcr.io/dfe-digital/teaching-vacancies
 
 jobs:
+  swagger-gen:
+    name: Generate and Cache swagger docs
+
+    runs-on: ubuntu-20.04
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgis://postgres:postgres@localhost:5432/tvs_test
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+    services:
+      postgres:
+        image: postgis/postgis:14-3.4-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache swagger docs
+        uses: actions/cache@v4
+        id: swagger-cache
+        with:
+          path: 'swagger'
+          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
+
+      - name: Prepare application environment
+        if: steps.swagger-cache.outputs.cache-hit != 'true'
+        uses: ./.github/actions/prepare-app-env
+        with:
+          skip-node: true
+
+      - name: Set up test database
+        if: steps.swagger-cache.outputs.cache-hit != 'true'
+        run: bin/rails db:create db:schema:load
+
+      - name: Generate Swagger (OpenAPI) docs
+        if: steps.swagger-cache.outputs.cache-hit != 'true'
+        run: bundle exec rake rswag:specs:swaggerize
 
   build:
     if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name != 'pull_request'
     name: Build docker image
+    needs: swagger-gen
     outputs:
       matrix_environments: ${{ env.MATRIX_ENVIRONMENTS }}
       docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
@@ -94,6 +139,14 @@ jobs:
             username: ${{ github.repository_owner }}
             password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Restore swagger
+        uses: actions/cache/restore@v4
+        id: swagger-cache
+        with:
+          path: 'swagger'
+          key: ${{ runner.os }}-swagger-${{ hashFiles('spec/swagger_helper.rb', 'spec/requests/publishers/ats_api/v1/**', 'app/controllers/publishers/ats_api/v1/**') }}
+          fail-on-cache-miss: true
+
       - name: Build and push docker image from builder target
         uses: docker/build-push-action@v6
         with:
@@ -105,6 +158,8 @@ jobs:
           cache-from: |
             ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
             ${{ env.DOCKER_REPOSITORY }}:builder-main
+          # Need to tell buildx to use current rather than git
+          context: "."
           push: true
           # Tag with branch name for reuse
           tags: ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
@@ -124,6 +179,8 @@ jobs:
             ${{ env.DOCKER_REPOSITORY }}:builder-${{ env.GIT_BRANCH }}
             ${{ env.DOCKER_REPOSITORY }}:${{ env.GIT_BRANCH }}
             ${{ env.DOCKER_REPOSITORY }}:main
+          # Need to tell buildx to use current rather than git
+          context: "."
           push: false
           load: true
           # Tag with branch name for reuse

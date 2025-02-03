@@ -540,6 +540,57 @@ RSpec.describe Vacancy do
     end
   end
 
+  describe "#external?" do
+    subject { vacancy.external? }
+
+    let(:vacancy) { build(:vacancy) }
+
+    context "when external_source is present" do
+      before { vacancy.external_source = "some_source" }
+
+      it { is_expected.to be true }
+    end
+
+    context "when ats api client id is present" do
+      let(:publisher_api_client) { build(:publisher_ats_api_client) }
+
+      before { vacancy.publisher_ats_api_client = publisher_api_client }
+
+      it { is_expected.to be true }
+    end
+
+    context "when none of the external attributes are present" do
+      it { is_expected.to be false }
+    end
+  end
+
+  describe "#organisation_urns" do
+    let(:vacancy) { create(:vacancy, organisations: organisations) }
+
+    context "when the organisation is a school" do
+      let(:school) { create(:school, urn: "100001") }
+      let(:organisations) { [school] }
+
+      it "returns an array with school_urns" do
+        expect(vacancy.organisation_urns).to eq([{ school_urns: ["100001"] }])
+      end
+    end
+
+    context "when the organisation is a school group with a UID" do
+      let(:organisations) { [school_group] }
+      let(:school_group) { create(:trust, uid: "12345") }
+
+      before do
+        create(:school, school_groups: [school_group], urn: "100002")
+        create(:school, school_groups: [school_group], urn: "100003")
+      end
+
+      it "returns an array with trust_uid and school_urns" do
+        expect(vacancy.organisation_urns.sort).to eq([{ trust_uid: "12345", school_urns: %w[100002 100003].sort }])
+      end
+    end
+  end
+
   describe "#distance_in_miles_to" do
     let(:test_coordinates) { Geocoding.new("Stonehenge").coordinates }
     subject { create(:vacancy, organisations: organisations) }

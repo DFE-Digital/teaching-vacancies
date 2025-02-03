@@ -59,6 +59,7 @@ class Vacancy < ApplicationRecord
 
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
+  belongs_to :publisher_ats_api_client, optional: true
 
   has_many_attached :supporting_documents, service: :amazon_s3_documents
   has_one_attached :application_form, service: :amazon_s3_documents
@@ -130,13 +131,23 @@ class Vacancy < ApplicationRecord
   end
 
   def external?
-    external_source.present?
+    external_source.present? || publisher_ats_api_client.present?
   end
 
   def organisation
     return organisations.first if organisations.one?
 
     organisations.find(&:trust?) || publisher_organisation || organisations.first&.school_groups&.first
+  end
+
+  def organisation_urns
+    organisations.filter_map do |organisation|
+      if organisation.is_a?(School)
+        { school_urns: [organisation.urn] }
+      elsif organisation.is_a?(SchoolGroup) && organisation.uid.present?
+        { trust_uid: organisation.uid, school_urns: organisation.schools.pluck(:urn) }
+      end
+    end
   end
 
   def location
