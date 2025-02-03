@@ -6,7 +6,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for form, url: jobseekers_profile_work_history_index_path, method: :post do |f|
+    = form_for @form, url: jobseekers_profile_work_history_index_path, method: :post do |f|
       = f.govuk_error_summary
 
       span.govuk-caption-l = t(".caption")

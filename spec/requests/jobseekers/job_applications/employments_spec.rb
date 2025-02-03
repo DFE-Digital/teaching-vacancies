@@ -49,7 +49,7 @@ RSpec.describe "Job applications employments" do
     let(:organisation) { "Awesome academy" }
 
     context "when the form is valid" do
-      before { allow_any_instance_of(Jobseekers::JobApplication::Details::EmploymentForm).to receive(:valid?).and_return(true) }
+      before { allow_any_instance_of(Jobseekers::EmploymentForm).to receive(:valid?).and_return(true) }
 
       it "creates the employment and redirects to the employment history build step" do
         expect { post jobseekers_job_application_employments_path(job_application), params: params }
@@ -85,7 +85,7 @@ RSpec.describe "Job applications employments" do
     let(:organisation) { "Awesome academy" }
 
     context "when the form is valid" do
-      before { allow_any_instance_of(Jobseekers::JobApplication::Details::EmploymentForm).to receive(:valid?).and_return(true) }
+      before { allow_any_instance_of(Jobseekers::EmploymentForm).to receive(:valid?).and_return(true) }
 
       it "updates the employment and redirects to the employment history build step" do
         expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }
