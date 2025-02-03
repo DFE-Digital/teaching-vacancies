@@ -235,17 +235,14 @@ RSpec.describe "Jobseekers can manage their profile" do
 
             within "ul.govuk-list.govuk-error-summary__list" do
               expect(all("a").map { |l| [l.text, l[:href]] })
-                .to eq([
-                  ["Enter a school or other organisation", "#jobseekers-profile-employment-form-organisation-field-error"],
-                  ["Enter your job title", "#jobseekers-profile-employment-form-job-title-field-error"],
-                  ["Enter your main duties for this role", "#jobseekers-profile-employment-form-main-duties-field-error"],
-                  ["Enter a date in the correct format", "#jobseekers-profile-employment-form-started-on-field-error"],
-                ])
+                .to contain_exactly(["Enter a school or other organisation", "#jobseekers-profile-employment-form-organisation-field-error"],
+                                    ["Enter your job title", "#jobseekers-profile-employment-form-job-title-field-error"],
+                                    ["Enter your main duties for this role", "#jobseekers-profile-employment-form-main-duties-field-error"],
+                                    ["Enter the date you started at this school or organisation", "#jobseekers-profile-employment-form-started-on-field-error"])
             end
           end
 
           it "makes reason mandatory when non current" do
-            # choose "No", name: "jobseekers_profile_employment_form[is_current_role]"
             click_on I18n.t("buttons.save_and_continue")
 
             expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
