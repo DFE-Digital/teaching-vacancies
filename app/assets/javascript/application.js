@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/browser';
 import 'core-js/modules/es.weak-map';
 import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
+// import * as govukFrontend from 'govuk-frontend';
 import * as govukFrontend from 'govuk-frontend';
 import $ from 'jquery';
 import * as mojFrontend from '@ministryofjustice/frontend';
@@ -71,3 +72,15 @@ Rails.start();
 govukFrontend.initAll();
 window.$ = $;
 mojFrontend.initAll();
+
+if (typeof mojFrontend.MultiFileUpload !== 'undefined') {
+  const hasUploads = document.querySelector('.moj-multi-file-upload');
+  if (hasUploads !== null) {
+    // eslint-disable-next-line no-new
+    new mojFrontend.MultiFileUpload({
+      container: document.querySelector('.moj-multi-file-upload'),
+      uploadUrl: '/ajax-upload-url',
+      deleteUrl: '/ajax-delete-url',
+    });
+  }
+}
