@@ -62,6 +62,11 @@ send_draft_applications_email:
   class: 'SendEmailForDraftJobApplicationsJob'
   queue: default
 
+delete_old_feedback:
+  cron: '0 3 * * *' # "At 03:00."
+  class: 'DeleteOldFeedbackJob'
+  queue: default
+
 remove_vacancies_that_expired_yesterday_from_google_index:
   cron: '0 04 * * *' # "At 04:00."
   class: 'RemoveVacanciesThatExpiredYesterdayFromGoogleIndexJob'
