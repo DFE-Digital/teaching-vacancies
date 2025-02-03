@@ -184,6 +184,31 @@ en:
           optional: You can select ‘prefer not to say’ if you would rather not answer any question.
           step_title: Equal opportunities
           title: Equal opportunities — Application
+        catholic:
+          step_title: Religious Information
+          title: Religious information — Application
+          heading: Religious information
+          is_a_catholic_school: "%{name} is a Catholic school."
+          preference_to_catholics: Schools, academies and colleges of a religious character can give preference to Catholic applicants when recruiting for teaching roles.
+          preference_for_support_staff: They can also give preference to Catholic applicants for support staff roles where there is a genuine occupational requirement.
+          non_catholics_apply: Applicants who do not follow a faith or religion are still encouraged to apply.
+        catholic_following_religion:
+          heading: Religious information
+        non_catholic_following_religion:
+          heading: Religious information
+          title: Religious information — Application
+        catholic_religion_details:
+          heading: Religious information
+          title: Religious information — Application
+        non_catholic_religion_details:
+          heading: Religious information
+          title: Religious information — Application
+        non_catholic:
+          heading: Religious information
+          title: Religious information — Application
+          has_a_religious_character: "%{name} has a religious character."
+          preference_to_religious_applicants: Schools, academies and colleges of a religious character can give preference to religious applicants when recruiting for teaching roles, but candidates who do not follow a faith or religion are still encouraged to apply.
+          ethos_and_aims: How will you support the school's ethos and aims?
         personal_details:
           description: Provide some basic details about yourself, like how to contact you about this application.
           heading: Personal details
@@ -195,19 +220,24 @@ en:
           banner_documents_html: >-
             Documents supplied with %{job_link} listing that may be of some help with your personal statement.
           banner_no_documents_html: >-
-            It may be helpful to refer back to %{job_link} when writing your personal statement.
+            It may be helpful to refer back to %{job_link} and include any relevant personal qualities and experiences.
           description: >-
-            Please explain why you are suitable for this role. You should refer to the person specification in the job
-            description, and include any relevant personal qualities and experiences.
+            Explain why you are suitable for this role.
+          job_description: job description
           heading: Personal statement
-          personal_statement_guide:
-            description_desktop: Find out how to sell your skills and experience to school recruiters.
-            description_mobile: Get guidance around creating the perfect personal statement.
-            link_text: How to write a teacher personal statement
-            title: How to write a teacher personal statement
+          applying_for_a_teaching_role: If you're applying for a teaching role
+          you_could_provide: "You could include information about:"
+          personal_statement_preamble: "Get advice from experienced teachers and school leaders on "
+          bullets:
+            - your teaching and classroom management style
+            - your knowledge of the curriculum
+            - your understanding of safeguarding and student wellbeing
+            - additional responsibilities you’ve taken on in school
+            - experience in special educational needs and disability (SEND)
+            - any relevant interests or extra-curricular activities
+          personal_statement_link_text: writing your personal statement
           step_title: Personal statement
           title: Personal statement — Application
-          hint: You can copy and paste bullet points into the text box.
         process_title: Application steps
         professional_status:
           heading: Professional status
@@ -410,10 +440,9 @@ en:
             gcse: Edit GCSEs
             as_level: Edit AS Levels
             a_level: Edit A Levels
-            other_secondary: Edit secondary qualifications
             undergraduate: Edit undergraduate degree
             postgraduate: Edit postgraduate qualification
-            other: Edit qualification or course
+            other: Edit qualification
           title: Edit qualification — Application
         new:
           <<: *qualifications_shared
@@ -421,12 +450,12 @@ en:
             gcse: Add GCSEs
             as_level: Add AS Levels
             a_level: Add A Levels
-            other_secondary: Add secondary qualifications
             undergraduate: Add an undergraduate degree
             postgraduate: Add a postgraduate qualification
-            other: Add a qualification or course
+            other: Add a qualification
           title: Add a qualification — Application
           hint: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
+          hint_for_other_qualifications: Add any formal qualifications. You can add details of any training or professional development in the continuing professional development part of the application.
         select_category:
           <<: *qualifications_shared
           heading: Add a qualification
@@ -497,6 +526,9 @@ en:
         warning: You cannot review a non-draft job application
         training_and_cpds:
           none: You have not added any training.
+        religious_information:
+          heading: This school has a religious character and has asked applicants to provide religious information as part of the application, where possible.
+          baptism_certificate: Baptism certficate
       show:
         application_sections: Application sections
         ask_for_support:
@@ -532,6 +564,8 @@ en:
           your_address: Your address
         personal_statement:
           heading: Personal statement
+        religious_information:
+          heading: Religious Information
         professional_status:
           heading: Professional status
           statutory_induction_complete: Have you completed your induction period?
@@ -810,12 +844,12 @@ en:
             gcse: Add GCSEs
             as_level: Add AS Levels
             a_level: Add A Levels
-            other_secondary: Add secondary qualifications
             undergraduate: Add an undergraduate degree
             postgraduate: Add a postgraduate qualification
-            other: Add a qualification or course
+            other: Add a qualification
           title: Add a qualification — Profile
           hint: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
+          hint_for_other_qualifications: Add any formal qualifications. You can add details of any training or professional development in the continuing professional development part of the application.
         edit:
           page_title: Qualifications
         review:

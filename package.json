@@ -13,7 +13,7 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@ministryofjustice/frontend": "^3.3.1",
-    "@sentry/browser": "8.48.0",
+    "@sentry/browser": "8.52.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
     "axios": "^1.7.9",
@@ -27,11 +27,12 @@
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
     "lodash": "^4.17.21",
-    "rails-ujs": "^5.2.8"
+    "rails-ujs": "^5.2.8",
+    "tough-cookie": "^5.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
+    "@babel/core": "^7.26.7",
+    "@babel/preset-env": "^7.26.7",
     "concurrently": "^9.1.2",
     "dotenv": "^16.4.7",
     "esbuild": "^0.24.2",
@@ -41,7 +42,7 @@
     "eslint-plugin-import": "^2.31.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "29.7.0",
-    "jsdom": "^25.0.1",
+    "jsdom": "^26.0.0",
     "postcss": "^8.5.1",
     "sass": "^1.83.4",
     "stylelint": "^15.11.0",

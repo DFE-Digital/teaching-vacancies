@@ -60,10 +60,10 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = built_scope.joins(organisation_vacancies: :organisation)
 
     if school_types.include?("faith_school") && school_types.include?("special_school")
-      built_scope.where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES)
+      built_scope.merge(Organisation.only_faith_schools)
                  .or(built_scope.where("organisations.detailed_school_type IN (?)", Organisation::SPECIAL_SCHOOL_TYPES)).distinct
     elsif school_types.include?("faith_school")
-      built_scope.where.not("organisations.gias_data ->> 'ReligiousCharacter (name)' IN (?)", Organisation::NON_FAITH_RELIGIOUS_CHARACTER_TYPES).distinct
+      built_scope.merge(Organisation.only_faith_schools).distinct
     elsif school_types.include?("special_school")
       built_scope.where(organisations: { detailed_school_type: Organisation::SPECIAL_SCHOOL_TYPES }).distinct
     else
@@ -105,16 +105,17 @@ class VacancyFilterQuery < ApplicationQuery
   end
 
   def add_working_patterns_filters(working_patterns, built_scope)
-    return built_scope unless working_patterns.present?
-
-    if working_patterns.include?("job_share")
-      working_patterns -= ["job_share"]
-      built_scope = built_scope.where(is_job_share: true)
+    if working_patterns.present?
+      if working_patterns == %w[job_share]
+        built_scope.where(is_job_share: true)
+      elsif working_patterns.include?("job_share")
+        built_scope.where(is_job_share: true).or(built_scope.with_any_of_working_patterns(working_patterns - %w[job_share]))
+      else
+        built_scope.with_any_of_working_patterns(working_patterns)
+      end
+    else
+      built_scope
     end
-
-    built_scope = built_scope.with_any_of_working_patterns(working_patterns) if working_patterns.present?
-
-    built_scope
   end
 
   def apply_job_roles(keys, built_scope, filters)

@@ -146,6 +146,18 @@ shared:
     - safeguarding_issue_details
     - imported_steps
     - statutory_induction_complete_details
+    - following_religion
+    - religious_reference_type
+    - faith
+    - place_of_worship
+    - religious_referee_name
+    - religious_referee_address
+    - religious_referee_role
+    - religious_referee_email
+    - religious_referee_phone
+    - baptism_address
+    - baptism_date
+    - ethos_and_aims
   job_preferences_locations:
     - id
     - job_preferences_id
@@ -208,14 +220,7 @@ shared:
     - name
     - location_type
     - area
-    - created_at
-    - updated_at
-  notifications:
-    - id
-    - recipient_type
-    - recipient_id
-    - type
-    - read_at
+    - centroid
     - created_at
     - updated_at
   organisations:
@@ -299,6 +304,7 @@ shared:
     - year
     - job_application_id
     - jobseeker_profile_id
+    - awarding_body
   qualification_results:
     - id
     - qualification_id
@@ -412,6 +418,7 @@ shared:
     - flexi_working
     - extension_reason
     - other_extension_reason_details
+    - religion_type
   failed_imported_vacancies:
     - id
     - import_errors
@@ -461,3 +468,13 @@ shared:
     - created_at
     - updated_at
     - notifications_count
+  :professional_body_memberships:
+    - id
+    - created_at
+    - updated_at
+    - name
+    - membership_type
+    - membership_number
+    - year_membership_obtained
+    - exam_taken
+    - jobseeker_profile_id

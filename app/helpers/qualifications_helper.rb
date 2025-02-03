@@ -5,7 +5,6 @@ module QualificationsHelper
     a_level
     as_level
     gcse
-    other_secondary
     other
   ].freeze
 

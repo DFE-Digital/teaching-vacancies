@@ -141,12 +141,12 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def step_valid?(step)
-    step_form = "jobseekers/job_application/#{step}_form".camelize.constantize
+    form_class = "jobseekers/job_application/#{step}_form".camelize.constantize
 
-    attributes = step_form.load_form(job_application)
+    attributes = form_class.load_form(job_application)
     attributes.merge!(trn_params) if step == :professional_status
 
-    form = step_form.new(attributes)
+    form = form_class.new(attributes)
 
     form.valid?.tap do
       job_application.errors.merge!(form.errors)

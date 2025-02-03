@@ -7,8 +7,8 @@ RSpec.describe Qualification do
   describe "#name" do
     let(:qualification) { build_stubbed(:qualification, name: name, category: category) }
 
-    context "when the category is 'other_secondary' or 'other'" do
-      let(:category) { "other_secondary" }
+    context "when the category is 'other'" do
+      let(:category) { "other" }
       let(:name) { "Welsh Baccalaureate" }
 
       context "when the name has been set" do
@@ -26,7 +26,7 @@ RSpec.describe Qualification do
       end
     end
 
-    context "when the category is not 'other_secondary' or 'other' and the name has not been set" do
+    context "when the category is not 'other' and the name has not been set" do
       let(:category) { "undergraduate" }
       let(:name) { "" }
 

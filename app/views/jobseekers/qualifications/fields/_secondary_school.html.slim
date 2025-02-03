@@ -1,8 +1,5 @@
 = f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }, width: "three-quarters"
 
-- if category == "other_secondary"
-  = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }, width: "two-thirds"
-
 = f.govuk_number_field :year, label: { size: "s" }, aria: { required: true }, width: 4
 
 = f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_qualifications_shared_legends.subjects") }, class: "subjects-and-grades", data: { controller: "manage-qualifications" } do

@@ -166,9 +166,17 @@ en:
           Department for Education services.
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
+      jobseekers_job_application_personal_details_form:
+        has_ni_number: >-
+          You can find this on your National Insurance card,
+          benefit letter, payslip or P60. It's made up of 2 letters, 6 numbers and a final letter.
+        phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
+        previous_names: For example maiden name or name at birth, if different from the name you have now.
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
+      jobseekers_qualifications_other_form:
+        awarding_body: For example, a university or college
       jobseekers_job_alert_further_feedback_form:
         comment: This is optional, but the information will help us to make improvements.
         email: >-
@@ -187,8 +195,6 @@ en:
         started_on: For example, %{date}
         reason_for_leaving: If you're still in the role, give a brief summary of your reasons for wanting to leave.
 
-      jobseekers_qualifications_degree_form:
-        institution: For example, a university or college
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
       jobseekers_unsubscribe_feedback_form:
@@ -201,6 +207,7 @@ en:
       jobseekers_qualifications_category_form:
         category_options:
           postgraduate: For example, A PGCE, master’s or PhD.
+          other: For example, BTECs, diplomas or qualifications from outside of the UK.
 
       publishers_organisation_form:
         description: Jobseekers will see this description of the %{organisation_type} in the job listing
@@ -228,9 +235,6 @@ en:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:
         application_form: You can only upload a PDF or DOCX file under 10MB
-      publishers_job_listing_applying_for_the_job_form:
-        enable_job_applications_options:
-          "false": You'll need to provide additional details about how to apply.
       publishers_job_listing_documents_form:
         documents: You can only upload PDF or DOCX files under 10MB
       publishers_job_listing_feedback_form:
@@ -390,10 +394,9 @@ en:
           gcse: GCSEs
           as_level: AS Levels
           a_level: A Levels
-          other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
-          other: Other qualification or course
+          other: Other qualification
         finished_studying_details: Please give details
         finished_studying_options:
           false: "Not finished yet"
@@ -450,10 +453,9 @@ en:
           gcse: GCSEs
           as_level: AS Levels
           a_level: A Levels
-          other_secondary: Other secondary qualification
           undergraduate: Undergraduate degree
           postgraduate: Postgraduate qualification
-          other: Other qualification or course
+          other: Other qualification
       jobseekers_qualifications_degree_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: Awarding body
@@ -464,13 +466,10 @@ en:
         institution: School, college, university or other organisation
         name: Qualification or course name
         year: Year qualification was awarded
+        awarding_body: Awarding body (optional)
       jobseekers_qualifications_secondary_common_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: School, college, or other organisation
-      jobseekers_qualifications_secondary_other_form:
-        <<: *jobseekers_qualifications_shared_labels
-        institution: School, college, or other organisation
-        name: Qualification name
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status_options:
           "yes": "Yes"
@@ -491,8 +490,6 @@ en:
         completed_period_hint: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs).
         teacher_reference_number_hint: Schools will only be able to see your TRN if you apply for a role. You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
         trn_link_text: find your TRN
-
-
       jobseekers_training_and_cpd_form:
         name: Name of course or training
         provider: Training provider
@@ -500,8 +497,6 @@ en:
         year_awarded: Date completed
         year_completed_hint: For example, 1998
         course_length: Course length
-
-
       personal_details_form:
         email: Email
         change_email_html: Select to %{link}
@@ -604,12 +599,6 @@ en:
         application_email_options:
           other: Another email address
         other_application_email: Email address
-      publishers_job_listing_applying_for_the_job_form:
-        quick_apply: Only show quick apply jobs
-        quick_apply_hint: Apply for jobs quickly using an online application form
-        enable_job_applications_options:
-          true: "Teaching Vacancies application form"
-          false: "Use other application form method"
       publishers_job_listing_contract_type_form:
         contract_type_options:
           fixed_term: Fixed term (including maternity or parental leave cover)
@@ -861,7 +850,6 @@ en:
       jobseekers_profile_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
         has_teacher_reference_number: Do you have a teacher reference number (TRN)?
-
       jobseekers_profile_employment_form:
         current_role: Are you still working in this role?
         ended_on: End date
@@ -878,8 +866,6 @@ en:
         ect_status: Is this role suitable for an early career teacher (ECT)?
         further_details_provided: Do you want to add further details about the role?
         safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
-      publishers_job_listing_applying_for_the_job_form:
-        enable_job_applications: Select application form type
       publishers_job_listing_application_form_form:
         application_email: Email address to receive applications
       publishers_job_listing_contract_type_form:

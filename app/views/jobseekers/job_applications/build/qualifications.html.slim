@@ -18,9 +18,10 @@
                     - row.with_value text: safe_join(qualification.qualification_results.map { |res| tag.div(display_secondary_qualification(res), class: "govuk-body govuk-!-margin-bottom-1") })
 
                 - qualification.display_attributes.each do |attribute|
-                  - summary_list.with_row do |row|
-                    - row.with_key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
-                    - row.with_value text: qualification[attribute]
+                  - if qualification[attribute].present?
+                    - summary_list.with_row do |row|
+                      - row.with_key text: t("helpers.label.#{qualification_form_param_key(qualification.category)}.#{attribute}")
+                      - row.with_value text: qualification[attribute]
 
                 - if qualification.finished_studying == false
                   - summary_list.with_row do |row|
@@ -32,10 +33,10 @@
             - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_qualification_path(job_application, qualification), class: "govuk-link--no-visited-state"
             - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_qualification_path(job_application, qualification), method: :delete
 
-      = govuk_button_link_to t("buttons.add_another_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-button--secondary"
+      = govuk_button_link_to t("buttons.add_another_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application)
     - else
       = render EmptySectionComponent.new title: t(".no_qualifications") do
-        = govuk_button_link_to t("buttons.add_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-button--secondary govuk-!-margin-bottom-0"
+        = govuk_button_link_to t("buttons.add_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-!-margin-bottom-0"
 
     = form_for form, url: jobseekers_job_application_build_path(job_application, :qualifications), method: :patch do |f|
       = f.govuk_error_summary

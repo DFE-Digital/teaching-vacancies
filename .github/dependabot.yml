@@ -21,6 +21,7 @@ updates:
       # Our current Redis service instance is 6.0 on Azure.
       - dependency-name: "redis"
         update-types: ["version-update:semver-major"]
+
     groups:
       gem-dependencies:
         update-types:

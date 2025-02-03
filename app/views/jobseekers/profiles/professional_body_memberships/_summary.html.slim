@@ -1,0 +1,5 @@
+p class="govuk-!-margin-bottom-6"
+  = govuk_link_to "Add membership", new_jobseekers_profile_professional_body_membership_path
+
+- if profile.professional_body_memberships.any?
+  = render "jobseekers/professional_body_memberships/professional_body_memberships", profile: profile

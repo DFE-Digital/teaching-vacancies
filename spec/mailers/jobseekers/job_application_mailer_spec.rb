@@ -29,7 +29,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
                                                        email: "[#{contact_email}](mailto:#{contact_email})"))
     end
 
-    it "triggers a `jobseeker_application_shortlisted` email event" do
+    it "triggers a `jobseeker_application_shortlisted` email event", :dfe_analytics do
       mail.deliver_now
       expect(:jobseeker_application_shortlisted).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
@@ -49,7 +49,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
                                                    email: "[#{contact_email}](mailto:#{contact_email})"))
     end
 
-    it "triggers a `jobseeker_application_submitted` email event" do
+    it "triggers a `jobseeker_application_submitted` email event", :dfe_analytics do
       mail.deliver_now
       expect(:jobseeker_application_submitted).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
@@ -68,7 +68,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
                                                    email: "[#{contact_email}](mailto:#{contact_email})"))
     end
 
-    it "triggers a `jobseeker_application_unsuccessful` email event" do
+    it "triggers a `jobseeker_application_unsuccessful` email event", :dfe_analytics do
       mail.deliver_now
       expect(:jobseeker_application_unsuccessful).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
@@ -87,7 +87,7 @@ RSpec.describe Jobseekers::JobApplicationMailer do
       expect(mail.body.encoded).to include(jobseekers_job_application_url(job_application))
     end
 
-    it "triggers a `jobseeker_job_listing_ended_early` email event" do
+    it "triggers a `jobseeker_job_listing_ended_early` email event", :dfe_analytics do
       mail.deliver_now
       expect(:jobseeker_job_listing_ended_early).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end

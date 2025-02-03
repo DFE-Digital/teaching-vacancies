@@ -13,8 +13,8 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
   end
 
   context "publisher flow" do
-    let(:school) { create(:school, name: "Some school") }
-    let(:other_school) { create(:school, name: "Some other school") }
+    let(:school) { create(:school, :with_image, name: "Some school") }
+    let(:other_school) { create(:school, :with_image, name: "Some other school") }
     let(:trust) { create(:trust) }
     let(:local_authority) { create(:local_authority, local_authority_code: "100") }
     let(:publisher) { create(:publisher, organisations: organisations, accepted_terms_at: 1.day.ago) }
@@ -46,7 +46,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         )
       end
 
-      it "can sign in, choose an org, sign out" do
+      it "can sign in, choose an org, sign out", :dfe_analytics do
         freeze_time do
           visit root_path
           within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
@@ -105,7 +105,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
       context "organisation is a School" do
         let(:organisations) { [school] }
 
-        it "can sign in" do
+        it "can sign in", :dfe_analytics do
           freeze_time do
             visit root_path
             within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
@@ -140,7 +140,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
         before { allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference)) }
 
-        it "can sign in" do
+        it "can sign in", :dfe_analytics do
           freeze_time do
             visit root_path
             within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }
@@ -179,7 +179,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
         end
 
-        it "can sign in" do
+        it "can sign in", :dfe_analytics do
           freeze_time do
             visit root_path
             within(".govuk-header__navigation") { click_on I18n.t("buttons.sign_in") }

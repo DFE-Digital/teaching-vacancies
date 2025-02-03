@@ -120,7 +120,7 @@ RSpec.describe "Api::Vacancies" do
       expect(response.status).to eq(Rack::Utils.status_code(:not_found))
     end
 
-    it "still monitors API usage if the request is for an entity that is not found" do
+    it "still monitors API usage if the request is for an entity that is not found", :dfe_analytics do
       get api_job_path("slug-that-does-not-exist", api_version: 1), params: { format: :json }
       expect(:api_queried).to have_been_enqueued_as_analytics_event
     end
@@ -137,7 +137,7 @@ RSpec.describe "Api::Vacancies" do
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
     end
 
-    it "triggers an api_queried event" do
+    it "triggers an api_queried event", :dfe_analytics do
       subject
       expect(:api_queried).to have_been_enqueued_as_analytics_event
     end

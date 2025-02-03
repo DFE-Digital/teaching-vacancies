@@ -34,8 +34,22 @@ RSpec.describe CampaignPage do
   end
 
   describe "banner_title" do
-    it "returns the banner title" do
-      expect(campaign_page.banner_title("Severus")).to eq("Severus, this is a fake campaign")
+    context "when the subject is not in the language subjects" do
+      it "returns the banner title" do
+        expect(campaign_page.banner_title("Severus", "Geography")).to eq("Severus, find the right geography fake job for you")
+      end
+    end
+
+    context "when the subject is in the language subjects" do
+      it "returns the banner title" do
+        expect(campaign_page.banner_title("Severus", "English")).to eq("Severus, find the right English fake job for you")
+      end
+    end
+
+    context "when the subject is nil" do
+      it "returns the banner title" do
+        expect(campaign_page.banner_title("Severus")).to eq("Severus, find the right fake job for you")
+      end
     end
   end
 end

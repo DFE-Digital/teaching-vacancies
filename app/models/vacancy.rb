@@ -55,6 +55,8 @@ class Vacancy < ApplicationRecord
   enum :receive_applications, { email: 0, website: 1 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
+  enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
+
   belongs_to :publisher, optional: true
   belongs_to :publisher_organisation, class_name: "Organisation", optional: true
   belongs_to :publisher_ats_api_client, optional: true

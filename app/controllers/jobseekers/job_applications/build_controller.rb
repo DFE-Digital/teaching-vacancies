@@ -9,13 +9,15 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def update
     if form.valid?
-      job_application.update(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
+      job_application.update!(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
       update_or_create_jobseeker_profile! if step == :professional_status
 
       if redirect_to_review?
         redirect_to jobseekers_job_application_review_path(job_application), success: t("messages.jobseekers.job_applications.saved")
-      else
+      elsif steps_complete?
         redirect_to jobseekers_job_application_apply_path job_application
+      else
+        redirect_to jobseekers_job_application_build_path(job_application, step_process.next_step(step))
       end
     else
       render step
@@ -23,6 +25,10 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   private
+
+  def steps_complete?
+    step_process.last_of_group?(step) || (step.in?(%i[catholic_following_religion non_catholic_following_religion]) && !job_application.following_religion)
+  end
 
   def back_path
     @back_path ||= if redirect_to_review?
@@ -49,16 +55,14 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
                  when "show"
                    form_class.load_form(job_application)
                  when "update"
-                   form_params
+                   form_class.load_form(job_application).merge(form_params)
                  end
 
-    attributes[:unexplained_employment_gaps] = job_application.unexplained_employment_gaps if step == :employment_history
-
-    if step == :professional_status
-      attributes.merge(jobseeker_profile_attributes)
-                .merge(trn_params)
-    elsif step == :references
-      attributes.merge(references: job_application.references)
+    case step
+    when :professional_status
+      attributes.merge(trn_params)
+    when :employment_history
+      attributes.merge(unexplained_employment_gaps: job_application.unexplained_employment_gaps)
     else
       attributes
     end
@@ -101,7 +105,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def update_fields
-    form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
+    # This version doesn't work with date fields as they are submitted in 3 parts (hence form_params doesn't contain the right key)
+    # form_class.storable_fields.select { |f| form_params.key?(f) }.index_with { |field| form.public_send(field) }
+    form_params.except(*form_class.unstorable_fields)
   end
 
   def step_incomplete?
@@ -112,15 +118,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     @vacancy ||= job_application.vacancy
   end
 
-  def jobseeker_profile_attributes
-    {
-      jobseeker_profile: current_jobseeker.jobseeker_profile,
-    }
-  end
-
   def trn_params
-    return {} unless step == :professional_status
-
     {
       teacher_reference_number: form_params[:teacher_reference_number] || current_jobseeker&.jobseeker_profile&.teacher_reference_number,
       has_teacher_reference_number: form_params[:has_teacher_reference_number] || current_jobseeker&.jobseeker_profile&.has_teacher_reference_number,

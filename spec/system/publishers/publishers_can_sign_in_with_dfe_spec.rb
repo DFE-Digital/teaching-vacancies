@@ -6,7 +6,7 @@ RSpec.shared_examples "a successful Publisher sign in" do
     visit new_publisher_session_path
   end
 
-  scenario "it signs in the user successfully" do
+  scenario "it signs in the user successfully", :dfe_analytics do
     sign_in_publisher
     expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "dsi" }) # rubocop:disable RSpec/ExpectActual
 
@@ -16,7 +16,7 @@ RSpec.shared_examples "a successful Publisher sign in" do
 end
 
 RSpec.shared_examples "a failed Publisher sign in" do |options|
-  scenario "it does not sign-in the user, and tells the user what to do" do
+  scenario "it does not sign-in the user, and tells the user what to do", :dfe_analytics do
     visit new_publisher_session_path
     sign_in_publisher
 
@@ -56,7 +56,7 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
   end
 
   context "with valid credentials that match a school" do
-    let!(:organisation) { create(:school, urn: "110627") }
+    let!(:organisation) { create(:school, :with_image, urn: "110627") }
 
     before do
       stub_publisher_authentication_step email: dsi_email_address

@@ -23,7 +23,7 @@ FactoryBot.define do
       end
     end
     institution { secondary? ? Faker::Educator.secondary_school : Faker::Educator.university }
-    name { other_secondary? || other? ? Faker::Educator.degree : "" }
+    name { other? ? Faker::Educator.degree : "" }
     subject { undergraduate? || postgraduate? || other? ? Faker::Educator.subject : "" }
     year { finished_studying == false ? nil : factory_rand(1970..2020) }
 

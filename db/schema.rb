@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_29_103408) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -78,11 +78,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.uuid "job_application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "employment_type", default: 0
-    t.text "reason_for_break", default: ""
     t.text "organisation_ciphertext"
     t.text "job_title_ciphertext"
     t.text "main_duties_ciphertext"
+    t.integer "employment_type", default: 0
+    t.text "reason_for_break", default: ""
     t.uuid "jobseeker_profile_id"
     t.text "reason_for_leaving"
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
@@ -249,6 +249,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.integer "imported_steps", default: [], null: false, array: true
     t.datetime "interviewing_at"
     t.string "statutory_induction_complete_details"
+    t.boolean "following_religion"
+    t.integer "religious_reference_type"
+    t.string "faith_ciphertext"
+    t.string "place_of_worship_ciphertext"
+    t.string "religious_referee_name_ciphertext"
+    t.string "religious_referee_address_ciphertext"
+    t.string "religious_referee_role_ciphertext"
+    t.string "religious_referee_email_ciphertext"
+    t.string "religious_referee_phone_ciphertext"
+    t.string "baptism_address_ciphertext"
+    t.string "baptism_date_ciphertext"
+    t.string "ethos_and_aims_ciphertext"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -313,9 +325,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
+    t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
-    t.string "govuk_one_login_id"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
   end
@@ -334,7 +346,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
+    t.geography "centroid", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
+    t.index ["centroid"], name: "index_location_polygons_on_centroid", using: :gist
     t.index ["name"], name: "index_location_polygons_on_name"
   end
 
@@ -381,18 +395,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_noticed_notifications_on_event_id"
     t.index ["recipient_type", "recipient_id"], name: "index_noticed_notifications_on_recipient"
-  end
-
-  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "recipient_type", null: false
-    t.uuid "recipient_id", null: false
-    t.string "type", null: false
-    t.jsonb "params"
-    t.datetime "read_at", precision: nil
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["read_at"], name: "index_notifications_on_read_at"
-    t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
   end
 
   create_table "organisation_publisher_preferences", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -477,6 +479,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.index ["jobseeker_profile_id"], name: "index_personal_details_jobseeker_profile_id", unique: true
   end
 
+  create_table "professional_body_memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "membership_type"
+    t.string "membership_number"
+    t.integer "year_membership_obtained"
+    t.boolean "exam_taken", default: false, null: false
+    t.uuid "jobseeker_profile_id"
+    t.index ["jobseeker_profile_id"], name: "index_professional_body_memberships_on_jobseeker_profile_id"
+  end
+
   create_table "publisher_ats_api_clients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "api_key", null: false
@@ -533,6 +547,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.uuid "job_application_id"
     t.text "finished_studying_details_ciphertext"
     t.uuid "jobseeker_profile_id"
+    t.string "awarding_body"
     t.index ["job_application_id"], name: "index_qualifications_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_qualifications_on_jobseeker_profile_id"
   end
@@ -685,12 +700,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
     t.boolean "include_additional_documents"
     t.boolean "visa_sponsorship_available"
     t.boolean "is_parental_leave_cover"
-    t.boolean "is_job_share"
     t.string "hourly_rate"
+    t.boolean "is_job_share"
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"
     t.uuid "publisher_ats_api_client_id"
+    t.integer "religion_type"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
     t.index ["geolocation", "expires_at", "publish_on"], name: "index_vacancies_on_geolocation_and_expires_at_and_publish_on", using: :gist
@@ -745,6 +761,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_13_144018) do
   add_foreign_key "organisation_vacancies", "organisations"
   add_foreign_key "organisation_vacancies", "vacancies"
   add_foreign_key "personal_details", "jobseeker_profiles"
+  add_foreign_key "professional_body_memberships", "jobseeker_profiles"
   add_foreign_key "publisher_preferences", "organisations"
   add_foreign_key "publisher_preferences", "publishers"
   add_foreign_key "qualification_results", "qualifications"

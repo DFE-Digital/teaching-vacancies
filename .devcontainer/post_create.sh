@@ -26,6 +26,11 @@ log 'Ensure `tmp` folder has a `.keep` file'
 # leading Git to believe the `.keep` file has gone missing)
 touch tmp/.keep
 
+log 'Set difftastic as the default git diff tool'
+gem install difftastic --no-document
+git config --global diff.external difft
+git config --global alias.difft '!difft'
+
 log 'Allow using `psql` without needing to enter a password'
 echo "db:5432:*:postgres:postgres" > $HOME/.pgpass
 chmod 600 $HOME/.pgpass

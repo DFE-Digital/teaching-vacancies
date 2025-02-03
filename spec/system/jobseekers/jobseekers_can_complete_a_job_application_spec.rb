@@ -28,9 +28,9 @@ RSpec.describe "Jobseekers can complete a job application" do
     validates_step_complete
     choose I18n.t("helpers.label.jobseekers_job_application_qualifications_form.qualifications_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
-
     expect(page).not_to have_content("There is a problem")
-    click_on(I18n.t("jobseekers.job_applications.build.qualifications.heading"))
+
+    click_on I18n.t("jobseekers.job_applications.build.qualifications.heading")
     click_on I18n.t("buttons.add_qualification")
     validates_step_complete(button: I18n.t("buttons.continue"))
     select_qualification_category("Undergraduate degree")
@@ -71,6 +71,7 @@ RSpec.describe "Jobseekers can complete a job application" do
     click_on I18n.t("buttons.save_and_continue")
 
     click_on(I18n.t("jobseekers.job_applications.build.references.heading"))
+
     click_on I18n.t("buttons.add_reference")
     click_on I18n.t("buttons.save_reference")
     expect(page).to have_content("There is a problem")

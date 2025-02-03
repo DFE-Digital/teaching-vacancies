@@ -4,6 +4,7 @@ shared:
   - equal_opportunities_report_published
   - failed_dsi_sign_in_attempt
   - form_validation_failed
+  - google_geocoding_api_hit
   - job_alert_subscription_created
   - job_alert_subscription_unsubscribed
   - job_alert_subscription_updated

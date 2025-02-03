@@ -23,10 +23,22 @@ class Subscription < ApplicationRecord
     # legacy 'subject' criteria appears to be 1 single value
     subject: ->(vacancy, value) { (vacancy.subjects || []).include?(value) },
     phases: ->(vacancy, value) { vacancy.phases.intersect?(value) },
-    working_patterns: ->(vacancy, value) { vacancy.working_patterns.intersect?(value) },
+    working_patterns: ->(vacancy, value) { working_pattern_match?(vacancy, value) },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
     keyword: ->(vacancy, value) { vacancy.searchable_content.include? value.downcase.strip },
   }.freeze
+
+  class << self
+    def working_pattern_match?(vacancy, working_patterns)
+      if working_patterns == %w[job_share]
+        vacancy.is_job_share
+      elsif working_patterns.include?("job_share")
+        vacancy.is_job_share || vacancy.working_patterns.intersect?(working_patterns - %w[job_share])
+      else
+        vacancy.working_patterns.intersect?(working_patterns)
+      end
+    end
+  end
 
   def self.encryptor(serializer: :json_allow_marshal)
     key_generator_secret = SUBSCRIPTION_KEY_GENERATOR_SECRET
@@ -71,15 +83,14 @@ class Subscription < ApplicationRecord
     Organisation.find_by(slug: search_criteria["organisation_slug"]) if search_criteria["organisation_slug"]
   end
 
-  def vacancies_matching(default_scope)
-    scope = default_scope
+  def vacancies_matching(scope)
     # ignore legacy sorting criteria - legacy job_title is too specific and will typically filter everything
     criteria = search_criteria.symbolize_keys.except(:jobs_sort, :job_title, :minimum_salary)
-    scope, criteria = self.class.handle_location(scope, criteria)
 
-    scope.select do |vacancy|
-      criteria.all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
+    vacancies = scope.select do |vacancy|
+      criteria.except(:location, :radius).all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
     end
+    self.class.handle_location(vacancies, criteria)
   end
 
   extend DistanceHelper
@@ -110,13 +121,12 @@ class Subscription < ApplicationRecord
       if criteria.key?(:location)
         location = criteria[:location].strip.downcase
         if location.blank? || LocationQuery::NATIONWIDE_LOCATIONS.include?(location)
-          [scope, criteria.except(:location, :radius)]
+          scope
         else
-          [limit_by_location(scope, location, criteria[:radius] || 10), criteria.except(:location, :radius)]
+          limit_by_location(scope, location, criteria[:radius] || 10)
         end
       else
-        # ignore 'radius' keys that don't have a 'location' key
-        [scope, criteria.except(:radius)]
+        scope
       end
     end
   end

@@ -45,8 +45,6 @@
   - first_name_ciphertext
   - last_name_ciphertext
   - phone_number_ciphertext
-  :notifications:
-  - params
   :notes:
   - id
   - content
@@ -93,6 +91,18 @@
   - rejection_reasons_ciphertext
   - gaps_in_employment_details_ciphertext
   - in_progress_steps
+  - employment_history_section_completed
+  - qualifications_section_completed
+  - place_of_worship_ciphertext
+  - religious_referee_name_ciphertext
+  - religious_referee_address_ciphertext
+  - religious_referee_role_ciphertext
+  - religious_referee_email_ciphertext
+  - religious_referee_phone_ciphertext
+  - faith_ciphertext
+  - baptism_address_ciphertext
+  - baptism_date_ciphertext
+  - ethos_and_aims_ciphertext
   :employments:
   - organisation_ciphertext
   - job_title_ciphertext

@@ -126,6 +126,7 @@ module PdfHelper
       ["Institution:", qualification.institution],
       ["Grade:", qualification.grade],
       ["Date completed:", qualification.year],
+      ["Awarding body:", qualification.awarding_body],
     ].reject { |row| row[1].blank? }
 
     render_table(pdf, general_qualification_data)
@@ -178,7 +179,6 @@ module PdfHelper
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def add_references(pdf)
     pdf.start_new_page
 
@@ -205,7 +205,6 @@ module PdfHelper
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def add_ask_for_support(pdf)
     pdf.start_new_page

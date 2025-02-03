@@ -56,9 +56,9 @@ class LocationQuery < ApplicationQuery
   end
 
   def sort_by_polygon_distance(field_name)
-    @scope = scope.select("vacancies.*, ST_Distance(#{field_name}, ST_Centroid(location_polygons.area), false) AS distance")
+    @scope = scope.select("vacancies.*, ST_Distance(#{field_name}, location_polygons.centroid, false) AS distance")
                   # why not using 'distance' alias? is not defined when calling this query with a 'pluck'
-                  .order(Arel.sql("ST_Distance(#{field_name}, ST_Centroid(location_polygons.area), false)"))
+                  .order(Arel.sql("ST_Distance(#{field_name}, location_polygons.centroid, false)"))
   end
 
   def sort_by_coordinates_distance(field_name, point)

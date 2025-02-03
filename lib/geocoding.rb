@@ -15,8 +15,11 @@ class Geocoding
     return self.class.test_coordinates if Rails.application.config.geocoder_lookup == :test
 
     Rails.cache.fetch([:geocoding, location], expires_in: CACHE_DURATION, skip_nil: true) do
-      Geocoder.coordinates(location, lookup: :google, components: "country:gb")
+      Geocoder.coordinates(location, lookup: :google, components: "country:gb").tap do |coords|
+        trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: coords)
+      end
     rescue Geocoder::OverQueryLimitError
+      trigger_google_geocoding_api_hit_event(type: :coordinates, location:, result: "OVER_QUERY_LIMIT")
       Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
       Geocoder.coordinates(location, lookup: :uk_ordnance_survey_names)
     end || no_coordinates_match
@@ -27,14 +30,30 @@ class Geocoding
 
     Rails.cache.fetch([:postcode_from_coords, location], expires_in: CACHE_DURATION, skip_nil: true) do
       result = Geocoder.search(location, lookup: :google).first
-      result.data["address_components"].find { |line| "postal_code".in?(line["types"]) }&.dig("short_name") unless result.nil?
+      if result.present?
+        postcode = result.data["address_components"].find { |line| "postal_code".in?(line["types"]) }&.dig("short_name")
+        trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: postcode)
+        postcode
+      else
+        trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: nil)
+        nil
+      end
     rescue Geocoder::OverQueryLimitError
+      trigger_google_geocoding_api_hit_event(type: :postcode, location:, result: "OVER_QUERY_LIMIT")
       Rails.logger.error("Google Geocoding API responded with OVER_QUERY_LIMIT")
       fallback_postcode_from_coords
     end || no_postcode_match
   end
 
   private
+
+  def trigger_google_geocoding_api_hit_event(type:, location:, result:)
+    event = DfE::Analytics::Event.new
+      .with_type(:google_geocoding_api_hit)
+      .with_data(data: { type:, location: location.to_s, result: result&.to_s })
+
+    DfE::Analytics::SendEvents.do([event])
+  end
 
   def fallback_postcode_from_coords(service: :nominatim)
     result = Geocoder.search(location, lookup: service).first.data

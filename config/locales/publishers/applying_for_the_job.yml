@@ -1,0 +1,21 @@
+en:
+  helpers:
+    hint:
+      publishers_job_listing_applying_for_the_job_form:
+        application_form_type_options:
+          other_religion: >-
+            Ask applicants if they have a religious denomination or faith,
+            how they'll meet your school's ethos and aims
+            and the option to provide a religious reference or place of worship.
+          catholic: Ask applicants about their religion, place of worship and religious reference or baptism information.
+          other: You can upload your own form or provide a link to a website where applicants should apply.
+
+    label:
+      publishers_job_listing_applying_for_the_job_form:
+        quick_apply: Only show quick apply jobs
+        quick_apply_hint: Apply for jobs quickly using an online application form
+        application_form_type_options:
+          no_religion_html: Online application form %{tag}
+          other_religion_html: Online application form with questions about religion %{tag}
+          catholic_html: Online application form for Catholic schools %{tag}
+          other: Use other application form

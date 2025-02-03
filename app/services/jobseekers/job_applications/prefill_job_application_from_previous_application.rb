@@ -21,12 +21,36 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   private
 
   def copy_personal_info
-    new_job_application.assign_attributes(recent_job_application.slice(*attributes_to_copy))
+    attributes = attributes_to_copy
+    if attributes.include? :baptism_certificate
+      new_job_application.assign_attributes(recent_job_application.slice(*(attributes - [:baptism_certificate])))
+
+      if recent_job_application.baptism_certificate.present?
+        recent_job_application.baptism_certificate.blob.open do |tempfile|
+          new_job_application.baptism_certificate.attach({
+            io: tempfile,
+            filename: recent_job_application.baptism_certificate.blob.filename,
+            content_type: recent_job_application.baptism_certificate.blob.content_type,
+          })
+        end
+      end
+    else
+      new_job_application.assign_attributes(recent_job_application.slice(*attributes))
+    end
   end
 
   def attributes_to_copy
-    %i[personal_details professional_status ask_for_support personal_statement].map { |step| form_fields_from_step(step) }
-                                                                               .flatten - jobseeker_profile_fields
+    %i[personal_details
+       professional_status
+       ask_for_support
+       personal_statement
+       catholic_following_religion
+       non_catholic_following_religion
+       catholic_religion_details
+       school_ethos
+       non_catholic_religion_details]
+      .filter_map { |step| form_fields_from_step(step) if relevant_steps.include?(step) }
+      .flatten - jobseeker_profile_fields
   end
 
   def jobseeker_profile_fields
@@ -84,7 +108,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def completed_steps
-    completed_steps = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds].select { |step| relevant_steps.include?(step.to_sym) }
+    completed_steps = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds following_religion religion_details].select { |step| relevant_steps.include?(step.to_sym) }
     completed_steps << "employment_history" unless previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
     completed_steps << "professional_status" if previous_application_has_professional_status_details?
     completed_steps

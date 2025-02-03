@@ -105,3 +105,6 @@ dump.rdb
 # devops files
 bin/konduit.sh
 /swagger/v1/swagger.yaml
+
+# RVM gemset support
+/.ruby-gemset

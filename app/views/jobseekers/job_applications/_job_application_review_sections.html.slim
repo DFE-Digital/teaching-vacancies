@@ -4,6 +4,11 @@
 = render "jobseekers/job_applications/review/training_and_cpds", r: r, job_application: job_application
 = render "jobseekers/job_applications/review/employment_history", r: r, job_application: job_application
 = render "jobseekers/job_applications/review/personal_statement", r: r, job_application: job_application
+- case job_application.vacancy.religion_type
+  - when "catholic"
+    = render "jobseekers/job_applications/review/catholic_religious_information", r: r, job_application: job_application
+  - when "other_religion"
+    = render "jobseekers/job_applications/review/non_catholic_religious_information", r: r, job_application: job_application
 = render "jobseekers/job_applications/review/references", r: r, job_application: job_application
 - if jobseeker_signed_in?
   = render "jobseekers/job_applications/review/equal_opportunities", r: r

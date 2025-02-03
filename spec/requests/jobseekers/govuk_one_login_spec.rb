@@ -45,7 +45,7 @@ RSpec.describe "Govuk One Login authentication response" do
     end
 
     before do
-      allow_any_instance_of(ApplicationController).to receive(:stored_location_for).and_return(devise_stored_location) # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(ApplicationController).to receive(:stored_location_for).and_return(devise_stored_location)
       allow(Jobseekers::GovukOneLogin::UserFromAuthResponse).to receive(:call).and_return(govuk_one_login_user)
       get root_path # Loads OneLogin Sign-in button and sets session values for user.
     end
@@ -64,7 +64,7 @@ RSpec.describe "Govuk One Login authentication response" do
           .to include(I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error"))
       end
 
-      it "sends an analytics event for a failed OneLogin sign-in attempt" do
+      it "sends an analytics event for a failed OneLogin sign-in attempt", :dfe_analytics do
         get auth_govuk_one_login_callback_path
 
         expect(:jobseeker_failed_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_event
@@ -84,7 +84,7 @@ RSpec.describe "Govuk One Login authentication response" do
       expect(session[:govuk_one_login_nonce]).to be_nil
     end
 
-    it "sends an analytics event for a successful OneLogin sign-in attempt" do
+    it "sends an analytics event for a successful OneLogin sign-in attempt", :dfe_analytics do
       get auth_govuk_one_login_callback_path
 
       expect(:jobseeker_successful_govuk_one_login_sign_in).to have_been_enqueued_as_analytics_event

@@ -2,6 +2,8 @@
 
 = f.govuk_text_field :name, label: { size: "s" }, aria: { required: true }
 
+= f.govuk_text_field :awarding_body, label: { size: "s" }
+
 = f.govuk_text_field :subject, label: { size: "s", text: t("helpers.optional_field_html", label: t("helpers.label.jobseekers_qualifications_shared_labels.subject")) }
 
 = f.govuk_radio_buttons_fieldset :finished_studying do

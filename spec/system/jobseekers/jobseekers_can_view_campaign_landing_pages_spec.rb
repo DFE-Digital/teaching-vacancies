@@ -40,7 +40,7 @@ RSpec.describe "Jobseekers can view the bespoke campaign landing page" do
   it "contains the expected content and vacancies with personalized jobseeker name" do
     visit campaign_landing_page_path(email_name: "John", email_jobrole: "Teacher", email_subject: "Mathematics", utm_content: "FAKE1+CAMPAIGN")
 
-    expect(page).to have_css("h1", text: "John, this is a fake campaign")
+    expect(page).to have_css("h1", text: "John, find the right mathematics fake job for you")
 
     expect(page).to have_css("#search-results")
     within "#search-results" do

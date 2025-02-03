@@ -1,0 +1,46 @@
+- r.with_section :non_catholic
+  p.govuk-body = t("jobseekers.job_applications.review.religious_information.heading")
+
+  = govuk_summary_list do |summary_list|
+    - summary_list.with_row do |row|
+      - row.with_key text: t("helpers.label.jobseekers_job_application_non_catholic_form.ethos_and_aims")
+      - row.with_value text: job_application.ethos_and_aims
+
+    - if job_application.following_religion.in? [true, false]
+      - summary_list.with_row do |row|
+        - row.with_key text: t("helpers.legend.jobseekers_job_application_non_catholic_form.following_religion")
+        - row.with_value text: t("helpers.label.jobseekers_job_application_non_catholic_form.following_religion_options.#{job_application.following_religion}")
+
+    - if job_application.following_religion
+      - summary_list.with_row do |row|
+        - row.with_key text: t("helpers.label.jobseekers_job_application_non_catholic_form.faith")
+        - row.with_value text: job_application.faith
+
+      - summary_list.with_row do |row|
+        - row.with_key text: t("helpers.label.jobseekers_job_application_non_catholic_form.place_of_worship")
+        - row.with_value text: job_application.place_of_worship
+
+      - summary_list.with_row do |row|
+        - row.with_key text: t("helpers.legend.jobseekers_job_application_non_catholic_form.religious_reference_type")
+        - row.with_value text: t("helpers.label.jobseekers_job_application_non_catholic_form.following_religion_options.#{job_application.religious_reference_type == 'referee'}")
+
+      - if job_application.religious_reference_type == "referee"
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_name")
+          - row.with_value text: job_application.religious_referee_name
+
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_address")
+          - row.with_value text: job_application.religious_referee_address
+
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_role")
+          - row.with_value text: job_application.religious_referee_role
+
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_email")
+          - row.with_value text: job_application.religious_referee_email
+
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_job_application_non_catholic_form.religious_referee_phone")
+          - row.with_value text: job_application.religious_referee_phone
