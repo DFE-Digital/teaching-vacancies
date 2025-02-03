@@ -104,3 +104,6 @@ dump.rdb
 
 # devops files
 bin/konduit.sh
+
+# RVM gemset support
+/.ruby-gemset
