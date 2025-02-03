@@ -1,8 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can add job preferences to their profile" do
-  let(:jobseeker) { create(:jobseeker) }
-  let(:profile) { create(:jobseeker_profile, jobseeker:) }
+  let!(:jobseeker) { create(:jobseeker, :with_profile) }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
@@ -12,8 +11,10 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
 
   describe "changing job preferences" do
     context "when adding job preferences" do
-      let!(:job_preference) { create(:job_preferences, completed_steps: [], builder_completed: false, jobseeker_profile: profile) }
-      before { visit jobseekers_profile_path }
+      before do
+        visit jobseekers_profile_path
+        create(:job_preferences, completed_steps: [], builder_completed: false, jobseeker_profile: jobseeker.jobseeker_profile)
+      end
 
       it "allows jobseekers to add job preferences" do
         click_on "Add job preferences"
@@ -70,7 +71,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         fill_in "Location", with: "London"
         choose "1 mile"
         click_on "Save and continue"
-        
+
         # submit empty form
         click_on "Save and continue"
         expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
@@ -93,14 +94,14 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
 
     context "when editing job preferences" do
       before do
-        create(:job_preferences, :with_locations, working_patterns: ["part_time"], jobseeker_profile: profile)
+        create(:job_preferences, :with_locations, working_patterns: %w[part_time], working_pattern_details: "I cannot work on Mondays or Fridays", jobseeker_profile: jobseeker.jobseeker_profile)
         visit jobseekers_profile_path
       end
 
       it "allows jobseeker to edit job preferences" do
         expect(page).to have_css(".govuk-summary-list__key", text: "Working pattern details")
         expect(page).to have_css(".govuk-summary-list__value", text: "I cannot work on Mondays or Fridays")
-        
+
         click_on("Change working pattern details")
         fill_in "job-preferences-working-pattern-details-field", with: "On second thoughts, I can only work Wednesdays"
         click_on "Save and continue"
@@ -118,7 +119,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
     end
   end
 
-  def expect_page_to_have_values(role:, phase:, key_stage:, working_patterns:, working_pattern_details: nil, location:, location_radius:)
+  def expect_page_to_have_values(role:, phase:, key_stage:, working_patterns:, location:, location_radius:, working_pattern_details: nil)
     expect(page).to have_css(".govuk-summary-list__key", text: "Role")
     expect(page).to have_css(".govuk-summary-list__value", text: role)
 
