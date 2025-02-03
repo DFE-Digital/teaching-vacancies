@@ -19,11 +19,10 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
     end
 
     context "when started_on is an invalid date" do
-      let(:params) { { "started_on(1i)" => "2021", "started_on(2i)" => "01", "started_on(3i)" => "100" } }
+      let(:params) { { "started_on(1i)" => "2021", "started_on(2i)" => "01", "started_on(3i)" => "99" } }
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:started_on, :invalid)).to be true
+        expect { subject }.to raise_error(ActiveRecord::MultiparameterAssignmentErrors)
       end
     end
 
@@ -32,7 +31,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
       it "is invalid" do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:started_on, :invalid)).to be true
+        expect(subject.errors.messages[:ended_on]).to eq(["Enter the date you left this school or organisation"])
       end
     end
 
@@ -57,11 +56,10 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
     end
 
     context "when ended_on is invalid" do
-      let(:params) { { is_current_role: false, "ended_on(1i)" => "2021", "ended_on(2i)" => "01", "ended_on(3i)" => "100" } }
+      let(:params) { { is_current_role: false, "ended_on(1i)" => "2021", "ended_on(2i)" => "01", "ended_on(3i)" => "40" } }
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:ended_on, :invalid)).to be true
+        expect { subject }.to raise_error(ActiveRecord::MultiparameterAssignmentErrors)
       end
     end
 
@@ -76,7 +74,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
       it "is invalid" do
         expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:ended_on, :invalid)).to be true
+        expect(subject.errors.messages[:ended_on]).to eq(["Enter the date you left this school or organisation"])
       end
     end
 
