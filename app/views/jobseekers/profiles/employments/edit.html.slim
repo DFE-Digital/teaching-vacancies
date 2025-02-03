@@ -12,7 +12,9 @@
       span.govuk-caption-l = t(".caption")
       label.govuk-heading-l = t(".title")
 
-      = render "fields", f: f
+      = render "employment_fields", f: f
+
+      = f.govuk_submit t("buttons.save_and_continue")
 
     .govuk-button-group
       = govuk_link_to(t("buttons.cancel"), jobseekers_profile_path)

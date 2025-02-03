@@ -199,7 +199,6 @@ RSpec.describe "Jobseekers can complete a religious job application" do
     it "validates ethos and aims step" do
       expect(page).to have_content(I18n.t("jobseekers.job_applications.build.non_catholic.preference_to_religious_applicants"))
       validates_step_complete
-      sleep 20
       expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/non_catholic_form.attributes.ethos_and_aims.blank"))
     end
 
@@ -251,7 +250,6 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
             context "without a referee" do
               before do
-                sleep 5
                 find("label[for='jobseekers-job-application-non-catholic-form-religious-reference-type-no-referee-field']").click
               end
 

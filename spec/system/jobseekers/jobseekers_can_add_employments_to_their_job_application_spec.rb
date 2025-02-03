@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :employment_history))
     validates_step_complete(button: I18n.t("buttons.save_employment"))
 
-    fill_in_current_role
+    fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
 
     click_on I18n.t("buttons.save_employment")
 
@@ -37,7 +37,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
     expect(page).to have_content("The Best Teacher")
-    expect(page).to have_content(Date.new(2020, 0o7, 1).to_formatted_s(:month_year))
+    expect(page).to have_content(Date.new(2020, 7, 1).to_formatted_s(:month_year))
   end
 
   it "displays employment history from newest to oldest job" do
@@ -58,7 +58,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     all(:link, "Add another job").first.click
 
-    fill_in_current_role
+    fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
 
     click_on I18n.t("buttons.save_employment")
 
