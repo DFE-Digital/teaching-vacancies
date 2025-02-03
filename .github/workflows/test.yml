@@ -7,34 +7,19 @@ on:
 
 jobs:
   backend-tests:
-    name: Run RSpec (${{ matrix.test_params.name }})
+    name: Run RSpec Tests in parallel
 
     runs-on: ubuntu-22.04
 
     strategy:
       fail-fast: false
-      matrix:
-        test_params:
-          -
-            name: system - jobseekers
-            params: 'spec/system/jobseekers'
-          -
-            name: system - publishers
-            params: 'spec/system/publishers'
-          -
-            name: system - support users
-            params: 'spec/system/support_users'
-          -
-            name: system - other
-            params: 'spec/system/other'
-          -
-            name: unit
-            params: '--exclude-pattern "spec/{system}/*_spec.rb, spec/system/{jobseekers,publishers,support_users,other}/*_spec.rb"'
 
     env:
-      DATABASE_URL: postgis://postgres:postgres@localhost:5432/tvs_test
+      DATABASE_URL: postgis://postgres:postgres@localhost:5432
       RAILS_ENV: test
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      PARALLEL_TEST_PROCESSORS: 4
+      PARALLEL_TEST_FIRST_IS_1: true
 
     services:
       postgres:
@@ -54,19 +39,27 @@ jobs:
         uses: ./.github/actions/prepare-app-env
 
       - name: Set up test database
-        run: bin/rails db:create db:schema:load
+        run: bundle exec rake db:create db:schema:load parallel:create parallel:load_schema
 
       - name: Precompile assets
         run: bin/rails assets:precompile
 
-      - name: Run tests
-        run: bundle exec rspec ${{ matrix.test_params.params }}
+      - name: Cache Test Runtimes
+        uses: actions/cache@v4
+        with:
+          path: "tmp/parallel_runtime_rspec.log"
+          key: ${{ runner.os }}-spec-${{ hashFiles('**/*spec.rb') }}
+          restore-keys: |
+            ${{ runner.os }}-spec-
+
+      - name: Run tests in parallel
+        run: bundle exec rake parallel:spec
 
       - name: Upload Capybara failures screenshots
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: capybara-screenshots-${{ matrix.test_params.name }}
+          name: capybara-screenshots
           path: /home/runner/work/teaching-vacancies/teaching-vacancies/tmp/capybara/*.png
           if-no-files-found: ignore # If only non-capybara tests fail there will be no screenshots
   frontend-tests:
