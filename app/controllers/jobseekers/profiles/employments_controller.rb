@@ -1,10 +1,16 @@
 class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesController
-  def new; end
+  def new
+    @form = Jobseekers::Profile::EmploymentForm.new
+  end
 
-  def edit; end
+  def edit
+    @form = Jobseekers::Profile::EmploymentForm.new(employment.slice(*employment_attrs))
+  end
 
   def create
-    if form.valid?
+    @form = Jobseekers::Profile::EmploymentForm.new(employment_form_params)
+
+    if @form.valid?
       profile.employments.create(employment_form_params)
       redirect_to review_jobseekers_profile_work_history_index_path
     else
@@ -13,7 +19,9 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   end
 
   def update
-    if form.valid?
+    @form = Jobseekers::Profile::EmploymentForm.new(employment_form_params)
+
+    if @form.valid?
       employment.update(employment_form_params)
       redirect_to review_jobseekers_profile_work_history_index_path, success: t(".success")
     else
@@ -32,23 +40,6 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   end
 
   private
-
-  helper_method :form
-
-  def form
-    @form ||= Jobseekers::Profile::EmploymentForm.new(employment_form_attributes)
-  end
-
-  def employment_form_attributes
-    case action_name
-    when "new"
-      {}
-    when "edit"
-      employment.slice(*employment_attrs)
-    when "create", "update"
-      employment_form_params
-    end
-  end
 
   def employment
     profile.employments.find(params[:id])

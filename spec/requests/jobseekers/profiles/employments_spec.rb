@@ -78,7 +78,7 @@ RSpec.describe "Jobseeker profile employments" do
     let(:organisation) { "Arsenal" }
 
     context "when the form is valid" do
-      before { allow_any_instance_of(Jobseekers::Profile::EmploymentForm).to receive(:valid?).and_return(true) }
+      before { allow_any_instance_of(Jobseekers::EmploymentForm).to receive(:valid?).and_return(true) }
 
       it "updates the employment and redirects to the review page" do
         expect { patch jobseekers_profile_work_history_path(employment), params: params }
