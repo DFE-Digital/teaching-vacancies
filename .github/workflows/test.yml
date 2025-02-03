@@ -20,6 +20,7 @@ jobs:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       PARALLEL_TEST_PROCESSORS: 4
       PARALLEL_TEST_FIRST_IS_1: true
+      COVERAGE: 1
 
     services:
       postgres:
