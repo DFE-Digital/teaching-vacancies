@@ -8,6 +8,6 @@
     = form_for form, url: jobseekers_job_application_employment_path(job_application, employment), method: :patch do |f|
       = f.govuk_error_summary
 
-      = render "fields", f: f
+      = render "employment_fields", f: f
 
       = f.govuk_submit t("buttons.save_employment")
