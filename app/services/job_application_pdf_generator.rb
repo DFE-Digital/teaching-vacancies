@@ -16,6 +16,7 @@ class JobApplicationPdfGenerator
       add_professional_status(pdf)
       add_qualifications(pdf)
       add_training_and_cpds(pdf)
+      add_professional_body_memberships(pdf)
       add_employment_history(pdf)
       add_personal_statement(pdf)
       add_references(pdf)

@@ -32,6 +32,8 @@ RSpec.describe JobApplicationPdfGenerator, type: :service do
       expect(text_analysis.strings).to include("Personal Details")
       expect(text_analysis.strings).to include("Professional Status")
       expect(text_analysis.strings).to include("Qualifications")
+      expect(text_analysis.strings).to include("Training and CPD")
+      expect(text_analysis.strings).to include("Professional body memberships")
       expect(text_analysis.strings).to include("Employment History")
       expect(text_analysis.strings).to include("Personal Statement")
       expect(text_analysis.strings).to include("References")

@@ -5,6 +5,7 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
                          professional_status: %i[professional_status],
                          qualifications: %i[qualifications],
                          training_and_cpds: %i[training_and_cpds],
+                         professional_body_memberships: %i[professional_body_memberships],
                          employment_history: %i[employment_history],
                          personal_statement: %i[personal_statement] }.freeze
 
