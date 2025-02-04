@@ -59,7 +59,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         expect(page).to have_css(".govuk-summary-list__key", text: "Working pattern details")
         expect(page).to have_css(".govuk-summary-list__value", text: "I cannot work on Mondays or Fridays")
 
-        click_on("Change working pattern details")
+        click_on("Change Working pattern details")
         fill_in "job-preferences-working-pattern-details-field", with: "On second thoughts, I can only work Wednesdays"
         click_on "Save and continue"
 
