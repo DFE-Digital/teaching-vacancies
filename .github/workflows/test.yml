@@ -79,7 +79,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: capybara-screenshots-${{ matrix.test_params.name }}
+          name: capybara-screenshots
           path: /home/runner/work/teaching-vacancies/teaching-vacancies/tmp/capybara/*.png
           if-no-files-found: ignore # If only non-capybara tests fail there will be no screenshots
 
