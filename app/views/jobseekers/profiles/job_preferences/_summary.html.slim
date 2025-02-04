@@ -22,8 +22,8 @@ ruby:
       join_with: ", ",
     },
     working_pattern_details: {
-      step_name: "working_patterns", # So maps to the correct step that defines this attribute.
-      if: ->(form) { form.working_pattern_details.present? }
+      step_name: "working_patterns",
+      if: ->(form) { form.working_pattern_details.present? },
     },
     locations: {
       if: ->(form) { form.locations.any? },
