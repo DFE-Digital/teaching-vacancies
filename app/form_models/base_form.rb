@@ -38,16 +38,16 @@ class BaseForm
     EventContext.trigger_for_dfe_analytics(:form_validation_failed, event_data)
   end
 
-  private
-
-  def event_data
-    errors.each_with_object({ form_name: self.class.name.underscore }) { |error, data| data[error.attribute] = error.type }
-  end
-
   def number_of_words_exceeds_permitted_length?(number, attribute)
     number_of_words = remove_html_tags(attribute)&.split&.length
 
     number_of_words&.>(number)
+  end
+
+  private
+
+  def event_data
+    errors.each_with_object({ form_name: self.class.name.underscore }) { |error, data| data[error.attribute] = error.type }
   end
 
   def remove_html_tags(field)

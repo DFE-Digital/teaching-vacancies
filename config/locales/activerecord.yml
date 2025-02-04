@@ -660,6 +660,10 @@ en:
             about_you:
               blank: Enter your about you details
               length: About you must be 1000 words or less
+        jobseekers/job_preferences_form/working_pattern:
+          attributes:
+            working_pattern_details:
+              length: Working pattern details must be 50 words or less
         jobseekers/profile/qualified_teacher_status_form:
           attributes:
             qualified_teacher_status:

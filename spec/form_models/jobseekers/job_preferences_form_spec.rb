@@ -86,5 +86,25 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
   describe "`working_patterns` step" do
     subject(:step) { multistep.steps[:working_patterns] }
     it { is_expected.to validate_presence_of :working_patterns }
+
+    describe "#working_pattern_details_does_not_exceed_maximum_words" do
+      context "when working_pattern_details is too long" do
+        let(:initial_attributes) { { working_pattern_details: "word " * 51 } }
+
+        it "adds an error" do
+          step.valid?
+          expect(step.errors[:working_pattern_details]).to include("is too long")
+        end
+      end
+
+      context "when working_pattern_details is within the limit" do
+        let(:initial_attributes) { { working_pattern_details: "word " * 49 } }
+
+        it "does not add an error" do
+          step.valid?
+          expect(step.errors[:working_pattern_details]).to be_empty
+        end
+      end
+    end
   end
 end
