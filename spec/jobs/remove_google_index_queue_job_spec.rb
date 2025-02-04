@@ -5,18 +5,18 @@ RSpec.describe RemoveGoogleIndexQueueJob do
   subject(:job) { described_class.perform_later(url) }
 
   it "executes perform" do
-    indexing_service = double(:mock)
-    expect(GoogleIndexing).to receive(:new).with(url).and_return(indexing_service)
+    indexing_service = instance_double(GoogleIndexing, remove: true)
+    allow(GoogleIndexing).to receive(:new).with(url).and_return(indexing_service)
     expect(indexing_service).to receive(:remove)
 
     perform_enqueued_jobs { job }
   end
 
-  it "aborts execution when no Google credentials are set" do
-    stub_const("GOOGLE_API_JSON_KEY", "")
+  it "logs an error message when the indexing service cannot be instantiated" do
+    allow(GoogleIndexing).to receive(:new).and_return(nil)
+    allow(Rails.logger).to receive(:info).with(any_args)
+    expect(Rails.logger).to receive(:info).with("Sidekiq: Aborting Google remove index. Error: No Google API")
     Sidekiq::Testing.inline! do
-      expect(GoogleIndexing).to receive(:new).and_raise(SystemExit, "No Google API")
-
       described_class.perform_now(url)
     end
   end

@@ -7,28 +7,37 @@ class Publishers::DocumentVirusCheck
   FILE_VIRUS_STATUS_CODE = 403 # 403 Permission denied when acknowledge_abuse: false
 
   def initialize(file)
+    @api_client = GoogleApiClient.instance
+    return if api_client.missing_key?
+
+    drive_service.authorization = api_client.authorization
     @file = file
   end
 
   def safe?
+    return false if api_client.missing_key?
+
     drive_service.get_file(
       uploaded_file.id,
       acknowledge_abuse: false,
       download_dest: uploaded_file.id.to_s,
     )
+
     true
   rescue Google::Apis::ClientError => e
     return false if e.status_code == FILE_VIRUS_STATUS_CODE
 
     raise e
   ensure
-    FileUtils.rm_rf(uploaded_file.id.to_s)
-    drive_service.delete_file(uploaded_file.id)
+    unless api_client.missing_key?
+      FileUtils.rm_rf(uploaded_file.id.to_s)
+      drive_service.delete_file(uploaded_file.id)
+    end
   end
 
   private
 
-  attr_reader :file
+  attr_reader :file, :api_client
 
   def uploaded_file
     @uploaded_file ||= drive_service.create_file(
