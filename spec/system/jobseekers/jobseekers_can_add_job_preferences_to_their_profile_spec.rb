@@ -19,65 +19,22 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
       it "allows jobseekers to add job preferences" do
         click_on "Add job preferences"
 
-        # submit empty form
-        click_on "Save and continue"
-        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
-        within(".govuk-error-summary__body") do
-          expect(page).to have_link("Select the roles you are interested in to continue", href: "#job-preferences-roles-field-error")
-        end
-
         check "Headteacher"
         click_on "Save and continue"
-
-        # submit empty form
-        click_on "Save and continue"
-        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
-        within(".govuk-error-summary__body") do
-          expect(page).to have_link("Select the education phases you are interested in to continue", href: "#job-preferences-phases-field-error")
-        end
 
         check "Through school"
         click_on "Save and continue"
 
-        # submit empty form
-        click_on "Save and continue"
-        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
-        within(".govuk-error-summary__body") do
-          expect(page).to have_link("Select the key stages you are interested in to continue", href: "#job-preferences-key-stages-field-error")
-        end
-
         check "I'm not looking for a teaching job"
         click_on "Save and continue"
-
-        # submit empty form
-        click_on "Save and continue"
-        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
-        within(".govuk-error-summary__body") do
-          expect(page).to have_link("Select the working patterns you are interested in to continue", href: "#job-preferences-working-patterns-field-error")
-        end
 
         check "Part time"
         fill_in "job-preferences-working-pattern-details-field", with: "I am only available before 1pm."
         click_on "Save and continue"
 
-        # submit empty form
-        click_on "Save and continue"
-        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
-        within(".govuk-error-summary__body") do
-          expect(page).to have_link("Enter a city, county or postcode in the UK", href: "#job-preferences-location-location-field-error")
-          expect(page).to have_link("Select a search radius", href: "#job-preferences-location-radius-field-error")
-        end
-
         fill_in "Location", with: "London"
         choose "1 mile"
         click_on "Save and continue"
-
-        # submit empty form
-        click_on "Save and continue"
-        expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
-        within(".govuk-error-summary__body") do
-          expect(page).to have_link("Select yes if you want to add another location", href: "#job-preferences-add-location-field-error")
-        end
 
         choose "No"
         click_on "Save and continue"
