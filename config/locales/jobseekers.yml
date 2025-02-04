@@ -700,6 +700,12 @@ en:
           working_pattern_details:
             label: Provide more details about your working pattern preference (optional)
             hint: For example, if you're looking for a role that's 2 days a week, or Monday to Wednesday.
+          hint: |
+            Some schools may be open to part-time applicants even if a position is advertised as full time.
+            
+            Provide your preference so that you can discuss your options with the school.
+
+            Select all that apply.
         summary:
           key_stages:
             one: Key stage
