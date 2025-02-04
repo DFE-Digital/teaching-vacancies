@@ -10,13 +10,20 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   end
 
   def create
-    @form = Jobseekers::JobApplication::Details::EmploymentForm.new(employment_params)
+    @form = Jobseekers::JobApplication::Details::EmploymentForm.new
+    @form.attributes = employment_params
+
     if @form.valid?
       job_application.employments.job.create(employment_params)
       redirect_to back_path
     else
       render :new
     end
+  rescue ActiveRecord::MultiparameterAssignmentErrors => e
+    e.errors.each do |error|
+      @form.errors.add(error.attribute, :invalid)
+    end
+    render :new
   end
 
   def update
