@@ -1,5 +1,6 @@
 class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications::BaseController
   include Jobseekers::QualificationFormConcerns
+  before_action :strip_empty_working_patterns_checkboxes, only: %i[update]
 
   helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
@@ -141,5 +142,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
         has_teacher_reference_number: form_params[:has_teacher_reference_number],
       )
     end
+  end
+
+  def strip_empty_working_patterns_checkboxes
+    strip_empty_checkboxes(%i[working_patterns], :jobseekers_job_application_personal_details_form)
   end
 end

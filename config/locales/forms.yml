@@ -841,6 +841,7 @@ en:
       jobseekers_job_application_personal_details_form:
         your_address: Your address
         has_ni_number: Do you have a national insurance number?
+        working_patterns: Working pattern preference
       jobseekers_job_application_training_and_cpds_form:
         training_and_cpds_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:

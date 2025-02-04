@@ -59,6 +59,7 @@ en:
         personal_details_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
+        working_pattern_details: Provide more details about your working patterns preference (optional)
     hint:
       jobseekers_job_application_personal_details_form:
         has_ni_number: >-
@@ -66,3 +67,10 @@ en:
           benefit letter, payslip or P60. It's made up of 2 letters, 6 numbers and a final letter.
         phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
         previous_names: For example maiden name or name at birth, if different from the name you have now.
+        working_patterns: >-
+          Some schools may be open to part-time applicants even if a position is advertised as full time.
+            
+          Provide your preference so that you can discuss your options with the school.
+
+          Select all that apply.
+        working_pattern_details: For example, if you're looking for a role that's 2 days a week, or Monday to Wednesday.
