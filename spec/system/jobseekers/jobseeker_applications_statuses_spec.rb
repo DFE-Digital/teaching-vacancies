@@ -23,11 +23,11 @@ RSpec.describe "Jobseekers applications statuses" do
 
         click_button "Start application"
 
-        expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.in_progress"))
-        expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.in_progress"))
-        expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.in_progress"))
-        expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.in_progress"))
-        expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.in_progress"))
+        expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.incomplete"))
       end
     end
 
@@ -42,11 +42,11 @@ RSpec.describe "Jobseekers applications statuses" do
 
         click_button "Start application"
 
-        expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.not_started"))
-        expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.not_started"))
-        expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.not_started"))
-        expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.not_started"))
-        expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.not_started"))
+        expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.incomplete"))
       end
     end
 
@@ -61,11 +61,11 @@ RSpec.describe "Jobseekers applications statuses" do
 
         click_button "Start application"
 
-        expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.not_started"))
-        expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.not_started"))
-        expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.in_progress"))
-        expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.not_started"))
-        expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.in_progress"))
+        expect(page).to have_css("#personal_details", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#professional_status", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#qualifications", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#training_and_cpds", text: I18n.t("shared.status_tags.incomplete"))
+        expect(page).to have_css("#employment_history", text: I18n.t("shared.status_tags.incomplete"))
       end
 
       context "when the jobseeker completes a section" do

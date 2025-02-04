@@ -109,14 +109,6 @@ module JobApplicationsHelper
     end
   end
 
-  def job_application_step_in_progress?(job_application, step)
-    job_application.in_progress_steps.include?(step.to_s)
-  end
-
-  def job_application_step_imported?(job_application, step)
-    job_application.imported_steps.include?(step.to_s)
-  end
-
   def visa_sponsorship_needed_answer(job_application)
     return unless job_application.right_to_work_in_uk.present?
 

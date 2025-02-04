@@ -8,10 +8,6 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyFor
     [:supporting_documents]
   end
 
-  def self.optional?
-    false
-  end
-
   def params_to_save
     { completed_steps: params[:completed_steps] }
   end

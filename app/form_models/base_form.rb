@@ -22,16 +22,6 @@ class BaseForm
 
   after_validation :send_errors_to_big_query, unless: :skip_after_validation_big_query_callback
 
-  def self.target_name
-    model_name.element.split("_")[0..-2].join("_").to_s
-  end
-
-  def self.optional?
-    form_section = new
-    form_section.skip_after_validation_big_query_callback = true
-    form_section.valid?
-  end
-
   def send_errors_to_big_query
     return if errors.none?
 
