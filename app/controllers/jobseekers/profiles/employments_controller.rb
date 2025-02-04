@@ -8,14 +8,20 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   end
 
   def create
-    @form = Jobseekers::Profile::EmploymentForm.new(employment_form_params)
+    @form = Jobseekers::Profile::EmploymentForm.new
+    @form.attributes = employment_form_params
 
     if @form.valid?
-      profile.employments.create(employment_form_params)
+      profile.employments.create!(employment_form_params)
       redirect_to review_jobseekers_profile_work_history_index_path
     else
       render :new
     end
+  rescue ActiveRecord::MultiparameterAssignmentErrors => e
+    e.errors.each do |error|
+      @form.errors.add(error.attribute, :invalid)
+    end
+    render :new
   end
 
   def update
