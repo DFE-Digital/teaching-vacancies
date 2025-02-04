@@ -18,9 +18,6 @@ jobs:
       DATABASE_URL: postgis://postgres:postgres@localhost:5432
       RAILS_ENV: test
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      PARALLEL_TEST_PROCESSORS: 4
-      PARALLEL_TEST_FIRST_IS_1: true
-      COVERAGE: 1
 
     services:
       postgres:
@@ -60,6 +57,10 @@ jobs:
             ${{ runner.os }}-spec-
 
       - name: Run tests in parallel
+        env:
+          PARALLEL_TEST_PROCESSORS: 4
+          PARALLEL_TEST_FIRST_IS_1: true
+          COVERAGE: 1
         run: bundle exec rake parallel:spec
 
       # Tests may fail due to lack of coverage, so always run coverage upload and checks
