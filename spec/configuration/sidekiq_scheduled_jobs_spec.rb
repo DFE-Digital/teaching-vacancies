@@ -13,7 +13,6 @@ RSpec.describe "Sidekiq configuration" do
     %w[
       AlertEmail::Base
       MigrateVacancyDocumentsToActiveStorageJob
-      NormaliseExistingOrganisationLogoDimensionsJob
       PerformancePlatformTransactionsQueueJob
       RemoveGoogleIndexQueueJob
       SeedDatabaseJob
