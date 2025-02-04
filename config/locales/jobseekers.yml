@@ -921,6 +921,8 @@ en:
         working_patterns:
           one: Working pattern
           other: Working patterns
+        working_pattern_details:
+            one: Working pattern details
         subjects:
           one: Subject
           other: Subjects

@@ -36,5 +36,6 @@ RSpec.describe "Jobseeker profiles", type: :system do
     expect(page).to have_content(jobseeker_profile.training_and_cpds.first.provider)
     expect(page).to have_content(jobseeker_profile.training_and_cpds.first.grade)
     expect(page).to have_content(jobseeker_profile.training_and_cpds.first.year_awarded)
+    expect(page).to have_content(jobseeker_profile.job_preferences.working_pattern_details)
   end
 end
