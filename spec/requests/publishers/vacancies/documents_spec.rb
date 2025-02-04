@@ -63,7 +63,7 @@ RSpec.describe "Documents" do
         }
       end
 
-      it "triggers an event" do
+      it "triggers an event", :dfe_analytics do
         request
         expect(:supporting_document_created).to have_been_enqueued_as_analytics_event( # rubocop:disable RSpec/ExpectActual
           with_data: { vacancy_id: vacancy.id,
