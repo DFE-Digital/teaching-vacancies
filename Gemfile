@@ -117,6 +117,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "rswag-specs"
   gem "slim_lint", require: false
+  gem "undercover", require: false
 end
 
 group :test do
@@ -126,6 +127,8 @@ group :test do
   gem "rack_session_access"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
+  gem "simplecov", require: false
+  gem "simplecov-lcov", require: false
   gem "uri-query_params"
   gem "vcr"
   gem "webmock"
