@@ -21,6 +21,10 @@ ruby:
       map_values: ->(value, step) { step.options[value] },
       join_with: ", ",
     },
+    working_pattern_details: {
+      step_name: "working_patterns", # So maps to the correct step that defines this attribute.
+      if: ->(form) { form.working_pattern_details.present? }
+    },
     locations: {
       if: ->(form) { form.locations.any? },
       map_values: ->((_, value), _) { "#{value[:location]} (#{t('jobs.search.number_of_miles', count: value[:radius].to_i)})" },
@@ -33,9 +37,8 @@ ruby:
       step_name = multistep.class.delegated_attributes[attribute.to_s]
       condition = options[:if] || ->(form) { form.completed?(step_name) }
       next unless condition.call(multistep)
-
       value = multistep.public_send(attribute)
-      count = value.count
+      count = value.is_a?(Array) ? value.count : 1
       if options[:map_values] || options[:join_with]
         value = value.map { |elem| options[:map_values].call(elem, multistep.steps[step_name]) } if options[:map_values]
         value = value.map { |elem| "".html_safe + elem }
@@ -46,14 +49,6 @@ ruby:
         row.with_key text: t(".#{attribute}", count:)
         row.with_value text: value.presence || options[:blank]
         row.with_action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name), visually_hidden_text: attribute.to_s.humanize)
-      end
-
-      if step_name == :working_patterns && multistep.working_pattern_details.present?
-        summary_list.with_row do |row|
-          row.with_key text: "Working pattern details"
-          row.with_value text: multistep.working_pattern_details
-          row.with_action(text: t("buttons.change"), href: jobseekers_job_preferences_step_path(step: step_name), visually_hidden_text: "working pattern details")
-        end
       end
     end
   end
