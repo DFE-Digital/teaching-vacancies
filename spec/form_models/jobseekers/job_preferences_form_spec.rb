@@ -93,7 +93,7 @@ RSpec.describe Jobseekers::JobPreferencesForm, type: :model do
 
         it "adds an error" do
           step.valid?
-          expect(step.errors[:working_pattern_details]).to include("is too long")
+          expect(step.errors[:working_pattern_details]).to eq(["Working pattern details must be 50 words or less"])
         end
       end
 
