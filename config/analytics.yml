@@ -127,6 +127,7 @@ shared:
     - teacher_reference_number
     - national_insurance_number
     - qualified_teacher_status
+    - qts_age_range_and_subject
     - qualified_teacher_status_year
     - statutory_induction_complete
     - personal_statement
@@ -176,6 +177,7 @@ shared:
     - jobseeker_id
     - about_you
     - qualified_teacher_status
+    - qts_age_range_and_subject
     - qualified_teacher_status_year
     - active
     - requested_hidden_profile

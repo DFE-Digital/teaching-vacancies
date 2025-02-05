@@ -2,32 +2,15 @@
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
-.govuk-grid-row
-  div
-    h2.govuk-heading-l = t(".heading")
-    p.govuk-body = t(".introduction")
+h2.govuk-heading-l = t(".heading")
+p.govuk-body = t(".introduction")
 
-    = form_for form, url: jobseekers_job_application_build_path(job_application, :professional_status), method: :patch do |f|
-      = f.govuk_error_summary
+= form_for form, url: jobseekers_job_application_build_path(job_application, :professional_status), method: :patch do |f|
+  = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :qualified_teacher_status, hint: -> { tag.p(t("helpers.label.jobseekers_job_application_professional_status_form.hint", link: govuk_link_to(t("helpers.label.jobseekers_job_application_professional_status_form.link_text"), "https://www.gov.uk/guidance/qualified-teacher-status-qts", target: "_blank")).html_safe) } do
-        = f.govuk_radio_button :qualified_teacher_status, :yes, link_errors: true do
-          = f.govuk_text_field :qualified_teacher_status_year
-        = f.govuk_radio_button :qualified_teacher_status, :no do
-          = f.govuk_text_area :qualified_teacher_status_details
-        = f.govuk_radio_button :qualified_teacher_status, :on_track
+  = render "qts_fields", f: f
 
-      = f.govuk_radio_buttons_fieldset :has_teacher_reference_number, hint: -> { tag.p(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.teacher_reference_number_hint", link: govuk_link_to(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.trn_link_text"), "https://find-a-lost-trn.education.gov.uk/start", target: "_blank")).html_safe) } do
-        = f.govuk_radio_button :has_teacher_reference_number, "yes", link_errors: true, label: { text: t("helpers.legend.jobseekers_job_application_professional_status_form.has_teacher_reference_number_options.yes") }
-          = f.govuk_text_field :teacher_reference_number, label: { text: t("helpers.legend.jobseekers_job_application_professional_status_form.teacher_reference_number") }
-        = f.govuk_radio_button :has_teacher_reference_number, "no", label: { text: t("helpers.legend.jobseekers_job_application_professional_status_form.has_teacher_reference_number_options.no") }
+  = f.govuk_collection_radio_buttons :professional_status_section_completed, %w[true false], :to_s
 
-      = f.govuk_radio_buttons_fieldset :statutory_induction_complete, hint: { text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.completed_period_hint") }, legend: { text: t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete") } do
-        = f.govuk_radio_button :statutory_induction_complete, "yes", link_errors: true
-        = f.govuk_radio_button :statutory_induction_complete, "no" do
-          = f.govuk_text_area :statutory_induction_complete_details, label: -> { tag.p(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete_details", link: govuk_link_to(t("helpers.label.jobseekers_profile_qualified_teacher_status_form.statutory_induction_complete_details_hint_text"), "https://www.gov.uk/government/publications/induction-for-early-career-teachers-england", target: "_blank")).html_safe) }
-
-      = f.govuk_collection_radio_buttons :professional_status_section_completed, %w[true false], :to_s
-
-      = f.govuk_submit job_application_build_submit_button_text do
-        = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+  = f.govuk_submit job_application_build_submit_button_text do
+    = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"

@@ -17,8 +17,17 @@ class Jobseekers::Profile::QualifiedTeacherStatusForm < BaseForm
     end
   end
 
+  FIELDS = %i[qualified_teacher_status
+              qualified_teacher_status_year
+              teacher_reference_number
+              statutory_induction_complete
+              has_teacher_reference_number
+              statutory_induction_complete_details
+              qts_age_range_and_subject
+              qualified_teacher_status_details].freeze
+
   def self.fields
-    %i[qualified_teacher_status qualified_teacher_status_year teacher_reference_number statutory_induction_complete has_teacher_reference_number statutory_induction_complete_details]
+    FIELDS
   end
 
   def statutory_induction_complete_options
@@ -34,5 +43,5 @@ class Jobseekers::Profile::QualifiedTeacherStatusForm < BaseForm
     teacher_reference_number
   end
 
-  attr_accessor(*fields)
+  attr_accessor(*FIELDS)
 end

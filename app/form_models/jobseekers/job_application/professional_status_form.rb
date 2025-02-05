@@ -12,6 +12,7 @@ module Jobseekers
         statutory_induction_complete
         teacher_reference_number
         statutory_induction_complete_details
+        qts_age_range_and_subject
       ].freeze
 
       attr_accessor(*FIELDS, :has_teacher_reference_number)

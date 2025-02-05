@@ -8,6 +8,10 @@
     - row.with_value text: job_application_jobseeker_profile_info(job_application)
 
   - s.with_row do |row|
+    - row.with_key text: t("helpers.label.jobseekers_job_application_professional_status_form.qts_age_range_and_subject")
+    - row.with_value text: job_application.qts_age_range_and_subject
+
+  - s.with_row do |row|
     - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
     - row.with_value text: job_application.statutory_induction_complete.humanize
 
