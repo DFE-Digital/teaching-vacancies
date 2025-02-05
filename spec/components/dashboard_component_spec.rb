@@ -140,8 +140,8 @@ RSpec.describe DashboardComponent, type: :component do
           expect(inline_component.css(".govuk-summary-list").to_html).to include(vacancy.job_title)
         end
 
-        it "does not render the link to view applicants" do
-          expect(page).not_to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
+        it "renders the link to view applicants" do
+          expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
         end
 
         it "renders the local authority's name in the table" do
