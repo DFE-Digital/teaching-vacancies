@@ -33,7 +33,7 @@
 
     - task_list.with_item(title: t("jobseekers.job_applications.build.professional_body_memberships.list_heading"), href: jobseekers_job_application_build_path(job_application, :professional_body_memberships),
       html_attributes: { id: :professional_body_memberships },
-      status: review_section_tag(job_application, [Jobseekers::JobApplication::ProfessionalBodyMembershipsForm]))
+      status: review_section_tag(job_application, :professional_body_memberships))
 
     - task_list.with_item(title: t("jobseekers.job_applications.build.employment_history.heading"), href: jobseekers_job_application_build_path(job_application, :employment_history),
       html_attributes: { id: :employment_history },
