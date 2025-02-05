@@ -6,9 +6,10 @@ RSpec.describe "Jobseeker profiles", type: :system do
   let(:jobseeker_profile) { create(:jobseeker_profile, :completed, :with_location_preferences) }
 
   before do
-    jobseeker_profile.job_preferences.update(roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
-                                                        higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
-                                                        catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support senior_leader middle_leader])
+    jobseeker_profile.job_preferences.update!(roles: %w[ teacher headteacher deputy_headteacher assistant_headteacher head_of_year_or_phase head_of_department_or_curriculum teaching_assistant
+                                                         higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
+                                                         catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support senior_leader middle_leader])
+    create(:professional_body_membership, jobseeker_profile: jobseeker_profile)
   end
 
   scenario "A publisher can view a jobseeker's profile" do
@@ -37,5 +38,9 @@ RSpec.describe "Jobseeker profiles", type: :system do
     expect(page).to have_content(jobseeker_profile.training_and_cpds.first.grade)
     expect(page).to have_content(jobseeker_profile.training_and_cpds.first.year_awarded)
     expect(page).to have_content(jobseeker_profile.job_preferences.working_pattern_details)
+    expect(page).to have_content(jobseeker_profile.professional_body_memberships.first.name)
+    expect(page).to have_content(jobseeker_profile.professional_body_memberships.first.membership_type)
+    expect(page).to have_content(jobseeker_profile.professional_body_memberships.first.membership_number)
+    expect(page).to have_content(jobseeker_profile.professional_body_memberships.first.year_membership_obtained)
   end
 end
