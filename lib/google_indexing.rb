@@ -1,4 +1,5 @@
 require "google/apis/indexing_v3"
+require "google_api_client"
 
 class GoogleIndexing
   ACTIONS = { update: "URL_UPDATED",
@@ -10,7 +11,7 @@ class GoogleIndexing
 
   def initialize(url)
     @api_client = GoogleApiClient.instance
-    return if @api_client.missing_key?
+    return unless api_client.authorization
 
     @service = API::IndexingService.new
     @service.authorization = api_client.authorization
@@ -30,7 +31,7 @@ class GoogleIndexing
   attr_reader :api_client
 
   def call(action)
-    return if api_client.missing_key?
+    return unless service
 
     notification = API::UrlNotification.new(url: url, type: ACTIONS[action])
     service.publish_url_notification(notification)

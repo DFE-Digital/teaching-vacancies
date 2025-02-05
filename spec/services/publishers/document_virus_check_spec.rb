@@ -1,4 +1,5 @@
 require "rails_helper"
+require "google_api_client"
 
 RSpec.describe Publishers::DocumentVirusCheck do
   subject { described_class.new(file) }
@@ -7,7 +8,7 @@ RSpec.describe Publishers::DocumentVirusCheck do
   let(:uploaded_file) { instance_double(Google::Apis::DriveV3::File, id: "0xDECAFBAD") }
   let(:time) { Time.zone.local(1999, 12, 31, 23, 59, 59) }
   let(:authorization) { instance_double(Google::Auth::ServiceAccountCredentials, fetch_access_token!: true) }
-  let(:google_api_client) { instance_double(GoogleApiClient, missing_key?: false, authorization: authorization) }
+  let(:google_api_client) { instance_double(GoogleApiClient, authorization: authorization) }
   let(:drive_service) do
     instance_double(Google::Apis::DriveV3::DriveService,
                     create_file: uploaded_file,
@@ -69,8 +70,8 @@ RSpec.describe Publishers::DocumentVirusCheck do
       end
     end
 
-    context "when the api client is missing the API key" do
-      let(:google_api_client) { instance_double(GoogleApiClient, missing_key?: true, authorization: nil) }
+    context "when the api client does not have an authorization" do
+      let(:google_api_client) { instance_double(GoogleApiClient, authorization: nil) }
 
       it "returns false" do
         expect(subject).not_to be_safe

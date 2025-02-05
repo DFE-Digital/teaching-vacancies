@@ -3,7 +3,9 @@ require "google_api_client"
 
 RSpec.describe GoogleApiClient, type: :singleton do
   let(:google_api_client) { described_class.instance }
-  let(:authorizer) { instance_double(Google::Auth::ServiceAccountCredentials, fetch_access_token!: true) }
+  let(:authorizer) do
+    instance_double(Google::Auth::ServiceAccountCredentials, fetch_access_token!: true, expired?: false)
+  end
 
   before do
     described_class.instance_variable_set(:@singleton__instance__, nil) # Needed to setup the instance with different values in each test
@@ -14,13 +16,13 @@ RSpec.describe GoogleApiClient, type: :singleton do
     context "when GOOGLE_API_JSON_KEY is not set" do
       before do
         allow(ENV).to receive(:fetch).with("GOOGLE_API_JSON_KEY", "").and_return("")
-        allow(Rails.logger).to receive(:info).with(any_args) # Allow any other messages
+        allow(Rails.logger).to receive(:info).with(any_args)
       end
 
       it "logs a message and does not set the authorizer" do
         expect(Rails.logger).to receive(:info).with("***No GOOGLE_API_JSON_KEY set")
         google_api_client
-        expect(google_api_client.authorizer).to be_nil
+        expect(Google::Auth::ServiceAccountCredentials).not_to receive(:make_creds)
       end
     end
 
@@ -31,9 +33,10 @@ RSpec.describe GoogleApiClient, type: :singleton do
         allow(ENV).to receive(:fetch).with("GOOGLE_API_JSON_KEY", "").and_return(json_key)
       end
 
-      it "sets the authorizer" do
+      it "sets the authorizer and fetches the access token" do
+        allow(Google::Auth::ServiceAccountCredentials).to receive(:make_creds).and_return(authorizer)
+        expect(authorizer).to receive(:fetch_access_token!)
         google_api_client
-        expect(google_api_client.authorizer).to eq(authorizer)
       end
     end
   end
@@ -47,39 +50,21 @@ RSpec.describe GoogleApiClient, type: :singleton do
       expect(google_api_client.authorization).to eq(authorizer)
     end
 
-    context "when the token is expired" do
-      before do
-        allow(authorizer).to receive(:expired?).and_return(true)
-      end
-
-      it "refreshes the token" do
-        expect(authorizer).to receive(:fetch_access_token!)
-        google_api_client.authorization
-      end
-    end
-  end
-
-  describe "#missing_key?" do
-    context "when GOOGLE_API_JSON_KEY is empty" do
-      before do
-        allow(ENV).to receive(:fetch).with("GOOGLE_API_JSON_KEY", "").and_return("")
-      end
-
-      it "returns true" do
-        expect(google_api_client.missing_key?).to be true
-      end
+    it "returns nil when there is no authorizer" do
+      allow(google_api_client).to receive(:authorizer).and_return(nil)
+      expect(google_api_client.authorization).to be_nil
     end
 
-    context "when GOOGLE_API_JSON_KEY is not empty" do
-      let(:json_key) { '{"type": "service_account"}' }
+    it "does not refresh the token for non expired authorizations" do
+      allow(authorizer).to receive(:expired?).and_return(false)
+      expect(authorizer).not_to receive(:fetch_access_token!)
+      google_api_client.authorization
+    end
 
-      before do
-        allow(ENV).to receive(:fetch).with("GOOGLE_API_JSON_KEY", "").and_return(json_key)
-      end
-
-      it "returns false" do
-        expect(google_api_client.missing_key?).to be false
-      end
+    it "refreshes the token for expired authorizations" do
+      allow(authorizer).to receive(:expired?).and_return(true)
+      expect(authorizer).to receive(:fetch_access_token!)
+      google_api_client.authorization
     end
   end
 end

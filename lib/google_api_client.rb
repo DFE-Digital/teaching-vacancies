@@ -4,8 +4,6 @@ require "singleton"
 class GoogleApiClient
   include Singleton
 
-  attr_reader :authorizer, :google_api_json_key
-
   SCOPE = ["https://www.googleapis.com/auth/indexing",
            "https://www.googleapis.com/auth/drive"].freeze
 
@@ -17,7 +15,7 @@ class GoogleApiClient
     end
 
     @authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
-      json_key_io: StringIO.new(GOOGLE_API_JSON_KEY),
+      json_key_io: StringIO.new(@google_api_json_key),
       scope: SCOPE,
     )
     # Fetch the initial access token
@@ -25,10 +23,16 @@ class GoogleApiClient
   end
 
   def authorization
+    return unless authorizer
+
     # Refresh the token if it's expired
-    authorizer.fetch_access_token! if authorizer&.expired?
+    authorizer.fetch_access_token! if authorizer.expired?
     authorizer
   end
+
+  private
+
+  attr_reader :authorizer, :google_api_json_key
 
   def missing_key?
     google_api_json_key.empty? || JSON.parse(google_api_json_key).empty?

@@ -1,5 +1,6 @@
 require "rails_helper"
 require "google_indexing"
+require "google_api_client"
 
 RSpec.describe GoogleIndexing do
   let(:url) { "https://google.com" }
@@ -19,7 +20,7 @@ RSpec.describe GoogleIndexing do
   end
 
   context "Successful requests" do
-    let(:google_api_client) { instance_double(GoogleApiClient, missing_key?: false, authorization: authorization) }
+    let(:google_api_client) { instance_double(GoogleApiClient, authorization: authorization) }
 
     context "Requesting a url index update" do
       it "sets up the indexing service and its authorization" do
@@ -60,8 +61,8 @@ RSpec.describe GoogleIndexing do
     end
   end
 
-  context "When the Google API client has is missing its key" do
-    let(:google_api_client) { instance_double(GoogleApiClient, missing_key?: true, authorization: nil) }
+  context "When the Google API client is missing the authorization" do
+    let(:google_api_client) { instance_double(GoogleApiClient, authorization: nil) }
 
     it "logs an error and aborts execution" do
       expect(GoogleIndexing::API::IndexingService).not_to receive(:new)
