@@ -8,6 +8,7 @@
 
   .govuk-grid-row
     .govuk-grid-column-two-thirds
-      = f.govuk_collection_check_boxes :working_patterns, @step.options, :first, :last, legend: { size: "l", text: "Working patterns" }, caption: { text: "Job preferences", size: "l" }
+      = f.govuk_collection_check_boxes :working_patterns, @step.options, :first, :last, legend: { size: "l", text: "Working patterns" }, caption: { text: "Job preferences", size: "l" }, hint: { text: t(".hint") }
+      = f.govuk_text_area :working_pattern_details, label: { text: t(".working_pattern_details.label"), size: "s" }, hint: { text: t(".working_pattern_details.hint") }, max_words: 50
       = f.govuk_submit "Save and continue"
       p = f.link_to "Cancel", escape_path

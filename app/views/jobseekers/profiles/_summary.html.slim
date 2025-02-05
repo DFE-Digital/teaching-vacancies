@@ -25,6 +25,10 @@ p class="govuk-!-margin-bottom-3" = jobseeker_status(profile)
         - summary_list.with_row do |row|
           - row.with_key text: t(".working_patterns", count: patterns.count)
           - row.with_value text: humanize_array(patterns)
+      - if (working_pattern_details = job_preferences.working_pattern_details).present?
+        - summary_list.with_row do |row|
+          - row.with_key text: t(".working_pattern_details", count: 1)
+          - row.with_value text: working_pattern_details
 
 - if profile.about_you.present?
   h2.govuk-heading-m class="govuk-!-padding-bottom-2"

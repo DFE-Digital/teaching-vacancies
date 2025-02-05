@@ -5,6 +5,7 @@ FactoryBot.define do
     key_stages { key_stages_for_phases }
     subjects { factory_rand_sample(SUBJECT_OPTIONS.map(&:first), 1..3) }
     working_patterns { factory_rand_sample(Vacancy.working_patterns.keys, 1..2) }
+    working_pattern_details { "Strictly no Mondays" }
     builder_completed { true }
     completed_steps do
       {

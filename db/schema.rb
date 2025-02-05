@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_29_103408) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -276,6 +276,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_29_103408) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "jobseeker_profile_id", null: false
+    t.string "working_pattern_details"
     t.index ["jobseeker_profile_id"], name: "index_job_preferences_jobseeker_profile_id", unique: true
   end
 

@@ -21,6 +21,9 @@ ruby:
       map_values: ->(value, step) { step.options[value] },
       join_with: ", ",
     },
+    working_pattern_details: {
+      if: ->(form) { form.working_pattern_details.present? },
+    },
     locations: {
       if: ->(form) { form.locations.any? },
       map_values: ->((_, value), _) { "#{value[:location]} (#{t('jobs.search.number_of_miles', count: value[:radius].to_i)})" },
@@ -33,9 +36,8 @@ ruby:
       step_name = multistep.class.delegated_attributes[attribute.to_s]
       condition = options[:if] || ->(form) { form.completed?(step_name) }
       next unless condition.call(multistep)
-
       value = multistep.public_send(attribute)
-      count = value.count
+      count = value.is_a?(Array) ? value.count : 1
       if options[:map_values] || options[:join_with]
         value = value.map { |elem| options[:map_values].call(elem, multistep.steps[step_name]) } if options[:map_values]
         value = value.map { |elem| "".html_safe + elem }

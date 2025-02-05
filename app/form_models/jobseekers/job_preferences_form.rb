@@ -1,7 +1,7 @@
 require_dependency "multistep/form"
 
 module Jobseekers
-  class JobPreferencesForm
+  class JobPreferencesForm < BaseForm
     include Multistep::Form
 
     ROLES = %i[teacher head_of_year_or_phase head_of_department_or_curriculum assistant_headteacher deputy_headteacher
@@ -88,11 +88,18 @@ module Jobseekers
 
     step :working_patterns do
       attribute :working_patterns, array: true
-
+      attribute :working_pattern_details
       validates :working_patterns, presence: true
+      validate :working_pattern_details_does_not_exceed_maximum_words
 
       def options
         WORKING_PATTERNS.to_h { |opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{opt}")] }
+      end
+
+      def working_pattern_details_does_not_exceed_maximum_words
+        if multistep.number_of_words_exceeds_permitted_length?(50, working_pattern_details)
+          errors.add(:working_pattern_details, :length)
+        end
       end
     end
 
