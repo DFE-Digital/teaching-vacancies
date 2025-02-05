@@ -322,8 +322,6 @@ GEM
     json-schema (5.0.1)
       addressable (~> 2.8)
     jwt (2.10.1)
-    jwt (2.9.3)
-      base64
     kramdown (2.5.1)
       rexml (>= 3.3.9)
     kramdown-parser-gfm (1.1.0)
@@ -741,9 +739,9 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
-    undercover (0.6.3)
+    undercover (0.5.0)
       bigdecimal
-      imagen (>= 0.2.0)
+      imagen (>= 0.1.8)
       rainbow (>= 2.1, < 4.0)
       rugged (>= 0.27, < 1.8)
     unicode (0.4.4.5)
@@ -919,7 +917,7 @@ DEPENDENCIES
   slim_lint
   solargraph
   tzinfo-data
-  undercover
+  undercover (< 0.6)
   uri-query_params
   valid_email2
   validate_url
