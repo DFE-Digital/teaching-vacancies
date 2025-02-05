@@ -3,7 +3,11 @@ class RemoveGoogleIndexQueueJob < ApplicationJob
   queue_as :default
 
   def perform(url)
-    GoogleIndexing.new(url).remove
+    if (url_indexing = GoogleIndexing.new(url))
+      url_indexing.remove
+    else
+      Rails.logger.info("Sidekiq: Aborting Google remove index. Error: No Google API")
+    end
   rescue SystemExit => e
     Rails.logger.info("Sidekiq: Aborting Google remove index. Error: #{e.message}")
   rescue StandardError => e

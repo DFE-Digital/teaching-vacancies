@@ -1,15 +1,24 @@
 require "rails_helper"
+require "google_api_client"
 
 RSpec.describe Publishers::DocumentVirusCheck do
   subject { described_class.new(file) }
 
-  let(:file) { double("File", path: "/dev/null") }
-  let(:uploaded_file) { double("Uploaded file", id: "0xDECAFBAD") }
-  let(:drive_service) { double("GDrive", create_file: uploaded_file, get_file: nil, delete_file: nil) }
-
+  let(:file) { instance_double(File, path: "/dev/null") }
+  let(:uploaded_file) { instance_double(Google::Apis::DriveV3::File, id: "0xDECAFBAD") }
   let(:time) { Time.zone.local(1999, 12, 31, 23, 59, 59) }
+  let(:authorization) { instance_double(Google::Auth::ServiceAccountCredentials, fetch_access_token!: true) }
+  let(:google_api_client) { instance_double(GoogleApiClient, authorization: authorization) }
+  let(:drive_service) do
+    instance_double(Google::Apis::DriveV3::DriveService,
+                    create_file: uploaded_file,
+                    get_file: nil,
+                    delete_file: nil,
+                    "authorization=": authorization)
+  end
 
   before do
+    allow(GoogleApiClient).to receive(:instance).and_return(google_api_client)
     allow(Google::Apis::DriveV3::DriveService).to receive(:new).and_return(drive_service)
   end
 
@@ -56,6 +65,20 @@ RSpec.describe Publishers::DocumentVirusCheck do
 
       it "deletes the file from Google Drive" do
         expect(drive_service).to receive(:delete_file).with("0xDECAFBAD")
+
+        subject.safe?
+      end
+    end
+
+    context "when the api client does not have an authorization" do
+      let(:google_api_client) { instance_double(GoogleApiClient, authorization: nil) }
+
+      it "returns false" do
+        expect(subject).not_to be_safe
+      end
+
+      it "does not attempt to upload the file" do
+        expect(Google::Apis::DriveV3::DriveService).not_to receive(:new)
 
         subject.safe?
       end

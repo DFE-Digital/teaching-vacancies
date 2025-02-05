@@ -50,8 +50,7 @@ __Once you are inside:__
 ### Google API Keys
 There are several different API keys in use in different environments. There are keys for Google Maps, as well as service accounts for Google Analytics, BigQuery and Google Drive.
 - `GOOGLE_LOCATION_SEARCH_API_KEY` is used for both the Google Places API and the Google Geocoding API
-- `GOOGLE_MAPS_API_KEY` is used for Google Maps
-- `GOOGLE_API_JSON_KEY` is used for analytics, indexing and drive
+- `GOOGLE_API_JSON_KEY` is used for indexing and drive
 - `BIG_QUERY_API_JSON_KEY` is used for writing tables into BigQuery
 
 __NOTE: Keys with `JSON` in the name are `JSON` objects, not simple strings. They will need to be normalized in to `JSON` strings to be used in ENV variables.__
