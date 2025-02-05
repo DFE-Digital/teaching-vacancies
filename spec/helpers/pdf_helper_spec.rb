@@ -4,6 +4,7 @@ require "pdf/inspector"
 
 RSpec.describe JobApplicationPdfGenerator, type: :service do
   let(:job_application) { create(:job_application, vacancy: vacancy) }
+  let!(:professional_body_membership) { create(:professional_body_membership, job_application: job_application, membership_number: nil, year_membership_obtained: nil) }
   let(:vacancy) { create(:vacancy) }
   let(:pdf_generator) { JobApplicationPdfGenerator.new(job_application, vacancy) }
 
@@ -46,6 +47,22 @@ RSpec.describe JobApplicationPdfGenerator, type: :service do
       expect(text_analysis.strings).to include(job_application.last_name)
       expect(text_analysis.strings).to include(job_application.email_address)
       expect(text_analysis.strings).to include(job_application.phone_number)
+    end
+
+    context "when render professional body memberships" do
+      let(:pdf_data) { text_analysis.strings.join(" ") }
+      
+      it "includes applicant's professional body membership data" do
+        expect(pdf_data).to include("Name of professional body:")
+        expect(pdf_data).to include(professional_body_membership.name)
+        expect(pdf_data).to include("Membership type or level:")
+        expect(pdf_data).to include(professional_body_membership.membership_type)
+      end
+
+      it "does not show blank lines where optional professional body membership data does not exist" do
+        expect(pdf_data).not_to include("Membership number or registration")
+        expect(pdf_data).not_to include("Date obtained")
+      end
     end
   end
 end
