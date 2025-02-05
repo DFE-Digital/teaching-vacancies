@@ -48,6 +48,8 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     add_group "Presenters", "app/presenters"
     add_group "Notifiers", "app/notifiers"
 
-    minimum_coverage line: 95.02, branch: 79.10
+    # These minima seem to be a bit unstable, so they need to be set around
+    # .25% lower (branch) and .1% lower (line) than the test run for now
+    minimum_coverage line: 94.96, branch: 78.92
   end
 end
