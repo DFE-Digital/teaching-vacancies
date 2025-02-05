@@ -50,8 +50,7 @@ RSpec.describe JobApplicationPdfGenerator, type: :service do
     end
 
     context "when render professional body memberships" do
-
-      context "when professional body memberships exist" do   
+      context "when professional body memberships exist" do
         let(:pdf_data) { text_analysis.strings.join(" ") }
 
         it "includes applicant's professional body membership data" do
