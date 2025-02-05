@@ -22,6 +22,11 @@ updates:
       - dependency-name: "redis"
         update-types: ["version-update:semver-major"]
 
+      # TODO: Remove this ignore config once undercover issue has been resolved
+      # Undercover 0.6.x doesn't seeem to respect :nocov: directives properly
+      - dependency-name: "underciver"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
     groups:
       gem-dependencies:
         update-types:
