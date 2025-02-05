@@ -49,6 +49,13 @@ RSpec.describe "Jobseekers can add professional body memberships to their job ap
     it "allows jobseekers to edit the professional body membership" do
       click_on I18n.t("buttons.change")
       expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :professional_body_memberships))
+      fill_in "Name of professional body", with: ""
+      click_on I18n.t("buttons.save_and_continue")
+
+      within(".govuk-error-summary__body") do
+        expect(page).to have_link("Enter the name of the professional body.", href: "#jobseekers-professional-body-membership-form-name-field-error")
+      end
+
       fill_in "Name of professional body", with: "Teaching staff union"
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_no_content("Teachers Union")
