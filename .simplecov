@@ -50,6 +50,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
 
     # These minima seem to be a bit unstable, so they need to be set around
     # .25% lower (branch) and .1% lower (line) than the test run for now
-    minimum_coverage line: 94.96, branch: 78.92
+    minimum_coverage line: 95.46, branch: 78.92
   end
 end
