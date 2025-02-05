@@ -10,8 +10,8 @@ module Jobseekers
     attribute :started_on, :date
     attribute :ended_on, :date
 
-    validates :organisation, :job_title, :main_duties, presence: true
-    validates :reason_for_leaving, presence: true, unless: -> { current_role }
+    # KSIE dictates that we need a reason_for_leaving even for current role
+    validates :organisation, :job_title, :main_duties, :reason_for_leaving, presence: true
     validates :started_on, date: { before: :today }
 
     validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { current_role }
