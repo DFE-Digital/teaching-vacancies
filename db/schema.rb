@@ -9,7 +9,6 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-
 ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
@@ -325,8 +324,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
     t.datetime "updated_at", null: false
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
-    t.text "last_sign_in_ip_ciphertext"
     t.string "govuk_one_login_id"
+    t.text "last_sign_in_ip_ciphertext"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
@@ -489,6 +488,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
     t.integer "year_membership_obtained"
     t.boolean "exam_taken", default: false, null: false
     t.uuid "jobseeker_profile_id"
+    t.uuid "job_application_id"
+    t.index ["job_application_id"], name: "index_professional_body_memberships_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_professional_body_memberships_on_jobseeker_profile_id"
   end
 
@@ -762,6 +763,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
   add_foreign_key "organisation_vacancies", "organisations"
   add_foreign_key "organisation_vacancies", "vacancies"
   add_foreign_key "personal_details", "jobseeker_profiles"
+  add_foreign_key "professional_body_memberships", "job_applications"
   add_foreign_key "professional_body_memberships", "jobseeker_profiles"
   add_foreign_key "publisher_preferences", "organisations"
   add_foreign_key "publisher_preferences", "publishers"

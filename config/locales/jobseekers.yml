@@ -575,7 +575,10 @@ en:
           none: The candidate has not included any qualifications.
           subjects_and_grades: Subjects and grades
         training_and_cpds:
+          heading: Training and continuing professional development (CPD)
           none: The candidate has not included any training or CPD.
+        professional_body_memberships:
+          heading: Professional body memberships
         references:
           email: Email address
           heading: References

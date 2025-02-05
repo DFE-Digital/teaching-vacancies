@@ -7,5 +7,6 @@ FactoryBot.define do
     exam_taken { true }
 
     jobseeker_profile { nil }
+    job_application { nil }
   end
 end

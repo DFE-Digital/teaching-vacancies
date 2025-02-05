@@ -153,6 +153,27 @@ module PdfHelper
     end
   end
 
+  def add_professional_body_memberships(pdf)
+    pdf.move_down 5
+    add_section_title(pdf, "Professional body memberships")
+
+    if job_application.professional_body_memberships.none?
+      pdf.text I18n.t("jobseekers.job_applications.show.professional_body_memberships.none"), size: 12
+    else
+      job_application.professional_body_memberships.each do |membership|
+        professional_body_membership_data = [
+          ["Name of professional body:", membership.name],
+          ["Membership type or level:", membership.membership_type],
+          ["Membership or registration number:", membership.membership_number],
+          ["Date obtained:", membership.year_membership_obtained],
+          ["Exam taken for this membership:", I18n.t("helpers.label.jobseekers_professional_body_membership_form.exam_taken_options.#{membership.exam_taken}")],
+        ].reject { |row| row[1].blank? }
+
+        render_table(pdf, professional_body_membership_data)
+      end
+    end
+  end
+
   def add_employment_history(pdf)
     pdf.start_new_page
     add_section_title(pdf, "Employment History")

@@ -1,0 +1,31 @@
+- r.with_section :professional_body_memberships
+  - if job_application.professional_body_memberships.none?
+    - if jobseeker_signed_in?
+      p.govuk-body = t("jobseekers.job_applications.show.professional_body_memberships.none")
+    - elsif publisher_signed_in?
+      p.govuk-body = t("jobseekers.job_applications.review.professional_body_memberships.none")
+  - else
+    - job_application.professional_body_memberships.each do |professional_body_membership|
+      = govuk_summary_list html_attributes: { id: professional_body_membership.name }, classes: "govuk-!-margin-bottom-10" do |summary_list|
+        - summary_list.with_row do |row|
+          - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.name")
+          - row.with_value text: professional_body_membership.name
+
+        - if professional_body_membership.membership_type.present?
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.membership_type")
+            - row.with_value text: professional_body_membership.membership_type
+
+        - if professional_body_membership.membership_number.present?
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.membership_number")
+            - row.with_value text: professional_body_membership.membership_number
+
+        - if professional_body_membership.year_membership_obtained.present?
+          - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.year_membership_obtained")
+            - row.with_value text: professional_body_membership.year_membership_obtained
+
+        - summary_list.with_row do |row|
+            - row.with_key text: t("helpers.label.jobseekers_professional_body_membership_form.exam_taken")
+            - row.with_value text: t("helpers.label.jobseekers_professional_body_membership_form.exam_taken_options.#{professional_body_membership.exam_taken}")
