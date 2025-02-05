@@ -20,6 +20,7 @@ gem "railties", RAILS_VERSION
 gem "activerecord-import"
 gem "activerecord-postgis-adapter", ">= 10.0.1"
 gem "activerecord-session_store"
+gem "active_storage_validations"
 gem "addressable"
 gem "array_enum"
 gem "aws-sdk-s3", require: false
@@ -117,7 +118,9 @@ group :development, :test do
   gem "rspec-rails"
   gem "rswag-specs"
   gem "slim_lint", require: false
-  gem "undercover", require: false
+  # https://github.com/grodowski/undercover/issues/220
+  # v 0.6 doesn't respect :nocov: tags properly
+  gem "undercover", "< 0.6", require: false
 end
 
 group :test do

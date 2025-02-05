@@ -1,16 +1,21 @@
 require "google/apis/drive_v3"
 
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
-  helper_method :documents_form, :confirmation_form
+  helper_method :confirmation_form
+
+  skip_before_action :verify_authenticity_token,
+                     only: %i[upload_file delete_uploaded_file]
+
+  def index; end
+
+  def new
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
+  end
 
   def create
-    if documents_form.valid?
-      documents_form.supporting_documents.each do |document|
-        vacancy.supporting_documents.attach(document)
-        send_dfe_analytics_event(:supporting_document_created, document.original_filename, document.size, document.content_type)
-      end
-
-      vacancy.update(documents_form.params_to_save)
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params.merge(supporting_documents: vacancy.supporting_documents), vacancy)
+    if @documents_form.valid?
+      vacancy.update(@documents_form.params_to_save)
 
       render :index
     else
@@ -24,6 +29,29 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     send_dfe_analytics_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
 
     redirect_to after_document_delete_path, flash: { success: t("jobs.file_delete_success_message", filename: document.filename) }
+  end
+
+  def upload_file
+    @document = params.require(:documents)
+
+    respond_to do |format|
+      if vacancy.supporting_documents.attach(@document)
+        send_dfe_analytics_event(:supporting_document_created, @document.original_filename, @document.size, @document.content_type)
+        format.json { render "upload_success" }
+      else
+        format.json { render "upload_error" }
+      end
+    end
+  end
+
+  def delete_uploaded_file
+    filename = params.require(:delete)
+    vacancy.supporting_documents.select { |d| d.filename == filename }.each do |document|
+      document.purge
+      send_dfe_analytics_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
+    end
+
+    respond_to(&:json)
   end
 
   def confirm
@@ -40,10 +68,6 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   def step
     :documents
-  end
-
-  def documents_form
-    @documents_form ||= Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
   end
 
   def documents_form_params

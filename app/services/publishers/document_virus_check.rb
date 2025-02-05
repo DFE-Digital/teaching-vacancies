@@ -11,6 +11,12 @@ class Publishers::DocumentVirusCheck
   end
 
   def safe?
+    uploaded_file = drive_service.create_file(
+      { alt: "media", name: "virus-check-#{Time.zone.now.strftime('%F-%H.%M.%S.%3N')}" },
+      fields: "id, web_view_link, web_content_link, mime_type",
+      upload_source: file.path,
+    )
+
     drive_service.get_file(
       uploaded_file.id,
       acknowledge_abuse: false,
@@ -29,14 +35,6 @@ class Publishers::DocumentVirusCheck
   private
 
   attr_reader :file
-
-  def uploaded_file
-    @uploaded_file ||= drive_service.create_file(
-      { alt: "media", name: "virus-check-#{Time.zone.now.strftime('%F-%H.%M.%S.%3N')}" },
-      fields: "id, web_view_link, web_content_link, mime_type",
-      upload_source: file.path,
-    )
-  end
 
   def drive_service
     @drive_service ||= Google::Apis::DriveV3::DriveService.new
