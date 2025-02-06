@@ -11,11 +11,9 @@ div
 
     p.govuk-body = t(".next_step.profile_update")
 
-    p.govuk-grid-row
-      .govuk-grid-column-one-half
-        = govuk_button_link_to t(".next_step.show_application"), jobseekers_job_application_path(@job_application), class: "govuk-button--secondary"
-      .govuk-grid-column-one-half
-        = govuk_button_link_to t(".next_step.view_applications"), jobseekers_job_applications_path, class: "govuk-button--secondary"
+    .govuk-button-group
+      = govuk_button_link_to t(".next_step.show_application"), jobseekers_job_application_path(@job_application), class: "govuk-button--secondary"
+      = govuk_button_link_to t(".next_step.view_applications"), jobseekers_job_applications_path, class: "govuk-button--secondary"
 
     h2.govuk-heading-m = t(".candidate_profile.heading")
     p.govuk-body = t(".candidate_profile.text")
