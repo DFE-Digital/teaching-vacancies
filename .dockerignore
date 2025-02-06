@@ -42,6 +42,7 @@ config/localhost/https/*.crt
 /InstalledFiles
 /pkg/
 /spec/*
+!/spec/factories
 /test/tmp/
 /test/version_tmp/
 /tmp/
