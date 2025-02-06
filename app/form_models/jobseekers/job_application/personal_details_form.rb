@@ -66,9 +66,15 @@ module Jobseekers
       validates :email_address, email_address: true
       validates :right_to_work_in_uk, inclusion: { in: %w[yes no] }, if: -> { personal_details_section_completed }
       validates :working_patterns, presence: true
-      # validate :working_pattern_details_does_not_exceed_maximum_words
+      validate :working_pattern_details_does_not_exceed_maximum_words
 
       completed_attribute(:personal_details)
+
+      def working_pattern_details_does_not_exceed_maximum_words
+        if number_of_words_exceeds_permitted_length?(50, working_pattern_details)
+          errors.add(:working_pattern_details, :length)
+        end
+      end
     end
   end
 end

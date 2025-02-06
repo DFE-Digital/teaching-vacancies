@@ -32,6 +32,8 @@ en:
               inclusion: Select yes if you have a National Insurance number
             personal_details_section_completed:
               inclusion: Select yes if you have completed this section
+            working_pattern_details:
+              length: Working pattern details must be 50 words or less
   helpers:
     legend:
       jobseekers_job_application_personal_details_form:
