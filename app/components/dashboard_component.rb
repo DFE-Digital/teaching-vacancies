@@ -59,7 +59,7 @@ class DashboardComponent < ApplicationComponent
   end
 
   def include_job_applications?
-    organisation.group_type != "local_authority" && @selected_type.in?(%w[published expired])
+    @selected_type.in?(%w[published expired])
   end
 
   def selected_scope
