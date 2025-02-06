@@ -83,6 +83,8 @@ module JobseekerHelpers
     fill_in "Country", with: "United Kingdom"
     fill_in "Phone number", with: "01234 123456"
     fill_in "Email address", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
+    check "Part time"
+    fill_in "jobseekers_job_application_personal_details_form[working_pattern_details]", with: "I only work on days starting with T sorry."
     choose I18n.t("jobseekers.profiles.personal_details.work.options.true")
     choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.has_ni_number_options.yes")
     fill_in I18n.t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number"), with: "AB 12 12 12 A"

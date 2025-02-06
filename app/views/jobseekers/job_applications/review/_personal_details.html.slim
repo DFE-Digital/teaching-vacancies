@@ -40,3 +40,12 @@
     - s.with_row do |row|
       - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review")
       - row.with_value text: job_application.national_insurance_number.presence || t("jobseekers.job_applications.not_defined")
+  
+  - s.with_row do |row|
+    - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.working_patterns")
+    - row.with_value text: readable_working_patterns(job_application)
+  
+  - if job_application.working_pattern_details.present?
+    - s.with_row do |row|
+      - row.with_key text: t("helpers.legend.jobseekers_job_application_personal_details_form.working_pattern_details")
+      - row.with_value text: job_application.working_pattern_details
