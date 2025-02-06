@@ -67,6 +67,33 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
           expect(Vacancy.last.organisation).to eq(school)
         end
       end
+
+      context "when a valid school for the trust and an invalid school are both provided" do
+        let(:trust) { create(:trust, schools: [school]) }
+        let(:school_urns) { { school_urns: [school.urn, 9999] } }
+        let(:organisations) { { trust_uid: trust.uid }.merge(school_urns) }
+
+        it "only assigns the vacancy to the school within the trust" do
+          create_vacancy_service
+          vacancy = Vacancy.last
+          expect(vacancy.organisation).to eq(school)
+          expect(vacancy.organisations).to contain_exactly(school)
+        end
+      end
+
+      context "when a valid school for the trust and school not belonging to the trust are both provided" do
+        let(:trust) { create(:trust, schools: [school]) }
+        let(:non_trust_school) { create(:school) }
+        let(:school_urns) { { school_urns: [school.urn, non_trust_school.urn] } }
+        let(:organisations) { { trust_uid: trust.uid }.merge(school_urns) }
+
+        it "only assigns the vacancy to the school within the trust" do
+          create_vacancy_service
+          vacancy = Vacancy.last
+          expect(vacancy.organisation).to eq(school)
+          expect(vacancy.organisations).to contain_exactly(school)
+        end
+      end
     end
 
     context "when a vacancy with the same external reference exists" do
@@ -95,27 +122,27 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
     end
 
-    context "when organisations are invalid" do
+    context "when the given school does not exist" do
       let(:school_urns) { { school_urns: [9999] } }
 
-      it "raises Publishers::AtsApi::OrganisationFetcher::CreateVacancyService" do
+      it "raises InvalidOrganisationError" do
         expect { create_vacancy_service }.to raise_error(
           Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
           "No valid organisations found",
         )
       end
+    end
 
-      context "when invalid school in a valid trust" do
-        let(:trust) { create(:trust, schools: [school]) }
-        let(:school_urns) { { school_urns: [9999] } }
-        let(:organisations) { { trust_uid: trust.uid }.merge(school_urns) }
+    context "when given school does not belong to the given trust" do
+      let(:trust) { create(:trust, schools: [school]) }
+      let(:school_urns) { { school_urns: [9999] } }
+      let(:organisations) { { trust_uid: trust.uid }.merge(school_urns) }
 
-        it "raises Publishers::AtsApi::OrganisationFetcher::CreateVacancyService" do
-          expect { create_vacancy_service }.to raise_error(
-            Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
-            "No valid organisations found",
-          )
-        end
+      it "raises InvalidOrganisationError" do
+        expect { create_vacancy_service }.to raise_error(
+          Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
+          "No valid organisations found",
+        )
       end
     end
 
