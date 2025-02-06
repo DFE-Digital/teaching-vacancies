@@ -9,7 +9,7 @@ ARG TERRAFORM_VERSION=1.5.1
 
 # Set up NodeSource repository for newer Node.JS
 RUN apt update -yq \
-   && apt install curl gnupg -yq \
+   && apt install curl gnupg cmake -yq \
    && curl -sL https://deb.nodesource.com/setup_$NODEJS_MAJOR_VERSION.x | bash
 
 # Set up dependencies
