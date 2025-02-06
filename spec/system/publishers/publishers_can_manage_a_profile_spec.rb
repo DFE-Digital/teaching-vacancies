@@ -384,7 +384,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
       expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
       expect(organisation.reload.logo.attachment.filename.to_s).to eq(image_file_name)
-      expect(page).to have_css("img[src*='#{url_for(organisation.logo)}']")
+      expect(page).to have_css("img[src*='#{Capybara.app_host}#{rails_blob_path(organisation.logo, only_path: true)}']")
     end
   end
 
@@ -435,7 +435,7 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
 
       expect(page).to have_content(I18n.t("publishers.organisations.update_success", organisation_type: "School"))
       expect(organisation.reload.photo.attachment.filename.to_s).to eq(image_file_name)
-      expect(page).to have_css("img[src*='#{url_for(organisation.photo)}']")
+      expect(page).to have_css("img[src*='#{Capybara.app_host}#{rails_blob_path(organisation.photo, only_path: true)}']")
     end
   end
 
