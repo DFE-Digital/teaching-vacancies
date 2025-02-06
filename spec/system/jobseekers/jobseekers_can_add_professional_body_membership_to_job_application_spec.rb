@@ -16,6 +16,7 @@ RSpec.describe "Jobseekers can add professional body memberships to their job ap
     end
 
     it "allows jobseekers to add a professional body membership" do
+      expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :professional_body_memberships))
       validates_step_complete(button: I18n.t("buttons.save_and_continue"))
       fill_in_professional_body_membership
       click_on I18n.t("buttons.save_and_continue")
