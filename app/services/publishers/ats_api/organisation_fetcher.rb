@@ -7,14 +7,11 @@ module Publishers
         return [] unless school_params
 
         trust = find_trust(school_params[:trust_uid])
-        schools = find_schools(school_params[:school_urns])
+        schools = find_schools(trust, school_params[:school_urns])
 
         validate_organisations!(trust, schools, school_params[:school_urns])
 
-        return schools.to_a if trust.blank?
-        return [trust] if schools.blank?
-
-        fetch_valid_schools(trust, school_params[:school_urns])
+        schools.presence&.to_a || [trust]
       end
 
       private
@@ -23,8 +20,14 @@ module Publishers
         SchoolGroup.trusts.find_by(uid: trust_uid) if trust_uid.present?
       end
 
-      def find_schools(school_urns)
-        ::Organisation.where(urn: school_urns) if school_urns.present?
+      def find_schools(trust, school_urns)
+        return if school_urns.blank?
+
+        if trust
+          trust.schools.where(urn: school_urns)
+        else
+          ::Organisation.where(urn: school_urns)
+        end
       end
 
       def validate_organisations!(trust, schools, school_urns)
@@ -35,15 +38,7 @@ module Publishers
 
       def no_valid_organisations?(trust, schools, school_urns)
         (schools.blank? && trust.blank?) ||
-          (trust.present? && school_urns.present? && invalid_trust_school_match?(trust, school_urns))
-      end
-
-      def invalid_trust_school_match?(trust, school_urns)
-        trust.schools.where(urn: school_urns).blank?
-      end
-
-      def fetch_valid_schools(trust, school_urns)
-        trust.schools.where(urn: school_urns).order(:created_at).presence || [trust]
+          (trust.present? && school_urns.present? && schools.blank?)
       end
     end
   end
