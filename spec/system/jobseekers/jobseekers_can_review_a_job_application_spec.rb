@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Jobseekers can review a job application" do
+include JobApplicationsHelper
   let(:jobseeker) { create(:jobseeker) }
   let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
   let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
@@ -23,8 +24,8 @@ RSpec.describe "Jobseekers can review a job application" do
       expect(page).to have_content(job_application.country)
       expect(page).to have_content(job_application.phone_number)
       expect(page).to have_content(job_application.national_insurance_number)
-      expect(page).to have_content(JobApplicationHelper.readable_working_patterns(job_application))
-      expect(page).to have_content(job_application.working_patterns_details)
+      expect(page).to have_content(readable_working_patterns(job_application))
+      expect(page).to have_content(job_application.working_pattern_details)
     end
 
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.professional_status.heading") do
