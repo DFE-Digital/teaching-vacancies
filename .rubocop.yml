@@ -193,7 +193,3 @@ Metrics/PerceivedComplexity:
   Max: 18 # Default 8
   Exclude:
     - "spec/**/*"
-
-# We have lots of these, not easily avoidable in a lot of cases
-RSpec/AnyInstance:
-  Enabled: false
