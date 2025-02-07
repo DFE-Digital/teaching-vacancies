@@ -26,6 +26,8 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
       qualified_teacher_status_year: jobseeker_profile.qualified_teacher_status_year || "",
       qualified_teacher_status: jobseeker_profile.qualified_teacher_status || "",
       right_to_work_in_uk: jobseeker_right_to_work,
+      working_patterns: jobseeker_profile.job_preferences.working_patterns,
+      working_pattern_details: jobseeker_profile.job_preferences.working_pattern_details,
     )
   end
 

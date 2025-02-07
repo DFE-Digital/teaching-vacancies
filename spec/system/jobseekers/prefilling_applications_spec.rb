@@ -44,6 +44,8 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(current_job_application.first_name).to eq(previous_application.first_name)
         expect(current_job_application.last_name).to eq(previous_application.last_name)
         expect(current_job_application.phone_number).to eq(previous_application.phone_number)
+        expect(current_job_application.working_patterns).to eq(previous_application.working_patterns)
+        expect(current_job_application.working_pattern_details).to eq(previous_application.working_pattern_details)
         within("#personal_details") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
         end
@@ -141,6 +143,8 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(current_job_application.first_name).to eq(profile.personal_details.first_name)
         expect(current_job_application.last_name).to eq(profile.personal_details.last_name)
         expect(current_job_application.phone_number).to eq(profile.personal_details.phone_number)
+        expect(current_job_application.working_patterns).to eq(profile.job_preferences.working_patterns)
+        expect(current_job_application.working_pattern_details).to eq(profile.job_preferences.working_pattern_details)
 
         expect(current_job_application.qualified_teacher_status_year).to eq(profile.qualified_teacher_status_year)
 
