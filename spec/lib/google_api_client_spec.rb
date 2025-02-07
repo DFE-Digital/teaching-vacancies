@@ -8,8 +8,11 @@ RSpec.describe GoogleApiClient, type: :singleton do
   end
 
   before do
-    described_class.instance_variable_set(:@singleton__instance__, nil) # Needed to setup the instance with different values in each test
     allow(Google::Auth::ServiceAccountCredentials).to receive(:make_creds).and_return(authorizer)
+  end
+
+  after do
+    described_class.instance_variable_set(:@singleton__instance__, nil) # Cleans the singleton after each test
   end
 
   describe "#initialize" do
