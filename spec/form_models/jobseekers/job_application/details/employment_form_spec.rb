@@ -70,7 +70,9 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
       let(:params) do
         { current_role: "no",
           "ended_on(3i)" => "10",
-          "started_on(1i)" => "2021", "started_on(2i)" => "01", "started_on(3i)" => "01" }
+          "started_on(1i)" => "2021",
+          "started_on(2i)" => "01",
+          "started_on(3i)" => "01" }
       end
 
       it "is invalid" do
@@ -82,8 +84,12 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
     context "when ended_on is after today" do
       let(:params) do
         { current_role: "no",
-          "started_on(1i)" => "2021", "started_on(2i)" => "01", "started_on(3i)" => "01",
-          "ended_on(1i)" => "2120", "ended_on(2i)" => "01", "ended_on(3i)" => "01" }
+          "started_on(1i)" => "2021",
+          "started_on(2i)" => "01",
+          "started_on(3i)" => "01",
+          "ended_on(1i)" => "2120",
+          "ended_on(2i)" => "01",
+          "ended_on(3i)" => "01" }
       end
 
       it "is invalid" do
@@ -95,8 +101,12 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
     context "when ended_on is before started_on" do
       let(:params) do
         { current_role: "no",
-          "started_on(1i)" => "2021", "started_on(2i)" => "01", "started_on(3i)" => "01",
-          "ended_on(1i)" => "2020", "ended_on(2i)" => "01", "ended_on(3i)" => "01" }
+          "started_on(1i)" => "2021",
+          "started_on(2i)" => "01",
+          "started_on(3i)" => "01",
+          "ended_on(1i)" => "2020",
+          "ended_on(2i)" => "01",
+          "ended_on(3i)" => "01" }
       end
 
       it "is invalid" do
@@ -108,9 +118,17 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
   context "when all attributes are valid" do
     let(:params) do
-      { organisation: "An organisation", job_title: "A job title", main_duties: "Some main duties",
-        current_role: "no", "started_on(1i)" => "2019", "started_on(2i)" => "09", "started_on(3i)" => "01",
-        "ended_on(1i)" => "2020", "ended_on(2i)" => "07", "ended_on(3i)" => "30", reason_for_leaving: "stress" }
+      { organisation: "An organisation",
+        job_title: "A job title",
+        main_duties: "Some main duties",
+        current_role: "no",
+        "started_on(1i)" => "2019",
+        "started_on(2i)" => "09",
+        "started_on(3i)" => "01",
+        "ended_on(1i)" => "2020",
+        "ended_on(2i)" => "07",
+        "ended_on(3i)" => "30",
+        reason_for_leaving: "stress" }
     end
 
     it "is valid" do
@@ -119,9 +137,17 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
     context "when ended_on is on the same date as started_on" do
       let(:params) do
-        { organisation: "An organisation", job_title: "A job title", main_duties: "Some main duties",
-          current_role: "no", "started_on(1i)" => "2019", "started_on(2i)" => "09", "started_on(3i)" => "30",
-          "ended_on(1i)" => "2019", "ended_on(2i)" => "09", "ended_on(3i)" => "30", reason_for_leaving: "stress" }
+        { organisation: "An organisation",
+          job_title: "A job title",
+          main_duties: "Some main duties",
+          current_role: "no",
+          "started_on(1i)" => "2019",
+          "started_on(2i)" => "09",
+          "started_on(3i)" => "30",
+          "ended_on(1i)" => "2019",
+          "ended_on(2i)" => "09",
+          "ended_on(3i)" => "30",
+          reason_for_leaving: "stress" }
       end
 
       it "is valid" do
