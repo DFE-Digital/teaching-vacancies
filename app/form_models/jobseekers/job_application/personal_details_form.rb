@@ -49,10 +49,6 @@ module Jobseekers
           }.merge(completed_attrs(model, :personal_details))
           super.merge(new_attrs)
         end
-
-        def fields
-          super + [{ working_patterns: [] }]
-        end
       end
 
       validates :city, :country, :email_address, :first_name, :last_name,
