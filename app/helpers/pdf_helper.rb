@@ -52,6 +52,7 @@ module PdfHelper
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"), job_application.phone_number],
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.email_address"), job_application.email],
       [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk"), visa_sponsorship_needed_answer(job_application)],
+      [I18n.t("helpers.legend.jobseekers_job_application_personal_details_form.working_patterns"), readable_working_patterns(job_application)],
     ]
 
     if job_application.national_insurance_number?
@@ -59,6 +60,10 @@ module PdfHelper
         I18n.t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review"),
         job_application.national_insurance_number.presence || I18n.t("jobseekers.job_applications.not_defined"),
       ]
+    end
+
+    if job_application.working_pattern_details.present?
+      personal_details << [I18n.t("helpers.legend.jobseekers_job_application_personal_details_form.working_pattern_details"), job_application.working_pattern_details]
     end
 
     add_section_title(pdf, "Personal Details")
