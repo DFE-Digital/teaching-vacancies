@@ -95,6 +95,27 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
       end
     end
 
+    context "when ended_on and current role are both set" do
+      let(:params) do
+        { is_current_role: true,
+          organisation: "An organisation",
+          job_title: "A job title",
+          main_duties: "Some main duties",
+          reason_for_leaving: "stress",
+          "started_on(1i)" => "2021",
+          "started_on(2i)" => "01",
+          "started_on(3i)" => "01",
+          "ended_on(1i)" => "2022",
+          "ended_on(2i)" => "01",
+          "ended_on(3i)" => "01" }
+      end
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors.messages).to eq({ ended_on: ["End date cannot be entered for current role"] })
+      end
+    end
+
     context "when ended_on is before started_on" do
       let(:params) do
         { is_current_role: false,

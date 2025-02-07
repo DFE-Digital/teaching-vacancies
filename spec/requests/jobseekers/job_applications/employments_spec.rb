@@ -49,30 +49,30 @@ RSpec.describe "Job applications employments" do
     let(:job_title) { "Number 9" }
     let(:ended_on_month) { "01" }
     let(:started_on_year) { "2001" }
-    let(:current_role) { "no" }
     let(:ended_on_year) { "2002" }
     let(:main_duties) { "Scoring goals" }
     let(:reason_for_leaving) { "relocating" }
-    let(:params) do
+    let(:base_params) do
       {
-        jobseekers_job_application_details_employment_form: {
-          organisation: organisation,
-          job_title: job_title,
-          "started_on(2i)": started_on_month,
-          "started_on(1i)": started_on_year,
-          is_current_role: current_role,
-          "ended_on(2i)": ended_on_month,
-          "ended_on(1i)": ended_on_year,
-          main_duties: main_duties,
-          reason_for_leaving: reason_for_leaving,
-        },
+        organisation: organisation,
+        job_title: job_title,
+        "started_on(2i)": started_on_month,
+        "started_on(1i)": started_on_year,
+        main_duties: main_duties,
+        reason_for_leaving: reason_for_leaving,
       }
     end
 
     describe "POST #create" do
+      let(:params) do
+        {
+          jobseekers_job_application_details_employment_form:
+            base_params.merge(is_current_role: "true"),
+        }
+      end
+
       context "when the form is valid" do
         let(:started_on_month) { "12" }
-        let(:current_role) { "yes" }
 
         it "creates the employment and redirects to the employment history build step" do
           expect { post jobseekers_job_application_employments_path(job_application), params: params }
@@ -108,10 +108,16 @@ RSpec.describe "Job applications employments" do
     describe "PATCH #update" do
       let!(:employment) { create(:employment, :current_role, job_application: job_application, organisation: "Cool school") }
       let(:organisation) { "Awesome academy" }
+      let(:params) do
+        {
+          jobseekers_job_application_details_employment_form:
+            base_params.merge(is_current_role: "false", "ended_on(2i)": ended_on_month,
+                              "ended_on(1i)": ended_on_year),
+        }
+      end
 
       context "when the form is valid" do
         let(:started_on_month) { "12" }
-        let(:current_role) { "false" }
 
         it "updates the employment and redirects to the employment history build step" do
           expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }

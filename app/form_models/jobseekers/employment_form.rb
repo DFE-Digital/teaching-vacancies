@@ -6,7 +6,7 @@ module Jobseekers
 
     attr_accessor :organisation, :job_title, :subjects, :main_duties, :reason_for_leaving
 
-    attribute :current_role, :boolean
+    attribute :is_current_role, :boolean
     attribute :started_on, :date
     attribute :ended_on, :date
 
@@ -14,6 +14,7 @@ module Jobseekers
     validates :organisation, :job_title, :main_duties, :reason_for_leaving, presence: true
     validates :started_on, date: { before: :today }
 
-    validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { current_role }
+    validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { is_current_role }
+    validates :ended_on, absence: true, if: -> { is_current_role }
   end
 end

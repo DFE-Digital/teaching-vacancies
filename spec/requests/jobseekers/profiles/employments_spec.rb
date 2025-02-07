@@ -7,7 +7,7 @@ RSpec.describe "Jobseeker profile employments" do
   let(:job_title) { "Number 9" }
   let(:started_on_month) { "01" }
   let(:started_on_year) { "2001" }
-  let(:current_role) { "no" }
+  let(:current_role) { "true" }
   let(:ended_on_month) { "01" }
   let(:ended_on_year) { "2002" }
   let(:main_duties) { "Scoring goals" }
@@ -21,8 +21,8 @@ RSpec.describe "Jobseeker profile employments" do
         "started_on(2i)": started_on_month,
         "started_on(1i)": started_on_year,
         is_current_role: current_role,
-        "ended_on(2i)": ended_on_month,
-        "ended_on(1i)": ended_on_year,
+        # "ended_on(2i)": ended_on_month,
+        # "ended_on(1i)": ended_on_year,
         main_duties: main_duties,
         reason_for_leaving: reason_for_leaving,
       }.merge(days),
@@ -48,8 +48,6 @@ RSpec.describe "Jobseeker profile employments" do
 
   describe "POST #create" do
     context "when the form is valid" do
-      let(:current_role) { "yes" }
-
       it "creates the employment and redirects to the review page" do
         expect { post jobseekers_profile_work_history_index_path, params: params }
           .to change { Employment.count }.by(1)
