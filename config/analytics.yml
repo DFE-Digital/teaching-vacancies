@@ -158,6 +158,8 @@ shared:
     - baptism_address
     - baptism_date
     - ethos_and_aims
+    - working_patterns
+    - working_pattern_details
   job_preferences_locations:
     - id
     - job_preferences_id
