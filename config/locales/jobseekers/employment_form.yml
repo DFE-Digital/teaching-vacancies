@@ -1,0 +1,89 @@
+en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/job_application/details/employment_form:
+          attributes:
+            is_current_role:
+              inclusion: Select yes if this is your current role
+            ended_on:
+              on_or_after: End date must be on or after the start date
+              before: The date the role ended must be in the past
+              blank: Enter the date you left this school or organisation
+              invalid: Enter a date in the correct format
+              present: End date cannot be entered for current role
+            job_title:
+              blank: Enter your job title
+            main_duties:
+              blank: Enter your main duties for this role
+            organisation:
+              blank: Enter a school or other organisation
+            started_on:
+              before: The date the role started must be in the past
+              blank: Enter the date you started at this school or organisation
+              invalid: Enter a date in the correct format
+            reason_for_leaving:
+              blank: Enter your reason for leaving the role
+        jobseekers/profile/employment_form:
+          attributes:
+            is_current_role:
+              inclusion: Select yes if this is your current role
+            ended_on:
+              on_or_after: End date must be on or after the start date
+              before: The date the role ended must be in the past
+              blank: Enter the date you left this school or organisation
+              invalid: Enter a date in the correct format
+              present: End date cannot be entered for current role
+            job_title:
+              blank: Enter your job title
+            main_duties:
+              blank: Enter your main duties for this role
+            organisation:
+              blank: Enter a school or other organisation
+            started_on:
+              before: The date the role started must be in the past
+              blank: Enter the date you started at this school or organisation
+              invalid: Enter a date in the correct format
+            reason_for_leaving:
+              blank: Enter your reason for leaving the role
+
+  helpers:
+    hint:
+      jobseekers_job_application_details_employment_form:
+        main_duties: Give a brief summary of your key responsibilities.
+        organisation: For a non-teaching job, tell us the name of the organisation you worked at
+        reason_for_leaving: If you’re still in the role, give a brief summary of your reasons for wanting to leave.
+      jobseekers_profile_employment_form:
+        main_duties: Give a brief summary of your key responsibilities.
+        organisation_name: If you worked for yourself, enter ‘self-employed’
+        started_on: For example, %{date}
+        reason_for_leaving: If you're still in the role, give a brief summary of your reasons for wanting to leave.
+
+    label:
+      jobseekers_job_application_details_employment_form:
+        is_current_role_options:
+          "yes": I currently work here
+        job_title: Job title
+        main_duties: Main duties
+        organisation: School or other organisation
+        subjects_review: Subjects and key stages taught
+        subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        reason_for_leaving: Reason for leaving role
+      jobseekers_profile_employment_form:
+        is_current_role_options:
+          "yes": I currently work here
+        job_title: Role
+        main_duties: Main duties
+        reason_for_leaving: Reason for leaving role
+        organisation: Name of school or employer
+        subjects: Subjects and key stages taught (optional)
+
+    legend:
+      jobseekers_job_application_details_employment_form:
+        is_current_role: Is this your current role?
+        ended_on: End date
+        started_on: Start date
+      jobseekers_profile_employment_form:
+        is_current_role: Are you still working in this role?
+        ended_on: End date
+        started_on: Start date
