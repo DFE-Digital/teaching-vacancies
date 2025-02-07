@@ -160,7 +160,7 @@ module JobApplicationsHelper
   end
 
   def readable_working_patterns(job_application)
-    working_patterns = job_application.working_patterns.map { |working_pattern|
+    job_application.working_patterns.map { |working_pattern|
       JobApplication.human_attribute_name("working_patterns.#{working_pattern}").downcase
     }.join(", ").capitalize
   end

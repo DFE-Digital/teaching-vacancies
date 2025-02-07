@@ -17,10 +17,10 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
       email_address: "david@gmail.com",
       right_to_work_in_uk: "yes",
       personal_details_section_completed: true,
-      working_patterns: ["part_time"],
+      working_patterns: %w[part_time],
       working_pattern_details: "I will NOT work on Mondays.",
-      has_ni_number: "yes", 
-      national_insurance_number: "DE 45 45 45 D"
+      has_ni_number: "yes",
+      national_insurance_number: "DE 45 45 45 D",
     }
   end
 
@@ -82,6 +82,7 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
     let(:form) do
       described_class.new(valid_params.merge(working_pattern_details: working_pattern_details))
     end
+
     context "when working_pattern_details is too long" do
       let(:working_pattern_details) { "word " * 51 }
 

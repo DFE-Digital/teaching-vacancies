@@ -4,7 +4,7 @@ RSpec.describe "Publishers can view a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
-  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, working_patterns: ["full_time", "part_time"]) }
+  let(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, working_patterns: %w[full_time part_time]) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)

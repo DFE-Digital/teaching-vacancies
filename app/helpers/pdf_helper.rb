@@ -56,10 +56,7 @@ module PdfHelper
     ]
 
     if job_application.national_insurance_number?
-      personal_details << [
-        I18n.t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review"),
-        job_application.national_insurance_number.presence || I18n.t("jobseekers.job_applications.not_defined"),
-      ]
+      personal_details << [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.national_insurance_number_review"), job_application.national_insurance_number.presence || I18n.t("jobseekers.job_applications.not_defined")]
     end
 
     if job_application.working_pattern_details.present?

@@ -3,7 +3,7 @@ require "prawn"
 require "pdf/inspector"
 
 RSpec.describe JobApplicationPdfGenerator, type: :service do
-  let(:job_application) { create(:job_application, vacancy: vacancy, working_patterns: ["full_time", "part_time"]) }
+  let(:job_application) { create(:job_application, vacancy: vacancy, working_patterns: %w[full_time part_time]) }
   let!(:professional_body_membership) { create(:professional_body_membership, job_application: job_application, membership_number: nil, year_membership_obtained: nil) }
   let(:vacancy) { create(:vacancy) }
   let(:pdf_generator) { JobApplicationPdfGenerator.new(job_application, vacancy) }
