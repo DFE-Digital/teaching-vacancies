@@ -24,7 +24,7 @@ module Jobseekers
       attr_accessor(*(FIELDS + [:has_ni_number]))
       attr_writer :national_insurance_number
 
-      attribute :working_patterns, default: []
+      attribute :working_patterns, array: true, default: []
 
       def national_insurance_number
         @national_insurance_number if has_ni_number == "yes"
@@ -48,6 +48,11 @@ module Jobseekers
             has_ni_number: model.national_insurance_number.present? ? "yes" : "no",
           }.merge(completed_attrs(model, :personal_details))
           super.merge(new_attrs)
+        end
+
+        def fields
+          # ensure that we can accept an array for working_patterns
+          super + [{ working_patterns: [] }] - [:working_patterns]
         end
       end
 
