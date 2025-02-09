@@ -20,7 +20,7 @@ RSpec.describe JobApplicationReviewComponent::Section, type: :component do
   it "uses the section name to find the form by default" do
     render_inline(component)
 
-    Jobseekers::JobApplication::PersonalDetailsForm.fields.each do |field|
+    Jobseekers::JobApplication::PersonalDetailsForm.storable_fields.each do |field|
       expect(page).to have_css("div##{field}")
     end
   end
