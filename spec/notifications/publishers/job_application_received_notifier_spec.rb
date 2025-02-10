@@ -35,12 +35,12 @@ RSpec.describe Publishers::JobApplicationReceivedNotifier do
 
     context "when the notification was delivered before yesterday" do
       before do
-        travel_to DateTime.new(2000, 0o1, 0o1, 14, 30) do
+        travel_to DateTime.new(2019, 1, 1, 14, 30) do
           described_class
             .with(vacancy: job_application.vacancy, job_application: job_application)
             .deliver(publisher)
         end
-        publisher.notifications.last.update(created_at: DateTime.new(2000, 0o1, 0o1, 14, 30))
+        publisher.notifications.last.update(created_at: DateTime.new(2000, 1, 1, 14, 30))
       end
 
       it "returns the correct timestamp" do

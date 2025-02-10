@@ -8,6 +8,7 @@ FactoryBot.define do
     started_on { Faker::Date.in_date_period(year: 2016) }
     current_role { "no" }
     ended_on { Faker::Date.in_date_period(year: 2018) }
+    employment_type { :job }
 
     job_application
   end

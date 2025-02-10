@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     expect(page).to have_link(I18n.t("buttons.cancel"), href: jobseekers_job_application_build_path(job_application, :employment_history))
     validates_step_complete(button: I18n.t("buttons.save_employment"))
 
-    fill_in_current_role
+    fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
 
     click_on I18n.t("buttons.save_employment")
 
@@ -37,7 +37,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :employment_history))
     expect(page).to have_content("The Best Teacher")
-    expect(page).to have_content(Date.new(2020, 0o7, 1).to_formatted_s(:month_year))
+    expect(page).to have_content(Date.new(2020, 7, 1).to_formatted_s(:month_year))
   end
 
   it "displays employment history from newest to oldest job" do
@@ -58,7 +58,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     all(:link, "Add another job").first.click
 
-    fill_in_current_role
+    fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
 
     click_on I18n.t("buttons.save_employment")
 
@@ -74,7 +74,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
   context "managing employment history gaps" do
     before do
       create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01"))
-      create(:employment, :job, job_application: job_application, started_on: Date.parse("2021-06-01"), current_role: "yes")
+      create(:employment, :job, :current_role, job_application: job_application, started_on: Date.parse("2021-06-01"))
     end
 
     it "allows jobseekers to add, change and delete gaps in employment with prefilled start and end date" do
@@ -118,7 +118,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
   context "when there is at least one role" do
     let!(:employment) { create(:employment, organisation: "A school", job_application: job_application, started_on: Date.parse("2021-01-01"), ended_on: Date.parse("2021-02-01")) }
-    let!(:employment2) { create(:employment, job_title: "current role", organisation: "Some other place", job_application: job_application, started_on: Date.parse("2022-02-01"), current_role: "yes") }
+    let!(:employment2) { create(:employment, :current_role, job_title: "current role", organisation: "Some other place", job_application: job_application, started_on: Date.parse("2022-02-01")) }
 
     it "allows jobseekers to delete employment history" do
       visit jobseekers_job_application_build_path(job_application, :employment_history)

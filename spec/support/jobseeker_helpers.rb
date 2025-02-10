@@ -15,15 +15,19 @@ module JobseekerHelpers
     choose I18n.t("helpers.label.jobseekers_job_application_ask_for_support_form.ask_for_support_section_completed_options.true")
   end
 
-  def fill_in_current_role(job_title: "The Best Teacher", start_month: "07", start_year: "2020")
-    fill_in "School or other organisation", with: "The Best School"
-    fill_in "Job title", with: job_title
-    fill_in "Main duties", with: "Some details about what the main duties were"
-    fill_in "Reason for leaving role", with: "It's complicated"
-    fill_in "Subjects and key stages taught (optional field)", with: "English KS1"
-    fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: start_year
-    fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: start_month
-    choose "Yes", name: "jobseekers_job_application_details_employment_form[current_role]"
+  def fill_in_current_role(form:, start_month: "07", start_year: "2020")
+    fill_in I18n.t("helpers.label.#{form}.organisation"), with: "Super School"
+    fill_in I18n.t("helpers.label.#{form}.job_title"), with: "The Best Teacher"
+    fill_in I18n.t("helpers.label.#{form}.main_duties"), with: "Goals and that"
+    fill_in I18n.t("helpers.label.#{form}.reason_for_leaving"), with: "I hate it there"
+
+    if I18n.exists?("helpers.label.#{form}.subjects_html")
+      fill_in "Subjects and key stages taught (optional field)", with: "English KS1"
+    end
+
+    fill_in "#{form}[started_on(1i)]", with: start_year
+    fill_in "#{form}[started_on(2i)]", with: start_month
+    choose "Yes", name: "#{form}[current_role]"
   end
 
   def fill_in_declarations
