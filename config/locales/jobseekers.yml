@@ -494,6 +494,7 @@ en:
         relationship: Relationship to applicant
         is_most_recent_employer: Current or most recent employer
       review:
+        view_your_profile: View your profile
         confirmation:
           heading: Confirmation
           update_your_profile:
@@ -598,7 +599,7 @@ en:
         submitted: Application submitted
         unsuccessful: Unsuccessful
         withdrawn: Withdrawn
-      submit:
+      post_submit:
         feedback:
           description: >-
             Your feedback can help us improve the service to better support you as well as schools around England.
@@ -608,8 +609,15 @@ en:
           shortlisted: >-
             If you are shortlisted for an interview %{organisation} will be in touch to let you know.
           profile_update: >-
-            Your profile will match the information you supplied in your application if you chose to update it.
-          view_applications: View your applications
+            Your application information will be saved so that you can use it when you next apply for a role.
+          view_applications: Return to all applications
+          show_application: Print or download your application
+          show_profile: View your profile
+        candidate_profile:
+          heading: Your candidate profile
+          text: >-
+            Your application information is also saved in your candidate profile. If you turn on your profile,
+            schools will be able to view it and contact you about roles.
         panel:
           body: We have sent an email confirmation to %{email}
           title: Your application has been submitted

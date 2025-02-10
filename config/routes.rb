@@ -105,6 +105,7 @@ Rails.application.routes.draw do
       get :confirm_destroy
       get :confirm_withdraw
       post :submit
+      get :post_submit
       post :withdraw
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
     end

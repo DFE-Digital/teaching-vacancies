@@ -105,7 +105,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
               click_on I18n.t("buttons.submit_application")
-              click_on "View your applications"
+              click_on I18n.t("jobseekers.job_applications.post_submit.next_step.view_applications")
               expect(page).to have_content(vacancy.job_title)
             end
           end
@@ -140,7 +140,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
               check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_usage_options.1")
               click_on I18n.t("buttons.submit_application")
-              click_on "View your applications"
+              click_on I18n.t("jobseekers.job_applications.post_submit.next_step.view_applications")
               expect(page).to have_content(vacancy.job_title)
             end
           end
@@ -226,7 +226,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
             complete_from_references_page
             submit_application_from_review
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
+            expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
           end
         end
 
@@ -260,7 +260,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
                 expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
                 complete_from_references_page
                 submit_application_from_review
-                expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
+                expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
               end
             end
 
@@ -282,7 +282,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
                 click_on I18n.t("buttons.save_and_continue")
                 complete_from_references_page
                 submit_application_from_review
-                expect(page).to have_content(I18n.t("jobseekers.job_applications.submit.panel.title"))
+                expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
               end
             end
           end
