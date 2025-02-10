@@ -13,7 +13,7 @@ class Employment < ApplicationRecord
   # 5. remove old column
   # add this once column has been backfilled
   # self.ignored_columns += %i[current_role]
-  # temp - set new current role column from old one
+  # set new current role column from old one
   before_save do |employment|
     employment.is_current_role = (employment.current_role == "yes")
   end

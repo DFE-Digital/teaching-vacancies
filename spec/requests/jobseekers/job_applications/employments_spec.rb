@@ -72,12 +72,15 @@ RSpec.describe "Job applications employments" do
     describe "POST #create" do
       context "when the form is valid" do
         let(:ended_on_month) { "12" }
+        let(:current_role) { "yes" }
 
         it "creates the employment and redirects to the employment history build step" do
           expect { post jobseekers_job_application_employments_path(job_application), params: params }
             .to change { Employment.count }.by(1)
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
+
+          expect(Employment.order(:created_at).last.is_current_role).to be(true)
         end
 
         context "when the job application status is not draft" do
@@ -104,7 +107,7 @@ RSpec.describe "Job applications employments" do
     end
 
     describe "PATCH #update" do
-      let!(:employment) { create(:employment, job_application: job_application, organisation: "Cool school") }
+      let!(:employment) { create(:employment, :current_role, job_application: job_application, organisation: "Cool school") }
       let(:organisation) { "Awesome academy" }
 
       context "when the form is valid" do
@@ -113,6 +116,8 @@ RSpec.describe "Job applications employments" do
         it "updates the employment and redirects to the employment history build step" do
           expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }
             .to change { employment.reload.organisation }.from("Cool school").to("Awesome academy")
+
+          expect(employment.is_current_role).to be(false)
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
         end

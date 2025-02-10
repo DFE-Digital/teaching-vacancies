@@ -48,11 +48,15 @@ RSpec.describe "Jobseeker profile employments" do
 
   describe "POST #create" do
     context "when the form is valid" do
+      let(:current_role) { "yes" }
+
       it "creates the employment and redirects to the review page" do
         expect { post jobseekers_profile_work_history_index_path, params: params }
           .to change { Employment.count }.by(1)
 
         expect(response).to redirect_to(review_jobseekers_profile_work_history_index_path)
+
+        expect(Employment.order(:created_at).last.is_current_role).to be(true)
       end
     end
 
