@@ -79,7 +79,8 @@ RSpec.describe "Job applications employments" do
             .to change { Employment.count }.by(1)
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
-  expect(Employment.order(:created_at).last.is_current_role).to be(true)
+
+          expect(Employment.order(:created_at).last.is_current_role).to be(true)
         end
 
         context "when the job application status is not draft" do
@@ -116,7 +117,9 @@ RSpec.describe "Job applications employments" do
           expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }
             .to change { employment.reload.organisation }.from("Cool school").to("Awesome academy")
 
-          expect(employment.is_current_role).to be(false)expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
+          expect(employment.is_current_role).to be(false)
+
+          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
         end
 
         context "when the job application status is not draft" do
