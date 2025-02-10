@@ -5,8 +5,22 @@ class Employment < ApplicationRecord
 
   enum :employment_type, { job: 0, break: 1 }
 
+  # Follow the stardard Google deployment pattern for is_current_role:
+  # 1. Add new column
+  # 2. Populate new column alongside old
+  # 3. backfill new column at leisure
+  # 4. start using new column
+  # 5. remove old column
+  # add this once column has been backfilled
+  # self.ignored_columns += %i[current_role]
+  # temp - set new current role column from old one
+  before_save do |employment|
+    employment.is_current_role = (employment.current_role == "yes")
+  end
+
   def duplicate
     self.class.new(
+      is_current_role:,
       current_role:,
       employment_type:,
       ended_on:,
@@ -23,5 +37,6 @@ class Employment < ApplicationRecord
 
   def current_role?
     current_role.present? && current_role != "no"
+    # is_current_role
   end
 end
