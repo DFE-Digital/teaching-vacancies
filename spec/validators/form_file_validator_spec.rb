@@ -15,13 +15,16 @@ end
 
 RSpec.describe FormFileValidator do
   describe "#validate_each" do
-    before { allow_any_instance_of(described_class).to receive(:validating_files_after_form_submission?).and_return(true) }
+    let(:document_virus_check) { instance_double(Publishers::DocumentVirusCheck, safe?: true) }
+
+    before do
+      allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(document_virus_check)
+      allow_any_instance_of(described_class).to receive(:validating_files_after_form_submission?).and_return(true)
+    end
 
     context "when the form's file type is a document" do
       let(:form_with_documents) { DummyFormFileValidatorForm.new({ supporting_documents: [uploaded_document] }) }
       let(:uploaded_document) { fixture_file_upload("blank_job_spec.pdf", "application/pdf") }
-
-      before { allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(true) }
 
       context "when the document is valid" do
         before do
@@ -60,7 +63,7 @@ RSpec.describe FormFileValidator do
         let(:error_message) { I18n.t("jobs.file_virus_error_message", filename: uploaded_document.original_filename) }
 
         before do
-          allow_any_instance_of(Publishers::DocumentVirusCheck).to receive(:safe?).and_return(false)
+          allow(document_virus_check).to receive(:safe?).and_return(false)
           form_with_documents.valid?
         end
 
