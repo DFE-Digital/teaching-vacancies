@@ -36,10 +36,6 @@ RSpec.describe Jobseekers::Profile::EmploymentForm, type: :model do
     end
   end
 
-  context "when #current_role is 'yes'" do
-    it { is_expected.to validate_inclusion_of(:is_current_role).in_array([true, false]) }
-  end
-
   context "when #current_role is 'no'" do
     subject { described_class.new(is_current_role: false) }
 

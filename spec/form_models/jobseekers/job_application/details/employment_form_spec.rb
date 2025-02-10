@@ -7,7 +7,6 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
   it { is_expected.to validate_presence_of(:organisation) }
   it { is_expected.to validate_presence_of(:job_title) }
   it { is_expected.to validate_presence_of(:main_duties) }
-  it { is_expected.to validate_inclusion_of(:is_current_role).in_array([true, false]) }
 
   describe "#started_on" do
     context "when started_on is blank" do

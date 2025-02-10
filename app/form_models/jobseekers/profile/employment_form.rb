@@ -3,12 +3,10 @@ class Jobseekers::Profile::EmploymentForm < BaseForm
   include DateAttributeAssignment
   include ActiveModel::Attributes
 
-  FIELDS = %i[organisation job_title main_duties jobseeker_profile_id subjects reason_for_leaving].freeze
-
-  def self.fields
-    FIELDS + %i[is_current_role]
-  end
-  attr_accessor(*FIELDS)
+  # def self.fields
+  #   %i[organisation job_title main_duties jobseeker_profile_id subjects reason_for_leaving]
+  # end
+  attr_accessor(:organisation, :job_title, :main_duties, :jobseeker_profile_id, :subjects, :reason_for_leaving)
 
   attr_reader :started_on, :ended_on
 
