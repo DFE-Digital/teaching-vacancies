@@ -586,7 +586,8 @@ RSpec.describe Vacancy do
       end
 
       it "returns an array with trust_uid and school_urns" do
-        expect(vacancy.organisation_urns).to contain_exactly({ trust_uid: "12345", school_urns: %w[100002 100003].sort })
+        expect(vacancy.organisation_urns)
+          .to contain_exactly(trust_uid: "12345", school_urns: contain_exactly("100002", "100003"))
       end
     end
   end
