@@ -12,16 +12,11 @@ class Employment < ApplicationRecord
   # 4. start using new column
   # 5. remove old column
   # add this once column has been backfilled
-  # self.ignored_columns += %i[current_role]
-  # set new current role column from old one
-  before_save do |employment|
-    employment.is_current_role = (employment.current_role == "yes")
-  end
+  self.ignored_columns += %i[current_role]
 
   def duplicate
     self.class.new(
       is_current_role:,
-      current_role:,
       employment_type:,
       ended_on:,
       job_title:,
@@ -36,7 +31,6 @@ class Employment < ApplicationRecord
   end
 
   def current_role?
-    current_role == "yes"
-    # is_current_role
+    is_current_role
   end
 end

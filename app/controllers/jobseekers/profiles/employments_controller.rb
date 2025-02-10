@@ -61,6 +61,6 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   end
 
   def employment_attrs
-    %i[organisation job_title started_on current_role ended_on main_duties subjects reason_for_leaving].freeze
+    %i[organisation job_title started_on is_current_role ended_on main_duties subjects reason_for_leaving].freeze
   end
 end

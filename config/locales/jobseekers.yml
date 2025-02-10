@@ -65,7 +65,7 @@ en:
       survey_text: Take our quick survey about your experience of using Teaching Vacancies
     employments:
       break: Gap in work history
-      current_role: Is this your current role?
+      is_current_role: Is this your current role?
       ended_on: End date
       main_duties: Main duties
       organisation: School or employer
@@ -311,7 +311,7 @@ en:
         review:
           heading: Training and continuing professional development (CPD)
       employments:
-        current_role: This is my current role
+        is_current_role: This is my current role
         destroy:
           success: One role has been deleted
         edit:
@@ -540,7 +540,7 @@ en:
           heading: Declarations
           right_to_work_in_uk: Do you currently have the right to work in the UK?
         employment_history:
-          current_role: Is this your current role?
+          is_current_role: Is this your current role?
           ended_on: End date
           heading: Work history
           main_duties: Main duties
@@ -713,7 +713,7 @@ en:
             hint: For example, if you're looking for a role that's 2 days a week, or Monday to Wednesday.
           hint: |
             Some schools may be open to part-time applicants even if a position is advertised as full time.
-            
+
             Provide your preference so that you can discuss your options with the school.
 
             Select all that apply.

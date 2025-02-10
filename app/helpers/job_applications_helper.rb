@@ -206,7 +206,7 @@ module JobApplicationsHelper
             reason_for_leaving: "Moving out of the area",
             subjects: Faker::Educator.subject,
             started_on: Faker::Date.in_date_period(year: 2016),
-            current_role: "no",
+            current_role: false,
             ended_on: Faker::Date.in_date_period(year: 2018),
           ),
           Employment.new(
@@ -216,7 +216,7 @@ module JobApplicationsHelper
             reason_for_leaving: "No opportunities for career advancement",
             subjects: Faker::Educator.subject,
             started_on: Faker::Date.in_date_period(year: 2016),
-            current_role: "no",
+            current_role: false,
             ended_on: Faker::Date.in_date_period(year: 2018),
           ),
         ],

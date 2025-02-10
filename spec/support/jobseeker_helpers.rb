@@ -27,7 +27,7 @@ module JobseekerHelpers
 
     fill_in "#{form}[started_on(1i)]", with: start_year
     fill_in "#{form}[started_on(2i)]", with: start_month
-    choose "Yes", name: "#{form}[current_role]"
+    choose "Yes", name: "#{form}[is_current_role]"
   end
 
   def fill_in_declarations
@@ -45,7 +45,7 @@ module JobseekerHelpers
     fill_in "Reason for leaving role", with: "Just couldn't take it any longer"
     fill_in "jobseekers_job_application_details_employment_form[started_on(1i)]", with: start_year
     fill_in "jobseekers_job_application_details_employment_form[started_on(2i)]", with: start_month
-    choose "No", name: "jobseekers_job_application_details_employment_form[current_role]"
+    choose "No", name: "jobseekers_job_application_details_employment_form[is_current_role]"
     fill_in "jobseekers_job_application_details_employment_form[ended_on(1i)]", with: end_year
     fill_in "jobseekers_job_application_details_employment_form[ended_on(2i)]", with: end_month
   end

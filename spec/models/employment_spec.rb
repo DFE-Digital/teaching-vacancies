@@ -10,7 +10,7 @@ RSpec.describe Employment do
 
     it "returns a new Employment with the same attributes" do
       %i[
-        current_role
+        is_current_role
         employment_type
         ended_on
         job_title

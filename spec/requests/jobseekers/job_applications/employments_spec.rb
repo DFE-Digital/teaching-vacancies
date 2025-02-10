@@ -47,7 +47,7 @@ RSpec.describe "Job applications employments" do
   describe "changing data" do
     let(:organisation) { "Awesome academy" }
     let(:job_title) { "Number 9" }
-    let(:started_on_month) { "01" }
+    let(:ended_on_month) { "01" }
     let(:started_on_year) { "2001" }
     let(:current_role) { "no" }
     let(:ended_on_year) { "2002" }
@@ -60,7 +60,7 @@ RSpec.describe "Job applications employments" do
           job_title: job_title,
           "started_on(2i)": started_on_month,
           "started_on(1i)": started_on_year,
-          current_role: current_role,
+          is_current_role: current_role,
           "ended_on(2i)": ended_on_month,
           "ended_on(1i)": ended_on_year,
           main_duties: main_duties,
@@ -71,7 +71,7 @@ RSpec.describe "Job applications employments" do
 
     describe "POST #create" do
       context "when the form is valid" do
-        let(:ended_on_month) { "12" }
+        let(:started_on_month) { "12" }
         let(:current_role) { "yes" }
 
         it "creates the employment and redirects to the employment history build step" do
@@ -79,7 +79,6 @@ RSpec.describe "Job applications employments" do
             .to change { Employment.count }.by(1)
 
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
-
           expect(Employment.order(:created_at).last.is_current_role).to be(true)
         end
 
@@ -95,7 +94,7 @@ RSpec.describe "Job applications employments" do
       end
 
       context "when the form is invalid" do
-        let(:ended_on_month) { "15" }
+        let(:started_on_month) { "15" }
 
         it "does not create the employment and renders the new page" do
           expect { post jobseekers_job_application_employments_path(job_application), params: params }
@@ -111,14 +110,14 @@ RSpec.describe "Job applications employments" do
       let(:organisation) { "Awesome academy" }
 
       context "when the form is valid" do
-        let(:ended_on_month) { "12" }
+        let(:started_on_month) { "12" }
+        let(:current_role) { "false" }
 
         it "updates the employment and redirects to the employment history build step" do
           expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }
             .to change { employment.reload.organisation }.from("Cool school").to("Awesome academy")
 
           expect(employment.is_current_role).to be(false)
-
           expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
         end
 
@@ -134,7 +133,7 @@ RSpec.describe "Job applications employments" do
       end
 
       context "when the form is invalid" do
-        let(:ended_on_month) { "15" }
+        let(:started_on_month) { "15" }
 
         it "does not update the employment and renders the edit page" do
           expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }

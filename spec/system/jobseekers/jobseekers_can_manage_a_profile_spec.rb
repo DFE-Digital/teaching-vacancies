@@ -233,13 +233,15 @@ RSpec.describe "Jobseekers can manage their profile" do
                 .to contain_exactly(["Enter a school or other organisation", "#jobseekers-profile-employment-form-organisation-field-error"],
                                     ["Enter your job title", "#jobseekers-profile-employment-form-job-title-field-error"],
                                     ["Enter your main duties for this role", "#jobseekers-profile-employment-form-main-duties-field-error"],
-                                    ["Select yes if this is your current role", "#jobseekers-profile-employment-form-current-role-field-error"],
-                                    ["Enter a date in the correct format", "#jobseekers-profile-employment-form-started-on-field-error"])
+                                    ["Enter your reason for leaving the role", "#jobseekers-profile-employment-form-reason-for-leaving-field-error"],
+                                    ["Select yes if this is your current role", "#jobseekers-profile-employment-form-is-current-role-field-error"],
+                                    ["Enter a date in the correct format", "#jobseekers-profile-employment-form-started-on-field-error"],
+                                    ["Enter a date in the correct format", "#jobseekers-profile-employment-form-ended-on-field-error"])
             end
           end
 
           it "makes reason mandatory when non current" do
-            choose "No", name: "jobseekers_profile_employment_form[current_role]"
+            choose "No", name: "jobseekers_profile_employment_form[is_current_role]"
             click_on I18n.t("buttons.save_and_continue")
 
             expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
@@ -992,7 +994,7 @@ RSpec.describe "Jobseekers can manage their profile" do
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: "Number 9"
     fill_in "jobseekers_profile_employment_form[started_on(1i)]", with: "1991"
     fill_in "jobseekers_profile_employment_form[started_on(2i)]", with: "09"
-    choose "No", name: "jobseekers_profile_employment_form[current_role]"
+    choose "No", name: "jobseekers_profile_employment_form[is_current_role]"
     fill_in "jobseekers_profile_employment_form[ended_on(1i)]", with: (Date.today - 1.year).year
     fill_in "jobseekers_profile_employment_form[ended_on(2i)]", with: (Date.today - 1.year).month
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: "Goals and that"

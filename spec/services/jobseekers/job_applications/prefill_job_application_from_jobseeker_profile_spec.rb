@@ -25,7 +25,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerPr
   end
 
   it "copies employments from jobseeker profile" do
-    attributes_to_copy = %i[organisation job_title subjects current_role main_duties started_on ended_on]
+    attributes_to_copy = %i[organisation job_title subjects is_current_role main_duties started_on ended_on]
 
     expect(subject.employments.map { |employment| employment.slice(*attributes_to_copy) })
       .to eq(jobseeker_profile.employments.map { |employment| employment.slice(*attributes_to_copy) })
