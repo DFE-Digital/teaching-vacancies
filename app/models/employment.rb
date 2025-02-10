@@ -36,7 +36,7 @@ class Employment < ApplicationRecord
   end
 
   def current_role?
-    current_role.present? && current_role != "no"
+    current_role == "yes"
     # is_current_role
   end
 end
