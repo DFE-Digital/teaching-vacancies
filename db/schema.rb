@@ -9,7 +9,8 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema[7.2].define(version: 2025_02_03_165018) do
+
+ActiveRecord::Schema[7.2].define(version: 2025_02_10_105445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -84,6 +85,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_165018) do
     t.text "reason_for_break", default: ""
     t.uuid "jobseeker_profile_id"
     t.text "reason_for_leaving"
+    t.boolean "is_current_role", default: false, null: false
     t.index ["job_application_id"], name: "index_employments_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_employments_on_jobseeker_profile_id"
   end
@@ -326,8 +328,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_03_165018) do
     t.datetime "updated_at", null: false
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
-    t.string "govuk_one_login_id"
     t.text "last_sign_in_ip_ciphertext"
+    t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
