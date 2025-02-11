@@ -9,11 +9,7 @@ class Subscription < ApplicationRecord
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
 
   FILTERS = {
-    teaching_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
-    support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
-    # support_job_roles used to be called both of these in the past, and there are still active subscriptions with this name
-    teaching_support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
-    non_teaching_support_job_roles: ->(vacancy, value) { vacancy.job_roles.intersect?(value) },
+    job_roles: ->(vacancy, value) { value.any? { |v| vacancy.job_roles.intersect?(v) } },
 
     visa_sponsorship_availability: ->(vacancy, value) { value.include? vacancy.visa_sponsorship_available.to_s },
     ect_statuses: ->(vacancy, value) { value.include?(vacancy.ect_status) },
@@ -27,6 +23,9 @@ class Subscription < ApplicationRecord
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
     keyword: ->(vacancy, value) { vacancy.searchable_content.include? value.downcase.strip },
   }.freeze
+
+  # support_job_roles used to be called teaching_support_job_roles and non_teaching_support_job_roles in the past, and there are still active subscriptions with this name
+  JOB_ROLE_ALIASES = %i[teaching_job_roles support_job_roles teaching_support_job_roles non_teaching_support_job_roles].freeze
 
   class << self
     def working_pattern_match?(vacancy, working_patterns)
@@ -87,8 +86,15 @@ class Subscription < ApplicationRecord
     # ignore legacy sorting criteria - legacy job_title is too specific and will typically filter everything
     criteria = search_criteria.symbolize_keys.except(:jobs_sort, :job_title, :minimum_salary)
 
+    # as there is just 1 'job_roles' field in TV but multiple search criteria, treat them all as aliases of each other
+    # and convert them into an array matcher using any?
+    if JOB_ROLE_ALIASES.any? { |job_role_alias| criteria.key?(job_role_alias) }
+      job_roles = criteria.slice(*JOB_ROLE_ALIASES).values
+      criteria.merge!(job_roles: job_roles)
+    end
+
     vacancies = scope.select do |vacancy|
-      criteria.except(:location, :radius).all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
+      criteria.except(*JOB_ROLE_ALIASES, :location, :radius).all? { |criterion, value| FILTERS.fetch(criterion).call(vacancy, value) }
     end
     self.class.handle_location(vacancies, criteria)
   end
