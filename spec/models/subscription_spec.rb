@@ -224,13 +224,26 @@ RSpec.describe Subscription do
       context "with teaching job roles" do
         before do
           create(:vacancy, :published_slugged, contact_number: "teach1", job_roles: %w[teacher], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
+          create(:vacancy, :published_slugged, contact_number: "itsupp1", job_roles: %w[it_support], subjects: %w[English], phases: %w[secondary], working_patterns: %w[full_time])
         end
 
         let(:teacher_vacancy) { Vacancy.find_by!(contact_number: "teach1") }
-        let(:subscription) { create(:subscription, teaching_job_roles: %w[teacher], frequency: :daily) }
+        let(:it_vacancy) { Vacancy.find_by!(contact_number: "itsupp1") }
 
-        it "only finds the teaching job" do
-          expect(vacancies).to eq([teacher_vacancy])
+        context "with single filter" do
+          let(:subscription) { create(:subscription, teaching_job_roles: %w[teacher], frequency: :daily) }
+
+          it "only finds the teaching job" do
+            expect(vacancies).to eq([teacher_vacancy])
+          end
+        end
+
+        context "with multiple filters" do
+          let(:subscription) { create(:subscription, teaching_job_roles: %w[teacher], support_job_roles: %w[it_support], frequency: :daily) }
+
+          it "finds both jobs" do
+            expect(vacancies).to contain_exactly(teacher_vacancy, it_vacancy)
+          end
         end
       end
 

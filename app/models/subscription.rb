@@ -90,7 +90,7 @@ class Subscription < ApplicationRecord
     # and convert them into an array matcher using any?
     if JOB_ROLE_ALIASES.any? { |job_role_alias| criteria.key?(job_role_alias) }
       job_roles = criteria.slice(*JOB_ROLE_ALIASES).values
-      criteria.merge!(job_roles: job_roles)
+      criteria[:job_roles] = job_roles
     end
 
     vacancies = scope.select do |vacancy|
