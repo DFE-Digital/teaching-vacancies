@@ -44,73 +44,104 @@ RSpec.describe "Job applications employments" do
     end
   end
 
-  describe "POST #create" do
-    let(:params) { { jobseekers_job_application_details_employment_form: { organisation: organisation } } }
+  describe "changing data" do
     let(:organisation) { "Awesome academy" }
+    let(:job_title) { "Number 9" }
+    let(:started_on_month) { "01" }
+    let(:started_on_year) { "2001" }
+    let(:current_role) { "no" }
+    let(:ended_on_year) { "2002" }
+    let(:main_duties) { "Scoring goals" }
+    let(:reason_for_leaving) { "relocating" }
+    let(:params) do
+      {
+        jobseekers_job_application_details_employment_form: {
+          organisation: organisation,
+          job_title: job_title,
+          "started_on(2i)": started_on_month,
+          "started_on(1i)": started_on_year,
+          current_role: current_role,
+          "ended_on(2i)": ended_on_month,
+          "ended_on(1i)": ended_on_year,
+          main_duties: main_duties,
+          reason_for_leaving: reason_for_leaving,
+        },
+      }
+    end
 
-    context "when the form is valid" do
-      before { allow_any_instance_of(Jobseekers::JobApplication::Details::EmploymentForm).to receive(:valid?).and_return(true) }
+    describe "POST #create" do
+      context "when the form is valid" do
+        let(:ended_on_month) { "12" }
+        let(:current_role) { "yes" }
 
-      it "creates the employment and redirects to the employment history build step" do
-        expect { post jobseekers_job_application_employments_path(job_application), params: params }
-          .to change { Employment.count }.by(1)
+        it "creates the employment and redirects to the employment history build step" do
+          expect { post jobseekers_job_application_employments_path(job_application), params: params }
+            .to change { Employment.count }.by(1)
 
-        expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
+          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
+
+          expect(Employment.order(:created_at).last.is_current_role).to be(true)
+        end
+
+        context "when the job application status is not draft" do
+          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+
+          it "returns not_found" do
+            post jobseekers_job_application_employments_path(job_application), params: params
+
+            expect(response).to have_http_status(:not_found)
+          end
+        end
       end
 
-      context "when the job application status is not draft" do
-        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+      context "when the form is invalid" do
+        let(:ended_on_month) { "15" }
 
-        it "returns not_found" do
-          post jobseekers_job_application_employments_path(job_application), params: params
+        it "does not create the employment and renders the new page" do
+          expect { post jobseekers_job_application_employments_path(job_application), params: params }
+            .to(not_change { Employment.count })
 
-          expect(response).to have_http_status(:not_found)
+          expect(response).to render_template(:new)
         end
       end
     end
 
-    context "when the form is invalid" do
-      it "does not create the employment and renders the new page" do
-        expect { post jobseekers_job_application_employments_path(job_application), params: params }
-          .to(not_change { Employment.count })
+    describe "PATCH #update" do
+      let!(:employment) { create(:employment, :current_role, job_application: job_application, organisation: "Cool school") }
+      let(:organisation) { "Awesome academy" }
 
-        expect(response).to render_template(:new)
-      end
-    end
-  end
+      context "when the form is valid" do
+        let(:ended_on_month) { "12" }
 
-  describe "PATCH #update" do
-    let!(:employment) { create(:employment, job_application: job_application, organisation: "Cool school") }
-    let(:params) { { jobseekers_job_application_details_employment_form: { organisation: organisation } } }
-    let(:organisation) { "Awesome academy" }
+        it "updates the employment and redirects to the employment history build step" do
+          expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }
+            .to change { employment.reload.organisation }.from("Cool school").to("Awesome academy")
 
-    context "when the form is valid" do
-      before { allow_any_instance_of(Jobseekers::JobApplication::Details::EmploymentForm).to receive(:valid?).and_return(true) }
+          expect(employment.is_current_role).to be(false)
 
-      it "updates the employment and redirects to the employment history build step" do
-        expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }
-          .to change { employment.reload.organisation }.from("Cool school").to("Awesome academy")
+          expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
+        end
 
-        expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :employment_history))
-      end
+        context "when the job application status is not draft" do
+          let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
-      context "when the job application status is not draft" do
-        let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
+          it "returns not_found" do
+            patch jobseekers_job_application_employment_path(job_application, employment), params: params
 
-        it "returns not_found" do
-          patch jobseekers_job_application_employment_path(job_application, employment), params: params
-
-          expect(response).to have_http_status(:not_found)
+            expect(response).to have_http_status(:not_found)
+          end
         end
       end
-    end
 
-    context "when the form is invalid" do
-      it "does not update the employment and renders the edit page" do
-        expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }
-          .to(not_change { employment.reload.organisation })
+      context "when the form is invalid" do
+        let(:ended_on_month) { "15" }
 
-        expect(response).to render_template(:edit)
+        it "does not update the employment and renders the edit page" do
+          expect { patch jobseekers_job_application_employment_path(job_application, employment), params: params }
+            .to(not_change { employment.reload.organisation })
+
+          expect(response).to render_template(:edit)
+        end
       end
     end
   end

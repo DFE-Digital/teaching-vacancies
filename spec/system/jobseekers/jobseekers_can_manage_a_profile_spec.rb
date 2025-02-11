@@ -230,13 +230,11 @@ RSpec.describe "Jobseekers can manage their profile" do
 
             within "ul.govuk-list.govuk-error-summary__list" do
               expect(all("a").map { |l| [l.text, l[:href]] })
-                .to eq([
-                  ["Enter a school or other organisation", "#jobseekers-profile-employment-form-organisation-field-error"],
-                  ["Enter your job title", "#jobseekers-profile-employment-form-job-title-field-error"],
-                  ["Enter your main duties for this role", "#jobseekers-profile-employment-form-main-duties-field-error"],
-                  ["Enter a date in the correct format", "#jobseekers-profile-employment-form-started-on-field-error"],
-                  ["Select yes if this is your current role", "#jobseekers-profile-employment-form-current-role-field-error"],
-                ])
+                .to contain_exactly(["Enter a school or other organisation", "#jobseekers-profile-employment-form-organisation-field-error"],
+                                    ["Enter your job title", "#jobseekers-profile-employment-form-job-title-field-error"],
+                                    ["Enter your main duties for this role", "#jobseekers-profile-employment-form-main-duties-field-error"],
+                                    ["Select yes if this is your current role", "#jobseekers-profile-employment-form-current-role-field-error"],
+                                    ["Enter a date in the correct format", "#jobseekers-profile-employment-form-started-on-field-error"])
             end
           end
 
@@ -271,7 +269,7 @@ RSpec.describe "Jobseekers can manage their profile" do
               expect(page).to have_content(employment.organisation)
               expect(page).to have_content(employment.job_title)
               expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
-              expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year)) unless employment.current_role == "yes"
+              expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year)) unless employment.current_role?
               expect(page).to have_content(employment.main_duties)
               expect(page).to have_content(employment.reason_for_leaving)
             end
@@ -982,13 +980,7 @@ RSpec.describe "Jobseekers can manage their profile" do
   def add_jobseeker_profile_employment
     click_link("Add roles")
 
-    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.organisation"), with: "Arsenal"
-    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: "Number 9"
-    fill_in "jobseekers_profile_employment_form[started_on(1i)]", with: "1991"
-    fill_in "jobseekers_profile_employment_form[started_on(2i)]", with: "09"
-    choose "Yes", name: "jobseekers_profile_employment_form[current_role]"
-    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: "Goals and that"
-    fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: "I hate it there"
+    fill_in_current_role(form: "jobseekers_profile_employment_form")
 
     click_on I18n.t("buttons.save_and_continue")
   end

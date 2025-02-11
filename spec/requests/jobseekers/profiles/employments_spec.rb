@@ -38,8 +38,8 @@ RSpec.describe "Jobseeker profile employments" do
   end
 
   describe "GET #edit" do
-    let(:profile) { create(:jobseeker_profile) }
-    let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile_id: profile.id) }
+    let(:profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+    let!(:employment) { create(:employment, :jobseeker_profile_employment, jobseeker_profile: profile) }
 
     it "renders the edit page" do
       expect(get(edit_jobseekers_profile_work_history_path(employment))).to render_template(:edit)
@@ -48,16 +48,20 @@ RSpec.describe "Jobseeker profile employments" do
 
   describe "POST #create" do
     context "when the form is valid" do
+      let(:current_role) { "yes" }
+
       it "creates the employment and redirects to the review page" do
         expect { post jobseekers_profile_work_history_index_path, params: params }
           .to change { Employment.count }.by(1)
 
         expect(response).to redirect_to(review_jobseekers_profile_work_history_index_path)
+
+        expect(Employment.order(:created_at).last.is_current_role).to be(true)
       end
     end
 
     context "when the form is invalid" do
-      let(:organisation) { nil }
+      let(:started_on_month) { 15 }
 
       it "does not create the employment and renders the new page" do
         expect { post jobseekers_profile_work_history_index_path, params: params }
