@@ -159,6 +159,12 @@ module JobApplicationsHelper
                        ))
   end
 
+  def readable_working_patterns(job_application)
+    job_application.working_patterns.map { |working_pattern|
+      JobApplication.human_attribute_name("working_patterns.#{working_pattern}").downcase
+    }.join(", ").capitalize
+  end
+
   # These are only used to generate example data
   POSSIBLE_DEGREE_GRADES = %w[2.1 2.2 Honours].freeze
   POSSIBLE_OTHER_GRADES = %w[Pass Merit Distinction].freeze

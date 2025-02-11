@@ -36,6 +36,9 @@
           = f.govuk_text_field :national_insurance_number, label: { size: "s" }, width: "one-half"
         = f.govuk_radio_button :has_ni_number, :no
 
+      = f.govuk_collection_check_boxes :working_patterns, form.working_pattern_options, :first, :last
+      = f.govuk_text_area :working_pattern_details, label: { size: "s" }, max_words: 50
+
       = f.govuk_collection_radio_buttons :personal_details_section_completed, %w[true false], :to_s
 
       = f.govuk_submit job_application_build_submit_button_text do

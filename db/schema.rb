@@ -9,7 +9,7 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_03_165018) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -260,6 +260,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_31_154240) do
     t.string "baptism_address_ciphertext"
     t.string "baptism_date_ciphertext"
     t.string "ethos_and_aims_ciphertext"
+    t.integer "working_patterns", array: true
+    t.string "working_pattern_details"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end

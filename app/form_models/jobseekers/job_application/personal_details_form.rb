@@ -15,13 +15,23 @@ module Jobseekers
         postcode
         street_address
         right_to_work_in_uk
+        working_patterns
+        working_pattern_details
       ].freeze
+
+      WORKING_PATTERNS = %i[full_time part_time job_share].freeze
 
       attr_accessor(*(FIELDS + [:has_ni_number]))
       attr_writer :national_insurance_number
 
+      attribute :working_patterns, array: true, default: []
+
       def national_insurance_number
         @national_insurance_number if has_ni_number == "yes"
+      end
+
+      def working_pattern_options
+        WORKING_PATTERNS.to_h { |opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{opt}")] }
       end
 
       class << self
@@ -39,6 +49,11 @@ module Jobseekers
           }.merge(completed_attrs(model, :personal_details))
           super.merge(new_attrs)
         end
+
+        def fields
+          # ensure that we can accept an array for working_patterns
+          super + [{ working_patterns: [] }] - [:working_patterns]
+        end
       end
 
       validates :city, :country, :email_address, :first_name, :last_name,
@@ -51,8 +66,16 @@ module Jobseekers
       validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,13}\z/ }, if: -> { personal_details_section_completed }
       validates :email_address, email_address: true
       validates :right_to_work_in_uk, inclusion: { in: %w[yes no] }, if: -> { personal_details_section_completed }
+      validates :working_patterns, presence: true
+      validate :working_pattern_details_does_not_exceed_maximum_words
 
       completed_attribute(:personal_details)
+
+      def working_pattern_details_does_not_exceed_maximum_words
+        if number_of_words_exceeds_permitted_length?(50, working_pattern_details)
+          errors.add(:working_pattern_details, :length)
+        end
+      end
     end
   end
 end

@@ -55,6 +55,7 @@ class JobApplication < ApplicationRecord
 
   # If you want to add a status, be sure to add a `status_at` column to the `job_applications` table
   enum :status, { draft: 0, submitted: 1, reviewed: 2, shortlisted: 3, unsuccessful: 4, withdrawn: 5, interviewing: 6 }, default: 0
+  array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
 
   RELIGIOUS_REFERENCE_TYPES = { referee: 1, baptism_certificate: 2, baptism_date: 3, no_referee: 4 }.freeze
 

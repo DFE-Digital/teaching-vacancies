@@ -21,6 +21,8 @@ FactoryBot.define do
     phone_number { "01234 567890" }
     teacher_reference_number { "1234567" }
     national_insurance_number { "QQ 12 34 56 C" }
+    working_patterns { %w[part_time] }
+    working_pattern_details { "I don't do mornings" }
 
     # Professional statement
     qualified_teacher_status { "yes" }
