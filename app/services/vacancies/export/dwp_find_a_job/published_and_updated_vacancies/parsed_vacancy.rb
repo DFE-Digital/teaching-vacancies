@@ -12,6 +12,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     STATUS_PART_TIME_ID = 2
     TYPE_PERMANENT_ID = 1
     TYPE_CONTRACT_ID = 2
+    TYPE_TEMPORARY_ID = 3
 
     attr_reader :vacancy
 
@@ -67,6 +68,8 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
         TYPE_PERMANENT_ID
       when "fixed_term"
         TYPE_CONTRACT_ID
+      when "casual"
+        TYPE_TEMPORARY_ID
       end
     end
 
