@@ -12,6 +12,13 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     STATUS_PART_TIME_ID = 2
     TYPE_PERMANENT_ID = 1
     TYPE_CONTRACT_ID = 2
+    TYPE_TEMPORARY_ID = 3
+
+    CONTRACT_TYPE_MAPPING = {
+      "permanent" => TYPE_PERMANENT_ID,
+      "fixed_term" => TYPE_CONTRACT_ID,
+      "casual" => TYPE_TEMPORARY_ID,
+    }.freeze
 
     attr_reader :vacancy
 
@@ -62,12 +69,8 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     end
 
     def type_id
-      case vacancy.contract_type
-      when "permanent"
-        TYPE_PERMANENT_ID
-      when "fixed_term"
-        TYPE_CONTRACT_ID
-      end
+      # using fetch here so that an error is raised if a new contract_type is added to vacancies but not mapped to a DWP VacancyType here.
+      CONTRACT_TYPE_MAPPING.fetch(vacancy.contract_type)
     end
 
     private
