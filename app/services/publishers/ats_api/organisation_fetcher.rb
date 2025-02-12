@@ -6,19 +6,39 @@ module Publishers
       def fetch_organisations(school_params)
         return [] unless school_params
 
-        trust_uid = school_params[:trust_uid]
-        school_urns = school_params[:school_urns]
+        trust = find_trust(school_params[:trust_uid])
+        schools = find_schools(trust, school_params[:school_urns])
 
-        # When having both trust and schools, only return the schools that are in the trust if any.
-        # Otherwise, return the trust itself.
-        multi_academy_trust = SchoolGroup.trusts.find_by(uid: trust_uid)
-        schools = ::Organisation.where(urn: school_urns) if school_urns.present?
+        validate_organisations!(trust, schools, school_params[:school_urns])
 
-        raise InvalidOrganisationError, "No valid organisations found" if multi_academy_trust.blank? && schools.blank?
-        return schools.to_a if multi_academy_trust.blank?
-        return Array(multi_academy_trust) if schools.blank?
+        schools.presence&.to_a || [trust]
+      end
 
-        multi_academy_trust.schools.where(urn: school_urns).order(:created_at).to_a.presence || Array(multi_academy_trust)
+      private
+
+      def find_trust(trust_uid)
+        SchoolGroup.trusts.find_by(uid: trust_uid) if trust_uid.present?
+      end
+
+      def find_schools(trust, school_urns)
+        return if school_urns.blank?
+
+        if trust
+          trust.schools.where(urn: school_urns)
+        else
+          ::Organisation.where(urn: school_urns)
+        end
+      end
+
+      def validate_organisations!(trust, schools, school_urns)
+        if no_valid_organisations?(trust, schools, school_urns)
+          raise InvalidOrganisationError, "No valid organisations found"
+        end
+      end
+
+      def no_valid_organisations?(trust, schools, school_urns)
+        (schools.blank? && trust.blank?) ||
+          (trust.present? && school_urns.present? && schools.blank?)
       end
     end
   end
