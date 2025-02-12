@@ -4,8 +4,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   before_action :show_publisher_preferences, only: %i[index]
   before_action :redirect_to_show_publisher_profile_incomplete, only: %i[index], if: -> { signing_in? }, unless: -> { current_organisation.profile_complete? }
-  # TODO: Temporarily disabled for TEVA-4099
-  # before_action :redirect_to_new_features_page, only: %i[show]
 
   helper_method :vacancy_statistics_form
 
@@ -75,7 +73,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def show_application_feature_reminder_page?
-    return false if session[:visited_application_feature_reminder_page] || session[:visited_new_features_page] || current_organisation.local_authority?
+    return false if session[:visited_application_feature_reminder_page] || session[:visited_new_features_page]
 
     Vacancy.published.where(
       publisher_id: current_publisher.id,
@@ -98,25 +96,6 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     else
       @vacancy_statistics_form ||= Publishers::VacancyStatisticsForm.new
     end
-  end
-
-  def redirect_to_new_features_page
-    redirect_to publishers_new_features_path if session[:visited_new_features_page].nil? && show_new_features_page?
-  end
-
-  def show_new_features_page?
-    return false if current_organisation.local_authority?
-    return false if publisher_has_used_feature?
-
-    if (dismissed_at = current_publisher.dismissed_new_features_page_at)
-      dismissed_at < Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT
-    else
-      true
-    end
-  end
-
-  def publisher_has_used_feature?
-    current_publisher.vacancies.where(enable_job_applications: true).with_job_roles("education_support").any?
   end
 
   def statistics_params
