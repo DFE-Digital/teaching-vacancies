@@ -65,7 +65,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
       case vacancy.contract_type
       when "permanent"
         TYPE_PERMANENT_ID
-      when "fixed_term", "parental_leave_cover"
+      when "fixed_term"
         TYPE_CONTRACT_ID
       end
     end

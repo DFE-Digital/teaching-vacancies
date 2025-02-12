@@ -310,11 +310,5 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated::ParsedVacanc
 
       expect(parsed.type_id).to eq(described_class::TYPE_CONTRACT_ID)
     end
-
-    it "returns the contract type id if the vacancy contract type is parental_leave_cover" do
-      allow(vacancy).to receive(:contract_type).and_return("parental_leave_cover")
-
-      expect(parsed.type_id).to eq(described_class::TYPE_CONTRACT_ID)
-    end
   end
 end
