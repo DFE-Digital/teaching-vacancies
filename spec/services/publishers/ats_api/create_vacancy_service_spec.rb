@@ -111,7 +111,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         {
           status: :conflict,
           json: {
-            error: "A vacancy with the provided external reference already exists",
+            error: "A vacancy with the provided data already exists",
             link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
           },
         }
@@ -167,6 +167,31 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
 
       it "returns a validation error response" do
+        expect(create_vacancy_service).to eq(expected_response)
+      end
+    end
+
+    context "when a vacancy with the same job_title, expired_at, and organisations exists" do
+      let!(:existing_vacancy) do
+        create(
+          :vacancy,
+          job_title: job_title,
+          expires_at: params[:expires_at],
+          organisations: [school],
+        )
+      end
+
+      let(:expected_response) do
+        {
+          status: :conflict,
+          json: {
+            error: "A vacancy with the provided data already exists",
+            link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
+          },
+        }
+      end
+
+      it "returns a conflict response" do
         expect(create_vacancy_service).to eq(expected_response)
       end
     end

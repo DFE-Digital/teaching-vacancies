@@ -7,7 +7,7 @@ module Publishers
         def call(params)
           vacancy = Vacancy.new(sanitised_params(params))
 
-          if (conflict = conflict_vacancy(vacancy))
+          if (conflict = conflict_vacancy(vacancy) || duplicate_vacancy(vacancy))
             return conflict_response(conflict)
           end
 
@@ -34,11 +34,19 @@ module Publishers
           )
         end
 
+        def duplicate_vacancy(vacancy)
+          Vacancy.joins(:organisations).where(
+            job_title: vacancy.job_title,
+            expires_at: vacancy.expires_at,
+            organisations: { id: vacancy.organisation_ids },
+          ).distinct.first
+        end
+
         def conflict_response(conflict_vacancy)
           {
             status: :conflict,
             json: {
-              error: "A vacancy with the provided external reference already exists",
+              error: "A vacancy with the provided data already exists",
               link: Rails.application.routes.url_helpers.vacancy_url(conflict_vacancy),
             },
           }
