@@ -17,7 +17,7 @@ module Vacancies::Export::DwpFindAJob::PublishedAndUpdatedVacancies
     CONTRACT_TYPE_MAPPING = {
       "permanent" => TYPE_PERMANENT_ID,
       "fixed_term" => TYPE_CONTRACT_ID,
-      "casual" => TYPE_TEMPORARY_ID
+      "casual" => TYPE_TEMPORARY_ID,
     }.freeze
 
     attr_reader :vacancy
