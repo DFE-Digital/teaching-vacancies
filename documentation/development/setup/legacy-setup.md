@@ -8,7 +8,7 @@
 
 Welcome! :tada: :fireworks: :tiger:
 
-By now you should be [onboarded](/documentation/onboarding.md).
+By now you should be [onboarded](/documentation/team/onboarding.md).
 
 The first thing to do is to install the required development tools. If you are on a Mac, this [script](https://github.com/thoughtbot/laptop) will install Homebrew, Git, asdf-vm, Ruby, Bundler, Node.js, npm, Yarn, Postgres, Redis and other useful utilities.
 
@@ -98,7 +98,7 @@ Try [seeding the database](https://github.com/DFE-Digital/teaching-vacancies#see
 
 ### Getting production-like data for local development
 
-To get sanitised production-like data for local development, first log in to AWS with the ReadOnly role. To do so, follow the instructions here: [AWS Login](/documentation/aws-roles-and-cli-tools.md#log-in-to-the-aws-console-with-aws-vault).
+To get sanitised production-like data for local development, first log in to AWS with the ReadOnly role. To do so, follow the instructions here: [AWS Login](/documentation/operations/infrastructure/aws-roles-and-cli-tools.md#log-in-to-the-aws-console-with-aws-vault).
 
 Once logged in, go to S3 >  530003481352-tv-db-backups > sanitised. Then click the checkbox next to the backup you want (the names of the backups will include dates) and click "Download".
 

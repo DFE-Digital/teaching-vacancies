@@ -13,7 +13,7 @@ Teaching Vacancies is hosted on [Azure Cloud Infrastructure Platform (CIP)](http
 
 Ephemeral review apps that are created when a PR is created on GitHub, and destroyed when the PR is merged. These have URLs which contain the Pull Request number, like `https://teaching-vacancies-review-pr-6441.test.teacherservices.cloud`
 
-The QA and Staging environments have [integration with DSI](./dsi-integration.md).
+The QA and Staging environments have [integration with DSI](/documentation/service/users/dsi-integration.md).
 
 The Staging environment is a pre-production environment, to identify issues with code before it's promoted to Production.
 On merging a Pull Request, the same code is deployed first to Staging, and after a successful smoke test, to Production.
@@ -21,7 +21,7 @@ On merging a Pull Request, the same code is deployed first to Staging, and after
 QA environment contains the same code branch as Staging and Production environments, and is used by multiple members of the team for general testing about a production-like environment.
 
 ## Deployments
-Detailed information about our deployment process in [this link](./deployments.md).
+Detailed information about our deployment process in [this link](/documentation/operations/deployment/deployments.md).
 
 ## Azure Kubernetes Service (AKS) organisation and permission model
 
@@ -47,7 +47,7 @@ Teaching Vacancies application environments are hosted in the following clusters
 | Production      | s189-teacher-services-cloud-production | tv-production        |
 
 
-During [onboarding](./onboarding.md) you will have been granted access to selected Azure resources and roles.
+During [onboarding](/documentation/team/onboarding.md) you will have been granted access to selected Azure resources and roles.
 
 By default, you will have access to TV Kubernetes namespaces/envs/apps hosted in the `s189-teacher-services-cloud-test` cluster.
 
@@ -234,7 +234,7 @@ on:
       - dev
       - <env>
 ```
-- Optionally, [refresh the database](database-backups.md) with a sanitised copy of the production data
+- Optionally, [refresh the database](/documentation/operations/maintenance/database-backups.md) with a sanitised copy of the production data
 
 
 

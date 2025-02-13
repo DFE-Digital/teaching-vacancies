@@ -1,6 +1,6 @@
 # Authentication
 
-Hiring staff authenticate via the [DfE Sign-in](https://services.signin.education.gov.uk/) system. When [onboarded](./onboarding.md) you are associated with more than one organisation.
+Hiring staff authenticate via the [DfE Sign-in](https://services.signin.education.gov.uk/) system. When [onboarded](/documentation/team/onboarding.md) you are associated with more than one organisation.
 
 Different environments talk to different DfE Sign-in environments:
 
@@ -85,7 +85,7 @@ Changing the environment variable within the `<env>_app_env.yml` follows the sta
 #### Toggling Authentication Fallback Using manual steps
 
 The following method is included for completeness, but should be considered as a "panic mode" option only.
-It requires `SpaceDeveloper` permission on the `s189-teacher-services-cloud-production` subscription, and only persists until the next [Automated Deployment to staging and production](/deployments.md#build-and-deploy-to-staging-and-production---github-actions)
+It requires `SpaceDeveloper` permission on the `s189-teacher-services-cloud-production` subscription, and only persists until the next [Automated Deployment to staging and production](/documentation/operations/deployment/deployments.md#build-and-deploy-to-staging-and-production---github-actions)
 
 - Block all deployments to `production` by requesting in the Slack channel `#tv_devs`
 - Log in in the [Azure Portal](https://portal.azure.com.mcas.ms/) and request access to the `s189-Contributor and Key Vault editor` role in the `s189-teacher-services-cloud-production` subscription.

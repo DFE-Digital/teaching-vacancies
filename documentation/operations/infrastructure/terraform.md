@@ -4,7 +4,7 @@
 In order to run the command you first have to login via ```az login``` (or ```az login --use-device-code``` to authenticate in a non-default browser)
 
 You will then need to assume the `Deployments` role. If you are using
-[aws-vault](./aws-roles-and-cli-tools.md), this is as easy as running the make command through
+[aws-vault](/documentation/operations/infrastructure/aws-roles-and-cli-tools.md), this is as easy as running the make command through
 `aws-vault exec`:
 
 ```
@@ -31,7 +31,7 @@ Staging
 make tag=47fd1475376bbfa16a773693133569b794408995 staging terraform-app-plan
 ```
 
-To run the commands below, you will first need to assume the `Administrator` role with [aws-vault](../aws-roles-and-cli-tools.md)
+To run the commands below, you will first need to assume the `Administrator` role with [aws-vault](/documentation/operations/infrastructure/aws-roles-and-cli-tools.md)
 
 Common
 ```
