@@ -1,21 +1,21 @@
-- r.with_section :professional_status do |s|
-  - s.with_row do |row|
+- r.with_section :professional_status do |summary_list|
+  - summary_list.with_row do |row|
     - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status")
     - row.with_value text: job_application_qualified_teacher_status_info(job_application)
 
-  - s.with_row do |row|
+  - summary_list.with_row do |row|
     - row.with_key text: t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review")
     - row.with_value text: job_application_jobseeker_profile_info(job_application)
 
-  - s.with_row do |row|
+  - summary_list.with_row do |row|
     - row.with_key text: t("helpers.label.jobseekers_job_application_professional_status_form.qts_age_range_and_subject")
     - row.with_value text: job_application.qts_age_range_and_subject
 
-  - s.with_row do |row|
+  - summary_list.with_row do |row|
     - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
     - row.with_value text: job_application.statutory_induction_complete.humanize
 
   - if job_application.statutory_induction_complete_details.present? && job_application.statutory_induction_complete == "no"
-    - s.with_row do |row|
+    - summary_list.with_row do |row|
       - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete_details")
       - row.with_value text: job_application.statutory_induction_complete_details

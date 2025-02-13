@@ -4,7 +4,7 @@
   nav.govuk-breadcrumbs aria-label="Breadcrumbs"
   = govuk_back_link text: t("buttons.back"), href: jobseekers_profile_path
 
-= form_for form, url: jobseekers_profile_qualified_teacher_status_path, method: "patch" do |f|
+= form_for @form, url: jobseekers_profile_qualified_teacher_status_path, method: "patch" do |f|
   = f.govuk_error_summary
 
   = render "qts_fields", f: f
