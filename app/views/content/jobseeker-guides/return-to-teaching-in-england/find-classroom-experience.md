@@ -1,0 +1,52 @@
+---
+order: 100
+title: Find classroom experience
+meta_description: Find out how to find classroom experience to help you return to teaching.
+date_posted: 06/12/2023
+category_tags: apply
+card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience.jpg"
+---
+
+Schools will expect you to reflect on your recent school experience when you apply for a teaching role. 
+
+If you’re returning to teach, each school will have different requirements for your experience.
+
+## Contact a school
+
+The [Get information About Schools site](https://get-information-schools.service.gov.uk/?) has a list of all the educational establishments in England and Wales. You can filter your search by education phase and location to find a suitable school.
+
+You may need to contact several schools in your area to arrange school experience
+
+## Find experience using a subject organisation
+
+Subject organisations can help you find classroom experience in a specific subject.
+
+### Maths Hubs
+
+[Maths Hubs](https://www.ncetm.org.uk/maths-hubs/?) is a program that connects mathematics professionals through a network of 40 hubs across the country. Each hub is led by an outstanding local school or college.
+
+### Institute of Physics
+
+[Institute of Physics](https://www.iop.org/) is a support network for teachers and pupils of physics.
+
+### STEM Ambassadors
+
+[STEM Ambassadors](https://www.stem.org.uk/stem-ambassadors) inspire young people to enjoy science, technology, engineering and maths.
+
+## Find a job at a local school
+
+You could consider applying for other roles at a local school to gain classroom experience.
+
+### Teaching assistant (TA)
+
+TAs help teachers in primary or secondary schools, working one-on-one or with small groups of pupils. 
+
+TAs mainly support pupils in the classroom but may also take them to an a nearby room or area for activities such as reading sessions or booster support for struggling students.
+
+[Find teaching assistant roles](https://teaching-vacancies.service.gov.uk/jobs?ect_statuses%5B%5D=&keyword=&location=&organisation_slug=&organisation_types%5B%5D=&phases%5B%5D=&previous_keyword=&quick_apply%5B%5D=&radius=0&school_types%5B%5D=&sort_by=publish_on&sort_by=publish_on&subjects%5B%5D=&support_job_roles%5B%5D=&support_job_roles%5B%5D=teaching_assistant&teaching_job_roles%5B%5D=&visa_sponsorship_availability%5B%5D=&working_patterns%5B%5D=)
+
+### Cover supervisor
+
+Cover supervisors teach planned lessons and tasks on a flexible schedule. They usually cover classes in different year groups and abilities. 
+
+[Find cover supervisor roles](https://teaching-vacancies.service.gov.uk/jobs?visa_sponsorship_availability%5B%5D=&teaching_job_roles%5B%5D=&support_job_roles%5B%5D=&support_job_roles%5B%5D=education_support&phases%5B%5D=&subjects%5B%5D=&ect_statuses%5B%5D=&organisation_types%5B%5D=&school_types%5B%5D=&working_patterns%5B%5D=&quick_apply%5B%5D=&previous_keyword=&organisation_slug=&keyword=&location=&radius=0&sort_by=publish_on&sort_by=publish_on)
