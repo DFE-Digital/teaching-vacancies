@@ -1,5 +1,5 @@
 ---
-order: 100
+order: 107
 title: Show how you meet the teachers' standards
 meta_description: Find out how to show how you meet the teachers' standards to help you to return to teaching.
 date_posted: 06/12/2023

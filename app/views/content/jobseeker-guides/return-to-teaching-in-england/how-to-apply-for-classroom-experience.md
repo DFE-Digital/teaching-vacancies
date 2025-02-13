@@ -1,5 +1,5 @@
 ---
-order: 100
+order: 104
 title: How to apply for classroom experience
 meta_description: Find out how to apply for classroom experience to help you return to teaching.
 date_posted: 06/12/2023
