@@ -111,7 +111,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         {
           status: :conflict,
           json: {
-            error: "A vacancy with the provided data already exists",
+            error: "A vacancy with the provided ATS client ID and external reference already exists.",
             link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
           },
         }
@@ -185,7 +185,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         {
           status: :conflict,
           json: {
-            error: "A vacancy with the provided data already exists",
+            error: "A vacancy with the same job title, expiry date, and organisation already exists.",
             link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
           },
         }
