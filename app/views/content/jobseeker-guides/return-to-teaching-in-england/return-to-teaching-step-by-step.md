@@ -19,10 +19,10 @@ Check what you need to do to return to teach in a state-funded school in England
     </div>
     <div id="accordion-default-content-1" class="govuk-accordion__section-content">
       <p class="govuk-body">
-        Find out what has changed since you last taught in a classroom. You can also start to explore potential roles by [setting up a job alert](https://teaching-vacancies.service.gov.uk/subscriptions/new) and get teaching jobs sent to you. 
+        Find out what has changed since you last taught in a classroom. You can also start to explore potential roles by <a href="/subscriptions/new">setting up a job alert</a> and get teaching jobs sent to you. 
       </p>
       <p>
-        [Update your subject and teaching knowledge (link not done yet)](https://teaching-vacancies.service.gov.uk/subscriptions/new)
+        <a href="/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas">Update your subject and teaching knowledge</a>
       </p>
     </div>
   </div>
@@ -39,10 +39,10 @@ Check what you need to do to return to teach in a state-funded school in England
         You should spend time in a classroom to see if you're ready to return to teaching. Classroom experience can also help you secure a strong teaching reference for your applications. 
       </p>
       <p class="govuk-body">
-        Find classroom experience [link to new find classroom experience page] 
+        <a href="/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience">Find classroom experience</a>
       </p>
       <p class="govuk-body">
-        How to apply for classroom experience [link to new apply for classroom experience page] 
+        <a href="/jobseeker-guides/return-to-teaching-in-england/how-to-apply-for-classroom-experience">How to apply for classroom experience</a>
       </p>
     </div>
   </div>
@@ -61,10 +61,13 @@ Check what you need to do to return to teach in a state-funded school in England
         <li>Show strong examples of your teaching practice</li>
       </ul>
       <p class="govuk-body">
-       Write a great teaching job application in 5 steps
+        <a href="/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-write-teacher-personal-statement">How to write a teacher personal statement</a>
       </p>
       <p class="govuk-body">
-        Arrange your referees
+        <a href="/jobseeker-guides/get-help-applying-for-your-teaching-role/write-a-great-teaching-job-application-in-five-steps">Write a great teaching job application in 5 steps</a>
+      </p>
+      <p class="govuk-body">
+        <a href="/jobseeker-guides/return-to-teaching-in-england/arrange-your-referees">Arrange your referees</a>
       </p>
     </div>
   </div>
@@ -78,10 +81,10 @@ Check what you need to do to return to teach in a state-funded school in England
     </div>
     <div id="accordion-default-content-4" class="govuk-accordion__section-content">
       <p class="govuk-body">
-        Search for teaching roles and filter to find the right one for you or look for roles in specific schools or trusts. 
+        <a href="/jobs">Search for teaching roles</a> and filter to find the right one for you or look for roles in specific schools or trusts. 
       </p>
       <p class="govuk-body">
-        Find a teaching role at the right school
+        <a href="/jobseeker-guides/get-help-applying-for-your-teaching-role/find-a-teaching-role-at-the-right-school">Find a teaching role at the right school</a>
       </p>
     </div>
   </div>
@@ -103,13 +106,13 @@ Check what you need to do to return to teach in a state-funded school in England
         <li>attending a formal interview</li>
       </ul>
       <p class="govuk-body">
-        How to approach a teaching job interview 
+        <a href="/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-approach-a-teaching-job-interview">How to approach a teaching job interview</a>
       </p>
       <p class="govuk-body">
-        Prepare for a teaching interview lesson 
+        <a href="/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson">Prepare for a teaching interview lesson</a>
       </p>
       <p class="govuk-body">
-        Show how you meet the teachers’ standards [link to new teachers’ standards page] 
+        <a href="/jobseeker-guides/return-to-teaching-in-england/show-how-you-meet-the-teachers-standards">Show how you meet the teachers’ standards</a>
       </p>
     </div>
   </div>

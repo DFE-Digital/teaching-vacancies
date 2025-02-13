@@ -43,10 +43,10 @@ TAs help teachers in primary or secondary schools, working one-on-one or with sm
 
 TAs mainly support pupils in the classroom but may also take them to an a nearby room or area for activities such as reading sessions or booster support for struggling students.
 
-[Find teaching assistant roles](https://teaching-vacancies.service.gov.uk/jobs?ect_statuses%5B%5D=&keyword=&location=&organisation_slug=&organisation_types%5B%5D=&phases%5B%5D=&previous_keyword=&quick_apply%5B%5D=&radius=0&school_types%5B%5D=&sort_by=publish_on&sort_by=publish_on&subjects%5B%5D=&support_job_roles%5B%5D=&support_job_roles%5B%5D=teaching_assistant&teaching_job_roles%5B%5D=&visa_sponsorship_availability%5B%5D=&working_patterns%5B%5D=)
+[Find teaching assistant roles](/jobs?support_job_roles%5B%5D=teaching_assistant)
 
 ### Cover supervisor
 
 Cover supervisors teach planned lessons and tasks on a flexible schedule. They usually cover classes in different year groups and abilities. 
 
-[Find cover supervisor roles](https://teaching-vacancies.service.gov.uk/jobs?visa_sponsorship_availability%5B%5D=&teaching_job_roles%5B%5D=&support_job_roles%5B%5D=&support_job_roles%5B%5D=education_support&phases%5B%5D=&subjects%5B%5D=&ect_statuses%5B%5D=&organisation_types%5B%5D=&school_types%5B%5D=&working_patterns%5B%5D=&quick_apply%5B%5D=&previous_keyword=&organisation_slug=&keyword=&location=&radius=0&sort_by=publish_on&sort_by=publish_on)
+[Find cover supervisor roles](/jobs?teaching_job_roles%5B%5D=&support_job_roles)
