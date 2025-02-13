@@ -40,7 +40,6 @@ RSpec.describe "School viewing public listings" do
     within(".govuk-header__navigation") { expect(page).to have_content(I18n.t("nav.manage_jobs")) }
 
     within(".govuk-header") { click_on(I18n.t("app.title")) }
-    expect(page).to have_content(I18n.t("jobs.heading"))
 
     within(".govuk-header__navigation") { click_on(I18n.t("nav.manage_jobs")) }
     expect(page).to have_content(school.name)

@@ -41,7 +41,7 @@ RSpec.describe "Page availability", js: true, smoke_test: true do
       page.driver.browser.manage.add_cookie(name: "consented-to-cookies", value: "no", domain: smoke_test_domain)
 
       page.visit "#{base_url}/"
-      expect(page).to have_content(I18n.t("jobs.heading"))
+      expect(page).to have_content(I18n.t("nav.create_a_job_alert"))
 
       page.visit "#{base_url}/jobs?keyword=Maths"
 
