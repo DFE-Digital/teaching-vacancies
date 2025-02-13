@@ -1,5 +1,9 @@
 class Geocoding
-  CACHE_DURATION = 30.days
+  # The geographical coordinates of the UK are stable and unlikely to change, allowing us to cache the results for an
+  # extended period.
+  # Due to the high volume of location searches we receive daily (over 70k/day at the time of writing),
+  # the cache refresh period significantly impacts our Google Geocoding API usage and billing.
+  CACHE_DURATION = 180.days
 
   attr_reader :location
 
