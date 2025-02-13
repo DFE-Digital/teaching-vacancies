@@ -1,6 +1,6 @@
 ---
 order: 100
-title: Return to teaching
+title: Get support returning to teaching
 meta_description: Find out how you could get support returning to teaching, including how to get free, one-to-one guidance from a return to teaching adviser.
 date_posted: 08/09/2023
 category_tags: apply
@@ -100,3 +100,5 @@ You may find it useful to know how to:
   * [find your teacher reference number](https://www.gov.uk/guidance/teacher-reference-number-trn) 
   * [check salaries and other benefits](https://getintoteaching.education.gov.uk/salaries-and-benefits)
   * [ensure your pension is up to date](https://www.teacherspensions.co.uk/members/working-life/deferring-your-pension/return-to-pensionable-service.aspx)
+
+Find out how to [return to teaching](step by step page goes here)

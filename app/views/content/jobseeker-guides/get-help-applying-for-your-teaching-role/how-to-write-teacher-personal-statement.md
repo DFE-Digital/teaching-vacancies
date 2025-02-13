@@ -8,10 +8,33 @@ card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teachin
 ---
 ![Students sat around a table talking to a teacher.](/content-assets/jobseeker-guides/get-help-applying-for-your-teaching-role/how-to-write-your-teacher-training-personal-statement.jpg)
 
-Your personal statement is your first opportunity to show the school you’re a great fit for the job, and gets you closer to being shortlisted for an interview. The more you show how your skills and interests match the school’s ethos and values, the better. We've spoken to a range of teachers to get their top tips for success.
+Your personal statement is your first opportunity to show the school you’re a great fit for the job, and gets you closer to being shortlisted for an interview.
+
+It should be:
+
+* no more than 2 pages long, or around 1,300 words
+* written in first person
+* checked for spelling and grammar mistakes
+* proofread before being sent to the school
+
+The more you show how your skills and interests match the school's ethos and values, the better.
+
+We've spoken to a range of teachers to get their top tips for success.
+
+## Explain why you're a good fit for the school
+Use your introductory paragraph to outline the reasons why you are a good fit for the school. 
+
+You can tailor your personal statement using information from the school's website, such as their ethos and values.
+
+You may want to include examples that show you meet the [teachers' standards](https://www.gov.uk/government/publications/teachers-standards?). Make sure your examples are detailed and concise.
+
+## Show how you meet the job description criteria
+Share examples that show how you meet the criteria in the job description. Focus on meeting the essential criteria but include examples for the desirable criteria if you can, too. 
+ 
+Explain each example clearly and highlight its impact on student outcomes. If you’re a returning teacher, you can share how your time away from the classroom has also added to your skills and experience.
 
 ## What experience do you have?
-Schools want to hear about your trainee experience with different subjects, key stages, types of school, and working with a range of pupils.
+Schools want to hear about your experience with different subjects, key stages, types of school, and working with a range of pupils.
 
 Think about your approach to teaching, how you keep pupils engaged, and how you communicate with different kinds of people (children, staff, parents and carers). Ensure you provide evidence for how you have improved student engagement and built positive relationships with pupils.
 
