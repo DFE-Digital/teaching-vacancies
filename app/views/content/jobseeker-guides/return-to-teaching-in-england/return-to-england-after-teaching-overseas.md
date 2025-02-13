@@ -45,4 +45,4 @@ Get ready to apply by:
 
 
 
-<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
+<a href="/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
