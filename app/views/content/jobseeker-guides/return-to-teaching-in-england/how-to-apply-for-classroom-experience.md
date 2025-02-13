@@ -36,4 +36,4 @@ Some schools may allow an initial visit without a DBS, provided you’re:
 
 You may not be allowed on school grounds without proper identification (ID). You must check with the school beforehand to see what forms of ID are required.   
   
-Part 3 of [Keeping children safe in education](Keeping children safe in education ) guidance explains what type of DBS check is required and when.
+Part 3 of [Keeping children safe in education](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2) guidance explains what type of DBS check is required and when.

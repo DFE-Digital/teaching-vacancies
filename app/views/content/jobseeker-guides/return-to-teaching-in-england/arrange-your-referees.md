@@ -13,7 +13,7 @@ Further guidance can be found in [Part three (safer recruitment) of the statutor
  
 KCSIE is not specific about how many references are required. Schools are best placed to make this decision based on their individual needs and circumstances. 
  
-[Gaining school experience](https://teaching-vacancies.service.gov.uk/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience) can help you secure referees. 
+[Gaining school experience](/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience) can help you secure referees. 
  
 ## How to select your referees 
  
