@@ -96,6 +96,7 @@ en:
       one: Open filters (%{count} applied)
       other: Open filters (%{count} applied)
     sign_in: Sign in
+    setup_alerts: Set up alerts
     sign_in_to_download: Sign in to download application form
     sign_in_jobseeker: Sign in as a jobseeker
     sign_in_publisher: Sign in as hiring staff

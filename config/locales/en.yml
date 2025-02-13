@@ -157,6 +157,7 @@ en:
             create_account: create a jobseeker account
             sign_in: Jobseeker sign in
         title: For jobseekers
+      alerts_description: Receive email alerts with the latest jobs for this search
       personal_statement_section:
         description_html: You can apply for jobs, set up job alerts and %{personal_statement_guide_link}.
         link_text: read advice for jobseekers

@@ -17,5 +17,4 @@
     = header.with_navigation_item text: t("nav.support_user_dashboard"), href: support_user_root_path, active: current_page?(support_user_root_path)
     = header.with_navigation_item text: t("nav.sign_out"), href: destroy_support_user_session_path, options: { method: :delete }
   - else
-    = header.with_navigation_item text: t("nav.create_a_job_alert"), href: new_subscription_path
     = header.with_navigation_item text: t("nav.sign_in"), href: page_path("sign-in")
