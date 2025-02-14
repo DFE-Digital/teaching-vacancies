@@ -7,6 +7,8 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.jpg"
 ---
 
+![A student working at a computer while a teacher helps.](/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.jpg)
+
 If you’re returning to teaching, refreshing your subject and teaching knowledge will improve your confidence and prepare you for your return to the classroom.
 
 You might find it helpful to:
