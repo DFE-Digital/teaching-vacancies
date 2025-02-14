@@ -13,7 +13,7 @@ These alerts are related to the service and raised in the [#twd_tv_dev](https://
 
 ### Azure Kubernetes Service (AKS)
 
-Further information on setting up and logging in to `AKS` are in the [hosting](../hosting.md) document.
+Further information on setting up and logging in to `AKS` are in the [hosting](/documentation/operations/infrastructure/hosting.md) document.
 
 - Request editor role access to `s189-teacher-services-cloud-production` subscription throguh the [Azure Portal](https://portal.azure.com/#home)
 - Login with `az login --tenant tenantid`

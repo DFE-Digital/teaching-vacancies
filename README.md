@@ -13,222 +13,71 @@ Vacancies service, a Ruby on Rails application with PostgreSQL and Redis backing
 Welcome to the team! 🐯
 
 You should have been added to our Github team ahead of time, if not, remind your delivery manager or
-tech lead to do that and also [complete the other onboarding steps](documentation/onboarding.md)!
+tech lead to do that and also [complete the other onboarding steps](documentation/team/onboarding.md)!
 
-## Quick start
+## Project documentation
 
-This project uses [devcontainers](https://code.visualstudio.com/docs/remote/create-dev-container)
-to provide a seamless onboarding experience for developers and other team members.
+### Team
+* [Onboarding](/documentation/team/onboarding.md)
+* [Continuous delivery](/documentation/team/continuous-delivery.md)
+* [Business Analyst activities](/documentation/team/business-analyst-activities.md)
 
-You will need the following software installed on your system:
-- [Git](https://github.com/git-guides/install-git)
-- [Docker Desktop](https://www.docker.com/get-started)
-  - You will need to start Docker before the process will work.
-- [Visual Studio Code](https://code.visualstudio.com)
+### Development
 
-To get the application running:
-- Clone the repository to a folder of your choice
-- Ask another developer for a `.env` file, and place it in the root of the application folder
-  (you can set up your AWS access to be able to do this yourself later)
-- Open the folder in VS Code, and when prompted, choose "Reopen in container"
-- The container will now build and execute first run tasks - this will take between 5 and 10 minutes
-  depending on the performance of your computer. Wait for the terminal showing build tasks to
-  display "`Done. Press any key to close the terminal.`"
+#### Setup
+* [Developers quick start](/documentation/development/setup/quick_start.md)
+* [Legacy Setup](/documentation/development/setup/legacy-setup.md)
 
-When the build has finished, you can run the application by clicking on "▶️ Start app" in the status
-bar, using the VS Code "Run task" option, or the Rails convention `bin/dev` script. This will start:
-- The Rails application running on http://localhost:3000
-- An asset build task each for Javascript and CSS
-- Sidekiq for processing background jobs
+#### Tooling
+* [Tests and linting](/documentation/development/tooling/testing.md)
+* [Data: Seends and external](/documentation/development/tooling/data.md)
+* [Secrets detection](/documentation/development/tooling/secrets-detection.md)
+* [Devcontainer](/documentation/development/tooling/devcontainer.md)
 
-<details>
-  <summary>Optional: Advanced custom setup (for developers)</summary>
+### Operations
 
-  > The Docker-based devcontainer setup (see [configuration](.devcontainer)) is our "gold standard"
-  > reference implementation of a local development environment. We highly recommend you use it, but
-  > you're of course free to work in whatever way makes you the most happy and productive.
-  >
-  > This might involve running a container-based workflow using vanilla `docker-compose` (working
-  > inside the container using a command-line text editor, or outside the container in a GUI editor
-  > or IDE), running a Linux VM with a container engine for that extra bit of performance, or just
-  > using the container definitions as a guide to setting the app up locally without any Docker
-  > involvement at all.
-  >
-  > Following convention, a `bin/dev` script is provided that uses Foreman to run all the tasks
-  > needed for the application.
-</details>
+#### Infrastructure
+* [Hosting](/documentation/operations/infrastructure/hosting.md)
+* [Infrastructure](/documentation/operations/infrastructure/infrastructure.md)
+* [Aws roles and cli tools](/documentation/operations/infrastructure/aws-roles-and-cli-tools.md)
+* [DNS Records](/documentation/operations/infrastructure/dns-records.md)
+* [Docker](/documentation/operations/infrastructure/docker.md)
+* [Terraform](/documentation/operations/infrastructure/terraform.md)
 
-* [API Documentation](https://docs.teaching-vacancies.service.gov.uk)
-* [API Keys](/documentation/api-keys.md)
-* [Continuous delivery](/documentation/continuous-delivery.md)
-* [Deployments](/documentation/deployments.md)
-* [Docker](/documentation/docker.md)
-* [Publishers - DSI Integration](/documentation/dsi-integration.md)
-* [Jobseekers - GOV.UK One Login Integration](/documentation/govuk-one-login.md)
-* [Hosting](/documentation/hosting.md)
-* [Integrations with other job posting services](/documentation/integrations.md)
-* [Logging](/documentation/logging.md)
-* [Onboarding](/documentation/onboarding.md)
-* [Search](/documentation/search.md)
-* [Disaster Recovery](/documentation/disaster-recovery.md)
-* [Front-end](/documentation/front-end.md)
+#### Deployment
+* [Deployments](/documentation/operations/deployment/deployments.md)
+* [Rollback](/documentation/operations/deployment/rollback.md)
+* [Github Actions](/documentation/operations/deployment/github-actions.md)
 
----
+#### Monitoring
+* [Monitoring](/documentation/operations/monitoring/monitoring.md)
+* [Alert Runbook](/documentation/operations/monitoring/alert-runbook.md)
+* [Sentry](/documentation/operations/monitoring/sentry.md)
 
-## Additional setup
+#### Maintenance
+* [Database backups](/documentation/operations/maintenance/database-backups.md)
+* [BAU tasks](/documentation/operations/maintenance/bau-tasks.md)
+* [Disaster Recovery](/documentation/operations/maintenance/disaster-recovery.md)
+* [Maintenance Mode](/documentation/operations/maintenance/maintenance-mode.md)
+* [Offline Site](/documentation/operations/maintenance/offline-site.md)
+* [Application secrets](/documentation/operations/maintenance/application-secrets.md)
 
-This section describes optional additional setup tasks once you have the application up and running.
-It is mainly relevant for developers and not strictly necessary to run the application.
+### Service
 
-### AWS credentials, MFA, and role profiles
+#### Users management
+* [Publishers - DSI Integration](/documentation/service/users/dsi-integration.md)
+* [Jobseekers - GOV.UK One Login Integration](/documentation/service/users/govuk-one-login.md)
 
-Once onboarded to AWS, you should finish setting up your account by following the steps described in
-the [AWS roles and CLI tools documentation](/documentation/aws-roles-and-cli-tools.md).
+#### Integrations
+* [Integrations with other job posting services](/documentation/service/integrations/integrations.md)
+* [DWP Find a Job](/documentation/service/integrations/dwp-find-a-job.md)
 
-### Environment Variables
+#### Technical approaches
+* [Our Front-end](/documentation/service/technical/front-end.md)
+* [Landing Pages](/documentation/service/technical/landing-pages.md)
+* [Multistep form](/documentation/service/technical/multistep-form.md)
+* [Rails View components](/documentation/service/technical/components.md)
+* [File uploads virus scan: Google Drive API](/documentation/service/technical/google-drive-api.md)
+* [Bot mitigation](/documentation/service/technical/bot-mitigation.md)
 
-Some environment variables are stored in [AWS Systems Manager Parameter Store](https://eu-west-2.console.aws.amazon.com/systems-manager/parameters/?region=eu-west-2&tab=Table), some are stored in the repository.
 
-Secrets (eg: API keys) are stored in AWS Systems Manager Parameter Store in `/teaching-vacancies/<env>/app/*` and `/teaching-vacancies/<env>/infra/*` files.
-
-Non-secrets (eg: public URLs or feature flags) are stored in the repository in `terraform/workspace-variables/<env>_app_env.yml` files.
-
-Run the following command to fetch all the required environment variables for development and output to a shell environment file:
-
-```
-aws-vault exec ReadOnly -- make -s local print-env > .env
-```
-
-[Git secrets](/documentation/secrets-detection.md) offers an easy way to defend against accidentally publishing these secrets.
-
-## Data
-
-If you use the devcontainer, the database will be created and seeded on first run using standard
-`rails db:prepare`. The seeds generate a number of fake vacancies, job applications, and users,
-as well as importing required data from a number of external services.
-
-You shouldn't have to refresh the external data, but if you do need to, you can with the following
-tasks:
-
-```bash
-# Import all schools, trusts, and local authorities from DfE's Get Information About Schools
-bundle exec rails gias:import_schools
-
-# Import location polygon data from the Office for National Statistics
-bundle exec rails ons:import_all
-```
-
-If ever you want to start over, you can delete and re-seed using:
-
-```bash
-bundle exec rails db:drop db:prepare
-```
-
-The _SQLTools_ VS Code extension is installed and configured in the devcontainer by default and can
-be used to browse the database and run SQL queries. The `psql` tool is also installed, so you can
-use `rails dbconsole` or even just `psql tvs_development`.
-
-## Tests and linting
-
-The Rails application uses [RSpec](https://rspec.info) and [RuboCop](https://rubocop.org) for
-testing and linting, as well as [Brakeman](https://brakemanscanner.org) for security scanning and
-[Slim-Lint](https://github.com/sds/slim-lint) to lint Slim templates.
-
-```bash
-# Run tests and linting
-bundle exec rake
-
-# Run tests only
-bundle exec rspec
-
-# Run linters only
-bundle exec rails lint
-```
-
-The frontend Javascript code uses [Jest](https://jestjs.io) and [ESLint](https://eslint.org/) for
-testing and linting (using [Airbnb rules](https://www.npmjs.com/package/eslint-config-airbnb)), as
-well as [Stylelint](https://stylelint.io/) for SASS linting (with the default ruleset):
-
-```bash
-# Run tests and linting
-yarn test
-
-# Run tests only
-yarn run js:test
-
-# Generate a coverage report
-yarn run js:test:coverage
-
-# Run JS linter only
-yarn run js:lint
-
-# Run SASS linter only
-yarn run sass:lint
-```
-
-### RSpec parallel testing
-The service include [parallel_tests](https://github.com/grosser/parallel_tests) gem, that allows to split the RSpec test
-suite run accross multiple CPU cores.
-
-Each group will run against a separate database.
-To set it up:
-
-```
-RAILS_ENV=test rails parallel:create
-```
-
-To run the test suite in parallel:
-
-```
-RAILS_ENV=test rake parallel:spec
-```
-
-or
-```
-RAILS_ENV=test rails parallel:spec
-```
-
-or using Spring binstub:
-```
-parallel_rspec
-```
-
-## Visual regression testing
-
-The visual layout and appearance of defined scenarios (pages and common content) can be tested using [BackstopJS](https://github.com/garris/BackstopJS)
-
-This works by testing snapshot images in a branch or environment against accepted baseline/reference snapshot images. Tests are run across 3 viewports - mobile, tablet and desktop. Also if abtest variants are added to `config/ab_test.yml` then the corresponding page will be tested with each variant.
-
-This is currently a tool for developers to test changes locally against the QA environment. Running the test suite will create and load a UI in the browser to report on and for you to compare visual changes.
-
-### Setup
-
-Install the backstopjs library as a global dependency
-
-`npm install -g backstopjs@6.1.0`
-
-Add the following variables to your local `.env` file:
-
-```bash
-VISUAL_TEST_JOBSEEKER_USERNAME=xxx
-VISUAL_TEST_JOBSEEKER_PASSWORD=xxx
-VISUAL_TEST_PUBLISHER_USERNAME=xxx
-VISUAL_TEST_PUBLISHER_PASSWORD=xxx
-```
-
-### Usage
-
-If you have never run tests before, ensure you have created an `backstop/lib/.tmp` folder for authentication tokens. (TODO could do with automating)
-
-```bash
-# Create reference snapshot images
-yarn run visual:test:init
-
-# Run test suite to compare your changes to reference snapshots
-yarn run visual:test:run
-
-# approve changes
-yarn run visual:test:approve
-
-This will approve changes to create new baseline snapshots and clear your file system of snapshots created by previous test suite runs.
-```

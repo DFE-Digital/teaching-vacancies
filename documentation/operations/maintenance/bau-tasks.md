@@ -15,7 +15,7 @@ from the secrets repo.
 **Alert:** These commands will queue one async job for every 500 instances to upload.
  Depending on the volume of entities to push, we may need to execute these commands out of office hours or/and increase the number of production workers before executing them.
 
-To increase the production workers, read the [hosting documentation](./hosting.md#temporally-scaling-up-our-deployment-instances)
+To increase the production workers, read the [hosting documentation](/documentation/operations/infrastructure/hosting.md#temporally-scaling-up-our-deployment-instances)
 
 For backfilling a table into analytics, execute in a **production** console:
 ```
