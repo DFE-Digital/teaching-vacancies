@@ -7,6 +7,8 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-a-step-by-step-guide.jpg"
 ---
 
+![A teacher talking in front of a classroom full of students.](/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-a-step-by-step-guide.jpg)
+
 Check what you need to do to return to teach in a state-funded school in England.
 <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
   <div class="govuk-accordion__section">

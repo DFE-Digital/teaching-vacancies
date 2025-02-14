@@ -7,6 +7,8 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/how-to-apply-for-classroom-experience.png"
 ---
 
+![One student looking into a microscope while another student observes.](/content-assets/jobseeker-guides/return-to-teaching-in-england/how-to-apply-for-classroom-experience.png)
+
 When you contact a school to arrange classroom experience, you should include a short cover letter and CV. 
 
 Where possible, you should contact the school by email, which can usually be found on the school’s website.

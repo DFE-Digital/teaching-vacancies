@@ -7,6 +7,8 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/show-how-you-meet-the-teachers-standards.jpg"
 ---
 
+![A teacher in front of a classroom full of students, everyone has their hand raised.](/content-assets/jobseeker-guides/return-to-teaching-in-england/show-how-you-meet-the-teachers-standards.jpg)
+
 The [teachers’ standards](https://www.gov.uk/government/publications/teachers-standards?) are a framework for professional conduct and teaching quality. When you apply for a teaching role, you may be assessed to see how well you meet them.  
  
 You can use the framework as a checklist and gather examples to show how you meet each one. 
