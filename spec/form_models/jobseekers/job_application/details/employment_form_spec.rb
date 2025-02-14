@@ -7,7 +7,6 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
   it { is_expected.to validate_presence_of(:organisation) }
   it { is_expected.to validate_presence_of(:job_title) }
   it { is_expected.to validate_presence_of(:main_duties) }
-  it { is_expected.to validate_inclusion_of(:current_role).in_array(%w[yes no]) }
 
   describe "#started_on" do
     context "when started_on is blank" do
@@ -49,7 +48,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
   describe "#ended_on" do
     context "when ended_on is blank" do
-      let(:params) { { current_role: "no" } }
+      let(:params) { { is_current_role: false } }
 
       it "is invalid" do
         expect(subject).not_to be_valid
@@ -58,7 +57,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
     end
 
     context "when ended_on is invalid" do
-      let(:params) { { current_role: "no", "ended_on(1i)" => "2021", "ended_on(2i)" => "01", "ended_on(3i)" => "100" } }
+      let(:params) { { is_current_role: false, "ended_on(1i)" => "2021", "ended_on(2i)" => "01", "ended_on(3i)" => "100" } }
 
       it "is invalid" do
         expect(subject).not_to be_valid
@@ -68,7 +67,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
     context "when ended_on is an incomplete date" do
       let(:params) do
-        { current_role: "no",
+        { is_current_role: false,
           "ended_on(3i)" => "10",
           "started_on(1i)" => "2021",
           "started_on(2i)" => "01",
@@ -83,7 +82,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
     context "when ended_on is after today" do
       let(:params) do
-        { current_role: "no",
+        { is_current_role: false,
           "started_on(1i)" => "2021",
           "started_on(2i)" => "01",
           "started_on(3i)" => "01",
@@ -100,7 +99,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
 
     context "when ended_on is before started_on" do
       let(:params) do
-        { current_role: "no",
+        { is_current_role: false,
           "started_on(1i)" => "2021",
           "started_on(2i)" => "01",
           "started_on(3i)" => "01",
@@ -121,7 +120,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
       { organisation: "An organisation",
         job_title: "A job title",
         main_duties: "Some main duties",
-        current_role: "no",
+        is_current_role: false,
         "started_on(1i)" => "2019",
         "started_on(2i)" => "09",
         "started_on(3i)" => "01",
@@ -140,7 +139,7 @@ RSpec.describe Jobseekers::JobApplication::Details::EmploymentForm, type: :model
         { organisation: "An organisation",
           job_title: "A job title",
           main_duties: "Some main duties",
-          current_role: "no",
+          is_current_role: false,
           "started_on(1i)" => "2019",
           "started_on(2i)" => "09",
           "started_on(3i)" => "30",

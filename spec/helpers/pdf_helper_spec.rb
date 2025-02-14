@@ -3,7 +3,7 @@ require "prawn"
 require "pdf/inspector"
 
 RSpec.describe JobApplicationPdfGenerator, type: :service do
-  let(:job_application) { create(:job_application, vacancy: vacancy, working_patterns: %w[full_time part_time]) }
+  let(:job_application) { create(:job_application, create_details: false, vacancy: vacancy, working_patterns: %w[full_time part_time]) }
   let!(:professional_body_membership) { create(:professional_body_membership, job_application: job_application, membership_number: nil, year_membership_obtained: nil) }
   let(:vacancy) { create(:vacancy) }
   let(:pdf_generator) { JobApplicationPdfGenerator.new(job_application, vacancy) }
@@ -53,6 +53,22 @@ RSpec.describe JobApplicationPdfGenerator, type: :service do
       expect(text_analysis.strings).to include(job_application.email_address)
       expect(text_analysis.strings).to include(job_application.phone_number)
       expect(text_analysis.strings).to include(job_application.national_insurance_number)
+    end
+
+    context "with employments" do
+      before do
+        # turns out subjects column can't be nil (but can be blank)
+        create(:employment, job_title: employment_no_subjects, job_application: job_application, subjects: "")
+        create(:employment, :current_role, job_title: employment_with_subjects, job_application: job_application)
+      end
+
+      let(:employment_no_subjects) { Faker::Job.title }
+      let(:employment_with_subjects) { Faker::Job.title }
+
+      it "renders both employments" do
+        expect(text_analysis.strings).to include(employment_no_subjects)
+        expect(text_analysis.strings).to include(employment_with_subjects)
+      end
     end
 
     context "when rendering professional body memberships" do

@@ -9,9 +9,9 @@
   legend: { tag: nil, size: "m" },
   hint: -> { t("helpers.hint.date", date: 2.year.ago.strftime("%-m %Y")) }
 
-= f.govuk_radio_buttons_fieldset :current_role, legend: { size: "m", tag: nil } do
-  = f.govuk_radio_button :current_role, "yes", link_errors: true
-  = f.govuk_radio_button :current_role, "no" do
+= f.govuk_radio_buttons_fieldset :is_current_role, legend: { size: "m", tag: nil } do
+  = f.govuk_radio_button :is_current_role, "true", link_errors: true
+  = f.govuk_radio_button :is_current_role, "false" do
     = f.govuk_date_field :ended_on,
       omit_day: true,
       legend: { tag: nil, size: "m" },

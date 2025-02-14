@@ -20,7 +20,7 @@ RSpec.describe "Jobseeker profile employments" do
         job_title: job_title,
         "started_on(2i)": started_on_month,
         "started_on(1i)": started_on_year,
-        current_role: current_role,
+        is_current_role: current_role,
         "ended_on(2i)": ended_on_month,
         "ended_on(1i)": ended_on_year,
         main_duties: main_duties,

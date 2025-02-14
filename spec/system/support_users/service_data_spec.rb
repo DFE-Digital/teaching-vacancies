@@ -87,7 +87,7 @@ RSpec.describe "Service Data supportal section" do
     within(summary_card(employment.job_title)) do
       expect(page).to have_row("Id", employment.id)
       expect(page).to have_row("Salary", employment.salary)
-      expect(page).to have_row("Current role", employment.current_role)
+      expect(page).to have_row("Is current role", employment.is_current_role)
       expect(page).to have_row("Started on", employment.started_on)
       expect(page).to have_row("Ended on", employment.ended_on)
       expect(page).to have_row("Employment type", employment.employment_type)
