@@ -2,7 +2,7 @@
 order: 104
 title: How to apply for classroom experience
 meta_description: Find out how to apply for classroom experience to help you return to teaching.
-date_posted: 06/12/2023
+date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/how-to-apply-for-classroom-experience.png"
 ---

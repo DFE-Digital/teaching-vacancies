@@ -2,7 +2,7 @@
 order: 103
 title: Find classroom experience
 meta_description: Find out how to find classroom experience to help you return to teaching.
-date_posted: 06/12/2023
+date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience.jpg"
 ---

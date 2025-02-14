@@ -2,7 +2,7 @@
 order: 101
 title: "Return to teaching: step by step"
 meta_description: Step by step guide on how to return to teaching.
-date_posted: 06/12/2023
+date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas.jpg"
 ---
@@ -22,7 +22,7 @@ Check what you need to do to return to teach in a state-funded school in England
         Find out what has changed since you last taught in a classroom. You can also start to explore potential roles by <a href="/subscriptions/new">setting up a job alert</a> and get teaching jobs sent to you. 
       </p>
       <p>
-        <a href="/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas">Update your subject and teaching knowledge</a>
+        <a href="/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge">Update your subject and teaching knowledge</a>
       </p>
     </div>
   </div>

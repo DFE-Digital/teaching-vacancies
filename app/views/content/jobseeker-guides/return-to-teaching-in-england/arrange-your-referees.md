@@ -2,7 +2,7 @@
 order: 105
 title: Arrange your referees
 meta_description: Find out how to arrange your referees for job applications to return to teaching.
-date_posted: 06/12/2023
+date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/arrange-your-referees.png"
 ---
