@@ -61,7 +61,7 @@ RSpec.describe PostsController do
       context "return-to-teaching-in-england" do
         let(:post_names) do
           %w[
-            return-to-teaching
+            get-support-returning-to-teaching
             return-to-england-after-teaching-overseas
             arrange-your-referees
             find-classroom-experience
