@@ -2,7 +2,7 @@
 order: 107
 title: Show how you meet the teachers' standards
 meta_description: Find out how to show how you meet the teachers' standards to help you to return to teaching.
-date_posted: 06/12/2023
+date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/show-how-you-meet-the-teachers-standards.jpg"
 ---
