@@ -37,7 +37,7 @@ Sentry.init({
   dsn: window.sentryConfig.dsn,
   integrations: [Sentry.replayIntegration()],
   replaysSessionSampleRate: 0,
-  replaysOnErrorSampleRate: 1.0,
+  replaysOnErrorSampleRate: 0.1,
   environment: window.sentryConfig.environment,
   release: window.sentryConfig.release,
   tracesSampleRate: 0, // Disable tracing (performance monitoring, doesn't impact errors)
