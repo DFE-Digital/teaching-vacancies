@@ -7,6 +7,8 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience.jpg"
 ---
 
+![Three students sitting at a desk working.](/content-assets/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience.jpg)
+
 Schools will expect you to reflect on your recent school experience when you apply for a teaching role. 
 
 If you’re returning to teach, each school will have different requirements for your experience.
