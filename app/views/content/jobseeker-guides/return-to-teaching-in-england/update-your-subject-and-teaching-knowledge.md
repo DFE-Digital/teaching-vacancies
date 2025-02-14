@@ -2,7 +2,7 @@
 order: 106
 title: Update your subject and teaching knowledge
 meta_description: Find out how to update your subject and teaching knowledge to help return to teaching.
-date_posted: 08/09/2023
+date_posted: 17/02/2025
 category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/update-your-subject-and-teaching-knowledge.jpg"
 ---
