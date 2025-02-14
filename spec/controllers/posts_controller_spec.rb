@@ -63,6 +63,12 @@ RSpec.describe PostsController do
           %w[
             return-to-teaching
             return-to-england-after-teaching-overseas
+            arrange-your-referees
+            find-classroom-experience
+            how-to-apply-for-classroom-experience
+            show-how-you-meet-the-teachers-standards
+            update-your-subject-and-teaching-knowledge
+            return-to-teaching-step-by-step
           ]
         end
 
