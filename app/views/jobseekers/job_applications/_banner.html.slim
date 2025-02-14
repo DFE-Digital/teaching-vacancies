@@ -19,5 +19,5 @@
     - if job_application.status.in?(%w[reviewed shortlisted submitted])
       = govuk_button_link_to t("buttons.withdraw_application"), jobseekers_job_application_confirm_withdraw_path(job_application), class: "govuk-button--warning govuk-!-margin-bottom-4"
     - unless job_application.draft?
-      = govuk_button_link_to t("buttons.download_application"), "#", class: "govuk-button--secondary js-action print-application", "data-controller": "utils", "data-action": "click->utils#print"
+      = govuk_button_link_to t("buttons.download_pdf_application"), "#", class: "govuk-button--secondary js-action print-application", "data-controller": "utils", "data-action": "click->utils#print"
     = open_in_new_tab_link_to "View this listing", job_path(job_application.vacancy), class: "govuk-!-margin-bottom-0 view-listing-link"
