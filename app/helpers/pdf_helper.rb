@@ -353,7 +353,7 @@ module PdfHelper
   def pdf_job_application_qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
     when "yes"
-      "Yes, awarded in #{job_application.qualified_teacher_status_year}"
+      "Yes, awarded in #{job_application.qualified_teacher_status_year} #{job_application.qts_age_range_and_subject}"
     when "no"
       "No. #{job_application.qualified_teacher_status_details}"
     when "on_track"

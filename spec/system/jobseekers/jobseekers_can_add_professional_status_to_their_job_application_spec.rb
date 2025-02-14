@@ -33,7 +33,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
     choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
     fill_in "Year QTS was awarded", with: "2022"
-    fill_in "Please provide more detail (optional field)", with: "It was hard work but I made it"
+    fill_in I18n.t("helpers.label.jobseekers_job_application_professional_status_form.qts_age_range_and_subject"), with: "Adding up for little ones"
     choose("Yes, I have completed my induction period")
 
     click_on "Save and continue"
@@ -49,6 +49,8 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
     click_on "Save and continue"
 
     expect(page).not_to have_css("h2", text: "There is a problem")
+
+    expect(job_application.reload.qts_age_range_and_subject).to eq("Adding up for little ones")
   end
 
   it "creates a jobseeker profile if the jobseeker does not have one" do

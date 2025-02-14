@@ -43,7 +43,12 @@ module JobApplicationsHelper
   end
 
   def job_application_jobseeker_profile_info(job_application)
-    job_application.teacher_reference_number.presence || "None"
+    profile = job_application.jobseeker&.jobseeker_profile
+    if profile&.has_teacher_reference_number == "yes"
+      profile.teacher_reference_number
+    else
+      "None"
+    end
   end
 
   def job_application_support_needed_info(job_application)
