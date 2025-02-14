@@ -6,7 +6,6 @@ FactoryBot.define do
     main_duties { Faker::Lorem.paragraph(sentence_count: 2) }
     reason_for_leaving { Faker::Lorem.paragraph(sentence_count: 1) }
     started_on { Faker::Date.in_date_period(year: 2016) }
-    is_current_role { false }
     ended_on { Faker::Date.in_date_period(year: 2018) }
     employment_type { :job }
 
