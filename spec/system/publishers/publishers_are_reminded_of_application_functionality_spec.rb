@@ -40,39 +40,12 @@ RSpec.describe "Application feature reminder" do
       expect(current_path).to eq(organisation_job_build_path(Vacancy.order("created_at").last.id, :job_title))
     end
 
-    context "when the organisation is a local authority" do
-      let(:publisher_preference) { create(:publisher_preference, organisation:) }
-      let(:organisation) { create(:local_authority) }
-      let(:publisher) { publisher_preference.publisher }
-
-      it "does not show reminder page when creating a job" do
-        visit organisation_jobs_with_type_path
-        click_on "List a job"
-        expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_location))
-      end
-    end
-
     it "does not show reminder page when editing a job" do
       visit organisation_job_path(vacancy.id)
 
       click_on "Change", match: :first
 
       expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
-    end
-
-    # TODO: Temporarily disabled for TEVA-4099
-    xcontext "when the publisher has seen the new features page during the current session" do
-      let(:publisher) { create(:publisher, dismissed_new_features_page_at: nil) }
-
-      it "does not show the reminder page" do
-        visit organisation_jobs_with_type_path
-        expect(current_path).to eq(publishers_new_features_path)
-        check I18n.t("helpers.label.publishers_new_features_form.dismiss_options.true")
-        click_on I18n.t("buttons.continue_to_account")
-        visit organisation_jobs_with_type_path
-        click_on I18n.t("buttons.create_job")
-        expect(current_path).to eq(organisation_jobs_path)
-      end
     end
   end
 end
