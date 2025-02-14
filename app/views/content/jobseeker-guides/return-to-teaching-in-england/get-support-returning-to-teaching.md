@@ -101,4 +101,4 @@ You may find it useful to know how to:
   * [check salaries and other benefits](https://getintoteaching.education.gov.uk/salaries-and-benefits)
   * [ensure your pension is up to date](https://www.teacherspensions.co.uk/members/working-life/deferring-your-pension/return-to-pensionable-service.aspx)
 
-Find out how to [return to teaching](step by step page goes here)
+Find out how to [return to teaching](/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-step-by-step).
