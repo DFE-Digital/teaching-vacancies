@@ -92,7 +92,7 @@ module Jobseekers::Profiles
     end
 
     def form
-      @form ||= self.class.multistep_form.from_record(job_preference_record)
+      @form ||= self.class.multistep_form.from_record(job_preference_record || OpenStruct.new(attributes: {}))
     end
 
     def job_preference_record
