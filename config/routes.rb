@@ -212,7 +212,7 @@ Rails.application.routes.draw do
       post :consume, on: :member
     end
     resources :jobseeker_profiles, only: %i[index show]
-    resource :new_features, only: %i[show update] do
+    resource :new_features, only: %i[] do
       get :reminder
     end
     resources :notifications, only: %i[index]
