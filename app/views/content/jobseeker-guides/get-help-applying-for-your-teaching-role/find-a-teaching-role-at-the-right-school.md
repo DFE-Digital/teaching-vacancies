@@ -15,17 +15,22 @@ You can find out more about schools you’re interested in on the [Get Informati
 
 The time you spend teaching is only one aspect of life in a school. 
 The wider school culture and community will have a big impact on your experience. 
+
 All schools have a different approach to culture, curriculum, values, and wellbeing. 
 The school’s approach to these will help you enjoy your working life.
 
 Feel free to ask hiring staff any questions before applying for a job. 
+
 You can also organise a school visit to get a feel for what the school is like.
 
 ## School culture
 The best way to get a sense of what a school is like is to experience it in person, and you should feel comfortable to make an appointment for a school visit.
+
 Most schools welcome visits, particularly to the department you’re interested in applying to. 
+
 You could also have a look at the school's website or newsletter. 
 Some schools might share their news and successes on social media too.
+
 You can find an email address or phone number for the school’s hiring team on their job advert so you can get in touch with any questions about the role.
 
 ## Curriculum
