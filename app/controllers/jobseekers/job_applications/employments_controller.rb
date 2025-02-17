@@ -1,50 +1,50 @@
 class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseController
-  helper_method :back_path, :employment, :job_application
+  helper_method :back_path, :job_application
+
+  before_action :set_employment, only: %i[edit update destroy]
 
   def new
-    @form = Jobseekers::JobApplication::Details::EmploymentForm.new
+    @employment = job_application.employments.job.build
   end
 
   def edit
-    @form = Jobseekers::JobApplication::Details::EmploymentForm.new(employment.slice(*employment_attrs))
   end
 
   def create
-    @form = Jobseekers::JobApplication::Details::EmploymentForm.new
-    @form.attributes = employment_params
+    @employment = job_application.employments.job.build
+    @employment.attributes = employment_params
 
-    if @form.valid?
-      job_application.employments.job.create!(employment_params)
+    if @employment.valid?
+      @employment.save!
       redirect_to back_path
     else
       render :new
     end
   rescue ActiveRecord::MultiparameterAssignmentErrors => e
     e.errors.each do |error|
-      @form.errors.add(error.attribute, :invalid)
+      @employment.errors.add(error.attribute, :invalid)
     end
     render :new
   end
 
   def update
-    @form = Jobseekers::JobApplication::Details::EmploymentForm.new
-    @form.attributes = employment_params
+    @employment.attributes = employment_params
 
-    if @form.valid?
-      employment.update!(employment_params)
+    if @employment.valid?
+      @employment.save!
       redirect_to back_path
     else
       render :edit
     end
   rescue ActiveRecord::MultiparameterAssignmentErrors => e
     e.errors.each do |error|
-      @form.errors.add(error.attribute, :invalid)
+      @employment.errors.add(error.attribute, :invalid)
     end
     render :edit
   end
 
   def destroy
-    employment.destroy
+    @employment.destroy
     redirect_to back_path, success: t(".success")
   end
 
@@ -54,8 +54,8 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
     @back_path ||= jobseekers_job_application_build_path(job_application, :employment_history)
   end
 
-  def employment
-    job_application.employments.job.find(params[:id])
+  def set_employment
+    @employment = job_application.employments.job.find(params[:id])
   end
 
   def employment_params

@@ -2,7 +2,7 @@ en:
   activemodel:
     errors:
       models:
-        jobseekers/job_application/details/employment_form:
+        jobseekers/profile/employment_form:
           attributes:
             is_current_role:
               inclusion: Select yes if this is your current role
@@ -24,7 +24,11 @@ en:
               invalid: Enter a date in the correct format
             reason_for_leaving:
               blank: Enter your reason for leaving the role
-        jobseekers/profile/employment_form:
+
+  activerecord:
+    errors:
+      models:
+        employment:
           attributes:
             is_current_role:
               inclusion: Select yes if this is your current role
