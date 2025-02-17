@@ -36,7 +36,9 @@ Explain each example clearly and highlight its impact on student outcomes. If yo
 ## What experience do you have?
 Schools want to hear about your experience with different subjects, key stages, types of school, and working with a range of pupils.
 
-Think about your approach to teaching, how you keep pupils engaged, and how you communicate with different kinds of people (children, staff, parents and carers). Ensure you provide evidence for how you have improved student engagement and built positive relationships with pupils.
+Think about your approach to teaching, how you keep pupils engaged, and how you communicate with different kinds of people (children, staff, parents and carers). 
+
+Ensure you provide evidence for how you have improved student engagement and built positive relationships with pupils.
 
 Schools will be interested in your approach to behaviour management, so think about your go-to strategies.
 
@@ -49,7 +51,10 @@ You need to demonstrate your awareness of the importance of safeguarding and the
 
 
 ## What are your skills and qualities?
-Are you a well-organised, confident, and motivated teacher? Say it, and provide examples! Schools are looking for great communicators, team players and relationship builders. Make sure you say how you create a positive learning environment, and consider skills like time management, organisation, and flexibility.
+Are you a well-organised, confident, and motivated teacher? Say it, and provide examples! 
+
+Schools are looking for great communicators, team players and relationship builders. Make sure you say how you create a positive learning environment, and consider skills like time management, organisation, and flexibility.
+
 Schools will also want to know how you overcome challenges.
 
 ## How can you contribute to wider school life?
