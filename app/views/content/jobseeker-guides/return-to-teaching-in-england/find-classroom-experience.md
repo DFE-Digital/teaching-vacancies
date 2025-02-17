@@ -51,4 +51,4 @@ TAs mainly support pupils in the classroom but may also take them to an a nearby
 
 Cover supervisors teach planned lessons and tasks on a flexible schedule. They usually cover classes in different year groups and abilities. 
 
-[Find cover supervisor roles](/jobs?teaching_job_roles%5B%5D=&support_job_roles)
+[Find cover supervisor roles](/jobs?&support_job_roles%5B%5D=education_support)
