@@ -1,30 +1,4 @@
 en:
-  activemodel:
-    errors:
-      models:
-        jobseekers/profile/employment_form:
-          attributes:
-            is_current_role:
-              inclusion: Select yes if this is your current role
-            ended_on:
-              on_or_after: End date must be on or after the start date
-              before: The date the role ended must be in the past
-              blank: Enter the date you left this school or organisation
-              invalid: Enter a date in the correct format
-              present: End date cannot be entered for current role
-            job_title:
-              blank: Enter your job title
-            main_duties:
-              blank: Enter your main duties for this role
-            organisation:
-              blank: Enter a school or other organisation
-            started_on:
-              before: The date the role started must be in the past
-              blank: Enter the date you started at this school or organisation
-              invalid: Enter a date in the correct format
-            reason_for_leaving:
-              blank: Enter your reason for leaving the role
-
   activerecord:
     errors:
       models:

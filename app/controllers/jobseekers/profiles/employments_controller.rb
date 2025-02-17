@@ -1,34 +1,34 @@
 class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesController
+
+  before_action :set_employment, only: %i[edit update destroy]
+
   def new
-    @form = Jobseekers::Profile::EmploymentForm.new
+    @employment = profile.employments.job.build
   end
 
   def edit
-    @form = Jobseekers::Profile::EmploymentForm.new(employment.slice(*employment_attrs))
   end
 
   def create
-    @form = Jobseekers::Profile::EmploymentForm.new
-    @form.attributes = employment_form_params
+    @employment = profile.employments.job.build
+    @employment.attributes = employment_form_params
 
-    if @form.valid?
-      profile.employments.create!(employment_form_params)
+    if @employment.save
       redirect_to review_jobseekers_profile_work_history_index_path
     else
       render :new
     end
   rescue ActiveRecord::MultiparameterAssignmentErrors => e
     e.errors.each do |error|
-      @form.errors.add(error.attribute, :invalid)
+      @employment.errors.add(error.attribute, :invalid)
     end
     render :new
   end
 
   def update
-    @form = Jobseekers::Profile::EmploymentForm.new(employment_form_params)
+    @employment.attributes = employment_form_params
 
-    if @form.valid?
-      employment.update(employment_form_params)
+    if @employment.save
       redirect_to review_jobseekers_profile_work_history_index_path, success: t(".success")
     else
       render :edit
@@ -36,7 +36,7 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   end
 
   def destroy
-    employment.destroy
+    @employment.destroy
 
     redirect_to review_jobseekers_profile_work_history_index_path, success: t(".success")
   end
@@ -47,8 +47,8 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
 
   private
 
-  def employment
-    profile.employments.find(params[:id])
+  def set_employment
+    @employment = profile.employments.find(params[:id])
   end
 
   def employment_form_params

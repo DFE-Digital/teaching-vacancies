@@ -71,13 +71,11 @@ RSpec.describe "Jobseeker profile employments" do
   end
 
   describe "PATCH #update" do
-    let!(:employment) { create(:employment, :jobseeker_profile_employment, organisation: previous_organisation, jobseeker_profile_id: profile.id) }
+    let!(:employment) { create(:employment, :jobseeker_profile_employment, organisation: previous_organisation, jobseeker_profile: profile) }
     let(:previous_organisation) { "Test organisation" }
     let(:organisation) { "Arsenal" }
 
     context "when the form is valid" do
-      before { allow_any_instance_of(Jobseekers::EmploymentForm).to receive(:valid?).and_return(true) }
-
       it "updates the employment and redirects to the review page" do
         expect { patch jobseekers_profile_work_history_path(employment), params: params }
           .to change { employment.reload.organisation }.from(previous_organisation).to(organisation)

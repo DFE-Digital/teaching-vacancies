@@ -14,8 +14,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
     @employment = job_application.employments.job.build
     @employment.attributes = employment_params
 
-    if @employment.valid?
-      @employment.save!
+    if @employment.save
       redirect_to back_path
     else
       render :new
@@ -30,8 +29,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
   def update
     @employment.attributes = employment_params
 
-    if @employment.valid?
-      @employment.save!
+    if @employment.save
       redirect_to back_path
     else
       render :edit

@@ -6,7 +6,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
-    = form_for @form, url: jobseekers_profile_work_history_path(params[:id]), method: :patch do |f|
+    = form_with model: @employment, scope: :jobseekers_profile_employment_form, url: jobseekers_profile_work_history_path(params[:id]), method: :patch do |f|
       = f.govuk_error_summary
 
       span.govuk-caption-l = t(".caption")
