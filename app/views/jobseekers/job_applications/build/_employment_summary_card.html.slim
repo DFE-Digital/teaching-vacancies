@@ -12,7 +12,7 @@
       .govuk-summary-list__row
         dt.govuk-summary-list__key = t("jobseekers.job_applications.employments.started_on")
         dd.govuk-summary-list__value = employment.started_on.to_formatted_s(:month_year)
-      - if employment.is_current_role
+      - if employment.is_current_role?
         .govuk-summary-list__row
           dt.govuk-summary-list__key = t("jobseekers.job_applications.employments.ended_on")
           dd.govuk-summary-list__value = t("jobseekers.job_applications.employments.is_current_role")

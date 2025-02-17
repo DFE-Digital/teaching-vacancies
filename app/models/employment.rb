@@ -11,17 +11,8 @@ class Employment < ApplicationRecord
   validates :organisation, :job_title, :main_duties, :reason_for_leaving, presence: true, if: -> { job? }
   validates :started_on, date: { before: :today }, if: -> { job? }
 
-  validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { is_current_role }, if: -> { job? }
-  validates :ended_on, absence: true, if: -> { job? && is_current_role }
-
-  # Follow the stardard Google deployment pattern for is_current_role:
-  # 1. Add new column
-  # 2. Populate new column alongside old
-  # 3. backfill new column at leisure
-  # 4. start using new column
-  # 5. remove old column
-  # add this once column has been backfilled
-  self.ignored_columns += %i[current_role]
+  validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { is_current_role? }, if: -> { job? }
+  validates :ended_on, absence: true, if: -> { job? && is_current_role? }
 
   def duplicate
     self.class.new(
@@ -37,9 +28,5 @@ class Employment < ApplicationRecord
       subjects:,
       reason_for_leaving:,
     )
-  end
-
-  def current_role?
-    is_current_role
   end
 end

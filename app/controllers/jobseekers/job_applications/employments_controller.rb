@@ -7,8 +7,7 @@ class Jobseekers::JobApplications::EmploymentsController < Jobseekers::BaseContr
     @employment = job_application.employments.job.build
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @employment = job_application.employments.job.build

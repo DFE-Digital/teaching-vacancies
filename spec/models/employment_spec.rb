@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Employment do
-  subject { described_class.new(params) }
+  let(:employment) { described_class.new(params) }
   let(:params) { {} }
 
   it { is_expected.to belong_to(:job_application).optional }
@@ -49,8 +49,8 @@ RSpec.describe Employment do
       let(:params) { {} }
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:started_on, :blank)).to be true
+        expect(employment).not_to be_valid
+        expect(employment.errors.of_kind?(:started_on, :blank)).to be true
       end
     end
 
@@ -58,7 +58,7 @@ RSpec.describe Employment do
       let(:params) { { "started_on(1i)" => "2021", "started_on(2i)" => "01", "started_on(3i)" => "99" } }
 
       it "is invalid" do
-        expect { subject }.to raise_error(ActiveRecord::MultiparameterAssignmentErrors)
+        expect { employment }.to raise_error(ActiveRecord::MultiparameterAssignmentErrors)
       end
     end
 
@@ -66,8 +66,8 @@ RSpec.describe Employment do
       let(:params) { { "started_on(3i)" => "1" } }
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.messages[:ended_on]).to eq(["Enter the date you left this school or organisation"])
+        expect(employment).not_to be_valid
+        expect(employment.errors.messages[:ended_on]).to eq(["Enter the date you left this school or organisation"])
       end
     end
 
@@ -75,8 +75,8 @@ RSpec.describe Employment do
       let(:params) { { "started_on(1i)" => "2121", "started_on(2i)" => "01", "started_on(3i)" => "01" } }
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:started_on, :before)).to be true
+        expect(employment).not_to be_valid
+        expect(employment.errors.of_kind?(:started_on, :before)).to be true
       end
     end
   end
@@ -86,8 +86,8 @@ RSpec.describe Employment do
       let(:params) { { is_current_role: false } }
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:ended_on, :blank)).to be true
+        expect(employment).not_to be_valid
+        expect(employment.errors.of_kind?(:ended_on, :blank)).to be true
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe Employment do
       let(:params) { { is_current_role: false, "ended_on(1i)" => "2021", "ended_on(2i)" => "01", "ended_on(3i)" => "40" } }
 
       it "is invalid" do
-        expect { subject }.to raise_error(ActiveRecord::MultiparameterAssignmentErrors)
+        expect { employment }.to raise_error(ActiveRecord::MultiparameterAssignmentErrors)
       end
     end
 
@@ -109,8 +109,8 @@ RSpec.describe Employment do
       end
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.messages[:ended_on]).to eq(["Enter the date you left this school or organisation"])
+        expect(employment).not_to be_valid
+        expect(employment.errors.messages[:ended_on]).to eq(["Enter the date you left this school or organisation"])
       end
     end
 
@@ -126,8 +126,8 @@ RSpec.describe Employment do
       end
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:ended_on, :before)).to be true
+        expect(employment).not_to be_valid
+        expect(employment.errors.of_kind?(:ended_on, :before)).to be true
       end
     end
 
@@ -147,8 +147,8 @@ RSpec.describe Employment do
       end
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.messages).to eq({ ended_on: ["End date cannot be entered for current role"] })
+        expect(employment).not_to be_valid
+        expect(employment.errors.messages).to eq({ ended_on: ["End date cannot be entered for current role"] })
       end
     end
 
@@ -164,8 +164,8 @@ RSpec.describe Employment do
       end
 
       it "is invalid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors.of_kind?(:ended_on, :on_or_after)).to be true
+        expect(employment).not_to be_valid
+        expect(employment.errors.of_kind?(:ended_on, :on_or_after)).to be true
       end
     end
   end
@@ -186,7 +186,7 @@ RSpec.describe Employment do
     end
 
     it "is valid" do
-      expect(subject).to be_valid
+      expect(employment).to be_valid
     end
 
     context "when ended_on is on the same date as started_on" do
@@ -205,7 +205,7 @@ RSpec.describe Employment do
       end
 
       it "is valid" do
-        expect(subject).to be_valid
+        expect(employment).to be_valid
       end
     end
   end

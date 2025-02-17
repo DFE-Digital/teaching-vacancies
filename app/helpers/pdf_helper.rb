@@ -290,11 +290,11 @@ module PdfHelper
       ["Organisation:", employment.organisation],
       ["Main Duties:", employment.main_duties],
       ["Started on:", employment.started_on.to_formatted_s(:month_year)],
-      ["Current Role:", employment.is_current_role ? "Yes" : "No"],
+      ["Current Role:", employment.is_current_role? ? "Yes" : "No"],
     ]
 
     employment_data << ["Subjects:", employment.subjects] if employment.subjects.present?
-    employment_data << ["Ended on:", employment.ended_on.to_formatted_s(:month_year)] unless employment.is_current_role
+    employment_data << ["Ended on:", employment.ended_on.to_formatted_s(:month_year)] unless employment.is_current_role?
     employment_data << ["Reason for Leaving:", employment.reason_for_leaving]
 
     render_table(pdf, employment_data)

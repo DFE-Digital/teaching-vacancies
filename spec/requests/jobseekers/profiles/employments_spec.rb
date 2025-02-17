@@ -21,8 +21,6 @@ RSpec.describe "Jobseeker profile employments" do
         "started_on(2i)": started_on_month,
         "started_on(1i)": started_on_year,
         is_current_role: current_role,
-        # "ended_on(2i)": ended_on_month,
-        # "ended_on(1i)": ended_on_year,
         main_duties: main_duties,
         reason_for_leaving: reason_for_leaving,
       }.merge(days),
@@ -54,7 +52,7 @@ RSpec.describe "Jobseeker profile employments" do
 
         expect(response).to redirect_to(review_jobseekers_profile_work_history_index_path)
 
-        expect(Employment.order(:created_at).last.is_current_role).to be(true)
+        expect(Employment.order(:created_at).last.is_current_role?).to be(true)
       end
     end
 

@@ -1,13 +1,11 @@
 class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesController
-
   before_action :set_employment, only: %i[edit update destroy]
 
   def new
     @employment = profile.employments.job.build
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @employment = profile.employments.job.build
