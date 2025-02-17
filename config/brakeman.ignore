@@ -47,29 +47,6 @@
       "note": ""
     },
     {
-      "warning_type": "SQL Injection",
-      "warning_code": 0,
-      "fingerprint": "40e544a161015dda458b01305512279098b0cc0591dc86464fec823102bf94bd",
-      "check_name": "SQL",
-      "message": "Possible SQL injection",
-      "file": "app/services/ons_data_import/create_composites.rb",
-      "line": 15,
-      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
-      "code": "ActiveRecord::Base.connection.exec_update(\"\\n        WITH composite_area AS (\\n          SELECT ST_SimplifyPreserveTopology(\\n            ST_Union(area::geometry),\\n            #{0.001})::geography AS geo\\n          FROM location_polygons\\n          WHERE name IN (#{constituents.map do\n ActiveRecord::Base.connection.quote(c.downcase)\n end.join(\", \")})\\n        )\\n        UPDATE location_polygons\\n        SET area=composite_area.geo,\\n            location_type='composite',\\n            centroid=ST_Centroid(composite_area.geo)\\n        FROM composite_area\\n        WHERE id='#{LocationPolygon.find_or_create_by(:name => name).id}'\\n      \")",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "OnsDataImport::CreateComposites",
-        "method": "call"
-      },
-      "user_input": "constituents.map do\n ActiveRecord::Base.connection.quote(c.downcase)\n end.join(\", \")",
-      "confidence": "Medium",
-      "cwe_id": [
-        89
-      ],
-      "note": ""
-    },
-    {
       "warning_type": "Unscoped Find",
       "warning_code": 82,
       "fingerprint": "4555c296b942cffb89636f6e393403f7c6a8918d34ce290871cd44ee9a0a6ab1",
@@ -160,6 +137,29 @@
         285
       ],
       "note": "Support users are meant to be able to see jobseeker profiles"
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "76138ca17e9d6416c6b49d1462d247ca4c3d386810bae1b340a645a133d75709",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/services/ons_data_import/create_composites.rb",
+      "line": 25,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_update(\"\\n      WITH composite_area AS (\\n        SELECT ST_MakeValid(\\n          ST_SimplifyPreserveTopology(\\n            ST_Union(area::geometry),\\n            #{0.001}\\n          ),\\n          'method=structure'\\n        )::geography AS geo\\n        FROM location_polygons\\n        WHERE name IN (#{quoted_constituents.join(\", \")})\\n      )\\n      UPDATE location_polygons\\n      SET area=composite_area.geo,\\n          location_type='composite',\\n          centroid=ST_Centroid(composite_area.geo)\\n      FROM composite_area\\n      WHERE id='#{composite.id}'\\n    \")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "OnsDataImport::CreateComposites",
+        "method": "set_area_data"
+      },
+      "user_input": "quoted_constituents.join(\", \")",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
     },
     {
       "warning_type": "Cross-Site Scripting",

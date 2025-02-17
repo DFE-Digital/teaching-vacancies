@@ -40,13 +40,21 @@ class OnsDataImport::Base
   # This simplification is important because the ONS API returns polygons with a large number of vertices,
   # which makes ST_Buffer operations very computationally expensive.
   #
+  # The "ST_MakeValid" attempts to fix any resulting invalid area prior to store it.
+  # Rhe 'method=structure' parameter builds the new geometry by unioning exterior rings resulting into a single
+  # non-overlapping polygon
+  #
   # The area centroid is precomputed and stored to avoid recomputing it every time it's needed.
   def set_area_data(location_polygon, geometry, type)
     ActiveRecord::Base.connection.exec_update("
       WITH geom AS (
-        SELECT ST_SimplifyPreserveTopology(
-          ST_GeomFromGeoJSON(#{ActiveRecord::Base.connection.quote(geometry)}),
-          #{SIMPLIFICATION_TOLERANCE})::geography AS geo
+        SELECT ST_MakeValid(
+          ST_SimplifyPreserveTopology(
+            ST_GeomFromGeoJSON(#{ActiveRecord::Base.connection.quote(geometry)}),
+            #{SIMPLIFICATION_TOLERANCE}
+          ),
+          'method=structure'
+        )::geography AS geo
       )
       UPDATE location_polygons
       SET area=geom.geo,

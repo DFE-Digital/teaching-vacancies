@@ -16,18 +16,22 @@ RSpec.describe OnsDataImport::CreateComposites do
       subject.call
 
       expect(other_realm.location_type).to eq("composite")
-      expect(other_realm.area.coordinates.sort.flatten).to eq([
-        0.0, -1.0,
-        -1.0, -1.0,
-        -1.0, 0.0,
-        0.0, 0.0,
-        0.0, -1.0,
-        0.0, 1.0,
-        1.0, 1.0,
-        1.0, 0.0,
-        0.0, 0.0,
-        0.0, 1.0
-      ])
+      expect(other_realm.area.coordinates).to contain_exactly(
+        contain_exactly(
+          contain_exactly([-1.0, -1.0],
+                          [-1.0, 0.0],
+                          [0.0, 0.0],
+                          [0.0, -1.0],
+                          [-1.0, -1.0]),
+        ),
+        contain_exactly(
+          contain_exactly([1.0, 1.0],
+                          [1.0, 0.0],
+                          [0.0, 0.0],
+                          [0.0, 1.0],
+                          [1.0, 1.0]),
+        ),
+      )
     end
   end
 end
