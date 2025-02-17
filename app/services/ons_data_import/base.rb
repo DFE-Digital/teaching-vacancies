@@ -4,6 +4,14 @@ class OnsDataImport::Base
 
   PER_PAGE = 20
 
+  # The higher the value, the less vertices the polygon will have. Less vertices means less precision but faster.
+  # In degrees, 0.001 is the equivalent to ~100m.
+  # 0.001 provides a good balance between reducing the number of vertices and maintaining a precise shape for the
+  # polygon (tested original vs simplified outputs in geojson.io).
+  # EG: The original Cornwall polygon from ONS has 125k vertices, the simplified version with 0.001 tolerance has 2.5k
+  # vertices, while retaining the same shape.
+  SIMPLIFICATION_TOLERANCE = 0.001
+
   def call
     (0..).each do |offset|
       features = arcgis_features(offset)
@@ -25,10 +33,20 @@ class OnsDataImport::Base
 
   private
 
+  # Sets the area, location type and centroid for a location polygon coming from the ONS API.
+  #
+  # "ST_SimplifyPreserveTopology" is used to reduce the number of vertices in the polygon while ensuring the resulting
+  # polygon is topologically equivalent to the original.
+  # This simplification is important because the ONS API returns polygons with a large number of vertices,
+  # which makes ST_Buffer operations very computationally expensive.
+  #
+  # The area centroid is precomputed and stored to avoid recomputing it every time it's needed.
   def set_area_data(location_polygon, geometry, type)
     ActiveRecord::Base.connection.exec_update("
       WITH geom AS (
-        SELECT ST_GeomFromGeoJSON(#{ActiveRecord::Base.connection.quote(geometry)}) AS geo
+        SELECT ST_SimplifyPreserveTopology(
+          ST_GeomFromGeoJSON(#{ActiveRecord::Base.connection.quote(geometry)}),
+          #{SIMPLIFICATION_TOLERANCE})::geography AS geo
       )
       UPDATE location_polygons
       SET area=geom.geo,

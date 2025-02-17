@@ -8,7 +8,9 @@ class OnsDataImport::CreateComposites
 
       ActiveRecord::Base.connection.exec_update("
         WITH composite_area AS (
-          SELECT ST_Union(area::geometry)::geography AS geo
+          SELECT ST_SimplifyPreserveTopology(
+            ST_Union(area::geometry),
+            #{OnsDataImport::Base::SIMPLIFICATION_TOLERANCE})::geography AS geo
           FROM location_polygons
           WHERE name IN (#{quoted_constituents.join(', ')})
         )
