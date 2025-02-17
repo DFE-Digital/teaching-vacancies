@@ -13,7 +13,6 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
     context "when adding job preferences" do
       before do
         visit jobseekers_profile_path
-        create(:job_preferences, completed_steps: [], builder_completed: false, jobseeker_profile: jobseeker.jobseeker_profile)
       end
 
       it "allows jobseekers to add job preferences" do
