@@ -1,6 +1,4 @@
 class Jobseekers::JobApplications::BaseController < Jobseekers::BaseController
-  include Jobseekers::Wizardable
-
   helper_method :job_application
 
   def step_process
