@@ -12,7 +12,6 @@ on:
     - 'app/mailers/previewing_emails.md'
     - 'README.md'
     - 'app/assets/stylesheets/README.md'
-    - 'app/components/README.md'
     - '.github/pull_request_template.md'
 
   pull_request:

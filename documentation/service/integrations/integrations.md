@@ -14,4 +14,4 @@ We have 2 types of integrations:
 
 ## Integrations to export our internal vacancies to other job posting services
 
-- [DWP Find a Job service](integrations/dwp-find-a-job.md)
+- [DWP Find a Job service](dwp-find-a-job.md)
