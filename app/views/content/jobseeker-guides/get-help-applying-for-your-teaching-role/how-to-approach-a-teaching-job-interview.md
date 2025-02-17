@@ -27,16 +27,20 @@ These will be used for standard safeguarding checks.
 Plan how you will get to the interview in advance. Do you know the best train to catch, or where the car park is? Think about your appearance too; be you and be comfortable but consider professional clothing to create a positive first impression. 
 
 ## 4. Prepare answers to common interview questions
- Interview styles vary across schools – some may be formal while others may be more conversational. Study the school's website to get a sense of what the school is like. Prepare answers to likely questions and try to do a mock interview with a friend or colleague. Saying your answers out loud is really different to practising in your head. You can never predict all of the questions, but schools might ask:
+Interview styles vary across schools – some may be formal while others may be more conversational. Study the school's website to get a sense of what the school is like. 
+
+Prepare answers to likely questions and try to do a mock interview with a friend or colleague. Saying your answers out loud is really different to practising in your head. 
+
+You can never predict all of the questions, but schools might ask:
 
 * why do you want to work in our school?
 * what are your strongest qualities and why? 
 * what areas do you need to improve on? (Think professionally, not a personality trait)
 * how do you adapt your teaching to ensure all pupils make progress?
 * what would you do if a child told you something that concerned you?
-* tell us about a recent lesson and why it went well.
+* tell us about a recent lesson and why it went well
 
-You may be assessed against the [teachers’ standards](link to new page?) so you might want to prepare clear, strong examples to show how you have met each standards. 
+You may be assessed against the [teachers’ standards](https://www.gov.uk/government/publications/teachers-standards) so you might want to prepare clear, strong examples to show how you have met each standards. 
 
 Take your time answering a question and ask for clarification if needed. 
 
@@ -53,9 +57,9 @@ If you have not had any experience of dealing with a safeguarding issue yourself
 ## 7. Ask the panel questions
 This shows your interest and gives you the opportunity to inform your decision about the role. You could ask:
 
-* What do you like about your school?
-* What are their priorities for the School Improvement Plan (SIP)? How far have they been achieved? What are the biggest challenges?
-* What support is there for teachers?
+* what do you like about your school?
+* what are their priorities for the School Improvement Plan (SIP)? How far have they been achieved? What are the biggest challenges?
+* what support is there for teachers?
 
 ## 8. After your interview
 If you are not offered the role: 
