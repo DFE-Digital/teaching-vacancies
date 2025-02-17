@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_10_105445) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_17_111820) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -318,6 +318,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_10_105445) do
     t.string "has_teacher_reference_number"
     t.string "statutory_induction_complete_details"
     t.string "qts_age_range_and_subject"
+    t.text "qualified_teacher_status_details"
     t.index ["jobseeker_id"], name: "index_jobseeker_profiles_jobseeker_id", unique: true
   end
 

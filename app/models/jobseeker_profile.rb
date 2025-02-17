@@ -39,12 +39,21 @@ class JobseekerProfile < ApplicationRecord
 
   validates :jobseeker, uniqueness: true
 
+  before_save do |profile|
+    unless profile.qualified_teacher_status == "yes"
+      profile.qualified_teacher_status_year = nil
+      profile.teacher_reference_number = nil
+      profile.qts_age_range_and_subject = nil
+    end
+  end
+
   def self.copy_attributes(record, previous_application)
     record.assign_attributes(
       employments: previous_application.employments.map(&:duplicate),
       qualifications: previous_application.qualifications.map(&:duplicate),
       qualified_teacher_status_year: previous_application.qualified_teacher_status_year,
       qualified_teacher_status: previous_application.qualified_teacher_status,
+      qts_age_range_and_subject: previous_application.qts_age_range_and_subject,
     )
   end
 
