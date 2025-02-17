@@ -2,7 +2,7 @@ en:
   activemodel:
     errors:
       models:
-        jobseekers/profile/qualified_teacher_status_form:
+        jobseekers/profiles/qualified_teacher_status_form:
           attributes:
             qualified_teacher_status:
               inclusion: Select yes if you have qualified teacher status (QTS)
@@ -34,7 +34,7 @@ en:
               inclusion: Select yes if you have completed this section
   helpers:
     legend:
-      jobseekers_profile_qualified_teacher_status_form:
+      jobseekers_profiles_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
         has_teacher_reference_number: Do you have a teacher reference number (TRN)?
       jobseekers_job_application_professional_status_form:
@@ -48,7 +48,8 @@ en:
         statutory_induction_complete_details: Additional induction details
         professional_status_section_completed: Have you completed this section?
     label:
-      jobseekers_profile_qualified_teacher_status_form:
+      jobseekers_profiles_qualified_teacher_status_form:
+        qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>
         qualified_teacher_status_options:
           "yes": "Yes"
           "no": "No or not applicable"
@@ -88,5 +89,5 @@ en:
     hint:
       jobseekers_job_application_professional_status_form:
         statutory_induction_complete: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs)
-      jobseekers_profile_qualified_teacher_status_form:
+      jobseekers_profiles_qualified_teacher_status_form:
         statutory_induction_complete: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs)
