@@ -9,7 +9,7 @@
           p.govuk-body.address class="govuk-!-margin-bottom-0"
             = vacancy_full_job_location(vacancy)
         - if vacancy.organisation.logo.attached?
-          .header-with-logo-logo--search-result.right
+          div class="header-with-logo-logo--search-result govuk-!-text-align-right"
             = image_tag(vacancy.organisation.logo, alt: "")
 
       = govuk_summary_list(classes: "govuk-summary-list--no-border search-results__summary-list--compact") do |summary_list|
@@ -46,9 +46,9 @@
           - row.with_value text: format_time_to_datetime_at(vacancy.expires_at), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
         - if @search_coordinates && vacancy.geolocation
-            - summary_list.with_row do |row|
-              - row.with_key text: t("jobs.distance"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
-              - row.with_value text: t("jobs.distance_from_location", distance: vacancy.distance_in_miles_to(@search_coordinates).round(1)), classes: "govuk-body-s govuk-!-padding-bottom-0"
+          - summary_list.with_row do |row|
+            - row.with_key text: t("jobs.distance"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
+            - row.with_value text: t("jobs.distance_from_location", distance: vacancy.distance_in_miles_to(@search_coordinates).round(1)), classes: "govuk-body-s govuk-!-padding-bottom-0"
 
         - summary_list.with_row do |row|
           - row.with_key text: t("jobs.visa_sponsorship_row_title"), classes: "govuk-body-s govuk-!-font-weight-bold govuk-!-padding-bottom-0"
