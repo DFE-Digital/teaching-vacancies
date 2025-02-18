@@ -25,7 +25,7 @@ class Subscription < ApplicationRecord
     phases: ->(vacancy, value) { vacancy.phases.intersect?(value) },
     working_patterns: ->(vacancy, value) { working_pattern_match?(vacancy, value) },
     organisation_slug: ->(vacancy, value) { vacancy.organisations.map(&:slug).include?(value) },
-    keyword: ->(vacancy, value) { vacancy.searchable_content.include? value.downcase.strip },
+    keyword: ->(vacancy, value) { value.downcase.strip.split.all? { |k| vacancy.searchable_content.include? k } },
   }.freeze
 
   class << self
