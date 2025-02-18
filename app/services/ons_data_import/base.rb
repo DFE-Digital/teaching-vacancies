@@ -78,6 +78,9 @@ class OnsDataImport::Base
     response = HTTParty.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
     raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
 
-    JSON.parse(response.to_s)["features"]
+    response_data = JSON.parse(response.to_s)
+    raise "ArcGIS error: #{response_data}" if response_data.key?("error")
+
+    response_data.fetch("features")
   end
 end
