@@ -96,7 +96,7 @@ module Jobseekers::Profiles
     end
 
     def job_preference_record
-      @job_preference_record ||= profile.job_preferences
+      @job_preference_record ||= profile.job_preferences || profile.build_job_preferences
     end
 
     def force_location_added
