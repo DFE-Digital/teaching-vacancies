@@ -2,15 +2,15 @@
   - vacancies.each do |vacancy|
     .search-results__item
       .header-with-logo
-        - if vacancy.organisation.logo.attached?
-          .header-with-logo-logo--search-result
-            = image_tag(vacancy.organisation.logo, alt: "")
         .header-with-logo-title
           h2.govuk-heading-m class="govuk-!-margin-bottom-0"
             span class="govuk-!-margin-right-2" = results_link(vacancy, class: "view-vacancy-link")
             = govuk_tag(text: t("vacancies.listing.enable_job_applications_tag"), colour: "green") if vacancy.enable_job_applications?
           p.govuk-body.address class="govuk-!-margin-bottom-0"
             = vacancy_full_job_location(vacancy)
+        - if vacancy.organisation.logo.attached?
+          .header-with-logo-logo--search-result.right
+            = image_tag(vacancy.organisation.logo, alt: "")
 
       = govuk_summary_list(classes: "govuk-summary-list--no-border search-results__summary-list--compact") do |summary_list|
         - if vacancy.salary?
