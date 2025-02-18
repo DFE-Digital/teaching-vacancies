@@ -233,6 +233,7 @@ en:
           Get jobseekers interested in the role by providing a brief summary of around 400 words.
           You should cover what the role is and who you're looking to recruit.
           The first 20 to 40 words will be shown in search results, so make them stand out.
+        flexi_working_details_provided: Providing details about what you can offer may increase the number of application you receive for this role.
       publishers_job_listing_application_link_form:
         application_link: For example, https://www.example.com
       publishers_job_listing_application_form_form:

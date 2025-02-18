@@ -301,6 +301,8 @@ en:
     further_details:
       blank: Enter further details about the role
       length: The further details about the role must be 300 words or less
+    flexi_working:
+      blank: Enter flexible working details
   include_additional_documents_errors: &include_additional_documents_errors
     include_additional_documents:
       inclusion: Select yes if want to upload additional documents

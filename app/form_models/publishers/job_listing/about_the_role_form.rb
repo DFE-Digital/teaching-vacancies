@@ -10,6 +10,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validates :further_details_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validate :further_details_presence, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validates :flexi_working_details_provided, inclusion: { in: [true, false, "true", "false"] }
+  validate :flexi_working_presence, if: -> { flexi_working_details_provided == "true" }
 
   def self.fields
     %i[
@@ -82,6 +83,12 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     return if remove_html_tags(further_details).present?
 
     errors.add(:further_details, :blank)
+  end
+
+  def flexi_working_presence
+    return if remove_html_tags(flexi_working).present?
+
+    errors.add(:flexi_working, :blank)
   end
 
   def about_school_presence
