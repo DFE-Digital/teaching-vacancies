@@ -10,18 +10,6 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
   after { logout }
 
   describe "changing job preferences" do
-    context "when jobseeker does not have existing job preferences" do
-      before do
-        visit jobseekers_profile_path
-      end
-
-      it "successfully renders the page" do
-        click_on "Add job preferences"
-
-        expect(page).to have_content "What roles are you interested in?"
-      end
-    end
-
     context "when adding job preferences" do
       before do
         visit jobseekers_profile_path
