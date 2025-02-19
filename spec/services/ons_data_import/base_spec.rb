@@ -6,6 +6,6 @@ RSpec.describe OnsDataImport::Base, :vcr do
   let(:name_field) { "CTYUA19NM" }
 
   it "raises an error" do
-    expect { OnsDataImport::Base.call(api_name: api_name, name_field: name_field, valid_locations: []) }.to raise_error RuntimeError
+    expect { described_class.call(api_name: api_name, name_field: name_field, valid_locations: []) }.to raise_error RuntimeError
   end
 end
