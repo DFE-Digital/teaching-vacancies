@@ -48,12 +48,12 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     }
   end
 
-  # Overriding load_form to include :flexi_working_details_provided since it's not part of `self.fields`. This is necessary because 
+  # Overriding load_form to include :flexi_working_details_provided since it's not part of `self.fields`. This is necessary because
   # :flexi_working_details_provided is explicitly defined as a boolean attribute.
   def self.load_form(model)
     fields = self.fields << :flexi_working_details_provided
     model.slice(*fields)
-  end  
+  end
 
   private
 
