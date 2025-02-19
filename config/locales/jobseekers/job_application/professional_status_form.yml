@@ -2,6 +2,20 @@ en:
   activemodel:
     errors:
       models:
+        jobseekers/profiles/qualified_teacher_status_form:
+          attributes:
+            qualified_teacher_status:
+              inclusion: Select yes if you have qualified teacher status (QTS)
+            qualified_teacher_status_year:
+              less_than_or_equal_to: The year your QTS was awarded must be the current year or in the past
+              not_a_number: Enter the year your QTS was awarded
+            statutory_induction_complete:
+              inclusion: Select yes if you have completed your statutory induction year
+            teacher_reference_number:
+              invalid: Enter a teacher reference number (TRN) that is 7 digits long
+              blank: Enter a teacher reference number (TRN) that is 7 digits long
+            has_teacher_reference_number:
+              inclusion: Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.
         jobseekers/job_application/professional_status_form:
           attributes:
             qualified_teacher_status:
@@ -20,6 +34,9 @@ en:
               inclusion: Select yes if you have completed this section
   helpers:
     legend:
+      jobseekers_profiles_qualified_teacher_status_form:
+        qualified_teacher_status: Do you have qualified teacher status (QTS)?
+        has_teacher_reference_number: Do you have a teacher reference number (TRN)?
       jobseekers_job_application_professional_status_form:
         has_teacher_reference_number: "Do you have a teacher reference number (TRN)?"
         has_teacher_reference_number_options:
@@ -31,6 +48,27 @@ en:
         statutory_induction_complete_details: Additional induction details
         professional_status_section_completed: Have you completed this section?
     label:
+      jobseekers_profiles_qualified_teacher_status_form:
+        qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>
+        qualified_teacher_status_options:
+          "yes": "Yes"
+          "no": "No or not applicable"
+          on_track: "I’m on track to receive QTS"
+          non_teacher: "I'm not looking for a teaching job"
+        statutory_induction_complete_options:
+          "no": "No, I have not completed my induction period"
+          "yes": "Yes, I have completed my induction period"
+        has_teacher_reference_number_options:
+          "yes": "Yes"
+          "no": "No"
+        qualified_teacher_status_year: Year QTS was awarded
+        qts_age_range_and_subject: Age range and subject you trained to teach
+        teacher_reference_number: What is your teacher reference number (TRN)?
+        statutory_induction_complete: Have you completed your induction period?
+        statutory_induction_complete_details: Provide more detail, for example, if you have started but not completed your induction, or you are %{link} (optional)
+        statutory_induction_complete_details_hint_text: exempt from completing an induction
+        teacher_reference_number_hint: Schools will only be able to see your TRN if you apply for a role. You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
+        trn_link_text: find your TRN
       jobseekers_job_application_professional_status_form:
         qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>
         qualified_teacher_status_options:
@@ -42,12 +80,14 @@ en:
           "no": "No, I have not completed my induction period"
           "yes": "Yes, I have completed my induction period"
         qualified_teacher_status_year: Year QTS was awarded
+        qts_age_range_and_subject: Age range and subject you trained to teach
         hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}.
-        completed_period_hint: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs).
         link_text: how to get QTS
         professional_status_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section
     hint:
       jobseekers_job_application_professional_status_form:
-        statutory_induction_complete: New teachers before 2021 had to complete a 1 year statutory induction period. New teachers after 2021 have to complete a 2 year statutory induction period.
+        statutory_induction_complete: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs)
+      jobseekers_profiles_qualified_teacher_status_form:
+        statutory_induction_complete: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs)

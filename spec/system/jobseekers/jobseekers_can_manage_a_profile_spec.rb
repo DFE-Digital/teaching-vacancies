@@ -168,6 +168,8 @@ RSpec.describe "Jobseekers can manage their profile" do
         visit jobseekers_profile_path
       end
 
+      let(:subject_ages) { "Primary school particle physics" }
+
       it "allows the jobseeker to edit their QTS status to yes with year achieved" do
         click_link("Add qualified teacher status")
         within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
@@ -176,14 +178,16 @@ RSpec.describe "Jobseekers can manage their profile" do
         within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
           choose "Yes"
         end
-        fill_in "jobseekers_profile_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"
+        fill_in "jobseekers_profiles_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"
         fill_in "What is your teacher reference number (TRN)?", with: "1234567"
+        fill_in "Age range and subject you trained to teach", with: subject_ages
         choose "No, I have not completed my induction period"
-        fill_in "jobseekers-profile-qualified-teacher-status-form-statutory-induction-complete-details-field", with: "I am working on it."
+        fill_in "jobseekers-profiles-qualified-teacher-status-form-statutory-induction-complete-details-field", with: "I am working on it."
         click_on I18n.t("buttons.save_and_continue")
 
         expect(page).to have_content("2019")
         expect(page).to have_content("I am working on it.")
+        expect(page).to have_content(subject_ages)
       end
 
       it "allows the jobseeker to edit their QTS status to no" do

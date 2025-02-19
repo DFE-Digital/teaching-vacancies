@@ -61,6 +61,7 @@
   - updated_at
   :jobseeker_profiles:
   - teacher_reference_number_ciphertext
+  - qualified_teacher_status_details
   :job_preferences:
   - willing_to_relocate
   :job_applications:
