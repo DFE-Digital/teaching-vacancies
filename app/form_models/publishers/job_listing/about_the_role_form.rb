@@ -9,6 +9,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validates :further_details_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validate :further_details_presence, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validates :flexi_working_details_provided, inclusion: { in: [true, false, "true", "false"] }
 
   def self.fields
     %i[
@@ -22,6 +23,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
       safeguarding_information
       further_details_provided
       further_details
+      flexi_working_details_provided
     ]
   end
   attr_accessor(*fields)
@@ -38,6 +40,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
       safeguarding_information:,
       further_details_provided:,
       further_details:,
+      flexi_working_details_provided:,
     }
   end
 

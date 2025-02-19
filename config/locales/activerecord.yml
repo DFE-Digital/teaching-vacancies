@@ -296,6 +296,8 @@ en:
       length: Commitment to safeguarding must be 100 words or less
     further_details_provided:
       inclusion: Select yes if you want to add further details about the role
+    flexi_working_details_provided:
+      inclusion: Select yes if you want to add details about flexible working opportunities you offer
     further_details:
       blank: Enter further details about the role
       length: The further details about the role must be 300 words or less

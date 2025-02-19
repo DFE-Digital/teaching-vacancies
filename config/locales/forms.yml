@@ -546,6 +546,9 @@ en:
         further_details_provided_options:
           false: "No"
           true: "Yes"
+        flexi_working_details_provided_options:
+          false: "No"
+          true: "Yes"
         job_advert: Job advert
         safeguarding_information: Information about your commitment to safeguarding
         safeguarding_information_provided_options:
@@ -836,6 +839,7 @@ en:
       publishers_job_listing_about_the_role_form:
         ect_status: Is this role suitable for an early career teacher (ECT)?
         further_details_provided: Do you want to add further details about the role?
+        flexi_working_details_provided: Do you want to provide details about the flexible working opportunities you offer?
         safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
       publishers_job_listing_application_form_form:
         application_email: Email address to receive applications
