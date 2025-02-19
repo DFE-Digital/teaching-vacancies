@@ -136,6 +136,14 @@ RSpec.describe Subscription do
           end
         end
 
+        context "with multiple keywords" do
+          let(:keyword) { "really nice" }
+
+          it "finds the nice job" do
+            expect(vacancies).to eq([nice_job])
+          end
+        end
+
         context "with keyword caps and trailing space" do
           let(:keyword) { "Nice " }
 
