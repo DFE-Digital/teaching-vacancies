@@ -548,8 +548,8 @@ en:
           false: "No"
           true: "Yes"
         flexi_working_details_provided_options:
-          false: "No"
-          true: "Yes"
+          "false": "No"
+          "true": "Yes"
         job_advert: Job advert
         safeguarding_information: Information about your commitment to safeguarding
         safeguarding_information_provided_options:
