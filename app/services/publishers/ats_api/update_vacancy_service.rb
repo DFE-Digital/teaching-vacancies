@@ -5,25 +5,46 @@ module Publishers
 
       class << self
         def call(vacancy, params)
-          if vacancy.update(sanitised_params(params))
-            { success: true }
+          vacancy.assign_attributes(sanitised_params(params))
+
+          if vacancy.valid?
+            vacancy.save!
+            success_response
+          elsif (conflict = vacancy.find_conflicting_vacancy)
+            conflict_response(conflict, vacancy.errors[:base].first)
           else
-            { success: false, errors: format_errors(vacancy.errors.messages) }
+            validation_error_response(vacancy)
           end
         end
 
         private
 
-        attr_reader :vacancy, :params
-
         def sanitised_params(params)
           organisations = fetch_organisations(params[:schools])
-
           params.except(:schools).merge(organisations: organisations)
         end
 
-        def format_errors(errors)
-          errors.flat_map { |attr, messages| messages.map { |msg| "#{attr}: #{msg}" } }
+        def conflict_response(conflict_vacancy, error_message)
+          {
+            status: :conflict,
+            json: {
+              error: error_message,
+              link: Rails.application.routes.url_helpers.vacancy_url(conflict_vacancy),
+            },
+          }
+        end
+
+        def success_response
+          { success: true }
+        end
+
+        def validation_error_response(vacancy)
+          {
+            success: false,
+            errors: vacancy.errors.messages.flat_map do |attr, messages|
+              messages.map { |message| "#{attr}: #{message}" }
+            end,
+          }
         end
       end
     end
