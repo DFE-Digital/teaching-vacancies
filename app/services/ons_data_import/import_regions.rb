@@ -1,13 +1,9 @@
 class OnsDataImport::ImportRegions < OnsDataImport::Base
-  def api_name
-    "regions"
-  end
-
-  def name_field
-    "GOR10NM"
-  end
-
-  def in_scope?(location_name)
-    DOWNCASE_ONS_REGIONS.include?(location_name)
+  class << self
+    def call
+      super(api_name: "regions",
+            name_field: "GOR10NM",
+            valid_locations: DOWNCASE_ONS_REGIONS)
+    end
   end
 end
