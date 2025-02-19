@@ -26,3 +26,32 @@ For backfilling the whole DB into analytics (**very resource/time intensive**), 
 ```
 bundle exec rails dfe:analytics:import_all_entities
 ```
+
+### Copying files from a kubernetes pod to the developer machine
+
+[Article](https://spacelift.io/blog/kubectl-cp) with detailed instructions and examples.
+
+`kubectl cp -n <namespace> <pod-name>:<path> <destination-on-local-system>`
+
+Example:
+`kubectl cp -n tv-development  teaching-vacancies-review-pr-7433-744c5c9b4b-ckxxd:jobseeker_emails.txt ./file.txt`
+
+### Exporting SQL query outputs from service DB to the developer machine as CSV file
+
+You will need kounduit
+If not already setup, you can install it using the project Maefile. From the project's root:
+```
+ make bin/konduit.sh
+```
+Connect to the DB PSQL console:
+```
+bin/konduit.sh teaching-vacancies-production -- psql
+```
+From the PSQL console, execute a query:
+```
+COPY (
+  SELECT column/s
+  FROM table
+  WHERE condition
+) TO '/local/path/filename.csv' WITH CSV HEADER;
+```
