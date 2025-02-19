@@ -50,7 +50,7 @@
           rows: 5, required: true, aria: { hidden: false }), value: form.school_offer,
           field_name: "publishers_job_listing_about_the_role_form[school_offer]", hint: t("jobs.school_offer.hint"),
           label: { text: t("jobs.school_offer.publisher"), size: "s", id: "school-offer-label" })
-      
+
       = f.govuk_radio_buttons_fieldset :flexi_working_details_provided, legend: { size: "m", tag: nil }, class: ["flexi_working_details_provided"] do
         = f.govuk_radio_button :flexi_working_details_provided, "true" do
           = editor(form_input: f.govuk_text_area(:flexi_working,
