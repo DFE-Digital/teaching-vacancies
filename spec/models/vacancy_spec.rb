@@ -52,10 +52,10 @@ RSpec.describe Vacancy do
         green_school = create(:school, name: "Green school", town: "Greenway", county: "Mars")
         blue_school = create(:school, name: "Blue school")
 
-        first_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [blue_school])
-        second_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school])
-        third_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school])
-        fourth_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school])
+        first_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [blue_school], expires_at: 1.day.from_now)
+        second_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school], expires_at: 2.day.from_now)
+        third_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school], expires_at: 3.day.from_now)
+        fourth_maths_teacher = create(:vacancy, :published, job_title: "Maths Teacher", organisations: [green_school], expires_at: 4.day.from_now)
 
         expect(first_maths_teacher.slug).to eq("maths-teacher")
         expect(second_maths_teacher.slug).to eq("maths-teacher-green-school")
