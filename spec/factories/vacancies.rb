@@ -107,7 +107,6 @@ FactoryBot.define do
     end
 
     trait :central_office do
-      phase { "multiple_phases" }
       organisations { build_list(:trust, 1) }
     end
 

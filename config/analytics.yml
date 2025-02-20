@@ -404,7 +404,6 @@ shared:
     - job_location
     - job_roles
     - starts_asap
-    - phase
     - pay_scale
     - receive_applications
     - application_email
