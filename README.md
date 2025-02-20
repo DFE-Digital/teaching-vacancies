@@ -12,7 +12,7 @@ Vacancies service, a Ruby on Rails application with PostgreSQL and Redis backing
 
 Welcome to the team! 🐯
 
-You should have been added to our Github team ahead of time, if not remind your delivery manager or
+You should have been added to our Github team ahead of time, if not, remind your delivery manager or
 tech lead to do that and also [complete the other onboarding steps](documentation/team/onboarding.md)!
 
 ## Project documentation
