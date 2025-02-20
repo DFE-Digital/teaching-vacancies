@@ -99,8 +99,6 @@
     name: updated_at
     value_before_type_cast: 2024-11-28 23:00:43.233243000 Z
   - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: readable_phases
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: url_override
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: region
@@ -249,8 +247,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: updated_at
     value_before_type_cast: 2024-11-28 23:00:53.290075000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: readable_phases
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: url_override
   - !ruby/object:ActiveModel::Attribute::FromDatabase
@@ -402,8 +398,6 @@
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: updated_at
     value_before_type_cast: 2024-11-28 23:00:56.309950000 Z
-  - !ruby/object:ActiveModel::Attribute::FromDatabase
-    name: readable_phases
   - !ruby/object:ActiveModel::Attribute::FromDatabase
     name: url_override
   - !ruby/object:ActiveModel::Attribute::FromDatabase

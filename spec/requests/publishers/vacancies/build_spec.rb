@@ -18,7 +18,7 @@ RSpec.describe "Job applications build" do
     context "when the vacancy has been published" do
       context "when dependent steps have been made invalid" do
         context "when changing the job location" do
-          let(:vacancy) { create(:vacancy, :published, phase: "nursery", organisations: [school_one]) }
+          let(:vacancy) { create(:vacancy, :published, phases: ["nursery"], organisations: [school_one]) }
 
           before do
             allow(vacancy).to receive(:allow_key_stages?).and_return(true)
@@ -75,7 +75,7 @@ RSpec.describe "Job applications build" do
         end
 
         context "when changing the education_phase" do
-          let(:vacancy) { create(:vacancy, :published, phase: "nursery", organisations: [school_without_phase]) }
+          let(:vacancy) { create(:vacancy, :published, phases: ["nursery"], organisations: [school_without_phase]) }
 
           before { patch(organisation_job_build_path(vacancy.id, :education_phases, params)) }
 

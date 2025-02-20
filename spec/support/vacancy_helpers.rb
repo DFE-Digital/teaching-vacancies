@@ -188,7 +188,6 @@ module VacancyHelpers
     verify_job_locations(vacancy)
 
     expect(page).to have_content(vacancy.readable_job_roles)
-    expect(page).to have_content(vacancy.phase&.humanize) if vacancy.phase.present?
     expect(page).to have_content(vacancy.job_title)
     expect(page).to have_content(vacancy.readable_key_stages) if vacancy.key_stages.present?
     expect(page).to have_content(vacancy.readable_subjects) if vacancy.subjects.any?

@@ -147,7 +147,6 @@ RSpec.describe ImportFromVacancySourceJob do
           "part_time_details" => nil,
           "pay_scale" => "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
           "personal_statement_guidance" => "Maxime blanditiis quos. Cum officia facilis. Et et quod. Dolore id ut. Id aut quia.",
-          "phase" => nil,
           "phases" => [],
           "publish_on" => Date.today.strftime("%Y-%m-%d"),
           "publisher_id" => nil,
