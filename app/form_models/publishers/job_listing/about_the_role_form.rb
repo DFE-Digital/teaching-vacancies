@@ -12,7 +12,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validates :further_details_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validate :further_details_presence, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validates :flexi_working_details_provided, inclusion: { in: [true, false] }
-  validate :flexi_working_presence, if: -> { flexi_working_details_provided }
+  validate :flexi_working_presence, if: -> { flexi_working_details_provided == true }
 
   attribute :flexi_working_details_provided, :boolean
 

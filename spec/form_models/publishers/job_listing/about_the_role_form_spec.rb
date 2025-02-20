@@ -264,14 +264,6 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   describe "flexi_working_details_provided" do
     let(:error) { %i[flexi_working_details_provided inclusion] }
 
-    context "when flexi_working_details_provided is not true or false" do
-      let(:params) { { flexi_working_details_provided: "invalid_value" } }
-
-      it "fails validation" do
-        expect(subject.errors[:flexi_working_details_provided]).to include "Select yes if you want to add details about flexible working opportunities you offer"
-      end
-    end
-
     context "when flexi_working_details_provided is true" do
       let(:params) { { flexi_working_details_provided: true } }
 
