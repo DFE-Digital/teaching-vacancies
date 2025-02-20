@@ -15,23 +15,24 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validate :flexi_working_presence, if: -> { flexi_working_details_provided == true }
 
   attribute :flexi_working_details_provided, :boolean
+  attribute :job_advert
+  attribute :about_school
+  attribute :ect_status
+  attribute :skills_and_experience
+  attribute :school_offer
+  attribute :flexi_working
+  attribute :safeguarding_information_provided
+  attribute :safeguarding_information
+  attribute :further_details_provided
+  attribute :further_details
 
-  def self.fields
-    %i[
-      job_advert
-      about_school
-      ect_status
-      skills_and_experience
-      school_offer
-      flexi_working
-      safeguarding_information_provided
-      safeguarding_information
-      further_details_provided
-      further_details
-    ]
+  class << self
+    # Overriding load_form because we use attributes in this form rather than defining the fields like we do in other forms. 
+    # This is necessary as we need to define flexi_working_details_provided explicitly as a boolean.
+    def load_form(model)
+      model.slice(*attribute_names)
+    end
   end
-  attr_accessor(*fields)
-
   def params_to_save
     {
       job_advert:,
@@ -46,13 +47,6 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
       further_details:,
       flexi_working_details_provided:,
     }
-  end
-
-  # Overriding load_form to include :flexi_working_details_provided since it's not part of `self.fields`. This is necessary because
-  # :flexi_working_details_provided is explicitly defined as a boolean attribute.
-  def self.load_form(model)
-    fields = self.fields << :flexi_working_details_provided
-    model.slice(*fields)
   end
 
   private
