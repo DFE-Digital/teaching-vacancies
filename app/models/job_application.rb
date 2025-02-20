@@ -91,9 +91,6 @@ class JobApplication < ApplicationRecord
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents
 
-  # TODO: drop these columns once this been released
-  self.ignored_columns += %w[training_and_cpds_section_completed employment_history_section_completed qualifications_section_completed]
-
   def name
     "#{first_name} #{last_name}"
   end
