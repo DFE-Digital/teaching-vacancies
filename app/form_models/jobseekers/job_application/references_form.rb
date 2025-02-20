@@ -23,7 +23,7 @@ module Jobseekers
 
       def at_least_one_most_recent_employer
         return if references.any?(&:is_most_recent_employer)
-      
+
         errors.add(:references, :must_include_most_recent_employer)
       end
     end
