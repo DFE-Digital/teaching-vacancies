@@ -27,7 +27,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   attribute :further_details
 
   class << self
-    # Overriding load_form because we use attributes in this form rather than defining the fields like we do in other forms. 
+    # Overriding load_form because we use attributes in this form rather than defining the fields like we do in other forms.
     # This is necessary as we need to define flexi_working_details_provided explicitly as a boolean.
     def load_form(model)
       model.slice(*attribute_names)
