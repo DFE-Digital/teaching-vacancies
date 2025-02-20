@@ -17,9 +17,15 @@ module Jobseekers
       end
 
       attribute :references
-      validates :references, length: { minimum: 2 }, if: -> { references_section_completed }
+      validate :at_least_one_most_recent_employer, if: -> { references_section_completed }
 
       completed_attribute(:references)
+
+      def at_least_one_most_recent_employer
+        return if references.any?(&:is_most_recent_employer)
+      
+        errors.add(:references, :must_include_most_recent_employer)
+      end
     end
   end
 end
