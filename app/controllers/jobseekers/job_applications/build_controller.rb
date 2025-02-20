@@ -132,15 +132,9 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def update_or_create_jobseeker_profile!
     if current_jobseeker.jobseeker_profile.nil?
-      current_jobseeker.create_jobseeker_profile(
-        teacher_reference_number: form_params[:teacher_reference_number],
-        has_teacher_reference_number: form_params[:has_teacher_reference_number],
-      )
+      current_jobseeker.create_jobseeker_profile!(form_params.slice(:teacher_reference_number, :has_teacher_reference_number, :qualified_teacher_status))
     else
-      current_jobseeker.jobseeker_profile.update(
-        teacher_reference_number: form_params[:teacher_reference_number],
-        has_teacher_reference_number: form_params[:has_teacher_reference_number],
-      )
+      current_jobseeker.jobseeker_profile.update!(form_params.slice(:teacher_reference_number, :has_teacher_reference_number, :qualified_teacher_status))
     end
   end
 
