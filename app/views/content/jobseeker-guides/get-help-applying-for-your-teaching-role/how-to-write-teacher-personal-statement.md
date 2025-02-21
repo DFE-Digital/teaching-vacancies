@@ -10,9 +10,9 @@ card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teachin
 
 Your personal statement is your first opportunity to show the school you’re a great fit for the job, and gets you closer to being shortlisted for an interview.
 
-It should be:
+We recommend that your personal statement is:
 
-* no more than 2 pages long, or around 1,300 words
+* approximately 2 pages long
 * written in first person
 * checked for spelling and grammar mistakes
 * proofread before being sent to the school
@@ -26,7 +26,7 @@ Use your introductory paragraph to outline the reasons why you are a good fit fo
 
 You can tailor your personal statement using information from the school's website, such as their ethos and values.
 
-You may want to include examples that show you meet the [teachers' standards](https://www.gov.uk/government/publications/teachers-standards?). Make sure your examples are detailed and concise.
+You may want to include examples that show you meet the [teachers' standards](https://www.gov.uk/government/publications/teachers-standards?). Try to make your examples detailed and concise.
 
 ## Show how you meet the job description criteria
 Share examples that show how you meet the criteria in the job description. Focus on meeting the essential criteria but include examples for the desirable criteria if you can, too. 
