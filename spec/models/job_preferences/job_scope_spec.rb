@@ -91,7 +91,7 @@ RSpec.describe JobPreferences::JobScope do
     end
 
     context "with some of the jobseeker phases matching vacancy phases" do
-      let(:jobseeker_phases) { %w[primary nursery]  }
+      let(:jobseeker_phases) { %w[primary nursery] }
 
       it "returns any vacancies with all their phases included by the jobseeker phases" do
         expect(job_scope.call).to contain_exactly(vacancy3)

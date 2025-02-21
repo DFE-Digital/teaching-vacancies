@@ -44,7 +44,7 @@ users.each do |user|
 end
 
 # Vacancies at Bexleyheath school
-attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.readable_phase], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
+attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.school_readable_phase], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
 6.times { FactoryBot.create(:vacancy, :for_seed_data, :published, **attrs) }
 2.times { FactoryBot.create(:vacancy, :for_seed_data, :published, :no_tv_applications, **attrs) }
 4.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }

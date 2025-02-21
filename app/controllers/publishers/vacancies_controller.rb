@@ -25,11 +25,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def create
     vacancy = Vacancy.create!(publisher: current_publisher, publisher_organisation: current_organisation, organisations: [current_organisation])
 
-    if current_organisation.school?
-      vacancy.update(organisations: [current_organisation])
-      if current_organisation.readable_phase && School::PHASE_TO_KEY_STAGES_MAPPINGS.keys.include?(current_organisation.readable_phase.to_sym)
-        vacancy.update(phases: [current_organisation.readable_phase])
-      end
+    if current_organisation.school? && (current_organisation.phase && current_organisation.phase.in?(%w[primary secondary nursery sixth_form_or_college]))
+      vacancy.update!(phases: [current_organisation.phase])
     end
 
     redirect_to organisation_job_build_path(vacancy.id, :job_location)

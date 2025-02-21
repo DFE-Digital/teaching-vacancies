@@ -204,18 +204,18 @@ class Vacancy < ApplicationRecord
     enable_job_applications? && published? && !pending?
   end
 
-  KS_ALLOWED_STAGES = %w[primary secondary through]
+  KS_ALLOWED_STAGES = %w[primary secondary through].freeze
   KS_ALLOWED_ROLES = %w[teacher headteacher deputy_headteacher assistant_headteacher
-                       head_of_year_or_phase head_of_department_or_curriculum teaching_assistant]
+                        head_of_year_or_phase head_of_department_or_curriculum teaching_assistant].freeze
 
   def allow_key_stages?
     phases.intersect?(KS_ALLOWED_STAGES) && job_roles.intersect?(KS_ALLOWED_ROLES)
   end
 
   def allow_phase_to_be_set?
-    school_phases = organisations.schools.filter_map(&:readable_phase).uniq
+    school_phases = organisations.schools.filter_map(&:phase).uniq
 
-    (school_phases - %w[middle]).none?
+    !(school_phases.intersect? %w[nursery primary secondary sixth_form_or_college])
   end
 
   def allow_subjects?
