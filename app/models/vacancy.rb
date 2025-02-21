@@ -101,9 +101,12 @@ class Vacancy < ApplicationRecord
   scope :search_by_location, VacancyLocationQuery
   scope :search_by_full_text, VacancyFullTextSearchQuery
 
+  validates :external_reference,
+            uniqueness: { scope: :publisher_ats_api_client_id },
+            if: -> { publisher_ats_api_client_id.present? && external_reference.present? }
+
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
-  validate :no_conflict_vacancy, if: -> { publisher_ats_api_client_id.present? && external_reference.present? }
   validate :no_duplicate_vacancy, if: -> { job_title.present? && expires_at.present? && organisation_ids.present? }
 
   validates_with ExternalVacancyValidator, if: :external?
@@ -309,12 +312,6 @@ class Vacancy < ApplicationRecord
     return unless persisted? && listed? && enable_job_applications_changed?
 
     errors.add(:enable_job_applications, :cannot_be_changed_once_listed)
-  end
-
-  def no_conflict_vacancy
-    if find_conflict_vacancy
-      errors.add(:base, "A vacancy with the provided ATS client ID and external reference already exists.")
-    end
   end
 
   def no_duplicate_vacancy

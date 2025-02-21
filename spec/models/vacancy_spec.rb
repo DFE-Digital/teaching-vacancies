@@ -705,7 +705,7 @@ RSpec.describe Vacancy do
         create(:vacancy, :external, conflict_attributes)
 
         expect(vacancy).not_to be_valid
-        expect(vacancy.errors[:base])
+        expect(vacancy.errors[:external_reference])
           .to include("A vacancy with the provided ATS client ID and external reference already exists.")
       end
 

@@ -11,7 +11,7 @@ module Publishers
             vacancy.save!
             success_response
           elsif (conflict = vacancy.find_conflicting_vacancy)
-            conflict_response(conflict, vacancy.errors[:base].first)
+            conflict_response(conflict, vacancy.errors[:base].first || vacancy.errors[:external_reference].first)
           else
             validation_error_response(vacancy)
           end
