@@ -15,7 +15,7 @@ Where possible, you should contact the school by email, which can usually be fou
 
 ## What to include in your CV 
  
-Your CV should be no longer than 2 pages and include: 
+Typically CVs are no longer than 2 pages and include: 
 
 * your contact details and Teacher Reference Number (TRN), if you have one  
 * correct spelling, punctuation and grammar  
@@ -29,7 +29,7 @@ Your CV should be no longer than 2 pages and include:
  
 [DBS checks](https://www.gov.uk/government/collections/dbs-checking-service-guidance--2?) (formerly CRB checks) are records of a person’s criminal convictions, cautions, reprimands and warnings. 
   
-Some schools may ask you to complete a DBS check before they let you to join the classroom for experience. If you have a recent DBS certificate, let the school know as they may accept it.  
+Some schools may ask you to complete a DBS check before they let you join the classroom for experience. If you have a recent DBS certificate, let the school know as they may accept it.  
  
 Some schools may allow an initial visit without a DBS, provided you’re: 
 
