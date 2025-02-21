@@ -111,17 +111,17 @@ namespace :ons do
 
   desc "Import ONS counties"
   task import_counties: :environment do
-    OnsDataImport::ImportCounties.new.call
+    OnsDataImport::ImportCounties.call
   end
 
   desc "Import ONS cities"
   task import_cities: :environment do
-    OnsDataImport::ImportCities.new.call
+    OnsDataImport::ImportCities.call
   end
 
   desc "Import ONS regions"
   task import_regions: :environment do
-    OnsDataImport::ImportRegions.new.call
+    OnsDataImport::ImportRegions.call
   end
 
   desc "Create composites from ONS polygons"

@@ -12,41 +12,42 @@ class OnsDataImport::Base
   # vertices, while retaining the same shape.
   SIMPLIFICATION_TOLERANCE = 0.001
 
-  def call
-    (0..).each do |offset|
-      features = arcgis_features(offset)
-      break if features.blank?
+  class << self
+    def call(api_name:, name_field:, valid_locations:)
+      (0..).each do |offset|
+        features = arcgis_features(offset: offset, name_field: name_field, api_name: api_name)
+        break if features.blank?
 
-      features.each do |feature|
-        name = feature["properties"][name_field].downcase
-        next unless in_scope?(name)
+        features.each do |feature|
+          name = feature["properties"][name_field].downcase
+          next unless valid_locations.include?(name)
 
-        location_polygon = LocationPolygon.find_or_create_by(name: name)
-        type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[name]
-        geometry = feature["geometry"].to_json
+          location_polygon = LocationPolygon.find_or_create_by(name: name)
+          type = LOCATIONS_MAPPED_TO_HUMAN_FRIENDLY_TYPES[name]
+          geometry = feature["geometry"].to_json
 
-        Rails.logger.info("Persisting new area data for '#{name}' (#{type})")
-        set_area_data(location_polygon, geometry, type)
+          Rails.logger.info("Persisting new area data for '#{name}' (#{type})")
+          set_area_data(location_polygon, geometry, type)
+        end
       end
     end
-  end
 
-  private
+    private
 
-  # Sets the area, location type and centroid for a location polygon coming from the ONS API.
-  #
-  # "ST_SimplifyPreserveTopology" is used to reduce the number of vertices in the polygon while ensuring the resulting
-  # polygon is topologically equivalent to the original.
-  # This simplification is important because the ONS API returns polygons with a large number of vertices,
-  # which makes ST_Buffer operations very computationally expensive.
-  #
-  # The "ST_MakeValid" attempts to fix any resulting invalid area prior to store it.
-  # Rhe 'method=structure' parameter builds the new geometry by unioning exterior rings resulting into a single
-  # non-overlapping polygon
-  #
-  # The area centroid is precomputed and stored to avoid recomputing it every time it's needed.
-  def set_area_data(location_polygon, geometry, type)
-    ActiveRecord::Base.connection.exec_update("
+    # Sets the area, location type and centroid for a location polygon coming from the ONS API.
+    #
+    # "ST_SimplifyPreserveTopology" is used to reduce the number of vertices in the polygon while ensuring the resulting
+    # polygon is topologically equivalent to the original.
+    # This simplification is important because the ONS API returns polygons with a large number of vertices,
+    # which makes ST_Buffer operations very computationally expensive.
+    #
+    # The "ST_MakeValid" attempts to fix any resulting invalid area prior to store it.
+    # Rhe 'method=structure' parameter builds the new geometry by unioning exterior rings resulting into a single
+    # non-overlapping polygon
+    #
+    # The area centroid is precomputed and stored to avoid recomputing it every time it's needed.
+    def set_area_data(location_polygon, geometry, type)
+      ActiveRecord::Base.connection.exec_update("
       WITH geom AS (
         SELECT ST_MakeValid(
           ST_SimplifyPreserveTopology(
@@ -63,21 +64,27 @@ class OnsDataImport::Base
       FROM geom
       WHERE id='#{location_polygon.id}'
     ")
-  end
+    end
 
-  def arcgis_features(offset)
-    params = [
-      "where=1%3D1",
-      "outSR=4326",
-      "f=pgeojson",
-      "outFields=#{name_field}",
-      "resultRecordCount=#{PER_PAGE}",
-      "resultOffset=#{offset * PER_PAGE}",
-    ].join("&")
+    def arcgis_features(offset:, name_field:, api_name:)
+      params = [
+        "where=1%3D1",
+        "outSR=4326",
+        "f=pgeojson",
+        "outFields=#{name_field}",
+        "resultRecordCount=#{PER_PAGE}",
+        "resultOffset=#{offset * PER_PAGE}",
+      ].join("&")
 
-    response = HTTParty.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
-    raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
+      response = HTTParty.get("#{ARCGIS_BASE_URL}#{api_name}/FeatureServer/0/query?#{params}")
+      # :nocov:
+      raise "Unexpected ArcGIS response: #{response.code}" unless response.success?
+      # :nocov:
 
-    JSON.parse(response.to_s)["features"]
+      response_data = JSON.parse(response.to_s)
+      raise "ArcGIS error: #{response_data['error']}" if response_data.key?("error")
+
+      response_data.fetch("features")
+    end
   end
 end
