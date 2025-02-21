@@ -20,7 +20,6 @@ You might find it helpful to:
 * update your knowledge by engaging with subject organisations – if you have previously taught or trained to teach in the UK, a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers?) can recommend which ones you should consider contacting
 
 ## Prepare to return to primary teaching
-
 If you are thinking about returning to primary teaching, you should:
 
 * read the key stage (KS) 1 and 2 [national curriculum](https://www.gov.uk/government/publications/national-curriculum-in-england-primary-curriculum?).
