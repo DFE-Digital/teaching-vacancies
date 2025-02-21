@@ -95,9 +95,6 @@ shared:
   primary-school-jobs:
     phases:
       - primary
-  middle-school-jobs:
-    phases:
-      - middle
   secondary-school-jobs:
     phases:
       - secondary

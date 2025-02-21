@@ -107,4 +107,8 @@ module OrganisationsHelper
       ].join.html_safe
     end
   end
+
+  def school_readable_phase(school)
+    School::READABLE_PHASE_MAPPINGS.fetch(school.phase.to_sym).capitalize
+  end
 end
