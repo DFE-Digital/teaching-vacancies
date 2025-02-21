@@ -40,11 +40,11 @@ You can never predict all of the questions, but schools might ask:
 * what would you do if a child told you something that concerned you?
 * tell us about a recent lesson and why it went well
 
-You may be assessed against the [teachers’ standards](https://www.gov.uk/government/publications/teachers-standards) so you might want to prepare clear, strong examples to show how you have met each standards. 
+You may be assessed against the [teachers’ standards](https://www.gov.uk/government/publications/teachers-standards) so you might want to prepare clear, strong examples to show how you have met each standard. 
 
 Take your time answering a question and ask for clarification if needed. 
 
-## 5. Prepare for a teaching interview lessons
+## 5. Prepare for a teaching interview lesson
 You’ll likely be asked to teach a lesson as part of your interview. 
 
 Read advice from experienced school leaders on how to best [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/prepare-for-a-teaching-job-interview-lesson).
