@@ -97,7 +97,6 @@ en:
         education_phase_options:
           nursery: "Nursery"
           primary: "Primary school"
-          middle: "Middle school"
           secondary: "Secondary school"
           sixth_form_or_college: "Sixth form or college"
           through: "Through school"
@@ -263,12 +262,11 @@ en:
         phase:
           label: Education phase
           values:
-            middle: Middle school
             nursery: Nursery
             primary: Primary school
             secondary: Secondary school
             sixth_form_or_college: Sixth form or college
-            through: Through
+            through: All through school
             middle_deemed_secondary: Middle deamed secondary school
             middle_deemed_primary: Middle deamed primary school
         safeguarding_information:

@@ -60,10 +60,10 @@ RSpec.describe SubscriptionPresenter do
     end
 
     context "with the phases filter" do
-      let(:search_criteria) { { phases: %w[secondary middle] } }
+      let(:search_criteria) { { phases: %w[secondary nursery] } }
 
       it "formats and returns the phases" do
-        expect(presenter.filtered_search_criteria["education_phases"]).to eq("Secondary school, Middle school")
+        expect(presenter.filtered_search_criteria["education_phases"]).to eq("Secondary school, Nursery")
       end
     end
 

@@ -16,7 +16,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
 
     params.require(:publishers_job_listing_job_location_form)
           .permit(organisation_ids: [])
-          .merge(phases: organisations.schools.filter_map(&:readable_phase).uniq)
+          .merge(phases: organisations.schools.filter_map { |o| o.phase if o.phase.in? Vacancy::SCHOOL_PHASES_MATCHING_VACANCY_PHASES }.uniq)
           .merge(completed_steps: completed_steps)
   end
 

@@ -30,7 +30,7 @@ class VacancyFilterQuery < ApplicationQuery
     working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
     built_scope = add_working_patterns_filters(working_patterns, built_scope)
 
-    built_scope = built_scope.with_any_of_phases(phases(filters[:phases])) if phases(filters[:phases]).present?
+    built_scope = built_scope.with_any_of_phases(filters[:phases]) if filters[:phases].present?
 
     built_scope
   end
@@ -88,13 +88,6 @@ class VacancyFilterQuery < ApplicationQuery
     return if filter.blank?
 
     map_legacy_job_roles(filter).reject { |job_role| Vacancy.job_roles.exclude? job_role } # Avoids exceptions raised by ArrayEnum when the job role is not valid
-  end
-
-  def phases(filter)
-    filter&.map { |phase| phase.in?(%w[middle_deemed_secondary middle_deemed_primary]) ? "middle" : phase }
-          &.map { |phase| phase == "all_through" ? "through" : phase }
-          &.map { |phase| phase.in?(%w[sixteen_plus 16-19]) ? "sixth_form_or_college" : phase }
-          &.reject { |phase| phase.in? %w[not_applicable] }
   end
 
   def fix_legacy_working_patterns(working_patterns)

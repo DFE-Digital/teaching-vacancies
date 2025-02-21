@@ -25,8 +25,8 @@ class School < Organisation
     not_applicable: nil,
     nursery: "nursery",
     primary: "primary",
-    middle_deemed_primary: "middle",
-    middle_deemed_secondary: "middle",
+    middle_deemed_primary: "primary",
+    middle_deemed_secondary: "secondary",
     secondary: "secondary",
     sixth_form_or_college: "sixth_form_or_college",
     through: "through",
@@ -41,10 +41,6 @@ class School < Organisation
     sixth_form_or_college: %i[ks5],
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
   }.freeze
-
-  def readable_phase
-    READABLE_PHASE_MAPPINGS[phase.to_sym]
-  end
 
   def religious_character
     return if !respond_to?(:gias_data) || gias_data.nil?

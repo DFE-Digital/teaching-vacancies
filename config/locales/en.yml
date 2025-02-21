@@ -286,7 +286,6 @@ en:
         phases:
           nursery: Nursery
           primary: Primary school
-          middle: Middle school
           secondary: Secondary school
           sixth_form_or_college: Sixth form or college
           through: Through school
