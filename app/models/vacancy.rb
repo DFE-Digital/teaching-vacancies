@@ -101,8 +101,14 @@ class Vacancy < ApplicationRecord
   scope :search_by_location, VacancyLocationQuery
   scope :search_by_full_text, VacancyFullTextSearchQuery
 
+  validates :external_reference,
+            uniqueness: { scope: :publisher_ats_api_client_id },
+            if: -> { publisher_ats_api_client_id.present? && external_reference.present? }
+
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
+  validate :no_duplicate_vacancy, if: -> { job_title.present? && expires_at.present? && organisation_ids.present? }
+
   validates_with ExternalVacancyValidator, if: :external?
   validates :organisations, presence: true
 
@@ -282,6 +288,10 @@ class Vacancy < ApplicationRecord
     job_roles.intersect?(%w[teacher head_of_year_or_phase head_of_department_or_curriculum sendco other_leadership])
   end
 
+  def find_conflicting_vacancy
+    find_conflict_vacancy || find_duplicate_vacancy
+  end
+
   private
 
   def calculate_distance(search_coordinates, geolocation)
@@ -302,6 +312,28 @@ class Vacancy < ApplicationRecord
     return unless persisted? && listed? && enable_job_applications_changed?
 
     errors.add(:enable_job_applications, :cannot_be_changed_once_listed)
+  end
+
+  def no_duplicate_vacancy
+    if find_duplicate_vacancy
+      errors.add(:base, "A vacancy with the same job title, expiry date, and organisation already exists.")
+    end
+  end
+
+  def find_conflict_vacancy
+    Vacancy.where(
+      publisher_ats_api_client_id: publisher_ats_api_client_id,
+      external_reference: external_reference,
+    ).where.not(id: id).first
+  end
+
+  def find_duplicate_vacancy
+    Vacancy.joins(:organisations)
+      .where(
+        job_title: job_title,
+        expires_at: expires_at,
+        organisations: { id: organisation_ids },
+      ).where.not(id: id).distinct.first
   end
 
   # This method is used as a callback when either:

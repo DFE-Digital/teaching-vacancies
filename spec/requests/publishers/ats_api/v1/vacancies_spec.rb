@@ -45,7 +45,9 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:school) { create(:school) }
 
         before do
-          create_list(:vacancy, 2, :external, publisher_ats_api_client: client, organisations: [school])
+          Array.new(2) do |index|
+            create(:vacancy, :external, publisher_ats_api_client: client, organisations: [school], external_reference: "REF_CLIENT_#{index}")
+          end
         end
 
         after do |example|
@@ -491,7 +493,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
 
         before do
-          allow(Vacancy).to receive(:find_by).and_raise(StandardError.new("Internal server error"))
+          allow(Publishers::AtsApi::CreateVacancyService).to receive(:call).and_raise(StandardError.new("Internal server error"))
         end
 
         run_test!

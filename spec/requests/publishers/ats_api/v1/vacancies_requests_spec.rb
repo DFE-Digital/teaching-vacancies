@@ -7,8 +7,25 @@ RSpec.describe "Publishers::AtsApi::V1::Vacancies API" do
     it "only returns vacancies for the authenticated client" do
       other_client = create(:publisher_ats_api_client)
       school = create(:school)
-      create_list(:vacancy, 2, :external, publisher_ats_api_client: client, organisations: [school])
-      create_list(:vacancy, 3, :external, publisher_ats_api_client: other_client, organisations: [school])
+      Array.new(2) do |index|
+        create(
+          :vacancy,
+          :external,
+          publisher_ats_api_client: client,
+          organisations: [school],
+          external_reference: "REF_CLIENT_#{index}",
+        )
+      end
+
+      Array.new(3) do |index|
+        create(
+          :vacancy,
+          :external,
+          publisher_ats_api_client: other_client,
+          organisations: [school],
+          external_reference: "REF_OTHER_CLIENT_#{index}",
+        )
+      end
 
       get "/ats-api/v1/vacancies", headers: { "X-Api-Key" => client.api_key, "Accept" => "application/json" }
 
@@ -18,8 +35,17 @@ RSpec.describe "Publishers::AtsApi::V1::Vacancies API" do
     end
 
     it "returns paginated results" do
-      create_list(:vacancy, 10, :external, publisher_ats_api_client: client)
+      school = create(:school)
 
+      Array.new(10) do |index|
+        create(
+          :vacancy,
+          :external,
+          publisher_ats_api_client: client,
+          organisations: [school],
+          external_reference: "REF_CLIENT_#{index}",
+        )
+      end
       get "/ats-api/v1/vacancies", headers: { "X-Api-Key" => client.api_key, "Accept" => "application/json" }
 
       expect(response).to have_http_status(:ok)

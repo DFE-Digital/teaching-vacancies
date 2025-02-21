@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_17_111820) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_21_101041) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -717,6 +717,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_17_111820) do
     t.uuid "publisher_ats_api_client_id"
     t.integer "religion_type"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
+    t.index ["external_reference", "publisher_ats_api_client_id"], name: "index_vacancies_on_external_ref_and_publisher_ats_client_id", unique: true
     t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"
     t.index ["geolocation", "expires_at", "publish_on"], name: "index_vacancies_on_geolocation_and_expires_at_and_publish_on", using: :gist
     t.index ["publish_on"], name: "index_vacancies_on_publish_on"
