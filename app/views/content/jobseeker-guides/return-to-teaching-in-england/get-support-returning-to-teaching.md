@@ -41,6 +41,7 @@ Advisers can give you free one-to-one support with:
   * the applications process, such as writing personal statements and preparing for interviews
   * accessing courses to enhance your subject knowledge or teaching practice, such as national professional qualifications (NPQs)
   * finding teaching vacancies
+  * accessing themed webinars and networking opportunities
 
 You can chat by phone, text or email, as little or as often as you need.
 
