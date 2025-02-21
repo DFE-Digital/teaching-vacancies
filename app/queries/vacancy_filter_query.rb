@@ -91,7 +91,8 @@ class VacancyFilterQuery < ApplicationQuery
   end
 
   def phases(filter)
-    filter&.map { |phase| phase.in?(%w[middle_deemed_secondary middle_deemed_primary]) ? "middle" : phase }
+    filter&.map { |phase| phase == "middle_deemed_secondary" ? "secondary" : phase }
+          &.map { |phase| phase == "middle_deemed_primary" ? "primary" : phase }
           &.map { |phase| phase == "all_through" ? "through" : phase }
           &.map { |phase| phase.in?(%w[sixteen_plus 16-19]) ? "sixth_form_or_college" : phase }
           &.reject { |phase| phase.in? %w[not_applicable] }
