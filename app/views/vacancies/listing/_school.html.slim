@@ -6,7 +6,7 @@
   - if organisation.phase? && !organisation.not_applicable?
     - summary_list.with_row do |row|
       - row.with_key text: t("vacancies.listing.schools.phase")
-      - row.with_value text: organisation.readable_phase.capitalize
+      - row.with_value text: school_readable_phase(organisation)
 
   - summary_list.with_row do |row|
     - row.with_key text: t("vacancies.listing.schools.school_size")

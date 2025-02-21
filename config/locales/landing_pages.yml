@@ -149,11 +149,6 @@ en:
       title: "Primary School Teacher and Support Jobs"
       heading: "%{count} primary school jobs"
       meta_description: "Find primary school jobs for head teachers, teachers and teaching assistants. See the latest reception, KS1 and KS2 teaching jobs near you."
-    middle-school-jobs:
-      name: "Middle"
-      title: "Middle School Teacher and Support Jobs"
-      heading: "%{count} middle school jobs"
-      meta_description: "The latest middle school jobs near you. Teaching Vacancies has jobs for teachers, team leaders and support staff in middle schools across England."
     secondary-school-jobs:
       name: "Secondary"
       title: "Secondary School Teacher and Support Jobs"
