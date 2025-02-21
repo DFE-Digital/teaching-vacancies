@@ -56,6 +56,8 @@ Using the `geometry` type with `geographic: true` allows us to leverage a wide r
 - SRID: Spatial Referencing System ID.
 - 4326: Represents spatial data using longitude and latitude coordinates on the Earth's surface as defined in the WGS84 standard.
 
+The result of this is that the spatial data specifies the Earth as an ellipsoid, and uses elliptical geometry.
+
 The data type we use from PostGIS is `Geometry` with a `Geographic` coordinate system, which allows us to use projections and transformations.
 
 ### Why not just Geometry
@@ -63,11 +65,14 @@ The data type we use from PostGIS is `Geometry` with a `Geographic` coordinate s
 When using a geographic coordinate system, distance calculations are performed on the curved surface of the Earth.
 PostGIS functions like `ST_Distance` and `ST_Buffer` will take into account the Earth's curvature, providing more accurate results for large distances compared to a planar (flat) coordinate system.
 
-When investigating the possibility of using Geometry and a Projected Coordinate System, we found that our search area (England, The UK) distances are large enough to need to take the Earth's curvature into account.
+There is no papertrail on why Geographic data was chosen over Geogmetric when the feature was built, so we will assume it was for precission.
+
+Given that our service longest distances on the search are "within 200 miles from X location in England", using Earths ellipsoid (meant for long intercontinental or across multiple countries precission)
+doesn't seem a requirement for our service purpose. And it has major performance costs:
 
 ### Performance
 
-Using `Geographic` data and operations requires more computational resources than using planar `Geometric` data.
+Using `Geographic` data and operations over the earth's ellipsoid it is very expensive computationally compared to using planar `Geometric` data.
 
 We have mitigated the performance hit with a few measures:
 
@@ -92,7 +97,7 @@ Precomputing the `centroid` point for the location polygon areas and saving them
 
 #### Tweaking queries to improve performance
 
-The `use_spheroid` parameter set to `false` turns to use a faster spherical calculation.
+The `use_spheroid` parameter set to `false` improves the performance of operations by using a faster spherical calculation instead of a more computationally expensive ellipsoidal calculation.
 
 For example: `ST_Distance(gg1, gg2, false)`
 
@@ -159,6 +164,9 @@ Within the [mapping files](/config/data/ons_mappings/) we define the subset of c
 
 The [mapped locations file](/config/data/ons_mappings/mapped_locations.yml) helps to match common location search terms with an appropriate location polygon if any.
 
+**Warning**: There is no papertrail on why/how this approach was taken.
+The current team knowledge and understanding on this area is very limited and based on tracking the implementation/configuration files, that are quite complex.
+
 ## Getting the geographical coordinates
 
 As many location search terms don't match a polygon name, the service falls back to obtaining the location coordinates.
@@ -170,6 +178,6 @@ Information about the API usage/costs should be accessible from the Google Cloud
 ### Google Geocoding API costs
 
 Google Geocoding API is one of our higher costs in Google Cloud.
-To reduce the cost as much as possible, and as the coordinate info in the UK for a given point is quite stable data unlikely to change, we cache its responses for a long period, so there are fewer API hits renewing existing cached results.
+To reduce the cost as much as possible, and as the coordinate info in the UK for a given point is quite stable data unlikely to change, we cache its responses for a long period (Currently set at 180 days), so there are fewer API hits renewing existing cached results.
 
 Please be aware of the impact on the API costs if deciding to modify the Geocoding cache duration period.
