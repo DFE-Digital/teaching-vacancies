@@ -324,6 +324,7 @@ GEM
       addressable (~> 2.8)
       bigdecimal (~> 3.1)
     jwt (2.10.1)
+      base64
     kramdown (2.5.1)
       rexml (>= 3.3.9)
     kramdown-parser-gfm (1.1.0)
