@@ -9,9 +9,14 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/find
 
 ![Three students sitting at a desk working.](/content-assets/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience.jpg)
 
-Schools will expect you to reflect on your recent school experience when you apply for a teaching role. 
+Schools will expect you to reflect on your recent school experience when you apply and interview for a teaching role.
 
-If you’re returning to teach, each school will have different requirements for your experience.
+Each school will have different experience requirements for returning teachers. When you're ready to apply for a teaching role, you should find out what experience they require.
+
+To get school experience, you should:
+
+* observe lessons in subjects that you wish to teach
+* see a variety of teaching styles, with students of different abilities and backgrounds
 
 ## Contact a school
 
@@ -43,7 +48,7 @@ You could consider applying for other roles at a local school to gain classroom 
 
 TAs help teachers in primary or secondary schools, working one-on-one or with small groups of pupils. 
 
-TAs mainly support pupils in the classroom but may also take them to an a nearby room or area for activities such as reading sessions or booster support for struggling students.
+TAs mainly support pupils in the classroom but may also take them to a nearby room or area for activities such as reading sessions or booster support for struggling students.
 
 [Find teaching assistant roles](/jobs?support_job_roles%5B%5D=teaching_assistant)
 
