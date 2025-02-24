@@ -23,6 +23,8 @@ Feel free to ask hiring staff any questions before applying for a job.
 
 You can also organise a school visit to get a feel for what the school is like.
 
+If you need support returning to teaching after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
+
 ## School culture
 The best way to get a sense of what a school is like is to experience it in person, and you should feel comfortable to make an appointment for a school visit.
 
