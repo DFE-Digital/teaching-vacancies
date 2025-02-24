@@ -11,6 +11,8 @@ card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teachin
 
 The interview lesson is an opportunity to demonstrate your teaching ability so it’s important to be prepared. We’ve spoken to experienced teachers to get their top tips for success.
 
+If you need support returning to teaching after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
+
 ## 1. Plan your lesson
 Once you know the topic for your interview lesson, ask your mentor or colleagues for advice. Don’t make your lesson too complex, and you can use ideas and activities from textbooks or resources such as [Oak National Academy](https://www.thenational.academy/). 
 
