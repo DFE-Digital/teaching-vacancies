@@ -27,16 +27,27 @@ json.jobLocation do
   end
 end
 
-# Looks like we can't provide baseSalary as we're not the employer...?
-# json.baseSalary do
-#   json.set! "@type", "MonetaryAmount"
-#   json.currency "GBP"
-#   json.value do
-#     json.set! "@type", "QuantitativeValue"
-#     json.value vacancy.salary
-#     json.unitText "YEAR"
-#   end
-# end
+if vacancy.hourly_rate?
+  json.baseSalary do
+    json.set! "@type", "MonetaryAmount"
+    json.currency "GBP"
+    json.value do
+      json.set! "@type", "QuantitativeValue"
+      json.value vacancy.hourly_rate
+      json.unitText "HOUR"
+    end
+  end
+elsif vacancy.salary?
+  json.baseSalary do
+    json.set! "@type", "MonetaryAmount"
+    json.currency "GBP"
+    json.value do
+      json.set! "@type", "QuantitativeValue"
+      json.value vacancy.salary
+      json.unitText "YEAR"
+    end
+  end
+end
 
 json.url job_url(vacancy)
 
