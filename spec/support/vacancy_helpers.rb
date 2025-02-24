@@ -297,6 +297,11 @@ module VacancyHelpers
     {
       "@context": "http://schema.org",
       "@type": "JobPosting",
+      baseSalary: {
+        :@type=>"MonetaryAmount",
+        :currency=>"GBP",
+        :value=>{:@type=>"QuantitativeValue", :unitText=>"HOUR", :value=>"£25 per hour"}
+      },
       title: vacancy.job_title,
       jobBenefits: vacancy.benefits_details,
       datePosted: vacancy.publish_on.iso8601,
