@@ -1,5 +1,5 @@
 ---
-order: 106
+order: 102
 title: Update your subject and teaching knowledge
 meta_description: Find out how to update your subject and teaching knowledge to help return to teaching.
 date_posted: 17/02/2025
