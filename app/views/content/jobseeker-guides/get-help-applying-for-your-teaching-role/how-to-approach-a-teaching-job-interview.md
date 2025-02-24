@@ -11,6 +11,8 @@ card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teachin
 
 Congratulations, you’ve been invited to an interview for a teaching job! What’s next? We’ve spoken to experienced teachers to get their top tips for success including how to prepare answers to interview questions.
 
+If you need support returning to teaching after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
+
 ## 1. Confirm your attendance
 Make sure you accept the interview by email and reiterate your enthusiasm for the role. Make a note of any key staff names, who to ask for on your arrival, and what resources to bring with you.
 
