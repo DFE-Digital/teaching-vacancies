@@ -60,6 +60,19 @@ Schools will also want to know how you overcome challenges.
 ## How can you contribute to wider school life?
 Set yourself apart by showing how your hobbies and achievements could contribute to the wider school community. Could you run an after school club or organise school trips?
 
+## If you're returning to teaching after a break
+If you're thinking about returning to teaching or have previously trained to teach in the UK, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
+
+Advisers provide free one to one support by phone, text or email. 
+
+They can help you:
+
+* get classroom experience
+* find teaching jobs
+* apply and interview for jobs
+
+## Give your feedback
+Fill out a [short form](https://teaching-vacancies.service.gov.uk/feedback/new) and provide feedback on this page.
 
 <a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
 
