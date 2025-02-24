@@ -9,7 +9,7 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/retu
 
 ![A teacher talking in front of a classroom full of students.](/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-a-step-by-step-guide.jpg)
 
-Check what you need to do to return to teach in a state-funded school in England.
+Check what you need to do to return to teach in a state-funded school in England. If you need support returning to teaching after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
 <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
   <div class="govuk-accordion__section">
     <div class="govuk-accordion__section-header">
