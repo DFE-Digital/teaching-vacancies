@@ -40,7 +40,7 @@ en:
     label:
       jobseekers_job_application_details_employment_form:
         is_current_role_options:
-          "yes": I currently work here
+          "true": I currently work here
         job_title: Job title
         main_duties: Main duties
         organisation: School or other organisation
@@ -49,7 +49,7 @@ en:
         reason_for_leaving: Reason for leaving role
       jobseekers_profile_employment_form:
         is_current_role_options:
-          "yes": I currently work here
+          "true": I currently work here
         job_title: Role
         main_duties: Main duties
         reason_for_leaving: Reason for leaving role
