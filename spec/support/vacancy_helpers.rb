@@ -299,7 +299,7 @@ module VacancyHelpers
       "@type": "JobPosting",
       title: vacancy.job_title,
       jobBenefits: vacancy.benefits_details,
-      datePosted: vacancy.publish_on.to_time.iso8601,
+      datePosted: vacancy.publish_on.iso8601,
       description: vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : vacancy.job_advert,
       occupationalCategory: vacancy.job_roles.first,
       directApply: vacancy.enable_job_applications,
@@ -320,6 +320,7 @@ module VacancyHelpers
       hiringOrganization: {
         "@type": "Organization",
         name: vacancy.organisation_name,
+        sameAs: vacancy.organisation.url,
         identifier: vacancy.organisation.urn,
         description: vacancy.about_school,
       },

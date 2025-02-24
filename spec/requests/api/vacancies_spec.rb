@@ -174,6 +174,7 @@ RSpec.describe "Api::Vacancies" do
             hiringOrganization: {
               "@type": "Organization",
               name: vacancy.organisation_name,
+              sameAs: vacancy.organisation.url,
               identifier: vacancy.organisation.urn,
               description: vacancy.about_school.present? ? "<p>#{vacancy.about_school}</p>" : nil,
             },
