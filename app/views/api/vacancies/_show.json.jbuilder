@@ -2,13 +2,11 @@ json.set! "@context", "http://schema.org"
 json.set! "@type", "JobPosting"
 
 json.title vacancy.job_title
-# This doesn't appear in spec at https://developers.google.com/search/docs/appearance/structured-data/job-posting
-# not supported by Google
+# not supported by Google https://developers.google.com/search/docs/appearance/structured-data/job-posting
 json.jobBenefits vacancy.benefits_details
 json.datePosted vacancy.publish_on.iso8601
 json.description vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : vacancy.job_advert
-# This doesn't appear in spec at https://developers.google.com/search/docs/appearance/structured-data/job-posting
-# not supported by Google
+# not supported by Google https://developers.google.com/search/docs/appearance/structured-data/job-posting
 json.occupationalCategory vacancy.job_roles.first
 json.directApply true
 
@@ -58,6 +56,7 @@ json.hiringOrganization do
   json.sameAs vacancy.organisation.url
   json.identifier vacancy.organisation&.urn || vacancy.organisation&.uid
   json.description vacancy.about_school
+  json.logo image_path("images/govuk-icon-180.png")
 end
 
 json.validThrough vacancy.expires_at.iso8601

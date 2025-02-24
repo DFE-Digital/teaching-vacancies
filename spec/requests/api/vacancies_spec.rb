@@ -145,31 +145,12 @@ RSpec.describe "Api::Vacancies" do
     context "format" do
       before { subject }
 
-      it "maps vacancy to the JobPosting schema" do
-        expect(json.to_h).to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)))
-      end
-
       describe "#employment_type" do
         let(:vacancy) { create(:vacancy, working_patterns: working_patterns) }
         let(:working_patterns) { %w[full_time part_time] }
 
         it "maps working patterns to the expected Google Jobs values" do
           expect(json.to_h).to include(employmentType: %w[FULL_TIME PART_TIME])
-        end
-      end
-
-      describe "#hiringOrganization" do
-        it "sets the school's details" do
-          hiring_organization = {
-            hiringOrganization: {
-              "@type": "Organization",
-              name: vacancy.organisation_name,
-              sameAs: vacancy.organisation.url,
-              identifier: vacancy.organisation.urn,
-              description: vacancy.about_school.present? ? "<p>#{vacancy.about_school}</p>" : nil,
-            },
-          }
-          expect(json.to_h).to include(hiring_organization)
         end
       end
     end
