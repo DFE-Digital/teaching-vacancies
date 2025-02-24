@@ -9,11 +9,11 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/find
 
 ![Three students sitting at a desk working.](/content-assets/jobseeker-guides/return-to-teaching-in-england/find-classroom-experience.jpg)
 
-Schools will expect you to reflect on your recent school experience when you apply and interview for a teaching role.
+Schools will expect you to reflect on your recent school experience when you apply for a teaching role.
 
-Each school will have different experience requirements for returning teachers. When you're ready to apply for a teaching role, you should find out what experience they require.
+If you're returning to teaching after a break, you should check the experience requirements of specific schools before you apply for a role.
 
-To get school experience, you should:
+To get more school experience, you should:
 
 * observe lessons in subjects that you wish to teach
 * see a variety of teaching styles, with students of different abilities and backgrounds
