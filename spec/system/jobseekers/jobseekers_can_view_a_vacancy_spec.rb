@@ -44,7 +44,7 @@ RSpec.describe "Viewing a single published vacancy" do
     context "with multiple working patterns" do
       let(:vacancy) { create(:vacancy, organisations: [school], working_patterns: %w[full_time part_time]) }
 
-      scenario "the page contains correct JobPosting schema.org mark up" do
+      it "contains correct JobPosting schema.org mark up" do
         expect(page).to have_content "Full time"
         expect(page).to have_content "part time"
         expect(script_tag_content(wrapper_class: ".jobref"))
