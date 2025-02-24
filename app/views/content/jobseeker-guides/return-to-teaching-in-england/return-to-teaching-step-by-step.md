@@ -118,6 +118,18 @@ Check what you need to do to return to teach in a state-funded school in England
       </p>
     </div>
   </div>
+  <div class="govuk-accordion__section">
+    <div class="govuk-accordion__section-header">
+      <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-4">
+          Give your feedback
+        </span>
+      </h2>
+    </div>
+    <div id="accordion-default-content-4" class="govuk-accordion__section-content">
+      <p class="govuk-body">
+        Fill out a <a href="/feedback/new">short form</a>  and provide feedback on this page.
+      </p>
+    </div>
+  </div>
 </div>
-
-Fill out a [short form](/feedback/new) and provide feedback on this page.
