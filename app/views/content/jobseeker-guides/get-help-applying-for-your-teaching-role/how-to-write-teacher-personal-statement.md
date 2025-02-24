@@ -71,8 +71,5 @@ They can help you:
 * find teaching jobs
 * apply and interview for jobs
 
-## Give your feedback
-Fill out a [short form](https://teaching-vacancies.service.gov.uk/feedback/new) and provide feedback on this page.
-
 <a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
 
