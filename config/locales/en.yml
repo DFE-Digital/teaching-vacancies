@@ -411,6 +411,11 @@ en:
           with_subject: Get %{subject} teacher jobs sent straight to your inbox.
           without_subject: Get teaching jobs sent straight to your inbox.
         location: City, county or postcode (in England)
+      banner:
+        title: Get jobs sent straight to your inbox
+      headings:
+        teaching_roles: Teaching and leadership roles
+        support_roles: Support roles
     unsubscribe:
       confirmation: Are you sure you want to unsubscribe?
       guidance:
@@ -419,12 +424,6 @@ en:
       title: Unsubscribe from this job alert
     update:
       success: Your job alert has been updated
-    new_v2:
-      banner:
-        title: Get jobs sent straight to your inbox
-      headings:
-        teaching_roles: Teaching and leadership roles
-        support_roles: Support roles
 
   sub_nav:
     jobs: Jobs

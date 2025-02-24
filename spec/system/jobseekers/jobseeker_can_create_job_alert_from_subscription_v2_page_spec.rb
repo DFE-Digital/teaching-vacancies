@@ -1,19 +1,19 @@
 require "rails_helper"
 
-RSpec.describe "Jobseekers can create a job alert from the v2 page", recaptcha: true do
+RSpec.describe "Jobseekers can create a job alert", recaptcha: true do
   let(:jobseeker) { create(:jobseeker) }
   let(:subscription) { build(:subscription, :with_some_criteria) }
   let(:search_criteria) { subscription.search_criteria }
 
   before do
     login_as(jobseeker, scope: :jobseeker)
-    visit new_v2_subscriptions_path
+    visit new_subscriptions_path
   end
 
   after { logout }
 
   it "does not create a job alert if no fields are filled in" do
-    click_on I18n.t("buttons.subscribe_v2")
+    click_on I18n.t("buttons.subscribe")
     expect(page).to have_content("There is a problem")
   end
 
@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can create a job alert from the v2 page", recaptcha: 
 
   def create_a_job_alert
     fill_in_subscription_fields
-    click_on I18n.t("buttons.subscribe_v2")
+    click_on I18n.t("buttons.subscribe")
   end
 
   def fill_in_subscription_fields
