@@ -1,15 +1,5 @@
 require "rails_helper"
 
-# Specs in this file have access to a helper object that includes
-# the VacancyFormsHelper. For example:
-#
-# describe VacancyFormsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe VacancyFormsHelper do
   describe "#vacancy_job_title_form_hint_text" do
     let(:vacancy) { build(:vacancy, job_roles: [job_role], phases: [phase]) }

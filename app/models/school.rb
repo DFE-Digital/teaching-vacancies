@@ -25,8 +25,6 @@ class School < Organisation
     not_applicable: nil,
     nursery: "nursery",
     primary: "primary",
-    # middle_deemed_primary: "middle",
-    # middle_deemed_secondary: "middle",
     middle_deemed_primary: "primary",
     middle_deemed_secondary: "secondary",
     secondary: "secondary",

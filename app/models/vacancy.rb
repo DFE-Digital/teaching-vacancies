@@ -204,12 +204,12 @@ class Vacancy < ApplicationRecord
     enable_job_applications? && published? && !pending?
   end
 
-  KS_ALLOWED_STAGES = %w[primary secondary through].freeze
-  KS_ALLOWED_ROLES = %w[teacher headteacher deputy_headteacher assistant_headteacher
-                        head_of_year_or_phase head_of_department_or_curriculum teaching_assistant].freeze
-
   def allow_key_stages?
-    phases.intersect?(KS_ALLOWED_STAGES) && job_roles.intersect?(KS_ALLOWED_ROLES)
+    allowed_phases = %w[primary secondary through]
+    allowed_roles = %w[teacher headteacher deputy_headteacher assistant_headteacher
+                       head_of_year_or_phase head_of_department_or_curriculum teaching_assistant]
+
+    phases.intersect?(allowed_phases) && job_roles.intersect?(allowed_roles)
   end
 
   def allow_phase_to_be_set?
