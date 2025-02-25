@@ -11,7 +11,8 @@ Once the PR has been merged to main or a `deploy` tag applied to Review app, the
 - Builds and tags a Docker image from code in the `main` (staging, prod and qa) or `review app` branch
 - Tags the Docker image with the commit SHA as the tag
 - Logs in to Github's container registry as the service account `twd-tv-ci`
-- Pushes the image to GitHub packages, after it has been scanned by `Snyk` for vulnerabilities
+- Pushes the image to GitHub packages, after it has been scanned by `Snyk` for vulnerabilities.
+    - See [this guide](/documentation/operations/infrastructure/docker.md#docker-image-scan) on how to fix vulnerability errors that may arise at this stage.
 - Calls the [deploy_app.yml](../.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the appropriate environment.
 - Runs a smoke test against the deployed environment
 - If deployment (push) is to the main branch, performs `Post Deployment`
