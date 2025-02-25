@@ -241,11 +241,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_21_101041) do
     t.text "rejection_reasons_ciphertext"
     t.text "gaps_in_employment_details_ciphertext"
     t.integer "in_progress_steps", default: [], null: false, array: true
-    t.boolean "employment_history_section_completed"
-    t.boolean "qualifications_section_completed"
     t.string "safeguarding_issue"
     t.text "safeguarding_issue_details"
-    t.boolean "training_and_cpds_section_completed"
     t.integer "imported_steps", default: [], null: false, array: true
     t.datetime "interviewing_at"
     t.string "statutory_induction_complete_details"
