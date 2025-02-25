@@ -5,12 +5,11 @@ RSpec.describe ImportPolygonDataJob do
 
   describe "#perform" do
     it "calls the importers" do
-      expect(OnsDataImport::ImportCounties).to receive(:new).and_return(importer)
-      expect(OnsDataImport::ImportCities).to receive(:new).and_return(importer)
-      expect(OnsDataImport::ImportRegions).to receive(:new).and_return(importer)
+      expect(OnsDataImport::ImportCounties).to receive(:call)
+      expect(OnsDataImport::ImportCities).to receive(:call)
+      expect(OnsDataImport::ImportRegions).to receive(:call)
 
       subject.perform
-      expect(importer).to have_received(:call).exactly(3).times
     end
   end
 end

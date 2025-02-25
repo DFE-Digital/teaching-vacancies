@@ -36,8 +36,8 @@ RSpec.describe VacancyFilterQuery do
   let!(:it_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 16", phases: %w[primary], job_roles: ["it_support"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:pastoral_health_and_welfare_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 17", phases: %w[primary], job_roles: ["pastoral_health_and_welfare"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
   let!(:other_leadership_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 18", phases: %w[primary], job_roles: ["other_leadership"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:other_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", phases: %w[primary], job_roles: ["other_support"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
-  let!(:catering_cleaning_and_site_management_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", phases: %w[primary], job_roles: ["catering_cleaning_and_site_management"], publisher_organisation: free_school, organisations: [free_school, free_schools]) }
+  let!(:other_support_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", phases: %w[primary], job_roles: ["other_support"], publisher_organisation: free_school, organisations: [free_school, free_schools], expires_at: 2.days.from_now) }
+  let!(:catering_cleaning_and_site_management_vacancy) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 19", phases: %w[primary], job_roles: ["catering_cleaning_and_site_management"], publisher_organisation: free_school, organisations: [free_school, free_schools], expires_at: 1.day.from_now) }
 
   let!(:special_vacancy1) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 7", phases: %w[primary], organisations: [special_school1]) }
   let!(:special_vacancy2) { create(:vacancy, :no_tv_applications, job_title: "Vacancy 8", phases: %w[primary], organisations: [special_school2]) }

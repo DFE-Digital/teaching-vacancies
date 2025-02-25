@@ -29,7 +29,6 @@ FactoryBot.define do
     maximum_age { 18 }
     sequence(:name) { |n| "#{Faker::Educator.secondary_school.strip.delete("'")} #{n}" }
     phase { :secondary }
-    readable_phases { %w[secondary] }
     region { "South-East England" }
     safeguarding_information { Faker::Lorem.paragraph(sentence_count: 1) }
     sequence(:slug) { |n| "#{name.parameterize}-#{n}" }

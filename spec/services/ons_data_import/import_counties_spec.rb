@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe OnsDataImport::ImportCounties do
-  subject { described_class.new }
-
   let(:response1) { double(success?: true, to_s: file_fixture("ons_counties_geojson.json").read) }
   let(:response2) { double(success?: true, to_s: { features: [] }.to_json) }
 
@@ -12,7 +10,7 @@ RSpec.describe OnsDataImport::ImportCounties do
     allow(HTTParty).to receive(:get)
       .with(/Counties_and_Unitary_Authorities_April_2019_Boundaries_EW_BFC_2022/)
       .and_return(response1, response2)
-    subject.call
+    described_class.call
   end
 
   describe "#call" do

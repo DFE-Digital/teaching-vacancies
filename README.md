@@ -70,9 +70,11 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 
 #### Integrations
 * [Integrations with other job posting services](/documentation/service/integrations/integrations.md)
+* [Publisher ATS API](/documentation/service/integrations/publisher-ats-api.md)
 * [DWP Find a Job](/documentation/service/integrations/dwp-find-a-job.md)
 
 #### Technical approaches
+* [Searching by location](/documentation/service/technical/searching-by-location.md)
 * [Our Front-end](/documentation/service/technical/front-end.md)
 * [Landing Pages](/documentation/service/technical/landing-pages.md)
 * [Multistep form](/documentation/service/technical/multistep-form.md)

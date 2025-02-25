@@ -1,0 +1,23 @@
+- content_for :page_title_prefix do
+  | Vision statement
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    h1.govuk-heading-xl Vision statement
+    p.govuk-body
+      | Teaching Vacancies is a free national search and listing service to help state-funded primary and secondary schools in England recruit teachers, leaders, and support staff.
+
+    p.govuk-body
+      | Read our #{govuk_link_to("guidance on eligibility", "/get-help-hiring/how-to-setup-your-account/check-your-eligibility-to-advertise-roles")} to make sure your school can advertise roles using our service.
+
+    p.govuk-body
+      | Since launching the Teaching Vacancies service in April 2019, our mission has been to help schools save time and money on recruitment advertising. We estimate that, in total, schools using Teaching Vacancies have saved between £47.3 and £60.8 million from September 2018 to August 2024.
+
+    p.govuk-body
+      | To achieve our mission, we accept integrations through our application programming interface (API) from applicant tracking systems or other publicly funded services if they meet our service scope, and their business aims and values align with ours.
+
+    p.govuk-body
+      | Any vacancies published through an integration will not be pushed to #{govuk_link_to("GOV.UK Find A Job service", "https://www.gov.uk/find-a-job", target: "_blank", rel: "noopener")}.
+
+    p.govuk-body
+      | If your school or trust are interested in integrating with Teaching Vacancies, please contact us at #{govuk_link_to("TeachingVacancies.ATS@education.gov.uk", "TeachingVacancies.ATS@education.gov.uk", target: "_blank", rel: "noopener")}.

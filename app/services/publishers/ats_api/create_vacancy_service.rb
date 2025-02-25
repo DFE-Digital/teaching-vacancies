@@ -7,11 +7,14 @@ module Publishers
         def call(params)
           vacancy = Vacancy.new(sanitised_params(params))
 
-          if (conflict = find_conflicting_vacancy(vacancy))
-            return conflict_response(conflict[:vacancy], conflict[:error_message])
+          if vacancy.valid?
+            vacancy.save!
+            success_response(vacancy)
+          elsif (conflict = vacancy.find_conflicting_vacancy)
+            conflict_response(conflict, vacancy.errors[:base].first || vacancy.errors[:external_reference].first)
+          else
+            validation_error_response(vacancy)
           end
-
-          vacancy.save ? success_response(vacancy) : validation_error_response(vacancy)
         end
 
         private
@@ -21,29 +24,6 @@ module Publishers
 
           params[:publish_on] ||= Time.zone.today.to_s
           params.except(:schools).merge(organisations: organisations)
-        end
-
-        def find_conflicting_vacancy(vacancy)
-          if (conflict = conflict_vacancy(vacancy))
-            { vacancy: conflict, error_message: "A vacancy with the provided ATS client ID and external reference already exists." }
-          elsif (duplicate = duplicate_vacancy(vacancy))
-            { vacancy: duplicate, error_message: "A vacancy with the same job title, expiry date, and organisation already exists." }
-          end
-        end
-
-        def conflict_vacancy(vacancy)
-          Vacancy.find_by(
-            publisher_ats_api_client_id: vacancy.publisher_ats_api_client_id,
-            external_reference: vacancy.external_reference,
-          )
-        end
-
-        def duplicate_vacancy(vacancy)
-          Vacancy.joins(:organisations).where(
-            job_title: vacancy.job_title,
-            expires_at: vacancy.expires_at,
-            organisations: { id: vacancy.organisation_ids },
-          ).distinct.first
         end
 
         def conflict_response(conflict_vacancy, error_message)

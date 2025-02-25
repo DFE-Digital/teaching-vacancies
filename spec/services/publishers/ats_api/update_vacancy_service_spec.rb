@@ -3,7 +3,18 @@ require "rails_helper"
 RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   subject(:udpate_vacancy_service) { described_class.call(vacancy, params) }
 
-  let(:vacancy) { create(:vacancy, :external, organisations: [school]) }
+  let(:vacancy) do
+    create(
+      :vacancy,
+      :external,
+      external_reference: "old-ref",
+      publisher_ats_api_client_id: publisher_ats_api_client_id,
+      job_title: "English Teacher",
+      expires_at: "2025-12-31",
+      organisations: [school],
+    )
+  end
+  let(:publisher_ats_api_client_id) { create(:publisher_ats_api_client).id }
   let(:school) { create(:school) }
   let(:school_urns) { { school_urns: [school.urn] } }
   let(:job_title) { vacancy.job_title }
@@ -24,6 +35,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       skills_and_experience: vacancy.skills_and_experience,
       salary: vacancy.salary,
       schools: school_urns,
+      publisher_ats_api_client_id: publisher_ats_api_client_id,
     }
   end
 
@@ -70,6 +82,74 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       it "returns a validation error response" do
         expect(udpate_vacancy_service).to eq(expected_response)
       end
+    end
+  end
+
+  context "when a vacancy with the same external reference exists" do
+    let!(:existing_vacancy) do
+      create(
+        :vacancy,
+        :external,
+        external_reference: "new-ref",
+        publisher_ats_api_client_id: publisher_ats_api_client_id,
+      )
+    end
+
+    let(:expected_response) do
+      {
+        status: :conflict,
+        json: {
+          error: "A vacancy with the provided ATS client ID and external reference already exists.",
+          link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
+        },
+      }
+    end
+
+    it "returns a conflict response" do
+      expect(udpate_vacancy_service).to eq(expected_response)
+    end
+  end
+
+  context "when a vacancy with the same job_title, expired_at, and organisations exists" do
+    let!(:existing_vacancy) do
+      create(
+        :vacancy,
+        job_title: "Maths Teacher",
+        expires_at: "2026-01-01",
+        organisations: [school],
+      )
+    end
+
+    let(:params) do
+      {
+        external_reference: "new-ref",
+        job_title: "Maths Teacher",
+        job_advert: job_advert,
+        external_advert_url: vacancy.external_advert_url,
+        job_roles: job_roles,
+        contract_type: vacancy.contract_type,
+        phases: vacancy.phases,
+        working_patterns: working_patterns,
+        expires_at: "2026-01-01",
+        skills_and_experience: vacancy.skills_and_experience,
+        salary: vacancy.salary,
+        schools: school_urns,
+        publisher_ats_api_client_id: publisher_ats_api_client_id,
+      }
+    end
+
+    let(:expected_response) do
+      {
+        status: :conflict,
+        json: {
+          error: "A vacancy with the same job title, expiry date, and organisation already exists.",
+          link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
+        },
+      }
+    end
+
+    it "returns a conflict response" do
+      expect(udpate_vacancy_service).to eq(expected_response)
     end
   end
 end

@@ -55,7 +55,6 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
   it "creates a jobseeker profile if the jobseeker does not have one" do
     choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
-    choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
 
     fill_in "Year QTS was awarded", with: "2022"
     fill_in "Please provide more detail (optional field)", with: "It was hard work but I made it"
@@ -66,9 +65,9 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
     click_on "Save and continue"
 
-    expect(page).not_to have_css("h2", text: "There is a problem")
+    expect(page).to have_current_path(jobseekers_job_application_apply_path(job_application))
 
     jobseeker.reload
-    expect(jobseeker.jobseeker_profile).to be_present
+    expect(jobseeker.jobseeker_profile).to have_attributes(teacher_reference_number: "1234567", has_teacher_reference_number: "yes")
   end
 end

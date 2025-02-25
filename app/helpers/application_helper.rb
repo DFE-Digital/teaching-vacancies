@@ -32,6 +32,7 @@ module ApplicationHelper
       { text: "Terms and conditions", href: page_path("terms-and-conditions") },
       { text: "Accessibility", href: page_path("accessibility") },
       { text: "Savings methodology", href: page_path("savings-methodology") },
+      { text: "Vision statement", href: page_path("vision-statement") },
     ]
   end
 

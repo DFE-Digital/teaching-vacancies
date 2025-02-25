@@ -69,6 +69,7 @@ FactoryBot.define do
     visa_sponsorship_available { false }
     organisations { build_list(:school, 1) }
     is_job_share { false }
+    flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
 
     trait :legacy_vacancy do
@@ -107,7 +108,6 @@ FactoryBot.define do
     end
 
     trait :central_office do
-      phase { "multiple_phases" }
       organisations { build_list(:trust, 1) }
     end
 

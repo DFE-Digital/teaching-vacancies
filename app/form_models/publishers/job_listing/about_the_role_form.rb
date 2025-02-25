@@ -1,4 +1,6 @@
 class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::VacancyForm
+  include ActiveModel::Attributes
+
   validates :ect_status, inclusion: { in: Vacancy.ect_statuses.keys }, if: -> { vacancy&.job_roles&.include?("teacher") }
   validate :job_advert_presence, if: -> { vacancy.job_advert.present? }
   validate :about_school_presence, if: -> { vacancy.about_school.present? }
@@ -9,23 +11,28 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validates :further_details_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validate :further_details_presence, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validates :flexi_working_details_provided, inclusion: { in: [true, false] }
+  validate :flexi_working_presence, if: -> { flexi_working_details_provided == true }
 
-  def self.fields
-    %i[
-      job_advert
-      about_school
-      ect_status
-      skills_and_experience
-      school_offer
-      flexi_working
-      safeguarding_information_provided
-      safeguarding_information
-      further_details_provided
-      further_details
-    ]
+  attribute :flexi_working_details_provided, :boolean
+  attribute :job_advert
+  attribute :about_school
+  attribute :ect_status
+  attribute :skills_and_experience
+  attribute :school_offer
+  attribute :flexi_working
+  attribute :safeguarding_information_provided
+  attribute :safeguarding_information
+  attribute :further_details_provided
+  attribute :further_details
+
+  class << self
+    # Overriding load_form because we use attributes in this form rather than defining the fields like we do in other forms.
+    # This is necessary as we need to define flexi_working_details_provided explicitly as a boolean.
+    def load_form(model)
+      model.slice(*attribute_names)
+    end
   end
-  attr_accessor(*fields)
-
   def params_to_save
     {
       job_advert:,
@@ -38,6 +45,7 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
       safeguarding_information:,
       further_details_provided:,
       further_details:,
+      flexi_working_details_provided:,
     }
   end
 
@@ -79,6 +87,12 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     return if remove_html_tags(further_details).present?
 
     errors.add(:further_details, :blank)
+  end
+
+  def flexi_working_presence
+    return if remove_html_tags(flexi_working).present?
+
+    errors.add(:flexi_working, :blank)
   end
 
   def about_school_presence

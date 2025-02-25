@@ -251,7 +251,6 @@ shared:
     - gias_data
     - created_at
     - updated_at
-    - readable_phases
     - url_override
     - region
     - detailed_school_type
@@ -404,7 +403,6 @@ shared:
     - job_location
     - job_roles
     - starts_asap
-    - phase
     - pay_scale
     - receive_applications
     - application_email
@@ -424,6 +422,7 @@ shared:
     - extension_reason
     - other_extension_reason_details
     - religion_type
+    - flexi_working_details_provided
   failed_imported_vacancies:
     - id
     - import_errors
