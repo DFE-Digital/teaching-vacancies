@@ -15,6 +15,7 @@ southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
 
 # Team users
 users = [
+  { email: "alan.arnfeld@education.gov.uk", family_name: "Alan", given_name: "Arnfeld" },
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
   { email: "brandon1.chan@education.gov.uk", family_name: "Chan", given_name: "Brandon" },
   { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
