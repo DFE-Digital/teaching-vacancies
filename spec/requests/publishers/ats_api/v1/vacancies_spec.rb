@@ -2,7 +2,6 @@ require "swagger_helper"
 
 # rubocop:disable RSpec/VariableName
 # rubocop:disable RSpec/ScatteredSetup
-# rubocop:disable RSpec/EmptyExampleGroup
 RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   let!(:client) { create(:publisher_ats_api_client) }
   let(:"X-Api-Key") { client.api_key }
@@ -43,10 +42,21 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         let(:page) { nil }
         let(:school) { create(:school) }
+        let(:other_client) { create(:publisher_ats_api_client) }
 
         before do
           Array.new(2) do |index|
             create(:vacancy, :external, publisher_ats_api_client: client, organisations: [school], external_reference: "REF_CLIENT_#{index}")
+          end
+
+          Array.new(3) do |index|
+            create(
+              :vacancy,
+              :external,
+              publisher_ats_api_client: other_client,
+              organisations: [school],
+              external_reference: "REF_OTHER_CLIENT_#{index}",
+            )
           end
         end
 
@@ -58,7 +68,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           }
         end
 
-        run_test!
+        run_test! do |response|
+          body = response.parsed_body
+          expect(body["data"].size).to eq(2)
+          expect(body["meta"]["totalPages"]).to eq(1)
+        end
       end
 
       response(401, "Occurs when the provided API key is incorrect or missing") do
@@ -339,9 +353,14 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         schema "$ref" => "#/components/schemas/create_vacancy_response"
 
-        let(:school) { create(:school) }
         let(:source) { build(:vacancy, :external) }
-        let(:school_urns) { [school].map { |school| school.urn.to_i } }
+        let!(:school1) { create(:school, name: "Test School", urn: "111111", phase: :primary) }
+        let(:schools) { [school1] }
+        let(:organisation_ids) do
+          {
+            school_urns: schools.map { |school| school.urn.to_i },
+          }
+        end
         let(:vacancy) do
           {
             vacancy: {
@@ -359,13 +378,69 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               working_patterns: source.working_patterns,
               contract_type: source.contract_type,
               phases: source.phases,
-              schools: {
-                school_urns: school_urns,
-              },
+              schools: organisation_ids,
             },
           }
         end
-        run_test!
+
+        it "creates a vacancy" do |example|
+          expect { submit_request(example.metadata) }.to change(Vacancy, :count).from(0).to(1)
+          assert_response_matches_metadata(example.metadata)
+        end
+
+        describe "organisation linking", document: false do
+          let(:created_vacancy) { Vacancy.last }
+
+          describe "with a single school" do
+            it "links the vacancy to a single school" do |example|
+              submit_request(example.metadata)
+              expect(created_vacancy.organisations).to eq([school1])
+            end
+          end
+
+          describe "with multiple schools" do
+            let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+            let(:schools) { [school1, school2] }
+
+            it "links the vacancy to multiple schools" do |example|
+              submit_request(example.metadata)
+              expect(created_vacancy.organisations.sort).to eq([school1, school2].sort)
+            end
+          end
+
+          describe "with a trust central office and no schools" do
+            let(:organisation_ids) do
+              {
+                trust_uid: school_group.uid,
+              }
+            end
+            let(:school_group) { create(:trust, uid: "12345") }
+
+            it "links the vacancy to the trust" do |example|
+              submit_request(example.metadata)
+              expect(created_vacancy.organisations).to eq([school_group])
+            end
+          end
+
+          describe "with a trust central office and some schools" do
+            let(:organisation_ids) do
+              {
+                trust_uid: school_group.uid,
+                school_urns: schools.map { |school| school.urn.to_i },
+              }
+            end
+
+            let!(:school2) { create(:school, name: "Test School 2", urn: "222222", phase: :primary) }
+            let(:schools) { [school1, school2] }
+
+            let(:school_group) { create(:trust, uid: "12345", schools: schools) }
+
+            it "links the vacancy to the trusts schools" do |example|
+              submit_request(example.metadata)
+              expect(created_vacancy.organisations.sort).to eq([school1, school2].sort)
+            end
+          end
+        end
       end
 
       response(400, "The request body is missing required parameters or has invalid data.") do
@@ -990,4 +1065,3 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 end
 # rubocop:enable RSpec/VariableName
 # rubocop:enable RSpec/ScatteredSetup
-# rubocop:enable RSpec/EmptyExampleGroup
