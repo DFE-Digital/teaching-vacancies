@@ -71,6 +71,8 @@ Rails.application.configure do
   ENV["DFE_SIGN_IN_ISSUER"] = "http://fake.dsi.example.com"
   config.middleware.insert_before 0, DfeSignIn::FakeSignOutEndpoint
 
+  # we don't really need logs in test mode, certainly not every request on CI
+  config.log_level = :warn if ENV.key? "CI"
   config.log_file_size = 100.megabytes
 
   # Raise error when a before_action's only/except options reference missing actions
