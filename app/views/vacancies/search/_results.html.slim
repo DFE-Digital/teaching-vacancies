@@ -9,7 +9,7 @@
           p.govuk-body.address class="govuk-!-margin-bottom-0"
             = vacancy_full_job_location(vacancy)
         - if vacancy.organisation.logo.attached?
-          div class="header-with-logo-logo--search-result govuk-!-text-align-right"
+          div class="header-with-logo-logo--search-result"
             = image_tag(vacancy.organisation.logo, alt: "")
 
       = govuk_summary_list(classes: "govuk-summary-list--no-border search-results__summary-list--compact") do |summary_list|
