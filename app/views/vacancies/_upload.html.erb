@@ -1,0 +1,40 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">Upload files</h1>
+
+    <form action="" method="post" enctype="multipart/form-data">
+
+      <div class="moj-multi-file-upload">
+        <div class="moj-multi-file__uploaded-files moj-hidden">
+          <h2 class="govuk-heading-m">Files added</h2>
+          <div class="govuk-summary-list moj-multi-file-upload__list">
+
+          </div>
+        </div>
+
+        <div class="moj-multi-file-upload__upload">
+
+          <div class="govuk-form-group">
+            <label class="govuk-label govuk-label--m" for="documents">
+              Upload a file
+            </label>
+
+            <input class="govuk-file-upload moj-multi-file-upload__input" id="documents" name="documents" type="file" multiple="">
+
+          </div>
+
+          <button type="submit" class="govuk-button govuk-button--secondary moj-multi-file-upload__button" data-module="govuk-button">
+            Upload file
+          </button>
+
+        </div>
+      </div>
+
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Continue
+      </button>
+
+    </form>
+  </div>
+</div>
