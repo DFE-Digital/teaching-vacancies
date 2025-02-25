@@ -1,4 +1,4 @@
-- employments.sort_by { |e| e.current_role? ? Float::INFINITY : e.started_on }.reverse_each do |employment|
+- employments.sort_by { |e| e.is_current_role? ? Float::INFINITY : e.started_on }.reverse_each do |employment|
   - if employment.job?
     = render DetailComponent.new(title: employment.job_title) do |detail_component|
       - detail_component.with_body do
@@ -15,7 +15,7 @@
           - summary_list.with_row do |row|
             - row.with_key text: t("jobseekers.employments.is_current_role")
             - row.with_value text: employment.is_current_role ? "Yes" : "No"
-          - unless employment.is_current_role
+          - unless employment.is_current_role?
             - summary_list.with_row(classes: "govuk-summary-list__row--no-actions") do |row|
               - row.with_key text: t("jobseekers.employments.ended_on")
               - row.with_value text: employment.ended_on.to_formatted_s(:month_year)

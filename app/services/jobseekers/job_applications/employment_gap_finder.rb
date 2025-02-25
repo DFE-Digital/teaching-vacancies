@@ -6,7 +6,7 @@ class Jobseekers::JobApplications::EmploymentGapFinder
 
   def significant_gaps(threshold: 3.months)
     record.employments.each_with_object({}) do |employment, gaps|
-      next if employment.current_role?
+      next if employment.is_current_role?
       next if gap_to_today_is_less_than_threshold?(employment, threshold)
       next if overlapping_employment?(employment)
       next if next_employment_started_within_threshold?(employment, threshold)
@@ -59,6 +59,6 @@ class Jobseekers::JobApplications::EmploymentGapFinder
   end
 
   def adjusted_end_date(employment)
-    employment.current_role? ? today : employment.ended_on
+    employment.is_current_role? ? today : employment.ended_on
   end
 end

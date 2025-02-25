@@ -149,10 +149,6 @@ en:
         close_account_reason_comment: Your feedback will help us improve the service
       jobseekers_break_form:
         reason_for_break: "For example, 'I was unemployed', 'I had health issues' or 'I was caring for a child'"
-      jobseekers_job_application_details_employment_form:
-        main_duties: Give a brief summary of your key responsibilities.
-        organisation: For a non-teaching job, tell us the name of the organisation you worked at
-        reason_for_leaving: If you’re still in the role, give a brief summary of your reasons for wanting to leave.
       jobseekers_job_application_details_qualifications_degree_form:
         institution: Awarding body
         year: Year qualification was awarded
@@ -191,11 +187,6 @@ en:
         first_name: Or given names
         last_name: Or family name
         phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
-      jobseekers_profile_employment_form:
-        main_duties: Give a brief summary of your key responsibilities.
-        organisation_name: If you worked for yourself, enter ‘self-employed’
-        started_on: For example, %{date}
-        reason_for_leaving: If you're still in the role, give a brief summary of your reasons for wanting to leave.
 
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
@@ -357,16 +348,6 @@ en:
           uninterested: 'No'
       jobseekers_break_form:
         reason_for_break: Enter reasons for gap in work history
-      jobseekers_job_application_details_employment_form:
-        is_current_role_options:
-          "false": "No"
-          "true": "Yes"
-        job_title: Job title
-        main_duties: Main duties
-        organisation: School or other organisation
-        subjects_review: Subjects and key stages taught
-        subjects_html: Subjects and key stages taught (optional<span class='govuk-visually-hidden'> field</span>)</span>
-        reason_for_leaving: Reason for leaving role
       jobseekers_job_preferences_form:
         role_options:
           education_support: Learning support or cover supervisor
@@ -482,15 +463,6 @@ en:
         phone_number_provided_options:
           false: "No"
           true: "Yes"
-      jobseekers_profile_employment_form:
-        is_current_role_options:
-          "false": "No"
-          "true": "Yes"
-        job_title: Role
-        main_duties: Main duties
-        reason_for_leaving: Reason for leaving role
-        organisation: Name of school or employer
-        subjects: Subjects and key stages taught (optional)
       jobseekers_sign_in_form:
         email: Email address
         password: Password
@@ -797,10 +769,6 @@ en:
       jobseekers_break_form:
         ended_on: End of gap
         started_on: Start of gap
-      jobseekers_job_application_details_employment_form:
-        is_current_role: Is this your current role?
-        ended_on: End date
-        started_on: Start date
       jobseekers_job_application_details_qualifications_category_form:
         category: What qualification would you like to add?
       jobseekers_qualifications_shared_legends: &jobseekers_qualifications_shared_legends
@@ -825,10 +793,6 @@ en:
         <<: *jobseekers_qualifications_shared_legends
       jobseekers_qualifications_other_form:
         <<: *jobseekers_qualifications_shared_legends
-      jobseekers_profile_employment_form:
-        is_current_role: Are you still working in this role?
-        ended_on: End date
-        started_on: Start date
       jobseekers_subscription_form:
         frequency: When do you want to receive alerts?
       jobseekers_unsubscribe_feedback_form:

@@ -1,20 +1,32 @@
 class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesController
-  def new; end
+  before_action :set_employment, only: %i[edit update destroy]
+
+  def new
+    @employment = profile.employments.job.build
+  end
 
   def edit; end
 
   def create
-    if form.valid?
-      profile.employments.create(employment_form_params)
+    @employment = profile.employments.job.build
+    @employment.attributes = employment_form_params
+
+    if @employment.save
       redirect_to review_jobseekers_profile_work_history_index_path
     else
       render :new
     end
+  rescue ActiveRecord::MultiparameterAssignmentErrors => e
+    e.errors.each do |error|
+      @employment.errors.add(error.attribute, :invalid)
+    end
+    render :new
   end
 
   def update
-    if form.valid?
-      employment.update(employment_form_params)
+    @employment.attributes = employment_form_params
+
+    if @employment.save
       redirect_to review_jobseekers_profile_work_history_index_path, success: t(".success")
     else
       render :edit
@@ -22,7 +34,7 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
   end
 
   def destroy
-    employment.destroy
+    @employment.destroy
 
     redirect_to review_jobseekers_profile_work_history_index_path, success: t(".success")
   end
@@ -33,25 +45,8 @@ class Jobseekers::Profiles::EmploymentsController < Jobseekers::ProfilesControll
 
   private
 
-  helper_method :form
-
-  def form
-    @form ||= Jobseekers::Profile::EmploymentForm.new(employment_form_attributes)
-  end
-
-  def employment_form_attributes
-    case action_name
-    when "new"
-      {}
-    when "edit"
-      employment.slice(*employment_attrs)
-    when "create", "update"
-      employment_form_params
-    end
-  end
-
-  def employment
-    profile.employments.find(params[:id])
+  def set_employment
+    @employment = profile.employments.find(params[:id])
   end
 
   def employment_form_params

@@ -7,7 +7,7 @@ RSpec.describe "Jobseeker profile employments" do
   let(:job_title) { "Number 9" }
   let(:started_on_month) { "01" }
   let(:started_on_year) { "2001" }
-  let(:current_role) { "no" }
+  let(:current_role) { "true" }
   let(:ended_on_month) { "01" }
   let(:ended_on_year) { "2002" }
   let(:main_duties) { "Scoring goals" }
@@ -21,8 +21,6 @@ RSpec.describe "Jobseeker profile employments" do
         "started_on(2i)": started_on_month,
         "started_on(1i)": started_on_year,
         is_current_role: current_role,
-        "ended_on(2i)": ended_on_month,
-        "ended_on(1i)": ended_on_year,
         main_duties: main_duties,
         reason_for_leaving: reason_for_leaving,
       }.merge(days),
@@ -48,15 +46,13 @@ RSpec.describe "Jobseeker profile employments" do
 
   describe "POST #create" do
     context "when the form is valid" do
-      let(:current_role) { "yes" }
-
       it "creates the employment and redirects to the review page" do
         expect { post jobseekers_profile_work_history_index_path, params: params }
           .to change { Employment.count }.by(1)
 
         expect(response).to redirect_to(review_jobseekers_profile_work_history_index_path)
 
-        expect(Employment.order(:created_at).last.is_current_role).to be(true)
+        expect(Employment.order(:created_at).last.is_current_role?).to be(true)
       end
     end
 
@@ -73,13 +69,11 @@ RSpec.describe "Jobseeker profile employments" do
   end
 
   describe "PATCH #update" do
-    let!(:employment) { create(:employment, :jobseeker_profile_employment, organisation: previous_organisation, jobseeker_profile_id: profile.id) }
+    let!(:employment) { create(:employment, :jobseeker_profile_employment, organisation: previous_organisation, jobseeker_profile: profile) }
     let(:previous_organisation) { "Test organisation" }
     let(:organisation) { "Arsenal" }
 
     context "when the form is valid" do
-      before { allow_any_instance_of(Jobseekers::Profile::EmploymentForm).to receive(:valid?).and_return(true) }
-
       it "updates the employment and redirects to the review page" do
         expect { patch jobseekers_profile_work_history_path(employment), params: params }
           .to change { employment.reload.organisation }.from(previous_organisation).to(organisation)

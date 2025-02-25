@@ -42,7 +42,7 @@ RSpec.describe "Jobseekers can review a job application" do
         expect(page).to have_content(employment.main_duties)
         expect(page).to have_content(employment.started_on.to_formatted_s(:month_year))
         expect(page).to have_content(employment.is_current_role ? "Yes" : "No")
-        expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year))
+        expect(page).to have_content(employment.ended_on.to_formatted_s(:month_year)) unless employment.is_current_role?
       end
 
       expect_work_history_to_be_ordered_most_recent_first
