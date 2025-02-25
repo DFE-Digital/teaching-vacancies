@@ -235,5 +235,57 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
         expect(subject.params_to_save[:flexi_working]).to eq "<p>hello<br> world</p>"
       end
     end
+
+    context "when flexi_working_details_provided is 'true' and flexi_working is blank" do
+      let(:params) { { flexi_working_details_provided: "true", flexi_working: nil } }
+
+      it "fails validation" do
+        expect(subject.errors[:flexi_working]).to include("Enter flexible working details")
+      end
+    end
+
+    context "when flexi_working_details_provided is 'true' and flexi_working is provided" do
+      let(:params) { { flexi_working_details_provided: "true", flexi_working: "Some flexible working details" } }
+
+      it "passes validation" do
+        expect(subject.errors[:flexi_working_details_provided].blank?).to be true
+      end
+    end
+
+    context "when flexi_working_details_provided is 'false'" do
+      let(:params) { { flexi_working_details_provided: "false", flexi_working: nil } }
+
+      it "passes validation even if flexi_working is blank" do
+        expect(subject.errors[:flexi_working_details_provided].blank?).to be true
+      end
+    end
+  end
+
+  describe "flexi_working_details_provided" do
+    let(:error) { %i[flexi_working_details_provided inclusion] }
+
+    context "when flexi_working_details_provided is true" do
+      let(:params) { { flexi_working_details_provided: true } }
+
+      it "does not raise errors" do
+        expect(subject.errors[:flexi_working_details_provided].blank?).to be true
+      end
+    end
+
+    context "when flexi_working_details_provided is false" do
+      let(:params) { { flexi_working_details_provided: false } }
+
+      it "raises errors" do
+        expect(subject.errors[:flexi_working_details_provided].blank?).to be true
+      end
+    end
+
+    context "when flexi_working_details_provided is nil" do
+      let(:params) { { flexi_working_details_provided: nil } }
+
+      it "raises errors" do
+        expect(subject.errors[:flexi_working_details_provided].blank?).to be false
+      end
+    end
   end
 end

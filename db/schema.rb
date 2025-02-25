@@ -716,6 +716,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_21_101041) do
     t.string "other_extension_reason_details"
     t.uuid "publisher_ats_api_client_id"
     t.integer "religion_type"
+    t.boolean "flexi_working_details_provided"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_reference", "publisher_ats_api_client_id"], name: "index_vacancies_on_external_ref_and_publisher_ats_client_id", unique: true
     t.index ["external_source", "external_reference"], name: "index_vacancies_on_external_source_and_external_reference"

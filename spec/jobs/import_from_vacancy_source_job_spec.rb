@@ -178,6 +178,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "is_parental_leave_cover" => nil,
           "is_job_share" => true,
           "hourly_rate" => "£25 per hour",
+          "flexi_working_details_provided" => true,
         )
       end
 

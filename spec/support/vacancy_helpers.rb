@@ -144,10 +144,10 @@ module VacancyHelpers
     fill_in "publishers_job_listing_about_the_role_form[school_offer]", with: vacancy.school_offer
     fill_in "publishers_job_listing_about_the_role_form[flexi_working]", with: vacancy.flexi_working
 
-    # within ".safeguarding-information-provided-radios" do
-    #   choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.safeguarding_information_provided_options.#{vacancy.safeguarding_information_provided}")
-    #   fill_in "publishers_job_listing_about_the_role_form[safeguarding_information]", with: vacancy.safeguarding_information
-    # end
+    within ".flexi_working_details_provided", visible: :all do
+      choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.flexi_working_details_provided_options.#{vacancy.flexi_working_details_provided}")
+    end
+    fill_in "publishers_job_listing_about_the_role_form[flexi_working]", with: vacancy.flexi_working
 
     within ".further-details-provided-radios" do
       choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.further_details_provided_options.#{vacancy.further_details_provided}")
