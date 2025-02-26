@@ -1,6 +1,7 @@
 require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
+#  review ok - runtime 2.5 seconds
 RSpec.shared_examples "a successful Publisher sign in" do
   before do
     visit new_publisher_session_path

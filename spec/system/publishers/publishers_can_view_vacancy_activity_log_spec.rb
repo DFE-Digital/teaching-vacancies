@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# could just be a view spec - just checks that the activity log is filled in
+# most of the test is setup for the activity log via papertrail.
 RSpec.describe "Publishers can view a vacancy's activity log", versioning: true do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:organisation) { create(:school) }

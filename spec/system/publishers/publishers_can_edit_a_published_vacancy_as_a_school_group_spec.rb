@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# long rambly test, intentions unclear
+# runtime 4.4 seconds
 RSpec.describe "Editing a published vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school_group) { create(:trust, schools: [school1, school2]) }

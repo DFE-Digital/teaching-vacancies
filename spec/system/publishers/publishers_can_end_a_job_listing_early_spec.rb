@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# This could be a request spec?
+# runtime 3.8 seconds
 RSpec.describe "Publishers can end a job listing early" do
   let(:organisation) { create(:school) }
   let!(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
@@ -17,6 +19,8 @@ RSpec.describe "Publishers can end a job listing early" do
     click_on I18n.t("publishers.vacancies.show.heading_component.action.close_early")
     click_on I18n.t("buttons.end_listing")
 
+    # error case - could be unit tested?
+    # doesn't check error content
     expect(page).to have_content("There is a problem")
 
     choose I18n.t("helpers.label.publishers_job_listing_end_listing_form.hired_status_options.hired_other_free")
@@ -25,6 +29,7 @@ RSpec.describe "Publishers can end a job listing early" do
     expect { click_on I18n.t("buttons.end_listing") }.to change { Vacancy.live.count }.from(1).to(0)
 
     expect(current_path).to eq(organisation_job_path(vacancy.id))
+    # should we check that the requsted tick boxes have been saved?
   end
 
   context "when there are draft applications for the listing" do
