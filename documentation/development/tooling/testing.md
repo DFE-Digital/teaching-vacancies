@@ -64,6 +64,34 @@ or using Spring binstub:
 parallel_rspec
 ```
 
+## RSpec test coverage reports
+We use [Simplecov](https://github.com/simplecov-ruby/simplecov) and [Undercover](https://github.com/grodowski/undercover) gems for measuring and enforcing our test coverage.
+
+The configuration and minimum coverage requirements are set on the [.simplecov file](/.simplecov)
+
+### How to generate coverage reports locally?
+
+Set `COVERAGE=1` in your environment or as a prefix the full rspec run.
+
+EG: `COVERAGE=1 rspec`
+
+After running the full test suite, the coverage report should be available at the project's `/coverage/index.html` path.
+
+### Finding code coverage on the PR runs
+
+The code coverage is generated as an artifact on the projects Github PR check `test -> Run RSpec Tests in parallel -> Upload coverage report`
+
+When the step is expanded, there is a link to download it as:
+`Artifact download URL: https://github.com/DFE-Digital/teaching-vacancies/actions/runs/111111111/artifacts/22222222`
+
+The link will download a `ZIP` file containing the coverage report for the PR tests run.
+
+### Undercover alerts
+
+Once having a coverage report generated, undercover can be used to alert us about code that we added or changed without test coverage.
+
+This happens automatically in the PRs `test -> Run RSpec Tests in parallel` workflow. But can also be run locally invoking the `undercover` command.
+
 ## Visual regression testing
 
 The visual layout and appearance of defined scenarios (pages and common content) can be tested using [BackstopJS](https://github.com/garris/BackstopJS)
