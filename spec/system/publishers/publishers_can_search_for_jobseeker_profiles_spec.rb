@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# runtime 12 seconds
+# filtering jobseeker profiles, but looks ok
 RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
   let(:organisation) { create(:school, geopoint: "POINT (-0.108267 51.506438)") }
