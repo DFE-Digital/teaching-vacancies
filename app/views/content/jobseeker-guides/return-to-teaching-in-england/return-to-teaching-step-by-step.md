@@ -9,7 +9,7 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/retu
 
 ![A teacher talking in front of a classroom full of students.](/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-a-step-by-step-guide.jpg)
 
-Check what you need to do to return to teach in a state-funded school in England. If you need support returning to teaching after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
+Check what you need to do to return to teach in a state-funded school in England. If you need support returning to teaching after a break, you could be eligible for a [return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers). You can find additional support on [Get support returning to teaching](/jobseeker-guides/return-to-teaching-in-england/return-to-teaching/).
 <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
   <div class="govuk-accordion__section">
     <div class="govuk-accordion__section-header">
@@ -115,21 +115,3 @@ Check what you need to do to return to teach in a state-funded school in England
       </p>
       <p class="govuk-body">
         <a href="/jobseeker-guides/return-to-teaching-in-england/show-how-you-meet-the-teachers-standards">Show how you meet the teachers’ standards</a>
-      </p>
-    </div>
-  </div>
-  <div class="govuk-accordion__section">
-    <div class="govuk-accordion__section-header">
-      <h2 class="govuk-accordion__section-heading">
-        <span class="govuk-accordion__section-button" id="accordion-default-heading-4">
-          Give your feedback
-        </span>
-      </h2>
-    </div>
-    <div id="accordion-default-content-4" class="govuk-accordion__section-content">
-      <p class="govuk-body">
-        Fill out a <a href="/feedback/new">short form</a>  and provide feedback on this page.
-      </p>
-    </div>
-  </div>
-</div>
