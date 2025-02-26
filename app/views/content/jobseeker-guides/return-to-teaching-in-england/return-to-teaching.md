@@ -1,6 +1,6 @@
 ---
 order: 100
-title: Return to teaching
+title: Get support returning to teaching
 meta_description: Find out how you could get support returning to teaching, including how to get free, one-to-one guidance from a return to teaching adviser.
 date_posted: 08/09/2023
 category_tags: apply
