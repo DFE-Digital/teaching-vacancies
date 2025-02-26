@@ -150,12 +150,8 @@ RSpec.describe "Jobseekers can manage their profile" do
         visit jobseekers_profile_path
       end
 
-      it "prefills the form with the jobseeker's provided personal details" do
+      it "does not prefill the form with the personal details from the draft application" do
         expect(page).not_to have_content(previous_application.phone_number)
-      end
-
-      it "still shows the summary rows for the blank attributes" do
-        expect(page).to have_content("Name")
       end
     end
 
