@@ -142,12 +142,8 @@ module VacancyHelpers
 
     fill_in "publishers_job_listing_about_the_role_form[skills_and_experience]", with: vacancy.skills_and_experience
     fill_in "publishers_job_listing_about_the_role_form[school_offer]", with: vacancy.school_offer
-    within ".flexi_working_details_provided" do
-      choose "Yes"
-    end
-    fill_in "publishers_job_listing_about_the_role_form[flexi_working]", with: vacancy.flexi_working
 
-    within ".flexi_working_details_provided", visible: :all do
+    within ".flexi_working_details_provided" do
       choose I18n.t("helpers.label.publishers_job_listing_about_the_role_form.flexi_working_details_provided_options.#{vacancy.flexi_working_details_provided}")
     end
     fill_in "publishers_job_listing_about_the_role_form[flexi_working]", with: vacancy.flexi_working
