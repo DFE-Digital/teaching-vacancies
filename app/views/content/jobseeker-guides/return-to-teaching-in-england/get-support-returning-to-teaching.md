@@ -22,7 +22,9 @@ Schools are interested in recruiting former teachers like you so you can continu
 
 A return to teaching provides you with an opportunity to take greater control of your career to shape a role that suits your skills, ambition and situation.
 
-Flexible working options can also help you start back in a way that works for you.
+Flexible working options can also help you start back in a way that works for you. 
+
+Read the [step by step guide](/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-step-by-step) to support your return to teaching.
 
 ## Advice and support for returning teachers
 
