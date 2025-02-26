@@ -142,10 +142,11 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   # In order for this to be implemented effectively, the JobseekerProfile would need to split out the its professional status fields.
   #
   def update_or_create_jobseeker_profile!
+    profile_params = form_params.slice(:teacher_reference_number, :has_teacher_reference_number, :qualified_teacher_status)
     if current_jobseeker.jobseeker_profile.nil?
-      current_jobseeker.create_jobseeker_profile!(form_params.slice(:teacher_reference_number, :has_teacher_reference_number, :qualified_teacher_status))
+      current_jobseeker.create_jobseeker_profile!(profile_params)
     else
-      current_jobseeker.jobseeker_profile.update!(form_params.slice(:teacher_reference_number, :has_teacher_reference_number, :qualified_teacher_status))
+      current_jobseeker.jobseeker_profile.update!(profile_params)
     end
   end
 
