@@ -38,8 +38,6 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     context "when a publisher has multiple organisations" do
       let(:organisations) { [school, other_school, trust, local_authority] }
 
-      before { allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference)) }
-
       let(:other_login_key) do
         publisher.emergency_login_keys.create(
           not_valid_after: Time.current + Publishers::LoginKeysController::EMERGENCY_LOGIN_KEY_DURATION,
@@ -176,7 +174,6 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
         before do
           allow(Rails.configuration).to receive(:enforce_local_authority_allowlist).and_return(true)
-          allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
         end
 
         it "can sign in", :dfe_analytics do

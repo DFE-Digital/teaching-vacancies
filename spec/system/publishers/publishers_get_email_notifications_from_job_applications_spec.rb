@@ -1,4 +1,5 @@
 require "rails_helper"
+
 RSpec.describe "Publishers get email notifications from job applications" do
   include ActiveJob::TestHelper
 
@@ -9,11 +10,10 @@ RSpec.describe "Publishers get email notifications from job applications" do
   let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy, submitted_at: 1.day.ago) }
 
   before do
-    ActionMailer::Base.deliveries.clear
-    allow_any_instance_of(ApplicationController).to receive(:current_organisation).and_return(organisation)
-
     login_publisher(publisher: publisher, organisation:)
   end
+
+  after { logout }
 
   scenario "publishers get an email linking to the job applications received the day before" do
     perform_enqueued_jobs do

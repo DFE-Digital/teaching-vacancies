@@ -23,9 +23,7 @@ RSpec.describe "Publishers can extend a deadline" do
     click_on extend_expires_at
   end
 
-  after do
-    logout
-  end
+  after { logout }
 
   context "when the vacancy has not expired" do
     let(:vacancy_type) { :published }
@@ -71,8 +69,8 @@ RSpec.describe "Publishers can extend a deadline" do
 
     context "when re-listing for publication today" do
       before do
-        choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: "6 October 2024"), visible: false,
-                                                                                                                                         name: "publishers_job_listing_relist_form[publish_on_day]"
+        choose I18n.t("helpers.label.publishers_job_listing_important_dates_form.publish_on_day_options.today", date: "6 October 2024"),
+               visible: false, name: "publishers_job_listing_relist_form[publish_on_day]"
 
         click_on I18n.t("buttons.relist_vacancy")
       end

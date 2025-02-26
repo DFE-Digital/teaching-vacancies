@@ -35,7 +35,6 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     add_filter "app/controllers/robots_controller.rb"
     add_filter "app/controllers/sha_controller.rb"
     add_filter "app/jobs/set_organisation_slugs_job.rb"
-    add_filter "app/mailers/jobseekers/authentication_fallback_mailer.rb"
 
     add_filter "lib/dfe_sign_in/fake_sign_out_endpoint.rb"
     add_filter "lib/modules/aws_ip_ranges.rb"
@@ -50,6 +49,8 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
 
     # These minima seem to be a bit unstable, so they need to be set around
     # .25% lower (branch) and .1% lower (line) than the test run for now
-    minimum_coverage line: 95.69, branch: 79.71
+    #
+    # possibly the tests are stable now?
+    minimum_coverage line: 95.79, branch: 80.05
   end
 end

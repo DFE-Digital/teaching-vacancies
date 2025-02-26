@@ -7,7 +7,9 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
-  context "when a single school" do
+  after { logout }
+
+  context "with a single school" do
     let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
 
     before do
@@ -41,7 +43,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     end
   end
 
-  context "when a school group" do
+  context "with a school group" do
     let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
     let(:another_primary_school) { create(:school, name: "Another primary school", phase: "primary") }
     let(:trust) { create(:trust, schools: [primary_school, another_primary_school]) }
@@ -97,8 +99,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         scenario "key_stages has to be set again" do
           change_job_locations(vacancy, [secondary_school])
           click_on I18n.t("buttons.save_and_continue")
-
-          vacancy.phases = %w[secondary]
 
           click_on I18n.t("buttons.save_and_continue")
 

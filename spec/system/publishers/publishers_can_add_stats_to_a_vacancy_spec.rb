@@ -1,5 +1,4 @@
 require "rails_helper"
-require "sanitize"
 
 RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
   let(:school) { create(:school) }
@@ -8,6 +7,8 @@ RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
   before do
     login_publisher(publisher: publisher, organisation: school)
   end
+
+  after { logout }
 
   context "when there are vacancies awaiting feedback" do
     let!(:vacancy) { create(:vacancy, :expired, job_title: "Maths teacher", organisations: [school]) }

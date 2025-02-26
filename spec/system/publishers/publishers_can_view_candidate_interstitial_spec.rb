@@ -8,6 +8,8 @@ RSpec.describe "Publishers can see the Candidate profiles interstitial page" do
 
     before { login_publisher(publisher: publisher, organisation: school) }
 
+    after { logout }
+
     scenario "they will see the interstitial page" do
       visit organisation_jobs_with_type_path
 
@@ -22,6 +24,8 @@ RSpec.describe "Publishers can see the Candidate profiles interstitial page" do
     let(:publisher) { create(:publisher, acknowledged_candidate_profiles_interstitial: true, accepted_terms_at: Time.current) }
 
     before { login_publisher(publisher: publisher, organisation: school) }
+
+    after { logout }
 
     scenario "they will NOT see the interstitial page" do
       visit organisation_jobs_with_type_path

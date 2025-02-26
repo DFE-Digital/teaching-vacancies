@@ -35,10 +35,12 @@ RSpec.describe "Contacting Jobseekers", type: :system do
 
   before do
     allow(Geocoding).to receive(:test_coordinates).and_return(location_in_london)
+    login_publisher(publisher:)
   end
 
+  after { logout }
+
   scenario "A publisher can contact the jobseeker from their profile" do
-    login_publisher(publisher:)
     visit root_path
     click_link "Candidate profiles"
 
