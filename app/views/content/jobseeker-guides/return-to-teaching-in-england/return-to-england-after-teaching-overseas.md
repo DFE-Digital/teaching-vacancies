@@ -1,5 +1,5 @@
 ---
-order: 100
+order: 107
 title: Return to England after teaching overseas
 meta_description: Find out how to get support to return to England after teaching outside the UK and bring your skills and experience back to an English classroom.
 date_posted: 06/12/2023
@@ -7,7 +7,7 @@ category_tags: apply
 card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/return-to-england-after-teaching-overseas.jpg"
 ---
 
-![A teacher talking at the front of a classroom full of students during a lesson](/content-assets/jobseeker-guides/return-to-england-after-teaching-overseas-800x300.jpg)
+![A teacher talking at the front of a classroom full of students during a lesson.](/content-assets/jobseeker-guides/return-to-england-after-teaching-overseas-800x300.jpg)
 
 Get support if you’re a UK citizen thinking about returning from overseas to teach in England. 
 The skills, experience and perspective you’ve gained outside the UK are highly valued by schools and headteachers.
@@ -45,4 +45,4 @@ Get ready to apply by:
 
 
 
-<a href="https://teaching-vacancies.service.gov.uk/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
+<a href="/jobs?keyword=&location=" class="govuk-button">Search for roles</a>
