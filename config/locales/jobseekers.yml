@@ -434,6 +434,13 @@ en:
         qualifications_shared: &qualifications_shared
           caption: Education and qualifications
           subjects_and_grades: Subjects and grades
+          hint:
+            gcse: Add all your GCSEs.
+            as_level: Add all your AS levels.
+            a_level: Add all your A levels.
+            undergraduate: Add your undergraduate degree.
+            postgraduate: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
+            other: Add any formal qualifications. You can add details of any training or professional development in the continuing professional development part of the application.
         edit:
           <<: *qualifications_shared
           heading:
@@ -454,8 +461,6 @@ en:
             postgraduate: Add a postgraduate qualification
             other: Add a qualification
           title: Add a qualification — Application
-          hint: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
-          hint_for_other_qualifications: Add any formal qualifications. You can add details of any training or professional development in the continuing professional development part of the application.
         select_category:
           <<: *qualifications_shared
           heading: Add a qualification
@@ -871,8 +876,6 @@ en:
             postgraduate: Add a postgraduate qualification
             other: Add a qualification
           title: Add a qualification — Profile
-          hint: You do not need to add qualified teacher status (QTS) here. You can add this to your application in the professional status section.
-          hint_for_other_qualifications: Add any formal qualifications. You can add details of any training or professional development in the continuing professional development part of the application.
         edit:
           page_title: Qualifications
         review:
