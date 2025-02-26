@@ -34,7 +34,9 @@ RSpec.describe PersonalDetails do
     end
 
     context "when the jobseeker has a previous draft application" do
-      let!(:previous_application) { create(:job_application, :status_draft, jobseeker:) }
+      before do
+        create(:job_application, :status_draft, jobseeker:)
+      end
 
       it "uses the details from the previous application" do
         expect(personal_details.first_name).to be_nil
