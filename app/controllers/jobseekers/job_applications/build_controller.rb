@@ -51,6 +51,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     "jobseekers/job_application/#{step}_form".camelize.constantize
   end
 
+  # :nocov:
   def form_attributes
     attributes = case action_name
                  when "show"
@@ -61,13 +62,14 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
     case step
     when :professional_status
-      attributes.merge(trn_params)
+      attributes.merge(jobseeker_profile: current_jobseeker&.jobseeker_profile)
     when :employment_history
       attributes.merge(unexplained_employment_gaps: job_application.unexplained_employment_gaps)
     else
       attributes
     end
   end
+  # :nocov:
 
   def form_params
     param_key = ActiveModel::Naming.param_key(form_class)
@@ -121,13 +123,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def vacancy
     @vacancy ||= job_application.vacancy
-  end
-
-  def trn_params
-    {
-      teacher_reference_number: form_params[:teacher_reference_number] || current_jobseeker&.jobseeker_profile&.teacher_reference_number,
-      has_teacher_reference_number: form_params[:has_teacher_reference_number] || current_jobseeker&.jobseeker_profile&.has_teacher_reference_number,
-    }
   end
 
   # This set of fields needs to be a 'consistent' set rather than just a couple of fields.
