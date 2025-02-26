@@ -31,7 +31,9 @@ RSpec.describe JobseekerProfile, type: :model do
     end
 
     context "when the jobseeker has a previous draft application" do
-      let!(:previous_application) { create(:job_application, :status_draft, jobseeker:) }
+      before do
+        create(:job_application, :status_draft, jobseeker:)
+      end
 
       it "does not use the details from the draft application" do
         expect(profile.employments.map(&:job_title).sort).to be_empty
