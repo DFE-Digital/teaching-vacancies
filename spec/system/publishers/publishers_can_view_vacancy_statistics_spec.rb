@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# clear view spec - stats are published outside of the service
 RSpec.describe "Publishers can view a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }

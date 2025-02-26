@@ -1,5 +1,6 @@
 require "rails_helper"
 
+#  review ok - although it seems to fail a lot, but attempts to fix it have not been successful
 RSpec.describe "Publishers can view their notifications" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }

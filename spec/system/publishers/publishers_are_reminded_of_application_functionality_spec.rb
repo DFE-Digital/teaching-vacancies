@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# reviewed - seems ok
 RSpec.describe "Application feature reminder" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }

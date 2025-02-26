@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# reviewed - seems ok
 RSpec.describe "Publishers can edit a draft vacancy" do
   let(:publisher) { create(:publisher) }
   let(:primary_school) { create(:school, name: "Primary school", phase: "primary") }

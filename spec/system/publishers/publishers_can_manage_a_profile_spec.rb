@@ -1,5 +1,8 @@
 require "rails_helper"
 
+# runtime 14.5 seconds
+# lotsa of duplication around changing many parts of the organisation
+# profile, email, photo etc etc with mutiple scenarios (why LA?)
 RSpec.describe "Publishers can manage an organisation or school profile" do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
 

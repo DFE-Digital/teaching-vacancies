@@ -1,5 +1,7 @@
 require "rails_helper"
 
+#  feels very similar to the tests that invoke ATS type functionality
+# no really an integration / system test - could probably be deleted or merged with existing test
 RSpec.describe "Publishers can see the vacancies dashboard" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }

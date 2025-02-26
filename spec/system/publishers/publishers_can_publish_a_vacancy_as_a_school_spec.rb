@@ -1,5 +1,10 @@
 require "rails_helper"
 
+#  flow test done via a 'vacancy' rather than via
+# data (which can_publish_as_a_local_authority does)
+# runtime 33 seconds so very slow
+# 1 straight through flow, catholic/religion flow tests also
+# same weak error checks, same 2 defects (error message incorrect)
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:vacancy) do

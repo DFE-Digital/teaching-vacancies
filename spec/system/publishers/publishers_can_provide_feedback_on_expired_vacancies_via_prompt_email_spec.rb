@@ -1,5 +1,8 @@
 require "rails_helper"
 
+# runtime 3 seconds
+# very strange test, runs actual production code in its setup phase
+# clash between job spec for sending prompt and system spec for results?
 RSpec.describe "Publishers can provide feedback on expired vacancies via the prompt email" do
   include ActiveJob::TestHelper
 

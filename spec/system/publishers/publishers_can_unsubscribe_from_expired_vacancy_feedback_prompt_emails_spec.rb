@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# nice end2end test for unsubscribing to emails.
+# Maybe it should just run the job one more time and check that email doesn't arrive?
 RSpec.describe "Publishers can unsubscribe from expired vacancy feedback prompt emails" do
   include ActiveJob::TestHelper
 

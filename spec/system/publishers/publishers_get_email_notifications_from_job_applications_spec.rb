@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# reviewed ok - system test for SendApplicationsReceivedYesterdayJob
 RSpec.describe "Publishers get email notifications from job applications" do
   include ActiveJob::TestHelper
 

@@ -1,5 +1,12 @@
 require "rails_helper"
 
+# runtime 9.3 seconds
+# one long flow - combination of (very basic) error handling
+# There are at least 2 defects in this scenario which are not discovered
+# due to not checking error messages properly
+#
+# and check that flow works correctly from start to finish.
+# Why do we care about LA vs anything else though?
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
   let!(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: school_group, schools: [school1, school2]) }

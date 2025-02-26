@@ -1,5 +1,6 @@
 require "rails_helper"
 
+#  view spec? strange negative check for 'Location'
 RSpec.describe "Jobseeker profiles", type: :system do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
