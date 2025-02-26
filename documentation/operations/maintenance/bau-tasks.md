@@ -55,3 +55,15 @@ COPY (
   WHERE condition
 ) TO '/local/path/filename.csv' WITH CSV HEADER;
 ```
+
+### Running schedule tasks on demand
+
+We now and then want to execute a [scheduled rake task](/config/schedule.yml) on demand.
+
+Unles for particular debugging reasons, there is no need to do this from a production rails console.
+
+They can be triggered from the Sidekiq dashboard, accessible with your work email through DfE Sign-in.
+[Link to Sidekiq dashboard in production](https://teaching-vacancies.service.gov.uk/sidekiq)
+
+Once in the dashboard, the [Cron tab](https://teaching-vacancies.service.gov.uk/sidekiq/cron) lists all the schedule jobs,
+where they can be inmediately enqued or enabled/disabled on demand. .
