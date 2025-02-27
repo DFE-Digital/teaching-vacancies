@@ -9,7 +9,7 @@ card-image: "/content-assets/jobseeker-guides/return-to-teaching-in-england/arra
 
 ![A teacher helping a student with work.](/content-assets/jobseeker-guides/return-to-teaching-in-england/arrange-your-referees.png)
 
-Schools and colleges should obtain references before the interview stage, where possible. This allows any concerns raised to be explored further with the referee and taken up with the candidate during the interview. 
+References allow employers to obtain factual information to support appointment decisions. Schools and colleges should obtain references before the interview stage, where possible. This allows any concerns raised to be explored further with the referee and taken up with the candidate during the interview. 
  
 Further guidance can be found in [Part three (safer recruitment) of the statutory safeguarding guidance for schools, Keeping children safe in education (KCSIE)](https://www.gov.uk/government/publications/keeping-children-safe-in-education--2?).   
  
