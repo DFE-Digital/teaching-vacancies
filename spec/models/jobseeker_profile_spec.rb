@@ -14,38 +14,43 @@ RSpec.describe JobseekerProfile, type: :model do
     end
 
     context "when the jobseeker has a previously submitted application" do
-      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
+      let(:first_name) { "Bill" }
+      let(:last_name) { "Smith" }
+      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, first_name:, last_name:) }
 
       it "uses the details from the previous application" do
         expect(profile.employments.map(&:job_title).sort).to eq(previous_application.employments.map(&:job_title).sort)
         expect(profile.qualifications.map(&:institution).sort).to eq(previous_application.qualifications.map(&:institution).sort)
         expect(profile.qualified_teacher_status_year).to eq(previous_application.qualified_teacher_status_year)
         expect(profile.qualified_teacher_status).to eq(previous_application.qualified_teacher_status)
-        expect(profile.personal_details.first_name).to eq(previous_application.first_name)
-        expect(profile.personal_details.last_name).to eq(previous_application.last_name)
+        expect(profile.personal_details.first_name).to eq(first_name)
+        expect(profile.personal_details.last_name).to eq(last_name)
       end
 
       it "creates a job preferences record" do
         expect(profile.job_preferences).to be_present
+        expect(profile.job_preferences).to be_persisted
       end
     end
 
     context "when the jobseeker has a previous draft application" do
       before do
-        create(:job_application, :status_draft, jobseeker:)
+        create(:job_application, :status_draft, jobseeker:, first_name: "karl", last_name: "karlssen", phone_number: "01234567899", right_to_work_in_uk: "yes")
       end
 
       it "does not use the details from the draft application" do
-        expect(profile.employments.map(&:job_title)).to be_empty
-        expect(profile.qualifications.map(&:institution)).to be_empty
+        expect(profile.employments).to be_empty
+        expect(profile.qualifications).to be_empty
         expect(profile.qualified_teacher_status_year).to be_nil
         expect(profile.qualified_teacher_status).to be_nil
         expect(profile.personal_details.first_name).to be_nil
         expect(profile.personal_details.last_name).to be_nil
+        expect(profile.personal_details.phone_number).to be_nil
       end
 
       it "creates a job preferences record" do
         expect(profile.job_preferences).to be_present
+        expect(profile.job_preferences).to be_persisted
       end
     end
 
