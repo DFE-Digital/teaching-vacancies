@@ -541,28 +541,28 @@ RSpec.describe Vacancy do
   end
 
   describe "#external?" do
-    let!(:vacancy1) { create(:vacancy, :external,job_title: "v1", external_source: nil) }
-    let!(:vacancy2) { create(:vacancy, :external, job_title: "v2", publisher_ats_api_client: nil) }
-    let!(:vacancy3) { create(:vacancy, job_title: "v3", external_source: nil, publisher_ats_api_client: nil ) }
+    let!(:ats_api_client_vacancy) { create(:vacancy, :external, job_title: "v1", external_source: nil) }
+    let!(:external_source_vacancy) { create(:vacancy, :external, job_title: "v2", publisher_ats_api_client: nil) }
+    let!(:internal_vacancy) { create(:vacancy, job_title: "v3", external_source: nil, publisher_ats_api_client: nil) }
 
     it "is external when external_source is present" do
-      expect(vacancy1.external?).to be true
+      expect(ats_api_client_vacancy.external?).to be true
     end
 
     it "is external when ats api client id is present" do
-      expect(vacancy2.external?).to be true
+      expect(external_source_vacancy.external?).to be true
     end
 
     it "is not external when none of the external attributes are present" do
-      expect(vacancy3.external?).to be false
+      expect(internal_vacancy.external?).to be false
     end
 
     it "matches external scopes" do
-      expect(Vacancy.external).to contain_exactly(vacancy1, vacancy2)
+      expect(Vacancy.external).to contain_exactly(ats_api_client_vacancy, external_source_vacancy)
     end
 
     it "matches internal scopes" do
-      expect(Vacancy.internal.map(&:job_title)).to contain_exactly(vacancy3.job_title)
+      expect(Vacancy.internal.map(&:job_title)).to contain_exactly(internal_vacancy.job_title)
     end
   end
 
