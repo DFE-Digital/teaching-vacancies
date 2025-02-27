@@ -45,16 +45,28 @@ module Jobseekers
         self.has_teacher_reference_number ||= jobseeker_profile.has_teacher_reference_number
       end
 
-      validates :qualified_teacher_status, inclusion: { in: %w[yes no on_track] }, if: -> { professional_status_section_completed }
-      validates :qualified_teacher_status_year, numericality: { less_than_or_equal_to: proc { Time.current.year } },
-                                                if: -> { qualified_teacher_status == "yes" && professional_status_section_completed }
-      validates :statutory_induction_complete, inclusion: { in: %w[yes no] }, if: -> { professional_status_section_completed }
+      # These validations are only applied when the professional status section is marked as completed.
+      #
+      # Equivalent to if: -> { professional_status_section_completed == true }.
+      # Nested validations using "if" calls would override the parent "with_options if:" call instead of combining the conditions.
+      # By using "unless" we can keep using "if" for nested validations and the "if & unless" conditions will be combined.
+      with_options unless: -> { professional_status_section_completed != true } do
+        validates :qualified_teacher_status, inclusion: { in: %w[yes no on_track] }
+        validates :statutory_induction_complete, inclusion: { in: %w[yes no] }
 
-      validates :teacher_reference_number, presence: true, if: -> { qualified_teacher_status == "yes" && professional_status_section_completed }
+        with_options if: -> { qualified_teacher_status == "yes" } do
+          validates :qualified_teacher_status_year, numericality: { less_than_or_equal_to: proc { Time.current.year } }
+          validates :has_teacher_reference_number, inclusion: { in: %w[yes] }
+          validates :teacher_reference_number, presence: true
+        end
+
+        with_options if: -> { qualified_teacher_status.in?(%w[no on_track]) } do
+          validates :has_teacher_reference_number, inclusion: { in: %w[yes no] }
+        end
+      end
+
       validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: false, if: -> { qualified_teacher_status == "yes" || has_teacher_reference_number == "yes" }
       validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true, if: -> { qualified_teacher_status.in?(%w[no on_track]) }
-      validates :has_teacher_reference_number, inclusion: { in: %w[yes] }, if: -> { qualified_teacher_status == "yes" && professional_status_section_completed }
-      validates :has_teacher_reference_number, inclusion: { in: %w[yes no] }, if: -> { qualified_teacher_status.in?(%w[no on_track]) && professional_status_section_completed }
 
       completed_attribute(:professional_status)
     end
