@@ -40,6 +40,8 @@ class Vacancy < ApplicationRecord
                          administration_hr_data_and_finance catering_cleaning_and_site_management
                          it_support pastoral_health_and_welfare other_support].freeze
 
+  SCHOOL_PHASES_MATCHING_VACANCY_PHASES = %w[nursery primary secondary sixth_form_or_college].freeze
+
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
   # middle(2) removed and converted to primary/secondary to avoid missing middle school roles in primary/secondary filters
@@ -221,7 +223,7 @@ class Vacancy < ApplicationRecord
   def allow_phase_to_be_set?
     school_phases = organisations.schools.filter_map(&:phase).uniq
 
-    !(school_phases.intersect? %w[nursery primary secondary sixth_form_or_college])
+    !(school_phases.intersect? SCHOOL_PHASES_MATCHING_VACANCY_PHASES)
   end
 
   def allow_subjects?
