@@ -94,8 +94,8 @@ class Vacancy < ApplicationRecord
   scope :published_on_count, ->(date) { published.where(publish_on: date.all_day).count }
   scope :visa_sponsorship_available, -> { where(visa_sponsorship_available: true) }
 
-  scope :internal, -> { where(external_source: nil) }
-  scope :external, -> { where.not(external_source: nil) }
+  scope :internal, -> { where(external_source: nil, publisher_ats_api_client_id: nil) }
+  scope :external, -> { where.not(external_source: nil, publisher_ats_api_client_id: nil) }
 
   scope :search_by_filter, VacancyFilterQuery
   scope :search_by_location, VacancyLocationQuery
