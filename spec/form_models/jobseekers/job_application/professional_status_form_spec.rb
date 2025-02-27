@@ -1,17 +1,93 @@
 require "rails_helper"
 
 RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model do
-  subject do
-    described_class.new(professional_status_section_completed: true)
-  end
+  describe "validations" do
+    subject(:form) { described_class.new(attributes) }
 
-  it { is_expected.to validate_inclusion_of(:qualified_teacher_status).in_array(%w[yes no on_track]) }
-  it { is_expected.to validate_inclusion_of(:statutory_induction_complete).in_array(%w[yes no]) }
+    RSpec.shared_examples "validates teacher reference number format" do
+      %w[123456 12345678 123456a 123-456 123-4567].each do |invalid_trn|
+        it { is_expected.not_to allow_value(invalid_trn).for(:teacher_reference_number) }
+      end
+      it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
+    end
 
-  context "when qualified_teacher_status is yes" do
-    before { allow(subject).to receive(:qualified_teacher_status).and_return("yes") }
+    RSpec.shared_examples "allows teacher reference number to be blank" do
+      it { is_expected.to allow_value("").for(:teacher_reference_number) }
+      it { is_expected.to allow_value(nil).for(:teacher_reference_number) }
+    end
 
-    it { is_expected.to validate_numericality_of(:qualified_teacher_status_year).is_less_than_or_equal_to(Time.current.year) }
+    context "when the professional status section is not completed" do
+      let(:attributes) { { professional_status_section_completed: false } }
+
+      it { is_expected.not_to validate_presence_of(:qualified_teacher_status) }
+      it { is_expected.not_to validate_presence_of(:qualified_teacher_status_year) }
+      it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
+      it { is_expected.not_to validate_presence_of(:statutory_induction_complete) }
+      it { is_expected.not_to validate_presence_of(:has_teacher_reference_number) }
+      it { is_expected.not_to validate_presence_of(:statutory_induction_complete_details) }
+      it { is_expected.not_to validate_presence_of(:qts_age_range_and_subject) }
+      it { is_expected.not_to validate_presence_of(:qualified_teacher_status_details) }
+
+      context "when qualified_teacher_status is 'yes'" do
+        let(:attributes) { super().merge(qualified_teacher_status: "yes") }
+
+        it { is_expected.to validate_presence_of(:teacher_reference_number) }
+
+        include_examples "validates teacher reference number format"
+      end
+
+      %w[no on_track].each do |status|
+        context "when qualified_teacher_status is '#{status}'" do
+          let(:attributes) { super().merge(qualified_teacher_status: status) }
+
+          it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
+
+          include_examples "validates teacher reference number format"
+          include_examples "allows teacher reference number to be blank"
+        end
+      end
+
+      context "when has_teacher_reference_number is 'yes'" do
+        let(:attributes) { super().merge(has_teacher_reference_number: "yes") }
+
+        it { is_expected.to validate_presence_of(:teacher_reference_number) }
+
+        include_examples "validates teacher reference number format"
+      end
+    end
+
+    context "when the professional status section is completed" do
+      let(:attributes) { { professional_status_section_completed: true } }
+
+      it { is_expected.to validate_inclusion_of(:qualified_teacher_status).in_array(%w[yes no on_track]) }
+      it { is_expected.to validate_inclusion_of(:statutory_induction_complete).in_array(%w[yes no]) }
+
+      context "when qualified_teacher_status is 'yes'" do
+        let(:attributes) { super().merge(qualified_teacher_status: "yes") }
+
+        it { is_expected.to validate_numericality_of(:qualified_teacher_status_year).is_less_than_or_equal_to(Time.current.year) }
+
+        it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array(%w[yes]) }
+
+        it { is_expected.to validate_presence_of(:teacher_reference_number) }
+
+        include_examples "validates teacher reference number format"
+      end
+
+      %w[no on_track].each do |status|
+        context "when qualified_teacher_status is '#{status}'" do
+          let(:attributes) { super().merge(qualified_teacher_status: status) }
+
+          it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array(%w[yes no]) }
+
+          it { is_expected.not_to validate_numericality_of(:qualified_teacher_status_year).is_less_than_or_equal_to(Time.current.year) }
+          it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
+
+          include_examples "validates teacher reference number format"
+          include_examples "allows teacher reference number to be blank"
+        end
+      end
+    end
   end
 
   describe "teacher reference information" do
