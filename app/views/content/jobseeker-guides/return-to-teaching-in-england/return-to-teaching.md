@@ -1,6 +1,6 @@
 ---
 order: 100
-title: Return to teaching
+title: Get support returning to teaching
 meta_description: Find out how you could get support returning to teaching, including how to get free, one-to-one guidance from a return to teaching adviser.
 date_posted: 08/09/2023
 category_tags: apply
@@ -22,7 +22,9 @@ Schools are interested in recruiting former teachers like you so you can continu
 
 A return to teaching provides you with an opportunity to take greater control of your career to shape a role that suits your skills, ambition and situation.
 
-Flexible working options can also help you start back in a way that works for you.
+Flexible working options can also help you start back in a way that works for you. 
+
+Read the [step by step guide](/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-step-by-step) to support your return to teaching.
 
 ## Advice and support for returning teachers
 
@@ -41,6 +43,7 @@ Advisers can give you free one-to-one support with:
   * the applications process, such as writing personal statements and preparing for interviews
   * accessing courses to enhance your subject knowledge or teaching practice, such as national professional qualifications (NPQs)
   * finding teaching vacancies
+  * accessing themed webinars and networking opportunities
 
 You can chat by phone, text or email, as little or as often as you need.
 
@@ -58,35 +61,6 @@ You can [find out more about teaching in England as a non-UK citizen](https://ge
 
 [Get a return to teaching adviser](https://getintoteaching.education.gov.uk/landing/return-to-teaching-advisers).
 
-## Find your perfect teaching job
-Every school has its own culture and values so it’s useful to consider what’s important to you when searching for a teaching job.
-
-You can [find out more about how to find a teaching role at the right school](https://teaching-vacancies.service.gov.uk/jobseeker-guides/get-help-applying-for-your-teaching-role/find-a-teaching-role-at-the-right-school).
-
-## Get help applying for a teaching job
-
-If you’ve found a teaching job which looks right for you, help make it yours with top tips from experienced teachers.
-
-Find out how to:
-
-  * [write a teacher personal statement](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-write-teacher-personal-statement)
-  * [write a great teaching job application in 5 steps](https://teaching-vacancies.service.gov.uk/jobseeker-guides/write-a-great-teaching-job-application-in-five-steps)
-  * [approach a teaching job interview](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-approach-a-teaching-job-interview)
-  * [prepare for a teaching interview lesson](https://teaching-vacancies.service.gov.uk/jobseeker-guides/prepare-for-a-teaching-job-interview-lesson)
-
-When you’re ready, you can [search for a job](https://teaching-vacancies.service.gov.uk/).
-
-## Refresh your knowledge after a break from teaching
-
-There are plenty of resources available to help you understand what might have changed since the last time you were in a classroom.
-
-You can find guidance and information about:
-
-  * [early career teacher resources](https://support-for-early-career-teachers.education.gov.uk/)
-  * changes to the [national curriculum and qualifications](https://www.gov.uk/topic/schools-colleges-childrens-services/curriculum-qualifications)
-  * [current behaviour management guidelines](https://www.gov.uk/government/publications/behaviour-and-discipline-in-schools)
-  * improvements to [national professional qualifications (NPQs)](https://www.gov.uk/government/publications/national-professional-qualifications-npqs-reforms/national-professional-qualifications-npqs-reforms) and whether you may be eligible for a fully funded scholarship
-
 ## Other things to consider
 
 Getting back into teaching provides you with a chance to consider other things like:
@@ -100,3 +74,5 @@ You may find it useful to know how to:
   * [find your teacher reference number](https://www.gov.uk/guidance/teacher-reference-number-trn) 
   * [check salaries and other benefits](https://getintoteaching.education.gov.uk/salaries-and-benefits)
   * [ensure your pension is up to date](https://www.teacherspensions.co.uk/members/working-life/deferring-your-pension/return-to-pensionable-service.aspx)
+
+Find out how to [return to teaching](/jobseeker-guides/return-to-teaching-in-england/return-to-teaching-step-by-step).

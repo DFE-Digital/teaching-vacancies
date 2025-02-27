@@ -23,7 +23,7 @@ You should include any breaks too, such as time you took to travel or for caring
 Make it easy for schools to review your application by completing all of the sections. Don’t worry if you don’t have your teaching reference number (TRN) yet, but do include your current course and expected qualification date. 
 
 ## 4. Check in with your referees
-Ideal referees are your current or most recent mentor, university tutor, or headteacher. It’s worth getting clear permission to use your referees so there are no surprises for anyone. Check which contact details they want you to use, ideally a specific email address, rather than something like info@example.com. It would be a shame for a lost reference request to slow down or risk your application.
+Ideal referees are your current or most recent mentor, university tutor, or headteacher. It’s worth getting clear permission to use your referees so there are no surprises for anyone. Check which contact details they want you to use, ideally a specific email address, rather than a mailbox that may not be monitored. It would be a shame for a lost reference request to slow down or risk your application.
 
 ## 5. Write a great personal statement
 At the heart of your application form is your personal statement. [Find out how to write a personal statement](https://teaching-vacancies.service.gov.uk/jobseeker-guides/how-to-write-teacher-personal-statement) that gives you the best chance to get an interview, where you can show in person what a great candidate you are. The more you show how your skills and interests match the school’s ethos, the better.
