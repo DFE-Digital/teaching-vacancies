@@ -541,26 +541,28 @@ RSpec.describe Vacancy do
   end
 
   describe "#external?" do
-    subject { vacancy.external? }
+    let!(:vacancy1) { create(:vacancy, :external,job_title: "v1", external_source: nil) }
+    let!(:vacancy2) { create(:vacancy, :external, job_title: "v2", publisher_ats_api_client: nil) }
+    let!(:vacancy3) { create(:vacancy, job_title: "v3", external_source: nil, publisher_ats_api_client: nil ) }
 
-    let(:vacancy) { build(:vacancy) }
-
-    context "when external_source is present" do
-      before { vacancy.external_source = "some_source" }
-
-      it { is_expected.to be true }
+    it "is external when external_source is present" do
+      expect(vacancy1.external?).to be true
     end
 
-    context "when ats api client id is present" do
-      let(:publisher_api_client) { build(:publisher_ats_api_client) }
-
-      before { vacancy.publisher_ats_api_client = publisher_api_client }
-
-      it { is_expected.to be true }
+    it "is external when ats api client id is present" do
+      expect(vacancy2.external?).to be true
     end
 
-    context "when none of the external attributes are present" do
-      it { is_expected.to be false }
+    it "is not external when none of the external attributes are present" do
+      expect(vacancy3.external?).to be false
+    end
+
+    it "matches external scopes" do
+      expect(Vacancy.external).to contain_exactly(vacancy1, vacancy2)
+    end
+
+    it "matches internal scopes" do
+      expect(Vacancy.internal.map(&:job_title)).to contain_exactly(vacancy3.job_title)
     end
   end
 
