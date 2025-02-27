@@ -101,15 +101,21 @@ class Vacancy < ApplicationRecord
   scope :search_by_location, VacancyLocationQuery
   scope :search_by_full_text, VacancyFullTextSearchQuery
 
+  # effectively we have two different types of vacancy - external ones and internal ones
+  # these require seperate validaqtion rules - internal ones are built up over time by a user,
+  # so it is much harder to validate them at the model level.
+  # External ones are complete so they can be validated at this level (and have extra properties)
+  # the ExternalVacancyValidator tries to do this (by checking presence of certain fields), but it's really a separate type.
   validates :external_reference,
             uniqueness: { scope: :publisher_ats_api_client_id },
             if: -> { publisher_ats_api_client_id.present? && external_reference.present? }
+  # temporary solution - don't do this validation on manually published vacancies
+  validate :no_duplicate_vacancy, if: -> { external? && job_title.present? && expires_at.present? && organisation_ids.present? }
+  # this validates presence of certain fields for external vacancies
+  validates_with ExternalVacancyValidator, if: :external?
 
   validates :slug, presence: true
   validate :enable_job_applications_cannot_be_changed_once_listed
-  validate :no_duplicate_vacancy, if: -> { job_title.present? && expires_at.present? && organisation_ids.present? }
-
-  validates_with ExternalVacancyValidator, if: :external?
   validates :organisations, presence: true
 
   validates :application_email, email_address: true, if: -> { application_email_changed? } # Allows data created prior to validation to still be valid
