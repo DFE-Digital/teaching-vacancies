@@ -36,8 +36,8 @@ RSpec.describe JobseekerProfile, type: :model do
       end
 
       it "does not use the details from the draft application" do
-        expect(profile.employments.map(&:job_title).sort).to be_empty
-        expect(profile.qualifications.map(&:institution).sort).to be_empty
+        expect(profile.employments.map(&:job_title)).to be_empty
+        expect(profile.qualifications.map(&:institution)).to be_empty
         expect(profile.qualified_teacher_status_year).to be_nil
         expect(profile.qualified_teacher_status).to be_nil
         expect(profile.personal_details.first_name).to be_nil
