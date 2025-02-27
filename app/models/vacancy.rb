@@ -109,7 +109,7 @@ class Vacancy < ApplicationRecord
   validates :external_reference,
             uniqueness: { scope: :publisher_ats_api_client_id },
             if: -> { publisher_ats_api_client_id.present? && external_reference.present? }
-  # temporary solution - don't do this validation on external vacancies
+  # temporary solution - don't do this validation on manually published vacancies
   validate :no_duplicate_vacancy, if: -> { external? && job_title.present? && expires_at.present? && organisation_ids.present? }
   # this validates presence of certain fields for external vacancies
   validates_with ExternalVacancyValidator, if: :external?
