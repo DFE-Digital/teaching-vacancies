@@ -17,8 +17,14 @@ inputs:
   aws-secret-access-key:
     description: AWS-KEY
     required: true
-  azure-credentials:
-    description: Service principal secret to access the azure subscription
+  azure-client-id:
+    description: Azure service principal or managed identity client ID when using OIDC
+    required: true
+  azure-subscription-id:
+    description: Azure service principal or managed identity subscription ID when using OIDC
+    required: true
+  azure-tenant-id:
+    description: Azure service principal or managed identity tenant ID when using OIDC
     required: true
 
 
@@ -30,7 +36,7 @@ runs:
       name: Checkout Code
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{ inputs.aws-access-key-id }}
         aws-secret-access-key: ${{ inputs.aws-secret-access-key }}
@@ -41,7 +47,9 @@ runs:
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
-        azure-credentials: ${{ inputs.azure-credentials }}
+        azure-client-id: ${{ inputs.azure-client-id }}
+        azure-subscription-id: ${{ inputs.azure-subscription-id }}
+        azure-tenant-id: ${{ inputs.azure-tenant-id }}
 
     - uses: google-github-actions/auth@v2
       with:
