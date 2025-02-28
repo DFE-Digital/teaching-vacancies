@@ -89,7 +89,9 @@ jobs:
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
     - name: Terraform destroy (on PR closed)
       run: |
