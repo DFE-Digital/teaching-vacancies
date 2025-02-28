@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_21_101041) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_28_104626) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -261,6 +261,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_21_101041) do
     t.integer "working_patterns", array: true
     t.string "working_pattern_details"
     t.string "qts_age_range_and_subject"
+    t.boolean "is_statutory_induction_complete"
+    t.boolean "is_support_needed"
+    t.boolean "has_close_relationships"
+    t.boolean "has_right_to_work_in_uk"
+    t.boolean "has_safeguarding_issue"
     t.index ["jobseeker_id"], name: "index_job_applications_jobseeker_id"
     t.index ["vacancy_id"], name: "index_job_applications_on_vacancy_id"
   end
@@ -479,6 +484,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_21_101041) do
     t.text "last_name_ciphertext"
     t.text "phone_number_ciphertext"
     t.boolean "right_to_work_in_uk"
+    t.boolean "has_right_to_work_in_uk"
     t.index ["jobseeker_profile_id"], name: "index_personal_details_jobseeker_profile_id", unique: true
   end
 
