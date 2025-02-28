@@ -130,7 +130,7 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       context "with a jobseeker profile" do
         let(:attributes) { { jobseeker_profile: profile } }
 
-        context "with TRI values" do
+        context "when the jobseeker profile has TRI values" do
           let(:profile) do
             instance_double(JobseekerProfile, teacher_reference_number: "7654321", has_teacher_reference_number: "yes")
           end
@@ -141,7 +141,7 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
           end
         end
 
-        context "without TRI values" do
+        context "when the jobseeker profile doesn't have TRI values" do
           let(:profile) do
             instance_double(JobseekerProfile, teacher_reference_number: nil, has_teacher_reference_number: nil)
           end
@@ -152,7 +152,7 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
           end
         end
 
-        context "when explicitly stating no teacher reference number is provided" do
+        context "when the jobseeker profile has_teacher_reference_number set to 'no'" do
           let(:profile) do
             instance_double(JobseekerProfile, teacher_reference_number: nil, has_teacher_reference_number: "no")
           end
