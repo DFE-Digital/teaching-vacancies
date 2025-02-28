@@ -9,7 +9,7 @@ on:
 jobs:
   sync:
     name: Backup production database
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     environment: production
     services:
       postgres:

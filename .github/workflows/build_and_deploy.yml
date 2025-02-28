@@ -33,7 +33,7 @@ jobs:
   swagger-gen:
     name: Generate and Cache swagger docs
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     env:
       RAILS_ENV: test
@@ -84,7 +84,7 @@ jobs:
       docker_image_tag: ${{ env.DOCKER_IMAGE_TAG }}
       commit_sha: ${{ env.COMMIT_SHA }}
       LINK_TO_RUN: ${{ env.LINK_TO_RUN }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
 
@@ -234,7 +234,7 @@ jobs:
       # Its value is the list of environments. The matrix iterates once per environment and the value is accessed via ${{ matrix.environment }}
       matrix: ${{fromJSON(needs.build.outputs.matrix_environments)}}
     needs: [build]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -337,7 +337,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     name: Post deployment steps
     needs: [build, deploy]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
