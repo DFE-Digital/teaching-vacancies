@@ -9,9 +9,3 @@
 ### Before
 
 ### After
-
-## Next steps:
-
-- [ ] Terraform deployment required?
-
-- [ ] New development configuration to be shared?
