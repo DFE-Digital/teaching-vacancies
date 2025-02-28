@@ -5,8 +5,9 @@ module ProfileSection
     def prepare(**, &block)
       find_or_initialize_by(**).tap do |record|
         if record.new_record?
-          if (previous_application = jobseeker(record).job_applications.last)
-            copy_attributes(record, previous_application)
+          # do not populated from draft applications as they make be incomplete and invalid.
+          if (previously_submitted_application = jobseeker(record).job_applications.after_submission.last)
+            copy_attributes(record, previously_submitted_application)
 
             block&.call(record)
             before_save_on_prepare(record)
@@ -24,9 +25,9 @@ module ProfileSection
       record.jobseeker_profile.jobseeker
     end
 
-    def copy_attributes(record, previous_application)
+    def copy_attributes(record, previously_submitted_application)
       attributes_to_copy.each do |attribute|
-        record.assign_attributes(attribute => previous_application.public_send(attribute))
+        record.assign_attributes(attribute => previously_submitted_application.public_send(attribute))
       end
     end
 

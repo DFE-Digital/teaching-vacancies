@@ -18,7 +18,7 @@ RSpec.describe PersonalDetails do
       end
     end
 
-    context "when the profile has a previous application" do
+    context "when the profile has a previously submitted application" do
       let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:) }
 
       it "uses the details from the previous application" do
@@ -30,6 +30,23 @@ RSpec.describe PersonalDetails do
 
       it "sets some steps to completed" do
         expect(personal_details.completed_steps).to include("name", "phone_number", "work")
+      end
+    end
+
+    context "when the jobseeker has a previous draft application" do
+      before do
+        create(:job_application, :status_draft, jobseeker:, first_name: "karl", last_name: "karlssen", phone_number: "01234567899", right_to_work_in_uk: "yes")
+      end
+
+      it "does not use details from draft application" do
+        expect(personal_details.first_name).to be_nil
+        expect(personal_details.last_name).to be_nil
+        expect(personal_details.phone_number).to be_nil
+        expect(personal_details.right_to_work_in_uk).to be_nil
+      end
+
+      it "does not set steps to completed" do
+        expect(personal_details.completed_steps).to be_blank
       end
     end
 

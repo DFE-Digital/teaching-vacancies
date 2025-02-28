@@ -84,7 +84,7 @@ class JobApplication < ApplicationRecord
   has_noticed_notifications
 
   scope :submitted_yesterday, -> { submitted.where("DATE(submitted_at) = ?", Date.yesterday) }
-  scope :after_submission, -> { where(status: %w[submitted reviewed shortlisted unsuccessful withdrawn]) }
+  scope :after_submission, -> { where.not(status: :draft) }
   scope :draft, -> { where(status: "draft") }
 
   validates :email_address, email_address: true, if: -> { email_address_changed? } # Allows data created prior to validation to still be valid

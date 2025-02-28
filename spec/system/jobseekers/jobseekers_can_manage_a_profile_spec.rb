@@ -127,19 +127,32 @@ RSpec.describe "Jobseekers can manage their profile" do
       end
     end
 
-    describe "personal details if the jobseeker has a blank previous job application" do
-      let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
+    describe "personal details if the jobseeker has a previously submitted job application" do
+      let(:first_name) { "Alfred" }
+      let(:last_name) { "Accelsior" }
+      let(:phone_number) { "01234567890" }
+      let!(:previous_application) { create(:job_application, :status_submitted, jobseeker:, first_name:, last_name:, phone_number:) }
 
       before do
         visit jobseekers_profile_path
       end
 
       it "prefills the form with the jobseeker's provided personal details" do
-        expect(page).to have_content(previous_application.phone_number)
+        expect(page).to have_content(first_name)
+        expect(page).to have_content(last_name)
+        expect(page).to have_content(phone_number)
+      end
+    end
+
+    describe "personal details if the jobseeker has a blank previous draft job application" do
+      let!(:previous_application) { create(:job_application, :status_draft, jobseeker:, first_name: nil, last_name: nil, phone_number: "01234567890") }
+
+      before do
+        visit jobseekers_profile_path
       end
 
-      it "still shows the summary rows for the blank attributes" do
-        expect(page).to have_content("Name")
+      it "does not prefill the form with the personal details from the draft application" do
+        expect(page).not_to have_content(previous_application.phone_number)
       end
     end
 
