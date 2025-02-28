@@ -6,12 +6,12 @@ namespace :vacancies do
       if vacancy.phases.include? nil
         extra_phases = case vacancy.organisation.phase
                        when "middle_deemed_primary"
-                         ["primary"]
+                         %w[primary]
                        when "middle_deemed_secondary"
-                         ["secondary"]
+                         %w[secondary]
                        else
-                         ["primary", "secondary"]
-        end
+                         %w[primary secondary]
+                       end
         vacancy.update!(phases: (vacancy.phases.compact + extra_phases).uniq)
       end
     end
