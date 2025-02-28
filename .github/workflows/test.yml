@@ -9,7 +9,7 @@ jobs:
   backend-tests:
     name: Run RSpec Tests in parallel
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
@@ -38,6 +38,10 @@ jobs:
 
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
+
+      - name: Install ImageMagick
+        run: sudo apt-get install imagemagick
+        shell: bash
 
       - name: Set up test database
         run: bundle exec rake db:create db:schema:load parallel:create parallel:load_schema
