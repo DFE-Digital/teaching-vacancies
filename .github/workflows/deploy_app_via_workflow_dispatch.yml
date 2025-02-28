@@ -21,7 +21,7 @@ jobs:
 
   deploy-app:
     name: Deploy ${{ github.event.inputs.tag }} to ${{ github.event.inputs.environment }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
 
     - name: Deploy App to ${{ env.ENVIRONMENT }} environment
