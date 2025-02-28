@@ -11,7 +11,7 @@ class Publishers::JobseekerProfileSearchForm
   attribute :education_phases
   attribute :key_stages
   attribute :subjects
-  attribute :right_to_work_in_uk
+  attribute :has_right_to_work_in_uk, :boolean
 
   def school_options
     current_organisation.schools.map { |school| [school.id, school.name] }

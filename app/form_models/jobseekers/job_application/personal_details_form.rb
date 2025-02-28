@@ -14,7 +14,6 @@ module Jobseekers
         previous_names
         postcode
         street_address
-        right_to_work_in_uk
         working_patterns
         working_pattern_details
       ].freeze
@@ -36,7 +35,7 @@ module Jobseekers
 
       class << self
         def storable_fields
-          FIELDS + %i[national_insurance_number]
+          FIELDS + %i[national_insurance_number has_right_to_work_in_uk]
         end
 
         def unstorable_fields
@@ -65,7 +64,10 @@ module Jobseekers
 
       validates :phone_number, format: { with: /\A\+?(?:\d\s?){10,13}\z/ }, if: -> { personal_details_section_completed }
       validates :email_address, email_address: true
-      validates :right_to_work_in_uk, inclusion: { in: %w[yes no] }, if: -> { personal_details_section_completed }
+
+      attribute :has_right_to_work_in_uk, :boolean
+      validates :has_right_to_work_in_uk, inclusion: { in: [true, false] }, if: -> { personal_details_section_completed }
+
       validates :working_patterns, presence: true
       validate :working_pattern_details_does_not_exceed_maximum_words
 

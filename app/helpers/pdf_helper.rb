@@ -71,10 +71,10 @@ module PdfHelper
     professional_status = [
       [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"), pdf_job_application_qualified_teacher_status_info(job_application)],
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review"), job_application_jobseeker_profile_info(job_application)],
-      [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete"), job_application.statutory_induction_complete.humanize],
+      [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete"), job_application.is_statutory_induction_complete? ? "Yes" : "No"],
     ]
 
-    if job_application.statutory_induction_complete_details.present? && job_application.statutory_induction_complete == "no"
+    if job_application.statutory_induction_complete_details.present? && !job_application.is_statutory_induction_complete?
       professional_status << [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete_details"), job_application.statutory_induction_complete_details]
     end
 
@@ -318,10 +318,10 @@ module PdfHelper
   end
 
   def pdf_job_application_safeguarding_issues_info
-    case job_application.safeguarding_issue
-    when "yes"
+    case job_application.has_safeguarding_issue
+    when true
       "Yes\nDetails: #{job_application.safeguarding_issue_details}"
-    when "no"
+    when false
       "No"
     else
       "No information provided"
@@ -329,10 +329,10 @@ module PdfHelper
   end
 
   def pdf_job_application_close_relationships_info
-    case job_application.close_relationships
-    when "yes"
+    case job_application.has_close_relationships
+    when true
       "Yes\nDetails: #{job_application.close_relationships_details}"
-    when "no"
+    when false
       "No"
     else
       "No information provided"
@@ -340,10 +340,10 @@ module PdfHelper
   end
 
   def pdf_job_application_support_needed_info(job_application)
-    case job_application.support_needed
-    when "yes"
+    case job_application.is_support_needed
+    when true
       "Yes\nDetails: #{job_application.support_needed_details}"
-    when "no"
+    when false
       "No"
     else
       "No information provided"

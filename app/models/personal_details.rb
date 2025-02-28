@@ -16,19 +16,20 @@ class PersonalDetails < ApplicationRecord
   # 4. start using new column
   # 5. remove old column
   # add this once column has been backfilled
-  # self.ignored_columns += %i[right_to_work_in_uk]
-  before_save :sync_yes_no_booleans
+  self.ignored_columns += %i[right_to_work_in_uk]
 
-  def sync_yes_no_booleans
-    self.has_right_to_work_in_uk = right_to_work_in_uk
-  end
+  # before_save :sync_yes_no_booleans
+  #
+  # def sync_yes_no_booleans
+  #   self.has_right_to_work_in_uk = right_to_work_in_uk
+  # end
 
   def self.attributes_to_copy
     %w[
       first_name
       last_name
       phone_number
-      right_to_work_in_uk
+      has_right_to_work_in_uk
     ]
   end
 
@@ -42,7 +43,7 @@ class PersonalDetails < ApplicationRecord
     end
 
     record.completed_steps["phone_number"] = :completed if record.phone_number_provided == false || record.phone_number.present?
-    record.completed_steps["work"] = :completed unless record.right_to_work_in_uk.nil?
+    record.completed_steps["work"] = :completed unless record.has_right_to_work_in_uk.nil?
   end
 
   def reset_phone_number
@@ -50,14 +51,6 @@ class PersonalDetails < ApplicationRecord
   end
 
   def complete?
-    first_name.present? && last_name.present? && (!phone_number_provided? || phone_number.present?) && !right_to_work_in_uk.nil?
-  end
-
-  def right_to_work_in_uk=(value)
-    if value.is_a?(String)
-      super(%w[yes true].include?(value.downcase))
-    else
-      super
-    end
+    first_name.present? && last_name.present? && (!phone_number_provided? || phone_number.present?) && !has_right_to_work_in_uk.nil?
   end
 end

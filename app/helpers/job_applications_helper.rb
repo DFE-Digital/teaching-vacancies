@@ -52,31 +52,30 @@ module JobApplicationsHelper
   end
 
   def job_application_support_needed_info(job_application)
-    case job_application.support_needed
-    when "yes"
+    case job_application.is_support_needed
+    when true
       safe_join([tag.div("Yes", class: "govuk-body", id: "support_needed"),
                  tag.p(job_application.support_needed_details, class: "govuk-body", id: "support_needed_details")])
-    when "no"
+    when false
       tag.div("No", id: "support_needed")
     end
   end
 
   def job_application_close_relationships_info(job_application)
-    case job_application.close_relationships
-    when "yes"
+    case job_application.has_close_relationships
+    when true
       safe_join([tag.div("Yes", class: "govuk-body", id: "close_relationships"),
                  tag.p(job_application.close_relationships_details, class: "govuk-body", id: "close_relationships_details")])
-    when "no"
+    when false
       tag.div("No", class: "govuk-body", id: "close_relationships")
     end
   end
 
   def job_application_safeguarding_issues_info(job_application)
-    case job_application.safeguarding_issue
-    when "yes"
+    if job_application.has_safeguarding_issue
       safe_join([tag.div("Yes", class: "govuk-body", id: "safeguarding_issue"),
                  tag.p(job_application.safeguarding_issue_details, class: "govuk-body", id: "safeguarding_issue_details")])
-    when "no"
+    else
       tag.div("No", class: "govuk-body", id: "safeguarding_issue")
     end
   end
@@ -115,9 +114,9 @@ module JobApplicationsHelper
   end
 
   def visa_sponsorship_needed_answer(job_application)
-    return unless job_application.right_to_work_in_uk.present?
+    return if job_application.has_right_to_work_in_uk.nil?
 
-    job_application.right_to_work_in_uk == "yes" ? I18n.t("jobseekers.profiles.personal_details.work.options.true") : I18n.t("jobseekers.profiles.personal_details.work.options.false")
+    job_application.has_right_to_work_in_uk ? I18n.t("jobseekers.profiles.personal_details.work.options.true") : I18n.t("jobseekers.profiles.personal_details.work.options.false")
   end
 
   def radio_button_legend_hint
