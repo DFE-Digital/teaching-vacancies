@@ -110,6 +110,8 @@ class SubscriptionsController < ApplicationController
       search_criteria_params
     elsif campaign_link?
       email.merge(campaign_attributes)
+    else
+      email
     end
   end
 
