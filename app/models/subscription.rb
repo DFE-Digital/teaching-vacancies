@@ -108,7 +108,11 @@ class Subscription < ApplicationRecord
                       "essex, southend and thurrock",
                       "leicestershire and rutland",
                       "lincolnshire and lincoln",
-                      "derbyshire and derby"].freeze
+                      "derbyshire and derby",
+                      "county durham, darlington, hartlepool and stockton",
+                      "cheshire",
+                      "staffordshire and stoke",
+                      "lancashire, blackburn and blackpool"].freeze
 
   class << self
     def limit_by_location(vacancies, location, radius_in_miles)
