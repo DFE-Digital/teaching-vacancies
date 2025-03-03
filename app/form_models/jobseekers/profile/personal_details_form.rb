@@ -23,8 +23,8 @@ class Jobseekers::Profile::PersonalDetailsForm
   end
 
   step :work do
-    attribute :right_to_work_in_uk
+    attribute :has_right_to_work_in_uk, :boolean
 
-    validates :right_to_work_in_uk, presence: true
+    validates :has_right_to_work_in_uk, inclusion: { in: [true, false] }
   end
 end

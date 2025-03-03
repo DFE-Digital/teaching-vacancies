@@ -25,7 +25,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
       phone_number: jobseeker_profile.personal_details&.phone_number,
       qualified_teacher_status_year: jobseeker_profile.qualified_teacher_status_year || "",
       qualified_teacher_status: jobseeker_profile.qualified_teacher_status || "",
-      right_to_work_in_uk: jobseeker_right_to_work,
+      has_right_to_work_in_uk: jobseeker_profile.personal_details&.has_right_to_work_in_uk?,
       working_patterns: jobseeker_profile.job_preferences&.working_patterns,
       working_pattern_details: jobseeker_profile.job_preferences&.working_pattern_details,
     )
@@ -69,7 +69,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
     new_job_application.completed_steps = []
     new_job_application.imported_steps = []
 
-    if new_job_application.first_name.present? || new_job_application.last_name.present? || new_job_application.phone_number.present? || new_job_application.right_to_work_in_uk.present?
+    if new_job_application.first_name.present? || new_job_application.last_name.present? || new_job_application.phone_number.present? || !new_job_application.has_right_to_work_in_uk.nil?
       new_job_application.in_progress_steps += [:personal_details]
     end
 
@@ -79,12 +79,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
     new_job_application.in_progress_steps += [:qualifications] if new_job_application.qualifications.present?
   end
   # rubocop:enable Metrics/AbcSize
-
-  def jobseeker_right_to_work
-    return "" if jobseeker_profile.personal_details&.right_to_work_in_uk.nil?
-
-    jobseeker_profile.personal_details.right_to_work_in_uk? ? "yes" : "no"
-  end
 
   def jobseeker_profile
     @jobseeker_profile ||= jobseeker.jobseeker_profile

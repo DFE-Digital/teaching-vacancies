@@ -27,13 +27,13 @@ FactoryBot.define do
     # Professional statement
     qualified_teacher_status { "yes" }
     qualified_teacher_status_year { "1990" }
-    statutory_induction_complete { "yes" }
+    is_statutory_induction_complete { true }
 
     # Personal statement
     personal_statement { Faker::Lorem.paragraph(sentence_count: 8) }
 
     # Ask for support
-    support_needed { "yes" }
+    is_support_needed { true }
     support_needed_details { Faker::Lorem.paragraph(sentence_count: 2) }
 
     # Equal opportunities
@@ -49,11 +49,11 @@ FactoryBot.define do
     religion_description { Faker::Lorem.sentence }
 
     # Declarations
-    close_relationships { "yes" }
+    has_close_relationships { true }
     close_relationships_details { Faker::Lorem.paragraph(sentence_count: 1) }
-    safeguarding_issue { "yes" }
+    has_safeguarding_issue { true }
     safeguarding_issue_details { Faker::Lorem.paragraph(sentence_count: 1) }
-    right_to_work_in_uk { "yes" }
+    has_right_to_work_in_uk { true }
 
     completed_steps { JobApplication.completed_steps.keys }
     in_progress_steps { [] }
@@ -105,7 +105,7 @@ FactoryBot.define do
     # Professional statement
     qualified_teacher_status { "" }
     qualified_teacher_status_year { "" }
-    statutory_induction_complete { "" }
+    is_statutory_induction_complete { nil }
 
     # Personal statement
     personal_statement { "" }
@@ -122,15 +122,15 @@ FactoryBot.define do
     religion_description { "" }
 
     # Ask for support
-    support_needed { "" }
+    is_support_needed { nil }
     support_needed_details { "" }
 
     # Declarations
-    close_relationships { "" }
+    has_close_relationships { nil }
     close_relationships_details { "" }
-    safeguarding_issue { "" }
+    has_safeguarding_issue { nil }
     safeguarding_issue_details { "" }
-    right_to_work_in_uk { "" }
+    has_right_to_work_in_uk { nil }
 
     completed_steps { [] }
   end

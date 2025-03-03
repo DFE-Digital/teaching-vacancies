@@ -31,7 +31,7 @@ RSpec.describe "Jobseekers can review a job application" do
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.professional_status.heading") do
       expect(page).to have_content(job_application.qualified_teacher_status.humanize)
       expect(page).to have_content(job_application.qualified_teacher_status_year)
-      expect(page).to have_content(job_application.statutory_induction_complete.humanize)
+      expect(page).to have_content(job_application.is_statutory_induction_complete? ? "Yes" : "No")
     end
 
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.employment_history.heading") do
@@ -84,14 +84,14 @@ RSpec.describe "Jobseekers can review a job application" do
     end
 
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.ask_for_support.heading") do
-      expect(page).to have_content(job_application.support_needed.humanize)
+      expect(page).to have_content(job_application.is_support_needed? ? "Yes" : "No")
       expect(page).to have_content(job_application.support_needed_details)
     end
 
     within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.declarations.heading") do
-      expect(page).to have_content(job_application.close_relationships.humanize)
+      expect(page).to have_content(job_application.has_close_relationships? ? "Yes" : "No")
       expect(page).to have_content(job_application.close_relationships_details)
-      expect(page).to have_content(job_application.right_to_work_in_uk.humanize)
+      expect(page).to have_content(job_application.has_right_to_work_in_uk? ? "Yes" : "No")
     end
   end
 end

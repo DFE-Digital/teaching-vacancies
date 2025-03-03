@@ -15,7 +15,7 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
       last_name: "Bobbins",
       phone_number: "01234 12345678",
       email_address: "david@gmail.com",
-      right_to_work_in_uk: "yes",
+      has_right_to_work_in_uk: "true",
       personal_details_section_completed: true,
       working_patterns: %w[part_time],
       working_pattern_details: "I will NOT work on Mondays.",
@@ -109,6 +109,5 @@ RSpec.describe Jobseekers::JobApplication::PersonalDetailsForm, type: :model do
   it { is_expected.to allow_value("01234 12345678").for(:phone_number) }
   it { is_expected.not_to allow_value("01234 123456789").for(:phone_number) }
 
-  it { is_expected.to validate_inclusion_of(:right_to_work_in_uk).in_array(%w[yes no]) }
   it { is_expected.to validate_presence_of(:working_patterns) }
 end

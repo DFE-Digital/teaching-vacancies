@@ -43,8 +43,10 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     session[:back_to_review] = (session[:back_to_review] || []).push(job_application.id).uniq
   end
 
+  # This redirect happens if we don't know the user's status, or they have the right perform the role
+  # (either they have a visa or the job doesn't require one)
   def about_your_application
-    if profile.nil? || profile&.personal_details&.right_to_work_in_uk? || vacancy.visa_sponsorship_available?
+    if profile&.personal_details.nil? || profile.personal_details.has_right_to_work_in_uk? || vacancy.visa_sponsorship_available?
       redirect_to new_quick_apply_jobseekers_job_job_application_path(vacancy.id)
     end
   end

@@ -10,7 +10,7 @@ module JobseekerHelpers
   end
 
   def fill_in_ask_for_support
-    choose "Yes", name: "jobseekers_job_application_ask_for_support_form[support_needed]"
+    choose "Yes", name: "jobseekers_job_application_ask_for_support_form[is_support_needed]"
     fill_in "Tell us any information you think is relevant", with: "Some details about support"
     choose I18n.t("helpers.label.jobseekers_job_application_ask_for_support_form.ask_for_support_section_completed_options.true")
   end
@@ -31,7 +31,7 @@ module JobseekerHelpers
   end
 
   def fill_in_declarations
-    choose "Yes", name: "jobseekers_job_application_declarations_form[close_relationships]"
+    choose "Yes", name: "jobseekers_job_application_declarations_form[has_close_relationships]"
     fill_in "Please give details", with: "Some details of the relationship"
     choose "Yes, I want to share something"
     fill_in "Give any relevant information", with: "Criminal record"
@@ -105,7 +105,7 @@ module JobseekerHelpers
     fill_in "Year QTS was awarded", with: Time.current.year
     choose "Yes", name: "jobseekers_job_application_professional_status_form[has_teacher_reference_number]"
     fill_in "What is your teacher reference number (TRN)?", with: "1234567"
-    choose "Yes", name: "jobseekers_job_application_professional_status_form[statutory_induction_complete]"
+    choose "Yes", name: "jobseekers_job_application_professional_status_form[is_statutory_induction_complete]"
 
     choose I18n.t("helpers.label.jobseekers_job_application_professional_status_form.professional_status_section_completed_options.true")
   end

@@ -15,15 +15,15 @@
     = form_for @form, url: jobseekers_job_application_build_path(job_application, :declarations), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :safeguarding_issue, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.safeguarding_issue", organisation: vacancy.organisation_name) } do
-        = f.govuk_radio_button :safeguarding_issue, :yes, link_errors: true, label: { text: t(".safeguarding_issue.yes") } do
+      = f.govuk_radio_buttons_fieldset :has_safeguarding_issue do
+        = f.govuk_radio_button :has_safeguarding_issue, "true", link_errors: true, label: { text: t(".safeguarding_issue.yes") } do
           = f.govuk_text_area :safeguarding_issue_details, label: { text: t(".safeguarding_issue.hint") }
-        = f.govuk_radio_button :safeguarding_issue, :no, label: { text: t(".safeguarding_issue.no") }
+        = f.govuk_radio_button :has_safeguarding_issue, "false", label: { text: t(".safeguarding_issue.no") }
 
-      = f.govuk_radio_buttons_fieldset :close_relationships, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation_name) } do
-        = f.govuk_radio_button :close_relationships, :yes, link_errors: true do
+      = f.govuk_radio_buttons_fieldset :has_close_relationships, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.has_close_relationships", organisation: vacancy.organisation_name) } do
+        = f.govuk_radio_button :has_close_relationships, "true", link_errors: true do
           = f.govuk_text_field :close_relationships_details
-        = f.govuk_radio_button :close_relationships, :no
+        = f.govuk_radio_button :has_close_relationships, "false"
 
       = f.govuk_collection_radio_buttons :declarations_section_completed, %w[true false], :to_s
 

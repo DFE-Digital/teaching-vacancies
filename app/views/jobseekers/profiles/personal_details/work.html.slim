@@ -9,13 +9,13 @@
     = form_for @step, url: { action: :update }, method: :post, as: :personal_details_form do |f|
       = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :right_to_work_in_uk,
+      = f.govuk_radio_buttons_fieldset :has_right_to_work_in_uk,
         legend: { text: t(".page_title"), tag: "h1", size: "l" },
         caption: { text: t(".caption"), size: "l" },
         hint: { text: t(".hint.text", link: govuk_link_to(t(".hint.link"), "https://getintoteaching.education.gov.uk/non-uk-teachers/visas-for-non-uk-teachers", target: "_blank")).html_safe } do
 
-        = f.govuk_radio_button :right_to_work_in_uk, "true", label: { text: t(".options.true") }, link_errors: true
-        = f.govuk_radio_button :right_to_work_in_uk, "false", label: { text: t(".options.false") }
+        = f.govuk_radio_button :has_right_to_work_in_uk, "true", label: { text: t(".options.true") }, link_errors: true
+        = f.govuk_radio_button :has_right_to_work_in_uk, "false", label: { text: t(".options.false") }
 
       = f.govuk_submit t("buttons.save_and_continue"), class: "govuk-!-margin-bottom-5"
 

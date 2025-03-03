@@ -22,7 +22,6 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       it { is_expected.not_to validate_presence_of(:qualified_teacher_status) }
       it { is_expected.not_to validate_presence_of(:qualified_teacher_status_year) }
       it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
-      it { is_expected.not_to validate_presence_of(:statutory_induction_complete) }
       it { is_expected.not_to validate_presence_of(:has_teacher_reference_number) }
       it { is_expected.not_to validate_presence_of(:statutory_induction_complete_details) }
       it { is_expected.not_to validate_presence_of(:qts_age_range_and_subject) }
@@ -42,7 +41,6 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       let(:attributes) { { professional_status_section_completed: true } }
 
       it { is_expected.to validate_inclusion_of(:qualified_teacher_status).in_array(%w[yes no on_track]) }
-      it { is_expected.to validate_inclusion_of(:statutory_induction_complete).in_array(%w[yes no]) }
 
       context "when qualified_teacher_status is 'yes'" do
         let(:attributes) { super().merge(qualified_teacher_status: "yes") }
@@ -107,14 +105,14 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
 
     context "when statutory_induction_complete is yes" do
       it "sets statutory_induction_complete_details to nil" do
-        subject = described_class.new(valid_attributes.merge(statutory_induction_complete: "yes", statutory_induction_complete_details: "some info"))
+        subject = described_class.new(valid_attributes.merge(is_statutory_induction_complete: true, statutory_induction_complete_details: "some info"))
         expect(subject.statutory_induction_complete_details).to be_nil
       end
     end
 
     context "when statutory_induction_complete is no" do
       it "does not modify statutory_induction_complete_details" do
-        subject = described_class.new(valid_attributes.merge(statutory_induction_complete: "no", statutory_induction_complete_details: "some info"))
+        subject = described_class.new(valid_attributes.merge(is_statutory_induction_complete: false, statutory_induction_complete_details: "some info"))
         expect(subject.statutory_induction_complete_details).to eq "some info"
       end
     end

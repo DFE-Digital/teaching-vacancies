@@ -765,7 +765,7 @@ en:
           last_name: Last name
           phone_number: Phone number
           phone_number_provided: Do you want to provide a phone number?
-          right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
+          has_right_to_work_in_uk: Do you need Skilled Worker visa sponsorship?
         work:
           caption: Personal details
           hint:
