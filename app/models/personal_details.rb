@@ -9,6 +9,20 @@ class PersonalDetails < ApplicationRecord
 
   validates :jobseeker_profile, uniqueness: true
 
+  # Follow the stardard Google deployment pattern for various booleans:
+  # 1. Add new column
+  # 2. Populate new column alongside old
+  # 3. backfill new column at leisure
+  # 4. start using new column
+  # 5. remove old column
+  # add this once column has been backfilled
+  # self.ignored_columns += %i[right_to_work_in_uk]
+  before_save :sync_yes_no_booleans
+
+  def sync_yes_no_booleans
+    self.has_right_to_work_in_uk = right_to_work_in_uk
+  end
+
   def self.attributes_to_copy
     %w[
       first_name
