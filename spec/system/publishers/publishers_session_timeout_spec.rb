@@ -9,9 +9,7 @@ RSpec.describe "Publisher session" do
     login_publisher(publisher: publisher, organisation: school)
   end
 
-  after do
-    travel_back
-  end
+  after { logout }
 
   it "expires after TIMEOUT_PERIOD and redirects to login page" do
     visit organisation_jobs_with_type_path

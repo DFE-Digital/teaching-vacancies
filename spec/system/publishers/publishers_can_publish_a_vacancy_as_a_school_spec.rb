@@ -3,16 +3,17 @@ require "rails_helper"
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:vacancy) do
-    VacancyPresenter.new(build(:vacancy,
-                               :ect_suitable,
-                               job_roles: ["teacher"],
-                               phases: %w[secondary],
-                               key_stages: %w[ks3],
-                               publish_on: Date.current))
+    build(:vacancy,
+          :ect_suitable,
+          job_roles: ["teacher"],
+          phases: %w[secondary],
+          key_stages: %w[ks3],
+          publish_on: Date.current)
   end
   let(:created_vacancy) { Vacancy.last }
 
   before { login_publisher(publisher: publisher, organisation: school) }
+
   after { logout }
 
   context "non-faith school" do
@@ -224,8 +225,7 @@ RSpec.describe "Creating a vacancy" do
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
         vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], key_stages: %w[ks3], publish_on: Time.zone.today, phases: %w[secondary])
-        vacancy.assign_attributes expires_at: yesterday_date
-        vacancy.save(validate: false)
+        vacancy.update! expires_at: yesterday_date
 
         visit organisation_job_path(vacancy.id)
         visit organisation_job_build_path(vacancy.id, :important_dates)

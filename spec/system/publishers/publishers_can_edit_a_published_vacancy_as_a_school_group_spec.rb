@@ -9,6 +9,8 @@ RSpec.describe "Editing a published vacancy" do
 
   before { login_publisher(publisher: publisher, organisation: school_group) }
 
+  after { logout }
+
   describe "#job_location" do
     scenario "can edit job location" do
       visit organisation_job_path(vacancy.id)

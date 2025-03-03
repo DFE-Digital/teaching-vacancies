@@ -12,6 +12,8 @@ RSpec.describe "Publishers can reject a job application" do
     visit organisation_job_job_application_path(vacancy.id, job_application.id)
   end
 
+  after { logout }
+
   it "rejects the job application after confirmation", :js do
     click_on "Update application status"
     expect(page).to have_no_css("strong.govuk-tag.govuk-tag--red.application-status", text: "rejected")

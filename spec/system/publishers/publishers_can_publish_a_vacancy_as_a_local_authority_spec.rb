@@ -11,7 +11,6 @@ RSpec.describe "Creating a vacancy" do
 
   before do
     login_publisher(publisher: publisher, organisation: school_group)
-    allow(PublisherPreference).to receive(:find_by).and_return(instance_double(PublisherPreference))
   end
 
   after { logout }

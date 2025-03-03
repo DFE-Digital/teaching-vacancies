@@ -12,6 +12,8 @@ RSpec.describe "Publishers can preview an organisation or school profile" do
     visit publisher_root_path
   end
 
+  after { logout }
+
   context "when the publisher is signed in as a school" do
     let(:organisation) { create(:school) }
 

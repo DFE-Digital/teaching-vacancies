@@ -4,8 +4,11 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
 
+  before { login_publisher(publisher: publisher, organisation: school) }
+
+  after { logout }
+
   scenario "school" do
-    login_publisher(publisher: publisher, organisation: school)
     vacancy = create(:vacancy, status: "published", organisations: [school])
 
     visit organisation_jobs_with_type_path
@@ -21,12 +24,8 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     let!(:draft_vacancy) { create(:vacancy, :draft, organisations: [school]) }
     let!(:pending_vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
     let!(:expired_vacancy) do
-      expired_vacancy = build(:vacancy, :expired, organisations: [school])
-      expired_vacancy.save(validate: false)
-      expired_vacancy
+      create(:vacancy, :expired, organisations: [school])
     end
-
-    before { login_publisher(publisher: publisher, organisation: school) }
 
     scenario "jobs are split into sections" do
       create_list(:vacancy, 5, :published, organisations: [school])
@@ -96,7 +95,6 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
       let!(:draft_vacancy) { create(:vacancy, :draft, organisations: [school], created_at: 3.days.ago, updated_at: 1.day.ago) }
 
       scenario "shows the last updated at" do
-        draft_vacancy
         visit organisation_jobs_with_type_path
 
         within(".dashboard-component") do

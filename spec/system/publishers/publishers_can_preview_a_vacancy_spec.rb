@@ -7,6 +7,8 @@ RSpec.describe "Publishers can preview a vacancy" do
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
+  after { logout }
+
   context "when reviewing a draft vacancy" do
     before { visit organisation_job_path(vacancy.id) }
 

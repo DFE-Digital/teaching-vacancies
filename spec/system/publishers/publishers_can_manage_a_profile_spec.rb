@@ -8,6 +8,8 @@ RSpec.describe "Publishers can manage an organisation or school profile" do
     visit publisher_root_path
   end
 
+  after { logout }
+
   describe "changing the organisation's website" do
     context "when the publisher is signed in as a school" do
       let(:organisation) { create(:school) }

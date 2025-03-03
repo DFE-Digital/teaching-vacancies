@@ -133,11 +133,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
   context "with valid credentials that match a Trust" do
     let(:organisation) { create(:trust, :profile_incomplete) }
-    let(:publisher_preference) { instance_double(PublisherPreference) }
 
     before do
-      allow(PublisherPreference).to receive(:find_by).and_return(publisher_preference)
-
       stub_publisher_authentication_step(school_urn: nil, trust_uid: organisation.uid, email: dsi_email_address)
       stub_publisher_authorisation_step
       stub_sign_in_with_multiple_organisations
@@ -158,7 +155,6 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
 
   context "with valid credentials that match a Local Authority" do
     let(:organisation) { create(:local_authority, local_authority_code: "100") }
-    let(:publisher_preference) { instance_double(PublisherPreference) }
 
     before do
       allow(Rails.configuration).to receive(:enforce_local_authority_allowlist).and_return(true)
@@ -169,9 +165,11 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       stub_sign_in_with_multiple_organisations
     end
 
-    it_behaves_like "a successful Publisher sign in"
-
     context "when user preferences have been set" do
+      let(:publisher_preference) { instance_double(PublisherPreference) }
+
+      it_behaves_like "a successful Publisher sign in"
+
       it "does not redirect the sign in page to the publisher preference page" do
         visit new_publisher_session_path
         sign_in_publisher

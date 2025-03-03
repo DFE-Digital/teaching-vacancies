@@ -18,6 +18,8 @@ RSpec.describe "Publishers can view a job application" do
     visit organisation_job_statistics_path(vacancy.id)
   end
 
+  after { logout }
+
   it "shows the statistics" do
     within("#vacancy_statistics") do
       expect(page).to have_content("#{I18n.t('publishers.vacancies.statistics.show.views_by_jobseeker')}42")

@@ -14,6 +14,8 @@ RSpec.describe "Publishers can view a vacancy's activity log", versioning: true 
     visit organisation_job_path(vacancy.id)
   end
 
+  after { logout }
+
   it "updates the activity log" do
     click_review_page_change_link(section: "job_details", row: "subjects")
     expect(current_path).to eq(organisation_job_build_path(vacancy.id, :subjects))

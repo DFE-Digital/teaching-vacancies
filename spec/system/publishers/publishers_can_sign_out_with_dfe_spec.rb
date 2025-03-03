@@ -1,4 +1,5 @@
 require "rails_helper"
+
 RSpec.describe "Publishers can sign out with DfE Sign In" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }

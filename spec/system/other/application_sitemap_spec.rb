@@ -1,4 +1,5 @@
 require "rails_helper"
+
 RSpec.describe "Application sitemap" do
   context "sitemap.xml" do
     scenario "generates a sitemap of the application" do

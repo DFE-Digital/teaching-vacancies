@@ -10,10 +10,12 @@ RSpec.describe "Jobseeker profiles", type: :system do
                                                          higher_level_teaching_assistant education_support sendco administration_hr_data_and_finance
                                                          catering_cleaning_and_site_management it_support pastoral_health_and_welfare other_leadership other_support senior_leader middle_leader])
     create(:professional_body_membership, jobseeker_profile: jobseeker_profile)
+    login_publisher(publisher:, organisation:)
   end
 
+  after { logout }
+
   scenario "A publisher can view a jobseeker's profile" do
-    login_publisher(publisher:, organisation:)
     visit publishers_jobseeker_profile_path(jobseeker_profile)
 
     expect(page).to have_content(jobseeker_profile.full_name)

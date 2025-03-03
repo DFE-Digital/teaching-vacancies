@@ -37,6 +37,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   describe "Visiting the publisher's jobseeker profiles start page" do
     before { login_publisher(publisher:, organisation:) }
 
+    after { logout }
+
     it "will display all jobseeker profiles with location preference areas containing the school" do
       visit publishers_jobseeker_profiles_path
 
@@ -131,6 +133,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
         visit publishers_jobseeker_profiles_path
       end
 
+      after { logout }
+
       it "will allow hiring staff to filter by jobseekers' preferred roles" do
         within ".filters-component" do
           find('span[title="Support"]').click
@@ -180,6 +184,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
       visit publishers_jobseeker_profiles_path
     end
 
+    after { logout }
+
     context "when no locations are selected in the filters" do
       it "shows text explaining that the candidates are willing travel to one of more of the locations" do
         expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that's near to at least one of your schools.")
@@ -209,6 +215,8 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
       login_publisher(publisher:, organisation:)
       visit publishers_jobseeker_profiles_path
     end
+
+    after { logout }
 
     it "shows text explaining that the candidates are willing to travel to the school" do
       expect(page).to have_selector("p", text: "These candidates are willing to travel to a location that’s near to your school.")

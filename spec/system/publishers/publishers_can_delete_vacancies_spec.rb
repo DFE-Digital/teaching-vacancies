@@ -11,6 +11,8 @@ RSpec.describe "School deleting vacancies" do
     click_on vacancy.job_title
   end
 
+  after { logout }
+
   scenario "A school can delete a vacancy from a list" do
     click_on I18n.t("publishers.vacancies.show.heading_component.action.delete")
     click_on I18n.t("buttons.confirm_deletion")

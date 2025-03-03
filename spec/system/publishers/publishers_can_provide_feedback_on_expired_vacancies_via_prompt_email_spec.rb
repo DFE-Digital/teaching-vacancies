@@ -1,4 +1,5 @@
 require "rails_helper"
+
 RSpec.describe "Publishers can provide feedback on expired vacancies via the prompt email" do
   include ActiveJob::TestHelper
 

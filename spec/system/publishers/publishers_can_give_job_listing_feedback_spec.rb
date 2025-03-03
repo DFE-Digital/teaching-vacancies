@@ -11,6 +11,8 @@ RSpec.describe "Publishers can give job listing feedback" do
     visit organisation_job_summary_path(vacancy.id)
   end
 
+  after { logout }
+
   context "when the vacancy is not published" do
     let(:vacancy) { create(:vacancy, :draft, organisations: [organisation], publisher: publisher) }
 

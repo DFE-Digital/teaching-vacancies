@@ -1,4 +1,5 @@
 require "rails_helper"
+
 RSpec.describe "Publishers can unsubscribe from expired vacancy feedback prompt emails" do
   include ActiveJob::TestHelper
 
