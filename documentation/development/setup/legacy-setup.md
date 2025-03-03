@@ -96,18 +96,6 @@ Try [seeding the database](https://github.com/DFE-Digital/teaching-vacancies#see
 
 ## Misc
 
-### Getting production-like data for local development
-
-To get sanitised production-like data for local development, first log in to AWS with the ReadOnly role. To do so, follow the instructions here: [AWS Login](/documentation/operations/infrastructure/aws-roles-and-cli-tools.md#log-in-to-the-aws-console-with-aws-vault).
-
-Once logged in, go to S3 >  530003481352-tv-db-backups > sanitised. Then click the checkbox next to the backup you want (the names of the backups will include dates) and click "Download".
-
-Then, unzip the file and load it into your local database like so:
-
-```bash
-  psql tvs_development < <path to unzipped .sql backup file>
-```
-
 ### Integration between Jira and Github
 
 The integration allows to see the status of development from within the jira issue. You can see the

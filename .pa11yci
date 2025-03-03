@@ -6,6 +6,11 @@
     "useIncognitoBrowserContext": false,
     "actions": [
       "screen capture /tmp/pa11y/screenshot.png"
-    ]
+    ],
+    "chromeLaunchConfig": {
+      "args": [
+        "--no-sandbox"
+      ]
+    }
   }
 }
