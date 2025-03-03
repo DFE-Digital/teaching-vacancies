@@ -22,7 +22,7 @@ namespace :db do # rubocop:disable Metrics/BlockLength
   task create_random_vacancies: :environment do
     1000.times do
       school = School.not_closed.order(Arel.sql("RANDOM()")).first
-      FactoryBot.create(:vacancy, organisations: [school])
+      FactoryBot.create(:vacancy, :for_seed_data, organisations: [school])
     end
   end
 
