@@ -25,9 +25,8 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def create
     vacancy = Vacancy.create!(publisher: current_publisher, publisher_organisation: current_organisation, organisations: [current_organisation])
 
-    if current_organisation.school?
-      vacancy.update(organisations: [current_organisation])
-      vacancy.update(phases: [current_organisation.readable_phase]) if current_organisation.readable_phase
+    if current_organisation.school? && current_organisation.phase.in?(Vacancy::SCHOOL_PHASES_MATCHING_VACANCY_PHASES)
+      vacancy.update!(phases: [current_organisation.phase])
     end
 
     redirect_to organisation_job_build_path(vacancy.id, :job_location)

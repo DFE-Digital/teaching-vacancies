@@ -36,8 +36,4 @@ module LandingPagesHelper
 
     landing_page_link_or_text({ ect_statuses: [vacancy.ect_status] }, vacancy.ect_status.humanize)
   end
-
-  def linked_school_phase(school)
-    landing_page_link_or_text({ phases: [school.readable_phase] }, school.readable_phase&.capitalize)
-  end
 end

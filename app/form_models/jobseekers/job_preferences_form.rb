@@ -8,7 +8,6 @@ module Jobseekers
                headteacher teaching_assistant higher_level_teaching_assistant education_support
                sendco administration_hr_data_and_finance catering_cleaning_and_site_management it_support
                pastoral_health_and_welfare other_leadership other_support].freeze
-    PHASES = %i[nursery primary middle secondary through].freeze
     WORKING_PATTERNS = %i[full_time part_time job_share].freeze
 
     def self.from_record(record)
@@ -58,9 +57,8 @@ module Jobseekers
       validates :key_stages, presence: true
 
       def options(phases: multistep.phases)
-        school_types = School::READABLE_PHASE_MAPPINGS.select { |_, v| phases.include? v }.map(&:first)
-        options = School::PHASE_TO_KEY_STAGES_MAPPINGS.values_at(*school_types).flatten.uniq
-                    .to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.key_stages_options.#{opt}")] }
+        options = School::PHASE_TO_KEY_STAGES_MAPPINGS.values_at(*phases.map(&:to_sym)).flatten.uniq
+                                                      .to_h { |opt| [opt.to_s, I18n.t("helpers.label.jobseekers_job_preferences_form.key_stages_options.#{opt}")] }
         options.merge({ "non_teaching" => "I'm not looking for a teaching job" })
       end
 
