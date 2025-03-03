@@ -10,7 +10,7 @@ card-image: "/content-assets/jobseeker-guides/get-help-applying-for-your-teachin
 
 Your personal statement is your first opportunity to show the school you’re a great fit for the job, and gets you closer to being shortlisted for an interview.
 
-Schools may ask for your personal statement to be:
+Schools typically expect personal statements to be:
 
 * approximately 2 pages long
 * written in first person
