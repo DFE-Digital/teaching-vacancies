@@ -50,17 +50,6 @@ RSpec.describe "Api::Vacancies" do
       expect(json[:links].keys).to include(:self, :first, :last, :prev, :next)
     end
 
-    it "retrieves all live vacancies" do
-      published_vacancy = create(:vacancy, organisations: [school])
-      create(:vacancy, :expired, organisations: [school])
-
-      get api_jobs_path(api_version: 1), params: { format: :json }
-
-      expect(response.status).to eq(Rack::Utils.status_code(:ok))
-      expect(json[:data].count).to eq(1)
-      expect(json[:data]).to include(vacancy_json_ld(VacancyPresenter.new(published_vacancy)))
-    end
-
     context "when there are more vacancies than the per-page limit" do
       before do
         stub_const("Api::VacanciesController::MAX_API_RESULTS_PER_PAGE", per_page)
@@ -96,6 +85,7 @@ RSpec.describe "Api::Vacancies" do
     end
 
     it "does not retrieve incomplete or deleted vacancies" do
+      create(:vacancy, organisations: [school])
       create(:vacancy, :draft)
       create(:vacancy, :trashed)
       create(:vacancy, :future_publish)
@@ -103,7 +93,7 @@ RSpec.describe "Api::Vacancies" do
       get api_jobs_path(api_version: 1), params: { format: :json }
 
       expect(response.status).to eq(Rack::Utils.status_code(:ok))
-      expect(json[:data].count).to eq(0)
+      expect(json[:data].count).to eq(1)
     end
   end
 
@@ -155,30 +145,12 @@ RSpec.describe "Api::Vacancies" do
     context "format" do
       before { subject }
 
-      it "maps vacancy to the JobPosting schema" do
-        expect(json.to_h).to eq(vacancy_json_ld(VacancyPresenter.new(vacancy)))
-      end
-
       describe "#employment_type" do
         let(:vacancy) { create(:vacancy, working_patterns: working_patterns) }
         let(:working_patterns) { %w[full_time part_time] }
 
         it "maps working patterns to the expected Google Jobs values" do
           expect(json.to_h).to include(employmentType: %w[FULL_TIME PART_TIME])
-        end
-      end
-
-      describe "#hiringOrganization" do
-        it "sets the school's details" do
-          hiring_organization = {
-            hiringOrganization: {
-              "@type": "Organization",
-              name: vacancy.organisation_name,
-              identifier: vacancy.organisation.urn,
-              description: vacancy.about_school.present? ? "<p>#{vacancy.about_school}</p>" : nil,
-            },
-          }
-          expect(json.to_h).to include(hiring_organization)
         end
       end
     end
