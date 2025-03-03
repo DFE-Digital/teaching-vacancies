@@ -52,7 +52,7 @@ module LinksHelper
   end
 
   def school_website_link(organisation, vacancy: nil, **)
-    tracked_open_in_new_tab_link_to(
+    tracked_link_to(
       t("vacancies.listing.schools.website_link_text", organisation_name: organisation.name),
       organisation.url,
       link_type: :school_website,
@@ -62,7 +62,7 @@ module LinksHelper
   end
 
   def organisation_vacancies_link(organisation)
-    open_in_new_tab_link_to(
+    govuk_link_to(
       "#{request.host}/organisations/#{organisation.slug}",
       organisation_landing_page_path(organisation),
     )
@@ -79,7 +79,7 @@ module LinksHelper
   end
 
   def apply_link(vacancy, **)
-    tracked_open_in_new_tab_button_link_to(
+    tracked_button_link_to(
       t("jobs.apply"),
       vacancy.application_link,
       "aria-label": t("jobs.aria_labels.apply_link"),
@@ -90,7 +90,7 @@ module LinksHelper
   end
 
   def ofsted_report_link(organisation, vacancy: nil, **)
-    tracked_open_in_new_tab_link_to(
+    tracked_link_to(
       t("vacancies.listing.schools.view_ofsted_report"),
       ofsted_report(organisation),
       link_type: :ofsted_report,
