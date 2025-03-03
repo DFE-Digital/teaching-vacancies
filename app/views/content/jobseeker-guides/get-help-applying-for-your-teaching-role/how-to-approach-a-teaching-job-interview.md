@@ -20,7 +20,7 @@ Make sure you accept the interview by email and reiterate your enthusiasm for th
 The school may require you to bring evidence of your:
 
 * identity, such as your passport or driving license
-* residency of working rights
+* residency or working rights
 * exam qualifications, such as exam certificates or transcripts - if you do not have these to hand, you can [access your teaching qualifications](https://www.gov.uk/guidance/access-your-teaching-qualifications) if you obtained these in England
 
 These will be used for standard safeguarding checks.
