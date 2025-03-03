@@ -127,16 +127,12 @@ shared:
     - qualified_teacher_status
     - qts_age_range_and_subject
     - qualified_teacher_status_year
-    - statutory_induction_complete
     - is_statutory_induction_complete
     - personal_statement
-    - support_needed
     - is_support_needed
     - support_needed_details
-    - close_relationships
     - has_close_relationships
     - close_relationships_details
-    - right_to_work_in_uk
     - has_right_to_work_in_uk
     - further_instructions
     - rejection_reasons
@@ -145,7 +141,6 @@ shared:
     - country
     - email_address
     - withdrawn_by_closing_account
-    - safeguarding_issue
     - has_safeguarding_issue
     - safeguarding_issue_details
     - imported_steps
@@ -183,7 +178,6 @@ shared:
     - qualified_teacher_status_year
     - active
     - requested_hidden_profile
-    - statutory_induction_complete
     - is_statutory_induction_complete
     - teacher_reference_number
     - has_teacher_reference_number
@@ -444,7 +438,6 @@ shared:
     - phone_number
     - completed_steps
     - created_at
-    - right_to_work_in_uk
     - has_right_to_work_in_uk
     - updated_at
   :training_and_cpds:

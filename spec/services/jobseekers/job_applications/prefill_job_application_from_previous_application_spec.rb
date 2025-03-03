@@ -23,7 +23,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         let(:attributes_to_copy) do
           %i[ first_name last_name previous_names street_address city country postcode phone_number
               national_insurance_number qualified_teacher_status qualified_teacher_status_year qualified_teacher_status_details
-              statutory_induction_complete support_needed support_needed_details]
+              is_statutory_induction_complete is_support_needed support_needed_details]
         end
 
         it "copies personal info from the recent job application" do
@@ -140,7 +140,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
       end
 
       it "does not copy declarations attributes from the recent job application" do
-        expect(subject.close_relationships).to be_blank
+        expect(subject.has_close_relationships).to be_nil
         expect(subject.close_relationships_details).to be_blank
       end
 

@@ -20,7 +20,7 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
     within "ul.govuk-list.govuk-error-summary__list" do
       expect(page).to have_link("Select yes if you have qualified teacher status", href: "#jobseekers-job-application-professional-status-form-qualified-teacher-status-field-error")
-      expect(page).to have_link("Select yes if you have completed your statutory induction year", href: "#jobseekers-job-application-professional-status-form-statutory-induction-complete-field-error")
+      expect(page).to have_link("Select yes if you have completed your statutory induction year", href: "#jobseekers-job-application-professional-status-form-is-statutory-induction-complete-field-error")
     end
 
     choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"

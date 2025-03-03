@@ -5,11 +5,9 @@ module Jobseekers
       include ActiveModel::Attributes
       include CompletedFormAttribute
 
-      FIELDS = %i[support_needed support_needed_details].freeze
-
       class << self
         def storable_fields
-          FIELDS
+          %i[support_needed_details is_support_needed]
         end
 
         def unstorable_fields
@@ -20,10 +18,12 @@ module Jobseekers
           super.merge(completed_attrs(model, :ask_for_support))
         end
       end
-      attr_accessor(*FIELDS)
+      attr_accessor(:support_needed_details)
 
-      validates :support_needed, inclusion: { in: %w[yes no] }, if: -> { ask_for_support_section_completed }
-      validates :support_needed_details, presence: true, if: -> { support_needed == "yes" && ask_for_support_section_completed }
+      attribute :is_support_needed, :boolean
+
+      validates :is_support_needed, inclusion: { in: [true, false] }, if: -> { ask_for_support_section_completed }
+      validates :support_needed_details, presence: true, if: -> { is_support_needed && ask_for_support_section_completed }
 
       completed_attribute(:ask_for_support)
     end

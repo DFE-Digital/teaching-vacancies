@@ -9,7 +9,6 @@ module Jobseekers
         qualified_teacher_status
         qualified_teacher_status_year
         qualified_teacher_status_details
-        statutory_induction_complete
         teacher_reference_number
         statutory_induction_complete_details
         qts_age_range_and_subject
@@ -19,7 +18,7 @@ module Jobseekers
 
       class << self
         def storable_fields
-          FIELDS
+          FIELDS + [:is_statutory_induction_complete]
         end
 
         def unstorable_fields
@@ -32,10 +31,12 @@ module Jobseekers
         end
       end
 
+      attribute :is_statutory_induction_complete, :boolean
+
       def initialize(attributes = {})
         super
 
-        if attributes[:statutory_induction_complete] == "yes"
+        if attributes[:is_statutory_induction_complete] == true
           self.statutory_induction_complete_details = nil
         end
       end
@@ -59,7 +60,7 @@ module Jobseekers
       # Equivalent to if: -> { professional_status_section_completed == true }.
       with_options unless: -> { professional_status_section_completed != true } do
         validates :qualified_teacher_status, inclusion: { in: %w[yes no on_track] }
-        validates :statutory_induction_complete, inclusion: { in: %w[yes no] }
+        validates :is_statutory_induction_complete, inclusion: { in: [true, false] }
 
         with_options if: -> { qualified_teacher_status == "yes" } do
           validates :qualified_teacher_status_year, numericality: { less_than_or_equal_to: proc { Time.current.year } }
