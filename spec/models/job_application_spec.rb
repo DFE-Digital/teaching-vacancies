@@ -69,6 +69,7 @@ RSpec.describe JobApplication do
     it "resets support needed details" do
       expect(subject.support_needed).to eq "no"
       expect(subject.support_needed_details).to be_blank
+      expect(subject.is_support_needed).to be(false)
     end
   end
 
