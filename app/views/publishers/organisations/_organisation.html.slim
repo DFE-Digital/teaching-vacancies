@@ -37,7 +37,7 @@
   - summary_list.with_row(html_attributes: { id: "website" }) do |row|
     - row.with_key text: t(".website.label")
     - row.with_value do
-      - link = open_in_new_tab_link_to(organisation.url, organisation.url, class: "wordwrap") if organisation.url.present?
+      - link = govuk_link_to(organisation.url, organisation.url, class: "wordwrap") if organisation.url.present?
       = required_profile_info(value: link, missing_prompt: t(".website.missing_prompt"))
     - row.with_action text: t("buttons.change"), href: edit_publishers_organisation_website_path(organisation), classes: "govuk-link--no-visited-state", visually_hidden_text: t(".website.label")
 
