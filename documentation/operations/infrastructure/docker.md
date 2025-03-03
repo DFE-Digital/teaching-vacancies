@@ -256,3 +256,10 @@ To view the docker images stored on GitHub's container registry, you need to go 
 ### Docker image scan
 
 As part of the CI/CD, we conduct a Docker security scan using `snyk`, by invoking Snyk's docker image: `snyk/snyk-cli:docker`. This allows us a deep image inspection and vulnerability scan. When a vulnerability is detected while scanning, this breaks breaks CI/CD build. The vulnerability detected by `snyk`would need to be fixed before a successfully build can be completed.
+
+To fix it:
+1. Identify the offending package in the CI error message.
+2. Search for a patched non-vulnerable version.
+3. Set the explicit non-vulnerable version dependency (EG: `openssl=3.1.8-r0`) in the [Dockerfile's](/Dockerfile) `PROD_PACKAGES` list.
+4. Test the fix by pushing the Dockerfile change into a review app, an check the build output.
+5. Review & merge if it fixed the build.
