@@ -5,6 +5,8 @@ RSpec.describe "Publishers can edit a vacancy" do
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
+  after { logout }
+
   context "when editing a published vacancy" do
     let(:vacancy) do
       VacancyPresenter.new(
@@ -169,9 +171,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         edit_date("expires_at", expiry_date)
 
         expect(current_path).to eq(organisation_job_path(vacancy.id))
-        # Using String#strip to get rid of an initial space in e.g. " 1 July 2020" which caused test failures
-        # due to a leading newline in the body ("\n1 July 2020").
-        expect(page).to have_content(expiry_date.to_formatted_s.strip)
+        expect(page).to have_content(expiry_date.to_formatted_s)
       end
 
       scenario "adds a job to update the Google index in the queue" do
@@ -188,9 +188,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       context "when the job post has already been published" do
         context "when the publication date is in the past" do
           scenario "renders the publication date as text and does not allow editing" do
-            vacancy = build(:vacancy, :published, organisations: [school], slug: "test-slug", publish_on: 1.day.ago)
-            vacancy.save(validate: false)
-            vacancy = VacancyPresenter.new(vacancy)
+            vacancy = create(:vacancy, :published, organisations: [school], slug: "test-slug", publish_on: 1.day.ago)
             visit organisation_job_path(vacancy.id)
 
             click_review_page_change_link(section: "important_dates", row: "expires_at")
@@ -208,7 +206,6 @@ RSpec.describe "Publishers can edit a vacancy" do
         context "when the publication date is in the future" do
           scenario "renders the publication date as text and allows editing" do
             vacancy = create(:vacancy, :future_publish, organisations: [school])
-            vacancy = VacancyPresenter.new(vacancy)
             visit organisation_job_path(vacancy.id)
             click_review_page_change_link(section: "important_dates", row: "publish_on")
 

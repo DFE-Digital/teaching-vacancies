@@ -8,36 +8,40 @@ RSpec.describe "Publishers can accept terms and conditions" do
 
     before { login_publisher(publisher: publisher, organisation: school) }
 
-    scenario "they will see the terms and conditions" do
-      visit organisation_jobs_with_type_path
+    context "not signing out" do
+      after { logout }
 
-      expect(page).to have_content(I18n.t("terms_and_conditions.please_accept"))
-    end
+      scenario "they will see the terms and conditions" do
+        visit organisation_jobs_with_type_path
 
-    scenario "they can accept the terms and conditions" do
-      visit publishers_terms_and_conditions_path
+        expect(page).to have_content(I18n.t("terms_and_conditions.please_accept"))
+      end
 
-      expect(publisher).not_to be_accepted_terms_at
+      scenario "they can accept the terms and conditions" do
+        visit publishers_terms_and_conditions_path
 
-      check I18n.t("terms_and_conditions.label")
-      click_on I18n.t("buttons.accept_and_continue")
+        expect(publisher).not_to be_accepted_terms_at
 
-      publisher.reload
-      expect(page).to have_content("You can now view candidate profiles and invite them to apply to jobs")
-      expect(publisher).to be_accepted_terms_at
-    end
+        check I18n.t("terms_and_conditions.label")
+        click_on I18n.t("buttons.accept_and_continue")
 
-    scenario "an error is shown if they don’t accept" do
-      visit publishers_terms_and_conditions_path
+        publisher.reload
+        expect(page).to have_content("You can now view candidate profiles and invite them to apply to jobs")
+        expect(publisher).to be_accepted_terms_at
+      end
 
-      expect(publisher).not_to be_accepted_terms_at
+      scenario "an error is shown if they don’t accept" do
+        visit publishers_terms_and_conditions_path
 
-      click_on I18n.t("buttons.accept_and_continue")
+        expect(publisher).not_to be_accepted_terms_at
 
-      publisher.reload
+        click_on I18n.t("buttons.accept_and_continue")
 
-      expect(page).to have_content("There is a problem")
-      expect(publisher).not_to be_accepted_terms_at
+        publisher.reload
+
+        expect(page).to have_content("There is a problem")
+        expect(publisher).not_to be_accepted_terms_at
+      end
     end
 
     context "signing out" do
@@ -66,6 +70,8 @@ RSpec.describe "Publishers can accept terms and conditions" do
     let(:publisher) { create(:publisher, accepted_terms_at: Time.current) }
 
     before { login_publisher(publisher: publisher, organisation: school) }
+
+    after { logout }
 
     scenario "they will not see the terms and conditions" do
       visit organisation_jobs_with_type_path

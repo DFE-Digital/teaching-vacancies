@@ -10,6 +10,8 @@ RSpec.describe "Publishers can end a job listing early" do
     visit organisation_jobs_path
   end
 
+  after { logout }
+
   it "submits form, renders error, then ends listing early" do
     click_on vacancy.job_title
     click_on I18n.t("publishers.vacancies.show.heading_component.action.close_early")

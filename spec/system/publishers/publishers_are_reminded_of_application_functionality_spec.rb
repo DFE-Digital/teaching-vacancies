@@ -7,6 +7,8 @@ RSpec.describe "Application feature reminder" do
 
   before { login_publisher(publisher:, organisation:, allow_reminders: true) }
 
+  after { logout }
+
   context "when at least one vacancy has been published that accepts applications through TV" do
     let!(:vacancy) { create(:vacancy, :published, enable_job_applications: true, publisher:, organisations: [organisation]) }
 

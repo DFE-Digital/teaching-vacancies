@@ -1,16 +1,19 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can add aditional documents to a vacancy" do
+RSpec.describe "Publishers can add additional documents to a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:primary_school) { create(:school, name: "Primary school", phase: "primary") }
   let(:organisation) { primary_school }
 
   let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
 
+  before { login_publisher(publisher: publisher, organisation: organisation) }
+
+  after { logout }
+
   scenario "can add an additional documents to a vacancy" do
     allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
 
-    login_publisher(publisher: publisher, organisation: organisation)
     visit organisation_jobs_with_type_path
     click_on "Draft jobs"
     click_on vacancy.job_title
