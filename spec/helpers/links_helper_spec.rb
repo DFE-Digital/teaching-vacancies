@@ -26,7 +26,7 @@ RSpec.describe LinksHelper do
     let(:link_text) { "#{URI(root_url).host}/organisations/#{organisation.slug}" }
 
     it "generates a link with the URL included in the link text" do
-      expect(subject).to have_link("#{link_text}", href: helper.organisation_landing_page_path(organisation))
+      expect(subject).to have_link(link_text.to_s, href: helper.organisation_landing_page_path(organisation))
     end
   end
 end
