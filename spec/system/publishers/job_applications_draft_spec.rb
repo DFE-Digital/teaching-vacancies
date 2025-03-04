@@ -1,9 +1,5 @@
 require "rails_helper"
 
-# This could easily be converted into a view spec - it is just
-# checking the display of a single job application
-# The name is confusing as it has nothing to do with draft applications
-# runtime: 24 seconds
 RSpec.describe "Draft job applications for publishers" do
   context "when an application is in 'submitted' status" do
     let(:publisher) { create(:publisher, :with_organisation) }
