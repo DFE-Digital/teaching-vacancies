@@ -229,11 +229,8 @@ RSpec.describe Subscription do
         end
 
         context "when polygon has invalid geometry", :geocode do
-          let(:vacancies) { subscription.vacancies_matching(Vacancy.all) }
           let(:subscription) { create(:daily_subscription, location: "basildon", radius: radius) }
           let(:radius) { 200 }
-          let(:basildon_polygon) { LocationPolygon.find_by(name: "basildon") }
-          let(:basildon_coordinates) { [51.5761, 0.4886] }
 
           before do
             # rubocop:disable RSpec/AnyInstance
