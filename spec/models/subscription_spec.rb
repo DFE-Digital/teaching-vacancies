@@ -227,6 +227,33 @@ RSpec.describe Subscription do
             end
           end
         end
+
+        context "when polygon has invalid geometry", :geocode, :vcr do
+          let(:vacancies) { subscription.vacancies_matching(Vacancy.all) }
+          let(:subscription) { create(:daily_subscription, location: "basildon", radius: radius) }
+          let(:radius) { 200 }
+          let(:basildon_polygon) { LocationPolygon.find_by(name: "basildon") }
+          let(:basildon_coordinates) { [51.5761, 0.4886] }
+          
+          before do
+            # Create a double for the area with the invalid_reason method raising an error
+            polygon_area_double = instance_double("RGeo::Geos::Polygon")
+            allow(polygon_area_double).to receive(:invalid_reason).and_raise(RGeo::Error::InvalidGeometry)
+          
+            # Stub the polygon to return the double for area
+            allow_any_instance_of(LocationPolygon).to receive(:area).and_return(polygon_area_double)
+          
+            # Mock Geocoder to prevent real API call
+            allow(Geocoder).to receive(:coordinates).with("basildon", hash_including(lookup: :google, components: "country:gb")).and_return(basildon_coordinates)
+          end
+          
+
+          it "rescues RGeo::Error::InvalidGeometry and falls back to distance-based filtering" do
+            expect(Rails.logger).to receive(:error).with(/Invalid geometry encountered for location/)
+            # same result as entering basildon postcode with radius of 200.
+            expect(vacancies).to contain_exactly(liverpool_vacancy, st_albans_vacancy, basildon_vacancy)
+          end
+        end
       end
 
       context "with teaching job roles" do
