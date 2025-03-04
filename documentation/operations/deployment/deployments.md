@@ -11,7 +11,8 @@ Once the PR has been merged to main or a `deploy` tag applied to Review app, the
 - Builds and tags a Docker image from code in the `main` (staging, prod and qa) or `review app` branch
 - Tags the Docker image with the commit SHA as the tag
 - Logs in to Github's container registry as the service account `twd-tv-ci`
-- Pushes the image to GitHub packages, after it has been scanned by `Snyk` for vulnerabilities
+- Pushes the image to GitHub packages, after it has been scanned by `Snyk` for vulnerabilities.
+    - See [this guide](/documentation/operations/infrastructure/docker.md#docker-image-scan) on how to fix vulnerability errors that may arise at this stage.
 - Calls the [deploy_app.yml](../.github/workflows/deploy_app.yml) workflow to use Terraform to update the `web` and `worker` apps to use the new Docker image, and apply any changes to the appropriate environment.
 - Runs a smoke test against the deployed environment
 - If deployment (push) is to the main branch, performs `Post Deployment`
@@ -26,7 +27,7 @@ Perform the following to trigger a deployment a review app
 - attach a `deploy` label
 - Docker image and tag used to deploy the `review app` is based on the review app's `branch` and `sha` e.g teva-1234:commit_sha
 
-### Review app databases
+#### Review app databases
 By default, review apps use a simple postgis container deployed to AKS, as opposed to real Azure database flexible servers as it's cheaper and much faster to deploy.
 
 To use the Azure database temporarily in a review app, you can change the following parameters to `true` in `terraform/workspace-variables/review.tfvars.json` on the branch (do not commit this hange to main, remove it before merging):
@@ -36,6 +37,25 @@ To use the Azure database temporarily in a review app, you can change the follow
 "enable_postgres_ssl": true,
 "add_database_name_suffix": true,
 ```
+#### Review app deployment failures
+
+Sometimes, a review apps seem to timeout with a message like:
+
+> module.paas.module.web_application.kubernetes_deployment.main: Still creating... [9m50s elapsed]
+>
+> │ Error: Waiting for rollout to finish: 1 replicas wanted; 0 replicas Ready
+
+This may mean that the Review App startup process was terminated with an exception.
+
+To identify possible exceptions you can:
+
+- Check the Sentry errors for `review` environment.
+
+- Check the logs for the review app pod:
+  - `kubectl -n tv-development get pods` To identify the review app pod we want to check.
+  - `kubectl -n tv-development logs -f POD_NAME` To view logs.
+
+     For example: `kubectl -n tv-development logs -f teaching-vacancies-review-pr-7546-c7476575b-gfbd4`
 
 ### Merge and concurrency deployment management
 When there are multiple merges, this could lead to race conditions. To mitigate this, the `turnstyle` action prevents two or more instances of the same workflow from running concurrently.
@@ -81,7 +101,7 @@ This workflow can be triggered manually, passing the PR number corresponding to 
 ### Deleting review apps manually
 
 Sometimes, the [delete_review_app.yml](../.github/workflows/delete_review_app.yml) workflow errors as the review app
-wasn't  healthy/accesible and failed the initial "is this review app running?" check.
+wasn't healthy/accesible and failed the initial "is this review app running?" check.
 
 The kubernetes pods and other AKS resources (DB, Redis instances...) may still be running but orphaned once the PR is
 closed and the deletion job fails.

@@ -35,6 +35,33 @@ Plus
 
 One of TV developers needs to add the new developer to [teaching-vacancies-developers](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies-developers) as `maintainer` role.
 
+### Github Codespaces access for content team members
+
+We provide content team members a cloud development environment through [Github Codespaces](https://docs.github.com/en/codespaces).
+The codespaces are built using our [Devcontainer setup](/documentation/development/tooling/devcontainer.md)
+
+Onboarding a new team member to TV project codespaces:
+
+1. Ensure the team member has a Github user and is a member of [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams).
+
+2. The team member must have individual write access (not only by a team membership) in the [project access settings](https://github.com/DFE-Digital/teaching-vacancies/settings/access).
+
+3. Request codespace access for the team member through the [DFE Service Portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=0aacf3a81ba52110b192ec69b04bcb14) under `GitHub (dfe-digital) -> Other`.
+
+
+    **Request content template**
+    > Add a new user to organisation-owned Codespaces for Teaching Vacancies service.
+    >
+    > A new Teaching Vacancies content team member needs access to the DFE Digital-paid codespaces.
+    >
+    > Our project: https://github.com/DFE-Digital/teaching-vacancies
+    >
+    > The user: @user_github_handle
+    >
+    > Thank you.
+
+4. Once the ticket gets actioned, the user should be able to create codespaces from the `Code -> Codespaces` green button in our Github project landing page.
+
 ## DFE Azure Platform Identity
 
 Follow the [developer onboarding docs](https://github.com/DFE-Digital/teacher-services-cloud/blob/main/documentation/developer-onboarding.md#developer-onboarding) to setup your account in DFE Azure Platform Identity.
