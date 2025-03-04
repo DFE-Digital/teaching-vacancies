@@ -241,7 +241,6 @@ RSpec.describe Subscription do
             # rubocop:enable RSpec/AnyInstance
 
             # Mock Geocoder to prevent real API call
-
             allow(Geocoder).to receive(:coordinates).with("basildon", hash_including(lookup: :google, components: "country:gb"))
                                                     .and_return([51.5761, 0.4886])
           end
