@@ -236,9 +236,12 @@ RSpec.describe Subscription do
           let(:basildon_coordinates) { [51.5761, 0.4886] }
 
           before do
+            # rubocop:disable RSpec/AnyInstance
             allow_any_instance_of(LocationPolygon).to receive(:area).and_raise(RGeo::Error::InvalidGeometry)
+            # rubocop:enable RSpec/AnyInstance
 
             # Mock Geocoder to prevent real API call
+
             allow(Geocoder).to receive(:coordinates).with("basildon", hash_including(lookup: :google, components: "country:gb"))
                                                     .and_return([51.5761, 0.4886])
           end
