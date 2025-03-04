@@ -119,7 +119,7 @@ class Subscription < ApplicationRecord
           return vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
         end
       rescue RGeo::Error::InvalidGeometry => e
-        Rails.logger.error("Invalid geometry encountered for location #{polygon.name}: #{e.message}")
+        Sentry.capture_exception(e)
       end
 
       radius_in_metres = convert_miles_to_metres(radius_in_miles)

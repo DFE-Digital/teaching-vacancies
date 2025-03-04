@@ -237,15 +237,14 @@ RSpec.describe Subscription do
 
           before do
             allow_any_instance_of(LocationPolygon).to receive(:area).and_raise(RGeo::Error::InvalidGeometry)
-          
+
             # Mock Geocoder to prevent real API call
             allow(Geocoder).to receive(:coordinates).with("basildon", hash_including(lookup: :google, components: "country:gb"))
                                                     .and_return([51.5761, 0.4886])
           end
-          
 
           it "rescues RGeo::Error::InvalidGeometry and falls back to distance-based filtering" do
-            expect(Rails.logger).to receive(:error).with(/Invalid geometry encountered for location/)
+            expect(Sentry).to receive(:capture_exception).with(instance_of(RGeo::Error::InvalidGeometry))
             # same result as entering basildon postcode with radius of 200.
             expect(vacancies).to contain_exactly(liverpool_vacancy, st_albans_vacancy, basildon_vacancy)
           end
