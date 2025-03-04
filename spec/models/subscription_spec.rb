@@ -236,18 +236,13 @@ RSpec.describe Subscription do
           let(:basildon_coordinates) { [51.5761, 0.4886] }
 
           before do
-            # Create a double for the area with the invalid_reason method raising an error
-            polygon_area_double = instance_double(RGeo::Geos::Polygon)
-            allow(polygon_area_double).to receive(:invalid_reason).and_raise(RGeo::Error::InvalidGeometry)
-
-            # Stub the polygon to return the double for area
-            # rubocop:disable RSpec/AnyInstance
-            allow_any_instance_of(LocationPolygon).to receive(:area).and_return(polygon_area_double)
-            # rubocop:enable RSpec/AnyInstance
-
+            allow_any_instance_of(LocationPolygon).to receive(:area).and_raise(RGeo::Error::InvalidGeometry)
+          
             # Mock Geocoder to prevent real API call
-            allow(Geocoder).to receive(:coordinates).with("basildon", hash_including(lookup: :google, components: "country:gb")).and_return(basildon_coordinates)
+            allow(Geocoder).to receive(:coordinates).with("basildon", hash_including(lookup: :google, components: "country:gb"))
+                                                    .and_return([51.5761, 0.4886])
           end
+          
 
           it "rescues RGeo::Error::InvalidGeometry and falls back to distance-based filtering" do
             expect(Rails.logger).to receive(:error).with(/Invalid geometry encountered for location/)
