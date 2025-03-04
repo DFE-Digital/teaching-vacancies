@@ -53,7 +53,9 @@ To identify possible exceptions you can:
 
 - Check the logs for the review app pod:
   - `kubectl -n tv-development get pods` To identify the review app pod we want to check.
-  - `kubectl -n tv-development logs -f teaching-vacancies-review-pr-7546-c7476575b-gfbd4`
+  - `kubectl -n tv-development logs -f POD_NAME` To view logs.
+
+     For example: `kubectl -n tv-development logs -f teaching-vacancies-review-pr-7546-c7476575b-gfbd4`
 
 ### Merge and concurrency deployment management
 When there are multiple merges, this could lead to race conditions. To mitigate this, the `turnstyle` action prevents two or more instances of the same workflow from running concurrently.
