@@ -43,6 +43,7 @@ en:
           "yes": "Yes"
           "no": "No"
         teacher_reference_number: What is your teacher reference number (TRN)?
+        teacher_reference_number_optional: What is your teacher reference number (TRN)? (optional)
         statutory_induction_complete: Have you completed your induction period?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
         statutory_induction_complete_details: Additional induction details

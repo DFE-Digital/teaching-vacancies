@@ -15,7 +15,7 @@ module Jobseekers
         qts_age_range_and_subject
       ].freeze
 
-      attr_accessor(*FIELDS, :has_teacher_reference_number)
+      attr_accessor(*FIELDS)
 
       class << self
         def storable_fields
@@ -23,12 +23,11 @@ module Jobseekers
         end
 
         def unstorable_fields
-          %i[has_teacher_reference_number professional_status_section_completed]
+          %i[professional_status_section_completed]
         end
 
         def load_form(model)
           super.merge(completed_attrs(model, :professional_status))
-               .merge(has_teacher_reference_number: model[:teacher_reference_number].present? ? "yes" : "no")
         end
       end
 
@@ -42,7 +41,6 @@ module Jobseekers
         return unless jobseeker_profile
 
         self.teacher_reference_number ||= jobseeker_profile.teacher_reference_number
-        self.has_teacher_reference_number ||= jobseeker_profile.has_teacher_reference_number
       end
 
       # These validations are only applied when the professional status section is marked as completed.
@@ -68,23 +66,11 @@ module Jobseekers
 
         with_options if: -> { qualified_teacher_status == "yes" } do
           validates :qualified_teacher_status_year, numericality: { less_than_or_equal_to: proc { Time.current.year } }
-          validates :has_teacher_reference_number, inclusion: { in: %w[yes] }
-        end
-
-        with_options if: -> { qualified_teacher_status.in?(%w[no on_track]) } do
-          validates :has_teacher_reference_number, inclusion: { in: %w[yes no] }
+          validates :teacher_reference_number, presence: true
         end
       end
 
-      # Teacher reference number:
-      # Its presence is required when the "has_teacher_reference_number" is "yes".
-      # Its format is validated only when the number is provided.
-      # Having a qalified teacher status 'yes' will enforce the "has_teacher_reference_number" to be 'yes' what will force
-      # the "teacher_reference_number" to be present and formatted correctly.
-      # Codewise "has_teacher_reference_number" seems to be a redundant field as it can be inferred from the presence
-      # of the "teacher_reference_number".
-      validates :teacher_reference_number, presence: true, if: -> { has_teacher_reference_number == "yes" }
-      validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true
+      validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true # Format is always validated when TRN is present.
 
       completed_attribute(:professional_status)
     end
