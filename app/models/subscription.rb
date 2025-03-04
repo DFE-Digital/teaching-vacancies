@@ -111,6 +111,7 @@ class Subscription < ApplicationRecord
                       "derbyshire and derby"].freeze
 
   class << self
+    # rubocop:disable Metrics/AbcSize
     def limit_by_location(vacancies, location, radius_in_miles)
       polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
       begin
@@ -120,12 +121,13 @@ class Subscription < ApplicationRecord
       rescue RGeo::Error::InvalidGeometry => e
         Rails.logger.error("Invalid geometry encountered for location #{polygon.name}: #{e.message}")
       end
-    
+
       radius_in_metres = convert_miles_to_metres(radius_in_miles)
       coordinates = Geocoding.new(location).coordinates
       search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
       vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
     end
+    # rubocop:enable Metrics/AbcSize
 
     def handle_location(scope, criteria)
       if criteria.key?(:location)
