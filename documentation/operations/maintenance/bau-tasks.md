@@ -38,7 +38,7 @@ Example:
 
 ### Exporting SQL query outputs from service DB to the developer machine as CSV file
 
-You will need kounduit
+You will need konduit
 If not already setup, you can install it using the project Maefile. From the project's root:
 ```
  make bin/konduit.sh
@@ -60,7 +60,7 @@ COPY (
 
 We now and then want to execute a [scheduled rake task](/config/schedule.yml) on demand.
 
-Unles for particular debugging reasons, there is no need to do this from a production rails console.
+Unless for particular debugging reasons, there is no need to do this from a production rails console.
 
 They can be triggered from the Sidekiq dashboard, accessible with your work email through DfE Sign-in.
 [Link to Sidekiq dashboard in production](https://teaching-vacancies.service.gov.uk/sidekiq)

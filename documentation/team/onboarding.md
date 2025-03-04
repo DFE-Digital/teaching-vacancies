@@ -46,7 +46,7 @@ Onboarding a new team member to TV project codespaces:
 
 2. The team member must have individual write access (not only by a team membership) in the [project access settings](https://github.com/DFE-Digital/teaching-vacancies/settings/access).
 
-3. Request codespace access for the team member thorugh the [DFE Service Portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=0aacf3a81ba52110b192ec69b04bcb14) under `GitHub (dfe-digital) -> Other`.
+3. Request codespace access for the team member through the [DFE Service Portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=0aacf3a81ba52110b192ec69b04bcb14) under `GitHub (dfe-digital) -> Other`.
 
 
     **Request content template**

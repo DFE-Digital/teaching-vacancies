@@ -45,7 +45,7 @@ Sometimes, a review apps seem to timeout with a message like:
 >
 > │ Error: Waiting for rollout to finish: 1 replicas wanted; 0 replicas Ready
 
-This may men that the Review App startup process was terminated with an exception.
+This may mean that the Review App startup process was terminated with an exception.
 
 To identify possible exceptions you can:
 
