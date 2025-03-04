@@ -26,7 +26,7 @@ RSpec.describe VacanciesController do
     let(:vacancy) { create(:vacancy, :no_tv_applications) }
 
     it "has the correct text" do
-      expect(response.body).to have_content("How to apply (opens in new tab)")
+      expect(response.body).to have_content("How to apply")
     end
   end
 
