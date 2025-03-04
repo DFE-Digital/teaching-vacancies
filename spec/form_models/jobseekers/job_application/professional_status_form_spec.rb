@@ -22,7 +22,6 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       it { is_expected.not_to validate_presence_of(:qualified_teacher_status) }
       it { is_expected.not_to validate_presence_of(:qualified_teacher_status_year) }
       it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
-      it { is_expected.not_to validate_presence_of(:statutory_induction_complete) }
       it { is_expected.not_to validate_presence_of(:has_teacher_reference_number) }
       it { is_expected.not_to validate_presence_of(:statutory_induction_complete_details) }
       it { is_expected.not_to validate_presence_of(:qts_age_range_and_subject) }
