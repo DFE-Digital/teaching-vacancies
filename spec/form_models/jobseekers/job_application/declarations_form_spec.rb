@@ -5,18 +5,14 @@ RSpec.describe Jobseekers::JobApplication::DeclarationsForm, type: :model do
     described_class.new(declarations_section_completed: true)
   end
 
-  it { is_expected.to validate_inclusion_of(:close_relationships).in_array(%w[yes no]) }
-
   context "when close_relationships is yes" do
-    before { allow(subject).to receive(:close_relationships).and_return("yes") }
+    before { allow(subject).to receive(:has_close_relationships).and_return(true) }
 
     it { is_expected.to validate_presence_of(:close_relationships_details) }
   end
 
-  it { is_expected.to validate_inclusion_of(:safeguarding_issue).in_array(%w[yes no]) }
-
   context "when safeguarding_issue is yes" do
-    before { allow(subject).to receive(:safeguarding_issue).and_return("yes") }
+    before { allow(subject).to receive(:has_safeguarding_issue).and_return(true) }
 
     it { is_expected.to validate_presence_of(:safeguarding_issue_details) }
   end

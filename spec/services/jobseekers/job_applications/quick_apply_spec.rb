@@ -60,7 +60,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
       expect(job_application.phone_number).to be_blank
       expect(job_application.qualified_teacher_status_year).to be_blank
       expect(job_application.qualified_teacher_status).to be_blank
-      expect(job_application.right_to_work_in_uk).to be_blank
+      expect(job_application.has_right_to_work_in_uk).to be_nil
       expect(job_application.qualifications).to be_blank
       expect(job_application.employments).to be_blank
       expect(job_application.training_and_cpds).to be_blank

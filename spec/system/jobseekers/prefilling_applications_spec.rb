@@ -62,7 +62,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         expect(current_job_application.qualified_teacher_status).to eq("yes")
         expect(current_job_application.qualified_teacher_status_year).to eq("2020")
         # skilled worker visa sponsorship
-        expect(current_job_application.right_to_work_in_uk).to eq("yes")
+        expect(current_job_application.has_right_to_work_in_uk).to be(true)
 
         within("#professional_status") do
           expect(page).to have_css("strong.govuk-tag.govuk-tag--blue", text: I18n.t("shared.status_tags.imported"))
@@ -121,7 +121,7 @@ RSpec.describe "Jobseekers can prefill applications" do
         end
 
         click_on I18n.t("jobseekers.job_applications.build.ask_for_support.heading")
-        expect(page).to have_content(previous_application.support_needed.capitalize)
+        expect(page).to have_content(previous_application.is_support_needed? ? "Yes" : "No")
         expect(page).to have_content(previous_application.support_needed_details)
         click_on "Back"
         within("#ask_for_support") do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_28_104626) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -210,7 +210,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_104626) do
     t.string "support_needed", default: "", null: false
     t.string "close_relationships", default: "", null: false
     t.string "right_to_work_in_uk", default: "", null: false
-    t.string "gaps_in_employment", default: "", null: false
     t.string "disability", default: "", null: false
     t.string "gender", default: "", null: false
     t.string "gender_description", default: "", null: false
