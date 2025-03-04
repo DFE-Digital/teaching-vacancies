@@ -120,7 +120,7 @@ class Subscription < ApplicationRecord
         end
       rescue RGeo::Error::InvalidGeometry => e
         Sentry.with_scope do |scope|
-          scope.set_context("Polygon", { id: polygon.id, name: polygon.name } )
+          scope.set_context("Polygon", { id: polygon.id, name: polygon.name })
           Sentry.capture_exception(e)
         end
       end
