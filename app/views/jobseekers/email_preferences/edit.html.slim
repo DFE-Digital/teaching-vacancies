@@ -1,0 +1,21 @@
+- content_for :page_title_prefix, t(".page_title")
+
+h1.govuk-heading-l = t(".page_title")
+
+p = t(".description_html")
+
+= form_for @form, url: jobseekers_account_email_preferences_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_radio_buttons_fieldset :email_opt_out, legend: { text: t(".opt_out_legend"), size: "m" } do
+    = f.govuk_radio_button :email_opt_out, "false", label: { text: t(".receive_emails") }, link_errors: true
+    = f.govuk_radio_button :email_opt_out, "true", label: { text: t(".opt_out") } do
+      = f.govuk_radio_buttons_fieldset :email_opt_out_reason, legend: { text: t(".reason_legend"), size: "s" } do
+        = f.govuk_radio_button :email_opt_out_reason, "too_many_emails", label: { text: t(".reasons.too_many_emails") }, link_errors: true
+        = f.govuk_radio_button :email_opt_out_reason, "not_relevant", label: { text: t(".reasons.not_relevant") }
+        = f.govuk_radio_button :email_opt_out_reason, "found_job", label: { text: t(".reasons.found_job") }
+        = f.govuk_radio_button :email_opt_out_reason, "not_looking_anymore", label: { text: t(".reasons.not_looking_anymore") }
+        = f.govuk_radio_button :email_opt_out_reason, "other_reason", label: { text: t(".reasons.other_reason") } do
+          = f.govuk_text_area :email_opt_out_comment, label: { text: t(".other_reason_label") }
+
+  = f.govuk_submit t("buttons.save_changes")
