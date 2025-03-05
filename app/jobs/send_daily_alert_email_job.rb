@@ -6,6 +6,6 @@ class SendDailyAlertEmailJob < AlertEmail::Base
   end
 
   def from_date
-    Time.zone.yesterday
+    Date.yesterday
   end
 end
