@@ -163,12 +163,6 @@ en:
           Department for Education services.
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
-      jobseekers_job_application_personal_details_form:
-        has_ni_number: >-
-          You can find this on your National Insurance card,
-          benefit letter, payslip or P60. It's made up of 2 letters, 6 numbers and a final letter.
-        phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
-        previous_names: For example maiden name or name at birth, if different from the name you have now.
       jobseekers_qualifications_degree_form:
         institution: For example, a university or college
         qualifications_section_completed: Ensure you've added all the education and qualifications you've done.
@@ -181,11 +175,6 @@ en:
           Department for Education services.
         occupation: >-
           We'll only use this to tell you about opportunities to take part in user research that is relevant to you.
-
-      personal_details_form:
-        first_name: Or given names
-        last_name: Or family name
-        phone_number: Enter a phone number you are happy to be contacted on. For example, 01632 960 001, 07700 900 982 or +44 0808 157 0192.
 
       jobseekers_subscription_form:
         email: Enter your email address. We'll only use it to send you job alerts.
@@ -451,17 +440,6 @@ en:
         year_awarded: Date completed
         year_completed_hint: For example, 1998
         course_length: Course length
-      personal_details_form:
-        email: Email
-        change_email_html: Select to %{link}
-        change_email_link_text: change your email address
-        first_name: First name
-        last_name: Last name
-        phone_number: Phone number
-        phone_number_provided: Do you want to provide a phone number?
-        phone_number_provided_options:
-          false: "No"
-          true: "Yes"
       jobseekers_sign_in_form:
         email: Email address
         password: Password
@@ -780,10 +758,6 @@ en:
       jobseekers_job_application_feedback_form:
         rating: How satisfied are you with your experience of using Teaching Vacancies?
         user_participation_response: Would you like to participate in our research?
-      jobseekers_job_application_personal_details_form:
-        your_address: Your address
-        has_ni_number: Do you have a national insurance number?
-        working_patterns: Working pattern preference
       jobseekers_job_application_training_and_cpds_form:
         training_and_cpds_section_completed: Have you completed this section?
       jobseekers_job_application_withdraw_form:
