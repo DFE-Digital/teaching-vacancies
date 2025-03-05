@@ -16,12 +16,14 @@ class Jobseeker < ApplicationRecord
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
   validates :govuk_one_login_id, uniqueness: true, allow_nil: true
 
+  validates :email_opt_out_reason, presence: true, if: -> { email_opt_out  }
+  validates :email_opt_out_comment, presence: true, if: -> { email_opt_out && email_opt_out_reason&.to_sym == :other_reason }
+
   enum :email_opt_out_reason, {
     too_many_emails: 0,
-    not_relevant: 1, 
-    found_job: 2,
-    not_looking_anymore: 3,
-    other_reason: 4
+    not_getting_any_value: 1,
+    not_looking_for_job: 2,
+    other_reason: 3,
   }
 
   after_update :update_subscription_emails
@@ -31,14 +33,6 @@ class Jobseeker < ApplicationRecord
     return unless saved_change_to_attribute?(:email)
 
     Subscription.where(email: email_previously_was).update(email: email)
-  end
-
-  def create_email_opt_out_feedback
-    feedbacks.create(
-      feedback_type: :email_preferences,
-      unsubscribe_reason: email_opt_out_reason,
-      job_found_unsubscribe_reason_comment: email_opt_out_comment
-    )
   end
 
   def account_closed?
@@ -78,5 +72,22 @@ class Jobseeker < ApplicationRecord
   # created before introducingq OneLogin and still non-linked with a OneLogin account.
   def self.find_from_govuk_one_login(id:, email:)
     find_by(govuk_one_login_id: id) || find_by(email: email)
+  end
+
+  private
+
+  OPT_OUT_TO_UNSUBSCRIBE_REASON = {
+    too_many_emails: :not_relevant,
+    not_getting_any_value: :circumstances_change,
+    not_looking_for_job: :job_found,
+    other_reason: :other_reason,
+  }.freeze
+
+  def create_email_opt_out_feedback
+    feedbacks.create(
+      feedback_type: :email_preferences,
+      unsubscribe_reason: OPT_OUT_TO_UNSUBSCRIBE_REASON.fetch(email_opt_out_reason.to_sym),
+      job_found_unsubscribe_reason_comment: email_opt_out_comment,
+    )
   end
 end

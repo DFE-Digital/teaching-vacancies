@@ -25,9 +25,10 @@ en:
         email_preferences:
           heading: Opt out of emails
           description: "As well as emails about your account and applications, we may send you emails about:"
-          website_updates: ""
-          tips_to_find_a_job: ""
-          link: ""
+          website_updates: wesbite updates
+          tips_to_find_a_job: tips to find your next role
+          choose_to_only: You can choose to only receive emails about your account and applications, and opt out of any other email communication.
+          link: Opt out of additional email communication
         find_account_details:
           heading: Can't find your account details?
           paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your account details will not automatically be saved.
@@ -1071,23 +1072,3 @@ en:
         title: Sign in unsuccessful
         expired_html: The login link you used has expired. Please %{try_again}.
         no_key_html: The login link you used was not recognised. Please %{try_again}.
-
-    email_preferences:
-      edit:
-        page_title: Title here for email preferences
-        description_html: >-
-          Some description here, ask Chloe
-        opt_out_legend: Would you like to receive emails about updates to Teaching Vacancies?
-        receive_emails: Yes, I want to receive emails
-        opt_out: No, I want to opt out of non-transactional emails
-        reason_legend: Please tell us why you want to opt out
-        reasons:
-          too_many_emails: I receive too many emails
-          not_relevant: The emails are not relevant to me
-          found_job: I've found a job
-          not_looking_anymore: I'm no longer looking for a job
-          other_reason: Other reason
-        other_reason_label: Please tell us more (optional)
-      update:
-        success: Your email preferences have been updated
-
