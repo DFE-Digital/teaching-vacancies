@@ -4,7 +4,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
     education_phases: %i[phases],
     key_stages: %i[key_stages],
     subjects: %i[subjects],
-    contract_type: %i[working_patterns],
+    working_patterns: %i[working_patterns],
     pay_package: %i[salary_types],
   }.freeze
 

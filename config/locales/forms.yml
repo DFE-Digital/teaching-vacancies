@@ -699,6 +699,13 @@ en:
           full_time: Full time
           job_share: Job share
           part_time: Part time
+        contract_type_options:
+          fixed_term: Fixed term (including maternity or parental leave cover)
+          parental_leave_cover: Maternity or parental leave cover
+          permanent: Permanent
+          casual: Casual
+        fixed_term_contract_duration: Length of contract
+        is_parental_leave_cover: Is this covering maternity or paternal leave?
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
         listed_elsewhere: Listed elsewhere?

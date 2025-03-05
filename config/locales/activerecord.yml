@@ -146,7 +146,7 @@ en:
     key_stages:
       blank: Select key stage
       inclusion: Select key stage
-  contract_type_errors: &contract_type_errors
+  working_patterns_errors: &working_patterns_errors
     contract_type:
       inclusion: Select contract type
     fixed_term_contract_duration:
@@ -159,6 +159,7 @@ en:
       maximum_words: Working patterns details must be 50 words or less
     is_job_share:
       blank: Select yes if this role can be done as a job share
+<<<<<<< HEAD
   working_patterns_errors: &working_patterns_errors
     working_patterns:
       blank: Select a working pattern
@@ -168,6 +169,8 @@ en:
       maximum_words: Working patterns details must be 50 words or less
     is_job_share:
       inclusion: Select yes if this role can be done as a job share
+=======
+>>>>>>> 1d867dba4 (Combine working_patterns and contract_type pages)
   pay_package_errors: &pay_package_errors
     actual_salary:
       blank: Enter actual salary
@@ -378,9 +381,6 @@ en:
         publishers/job_listing/key_stages_form:
           attributes:
             <<: *key_stages_errors
-        publishers/job_listing/contract_type_form:
-          attributes:
-            <<: *contract_type_errors
         publishers/job_listing/working_patterns_form:
           attributes:
             <<: *working_patterns_errors
