@@ -18,10 +18,9 @@ class Jobseeker < ApplicationRecord
 
   enum :email_opt_out_reason, {
     too_many_emails: 0,
-    not_relevant: 1, 
-    found_job: 2,
-    not_looking_anymore: 3,
-    other_reason: 4
+    not_getting_any_value: 1,
+    not_looking_for_job: 2,
+    other_close_account_reason: 3,
   }
 
   after_update :update_subscription_emails
@@ -36,8 +35,8 @@ class Jobseeker < ApplicationRecord
   def create_email_opt_out_feedback
     feedbacks.create(
       feedback_type: :email_preferences,
-      unsubscribe_reason: email_opt_out_reason,
-      job_found_unsubscribe_reason_comment: email_opt_out_comment
+      close_account_reason: email_opt_out_reason,
+      job_found_unsubscribe_reason_comment: email_opt_out_comment,
     )
   end
 

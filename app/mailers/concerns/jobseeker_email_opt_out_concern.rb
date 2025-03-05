@@ -6,7 +6,7 @@ module JobseekerEmailOptOutConcern
   # Returns false if the jobseeker hasn't opted out or if no jobseeker is provided
   def jobseeker_opted_out?(jobseeker)
     return false if jobseeker.blank?
-    
+
     jobseeker.email_opt_out?
   end
 end
