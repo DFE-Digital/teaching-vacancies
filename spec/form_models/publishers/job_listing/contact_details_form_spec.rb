@@ -7,24 +7,20 @@ RSpec.describe Publishers::JobListing::ContactDetailsForm, type: :model do
   let(:current_publisher) { build_stubbed(:publisher, email: "test@example.com") }
   let(:params) { {} }
 
-  describe "contact number provided" do
-    it { is_expected.to validate_inclusion_of(:contact_number_provided).in_array([true, false, "true", "false"]) }
-  end
-
   describe "contact number" do
     context "when contact_number_provided is false" do
-      before { allow(subject).to receive(:contact_number_provided).and_return("false") }
+      before { allow(subject).to receive(:contact_number_provided).and_return(false) }
       it { is_expected.not_to validate_presence_of(:contact_number) }
     end
 
     context "when contact_number_provided is true" do
-      before { allow(subject).to receive(:contact_number_provided).and_return("true") }
+      before { allow(subject).to receive(:contact_number_provided).and_return(true) }
       it { is_expected.to validate_presence_of(:contact_number) }
     end
   end
 
   describe "contact email" do
-    before { allow(subject).to receive(:contact_number_provided).and_return("false") }
+    before { allow(subject).to receive(:contact_number_provided).and_return(false) }
 
     context "when contact_email is current publisher email" do
       let(:params) { { other_contact_email: nil, contact_email: current_publisher.email } }

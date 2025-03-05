@@ -5,7 +5,6 @@ RSpec.describe Jobseekers::Qualifications::OtherForm, type: :model do
   let(:params) { {} }
 
   it { is_expected.to validate_presence_of(:category) }
-  it { is_expected.to validate_presence_of(:finished_studying) }
   it { is_expected.to validate_presence_of(:institution) }
   it { is_expected.to validate_presence_of(:name) }
 

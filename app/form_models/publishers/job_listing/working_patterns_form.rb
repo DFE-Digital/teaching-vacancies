@@ -1,12 +1,18 @@
 class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::VacancyForm
+  include ActiveModel::Attributes
+
   validates :working_patterns, presence: true, inclusion: { in: Vacancy.working_patterns.keys - ["job_share"] }
-  validates :is_job_share, inclusion: { in: [true, false, "true", "false"] }
+  validates :is_job_share, inclusion: { in: [true, false] }
   validate :working_patterns_details_does_not_exceed_maximum_words
 
+  FIELDS = %i[working_patterns working_patterns_details].freeze
+
   def self.fields
-    %i[working_patterns working_patterns_details is_job_share]
+    FIELDS + %i[is_job_share]
   end
-  attr_accessor(*fields)
+  attr_accessor(*FIELDS)
+
+  attribute :is_job_share, :boolean
 
   def params_to_save
     { working_patterns:, working_patterns_details:, is_job_share: }

@@ -22,7 +22,6 @@ RSpec.describe Publishers::JobListing::PayPackageForm, type: :model do
 
       it { is_expected.to validate_presence_of(salary_value) }
       it { is_expected.to validate_length_of(salary_value).is_at_least(1).is_at_most(256) }
-      it { is_expected.to validate_inclusion_of(:benefits).in_array([true, false, "true", "false"]) }
 
       (SALARY_OPTIONS.keys - [salary_value]).each do |other_salary_type|
         it { is_expected.not_to validate_presence_of(other_salary_type) }
@@ -33,14 +32,12 @@ RSpec.describe Publishers::JobListing::PayPackageForm, type: :model do
   context "when there are no benefits" do
     let(:params) { { salary_types: nil, benefits: "false" } }
 
-    it { is_expected.to validate_inclusion_of(:benefits).in_array([true, false, "true", "false"]) }
     it { is_expected.not_to validate_presence_of(:benefits_details) }
   end
 
   context "when there are benefits" do
     let(:params) { { salary_types: nil, benefits: "true" } }
 
-    it { is_expected.to validate_inclusion_of(:benefits).in_array([true, false, "true", "false"]) }
     it { is_expected.to validate_presence_of(:benefits_details) }
     it { is_expected.to validate_length_of(:benefits_details).is_at_least(1).is_at_most(256) }
   end

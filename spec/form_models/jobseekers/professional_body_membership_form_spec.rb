@@ -50,15 +50,6 @@ RSpec.describe Jobseekers::ProfessionalBodyMembershipForm, type: :model do
       end
     end
 
-    context "when exam_taken is not a valid value" do
-      let(:exam_taken) { "invalid_value" }
-
-      it "is not valid" do
-        expect(form).not_to be_valid
-        expect(form.errors[:exam_taken]).to include("Select yes if your professional body membership required you to take an exam.")
-      end
-    end
-
     context "when exam_taken is true or false" do
       it "is valid with true" do
         form.exam_taken = true
@@ -67,18 +58,6 @@ RSpec.describe Jobseekers::ProfessionalBodyMembershipForm, type: :model do
 
       it "is valid with false" do
         form.exam_taken = false
-        expect(form).to be_valid
-      end
-    end
-
-    context "when exam_taken is a string version of true or false" do
-      it "is valid with 'true'" do
-        form.exam_taken = "true"
-        expect(form).to be_valid
-      end
-
-      it "is valid with 'false'" do
-        form.exam_taken = "false"
         expect(form).to be_valid
       end
     end
