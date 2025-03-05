@@ -555,6 +555,10 @@ en:
           casual: Casual
         fixed_term_contract_duration: Length of contract
         is_parental_leave_cover: Is this covering maternity or paternal leave?
+        working_patterns_options:
+          full_time: Full time
+          job_share: Job share
+          part_time: Part time
       publishers_job_listing_contact_details_form:
         contact_email_options:
           other: Another email address
@@ -718,6 +722,13 @@ en:
           full_time: Full time
           job_share: Job share
           part_time: Part time
+        contract_type_options:
+          fixed_term: Fixed term (including maternity or parental leave cover)
+          parental_leave_cover: Maternity or parental leave cover
+          permanent: Permanent
+          casual: Casual
+        fixed_term_contract_duration: Length of contract
+        is_parental_leave_cover: Is this covering maternity or paternal leave?
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
         listed_elsewhere: Listed elsewhere?
@@ -809,6 +820,7 @@ en:
         application_email: Email address to receive applications
       publishers_job_listing_contract_type_form:
         contract_type: Contract type
+        working_patterns_options:
       publishers_job_listing_contact_details_form:
         contact_email: Email address
         contact_number_provided: Do you want to give a contact phone number?
