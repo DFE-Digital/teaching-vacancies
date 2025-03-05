@@ -124,32 +124,4 @@ RSpec.describe JobApplicationsHelper do
       end
     end
   end
-
-  # describe "#visa_sponsorship_needed_answer" do
-  #   let(:job_application) { build(:job_application, has_right_to_work_in_uk: right_to_work) }
-  #
-  #   context "when not present" do
-  #     let(:right_to_work) { nil }
-  #
-  #     it "returns nil" do
-  #       expect(visa_sponsorship_needed_answer(job_application)).to be_nil
-  #     end
-  #   end
-  #
-  #   context "when true" do
-  #     let(:right_to_work) { true }
-  #
-  #     it "returns right to work" do
-  #       expect(visa_sponsorship_needed_answer(job_application)).to eq("No, I already have the right to work in the UK")
-  #     end
-  #   end
-  #
-  #   context "when false" do
-  #     let(:right_to_work) { false }
-  #
-  #     it "returns visa required" do
-  #       expect(visa_sponsorship_needed_answer(job_application)).to eq("Yes, I will need to apply for a visa giving me the right to work in the UK")
-  #     end
-  #   end
-  # end
 end
