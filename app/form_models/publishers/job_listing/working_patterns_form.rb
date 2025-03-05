@@ -1,15 +1,21 @@
 class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::VacancyForm
+  attr_accessor :contract_type, :fixed_term_contract_duration, :is_parental_leave_cover
+
+  validates :contract_type, inclusion: { in: Vacancy.contract_types.keys }
+  validates :fixed_term_contract_duration, presence: true, if: -> { contract_type == "fixed_term" }
+  validates :is_parental_leave_cover, inclusion: { in: ["true", "false", true, false] }, if: -> { contract_type == "fixed_term" }
   validates :working_patterns, presence: true, inclusion: { in: Vacancy.working_patterns.keys - ["job_share"] }
   validates :is_job_share, inclusion: { in: [true, false, "true", "false"] }
   validate :working_patterns_details_does_not_exceed_maximum_words
 
+  # probably needs changing
   def self.fields
-    %i[working_patterns working_patterns_details is_job_share]
+    %i[working_patterns working_patterns_details is_job_share contract_type fixed_term_contract_duration is_parental_leave_cover]
   end
   attr_accessor(*fields)
 
   def params_to_save
-    { working_patterns:, working_patterns_details:, is_job_share: }
+    { working_patterns:, working_patterns_details:, is_job_share:, contract_type:, fixed_term_contract_duration:, is_parental_leave_cover:}
   end
 
   private
