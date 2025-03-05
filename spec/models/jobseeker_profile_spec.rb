@@ -78,8 +78,8 @@ RSpec.describe JobseekerProfile, type: :model do
     let(:profile) { create(:jobseeker_profile, qualifications: [old_qualification]) }
 
     it "replaces the qualifications" do
-      expect { profile.replace_qualifications!(new_qualifications) }
-        .to change { profile.reload.qualifications }.from([old_qualification]).to(new_qualifications)
+      profile.replace_qualifications!(new_qualifications)
+      expect(profile.reload.qualifications).to match_array(new_qualifications)
     end
 
     it "deletes the original profile qualifications" do

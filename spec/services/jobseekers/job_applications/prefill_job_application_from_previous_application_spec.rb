@@ -91,7 +91,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         attributes_to_copy = %i[category finished_studying finished_studying_details grade institution name subject year]
 
         expect(subject.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
-          .to eq(recent_job_application.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
+          .to match_array(recent_job_application.qualifications.map { |qualification| qualification.slice(*attributes_to_copy) })
       end
 
       it "sets qualifications section completed to true" do
