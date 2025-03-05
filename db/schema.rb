@@ -327,12 +327,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
     t.datetime "updated_at", null: false
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
-    t.string "govuk_one_login_id"
     t.text "last_sign_in_ip_ciphertext"
+    t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
-    t.boolean "email_opt_out", default: false
-    t.datetime "email_opt_out_at"
+    t.boolean "email_opt_out", default: false, null: false
     t.integer "email_opt_out_reason"
     t.text "email_opt_out_comment"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
