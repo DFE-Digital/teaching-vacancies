@@ -193,6 +193,7 @@ Rails.application.routes.draw do
         get :account_found
         get :account_not_found
       end
+      resource :email_preferences, only: %i[edit update]
     end
     resource :account_feedback, only: %i[new create]
     resource :request_account_transfer_email, only: %i[new create]

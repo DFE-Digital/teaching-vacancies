@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_21_101041) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -327,10 +327,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_21_101041) do
     t.datetime "updated_at", null: false
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
-    t.text "last_sign_in_ip_ciphertext"
     t.string "govuk_one_login_id"
+    t.text "last_sign_in_ip_ciphertext"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
+    t.boolean "email_opt_out", default: false
+    t.datetime "email_opt_out_at"
+    t.integer "email_opt_out_reason"
+    t.text "email_opt_out_comment"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
   end
