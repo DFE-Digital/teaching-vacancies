@@ -92,6 +92,7 @@ FactoryBot.define do
       is_job_share { [true, false].sample }
       working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
+      phases { factory_rand_sample(Vacancy.phases.keys, 1..3) }
     end
 
     trait :without_any_money do
