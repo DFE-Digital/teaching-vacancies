@@ -16,12 +16,29 @@ class Jobseeker < ApplicationRecord
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
   validates :govuk_one_login_id, uniqueness: true, allow_nil: true
 
+  enum :email_opt_out_reason, {
+    too_many_emails: 0,
+    not_relevant: 1, 
+    found_job: 2,
+    not_looking_anymore: 3,
+    other_reason: 4
+  }
+
   after_update :update_subscription_emails
+  after_update :create_email_opt_out_feedback, if: -> { saved_change_to_attribute?(:email_opt_out) && email_opt_out? }
 
   def update_subscription_emails
     return unless saved_change_to_attribute?(:email)
 
     Subscription.where(email: email_previously_was).update(email: email)
+  end
+
+  def create_email_opt_out_feedback
+    feedbacks.create(
+      feedback_type: :email_preferences,
+      unsubscribe_reason: email_opt_out_reason,
+      job_found_unsubscribe_reason_comment: email_opt_out_comment
+    )
   end
 
   def account_closed?
