@@ -54,7 +54,7 @@ class JobseekerProfile < ApplicationRecord
   # 4. start using new column
   # 5. remove old column
   # add this once column has been backfilled
-  # self.ignored_columns += %i[right_to_work_in_uk]
+  # self.ignored_columns += %i[statutory_induction_complete]
   before_save :sync_yes_no_booleans
 
   def sync_yes_no_booleans
