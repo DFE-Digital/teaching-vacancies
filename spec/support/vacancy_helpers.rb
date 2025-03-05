@@ -38,22 +38,23 @@ module VacancyHelpers
     end
   end
 
-  def fill_in_contract_type_form_fields(vacancy)
+  def fill_in_working_patterns_form_fields(vacancy)
     if vacancy.contract_type == "fixed_term"
-      choose I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.fixed_term")
-      choose "Yes"
+      choose I18n.t("helpers.label.publishers_job_listing_working_patterns_form.contract_type_options.fixed_term")
+      # Choose "Yes" for parental leave coverage
+      find("#publishers-job-listing-working-patterns-form-is-parental-leave-cover-true-field").choose
       fill_in "Length of contract", with: "1 month"
     else
-      choose I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{vacancy.contract_type}")
+      choose I18n.t("helpers.label.publishers_job_listing_working_patterns_form.contract_type_options.#{vacancy.contract_type}")
     end
-  end
 
-  def fill_in_working_patterns_form_fields(vacancy)
     vacancy.working_patterns.each do |working_pattern|
       check Vacancy.human_attribute_name(working_pattern.to_s), name: "publishers_job_listing_working_patterns_form[working_patterns][]"
     end
 
-    choose(vacancy.is_job_share ? "Yes" : "No")
+    # Choose "Yes" or "No" for job share option
+    job_share_field_id = vacancy.is_job_share ? "publishers-job-listing-working-patterns-form-is-job-share-true-field" : "publishers-job-listing-working-patterns-form-is-job-share-field"
+    find("##{job_share_field_id}").choose
 
     fill_in "publishers_job_listing_working_patterns_form[working_patterns_details]", with: vacancy.working_patterns_details
   end
@@ -385,10 +386,6 @@ module VacancyHelpers
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :subjects), ignore_query: true)
 
     fill_in_subjects_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :contract_type), ignore_query: true)
-
-    fill_in_contract_type_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :working_patterns), ignore_query: true)
 
