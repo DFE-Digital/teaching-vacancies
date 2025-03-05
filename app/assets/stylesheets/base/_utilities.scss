@@ -136,12 +136,15 @@
   &-logo {
     margin-right: govuk-spacing(3);
 
+    // https://stackoverflow.com/questions/36182635/making-a-flex-item-float-right
+    // float the logo right using margin-left:auto
     &--search-result {
       align-items: center;
       display: flex;
       height: 70px;
       justify-content: center;
       margin-right: govuk-spacing(3);
+      margin-left: auto;
       width: 70px;
     }
   }
