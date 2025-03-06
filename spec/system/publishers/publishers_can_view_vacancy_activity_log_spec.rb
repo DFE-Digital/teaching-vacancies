@@ -24,12 +24,11 @@ RSpec.describe "Publishers can view a vacancy's activity log", versioning: true 
     new_subjects.each { |subject| check subject }
 
     click_on I18n.t("buttons.save_and_continue")
-
-    click_review_page_change_link(section: "job_details", row: "contract_type")
-    expect(current_path).to eq(organisation_job_build_path(vacancy.id, :contract_type))
+    click_review_page_change_link(section: "job_details", row: "working_patterns")
+    expect(current_path).to eq(organisation_job_build_path(vacancy.id, :working_patterns))
 
     choose I18n.t("helpers.label.publishers_job_listing_contract_type_form.contract_type_options.#{new_contract_type}")
-    within("#publishers-job-listing-contract-type-form-contract-type-fixed-term-conditional") do
+    within("#publishers-job-listing-working-patterns-form-contract-type-fixed-term-conditional") do
       choose "Yes"
       fill_in I18n.t("helpers.label.publishers_job_listing_contract_type_form.fixed_term_contract_duration"), with: "6 months"
     end
