@@ -51,8 +51,10 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
     "jobseekers/job_application/#{step}_form".camelize.constantize
   end
 
-  # :nocov:
   def form_attributes
+    if step == :professional_status
+      job_application.assign_attributes(teacher_reference_number: current_jobseeker&.jobseeker_profile&.teacher_reference_number)
+    end
     attributes = case action_name
                  when "show"
                    form_class.load_form(job_application)
@@ -61,15 +63,12 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
                  end
 
     case step
-    when :professional_status
-      attributes.merge(jobseeker_profile: current_jobseeker&.jobseeker_profile)
     when :employment_history
       attributes.merge(unexplained_employment_gaps: job_application.unexplained_employment_gaps)
     else
       attributes
     end
   end
-  # :nocov:
 
   def form_params
     param_key = ActiveModel::Naming.param_key(form_class)
