@@ -5,6 +5,8 @@ class CampaignPage
   LANGUAGE_SUBJECTS = %w[English Spanish German French].freeze
 
   def self.exists?(utm_content)
+    return false if utm_content.blank?
+
     Rails.application.config.campaign_pages.key?(utm_content.to_sym)
   end
 

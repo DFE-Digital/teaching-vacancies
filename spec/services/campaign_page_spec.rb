@@ -16,6 +16,8 @@ RSpec.describe CampaignPage do
     it "returns whether a landing page has been set up" do
       expect(described_class.exists?("FAKE1+CAMPAIGN")).to be(true)
       expect(described_class.exists?("i-do-not-exist")).to be(false)
+      expect(described_class.exists?("")).to be(false)
+      expect(described_class.exists?(nil)).to be(false)
     end
   end
 
