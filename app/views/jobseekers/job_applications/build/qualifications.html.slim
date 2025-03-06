@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
@@ -38,7 +38,7 @@
       = render EmptySectionComponent.new title: t(".no_qualifications") do
         = govuk_button_link_to t("buttons.add_qualification"), select_category_jobseekers_job_application_qualifications_path(job_application), class: "govuk-!-margin-bottom-0"
 
-    = form_for form, url: jobseekers_job_application_build_path(job_application, :qualifications), method: :patch do |f|
+    = form_for @form, url: jobseekers_job_application_build_path(job_application, :qualifications), method: :patch do |f|
       = f.govuk_error_summary
       = f.govuk_collection_radio_buttons :qualifications_section_completed, %w[true false], :to_s
       = f.govuk_submit job_application_build_submit_button_text do

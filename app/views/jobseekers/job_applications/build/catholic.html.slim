@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
@@ -14,7 +14,7 @@
 
     p.govuk-body = t(".non_catholics_apply")
 
-    = form_for form, url: jobseekers_job_application_build_path(job_application, :catholic), method: :patch, multipart: true do |f|
+    = form_for @form, url: jobseekers_job_application_build_path(job_application, :catholic), method: :patch, multipart: true do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :following_religion do

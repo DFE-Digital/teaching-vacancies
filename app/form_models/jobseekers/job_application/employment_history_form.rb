@@ -18,7 +18,7 @@ module Jobseekers
         end
 
         def load_form(model)
-          super.merge(completed_attrs(model, :employment_history))
+          super.merge(unexplained_employment_gaps: model.unexplained_employment_gaps).merge(completed_attrs(model, :employment_history))
         end
       end
       attr_accessor(*FIELDS, :unexplained_employment_gaps)

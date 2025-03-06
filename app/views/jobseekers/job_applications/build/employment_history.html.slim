@@ -1,6 +1,6 @@
-= form_for form, url: jobseekers_job_application_build_path(job_application, :employment_history), method: :patch do |f|
-  = f.govuk_error_summary(presenter: WorkHistoryErrorSummaryPresenter.new(form.errors.messages, form.unexplained_employment_gaps))
-  - content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+= form_for @form, url: jobseekers_job_application_build_path(job_application, :employment_history), method: :patch do |f|
+  = f.govuk_error_summary(presenter: WorkHistoryErrorSummaryPresenter.new(@form.errors.messages, @form.unexplained_employment_gaps))
+  - content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
   = render "banner", vacancy: vacancy, back_path: back_path
 

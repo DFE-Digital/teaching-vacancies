@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
@@ -12,7 +12,7 @@
     p.govuk-body = open_in_new_tab_link_to(t(".description4"), "https://www.gov.uk/tell-employer-or-college-about-criminal-record")
     p.govuk-body = t(".description5", link_text: open_in_new_tab_link_to(t(".keep_children_safe_link_text"), "https://www.gov.uk/government/publications/keeping-children-safe-in-education--2")).html_safe
 
-    = form_for form, url: jobseekers_job_application_build_path(job_application, :declarations), method: :patch do |f|
+    = form_for @form, url: jobseekers_job_application_build_path(job_application, :declarations), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :safeguarding_issue, legend: { text: t("helpers.legend.jobseekers_job_application_declarations_form.safeguarding_issue", organisation: vacancy.organisation_name) } do

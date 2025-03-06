@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".heading"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".heading"))
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
@@ -29,7 +29,7 @@
       = render EmptySectionComponent.new title: t(".no_professional_body_memberships") do
         = govuk_button_link_to t("buttons.add_professional_body_membership"), new_jobseekers_job_application_professional_body_membership_path(job_application), class: "govuk-!-margin-bottom-0"
 
-    = form_for form, url: jobseekers_job_application_build_path(job_application, :professional_body_memberships), method: :patch do |f|
+    = form_for @form, url: jobseekers_job_application_build_path(job_application, :professional_body_memberships), method: :patch do |f|
       = f.govuk_error_summary
       = f.govuk_collection_radio_buttons :professional_body_memberships_section_completed, %w[true false], :to_s
       = f.govuk_submit job_application_build_submit_button_text do
