@@ -42,8 +42,10 @@ class JobseekerProfile < ApplicationRecord
   before_save do |profile|
     unless profile.qualified_teacher_status == "yes"
       profile.qualified_teacher_status_year = nil
-      profile.teacher_reference_number = nil
       profile.qts_age_range_and_subject = nil
+    end
+    unless profile.has_teacher_reference_number == "yes"
+      profile.teacher_reference_number = nil
     end
   end
 
