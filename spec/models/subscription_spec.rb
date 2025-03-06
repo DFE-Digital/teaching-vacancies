@@ -227,6 +227,27 @@ RSpec.describe Subscription do
             end
           end
         end
+
+        context "when polygon has invalid geometry", :geocode do
+          let(:subscription) { create(:daily_subscription, location: "basildon", radius: radius) }
+          let(:radius) { 200 }
+
+          before do
+            # rubocop:disable RSpec/AnyInstance
+            allow_any_instance_of(LocationPolygon).to receive(:area).and_raise(RGeo::Error::InvalidGeometry)
+            # rubocop:enable RSpec/AnyInstance
+
+            # Mock Geocoder to prevent real API call
+            allow(Geocoder).to receive(:coordinates).with("basildon", hash_including(lookup: :google, components: "country:gb"))
+                                                    .and_return([51.5761, 0.4886])
+          end
+
+          it "rescues RGeo::Error::InvalidGeometry and falls back to distance-based filtering" do
+            expect(Sentry).to receive(:capture_exception).with(instance_of(RGeo::Error::InvalidGeometry))
+            # same result as entering basildon postcode with radius of 200.
+            expect(vacancies).to contain_exactly(liverpool_vacancy, st_albans_vacancy, basildon_vacancy)
+          end
+        end
       end
 
       context "with teaching job roles" do

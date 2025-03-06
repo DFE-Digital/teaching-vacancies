@@ -115,17 +115,26 @@ class Subscription < ApplicationRecord
                       "lancashire, blackburn and blackpool"].freeze
 
   class << self
+    # rubocop:disable Metrics/AbcSize
     def limit_by_location(vacancies, location, radius_in_miles)
       polygon = LocationPolygon.buffered(radius_in_miles).with_name(location)
-      if polygon.present? && !polygon.name.in?(INVALID_POLYGONS) && polygon.area.invalid_reason.nil?
-        vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
-      else
-        radius_in_metres = convert_miles_to_metres radius_in_miles
-        coordinates = Geocoding.new(location).coordinates
-        search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
-        vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
+      begin
+        if polygon.present? && !polygon.name.in?(INVALID_POLYGONS) && polygon.area.invalid_reason.nil?
+          return vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| polygon.area.contains?(point) } }
+        end
+      rescue RGeo::Error::InvalidGeometry => e
+        Sentry.with_scope do |scope|
+          scope.set_context("Polygon", { id: polygon.id, name: polygon.name })
+          Sentry.capture_exception(e)
+        end
       end
+
+      radius_in_metres = convert_miles_to_metres(radius_in_miles)
+      coordinates = Geocoding.new(location).coordinates
+      search_point = RGeo::Geographic.spherical_factory(srid: 4326).point(coordinates.second, coordinates.first)
+      vacancies.select { |v| v.organisations.map(&:geopoint).any? { |point| search_point.distance(point) < radius_in_metres } }
     end
+    # rubocop:enable Metrics/AbcSize
 
     def handle_location(scope, criteria)
       if criteria.key?(:location)
