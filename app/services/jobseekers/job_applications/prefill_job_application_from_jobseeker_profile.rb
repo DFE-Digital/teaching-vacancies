@@ -46,7 +46,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
   def copy_employments
     jobseeker_profile.employments.each do |employment|
       new_employment = employment.dup
-      new_employment.update(job_application: new_job_application, salary: "")
+      new_employment.update(job_application: new_job_application)
     end
   end
 

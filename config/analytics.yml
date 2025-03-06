@@ -22,7 +22,6 @@ shared:
     - employment_type
     - organisation
     - job_title
-    - salary
     - subjects
     - is_current_role
     - main_duties

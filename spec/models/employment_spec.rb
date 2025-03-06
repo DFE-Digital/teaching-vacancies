@@ -23,7 +23,6 @@ RSpec.describe Employment do
         main_duties
         organisation
         reason_for_break
-        salary
         started_on
         subjects
       ].each do |attribute|
