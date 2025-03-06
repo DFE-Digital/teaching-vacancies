@@ -16,10 +16,9 @@ class Publishers::JobListing::ContractTypeForm < Publishers::JobListing::Vacancy
   def self.fields
     %i[working_patterns working_patterns_details is_job_share contract_type fixed_term_contract_duration is_parental_leave_cover]
   end
-  attr_accessor(*fields)
 
   def params_to_save
-    { working_patterns:, working_patterns_details:, is_job_share:, contract_type:, fixed_term_contract_duration:, is_parental_leave_cover:}
+    { working_patterns:, working_patterns_details:, is_job_share:, contract_type:, fixed_term_contract_duration:, is_parental_leave_cover: }
   end
 
   private

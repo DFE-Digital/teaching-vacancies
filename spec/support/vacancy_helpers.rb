@@ -42,7 +42,7 @@ module VacancyHelpers
     if vacancy.contract_type == "fixed_term"
       choose I18n.t("helpers.label.publishers_job_listing_working_patterns_form.contract_type_options.fixed_term")
       # Choose "Yes" for parental leave coverage
-      find("#publishers-job-listing-working-patterns-form-is-parental-leave-cover-true-field").choose
+      find_by_id("publishers-job-listing-working-patterns-form-is-parental-leave-cover-true-field").choose
       fill_in "Length of contract", with: "1 month"
     else
       choose I18n.t("helpers.label.publishers_job_listing_working_patterns_form.contract_type_options.#{vacancy.contract_type}")
