@@ -115,9 +115,11 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     Jobseekers::JobApplications::JobApplicationStepProcess.new(job_application: new_job_application).steps
   end
 
+  PLAIN_STEPS = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details]
+
   def completed_steps
-    completed_steps = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].select { |step| relevant_steps.include?(step.to_sym) }
-    completed_steps << "employment_history" unless previous_application_was_submitted_before_we_began_validating_gaps_in_work_history?
+    completed_steps = PLAIN_STEPS.select { |step| relevant_steps.include?(step.to_sym) }
+    completed_steps << "employment_history" unless previous_application_was_submitted_before_we_began_validating_gaps_in_work_history? || recent_job_application.employments.reject(&:valid?).any?
     completed_steps << "professional_status" if previous_application_has_professional_status_details?
     completed_steps
   end
