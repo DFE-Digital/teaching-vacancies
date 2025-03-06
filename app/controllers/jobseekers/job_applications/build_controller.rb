@@ -52,18 +52,17 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   end
 
   def form_attributes
-    if step == :professional_status
-      job_application.assign_attributes(teacher_reference_number: current_jobseeker&.jobseeker_profile&.teacher_reference_number)
-    end
     attributes = case action_name
                  when "show"
+                   if step == :professional_status
+                     job_application.assign_attributes(teacher_reference_number: current_jobseeker.jobseeker_profile&.teacher_reference_number)
+                   end
                    form_class.load_form(job_application)
                  when "update"
                    form_class.load_form(job_application).merge(form_params)
                  end
 
-    case step
-    when :employment_history
+    if step == :employment_history
       attributes.merge(unexplained_employment_gaps: job_application.unexplained_employment_gaps)
     else
       attributes
