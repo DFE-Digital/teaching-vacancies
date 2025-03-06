@@ -8,7 +8,7 @@ RSpec.describe CampaignPage do
   before do
     allow(Search::VacancySearch)
       .to receive(:new)
-            .with(hash_including(working_patterns: %w[part_time], subjects: %w[Potions Sorcery]))
+            .with(hash_including(working_patterns: %w[part_time], subjects: %w[Physics Science]))
             .and_return(search)
   end
 
@@ -26,7 +26,7 @@ RSpec.describe CampaignPage do
       expect(described_class["FAKE1+CAMPAIGN"].banner_image)
         .to eq("campaigns/secondary_not_too_late.jpg")
       expect(described_class["FAKE1+CAMPAIGN"].criteria)
-        .to eq({ radius: 15, teaching_job_roles: %w[teacher], working_patterns: %w[part_time], subjects: %w[Potions Sorcery] })
+        .to eq({ radius: 15, teaching_job_roles: %w[teacher], working_patterns: %w[part_time], subjects: %w[Physics Science] })
     end
 
     it "raises an error if no landing page with the given slug has been configured" do

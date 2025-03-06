@@ -38,115 +38,115 @@ shared:
     teaching_job_roles:
       - teacher
     subjects:
-      - maths
+      - Mathematics
     radius: 15
   geographybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - geography
+      - Geography
     radius: 15
   languagesbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - languages
+      - Languages
     radius: 15
   pebespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - physical_education
+      - Physical education
     radius: 15
   physicsbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - physics
+      - Physics
     radius: 15
   historybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - history
+      - History
     radius: 15
   designandtechnologybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - design_and_technology
+      - Design and technology
     radius: 15
   sciencebespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - science
+      - Science
     radius: 15
   dancedramamusicbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - dance
-      - drama
-      - music
+      - Dance
+      - Drama
+      - Music
     radius: 15
   computingbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - computing
+      - Computing
     radius: 15
   chemistrybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - chemistry
+      - Chemistry
     radius: 15
   businessandeconomicsbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - business_studies
-      - economics
+      - Business studies
+      - Economics
     radius: 15
   re:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - religious_education
+      - Religious education
     radius: 15
   biologybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - biology
+      - Biology
     radius: 15
   englishbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - english
+      - English
     radius: 15
   psychologybespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
       - teacher
     subjects:
-      - psychology
+      - Psychology
     radius: 15
   parttimebespoke+PRIMARY:
     banner_image: "campaigns/primary_part_time.jpg"
@@ -193,6 +193,6 @@ test:
     working_patterns:
       - part_time
     subjects:
-      - Potions
-      - Sorcery
+      - Physics
+      - Science
     radius: 15
