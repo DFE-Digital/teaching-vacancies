@@ -8,6 +8,7 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
       employment_history_section_completed: employment_history_section_completed,
       unexplained_employment_gaps_present: unexplained_employment_gaps_present,
       unexplained_employment_gaps: unexplained_employment_gaps,
+      employments: [],
     }
   end
 
@@ -25,7 +26,7 @@ RSpec.describe Jobseekers::JobApplication::EmploymentHistoryForm, type: :model d
       it "adds errors for each unexplained gap" do
         expect(form).not_to be_valid
 
-        expect(form.errors[:base]).to include(
+        expect(form.errors[:unexplained_employment_gaps]).to include(
           "You have a gap in your work history (about 1 year).",
           "You have a gap in your work history (7 months).",
         )
