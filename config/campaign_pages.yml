@@ -193,6 +193,6 @@ test:
     working_patterns:
       - part_time
     subjects:
-      - Potions
-      - Sorcery
+      - Physics
+      - Science
     radius: 15
