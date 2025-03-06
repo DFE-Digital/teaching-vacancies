@@ -2,9 +2,9 @@ en:
   campaign_pages:
     whentoapplybespoke+PRIMARY:
       banner_title: "%{name}, find your primary teacher job"
-    mostvacanciesbespoke%2BPRIMARY:
+    mostvacanciesbespoke+PRIMARY:
       banner_title: "%{name}, find your primary teacher job"
-    mostvacanciesbespoke%2BSECONDARY:
+    mostvacanciesbespoke+SECONDARY:
       banner_title: "%{name}, find your secondary teacher job"
     whentoapplybespoke+SECONDARY:
       banner_title: "%{name}, find your secondary teacher job"
