@@ -1,0 +1,38 @@
+en:
+  helpers:
+    hint:
+      publishers_job_listing_working_patterns_form:
+      working_patterns: Select all that apply.
+      working_patterns_details: For example, 16 hours a week, Monday to Wednesday.
+      working_patterns_options:
+        full_time_education_support: Usually at least 36.5 hours a week
+        full_time_higher_level_teaching_assistant: Usually at least 36.5 hours a week
+        full_time_head_of_year_or_phase: Usually at least 27.5 hours a week
+        full_time_head_of_department_or_curriculum: Usually at least 27.5 hours a week
+        full_time_sendco: ""
+        full_time_headteacher: Usually at least 27.5 hours a week
+        full_time_deputy_headteacher: Usually at least 27.5 hours a week
+        full_time_assistant_headteacher: Usually at least 27.5 hours a week
+        full_time_teaching_assistant: Usually at least 36.5 hours a week
+        full_time_teacher: Usually at least 27.5 hours a week
+    label:
+      publishers_job_listing_working_patterns_form:
+        working_patterns_details: Details of working hours/days (optional)
+        organisation_type_options:
+          academy: Academy
+          local_authority: Local authority maintained schools
+        working_patterns_options:
+          full_time: Full time
+          job_share: Job share
+          part_time: Part time
+        contract_type_options:
+          fixed_term: Fixed term (including maternity or parental leave cover)
+          parental_leave_cover: Maternity or parental leave cover
+          permanent: Permanent
+          casual: Casual
+        fixed_term_contract_duration: Length of contract
+        is_parental_leave_cover: Is this covering maternity or paternal leave?
+    legend:
+      publishers_job_listing_working_patterns_form:
+        working_patterns: Working patterns
+        contract_type: Contract type
