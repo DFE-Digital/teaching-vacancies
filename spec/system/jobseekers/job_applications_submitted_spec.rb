@@ -56,6 +56,12 @@ RSpec.describe "Submitted job applications for jobseekers" do
       it "removes the 'submit application' section" do
         expect(page).not_to have_css(".new_jobseekers_job_application_review_form")
       end
+
+      it "does not show equal opportunities section details" do
+        within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.equal_opportunities.heading") do
+          expect(page).to have_content(I18n.t("jobseekers.job_applications.build.equal_opportunities.anonymity"))
+        end
+      end
     end
   end
 end
