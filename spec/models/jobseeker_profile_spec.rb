@@ -72,6 +72,30 @@ RSpec.describe JobseekerProfile, type: :model do
     end
   end
 
+  describe "#save" do
+    let(:profile) { create(:jobseeker_profile) }
+
+    before do
+      profile.update!(has_teacher_reference_number: has_teacher_reference_number, teacher_reference_number: "1234567")
+    end
+
+    context "without a TRN" do
+      let(:has_teacher_reference_number) { "no" }
+
+      it "blanks TRN" do
+        expect(profile.teacher_reference_number).to be_nil
+      end
+    end
+
+    context "with a TRN" do
+      let(:has_teacher_reference_number) { "yes" }
+
+      it "keeps the TRN" do
+        expect(profile.teacher_reference_number).to eq("1234567")
+      end
+    end
+  end
+
   describe "#replace_qualifications!" do
     let(:old_qualification) { create(:qualification) }
     let(:new_qualifications) { create_list(:qualification, 2) }

@@ -33,16 +33,11 @@ module Jobseekers
       end
 
       def initialize(attributes = {})
-        jobseeker_profile = attributes.delete(:jobseeker_profile)
         super
 
         if attributes[:statutory_induction_complete] == "yes"
           self.statutory_induction_complete_details = nil
         end
-        return unless jobseeker_profile
-
-        self.teacher_reference_number ||= jobseeker_profile.teacher_reference_number
-        self.has_teacher_reference_number ||= jobseeker_profile.has_teacher_reference_number
       end
 
       # These validations are only applied when the professional status section is marked as completed.
@@ -79,7 +74,7 @@ module Jobseekers
       # Teacher reference number:
       # Its presence is required when the "has_teacher_reference_number" is "yes".
       # Its format is validated only when the number is provided.
-      # Having a qalified teacher status 'yes' will enforce the "has_teacher_reference_number" to be 'yes' what will force
+      # Having a qualified teacher status 'yes' will enforce the "has_teacher_reference_number" to be 'yes' what will force
       # the "teacher_reference_number" to be present and formatted correctly.
       # Codewise "has_teacher_reference_number" seems to be a redundant field as it can be inferred from the presence
       # of the "teacher_reference_number".
