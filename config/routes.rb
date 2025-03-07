@@ -362,7 +362,7 @@ Rails.application.routes.draw do
       get "jobs(/:type)", to: "publishers/vacancies#index", defaults: { type: :published }, as: :jobs_with_type
     end
 
-    resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do
+    resources :jobs, only: %i[new create destroy delete show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :documents, only: %i[index new create destroy], controller: "publishers/vacancies/documents" do
         post :confirm, on: :collection
