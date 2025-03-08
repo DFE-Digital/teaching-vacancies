@@ -37,20 +37,20 @@ RSpec.describe "Publishers can view their notifications" do
 
       click_on strip_tags(I18n.t("nav.notifications_html", count: 2))
 
-      sleep 10
       within ".notification" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
 
       click_on "Next"
+      # wait for page load
       find(".govuk-pagination__prev")
 
-      sleep 10
       within ".notification" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)
       end
 
       click_on "Previous"
+      # wait for page load
       find(".govuk-pagination__next")
 
       within ".notification" do
