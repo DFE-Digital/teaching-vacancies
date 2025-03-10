@@ -2,8 +2,9 @@ require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Job applications" do
-  let(:vacancy) { create(:vacancy, organisations: [build(:school)]) }
+  let(:vacancy) { create(:vacancy, visa_sponsorship_available: visa_sponsorship, organisations: [build(:school)]) }
   let(:jobseeker) { create(:jobseeker) }
+  let(:visa_sponsorship) { false }
 
   describe "GET #new" do
     before { create(:jobseeker_profile, jobseeker: jobseeker) }
@@ -18,6 +19,8 @@ RSpec.describe "Job applications" do
 
     context "when the jobseeker is signed in" do
       before { sign_in(jobseeker, scope: :jobseeker) }
+
+      after { sign_out(jobseeker) }
 
       context "when the job is not live" do
         let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
@@ -46,12 +49,12 @@ RSpec.describe "Job applications" do
 
         context "when a non-draft job application already exists and the user does not have right to work in UK" do
           let(:jobseeker_profile) { JobseekerProfile.last }
-          let!(:personal_details) { create(:personal_details, right_to_work_in_uk: false, jobseeker_profile: jobseeker_profile) }
+          let!(:personal_details) { create(:personal_details, has_right_to_work_in_uk: false, jobseeker_profile: jobseeker_profile) }
           let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
           let(:new_vacancy) { create(:vacancy, organisations: [build(:school)]) }
 
           context "when the user has the right to work in UK" do
-            let!(:personal_details) { create(:personal_details, right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
+            let!(:personal_details) { create(:personal_details, has_right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
 
             it "redirects to `about_your_application_jobseekers_job_job_application_path`" do
               expect(get(new_jobseekers_job_job_application_path(new_vacancy.id)))
@@ -60,7 +63,7 @@ RSpec.describe "Job applications" do
           end
 
           context "when the user has right to work in UK" do
-            let!(:personal_details) { create(:personal_details, right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
+            let!(:personal_details) { create(:personal_details, has_right_to_work_in_uk: true, jobseeker_profile: jobseeker_profile) }
 
             it "redirects to `new_quick_apply_jobseekers_job_job_application_path`" do
               expect(get(about_your_application_jobseekers_job_job_application_path(new_vacancy.id)))
@@ -85,6 +88,8 @@ RSpec.describe "Job applications" do
     let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
 
     before { sign_in(jobseeker, scope: :jobseeker) }
+
+    after { sign_out(jobseeker) }
 
     context "when the job is not live" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
@@ -124,6 +129,8 @@ RSpec.describe "Job applications" do
 
   describe "GET #new_quick_apply" do
     before { sign_in(jobseeker, scope: :jobseeker) }
+
+    after { sign_out(jobseeker) }
 
     context "when a job application for the job already exists" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
@@ -176,6 +183,8 @@ RSpec.describe "Job applications" do
 
   describe "POST #quick_apply" do
     before { sign_in(jobseeker, scope: :jobseeker) }
+
+    after { sign_out(jobseeker) }
 
     context "when a job application for the job already exists" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
@@ -242,6 +251,8 @@ RSpec.describe "Job applications" do
 
     before { sign_in(jobseeker, scope: :jobseeker) }
 
+    after { sign_out(jobseeker) }
+
     context "when the job is not listed" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
@@ -299,6 +310,8 @@ RSpec.describe "Job applications" do
 
     before { sign_in(jobseeker, scope: :jobseeker) }
 
+    after { sign_out(jobseeker) }
+
     context "when the application is not a draft" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -318,6 +331,8 @@ RSpec.describe "Job applications" do
 
   describe "GET #confirm_destroy" do
     before { sign_in(jobseeker, scope: :jobseeker) }
+
+    after { sign_out(jobseeker) }
 
     context "when the application is a draft" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
@@ -341,6 +356,8 @@ RSpec.describe "Job applications" do
 
     before { sign_in(jobseeker, scope: :jobseeker) }
 
+    after { sign_out(jobseeker) }
+
     context "when the application is not a draft" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -360,6 +377,8 @@ RSpec.describe "Job applications" do
 
   describe "DELETE #destroy" do
     before { sign_in(jobseeker, scope: :jobseeker) }
+
+    after { sign_out(jobseeker) }
 
     context "when the application is a draft" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
@@ -386,6 +405,8 @@ RSpec.describe "Job applications" do
   describe "GET #confirm_withdraw" do
     before { sign_in(jobseeker, scope: :jobseeker) }
 
+    after { sign_out(jobseeker) }
+
     context "when the application is submitted" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -404,6 +425,69 @@ RSpec.describe "Job applications" do
     end
   end
 
+  describe "GET #about_your_application" do
+    before { sign_in(jobseeker, scope: :jobseeker) }
+
+    after { sign_out(jobseeker) }
+
+    let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+
+    context "without a profile" do
+      it "redirects to quick apply" do
+        expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+      end
+    end
+
+    context "with an empty profile" do
+      before do
+        create(:jobseeker_profile, jobseeker: jobseeker)
+      end
+
+      it "redirects to quick apply" do
+        expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+      end
+    end
+
+    context "with a non-visa-seeking profile" do
+      before do
+        create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: true))
+      end
+
+      it "redirects to quick apply" do
+        expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+      end
+    end
+
+    context "with a visa-seeking profile but vacancy is sponsored" do
+      before do
+        create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: false))
+      end
+
+      let(:visa_sponsorship) { true }
+
+      it "redirects to quick apply" do
+        expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          .to redirect_to(new_quick_apply_jobseekers_job_job_application_path(vacancy.id))
+      end
+    end
+
+    context "with a visa-seeking profile" do
+      before do
+        create(:jobseeker_profile, jobseeker: jobseeker, personal_details: build(:personal_details, has_right_to_work_in_uk: false))
+      end
+
+      let(:visa_sponsorship) { false }
+
+      it "shows the page" do
+        expect(get(about_your_application_jobseekers_job_job_application_path(vacancy.id)))
+          .to render_template(:about_your_application)
+      end
+    end
+  end
+
   describe "POST #withdraw" do
     let(:withdraw_reason) { "other" }
     let(:origin) { "" }
@@ -413,6 +497,8 @@ RSpec.describe "Job applications" do
     end
 
     before { sign_in(jobseeker, scope: :jobseeker) }
+
+    after { sign_out(jobseeker) }
 
     context "when the application is submitted" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }

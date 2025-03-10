@@ -12,10 +12,10 @@
     - row.with_value text: job_application.qts_age_range_and_subject
 
   - summary_list.with_row do |row|
-    - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete")
-    - row.with_value text: job_application.statutory_induction_complete.humanize
+    - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.is_statutory_induction_complete")
+    - row.with_value text: job_application.is_statutory_induction_complete? ? "Yes" : "No"
 
-  - if job_application.statutory_induction_complete_details.present? && job_application.statutory_induction_complete == "no"
+  - if job_application.statutory_induction_complete_details.present? && !job_application.is_statutory_induction_complete
     - summary_list.with_row do |row|
       - row.with_key text: t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete_details")
       - row.with_value text: job_application.statutory_induction_complete_details

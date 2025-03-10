@@ -47,7 +47,7 @@ RSpec.describe JobApplicationsHelper do
     subject { helper.job_application_support_needed_info(job_application) }
 
     context "when support_needed is 'yes'" do
-      let(:job_application) { build_stubbed(:job_application, support_needed: "yes") }
+      let(:job_application) { build_stubbed(:job_application, is_support_needed: true) }
 
       it "returns the correct info" do
         expect(subject).to eq(safe_join([tag.div("Yes", class: "govuk-body", id: "support_needed"),
@@ -56,7 +56,7 @@ RSpec.describe JobApplicationsHelper do
     end
 
     context "when support_needed is 'no'" do
-      let(:job_application) { build_stubbed(:job_application, support_needed: "no") }
+      let(:job_application) { build_stubbed(:job_application, is_support_needed: false) }
 
       it "returns the correct info" do
         expect(subject).to eq(tag.div("No", id: "support_needed"))
@@ -64,7 +64,7 @@ RSpec.describe JobApplicationsHelper do
     end
 
     context "when support_needed is blank" do
-      let(:job_application) { build_stubbed(:job_application, support_needed: "") }
+      let(:job_application) { build_stubbed(:job_application, is_support_needed: nil) }
 
       it "returns the correct info" do
         expect(subject).to be_blank
@@ -76,7 +76,7 @@ RSpec.describe JobApplicationsHelper do
     subject { helper.job_application_close_relationships_info(job_application) }
 
     context "when close_relationships is 'yes'" do
-      let(:job_application) { build_stubbed(:job_application, close_relationships: "yes") }
+      let(:job_application) { build_stubbed(:job_application, has_close_relationships: true) }
 
       it "returns the correct info" do
         expect(subject).to eq(safe_join([
@@ -87,7 +87,7 @@ RSpec.describe JobApplicationsHelper do
     end
 
     context "when close_relationships is 'no'" do
-      let(:job_application) { build_stubbed(:job_application, close_relationships: "no") }
+      let(:job_application) { build_stubbed(:job_application, has_close_relationships: false) }
 
       it "returns the correct info" do
         expect(subject).to eq(tag.div("No", class: "govuk-body", id: "close_relationships"))
@@ -95,7 +95,7 @@ RSpec.describe JobApplicationsHelper do
     end
 
     context "when close_relationships is blank" do
-      let(:job_application) { build_stubbed(:job_application, close_relationships: "") }
+      let(:job_application) { build_stubbed(:job_application, has_close_relationships: nil) }
 
       it "returns the correct info" do
         expect(subject).to be_blank

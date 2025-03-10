@@ -51,7 +51,7 @@ module PdfHelper
        [job_application.street_address, job_application.city, job_application.postcode, job_application.country].compact.join(", ")],
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.phone_number"), job_application.phone_number],
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.email_address"), job_application.email],
-      [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.right_to_work_in_uk"), visa_sponsorship_needed_answer(job_application)],
+      [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.has_right_to_work_in_uk"), visa_sponsorship_needed_answer(job_application)],
       [I18n.t("helpers.legend.jobseekers_job_application_personal_details_form.working_patterns"), readable_working_patterns(job_application)],
     ]
 
@@ -68,13 +68,15 @@ module PdfHelper
   end
 
   def add_professional_status(pdf)
+    # :nocov:
     professional_status = [
       [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"), pdf_job_application_qualified_teacher_status_info(job_application)],
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review"), job_application_jobseeker_profile_info(job_application)],
-      [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete"), job_application.statutory_induction_complete.humanize],
+      [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.is_statutory_induction_complete"), job_application.is_statutory_induction_complete? ? "Yes" : "No"],
     ]
+    # :nocov:
 
-    if job_application.statutory_induction_complete_details.present? && job_application.statutory_induction_complete == "no"
+    if job_application.statutory_induction_complete_details.present?
       professional_status << [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.statutory_induction_complete_details"), job_application.statutory_induction_complete_details]
     end
 
@@ -236,7 +238,7 @@ module PdfHelper
 
     support_data = [
       [
-        I18n.t("helpers.legend.jobseekers_job_application_ask_for_support_form.support_needed"),
+        I18n.t("helpers.legend.jobseekers_job_application_ask_for_support_form.is_support_needed"),
         pdf_job_application_support_needed_info(job_application),
       ],
     ]
@@ -253,8 +255,8 @@ module PdfHelper
     close_relationships_info = pdf_job_application_close_relationships_info
 
     declarations_data = [
-      [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.safeguarding_issue"), safeguarding_issues_info],
-      [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.close_relationships", organisation: vacancy.organisation_name), close_relationships_info],
+      [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.has_safeguarding_issue"), safeguarding_issues_info],
+      [I18n.t("helpers.legend.jobseekers_job_application_declarations_form.has_close_relationships", organisation: vacancy.organisation_name), close_relationships_info],
     ]
 
     render_table(pdf, declarations_data)
@@ -317,38 +319,31 @@ module PdfHelper
     pdf.text gap.to_s, size: 12
   end
 
+  # :nocov:
   def pdf_job_application_safeguarding_issues_info
-    case job_application.safeguarding_issue
-    when "yes"
+    if job_application.has_safeguarding_issue?
       "Yes\nDetails: #{job_application.safeguarding_issue_details}"
-    when "no"
-      "No"
     else
-      "No information provided"
+      "No"
     end
   end
 
   def pdf_job_application_close_relationships_info
-    case job_application.close_relationships
-    when "yes"
+    if job_application.has_close_relationships?
       "Yes\nDetails: #{job_application.close_relationships_details}"
-    when "no"
-      "No"
     else
-      "No information provided"
+      "No"
     end
   end
 
   def pdf_job_application_support_needed_info(job_application)
-    case job_application.support_needed
-    when "yes"
+    if job_application.is_support_needed?
       "Yes\nDetails: #{job_application.support_needed_details}"
-    when "no"
-      "No"
     else
-      "No information provided"
+      "No"
     end
   end
+  # :nocov:
 
   def pdf_job_application_qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status

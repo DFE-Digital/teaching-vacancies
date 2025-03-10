@@ -16,10 +16,10 @@
     = form_for @form, url: jobseekers_job_application_build_path(job_application, :ask_for_support), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_radio_buttons_fieldset :support_needed do
-        = f.govuk_radio_button :support_needed, :yes, link_errors: true do
+      = f.govuk_radio_buttons_fieldset :is_support_needed do
+        = f.govuk_radio_button :is_support_needed, "true", link_errors: true do
           = f.govuk_text_area :support_needed_details, rows: 10
-        = f.govuk_radio_button :support_needed, :no
+        = f.govuk_radio_button :is_support_needed, "false"
 
       = f.govuk_collection_radio_buttons :ask_for_support_section_completed, %w[true false], :to_s
 

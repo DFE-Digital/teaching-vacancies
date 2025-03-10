@@ -6,13 +6,13 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   validate :about_school_presence, if: -> { vacancy.about_school.present? }
   validate :skills_and_experience_presence, unless: -> { vacancy.job_advert.present? }
   validate :school_offer_presence, unless: -> { vacancy.about_school.present? }
-  validates :safeguarding_information_provided, inclusion: { in: [true, false, "true", "false"] }, if: -> { vacancy.safeguarding_information.present? }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
-  validate :safeguarding_information_presence, if: -> { vacancy.safeguarding_information.present? && safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
-  validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
-  validates :further_details_provided, inclusion: { in: [true, false, "true", "false"] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
-  validate :further_details_presence, if: -> { further_details_provided == "true" }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validates :safeguarding_information_provided, inclusion: { in: [true, false] }, if: -> { vacancy.safeguarding_information.present? }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validate :safeguarding_information_presence, if: -> { vacancy.safeguarding_information.present? && safeguarding_information_provided  }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validate :safeguarding_information_does_not_exceed_maximum_words, if: -> { safeguarding_information_provided }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validates :further_details_provided, inclusion: { in: [true, false] }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
+  validate :further_details_presence, if: -> { further_details_provided }, unless: -> { vacancy.job_advert.present? || vacancy.about_school.present? }
   validates :flexi_working_details_provided, inclusion: { in: [true, false] }
-  validate :flexi_working_presence, if: -> { flexi_working_details_provided == true }
+  validate :flexi_working_presence, if: -> { flexi_working_details_provided }
 
   attribute :flexi_working_details_provided, :boolean
   attribute :job_advert
@@ -21,9 +21,9 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
   attribute :skills_and_experience
   attribute :school_offer
   attribute :flexi_working
-  attribute :safeguarding_information_provided
+  attribute :safeguarding_information_provided, :boolean
   attribute :safeguarding_information
-  attribute :further_details_provided
+  attribute :further_details_provided, :boolean
   attribute :further_details
 
   class << self
