@@ -135,7 +135,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
     if form.update_profile
       profile.replace_qualifications!(job_application.qualifications.map(&:duplicate))
-      profile.replace_employments!(job_application.employments.map(&:duplicate))
+      profile.replace_employments!(job_application.employments)
       profile.replace_training_and_cpds!(job_application.training_and_cpds.map(&:duplicate))
     end
   end

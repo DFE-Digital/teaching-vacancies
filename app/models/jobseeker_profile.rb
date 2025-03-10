@@ -77,10 +77,16 @@ class JobseekerProfile < ApplicationRecord
     end
   end
 
+  # need to avoid validation, as it changed around March 2024
+  # and some employment records may now be invalid
   def replace_employments!(new_employments)
     transaction do
       employments.destroy_all
-      update!(employments: new_employments)
+      # dup is supposed not to copy associations, but it doesn't seem to work in this case
+      new_employments.map(&:dup).each do |employment|
+        employment.assign_attributes(job_application: nil, jobseeker_profile: self)
+        employment.save!(validate: false)
+      end
     end
   end
 
