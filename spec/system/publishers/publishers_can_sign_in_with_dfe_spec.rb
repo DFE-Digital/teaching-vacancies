@@ -81,6 +81,8 @@ RSpec.describe "Publishers can sign in with DfE Sign In" do
       expect(page).to have_content(I18n.t("home.index.publisher_section.title"))
       expect(page).to have_link(I18n.t("home.index.publisher_section.signed_in.link_text.manage_jobs"), href: organisation_jobs_with_type_path)
       click_on I18n.t("buttons.create_job")
+      expect(current_path).to eq(new_organisation_job_path)
+      click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(reminder_publishers_new_features_path)
     end
 
