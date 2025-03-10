@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :job_application do
     transient do
       draft_at { 2.weeks.ago }
-      create_details { true }
+      create_details { false }
     end
 
     status { :draft }

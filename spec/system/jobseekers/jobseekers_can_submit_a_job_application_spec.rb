@@ -16,7 +16,7 @@ RSpec.describe "Jobseekers can submit a job application" do
   after { logout }
 
   context "when the application is complete" do
-    let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+    let(:job_application) { create(:job_application, create_details: true, jobseeker: jobseeker, vacancy: vacancy) }
 
     it "allows jobseekers to submit application and receive confirmation email" do
       click_on I18n.t("buttons.submit_application")

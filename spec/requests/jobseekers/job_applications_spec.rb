@@ -229,7 +229,7 @@ RSpec.describe "Job applications" do
   end
 
   describe "POST #submit" do
-    let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
+    let!(:job_application) { create(:job_application, create_details: true, jobseeker: jobseeker, vacancy: vacancy) }
     let(:button) { I18n.t("buttons.submit_application") }
     let(:confirm_data_accurate) { 1 }
     let(:confirm_data_usage) { 1 }
