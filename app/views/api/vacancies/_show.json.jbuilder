@@ -8,7 +8,8 @@ json.datePosted vacancy.publish_on.iso8601
 json.description vacancy.skills_and_experience.present? ? vacancy.skills_and_experience : vacancy.job_advert
 # not supported by Google https://developers.google.com/search/docs/appearance/structured-data/job-posting
 json.occupationalCategory vacancy.job_roles.first
-json.directApply true
+# This appears to be safe but possibly conservative, as website external applications also fit this bill
+json.directApply vacancy.enable_job_applications
 
 json.employmentType vacancy.working_patterns_for_job_schema
 
