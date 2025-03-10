@@ -77,10 +77,15 @@ class JobseekerProfile < ApplicationRecord
     end
   end
 
+  # need to avoid validation, as it changed around March 2024
+  # and some employment records may now be invalid
   def replace_employments!(new_employments)
     transaction do
       employments.destroy_all
-      update!(employments: new_employments)
+      new_employments.map(&:duplicate).each do |employment|
+        employment.assign_attributes(jobseeker_profile: self)
+        employment.save!(validate: false)
+      end
     end
   end
 

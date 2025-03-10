@@ -78,9 +78,9 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   end
 
   def copy_employments
-    recent_job_application.employments.each do |employment|
-      new_employment = employment.dup
-      new_employment.update(job_application: new_job_application, salary: "")
+    recent_job_application.employments.map(&:duplicate).each do |new_employment|
+      new_employment.assign_attributes(job_application: new_job_application, salary: "")
+      new_employment.save(validate: false)
     end
   end
 

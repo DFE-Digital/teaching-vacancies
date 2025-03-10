@@ -15,18 +15,10 @@ class Employment < ApplicationRecord
   validates :ended_on, absence: true, if: -> { job? && is_current_role? }
 
   def duplicate
-    self.class.new(
-      is_current_role:,
-      employment_type:,
-      ended_on:,
-      job_title:,
-      main_duties:,
-      organisation:,
-      reason_for_break:,
-      salary:,
-      started_on:,
-      subjects:,
-      reason_for_leaving:,
-    )
+    # dup does a shallow copy, but although it "doesn't copy associations" according to the
+    # docs, it *does* copy parent associations so we remove these
+    dup.tap do |employment|
+      employment.assign_attributes(job_application: nil, jobseeker_profile: nil)
+    end
   end
 end

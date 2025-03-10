@@ -119,13 +119,24 @@ RSpec.describe JobseekerProfile, type: :model do
   end
 
   describe "#replace_employments!" do
-    let(:old_employment) { create(:employment) }
-    let(:new_employments) { create_list(:employment, 2) }
-    let(:profile) { create(:jobseeker_profile, employments: [old_employment]) }
+    let(:old_employment) { build(:employment) }
+    let(:new_employments) { build_list(:employment, 2) }
+    let!(:profile) { create(:jobseeker_profile, employments: [old_employment]) }
+    let(:excluded_attrs) { %i[job_application_id jobseeker_profile_id created_at id updated_at] }
+
+    before do
+      create(:job_application, create_details: false, employments: new_employments)
+    end
 
     it "replaces the employments" do
-      expect { profile.replace_employments!(new_employments) }
-        .to change { profile.reload.employments }.from([old_employment]).to(new_employments)
+      expect {
+        profile.replace_employments!(new_employments)
+      }.to change(Employment, :count).by(1)
+
+      expect(profile.reload.employments.map { |z| z.attributes.symbolize_keys.except(*excluded_attrs).reject { |k, _v| k.to_s.ends_with?("_ciphertext") } })
+        .to match_array(new_employments.map { |x| x.attributes.symbolize_keys.except(*excluded_attrs).reject { |k, _v| k.to_s.ends_with?("_ciphertext") } })
+
+      expect(profile.employments.map(&:job_application).uniq).to eq([nil])
     end
 
     it "deletes the original profile employments" do
