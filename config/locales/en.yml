@@ -561,6 +561,7 @@ en:
             no_keyword: Try browsing in a wider location search
           suggestion_html: '%{search_link} %{count}'
           radius_distance: '%{radius} miles'
+          hidden: 'from %{location}'
           results:
             one: (%{count} result)
             other: (%{count} results)
