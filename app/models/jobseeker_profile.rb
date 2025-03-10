@@ -82,9 +82,8 @@ class JobseekerProfile < ApplicationRecord
   def replace_employments!(new_employments)
     transaction do
       employments.destroy_all
-      # dup is supposed not to copy associations, but it doesn't seem to work in this case
-      new_employments.map(&:dup).each do |employment|
-        employment.assign_attributes(job_application: nil, jobseeker_profile: self)
+      new_employments.map(&:duplicate).each do |employment|
+        employment.assign_attributes(jobseeker_profile: self)
         employment.save!(validate: false)
       end
     end
