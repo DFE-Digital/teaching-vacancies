@@ -78,7 +78,7 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows user to filter by academies" do
-      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
+      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([academy_school1, academy_school2, free_school1, free_school2])
@@ -86,7 +86,7 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows user to filter by local authorities" do
-      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
+      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([local_authority_school])
@@ -94,8 +94,8 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows user to filter by both academies and local authorities" do
-      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
-      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
+      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority")
+      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
       click_on I18n.t("buttons.search")
 
       expect_page_to_show_schools([local_authority_school, academy_school1, academy_school2, free_school1, free_school2])

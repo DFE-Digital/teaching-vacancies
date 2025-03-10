@@ -4,7 +4,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
     education_phases: %i[phases],
     key_stages: %i[key_stages],
     subjects: %i[subjects],
-    working_patterns: %i[working_patterns],
+    contract_information: %i[working_patterns],
     pay_package: %i[salary_types],
   }.freeze
 
@@ -50,15 +50,9 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
           .merge(completed_steps: completed_steps)
   end
 
-  def contract_type_params(params)
-    params.require(:publishers_job_listing_contract_type_form)
-          .permit(:contract_type, :fixed_term_contract_duration, :is_parental_leave_cover)
-          .merge(completed_steps: completed_steps)
-  end
-
-  def working_patterns_params(params)
-    params.require(:publishers_job_listing_working_patterns_form)
-          .permit(:working_patterns_details, :is_job_share, working_patterns: [])
+  def contract_information_params(params)
+    params.require(:publishers_job_listing_contract_information_form)
+          .permit(:working_patterns_details, :is_job_share, :contract_type, :fixed_term_contract_duration, :is_parental_leave_cover, working_patterns: [])
           .merge(completed_steps: completed_steps)
   end
 

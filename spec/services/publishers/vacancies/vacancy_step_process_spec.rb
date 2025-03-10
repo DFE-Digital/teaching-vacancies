@@ -20,7 +20,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
   describe "#steps" do
     context "job_details steps" do
       it "has the required steps" do
-        expect(subject.steps).to include(:job_role, :job_title, :contract_type, :working_patterns, :pay_package)
+        expect(subject.steps).to include(:job_role, :job_title, :contract_information, :pay_package)
       end
 
       context "when the organisation is a school" do
