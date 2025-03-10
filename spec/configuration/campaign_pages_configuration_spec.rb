@@ -22,7 +22,7 @@ RSpec.describe "Landing page configuration" do
     Rails.application.config.campaign_pages.each do |campaign, config|
       next if config[:teaching_job_roles].blank?
 
-      config[:teaching_job_roles].each do |job_role| # rubocop:disable Rspect/IteratedExpectation
+      config[:teaching_job_roles].each do |job_role| # rubocop:disable RSpec/IteratedExpectation
         expect(job_role).to be_in(Vacancy::TEACHING_JOB_ROLES),
                             "Invalid teaching job role '#{job_role}' for campaign '#{campaign}'" # Needed iterated expectation for this descriptive error
       end

@@ -147,6 +147,7 @@ class Jobseekers::SearchForm
   end
 
   QuickApplyOptions = Struct.new(:value, :text, :hint, keyword_init: true)
+  private_constant :QuickApplyOptions
 
   def set_quick_apply_options
     @quick_apply_options = [
