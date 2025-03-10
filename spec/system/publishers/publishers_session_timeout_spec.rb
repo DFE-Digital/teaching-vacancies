@@ -7,14 +7,16 @@ RSpec.describe "Publisher session" do
   before do
     allow(AuthenticationFallback).to receive(:enabled?).and_return(false)
     login_publisher(publisher: publisher, organisation: school)
+
+    visit organisation_jobs_with_type_path
+    click_on I18n.t("buttons.create_job")
+    expect(current_path).to eq(new_organisation_job_path)
+    click_on I18n.t("buttons.create_job")  
   end
 
   after { logout }
 
   it "expires after TIMEOUT_PERIOD and redirects to login page" do
-    visit organisation_jobs_with_type_path
-    click_on I18n.t("buttons.create_job")
-
     travel(Publisher.timeout_in + 1.minute) do
       click_on I18n.t("buttons.save_and_continue")
 
@@ -25,9 +27,6 @@ RSpec.describe "Publisher session" do
   end
 
   it "doesn't expire before TIMEOUT_PERIOD" do
-    visit organisation_jobs_with_type_path
-    click_on I18n.t("buttons.create_job")
-
     travel(Publisher.timeout_in - 1.minute) do
       click_on I18n.t("buttons.save_and_continue")
 

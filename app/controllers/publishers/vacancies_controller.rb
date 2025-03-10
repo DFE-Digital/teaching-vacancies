@@ -6,6 +6,9 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   before_action :redirect_to_show_publisher_profile_incomplete, only: %i[index], if: -> { signing_in? }, unless: -> { current_organisation.profile_complete? }
 
   helper_method :vacancy_statistics_form
+  
+  def new
+  end
 
   def show
     @vacancy = VacancyPresenter.new(vacancy)
