@@ -1,5 +1,9 @@
 require "rails_helper"
 
+# same test as publish_as_a_school and as_a_la
+# with same defects in error checking.
+# 1 good extra error check test
+# runtime 9.54 seconds
 RSpec.describe "Creating a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school_group) { create(:trust, schools: [school1, school2, school3], safeguarding_information: nil) }

@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# reviewed - seems ok
 RSpec.describe "Submitting effectiveness statistics on expired vacancies" do
   let(:school) { create(:school) }
   let(:publisher) { create(:publisher) }

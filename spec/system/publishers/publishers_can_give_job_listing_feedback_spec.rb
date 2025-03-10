@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# reviewed ok
+# runtime 3.1 seconds
 RSpec.describe "Publishers can give job listing feedback" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }

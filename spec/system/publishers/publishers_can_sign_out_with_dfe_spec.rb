@@ -1,5 +1,6 @@
 require "rails_helper"
 
+#  review ok - seperate from sign-in, but just a matter of taste
 RSpec.describe "Publishers can sign out with DfE Sign In" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
