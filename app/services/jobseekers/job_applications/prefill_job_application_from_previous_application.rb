@@ -79,7 +79,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
 
   def copy_employments
     recent_job_application.employments.map(&:duplicate).each do |new_employment|
-      new_employment.assign_attributes(job_application: new_job_application, salary: "")
+      new_employment.assign_attributes(job_application: new_job_application)
       new_employment.save(validate: false)
     end
   end
