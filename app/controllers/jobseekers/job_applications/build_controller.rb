@@ -2,16 +2,20 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   include Jobseekers::QualificationFormConcerns
   before_action :strip_empty_working_patterns_checkboxes, only: %i[update]
 
-  helper_method :back_path, :employments, :form, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
+  helper_method :back_path, :employments, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
   def show
+    if step == :professional_status
+      job_application.assign_attributes(teacher_reference_number: current_jobseeker.jobseeker_profile&.teacher_reference_number)
+    end
+    @form = form_class.new(form_class.load_form(job_application))
     render step
   end
 
   def update
-    if form.valid?
-      job_application.update!(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
-      update_or_create_jobseeker_profile! if step == :professional_status
+    @form = form_class.new(form_class.load_form(job_application).merge(form_params))
+    if @form.valid?
+      update_job_application!
 
       if redirect_to_review?
         redirect_to jobseekers_job_application_review_path(job_application), success: t("messages.jobseekers.job_applications.saved")
@@ -39,34 +43,12 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
                    end
   end
 
-  def form
-    @form ||= form_class.new(form_attributes)
-  end
-
   def step
     params[:id].to_sym
   end
 
   def form_class
     "jobseekers/job_application/#{step}_form".camelize.constantize
-  end
-
-  def form_attributes
-    attributes = case action_name
-                 when "show"
-                   if step == :professional_status
-                     job_application.assign_attributes(teacher_reference_number: current_jobseeker.jobseeker_profile&.teacher_reference_number)
-                   end
-                   form_class.load_form(job_application)
-                 when "update"
-                   form_class.load_form(job_application).merge(form_params)
-                 end
-
-    if step == :employment_history
-      attributes.merge(unexplained_employment_gaps: job_application.unexplained_employment_gaps)
-    else
-      attributes
-    end
   end
 
   def form_params
@@ -134,12 +116,15 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   # This type of strategy would have caught this as the code would have noticed that qualified_teacher_status was not one of yes/no/on_track.
   # In order for this to be implemented effectively, the JobseekerProfile would need to split out the its professional status fields.
   #
-  def update_or_create_jobseeker_profile!
-    profile_params = form_params.slice(:teacher_reference_number, :has_teacher_reference_number, :qualified_teacher_status)
-    if current_jobseeker.jobseeker_profile.nil?
-      current_jobseeker.create_jobseeker_profile!(profile_params)
-    else
-      current_jobseeker.jobseeker_profile.update!(profile_params)
+  def update_job_application!
+    job_application.update!(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
+    if step == :professional_status
+      profile_params = form_params.slice(:teacher_reference_number, :has_teacher_reference_number, :qualified_teacher_status)
+      if current_jobseeker.jobseeker_profile.nil?
+        current_jobseeker.create_jobseeker_profile!(profile_params)
+      else
+        current_jobseeker.jobseeker_profile.update!(profile_params)
+      end
     end
   end
 

@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
@@ -33,7 +33,7 @@
       = render EmptySectionComponent.new title: t(".no_references") do
         = govuk_button_link_to t("buttons.add_reference"), new_jobseekers_job_application_reference_path(job_application), class: "govuk-!-margin-bottom-0"
 
-    = form_for form, url: jobseekers_job_application_build_path(job_application, :references), method: :patch do |f|
+    = form_for @form, url: jobseekers_job_application_build_path(job_application, :references), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_collection_radio_buttons :references_section_completed, %w[true false], :to_s

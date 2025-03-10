@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
 = render "banner", vacancy: vacancy, back_path: back_path
 
@@ -13,7 +13,7 @@
         li = example
     p.govuk-body = t(".closing")
 
-    = form_for form, url: jobseekers_job_application_build_path(job_application, :ask_for_support), method: :patch do |f|
+    = form_for @form, url: jobseekers_job_application_build_path(job_application, :ask_for_support), method: :patch do |f|
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :support_needed do
