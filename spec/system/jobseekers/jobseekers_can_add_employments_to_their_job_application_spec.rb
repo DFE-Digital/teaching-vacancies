@@ -61,7 +61,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
       validates_step_complete(button: "Save and continue")
 
       within all(".govuk-summary-card").last do
-        click_on 'Change'
+        click_on "Change"
       end
       fill_in "Reason for leaving role", with: "Needed for KSCIE compliance"
       click_on I18n.t("buttons.save_employment")

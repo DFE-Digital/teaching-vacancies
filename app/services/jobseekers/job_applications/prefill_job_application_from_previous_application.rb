@@ -115,7 +115,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     Jobseekers::JobApplications::JobApplicationStepProcess.new(job_application: new_job_application).steps
   end
 
-  PLAIN_STEPS = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details]
+  PLAIN_STEPS = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].freeze
 
   def completed_steps
     completed_steps = PLAIN_STEPS.select { |step| relevant_steps.include?(step.to_sym) }
