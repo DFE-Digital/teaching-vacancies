@@ -1000,6 +1000,9 @@ RSpec.describe "Jobseekers can manage their profile" do
     fill_in_current_role(form: "jobseekers_profile_employment_form")
 
     click_on I18n.t("buttons.save_and_continue")
+
+    # wait for page load
+    find(".govuk-summary-card")
   end
 
   def add_jobseeker_profile_employment_with_a_gap
