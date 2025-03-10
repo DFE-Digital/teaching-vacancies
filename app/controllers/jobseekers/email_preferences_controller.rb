@@ -5,7 +5,7 @@ module Jobseekers
     def edit; end
 
     def update
-      if @model.update(email_preferences_params)
+      if @jobseeker.update(email_preferences_params)
         redirect_to jobseekers_account_path, success: t(".success")
       else
         render :edit
@@ -15,7 +15,7 @@ module Jobseekers
     private
 
     def set_model
-      @model = current_jobseeker
+      @jobseeker = current_jobseeker
     end
 
     def email_preferences_params

@@ -16,8 +16,7 @@ class Jobseeker < ApplicationRecord
   validates :email, email_address: true, if: -> { email_changed? } # Allows data created prior to validation to still be valid
   validates :govuk_one_login_id, uniqueness: true, allow_nil: true
 
-  validates :email_opt_out_reason, presence: true, if: -> { email_opt_out  }
-  validates :email_opt_out_comment, presence: true, if: -> { email_opt_out && email_opt_out_reason&.to_sym == :other_reason }
+  validates :email_opt_out_reason, presence: true, if: -> { email_opt_out }
 
   enum :email_opt_out_reason, {
     too_many_emails: 0,
