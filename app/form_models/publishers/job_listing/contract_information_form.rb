@@ -5,7 +5,7 @@ class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::
   validates :contract_type, inclusion: { in: Vacancy.contract_types.keys }
   validates :fixed_term_contract_duration, presence: true, if: -> { contract_type == "fixed_term" }
   validates :is_parental_leave_cover, inclusion: { in: ["true", "false", true, false] }, if: -> { contract_type == "fixed_term" }
-  validates :working_patterns, presence: true, inclusion: { in: Vacancy.working_patterns.keys - ["job_share"] }
+  validates :working_patterns, presence: true, inclusion: { in: Vacancy.working_patterns.keys - %w[job_share] }
   validates :is_job_share, inclusion: { in: [true, false, "true", "false"] }
   validate :working_patterns_details_does_not_exceed_maximum_words
 
