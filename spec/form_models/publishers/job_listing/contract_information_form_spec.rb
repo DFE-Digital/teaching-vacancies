@@ -1,16 +1,17 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ContractInformationForm, type: :model do
-  subject { described_class.new(params, vacancy) }
+  subject(:form) { described_class.new(params, vacancy) }
 
   let(:vacancy) { build(:vacancy) }
   let(:working_patterns) { nil }
   let(:working_patterns_details) { nil }
   let(:params) { { working_patterns:, working_patterns_details: } }
 
-  before { subject.valid? }
+  before { form.valid? }
 
   it { is_expected.to validate_presence_of(:working_patterns) }
+<<<<<<< HEAD
   it { is_expected.to validate_inclusion_of(:working_patterns).in_array(Vacancy::WORKING_PATTERNS) }
 
   it "validates 'is_job_share' presence" do
@@ -36,6 +37,9 @@ RSpec.describe Publishers::JobListing::ContractInformationForm, type: :model do
       expect(form.errors[:is_job_share]).to be_empty
     end
   end
+=======
+  it { is_expected.to validate_inclusion_of(:working_patterns).in_array(Vacancy.working_patterns.keys - %w[job_share]) }
+>>>>>>> 987c14115 (Linting)
 
   describe "#working_patterns_details" do
     context "when working_patterns_details does not exceed the maximum allowed length" do
