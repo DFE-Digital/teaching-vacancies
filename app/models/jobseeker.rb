@@ -74,14 +74,14 @@ class Jobseeker < ApplicationRecord
     find_by(govuk_one_login_id: id) || find_by(email: email)
   end
 
-  private
-
   OPT_OUT_TO_UNSUBSCRIBE_REASON = {
     too_many_emails: :not_relevant,
     not_getting_any_value: :circumstances_change,
     not_looking_for_job: :job_found,
     other_reason: :other_reason,
   }.freeze
+
+  private
 
   def create_email_opt_out_feedback
     feedbacks.create(
