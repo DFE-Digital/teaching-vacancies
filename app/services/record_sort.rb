@@ -15,6 +15,8 @@ class RecordSort
 
   delegate :each, to: :options
 
+  SortOption = Struct.new(:by, :display_name, :order)
+
   def initialize(...)
     @sort_by = default_sort_option.by
     @order = default_sort_option.order
@@ -48,8 +50,6 @@ class RecordSort
   alias by sort_by
 
   private
-
-  SortOption = Struct.new(:by, :display_name, :order)
 
   def record_class
     self.class.name.split("::").last.gsub("Sort", "").constantize

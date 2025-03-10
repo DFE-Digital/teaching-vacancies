@@ -47,9 +47,7 @@ RSpec::Matchers.define :have_been_enqueued_as_analytics_event do |args|
     end
   end
 
-  def queue_adapter
-    ActiveJob::Base.queue_adapter
-  end
+  delegate :queue_adapter, to: :"ActiveJob::Base"
 
   def jobs_to_event_types(jobs)
     jobs.map { |job|
