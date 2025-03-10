@@ -4,6 +4,17 @@ RSpec.describe Jobseeker do
   it { is_expected.to have_many(:saved_jobs) }
   it { is_expected.to have_many(:job_applications) }
 
+  describe "validations" do
+    describe "email_opt_out_reason" do
+      let(:jobseeker) { build(:jobseeker, email_opt_out: true) }
+
+      it "checks for reason when opting out" do
+        expect(jobseeker).not_to be_valid
+        expect(jobseeker.errors.messages).to eq({ email_opt_out_reason: ["Select your reason for opting out"] })
+      end
+    end
+  end
+
   describe "update_subscription_emails" do
     let(:jobseeker) { create(:jobseeker) }
     let!(:subscription) { create(:subscription, email: jobseeker.email) }

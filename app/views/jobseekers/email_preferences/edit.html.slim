@@ -4,7 +4,7 @@ h1.govuk-heading-l = t(".page_title")
 
 p = t(".description")
 
-= form_with model: @model, scope: :jobseekers_email_preferences_form, url: jobseekers_account_email_preferences_path, method: :patch do |f|
+= form_with model: @jobseeker, scope: :jobseekers_email_preferences_form, url: jobseekers_account_email_preferences_path, method: :patch do |f|
   = f.govuk_error_summary
 
   = f.govuk_radio_buttons_fieldset :email_opt_out do
