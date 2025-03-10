@@ -107,7 +107,7 @@ class Jobseekers::SearchForm
     @ect_status_options = [["ect_suitable", I18n.t("jobs.filters.ect_suitable")]]
     set_quick_apply_options
     @working_pattern_options = Vacancy.working_patterns.keys.map do |option|
-      [option, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{option}")]
+      [option, I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{option}")]
     end
     set_organisation_type_options
     @school_type_options = %w[faith_school special_school].map { |school_type| [school_type, I18n.t("organisations.filters.#{school_type}")] }
@@ -141,8 +141,8 @@ class Jobseekers::SearchForm
 
   def set_organisation_type_options
     @organisation_type_options = [
-      [I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy"), "includes free schools"],
-      [I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority"), nil],
+      [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy"), "includes free schools"],
+      [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority"), nil],
     ]
   end
 
