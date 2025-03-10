@@ -100,13 +100,13 @@ RSpec.describe "Creating a vacancy" do
 
     fill_in_subjects_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :working_patterns))
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contract_information))
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :working_patterns))
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contract_information))
 
-    fill_in_working_patterns_form_fields(vacancy)
+    fill_in_contract_information_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 

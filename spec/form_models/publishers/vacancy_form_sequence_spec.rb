@@ -21,7 +21,7 @@ RSpec.describe Publishers::VacancyFormSequence do
       job_title
       key_stages
       subjects
-      working_patterns
+      contract_information
       pay_package
       important_dates
       start_date

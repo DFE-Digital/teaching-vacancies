@@ -688,7 +688,7 @@ en:
         key_stages: Key stage
         subjects: Subjects (optional)
         contract_type: Contract type
-        working_patterns: Contract information
+        contract_information: Contract information
         pay_package: Salary and allowances
         important_dates: Publish and closing dates
         start_date: Job start date

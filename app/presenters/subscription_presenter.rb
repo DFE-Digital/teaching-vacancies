@@ -96,7 +96,7 @@ class SubscriptionPresenter < BasePresenter
   end
 
   def render_working_patterns_filter(value)
-    { working_patterns: value.map { |role| I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{role}") }.join(", ") }
+    { working_patterns: value.map { |role| I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{role}") }.join(", ") }
   end
 
   def render_phases_filter(value)

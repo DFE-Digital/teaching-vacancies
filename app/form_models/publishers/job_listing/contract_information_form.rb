@@ -1,4 +1,4 @@
-class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::VacancyForm
+class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::VacancyForm
   include ActiveModel::Attributes
   attr_accessor :contract_type, :fixed_term_contract_duration, :is_parental_leave_cover, :working_patterns, :working_patterns_details, :is_job_share
 
@@ -35,6 +35,6 @@ class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::Vaca
 
     errors.add(:working_patterns_details,
                :working_patterns_details_maximum_words,
-               message: I18n.t("working_patterns_errors.working_patterns_details.maximum_words"))
+               message: I18n.t("contract_information_errors.working_patterns_details.maximum_words"))
   end
 end

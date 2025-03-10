@@ -146,7 +146,7 @@ en:
     key_stages:
       blank: Select key stage
       inclusion: Select key stage
-  working_patterns_errors: &working_patterns_errors
+  contract_information_errors: &contract_information_errors
     contract_type:
       inclusion: Select contract type
     fixed_term_contract_duration:
@@ -383,7 +383,7 @@ en:
             <<: *key_stages_errors
         publishers/job_listing/working_patterns_form:
           attributes:
-            <<: *working_patterns_errors
+            <<: *contract_information_errors
         publishers/job_listing/pay_package_form:
           attributes:
             <<: *pay_package_errors
@@ -702,7 +702,7 @@ en:
           attributes:
             <<: *job_roles_errors
             <<: *job_location_errors
-            <<: *working_patterns_errors
+            <<: *contract_information_errors
             <<: *pay_package_errors
             <<: *important_dates_errors
             <<: *start_date_errors

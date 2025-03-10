@@ -55,7 +55,7 @@
             = f.govuk_radio_button :is_job_share, true, label: { text: "Yes" }
             = f.govuk_radio_button :is_job_share, false, label: { text: "No" }
       = f.govuk_text_area(:working_patterns_details,
-                          label: -> { tag.label(t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
+                          label: -> { tag.label(t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_details"), class: ["govuk-label", "govuk-!-font-weight-bold"]) },
                           max_words: 75)
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
 >>>>>>> 4ae2ddd5c (Add new yml file for working_patterns_form)
