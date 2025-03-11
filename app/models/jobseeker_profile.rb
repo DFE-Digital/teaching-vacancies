@@ -60,7 +60,7 @@ class JobseekerProfile < ApplicationRecord
 
   def self.copy_attributes(record, previous_application)
     record.assign_attributes(
-      employments: previous_application.employments.map(&:clone),
+      employments: previous_application.employments.map(&:duplicate),
       qualifications: previous_application.qualifications.map(&:duplicate),
       qualified_teacher_status_year: previous_application.qualified_teacher_status_year,
       qualified_teacher_status: previous_application.qualified_teacher_status,
