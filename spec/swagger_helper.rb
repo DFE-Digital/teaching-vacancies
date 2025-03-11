@@ -138,7 +138,7 @@ RSpec.configure do |config|
               visa_sponsorship_available: {
                 type: :boolean,
                 example: false,
-                description: "Indicates if a visa sponsorship is available for this role.",
+                description: "Indicates if a visa sponsorship is available for this role. Defaults to false.",
               },
               is_job_share: {
                 type: :boolean,

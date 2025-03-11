@@ -93,6 +93,45 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         end
       end
 
+      describe "'visa_sponsorship_available'" do
+        it "defaults to false when not provided" do
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(false)
+        end
+
+        context "when provided" do
+          it "gets set as 'true' when provided as a boolean" do
+            params[:visa_sponsorship_available] = true
+            create_vacancy_service
+            expect(Vacancy.last.visa_sponsorship_available).to be(true)
+          end
+
+          it "gets set as 'true' when provided as a string" do
+            params[:visa_sponsorship_available] = "true"
+            create_vacancy_service
+            expect(Vacancy.last.visa_sponsorship_available).to be(true)
+          end
+
+          it "gets set as 'false' when provided as a boolean" do
+            params[:visa_sponsorship_available] = false
+            create_vacancy_service
+            expect(Vacancy.last.visa_sponsorship_available).to be(false)
+          end
+
+          it "gets set as 'false' when provided as a string" do
+            params[:visa_sponsorship_available] = "false"
+            create_vacancy_service
+            expect(Vacancy.last.visa_sponsorship_available).to be(false)
+          end
+
+          it "gets set as 'false' when any other string come" do
+            params[:visa_sponsorship_available] = "foobar"
+            create_vacancy_service
+            expect(Vacancy.last.visa_sponsorship_available).to be(false)
+          end
+        end
+      end
+
       context "when the vacancy belongs to a school" do
         it "creates a vacancy with the correct organisation" do
           create_vacancy_service

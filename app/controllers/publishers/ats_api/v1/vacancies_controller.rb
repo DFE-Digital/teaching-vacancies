@@ -53,7 +53,6 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
       expires_at
       job_title
       salary
-      visa_sponsorship_available
       external_reference
       job_roles
       working_patterns

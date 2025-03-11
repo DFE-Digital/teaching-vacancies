@@ -112,7 +112,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                      job_title
                      job_advert
                      salary
-                     visa_sponsorship_available
                      external_reference
                      job_roles
                      working_patterns
@@ -171,7 +170,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           visa_sponsorship_available: {
             type: :boolean,
             example: false,
-            description: "Indicates if a visa sponsorship is available for this role.",
+            description: "Indicates if a visa sponsorship is available for this role. Defaults to false.",
           },
           is_job_share: {
             type: :boolean,
@@ -635,7 +634,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                      job_title
                      job_advert
                      salary
-                     visa_sponsorship_available
                      external_reference
                      job_roles
                      working_patterns
@@ -694,7 +692,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           visa_sponsorship_available: {
             type: :boolean,
             example: false,
-            description: "Indicates if a visa sponsorship is available for this role.",
+            description: "Indicates if a visa sponsorship is available for this role. Defaults to false.",
           },
           is_job_share: {
             type: :boolean,
