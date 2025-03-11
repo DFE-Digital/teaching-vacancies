@@ -9,7 +9,7 @@ module Jobseekers
       let(:attributes) { {} }
 
       describe "validations" do
-        context "when qualified_teacher_status is 'yes'" do
+        context "when is_qualified_teacher_status is true" do
           let(:attributes) do
             { qualified_teacher_status: "yes",
               qualified_teacher_status_year: current_year,
