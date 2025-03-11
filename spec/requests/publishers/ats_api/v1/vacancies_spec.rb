@@ -111,7 +111,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                      expires_at
                      job_title
                      job_advert
-                     skills_and_experience
                      salary
                      visa_sponsorship_available
                      external_reference
@@ -143,13 +142,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           job_title: {
             type: :string,
             example: "Teacher of Geography",
-            description: "The title of the vacancy.",
+            description: "The short job title shown in the page title and search results.",
           },
-          job_advert: { type: :string, example: "Aut repellat vel. Nesciunt exercitationem et. Numquam a corrupti. Et minus hic. Perspiciatis dolor neque. Sit est nemo. Ut ex officiis. Illum et mollitia. Quia qui qui. Debitis totam odio. Consequatur eum iste. Aut ex et. Quo explicabo quae. Aut id laborum. Occaecati quod sit. Laudantium ipsum placeat. Et sed nesciunt. Ut iste maxime. Ea repudiandae rem. Qui fugit adipisci. Vero fugiat dolor. Nesciunt eum et. Molestias nulla facere. Aliquid dolore assumenda. Aut repudiandae iusto. Quia aut maxime. Consequatur voluptates facere. Facere eius asperiores. Fugiat occaecati assumenda. Maiores consequatur architecto. Perferendis sint ut. Est odio dolorem. Aliquid fugiat iusto. Eaque fugiat voluptas. Eos velit assumenda. Nesciunt minus quia. Cupiditate vero dolor. Quos temporibus consequuntur. Vel cupiditate eos. Dolore dolores repellat. Ex ipsam consequuntur. Dolores harum voluptatem. Temporibus neque quis. Vero soluta sunt. Voluptas laboriosam modi. Quod ut nostrum. Veniam voluptatem et. Explicabo necessitatibus ex. Ut architecto placeat. Neque velit et." },
-          skills_and_experience: {
+          job_advert: {
             type: :string,
-            example: "We're looking for a dedicated Teacher of Geography",
-            description: "Details about the required skills, experience, and qualifications.",
+            example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
+            description: "The long form job advert text shown on the job listing.",
           },
           salary: {
             type: :string,
@@ -159,7 +157,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           benefits_details: {
             type: :string,
             example: "TLR2a",
-            description: "Any additional benefits or allowances, e.g. TLR payments.",
+            description: "Any additional benefits or allowances.",
           },
           starts_on: {
             type: :string,
@@ -368,7 +366,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               expires_at: source.expires_at,
               job_title: source.job_title,
               job_advert: source.job_advert,
-              skills_and_experience: source.skills_and_experience,
               salary: source.salary,
               visa_sponsorship_available: source.visa_sponsorship_available,
               external_reference: source.external_reference,
@@ -452,7 +449,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy) do
           {
             vacancy: {
-              skills_and_experience: source.skills_and_experience,
+              job_advert: source.job_advert,
               salary: source.salary,
               school_urns: school_urns,
               job_roles: source.job_roles,
@@ -487,7 +484,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               expires_at: source.expires_at,
               job_title: source.job_title,
               job_advert: source.job_advert,
-              skills_and_experience: source.skills_and_experience,
               salary: source.salary,
               visa_sponsorship_available: source.visa_sponsorship_available,
               external_reference: source.external_reference,
@@ -519,7 +515,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               expires_at: source.expires_at,
               job_title: nil,
               job_advert: source.job_advert,
-              skills_and_experience: source.skills_and_experience,
               salary: source.salary,
               visa_sponsorship_available: source.visa_sponsorship_available,
               external_reference: source.external_reference,
@@ -551,7 +546,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               expires_at: source.expires_at,
               job_title: source.job_title,
               job_advert: source.job_advert,
-              skills_and_experience: source.skills_and_experience,
               salary: source.salary,
               visa_sponsorship_available: source.visa_sponsorship_available,
               external_reference: source.external_reference,
@@ -641,7 +635,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                      expires_at
                      job_title
                      job_advert
-                     skills_and_experience
                      salary
                      visa_sponsorship_available
                      external_reference
@@ -673,13 +666,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           job_title: {
             type: :string,
             example: "Teacher of Geography",
-            description: "The title of the vacancy.",
+            description: "The short job title shown in the page title and search results.",
           },
-          job_advert: { type: :string, example: "Aut repellat vel. Nesciunt exercitationem et. Numquam a corrupti. Et minus hic. Perspiciatis dolor neque. Sit est nemo. Ut ex officiis. Illum et mollitia. Quia qui qui. Debitis totam odio. Consequatur eum iste. Aut ex et. Quo explicabo quae. Aut id laborum. Occaecati quod sit. Laudantium ipsum placeat. Et sed nesciunt. Ut iste maxime. Ea repudiandae rem. Qui fugit adipisci. Vero fugiat dolor. Nesciunt eum et. Molestias nulla facere. Aliquid dolore assumenda. Aut repudiandae iusto. Quia aut maxime. Consequatur voluptates facere. Facere eius asperiores. Fugiat occaecati assumenda. Maiores consequatur architecto. Perferendis sint ut. Est odio dolorem. Aliquid fugiat iusto. Eaque fugiat voluptas. Eos velit assumenda. Nesciunt minus quia. Cupiditate vero dolor. Quos temporibus consequuntur. Vel cupiditate eos. Dolore dolores repellat. Ex ipsam consequuntur. Dolores harum voluptatem. Temporibus neque quis. Vero soluta sunt. Voluptas laboriosam modi. Quod ut nostrum. Veniam voluptatem et. Explicabo necessitatibus ex. Ut architecto placeat. Neque velit et." },
-          skills_and_experience: {
+          job_advert: {
             type: :string,
-            example: "We're looking for a dedicated Teacher of Geography",
-            description: "Details about the required skills, experience, and qualifications.",
+            example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
+            description: "The long form job advert text shown on the job listing.",
           },
           salary: {
             type: :string,
@@ -689,7 +681,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           benefits_details: {
             type: :string,
             example: "TLR2a",
-            description: "Any additional benefits or allowances, e.g. TLR payments.",
+            description: "Any additional benefits or allowances.",
           },
           starts_on: {
             type: :string,
@@ -881,8 +873,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               external_advert_url: "https://example.com/jobs/123",
               expires_at: "2022-01-01",
               job_title: "Teacher of Geography",
-              job_advert: "Teacher of Geography",
-              skills_and_experience: "We're looking for a dedicated Teacher of Geography",
+              job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
               visa_sponsorship_available: true,
               external_reference: "REF1234HYZ",
@@ -910,7 +901,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy) do
           {
             vacancy: {
-              skills_and_experience: source.skills_and_experience,
+              job_advert: source.job_advert,
               salary: source.salary,
               school_urns: school_urns,
               job_roles: source.job_roles,
@@ -944,8 +935,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               external_advert_url: "https://example.com/jobs/123",
               expires_at: "2022-01-01",
               job_title: "Teacher of Geography",
-              job_advert: "Teacher of Geography",
-              skills_and_experience: "We're looking for a dedicated Teacher of Geography",
+              job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
               visa_sponsorship_available: true,
               external_reference: "REF1234HYZ",
@@ -974,8 +964,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               external_advert_url: "https://example.com/jobs/123",
               expires_at: "2022-01-01",
               job_title: nil,
-              job_advert: nil,
-              skills_and_experience: "We're looking for a dedicated Teacher of Geography",
+              job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
               visa_sponsorship_available: true,
               external_reference: "REF1234HYZ",
@@ -1002,8 +991,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               external_advert_url: "https://example.com/jobs/123",
               expires_at: "2022-01-01",
               job_title: "Teacher of Geography",
-              job_advert: "Teacher of Geography",
-              skills_and_experience: "We're looking for a dedicated Teacher of Geography",
+              job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
               visa_sponsorship_available: true,
               external_reference: "REF1234HYZ",

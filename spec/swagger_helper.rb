@@ -70,7 +70,7 @@ RSpec.configure do |config|
               expires_at
               starts_on
               job_title
-              skills_and_experience
+              job_advert
               salary
               external_reference
               job_roles
@@ -108,12 +108,12 @@ RSpec.configure do |config|
               job_title: {
                 type: :string,
                 example: "Teacher of Geography",
-                description: "The title of the vacancy.",
+                description: "The short job title shown in the page title and search results.",
               },
-              skills_and_experience: {
+              job_advert: {
                 type: :string,
-                example: "We're looking for a dedicated Teacher of Geography",
-                description: "Details about the required skills, experience, and qualifications.",
+                example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
+                description: "The long form job advert text shown on the job listing.",
               },
               salary: {
                 type: :string,
@@ -123,7 +123,7 @@ RSpec.configure do |config|
               benefits_details: {
                 type: :string,
                 example: "TLR2a",
-                description: "Any additional benefits or allowances, e.g. TLR payments.",
+                description: "Any additional benefits or allowances.",
               },
               starts_on: {
                 type: :string,

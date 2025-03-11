@@ -2,7 +2,7 @@ json.external_advert_url vacancy.external_advert_url
 json.publish_on vacancy.publish_on
 json.expires_at vacancy.expires_at
 json.job_title vacancy.job_title
-json.skills_and_experience vacancy.skills_and_experience
+json.job_advert vacancy.job_advert
 json.salary vacancy.salary
 json.benefits_details vacancy.benefits_details
 json.starts_on vacancy.starts_on if vacancy.starts_on.present?

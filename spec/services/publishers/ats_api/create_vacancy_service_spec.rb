@@ -23,7 +23,6 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       phases: %w[primary],
       working_patterns: working_patterns,
       expires_at: Time.zone.today + 30,
-      skills_and_experience: "Expert in teaching",
       salary: "£30,000 - £40,000",
       schools: organisations,
       publisher_ats_api_client_id: publisher_ats_api_client_id,

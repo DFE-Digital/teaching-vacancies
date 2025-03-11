@@ -52,7 +52,6 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
       external_advert_url
       expires_at
       job_title
-      skills_and_experience
       salary
       visa_sponsorship_available
       external_reference
@@ -68,7 +67,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   def permitted_vacancy_params
     params.fetch(:vacancy)
           .permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
-                  :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
+                  :expires_at, :job_title, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
                   job_roles: [], working_patterns: [], phases: [], schools: [:trust_uid, { school_urns: [] }])
           .merge(publisher_ats_api_client_id: client.id)
   end
