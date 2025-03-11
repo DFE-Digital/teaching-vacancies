@@ -186,7 +186,7 @@ module JobApplicationsHelper
       phone_number: "07123456789",
       teacher_reference_number: "1234567",
       qualified_teacher_status: "yes",
-      is_statutory_induction_complete: false,
+      is_statutory_induction_complete: true,
       has_right_to_work_in_uk: true,
       has_safeguarding_issue: false,
       safeguarding_issue_details: "",
