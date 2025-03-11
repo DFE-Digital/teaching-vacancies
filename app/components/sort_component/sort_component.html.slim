@@ -1,5 +1,5 @@
-  = tag.div(**html_attributes) do
-    - case display_type
+= tag.div(**html_attributes) do
+  - case display_type
     - when "inline-select"
       = form_for sort_form, as: "", url: path.call(url_params), method: :get, data: { controller: "form", "hide-submit": true } do |f|
         = f.govuk_collection_select :sort_by,
@@ -11,9 +11,9 @@
           data: { action: "change->form#submitListener" },
           classes: "min-width-auto"
 
-        <noscript>
-          = f.govuk_submit t("jobs.sort_by.submit"), class: "govuk-!-margin-left-1 govuk-!-padding-top-0", secondary: true
-        </noscript>
+        noscript
+          = f.govuk_submit t("jobs.sort_by.submit"), class: "govuk-!-margin-left-0 govuk-!-padding-top-0", secondary: true
+
     - when "dropdown"
       = form_for sort_form, as: "", url: path.call(url_params), method: :get, data: { controller: "form", "hide-submit": true } do |f|
         = f.govuk_collection_select :sort_by,

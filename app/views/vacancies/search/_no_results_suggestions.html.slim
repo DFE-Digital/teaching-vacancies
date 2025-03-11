@@ -15,7 +15,9 @@
     ul.govuk-list.govuk-list--bullet
       - vacancies_search.wider_search_suggestions.each do |wider_radius|
         li = t(".wider_search_suggestions.suggestion_html",
-               search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first), jobs_path(vacancies_search.search_criteria.merge(radius: wider_radius.first))),
+               search_link: govuk_link_to(t(".wider_search_suggestions.radius_distance", radius: wider_radius.first),
+                 jobs_path(vacancies_search.search_criteria.merge(radius: wider_radius.first)),
+                 visually_hidden_suffix: t(".wider_search_suggestions.hidden", location: vacancies_search.location)),
                count: t(".wider_search_suggestions.results", count: wider_radius.last))
 
 span.govuk-heading-m
