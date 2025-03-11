@@ -110,7 +110,7 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       end
     end
 
-    context "when statutory_induction_complete is no" do
+    context "when is_statutory_induction_complete is false" do
       it "does not modify statutory_induction_complete_details" do
         subject = described_class.new(valid_attributes.merge(is_statutory_induction_complete: false, statutory_induction_complete_details: "some info"))
         expect(subject.statutory_induction_complete_details).to eq "some info"
