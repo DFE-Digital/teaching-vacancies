@@ -32,7 +32,7 @@ RSpec.describe "Publishers can view their notifications" do
       visit root_path
     end
 
-    it "clicks notifications link, renders the notifications, paginates, and marks as read", :js do
+    it "clicks notifications link, renders the notifications, paginates, and marks as read" do
       click_on strip_tags(I18n.t("nav.notifications_html", count: 2))
 
       within ".notification" do
