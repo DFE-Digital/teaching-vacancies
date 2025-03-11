@@ -5,9 +5,7 @@ RSpec.describe "Application feature reminder" do
   let(:publisher) { create(:publisher) }
   let(:last_vacancy) { Vacancy.order("created_at").last }
 
-  before do
-    login_publisher(publisher:, organisation:, allow_reminders: true)
-  end
+  before { login_publisher(publisher:, organisation:, allow_reminders: true) }
 
   after { logout }
 
