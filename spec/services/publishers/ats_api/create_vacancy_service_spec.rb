@@ -40,6 +40,20 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         expect(Vacancy.last.external_reference).to eq("new-ref")
       end
 
+      describe "'publish_on'" do
+        it "defaults to the current date when not provided" do
+          create_vacancy_service
+          expect(Vacancy.last.publish_on).to eq(Time.zone.today)
+        end
+
+        it "gets set from the parameters when provided" do
+          publish_on = Time.zone.today + 1
+          params[:publish_on] = publish_on
+          create_vacancy_service
+          expect(Vacancy.last.publish_on).to eq(publish_on)
+        end
+      end
+
       context "when the vacancy belongs to a school" do
         it "creates a vacancy with the correct organisation" do
           create_vacancy_service

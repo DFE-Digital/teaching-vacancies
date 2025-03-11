@@ -131,7 +131,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             type: :string,
             format: :date,
             example: "2025-01-01",
-            description: "The date on which the vacancy should be published.",
+            description: "The date on which the vacancy should be published. Defaults to the current date.",
           },
           expires_at: {
             type: :string,
@@ -655,7 +655,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             type: :string,
             format: :date,
             example: "2025-01-01",
-            description: "The date on which the vacancy should be published.",
+            description: "The date on which the vacancy should be published. Defaults to the current date.",
           },
           expires_at: {
             type: :string,
