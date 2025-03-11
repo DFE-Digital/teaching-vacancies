@@ -75,7 +75,7 @@ attrs = { organisations: weydon_trust.schools, phases: %w[secondary], publisher_
 
 # Vacancies at multiple schools in Southampton local authority
 attrs = { organisations: southampton_la.schools.first(5), phases: %w[primary], publisher_organisation: southampton_la, publisher: Publisher.all.sample }
-3.times { FactoryBot.create(:vacancy, :published, **attrs) }
+3.times { FactoryBot.create(:vacancy, :for_seed_data, :published, **attrs) }
 
 # Jobseekers
 FactoryBot.create(:jobseeker, email: "jobseeker@contoso.com")
