@@ -103,7 +103,7 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       }
     end
 
-    context "when statutory_induction_complete is yes" do
+    context "when is_statutory_induction_complete is true" do
       it "sets statutory_induction_complete_details to nil" do
         subject = described_class.new(valid_attributes.merge(is_statutory_induction_complete: true, statutory_induction_complete_details: "some info"))
         expect(subject.statutory_induction_complete_details).to be_nil
