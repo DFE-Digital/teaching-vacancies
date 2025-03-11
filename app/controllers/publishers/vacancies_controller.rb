@@ -7,7 +7,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   helper_method :vacancy_statistics_form
 
-  def new; end
+  def start; end
 
   def show
     @vacancy = VacancyPresenter.new(vacancy)

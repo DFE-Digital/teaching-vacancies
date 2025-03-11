@@ -20,7 +20,7 @@ RSpec.describe "Creating a vacancy" do
 
   describe "the job location step" do
     scenario "displays error message unless a location is selected" do
-      expect(current_path).to eq(new_organisation_job_path)
+      expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
       within("h1") do
@@ -37,7 +37,7 @@ RSpec.describe "Creating a vacancy" do
     end
 
     scenario "redirects to job details when submitted successfully" do
-      expect(current_path).to eq(new_organisation_job_path)
+      expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
       within("h1") do
@@ -55,7 +55,7 @@ RSpec.describe "Creating a vacancy" do
   end
 
   scenario "publishes a vacancy" do
-    expect(current_path).to eq(new_organisation_job_path)
+    expect(current_path).to eq(organisation_jobs_start_path)
     click_on I18n.t("buttons.create_job")
     uncheck I18n.t("organisations.job_location_heading.central_office")
     click_on I18n.t("buttons.continue")

@@ -623,7 +623,7 @@ en:
         heading: Check details and %{status} job listing
         page_title: "%{heading} - Create job listing - Teaching Vacancies - GOV.UK"
         steps: Create a job listing steps
-      new:
+      start:
         page_title: Create a job listing
         title: Create a job listing
         list:

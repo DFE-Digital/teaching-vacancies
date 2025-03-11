@@ -17,7 +17,7 @@ RSpec.describe "Application feature reminder" do
     it "does not show reminder page when creating a job" do
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(new_organisation_job_path)
+      expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
       expect(current_path).to eq(organisation_job_build_path(last_vacancy.id, :job_title))
     end
@@ -31,7 +31,7 @@ RSpec.describe "Application feature reminder" do
     it "shows reminder page before first step of create job and does not show it twice in the same session" do
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(new_organisation_job_path)
+      expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
       expect(page).to have_content(I18n.t("publishers.new_features.reminder.page_title"))
       expect(page).to have_link(I18n.t("publishers.new_features.reminder.how_applications_work_link"), href: post_path(section: "get-help-hiring", subcategory: "how-to-create-job-listings-and-accept-applications", post_name: "accepting-job-applications-on-teaching-vacancies"))
@@ -44,13 +44,13 @@ RSpec.describe "Application feature reminder" do
 
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(new_organisation_job_path)
+      expect(current_path).to eq(organisation_jobs_start_path)
     end
 
     it "does not show reminder page when editing a job" do
       visit organisation_jobs_with_type_path
       click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(new_organisation_job_path)
+      expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
       visit organisation_job_path(vacancy.id)
 

@@ -361,8 +361,9 @@ Rails.application.routes.draw do
     scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do
       get "jobs(/:type)", to: "publishers/vacancies#index", defaults: { type: :published }, as: :jobs_with_type
     end
+    get "/jobs/start", to: "publishers/vacancies#start"
 
-    resources :jobs, only: %i[new create destroy delete show], controller: "publishers/vacancies" do
+    resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :documents, only: %i[index new create destroy], controller: "publishers/vacancies/documents" do
         post :confirm, on: :collection
