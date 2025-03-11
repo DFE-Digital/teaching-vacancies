@@ -78,6 +78,10 @@ FactoryBot.define do
     end
   end
 
+  trait :for_seed_data do
+    create_details { true }
+  end
+
   trait :status_draft do
     transient do
       create_details { false }
