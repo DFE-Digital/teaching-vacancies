@@ -7,7 +7,7 @@ json.salary vacancy.salary
 json.benefits_details vacancy.benefits_details
 json.starts_on vacancy.starts_on if vacancy.starts_on.present?
 json.visa_sponsorship_available vacancy.visa_sponsorship_available
-json.is_job_share vacancy.is_job_share if vacancy.is_job_share.present?
+json.is_job_share vacancy.is_job_share
 json.external_reference vacancy.external_reference
 json.job_roles vacancy.job_roles
 json.schools do

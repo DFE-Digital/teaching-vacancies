@@ -55,7 +55,6 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
       salary
       visa_sponsorship_available
       external_reference
-      is_job_share
       job_roles
       working_patterns
       contract_type

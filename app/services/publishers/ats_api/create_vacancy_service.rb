@@ -23,6 +23,7 @@ module Publishers
           organisations = fetch_organisations(params[:schools])
 
           params[:publish_on] ||= Time.zone.today.to_s
+          params[:is_job_share] = params[:is_job_share].in?([true, "true"])
           params.except(:schools).merge(organisations: organisations)
         end
 

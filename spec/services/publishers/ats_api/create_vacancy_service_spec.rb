@@ -54,6 +54,45 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         end
       end
 
+      describe "'is_job_share'" do
+        it "defaults to false when not provided" do
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(false)
+        end
+
+        context "when provided" do
+          it "gets set as 'true' when provided as a boolean" do
+            params[:is_job_share] = true
+            create_vacancy_service
+            expect(Vacancy.last.is_job_share).to be(true)
+          end
+
+          it "gets set as 'true' when provided as a string" do
+            params[:is_job_share] = "true"
+            create_vacancy_service
+            expect(Vacancy.last.is_job_share).to be(true)
+          end
+
+          it "gets set as 'false' when provided as a boolean" do
+            params[:is_job_share] = false
+            create_vacancy_service
+            expect(Vacancy.last.is_job_share).to be(false)
+          end
+
+          it "gets set as 'false' when provided as a string" do
+            params[:is_job_share] = "false"
+            create_vacancy_service
+            expect(Vacancy.last.is_job_share).to be(false)
+          end
+
+          it "gets set as 'false' when any other string come" do
+            params[:is_job_share] = "foobar"
+            create_vacancy_service
+            expect(Vacancy.last.is_job_share).to be(false)
+          end
+        end
+      end
+
       context "when the vacancy belongs to a school" do
         it "creates a vacancy with the correct organisation" do
           create_vacancy_service

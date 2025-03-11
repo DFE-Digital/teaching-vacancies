@@ -143,7 +143,7 @@ RSpec.configure do |config|
               is_job_share: {
                 type: :boolean,
                 example: true,
-                description: "Whether the role is open to a job share.",
+                description: "Whether the role is open to a job share. Defaults to false.",
               },
               schools: {
                 oneOf: [

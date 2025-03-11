@@ -114,7 +114,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                      salary
                      visa_sponsorship_available
                      external_reference
-                     is_job_share
                      job_roles
                      working_patterns
                      contract_type
@@ -177,7 +176,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           is_job_share: {
             type: :boolean,
             example: true,
-            description: "Whether the role is open to a job share.",
+            description: "Whether the role is open to a job share. Defaults to false.",
           },
           schools: {
             oneOf: [
@@ -638,7 +637,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                      salary
                      visa_sponsorship_available
                      external_reference
-                     is_job_share
                      job_roles
                      working_patterns
                      contract_type
@@ -701,7 +699,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           is_job_share: {
             type: :boolean,
             example: true,
-            description: "Whether the role is open to a job share.",
+            description: "Whether the role is open to a job share. Defaults to false.",
           },
           schools: {
             oneOf: [
