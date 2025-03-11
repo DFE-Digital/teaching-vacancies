@@ -46,7 +46,7 @@ RSpec.describe JobApplicationsHelper do
   describe "#job_application_support_needed_info" do
     subject { helper.job_application_support_needed_info(job_application) }
 
-    context "when support_needed is 'yes'" do
+    context "when is_support_needed is 'true'" do
       let(:job_application) { build_stubbed(:job_application, is_support_needed: true) }
 
       it "returns the correct info" do
@@ -55,7 +55,7 @@ RSpec.describe JobApplicationsHelper do
       end
     end
 
-    context "when support_needed is 'no'" do
+    context "when is_support_needed is 'false'" do
       let(:job_application) { build_stubbed(:job_application, is_support_needed: false) }
 
       it "returns the correct info" do
@@ -63,7 +63,7 @@ RSpec.describe JobApplicationsHelper do
       end
     end
 
-    context "when support_needed is blank" do
+    context "when is_support_needed is nil" do
       let(:job_application) { build_stubbed(:job_application, is_support_needed: nil) }
 
       it "returns the correct info" do
@@ -75,7 +75,7 @@ RSpec.describe JobApplicationsHelper do
   describe "job_application_close_relationships_info" do
     subject { helper.job_application_close_relationships_info(job_application) }
 
-    context "when close_relationships is 'yes'" do
+    context "when has_close_relationships is 'true'" do
       let(:job_application) { build_stubbed(:job_application, has_close_relationships: true) }
 
       it "returns the correct info" do
@@ -86,7 +86,7 @@ RSpec.describe JobApplicationsHelper do
       end
     end
 
-    context "when close_relationships is 'no'" do
+    context "when has_close_relationships is 'false'" do
       let(:job_application) { build_stubbed(:job_application, has_close_relationships: false) }
 
       it "returns the correct info" do
@@ -94,7 +94,7 @@ RSpec.describe JobApplicationsHelper do
       end
     end
 
-    context "when close_relationships is blank" do
+    context "when has_close_relationships is nil" do
       let(:job_application) { build_stubbed(:job_application, has_close_relationships: nil) }
 
       it "returns the correct info" do
