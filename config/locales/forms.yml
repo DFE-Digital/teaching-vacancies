@@ -52,6 +52,7 @@ en:
     delete_subject: Delete subject
     dismiss: Dismiss
     download_pdf_application: Download application
+    download_equal_opps_data: Download equal opps for this job
     download_application_form: Download an application form - %{size}
     download_stats: Download statistics (csv, 0.2KB)
     edit: Edit

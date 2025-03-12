@@ -363,6 +363,7 @@ Rails.application.routes.draw do
     end
 
     resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do
+      get :download_equal_opps_pdf
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :documents, only: %i[index new create destroy], controller: "publishers/vacancies/documents" do
         post :confirm, on: :collection
