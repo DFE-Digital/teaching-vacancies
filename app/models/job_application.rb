@@ -91,6 +91,27 @@ class JobApplication < ApplicationRecord
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents
 
+  # Follow the stardard Google deployment pattern for various booleans:
+  # 1. Add new column
+  # 2. Populate new column alongside old
+  # 3. backfill new column at leisure
+  # 4. start using new column
+  # 5. remove old column
+  # add this once column has been backfilled
+  # self.ignored_columns += %i[statutory_induction_complete support_needed close_relationships right_to_work_in_uk safeguarding_issue]
+  before_save :sync_yes_no_booleans
+
+  def sync_yes_no_booleans
+    self.is_statutory_induction_complete = (statutory_induction_complete == "yes") if statutory_induction_complete.present?
+    self.is_support_needed = (support_needed == "yes") if support_needed.present?
+    self.has_close_relationships = (close_relationships == "yes") if close_relationships.present?
+    self.has_right_to_work_in_uk = (right_to_work_in_uk == "yes") if right_to_work_in_uk.present?
+    self.has_safeguarding_issue = (safeguarding_issue == "yes") if safeguarding_issue.present?
+  end
+
+  # This column seems to be unused already
+  self.ignored_columns += %i[gaps_in_employment]
+
   def name
     "#{first_name} #{last_name}"
   end
