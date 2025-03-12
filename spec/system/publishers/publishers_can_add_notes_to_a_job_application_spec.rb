@@ -37,6 +37,8 @@ RSpec.describe "Publishers can add notes to a job application", js: true do
 
     expect(page).to have_content(note.content)
     click_on I18n.t("buttons.delete")
+    # wait for action to complete
+    find(".govuk-notification-banner")
 
     expect(page).to_not have_content(note.content)
   end
