@@ -117,18 +117,11 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
     end
 
-    describe "shortlisted application" do
-      let(:status) { "shortlisted" }
-
-      it "shows applicant name that links to application", :js do
-        within(".application-#{status}") do
-          expect(page).to have_link("#{job_application_shortlisted.first_name} #{job_application_shortlisted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_shortlisted.id))
-        end
-      end
-
-      it "shows green shortlisted tag", :js do
-        within(".application-#{status}") do
+    describe "shortlisted application", :js do
+      it "shows applicant name that links to application and green shortlisted tag" do
+        within(".application-shortlisted") do
           expect(page).to have_css(".govuk-tag--green", text: "shortlisted")
+          expect(page).to have_link("#{job_application_shortlisted.first_name} #{job_application_shortlisted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_shortlisted.id))
         end
       end
     end
