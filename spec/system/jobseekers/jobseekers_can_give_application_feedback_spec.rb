@@ -28,12 +28,18 @@ RSpec.describe "Jobseekers can give job application feedback after submitting th
     fill_in "jobseekers_job_application_feedback_form[comment]", with: comment
     fill_in "jobseekers_job_application_feedback_form[occupation]", with: occupation
 
-    expect { click_on I18n.t("buttons.submit_feedback") }.to change {
+    expect { submit_feedback }.to change {
       jobseeker.feedbacks.where(comment: comment, email: jobseeker.email, feedback_type: "application", rating: "somewhat_satisfied", user_participation_response: "interested", occupation: occupation).count
     }.by(1)
 
     expect(current_path).to eq(jobseekers_job_applications_path)
 
     expect(page).to have_content(I18n.t("jobseekers.job_applications.feedbacks.create.success"))
+  end
+
+  def submit_feedback
+    click_on I18n.t("buttons.submit_feedback")
+    # wait for page load
+    find(".govuk-notification-banner--success")
   end
 end
