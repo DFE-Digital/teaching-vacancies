@@ -619,7 +619,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
     end
 
-    put("Updates an existing vacancy. The request body must include all required fields.") do
+    put("Updates an existing vacancy. The request body must include all required fields. Optional fields keep existing values if not provided.") do
       tags "Vacancies"
       consumes "application/json"
       produces "application/json"

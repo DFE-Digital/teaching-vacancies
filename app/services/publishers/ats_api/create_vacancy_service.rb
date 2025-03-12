@@ -25,7 +25,8 @@ module Publishers
           params[:publish_on] ||= Time.zone.today.to_s
           params[:is_job_share] = params[:is_job_share].in?([true, "true"])
           params[:visa_sponsorship_available] = params[:visa_sponsorship_available].in?([true, "true"])
-          params.except(:schools).merge(organisations: organisations)
+          params[:ect_status] = params[:ect_suitable].in?([true, "true"]) ? "ect_suitable" : "ect_unsuitable"
+          params.except(:schools, :ect_suitable).merge(organisations: organisations)
         end
 
         def conflict_response(conflict_vacancy, error_message)

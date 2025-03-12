@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::AtsApi::UpdateVacancyService do
-  subject(:udpate_vacancy_service) { described_class.call(vacancy, params) }
+  subject(:update_vacancy_service) { described_class.call(vacancy, params) }
 
   let(:vacancy) do
     create(
@@ -12,6 +12,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       job_title: "English Teacher",
       expires_at: "2025-12-31",
       organisations: [school],
+      ect_status: "ect_unsuitable",
     )
   end
   let(:publisher_ats_api_client_id) { create(:publisher_ats_api_client).id }
@@ -41,12 +42,30 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
 
   describe "#call" do
     context "when the update is successful" do
-      it "updates only the attributes that differ from the original vacancy" do
-        udpate_vacancy_service
+      it "updates the attributes that differ from the original vacancy" do
+        update_vacancy_service
         vacancy.reload
 
         expect(vacancy.working_patterns).to eq(%w[full_time])
         expect(vacancy.external_reference).to eq("new-ref")
+      end
+
+      it "keeps the existing value for optional attributes not provided" do
+        update_vacancy_service
+        vacancy.reload
+
+        expect(vacancy.ect_status).to eq("ect_unsuitable")
+      end
+
+      context "when providing a new value for optional params" do
+        let(:params) { super().merge(ect_suitable: true) }
+
+        it "updates the value" do
+          update_vacancy_service
+          vacancy.reload
+
+          expect(vacancy.ect_status).to eq("ect_suitable")
+        end
       end
     end
 
@@ -54,7 +73,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       let(:school_urns) { { school_urns: [9999] } }
 
       it "raises Publishers::AtsApi::CreateVacancyService::InvalidOrganisationError" do
-        expect { udpate_vacancy_service }.to raise_error(
+        expect { update_vacancy_service }.to raise_error(
           Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError,
           "No valid organisations found",
         )
@@ -80,7 +99,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       end
 
       it "returns a validation error response" do
-        expect(udpate_vacancy_service).to eq(expected_response)
+        expect(update_vacancy_service).to eq(expected_response)
       end
     end
   end
@@ -106,7 +125,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
     end
 
     it "returns a conflict response" do
-      expect(udpate_vacancy_service).to eq(expected_response)
+      expect(update_vacancy_service).to eq(expected_response)
     end
   end
 
@@ -149,7 +168,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
     end
 
     it "returns a conflict response" do
-      expect(udpate_vacancy_service).to eq(expected_response)
+      expect(update_vacancy_service).to eq(expected_response)
     end
   end
 end

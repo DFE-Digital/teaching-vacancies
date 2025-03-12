@@ -132,6 +132,45 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         end
       end
 
+      describe "'ect_suitable'" do
+        it "defaults ect_status to 'ect_unsuitable when not provided" do
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+        end
+
+        context "when provided" do
+          it "sets 'ect_status' to 'ect_suitable' when provided as a boolean" do
+            params[:ect_suitable] = true
+            create_vacancy_service
+            expect(Vacancy.last.ect_status).to eq("ect_suitable")
+          end
+
+          it "sets 'ect_status' to 'ect_suitable' when provided as a string" do
+            params[:ect_suitable] = "true"
+            create_vacancy_service
+            expect(Vacancy.last.ect_status).to eq("ect_suitable")
+          end
+
+          it "sets 'ect_status' to 'ect_unsuitable' when provided as a boolean" do
+            params[:ect_suitable] = false
+            create_vacancy_service
+            expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+          end
+
+          it "sets 'ect_status' to 'ect_unsuitable' when provided as a string" do
+            params[:ect_suitable] = "false"
+            create_vacancy_service
+            expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+          end
+
+          it "sets 'ect_status' to 'ect_unsuitable' when any other string come" do
+            params[:ect_suitable] = "foobar"
+            create_vacancy_service
+            expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+          end
+        end
+      end
+
       context "when the vacancy belongs to a school" do
         it "creates a vacancy with the correct organisation" do
           create_vacancy_service
