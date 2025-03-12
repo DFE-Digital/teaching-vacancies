@@ -254,7 +254,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             minItems: 1,
             items: {
               type: :string,
-              enum: Vacancy.working_patterns.keys,
+              enum: Vacancy::WORKING_PATTERNS,
               description: "Valid working pattern, e.g. 'full_time', 'part_time', etc.",
             },
             description: "An array of one or more working patterns for the vacancy.",
@@ -776,7 +776,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             minItems: 1,
             items: {
               type: :string,
-              enum: Vacancy.working_patterns.keys,
+              enum: Vacancy::WORKING_PATTERNS,
               description: "Valid working pattern, e.g. 'full_time', 'part_time', etc.",
             },
             description: "An array of one or more working patterns for the vacancy.",
