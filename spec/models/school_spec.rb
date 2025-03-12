@@ -48,4 +48,32 @@ RSpec.describe School do
       expect(school.errors.messages[:urn].first).to eq(I18n.t("errors.messages.taken"))
     end
   end
+
+  describe "#map_middle_school_phase" do
+    let(:school) { build(:school, phase: phase) }
+
+    context "when school is middle-deemed-primary" do
+      let(:phase) { "middle_deemed_primary" }
+
+      it "maps to primary" do
+        expect(school.map_middle_school_phase).to eq(%w[primary])
+      end
+    end
+
+    context "when school is middle-deemed-secondayr" do
+      let(:phase) { "middle_deemed_secondary" }
+
+      it "maps to secondary" do
+        expect(school.map_middle_school_phase).to eq(%w[secondary])
+      end
+    end
+
+    context "when school is not mapped as middle" do
+      let(:phase) { "not_applicable" }
+
+      it "maps to primary secondary" do
+        expect(school.map_middle_school_phase).to eq(%w[primary secondary])
+      end
+    end
+  end
 end

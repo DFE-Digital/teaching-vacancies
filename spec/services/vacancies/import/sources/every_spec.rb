@@ -365,6 +365,14 @@ RSpec.describe Vacancies::Import::Sources::Every do
         expect(vacancy.phases).to eq(["through"])
       end
     end
+
+    context "when the phase is middle" do
+      let(:phase) { "middle" }
+
+      it "maps to phases for the school" do
+        expect(vacancy.phases).to eq(["primary", "secondary"])
+      end
+    end
   end
 
   describe "ect suitability mapping" do

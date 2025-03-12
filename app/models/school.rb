@@ -42,6 +42,17 @@ class School < Organisation
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
   }.freeze
 
+  def map_middle_school_phase
+    case phase
+    when "middle_deemed_primary"
+      %w[primary]
+    when "middle_deemed_secondary"
+      %w[secondary]
+    else
+      %w[primary secondary]
+    end
+  end
+
   def religious_character
     return if !respond_to?(:gias_data) || gias_data.nil?
     return if ["None", "Does not apply"].include?(gias_data["ReligiousCharacter (name)"])
