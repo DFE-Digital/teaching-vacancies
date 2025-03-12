@@ -12,7 +12,7 @@ namespace :vacancies do
                        else
                          %w[primary secondary]
                        end
-        vacancy.update!(phases: (vacancy.phases.compact + extra_phases).uniq)
+        vacancy.update(phases: (vacancy.phases.compact + extra_phases).uniq, touch: false)
       end
     end
   end
