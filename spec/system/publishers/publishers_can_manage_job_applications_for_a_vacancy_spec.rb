@@ -78,6 +78,10 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       # wait for page load
       find(".govuk-radios")
       choose("Reviewed ")
+      # wait for complete render
+      within "#main-content" do
+        find ".govuk-button"
+      end
       click_on "Save and continue"
       expect(page).to have_content("New (3)")
     end
