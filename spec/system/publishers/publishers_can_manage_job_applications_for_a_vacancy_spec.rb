@@ -76,7 +76,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
       click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
       # wait for page load
-      find(".govuk-radios")
+      expect(page).to have_css(".govuk-radios")
       choose("Reviewed ")
       # wait for complete render
       within "#main-content" do
