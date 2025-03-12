@@ -1,3 +1,4 @@
+json.id vacancy.id
 json.external_advert_url vacancy.external_advert_url
 json.publish_on vacancy.publish_on
 json.expires_at vacancy.expires_at
