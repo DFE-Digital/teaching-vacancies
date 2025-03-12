@@ -2,12 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Publishers can manage job applications for a vacancy" do
   let(:organisation) { create(:school, name: "A school with a vacancy") }
-  let(:vacancy) { Vacancy.last }
+  let!(:vacancy) { create(:vacancy, vacancy_trait, expires_at: expired_at, organisations: [organisation], job_applications: job_applications) }
   let(:publisher) { create(:publisher) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
-    create(:vacancy, vacancy_trait, expires_at: expired_at, organisations: [organisation], job_applications: job_applications)
   end
 
   after { logout }
@@ -72,10 +71,16 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
     scenario "Changing a single status", :js do
       within(".application-unsuccessful") do
-        find(".govuk-checkboxes__item").click
+        find(".govuk-checkboxes__input", visible: false).set(true)
       end
       click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
-      find(".govuk-tag--purple").click
+      # wait for page load
+      expect(page).to have_css(".govuk-radios")
+      choose("Reviewed ")
+      # wait for complete render
+      within "#main-content" do
+        find ".govuk-button"
+      end
       click_on "Save and continue"
       expect(page).to have_content("New (3)")
     end
@@ -112,18 +117,11 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
     end
 
-    describe "shortlisted application" do
-      let(:status) { "shortlisted" }
-
-      it "shows applicant name that links to application", :js do
-        within(".application-#{status}") do
-          expect(page).to have_link("#{job_application_shortlisted.first_name} #{job_application_shortlisted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_shortlisted.id))
-        end
-      end
-
-      it "shows green shortlisted tag", :js do
-        within(".application-#{status}") do
+    describe "shortlisted application", :js do
+      it "shows applicant name that links to application and green shortlisted tag" do
+        within(".application-shortlisted") do
           expect(page).to have_css(".govuk-tag--green", text: "shortlisted")
+          expect(page).to have_link("#{job_application_shortlisted.first_name} #{job_application_shortlisted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_shortlisted.id))
         end
       end
     end

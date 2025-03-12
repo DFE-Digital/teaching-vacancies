@@ -22,8 +22,8 @@ RSpec.describe "Publishers can shortlist a job application" do
     # wait for page reload
     find(".govuk-tabs")
 
-    expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
     expect(page).to have_css("strong.govuk-tag.govuk-tag--green.application-status", text: "shortlisted")
+    expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
     expect(job_application.reload.status).to eq("shortlisted")
   end
 end

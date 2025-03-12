@@ -20,8 +20,8 @@ RSpec.describe "Publishers can reject a job application" do
     choose "Not Considering"
     click_on "Save and continue"
 
-    expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
     expect(page).to have_css("strong.govuk-tag.govuk-tag--red.application-status", text: "rejected")
+    expect(current_path).to eq(organisation_job_job_applications_path(vacancy.id))
     expect(job_application.reload.status).to eq("unsuccessful")
   end
 end
