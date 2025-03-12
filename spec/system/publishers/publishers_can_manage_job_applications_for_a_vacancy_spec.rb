@@ -71,7 +71,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
     scenario "Changing a single status", :js do
       within(".application-unsuccessful") do
-        find(".govuk-checkboxes__item").click
+        find(".govuk-checkboxes__input", visible: false).set(true)
       end
       click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
       # wait for page load

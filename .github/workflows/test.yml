@@ -56,7 +56,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "tmp/parallel_runtime_rspec.log"
-          key: ${{ runner.os }}-spec-${{ hashFiles('**/*spec.rb') }}
+          key: ${{ runner.os }}-spec-${{ hashFiles('spec/**/*spec.rb') }}
           restore-keys: |
             ${{ runner.os }}-spec-
 
