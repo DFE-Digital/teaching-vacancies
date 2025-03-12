@@ -44,6 +44,6 @@ class JobApplicationReviewComponent::Section < ReviewComponent::Section
   def allow_edit?
     return @allow_edit unless @allow_edit.nil?
 
-    !@job_application.deadline_passed? && !@job_application.submitted?
+    @job_application.allow_edit?
   end
 end

@@ -29,6 +29,30 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#allow_edit?" do
+    let(:job_application) { build(:job_application) }
+
+    subject { job_application.allow_edit? }
+
+    context "when draft" do
+      it { is_expected.to be true }
+
+      context "when vacancy is expired" do
+        let(:job_application) { build(:job_application, vacancy: build(:vacancy, :expired)) }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    described_class.statuses.except("draft").each do |status, s|
+      context "when application is in #{status} status" do
+        let(:job_application) { build(:job_application, status: s) }
+
+        it { is_expected.to be false }
+      end
+    end
+  end
+
   describe "#email" do
     let(:jobseeker) { build_stubbed(:jobseeker, email: "backup-email@example.com") }
     subject { build_stubbed(:job_application, email_address: email_address, jobseeker: jobseeker) }
