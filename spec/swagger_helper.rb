@@ -311,7 +311,10 @@ RSpec.configure do |config|
                          job_roles
                          working_patterns
                          contract_type
-                         phases],
+                         phases
+                         is_job_share
+                         ect_suitable
+                         visa_sponsorship_available],
             properties: {
               id: {
                 type: :string,
@@ -562,7 +565,6 @@ RSpec.configure do |config|
               },
             },
           },
-
           create_vacancy_response: {
             type: :object,
             required: %i[id], # Required so Rswag tests assert its presence in the API responses
@@ -577,79 +579,129 @@ RSpec.configure do |config|
           },
           bad_request_error: {
             type: :object,
-            required: %w[error], # Required so Rswag tests assert its presence in the API responses
-            properties: {
-              error: {
-                type: :string,
-                example: "Request body could not be read properly",
-                description: "A description of the bad request error.",
-              },
-            },
-          },
-          unauthorized_error: {
-            type: :object,
-            required: %w[error], # Required so Rswag tests assert its presence in the API responses
-            properties: {
-              error: {
-                type: :string,
-                example: "Invalid API key",
-                description: "A description of the unauthorised error.",
-              },
-            },
-          },
-          not_found_error: {
-            type: :object,
-            required: %w[error], # Required so Rswag tests assert its presence in the API responses
-            properties: {
-              error: {
-                type: :string,
-                example: "The given ID does not match any vacancy for your ATS",
-                description: "A description of the resource not found error.",
-              },
-            },
-          },
-          internal_server_error: {
-            type: :object,
-            required: %w[error], # Required so Rswag tests assert its presence in the API responses
-            properties: {
-              error: {
-                type: :string,
-                example: "There was an internal error processing this request",
-                description: "A description of the internal server error.",
-              },
-            },
-          },
-          conflict_error: {
-            type: :object,
-            required: %w[error], # Required so Rswag tests assert its presence in the API responses
-            properties: {
-              error: {
-                type: :string,
-                example: "A vacancy with the provided external reference already exists",
-                description: "A description of the conflict error.",
-              },
-              link: {
-                type: :string,
-                format: :uri,
-                example: "https://example.com/vacancies/123",
-                description: "A link to the existing conflicting resource (if applicable).",
-              },
-            },
-          },
-          validation_error: {
-            type: :object,
-            required: %w[errors], # Required so Rswag tests assert its presence in the API responses
+            required: %w[errors],
             properties: {
               errors: {
                 type: :array,
                 items: {
                   type: :string,
-                  example: "job_title: can't be blank",
-                  description: "A message describing a specific validation error.",
+                  description: "Error message describing the issue",
                 },
-                description: "An array of validation errors.",
+                description: "One or more error messages describing the issue",
               },
             },
+            example: {
+              errors: ["param is missing or the value is empty: external_advert_url, expires_at"],
+            },
+            description: "Returned when the request is malformed or missing required parameters.",
+          },
+          unauthorized_error: {
+            type: :object,
+            required: %w[errors],
+            properties: {
+              errors: {
+                type: :array,
+                items: {
+                  type: :string,
+                  description: "Error message describing the issue",
+                },
+                description: "One or more error messages describing the issue",
+              },
+            },
+            example: {
+              errors: ["Invalid API key"],
+            },
+            description: "Returned when authentication fails",
+          },
+          not_found_error: {
+            type: :object,
+            required: %w[errors],
+            properties: {
+              errors: {
+                type: :array,
+                items: {
+                  type: :string,
+                  description: "Error message describing the issue",
+                },
+                description: "One or more error messages describing the issue",
+              },
+            },
+            example: {
+              errors: ["The given ID does not match any vacancy for your ATS"],
+            },
+            description: "Returned when the requested resource cannot be found",
+          },
+          internal_server_error: {
+            type: :object,
+            required: %w[errors],
+            properties: {
+              errors: {
+                type: :array,
+                items: {
+                  type: :string,
+                  description: "Error message describing the issue",
+                },
+                description: "One or more error messages describing the issue",
+              },
+            },
+            example: {
+              errors: ["There was an internal error processing this request"],
+            },
+            description: "Returned when an unexpected server error occurs",
+          },
+          conflict_error: {
+            type: :object,
+            required: %w[errors],
+            properties: {
+              errors: {
+                type: :array,
+                items: {
+                  type: :string,
+                  description: "Error message describing the issue",
+                },
+                description: "One or more error messages describing the issue",
+              },
+              meta: {
+                type: :object,
+                description: "Optional additional information about the error",
+                properties: {
+                  link: {
+                    type: :string,
+                    format: :uri,
+                    description: "A link to an associated resource (when applicable)",
+                  },
+                },
+                additionalProperties: true,
+              },
+            },
+            example: {
+              errors: ["A vacancy with the provided external reference already exists"],
+              meta: {
+                link: "https://example.com/vacancies/123",
+              },
+            },
+            description: "Returned when a resource conflict occurs",
+          },
+          validation_error: {
+            type: :object,
+            required: %w[errors],
+            properties: {
+              errors: {
+                type: :array,
+                items: {
+                  type: :string,
+                  description: "Error message describing the issue",
+                },
+                description: "One or more error messages describing the issue",
+              },
+            },
+            example: {
+              errors: [
+                "job_title: can't be blank",
+                "salary: Enter full-time salary",
+              ],
+            },
+            description: "Returned when submitted data fails validation",
           },
         },
       },

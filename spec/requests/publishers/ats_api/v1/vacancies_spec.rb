@@ -38,6 +38,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           end
         end
 
+        # Autogenerate documentation examples from response
         after do |example|
           example.metadata[:response][:content] = {
             "application/json" => {
@@ -48,30 +49,38 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         run_test! do |response|
           body = response.parsed_body
+          expect(body.keys).to match_array(%w[data meta])
           expect(body["data"].size).to eq(2)
           expect(body["meta"]["totalPages"]).to eq(1)
         end
       end
 
       response(401, "Occurs when the provided API key is incorrect or missing") do
-        schema "$ref" => "#/components/schemas/unauthorized_error"
+        schema "$ref" => "#/components/schemas/bad_request_error"
 
         let(:"X-Api-Key") { "wrong-key" }
         let(:page) { nil }
 
-        run_test!
+        run_test! do |response|
+          expect(response.parsed_body).to eq({ "errors" => ["Invalid API key"] })
+        end
       end
 
       response(500, "Indicates an unexpected issue on the server.") do
         schema "$ref" => "#/components/schemas/internal_server_error"
 
         let(:page) { nil }
+        let(:exception) { StandardError.new("Simulated server error") }
 
         before do
-          allow(Vacancy).to receive(:live).and_raise(StandardError.new("Simulated server error"))
+          allow(Sentry).to receive(:capture_exception)
+          allow(Vacancy).to receive(:live).and_raise(exception)
         end
 
-        run_test!
+        run_test! do |response|
+          expect(Sentry).to have_received(:capture_exception).with(exception)
+          expect(response.parsed_body).to eq({ "errors" => ["There was an internal error processing this request"] })
+        end
       end
     end
 
@@ -135,6 +144,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           describe "with a single school" do
             it "links the vacancy to a single school" do |example|
               submit_request(example.metadata)
+              assert_response_matches_metadata(example.metadata)
               expect(created_vacancy.organisations).to eq([school1])
             end
           end
@@ -145,6 +155,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
             it "links the vacancy to multiple schools" do |example|
               submit_request(example.metadata)
+              assert_response_matches_metadata(example.metadata)
               expect(created_vacancy.organisations.sort).to eq([school1, school2].sort)
             end
           end
@@ -159,6 +170,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
             it "links the vacancy to the trust" do |example|
               submit_request(example.metadata)
+              assert_response_matches_metadata(example.metadata)
               expect(created_vacancy.organisations).to eq([school_group])
             end
           end
@@ -178,6 +190,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
             it "links the vacancy to the trusts schools" do |example|
               submit_request(example.metadata)
+              assert_response_matches_metadata(example.metadata)
               expect(created_vacancy.organisations.sort).to eq([school1, school2].sort)
             end
           end
@@ -203,7 +216,26 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             },
           }
         end
-        run_test!
+
+        it "list the missing parameters" do |example|
+          submit_request(example.metadata)
+          assert_response_matches_metadata(example.metadata)
+          expect(response.parsed_body).to eq(
+            { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, external_reference, schools"] },
+          )
+        end
+
+        context "when the request is empty", document: false do
+          let(:vacancy) { "" }
+
+          it "list all the missing parameters" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body).to eq(
+              { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, salary, external_reference, job_roles, working_patterns, contract_type, phases, schools"] },
+            )
+          end
+        end
       end
 
       response(401, "Occurs when the provided API key is incorrect or missing.") do
@@ -212,7 +244,9 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy) { {} }
         let(:"X-Api-Key") { "wrong-key" }
 
-        run_test!
+        run_test! do |response|
+          expect(response.parsed_body).to eq({ "errors" => ["Invalid API key"] })
+        end
       end
 
       response(409, "An existing vacancy with the same external_reference already exists.") do
@@ -243,10 +277,14 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           }
         end
 
-        run_test!
+        run_test! do |response|
+          expect(response.parsed_body.keys).to match_array(%w[errors meta])
+          expect(response.parsed_body["errors"]).to eq(["A vacancy with the provided ATS client ID and external reference already exists."])
+          expect(response.parsed_body["meta"]["link"]).to end_with("/ats-api/v1/vacancies/#{source.slug}")
+        end
       end
 
-      response(422, "A server-side issue occurred while creating the vacancy.") do
+      response(422, "One or more values failed validation.") do
         schema "$ref" => "#/components/schemas/validation_error"
 
         let(:school) { create(:school) }
@@ -259,7 +297,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               expires_at: source.expires_at,
               job_title: nil,
               job_advert: source.job_advert,
-              salary: source.salary,
+              salary: "",
               visa_sponsorship_available: source.visa_sponsorship_available,
               external_reference: source.external_reference,
               is_job_share: source.is_job_share,
@@ -274,7 +312,34 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           }
         end
 
-        run_test!
+        it "list the failed validations" do |example|
+          submit_request(example.metadata)
+          assert_response_matches_metadata(example.metadata)
+          expect(response.parsed_body).to eq(
+            { "errors" => ["job_title: can't be blank", "salary: Enter full-time salary"] },
+          )
+        end
+
+        context "when the schools info is missing", document: false do
+          let(:vacancy) do
+            super().deep_merge(vacancy: {
+              job_title: "Teacher of Maths",
+              salary: "£30,000 to £40,000",
+              schools: {
+                school_urns: [],
+                trust_uid: nil,
+              },
+            })
+          end
+
+          it "list the missing parameters" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body).to eq(
+              { "errors" => ["No valid organisations found"] },
+            )
+          end
+        end
       end
 
       response(500, "A server-side issue occurred while creating the vacancy.") do
@@ -304,12 +369,17 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             },
           }
         end
+        let(:exception) { StandardError.new("Internal server error") }
 
         before do
-          allow(Publishers::AtsApi::CreateVacancyService).to receive(:call).and_raise(StandardError.new("Internal server error"))
+          allow(Sentry).to receive(:capture_exception)
+          allow(Publishers::AtsApi::CreateVacancyService).to receive(:call).and_raise(exception)
         end
 
-        run_test!
+        run_test! do |response|
+          expect(Sentry).to have_received(:capture_exception).with(exception)
+          expect(response.parsed_body).to eq({ "errors" => ["There was an internal error processing this request"] })
+        end
       end
     end
   end
@@ -317,7 +387,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   path "/ats-api/v1/vacancies/{id}" do
     parameter name: "id", in: :path, type: :string, description: "The id of the vacancy"
 
-    let(:id) { create(:vacancy, :external, publisher_ats_api_client: client).id }
+    let!(:original_vacancy) { create(:vacancy, :external, publisher_ats_api_client: client) }
+    let(:id) { original_vacancy.id }
 
     get("Retrieves details for a single vacancy by its unique ID, if it belongs to the requesting client.") do
       tags "Vacancies"
@@ -343,25 +414,38 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(401, "Occurs when the provided API key is incorrect or missing.") do
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
+        let(:vacancy) { {} }
         let(:"X-Api-Key") { "wrong-key" }
-        run_test!
+
+        run_test! do |response|
+          expect(response.parsed_body).to eq({ "errors" => ["Invalid API key"] })
+        end
       end
 
       response(404, "No vacancy was found with the provided ID that belongs to this client.") do
         schema "$ref" => "#/components/schemas/not_found_error"
 
         let(:id) { "123" }
-        run_test!
+
+        run_test! do |response|
+          expect(response.parsed_body).to eq({ "errors" => ["The given ID does not match any vacancy for your ATS"] })
+        end
       end
 
       response(500, "An unexpected error occurred on the server.") do
         schema "$ref" => "#/components/schemas/internal_server_error"
 
+        let(:exception) { StandardError.new("Internal server error") }
+
         before do
-          allow(Vacancy).to receive(:find_by!).and_raise(StandardError.new("Internal server error"))
+          allow(Sentry).to receive(:capture_exception)
+          allow(Vacancy).to receive(:find_by!).and_raise(exception)
         end
 
-        run_test!
+        run_test! do |response|
+          expect(Sentry).to have_received(:capture_exception).with(exception)
+          expect(response.parsed_body).to eq({ "errors" => ["There was an internal error processing this request"] })
+        end
       end
     end
 
@@ -405,15 +489,15 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(400, "Missing or invalid fields in the request body.") do
         schema "$ref" => "#/components/schemas/bad_request_error"
 
-        let(:school) { create(:school) }
-        let(:source) { build(:vacancy, :external) }
-        let(:school_urns) { [school].map { |school| school.urn.to_i } }
+        let(:school) { build_stubbed(:school) }
+        let(:source) { build_stubbed(:vacancy, :external) }
         let(:vacancy) do
           {
             vacancy: {
               job_advert: source.job_advert,
               salary: source.salary,
-              school_urns: school_urns,
+              school_urns: [school.urn.to_i],
+              job_title: source.job_title,
               job_roles: source.job_roles,
               working_patterns: source.working_patterns,
               contract_type: source.contract_type,
@@ -422,16 +506,36 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           }
         end
 
-        run_test!
+        it "list all the missing parameters" do |example|
+          submit_request(example.metadata)
+          assert_response_matches_metadata(example.metadata)
+          expect(response.parsed_body).to eq(
+            { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, external_reference, schools"] },
+          )
+        end
+
+        context "when the request is empty", document: false do
+          let(:vacancy) { "" }
+
+          it "list all the missing parameters" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body).to eq(
+              { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, salary, external_reference, job_roles, working_patterns, contract_type, phases, schools"] },
+            )
+          end
+        end
       end
 
       response(401, "Occurs when the provided API key is incorrect or missing.") do
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
         let(:vacancy) { {} }
-
         let(:"X-Api-Key") { "wrong-key" }
-        run_test!
+
+        run_test! do |response|
+          expect(response.parsed_body).to eq({ "errors" => ["Invalid API key"] })
+        end
       end
 
       response(404, "No vacancy was found with the provided ID that belongs to this client.") do
@@ -460,13 +564,47 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             },
           }
         end
-        run_test!
+
+        run_test! do |response|
+          expect(response.parsed_body).to eq({ "errors" => ["The given ID does not match any vacancy for your ATS"] })
+        end
       end
 
-      response(422, "The payload is syntactically correct but fails a data validation rule.") do
-        schema "$ref" => "#/components/schemas/validation_error"
+      response(409, "An existing vacancy with the same external_reference already exists.") do
+        schema "$ref" => "#/components/schemas/conflict_error"
 
-        let(:id) { create(:vacancy, :external, publisher_ats_api_client: client).id }
+        let!(:other_vacancy) { create(:vacancy, :external, publisher_ats_api_client: client, external_reference: "EXISTING-REF") }
+        let(:vacancy) do
+          {
+            vacancy: {
+              external_advert_url: "https://example.com/jobs/123",
+              expires_at: "2022-01-01",
+              job_title: "Teacher of Geography",
+              job_advert: "We're looking for a dedicated Teacher of Geography",
+              salary: "£12,345 to £67,890",
+              visa_sponsorship_available: true,
+              external_reference: "EXISTING-REF",
+              is_job_share: true,
+              job_roles: %w[teacher],
+              working_patterns: %w[full_time],
+              contract_type: "permanent",
+              phases: %w[secondary],
+              schools: {
+                school_urns: [original_vacancy.organisation.urn],
+              },
+            },
+          }
+        end
+
+        run_test! do |response|
+          expect(response.parsed_body.keys).to match_array(%w[errors meta])
+          expect(response.parsed_body["errors"]).to eq(["A vacancy with the provided ATS client ID and external reference already exists."])
+          expect(response.parsed_body["meta"]["link"]).to end_with("/ats-api/v1/vacancies/#{other_vacancy.slug}")
+        end
+      end
+
+      response(422, "One or more values failed validation.") do
+        schema "$ref" => "#/components/schemas/validation_error"
 
         let(:vacancy) do
           {
@@ -477,7 +615,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
               visa_sponsorship_available: true,
-              external_reference: "REF1234HYZ",
+              external_reference: nil,
               is_job_share: true,
               job_roles: %w[teacher],
               working_patterns: %w[full_time],
@@ -489,7 +627,35 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             },
           }
         end
-        run_test!
+
+        it "lists the failed validations" do |example|
+          submit_request(example.metadata)
+          assert_response_matches_metadata(example.metadata)
+          expect(response.parsed_body).to eq(
+            { "errors" => ["job_title: can't be blank", "external_reference: Enter an external reference"] },
+          )
+        end
+
+        context "when the schools info is missing", document: false do
+          let(:vacancy) do
+            super().deep_merge(vacancy: {
+              job_title: "Teacher of Maths",
+              salary: "£30,000 to £40,000",
+              schools: {
+                school_urns: [],
+                trust_uid: nil,
+              },
+            })
+          end
+
+          it "lists the missing parameters" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body).to eq(
+              { "errors" => ["No valid organisations found"] },
+            )
+          end
+        end
       end
 
       response(500, "An unexpected error occurred on the server.") do
@@ -517,11 +683,17 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           }
         end
 
+        let(:exception) { StandardError.new("Internal server error") }
+
         before do
-          allow(Vacancy).to receive(:find_by!).and_raise(StandardError.new("Internal server error"))
+          allow(Sentry).to receive(:capture_exception)
+          allow(Vacancy).to receive(:find_by!).and_raise(exception)
         end
 
-        run_test!
+        run_test! do |response|
+          expect(Sentry).to have_received(:capture_exception).with(exception)
+          expect(response.parsed_body).to eq({ "errors" => ["There was an internal error processing this request"] })
+        end
       end
     end
 
@@ -539,24 +711,36 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         schema "$ref" => "#/components/schemas/unauthorized_error"
 
         let(:"X-Api-Key") { "wrong-key" }
-        run_test!
+
+        run_test! do |response|
+          expect(response.parsed_body).to eq({ "errors" => ["Invalid API key"] })
+        end
       end
 
       response(404, "No vacancy was found with the provided ID that belongs to this client.") do
         schema "$ref" => "#/components/schemas/not_found_error"
 
         let(:id) { "123" }
-        run_test!
+
+        run_test! do |response|
+          expect(response.parsed_body).to eq({ "errors" => ["The given ID does not match any vacancy for your ATS"] })
+        end
       end
 
       response(500, "An unexpected error occurred on the server.") do
         schema "$ref" => "#/components/schemas/internal_server_error"
 
+        let(:exception) { StandardError.new("Internal server error") }
+
         before do
-          allow(Vacancy).to receive(:find_by!).and_raise(StandardError.new("Internal server error"))
+          allow(Sentry).to receive(:capture_exception)
+          allow(Vacancy).to receive(:find_by!).and_raise(exception)
         end
 
-        run_test!
+        run_test! do |response|
+          expect(Sentry).to have_received(:capture_exception).with(exception)
+          expect(response.parsed_body).to eq({ "errors" => ["There was an internal error processing this request"] })
+        end
       end
     end
   end

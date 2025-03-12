@@ -9,7 +9,7 @@ module Publishers
 
           if vacancy.valid?
             vacancy.save!
-            success_response
+            { status: :ok }
           elsif (conflict = vacancy.find_conflicting_vacancy)
             conflict_response(conflict, vacancy.errors[:base].first || vacancy.errors[:external_reference].first)
           else
@@ -38,22 +38,22 @@ module Publishers
           {
             status: :conflict,
             json: {
-              error: error_message,
-              link: Rails.application.routes.url_helpers.vacancy_url(conflict_vacancy),
+              errors: [error_message],
+              meta: {
+                link: Rails.application.routes.url_helpers.vacancy_url(conflict_vacancy),
+              },
             },
           }
         end
 
-        def success_response
-          { success: true }
-        end
-
         def validation_error_response(vacancy)
           {
-            success: false,
-            errors: vacancy.errors.messages.flat_map do |attr, messages|
-              messages.map { |message| "#{attr}: #{message}" }
-            end,
+            status: :unprocessable_entity,
+            json: {
+              errors: vacancy.errors.messages.flat_map do |attr, messages|
+                messages.map { |message| "#{attr}: #{message}" }
+              end,
+            },
           }
         end
       end

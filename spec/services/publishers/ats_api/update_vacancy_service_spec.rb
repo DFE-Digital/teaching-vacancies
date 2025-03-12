@@ -86,20 +86,20 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       let(:job_roles) { [] }
       let(:working_patterns) { [] }
 
-      let(:expected_response) do
-        {
-          success: false,
-          errors: [
-            "job_title: can't be blank",
-            "job_advert: Enter a job advert",
-            "job_roles: Select a job role",
-            "working_patterns: Select a working pattern",
-          ],
-        }
-      end
-
       it "returns a validation error response" do
-        expect(update_vacancy_service).to eq(expected_response)
+        expect(update_vacancy_service).to eq(
+          {
+            status: :unprocessable_entity,
+            json: {
+              errors: [
+                "job_title: can't be blank",
+                "job_advert: Enter a job advert",
+                "job_roles: Select a job role",
+                "working_patterns: Select a working pattern",
+              ],
+            },
+          },
+        )
       end
     end
   end
@@ -114,18 +114,16 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       )
     end
 
-    let(:expected_response) do
-      {
-        status: :conflict,
-        json: {
-          error: "A vacancy with the provided ATS client ID and external reference already exists.",
-          link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
-        },
-      }
-    end
-
     it "returns a conflict response" do
-      expect(update_vacancy_service).to eq(expected_response)
+      expect(update_vacancy_service).to eq(
+        {
+          status: :conflict,
+          json: {
+            errors: ["A vacancy with the provided ATS client ID and external reference already exists."],
+            meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy) },
+          },
+        },
+      )
     end
   end
 
@@ -157,18 +155,16 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       }
     end
 
-    let(:expected_response) do
-      {
-        status: :conflict,
-        json: {
-          error: "A vacancy with the same job title, expiry date, and organisation already exists.",
-          link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
-        },
-      }
-    end
-
     it "returns a conflict response" do
-      expect(update_vacancy_service).to eq(expected_response)
+      expect(update_vacancy_service).to eq(
+        {
+          status: :conflict,
+          json: {
+            errors: ["A vacancy with the same job title, expiry date, and organisation already exists."],
+            meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy) },
+          },
+        },
+      )
     end
   end
 end

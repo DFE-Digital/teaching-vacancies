@@ -33,8 +33,10 @@ module Publishers
           {
             status: :conflict,
             json: {
-              error: error_message,
-              link: Rails.application.routes.url_helpers.vacancy_url(conflict_vacancy),
+              errors: [error_message],
+              meta: {
+                link: Rails.application.routes.url_helpers.vacancy_url(conflict_vacancy),
+              },
             },
           }
         end

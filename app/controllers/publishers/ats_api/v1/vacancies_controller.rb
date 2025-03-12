@@ -30,11 +30,11 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
     result = Publishers::AtsApi::UpdateVacancyService.call(vacancy, permitted_vacancy_params)
 
-    if result[:success]
+    if result[:status] == :ok
       @vacancy = vacancy
       render :show
     else
-      render json: { errors: result[:errors] }, status: :unprocessable_entity
+      render result.slice(:json, :status)
     end
   end
 
@@ -82,28 +82,29 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     return if client
 
     render status: :unauthorized,
-           json: { error: "Invalid API key" },
+           json: { errors: ["Invalid API key"] },
            content_type: "application/json"
   end
 
   def validate_payload
     missing_keys = required_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
-    raise ActionController::ParameterMissing, "Missing required parameters: #{missing_keys.join(', ')}" if missing_keys.any?
+    raise ActionController::ParameterMissing, missing_keys.join(", ") if missing_keys.any?
   end
 
   def render_server_error(exception)
-    render json: { error: "Internal server error", message: exception.message }, status: :internal_server_error
+    Sentry.capture_exception(exception) # Sends the internal exception to Sentry, so it can be debugged/fixed.
+    render json: { errors: ["There was an internal error processing this request"] }, status: :internal_server_error
   end
 
   def render_not_found
-    render json: { error: "The given ID does not match any vacancy for your ATS" }, status: :not_found
+    render json: { errors: ["The given ID does not match any vacancy for your ATS"] }, status: :not_found
   end
 
   def render_bad_request(exception = nil)
-    render json: { error: exception&.message.presence || "Request body could not be read properly" }, status: :bad_request
+    render json: { errors: [exception&.message.presence || "Request body could not be read properly"] }, status: :bad_request
   end
 
   def render_unprocessable_entity(exception)
-    render json: { error: exception.message }, status: :unprocessable_entity
+    render json: { errors: [exception.message] }, status: :unprocessable_entity
   end
 end
