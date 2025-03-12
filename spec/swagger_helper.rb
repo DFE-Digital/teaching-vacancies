@@ -298,6 +298,20 @@ RSpec.configure do |config|
           vacancy_response: {
             type: :object,
             additionalProperties: false,
+            # A schema shouldn't need to define required properties if it's a response
+            # However Rswag tests will only check for the response properties presence if they're defined as required.
+            required: %i[id
+                         job_title
+                         external_reference
+                         external_advert_url
+                         expires_at
+                         job_advert
+                         salary
+                         schools
+                         job_roles
+                         working_patterns
+                         contract_type
+                         phases],
             properties: {
               id: {
                 type: :string,
@@ -526,6 +540,7 @@ RSpec.configure do |config|
           vacancies_response: {
             type: :object,
             additionalProperties: false,
+            required: %i[data meta], # Required so Rswag tests assert their presence in the API responses
             properties: {
               data: {
                 type: :array,
@@ -550,6 +565,7 @@ RSpec.configure do |config|
 
           create_vacancy_response: {
             type: :object,
+            required: %i[id], # Required so Rswag tests assert its presence in the API responses
             properties: {
               id: {
                 type: :string,
@@ -561,6 +577,7 @@ RSpec.configure do |config|
           },
           bad_request_error: {
             type: :object,
+            required: %w[error], # Required so Rswag tests assert its presence in the API responses
             properties: {
               error: {
                 type: :string,
@@ -571,6 +588,7 @@ RSpec.configure do |config|
           },
           unauthorized_error: {
             type: :object,
+            required: %w[error], # Required so Rswag tests assert its presence in the API responses
             properties: {
               error: {
                 type: :string,
@@ -581,6 +599,7 @@ RSpec.configure do |config|
           },
           not_found_error: {
             type: :object,
+            required: %w[error], # Required so Rswag tests assert its presence in the API responses
             properties: {
               error: {
                 type: :string,
@@ -591,6 +610,7 @@ RSpec.configure do |config|
           },
           internal_server_error: {
             type: :object,
+            required: %w[error], # Required so Rswag tests assert its presence in the API responses
             properties: {
               error: {
                 type: :string,
@@ -601,6 +621,7 @@ RSpec.configure do |config|
           },
           conflict_error: {
             type: :object,
+            required: %w[error], # Required so Rswag tests assert its presence in the API responses
             properties: {
               error: {
                 type: :string,
@@ -617,6 +638,7 @@ RSpec.configure do |config|
           },
           validation_error: {
             type: :object,
+            required: %w[errors], # Required so Rswag tests assert its presence in the API responses
             properties: {
               errors: {
                 type: :array,
