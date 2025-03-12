@@ -2,12 +2,11 @@ require "rails_helper"
 
 RSpec.describe "Publishers can manage job applications for a vacancy" do
   let(:organisation) { create(:school, name: "A school with a vacancy") }
-  let(:vacancy) { Vacancy.last }
+  let!(:vacancy) { create(:vacancy, vacancy_trait, expires_at: expired_at, organisations: [organisation], job_applications: job_applications) }
   let(:publisher) { create(:publisher) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)
-    create(:vacancy, vacancy_trait, expires_at: expired_at, organisations: [organisation], job_applications: job_applications)
   end
 
   after { logout }
