@@ -62,31 +62,21 @@ RSpec.configure do |config|
           },
         },
         schemas: {
-          vacancy: {
+          vacancy_request: {
             type: :object,
             additionalProperties: false,
-            required: %i[
-              external_advert_url
-              expires_at
-              starts_on
-              job_title
-              job_advert
-              salary
-              external_reference
-              job_roles
-              working_patterns
-              contract_type
-              phases
-              publish_on
-              schools
-            ],
+            required: %i[external_advert_url
+                         expires_at
+                         job_title
+                         job_advert
+                         salary
+                         external_reference
+                         job_roles
+                         working_patterns
+                         contract_type
+                         phases
+                         schools],
             properties: {
-              id: {
-                type: :string,
-                format: :uuid,
-                example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66",
-                description: "The unique identifier for the vacancy.",
-              },
               external_advert_url: {
                 type: :string,
                 format: :uri,
@@ -97,7 +87,7 @@ RSpec.configure do |config|
                 type: :string,
                 format: :date,
                 example: "2025-01-01",
-                description: "The date on which the vacancy should be published.Defaults to the current date.",
+                description: "The date on which the vacancy should be published. Defaults to the current date.",
               },
               expires_at: {
                 type: :string,
@@ -305,6 +295,259 @@ RSpec.configure do |config|
               },
             },
           },
+          vacancy_response: {
+            type: :object,
+            additionalProperties: false,
+            properties: {
+              id: {
+                type: :string,
+                format: :uuid,
+                example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66",
+                description: "The unique identifier for the vacancy.",
+              },
+              external_advert_url: {
+                type: :string,
+                format: :uri,
+                example: "https://example.com/jobs/123",
+                description: "The URL where the job is advertised externally.",
+              },
+              publish_on: {
+                type: :string,
+                format: :date,
+                example: "2025-01-01",
+                description: "The date on which the vacancy should be published.Defaults to the current date.",
+              },
+              expires_at: {
+                type: :string,
+                format: :datetime,
+                example: "2025-03-13T15:30:00Z",
+                description: "The end datetime of the vacancy. Must be after the start date.",
+              },
+              job_title: {
+                type: :string,
+                example: "Teacher of Geography",
+                description: "The short job title shown in the page title and search results.",
+              },
+              job_advert: {
+                type: :string,
+                example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
+                description: "The long form job advert text shown on the job listing.",
+              },
+              salary: {
+                type: :string,
+                example: "£12,345 to £67,890",
+                description: "Compensation for the role.",
+              },
+              benefits_details: {
+                type: :string,
+                example: "TLR2a",
+                description: "Any additional benefits or allowances.",
+              },
+              starts_on: {
+                type: :string,
+                example: "Easter",
+                description: "The start date (or approximate start timeframe) of the job.",
+              },
+              external_reference: {
+                type: :string,
+                example: "123GTZY",
+                description: "An external reference or identifier for your own tracking.",
+              },
+              visa_sponsorship_available: {
+                type: :boolean,
+                example: false,
+                description: "Indicates if a visa sponsorship is available for this role. Defaults to false.",
+              },
+              is_job_share: {
+                type: :boolean,
+                example: true,
+                description: "Whether the role is open to a job share. Defaults to false.",
+              },
+              schools: {
+                oneOf: [
+                  {
+                    type: :object,
+                    additionalProperties: false,
+                    required: %i[school_urns],
+                    properties: {
+                      school_urns: {
+                        type: :array,
+                        minItems: 1,
+                        items: {
+                          type: :string,
+                          example: "123456",
+                          description: "The unique reference number (URN) for an individual school.",
+                        },
+                      },
+                    },
+                    description: "Schema for a vacancy belonging to one or more schools by URN.",
+                  },
+                  {
+                    type: :object,
+                    additionalProperties: false,
+                    required: %i[trust_uid school_urns],
+                    properties: {
+                      trust_uid: {
+                        type: :string,
+                        example: "12345",
+                        description: "Unique identifier for a trust.",
+                      },
+                      school_urns: {
+                        type: :array,
+                        minItems: 0,
+                        items: {
+                          type: :string,
+                          example: "12345",
+                          description: "URNs of individual schools under the trust (optional).",
+                        },
+                      },
+                    },
+                    description: "Schema for a vacancy belonging to a trust, possibly linked to multiple schools.",
+                  },
+                  {
+                    type: :object,
+                    additionalProperties: false,
+                    required: %i[trust_uid],
+                    properties: {
+                      trust_uid: {
+                        type: :string,
+                        example: "12345",
+                        description: "Unique identifier for a trust.",
+                      },
+                    },
+                    description: "Schema for a vacancy belonging to a trust without any specific school URNs.",
+                  },
+                ],
+                description: "Specifies which school(s) or trust the vacancy belongs to.",
+              },
+              job_roles: {
+                type: :array,
+                minItems: 1,
+                items: {
+                  type: :string,
+                  enum: Vacancy.job_roles.keys,
+                  description: "Valid job role, e.g. 'teacher', 'senior_leader', etc.",
+                },
+                description: "An array of one or more job roles associated with the vacancy.",
+              },
+              ect_suitable: {
+                type: :boolean,
+                example: true,
+                description: "Indicates whether the vacancy is suitable for ECTs (Early Career Teachers). Defaults to false.",
+              },
+              working_patterns: {
+                type: :array,
+                minItems: 1,
+                items: {
+                  type: :string,
+                  enum: Vacancy::WORKING_PATTERNS,
+                  description: "Valid working pattern, e.g. 'full_time', 'part_time', etc.",
+                },
+                description: "An array of one or more working patterns for the vacancy.",
+              },
+              contract_type: {
+                type: :string,
+                enum: Vacancy.contract_types.keys,
+                example: "permanent",
+                description: "The type of contract, e.g. 'permanent', 'fixed_term'.",
+              },
+              phases: {
+                type: :array,
+                minItems: 1,
+                items: {
+                  type: :string,
+                  enum: Vacancy.phases.keys,
+                  description: "Valid phase, e.g. 'primary', 'secondary', etc.",
+                },
+                description: "One or more phases of education that the vacancy covers.",
+              },
+              key_stages: {
+                type: :array,
+                minItems: 1,
+                items: {
+                  type: :string,
+                  enum: Vacancy.key_stages.keys,
+                  description: "Valid key stage, e.g. 'ks1', 'ks2', etc.",
+                },
+                description: "One or more key stages relevant to the vacancy.",
+              },
+              subjects: {
+                type: :array,
+                minItems: 1,
+                items: {
+                  type: :string,
+                  enum: [
+                    "Accounting",
+                    "Art and design",
+                    "Biology",
+                    "Business Studies",
+                    "Chemistry",
+                    "Citizenship",
+                    "Classics",
+                    "Computing",
+                    "Dance",
+                    "Design And Technology",
+                    "Drama",
+                    "Economics",
+                    "Engineering",
+                    "English",
+                    "Food Technology",
+                    "French",
+                    "Geography",
+                    "German",
+                    "health_and_social_care",
+                    "history",
+                    "Humanities",
+                    "ICT",
+                    "Languages",
+                    "Law",
+                    "Mandarin",
+                    "Mathematics",
+                    "Media Studies",
+                    "Music",
+                    "Philosophy",
+                    "Physical Education",
+                    "Physics",
+                    "PSHE",
+                    "Psychology",
+                    "Religious Education",
+                    "Science",
+                    "Social Science",
+                    "Sociology",
+                    "Spanish",
+                    "Statistics",
+                  ],
+                  description: "Valid subject for the job, e.g. 'Biology', 'English', etc.",
+                },
+                description: "An array of subjects relevant to the vacancy.",
+              },
+            },
+          },
+          vacancies_response: {
+            type: :object,
+            additionalProperties: false,
+            properties: {
+              data: {
+                type: :array,
+                items: {
+                  "$ref" => "#/components/schemas/vacancy_response",
+                },
+              },
+              meta: {
+                type: :object,
+                additionalProperties: false,
+                properties: {
+                  totalPages: {
+                    type: :integer,
+                  },
+                  count: {
+                    type: :integer,
+                  },
+                },
+              },
+            },
+          },
+
           create_vacancy_response: {
             type: :object,
             properties: {
@@ -315,7 +558,6 @@ RSpec.configure do |config|
                 description: "The unique identifier of the vacancy that was just created.",
               },
             },
-            required: %w[id],
           },
           bad_request_error: {
             type: :object,
@@ -326,7 +568,6 @@ RSpec.configure do |config|
                 description: "A description of the bad request error.",
               },
             },
-            required: %w[error],
           },
           unauthorized_error: {
             type: :object,
@@ -337,7 +578,6 @@ RSpec.configure do |config|
                 description: "A description of the unauthorised error.",
               },
             },
-            required: %w[error],
           },
           not_found_error: {
             type: :object,
@@ -348,7 +588,6 @@ RSpec.configure do |config|
                 description: "A description of the resource not found error.",
               },
             },
-            required: %w[error],
           },
           internal_server_error: {
             type: :object,
@@ -359,7 +598,6 @@ RSpec.configure do |config|
                 description: "A description of the internal server error.",
               },
             },
-            required: %w[error],
           },
           conflict_error: {
             type: :object,
@@ -376,7 +614,6 @@ RSpec.configure do |config|
                 description: "A link to the existing conflicting resource (if applicable).",
               },
             },
-            required: %w[error],
           },
           validation_error: {
             type: :object,
@@ -391,7 +628,6 @@ RSpec.configure do |config|
                 description: "An array of validation errors.",
               },
             },
-            required: %w[errors],
           },
         },
       },
