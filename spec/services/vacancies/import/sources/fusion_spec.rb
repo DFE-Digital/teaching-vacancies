@@ -285,6 +285,14 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
           expect(vacancy.phases).to eq(%w[through])
         end
       end
+
+      context "when the phase is middle" do
+        let(:phase) { "middle" }
+
+        it "maps to phases for the school" do
+          expect(vacancy.phases).to eq(%w[primary secondary])
+        end
+      end
     end
 
     describe "working_patterns" do

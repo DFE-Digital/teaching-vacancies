@@ -280,6 +280,14 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
           end
         end
       end
+
+      context "when the phase is middle" do
+        let(:phase) { "middle" }
+
+        it "maps to phases for the school" do
+          expect(vacancy.phases).to eq(["primary", "secondary"])
+        end
+      end
     end
 
     context "when the same vacancy has been imported previously" do

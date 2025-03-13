@@ -80,7 +80,7 @@ module VacancyFormsHelper
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.teacher.nursery")
     when "primary"
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.teacher.primary")
-    when "middle" || "secondary" || "sixth_form_or_college"
+    when "secondary", "sixth_form_or_college"
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.teacher.middle_secondary_or_sixth_form_or_college")
     when "through"
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.teacher.through")
@@ -93,7 +93,7 @@ module VacancyFormsHelper
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.middle_leader.nursery")
     when "primary"
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.middle_leader.primary")
-    when "middle" || "secondary" || "sixth_form_or_college"
+    when "secondary", "sixth_form_or_college"
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.middle_leader.middle_secondary_or_sixth_form_or_college")
     when "through"
       t("helpers.hint.publishers_job_listing_job_title_form.job_title.middle_leader.through")

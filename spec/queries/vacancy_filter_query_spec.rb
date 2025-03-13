@@ -212,13 +212,6 @@ RSpec.describe VacancyFilterQuery do
       end
     end
 
-    it "transforms legacy phases filters to new ones" do
-      filters = {
-        phases: %w[16-19],
-      }
-      expect(subject.call(filters)).to contain_exactly(vacancy2)
-    end
-
     describe "roles mapping" do
       it "transforms legacy 'leadership' to all senior leadership roles" do
         filters = {

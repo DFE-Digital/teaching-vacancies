@@ -258,10 +258,8 @@
 "key stage 2":
   phases:
     - primary
-    - middle
 "key stage 3":
   phases:
-    - middle
     - secondary
 "key stage 4":
   phases:
@@ -276,10 +274,8 @@
 "ks2":
   phases:
     - primary
-    - middle
 "ks3":
   phases:
-    - middle
     - secondary
 "ks4":
   phases:
@@ -373,12 +369,6 @@
   teaching_job_roles:
     - head_of_year_or_phase
     - head_of_department_or_curriculum
-"middle school":
-  phases:
-    - middle
-"middle schools":
-  phases:
-    - middle
 "music":
   subjects:
     - Music

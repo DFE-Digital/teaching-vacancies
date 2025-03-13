@@ -13,5 +13,16 @@ module Vacancies::Import
     def vacancy_listed_at_excluded_trust_type?(schools, trust_uid)
       schools.none? && trust_uid.present?
     end
+
+    def map_middle_school_phase(phase)
+      case phase
+      when "middle_deemed_primary"
+        %w[primary]
+      when "middle_deemed_secondary"
+        %w[secondary]
+      else
+        %w[primary secondary]
+      end
+    end
   end
 end

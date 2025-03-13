@@ -12,6 +12,12 @@ SetOrganisationSlugsJob.perform_later
 bexleyheath_school = School.find_by!(urn: "137138")
 weydon_trust = SchoolGroup.find_by!(uid: "16644")
 southampton_la = SchoolGroup.find_by!(local_authority_code: "852")
+#  Oakfield Academy is middle deemed secondary
+oakfield = School.find_by!(urn: "136970")
+# Avanti Park is middle deeemd primary
+avanti = School.find_by!(urn: "147651")
+#  Through school
+abraham_moss = School.find_by!(urn: "150009")
 
 # Team users
 users = [
@@ -34,13 +40,13 @@ users = [
 ]
 
 users.each do |user|
-  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la], **user)
+  Publisher.create(organisations: [bexleyheath_school, weydon_trust, southampton_la, oakfield, avanti, abraham_moss], **user)
   SupportUser.create(user)
   FactoryBot.create(:jobseeker, email: user[:email])
 end
 
 # Vacancies at Bexleyheath school
-attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.readable_phase], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
+attrs = { organisations: [bexleyheath_school], phases: [bexleyheath_school.phase], publisher_organisation: bexleyheath_school, publisher: Publisher.all.sample }
 6.times { FactoryBot.create(:vacancy, :for_seed_data, :published, **attrs) }
 2.times { FactoryBot.create(:vacancy, :for_seed_data, :published, :no_tv_applications, **attrs) }
 4.times { FactoryBot.create(:vacancy, :for_seed_data, :future_publish, **attrs) }

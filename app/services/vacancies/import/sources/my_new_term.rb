@@ -62,7 +62,7 @@ class Vacancies::Import::Sources::MyNewTerm
       working_patterns: working_patterns_for(item),
       contract_type: contract_type_for(item),
       is_parental_leave_cover: parental_leave_cover_for?(item),
-      phases: phase_for(item),
+      phases: phases_for(item, schools.first),
       key_stages: key_stages_for(item),
       job_location: :at_one_school,
       visa_sponsorship_available: visa_sponsorship_available_for(item),
@@ -164,12 +164,18 @@ class Vacancies::Import::Sources::MyNewTerm
     end
   end
 
-  def phase_for(item)
+  def phases_for(item, school)
     return if item["phase"].blank?
 
-    item["phase"].strip
+    phase = item["phase"].strip
                  .gsub(/all_through|through_school/, "through")
                  .gsub(/16-19|16_19/, "sixth_form_or_college")
+
+    if phase == "middle"
+      map_middle_school_phase school.phase
+    else
+      [phase]
+    end
   end
 
   def contract_type_for(item)

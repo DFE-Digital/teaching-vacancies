@@ -20,7 +20,6 @@ class Vacancy < ApplicationRecord
   PHASES_TO_KEY_STAGES_MAPPINGS = {
     nursery: %i[early_years],
     primary: %i[early_years ks1 ks2],
-    middle: %i[ks1 ks2 ks3 ks4 ks5],
     secondary: %i[ks3 ks4 ks5],
     sixth_form_or_college: %i[ks5],
     through: %i[early_years ks1 ks2 ks3 ks4 ks5],
@@ -41,9 +40,12 @@ class Vacancy < ApplicationRecord
                          administration_hr_data_and_finance catering_cleaning_and_site_management
                          it_support pastoral_health_and_welfare other_support].freeze
 
+  SCHOOL_PHASES_MATCHING_VACANCY_PHASES = %w[nursery primary secondary sixth_form_or_college].freeze
+
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
-  array_enum phases: { nursery: 0, primary: 1, middle: 2, secondary: 3, sixth_form_or_college: 4, through: 5 }
+  # middle(2) removed and converted to primary/secondary to avoid missing middle school roles in primary/secondary filters
+  array_enum phases: { nursery: 0, primary: 1, secondary: 3, sixth_form_or_college: 4, through: 5 }
   array_enum job_roles: JOB_ROLES
   # removed parental_leave_cover: 2 from contract types. No instances in DB.
   enum :contract_type, { permanent: 0, fixed_term: 1, casual: 3 }
@@ -169,10 +171,6 @@ class Vacancy < ApplicationRecord
     [organisation&.name, organisation&.town, organisation&.county].reject(&:blank?)
   end
 
-  def school_phases
-    organisations.schools.filter_map(&:readable_phase).uniq
-  end
-
   def draft!
     self.publish_on = nil
     super
@@ -215,7 +213,7 @@ class Vacancy < ApplicationRecord
   end
 
   def allow_key_stages?
-    allowed_phases = %w[primary middle secondary through]
+    allowed_phases = %w[primary secondary through]
     allowed_roles = %w[teacher headteacher deputy_headteacher assistant_headteacher
                        head_of_year_or_phase head_of_department_or_curriculum teaching_assistant]
 
@@ -223,11 +221,13 @@ class Vacancy < ApplicationRecord
   end
 
   def allow_phase_to_be_set?
-    school_phases.none?
+    school_phases = organisations.schools.filter_map(&:phase).uniq
+
+    !(school_phases.intersect? SCHOOL_PHASES_MATCHING_VACANCY_PHASES)
   end
 
   def allow_subjects?
-    phases.any? { |phase| phase.in? %w[middle secondary sixth_form_or_college through] }
+    phases.any? { |phase| phase.in? %w[secondary sixth_form_or_college through] }
   end
 
   def key_stages_for_phases
