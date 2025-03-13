@@ -504,19 +504,38 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               salary: "£12,345 to £67,890",
               visa_sponsorship_available: true,
               external_reference: "REF1234HYZ",
-              is_job_share: true,
+              ect_suitable: true,
               job_roles: %w[teacher],
               working_patterns: %w[full_time],
               contract_type: "permanent",
               phases: %w[secondary],
               schools: {
-                school_urns: [create(:school).urn],
+                trust_uid: original_vacancy.organisation.trust.uid,
               },
             },
           }
         end
 
-        run_test!
+        run_test! do |response|
+          expect(response.parsed_body).to include(
+            "id" => id,
+            "external_advert_url" => "https://example.com/jobs/123",
+            "expires_at" => "2022-01-01T00:00:00.000+00:00",
+            "job_title" => "Teacher of Geography",
+            "job_advert" => "We're looking for a dedicated Teacher of Geography",
+            "salary" => "£12,345 to £67,890",
+            "visa_sponsorship_available" => true,
+            "external_reference" => "REF1234HYZ",
+            "is_job_share" => true, # Keeps original value for optional field that wasn't provided on update
+            "ect_suitable" => true,
+            "job_roles" => %w[teacher],
+            "working_patterns" => %w[full_time],
+            "contract_type" => "permanent",
+            "phases" => %w[secondary],
+            "schools" => { "school_urns" => [],
+                           "trust_uid" => original_vacancy.organisation.trust.uid }, # Reassigned the vacancy to the trust central office
+          )
+        end
       end
 
       response(400, "Missing or invalid fields in the request body.") do
