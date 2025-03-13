@@ -6,7 +6,9 @@ namespace :vacancies do
     Vacancy.active.find_each.select { |v| v.phases.include? nil }.each do |vacancy|
       extra_phases = mapper.map_middle_school_phase(vacancy.organisation.phase)
       vacancy.assign_attributes(phases: (vacancy.phases.compact + extra_phases).uniq)
-      vacancy.save!(touch: false)
+      # rubocop:disable Rails/SaveBang
+      vacancy.save(touch: false)
+      # rubocop:enable Rails/SaveBang
     end
   end
 end
