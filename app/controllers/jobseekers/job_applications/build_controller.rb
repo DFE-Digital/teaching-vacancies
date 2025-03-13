@@ -5,9 +5,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   helper_method :back_path, :employments, :job_application, :qualification_form_param_key, :redirect_to_review?, :vacancy
 
   def show
-    if step == :professional_status
-      job_application.assign_attributes(teacher_reference_number: current_jobseeker.jobseeker_profile&.teacher_reference_number)
-    end
     @form = form_class.new(form_class.load_form(job_application))
     render step
   end
@@ -15,7 +12,7 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
   def update
     @form = form_class.new(form_class.load_form(job_application).merge(form_params))
     if @form.valid?
-      update_job_application!
+      job_application.update!(update_params)
 
       if redirect_to_review?
         redirect_to jobseekers_job_application_review_path(job_application), success: t("messages.jobseekers.job_applications.saved")
@@ -103,29 +100,6 @@ class Jobseekers::JobApplications::BuildController < Jobseekers::JobApplications
 
   def vacancy
     @vacancy ||= job_application.vacancy
-  end
-
-  # This set of fields needs to be a 'consistent' set rather than just a couple of fields.
-  # A recent change in a before_save callback in the JobseekerProfile class meant that TRN related fields were not persisted unless qualified_teacher_status == "yes"
-  # so we had to add qualified_teacher_status here.
-  #
-  # Without this, the JobseekerProfile class thinks that the QTS status is 'no' (!= yes) and understandably clears some fields to prevent an inconsistently saved state.
-  # However the lack of data validation means/meant that this error wasn't caught.
-  # Possibly a better strategy would be to have data validation, but to use validate: false when it is known that the data is incomplete
-  # (e.g. when part completing a vacancy or job application)
-  # This type of strategy would have caught this as the code would have noticed that qualified_teacher_status was not one of yes/no/on_track.
-  # In order for this to be implemented effectively, the JobseekerProfile would need to split out the its professional status fields.
-  #
-  def update_job_application!
-    job_application.update!(update_params.except(:teacher_reference_number, :has_teacher_reference_number))
-    if step == :professional_status
-      profile_params = form_params.slice(:teacher_reference_number, :has_teacher_reference_number, :qualified_teacher_status)
-      if current_jobseeker.jobseeker_profile.nil?
-        current_jobseeker.create_jobseeker_profile!(profile_params)
-      else
-        current_jobseeker.jobseeker_profile.update!(profile_params)
-      end
-    end
   end
 
   def strip_empty_working_patterns_checkboxes

@@ -180,7 +180,6 @@ shared:
     - requested_hidden_profile
     - is_statutory_induction_complete
     - teacher_reference_number
-    - has_teacher_reference_number
     - statutory_induction_complete_details
   jobseeker_profile_excluded_organisations:
     - id
