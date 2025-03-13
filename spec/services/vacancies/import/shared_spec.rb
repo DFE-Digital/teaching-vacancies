@@ -6,13 +6,13 @@ end
 
 RSpec.describe "Vacancies::Import::Shared" do
   describe "#map_middle_school_phase" do
-    let(:school) { Vacancies::Import::Shared::Test }
+    subject { Vacancies::Import::Shared::Test }
 
     context "when school is middle-deemed-primary" do
       let(:phase) { "middle_deemed_primary" }
 
       it "maps to primary" do
-        expect(school.map_middle_school_phase(phase)).to eq(%w[primary])
+        expect(subject.map_middle_school_phase(phase)).to eq(%w[primary])
       end
     end
 
@@ -20,7 +20,7 @@ RSpec.describe "Vacancies::Import::Shared" do
       let(:phase) { "middle_deemed_secondary" }
 
       it "maps to secondary" do
-        expect(school.map_middle_school_phase(phase)).to eq(%w[secondary])
+        expect(subject.map_middle_school_phase(phase)).to eq(%w[secondary])
       end
     end
 
@@ -28,7 +28,7 @@ RSpec.describe "Vacancies::Import::Shared" do
       let(:phase) { "not_applicable" }
 
       it "maps to primary secondary" do
-        expect(school.map_middle_school_phase(phase)).to eq(%w[primary secondary])
+        expect(subject.map_middle_school_phase(phase)).to eq(%w[primary secondary])
       end
     end
   end
