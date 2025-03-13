@@ -12,7 +12,7 @@ module Jobseekers
         end
 
         def unstorable_fields
-          %i[unexplained_employment_gaps_present employment_history_section_completed employments]
+          %i[unexplained_employment_gaps employment_history_section_completed employments]
         end
 
         def load_form(model)
@@ -23,7 +23,7 @@ module Jobseekers
       end
       attr_accessor(:unexplained_employment_gaps, :employments)
 
-      validate :employment_history_gaps_are_explained, if: -> { unexplained_employment_gaps_present == "true" && employment_history_section_completed }
+      validate :employment_history_gaps_are_explained, if: -> { employment_history_section_completed }
 
       validate :employment_records_are_all_valid
 

@@ -102,10 +102,7 @@ Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
                                                             job_application: FactoryBot.build(:job_application,
                                                                                               vacancy: FactoryBot.build(:vacancy,
                                                                                                                         organisations: weydon_trust_schools))),
-                      employments: FactoryBot.build_list(:employment, 1,
-                                                         job_application: FactoryBot.build(:job_application,
-                                                                                           vacancy: FactoryBot.build(:vacancy,
-                                                                                                                     organisations: weydon_trust_schools))),
+                      employments: FactoryBot.build_list(:employment, 1, :jobseeker_profile_employment),
                       jobseeker: jobseeker) do |jobseeker_profile|
       FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
         FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
