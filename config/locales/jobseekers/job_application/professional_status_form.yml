@@ -40,10 +40,6 @@ en:
         is_statutory_induction_complete: Have you completed your induction period?
       jobseekers_job_application_professional_status_form:
         has_teacher_reference_number: "Do you have a teacher reference number (TRN)?"
-        has_teacher_reference_number_options:
-          "yes": "Yes"
-          "no": "No"
-        teacher_reference_number: What is your teacher reference number (TRN)?
         is_statutory_induction_complete: Have you completed your induction period?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
         statutory_induction_complete_details: Additional induction details
@@ -60,8 +56,8 @@ en:
           "false": "No, I have not completed my induction period"
           "true": "Yes, I have completed my induction period"
         has_teacher_reference_number_options:
-          "yes": "Yes"
-          "no": "No"
+          "true": "Yes"
+          "false": "No"
         qualified_teacher_status_year: Year QTS was awarded
         qts_age_range_and_subject: Age range and subject you trained to teach
         teacher_reference_number: What is your teacher reference number (TRN)?
@@ -77,6 +73,10 @@ en:
           on_track: I'm on track to receive my QTS
           non_teacher: I'm not looking for a teaching job
           "yes": "Yes"
+        has_teacher_reference_number_options:
+          "true": "Yes"
+          "false": "No"
+        teacher_reference_number: What is your teacher reference number (TRN)?
         is_statutory_induction_complete_options:
           "false": "No, I have not completed my induction period"
           "true": "Yes, I have completed my induction period"
