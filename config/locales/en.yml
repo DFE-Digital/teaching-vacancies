@@ -271,7 +271,7 @@ en:
         page_title: Schools - %{school_group_name}
     search:
       name: Name of school
-      location: City, county or postcode
+      location: City, county or postcode (in England)
       results:
         active_jobs: Active jobs
         key_stage: Key stage
