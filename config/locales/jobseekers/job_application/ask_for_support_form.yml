@@ -4,7 +4,7 @@ en:
       models:
         jobseekers/job_application/ask_for_support_form:
           attributes:
-            support_needed:
+            is_support_needed:
               inclusion: Select yes if you would like interview support
             support_needed_details:
               blank: Give details about what support you might need
@@ -14,14 +14,14 @@ en:
   helpers:
     legend:
       jobseekers_job_application_ask_for_support_form:
-        support_needed: Do you want to ask for support so that you can attend an interview?
+        is_support_needed: Do you want to ask for support so that you can attend an interview?
         ask_for_support_section_completed: Have you completed this section?
     label:
       jobseekers_job_application_ask_for_support_form:
         support_needed_details: Tell us any information you think is relevant
-        support_needed_options:
-          "no": No, I do not need support
-          "yes": Yes, I would like to share some information about the support that I need
+        is_support_needed_options:
+          "false": No, I do not need support
+          "true": Yes, I would like to share some information about the support that I need
         ask_for_support_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section

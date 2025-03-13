@@ -1,8 +1,11 @@
 class Publishers::JobListing::DocumentsConfirmationForm < Publishers::JobListing::VacancyForm
-  validates :upload_additional_document, inclusion: { in: [true, false, "true", "false"] }
+  include ActiveModel::Attributes
+
+  validates :upload_additional_document, inclusion: { in: [true, false] }
 
   def self.fields
     %i[upload_additional_document]
   end
-  attr_accessor(*fields)
+
+  attribute :upload_additional_document, :boolean
 end

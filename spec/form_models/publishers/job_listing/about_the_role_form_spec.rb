@@ -10,7 +10,6 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
   before { subject.valid? }
 
   it { is_expected.to validate_inclusion_of(:ect_status).in_array(Vacancy.ect_statuses.keys) }
-  it { is_expected.to validate_inclusion_of(:further_details_provided).in_array([true, false, "true", "false"]) }
 
   describe "skills_and_experience" do
     let(:error) { %i[skills_and_experience blank] }
@@ -115,7 +114,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       context "when safeguarding_information_provided is false" do
         let(:error) { %i[safeguarding_information blank] }
 
-        before { allow(subject).to receive(:safeguarding_information_provided).and_return("false") }
+        let(:params) { { safeguarding_information_provided: "false" } }
 
         it "passes validation" do
           expect(subject.errors.added?(*error)).to be false
@@ -173,8 +172,6 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       let(:presence_error) { %i[safeguarding_information blank] }
       let(:length_error) { %i[safeguarding_information length] }
 
-      it { is_expected.not_to validate_inclusion_of(:safeguarding_information_provided).in_array([true, false, "true", "false"]) }
-
       it "passes validation" do
         expect(subject.errors.added?(*presence_error)).to be false
         expect(subject.errors.added?(*length_error)).to be false
@@ -184,12 +181,13 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
 
   describe "further_details" do
     context "when further_details_provided is false" do
-      before { allow(subject).to receive(:further_details_provided).and_return("false") }
+      let(:params) { { further_details_provided: "false" } }
+
       it { is_expected.not_to validate_presence_of(:further_details) }
     end
 
     context "when further_details_provided is true" do
-      before { allow(subject).to receive(:further_details_provided).and_return("true") }
+      let(:params) { { further_details_provided: "true" } }
 
       it { is_expected.to validate_presence_of(:further_details) }
 

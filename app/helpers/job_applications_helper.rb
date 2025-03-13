@@ -52,31 +52,30 @@ module JobApplicationsHelper
   end
 
   def job_application_support_needed_info(job_application)
-    case job_application.support_needed
-    when "yes"
+    case job_application.is_support_needed
+    when true
       safe_join([tag.div("Yes", class: "govuk-body", id: "support_needed"),
                  tag.p(job_application.support_needed_details, class: "govuk-body", id: "support_needed_details")])
-    when "no"
+    when false
       tag.div("No", id: "support_needed")
     end
   end
 
   def job_application_close_relationships_info(job_application)
-    case job_application.close_relationships
-    when "yes"
+    case job_application.has_close_relationships
+    when true
       safe_join([tag.div("Yes", class: "govuk-body", id: "close_relationships"),
                  tag.p(job_application.close_relationships_details, class: "govuk-body", id: "close_relationships_details")])
-    when "no"
+    when false
       tag.div("No", class: "govuk-body", id: "close_relationships")
     end
   end
 
   def job_application_safeguarding_issues_info(job_application)
-    case job_application.safeguarding_issue
-    when "yes"
+    if job_application.has_safeguarding_issue
       safe_join([tag.div("Yes", class: "govuk-body", id: "safeguarding_issue"),
                  tag.p(job_application.safeguarding_issue_details, class: "govuk-body", id: "safeguarding_issue_details")])
-    when "no"
+    else
       tag.div("No", class: "govuk-body", id: "safeguarding_issue")
     end
   end
@@ -115,9 +114,9 @@ module JobApplicationsHelper
   end
 
   def visa_sponsorship_needed_answer(job_application)
-    return unless job_application.right_to_work_in_uk.present?
-
-    job_application.right_to_work_in_uk == "yes" ? I18n.t("jobseekers.profiles.personal_details.work.options.true") : I18n.t("jobseekers.profiles.personal_details.work.options.false")
+    unless job_application.has_right_to_work_in_uk.nil?
+      I18n.t("jobseekers.profiles.personal_details.work.options.#{job_application.has_right_to_work_in_uk}")
+    end
   end
 
   def radio_button_legend_hint
@@ -187,15 +186,15 @@ module JobApplicationsHelper
       phone_number: "07123456789",
       teacher_reference_number: "1234567",
       qualified_teacher_status: "yes",
-      statutory_induction_complete: "yes",
-      right_to_work_in_uk: "yes",
-      safeguarding_issue: "no",
+      is_statutory_induction_complete: true,
+      has_right_to_work_in_uk: true,
+      has_safeguarding_issue: false,
       safeguarding_issue_details: "",
       qualified_teacher_status_year: "2021",
       email_address: "jane.smith@gmail.com",
-      support_needed: "yes",
+      is_support_needed: true,
       support_needed_details: "I require a wheelchair accessible room for an interview",
-      close_relationships: "yes",
+      has_close_relationships: true,
       close_relationships_details: "Brother-in-law works at the trust",
       personal_statement:
         "As an English teacher, I am extremely passionate about instilling a love of reading and the written word into young people. I have been interested in a position at your school for a number of years and was thrilled to see this opportunity. I received my QTS in 2019, and have since worked as an English teacher in a secondary school in Sheffield.<br />

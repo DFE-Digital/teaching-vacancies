@@ -25,7 +25,7 @@ RSpec.describe PersonalDetails do
         expect(personal_details.first_name).to eq(previous_application.first_name)
         expect(personal_details.last_name).to eq(previous_application.last_name)
         expect(personal_details.phone_number).to eq(previous_application.phone_number)
-        expect(personal_details.right_to_work_in_uk).to eq(previous_application.right_to_work_in_uk == "yes")
+        expect(personal_details.has_right_to_work_in_uk).to eq(previous_application.has_right_to_work_in_uk)
       end
 
       it "sets some steps to completed" do
@@ -35,14 +35,14 @@ RSpec.describe PersonalDetails do
 
     context "when the jobseeker has a previous draft application" do
       before do
-        create(:job_application, :status_draft, jobseeker:, first_name: "karl", last_name: "karlssen", phone_number: "01234567899", right_to_work_in_uk: "yes")
+        create(:job_application, :status_draft, jobseeker:, first_name: "karl", last_name: "karlssen", phone_number: "01234567899", has_right_to_work_in_uk: true)
       end
 
       it "does not use details from draft application" do
         expect(personal_details.first_name).to be_nil
         expect(personal_details.last_name).to be_nil
         expect(personal_details.phone_number).to be_nil
-        expect(personal_details.right_to_work_in_uk).to be_nil
+        expect(personal_details.has_right_to_work_in_uk).to be_nil
       end
 
       it "does not set steps to completed" do

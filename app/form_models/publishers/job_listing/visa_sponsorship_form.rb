@@ -1,8 +1,10 @@
 class Publishers::JobListing::VisaSponsorshipForm < Publishers::JobListing::VacancyForm
-  validates :visa_sponsorship_available, inclusion: { in: [true, false, "true", "false"] }
+  include ActiveModel::Attributes
+
+  validates :visa_sponsorship_available, inclusion: { in: [true, false] }
 
   def self.fields
     %i[visa_sponsorship_available]
   end
-  attr_accessor(*fields)
+  attribute :visa_sponsorship_available, :boolean
 end

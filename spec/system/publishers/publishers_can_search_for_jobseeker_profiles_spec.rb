@@ -22,7 +22,7 @@ RSpec.describe "Publishers searching for Jobseeker profiles", type: :system do
   let(:part_time_preference_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 
   let!(:no_right_to_work_in_uk_profile) { create(:jobseeker_profile, personal_details: personal_details, qualified_teacher_status: "yes", qualified_teacher_status_year: "2000", job_preferences: no_right_to_work_in_uk_preferences) }
-  let(:personal_details) { create(:personal_details, right_to_work_in_uk: false) }
+  let(:personal_details) { create(:personal_details, has_right_to_work_in_uk: false) }
   let(:no_right_to_work_in_uk_preferences) { create(:job_preferences, roles: %w[teacher], key_stages: %w[ks1], working_patterns: %w[part_time], locations: [no_right_to_work_in_uk_containing_school], subjects: ["Geography"]) }
   let(:no_right_to_work_in_uk_containing_school) { create(:job_preferences_location, name: "London", radius: 100) }
 

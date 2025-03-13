@@ -6,8 +6,6 @@ module Jobseekers
       include ActiveModel::Attributes
       include CompletedFormAttribute
 
-      FIELDS = %i[unexplained_employment_gaps_present].freeze
-
       class << self
         def storable_fields
           []
@@ -21,12 +19,14 @@ module Jobseekers
           super.merge(unexplained_employment_gaps: model.unexplained_employment_gaps).merge(completed_attrs(model, :employment_history))
         end
       end
-      attr_accessor(*FIELDS, :unexplained_employment_gaps)
+      attr_accessor(:unexplained_employment_gaps)
 
       validate :employment_history_gaps_are_explained
 
+      attribute :unexplained_employment_gaps_present, :boolean
+
       def employment_history_gaps_are_explained
-        return unless unexplained_employment_gaps_present == "true" && employment_history_section_completed
+        return unless unexplained_employment_gaps_present && employment_history_section_completed
 
         unexplained_employment_gaps.each_value do |details|
           gap_duration = distance_of_time_in_words(details[:started_on], details[:ended_on] || Time.zone.today)

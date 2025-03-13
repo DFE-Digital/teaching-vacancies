@@ -1,4 +1,6 @@
 class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyForm
+  include ActiveModel::Attributes
+
   include ActionView::Helpers::SanitizeHelper
 
   SALARIES = {
@@ -12,13 +14,17 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
   SALARIES.each do |key, value|
     validates key, presence: true, length: { minimum: 1, maximum: 256 }, if: -> { params[:salary_types]&.include?(value) }
   end
-  validates :benefits, inclusion: { in: [true, false, "true", "false"] }
-  validates :benefits_details, presence: true, length: { minimum: 1, maximum: 256 }, if: -> { benefits == "true" }
+  validates :benefits, inclusion: { in: [true, false] }
+  validates :benefits_details, presence: true, length: { minimum: 1, maximum: 256 }, if: -> { benefits }
+
+  FIELDS = %i[actual_salary salary pay_scale benefits_details salary_types hourly_rate].freeze
 
   def self.fields
-    %i[actual_salary salary pay_scale benefits benefits_details salary_types hourly_rate]
+    FIELDS + %i[benefits]
   end
-  attr_accessor(*fields)
+  attr_accessor(*FIELDS)
+
+  attribute :benefits, :boolean
 
   def params_to_save
     SALARIES.each { |salary, salary_type| params[salary] = nil unless params[:salary_types]&.include? salary_type }

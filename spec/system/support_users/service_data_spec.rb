@@ -47,7 +47,7 @@ RSpec.describe "Service Data supportal section" do
       expect(page).to have_row("First name", personal_details.first_name)
       expect(page).to have_row("Last name", personal_details.last_name)
       expect(page).to have_row("Phone number", personal_details.phone_number)
-      expect(page).to have_row("Right to work in uk", "true")
+      expect(page).to have_row("Has right to work in uk", "true")
     end
 
     within(summary_card("Jobseeker Profile")) do

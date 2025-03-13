@@ -58,7 +58,7 @@ RSpec.describe "Jobseekers can submit a job application" do
   end
 
   context "when the application is complete but invalid" do
-    let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy, statutory_induction_complete: "invalid answer") }
+    let(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy, is_statutory_induction_complete: nil) }
 
     it "does not allow jobseekers to submit application, and informs jobseeker of invalid value" do
       check I18n.t("helpers.label.jobseekers_job_application_review_form.confirm_data_accurate_options.1")
@@ -69,8 +69,8 @@ RSpec.describe "Jobseekers can submit a job application" do
       expect(JobApplication.first.status).to eq("draft")
       expect(page).not_to have_content("There is a problem")
       expect(page).to have_content(I18n.t("messages.jobs.action_required.message.jobseeker"))
-      expect(page).to have_link(I18n.t("activemodel.errors.models.jobseekers/job_application/professional_status_form.attributes.statutory_induction_complete.inclusion"),
-                                href: "#statutory_induction_complete")
+      expect(page).to have_link(I18n.t("activemodel.errors.models.jobseekers/job_application/professional_status_form.attributes.is_statutory_induction_complete.inclusion"),
+                                href: "#is_statutory_induction_complete")
     end
   end
 end
