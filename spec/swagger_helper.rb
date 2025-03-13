@@ -304,14 +304,19 @@ RSpec.configure do |config|
                          job_title
                          external_reference
                          external_advert_url
+                         publish_on
                          expires_at
                          job_advert
                          salary
+                         benefits_details
+                         starts_on
                          schools
                          job_roles
                          working_patterns
                          contract_type
                          phases
+                         key_stages
+                         subjects
                          is_job_share
                          ect_suitable
                          visa_sponsorship_available],
@@ -381,61 +386,27 @@ RSpec.configure do |config|
                 description: "Whether the role is open to a job share. Defaults to false.",
               },
               schools: {
-                oneOf: [
-                  {
-                    type: :object,
-                    additionalProperties: false,
-                    required: %i[school_urns],
-                    properties: {
-                      school_urns: {
-                        type: :array,
-                        minItems: 1,
-                        items: {
-                          type: :string,
-                          example: "123456",
-                          description: "The unique reference number (URN) for an individual school.",
-                        },
-                      },
+                type: :object,
+                additionalProperties: false,
+                required: %i[school_urns trust_uid],
+                properties: {
+                  school_urns: {
+                    type: :array,
+                    minItems: 0,
+                    items: {
+                      type: :string,
+                      example: "123456",
+                      description: "The unique reference number (URN) for an individual school.",
                     },
-                    description: "Schema for a vacancy belonging to one or more schools by URN.",
                   },
-                  {
-                    type: :object,
-                    additionalProperties: false,
-                    required: %i[trust_uid school_urns],
-                    properties: {
-                      trust_uid: {
-                        type: :string,
-                        example: "12345",
-                        description: "Unique identifier for a trust.",
-                      },
-                      school_urns: {
-                        type: :array,
-                        minItems: 0,
-                        items: {
-                          type: :string,
-                          example: "12345",
-                          description: "URNs of individual schools under the trust (optional).",
-                        },
-                      },
-                    },
-                    description: "Schema for a vacancy belonging to a trust, possibly linked to multiple schools.",
+                  trust_uid: {
+                    type: :string,
+                    example: "12345",
+                    description: "Unique identifier for a trust.",
+                    nullable: true,
                   },
-                  {
-                    type: :object,
-                    additionalProperties: false,
-                    required: %i[trust_uid],
-                    properties: {
-                      trust_uid: {
-                        type: :string,
-                        example: "12345",
-                        description: "Unique identifier for a trust.",
-                      },
-                    },
-                    description: "Schema for a vacancy belonging to a trust without any specific school URNs.",
-                  },
-                ],
-                description: "Specifies which school(s) or trust the vacancy belongs to.",
+                },
+                description: "Specifies which school(s) and/or trust the vacancy belongs to.",
               },
               job_roles: {
                 type: :array,

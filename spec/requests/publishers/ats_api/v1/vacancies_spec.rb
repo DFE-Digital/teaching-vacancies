@@ -254,7 +254,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         let(:school) { create(:school) }
         let(:source) { create(:vacancy, :external, external_reference: "Ext-ref", publisher_ats_api_client: client) }
-        let(:school_urns) { [school].map { |school| school.urn.to_i } }
         let(:vacancy) do
           {
             vacancy: {
@@ -271,7 +270,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               contract_type: source.contract_type,
               phases: source.phases,
               schools: {
-                school_urns: school_urns,
+                school_urns: [school.urn.to_i],
               },
             },
           }
@@ -387,7 +386,18 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   path "/ats-api/v1/vacancies/{id}" do
     parameter name: "id", in: :path, type: :string, description: "The id of the vacancy"
 
-    let!(:original_vacancy) { create(:vacancy, :external, publisher_ats_api_client: client) }
+    let!(:trust) { create(:trust) }
+    let!(:school) { create(:school, school_groups: [trust]) }
+    let!(:original_vacancy) do
+      create(:vacancy,
+             :external,
+             organisations: [school],
+             publisher_ats_api_client: client,
+             other_start_date_details: "Around April",
+             start_date_type: "other",
+             starts_on: nil,
+             is_job_share: true)
+    end
     let(:id) { original_vacancy.id }
 
     get("Retrieves details for a single vacancy by its unique ID, if it belongs to the requesting client.") do
@@ -408,7 +418,30 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         schema "$ref" => "#/components/schemas/vacancy_response"
 
-        run_test!
+        run_test! do |response|
+          expect(response.parsed_body).to include(
+            "id" => id,
+            "external_advert_url" => original_vacancy.external_advert_url,
+            "publish_on" => original_vacancy.publish_on.iso8601,
+            "expires_at" => original_vacancy.expires_at.iso8601(3),
+            "job_title" => original_vacancy.job_title,
+            "job_advert" => original_vacancy.job_advert,
+            "salary" => original_vacancy.salary,
+            "visa_sponsorship_available" => original_vacancy.visa_sponsorship_available,
+            "external_reference" => original_vacancy.external_reference,
+            "is_job_share" => original_vacancy.is_job_share,
+            "ect_suitable" => original_vacancy.ect_status == "ect_suitable",
+            "job_roles" => original_vacancy.job_roles,
+            "working_patterns" => original_vacancy.working_patterns,
+            "contract_type" => original_vacancy.contract_type,
+            "phases" => original_vacancy.phases,
+            "benefits_details" => original_vacancy.benefits_details,
+            "starts_on" => original_vacancy.other_start_date_details,
+            "key_stages" => original_vacancy.key_stages,
+            "subjects" => original_vacancy.subjects,
+            "schools" => { "school_urns" => [school.urn], "trust_uid" => trust.uid },
+          )
+        end
       end
 
       response(401, "Occurs when the provided API key is incorrect or missing.") do
@@ -489,14 +522,13 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(400, "Missing or invalid fields in the request body.") do
         schema "$ref" => "#/components/schemas/bad_request_error"
 
-        let(:school) { build_stubbed(:school) }
         let(:source) { build_stubbed(:vacancy, :external) }
         let(:vacancy) do
           {
             vacancy: {
               job_advert: source.job_advert,
               salary: source.salary,
-              school_urns: [school.urn.to_i],
+              school_urns: [12_345],
               job_title: source.job_title,
               job_roles: source.job_roles,
               working_patterns: source.working_patterns,
