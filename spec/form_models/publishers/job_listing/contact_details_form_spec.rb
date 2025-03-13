@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ContactDetailsForm, type: :model do
-  subject { described_class.new(params, vacancy, current_publisher) }
+  subject { described_class.new(params.merge(extra_params), vacancy, current_publisher) }
 
   let(:vacancy) { build_stubbed(:vacancy) }
   let(:current_publisher) { build_stubbed(:publisher, email: "test@example.com") }
@@ -9,18 +9,20 @@ RSpec.describe Publishers::JobListing::ContactDetailsForm, type: :model do
 
   describe "contact number" do
     context "when contact_number_provided is false" do
-      before { allow(subject).to receive(:contact_number_provided).and_return(false) }
+      let(:extra_params) { { contact_number_provided: "false" } }
+
       it { is_expected.not_to validate_presence_of(:contact_number) }
     end
 
     context "when contact_number_provided is true" do
-      before { allow(subject).to receive(:contact_number_provided).and_return(true) }
+      let(:extra_params) { { contact_number_provided: "true" } }
+
       it { is_expected.to validate_presence_of(:contact_number) }
     end
   end
 
   describe "contact email" do
-    before { allow(subject).to receive(:contact_number_provided).and_return(false) }
+    let(:extra_params) { { contact_number_provided: "false" } }
 
     context "when contact_email is current publisher email" do
       let(:params) { { other_contact_email: nil, contact_email: current_publisher.email } }

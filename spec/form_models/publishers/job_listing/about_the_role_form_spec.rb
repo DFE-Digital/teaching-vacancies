@@ -114,7 +114,7 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
       context "when safeguarding_information_provided is false" do
         let(:error) { %i[safeguarding_information blank] }
 
-        before { allow(subject).to receive(:safeguarding_information_provided).and_return("false") }
+        let(:params) { { safeguarding_information_provided: "false" } }
 
         it "passes validation" do
           expect(subject.errors.added?(*error)).to be false
@@ -181,12 +181,13 @@ RSpec.describe Publishers::JobListing::AboutTheRoleForm, type: :model do
 
   describe "further_details" do
     context "when further_details_provided is false" do
-      before { allow(subject).to receive(:further_details_provided).and_return(false) }
+      let(:params) { { further_details_provided: "false" } }
+
       it { is_expected.not_to validate_presence_of(:further_details) }
     end
 
     context "when further_details_provided is true" do
-      before { allow(subject).to receive(:further_details_provided).and_return(true) }
+      let(:params) { { further_details_provided: "true" } }
 
       it { is_expected.to validate_presence_of(:further_details) }
 
