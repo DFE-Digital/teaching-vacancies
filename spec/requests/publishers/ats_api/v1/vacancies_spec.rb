@@ -115,27 +115,56 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy) do
           {
             vacancy: {
-              external_advert_url: source.external_advert_url,
-              expires_at: source.expires_at,
-              job_title: source.job_title,
-              job_advert: source.job_advert,
-              salary: source.salary,
-              visa_sponsorship_available: source.visa_sponsorship_available,
-              external_reference: source.external_reference,
               publisher_ats_api_client_id: client.id,
-              is_job_share: source.is_job_share,
-              job_roles: source.job_roles,
-              working_patterns: source.working_patterns,
-              contract_type: source.contract_type,
-              phases: source.phases,
+              external_advert_url: "https://example.com/jobs/123",
+              expires_at: "2026-01-01",
+              job_title: "Teacher of Geography",
+              job_advert: "We're looking for a dedicated Teacher of Geography",
+              salary: "£12,345 to £67,890",
+              visa_sponsorship_available: true,
+              external_reference: "REF1234HYZ",
+              ect_suitable: true,
+              job_roles: %w[teacher],
+              is_job_share: false,
+              working_patterns: %w[full_time],
+              contract_type: "permanent",
+              phases: %w[secondary],
+              publish_on: (Time.zone.today + 1).strftime("%Y-%m-%d"),
               schools: organisation_ids,
+              subjects: %w[Biology],
+              key_stages: %w[ks1 ks2],
+              starts_on: "Next April",
             },
           }
         end
 
-        it "creates a vacancy" do |example|
+        it "creates a vacancy with the given values" do |example|
           expect { submit_request(example.metadata) }.to change(Vacancy, :count).from(0).to(1)
           assert_response_matches_metadata(example.metadata)
+          created_vacancy = Vacancy.last
+          expect(response.parsed_body).to eq("id" => created_vacancy.id)
+          expect(created_vacancy).to have_attributes(
+            external_advert_url: "https://example.com/jobs/123",
+            expires_at: Date.new(2026, 1, 1),
+            job_title: "Teacher of Geography",
+            job_advert: "We're looking for a dedicated Teacher of Geography",
+            salary: "£12,345 to £67,890",
+            visa_sponsorship_available: true,
+            external_reference: "REF1234HYZ",
+            ect_status: "ect_suitable",
+            job_roles: %w[teacher],
+            is_job_share: false,
+            working_patterns: %w[full_time],
+            contract_type: "permanent",
+            phases: %w[secondary],
+            subjects: %w[Biology],
+            key_stages: %w[ks1 ks2],
+            publish_on: Time.zone.today + 1,
+            starts_on: nil,
+            start_date_type: "other",
+            other_start_date_details: "Next April",
+            organisations: [school1],
+          )
         end
 
         describe "organisation linking", document: false do
@@ -232,7 +261,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             submit_request(example.metadata)
             assert_response_matches_metadata(example.metadata)
             expect(response.parsed_body).to eq(
-              { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, salary, external_reference, job_roles, working_patterns, contract_type, phases, schools"] },
+              { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, job_advert, salary, external_reference, job_roles, working_patterns, contract_type, phases, schools"] },
             )
           end
         end
@@ -396,7 +425,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
              other_start_date_details: "Around April",
              start_date_type: "other",
              starts_on: nil,
-             is_job_share: true)
+             is_job_share: true,
+             ect_status: "ect_unsuitable")
     end
     let(:id) { original_vacancy.id }
 
@@ -494,6 +524,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(200, "Indicates the vacancy was updated. Returns the updated resource data.") do
         schema "$ref" => "#/components/schemas/vacancy_response"
 
+        let(:publish_on) { (Time.zone.today + 3).strftime("%Y-%m-%d") }
         let(:vacancy) do
           {
             vacancy: {
@@ -508,6 +539,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               job_roles: %w[teacher],
               working_patterns: %w[full_time],
               contract_type: "permanent",
+              publish_on: publish_on,
+              benefits_details: "Extra benefits",
+              starts_on: "2026-10-12",
+              key_stages: %w[ks2],
+              subjects: %w[Geography],
               phases: %w[secondary],
               schools: {
                 trust_uid: original_vacancy.organisation.trust.uid,
@@ -531,6 +567,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             "job_roles" => %w[teacher],
             "working_patterns" => %w[full_time],
             "contract_type" => "permanent",
+            "publish_on" => publish_on,
+            "benefits_details" => "Extra benefits",
+            "starts_on" => "2026-10-12",
+            "key_stages" => %w[ks2],
+            "subjects" => %w[Geography],
             "phases" => %w[secondary],
             "schools" => { "school_urns" => [],
                            "trust_uid" => original_vacancy.organisation.trust.uid }, # Reassigned the vacancy to the trust central office
@@ -572,7 +613,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             submit_request(example.metadata)
             assert_response_matches_metadata(example.metadata)
             expect(response.parsed_body).to eq(
-              { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, salary, external_reference, job_roles, working_patterns, contract_type, phases, schools"] },
+              { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, job_advert, salary, external_reference, job_roles, working_patterns, contract_type, phases, schools"] },
             )
           end
         end
