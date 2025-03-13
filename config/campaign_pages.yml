@@ -14,7 +14,7 @@ shared:
       - primary
     radius: 15
   mostvacanciesbespoke+SECONDARY:
-    banner_image: "campaigns/primary_teacher.jpg"
+    banner_image: "campaigns/secondary_teacher.jpg"
     teaching_job_roles:
       - teacher
     phases:
