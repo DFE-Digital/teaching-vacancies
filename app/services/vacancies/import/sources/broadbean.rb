@@ -131,7 +131,7 @@ class Vacancies::Import::Sources::Broadbean
                  .gsub(/16-19|16_19/, "sixth_form_or_college")
 
     if phase == "middle"
-      school.map_middle_school_phase
+      map_middle_school_phase school.phase
     else
       [phase]
     end
