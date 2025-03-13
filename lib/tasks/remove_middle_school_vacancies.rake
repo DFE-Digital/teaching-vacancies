@@ -6,7 +6,7 @@ namespace :vacancies do
     Vacancy.active.find_each.select { |v| v.phases.include? nil }.each do |vacancy|
       extra_phases = mapper.map_middle_school_phase(vacancy.organisation.phase)
       vacancy.assign_attributes(phases: (vacancy.phases.compact + extra_phases).uniq)
-      vacancy.save!(touch: false)
+      vacancy.save(touch: false)
     end
   end
 end
