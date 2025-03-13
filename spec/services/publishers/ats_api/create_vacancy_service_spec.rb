@@ -171,6 +171,41 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         end
       end
 
+      describe "start date fields" do
+        context "when starts_on is not provided" do
+          it "does not set any start date fields" do
+            create_vacancy_service
+            expect(Vacancy.last).to have_attributes(starts_on: nil,
+                                                    start_date_type: nil,
+                                                    other_start_date_details: nil)
+          end
+        end
+
+        context "when starts_on is formatted as a date" do
+          let(:starts_on) { Time.zone.tomorrow.strftime("%Y-%m-%d") }
+          let(:params) { super().merge(starts_on: starts_on) }
+
+          it "sets the specific start date to the provided date" do
+            create_vacancy_service
+            expect(Vacancy.last).to have_attributes(starts_on: Time.zone.tomorrow,
+                                                    start_date_type: "specific_date",
+                                                    other_start_date_details: nil)
+          end
+        end
+
+        context "when starts_on is not a formatted as a date" do
+          let(:starts_on) { "September 2022" }
+          let(:params) { super().merge(starts_on: starts_on) }
+
+          it "sets the other start date details to the provided date" do
+            create_vacancy_service
+            expect(Vacancy.last).to have_attributes(starts_on: nil,
+                                                    start_date_type: "other",
+                                                    other_start_date_details: starts_on)
+          end
+        end
+      end
+
       context "when the vacancy belongs to a school" do
         it "creates a vacancy with the correct organisation" do
           create_vacancy_service

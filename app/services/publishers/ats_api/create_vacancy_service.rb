@@ -26,7 +26,22 @@ module Publishers
           params[:is_job_share] = params[:is_job_share].in?([true, "true"])
           params[:visa_sponsorship_available] = params[:visa_sponsorship_available].in?([true, "true"])
           params[:ect_status] = params[:ect_suitable].in?([true, "true"]) ? "ect_suitable" : "ect_unsuitable"
-          params.except(:schools, :ect_suitable).merge(organisations: organisations)
+          params.except(:schools, :ect_suitable)
+                .merge(organisations: organisations)
+                .merge(start_date_fields(params[:starts_on]))
+        end
+
+        def start_date_fields(starts_on)
+          return {} if starts_on.blank?
+
+          # Reusing this date parser from the legacy importers.
+          # We will need to move this class to AtsApi module when removing the legacy codebase.
+          parsed_date = ::Vacancies::Import::Parser::StartDate.new(starts_on)
+          if parsed_date.specific?
+            { starts_on: parsed_date.date, start_date_type: parsed_date.type }
+          else
+            { other_start_date_details: parsed_date.date, start_date_type: parsed_date.type }
+          end
         end
 
         def conflict_response(conflict_vacancy, error_message)

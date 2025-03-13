@@ -13,6 +13,9 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       expires_at: "2025-12-31",
       organisations: [school],
       ect_status: "ect_unsuitable",
+      other_start_date_details: "September 2022",
+      start_date_type: "other",
+      starts_on: nil,
     )
   end
   let(:publisher_ats_api_client_id) { create(:publisher_ats_api_client).id }
@@ -55,6 +58,41 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
         vacancy.reload
 
         expect(vacancy.ect_status).to eq("ect_unsuitable")
+      end
+
+      describe "start date fields" do
+        context "when starts_on is not provided" do
+          it "keeps the existing start date fields" do
+            update_vacancy_service
+            expect(vacancy.reload).to have_attributes(other_start_date_details: "September 2022",
+                                                      start_date_type: "other",
+                                                      starts_on: nil)
+          end
+        end
+
+        context "when starts_on is formatted as a date" do
+          let(:starts_on) { Time.zone.tomorrow.strftime("%Y-%m-%d") }
+          let(:params) { super().merge(starts_on: starts_on) }
+
+          it "sets the specific start date to the provided date" do
+            update_vacancy_service
+            expect(vacancy.reload).to have_attributes(starts_on: Time.zone.tomorrow,
+                                                      start_date_type: "specific_date",
+                                                      other_start_date_details: nil)
+          end
+        end
+
+        context "when starts_on is not a formatted as a date" do
+          let(:starts_on) { "September 2022" }
+          let(:params) { super().merge(starts_on: starts_on) }
+
+          it "sets the other start date details to the provided date" do
+            update_vacancy_service
+            expect(vacancy.reload).to have_attributes(starts_on: nil,
+                                                      start_date_type: "other",
+                                                      other_start_date_details: starts_on)
+          end
+        end
       end
 
       context "when providing a new value for optional params" do

@@ -23,7 +23,22 @@ module Publishers
           organisations = fetch_organisations(params[:schools])
           ect_status = ect_status_from(params[:ect_suitable])
           params[:ect_status] = ect_status if ect_status.present?
-          params.except(:schools, :ect_suitable).merge(organisations: organisations)
+          params.except(:schools, :ect_suitable)
+                .merge(organisations: organisations)
+                .merge(start_date_fields(params[:starts_on]))
+        end
+
+        def start_date_fields(starts_on)
+          return {} if starts_on.blank?
+
+          # Reusing this date parser from the legacy importers.
+          # We will need to move this class to AtsApi module when removing the legacy codebase.
+          parsed_date = ::Vacancies::Import::Parser::StartDate.new(starts_on)
+          if parsed_date.specific?
+            { starts_on: parsed_date.date, start_date_type: parsed_date.type, other_start_date_details: nil }
+          else
+            { other_start_date_details: parsed_date.date, start_date_type: parsed_date.type, starts_on: nil }
+          end
         end
 
         # On the update, does not change the already set value unless it is explicitly set to true/false.
