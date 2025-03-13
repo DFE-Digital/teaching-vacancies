@@ -100,8 +100,8 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     render json: { errors: ["The given ID does not match any vacancy for your ATS"] }, status: :not_found
   end
 
-  def render_bad_request(exception = nil)
-    render json: { errors: [exception&.message.presence || "Request body could not be read properly"] }, status: :bad_request
+  def render_bad_request(exception)
+    render json: { errors: [exception.message] }, status: :bad_request
   end
 
   def render_unprocessable_entity(exception)
