@@ -24,6 +24,8 @@ RSpec.describe "Creating a vacancy" do
       expect(page).to have_content("Salisbury School")
 
       click_on I18n.t("buttons.create_job")
+      expect(current_path).to eq(organisation_jobs_start_path)
+      click_on I18n.t("buttons.create_job")
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
@@ -159,6 +161,8 @@ RSpec.describe "Creating a vacancy" do
 
     scenario "saving and finishing later" do
       visit organisation_jobs_with_type_path
+      click_on I18n.t("buttons.create_job")
+      expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
 
       fill_in_job_title_form_fields(vacancy)
@@ -352,6 +356,7 @@ RSpec.describe "Creating a vacancy" do
 
     before do
       visit organisation_jobs_with_type_path
+      click_on I18n.t("buttons.create_job")
 
       fill_in_forms_until_start_date(vacancy)
 

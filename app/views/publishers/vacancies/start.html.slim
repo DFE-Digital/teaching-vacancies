@@ -1,0 +1,37 @@
+- content_for :page_title_prefix, t(".page_title")
+
+- content_for :breadcrumbs do
+  nav.govuk-breadcrumbs aria-label="Breadcrumbs"
+  = govuk_back_link text: t("buttons.back"), href: organisation_jobs_path
+
+.govuk-grid-row
+  .govuk-grid-column-full
+    h1.govuk-heading-l = t(".title")
+    p.govuk-body = t(".paragraphs.provide_details_about_the_role")
+
+    h3.govuk-heading-s = t(".contract_details")
+    p.govuk-body = t(".paragraphs.you_should_include_information")
+    ul.govuk-list.govuk-list--bullet
+      li = t(".list.job_location")
+      li = t(".list.part_time_or_full_time")
+      li = t(".list.contract_type")
+      li = t(".list.salary_details")
+      li = t(".list.start_date")
+
+    h3.govuk-heading-s = t(".info_about_role")
+    p.govuk-body = t(".paragraphs.should_include")
+    ul.govuk-list.govuk-list--bullet
+      li = t(".list.role_details")
+      li = t(".list.visa_sponsorship")
+      li = t(".list.additional_documents")
+
+    h3.govuk-heading-s = t(".listing_details")
+    p.govuk-body = t(".paragraphs.need_to_specify")
+    ul.govuk-list.govuk-list--bullet
+      li = t(".list.when_to_publish_role")
+      li = t(".list.closing_date")
+
+    p.govuk-body = t(".paragraphs.how_to_receive_applications")
+
+    = govuk_button_to t("buttons.create_job"), organisation_jobs_path
+    = govuk_link_to(t("buttons.cancel"), organisation_jobs_path)

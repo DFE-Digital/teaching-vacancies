@@ -623,6 +623,29 @@ en:
         heading: Check details and %{status} job listing
         page_title: "%{heading} - Create job listing - Teaching Vacancies - GOV.UK"
         steps: Create a job listing steps
+      start:
+        page_title: Create a job listing
+        title: Create a job listing
+        list:
+          job_location: job location
+          part_time_or_full_time: if the role is full or part time
+          contract_type: the contract type, for example, permanent, temporary or fixed term
+          salary_details: salary details
+          start_date: start date
+          role_details: role details including job responsibilites
+          visa_sponsorship: whether visa sponsorship is available
+          additional_documents: any additional documents, such as job description or person specification
+          when_to_publish_role: when the role should be published
+          closing_date: the closing date for applications
+        paragraphs:
+          you_should_include_information: "You should include information about:"
+          provide_details_about_the_role: Provide details about the role, how candidates should apply and when the listing should be pubished.
+          should_include: "You should include:"
+          how_to_receive_applications: You will also be able to choose how to receive applications
+          need_to_specify: "You will need to specify:"
+        contract_details: Contract details
+        info_about_role: Information about the role
+        listing_details: Listing details
       show:
         copied:
           success: Job listing copied

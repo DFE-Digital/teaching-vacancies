@@ -11,15 +11,17 @@ RSpec.describe "Creating a vacancy" do
 
   before do
     login_publisher(publisher: publisher, organisation: school_group)
+
+    visit organisation_jobs_with_type_path
+    click_on I18n.t("buttons.create_job")
   end
 
   after { logout }
 
   describe "the job location step" do
     scenario "displays error message unless a location is selected" do
-      visit organisation_jobs_with_type_path
+      expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
-
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
       within("h1") do
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
@@ -35,9 +37,8 @@ RSpec.describe "Creating a vacancy" do
     end
 
     scenario "redirects to job details when submitted successfully" do
-      visit organisation_jobs_with_type_path
+      expect(current_path).to eq(organisation_jobs_start_path)
       click_on I18n.t("buttons.create_job")
-
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
       within("h1") do
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
@@ -54,7 +55,7 @@ RSpec.describe "Creating a vacancy" do
   end
 
   scenario "publishes a vacancy" do
-    visit organisation_jobs_with_type_path
+    expect(current_path).to eq(organisation_jobs_start_path)
     click_on I18n.t("buttons.create_job")
     uncheck I18n.t("organisations.job_location_heading.central_office")
     click_on I18n.t("buttons.continue")
