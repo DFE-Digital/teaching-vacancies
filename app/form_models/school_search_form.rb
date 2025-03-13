@@ -42,7 +42,7 @@ class SchoolSearchForm
   end
 
   def job_availability_options
-    [true, false].map { |i| [i.to_s, I18n.t(i, scope: "organisations.filters.job_availability.options")] }
+    [["true", I18n.t("organisations.filters.job_availability.options.true")]]
   end
 
   def organisation_type_options

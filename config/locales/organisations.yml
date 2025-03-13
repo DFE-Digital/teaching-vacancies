@@ -12,7 +12,7 @@ en:
       job_availability:
         label: Job availability
         options:
-          true: Has jobs
+          true: Only show school with jobs available
           false: Does not have any jobs
     search:
       no_results_heading: No schools found
