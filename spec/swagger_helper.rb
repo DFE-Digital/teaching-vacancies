@@ -77,24 +77,6 @@ RSpec.configure do |config|
                          phases
                          schools],
             properties: {
-              external_advert_url: {
-                type: :string,
-                format: :uri,
-                example: "https://example.com/jobs/123",
-                description: "The URL where the job is advertised externally.",
-              },
-              publish_on: {
-                type: :string,
-                format: :date,
-                example: "2025-01-01",
-                description: "The date on which the vacancy should be published. Defaults to the current date.",
-              },
-              expires_at: {
-                type: :string,
-                format: :datetime,
-                example: "2025-03-13T15:30:00Z",
-                description: "The end datetime of the vacancy. Must be after the start date.",
-              },
               job_title: {
                 type: :string,
                 example: "Teacher of Geography",
@@ -105,35 +87,22 @@ RSpec.configure do |config|
                 example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
                 description: "The long form job advert text shown on the job listing.",
               },
-              salary: {
+              external_advert_url: {
                 type: :string,
-                example: "£12,345 to £67,890",
-                description: "Compensation for the role.",
-              },
-              benefits_details: {
-                type: :string,
-                example: "TLR2a",
-                description: "Any additional benefits or allowances.",
-              },
-              starts_on: {
-                type: :string,
-                example: "Easter",
-                description: "The start date (or approximate start timeframe) of the job.",
+                format: :uri,
+                example: "https://example.com/jobs/123",
+                description: "The URL where the job is advertised externally.",
               },
               external_reference: {
                 type: :string,
                 example: "123GTZY",
                 description: "An external reference or identifier for your own tracking.",
               },
-              visa_sponsorship_available: {
-                type: :boolean,
-                example: false,
-                description: "Indicates if a visa sponsorship is available for this role. Defaults to false.",
-              },
-              is_job_share: {
-                type: :boolean,
-                example: true,
-                description: "Whether the role is open to a job share. Defaults to false.",
+              expires_at: {
+                type: :string,
+                format: :datetime,
+                example: "2025-03-13T15:30:00Z",
+                description: "The end datetime of the vacancy. Must be after the start date.",
               },
               schools: {
                 oneOf: [
@@ -202,10 +171,11 @@ RSpec.configure do |config|
                 },
                 description: "An array of one or more job roles associated with the vacancy.",
               },
-              ect_suitable: {
-                type: :boolean,
-                example: true,
-                description: "Indicates whether the vacancy is suitable for ECTs (Early Career Teachers).",
+              contract_type: {
+                type: :string,
+                enum: Vacancy.contract_types.keys,
+                example: "permanent",
+                description: "The type of contract, e.g. 'permanent', 'fixed_term'.",
               },
               working_patterns: {
                 type: :array,
@@ -217,12 +187,6 @@ RSpec.configure do |config|
                 },
                 description: "An array of one or more working patterns for the vacancy.",
               },
-              contract_type: {
-                type: :string,
-                enum: Vacancy.contract_types.keys,
-                example: "permanent",
-                description: "The type of contract, e.g. 'permanent', 'fixed_term'.",
-              },
               phases: {
                 type: :array,
                 minItems: 1,
@@ -232,6 +196,42 @@ RSpec.configure do |config|
                   description: "Valid phase, e.g. 'primary', 'secondary', etc.",
                 },
                 description: "One or more phases of education that the vacancy covers.",
+              },
+              salary: {
+                type: :string,
+                example: "£12,345 to £67,890",
+                description: "Compensation for the role.",
+              },
+              publish_on: {
+                type: :string,
+                format: :date,
+                example: "2025-01-01",
+                description: "The date on which the vacancy should be published. Defaults to the current date.",
+              },
+              benefits_details: {
+                type: :string,
+                example: "TLR2a",
+                description: "Any additional benefits or allowances.",
+              },
+              starts_on: {
+                type: :string,
+                example: "Easter",
+                description: "The start date (or approximate start timeframe) of the job.",
+              },
+              visa_sponsorship_available: {
+                type: :boolean,
+                example: false,
+                description: "Indicates if a visa sponsorship is available for this role. Defaults to false.",
+              },
+              is_job_share: {
+                type: :boolean,
+                example: true,
+                description: "Whether the role is open to a job share. Defaults to false.",
+              },
+              ect_suitable: {
+                type: :boolean,
+                example: true,
+                description: "Indicates whether the vacancy is suitable for ECTs (Early Career Teachers).",
               },
               key_stages: {
                 type: :array,
