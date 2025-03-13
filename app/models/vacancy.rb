@@ -165,13 +165,12 @@ class Vacancy < ApplicationRecord
     organisations.find(&:trust?) || publisher_organisation || organisations.first&.school_groups&.first
   end
 
-  def organisation_urns
-    organisations.filter_map do |organisation|
-      if organisation.is_a?(School)
-        { school_urns: [organisation.urn] }
-      elsif organisation.is_a?(SchoolGroup) && organisation.uid.present?
-        { trust_uid: organisation.uid, school_urns: organisation.schools.pluck(:urn) }
-      end
+  def trust_uid
+    org = organisation # So the queries for retrieving the organisation only run once.
+    if org.is_a?(SchoolGroup)
+      org.uid
+    else
+      org.school_groups.first&.uid
     end
   end
 

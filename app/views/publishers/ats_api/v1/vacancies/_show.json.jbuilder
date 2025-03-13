@@ -12,8 +12,8 @@ json.is_job_share vacancy.is_job_share
 json.external_reference vacancy.external_reference
 json.job_roles vacancy.job_roles
 json.schools do
-  json.school_urns(vacancy.organisations.map(&:urn))
-  json.trust_uid(vacancy.organisations.first&.trust&.uid)
+  json.school_urns(vacancy.organisations.filter_map(&:urn))
+  json.trust_uid(vacancy.trust_uid)
 end
 json.ect_suitable vacancy.ect_status == "ect_suitable"
 json.working_patterns vacancy.working_patterns
