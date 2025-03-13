@@ -95,14 +95,32 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
         end
       end
 
-      context "when providing a new value for optional params" do
-        let(:params) { super().merge(ect_suitable: true) }
+      describe "'ect_status' updates" do
+        context "when providing a new value" do
+          let(:params) { super().merge(ect_suitable: true) }
 
-        it "updates the value" do
-          update_vacancy_service
-          vacancy.reload
+          it "updates the value" do
+            update_vacancy_service
+            expect(vacancy.reload.ect_status).to eq("ect_suitable")
+          end
+        end
 
-          expect(vacancy.ect_status).to eq("ect_suitable")
+        context "when the given value matches the existing status" do
+          let(:params) { super().merge(ect_suitable: false) }
+
+          it "keeps the existing value" do
+            update_vacancy_service
+            expect(vacancy.reload.ect_status).to eq("ect_unsuitable")
+          end
+        end
+
+        context "when not providing a value" do
+          let(:params) { super().except(:ect_suitable) }
+
+          it "keeps the existing value" do
+            update_vacancy_service
+            expect(vacancy.reload.ect_status).to eq("ect_unsuitable")
+          end
         end
       end
     end
