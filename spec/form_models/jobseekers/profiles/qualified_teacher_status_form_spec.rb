@@ -23,64 +23,19 @@ module Jobseekers
           it { is_expected.to validate_presence_of(:teacher_reference_number) }
           it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
           it { is_expected.not_to allow_value("12345").for(:teacher_reference_number) }
-          it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array(%w[yes]) }
+          it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array([true]) }
         end
 
         context "when qualified_teacher_status is 'no'" do
-          let(:attributes) { { qualified_teacher_status: "no", has_teacher_reference_number: "no" } }
+          let(:attributes) { { qualified_teacher_status: "no", has_teacher_reference_number: "false" } }
 
           it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
-          it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array(%w[yes no]) }
         end
 
         context "when qualified_teacher_status is 'on_track'" do
-          let(:attributes) { { qualified_teacher_status: "on_track", has_teacher_reference_number: "yes" } }
+          let(:attributes) { { qualified_teacher_status: "on_track", has_teacher_reference_number: "true" } }
 
-          it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array(%w[yes no]) }
           it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
-        end
-      end
-
-      describe "#updated_teacher_reference_number" do
-        context "when has_teacher_reference_number is 'yes'" do
-          let(:attributes) { { has_teacher_reference_number: "yes", teacher_reference_number: "1234567" } }
-
-          it "returns the teacher reference number" do
-            expect(form.updated_teacher_reference_number).to eq("1234567")
-          end
-        end
-
-        context "when has_teacher_reference_number is 'no'" do
-          let(:attributes) { { has_teacher_reference_number: "no" } }
-
-          it "returns nil" do
-            expect(form.updated_teacher_reference_number).to be_nil
-          end
-        end
-      end
-
-      context "when statutory_induction_complete is yes" do
-        let(:valid_attributes) do
-          {
-            qualified_teacher_status: "yes",
-            qualified_teacher_status_year: "2020",
-            has_teacher_reference_number: "yes",
-            teacher_reference_number: "1234567",
-          }
-        end
-
-        context "when statutory_induction_complete is yes" do
-          it "sets statutory_induction_complete_details to nil" do
-            subject = described_class.new(valid_attributes.merge(is_statutory_induction_complete: true, statutory_induction_complete_details: "some info"))
-            expect(subject.statutory_induction_complete_details).to be_nil
-          end
-        end
-
-        context "when statutory_induction_complete is no" do
-          it "does not modify statutory_induction_complete_details" do
-            subject = described_class.new(valid_attributes.merge(is_statutory_induction_complete: false, statutory_induction_complete_details: "some info"))
-            expect(subject.statutory_induction_complete_details).to eq "some info"
-          end
         end
       end
     end
