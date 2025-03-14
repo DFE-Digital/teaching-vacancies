@@ -1,4 +1,6 @@
 class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
+  skip_before_action :verify_authenticity_token # API requests don't need CRSF protection.
+
   before_action :authenticate_client!
   before_action :validate_payload, only: %i[create update]
 
