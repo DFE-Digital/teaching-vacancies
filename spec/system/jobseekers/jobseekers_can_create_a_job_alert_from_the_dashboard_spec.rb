@@ -87,7 +87,7 @@ RSpec.describe "Jobseekers can create a job alert from the dashboard", recaptcha
     select I18n.t("jobs.search.number_of_miles", count: search_criteria["radius"])
     choose I18n.t("helpers.label.jobseekers_subscription_form.frequency_options.#{subscription.frequency}")
     search_criteria["working_patterns"].each do |working_pattern|
-      check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{working_pattern}")
+      check I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{working_pattern}")
     end
     find("summary", text: "Teaching & leadership").click
     search_criteria["teaching_job_roles"].each do |job_role|
