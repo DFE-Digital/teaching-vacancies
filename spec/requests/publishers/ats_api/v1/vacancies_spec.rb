@@ -56,7 +56,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
 
       response(401, "Occurs when the provided API key is incorrect or missing") do
-        schema "$ref" => "#/components/schemas/bad_request_error"
+        schema "$ref" => "#/components/schemas/unauthorized_error"
 
         let(:"X-Api-Key") { "wrong-key" }
         let(:page) { nil }
