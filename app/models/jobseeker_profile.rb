@@ -49,15 +49,6 @@ class JobseekerProfile < ApplicationRecord
     end
   end
 
-  # Follow the stardard Google deployment pattern for various booleans:
-  # 1. Add new column
-  # 2. Populate new column alongside old
-  # 3. backfill new column at leisure
-  # 4. start using new column
-  # 5. remove old column
-  # add this once column has been backfilled
-  self.ignored_columns += %i[statutory_induction_complete]
-
   def self.copy_attributes(record, previous_application)
     record.assign_attributes(
       employments: previous_application.employments.map(&:duplicate),
