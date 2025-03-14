@@ -19,7 +19,7 @@ class SchoolSearchForm
 
     if attrs.key?(:location)
       self.radius = Search::RadiusBuilder.new(attrs[:location], attrs[:radius]).radius.to_s
-      attrs[:location] = [attrs[:location], radius]
+      attrs[:radius] = radius
     else
       attrs.delete(:radius)
     end
