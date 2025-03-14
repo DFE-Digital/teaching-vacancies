@@ -12,7 +12,7 @@ en:
     category:
       inclusion: Select a qualification
     finished_studying:
-      blank: Select yes if you have finished studying for this qualification
+      inclusion: Select yes if you have finished studying for this qualification
     finished_studying_details:
       blank: Tell us why you are still studying for this qualification
     grade:
@@ -159,7 +159,7 @@ en:
       blank: Enter working patterns details
       maximum_words: Working patterns details must be 50 words or less
     is_job_share:
-      blank: Select yes if this role can be done as a job share
+      inclusion: Select yes if this role can be done as a job share
   pay_package_errors: &pay_package_errors
     actual_salary:
       blank: Enter actual salary
@@ -465,7 +465,7 @@ en:
         jobseekers/job_application/training_and_cpds_form:
           attributes:
             training_and_cpds_section_completed:
-              blank: Select yes if you have completed this section
+              inclusion: Select yes if you have completed this section
         jobseekers/job_application/religious_information_form:
           attributes:
             following_religion:
