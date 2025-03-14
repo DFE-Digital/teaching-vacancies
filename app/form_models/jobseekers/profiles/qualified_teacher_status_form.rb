@@ -46,7 +46,8 @@ module Jobseekers
         if has_teacher_reference_number
           stored
         else
-          stored.merge(teacher_reference_number: nil)
+          # blank means we don't have one, nil means we don't know yet
+          stored.merge(teacher_reference_number: "")
         end
       end
 
