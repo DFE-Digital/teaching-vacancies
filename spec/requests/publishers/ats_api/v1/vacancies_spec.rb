@@ -112,31 +112,30 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             school_urns: schools.map { |school| school.urn.to_i },
           }
         end
-        let(:vacancy) do
+        let(:vacancy_params) do
           {
-            vacancy: {
-              publisher_ats_api_client_id: client.id,
-              external_advert_url: "https://example.com/jobs/123",
-              expires_at: "2026-01-01",
-              job_title: "Teacher of Geography",
-              job_advert: "We're looking for a dedicated Teacher of Geography",
-              salary: "£12,345 to £67,890",
-              visa_sponsorship_available: true,
-              external_reference: "REF1234HYZ",
-              ect_suitable: true,
-              job_roles: %w[teacher],
-              is_job_share: false,
-              working_patterns: %w[full_time],
-              contract_type: "permanent",
-              phases: %w[secondary],
-              publish_on: (Time.zone.today + 1).strftime("%Y-%m-%d"),
-              schools: organisation_ids,
-              subjects: %w[Biology],
-              key_stages: %w[ks1 ks2],
-              starts_on: "Next April",
-            },
+            publisher_ats_api_client_id: client.id,
+            external_advert_url: "https://example.com/jobs/123",
+            expires_at: "2026-01-01",
+            job_title: "Teacher of Geography",
+            job_advert: "We're looking for a dedicated Teacher of Geography",
+            salary: "£12,345 to £67,890",
+            visa_sponsorship_available: true,
+            external_reference: "REF1234HYZ",
+            ect_suitable: true,
+            job_roles: %w[teacher],
+            is_job_share: false,
+            working_patterns: %w[full_time],
+            contract_type: "permanent",
+            phases: %w[secondary],
+            publish_on: (Time.zone.today + 1).strftime("%Y-%m-%d"),
+            schools: organisation_ids,
+            subjects: %w[Biology],
+            key_stages: %w[ks1 ks2],
+            starts_on: "Next April",
           }
         end
+        let(:vacancy) { { vacancy: vacancy_params } }
 
         it "creates a vacancy with the given values" do |example|
           expect { submit_request(example.metadata) }.to change(Vacancy, :count).from(0).to(1)
@@ -163,7 +162,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             starts_on: nil,
             start_date_type: "other",
             other_start_date_details: "Next April",
-            organisations: [school1],
           )
         end
 
@@ -222,6 +220,38 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               assert_response_matches_metadata(example.metadata)
               expect(created_vacancy.organisations.sort).to eq([school1, school2].sort)
             end
+          end
+        end
+
+        context "when not providing the optional parameters", document: false do
+          let(:vacancy_params) do
+            super().except(:publish_on,
+                           :benefits_details,
+                           :starts_on,
+                           :visa_sponsorship_available,
+                           :is_job_share,
+                           :ect_suitable,
+                           :key_stages,
+                           :subjects)
+          end
+
+          it "creates a vacancy with default values for the not provided parameters" do |example|
+            expect { submit_request(example.metadata) }.to change(Vacancy, :count).from(0).to(1)
+            assert_response_matches_metadata(example.metadata)
+            created_vacancy = Vacancy.last
+            expect(response.parsed_body).to eq("id" => created_vacancy.id)
+            expect(created_vacancy).to have_attributes(
+              publish_on: Time.zone.today,
+              benefits_details: nil,
+              starts_on: nil,
+              start_date_type: nil,
+              other_start_date_details: nil,
+              visa_sponsorship_available: false,
+              is_job_share: false,
+              ect_status: "ect_unsuitable",
+              key_stages: [],
+              subjects: nil,
+            )
           end
         end
       end
@@ -415,6 +445,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   path "/ats-api/v1/vacancies/{id}" do
     parameter name: "id", in: :path, type: :string, description: "The id of the vacancy"
 
+    let(:original_publish_on) { (Time.zone.today + 1).strftime("%Y-%m-%d") }
     let!(:trust) { create(:trust) }
     let!(:school) { create(:school, school_groups: [trust]) }
     let!(:original_vacancy) do
@@ -426,7 +457,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
              start_date_type: "other",
              starts_on: nil,
              is_job_share: true,
-             ect_status: "ect_unsuitable")
+             ect_status: "ect_unsuitable",
+             publish_on: original_publish_on,
+             benefits_details: "Original benefits",
+             visa_sponsorship_available: false,
+             key_stages: %w[ks1 ks2],
+             subjects: %w[English Spanish])
     end
     let(:id) { original_vacancy.id }
 
@@ -525,34 +561,36 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         schema "$ref" => "#/components/schemas/vacancy_response"
 
         let(:publish_on) { (Time.zone.today + 3).strftime("%Y-%m-%d") }
-        let(:vacancy) do
+        let(:vacancy_params) do
           {
-            vacancy: {
-              external_advert_url: "https://example.com/jobs/123",
-              expires_at: "2022-01-01",
-              job_title: "Teacher of Geography",
-              job_advert: "We're looking for a dedicated Teacher of Geography",
-              salary: "£12,345 to £67,890",
-              visa_sponsorship_available: true,
-              external_reference: "REF1234HYZ",
-              ect_suitable: true,
-              job_roles: %w[teacher],
-              working_patterns: %w[full_time],
-              contract_type: "permanent",
-              publish_on: publish_on,
-              benefits_details: "Extra benefits",
-              starts_on: "2026-10-12",
-              key_stages: %w[ks2],
-              subjects: %w[Geography],
-              phases: %w[secondary],
-              schools: {
-                trust_uid: original_vacancy.organisation.trust.uid,
-              },
+            external_advert_url: "https://example.com/jobs/123",
+            expires_at: "2022-01-01",
+            job_title: "Teacher of Geography",
+            job_advert: "We're looking for a dedicated Teacher of Geography",
+            salary: "£12,345 to £67,890",
+            visa_sponsorship_available: true,
+            is_job_share: false,
+            external_reference: "REF1234HYZ",
+            ect_suitable: true,
+            job_roles: %w[teacher],
+            working_patterns: %w[full_time],
+            contract_type: "permanent",
+            publish_on: publish_on,
+            benefits_details: "Extra benefits",
+            starts_on: "2026-10-12",
+            key_stages: %w[ks2],
+            subjects: %w[Geography],
+            phases: %w[secondary],
+            schools: {
+              trust_uid: original_vacancy.organisation.trust.uid,
             },
           }
         end
+        let(:vacancy) { { vacancy: vacancy_params } }
 
-        run_test! do |response|
+        it "updates the vacancy with the given values" do |example|
+          expect { submit_request(example.metadata) }.not_to change(Vacancy, :count)
+          assert_response_matches_metadata(example.metadata)
           expect(response.parsed_body).to include(
             "id" => id,
             "external_advert_url" => "https://example.com/jobs/123",
@@ -562,7 +600,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             "salary" => "£12,345 to £67,890",
             "visa_sponsorship_available" => true,
             "external_reference" => "REF1234HYZ",
-            "is_job_share" => true, # Keeps original value for optional field that wasn't provided on update
+            "is_job_share" => false,
             "ect_suitable" => true,
             "job_roles" => %w[teacher],
             "working_patterns" => %w[full_time],
@@ -573,9 +611,37 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             "key_stages" => %w[ks2],
             "subjects" => %w[Geography],
             "phases" => %w[secondary],
-            "schools" => { "school_urns" => [],
-                           "trust_uid" => original_vacancy.organisation.trust.uid }, # Reassigned the vacancy to the trust central office
+            "schools" => { "school_urns" => [], # Reassigned the vacancy to the trust central office
+                           "trust_uid" => original_vacancy.organisation.trust.uid },
           )
+        end
+
+        context "when not providing the optional parameters", document: false do
+          let(:vacancy_params) do
+            super().except(:publish_on,
+                           :benefits_details,
+                           :starts_on,
+                           :visa_sponsorship_available,
+                           :is_job_share,
+                           :ect_suitable,
+                           :key_stages,
+                           :subjects)
+          end
+
+          it "keeps the existing values for the not provided parameters" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body).to include(
+              "visa_sponsorship_available" => original_vacancy.visa_sponsorship_available,
+              "is_job_share" => original_vacancy.is_job_share,
+              "ect_suitable" => false,
+              "publish_on" => original_publish_on,
+              "benefits_details" => original_vacancy.benefits_details,
+              "starts_on" => original_vacancy.other_start_date_details,
+              "key_stages" => original_vacancy.key_stages,
+              "subjects" => original_vacancy.subjects,
+            )
+          end
         end
       end
 
