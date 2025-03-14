@@ -42,7 +42,7 @@ module JobApplicationsHelper
     end
   end
 
-  def job_application_jobseeker_profile_info(job_application)
+  def job_application_trn(job_application)
     job_application.teacher_reference_number.presence || "None"
   end
 

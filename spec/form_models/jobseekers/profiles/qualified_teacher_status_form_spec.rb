@@ -3,18 +3,17 @@ require "rails_helper"
 module Jobseekers
   module Profiles
     RSpec.describe QualifiedTeacherStatusForm, type: :model do
-      subject(:form) { described_class.new(attributes) }
-
-      let(:current_year) { Time.current.year }
-      let(:attributes) { {} }
-
       describe "validations" do
+        subject(:form) { described_class.new(attributes) }
+
+        let(:current_year) { Time.current.year }
+        let(:attributes) { {} }
+
         context "when is_qualified_teacher_status is true" do
           let(:attributes) do
             { qualified_teacher_status: "yes",
               qualified_teacher_status_year: current_year,
               teacher_reference_number: "1234567",
-              has_teacher_reference_number: "yes",
               is_statutory_induction_complete: true }
           end
 
@@ -27,15 +26,37 @@ module Jobseekers
         end
 
         context "when qualified_teacher_status is 'no'" do
-          let(:attributes) { { qualified_teacher_status: "no", has_teacher_reference_number: "false" } }
+          let(:attributes) { { qualified_teacher_status: "no" } }
 
           it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
         end
 
         context "when qualified_teacher_status is 'on_track'" do
-          let(:attributes) { { qualified_teacher_status: "on_track", has_teacher_reference_number: "true" } }
+          let(:attributes) { { qualified_teacher_status: "on_track" } }
 
           it { is_expected.to allow_value("1234567").for(:teacher_reference_number) }
+        end
+      end
+
+      describe "#load_form_from_model" do
+        subject(:form) { described_class.load_form_from_model(profile).has_teacher_reference_number }
+
+        context "when TRN is unknown" do
+          let(:profile) { build(:jobseeker_profile, teacher_reference_number: nil) }
+
+          it { is_expected.to be_nil }
+        end
+
+        context "when TRN is blank" do
+          let(:profile) { build(:jobseeker_profile, teacher_reference_number: "") }
+
+          it { is_expected.to be(false) }
+        end
+
+        context "when TRN is set" do
+          let(:profile) { build(:jobseeker_profile, :with_trn) }
+
+          it { is_expected.to be(true) }
         end
       end
     end
