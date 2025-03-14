@@ -855,9 +855,10 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       end
     end
 
-    delete("Deletes a vacancy with the given ID, if it belongs to the client's ATS. Returns 204 on success.") do
+    delete("Deletes a vacancy with the given ID, if it belongs to the client's ATS.") do
       tags "Vacancies"
       consumes "application/json"
+      produces "application/json"
 
       security [api_key: []]
 
