@@ -165,7 +165,7 @@ en:
       heading: "%{count} sixth form or college jobs"
       meta_description: "Use Teaching Vacancies to find sixth form, college and 16-19 education provider teaching jobs near you."
     through-school-jobs:
-      name: "Through school"
+      name: "All through school"
       title: "Through School Jobs"
       heading: "%{count} through school jobs"
       meta_description: "Use Teaching Vacancies to find through school jobs for head teachers, teachers, teaching assistants and education support jobs."
