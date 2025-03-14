@@ -62,36 +62,34 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
           expect(Vacancy.last.is_job_share).to be(false)
         end
 
-        context "when provided" do
-          it "gets set as 'true' when provided as a boolean" do
-            params[:is_job_share] = true
-            create_vacancy_service
-            expect(Vacancy.last.is_job_share).to be(true)
-          end
+        it "gets set as 'true' when provided as a boolean" do
+          params[:is_job_share] = true
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(true)
+        end
 
-          it "gets set as 'true' when provided as a string" do
-            params[:is_job_share] = "true"
-            create_vacancy_service
-            expect(Vacancy.last.is_job_share).to be(true)
-          end
+        it "gets set as 'true' when provided as a string" do
+          params[:is_job_share] = "true"
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(true)
+        end
 
-          it "gets set as 'false' when provided as a boolean" do
-            params[:is_job_share] = false
-            create_vacancy_service
-            expect(Vacancy.last.is_job_share).to be(false)
-          end
+        it "gets set as 'false' when provided as a boolean" do
+          params[:is_job_share] = false
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(false)
+        end
 
-          it "gets set as 'false' when provided as a string" do
-            params[:is_job_share] = "false"
-            create_vacancy_service
-            expect(Vacancy.last.is_job_share).to be(false)
-          end
+        it "gets set as 'false' when provided as a string" do
+          params[:is_job_share] = "false"
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(false)
+        end
 
-          it "gets set as 'false' when any other string come" do
-            params[:is_job_share] = "foobar"
-            create_vacancy_service
-            expect(Vacancy.last.is_job_share).to be(false)
-          end
+        it "gets set as 'false' when any other string come" do
+          params[:is_job_share] = "foobar"
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(false)
         end
       end
 
@@ -101,75 +99,71 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
           expect(Vacancy.last.visa_sponsorship_available).to be(false)
         end
 
-        context "when provided" do
-          it "gets set as 'true' when provided as a boolean" do
-            params[:visa_sponsorship_available] = true
-            create_vacancy_service
-            expect(Vacancy.last.visa_sponsorship_available).to be(true)
-          end
+        it "gets set as 'true' when provided as a boolean" do
+          params[:visa_sponsorship_available] = true
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(true)
+        end
 
-          it "gets set as 'true' when provided as a string" do
-            params[:visa_sponsorship_available] = "true"
-            create_vacancy_service
-            expect(Vacancy.last.visa_sponsorship_available).to be(true)
-          end
+        it "gets set as 'true' when provided as a string" do
+          params[:visa_sponsorship_available] = "true"
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(true)
+        end
 
-          it "gets set as 'false' when provided as a boolean" do
-            params[:visa_sponsorship_available] = false
-            create_vacancy_service
-            expect(Vacancy.last.visa_sponsorship_available).to be(false)
-          end
+        it "gets set as 'false' when provided as a boolean" do
+          params[:visa_sponsorship_available] = false
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(false)
+        end
 
-          it "gets set as 'false' when provided as a string" do
-            params[:visa_sponsorship_available] = "false"
-            create_vacancy_service
-            expect(Vacancy.last.visa_sponsorship_available).to be(false)
-          end
+        it "gets set as 'false' when provided as a string" do
+          params[:visa_sponsorship_available] = "false"
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(false)
+        end
 
-          it "gets set as 'false' when any other string come" do
-            params[:visa_sponsorship_available] = "foobar"
-            create_vacancy_service
-            expect(Vacancy.last.visa_sponsorship_available).to be(false)
-          end
+        it "gets set as 'false' when any other string come" do
+          params[:visa_sponsorship_available] = "foobar"
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(false)
         end
       end
 
       describe "'ect_suitable'" do
-        it "defaults ect_status to 'ect_unsuitable when not provided" do
+        it "defaults ect_status to 'ect_unsuitable when 'ect_suitable' is not provided" do
           create_vacancy_service
           expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
         end
 
-        context "when provided" do
-          it "sets 'ect_status' to 'ect_suitable' when provided as a boolean" do
-            params[:ect_suitable] = true
-            create_vacancy_service
-            expect(Vacancy.last.ect_status).to eq("ect_suitable")
-          end
+        it "sets 'ect_status' to 'ect_suitable' when 'ect_suitable' is true (boolean)" do
+          params[:ect_suitable] = true
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_suitable")
+        end
 
-          it "sets 'ect_status' to 'ect_suitable' when provided as a string" do
-            params[:ect_suitable] = "true"
-            create_vacancy_service
-            expect(Vacancy.last.ect_status).to eq("ect_suitable")
-          end
+        it "sets 'ect_status' to 'ect_suitable' when 'ect_suitable' is 'true' (string)" do
+          params[:ect_suitable] = "true"
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_suitable")
+        end
 
-          it "sets 'ect_status' to 'ect_unsuitable' when provided as a boolean" do
-            params[:ect_suitable] = false
-            create_vacancy_service
-            expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
-          end
+        it "sets 'ect_status' to 'ect_unsuitable' when 'ect_suitable' is false (boolean)" do
+          params[:ect_suitable] = false
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+        end
 
-          it "sets 'ect_status' to 'ect_unsuitable' when provided as a string" do
-            params[:ect_suitable] = "false"
-            create_vacancy_service
-            expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
-          end
+        it "sets 'ect_status' to 'ect_unsuitable' when 'ect_suitable' is 'false' (string)" do
+          params[:ect_suitable] = "false"
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+        end
 
-          it "sets 'ect_status' to 'ect_unsuitable' when any other string come" do
-            params[:ect_suitable] = "foobar"
-            create_vacancy_service
-            expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
-          end
+        it "sets 'ect_status' to 'ect_unsuitable' when any other string come" do
+          params[:ect_suitable] = "foobar"
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
         end
       end
 

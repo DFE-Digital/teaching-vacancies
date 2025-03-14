@@ -13,6 +13,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       expires_at: "2025-12-31",
       organisations: [school],
       ect_status: "ect_unsuitable",
+      working_patterns: %w[part_time],
       other_start_date_details: "September 2022",
       start_date_type: "other",
       starts_on: nil,
@@ -24,7 +25,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   let(:job_title) { vacancy.job_title }
   let(:job_advert) { vacancy.job_advert }
   let(:job_roles) { vacancy.job_roles }
-  let(:working_patterns) { vacancy.working_patterns }
+  let(:working_patterns) { %w[full_time] }
   let(:params) do
     {
       external_reference: "new-ref",
@@ -46,18 +47,17 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   describe "#call" do
     context "when the update is successful" do
       it "updates the attributes that differ from the original vacancy" do
-        update_vacancy_service
-        vacancy.reload
-
-        expect(vacancy.working_patterns).to eq(%w[full_time])
-        expect(vacancy.external_reference).to eq("new-ref")
+        expect { update_vacancy_service }
+          .to change { vacancy.reload.external_reference }.from("old-ref").to("new-ref")
+          .and change { vacancy.reload.working_patterns }.from(%w[part_time]).to(%w[full_time])
       end
 
       it "keeps the existing value for optional attributes not provided" do
-        update_vacancy_service
-        vacancy.reload
-
-        expect(vacancy.ect_status).to eq("ect_unsuitable")
+        expect { update_vacancy_service }
+          .to not_change { vacancy.reload.ect_status }.from("ect_unsuitable")
+          .and not_change { vacancy.reload.other_start_date_details }.from("September 2022")
+          .and not_change { vacancy.reload.start_date_type }.from("other")
+          .and not_change { vacancy.reload.starts_on }.from(nil)
       end
 
       context "when the job title is updated" do
