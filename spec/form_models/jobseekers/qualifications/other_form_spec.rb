@@ -8,6 +8,11 @@ RSpec.describe Jobseekers::Qualifications::OtherForm, type: :model do
   it { is_expected.to validate_presence_of(:institution) }
   it { is_expected.to validate_presence_of(:name) }
 
+  it "validates 'finished studying' presence" do
+    expect(form).not_to be_valid
+    expect(form.errors[:finished_studying]).to eq(["Select yes if you have finished studying for this qualification"])
+  end
+
   context "when finished studying is false" do
     let(:params) { { "finished_studying" => "false" } }
 
