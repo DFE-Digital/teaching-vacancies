@@ -60,6 +60,17 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
         expect(vacancy.ect_status).to eq("ect_unsuitable")
       end
 
+      context "when the job title is updated" do
+        let(:job_title) { "Maths Teacher" }
+
+        it "updates the vacancy job title and the slug" do
+          expect { update_vacancy_service }.to change { vacancy.reload.job_title }
+                                           .from("English Teacher").to("Maths Teacher")
+                                           .and change { vacancy.reload.slug }
+                                           .from("english-teacher").to("maths-teacher")
+        end
+      end
+
       describe "start date fields" do
         context "when starts_on is not provided" do
           it "keeps the existing start date fields" do

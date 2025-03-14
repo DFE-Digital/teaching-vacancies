@@ -8,6 +8,7 @@ module Publishers
           vacancy.assign_attributes(sanitised_params(params))
 
           if vacancy.valid?
+            vacancy.refresh_slug
             vacancy.save!
             { status: :ok }
           elsif (conflict = vacancy.find_conflicting_vacancy)

@@ -453,6 +453,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
     let!(:original_vacancy) do
       create(:vacancy,
              :external,
+             job_title: "Languages teacher",
              organisations: [school],
              publisher_ats_api_client: client,
              other_start_date_details: "Around April",
