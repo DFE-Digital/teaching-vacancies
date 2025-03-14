@@ -44,6 +44,20 @@ RSpec.describe Search::VacancySearch do
     allow(subject).to receive(:organisation).and_return(school)
   end
 
+  describe "#wider_search_suggestions" do
+    let(:vacancy_search) { described_class.new(form_hash) }
+    let(:builder) { Search::WiderSuggestionsBuilder }
+
+    before do
+      allow(builder).to receive(:call)
+      vacancy_search.wider_search_suggestions
+    end
+
+    it "uses Search::WiderSuggestionsBuilder to provide suggestions" do
+      expect(builder).to have_received(:call).with(vacancy_search)
+    end
+  end
+
   context "when clearing filters" do
     let(:teaching_job_roles) { ["teacher"] }
     let(:ect_statuses) { ["ect_suitable"] }

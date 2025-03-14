@@ -36,9 +36,7 @@ class Search::VacancySearch
   end
 
   def wider_search_suggestions
-    return unless total_count.zero? && search_criteria[:location].present?
-
-    @wider_search_suggestions ||= Search::WiderSuggestionsBuilder.new(search_criteria).suggestions
+    @wider_search_suggestions ||= Search::WiderSuggestionsBuilder.call(self)
   end
 
   def organisation
