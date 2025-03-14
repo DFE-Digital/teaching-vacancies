@@ -115,7 +115,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy_params) do
           {
             publisher_ats_api_client_id: client.id,
-            external_advert_url: "https://example.com/jobs/123",
+            external_advert_url: "https://www.example.com/ats-site/advertid",
             expires_at: "2026-01-01",
             job_title: "Teacher of Geography",
             job_advert: "We're looking for a dedicated Teacher of Geography",
@@ -144,7 +144,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           expect(response.parsed_body).to eq("id" => created_vacancy.id)
           expect(created_vacancy).to have_attributes(
             status: "published",
-            external_advert_url: "https://example.com/jobs/123",
+            external_advert_url: "https://www.example.com/ats-site/advertid",
             expires_at: Date.new(2026, 1, 1),
             job_title: "Teacher of Geography",
             job_advert: "We're looking for a dedicated Teacher of Geography",
@@ -447,7 +447,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
   path "/ats-api/v1/vacancies/{id}" do
     parameter name: "id", in: :path, type: :string, description: "The id of the vacancy"
 
-    let(:original_publish_on) { (Time.zone.today + 1).strftime("%Y-%m-%d") }
+    let(:original_publish_on) { Time.zone.today.strftime("%Y-%m-%d") }
     let!(:trust) { create(:trust) }
     let!(:school) { create(:school, school_groups: [trust]) }
     let!(:original_vacancy) do
@@ -486,9 +486,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         schema "$ref" => "#/components/schemas/vacancy_response"
 
-        run_test! do |response|
+        it "retrieves the vacancy details" do |example|
+          expect { submit_request(example.metadata) }.not_to change(Vacancy, :count)
+          assert_response_matches_metadata(example.metadata)
           expect(response.parsed_body).to include(
             "id" => id,
+            "public_url" => job_url(original_vacancy),
             "external_advert_url" => original_vacancy.external_advert_url,
             "publish_on" => original_vacancy.publish_on.iso8601,
             "expires_at" => original_vacancy.expires_at.iso8601(3),
@@ -509,6 +512,20 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             "subjects" => original_vacancy.subjects,
             "schools" => { "school_urns" => [school.urn], "trust_uid" => trust.uid },
           )
+        end
+
+        context "when the vacancy is still not published", document: false do
+          let(:original_publish_on) { (Time.zone.today + 1).strftime("%Y-%m-%d") }
+
+          it "doesn't contain a public_url" do |example|
+            expect { submit_request(example.metadata) }.not_to change(Vacancy, :count)
+            assert_response_matches_metadata(example.metadata)
+
+            expect(response.parsed_body).to include(
+              "id" => id,
+              "public_url" => nil,
+            )
+          end
         end
       end
 
@@ -562,11 +579,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       response(200, "Indicates the vacancy was updated. Returns the updated resource data.") do
         schema "$ref" => "#/components/schemas/vacancy_response"
 
-        let(:publish_on) { (Time.zone.today + 3).strftime("%Y-%m-%d") }
+        let(:publish_on) { Time.zone.today.strftime("%Y-%m-%d") }
+        let(:expires_at) { Time.zone.today + 7.days }
         let(:vacancy_params) do
           {
-            external_advert_url: "https://example.com/jobs/123",
-            expires_at: "2022-01-01",
+            external_advert_url: "https://www.example.com/ats-site/advertid",
+            expires_at: expires_at.strftime("%Y-%m-%d"),
             job_title: "Teacher of Geography",
             job_advert: "We're looking for a dedicated Teacher of Geography",
             salary: "£12,345 to £67,890",
@@ -593,10 +611,12 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         it "updates the vacancy with the given values" do |example|
           expect { submit_request(example.metadata) }.not_to change(Vacancy, :count)
           assert_response_matches_metadata(example.metadata)
+
           expect(response.parsed_body).to include(
             "id" => id,
-            "external_advert_url" => "https://example.com/jobs/123",
-            "expires_at" => "2022-01-01T00:00:00.000+00:00",
+            "public_url" => "http://www.example.com/jobs/teacher-of-geography",
+            "external_advert_url" => "https://www.example.com/ats-site/advertid",
+            "expires_at" => expires_at.to_time.iso8601(3),
             "job_title" => "Teacher of Geography",
             "job_advert" => "We're looking for a dedicated Teacher of Geography",
             "salary" => "£12,345 to £67,890",
@@ -614,7 +634,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             "subjects" => %w[Geography],
             "phases" => %w[secondary],
             "schools" => { "school_urns" => [], # Reassigned the vacancy to the trust central office
-                           "trust_uid" => original_vacancy.organisation.trust.uid },
+                           "trust_uid" => original_vacancy.trust_uid },
           )
         end
 
@@ -642,6 +662,19 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               "starts_on" => original_vacancy.other_start_date_details,
               "key_stages" => original_vacancy.key_stages,
               "subjects" => original_vacancy.subjects,
+            )
+          end
+        end
+
+        context "when the vacancy is not published", document: false do
+          let(:publish_on) { (Time.zone.today + 3).strftime("%Y-%m-%d") }
+
+          it "removes the public_url" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body).to include(
+              "publish_on" => publish_on,
+              "public_url" => nil,
             )
           end
         end
@@ -706,7 +739,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy) do
           {
             vacancy: {
-              external_advert_url: "https://example.com/jobs/123",
+              external_advert_url: "https://www.example.com/ats-site/advertid",
               expires_at: "2022-01-01",
               job_title: "Teacher of Geography",
               job_advert: "We're looking for a dedicated Teacher of Geography",
@@ -737,7 +770,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy) do
           {
             vacancy: {
-              external_advert_url: "https://example.com/jobs/123",
+              external_advert_url: "https://www.example.com/ats-site/advertid",
               expires_at: "2022-01-01",
               job_title: "Teacher of Geography",
               job_advert: "We're looking for a dedicated Teacher of Geography",
@@ -769,7 +802,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy) do
           {
             vacancy: {
-              external_advert_url: "https://example.com/jobs/123",
+              external_advert_url: "https://www.example.com/ats-site/advertid",
               expires_at: "2022-01-01",
               job_title: nil,
               job_advert: "We're looking for a dedicated Teacher of Geography",
@@ -824,7 +857,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:vacancy) do
           {
             vacancy: {
-              external_advert_url: "https://example.com/jobs/123",
+              external_advert_url: "https://www.example.com/ats-site/advertid",
               expires_at: "2022-01-01",
               job_title: "Teacher of Geography",
               job_advert: "We're looking for a dedicated Teacher of Geography",

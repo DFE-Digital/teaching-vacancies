@@ -96,7 +96,7 @@ RSpec.configure do |config|
                     type: :string,
                     format: :uri,
                     example: "https://example.com/jobs/123",
-                    description: "The URL where the job is advertised externally.",
+                    description: "A URL to a page on the school/recruitment website with more information about this job which will be linked to as 'View advert on school website' on the job listing.",
                   },
                   external_reference: {
                     type: :string,
@@ -274,6 +274,7 @@ RSpec.configure do |config|
             required: %i[id
                          job_title
                          external_reference
+                         public_url
                          external_advert_url
                          publish_on
                          expires_at
@@ -298,17 +299,24 @@ RSpec.configure do |config|
                 example: "9d8f5715-2e7c-4e64-8e34-35f510c12e66",
                 description: "The unique identifier for the vacancy.",
               },
+              public_url: {
+                type: :string,
+                format: :uri,
+                nullable: true,
+                example: "https://teaching-vacancies.service.gov.uk/jobs/teacher-of-geography-at-example-school",
+                description: "The public-facing URL where this vacancy can be viewed on Teaching Vacancies. Will only be present while the vacancy is published (between 'publish_on' and 'expires_at' values).",
+              },
               external_advert_url: {
                 type: :string,
                 format: :uri,
                 example: "https://example.com/jobs/123",
-                description: "The URL where the job is advertised externally.",
+                description: "A URL to a page on the school/recruitment website with more information about this job which will be linked to as 'View advert on school website' on the job listing.",
               },
               publish_on: {
                 type: :string,
                 format: :date,
                 example: "2025-01-01",
-                description: "The date on which the vacancy should be published.Defaults to the current date.",
+                description: "The date on which the vacancy should be published. Defaults to the current date.",
               },
               expires_at: {
                 type: :string,
