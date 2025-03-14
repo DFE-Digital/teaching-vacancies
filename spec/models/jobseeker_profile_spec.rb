@@ -125,7 +125,7 @@ RSpec.describe JobseekerProfile, type: :model do
     let(:excluded_attrs) { %i[job_application_id jobseeker_profile_id created_at id updated_at] }
 
     before do
-      create(:job_application, create_details: false, employments: new_employments)
+      create(:job_application, employments: new_employments)
     end
 
     it "replaces the employments" do

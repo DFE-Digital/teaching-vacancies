@@ -47,10 +47,8 @@
                 = " or "
                 = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_job_application_break_path(job_application, started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
 
-      - unexplained_employment_gaps_present = job_application.unexplained_employment_gaps.present?
       = f.govuk_collection_radio_buttons :employment_history_section_completed, %w[true false], :to_s
 
-      = f.hidden_field :unexplained_employment_gaps_present, value: unexplained_employment_gaps_present
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
         span.govuk-caption-m

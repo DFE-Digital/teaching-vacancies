@@ -293,7 +293,7 @@ RSpec.describe "Job applications" do
       end
 
       context "when the review form is valid" do
-        let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker, has_teacher_reference_number: "yes", teacher_reference_number: "1234567") }
+        let!(:jobseeker_profile) { create(:jobseeker_profile, :with_trn, jobseeker: jobseeker) }
 
         it "submits the job application and sends email" do
           assert_emails 1 do

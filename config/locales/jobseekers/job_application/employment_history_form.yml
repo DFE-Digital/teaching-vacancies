@@ -6,6 +6,7 @@ en:
           attributes:
             employment_history_section_completed:
               inclusion: Select yes if you have completed this section
+          invalid_employment: One or more of your employment records is invalid
   helpers:
     legend:
       jobseekers_job_application_employment_history_form:
