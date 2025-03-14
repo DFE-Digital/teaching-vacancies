@@ -137,12 +137,13 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
         let(:vacancy) { { vacancy: vacancy_params } }
 
-        it "creates a vacancy with the given values" do |example|
+        it "creates a published vacancy with the given values" do |example|
           expect { submit_request(example.metadata) }.to change(Vacancy, :count).from(0).to(1)
           assert_response_matches_metadata(example.metadata)
           created_vacancy = Vacancy.last
           expect(response.parsed_body).to eq("id" => created_vacancy.id)
           expect(created_vacancy).to have_attributes(
+            status: "published",
             external_advert_url: "https://example.com/jobs/123",
             expires_at: Date.new(2026, 1, 1),
             job_title: "Teacher of Geography",
@@ -235,12 +236,13 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                            :subjects)
           end
 
-          it "creates a vacancy with default values for the not provided parameters" do |example|
+          it "creates a published vacancy with default values for the not provided parameters" do |example|
             expect { submit_request(example.metadata) }.to change(Vacancy, :count).from(0).to(1)
             assert_response_matches_metadata(example.metadata)
             created_vacancy = Vacancy.last
             expect(response.parsed_body).to eq("id" => created_vacancy.id)
             expect(created_vacancy).to have_attributes(
+              status: "published",
               publish_on: Time.zone.today,
               benefits_details: nil,
               starts_on: nil,

@@ -35,9 +35,11 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         expect(create_vacancy_service).to eq(status: :created, json: { id: Vacancy.last.id })
       end
 
-      it "creates a vacancy with the correct external reference" do
-        create_vacancy_service
-        expect(Vacancy.last.external_reference).to eq("new-ref")
+      it "creates a published vacancy with the correct external reference" do
+        expect { create_vacancy_service }.to change(Vacancy, :count).by(1)
+        vacancy = Vacancy.last
+        expect(vacancy.external_reference).to eq("new-ref")
+        expect(vacancy.status).to eq("published")
       end
 
       describe "'publish_on'" do

@@ -28,6 +28,7 @@ module Publishers
           params[:ect_status] = params[:ect_suitable].in?([true, "true"]) ? "ect_suitable" : "ect_unsuitable"
           params.except(:schools, :ect_suitable)
                 .merge(organisations: organisations)
+                .merge(status: "published")
                 .merge(start_date_fields(params[:starts_on]))
         end
 
