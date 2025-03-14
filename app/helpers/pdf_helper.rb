@@ -43,6 +43,22 @@ module PdfHelper
     pdf.move_down 20
   end
 
+  def add_equal_opps_headers(pdf)
+    caption_text = "Equal opps data for #{vacancy.job_title}"
+    pdf.text caption_text, size: 12, style: :italic
+    pdf.move_down 10
+    pdf.text vacancy.job_title, size: 24, style: :bold
+    pdf.move_down 20
+  end
+
+  def add_equal_opps_headers_for_organisation(pdf)
+    caption_text = "Equal opps data for for your organisation"
+    pdf.text caption_text, size: 12, style: :italic
+    pdf.move_down 10
+    pdf.text "Your organisation name", size: 24, style: :bold
+    pdf.move_down 20
+  end
+
   def add_personal_details(pdf) # rubocop:disable Metrics/AbcSize
     personal_details = [
       [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.first_name"), job_application.first_name],
@@ -82,6 +98,81 @@ module PdfHelper
 
     add_section_title(pdf, "Professional Status")
     render_table(pdf, professional_status)
+  end
+
+  def add_age_data_for_single_vacancy(pdf, equal_opps_report)
+    ages = [
+      ["Under 25", equal_opps_report.age_under_twenty_five],
+      ["25 to 29", equal_opps_report.age_twenty_five_to_twenty_nine],
+      ["30 to 39", equal_opps_report.age_thirty_to_thirty_nine],
+      ["40 to 49", equal_opps_report.age_forty_to_forty_nine],
+      ["50 to 59", equal_opps_report.age_fifty_to_fifty_nine],
+      ["60+", equal_opps_report.age_sixty_and_over],
+      ["Prefer not to say", equal_opps_report.age_prefer_not_to_say]
+    ]
+
+    add_section_title(pdf, "Age")
+    render_table(pdf, ages)
+  end
+
+  def add_age_date_for_organisation(pdf, equal_opps_reports)
+    age_totals = equal_opps_reports.pluck(
+      :age_under_twenty_five, 
+      :age_twenty_five_to_twenty_nine, 
+      :age_thirty_to_thirty_nine, 
+      :age_forty_to_forty_nine, 
+      :age_fifty_to_fifty_nine, 
+      :age_sixty_and_over, 
+      :age_prefer_not_to_say
+    ).transpose.map(&:sum)
+
+    age_ranges = [
+      "Under 25", 
+      "25-29", 
+      "30-39", 
+      "40-49", 
+      "50-59", 
+      "60 and over", 
+      "Prefer not to say"
+    ]
+
+    ages = age_ranges.zip(age_totals)
+
+    add_section_title(pdf, "Age")
+    render_table(pdf, ages)
+  end
+
+  def add_gender_data_for_single_vacancy(pdf, equal_opps_report)
+    genders = [
+     ["Man", equal_opps_report.gender_man],
+     ["Woman", equal_opps_report.gender_woman],
+     ["Other", equal_opps_report.gender_other],
+     ["Prefer not to say", equal_opps_report.gender_prefer_not_to_say]
+    ]
+
+    add_section_title(pdf, "genders")
+    render_table(pdf, genders)
+  end
+
+  def add_gender_data_for_organisation(pdf, equal_opps_reports)
+    gender_totals = equal_opps_reports.pluck(
+      :gender_man,
+      :gender_woman,
+      :gender_other,
+      :gender_prefer_not_to_say
+    ).transpose.map(&:sum)
+
+    genders_names = [
+      "Man",
+      "Woman",
+      "Other",
+      "Prefer not to say",
+     ]
+
+     genders = genders_names.zip(gender_totals)
+
+     add_section_title(pdf, "Gender")
+     render_table(pdf, genders)
   end
 
   def add_qualifications(pdf)

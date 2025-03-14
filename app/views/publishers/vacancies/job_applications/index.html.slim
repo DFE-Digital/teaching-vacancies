@@ -4,6 +4,7 @@
 
 .govuk-grid-row
   .govuk-grid-column-full
+    = govuk_button_link_to t("buttons.download_equal_opps_data"), organisation_job_download_equal_opps_pdf_path(vacancy.id)
     - if vacancy.within_data_access_period?
       - applications = job_applications.group_by(&:status)
       - new_ones = applications.fetch("submitted", []) + applications.fetch("reviewed", [])

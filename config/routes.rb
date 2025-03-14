@@ -357,6 +357,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "/organisation/jobs/download_equal_opps_pdf_for_organisation", to: "publishers/vacancies#download_equal_opps_pdf_for_organisation"
+
   scope "/organisation", as: "organisation" do
     scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do
       get "jobs(/:type)", to: "publishers/vacancies#index", defaults: { type: :published }, as: :jobs_with_type
@@ -364,6 +366,7 @@ Rails.application.routes.draw do
     get "/jobs/start", to: "publishers/vacancies#start"
 
     resources :jobs, only: %i[create destroy delete show], controller: "publishers/vacancies" do
+      get :download_equal_opps_pdf
       resources :build, only: %i[show update], controller: "publishers/vacancies/build"
       resources :documents, only: %i[index new create destroy], controller: "publishers/vacancies/documents" do
         post :confirm, on: :collection
