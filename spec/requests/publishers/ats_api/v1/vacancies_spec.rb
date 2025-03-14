@@ -862,7 +862,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       security [api_key: []]
 
       response(204, "Indicates the vacancy was removed from the system.") do
-        run_test!
+        it "removes the vaancy" do |example|
+          expect { submit_request(example.metadata) }.to change(Vacancy, :count).from(1).to(0)
+          assert_response_matches_metadata(example.metadata)
+          expect(response.parsed_body).to be_empty
+        end
       end
 
       response(401, "Occurs when the provided API key is incorrect or missing.") do
