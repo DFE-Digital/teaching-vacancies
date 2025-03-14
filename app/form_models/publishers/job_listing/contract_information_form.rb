@@ -1,6 +1,6 @@
 class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::VacancyForm
   include ActiveModel::Attributes
-  attr_accessor :contract_type, :fixed_term_contract_duration, :is_parental_leave_cover, :working_patterns, :working_patterns_details, :is_job_share
+  attr_accessor :contract_type, :fixed_term_contract_duration, :working_patterns, :working_patterns_details
 
   validates :working_patterns, presence: true, inclusion: { in: Vacancy::WORKING_PATTERNS }
   validates :fixed_term_contract_duration, presence: true, if: -> { contract_type == "fixed_term" }
@@ -9,19 +9,11 @@ class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::
   validates :is_job_share, inclusion: { in: [true, false] }
   validate :working_patterns_details_does_not_exceed_maximum_words
 
-  attribute :working_patterns, array: true, default: []
-  attribute :working_patterns_details
   attribute :is_job_share, :boolean
-  attribute :contract_type
-  attribute :fixed_term_contract_duration
   attribute :is_parental_leave_cover, :boolean
 
-  class << self
-    # Overriding load_form because we use attributes in this form rather than defining the fields like we do in other forms.
-    # This is necessary as we need to define working_patterns explicitly as an array.
-    def load_form(model)
-      model.slice(*attribute_names)
-    end
+  def self.fields
+    %i[contract_type fixed_term_contract_duration is_parental_leave_cover working_patterns working_patterns_details is_job_share]
   end
 
   def params_to_save
