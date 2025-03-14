@@ -21,7 +21,7 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         check "Headteacher"
         click_on "Save and continue"
 
-        check "Through school"
+        check "All through school"
         click_on "Save and continue"
 
         check "I'm not looking for a teaching job"
@@ -38,13 +38,13 @@ RSpec.describe "Jobseekers can add job preferences to their profile" do
         choose "No"
         click_on "Save and continue"
 
-        expect_page_to_have_values(role: "Headteacher", phase: "Through school", key_stage: "I'm not looking for a teaching job", working_patterns: "Part time", working_pattern_details: "I am only available before 1pm.", location: "London", location_radius: "1 mile")
+        expect_page_to_have_values(role: "Headteacher", phase: "All through school", key_stage: "I'm not looking for a teaching job", working_patterns: "Part time", working_pattern_details: "I am only available before 1pm.", location: "London", location_radius: "1 mile")
 
         click_on "Return to profile"
 
         expect(page).to have_current_path(jobseekers_profile_path)
 
-        expect_page_to_have_values(role: "Headteacher", phase: "Through school", key_stage: "I'm not looking for a teaching job", working_patterns: "Part time", working_pattern_details: "I am only available before 1pm.", location: "London", location_radius: "1 mile")
+        expect_page_to_have_values(role: "Headteacher", phase: "All through school", key_stage: "I'm not looking for a teaching job", working_patterns: "Part time", working_pattern_details: "I am only available before 1pm.", location: "London", location_radius: "1 mile")
       end
     end
 
