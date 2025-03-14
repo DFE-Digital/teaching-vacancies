@@ -1,5 +1,8 @@
 require "rails_helper"
 
+# repeat of another test just specifically for rejections
+# can probably be deleted
+# runtime 11.5 seconds
 RSpec.describe "Publishers can reject a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }

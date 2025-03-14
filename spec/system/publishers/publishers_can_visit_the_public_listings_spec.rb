@@ -1,5 +1,6 @@
 require "rails_helper"
 
+# very odd test - not sure about the intention?
 RSpec.describe "School viewing public listings" do
   def set_up_omniauth_config
     OmniAuth.config.test_mode = false

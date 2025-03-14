@@ -1,5 +1,10 @@
 require "rails_helper"
 
+# strange test - checks some fields and not others.
+# really a view spec, but might be better written as a more
+# 'publish job' -> apply -> publisher (although I think this already exists)
+# so maybe this can be deleted or converted to a view spec runtime 3.5 seconds
+# test is very tied to CSS-selectors (summary list)
 RSpec.describe "Publishers can view a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
