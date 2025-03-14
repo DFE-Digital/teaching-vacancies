@@ -64,198 +64,205 @@ RSpec.configure do |config|
         schemas: {
           vacancy_request: {
             type: :object,
+            required: [:vacancy],
             additionalProperties: false,
-            required: %i[external_advert_url
-                         expires_at
-                         job_title
-                         job_advert
-                         salary
-                         external_reference
-                         job_roles
-                         working_patterns
-                         contract_type
-                         phases
-                         schools],
             properties: {
-              job_title: {
-                type: :string,
-                example: "Teacher of Geography",
-                description: "The short job title shown in the page title and search results.",
-              },
-              job_advert: {
-                type: :string,
-                example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
-                description: "The long form job advert text shown on the job listing.",
-              },
-              external_advert_url: {
-                type: :string,
-                format: :uri,
-                example: "https://example.com/jobs/123",
-                description: "The URL where the job is advertised externally.",
-              },
-              external_reference: {
-                type: :string,
-                example: "123GTZY",
-                description: "An external reference or identifier for your own tracking.",
-              },
-              expires_at: {
-                type: :string,
-                format: :datetime,
-                example: "2025-03-13T15:30:00Z",
-                description: "The end datetime of the vacancy. Must be after the start date.",
-              },
-              schools: {
-                oneOf: [
-                  {
-                    type: :object,
-                    additionalProperties: false,
-                    required: %i[school_urns],
-                    properties: {
-                      school_urns: {
-                        type: :array,
-                        minItems: 1,
-                        items: {
-                          type: :string,
-                          example: "123456",
-                          description: "The unique reference number (URN) for an individual school.",
+              vacancy: {
+                additionalProperties: false,
+                description: "The vacancy details to create or update.",
+                required: %i[external_advert_url
+                             expires_at
+                             job_title
+                             job_advert
+                             salary
+                             external_reference
+                             job_roles
+                             working_patterns
+                             contract_type
+                             phases
+                             schools],
+                properties: {
+                  job_title: {
+                    type: :string,
+                    example: "Teacher of Geography",
+                    description: "The short job title shown in the page title and search results.",
+                  },
+                  job_advert: {
+                    type: :string,
+                    example: "We're looking for a dedicated Teacher of Geography to join our team. The ideal candidate will have a passion for teaching and a deep understanding of the subject matter. Responsibilities include preparing lesson plans, delivering engaging lessons, and assessing student progress.",
+                    description: "The long form job advert text shown on the job listing.",
+                  },
+                  external_advert_url: {
+                    type: :string,
+                    format: :uri,
+                    example: "https://example.com/jobs/123",
+                    description: "The URL where the job is advertised externally.",
+                  },
+                  external_reference: {
+                    type: :string,
+                    example: "123GTZY",
+                    description: "An external reference or identifier for your own tracking.",
+                  },
+                  expires_at: {
+                    type: :string,
+                    format: :datetime,
+                    example: "2030-03-13T15:30:00Z",
+                    description: "The end datetime of the vacancy. Must be after the start date.",
+                  },
+                  schools: {
+                    oneOf: [
+                      {
+                        type: :object,
+                        additionalProperties: false,
+                        required: %i[trust_uid school_urns],
+                        properties: {
+                          trust_uid: {
+                            type: :string,
+                            example: "321",
+                            description: "Unique identifier for a trust.",
+                          },
+                          school_urns: {
+                            type: :array,
+                            minItems: 0,
+                            items: {
+                              type: :string,
+                              example: "12345",
+                              description: "URNs of individual schools under the trust.",
+                            },
+                          },
                         },
+                        description: "When providing a trust UID and school URNs, the vacancy will be associated with schools from the list that belong to the trust.",
                       },
-                    },
-                    description: "Schema for a vacancy belonging to one or more schools by URN.",
-                  },
-                  {
-                    type: :object,
-                    additionalProperties: false,
-                    required: %i[trust_uid school_urns],
-                    properties: {
-                      trust_uid: {
-                        type: :string,
-                        example: "12345",
-                        description: "Unique identifier for a trust.",
-                      },
-                      school_urns: {
-                        type: :array,
-                        minItems: 0,
-                        items: {
-                          type: :string,
-                          example: "12345",
-                          description: "URNs of individual schools under the trust (optional).",
+                      {
+                        type: :object,
+                        additionalProperties: false,
+                        required: %i[school_urns],
+                        properties: {
+                          school_urns: {
+                            type: :array,
+                            minItems: 1,
+                            items: {
+                              type: :string,
+                              example: "123456",
+                              description: "The unique reference number (URN) for an individual school.",
+                            },
+                          },
                         },
+                        description: "When providing only school URNs, the vacancy will be associated with the schools from the list.",
                       },
-                    },
-                    description: "Schema for a vacancy belonging to a trust, possibly linked to multiple schools.",
-                  },
-                  {
-                    type: :object,
-                    additionalProperties: false,
-                    required: %i[trust_uid],
-                    properties: {
-                      trust_uid: {
-                        type: :string,
-                        example: "12345",
-                        description: "Unique identifier for a trust.",
+                      {
+                        type: :object,
+                        additionalProperties: false,
+                        required: %i[trust_uid],
+                        properties: {
+                          trust_uid: {
+                            type: :string,
+                            example: "12345",
+                            description: "Unique identifier for a trust.",
+                          },
+                        },
+                        description: "When providing only a trust UID, the vacancy will be associated with the trust central office.",
                       },
-                    },
-                    description: "Schema for a vacancy belonging to a trust without any specific school URNs.",
+                    ],
+                    description: "Specifies which school(s) or trust the vacancy belongs to.",
                   },
-                ],
-                description: "Specifies which school(s) or trust the vacancy belongs to.",
-              },
-              job_roles: {
-                type: :array,
-                minItems: 1,
-                items: {
-                  type: :string,
-                  enum: Vacancy.job_roles.keys,
-                  description: "Valid job role, e.g. 'teacher', 'senior_leader', etc.",
+                  job_roles: {
+                    type: :array,
+                    minItems: 1,
+                    items: {
+                      type: :string,
+                      enum: Vacancy.job_roles.keys,
+                      description: "Valid job role, e.g. 'teacher', 'senior_leader', etc.",
+                    },
+                    description: "An array of one or more job roles associated with the vacancy.",
+                  },
+                  contract_type: {
+                    type: :string,
+                    enum: Vacancy.contract_types.keys,
+                    example: "permanent",
+                    description: "The type of contract, e.g. 'permanent', 'fixed_term'.",
+                  },
+                  working_patterns: {
+                    type: :array,
+                    minItems: 1,
+                    items: {
+                      type: :string,
+                      enum: Vacancy::WORKING_PATTERNS,
+                      description: "Valid working pattern, e.g. 'full_time', 'part_time', etc.",
+                    },
+                    example: %w[full_time],
+                    description: "An array of one or more working patterns for the vacancy.",
+                  },
+                  phases: {
+                    type: :array,
+                    minItems: 1,
+                    items: {
+                      type: :string,
+                      enum: Vacancy.phases.keys,
+                      description: "Valid phase, e.g. 'primary', 'secondary', etc.",
+                    },
+                    example: %w[secondary],
+                    description: "One or more phases of education that the vacancy covers.",
+                  },
+                  salary: {
+                    type: :string,
+                    example: "£12,345 to £67,890",
+                    description: "Compensation for the role.",
+                  },
+                  publish_on: {
+                    type: :string,
+                    format: :date,
+                    example: "2025-01-01",
+                    description: "The date on which the vacancy should be published. Defaults to the current date.",
+                  },
+                  benefits_details: {
+                    type: :string,
+                    example: "TLR2a",
+                    description: "Any additional benefits or allowances.",
+                  },
+                  starts_on: {
+                    type: :string,
+                    example: "Easter",
+                    description: "The start date (or approximate start timeframe) of the job.",
+                  },
+                  visa_sponsorship_available: {
+                    type: :boolean,
+                    example: false,
+                    description: "Indicates if a visa sponsorship is available for this role. Defaults to false.",
+                  },
+                  is_job_share: {
+                    type: :boolean,
+                    example: true,
+                    description: "Whether the role is open to a job share. Defaults to false.",
+                  },
+                  ect_suitable: {
+                    type: :boolean,
+                    example: true,
+                    description: "Indicates whether the vacancy is suitable for ECTs (Early Career Teachers).",
+                  },
+                  key_stages: {
+                    type: :array,
+                    minItems: 1,
+                    items: {
+                      type: :string,
+                      enum: Vacancy.key_stages.keys,
+                      description: "Valid key stage, e.g. 'ks1', 'ks2', etc.",
+                    },
+                    example: %w[ks1 ks2],
+                    description: "One or more key stages relevant to the vacancy.",
+                  },
+                  subjects: {
+                    type: :array,
+                    minItems: 1,
+                    items: {
+                      type: :string,
+                      enum: SUBJECT_OPTIONS.map(&:first), # List of available subjects in the service (from subjects.yml)
+                      description: "Valid subject for the job, e.g. 'Biology', 'English', etc.",
+                    },
+                    example: %w[Mathematics Science],
+                    description: "An array of subjects relevant to the vacancy.",
+                  },
                 },
-                description: "An array of one or more job roles associated with the vacancy.",
-              },
-              contract_type: {
-                type: :string,
-                enum: Vacancy.contract_types.keys,
-                example: "permanent",
-                description: "The type of contract, e.g. 'permanent', 'fixed_term'.",
-              },
-              working_patterns: {
-                type: :array,
-                minItems: 1,
-                items: {
-                  type: :string,
-                  enum: Vacancy::WORKING_PATTERNS,
-                  description: "Valid working pattern, e.g. 'full_time', 'part_time', etc.",
-                },
-                example: %w[full_time],
-                description: "An array of one or more working patterns for the vacancy.",
-              },
-              phases: {
-                type: :array,
-                minItems: 1,
-                items: {
-                  type: :string,
-                  enum: Vacancy.phases.keys,
-                  description: "Valid phase, e.g. 'primary', 'secondary', etc.",
-                },
-                example: %w[secondary],
-                description: "One or more phases of education that the vacancy covers.",
-              },
-              salary: {
-                type: :string,
-                example: "£12,345 to £67,890",
-                description: "Compensation for the role.",
-              },
-              publish_on: {
-                type: :string,
-                format: :date,
-                example: "2025-01-01",
-                description: "The date on which the vacancy should be published. Defaults to the current date.",
-              },
-              benefits_details: {
-                type: :string,
-                example: "TLR2a",
-                description: "Any additional benefits or allowances.",
-              },
-              starts_on: {
-                type: :string,
-                example: "Easter",
-                description: "The start date (or approximate start timeframe) of the job.",
-              },
-              visa_sponsorship_available: {
-                type: :boolean,
-                example: false,
-                description: "Indicates if a visa sponsorship is available for this role. Defaults to false.",
-              },
-              is_job_share: {
-                type: :boolean,
-                example: true,
-                description: "Whether the role is open to a job share. Defaults to false.",
-              },
-              ect_suitable: {
-                type: :boolean,
-                example: true,
-                description: "Indicates whether the vacancy is suitable for ECTs (Early Career Teachers).",
-              },
-              key_stages: {
-                type: :array,
-                minItems: 1,
-                items: {
-                  type: :string,
-                  enum: Vacancy.key_stages.keys,
-                  description: "Valid key stage, e.g. 'ks1', 'ks2', etc.",
-                },
-                example: %w[ks1 ks2],
-                description: "One or more key stages relevant to the vacancy.",
-              },
-              subjects: {
-                type: :array,
-                minItems: 1,
-                items: {
-                  type: :string,
-                  enum: SUBJECT_OPTIONS.map(&:first), # List of available subjects in the service (from subjects.yml)
-                  description: "Valid subject for the job, e.g. 'Biology', 'English', etc.",
-                },
-                example: %w[Mathematics Science],
-                description: "An array of subjects relevant to the vacancy.",
               },
             },
           },
@@ -478,10 +485,11 @@ RSpec.configure do |config|
           vacancies_response: {
             type: :object,
             additionalProperties: false,
-            required: %i[data meta], # Required so Rswag tests assert their presence in the API responses
+            required: %i[vacancies meta], # Required so Rswag tests assert their presence in the API responses
             properties: {
-              data: {
+              vacancies: {
                 type: :array,
+                description: "List of vacancies beonging to the client.",
                 items: {
                   "$ref" => "#/components/schemas/vacancy_response",
                 },

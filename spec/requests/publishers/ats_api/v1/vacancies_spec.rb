@@ -49,8 +49,8 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         run_test! do |response|
           body = response.parsed_body
-          expect(body.keys).to match_array(%w[data meta])
-          expect(body["data"].size).to eq(2)
+          expect(body.keys).to match_array(%w[vacancies meta])
+          expect(body["vacancies"].size).to eq(2)
           expect(body["meta"]["totalPages"]).to eq(1)
         end
       end

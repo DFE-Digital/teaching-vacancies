@@ -86,7 +86,10 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
                   phases: [],
                   key_stages: [],
                   subjects: [],
-                  schools: [:trust_uid, { school_urns: [] }])
+                  schools: [
+                    :trust_uid,
+                    { school_urns: [] },
+                  ])
           .merge(publisher_ats_api_client_id: client.id)
   end
   # rubocop:enable Metrics/MethodLength
