@@ -15,18 +15,23 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
       security [api_key: []]
       parameter name: :page, in: :query, type: :number, description: "page number (1-based), defaults to 1"
 
-      response(200, "Returns a list of paginated vacancies") do
+      response(200, "Returns a paginated list of all the client vacancies") do
         schema "$ref" => "#/components/schemas/vacancies_response"
 
         let(:page) { nil }
         let(:school) { create(:school) }
         let(:other_client) { create(:publisher_ats_api_client) }
+        let!(:vacancy_published) do
+          create(:vacancy, :external, :past_publish, publisher_ats_api_client: client, organisations: [school], external_reference: "REF_CLIENT_0")
+        end
+        let!(:vacancy_unpublished) do
+          create(:vacancy, :external, :future_publish, publisher_ats_api_client: client, organisations: [school], external_reference: "REF_CLIENT_1")
+        end
+        let!(:vacancy_expired) do
+          create(:vacancy, :external, :expired, publisher_ats_api_client: client, organisations: [school], external_reference: "REF_CLIENT_2")
+        end
 
         before do
-          Array.new(2) do |index|
-            create(:vacancy, :external, publisher_ats_api_client: client, organisations: [school], external_reference: "REF_CLIENT_#{index}")
-          end
-
           Array.new(3) do |index|
             create(
               :vacancy,
@@ -50,7 +55,10 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         run_test! do |response|
           body = response.parsed_body
           expect(body.keys).to match_array(%w[vacancies meta])
-          expect(body["vacancies"].size).to eq(2)
+          # Contain all the client vacancies
+          expect(body["vacancies"].map { |v| v["id"] }).to contain_exactly(vacancy_published.id,
+                                                                           vacancy_unpublished.id,
+                                                                           vacancy_expired.id)
           expect(body["meta"]["totalPages"]).to eq(1)
         end
       end
@@ -74,7 +82,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         before do
           allow(Sentry).to receive(:capture_exception)
-          allow(Vacancy).to receive(:live).and_raise(exception)
+          allow(Vacancy).to receive(:includes).and_raise(exception)
         end
 
         run_test! do |response|

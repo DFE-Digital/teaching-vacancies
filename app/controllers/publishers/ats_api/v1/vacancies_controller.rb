@@ -95,7 +95,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   # rubocop:enable Metrics/MethodLength
 
   def vacancies
-    Vacancy.live.includes(:organisations).order(publish_on: :desc)
+    Vacancy.includes(:organisations).order(publish_on: :desc)
   end
 
   def client
