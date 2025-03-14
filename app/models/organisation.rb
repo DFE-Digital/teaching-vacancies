@@ -68,9 +68,6 @@ class Organisation < ApplicationRecord
     through: 7,
   }
 
-  # This appears to be unused and confusing
-  self.ignored_columns += %i[readable_phases]
-
   def all_vacancies
     ids = school? ? [id] : [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
     Vacancy.in_organisation_ids(ids)
