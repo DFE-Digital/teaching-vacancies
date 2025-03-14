@@ -1,4 +1,11 @@
 en:
+  activemodel:
+    errors:
+      models:
+        jobseekers/job_application/professional_body_memberships_form:
+          attributes:
+            professional_body_memberships_section_completed:
+              inclusion: Select yes if you have completed this section
   helpers:
     label:
       jobseekers_job_application_professional_body_memberships_form:
