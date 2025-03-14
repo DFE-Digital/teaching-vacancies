@@ -1,6 +1,6 @@
 class Search::SchoolSearch
   extend Forwardable
-  def_delegators :location_search, :point_coordinates
+  def_delegators :location_search, :point_coordinates, :polygon
 
   attr_reader :search_criteria, :name, :location, :radius, :organisation_types, :school_types
 
@@ -23,10 +23,12 @@ class Search::SchoolSearch
     active_criteria.any?
   end
 
-  def wider_search_suggestions
-    return unless vacancies.empty? && search_criteria[:location].present?
+  def location_search
+    @location_search ||= Search::LocationBuilder.new(search_criteria[:location], search_criteria[:radius])
+  end
 
-    Search::WiderSuggestionsBuilder.new(search_criteria).suggestions
+  def wider_search_suggestions
+    @wider_search_suggestions ||= Search::WiderSuggestionsBuilder.call(self)
   end
 
   def organisations
@@ -34,7 +36,7 @@ class Search::SchoolSearch
   end
 
   def total_count
-    schools.count
+    @total_count ||= organisations.count
   end
 
   def total_filters
@@ -52,7 +54,7 @@ class Search::SchoolSearch
     scope = @scope.all
 
     scope = scope.search_by_name(name) if name.present?
-    scope = scope.search_by_location(*location) if location.present?
+    scope = scope.search_by_location(location, radius, polygon:) if location
     scope = scope.where(phase: education_phase) if education_phase
     scope = scope.where(phase: key_stage_phases) if key_stage_phases
     scope = apply_organisation_type_filter(scope)
