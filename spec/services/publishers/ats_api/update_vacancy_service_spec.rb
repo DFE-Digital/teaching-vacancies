@@ -176,7 +176,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
           status: :conflict,
           json: {
             errors: ["A vacancy with the provided ATS client ID and external reference already exists."],
-            meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy) },
+            meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy.id) },
           },
         },
       )
@@ -217,7 +217,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
           status: :conflict,
           json: {
             errors: ["A vacancy with the same job title, expiry date, and organisation already exists."],
-            meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy) },
+            meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy.id) },
           },
         },
       )

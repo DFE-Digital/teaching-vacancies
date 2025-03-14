@@ -50,7 +50,7 @@ module Publishers
             json: {
               errors: [error_message],
               meta: {
-                link: Rails.application.routes.url_helpers.vacancy_url(conflict_vacancy),
+                link: Rails.application.routes.url_helpers.vacancy_url(conflict_vacancy.id),
               },
             },
           }

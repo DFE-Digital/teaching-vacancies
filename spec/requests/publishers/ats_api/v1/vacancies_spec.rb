@@ -338,7 +338,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         run_test! do |response|
           expect(response.parsed_body.keys).to match_array(%w[errors meta])
           expect(response.parsed_body["errors"]).to eq(["A vacancy with the provided ATS client ID and external reference already exists."])
-          expect(response.parsed_body["meta"]["link"]).to end_with("/ats-api/v1/vacancies/#{source.slug}")
+          expect(response.parsed_body["meta"]["link"]).to end_with("/ats-api/v1/vacancies/#{source.id}")
         end
       end
 
@@ -757,7 +757,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         run_test! do |response|
           expect(response.parsed_body.keys).to match_array(%w[errors meta])
           expect(response.parsed_body["errors"]).to eq(["A vacancy with the provided ATS client ID and external reference already exists."])
-          expect(response.parsed_body["meta"]["link"]).to end_with("/ats-api/v1/vacancies/#{other_vacancy.slug}")
+          expect(response.parsed_body["meta"]["link"]).to end_with("/ats-api/v1/vacancies/#{other_vacancy.id}")
         end
       end
 
