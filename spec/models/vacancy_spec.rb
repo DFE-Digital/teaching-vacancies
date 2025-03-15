@@ -579,8 +579,8 @@ RSpec.describe Vacancy do
     end
 
     context "when the organisation is a school belonging to a trust" do
-      let(:school_group) { create(:trust, uid: "12345") }
-      let(:school) { create(:school, school_groups: [school_group]) }
+      let(:trust) { create(:trust, uid: "12345") }
+      let(:school) { create(:school, school_groups: [trust]) }
       let(:organisations) { [school] }
 
       it "returns the trust UID" do
@@ -594,6 +594,18 @@ RSpec.describe Vacancy do
       let(:organisations) { [school] }
 
       it { is_expected.to be_nil }
+    end
+
+    context "when the organisation is a school belonging to multiple school groups and a trust" do
+      let(:school_group_a) { create(:school_group, uid: nil) }
+      let(:school_group_b) { create(:school_group, uid: nil) }
+      let(:trust) { create(:trust, uid: "12345") }
+      let(:school) { create(:school, school_groups: [school_group_a, school_group_b, trust]) }
+      let(:organisations) { [school] }
+
+      it "returns the trust UID" do
+        expect(trust_uid).to eq("12345")
+      end
     end
 
     context "when the organisation is a trust" do

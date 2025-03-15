@@ -170,7 +170,7 @@ class Vacancy < ApplicationRecord
     if org.is_a?(SchoolGroup)
       org.uid
     else
-      org.school_groups.first&.uid
+      org.school_groups.trusts.first&.uid
     end
   end
 
