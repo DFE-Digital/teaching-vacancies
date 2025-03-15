@@ -46,8 +46,9 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
         end
       end
 
-      it "shows a card for each application that has been submitted and no draft applications", :js do
-        expect(page.find(".govuk-table__body")).to have_css(".govuk-table__row", count: 6)
+      it "shows a card for each application that has been submitted and no draft applications" do
+        # No JS - this is the 'all' tab
+        expect(page.first(".govuk-table__body")).to have_css(".govuk-table__row", count: 6)
       end
     end
 
