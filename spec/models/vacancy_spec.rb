@@ -566,31 +566,62 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#organisation_urns" do
+  describe "#trust_uid" do
     let(:vacancy) { create(:vacancy, organisations: organisations) }
 
-    context "when the organisation is a school" do
-      let(:school) { create(:school, urn: "100001") }
+    subject(:trust_uid) { vacancy.trust_uid }
+
+    context "when the organisation is a school not belonging to a school group" do
+      let(:school) { create(:school) }
       let(:organisations) { [school] }
 
-      it "returns an array with school_urns" do
-        expect(vacancy.organisation_urns).to eq([{ school_urns: ["100001"] }])
+      it { is_expected.to be_nil }
+    end
+
+    context "when the organisation is a school belonging to a trust" do
+      let(:trust) { create(:trust, uid: "12345") }
+      let(:school) { create(:school, school_groups: [trust]) }
+      let(:organisations) { [school] }
+
+      it "returns the trust UID" do
+        expect(trust_uid).to eq("12345")
       end
     end
 
-    context "when the organisation is a school group with a UID" do
-      let(:organisations) { [school_group] }
+    context "when the organisation is a school belonging to a school group with no UID" do
+      let(:school_group) { create(:trust, uid: nil) }
+      let(:school) { create(:school, school_groups: [school_group]) }
+      let(:organisations) { [school] }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when the organisation is a school belonging to multiple school groups and a trust" do
+      let(:school_group_a) { create(:school_group, uid: nil) }
+      let(:school_group_b) { create(:school_group, uid: nil) }
+      let(:trust) { create(:trust, uid: "12345") }
+      let(:school) { create(:school, school_groups: [school_group_a, school_group_b, trust]) }
+      let(:organisations) { [school] }
+
+      it "returns the trust UID" do
+        expect(trust_uid).to eq("12345")
+      end
+    end
+
+    context "when the organisation is a trust" do
       let(:school_group) { create(:trust, uid: "12345") }
+      let(:organisations) { [school_group] }
 
-      before do
-        create(:school, school_groups: [school_group], urn: "100002")
-        create(:school, school_groups: [school_group], urn: "100003")
+      it "returns the trust UID" do
+        expect(trust_uid).to eq("12345")
       end
+    end
 
-      it "returns an array with trust_uid and school_urns" do
-        expect(vacancy.organisation_urns)
-          .to contain_exactly(trust_uid: "12345", school_urns: contain_exactly("100002", "100003"))
-      end
+    context "when the organisation is a school group with no UID" do
+      let(:school_group) { create(:school_group, uid: nil) }
+      let(:organisations) { [school_group] }
+
+      it { is_expected.to be_nil }
     end
   end
 

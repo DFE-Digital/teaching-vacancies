@@ -222,6 +222,7 @@ FactoryBot.define do
       external_reference { "J3D1" }
       external_advert_url { "https://example.com/jobs/123" }
       phases { %w[secondary] }
+      skills_and_experience { nil }
     end
   end
 end

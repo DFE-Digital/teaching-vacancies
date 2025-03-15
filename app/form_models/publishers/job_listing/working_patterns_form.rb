@@ -1,7 +1,7 @@
 class Publishers::JobListing::WorkingPatternsForm < Publishers::JobListing::VacancyForm
   include ActiveModel::Attributes
 
-  validates :working_patterns, presence: true, inclusion: { in: Vacancy.working_patterns.keys - ["job_share"] }
+  validates :working_patterns, presence: true, inclusion: { in: Vacancy::WORKING_PATTERNS }
   validates :is_job_share, inclusion: { in: [true, false] }
   validate :working_patterns_details_does_not_exceed_maximum_words
 

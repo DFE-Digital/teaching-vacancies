@@ -23,7 +23,6 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       phases: %w[primary],
       working_patterns: working_patterns,
       expires_at: Time.zone.today + 30,
-      skills_and_experience: "Expert in teaching",
       salary: "£30,000 - £40,000",
       schools: organisations,
       publisher_ats_api_client_id: publisher_ats_api_client_id,
@@ -36,9 +35,171 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         expect(create_vacancy_service).to eq(status: :created, json: { id: Vacancy.last.id })
       end
 
-      it "creates a vacancy with the correct external reference" do
-        create_vacancy_service
-        expect(Vacancy.last.external_reference).to eq("new-ref")
+      it "creates a published vacancy with the correct external reference" do
+        expect { create_vacancy_service }.to change(Vacancy, :count).by(1)
+        vacancy = Vacancy.last
+        expect(vacancy.external_reference).to eq("new-ref")
+        expect(vacancy.status).to eq("published")
+      end
+
+      describe "'publish_on'" do
+        it "defaults to the current date when not provided" do
+          create_vacancy_service
+          expect(Vacancy.last.publish_on).to eq(Time.zone.today)
+        end
+
+        it "gets set from the parameters when provided" do
+          publish_on = Time.zone.today + 1
+          params[:publish_on] = publish_on
+          create_vacancy_service
+          expect(Vacancy.last.publish_on).to eq(publish_on)
+        end
+      end
+
+      describe "'is_job_share'" do
+        it "defaults to false when not provided" do
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(false)
+        end
+
+        it "gets set as 'true' when provided as a boolean" do
+          params[:is_job_share] = true
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(true)
+        end
+
+        it "gets set as 'true' when provided as a string" do
+          params[:is_job_share] = "true"
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(true)
+        end
+
+        it "gets set as 'false' when provided as a boolean" do
+          params[:is_job_share] = false
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(false)
+        end
+
+        it "gets set as 'false' when provided as a string" do
+          params[:is_job_share] = "false"
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(false)
+        end
+
+        it "gets set as 'false' when any other string come" do
+          params[:is_job_share] = "foobar"
+          create_vacancy_service
+          expect(Vacancy.last.is_job_share).to be(false)
+        end
+      end
+
+      describe "'visa_sponsorship_available'" do
+        it "defaults to false when not provided" do
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(false)
+        end
+
+        it "gets set as 'true' when provided as a boolean" do
+          params[:visa_sponsorship_available] = true
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(true)
+        end
+
+        it "gets set as 'true' when provided as a string" do
+          params[:visa_sponsorship_available] = "true"
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(true)
+        end
+
+        it "gets set as 'false' when provided as a boolean" do
+          params[:visa_sponsorship_available] = false
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(false)
+        end
+
+        it "gets set as 'false' when provided as a string" do
+          params[:visa_sponsorship_available] = "false"
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(false)
+        end
+
+        it "gets set as 'false' when any other string come" do
+          params[:visa_sponsorship_available] = "foobar"
+          create_vacancy_service
+          expect(Vacancy.last.visa_sponsorship_available).to be(false)
+        end
+      end
+
+      describe "'ect_suitable'" do
+        it "defaults ect_status to 'ect_unsuitable when 'ect_suitable' is not provided" do
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+        end
+
+        it "sets 'ect_status' to 'ect_suitable' when 'ect_suitable' is true (boolean)" do
+          params[:ect_suitable] = true
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_suitable")
+        end
+
+        it "sets 'ect_status' to 'ect_suitable' when 'ect_suitable' is 'true' (string)" do
+          params[:ect_suitable] = "true"
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_suitable")
+        end
+
+        it "sets 'ect_status' to 'ect_unsuitable' when 'ect_suitable' is false (boolean)" do
+          params[:ect_suitable] = false
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+        end
+
+        it "sets 'ect_status' to 'ect_unsuitable' when 'ect_suitable' is 'false' (string)" do
+          params[:ect_suitable] = "false"
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+        end
+
+        it "sets 'ect_status' to 'ect_unsuitable' when any other string come" do
+          params[:ect_suitable] = "foobar"
+          create_vacancy_service
+          expect(Vacancy.last.ect_status).to eq("ect_unsuitable")
+        end
+      end
+
+      describe "start date fields" do
+        context "when starts_on is not provided" do
+          it "does not set any start date fields" do
+            create_vacancy_service
+            expect(Vacancy.last).to have_attributes(starts_on: nil,
+                                                    start_date_type: nil,
+                                                    other_start_date_details: nil)
+          end
+        end
+
+        context "when starts_on is formatted as a date" do
+          let(:starts_on) { Time.zone.tomorrow.strftime("%Y-%m-%d") }
+          let(:params) { super().merge(starts_on: starts_on) }
+
+          it "sets the specific start date to the provided date" do
+            create_vacancy_service
+            expect(Vacancy.last).to have_attributes(starts_on: Time.zone.tomorrow,
+                                                    start_date_type: "specific_date",
+                                                    other_start_date_details: nil)
+          end
+        end
+
+        context "when starts_on is not a formatted as a date" do
+          let(:starts_on) { "September 2022" }
+          let(:params) { super().merge(starts_on: starts_on) }
+
+          it "sets the other start date details to the provided date" do
+            create_vacancy_service
+            expect(Vacancy.last).to have_attributes(starts_on: nil,
+                                                    start_date_type: "other",
+                                                    other_start_date_details: starts_on)
+          end
+        end
       end
 
       context "when the vacancy belongs to a school" do
@@ -107,18 +268,16 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         )
       end
 
-      let(:expected_response) do
-        {
-          status: :conflict,
-          json: {
-            error: "A vacancy with the provided ATS client ID and external reference already exists.",
-            link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
-          },
-        }
-      end
-
       it "returns a conflict response" do
-        expect(create_vacancy_service).to eq(expected_response)
+        expect(create_vacancy_service).to eq(
+          {
+            status: :conflict,
+            json: {
+              errors: ["A vacancy with the provided ATS client ID and external reference already exists."],
+              meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy.id) },
+            },
+          },
+        )
       end
     end
 
@@ -152,22 +311,20 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       let(:job_roles) { [] }
       let(:working_patterns) { [] }
 
-      let(:expected_response) do
-        {
-          status: :unprocessable_entity,
-          json: {
-            errors: [
-              "job_title: can't be blank",
-              "job_advert: Enter a job advert",
-              "job_roles: Select a job role",
-              "working_patterns: Select a working pattern",
-            ],
-          },
-        }
-      end
-
       it "returns a validation error response" do
-        expect(create_vacancy_service).to eq(expected_response)
+        expect(create_vacancy_service).to eq(
+          {
+            status: :unprocessable_entity,
+            json: {
+              errors: [
+                "job_title: can't be blank",
+                "job_advert: Enter a job advert",
+                "job_roles: Select a job role",
+                "working_patterns: Select a working pattern",
+              ],
+            },
+          },
+        )
       end
     end
 
@@ -181,18 +338,16 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         )
       end
 
-      let(:expected_response) do
-        {
-          status: :conflict,
-          json: {
-            error: "A vacancy with the same job title, expiry date, and organisation already exists.",
-            link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy),
-          },
-        }
-      end
-
       it "returns a conflict response" do
-        expect(create_vacancy_service).to eq(expected_response)
+        expect(create_vacancy_service).to eq(
+          {
+            status: :conflict,
+            json: {
+              errors: ["A vacancy with the same job title, expiry date, and organisation already exists."],
+              meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy.id) },
+            },
+          },
+        )
       end
     end
   end
