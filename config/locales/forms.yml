@@ -76,6 +76,8 @@ en:
     return_to_profile: Return to profile
     save: Save
     save_and_continue: Save and continue
+    create_new_template: Create new template
+    save_template: Save template
     save_and_finish_later: Save and finish later
     save_changes: Save changes
     save_employment: Save role
@@ -88,6 +90,7 @@ en:
     search_toggle_panel: Edit search
     select_file: Select a file
     send_message: Send message
+    send_ats_emails: Send email to applicants
     set_preferences: Set your preferences
     shortlist: Shortlist
     filters_toggle_panel: Show filter
@@ -461,7 +464,7 @@ en:
       publishers_job_application_status_form:
         status_options:
           submitted_html: New <span class="govuk-tag govuk-tag--blue">New</span>
-          unsuccessful_html: Not Considering <span class="govuk-tag govuk-tag--red">Not Considering</span>
+          unsuccessful_html: Not considering <span class="govuk-tag govuk-tag--red">Not considering</span>
           reviewed_html: Reviewed <span class="govuk-tag govuk-tag--purple">Reviewed</span>
           shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--green">Shortlisted</span>
           interviewing_html: Interviewing <span class="govuk-tag govuk-tag--turquoise">Interviewing</span>

@@ -7,6 +7,7 @@ class Publisher < ApplicationRecord
   has_many :organisations, through: :organisation_publishers
   has_many :publisher_preferences, dependent: :destroy
   has_many :vacancies
+  has_many :email_templates
 
   has_encrypted :family_name, :given_name
 
