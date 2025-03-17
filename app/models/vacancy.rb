@@ -42,6 +42,14 @@ class Vacancy < ApplicationRecord
 
   SCHOOL_PHASES_MATCHING_VACANCY_PHASES = %w[nursery primary secondary sixth_form_or_college].freeze
 
+  # 'job_share' now gets stored in "is_job_share".
+  # PR: https://github.com/DFE-Digital/teaching-vacancies/pull/6966
+  # TODO: - Check if the rake task migrating it was run and no "job_share" values are left on "working_patterns".
+  #       - Check that no code depends on the keys containing "job_share".
+  #       - Remove the key from the array_enum if the above conditions are met.
+  LEGACY_WORKING_PATTERNS = %w[job_share].freeze
+  WORKING_PATTERNS = %w[full_time part_time].freeze
+
   array_enum key_stages: { early_years: 0, ks1: 1, ks2: 2, ks3: 3, ks4: 4, ks5: 5 }
   array_enum working_patterns: { full_time: 0, part_time: 100, job_share: 101 }
   # middle(2) removed and converted to primary/secondary to avoid missing middle school roles in primary/secondary filters
@@ -157,13 +165,12 @@ class Vacancy < ApplicationRecord
     organisations.find(&:trust?) || publisher_organisation || organisations.first&.school_groups&.first
   end
 
-  def organisation_urns
-    organisations.filter_map do |organisation|
-      if organisation.is_a?(School)
-        { school_urns: [organisation.urn] }
-      elsif organisation.is_a?(SchoolGroup) && organisation.uid.present?
-        { trust_uid: organisation.uid, school_urns: organisation.schools.pluck(:urn) }
-      end
+  def trust_uid
+    org = organisation # So the queries for retrieving the organisation only run once.
+    if org.is_a?(SchoolGroup)
+      org.uid
+    else
+      org.school_groups.trusts.first&.uid
     end
   end
 

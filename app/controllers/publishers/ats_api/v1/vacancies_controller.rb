@@ -1,4 +1,6 @@
 class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
+  skip_before_action :verify_authenticity_token # API requests don't need CRSF protection.
+
   before_action :authenticate_client!
   before_action :validate_payload, only: %i[create update]
 
@@ -30,11 +32,11 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
     result = Publishers::AtsApi::UpdateVacancyService.call(vacancy, permitted_vacancy_params)
 
-    if result[:success]
+    if result[:status] == :ok
       @vacancy = vacancy
       render :show
     else
-      render json: { errors: result[:errors] }, status: :unprocessable_entity
+      render result.slice(:json, :status)
     end
   end
 
@@ -52,11 +54,9 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
       external_advert_url
       expires_at
       job_title
-      skills_and_experience
+      job_advert
       salary
-      visa_sponsorship_available
       external_reference
-      is_job_share
       job_roles
       working_patterns
       contract_type
@@ -65,16 +65,37 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     ]
   end
 
+  # rubocop:disable Metrics/MethodLength
   def permitted_vacancy_params
     params.fetch(:vacancy)
-          .permit(:external_advert_url, :external_reference, :visa_sponsorship_available, :is_job_share,
-                  :expires_at, :job_title, :skills_and_experience, :is_parental_leave_cover, :salary, :job_advert, :contract_type,
-                  job_roles: [], working_patterns: [], phases: [], schools: [:trust_uid, { school_urns: [] }])
+          .permit(:job_title,
+                  :job_advert,
+                  :external_advert_url,
+                  :external_reference,
+                  :expires_at,
+                  :contract_type,
+                  :salary,
+                  :visa_sponsorship_available,
+                  :is_job_share,
+                  :ect_suitable,
+                  :publish_on,
+                  :benefits_details,
+                  :starts_on,
+                  job_roles: [],
+                  working_patterns: [],
+                  phases: [],
+                  key_stages: [],
+                  subjects: [],
+                  schools: [
+                    :trust_uid,
+                    { school_urns: [] },
+                  ])
           .merge(publisher_ats_api_client_id: client.id)
   end
+  # rubocop:enable Metrics/MethodLength
 
   def vacancies
-    Vacancy.live.includes(:organisations).order(publish_on: :desc)
+    Vacancy.includes(:organisations).order(publish_on: :desc)
   end
 
   def client
@@ -85,28 +106,29 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     return if client
 
     render status: :unauthorized,
-           json: { error: "Invalid API key" },
+           json: { errors: ["Invalid API key"] },
            content_type: "application/json"
   end
 
   def validate_payload
     missing_keys = required_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
-    raise ActionController::ParameterMissing, "Missing required parameters: #{missing_keys.join(', ')}" if missing_keys.any?
+    raise ActionController::ParameterMissing, missing_keys.join(", ") if missing_keys.any?
   end
 
   def render_server_error(exception)
-    render json: { error: "Internal server error", message: exception.message }, status: :internal_server_error
+    Sentry.capture_exception(exception) # Sends the internal exception to Sentry, so it can be debugged/fixed.
+    render json: { errors: ["There was an internal error processing this request"] }, status: :internal_server_error
   end
 
   def render_not_found
-    render json: { error: "The given ID does not match any vacancy for your ATS" }, status: :not_found
+    render json: { errors: ["The given ID does not match any vacancy for your ATS"] }, status: :not_found
   end
 
-  def render_bad_request(exception = nil)
-    render json: { error: exception&.message.presence || "Request body could not be read properly" }, status: :bad_request
+  def render_bad_request(exception)
+    render json: { errors: [exception.message] }, status: :bad_request
   end
 
   def render_unprocessable_entity(exception)
-    render json: { error: exception.message }, status: :unprocessable_entity
+    render json: { errors: [exception.message] }, status: :unprocessable_entity
   end
 end

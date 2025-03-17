@@ -11,7 +11,7 @@ RSpec.describe Publishers::JobListing::WorkingPatternsForm, type: :model do
   before { subject.valid? }
 
   it { is_expected.to validate_presence_of(:working_patterns) }
-  it { is_expected.to validate_inclusion_of(:working_patterns).in_array(Vacancy.working_patterns.keys - ["job_share"]) }
+  it { is_expected.to validate_inclusion_of(:working_patterns).in_array(Vacancy::WORKING_PATTERNS) }
 
   it "validates 'is_job_share' presence" do
     expect(form).not_to be_valid
