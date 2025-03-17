@@ -1,4 +1,4 @@
-class SupportUsers::BaseMailer < ApplicationMailer
+class SupportUsers::BaseMailer < GovukNotifyMailer
   private
 
   def dfe_analytics_email_event
