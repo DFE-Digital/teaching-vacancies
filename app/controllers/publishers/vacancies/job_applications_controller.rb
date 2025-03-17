@@ -47,8 +47,11 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def tag
     with_valid_tag_form do |form|
-      if params["download_selected"] == "true"
-        download_selected(form.job_applications)
+      job_applications = tag_params.fetch(:job_applications).compact_blank
+    if params["download_selected"] == "true"
+      download_selected(form.job_applications)
+    elsif params["reject"] == "true"
+      prepare_to_reject(job_applications)
       else # when "update_status"
         render "tag"
       end
@@ -94,6 +97,21 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     else
       flash[form.origin] = form.errors.full_messages
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: form.origin)
+    end
+  end
+
+  def prepare_to_reject(job_applications)
+    @form = Publishers::JobApplication::RejectionEmailsForm.new(job_applications: job_applications)
+    if @form.valid?
+      job_applications = vacancy.job_applications.where(id: @form.job_applications)
+      batch = vacancy.batch_emails.build(batch_type: :not_sent)
+      job_applications.each do |job_application|
+        batch.job_applications << job_application
+      end
+      batch.save!
+      redirect_to select_rejection_template_organisation_job_batch_email_path(vacancy.id, batch)
+    else
+      render "index"
     end
   end
 

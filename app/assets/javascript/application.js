@@ -10,6 +10,12 @@ import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 import { initMojFrontEnd } from './init-moj-front-end';
 
+import 'trix';
+import '@rails/actiontext';
+
+// required to support images in trix editor
+import * as ActiveStorage from '@rails/activestorage';
+
 // view components
 import CookiesBannerController from './components/cookiesBanner/enhance';
 import EditorController from './components/editor/editor';
@@ -68,6 +74,8 @@ application.register('tracked-link', TrackedLinkController);
 application.register('utils', UtilsController);
 
 Rails.start();
+ActiveStorage.start();
+
 govukFrontend.initAll();
 window.$ = $;
 initMojFrontEnd();
