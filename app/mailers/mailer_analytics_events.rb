@@ -1,15 +1,6 @@
-class ApplicationMailer < Mail::Notify::Mailer
-  helper NotifyViewsHelper
-  helper OrganisationsHelper
+# frozen_string_literal: true
 
-  helper_method :uid, :utm_campaign
-
-  after_action :trigger_dfe_analytics_email_event
-
-  private
-
-  attr_reader :to
-
+module MailerAnalyticsEvents
   def trigger_dfe_analytics_email_event
     DfE::Analytics::SendEvents.do([dfe_analytics_email_event])
   end
@@ -24,10 +15,6 @@ class ApplicationMailer < Mail::Notify::Mailer
 
   def utm_campaign
     email_event_type
-  end
-
-  def template
-    NOTIFY_PRODUCTION_TEMPLATE
   end
 
   def dfe_analytics_custom_data

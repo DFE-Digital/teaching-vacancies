@@ -30,7 +30,7 @@ RSpec.describe Jobseekers::SubscriptionMailer do
   end
 
   # Stub the uid so that we can test links more easily
-  before { allow_any_instance_of(ApplicationMailer).to receive(:uid).and_return("a_unique_identifier") }
+  before { allow_any_instance_of(described_class).to receive(:uid).and_return("a_unique_identifier") }
 
   describe "#confirmation" do
     let(:mail) { described_class.confirmation(subscription.id) }
