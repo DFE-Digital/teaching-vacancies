@@ -63,6 +63,30 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @feedback_form = Publishers::JobListing::FeedbackForm.new
   end
 
+  def download_equal_opps_pdf
+    equal_opps_report = EqualOpportunitiesReport.find_by(vacancy_id: vacancy.id)
+    pdf = EqualOppsPdfGenerator.new(vacancy, equal_opps_report).generate_for_single_vacancy
+
+    send_data(
+      pdf.render,
+      filename: "equal_opps_report_for_#{vacancy.id}.pdf",
+      type: "application/pdf",
+      disposition: "inline",
+    )
+  end
+
+  def download_equal_opps_pdf_for_organisation
+    equal_opps_reports = EqualOpportunitiesReport.joins(vacancy: :organisations).where(organisations: { id: current_organisation.id })
+    pdf = EqualOppsPdfGenerator.new(nil, equal_opps_reports).generate_for_organisation
+
+    send_data(
+      pdf.render,
+      filename: "equal_opps_report_for_#{current_organisation.id}.pdf",
+      type: "application/pdf",
+      disposition: "inline",
+    )
+  end
+
   private
 
   def invent_job_alert_search_criteria
