@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Rails/ApplicationMailer
+# :nocov:
 class AmazonSesMailer < ActionMailer::Base
   include MailerAnalyticsEvents
   helper NotifyViewsHelper
@@ -9,9 +10,7 @@ class AmazonSesMailer < ActionMailer::Base
 
   after_action :trigger_dfe_analytics_email_event
 
-  # :nocov:
   self.delivery_method = :smtp unless Rails.env.test?
-  # :nocov:
 
   default from: "ats.teachingvacancies@service.education.gov.uk"
 
@@ -35,4 +34,5 @@ class AmazonSesMailer < ActionMailer::Base
     NOTIFY_PRODUCTION_TEMPLATE
   end
 end
+# :nocov:
 # rubocop:enable Rails/ApplicationMailer
