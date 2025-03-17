@@ -408,7 +408,21 @@ Rails.application.routes.draw do
         get :tag, on: :collection
         post :update_tag, on: :collection
       end
+      resources :batch_emails, only: %i[], controller: "publishers/vacancies/batch_emails" do
+        member do
+          get :select_rejection_template
+          get :prepare_rejection_emails
+          post :send_rejection_emails
+        end
+      end
     end
+
+    # scope constraints: { type: /(rejection)/ } do
+    #   resources :email_templates, only: %i[new create edit update destroy], controller: "publishers/email_templates"
+    #   # get "jobs(/:type)", to: "publishers/vacancies#index", defaults: { type: :published }, as: :jobs_with_type
+    # end
+
+    resources :email_templates, only: %i[new create edit update destroy], controller: "publishers/email_templates"
   end
 
   # Well known URLs
