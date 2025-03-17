@@ -1,7 +1,8 @@
 class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::VacancyForm
   include ActiveModel::Attributes
   attr_accessor :contract_type, :fixed_term_contract_duration, :working_patterns, :working_patterns_details
-
+  
+  validates :contract_type, inclusion: { in: Vacancy.contract_types.keys }
   validates :working_patterns, presence: true, inclusion: { in: Vacancy::WORKING_PATTERNS }
   validates :fixed_term_contract_duration, presence: true, if: -> { contract_type == "fixed_term" }
   validates :is_parental_leave_cover, inclusion: { in: [true, false] }, if: -> { contract_type == "fixed_term" }
