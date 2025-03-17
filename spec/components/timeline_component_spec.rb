@@ -44,7 +44,7 @@ RSpec.describe TimelineComponent, type: :component do
           end
         end
 
-        expect(page.all(".timeline-component__item")[0])
+        expect(page.first(".timeline-component__item"))
           .to have_css("h3", text: "Item 1")
           .and have_css("p", text: "The first thing")
 

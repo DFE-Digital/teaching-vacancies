@@ -34,7 +34,7 @@ RSpec.describe "Landing page configuration" do
     Rails.application.config.campaign_pages.each do |campaign, config|
       next if config[:subjects].blank?
 
-      config[:subjects].each do |subject| # rubocop:disable Rspec/IteratedExpectation
+      config[:subjects].each do |subject| # rubocop:disable RSpec/IteratedExpectation
         expect(subject).to be_in(valid_subjects),
                            "Invalid subject '#{subject}' for campaign '#{campaign}'" # Needed iterated expectation for this descriptive error
       end

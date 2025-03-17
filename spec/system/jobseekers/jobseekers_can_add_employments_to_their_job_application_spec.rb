@@ -50,13 +50,13 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
 
     click_on I18n.t("buttons.save_employment")
 
-    all(:link, "Add another job").first.click
+    first(:link, "Add another job").click
 
     fill_in_employment_history(job_title: "Oldest job", start_month: "09", start_year: "2015", end_month: "06", end_year: "2019")
 
     click_on I18n.t("buttons.save_employment")
 
-    all(:link, "Add another job").first.click
+    first(:link, "Add another job").click
 
     fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
 

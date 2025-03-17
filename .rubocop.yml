@@ -16,12 +16,14 @@ inherit_gem:
     - config/rspec.yml
 
 require:
+  - rubocop-rspec_rails
+
+plugins:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-rspec_rails
 
 AllCops:
   NewCops: enable

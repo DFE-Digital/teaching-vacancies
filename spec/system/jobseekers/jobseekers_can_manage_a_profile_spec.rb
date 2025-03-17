@@ -794,7 +794,7 @@ RSpec.describe "Jobseekers can manage their profile" do
       expect(current_path).to eq(jobseekers_job_preferences_step_path(:roles))
       expect(page).to have_css("h2", text: "There is a problem")
 
-      all("label", text: "Teacher", exact_text: true)[0].sibling("input").set(true)
+      first("label", text: "Teacher", exact_text: true).sibling("input").set(true)
       check "Head of year or phase"
       check "Assistant headteacher"
       click_on I18n.t("buttons.save_and_continue")
