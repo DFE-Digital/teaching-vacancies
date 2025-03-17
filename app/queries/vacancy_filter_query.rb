@@ -28,10 +28,7 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = built_scope.quick_apply if filters[:quick_apply]
     built_scope = add_school_type_filters(filters, built_scope)
     built_scope = add_working_patterns_filters(filters[:working_patterns], built_scope)
-
-    built_scope = built_scope.with_any_of_phases(filters[:phases]) if filters[:phases].present?
-
-    built_scope
+    add_phases_filters(filters[:phases], built_scope)
   end
 
   private
@@ -105,6 +102,19 @@ class VacancyFilterQuery < ApplicationQuery
       built_scope.where(is_job_share: true).or(built_scope.with_any_of_working_patterns(working_patterns - %w[job_share]))
     else
       built_scope.with_any_of_working_patterns(working_patterns)
+    end
+  end
+
+  def add_phases_filters(phases, built_scope)
+    return built_scope if phases.blank?
+
+    # Removes phases not defined in the model enumerable values (EG: legacy phases)
+    # Watch out: any legacy non-enum defined phases mapping must be done before this call.
+    phases &= Vacancy.phases.keys
+    if phases.any?
+      built_scope.with_any_of_phases(phases)
+    else
+      built_scope
     end
   end
 

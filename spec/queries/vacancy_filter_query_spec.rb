@@ -228,6 +228,48 @@ RSpec.describe VacancyFilterQuery do
       end
     end
 
+    describe "phases search" do
+      context "with no filters" do
+        let(:filters) { { phases: [] } }
+
+        it "returns many jobs" do
+          expect(subject.call(filters).count).to eq(29)
+        end
+      end
+
+      context "with primary filter" do
+        let(:filters) { { phases: %w[primary] } }
+
+        it "returns primary jobs" do
+          expect(subject.call(filters).count).to eq(27)
+        end
+      end
+
+      context "with primary and secondary filter" do
+        let(:filters) { { phases: %w[primary secondary] } }
+
+        it "returns both primary and secondary jobs" do
+          expect(subject.call(filters).count).to eq(28)
+        end
+      end
+
+      context "with legacy no longer defined filters" do
+        let(:filters) { { phases: %w[middle] } }
+
+        it "ignores the legacy filters and returns many jobs" do
+          expect(subject.call(filters).count).to eq(29)
+        end
+      end
+
+      context "with both legacy and a valid filter" do
+        let(:filters) { { phases: %w[middle primary] } }
+
+        it "ignores the legacy filters and applies the filter for the valid value" do
+          expect(subject.call(filters).count).to eq(27)
+        end
+      end
+    end
+
     describe "roles mapping" do
       it "transforms legacy 'leadership' to all senior leadership roles" do
         filters = {
