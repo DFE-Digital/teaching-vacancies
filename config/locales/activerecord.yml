@@ -158,18 +158,9 @@ en:
       blank: Enter working patterns details
       maximum_words: Working patterns details must be 50 words or less
     is_job_share:
-      blank: Select yes if this role can be done as a job share
-  working_patterns_errors: &working_patterns_errors
-    working_patterns:
-      blank: Select a working pattern
-      inclusion: Select a working pattern
-    working_patterns_details:
-      blank: Enter working patterns details
-      maximum_words: Working patterns details must be 50 words or less
-    is_job_share:
       inclusion: Select yes if this role can be done as a job share
     is_parental_leave_cover:
-      inclusion: Select yes if this role is covering maternity or paternity leave 
+      inclusion: Select yes if this role is covering maternity or paternity leave
   pay_package_errors: &pay_package_errors
     actual_salary:
       blank: Enter actual salary
