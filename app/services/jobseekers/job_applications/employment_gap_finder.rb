@@ -34,7 +34,7 @@ class Jobseekers::JobApplications::EmploymentGapFinder
       employment_ended_on = adjusted_end_date(employment)
       other_ended_on = adjusted_end_date(other)
 
-      other.started_on <= employment_ended_on && employment_ended_on <= other_ended_on
+      employment_ended_on.between?(other.started_on, other_ended_on)
     end
   end
 
