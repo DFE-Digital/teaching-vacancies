@@ -17,7 +17,7 @@
           = f.govuk_text_field :fixed_term_contract_duration, label: { size: "s" }
 
         = f.govuk_radio_button :contract_type, :casual
-      
+
       = f.govuk_collection_check_boxes(:working_patterns,
                                        Vacancy::WORKING_PATTERNS,
                                        :to_s,
@@ -33,4 +33,3 @@
                           max_words: 75)
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
-
