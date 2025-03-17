@@ -53,7 +53,7 @@ module VacancyHelpers
     end
 
     # Choose "Yes" or "No" for job share option
-    job_share_field_id = vacancy.is_job_share ? "publishers-job-listing-contract-information-form-is-job-share-true-field" : "publishers-job-listing-contract-information-form-is-job-share-field"
+    job_share_field_id = vacancy.is_job_share ? "publishers-job-listing-contract-information-form-is-job-share-true-field" : "publishers-job-listing-contract-information-form-is-job-share-false-field"
     find("##{job_share_field_id}").choose
 
     fill_in "publishers_job_listing_contract_information_form[working_patterns_details]", with: vacancy.working_patterns_details
