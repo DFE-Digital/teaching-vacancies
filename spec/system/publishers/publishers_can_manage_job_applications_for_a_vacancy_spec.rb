@@ -62,7 +62,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       expect(page).to have_css(".govuk-tag--red", wait: 10)
       find(".govuk-tag--red").click
       click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("Not Considering (3)")
+      expect(page).to have_content("Not considering (3)")
     end
 
     scenario "Changing a single status" do

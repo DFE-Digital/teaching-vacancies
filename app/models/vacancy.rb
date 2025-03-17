@@ -103,6 +103,7 @@ class Vacancy < ApplicationRecord
            after_remove: :refresh_geolocation
   has_many :markers, dependent: :destroy
   has_many :feedbacks, dependent: :destroy, inverse_of: :vacancy
+  has_many :batch_emails, dependent: :destroy
 
   delegate :name, to: :organisation, prefix: true, allow_nil: true
 
