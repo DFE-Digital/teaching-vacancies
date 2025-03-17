@@ -33,7 +33,7 @@
     "moment": "^2.30.1",
     "rails-ujs": "^5.2.8",
     "tough-cookie": "^6.0.0",
-    "trix": "^2.1.13"
+    "trix": "^2.1.13",
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",

@@ -617,6 +617,11 @@ en:
             job_applications:
               too_short: You must select an application to change
 
+        publishers/job_application/rejection_emails_form:
+          attributes:
+            job_applications:
+              too_short: You must select an application to reject
+
         publishers/job_application/download_form:
           attributes:
             job_applications:
