@@ -2,7 +2,7 @@
  # Alpine v3.19.
  # TODO: Regularly check in the alpine ruby "3.3.6-alpine3.21" images for its latest upgraded packages so we can remove
  # the hardcoded versions below when they have been updated in the alpine ruby image.
-ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15 busybox"
+ARG PROD_PACKAGES="imagemagick libpng libjpeg libxml2 libxslt libpq tzdata shared-mime-info postgresql15 busybox openssl=3.3.3-r0 musl=1.2.5-r9"
 
 FROM ruby:3.3.6-alpine3.21 AS builder
 
