@@ -17,7 +17,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
     end
 
     scenario "they do not receive the feedback prompt email" do
-      expect(ApplicationMailer.deliveries.count).to eq(0)
+      expect(GovukNotifyMailer.deliveries.count).to eq(0)
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
     end
 
     scenario "they receive the feedback prompt email" do
-      expect(ApplicationMailer.deliveries.count).to eq(1)
+      expect(GovukNotifyMailer.deliveries.count).to eq(1)
     end
 
     scenario "they can provide feedback" do
@@ -68,8 +68,8 @@ RSpec.describe "Publishers can provide feedback on expired vacancies via the pro
     end
 
     scenario "they receive a feedback prompt email for each qualifying vacanct" do
-      expect(ApplicationMailer.deliveries.map(&:to)).to match a_collection_containing_exactly([first_email], [first_email], [second_email], [second_email])
-      expect(ApplicationMailer.deliveries.count).to eq(4)
+      expect(GovukNotifyMailer.deliveries.map(&:to)).to match a_collection_containing_exactly([first_email], [first_email], [second_email], [second_email])
+      expect(GovukNotifyMailer.deliveries.count).to eq(4)
     end
   end
 end

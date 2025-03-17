@@ -19,8 +19,8 @@ RSpec.describe "Publishers get email notifications from job applications" do
     perform_enqueued_jobs do
       SendApplicationsReceivedYesterdayJob.new.perform
     end
-    expect(ApplicationMailer.deliveries.count).to eq(1)
-    email = ApplicationMailer.deliveries.first
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
+    email = ActionMailer::Base.deliveries.first
     expect(email).to have_attributes(
       to: [publisher.email],
       subject: I18n.t("publishers.job_application_mailer.applications_received.subject", count: 1),
