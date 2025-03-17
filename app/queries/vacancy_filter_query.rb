@@ -27,8 +27,7 @@ class VacancyFilterQuery < ApplicationQuery
     built_scope = add_organisation_type_filters(filters, built_scope)
     built_scope = built_scope.quick_apply if filters[:quick_apply]
     built_scope = add_school_type_filters(filters, built_scope)
-    working_patterns = fix_legacy_working_patterns(filters[:working_patterns])
-    built_scope = add_working_patterns_filters(working_patterns, built_scope)
+    built_scope = add_working_patterns_filters(filters[:working_patterns], built_scope)
 
     built_scope = built_scope.with_any_of_phases(filters[:phases]) if filters[:phases].present?
 
@@ -90,24 +89,22 @@ class VacancyFilterQuery < ApplicationQuery
     map_legacy_job_roles(filter).reject { |job_role| Vacancy.job_roles.exclude? job_role } # Avoids exceptions raised by ArrayEnum when the job role is not valid
   end
 
-  def fix_legacy_working_patterns(working_patterns)
-    return nil unless working_patterns
-
-    # These are no longer relevant and have no current equivalent
-    working_patterns - %w[compressed_hours staggered_hours]
-  end
-
   def add_working_patterns_filters(working_patterns, built_scope)
-    if working_patterns.present?
-      if working_patterns == %w[job_share]
-        built_scope.where(is_job_share: true)
-      elsif working_patterns.include?("job_share")
-        built_scope.where(is_job_share: true).or(built_scope.with_any_of_working_patterns(working_patterns - %w[job_share]))
-      else
-        built_scope.with_any_of_working_patterns(working_patterns)
-      end
+    return built_scope if working_patterns.blank?
+
+    # Removes working patterns not defined in the model enumerable values (EG: legacy working patterns)
+    # Watch out: any legacy non-enum defined working patterns mapping must be done before this call.
+    working_patterns &= Vacancy.working_patterns.keys
+    return built_scope if working_patterns.empty?
+
+    # ALERT: "job_share" is still defined in Vacancy.working_patterns enum. If removed from there these mappings need to
+    # happen BEFORE to the cleanup above.
+    if working_patterns == %w[job_share]
+      built_scope.where(is_job_share: true)
+    elsif working_patterns.include?("job_share")
+      built_scope.where(is_job_share: true).or(built_scope.with_any_of_working_patterns(working_patterns - %w[job_share]))
     else
-      built_scope
+      built_scope.with_any_of_working_patterns(working_patterns)
     end
   end
 
