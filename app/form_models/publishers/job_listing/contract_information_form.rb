@@ -25,7 +25,7 @@ class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::
   private
 
   def working_patterns_details_does_not_exceed_maximum_words
-    return unless number_of_words_exceeds_permitted_length?(75, working_patterns_details)
+    return unless number_of_words_exceeds_permitted_length?(WORKING_PATTERNS_DETAILS_MAX_WORDS, working_patterns_details)
 
     errors.add(:working_patterns_details,
                :working_patterns_details_maximum_words,
