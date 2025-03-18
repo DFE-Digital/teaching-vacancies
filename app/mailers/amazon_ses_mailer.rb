@@ -14,8 +14,6 @@ class AmazonSesMailer < ActionMailer::Base
 
   default from: "ats.teachingvacancies@service.education.gov.uk"
 
-  default from: "ats.teachingvacancies@service.education.gov.uk"
-
   def send_email(to:, subject:)
     @to = to
     mail(to: to, subject: subject, delivery_method_options: {
