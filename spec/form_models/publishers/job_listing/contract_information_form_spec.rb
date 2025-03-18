@@ -37,6 +37,22 @@ RSpec.describe Publishers::JobListing::ContractInformationForm, type: :model do
     end
   end
 
+  describe "contract_type validation" do
+    it "is invalid if contract_type is not in Vacancy.contract_types.keys" do
+      form.contract_type = "invalid_contract_type"
+      form.validate
+      expect(form.errors[:contract_type]).to include("Select contract type")
+    end
+
+    Vacancy.contract_types.keys.each do |valid_contract_type|
+      it "is valid if contract_type is #{valid_contract_type}" do
+        form.contract_type = valid_contract_type
+        form.validate
+        expect(form.errors[:contract_type]).to be_empty
+      end
+    end
+  end
+
   describe "#working_patterns_details" do
     context "when working_patterns_details does not exceed the maximum allowed length" do
       let(:working_patterns_details) { Faker::Lorem.sentence(word_count: 75) }
