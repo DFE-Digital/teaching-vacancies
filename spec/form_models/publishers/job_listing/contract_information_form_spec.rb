@@ -44,7 +44,7 @@ RSpec.describe Publishers::JobListing::ContractInformationForm, type: :model do
       expect(form.errors[:contract_type]).to include("Select contract type")
     end
 
-    Vacancy.contract_types.keys.each do |valid_contract_type|
+    Vacancy.contract_types.each_key do |valid_contract_type|
       it "is valid if contract_type is #{valid_contract_type}" do
         form.contract_type = valid_contract_type
         form.validate
