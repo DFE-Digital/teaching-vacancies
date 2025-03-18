@@ -12,6 +12,8 @@ class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::
   attribute :is_job_share, :boolean
   attribute :is_parental_leave_cover, :boolean
 
+  WORKING_PATTERNS_DETAILS_MAX_WORDS = 75
+
   def self.fields
     %i[contract_type fixed_term_contract_duration is_parental_leave_cover working_patterns working_patterns_details is_job_share]
   end
