@@ -7,7 +7,7 @@ class Gias::Data
     @type = type
   end
 
-  def each(&block)
+  def each(&)
     Tempfile.create(type) do |file|
       file.binmode
 
@@ -18,7 +18,7 @@ class Gias::Data
       end
       file.rewind
 
-      CSV.foreach(file, headers: true, encoding: "windows-1252:utf-8", &block)
+      CSV.foreach(file, headers: true, encoding: "windows-1252:utf-8", &)
     end
   end
 
