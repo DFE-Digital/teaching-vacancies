@@ -30,7 +30,7 @@ module Jobseekers
       end
 
       def working_pattern_options
-        WORKING_PATTERNS.to_h { |opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_working_patterns_form.working_patterns_options.#{opt}")] }
+        WORKING_PATTERNS.to_h { |opt| [opt.to_s, I18n.t("helpers.label.publishers_job_listing_contract_information_form.working_patterns_options.#{opt}")] }
       end
 
       class << self

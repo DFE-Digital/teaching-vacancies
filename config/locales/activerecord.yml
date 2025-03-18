@@ -146,12 +146,11 @@ en:
     key_stages:
       blank: Select key stage
       inclusion: Select key stage
-  contract_type_errors: &contract_type_errors
+  contract_information_errors: &contract_information_errors
     contract_type:
       inclusion: Select contract type
     fixed_term_contract_duration:
       blank: Enter the length of the fixed term contract
-  working_patterns_errors: &working_patterns_errors
     working_patterns:
       blank: Select a working pattern
       inclusion: Select a working pattern
@@ -160,6 +159,8 @@ en:
       maximum_words: Working patterns details must be 50 words or less
     is_job_share:
       inclusion: Select yes if this role can be done as a job share
+    is_parental_leave_cover:
+      inclusion: Select yes if this role is covering maternity or paternity leave
   pay_package_errors: &pay_package_errors
     actual_salary:
       blank: Enter actual salary
@@ -370,12 +371,9 @@ en:
         publishers/job_listing/key_stages_form:
           attributes:
             <<: *key_stages_errors
-        publishers/job_listing/contract_type_form:
+        publishers/job_listing/contract_information_form:
           attributes:
-            <<: *contract_type_errors
-        publishers/job_listing/working_patterns_form:
-          attributes:
-            <<: *working_patterns_errors
+            <<: *contract_information_errors
         publishers/job_listing/pay_package_form:
           attributes:
             <<: *pay_package_errors
@@ -694,7 +692,7 @@ en:
           attributes:
             <<: *job_roles_errors
             <<: *job_location_errors
-            <<: *working_patterns_errors
+            <<: *contract_information_errors
             <<: *pay_package_errors
             <<: *important_dates_errors
             <<: *start_date_errors
