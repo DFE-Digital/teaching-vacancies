@@ -18,9 +18,9 @@ module FormObject
     extend ActiveSupport::Concern
 
     class_methods do
-      def attribute(name, *args, array: false, **options)
+      def attribute(name, *, array: false, **options)
         options[:default] ||= -> { [] } if array
-        super(name, *args, **options)
+        super(name, *, **options)
         return unless array
 
         mod = Module.new do
