@@ -189,9 +189,9 @@ en:
           title: Religious information — Application
           heading: Religious information
           is_a_catholic_school: "%{name} is a Catholic school."
-          preference_to_catholics: Schools, academies and colleges of a religious character can give preference to Catholic applicants when recruiting for teaching roles.
-          preference_for_support_staff: They can also give preference to Catholic applicants for support staff roles where there is a genuine occupational requirement.
-          non_catholics_apply: Applicants who do not follow a faith or religion are still encouraged to apply.
+          preference_to_catholics: Schools, academies and colleges with a religious character can give preference to Catholic applicants when recruiting for teaching roles, and most senior leadership posts require the postholder to be a practising Catholic.
+          preference_for_support_staff: Preference can also be given to Catholic applicants for support staff roles where there is a genuine occupational requirement. In requesting the information below it is not our intention to deter applicants.
+          non_catholics_apply: Applicants from all faiths and none are welcome to apply.
         catholic_following_religion:
           heading: Religious information
         non_catholic_following_religion:
