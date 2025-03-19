@@ -318,6 +318,7 @@ Rails.application.routes.draw do
 
   resources :jobs, only: %i[index show], controller: "vacancies" do
     resources :documents, only: %i[show]
+    resource :analytics, only: [:show], controller: 'vacancy_analytics'
   end
 
   resources :organisations, only: %i[index show], path: "schools" do
