@@ -5,6 +5,7 @@
 .govuk-grid-row
   div
     h2.govuk-heading-l = t(".heading")
+    p.govuk-hint = t(".hint")
     - if job_application.professional_body_memberships.any?
       - job_application.professional_body_memberships.each do |professional_body_membership|
         = render DetailComponent.new title: professional_body_membership.name do |detail|
