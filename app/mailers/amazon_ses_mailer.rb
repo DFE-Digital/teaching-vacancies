@@ -14,15 +14,14 @@ class AmazonSesMailer < ActionMailer::Base
 
   default from: "ats.teachingvacancies@service.education.gov.uk"
 
-  def send_email(to:, subject:)
+  def send_email(to:, subject:, cc: [])
     @to = to
-    mail(to: to, subject: subject, delivery_method_options: {
+    mail(to: to, subject: subject, cc: cc, delivery_method_options: {
       user_name: Rails.application.credentials.dig(:smtp, :user_name),
       password: Rails.application.credentials.dig(:smtp, :password),
       address: "email-smtp.eu-west-2.amazonaws.com",
     }) do |format|
-      format.text
-      # format.html
+      format.html
     end
   end
 
