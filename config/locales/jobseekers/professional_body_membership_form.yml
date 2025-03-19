@@ -34,6 +34,7 @@ en:
         professional_body_memberships:
           list_heading: Professional body memberships
           heading: Professional body memberships (optional)
+          hint: You can include professional memberships here, such as the Chartered College of Teaching or the General Teaching Council. 
           no_training: No memberships specified
           no_professional_body_memberships: No memberships specified
       professional_body_memberships:
