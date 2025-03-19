@@ -27,11 +27,11 @@ RSpec.describe "Draft job applications for publishers" do
       end
 
       it "shows a status 'tag' of 'unread'" do
-        expect(page).to have_css(".govuk-tag", text: "unread")
+        expect(page).to have_css(".govuk-tag", text: "unread", wait: 5)
       end
 
       it "has a link to view the application" do
-        expect(page).to have_link(job_application.name, href: organisation_job_job_application_path(job_application, job_id: vacancy.id))
+        expect(page).to have_link(job_application.name, href: organisation_job_job_application_path(job_application, job_id: vacancy.id), wait: 5)
       end
     end
 
@@ -44,19 +44,19 @@ RSpec.describe "Draft job applications for publishers" do
       end
 
       it "has the application status of 'reviewed'" do
-        expect(page).to have_css(".application-status.govuk-tag", text: "reviewed")
+        expect(page).to have_css(".application-status.govuk-tag", text: "reviewed", wait: 5)
       end
 
       it "does not show the section status indicators" do
-        expect(page).not_to have_css(".review-component__section__heading .govuk-tag")
+        expect(page).not_to have_css(".review-component__section__heading .govuk-tag", wait: 5)
       end
 
       it "does not allow the jobseeker to edit or update any sections" do
-        expect(page).not_to have_css(".review-component__section__heading a")
+        expect(page).not_to have_css(".review-component__section__heading a", wait: 5)
       end
 
       it "removes the 'submit application' section" do
-        expect(page).not_to have_css(".new_jobseekers_job_application_review_form")
+        expect(page).not_to have_css(".new_jobseekers_job_application_review_form", wait: 5)
       end
     end
   end

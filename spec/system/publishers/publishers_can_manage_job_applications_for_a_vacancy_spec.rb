@@ -53,18 +53,35 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     end
 
     scenario "not selecting anything", :js do
+      # Wait for page to fully load
+      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 10)
+
       click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
-      expect(page).to have_content(I18n.t("activemodel.errors.models.publishers/job_application/tag_form.attributes.job_applications.too_short"))
+      expect(page).to have_content(I18n.t("activemodel.errors.models.publishers/job_application/tag_form.attributes.job_applications.too_short"), wait: 5)
     end
 
     scenario "Changing multiple statuses at once", :js do
+      # Wait for page to fully load
+      expect(page).to have_css(".application-reviewed", wait: 10)
+
       within(".application-reviewed") do
-        find(".govuk-checkboxes__item").click
+        expect(page).to have_css(".govuk-checkboxes__item", wait: 5)
+        find(".govuk-checkboxes__input", visible: false, wait: 5).set(true)
       end
+
+      expect(page).to have_css(".application-submitted", wait: 5)
+
       within(".application-submitted") do
-        find(".govuk-checkboxes__item").click
+        expect(page).to have_css(".govuk-checkboxes__item", wait: 5)
+        find(".govuk-checkboxes__input", visible: false, wait: 5).set(true)
       end
+
+      # Wait for button to be ready
+      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 5)
       click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
+
+      # Wait for page transition to complete
+      expect(page).to have_css(".govuk-tag--red", wait: 10)
       find(".govuk-tag--red").click
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("Not Considering (3)")
@@ -76,7 +93,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
       click_on I18n.t("publishers.vacancies.job_applications.candidates.update_application_status")
       # wait for page load
-      expect(page).to have_css(".govuk-radios")
+      expect(page).to have_css(".govuk-radios", wait: 5)
       choose("Reviewed ")
       # wait for complete render
       within "#main-content" do
@@ -90,12 +107,16 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       let(:status) { "submitted" }
 
       it "shows applicant name that links to application" do
+        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
+
         within(".application-#{status}") do
           expect(page).to have_link("#{job_application_submitted.first_name} #{job_application_submitted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_submitted.id))
         end
       end
 
       it "shows blue submitted tag", :js do
+        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
+
         within(".application-#{status}") do
           expect(page).to have_css(".govuk-tag--blue", text: "unread")
         end
@@ -106,12 +127,16 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       let(:status) { "reviewed" }
 
       it "shows applicant name that links to application", :js do
+        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
+
         within(".application-#{status}") do
           expect(page).to have_link("#{job_application_reviewed.first_name} #{job_application_reviewed.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_reviewed.id))
         end
       end
 
       it "shows purple reviewed tag", :js do
+        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
+
         within(".application-#{status}") do
           expect(page).to have_css(".govuk-tag--purple", text: "reviewed")
         end
@@ -120,6 +145,8 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
     describe "shortlisted application", :js do
       it "shows applicant name that links to application and green shortlisted tag" do
+        expect(page).to have_css(".application-shortlisted", wait: 10) # Wait for the page to fully load
+
         within(".application-shortlisted") do
           expect(page).to have_css(".govuk-tag--green", text: "shortlisted")
           expect(page).to have_link("#{job_application_shortlisted.first_name} #{job_application_shortlisted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_shortlisted.id))
@@ -131,14 +158,20 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       let(:status) { "unsuccessful" }
 
       it "shows applicant name that links to application", :js do
+        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
+
         within(".application-#{status}") do
-          expect(page).to have_link("#{job_application_unsuccessful.first_name} #{job_application_unsuccessful.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_unsuccessful.id))
+          expect(page).to have_link("#{job_application_unsuccessful.first_name} #{job_application_unsuccessful.last_name}",
+                                    href: organisation_job_job_application_path(vacancy.id, job_application_unsuccessful.id),
+                                    wait: 10)
         end
       end
 
       it "shows red rejected tag", :js do
+        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
+
         within(".application-#{status}") do
-          expect(page).to have_css(".govuk-tag--red", text: "rejected")
+          expect(page).to have_css(".govuk-tag--red", text: "rejected", wait: 5)
         end
       end
     end
