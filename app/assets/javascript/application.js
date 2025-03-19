@@ -10,6 +10,9 @@ import * as mojFrontend from '@ministryofjustice/frontend';
 import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
 
+import 'trix';
+import '@rails/actiontext';
+
 // view components
 import CookiesBannerController from './components/cookiesBanner/enhance';
 import EditorController from './components/editor/editor';

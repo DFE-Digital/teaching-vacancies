@@ -21,8 +21,7 @@ class AmazonSesMailer < ActionMailer::Base
       password: Rails.application.credentials.dig(:smtp, :password),
       address: "email-smtp.eu-west-2.amazonaws.com",
     }) do |format|
-      format.text
-      # format.html
+      format.html
     end
   end
 

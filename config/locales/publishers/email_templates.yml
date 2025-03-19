@@ -1,0 +1,52 @@
+en:
+  activerecord:
+    errors:
+      models:
+        email_template:
+          attributes:
+            name:
+              blank: Enter a template name
+            from:
+              blank: Enter a from description
+            subject:
+              blank: Enter a subject for the email
+  publishers:
+    email_templates:
+      new:
+        page_title: New email template
+        new_email_template: New email template
+      edit:
+        page_title: New email template
+        edit_email_template: Edit email template
+    vacancies:
+      batch_emails:
+        select_rejection_template:
+          page_title: Send rejection emails
+          caption: Send rejection emails
+          select_email_template: Select email template
+          edit_template: Edit template
+          delete_template: Delete template
+        prepare_rejection_emails:
+          page_title: Edit and send emails
+          caption: Reject candidates
+          heading: Edit and send emails
+          edit_email: Edit email
+          to: "To"
+          email_copy: Email a copy to %{email}
+
+  helpers:
+    label:
+      email_template:
+        name: Template name
+        from: From
+        subject: Subject
+      publishers_job_application_rejection_email_form:
+        contact_email: How should the applicant contact you? (Optional)
+        include_school_logo_options:
+          "true": Include school or trust logo in email
+    hint:
+      publishers_job_application_rejection_email_form:
+        contact_email: >-
+          Applicants will not be able to contact you through Teaching Vacancies.
+          Provide an email you would like the applicant to contact you through and this will be added to your email.
+

@@ -1,0 +1,18 @@
+- content_for :page_title_prefix, t(".page_title")
+
+h1.govuk-heading-l class="govuk-!-display-inline"
+  = t(".new_email_template")
+
+= form_with(model: @email_template, url: organisation_email_templates_path) do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_text_field :name
+  = f.govuk_text_field :from
+  = f.govuk_text_field :subject
+
+  = f.govuk_label :content
+  = f.rich_text_area :content
+
+  .govuk-button-group
+    = f.govuk_submit t("buttons.save_template"), class: "govuk-!-margin-top-6"
+
