@@ -31,6 +31,7 @@
     = render "vacancies/listing/key_dates_sidebar", vacancy: @vacancy, similar_jobs: @similar_jobs
 
   .govuk-grid-column-two-thirds
+    = govuk_link_to("View job analytics", job_analytics_path(@vacancy.id))
     = render "vacancies/listing/multi_school_banner", vacancy: @vacancy
 
     = render "vacancies/listing/job_details", vacancy: @vacancy

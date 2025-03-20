@@ -10,16 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_18_105355) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
-  enable_extension "citext"
   enable_extension "fuzzystrmatch"
-  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "postgis"
-  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
@@ -333,9 +330,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.date "account_closed_on"
     t.text "current_sign_in_ip_ciphertext"
     t.text "last_sign_in_ip_ciphertext"
-    t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
+    t.string "govuk_one_login_id"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
   end
@@ -716,8 +713,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.string "flexi_working"
     t.integer "extension_reason"
     t.string "other_extension_reason_details"
-    t.uuid "publisher_ats_api_client_id"
     t.integer "religion_type"
+    t.uuid "publisher_ats_api_client_id"
     t.boolean "flexi_working_details_provided"
     t.index ["expires_at"], name: "index_vacancies_on_expires_at"
     t.index ["external_reference", "publisher_ats_api_client_id"], name: "index_vacancies_on_external_ref_and_publisher_ats_client_id", unique: true
@@ -730,6 +727,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.index ["searchable_content"], name: "index_vacancies_on_searchable_content", using: :gin
     t.index ["slug"], name: "index_vacancies_on_slug"
     t.index ["status"], name: "index_vacancies_on_status"
+  end
+
+  create_table "vacancy_analytics", force: :cascade do |t|
+    t.uuid "vacancy_id", null: false
+    t.integer "view_count", default: 0
+    t.jsonb "referrer_counts", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "versions", force: :cascade do |t|
@@ -784,7 +789,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
   add_foreign_key "references", "job_applications"
   add_foreign_key "saved_jobs", "jobseekers"
   add_foreign_key "saved_jobs", "vacancies"
-  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id"
+  add_foreign_key "school_group_memberships", "organisations", column: "school_group_id", validate: false
   add_foreign_key "school_group_memberships", "organisations", column: "school_id"
   add_foreign_key "training_and_cpds", "job_applications"
   add_foreign_key "training_and_cpds", "jobseeker_profiles"
