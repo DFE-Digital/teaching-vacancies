@@ -76,7 +76,6 @@ RSpec.describe "Publishers can reject a job application" do
       perform_enqueued_jobs
       expect(ActionMailer::Base.deliveries.map(&:to)).to match_array(vacancy.job_applications.map { |ja| [ja.email_address] })
 
-      sleep 2
       within("#rejected_emails") do
         within(".govuk-table__body") do
           expect(all("tr").count).to eq(3)
