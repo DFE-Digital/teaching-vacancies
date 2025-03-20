@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# slow test does lots of Nokogiri searches, test matches code so appears to be of dubious benefit
+# runtime 4.7 seconds 50% of this is testing all imported locations
 RSpec.describe "Application sitemap" do
   context "sitemap.xml" do
     scenario "generates a sitemap of the application" do

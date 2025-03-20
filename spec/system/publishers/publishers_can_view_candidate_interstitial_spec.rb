@@ -1,5 +1,8 @@
 require "rails_helper"
 
+# ok but probably better done as 1 journey - the setup for the second test
+# assumes things that are not asserted at the end of the first run.
+# minimum test should assert outputs from first run to be fed into second run.
 RSpec.describe "Publishers can see the Candidate profiles interstitial page" do
   let(:school) { create(:school) }
 
