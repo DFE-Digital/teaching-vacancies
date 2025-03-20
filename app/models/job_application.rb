@@ -91,15 +91,6 @@ class JobApplication < ApplicationRecord
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents
 
-  # Follow the stardard Google deployment pattern for various booleans:
-  # 1. Add new column
-  # 2. Populate new column alongside old
-  # 3. backfill new column at leisure
-  # 4. start using new column
-  # 5. remove old column
-  # add this once column has been backfilled
-  self.ignored_columns += %i[statutory_induction_complete support_needed close_relationships right_to_work_in_uk safeguarding_issue]
-
   def name
     "#{first_name} #{last_name}"
   end

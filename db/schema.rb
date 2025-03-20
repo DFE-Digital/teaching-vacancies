@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_14_152244) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -70,7 +70,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
   end
 
   create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "salary", default: "", null: false
     t.string "subjects", default: "", null: false
     t.date "started_on"
     t.date "ended_on"
@@ -206,10 +205,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
     t.string "qualified_teacher_status", default: "", null: false
     t.string "qualified_teacher_status_year", default: "", null: false
     t.text "qualified_teacher_status_details", default: "", null: false
-    t.string "statutory_induction_complete", default: "", null: false
-    t.string "support_needed", default: "", null: false
-    t.string "close_relationships", default: "", null: false
-    t.string "right_to_work_in_uk", default: "", null: false
     t.string "disability", default: "", null: false
     t.string "gender", default: "", null: false
     t.string "gender_description", default: "", null: false
@@ -240,7 +235,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
     t.text "rejection_reasons_ciphertext"
     t.text "gaps_in_employment_details_ciphertext"
     t.integer "in_progress_steps", default: [], null: false, array: true
-    t.string "safeguarding_issue"
     t.text "safeguarding_issue_details"
     t.integer "imported_steps", default: [], null: false, array: true
     t.datetime "interviewing_at"
@@ -314,7 +308,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
     t.boolean "active", default: false, null: false
     t.boolean "requested_hidden_profile"
     t.text "teacher_reference_number_ciphertext"
-    t.string "statutory_induction_complete"
     t.string "has_teacher_reference_number"
     t.string "statutory_induction_complete_details"
     t.string "qts_age_range_and_subject"
@@ -453,7 +446,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
     t.json "gias_data"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "readable_phases", array: true
     t.string "url_override"
     t.string "region"
     t.string "detailed_school_type"
@@ -486,7 +478,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
     t.text "first_name_ciphertext"
     t.text "last_name_ciphertext"
     t.text "phone_number_ciphertext"
-    t.boolean "right_to_work_in_uk"
     t.boolean "has_right_to_work_in_uk"
     t.index ["jobseeker_profile_id"], name: "index_personal_details_jobseeker_profile_id", unique: true
   end
@@ -680,7 +671,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
     t.string "completed_steps", default: [], null: false, array: true
     t.string "actual_salary"
     t.text "working_patterns_details"
-    t.integer "phase"
     t.integer "key_stages", array: true
     t.geography "geolocation", limit: {srid: 4326, type: "geometry", geographic: true}
     t.string "readable_phases", default: [], array: true
