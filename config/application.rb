@@ -72,7 +72,8 @@ module TeachingVacancies
     # the job queuing to after the current Active Record transaction is committed.
     config.active_job.enqueue_after_transaction_commit = :default
 
-    config.action_mailer.delivery_method = :notify
+    # we have multiple mailers (Notify and Smtp) so can't configure here
+    # config.action_mailer.delivery_method = :notify
     config.action_mailer.deliver_later_queue_name = :high
     config.action_mailer.notify_settings = {
       api_key: ENV.fetch("NOTIFY_KEY", nil),

@@ -1,4 +1,4 @@
-class Jobseekers::BaseMailer < ApplicationMailer
+class Jobseekers::BaseMailer < GovukNotifyMailer
   private
 
   def dfe_analytics_email_event
