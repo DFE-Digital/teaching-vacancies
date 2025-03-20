@@ -199,6 +199,9 @@ shared:
     - account_closed_on
     - govuk_one_login_id
     - account_merge_confirmation_code_generated_at
+    - email_opt_out
+    - email_opt_out_reason
+    - email_opt_out_comment
   job_preferences:
     - id
     - roles

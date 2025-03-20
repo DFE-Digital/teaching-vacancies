@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_04_103139) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -288,7 +288,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.uuid "job_preferences_id", null: false
     t.string "name", null: false
     t.integer "radius", null: false
-    t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}, null: false
+    t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["area"], name: "index_job_preferences_locations_on_area", using: :gist
@@ -336,6 +336,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
+    t.boolean "email_opt_out", default: false, null: false
+    t.integer "email_opt_out_reason"
+    t.text "email_opt_out_comment"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
   end
@@ -353,8 +356,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.string "location_type"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
-    t.geography "centroid", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}
+    t.geography "centroid", limit: {srid: 4326, type: "st_point", geographic: true}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
     t.index ["centroid"], name: "index_location_polygons_on_centroid", using: :gist
     t.index ["name"], name: "index_location_polygons_on_name"
@@ -363,7 +366,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
   create_table "markers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "vacancy_id", null: false
     t.uuid "organisation_id", null: false
-    t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geography "geopoint", limit: {srid: 4326, type: "st_point", geographic: true}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["geopoint"], name: "index_markers_on_geopoint", using: :gist
@@ -459,7 +462,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.string "group_type"
     t.string "local_authority_within"
     t.string "establishment_status"
-    t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geography "geopoint", limit: {srid: 4326, type: "st_point", geographic: true}
     t.text "gias_data_hash"
     t.string "slug"
     t.string "email"
@@ -679,7 +682,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.text "working_patterns_details"
     t.integer "phase"
     t.integer "key_stages", array: true
-    t.geography "geolocation", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
+    t.geography "geolocation", limit: {srid: 4326, type: "geometry", geographic: true}
     t.string "readable_phases", default: [], array: true
     t.tsvector "searchable_content"
     t.boolean "google_index_removed", default: false

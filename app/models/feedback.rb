@@ -34,7 +34,7 @@ class Feedback < ApplicationRecord
     visual_identity: "Visual identity",
   }.freeze
 
-  enum :feedback_type, { jobseeker_account: 0, general: 1, job_alert: 2, unsubscribe: 3, vacancy_publisher: 4, application: 5, close_account: 6 }
+  enum :feedback_type, { jobseeker_account: 0, general: 1, job_alert: 2, unsubscribe: 3, vacancy_publisher: 4, application: 5, close_account: 6, email_preferences: 7 }
   enum :user_participation_response, { interested: 0, uninterested: 1 }
   enum :rating, { highly_satisfied: 0, somewhat_satisfied: 1, neither: 2, somewhat_dissatisfied: 3, highly_dissatisfied: 4 }
   enum :unsubscribe_reason, { not_relevant: 0, job_found: 1, circumstances_change: 2, other_reason: 3 }
