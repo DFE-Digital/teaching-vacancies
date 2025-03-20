@@ -44,8 +44,9 @@ class JobseekerProfile < ApplicationRecord
       profile.qualified_teacher_status_year = nil
       profile.qts_age_range_and_subject = nil
     end
-    unless profile.has_teacher_reference_number == "yes"
-      profile.teacher_reference_number = nil
+
+    if profile.is_statutory_induction_complete
+      profile.statutory_induction_complete_details = nil
     end
   end
 
@@ -56,7 +57,7 @@ class JobseekerProfile < ApplicationRecord
   # 4. start using new column
   # 5. remove old column
   # add this once column has been backfilled
-  self.ignored_columns += %i[statutory_induction_complete]
+  self.ignored_columns += %i[statutory_induction_complete has_teacher_reference_number]
 
   def self.copy_attributes(record, previous_application)
     record.assign_attributes(

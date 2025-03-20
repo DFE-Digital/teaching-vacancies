@@ -47,15 +47,15 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
 
         it { is_expected.to validate_numericality_of(:qualified_teacher_status_year).is_less_than_or_equal_to(Time.current.year) }
 
-        it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array(%w[yes]) }
+        it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array([true]) }
 
         it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
 
         context "when has_teacher_reference_number is 'no'" do
-          let(:attributes) { super().merge(has_teacher_reference_number: "no") }
+          let(:attributes) { super().merge(has_teacher_reference_number: "false") }
 
           it "contains an error for the has_teacher_reference_number field" do
-            form.valid?
+            expect(form).not_to be_valid
             expect(form.errors[:has_teacher_reference_number])
               .to eq(["Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN."])
           end
@@ -80,8 +80,6 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       %w[no on_track].each do |status|
         context "when qualified_teacher_status is '#{status}'" do
           let(:attributes) { super().merge(qualified_teacher_status: status) }
-
-          it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array(%w[yes no]) }
 
           it { is_expected.not_to validate_numericality_of(:qualified_teacher_status_year).is_less_than_or_equal_to(Time.current.year) }
           it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
