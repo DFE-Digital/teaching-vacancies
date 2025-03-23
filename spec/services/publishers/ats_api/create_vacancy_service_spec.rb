@@ -12,6 +12,8 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
   let(:job_advert) { "A job advert" }
   let(:job_roles) { %w[teacher] }
   let(:working_patterns) { %w[full_time] }
+  let(:expires_at) { Time.zone.today + 30 }
+  let(:publish_on) { nil }
   let(:params) do
     {
       external_reference: external_reference,
@@ -22,10 +24,11 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       contract_type: "fixed_term",
       phases: %w[primary],
       working_patterns: working_patterns,
-      expires_at: Time.zone.today + 30,
+      expires_at: expires_at,
       salary: "£30,000 - £40,000",
       schools: organisations,
       publisher_ats_api_client_id: publisher_ats_api_client_id,
+      publish_on: publish_on
     }
   end
 
@@ -305,7 +308,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
     end
 
-    context "when the vacancy fails validation" do
+    context "when the vacancy is missing mandatory fields" do
       let(:job_title) { nil }
       let(:job_advert) { nil }
       let(:job_roles) { [] }
@@ -322,6 +325,55 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
                 "job_roles: Select a job role",
                 "working_patterns: Select a working pattern",
               ],
+            },
+          },
+        )
+      end
+    end
+
+    context "when a job title is too long" do
+      let(:job_title) { "this is really a super long job title but sorry it's really really important" }
+
+      it "returns a validation error" do
+        expect(create_vacancy_service).to eq(
+          {
+            status: :unprocessable_entity,
+            json: {
+              errors: ["job_title: must be 75 characters or fewer"]
+            },
+          },
+        )
+      end
+    end
+
+    context "when expires_at date is in the past" do
+      let(:expires_at) { Date.current - 1.week }
+
+      it "returns a validation error" do
+        expect(create_vacancy_service).to eq(
+          {
+            status: :unprocessable_entity,
+            json: {
+              errors: [
+                "expires_at: must be a future date", 
+                "expires_at: must be later than the publish date"
+              ]
+            },
+          },
+        )
+      end
+    end
+
+    context "when expires at is before publish_on" do
+      let(:expires_at) { Date.current + 1.week }
+      let(:publish_on) { Date.current + 2.weeks }
+
+      it "returns a validation error" do
+        expect(create_vacancy_service).to eq(
+          {
+            status: :unprocessable_entity,
+            json: {
+              errors: ["expires_at: must be later than the publish date"]
             },
           },
         )
