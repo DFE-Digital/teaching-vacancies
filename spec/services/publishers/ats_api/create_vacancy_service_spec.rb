@@ -12,7 +12,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
   let(:job_advert) { "A job advert" }
   let(:job_roles) { %w[teacher] }
   let(:working_patterns) { %w[full_time] }
-  let(:expires_at) { Time.zone.today + 30 }
+  let(:expires_at) { Time.zone.today + 30.days }
   let(:publish_on) { nil }
   let(:params) do
     {

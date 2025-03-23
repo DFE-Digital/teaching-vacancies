@@ -26,6 +26,8 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   let(:job_advert) { vacancy.job_advert }
   let(:job_roles) { vacancy.job_roles }
   let(:working_patterns) { %w[full_time] }
+  let(:expires_at) { Time.zone.today + 30.days }
+  let(:publish_on) { nil }
   let(:params) do
     {
       external_reference: "new-ref",
@@ -36,11 +38,12 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       contract_type: vacancy.contract_type,
       phases: vacancy.phases,
       working_patterns: working_patterns,
-      expires_at: vacancy.expires_at,
+      expires_at: expires_at,
       skills_and_experience: vacancy.skills_and_experience,
       salary: vacancy.salary,
       schools: school_urns,
       publisher_ats_api_client_id: publisher_ats_api_client_id,
+      publish_on: publish_on
     }
   end
 
@@ -168,6 +171,54 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
           },
         )
       end
+    end
+  end
+
+  context "when a job title is too long" do
+    let(:job_title) { "this is really a super long job title but sorry it's really really important" }
+
+    it "returns a validation error" do
+      expect(update_vacancy_service).to eq(
+        {
+          status: :unprocessable_entity,
+          json: {
+            errors: ["job_title: must be 75 characters or fewer"]
+          },
+        },
+      )
+    end
+  end
+
+  context "when expires_at date is in the past" do
+    let(:expires_at) { Date.current - 1.week }
+
+    it "returns a validation error" do
+      expect(update_vacancy_service).to eq(
+        {
+          status: :unprocessable_entity,
+          json: {
+            errors: [
+              "expires_at: must be a future date"
+            ]
+          },
+        },
+      )
+    end
+  end
+
+  context "when expires at is before publish_on" do
+    let(:expires_at) { Date.current + 1.week }
+    let(:publish_on) { Date.current + 2.weeks }
+
+    it "returns a validation error" do
+      expect(update_vacancy_service).to eq(
+        {
+          status: :unprocessable_entity,
+          json: {
+            errors: ["expires_at: must be later than the publish date"]
+          },
+        },
+      )
     end
   end
 
