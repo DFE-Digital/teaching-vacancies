@@ -28,7 +28,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       salary: "£30,000 - £40,000",
       schools: organisations,
       publisher_ats_api_client_id: publisher_ats_api_client_id,
-      publish_on: publish_on
+      publish_on: publish_on,
     }
   end
 
@@ -339,7 +339,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
           {
             status: :unprocessable_entity,
             json: {
-              errors: ["job_title: must be 75 characters or fewer"]
+              errors: ["job_title: must be 75 characters or fewer"],
             },
           },
         )
@@ -355,9 +355,9 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
             status: :unprocessable_entity,
             json: {
               errors: [
-                "expires_at: must be a future date", 
-                "expires_at: must be later than the publish date"
-              ]
+                "expires_at: must be a future date",
+                "expires_at: must be later than the publish date",
+              ],
             },
           },
         )
@@ -373,7 +373,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
           {
             status: :unprocessable_entity,
             json: {
-              errors: ["expires_at: must be later than the publish date"]
+              errors: ["expires_at: must be later than the publish date"],
             },
           },
         )
