@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Publishers::AtsApi::UpdateVacancyService do
   subject(:update_vacancy_service) do
-    binding.pry
     described_class.call(vacancy, params)
   end
 
