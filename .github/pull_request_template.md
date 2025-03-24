@@ -21,6 +21,9 @@ If this PR modifies data structures or validations, check the following:
 - [ ] Adds/removes database fields
 - [ ] Modifies Vacancy enumerables (phases, working patterns, job roles, key stages, etc.)
 
+<details>
+<summary>If any of the above options has changed then the author must check/resolve all of the following...</summary>
+
 ### Integration Impact
 
 Does this change affect any of these integrations?
@@ -35,3 +38,4 @@ Could this change impact:
 - [ ] Existing subscription alerts (will legacy subscription search filters break?)
 - [ ] Legacy vacancy copying (will copied vacancies fail new validations?)
 - [ ] In-progress drafts for Vacancies or Job Applications
+</details>
