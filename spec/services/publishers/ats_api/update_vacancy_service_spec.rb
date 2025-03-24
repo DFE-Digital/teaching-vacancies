@@ -1,7 +1,10 @@
 require "rails_helper"
 
 RSpec.describe Publishers::AtsApi::UpdateVacancyService do
-  subject(:update_vacancy_service) { described_class.call(vacancy, params) }
+  subject(:update_vacancy_service) do
+    binding.pry
+    described_class.call(vacancy, params)
+  end
 
   let(:vacancy) do
     create(
@@ -155,6 +158,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       let(:job_advert) { nil }
       let(:job_roles) { [] }
       let(:working_patterns) { [] }
+      let(:expires_at) { nil }
 
       it "returns a validation error response" do
         expect(update_vacancy_service).to eq(
@@ -166,6 +170,7 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
                 "job_advert: Enter a job advert",
                 "job_roles: Select a job role",
                 "working_patterns: Select a working pattern",
+                "expires_at: Enter closing date",
               ],
             },
           },

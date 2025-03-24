@@ -313,6 +313,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       let(:job_advert) { nil }
       let(:job_roles) { [] }
       let(:working_patterns) { [] }
+      let(:expires_at) { nil }
 
       it "returns a validation error response" do
         expect(create_vacancy_service).to eq(
@@ -324,6 +325,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
                 "job_advert: Enter a job advert",
                 "job_roles: Select a job role",
                 "working_patterns: Select a working pattern",
+                "expires_at: Enter closing date",
               ],
             },
           },
