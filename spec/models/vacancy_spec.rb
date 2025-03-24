@@ -716,7 +716,7 @@ RSpec.describe Vacancy do
     let(:attributes) do
       {
         job_title: "Math Teacher",
-        expires_at: "2025-01-01",
+        expires_at: "2045-01-01",
         organisations: [school],
         publisher_ats_api_client: publisher_ats_api_client,
         external_reference: "REF123",
@@ -753,7 +753,7 @@ RSpec.describe Vacancy do
       let(:duplicate_attributes) do
         {
           job_title: "Math Teacher",
-          expires_at: "2025-01-01",
+          expires_at: "2045-01-01",
           organisations: [school],
         }
       end
