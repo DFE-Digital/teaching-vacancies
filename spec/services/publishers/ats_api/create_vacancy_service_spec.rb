@@ -348,8 +348,8 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       it "returns a validation error" do
         expect(create_vacancy_service[:status]).to eq :unprocessable_entity
         expect(create_vacancy_service[:json][:errors]).to include(
-          "expires_at: must be a future date", 
-          "expires_at: must be later than the publish date"
+          "expires_at: must be a future date",
+          "expires_at: must be later than the publish date",
         )
       end
     end
