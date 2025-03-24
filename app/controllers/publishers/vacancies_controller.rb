@@ -39,9 +39,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def destroy
-    vacancy.supporting_documents.purge_later
-    vacancy.update_attribute(:status, :trashed)
-    remove_google_index(vacancy)
+    vacancy.trash!
     redirect_to organisation_jobs_with_type_path, success: t(".success_html", job_title: vacancy.job_title)
   end
 
