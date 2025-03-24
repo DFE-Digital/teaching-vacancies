@@ -625,7 +625,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             "id" => id,
             "public_url" => "http://www.example.com/jobs/teacher-of-geography",
             "external_advert_url" => "https://www.example.com/ats-site/advertid",
-            "expires_at" => expires_at.to_time.iso8601(3),
+            "expires_at" => expires_at.in_time_zone.strftime("%Y-%m-%dT%H:%M:%S.000%:z"),
             "job_title" => "Teacher of Geography",
             "job_advert" => "We're looking for a dedicated Teacher of Geography",
             "salary" => "£12,345 to £67,890",
