@@ -9,7 +9,7 @@ class ExternalVacancyValidator < ActiveModel::Validator
 
     record.errors.add(:organisations, "No school(s) associated with vacancy") if record.organisations.empty?
     validate_job_title_length(record)
-    validate_expiry_date(record) unless record.expires_at.blank?
+    validate_expiry_date(record) if record.expires_at.present?
   end
 
   private
