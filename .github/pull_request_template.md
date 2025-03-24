@@ -24,6 +24,7 @@ If this PR modifies data structures or validations, check the following:
 ### Integration Impact
 
 Does this change affect any of these integrations?
+- [ ] DfE Analytics platform
 - [ ] Legacy imports mappings
 - [ ] DWP Find a Job export mappings
 - [ ] Publisher ATS API (may require mapping updates or API versioning)
