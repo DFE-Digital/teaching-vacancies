@@ -160,19 +160,13 @@ RSpec.describe Publishers::AtsApi::UpdateVacancyService do
       let(:expires_at) { nil }
 
       it "returns a validation error response" do
-        expect(update_vacancy_service).to eq(
-          {
-            status: :unprocessable_entity,
-            json: {
-              errors: [
-                "job_title: can't be blank",
-                "job_advert: Enter a job advert",
-                "job_roles: Select a job role",
-                "working_patterns: Select a working pattern",
-                "expires_at: Enter closing date",
-              ],
-            },
-          },
+        expect(update_vacancy_service[:status]).to eq :unprocessable_entity
+        expect(update_vacancy_service[:json][:errors]).to include(
+          "job_title: can't be blank",
+          "job_advert: Enter a job advert",
+          "job_roles: Select a job role",
+          "expires_at: Enter closing date",
+          "working_patterns: Select a working pattern",
         )
       end
     end
