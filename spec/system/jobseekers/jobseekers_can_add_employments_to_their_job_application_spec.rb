@@ -55,7 +55,7 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     end
 
     it "shows the record with an error, and prevents saving until fixed" do
-      expect(all(".govuk-summary-card__content").last).to have_content "Enter your reason for leaving the role"
+      expect(all(".govuk-summary-card__content").last).to have_content "Enter your reason for leaving this role"
 
       choose "Yes, I've completed this section"
       validates_step_complete(button: "Save and continue")
