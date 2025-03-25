@@ -302,6 +302,23 @@ class Vacancy < ApplicationRecord
     find_conflict_vacancy || find_duplicate_vacancy
   end
 
+  def trash!
+    return if trashed?
+
+    supporting_documents.purge_later
+    # rubocop:disable Rails/SkipsModelValidations
+    update_attribute(:status, :trashed)
+    # rubocop:enable Rails/SkipsModelValidations
+    remove_google_index
+  end
+
+  def remove_google_index
+    return if DisableExpensiveJobs.enabled?
+
+    url = Rails.application.routes.url_helpers.job_url(self)
+    RemoveGoogleIndexQueueJob.perform_later(url)
+  end
+
   private
 
   def calculate_distance(search_coordinates, geolocation)
