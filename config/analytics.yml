@@ -483,3 +483,10 @@ shared:
     - exam_taken
     - jobseeker_profile_id
     - job_application_id
+  :vacancy_analytics:
+    - id
+    - vacancy_id
+    - view_count
+    - referrer_counts
+    - created_at
+    - updated_at
