@@ -118,7 +118,7 @@ RSpec.configure do |config|
                         properties: {
                           trust_uid: {
                             type: :string,
-                            example: "321",
+                            example: "16644", # Weydon Multi Academy Trust UID
                             description: "Unique identifier for a trust.",
                           },
                           school_urns: {
@@ -126,8 +126,8 @@ RSpec.configure do |config|
                             minItems: 0,
                             items: {
                               type: :string,
-                              example: "12345",
-                              description: "URNs of individual schools under the trust.",
+                              example: "136531", # "Weydon School URN"
+                              description: "The unique reference number (URN) for an individual school.",
                             },
                           },
                         },
@@ -143,7 +143,7 @@ RSpec.configure do |config|
                             minItems: 1,
                             items: {
                               type: :string,
-                              example: "123456",
+                              example: "136531", # "Weydon School URN"
                               description: "The unique reference number (URN) for an individual school.",
                             },
                           },
@@ -157,7 +157,7 @@ RSpec.configure do |config|
                         properties: {
                           trust_uid: {
                             type: :string,
-                            example: "12345",
+                            example: "16644", # Weydon Multi Academy Trust UID
                             description: "Unique identifier for a trust.",
                           },
                         },
@@ -374,13 +374,13 @@ RSpec.configure do |config|
                     minItems: 0,
                     items: {
                       type: :string,
-                      example: "123456",
+                      example: "136531", # "Weydon School URN"
                       description: "The unique reference number (URN) for an individual school.",
                     },
                   },
                   trust_uid: {
                     type: :string,
-                    example: "12345",
+                    example: "16644", # Weydon Multi Academy Trust UID
                     description: "Unique identifier for a trust.",
                     nullable: true,
                   },
