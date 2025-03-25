@@ -119,3 +119,8 @@ end
 
 # still need to delete jobs without an organisation
 Vacancy.includes(:organisations).find_each.reject { |v| v.organisation.present? }.each(&:destroy)
+
+# Adds one ATS API Client for testing locally or on review apps
+if ENV["ATS_API_CLIENT_TESTING_API_KEY"].present?
+  PublisherAtsApiClient.create(name: "Testing ATS Client", api_key: ENV["ATS_API_CLIENT_TESTING_API_KEY"], last_rotated_at: Time.current)
+end
