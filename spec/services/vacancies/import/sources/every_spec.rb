@@ -277,13 +277,13 @@ RSpec.describe Vacancies::Import::Sources::Every do
   end
 
   describe "start date mapping" do
-    let(:fixture_date) { "2022-11-21T00:00:00" }
+    let(:fixture_date) { "2042-11-21T00:00:00" }
 
     context "when the start date contains a specific date" do
-      let(:response_body) { super().gsub(fixture_date, "2022-11-21") }
+      let(:response_body) { super().gsub(fixture_date, "2042-11-21") }
 
       it "stores the specific start date" do
-        expect(vacancy.starts_on.to_s).to eq "2022-11-21"
+        expect(vacancy.starts_on.to_s).to eq "2042-11-21"
         expect(vacancy.start_date_type).to eq "specific_date"
       end
     end

@@ -50,7 +50,7 @@ RSpec.describe Vacancies::Import::Sources::UnitedLearning do
 
       expect(vacancy.organisations).to eq([school])
 
-      expect(vacancy.expires_at).to eq(Time.zone.parse("2022-05-15 12:00:00"))
+      expect(vacancy.expires_at).to eq(Time.zone.parse("2042-05-15 12:00:00"))
       expect(vacancy.publish_on).to eq(Date.today)
     end
 

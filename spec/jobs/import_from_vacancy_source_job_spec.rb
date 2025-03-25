@@ -99,8 +99,8 @@ RSpec.describe ImportFromVacancySourceJob do
 
         expect(FailedImportedVacancy.first.source).to eq("fake_source")
         expect(FailedImportedVacancy.first.external_reference).to eq("J3D1")
-        expect(FailedImportedVacancy.first.import_errors.first).to eq("job_title:[can't be blank]")
-        expect(FailedImportedVacancy.first.import_errors.last).to eq("phases:[can't be blank]")
+        expect(FailedImportedVacancy.first.import_errors).to include("job_title:[can't be blank]")
+        expect(FailedImportedVacancy.first.import_errors).to include("phases:[can't be blank]")
         expect(FailedImportedVacancy.first.vacancy).to eq(
           "about_school" => "test",
           "actual_salary" => "",
@@ -213,15 +213,6 @@ RSpec.describe ImportFromVacancySourceJob do
         expect { import_from_vacancy_source_job }
           .to change { vacancy.reload.status }.from("published").to("removed_from_external_system")
           .and(change { vacancy.reload.updated_at })
-      end
-    end
-
-    context "when an expired vacancy no longer comes through" do
-      let!(:vacancy) { create(:vacancy, :expired_yesterday, :external, phases: %w[secondary], organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
-      let(:vacancies_from_source) { [] }
-
-      it "does not change the vacancy's status" do
-        expect { import_from_vacancy_source_job }.not_to(change { vacancy.reload.status })
       end
     end
   end

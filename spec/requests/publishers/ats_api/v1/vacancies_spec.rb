@@ -835,7 +835,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           submit_request(example.metadata)
           assert_response_matches_metadata(example.metadata)
           expect(response.parsed_body).to eq(
-            { "errors" => ["job_title: can't be blank", "external_reference: Enter an external reference"] },
+            { "errors" => ["job_title: can't be blank", "external_reference: Enter an external reference", "expires_at: must be a future date", "expires_at: must be later than the publish date"] },
           )
         end
 

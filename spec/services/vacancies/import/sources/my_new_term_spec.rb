@@ -55,7 +55,7 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
   end
 
   it "sets important dates" do
-    expect(vacancy.expires_at).to eq(Time.zone.parse("2023-02-10T23:59:00+00:00"))
+    expect(vacancy.expires_at).to eq(Time.zone.parse("2043-02-10T23:59:00+00:00"))
     expect(vacancy.publish_on).to eq(Date.today)
   end
 
