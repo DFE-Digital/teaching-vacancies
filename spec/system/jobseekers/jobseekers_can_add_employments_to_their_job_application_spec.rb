@@ -40,35 +40,35 @@ RSpec.describe "Jobseekers can add employments and breaks to their job applicati
     expect(page).to have_content(Date.new(2020, 7, 1).to_formatted_s(:month_year))
   end
 
-  it "displays employment history from newest to oldest job" do
-    visit jobseekers_job_application_build_path(job_application, :employment_history)
+  context "with an employmeent history" do
+    before do
+      build(:employment, reason_for_leaving: nil, job_application: job_application, job_title: "Oldest job",
+                         started_on: Date.new(2015, 7, 1), ended_on: Date.new(2019, 7, 1)).save!(validate: false)
+      create(:employment, job_application: job_application, job_title: "Old job", started_on: Date.new(2019, 7, 1), ended_on: Date.new(2020, 7, 1))
+      create(:employment, :current_role, job_application: job_application, job_title: "The Best Teacher", started_on: Date.new(2020, 7, 1))
 
-    click_on I18n.t("buttons.add_work_history")
-    validates_step_complete(button: I18n.t("buttons.save_employment"))
+      visit jobseekers_job_application_build_path(job_application, :employment_history)
+    end
 
-    fill_in_employment_history(job_title: "Old job")
+    it "displays employment history from newest to oldest job" do
+      expect(all(".govuk-summary-card__title").map(&:text)).to eq ["The Best Teacher", "Old job", "Oldest job"]
+    end
 
-    click_on I18n.t("buttons.save_employment")
+    it "shows the record with an error, and prevents saving until fixed" do
+      expect(all(".govuk-summary-card__content").last).to have_content "Enter your reason for leaving this role"
 
-    first(:link, "Add another job").click
+      choose "Yes, I've completed this section"
+      validates_step_complete(button: "Save and continue")
 
-    fill_in_employment_history(job_title: "Oldest job", start_month: "09", start_year: "2015", end_month: "06", end_year: "2019")
-
-    click_on I18n.t("buttons.save_employment")
-
-    first(:link, "Add another job").click
-
-    fill_in_current_role(form: "jobseekers_job_application_details_employment_form")
-
-    click_on I18n.t("buttons.save_employment")
-
-    oldest_job = find("h3", text: "Oldest job").path
-    middle_job = find("h3", text: "Old job").path
-    newest_job = find("h3", text: "The Best Teacher").path
-
-    expect(newest_job).to be < middle_job
-    expect(newest_job).to be < oldest_job
-    expect(middle_job).to be < oldest_job
+      within all(".govuk-summary-card").last do
+        click_on "Change"
+      end
+      fill_in "Reason for leaving role", with: "Needed for KSCIE compliance"
+      click_on I18n.t("buttons.save_employment")
+      choose "Yes, I've completed this section"
+      click_on "Save and continue"
+      expect(page).to have_current_path(jobseekers_job_application_apply_path(job_application))
+    end
   end
 
   context "managing employment history gaps" do

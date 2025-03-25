@@ -5,7 +5,7 @@ RSpec.describe "Jobseekers can update their profile from job applications" do
 
   let(:vacancy) { create(:vacancy) }
   let(:application_qualification) { create(:qualification, name: "Application qualification") }
-  let(:application_employment) { create(:employment, job_title: "Application employment") }
+  let(:application_employment) { create(:employment, :current_role, job_title: "Application employment") }
   let(:application_training) { create(:training_and_cpd, name: "Application training") }
   let(:job_application) do
     create(:job_application, create_details: true, jobseeker: jobseeker, vacancy: vacancy,
