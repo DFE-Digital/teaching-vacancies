@@ -15,7 +15,7 @@ The API clients will be able to do these operations:
 To onboard new clients to the API, the technical process is as follows:
 
 1. Set-up a dedicated review APP environment for the client integration.
-2. On the review app environment, visit the `/support-users/support-users/publisher_ats_api_clients` endpoint and add a
+2. On the review app environment, visit the `/support-users/publisher_ats_api_clients` endpoint and add a
 new api client for the new integration. This will generate an **API token for the client**.
 3. Go back to the client contact email and provide them with:
 
