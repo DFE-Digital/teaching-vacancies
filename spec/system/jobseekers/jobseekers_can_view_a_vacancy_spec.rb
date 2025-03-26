@@ -1,9 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Viewing a single published vacancy" do
+  include ActiveJob::TestHelper
   let(:school) { create(:school) }
-
-  before { visit job_path(vacancy) }
 
   context "when the vacancy status is published" do
     let(:vacancy) do
@@ -13,13 +12,30 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     scenario "jobseekers can view the vacancy" do
+      visit job_path(vacancy)
       verify_vacancy_show_page_details(vacancy)
+    end
+
+    scenario "tracks the view in Redis" do
+      referrer_url = "https://example.com/some/path?utm=123"
+      normalized_referrer = VacancyAnalyticsService.normalize_referrer(referrer_url)
+      redis_key = "vacancy_referrer_stats:#{vacancy.id}:#{normalized_referrer}"
+    
+      perform_enqueued_jobs do
+        page.driver.header("Referer", referrer_url)
+        visit job_path(vacancy)
+      end
+      expect(Redis.current.get(redis_key).to_i).to be > 0
+    
+      # Cleanup Redis
+      Redis.current.del(redis_key)
     end
 
     context "when the publish_on date is in the future" do
       let(:vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
 
       scenario "Job post with a future publish_on date are not accessible" do
+        visit job_path(vacancy)
         expect(page).to have_content("Page not found")
         expect(page).to_not have_content(vacancy.job_title)
       end
@@ -29,6 +45,7 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [school]) }
 
       scenario "it shows warnings that the post has expired" do
+        visit job_path(vacancy)
         expect(page).to have_content("EXPIRED")
         expect(page).to have_content("This job expired on #{format_date(vacancy.expires_at, :date_only)}")
       end
@@ -36,6 +53,7 @@ RSpec.describe "Viewing a single published vacancy" do
 
     context "when the vacancy has not expired" do
       scenario "it does not show warnings that the post has expired" do
+        visit job_path(vacancy)
         expect(page).not_to have_content("EXPIRED")
         expect(page).not_to have_content("This job expired on #{format_date(vacancy.expires_at, :date_only)}")
       end
@@ -45,6 +63,7 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, :published, :with_supporting_documents, organisations: [school]) }
 
       scenario "can see the supporting documents section" do
+        visit job_path(vacancy)
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.documents"))
         expect(page).to have_content(vacancy.supporting_documents.first.filename)
       end
@@ -54,6 +73,7 @@ RSpec.describe "Viewing a single published vacancy" do
       let(:vacancy) { create(:vacancy, :no_tv_applications, organisations: [school]) }
 
       scenario "a jobseeker can click on the application link" do
+        visit job_path(vacancy)
         click_on I18n.t("jobs.apply")
 
         expect(page.current_url).to eq vacancy.application_link
@@ -129,6 +149,7 @@ RSpec.describe "Viewing a single published vacancy" do
     let(:vacancy) { create(:vacancy, :draft, organisations: [school]) }
 
     scenario "jobseekers cannot view the vacancy" do
+      visit job_path(vacancy)
       expect(page).to have_content("Page not found")
       expect(page).to_not have_content(vacancy.job_title)
     end
