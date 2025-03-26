@@ -1,10 +1,10 @@
 class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseController
-  include Wicked::Wizard
+  # include Wicked::Wizard
   include OrganisationsHelper
 
-  steps :job_location, :job_title, :job_role, :education_phases, :key_stages, :subjects, :contract_information,
-        :pay_package, :important_dates, :start_date, :applying_for_the_job, :how_to_receive_applications, :application_link,
-        :application_form, :school_visits, :visa_sponsorship, :contact_details, :about_the_role, :include_additional_documents, :documents
+  # steps :job_location, :job_title, :job_role, :education_phases, :key_stages, :subjects, :contract_information,
+  #       :pay_package, :important_dates, :start_date, :applying_for_the_job, :how_to_receive_applications, :application_link,
+  #       :application_form, :school_visits, :visa_sponsorship, :contact_details, :about_the_role, :include_additional_documents, :documents
 
   helper_method :form
 
@@ -12,6 +12,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   before_action :set_school_options
 
   helper_method :current_publisher_preference
+  helper_method :wizard_path, :current_step
 
   def show
     skip_step_if_missing
@@ -32,8 +33,21 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   private
 
+  def render_wizard
+    if @skip_to
+      redirect_to wizard_path(@skip_to)
+    else
+      render step
+    end
+  end
+
+  def wizard_path(current_step)
+    organisation_job_build_path(vacancy.id, current_step)
+  end
+
   def form
-    @form ||= form_class.new(form_attributes, vacancy, current_publisher)
+    @form ||= form_class.new(form_attributes, vacancy)
+    # step_process.current_step
   end
 
   def form_class
@@ -88,9 +102,17 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
 
   def skip_step_if_missing
     # Calling step_process will initialize a StepProcess, which will raise if the current step is missing.
-    step_process
-  rescue StepProcess::MissingStepError
-    @step = "wicked_finish" if step == :documents
-    skip_step unless step == "wicked_finish"
+    if step_process.step_missing?
+      @step = "wicked_finish" if step == :documents
+      skip_step unless step == "wicked_finish"
+    end
+  end
+
+  def step
+    params[:id].to_sym
+  end
+
+  def skip_step
+    @skip_to = step_process.next_step
   end
 end

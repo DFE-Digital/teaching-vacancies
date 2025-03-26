@@ -17,7 +17,7 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
     %i[publish_on expires_at]
   end
 
-  def initialize(params, vacancy, current_publisher = nil)
+  def initialize(params, vacancy)
     @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
 
     super

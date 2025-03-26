@@ -1,20 +1,106 @@
-class Publishers::Vacancies::VacancyStepProcess < StepProcess
+class Publishers::Vacancies::VacancyStepProcess < DfE::Wizard::Base
   attr_reader :vacancy, :organisation
+
+  # attr_accessor :vacancy, :organisation
+
+  steps do
+    [
+      {
+        job_location: Publishers::JobListing::JobLocationForm,
+        job_title: Publishers::JobListing::JobTitleForm,
+        job_role: Publishers::JobListing::JobRoleForm,
+        education_phases: Publishers::JobListing::EducationPhasesForm,
+        key_stages: Publishers::JobListing::KeyStagesForm,
+        subjects: Publishers::JobListing::SubjectsForm,
+        contract_information: Publishers::JobListing::ContractInformationForm,
+        pay_package: Publishers::JobListing::PayPackageForm,
+        important_dates: Publishers::JobListing::ImportantDatesForm,
+        start_date: Publishers::JobListing::StartDateForm,
+        applying_for_the_job: Publishers::JobListing::ApplyingForTheJobForm,
+        how_to_receive_applications: Publishers::JobListing::HowToReceiveApplicationsForm,
+        application_link: Publishers::JobListing::ApplicationLinkForm,
+        application_form: Publishers::JobListing::ApplicationFormForm,
+        school_visits: Publishers::JobListing::SchoolVisitsForm,
+        visa_sponsorship: Publishers::JobListing::VisaSponsorshipForm,
+        contact_details: Publishers::JobListing::ContactDetailsForm,
+        about_the_role: Publishers::JobListing::AboutTheRoleForm,
+        include_additional_documents: Publishers::JobListing::IncludeAdditionalDocumentsForm,
+        documents: Publishers::JobListing::DocumentsForm,
+        # REVIEW: Publishers::JobListing::ReviewForm,
+      },
+    ]
+  end
+
+  # def initialize(current_step, vacancy:, organisation:)
+  #   @vacancy = vacancy
+  #   @organisation = organisation
+  #
+  #   super(current_step, {
+  #     job_details: job_details_steps,
+  #     important_dates: %i[important_dates start_date],
+  #     application_process: application_process_steps,
+  #     about_the_role: about_the_role_steps,
+  #     review: %i[review],
+  #   })
+  # end
 
   def initialize(current_step, vacancy:, organisation:)
     @vacancy = vacancy
     @organisation = organisation
 
-    super(current_step, {
+    super(current_step: current_step)
+
+    # raise StepProcess::MissingStepError, "Current step `#{current_step}` missing from steps (#{step_names.join(', ')})" unless current_step.in?(step_names)
+  end
+
+  def step_missing?
+    !current_step_name.in?(step_names)
+  end
+
+  def step_names
+    step_groups.values.flatten
+  end
+
+  def step_groups
+    {
       job_details: job_details_steps,
       important_dates: %i[important_dates start_date],
       application_process: application_process_steps,
       about_the_role: about_the_role_steps,
       review: %i[review],
-    })
+    }
+  end
+
+  def current_step_group_number
+    if current_step_name.in? job_details_steps
+      1
+    elsif current_step_name.in? important_date_steps
+      2
+    elsif current_step_name.in? application_process_steps
+      3
+    elsif current_step_name.in? about_the_role_steps
+      4
+    else
+      5
+    end
+  end
+
+  def total_step_groups
+    5
+  end
+
+  # Returns the key of the previous step from the current one
+  def previous_step
+    return nil if current_step_name == step_names.first
+
+    step_names[step_names.index(current_step_name) - 1]
   end
 
   private
+
+  def important_date_steps
+    %i[important_dates start_date]
+  end
 
   def job_details_steps
     steps = %i[job_location job_title job_role education_phases key_stages subjects contract_information pay_package]

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::ContactDetailsForm, type: :model do
-  subject { described_class.new(params.merge(extra_params), vacancy, current_publisher) }
+  subject { described_class.new(params.merge(extra_params), vacancy) }
 
   let(:vacancy) { build_stubbed(:vacancy) }
   let(:current_publisher) { build_stubbed(:publisher, email: "test@example.com") }
