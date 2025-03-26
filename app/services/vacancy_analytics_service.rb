@@ -9,7 +9,6 @@ class VacancyAnalyticsService
 
     # Generate a Redis key for today's visits for this vacancy and referrer
     redis_key = "#{REDIS_KEY_PREFIX}:#{vacancy_id}:#{normalized_referrer}"
-
     # Increment the counter in Redis
     Redis.current.incr(redis_key)
   end
