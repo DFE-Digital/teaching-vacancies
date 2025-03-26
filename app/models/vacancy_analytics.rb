@@ -1,15 +1,20 @@
 class VacancyAnalytics < ApplicationRecord
   belongs_to :vacancy
 
-  def self.increment_view(vacancy_id, referrer)
-    record = find_or_create_by!(vacancy_id: vacancy_id)
+  validates :referrer_url, presence: true
+  validates :date, presence: true
 
-    record.increment!(:view_count)
+  # Prevent duplicate entries for the same vacancy, referrer and date
+  validates :referrer_url, uniqueness: { scope: %i[vacancy_id date] }
 
-    referrers = record.referrer_counts || {}
-    referrer_key = referrer.present? ? URI(referrer).host : "direct"
-    referrers[referrer_key] = referrers.fetch(referrer_key, 0) + 1
+  scope :for_date_range, ->(start_date, end_date) { where(date: start_date..end_date) }
+  scope :by_referrer, ->(referrer) { where(referrer_url: referrer) }
 
-    record.update!(referrer_counts: referrers)
+  def track_vacancy_view(referrer)
+    # Track asynchronously to not impact response time
+    TrackVacancyViewJob.perform_later(
+      vacancy_id: id,
+      referrer_url: referrer,
+    )
   end
 end
