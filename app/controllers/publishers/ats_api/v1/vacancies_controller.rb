@@ -3,6 +3,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   before_action :authenticate_client!
   before_action :validate_payload, only: %i[create update]
+  before_action :set_vacancy, only: %i[show update destroy]
 
   rescue_from StandardError, with: :render_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
@@ -10,14 +11,11 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   rescue_from Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError, with: :render_unprocessable_entity
 
   def index
-    @pagy, @vacancies = pagy(vacancies.where(publisher_ats_api_client: client), items: 100)
-
+    @pagy, @vacancies = pagy(vacancies, items: 100)
     respond_to(&:json)
   end
 
   def show
-    @vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
-
     respond_to(&:json)
   end
 
@@ -28,12 +26,9 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def update
-    vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
-
-    result = Publishers::AtsApi::UpdateVacancyService.call(vacancy, permitted_vacancy_params)
+    result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, permitted_vacancy_params)
 
     if result[:status] == :ok
-      @vacancy = vacancy
       render :show
     else
       render result.slice(:json, :status)
@@ -41,13 +36,19 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def destroy
-    vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
-    vacancy.destroy!
-
+    @vacancy.trash!
     head :no_content
   end
 
   private
+
+  # :nocov:
+  def set_vacancy
+    @vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
+
+    raise ActiveRecord::RecordNotFound if @vacancy.trashed?
+  end
+  # :nocov:
 
   def required_vacancy_keys
     %i[
@@ -95,7 +96,11 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   # rubocop:enable Metrics/MethodLength
 
   def vacancies
-    Vacancy.includes(:organisations).order(publish_on: :desc)
+    Vacancy
+      .includes(:organisations)
+      .order(publish_on: :desc)
+      .where(publisher_ats_api_client: client)
+      .where.not(status: Vacancy.statuses[:trashed])
   end
 
   def client

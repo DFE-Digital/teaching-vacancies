@@ -14,8 +14,6 @@ class Employment < ApplicationRecord
   validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { is_current_role? }, if: -> { job? }
   validates :ended_on, absence: true, if: -> { job? && is_current_role? }
 
-  self.ignored_columns += %i[salary]
-
   def duplicate
     # dup does a shallow copy, but although it "doesn't copy associations" according to the
     # docs, it *does* copy parent associations so we remove these

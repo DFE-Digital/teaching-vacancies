@@ -142,9 +142,6 @@ class Vacancy < ApplicationRecord
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
 
-  # This should have been ignored and removed in late 2022
-  self.ignored_columns += %i[phase]
-
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
   def self.array_enums
@@ -303,6 +300,23 @@ class Vacancy < ApplicationRecord
 
   def find_conflicting_vacancy
     find_conflict_vacancy || find_duplicate_vacancy
+  end
+
+  def trash!
+    return if trashed?
+
+    supporting_documents.purge_later
+    # rubocop:disable Rails/SkipsModelValidations
+    update_attribute(:status, :trashed)
+    # rubocop:enable Rails/SkipsModelValidations
+    remove_google_index
+  end
+
+  def remove_google_index
+    return if DisableExpensiveJobs.enabled?
+
+    url = Rails.application.routes.url_helpers.job_url(self)
+    RemoveGoogleIndexQueueJob.perform_later(url)
   end
 
   private

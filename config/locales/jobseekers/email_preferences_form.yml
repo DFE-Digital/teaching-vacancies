@@ -1,0 +1,35 @@
+en:
+  activerecord:
+    errors:
+      models:
+        jobseeker:
+          attributes:
+            email_opt_out_reason:
+              blank: Select your reason for opting out
+            email_opt_out_comment:
+              blank: Tell us why you are opting out of the emails
+  helpers:
+    label:
+      jobseekers_email_preferences_form:
+        email_opt_out_options:
+          "false": Yes, I want to receive emails
+          "true": No, I want to opt out of non-transactional emails
+        email_opt_out_reason_options:
+          too_many_emails: I'm getting too many emails
+          not_getting_any_value: I'm not getting any value from the emails
+          not_looking_for_job: I'm not looking for a teaching, leadership or school-based support job
+          other_reason: Other
+        email_opt_out_comment: Tell us more (optional)
+    legend:
+      jobseekers_email_preferences_form:
+        email_opt_out: Would you like to receive emails about updates to Teaching Vacancies?
+        email_opt_out_reason: Tell us why you are opting out of emails
+
+  jobseekers:
+    email_preferences:
+      edit:
+        page_title: Opt out of emails
+        description: >-
+          You will still receive emails about any job alerts you have subscribed to and your job applications
+      update:
+        success: Your email preferences have been updated

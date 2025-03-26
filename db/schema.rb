@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_14_152244) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -70,7 +70,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
   end
 
   create_table "employments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "salary", default: "", null: false
     t.string "subjects", default: "", null: false
     t.date "started_on"
     t.date "ended_on"
@@ -206,10 +205,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.string "qualified_teacher_status", default: "", null: false
     t.string "qualified_teacher_status_year", default: "", null: false
     t.text "qualified_teacher_status_details", default: "", null: false
-    t.string "statutory_induction_complete", default: "", null: false
-    t.string "support_needed", default: "", null: false
-    t.string "close_relationships", default: "", null: false
-    t.string "right_to_work_in_uk", default: "", null: false
     t.string "disability", default: "", null: false
     t.string "gender", default: "", null: false
     t.string "gender_description", default: "", null: false
@@ -240,7 +235,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.text "rejection_reasons_ciphertext"
     t.text "gaps_in_employment_details_ciphertext"
     t.integer "in_progress_steps", default: [], null: false, array: true
-    t.string "safeguarding_issue"
     t.text "safeguarding_issue_details"
     t.integer "imported_steps", default: [], null: false, array: true
     t.datetime "interviewing_at"
@@ -288,7 +282,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.uuid "job_preferences_id", null: false
     t.string "name", null: false
     t.integer "radius", null: false
-    t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}, null: false
+    t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["area"], name: "index_job_preferences_locations_on_area", using: :gist
@@ -314,7 +308,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.boolean "active", default: false, null: false
     t.boolean "requested_hidden_profile"
     t.text "teacher_reference_number_ciphertext"
-    t.string "statutory_induction_complete"
     t.string "has_teacher_reference_number"
     t.string "statutory_induction_complete_details"
     t.string "qts_age_range_and_subject"
@@ -336,6 +329,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.string "govuk_one_login_id"
     t.string "account_merge_confirmation_code"
     t.datetime "account_merge_confirmation_code_generated_at"
+    t.boolean "email_opt_out", default: false, null: false
+    t.integer "email_opt_out_reason"
+    t.text "email_opt_out_comment"
     t.index ["email"], name: "index_jobseekers_on_email", unique: true
     t.index ["govuk_one_login_id"], name: "index_jobseekers_on_govuk_one_login_id", unique: true
   end
@@ -353,8 +349,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.string "location_type"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.geography "area", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
-    t.geography "centroid", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geography "area", limit: {srid: 4326, type: "geometry", geographic: true}
+    t.geography "centroid", limit: {srid: 4326, type: "st_point", geographic: true}
     t.index ["area"], name: "index_location_polygons_on_area", using: :gist
     t.index ["centroid"], name: "index_location_polygons_on_centroid", using: :gist
     t.index ["name"], name: "index_location_polygons_on_name"
@@ -363,7 +359,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
   create_table "markers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "vacancy_id", null: false
     t.uuid "organisation_id", null: false
-    t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geography "geopoint", limit: {srid: 4326, type: "st_point", geographic: true}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["geopoint"], name: "index_markers_on_geopoint", using: :gist
@@ -450,7 +446,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.json "gias_data"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.string "readable_phases", array: true
     t.string "url_override"
     t.string "region"
     t.string "detailed_school_type"
@@ -459,7 +454,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.string "group_type"
     t.string "local_authority_within"
     t.string "establishment_status"
-    t.geography "geopoint", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geography "geopoint", limit: {srid: 4326, type: "st_point", geographic: true}
     t.text "gias_data_hash"
     t.string "slug"
     t.string "email"
@@ -483,7 +478,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.text "first_name_ciphertext"
     t.text "last_name_ciphertext"
     t.text "phone_number_ciphertext"
-    t.boolean "right_to_work_in_uk"
     t.boolean "has_right_to_work_in_uk"
     t.index ["jobseeker_profile_id"], name: "index_personal_details_jobseeker_profile_id", unique: true
   end
@@ -677,9 +671,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_28_143957) do
     t.string "completed_steps", default: [], null: false, array: true
     t.string "actual_salary"
     t.text "working_patterns_details"
-    t.integer "phase"
     t.integer "key_stages", array: true
-    t.geography "geolocation", limit: {:srid=>4326, :type=>"geometry", :geographic=>true}
+    t.geography "geolocation", limit: {srid: 4326, type: "geometry", geographic: true}
     t.string "readable_phases", default: [], array: true
     t.tsvector "searchable_content"
     t.boolean "google_index_removed", default: false

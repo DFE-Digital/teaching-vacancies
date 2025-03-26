@@ -147,18 +147,21 @@ RSpec.describe Organisation do
   describe "#refresh_gias_data_hash" do
     subject { create(:school, gias_data: { foo: "bar" }, gias_data_hash: hash) }
 
+    let(:sha_256_hexdigest_for_foo_bar) { "e1d4f8c43b7b0393ffc10bf5959d52154d99abc9cb4b19f2f6b032d0b991e21e" }
+
     context "when the gias_data has changed" do
       let(:hash) { "Foo" }
 
       it "recomputes the hash" do
         expect { subject.refresh_gias_data_hash }
           .to change { subject.gias_data_hash }
-          .to("b8fd12f77d3a2614bcead8ab94c786c11b1bf6f2fdeb2d3801f316466f0fe4ee")
+          .from("Foo")
+          .to(sha_256_hexdigest_for_foo_bar)
       end
     end
 
     context "when the gias_data has not changed" do
-      let(:hash) { "b8fd12f77d3a2614bcead8ab94c786c11b1bf6f2fdeb2d3801f316466f0fe4ee" }
+      let(:hash) { sha_256_hexdigest_for_foo_bar }
 
       it "does not change the hash" do
         subject.refresh_gias_data_hash

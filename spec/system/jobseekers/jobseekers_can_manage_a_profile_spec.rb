@@ -251,7 +251,7 @@ RSpec.describe "Jobseekers can manage their profile" do
                 .to contain_exactly(["Enter a school or other organisation", "#jobseekers-profile-employment-form-organisation-field-error"],
                                     ["Enter your job title", "#jobseekers-profile-employment-form-job-title-field-error"],
                                     ["Enter your main duties for this role", "#jobseekers-profile-employment-form-main-duties-field-error"],
-                                    ["Enter your reason for leaving the role", "#jobseekers-profile-employment-form-reason-for-leaving-field-error"],
+                                    ["Enter your reason for leaving this role", "#jobseekers-profile-employment-form-reason-for-leaving-field-error"],
                                     ["Enter the date you started at this school or organisation", "#jobseekers-profile-employment-form-started-on-field-error"])
             end
           end
@@ -262,7 +262,7 @@ RSpec.describe "Jobseekers can manage their profile" do
             expect(page).to have_css("ul.govuk-list.govuk-error-summary__list")
 
             within "ul.govuk-list.govuk-error-summary__list" do
-              expect(page).to have_link("Enter your reason for leaving the role", href: "#jobseekers-profile-employment-form-reason-for-leaving-field-error")
+              expect(page).to have_link("Enter your reason for leaving this role", href: "#jobseekers-profile-employment-form-reason-for-leaving-field-error")
             end
           end
         end

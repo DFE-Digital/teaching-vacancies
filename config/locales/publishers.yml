@@ -99,7 +99,7 @@ en:
           primary: "Primary school"
           secondary: "Secondary school"
           sixth_form_or_college: "Sixth form or college"
-          through: "Through school"
+          through: "All through school"
         key_stage_options:
           early_years: "Early years"
           ks1: "Key stage 1"
@@ -266,7 +266,7 @@ en:
             primary: Primary school
             secondary: Secondary school
             sixth_form_or_college: Sixth form or college
-            through: All through school
+            through: Through school
             middle_deemed_secondary: Middle deamed secondary school
             middle_deemed_primary: Middle deamed primary school
         safeguarding_information:
@@ -688,7 +688,7 @@ en:
         key_stages: Key stage
         subjects: Subjects (optional)
         contract_type: Contract type
-        working_patterns: Working pattern
+        contract_information: Contract information
         pay_package: Salary and allowances
         important_dates: Publish and closing dates
         start_date: Job start date

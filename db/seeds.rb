@@ -25,7 +25,7 @@ users = [
   { email: "alisa.ali@education.gov.uk", family_name: "Ali", given_name: "Alisa" },
   { email: "brandon1.chan@education.gov.uk", family_name: "Chan", given_name: "Brandon" },
   { email: "chloe.ewens@education.gov.uk", family_name: "Ewens", given_name: "Chloe" },
-  { email: "davide.dippolito@education.gov.uk", family_name: "Dippolito", given_name: "Davide" },
+  { email: "david.thacker@education.gov.uk", family_name: "Thacker", given_name: "David" },
   { email: "ellie.nodder@education.gov.uk", family_name: "Nodder", given_name: "Ellie" },
   { email: "fisal.yusuf@education.gov.uk", family_name: "Yusuf", given_name: "Fisal" },
   { email: "halima.ikuomola@education.gov.uk", family_name: "Ikuomola", given_name: "Halima" },
@@ -108,10 +108,7 @@ Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
                                                             job_application: FactoryBot.build(:job_application,
                                                                                               vacancy: FactoryBot.build(:vacancy,
                                                                                                                         organisations: weydon_trust_schools))),
-                      employments: FactoryBot.build_list(:employment, 1,
-                                                         job_application: FactoryBot.build(:job_application,
-                                                                                           vacancy: FactoryBot.build(:vacancy,
-                                                                                                                     organisations: weydon_trust_schools))),
+                      employments: FactoryBot.build_list(:employment, 1, :jobseeker_profile_employment),
                       jobseeker: jobseeker) do |jobseeker_profile|
       FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
         FactoryBot.create(:job_preferences_location, job_preferences:, name: location_preference_names.pop)
@@ -122,3 +119,8 @@ end
 
 # still need to delete jobs without an organisation
 Vacancy.includes(:organisations).find_each.reject { |v| v.organisation.present? }.each(&:destroy)
+
+# Adds one ATS API Client for testing locally or on review apps
+if ENV["ATS_API_CLIENT_TESTING_API_KEY"].present?
+  PublisherAtsApiClient.create(name: "Testing ATS Client", api_key: ENV["ATS_API_CLIENT_TESTING_API_KEY"], last_rotated_at: Time.current)
+end

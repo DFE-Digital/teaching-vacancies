@@ -63,13 +63,6 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
     end
   end
 
-  def remove_google_index(job)
-    return if DisableExpensiveJobs.enabled?
-
-    url = job_url(job)
-    RemoveGoogleIndexQueueJob.perform_later(url)
-  end
-
   def update_google_index(job)
     return if DisableExpensiveJobs.enabled?
 

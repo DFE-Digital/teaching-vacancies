@@ -17,5 +17,5 @@ en:
         application_form_type_options:
           no_religion_html: Online application form %{tag}
           other_religion_html: Online application form with questions about religion %{tag}
-          catholic_html: Online application form for Catholic schools %{tag}
+          catholic_html: Catholic Education Service approved online application form %{tag}
           other: Use other application form

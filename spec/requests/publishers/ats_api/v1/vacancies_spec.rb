@@ -32,6 +32,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         end
 
         before do
+          create(:vacancy, :external, :trashed, publisher_ats_api_client: client, organisations: [school], external_reference: "REF_CLIENT_3")
           Array.new(3) do |index|
             create(
               :vacancy,
@@ -625,7 +626,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             "id" => id,
             "public_url" => "http://www.example.com/jobs/teacher-of-geography",
             "external_advert_url" => "https://www.example.com/ats-site/advertid",
-            "expires_at" => expires_at.to_time.iso8601(3),
+            "expires_at" => expires_at.in_time_zone.strftime("%Y-%m-%dT%H:%M:%S.000%:z"),
             "job_title" => "Teacher of Geography",
             "job_advert" => "We're looking for a dedicated Teacher of Geography",
             "salary" => "£12,345 to £67,890",
@@ -834,7 +835,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           submit_request(example.metadata)
           assert_response_matches_metadata(example.metadata)
           expect(response.parsed_body).to eq(
-            { "errors" => ["job_title: can't be blank", "external_reference: Enter an external reference"] },
+            { "errors" => ["job_title: can't be blank", "external_reference: Enter an external reference", "expires_at: must be a future date", "expires_at: must be later than the publish date"] },
           )
         end
 
@@ -908,7 +909,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
       response(204, "Indicates the vacancy was removed from the system.") do
         it "removes the vaancy" do |example|
-          expect { submit_request(example.metadata) }.to change(Vacancy, :count).from(1).to(0)
+          expect { submit_request(example.metadata) }.to change(Vacancy.active.where(publisher_ats_api_client: client), :count).from(1).to(0)
           assert_response_matches_metadata(example.metadata)
           expect(response.parsed_body).to be_empty
         end

@@ -53,7 +53,7 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
     end
 
     it "sets important dates" do
-      expect(vacancy.expires_at).to eq(Time.zone.parse("2022-10-28T12:00:00"))
+      expect(vacancy.expires_at).to eq(Time.zone.parse("2042-10-28T12:00:00"))
       expect(vacancy.publish_on).to eq(Date.today)
     end
 
@@ -192,10 +192,10 @@ RSpec.describe Vacancies::Import::Sources::Fusion do
     end
 
     describe "start date mapping" do
-      let(:fixture_date) { "2022-11-21T00:00:00" }
+      let(:fixture_date) { "2042-11-21T00:00:00" }
 
       it "stores the specific start date" do
-        expect(vacancy.starts_on.to_s).to eq "2022-11-21"
+        expect(vacancy.starts_on.to_s).to eq "2042-11-21"
         expect(vacancy.start_date_type).to eq "specific_date"
       end
 

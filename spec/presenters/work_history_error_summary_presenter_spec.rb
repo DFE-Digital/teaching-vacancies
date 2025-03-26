@@ -9,7 +9,7 @@ RSpec.describe WorkHistoryErrorSummaryPresenter do
   end
   let(:errors) do
     {
-      base: [
+      unexplained_employment_gaps: [
         "You have a gap in your work history (1 year).",
         "You have a gap in your work history (6 months).",
       ],
@@ -22,8 +22,8 @@ RSpec.describe WorkHistoryErrorSummaryPresenter do
     it "provides links to the correct gap IDs" do
       expect(presenter.formatted_error_messages).to eq(
         [
-          [:base, "You have a gap in your work history (1 year).", "#gap-20231201-20241201"],
-          [:base, "You have a gap in your work history (6 months).", "#gap-20201101-20210531"],
+          [:unexplained_employment_gaps, "You have a gap in your work history (1 year).", "#gap-20231201-20241201"],
+          [:unexplained_employment_gaps, "You have a gap in your work history (6 months).", "#gap-20201101-20210531"],
         ],
       )
     end

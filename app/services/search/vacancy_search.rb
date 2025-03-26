@@ -2,7 +2,7 @@ class Search::VacancySearch
   extend Forwardable
   def_delegators :location_search, :point_coordinates, :polygon
 
-  attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort
+  attr_reader :search_criteria, :keyword, :location, :radius, :organisation_slug, :sort, :original_scope
 
   def initialize(search_criteria, sort: nil, scope: Vacancy.live)
     @search_criteria = search_criteria
@@ -11,6 +11,7 @@ class Search::VacancySearch
     @radius = search_criteria[:radius]
     @organisation_slug = search_criteria[:organisation_slug]
     @sort = sort || Search::VacancySort.new(keyword: keyword, location: location)
+    @original_scope = scope.where(scope.where_values_hash)
     @scope = scope
   end
 
@@ -36,9 +37,7 @@ class Search::VacancySearch
   end
 
   def wider_search_suggestions
-    return unless total_count.zero? && search_criteria[:location].present?
-
-    @wider_search_suggestions ||= Search::WiderSuggestionsBuilder.new(search_criteria).suggestions
+    @wider_search_suggestions ||= Search::WiderSuggestionsBuilder.call(self)
   end
 
   def organisation

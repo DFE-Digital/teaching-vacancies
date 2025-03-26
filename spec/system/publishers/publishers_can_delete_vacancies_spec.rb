@@ -28,11 +28,4 @@ RSpec.describe "School deleting vacancies" do
 
     expect(vacancy.supporting_documents.count).to be_zero
   end
-
-  scenario "Notifies the Google index service" do
-    expect_any_instance_of(Publishers::Vacancies::BaseController).to receive(:remove_google_index).with(vacancy)
-
-    click_on I18n.t("publishers.vacancies.show.heading_component.action.delete")
-    click_on I18n.t("buttons.confirm_deletion")
-  end
 end

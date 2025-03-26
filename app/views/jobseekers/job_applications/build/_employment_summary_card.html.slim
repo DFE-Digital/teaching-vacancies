@@ -9,6 +9,11 @@
       .govuk-summary-list__row
         dt.govuk-summary-list__key = t("jobseekers.job_applications.employments.organisation")
         dd.govuk-summary-list__value = employment.organisation.presence
+      - unless employment.valid?
+        - employment.errors.full_messages.each do |message|
+          .govuk-summary-list__row
+            dt.govuk-summary-list__key
+            dd.govuk-summary-list__value.govuk-error-message = message
       .govuk-summary-list__row
         dt.govuk-summary-list__key = t("jobseekers.job_applications.employments.started_on")
         dd.govuk-summary-list__value = employment.started_on.to_formatted_s(:month_year)

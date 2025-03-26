@@ -10,6 +10,53 @@ RSpec.describe Vacancy do
   it { is_expected.to have_many(:job_applications) }
   it { is_expected.to have_one(:equal_opportunities_report) }
 
+  describe "#trash!" do
+    subject { create(:vacancy) }
+
+    it "updates status" do
+      subject.trash!
+      expect(subject).to be_trashed
+    end
+
+    it "removes google index" do
+      url = Rails.application.routes.url_helpers.job_url(subject)
+      expect { subject.trash! }.to have_enqueued_job(RemoveGoogleIndexQueueJob).with(url)
+    end
+
+    it "removes attachements" do
+      subject.trash!
+      expect(subject.supporting_documents).to be_blank
+    end
+
+    context "when vacancy already trashed" do
+      subject { create(:vacancy, :trashed) }
+
+      it "does nothing" do
+        expect { subject.trash! }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob)
+      end
+    end
+  end
+
+  describe "#remove_google_index" do
+    let(:vacancy) { create(:vacancy) }
+    subject(:remove_google_index) { vacancy.remove_google_index }
+
+    before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(enabled) }
+
+    context "when disable expensive jobs enabled is enabled" do
+      let(:enabled) { true }
+
+      it { expect { remove_google_index }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob) }
+    end
+
+    context "when disable expensive jobs enabled is disabled" do
+      let(:enabled) { false }
+      let(:url) { Rails.application.routes.url_helpers.job_url(vacancy) }
+
+      it { expect { remove_google_index }.to have_enqueued_job(RemoveGoogleIndexQueueJob).with(url) }
+    end
+  end
+
   describe "#has_noticed_notifications" do
     subject { create(:vacancy) }
 
@@ -716,7 +763,7 @@ RSpec.describe Vacancy do
     let(:attributes) do
       {
         job_title: "Math Teacher",
-        expires_at: "2025-01-01",
+        expires_at: "2045-01-01",
         organisations: [school],
         publisher_ats_api_client: publisher_ats_api_client,
         external_reference: "REF123",
@@ -753,7 +800,7 @@ RSpec.describe Vacancy do
       let(:duplicate_attributes) do
         {
           job_title: "Math Teacher",
-          expires_at: "2025-01-01",
+          expires_at: "2045-01-01",
           organisations: [school],
         }
       end

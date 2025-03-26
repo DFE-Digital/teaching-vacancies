@@ -6,7 +6,8 @@ RSpec.describe Search::SchoolSearch do
   let(:form_hash) do
     {
       name: name,
-      location: ([location, radius] if location.present?),
+      location: location,
+      radius: radius,
       organisation_types: organisation_types,
       key_stage: key_stage,
       job_availability: job_availability,
@@ -23,6 +24,27 @@ RSpec.describe Search::SchoolSearch do
   let(:radius) { 10 }
 
   let(:scope) { School.all }
+
+  describe "#wider_search_suggestions" do
+    let(:school_search) { described_class.new(form_hash, scope: scope) }
+    let(:builder) { Search::WiderSuggestionsBuilder }
+
+    before do
+      allow(builder).to receive(:call)
+    end
+
+    it "uses Search::WiderSuggestionsBuilder to provide suggestions" do
+      school_search.wider_search_suggestions
+      expect(builder).to have_received(:call).with(school_search)
+    end
+  end
+
+  describe "#location_search" do
+    it "uses Search::LocationBuilder" do
+      expect(Search::LocationBuilder).to receive(:new).with(location, radius)
+      subject.location_search
+    end
+  end
 
   context "when no filters (except for radius) are given" do
     it "returns unmodified scope" do
@@ -137,8 +159,8 @@ RSpec.describe Search::SchoolSearch do
     let(:school_types) { ["special_school"] }
 
     it "clears selected filters " do
-      expect(subject.active_criteria).to eq({ location: ["Sevenoaks", 10], name: name, organisation_types: organisation_types, job_availability: job_availability, key_stage: key_stage, school_types: school_types })
-      expect(subject.clear_filters_params).to eq({ location: ["Sevenoaks", 10], name: name, organisation_types: [], education_phase: [], key_stage: [], job_availability: [], school_types: [] })
+      expect(subject.active_criteria).to eq({ location: "Sevenoaks", radius: 10, name: name, organisation_types: organisation_types, job_availability: job_availability, key_stage: key_stage, school_types: school_types })
+      expect(subject.clear_filters_params).to eq({ location: "Sevenoaks", radius: 10, name: name, organisation_types: [], education_phase: [], key_stage: [], job_availability: [], school_types: [] })
     end
   end
 end

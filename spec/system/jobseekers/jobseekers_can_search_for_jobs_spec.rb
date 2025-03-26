@@ -262,7 +262,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     context "when academy is selected" do
       it "only shows vacancies from academies" do
         visit jobs_path
-        check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
+        check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([job1, job2, job3, job4])
@@ -273,7 +273,7 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     context "when local authority is selected" do
       it "only shows vacancies from local authorities" do
         visit jobs_path
-        check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
+        check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority")
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([job5])
@@ -284,8 +284,8 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
     context "when both local authority and academy are selected" do
       it "shows vacancies from both local authorities and academies" do
         visit jobs_path
-        check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy")
-        check I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority")
+        check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy")
+        check I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority")
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([job1, job2, job3, job4, job5])

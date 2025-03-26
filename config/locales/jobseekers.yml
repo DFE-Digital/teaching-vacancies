@@ -22,6 +22,13 @@ en:
           heading: Change your sign in details
           description: You can use your GOV.UK One Login to sign in to Teaching Vacancies.
           change_details_description: "You can change these details in your GOV.UK One Login:"
+        email_preferences:
+          heading: Opt out of emails
+          description: "As well as emails about your account and applications, we may send you emails about:"
+          website_updates: wesbite updates
+          tips_to_find_a_job: tips to find your next role
+          choose_to_only: You can choose to only receive emails about your account and applications, and opt out of any other email communication.
+          link: Opt out of additional email communication
         find_account_details:
           heading: Can't find your account details?
           paragraph1: If you had a Teaching Vacancies account using a different email address to your GOV.UK One Login account, your account details will not automatically be saved.
@@ -189,9 +196,9 @@ en:
           title: Religious information — Application
           heading: Religious information
           is_a_catholic_school: "%{name} is a Catholic school."
-          preference_to_catholics: Schools, academies and colleges of a religious character can give preference to Catholic applicants when recruiting for teaching roles.
-          preference_for_support_staff: They can also give preference to Catholic applicants for support staff roles where there is a genuine occupational requirement.
-          non_catholics_apply: Applicants who do not follow a faith or religion are still encouraged to apply.
+          preference_to_catholics: Schools, academies and colleges with a religious character can give preference to Catholic applicants when recruiting for teaching roles, and most senior leadership posts require the postholder to be a practising Catholic.
+          preference_for_support_staff: Preference can also be given to Catholic applicants for support staff roles where there is a genuine occupational requirement. In requesting the information below it is not our intention to deter applicants.
+          non_catholics_apply: Applicants from all faiths and none are welcome to apply.
         catholic_following_religion:
           heading: Religious information
         non_catholic_following_religion:
@@ -1065,4 +1072,3 @@ en:
         title: Sign in unsuccessful
         expired_html: The login link you used has expired. Please %{try_again}.
         no_key_html: The login link you used was not recognised. Please %{try_again}.
-

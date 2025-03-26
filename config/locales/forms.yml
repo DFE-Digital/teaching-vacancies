@@ -262,20 +262,6 @@ en:
             primary: For example ‘Teacher of KS1’
             through: For example ‘Teacher of KS1’ or ‘Teacher of Maths’
           teaching_assistant: For example ‘Teaching assistant’
-      publishers_job_listing_working_patterns_form:
-        working_patterns: Select all that apply.
-        working_patterns_details: For example, 16 hours a week, Monday to Wednesday.
-        working_patterns_options:
-          full_time_education_support: Usually at least 36.5 hours a week
-          full_time_higher_level_teaching_assistant: Usually at least 36.5 hours a week
-          full_time_head_of_year_or_phase: Usually at least 27.5 hours a week
-          full_time_head_of_department_or_curriculum: Usually at least 27.5 hours a week
-          full_time_sendco: ""
-          full_time_headteacher: Usually at least 27.5 hours a week
-          full_time_deputy_headteacher: Usually at least 27.5 hours a week
-          full_time_assistant_headteacher: Usually at least 27.5 hours a week
-          full_time_teaching_assistant: Usually at least 36.5 hours a week
-          full_time_teacher: Usually at least 27.5 hours a week
 
     label:
       publishers_new_features_form:
@@ -525,14 +511,6 @@ en:
         application_email_options:
           other: Another email address
         other_application_email: Email address
-      publishers_job_listing_contract_type_form:
-        contract_type_options:
-          fixed_term: Fixed term (including maternity or parental leave cover)
-          parental_leave_cover: Maternity or parental leave cover
-          permanent: Permanent
-          casual: Casual
-        fixed_term_contract_duration: Length of contract
-        is_parental_leave_cover: Is this covering maternity or paternal leave?
       publishers_job_listing_contact_details_form:
         contact_email_options:
           other: Another email address
@@ -592,7 +570,7 @@ en:
           primary: Primary school
           secondary: Secondary school
           sixth_form_or_college: Sixth form or college
-          through: Through school
+          through: All through school
       publishers_job_listing_how_to_receive_applications_form:
         receive_applications_options:
           email: By email
@@ -686,15 +664,6 @@ en:
         visa_sponsorship_available_options:
           false: "No"
           true: "Yes"
-      publishers_job_listing_working_patterns_form:
-        working_patterns_details: Details of working hours/days (optional)
-        organisation_type_options:
-          academy: Academy
-          local_authority: Local authority maintained schools
-        working_patterns_options:
-          full_time: Full time
-          job_share: Job share
-          part_time: Part time
       publishers_vacancy_statistics_form:
         hired_status: Job filled on Teaching Vacancies?
         listed_elsewhere: Listed elsewhere?
@@ -780,8 +749,6 @@ en:
         safeguarding_information_provided: Do you want to give information about your commitment to safeguarding?
       publishers_job_listing_application_form_form:
         application_email: Email address to receive applications
-      publishers_job_listing_contract_type_form:
-        contract_type: Contract type
       publishers_job_listing_contact_details_form:
         contact_email: Email address
         contact_number_provided: Do you want to give a contact phone number?
@@ -842,8 +809,6 @@ en:
         benefits: Do you want to include additional allowances?
       publishers_job_listing_school_visits_form:
         school_visits: Do you want to offer school visits?
-      publishers_job_listing_working_patterns_form:
-        working_patterns: Working patterns
       subscription:
         frequency: When do you want to receive alerts?
       support_request_form:

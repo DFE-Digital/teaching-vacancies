@@ -1,0 +1,21 @@
+- content_for :page_title_prefix, t(".page_title")
+
+h1.govuk-heading-l = t(".page_title")
+
+p = t(".description")
+
+= form_with model: @jobseeker, scope: :jobseekers_email_preferences_form, url: jobseekers_account_email_preferences_path, method: :patch do |f|
+  = f.govuk_error_summary
+
+  = f.govuk_radio_buttons_fieldset :email_opt_out do
+    = f.govuk_radio_button :email_opt_out, "false", link_errors: true
+    = f.govuk_radio_button :email_opt_out, "true" do
+      = f.govuk_radio_buttons_fieldset :email_opt_out_reason, legend: { size: "m" } do
+        = f.govuk_radio_button :email_opt_out_reason, :too_many_emails, link_errors: true
+        = f.govuk_radio_button :email_opt_out_reason, :not_getting_any_value
+        = f.govuk_radio_button :email_opt_out_reason, :not_looking_for_job
+        = f.govuk_radio_button :email_opt_out_reason, :other_reason do
+          = f.govuk_text_area :email_opt_out_comment
+
+  = f.govuk_submit t("buttons.save_changes")
+  = govuk_button_to t("buttons.cancel"), jobseekers_account_path, class: "govuk-!-margin-left-2 govuk-button--secondary"

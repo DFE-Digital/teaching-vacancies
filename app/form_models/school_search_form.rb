@@ -19,7 +19,7 @@ class SchoolSearchForm
 
     if attrs.key?(:location)
       self.radius = Search::RadiusBuilder.new(attrs[:location], attrs[:radius]).radius.to_s
-      attrs[:location] = [attrs[:location], radius]
+      attrs[:radius] = radius
     else
       attrs.delete(:radius)
     end
@@ -42,13 +42,13 @@ class SchoolSearchForm
   end
 
   def job_availability_options
-    [true, false].map { |i| [i.to_s, I18n.t(i, scope: "organisations.filters.job_availability.options")] }
+    [["true", I18n.t("organisations.filters.job_availability.options.true")]]
   end
 
   def organisation_type_options
     [
-      [I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.academy"), "includes free schools"],
-      [I18n.t("helpers.label.publishers_job_listing_working_patterns_form.organisation_type_options.local_authority"), nil],
+      [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.academy"), "includes free schools"],
+      [I18n.t("helpers.label.publishers_job_listing_contract_information_form.organisation_type_options.local_authority"), nil],
     ]
   end
 
