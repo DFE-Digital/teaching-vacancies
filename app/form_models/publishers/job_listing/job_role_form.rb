@@ -2,8 +2,14 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
   validates :job_roles, presence: { message: "At least one job role is required" }
   validate :job_roles_inclusion
 
-  def self.fields
-    %i[job_roles]
+  class << self
+    def fields
+      %i[job_roles]
+    end
+
+    def permitted_params
+      [{ job_roles: [] }]
+    end
   end
   attr_accessor(*fields)
 

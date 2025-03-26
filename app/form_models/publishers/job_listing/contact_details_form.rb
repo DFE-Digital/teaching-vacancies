@@ -9,10 +9,17 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
 
   FIELDS = %i[contact_email contact_number].freeze
 
-  def self.fields
-    FIELDS + %i[contact_number_provided]
+  class << self
+    def fields
+      FIELDS + %i[contact_number_provided]
+    end
+
+    def permitted_params
+      %i[contact_email other_contact_email contact_number contact_number_provided]
+    end
   end
   attr_accessor(*FIELDS)
+
   # attr_writer(:other_contact_email)
   attribute :other_contact_email
 

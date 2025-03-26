@@ -23,7 +23,7 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def update
-    if form.valid?
+    if step_process.valid_step?
       update_vacancy
       redirect_to_next_step
     else
@@ -46,25 +46,17 @@ class Publishers::Vacancies::BuildController < Publishers::Vacancies::BaseContro
   end
 
   def form
-    @form ||= form_class.new(form_attributes, vacancy)
-    # step_process.current_step
+    # @form ||= form_class.new(form_attributes, vacancy)
+    @form ||= case action_name
+              when "show"
+                form_class.new(form_class.load_form(vacancy), vacancy)
+              when "update"
+                step_process.current_step
+              end
   end
 
   def form_class
     "publishers/job_listing/#{step}_form".camelize.constantize
-  end
-
-  def form_attributes
-    case action_name
-    when "show"
-      form_class.load_form(vacancy)
-    when "update"
-      form_params
-    end
-  end
-
-  def form_params
-    send(:"#{step}_params", params)
   end
 
   def set_school_options

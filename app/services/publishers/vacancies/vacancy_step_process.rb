@@ -1,8 +1,6 @@
 class Publishers::Vacancies::VacancyStepProcess < DfE::Wizard::Base
   attr_reader :vacancy, :organisation
 
-  # attr_accessor :vacancy, :organisation
-
   steps do
     [
       {
@@ -26,31 +24,15 @@ class Publishers::Vacancies::VacancyStepProcess < DfE::Wizard::Base
         about_the_role: Publishers::JobListing::AboutTheRoleForm,
         include_additional_documents: Publishers::JobListing::IncludeAdditionalDocumentsForm,
         documents: Publishers::JobListing::DocumentsForm,
-        # REVIEW: Publishers::JobListing::ReviewForm,
       },
     ]
   end
 
-  # def initialize(current_step, vacancy:, organisation:)
-  #   @vacancy = vacancy
-  #   @organisation = organisation
-  #
-  #   super(current_step, {
-  #     job_details: job_details_steps,
-  #     important_dates: %i[important_dates start_date],
-  #     application_process: application_process_steps,
-  #     about_the_role: about_the_role_steps,
-  #     review: %i[review],
-  #   })
-  # end
-
-  def initialize(current_step, vacancy:, organisation:)
+  def initialize(current_step, vacancy:, organisation:, step_params: {})
     @vacancy = vacancy
     @organisation = organisation
 
-    super(current_step: current_step)
-
-    # raise StepProcess::MissingStepError, "Current step `#{current_step}` missing from steps (#{step_names.join(', ')})" unless current_step.in?(step_names)
+    super(current_step: current_step, step_params: step_params)
   end
 
   def step_missing?
@@ -96,7 +78,24 @@ class Publishers::Vacancies::VacancyStepProcess < DfE::Wizard::Base
     step_names[step_names.index(current_step_name) - 1]
   end
 
+  def step_params
+    param_key = "publishers_job_listing_#{current_step_name}_form"
+
+    if @step_params && @step_params[param_key].present?
+      @step_params.require(param_key).permit(*permitted_params)
+                  .merge(vacancy: @vacancy).merge(completed_steps: completed_steps)
+    end
+  end
+
+  def current_step_params
+    super.merge(step_object_class.extra_params(@vacancy, step_params))
+  end
+
   private
+
+  def completed_steps
+    (@vacancy.completed_steps | [current_step_name.to_s]).compact
+  end
 
   def important_date_steps
     %i[important_dates start_date]
