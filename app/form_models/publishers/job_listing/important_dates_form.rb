@@ -13,11 +13,36 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
   validates :expires_at, date: { on_or_after: :now, on_or_before: :far_future, after: :publish_on }
   validates :expiry_time, inclusion: { in: Vacancy::EXPIRY_TIME_OPTIONS }
 
-  def self.fields
-    %i[publish_on expires_at]
+  # def self.fields
+  #   %i[publish_on expires_at]
+  # end
+  #
+  # def initialize(params, vacancy)
+  #   @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
+  #
+  #   super
+  # end
+
+  class << self
+    def fields
+      %i[publish_on expires_at]
+    end
+
+    def permitted_params
+      %i[publish_on publish_on_day expires_at expiry_time]
+    end
+
+    # def extra_params(vacancy, form_params)
+    #   if form_params&.key?(:expiry_time)
+    #     super
+    #   else
+    #     super.merge({ expiry_time: vacancy.expires_at&.strftime("%k:%M")&.strip })
+    #   end
+    # end
   end
 
-  def initialize(params, vacancy)
+  def initialize(params, model = nil)
+    vacancy = model || params.fetch(:vacancy)
     @expiry_time = params[:expiry_time] || vacancy.expires_at&.strftime("%k:%M")&.strip
 
     super

@@ -1,5 +1,7 @@
 class Publishers::JobListing::VacancyForm < Publishers::JobListing::BaseForm
   attr_accessor :completed_steps, :current_organisation
+  # so that 'vacancy' can be passed through the 'params' hash
+  attr_writer :vacancy
 
   def initialize(params = {}, vacancy = nil)
     @params = params
@@ -9,7 +11,7 @@ class Publishers::JobListing::VacancyForm < Publishers::JobListing::BaseForm
   end
 
   def params_to_save
-    params.except(:current_organisation)
+    params.except(:current_organisation, :vacancy, :wizard)
   end
 
   class << self
@@ -19,6 +21,10 @@ class Publishers::JobListing::VacancyForm < Publishers::JobListing::BaseForm
 
     def permitted_params
       fields
+    end
+
+    def extra_params(vacancy, _form_params)
+      { vacancy: vacancy }
     end
   end
 

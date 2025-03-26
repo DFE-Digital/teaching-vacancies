@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Publishers::JobListing::DocumentsForm do
-  let(:documents_form) { described_class.new({supporting_documents: [document]}, vacancy) }
+  let(:documents_form) { described_class.new({ supporting_documents: [document] }, vacancy) }
   let(:vacancy) { build(:vacancy) }
   let(:attribute) { :supporting_documents }
   let(:document) { File.open(Rails.root.join("spec/fixtures/files/blank_job_spec.pdf")) }

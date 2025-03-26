@@ -10,11 +10,20 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   helper_method :current_step, :step_process, :vacancy, :vacancies, :all_steps_valid?, :next_invalid_step, :back_path
 
   def step_process
-    Publishers::Vacancies::VacancyStepProcess.new(
-      current_step || :review,
-      vacancy: vacancy,
-      organisation: current_organisation,
-    )
+    @step_process ||= if action_name == "update"
+                        Publishers::Vacancies::VacancyStepProcess.new(
+                          current_step || :review,
+                          vacancy: vacancy,
+                          organisation: current_organisation,
+                          step_params: params,
+                        )
+                      else
+                        Publishers::Vacancies::VacancyStepProcess.new(
+                          current_step || :review,
+                          vacancy: vacancy,
+                          organisation: current_organisation,
+                        )
+                      end
   end
 
   def vacancies

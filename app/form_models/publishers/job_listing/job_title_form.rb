@@ -7,8 +7,14 @@ class Publishers::JobListing::JobTitleForm < Publishers::JobListing::VacancyForm
   validates :job_title, length: { minimum: 4, maximum: 75 }, if: -> { job_title.present? }
   validate :job_title_has_no_tags?, if: proc { job_title.present? }
 
-  def self.fields
-    %i[job_title]
+  class << self
+    def fields
+      %i[job_title]
+    end
+
+    def extra_params(vacancy, _form_params)
+      { status: vacancy.status || "draft" }
+    end
   end
 
   def job_title_has_no_tags?

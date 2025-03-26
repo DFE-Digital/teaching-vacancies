@@ -1,8 +1,14 @@
 class Publishers::JobListing::KeyStagesForm < Publishers::JobListing::VacancyForm
   validate :key_stages_in_phase
 
-  def self.fields
-    %i[key_stages]
+  class << self
+    def fields
+      %i[key_stages]
+    end
+
+    def permitted_params
+      [{ key_stages: [] }]
+    end
   end
   attr_accessor(*fields)
 
