@@ -14,46 +14,40 @@ class VacancyAnalyticsService
   end
 
   def self.aggregate_and_save_stats
-    # Get all keys matching today's stats pattern
     today = Date.current.to_s
     keys_pattern = "#{REDIS_KEY_PREFIX}:#{today}:*"
 
-    # Get all keys and their values in a single operation
     Redis.current.scan_each(match: keys_pattern).each_slice(100) do |keys_batch|
       stats_to_update = []
+      keys_to_delete = []
 
       keys_batch.each do |key|
-        # Get the count and remove the key atomically
-        count = Redis.current.getdel(key).to_i
+        count = Redis.current.get(key).to_i
         next if count == 0
 
         # Parse key to extract vacancy_id and referrer
         _, date, vacancy_id, referrer = key.split(":", 4)
 
-        stats_to_update << {
-          vacancy_id: vacancy_id,
-          referrer_url: referrer,
-          date: Date.parse(date),
-          count: count,
-        }
+        stats_to_update << { vacancy_id: vacancy_id, referrer_url: referrer, date: Date.parse(date), count: count }
+        keys_to_delete << key
       end
 
-      # Bulk upsert to improve performance
       update_stats_in_database(stats_to_update) if stats_to_update.any?
+      Redis.current.del(*keys_to_delete)
     end
   end
 
   def self.update_stats_in_database(stats_batch)
     stats_batch.each do |stat|
       # Use upsert to avoid race conditions and reduce DB operations
-      VacancyReferrerStat.upsert(
+      VacancyAnalytics.upsert(
         {
           vacancy_id: stat[:vacancy_id],
           referrer_url: stat[:referrer_url],
           date: stat[:date],
           visit_count: stat[:count],
         },
-        on_duplicate: Arel.sql("visit_count = vacancy_referrer_stats.visit_count + #{stat[:count]}"),
+        on_duplicate: Arel.sql("visit_count = vacancy_analytics.visit_count + #{stat[:count]}"),
       )
     end
   end
