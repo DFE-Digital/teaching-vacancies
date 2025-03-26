@@ -1,10 +1,9 @@
-class Publishers::JobListing::VacancyForm < BaseForm
-  attr_accessor :params, :vacancy, :completed_steps, :current_organisation
+class Publishers::JobListing::VacancyForm < Publishers::JobListing::BaseForm
+  attr_accessor :completed_steps, :current_organisation
 
-  def initialize(params = {}, vacancy = nil, current_publisher = nil)
+  def initialize(params = {}, vacancy = nil)
     @params = params
     @vacancy = vacancy
-    @current_publisher = current_publisher
 
     super(params)
   end
@@ -17,5 +16,13 @@ class Publishers::JobListing::VacancyForm < BaseForm
     def load_form(model)
       model.slice(*fields)
     end
+
+    def permitted_params
+      fields
+    end
   end
+
+  private
+
+  attr_reader :params, :vacancy
 end

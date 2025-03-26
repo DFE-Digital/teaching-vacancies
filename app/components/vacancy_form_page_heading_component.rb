@@ -15,7 +15,7 @@ class VacancyFormPageHeadingComponent < ViewComponent::Base
   end
 
   def heading
-    t("publishers.vacancies.steps.#{step_process.current_step}")
+    t("publishers.vacancies.steps.#{step_process.current_step_name}")
   end
 
   def caption

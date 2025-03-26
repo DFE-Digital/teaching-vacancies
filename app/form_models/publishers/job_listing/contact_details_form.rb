@@ -13,29 +13,30 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
     FIELDS + %i[contact_number_provided]
   end
   attr_accessor(*FIELDS)
-  attr_writer(:other_contact_email)
+  # attr_writer(:other_contact_email)
+  attribute :other_contact_email
 
   attribute :contact_number_provided, :boolean
 
-  def contact_email
-    return unless @vacancy.contact_email || params[:contact_email]
-
-    if params[:contact_email].present?
-      return params[:contact_email] if params[:contact_email] == @current_publisher&.email
-
-      return "other"
-    end
-
-    return @current_publisher&.email if @vacancy.contact_email == @current_publisher&.email
-
-    "other"
-  end
-
-  def other_contact_email
-    return params[:other_contact_email] if params[:other_contact_email]
-
-    @vacancy.contact_email unless @vacancy.contact_email == @current_publisher&.email
-  end
+  # def contact_email
+  #   return unless @vacancy.contact_email || params[:contact_email]
+  #
+  #   if params[:contact_email].present?
+  #     return params[:contact_email] if params[:contact_email] == @current_publisher&.email
+  #
+  #     return "other"
+  #   end
+  #
+  #   return @current_publisher&.email if @vacancy.contact_email == @current_publisher&.email
+  #
+  #   "other"
+  # end
+  #
+  # def other_contact_email
+  #   return params[:other_contact_email] if params[:other_contact_email]
+  #
+  #   @vacancy.contact_email unless @vacancy.contact_email == @current_publisher&.email
+  # end
 
   def params_to_save
     {

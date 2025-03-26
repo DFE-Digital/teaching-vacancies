@@ -32,7 +32,7 @@ RSpec.describe VacanciesHelper do
   describe "#page_title_prefix" do
     subject { helper.page_title_prefix(step_process, form_object) }
 
-    let(:step_process) { double(:step_process, vacancy: vacancy, current_step: :job_title, current_step_group_number: 1) }
+    let(:step_process) { double(:step_process, vacancy: vacancy, current_step_name: :job_title, current_step_group_number: 1) }
     let(:form_object) { double(:form_object, errors: errors) }
 
     context "when the vacancy is published" do
