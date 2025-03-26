@@ -726,10 +726,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_02_154655) do
 
   create_table "vacancy_analytics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "vacancy_id", null: false
-    t.integer "view_count", default: 0
-    t.jsonb "referrer_counts", default: {}
+    t.string "referrer_url", null: false
+    t.date "date", null: false
+    t.integer "visit_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_vacancy_analytics_on_date"
+    t.index ["vacancy_id", "referrer_url", "date"], name: "index_vacancy_referrer_stats_on_vacancy_referrer_and_date", unique: true
+    t.index ["vacancy_id"], name: "index_vacancy_analytics_on_vacancy_id"
   end
 
   create_table "versions", force: :cascade do |t|
