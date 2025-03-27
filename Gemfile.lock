@@ -368,6 +368,7 @@ GEM
       logger
     mini_mime (1.1.5)
     minitest (5.25.5)
+    mock_redis (0.48.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.4.1)
@@ -880,6 +881,7 @@ DEPENDENCIES
   mail-notify
   mimemagic
   mini_magick
+  mock_redis
   net-pop!
   net-sftp
   nokogiri
