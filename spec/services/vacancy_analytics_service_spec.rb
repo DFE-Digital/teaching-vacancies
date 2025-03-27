@@ -8,6 +8,9 @@ RSpec.describe VacancyAnalyticsService do
 
   before do
     # Use fresh Redis DB (or clear key)
+    mock_redis = MockRedis.new
+    allow(Redis).to receive(:current).and_return(mock_redis)
+
     Redis.current.del(redis_key)
   end
 
