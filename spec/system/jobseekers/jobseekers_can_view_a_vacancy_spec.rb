@@ -20,13 +20,13 @@ RSpec.describe "Viewing a single published vacancy" do
       referrer_url = "https://example.com/some/path?utm=123"
       normalized_referrer = VacancyAnalyticsService.normalize_referrer(referrer_url)
       redis_key = "vacancy_referrer_stats:#{vacancy.id}:#{normalized_referrer}"
-    
+
       perform_enqueued_jobs do
         page.driver.header("Referer", referrer_url)
         visit job_path(vacancy)
       end
       expect(Redis.current.get(redis_key).to_i).to be > 0
-    
+
       # Cleanup Redis
       Redis.current.del(redis_key)
     end
