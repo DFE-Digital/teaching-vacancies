@@ -44,20 +44,29 @@ RSpec.describe VacancyAnalyticsService do
 
   describe ".aggregate_and_save_stats" do
     let(:key) { "vacancy_referrer_stats:#{Date.current}:#{vacancy.id}:#{normalized_referrer}" }
+    let(:second_key) { "vacancy_referrer_stats:#{Date.current}:#{vacancy.id}:another.com" }
 
     it "upserts the correct stat into the database and deletes the Redis key" do
       Redis.current.set(key, 5)
+      Redis.current.set(second_key, 3)
+
       expect {
         described_class.aggregate_and_save_stats
-      }.to change(VacancyAnalytics, :count).by(1)
+      }.to change(VacancyAnalytics, :count).by(2)
 
       expect(Redis.current.exists?(key)).to be(false)
+      expect(Redis.current.exists?(second_key)).to be(false)
 
-      stat = VacancyAnalytics.last
-      expect(stat.vacancy_id).to eq(vacancy.id)
-      expect(stat.referrer_url).to eq(normalized_referrer)
-      expect(stat.date).to eq(Date.current)
-      expect(stat.visit_count).to eq(5)
+      first_referrer_vacancy_analytics = VacancyAnalytics.find_by(referrer_url: normalized_referrer)
+      second_referrer_vacancy_analytics = VacancyAnalytics.find_by(referrer_url: "another.com")
+
+      expect(first_referrer_vacancy_analytics.vacancy_id).to eq(vacancy.id)
+      expect(first_referrer_vacancy_analytics.date).to eq(Date.current)
+      expect(first_referrer_vacancy_analytics.visit_count).to eq(5)
+
+      expect(second_referrer_vacancy_analytics.vacancy_id).to eq(vacancy.id)
+      expect(second_referrer_vacancy_analytics.date).to eq(Date.current)
+      expect(second_referrer_vacancy_analytics.visit_count).to eq(3)
     end
 
     it "skips keys with zero counts" do
