@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Publishers can copy and promote job" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
-  let(:vacancy) { create(:vacancy, :draft, organisations: [organisation], publisher: publisher, publish_on: publish_on) }
+  let(:vacancy) { create(:draft_vacancy, organisations: [organisation], publisher: publisher, publish_on: publish_on) }
   let(:share_page_content) { I18n.t("publishers.vacancies.summary.share_page_url") }
 
   before do

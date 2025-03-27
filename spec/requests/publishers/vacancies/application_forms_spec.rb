@@ -80,7 +80,7 @@ RSpec.describe "Documents" do
         end
 
         context "when the vacancy has not been published" do
-          before { vacancy.update(status: "draft") }
+          let(:vacancy) { create(:draft_vacancy, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
 
           it "redirects to the review page" do
             expect(request).to redirect_to(organisation_job_review_path(vacancy.id))

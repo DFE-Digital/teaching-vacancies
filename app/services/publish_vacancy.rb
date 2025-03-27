@@ -1,16 +1,13 @@
 class PublishVacancy
-  attr_accessor :current_organisation, :current_publisher, :vacancy
-
-  def initialize(vacancy, current_publisher, current_organisation)
-    @current_organisation = current_organisation
-    @current_publisher = current_publisher
-    @vacancy = vacancy
-  end
-
-  def call
-    vacancy.publisher_organisation = current_organisation
-    vacancy.publisher = current_publisher
-    vacancy.status = :published
-    vacancy.save
+  class << self
+    def call (vacancy, current_publisher, current_organisation)
+      CopyVacancy.new(vacancy, RealVacancy).call.tap do |new_vacancy|
+        new_vacancy.assign_attributes(publisher_organisation: current_organisation,
+                                    publisher: current_publisher,
+                                    status: :published)
+        new_vacancy.save
+        vacancy.destroy
+      end
+    end
   end
 end

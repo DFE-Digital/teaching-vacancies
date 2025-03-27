@@ -20,7 +20,7 @@ class Vacancies::Import::Sources::Fusion
       next if vacancy_listed_at_excluded_trust_type?(schools, result["trustUID"])
       next if vacancy_listed_at_excluded_school_type?(schools)
 
-      v = Vacancy.find_or_initialize_by(
+      v = RealVacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: result["reference"],
       )

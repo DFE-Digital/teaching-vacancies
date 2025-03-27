@@ -71,7 +71,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       end
 
       context "when vacancy is not published" do
-        let(:vacancy) { build_stubbed(:vacancy, :draft) }
+        let(:vacancy) { build_stubbed(:draft_vacancy) }
 
         it "is invalid" do
           expect(subject).to be_invalid
@@ -101,7 +101,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       end
 
       context "when vacancy is not published" do
-        let(:vacancy) { build_stubbed(:vacancy, :draft) }
+        let(:vacancy) { build_stubbed(:draft_vacancy) }
 
         it "is invalid" do
           expect(subject).to be_invalid
@@ -131,7 +131,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       end
 
       context "when vacancy is not published" do
-        let(:vacancy) { build_stubbed(:vacancy, :draft) }
+        let(:vacancy) { build_stubbed(:draft_vacancy) }
 
         it "is invalid" do
           expect(subject).to be_invalid
@@ -152,7 +152,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       end
 
       context "when vacancy is not published" do
-        let(:vacancy) { build_stubbed(:vacancy, :draft) }
+        let(:vacancy) { build_stubbed(:draft_vacancy) }
 
         it "is invalid" do
           expect(subject).to be_invalid

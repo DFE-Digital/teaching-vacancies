@@ -35,7 +35,7 @@ module Publishers::Wizardable # rubocop:disable Metrics/ModuleLength
   def job_title_params(params)
     params.require(:publishers_job_listing_job_title_form)
           .permit(:job_title)
-          .merge(completed_steps: completed_steps, status: vacancy.status || "draft")
+          .merge(completed_steps: completed_steps)
   end
 
   def key_stages_params(params)

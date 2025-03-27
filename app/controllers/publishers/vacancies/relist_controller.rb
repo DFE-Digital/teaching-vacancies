@@ -1,6 +1,5 @@
 class Publishers::Vacancies::RelistController < Publishers::Vacancies::BaseController
   def create
-    vacancy.status = :draft
     @vacancy = CopyVacancy.new(vacancy).call
 
     @form = Publishers::JobListing::RelistForm.new

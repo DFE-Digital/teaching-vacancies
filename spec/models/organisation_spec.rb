@@ -22,18 +22,20 @@ RSpec.describe Organisation do
     end
   end
 
-  describe "#all_vacancies" do
+  describe "#all_organisation_ids" do
     context "when the organisation is a school" do
       let!(:school1) { create(:school) }
       let!(:school2) { create(:school) }
       let(:vacancy) { create(:vacancy, organisations: [school1]) }
+      let(:result1) { Vacancy.in_organisation_ids(school1.all_organisation_ids) }
+      let(:result2) { Vacancy.in_organisation_ids(school2.all_organisation_ids) }
 
       it "returns all vacancies from the school" do
-        expect(school1.all_vacancies).to eq [vacancy]
+        expect(result1).to eq [vacancy]
       end
 
       it "returns no vacancies when there are none" do
-        expect(school2.all_vacancies).to be_none
+        expect(result2).to be_none
       end
     end
 
@@ -44,10 +46,11 @@ RSpec.describe Organisation do
       let(:vacancy1) { create(:vacancy, organisations: [school1]) }
       let(:vacancy2) { create(:vacancy, organisations: [trust]) }
       let(:vacancy3) { create(:vacancy, organisations: [school2]) }
+      let(:result) { Vacancy.in_organisation_ids(trust.all_organisation_ids) }
 
       it "returns all vacancies from the trust and the schools of the trust" do
-        expect(trust.all_vacancies).to include(vacancy1, vacancy2)
-        expect(trust.all_vacancies).not_to include(vacancy3)
+        expect(result).to include(vacancy1, vacancy2)
+        expect(result).not_to include(vacancy3)
       end
     end
 
@@ -65,10 +68,12 @@ RSpec.describe Organisation do
 
       before { allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools) }
 
+      let(:result) { Vacancy.in_organisation_ids(local_authority.all_organisation_ids) }
+
       it "returns all vacancies from the schools inside and outside of the local authority" do
-        expect(local_authority.all_vacancies).to include(vacancy1, vacancy3)
-        expect(local_authority.all_vacancies).not_to include(vacancy2)
-        expect(local_authority.all_vacancies).not_to include(vacancy4)
+        expect(result).to include(vacancy1, vacancy3)
+        expect(result).not_to include(vacancy2)
+        expect(result).not_to include(vacancy4)
       end
     end
   end

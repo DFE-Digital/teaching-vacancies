@@ -43,18 +43,19 @@ class DashboardComponent < ApplicationComponent
   attr_reader :publisher_preference, :organisation, :selected_type, :sort, :vacancies
 
   def set_vacancies
-    @vacancies =
+    scope = (selected_scope == "draft") ? DraftVacancy.all : RealVacancy.public_send(selected_scope)
+    vacancies =
       if publisher_preference.organisations.any?
-        Vacancy.in_organisation_ids(publisher_preference.organisations.map(&:id))
+        scope.in_organisation_ids(publisher_preference.organisations.map(&:id))
       elsif organisation.local_authority?
-        Vacancy.in_organisation_ids(publisher_preference.schools.map(&:id))
+        scope.in_organisation_ids(publisher_preference.schools.map(&:id))
       else
-        organisation.all_vacancies
+        # organisation.all_vacancies
+        scope.in_organisation_ids(organisation.all_organisation_ids)
       end
 
-    @vacancies = @vacancies.includes(:job_applications) if include_job_applications?
-    @vacancies = @vacancies.send(selected_scope)
-                           .order(sort.by => sort.order)
+    vacancies = vacancies.includes(:job_applications) if include_job_applications?
+    @vacancies = vacancies.order(sort.by => sort.order)
                            .reject { |vacancy| vacancy.job_title.blank? }
   end
 
@@ -69,13 +70,15 @@ class DashboardComponent < ApplicationComponent
   def set_organisation_options
     schools = organisation.local_authority? ? publisher_preference.schools : organisation.schools
     @organisation_options = schools.not_closed.order(:name).map do |school|
-      count = school.vacancies.send(selected_scope).count
+      # count = school.vacancies.send(selected_scope).count
+      count = (selected_scope == "draft") ? DraftVacancy.in_organisation_ids([school.id]).count : school.vacancies.public_send(selected_scope).count
       Option.new(id: school.id, name: school.name, label: "#{school.name} (#{count})")
     end
 
     return if organisation.local_authority?
 
-    count = organisation.vacancies.send(selected_scope).count
+    # count = organisation.vacancies.send(selected_scope).count
+    count = (selected_scope == "draft") ? DraftVacancy.in_organisation_ids([organisation.id]).count : organisation.vacancies.public_send(selected_scope).count
     @organisation_options.unshift(
       Option.new(id: organisation.id, name: "Head office", label: "Head office (#{count})"),
     )

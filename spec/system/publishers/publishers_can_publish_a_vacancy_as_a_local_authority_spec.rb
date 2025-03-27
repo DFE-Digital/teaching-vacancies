@@ -8,6 +8,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school2) { create(:school, :not_applicable, name: "Second school") }
   let(:vacancy) { build(:vacancy, :no_tv_applications, :ect_suitable, job_roles: ["teacher"], phases: %w[secondary], organisations: [school1, school2], contract_type: "fixed_term", is_parental_leave_cover: true) }
   let(:created_vacancy) { Vacancy.last }
+  let(:published) { Vacancy.order(:created_at).last}
 
   before do
     login_publisher(publisher: publisher, organisation: school_group)
@@ -160,6 +161,6 @@ RSpec.describe "Creating a vacancy" do
     verify_all_vacancy_details(created_vacancy)
 
     click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-    expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
+    expect(current_path).to eq(organisation_job_summary_path(published.id))
   end
 end

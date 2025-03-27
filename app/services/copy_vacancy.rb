@@ -1,7 +1,7 @@
 class CopyVacancy
-  def initialize(vacancy)
+  def initialize(vacancy, klass = DraftVacancy)
     @vacancy = vacancy
-    setup_new_vacancy
+    setup_new_vacancy klass
   end
 
   def call
@@ -12,9 +12,11 @@ class CopyVacancy
 
   private
 
-  def setup_new_vacancy
-    @new_vacancy = @vacancy.dup
-    @new_vacancy.status = :draft
+  def setup_new_vacancy klass
+    attributes = @vacancy.dup.attributes.symbolize_keys.except(:id, :type, :slug, :status, :created_at, :updated_at).keys.index_with { |attribute|
+      @vacancy.public_send(attribute)
+    }
+    @new_vacancy = klass.new(attributes)
     copy_application_form if @vacancy.application_form.attachments&.any?
 
     if @vacancy.supporting_documents.attachments&.any?

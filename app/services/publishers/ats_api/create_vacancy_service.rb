@@ -5,7 +5,7 @@ module Publishers
 
       class << self
         def call(params)
-          vacancy = Vacancy.new(sanitised_params(params))
+          vacancy = RealVacancy.new(sanitised_params(params))
 
           if vacancy.valid?
             vacancy.save!

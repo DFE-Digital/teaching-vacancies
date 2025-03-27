@@ -6,7 +6,7 @@ class Publishers::Vacancies::JobApplications::BaseController < Publishers::Vacan
   end
 
   def vacancy
-    @vacancy ||= current_organisation.all_vacancies
+    @vacancy ||= Vacancy.in_organisation_ids(current_organisation.all_organisation_ids)
                                      .listed
                                      .find(params[:job_id])
   end

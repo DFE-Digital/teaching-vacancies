@@ -18,6 +18,7 @@ RSpec.describe "Creating a vacancy" do
 
   context "non-faith school" do
     let(:school) { create(:school, :not_applicable, name: "Salisbury School") }
+    let(:published) { Vacancy.order(:created_at).last}
 
     it "follows the flow" do
       visit organisation_jobs_with_type_path
@@ -148,7 +149,7 @@ RSpec.describe "Creating a vacancy" do
       verify_all_vacancy_details(created_vacancy)
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-      expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
+      expect(current_path).to eq(organisation_job_summary_path(published.id))
     end
 
     scenario "saving and finishing later" do
@@ -215,9 +216,11 @@ RSpec.describe "Creating a vacancy" do
     end
 
     describe "#publish" do
+      let(:published) { Vacancy.order(:created_at).last}
+
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
-        vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], key_stages: %w[ks3], publish_on: Time.zone.today, phases: %w[secondary])
+        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], key_stages: %w[ks3], publish_on: Time.zone.today, phases: %w[secondary])
         vacancy.update! expires_at: yesterday_date
 
         visit organisation_job_path(vacancy.id)
@@ -253,7 +256,7 @@ RSpec.describe "Creating a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
 
         click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-        expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
+        expect(current_path).to eq(organisation_job_summary_path(published.id))
       end
 
       context "when publishing a vacancy" do
@@ -261,9 +264,11 @@ RSpec.describe "Creating a vacancy" do
         let(:publisher_that_publishes_vacancy) { create(:publisher, organisations: [school]) }
         let(:school) { create(:school) }
         let(:trust) { create(:trust, schools: [school]) }
-        let(:vacancy) { create(:vacancy, :draft, organisations: [school], publisher: publisher_that_created_vacancy, publisher_organisation: trust) }
+        let(:vacancy) { create(:draft_vacancy, organisations: [school], publisher: publisher_that_created_vacancy, publisher_organisation: trust) }
 
         before { login_publisher(publisher: publisher_that_publishes_vacancy, organisation: school) }
+
+        after { logout }
 
         scenario "the publisher and organisation_publisher are reset" do
           visit organisation_job_path(vacancy.id)
@@ -272,36 +277,40 @@ RSpec.describe "Creating a vacancy" do
 
           click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
-          vacancy.reload
+          # vacancy.reload
 
-          expect(vacancy.publisher).to eq(publisher_that_publishes_vacancy)
-          expect(vacancy.publisher_organisation).to eq(school)
+          expect(published.publisher).to eq(publisher_that_publishes_vacancy)
+          expect(published.publisher_organisation).to eq(school)
         end
       end
 
       scenario "can be published at a later date" do
-        vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
         visit organisation_job_path(vacancy.id)
         click_on I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft")
+        #  wait for page to load
+        find(".govuk-panel.govuk-panel--confirmation")
 
         expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: format_date(vacancy.publish_on)))
 
-        visit organisation_job_path(vacancy.id)
+        click_on 'make changes to the job listing'
+        # visit organisation_job_path(vacancy.id)
 
         has_scheduled_vacancy_review_heading?(vacancy)
         expect(page).to have_content(format_date(vacancy.publish_on).to_s)
       end
 
       scenario "can be converted to a draft" do
-        vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
         visit organisation_job_path(vacancy.id)
         click_on I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft")
 
         expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: format_date(vacancy.publish_on)))
 
-        visit organisation_job_path(vacancy.id)
+        # visit organisation_job_path(vacancy.id)
+        click_on 'make changes to the job listing'
 
         has_scheduled_vacancy_review_heading?(vacancy)
 
@@ -311,7 +320,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "a published vacancy cannot be republished" do
-        vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
         visit organisation_job_path(vacancy.id)
 
@@ -328,7 +337,7 @@ RSpec.describe "Creating a vacancy" do
 
       context "adds a job to update the Google index in the queue" do
         scenario "if the vacancy is published immediately" do
-          vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Date.current, key_stages: %w[ks3], phases: %w[secondary])
+          vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Date.current, key_stages: %w[ks3], phases: %w[secondary])
 
           expect_any_instance_of(Publishers::Vacancies::BaseController)
             .to receive(:update_google_index).with(vacancy)

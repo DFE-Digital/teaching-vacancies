@@ -56,7 +56,7 @@ RSpec.describe VacanciesHelper do
     end
 
     context "when the vacancy is not published" do
-      let(:vacancy) { build_stubbed(:vacancy, :draft) }
+      let(:vacancy) { build_stubbed(:draft_vacancy) }
 
       context "when there are errors" do
         let(:errors) { ["test error"] }
@@ -79,7 +79,7 @@ RSpec.describe VacanciesHelper do
   describe "#review_page_title_prefix" do
     subject { helper.review_page_title_prefix(vacancy) }
 
-    let(:vacancy) { build_stubbed(:vacancy, :draft, publish_on: publish_on) }
+    let(:vacancy) { build_stubbed(:draft_vacancy, publish_on: publish_on) }
 
     context "when publish_on is in the future" do
       let(:publish_on) { 2.days.from_now }
@@ -337,14 +337,14 @@ RSpec.describe VacanciesHelper do
     context "when the job is a draft" do
       context "when the draft has been completed" do
         let(:status) { "complete_draft" }
-        let(:vacancy) { create(:vacancy, :draft) }
+        let(:vacancy) { create(:draft_vacancy) }
 
         it "returns the correct text" do
           expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.complete_draft"))
         end
 
         context "when the publish on date is in the future" do
-          let(:vacancy) { create(:vacancy, :draft, publish_on: Date.tomorrow) }
+          let(:vacancy) { create(:draft_vacancy, publish_on: Date.tomorrow) }
 
           it "returns the correct text" do
             expect(subject).to eq(t("publishers.vacancies.show.heading_component.inset_text.scheduled_complete_draft"))

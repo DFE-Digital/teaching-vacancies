@@ -10,6 +10,10 @@ class Vacancy < ApplicationRecord
 
   friendly_id :slug_candidates, use: %w[slugged history]
 
+  # self.abstract_class = true
+
+  self.table_name = "vacancies"
+
   # TODO: Update with job listing updates
   ATTRIBUTES_TO_TRACK_IN_ACTIVITY_LOG = %i[
     about_school application_link contact_email contact_number contract_type expires_at how_to_apply job_advert
@@ -61,7 +65,8 @@ class Vacancy < ApplicationRecord
   enum :hired_status, { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum :listed_elsewhere, { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
-  enum :status, { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
+  # removed draft as an option with creatiuon of DraftVacancy
+  enum :status, { published: 0, trashed: 2, removed_from_external_system: 3 }
   enum :receive_applications, { email: 0, website: 1 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
@@ -90,7 +95,7 @@ class Vacancy < ApplicationRecord
 
   delegate :name, to: :organisation, prefix: true, allow_nil: true
 
-  scope :active, -> { where(status: %i[published draft]) }
+  # scope :active, -> { where(status: %i[published draft]) }
   scope :applicable, -> { where("expires_at >= ?", Time.current) }
   scope :awaiting_feedback, -> { expired.where(listed_elsewhere: nil, hired_status: nil) }
   scope :expired, -> { published.where("expires_at < ?", Time.current) }
@@ -208,6 +213,7 @@ class Vacancy < ApplicationRecord
   def publication_status
     return "expired" if expired?
     return "pending" if pending?
+    return "draft" if draft?
 
     status
   end

@@ -11,7 +11,7 @@ RSpec.describe CopyVacancy do
 
       expect(result).to be_a(Vacancy)
       expect(Vacancy.count).to eq(2)
-      expect(result.status).to eq("draft")
+      expect(result.class).to eq(DraftVacancy)
       expect(result.organisations).to eq [school]
     end
 

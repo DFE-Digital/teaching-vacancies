@@ -30,7 +30,7 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
 
   describe "caption" do
     context "when vacancy is not published" do
-      let(:status) { :draft }
+      let(:vacancy) { create(:draft_vacancy, organisations: [organisation], job_title: "Test job title", completed_steps: %w[job_location job_role review]) }
 
       it "shows the create caption with current step" do
         expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 2))

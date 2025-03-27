@@ -14,7 +14,7 @@ RSpec.describe "Publishers can give job listing feedback" do
   after { logout }
 
   context "when the vacancy is not published" do
-    let(:vacancy) { create(:vacancy, :draft, organisations: [organisation], publisher: publisher) }
+    let(:vacancy) { create(:draft_vacancy, organisations: [organisation], publisher: publisher) }
 
     it "redirects to the publisher's vacancy show page" do
       expect(current_path).to eq(organisation_job_path(vacancy.id))

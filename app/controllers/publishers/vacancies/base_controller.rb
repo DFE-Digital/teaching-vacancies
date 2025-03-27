@@ -18,7 +18,8 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
   end
 
   def vacancies
-    @vacancies ||= current_organisation.all_vacancies
+    # @vacancies ||= current_organisation.all_vacancies
+    @vacancies ||= Vacancy.in_organisation_ids(current_organisation.all_organisation_ids)
   end
 
   def vacancy

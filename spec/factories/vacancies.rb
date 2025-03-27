@@ -16,7 +16,7 @@ FactoryBot.define do
     "#{job_titles.sample} #{n}"
   end
 
-  factory :vacancy do
+  factory :vacancy, class: "RealVacancy" do
     salaries = [
       "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
       "£6,084 to £6,084 per year (full time equivalent)",
@@ -71,6 +71,10 @@ FactoryBot.define do
     is_job_share { false }
     flexi_working_details_provided { true }
     flexi_working { Faker::Lorem.sentence(word_count: factory_rand(50..150)) }
+
+    factory :draft_vacancy, class: "DraftVacancy" do
+      status { nil }
+    end
 
     trait :legacy_vacancy do
       about_school { Faker::Lorem.paragraph(sentence_count: factory_rand(5..10)) }
@@ -131,9 +135,9 @@ FactoryBot.define do
       salary { Faker::Lorem.characters(number: 257) }
     end
 
-    trait :draft do
-      status { :draft }
-    end
+    # trait :draft do
+    #   status { :draft }
+    # end
 
     trait :trashed do
       status { :trashed }

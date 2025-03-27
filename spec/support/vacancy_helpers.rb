@@ -42,7 +42,9 @@ module VacancyHelpers
     if vacancy.contract_type == "fixed_term"
       choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.fixed_term")
       # Choose "Yes" for parental leave coverage
-      find_by_id("publishers-job-listing-contract-information-form-is-parental-leave-cover-true-field").choose
+      within "#publishers-job-listing-contract-information-form-contract-type-fixed-term-conditional" do
+        choose "Yes"
+      end
       fill_in "Length of contract", with: "1 month"
     else
       choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.#{vacancy.contract_type}")
@@ -53,8 +55,8 @@ module VacancyHelpers
     end
 
     # Choose "Yes" or "No" for job share option
-    job_share_field_id = vacancy.is_job_share ? "publishers-job-listing-contract-information-form-is-job-share-true-field" : "publishers-job-listing-contract-information-form-is-job-share-false-field"
-    find("##{job_share_field_id}").choose
+    job_share_label = "publishers-job-listing-contract-information-form-is-job-share-#{vacancy.is_job_share}-field"
+    find("label[for=#{job_share_label}]").click
 
     fill_in "publishers_job_listing_contract_information_form[working_patterns_details]", with: vacancy.working_patterns_details
   end

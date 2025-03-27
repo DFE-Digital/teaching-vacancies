@@ -25,7 +25,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def create
-    vacancy = Vacancy.create!(publisher: current_publisher, publisher_organisation: current_organisation, organisations: [current_organisation])
+    vacancy = DraftVacancy.create!(publisher: current_publisher, publisher_organisation: current_organisation, organisations: [current_organisation])
 
     if current_organisation.school? && current_organisation.phase.in?(Vacancy::SCHOOL_PHASES_MATCHING_VACANCY_PHASES)
       vacancy.update!(phases: [current_organisation.phase])
@@ -50,8 +50,9 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def convert_to_draft
-    vacancy.draft!
-    redirect_to organisation_job_path(vacancy.id)
+    draft = CopyVacancy.new(vacancy).call
+    vacancy.destroy
+    redirect_to organisation_job_path(draft.id)
   end
 
   def summary
