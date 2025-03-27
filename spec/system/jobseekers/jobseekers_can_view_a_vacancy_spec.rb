@@ -17,6 +17,9 @@ RSpec.describe "Viewing a single published vacancy" do
     end
 
     scenario "tracks the view in Redis" do
+      mock_redis = MockRedis.new
+      allow(Redis).to receive(:current).and_return(mock_redis)
+      
       referrer_url = "https://example.com/some/path?utm=123"
       normalized_referrer = VacancyAnalyticsService.normalize_referrer(referrer_url)
       redis_key = "vacancy_referrer_stats:#{vacancy.id}:#{normalized_referrer}"
