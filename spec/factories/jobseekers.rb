@@ -8,5 +8,10 @@ FactoryBot.define do
         create(:jobseeker_profile, jobseeker: jobseeker)
       end
     end
+
+    trait :email_opted_out do
+      email_opt_out { true }
+      email_opt_out_reason { 0 }
+    end
   end
 end

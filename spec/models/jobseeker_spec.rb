@@ -4,6 +4,32 @@ RSpec.describe Jobseeker do
   it { is_expected.to have_many(:saved_jobs) }
   it { is_expected.to have_many(:job_applications) }
 
+  describe "scopes" do
+    describe ".active" do
+      subject(:active_jobseekers) { described_class.active }
+
+      let(:jobseeker_active) { create(:jobseeker) }
+      let(:jobseeker_inactive) { create(:jobseeker, account_closed_on: 1.day.ago) }
+
+      it { is_expected.not_to include(jobseeker_inactive) }
+      it { is_expected.to include(jobseeker_active) }
+    end
+
+    describe ".email_opt_in" do
+      subject(:active_jobseekers) { described_class.email_opt_in }
+
+      let(:jobseeker_active_opted_out) { create(:jobseeker, :email_opted_out) }
+      let(:jobseeker_active_opted_in) { create(:jobseeker) }
+      let(:jobseeker_inactive_opted_out) { create(:jobseeker, :email_opted_out, account_closed_on: 1.day.ago) }
+      let(:jobseeker_inactive_opted_in) { create(:jobseeker, account_closed_on: 1.day.ago) }
+
+      it { is_expected.not_to include(jobseeker_inactive_opted_out) }
+      it { is_expected.not_to include(jobseeker_inactive_opted_in) }
+      it { is_expected.not_to include(jobseeker_active_opted_out) }
+      it { is_expected.to include(jobseeker_active_opted_in) }
+    end
+  end
+
   describe "validations" do
     describe "email_opt_out_reason" do
       let(:jobseeker) { build(:jobseeker, email_opt_out: true) }
