@@ -28,7 +28,7 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
 
   def params_to_save
     SALARIES.each { |salary, salary_type| params[salary] = nil unless params[:salary_types]&.include? salary_type }
-    params.except(:salary_types)
+    super.except(:salary_types)
   end
 
   private
