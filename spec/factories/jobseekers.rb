@@ -13,5 +13,11 @@ FactoryBot.define do
       email_opt_out { true }
       email_opt_out_reason { 0 }
     end
+
+    trait :with_personal_details do
+      after(:create) do |jobseeker|
+        create(:jobseeker_profile, :with_personal_details, jobseeker: jobseeker)
+      end
+    end
   end
 end
