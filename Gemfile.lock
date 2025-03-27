@@ -560,6 +560,8 @@ GEM
       psych (>= 4.0.0)
     recaptcha (5.19.0)
     redis (4.8.1)
+    redis-client (0.24.0)
+      connection_pool
     regexp_parser (2.10.0)
     reline (0.6.0)
       io-console (~> 0.5)
@@ -913,6 +915,7 @@ DEPENDENCIES
   railties (~> 7.2)
   recaptcha
   redis
+  redis-client
   rgeo-geojson
   rspec-rails
   rswag-api
