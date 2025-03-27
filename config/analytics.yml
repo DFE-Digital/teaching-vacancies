@@ -486,7 +486,8 @@ shared:
   :vacancy_analytics:
     - id
     - vacancy_id
-    - view_count
-    - referrer_counts
+    - visit_count
+    - referrer_url
     - created_at
     - updated_at
+    - date
