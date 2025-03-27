@@ -21,7 +21,7 @@ RSpec.describe VacancyAnalyticsService do
     it "does nothing if vacancy_id is blank" do
       expect {
         described_class.track_visit(nil, referrer_url)
-      }.not_to change { Redis.current.keys("vacancy_referrer_stats:*").count }
+      }.not_to(change { Redis.current.keys("vacancy_referrer_stats:*").count })
     end
   end
 
@@ -40,19 +40,20 @@ RSpec.describe VacancyAnalyticsService do
   end
 
   describe ".aggregate_and_save_stats" do
+    let(:key) { "vacancy_referrer_stats:#{today}:#{vacancy_id}:#{normalized_referrer}" }
+    
     before do
       # Fake key format: "vacancy_referrer_stats:2025-03-26:<id>:<referrer>"
       today = Date.current.to_s
-      @key = "vacancy_referrer_stats:#{today}:#{vacancy_id}:#{normalized_referrer}"
-      Redis.current.set(@key, 5)
+      Redis.current.set(key, 5)
     end
 
     it "upserts the correct stat into the database and deletes the Redis key" do
       expect {
         described_class.aggregate_and_save_stats
-      }.to change { VacancyAnalytics.count }.by(1)
+      }.to change(VacancyAnalytics, :count).by(1)
 
-      expect(Redis.current.get(@key)).to be_nil
+      expect(Redis.current.get(key)).to be_nil
 
       stat = VacancyAnalytics.last
       expect(stat.vacancy_id).to eq(vacancy_id)

@@ -23,7 +23,7 @@ class VacancyAnalyticsService
 
       keys_batch.each do |key|
         count = Redis.current.get(key).to_i
-        next if count == 0
+        next if count.zero?
 
         # Parse key to extract vacancy_id and referrer
         _, date, vacancy_id, referrer = key.split(":", 4)
