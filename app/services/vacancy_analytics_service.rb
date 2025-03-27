@@ -46,7 +46,7 @@ class VacancyAnalyticsService
           date: stat[:date],
           visit_count: stat[:count],
         },
-        on_duplicate: Arel.sql("visit_count = vacancy_analytics.visit_count + #{stat[:count]}"),
+        on_duplicate: Arel.sql("visit_count = vacancy_analytics.visit_count + #{stat[:count].to_i}"),
       )
     end
   end
