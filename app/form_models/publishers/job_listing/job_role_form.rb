@@ -36,4 +36,8 @@ class Publishers::JobListing::JobRoleForm < Publishers::JobListing::VacancyForm
       errors.add(:job_roles, "Invalid job role") unless Vacancy.job_roles.key?(role)
     end
   end
+
+  def next_step
+    :education_phases
+  end
 end

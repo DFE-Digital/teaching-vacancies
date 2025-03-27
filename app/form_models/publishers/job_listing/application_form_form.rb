@@ -39,6 +39,10 @@ class Publishers::JobListing::ApplicationFormForm < Publishers::JobListing::Vaca
     }
   end
 
+  def next_step
+    :school_visits
+  end
+
   private
 
   def other_application_email_presence

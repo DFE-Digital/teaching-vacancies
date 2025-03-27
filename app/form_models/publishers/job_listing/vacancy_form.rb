@@ -26,6 +26,14 @@ class Publishers::JobListing::VacancyForm < Publishers::JobListing::BaseForm
     def extra_params(vacancy, _form_params)
       { vacancy: vacancy }
     end
+
+    def route_name
+      nil
+    end
+  end
+
+  def next_step_path_arguments
+    { job_id: @vacancy.id, id: next_step }
   end
 
   private

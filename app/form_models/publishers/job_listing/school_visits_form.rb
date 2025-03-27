@@ -9,4 +9,8 @@ class Publishers::JobListing::SchoolVisitsForm < Publishers::JobListing::Vacancy
   attr_accessor(:school_visits_details)
 
   attribute :school_visits, :boolean
+
+  def next_step
+    :visa_sponsorship
+  end
 end

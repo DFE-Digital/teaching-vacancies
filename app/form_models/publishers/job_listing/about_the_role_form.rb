@@ -64,6 +64,10 @@ class Publishers::JobListing::AboutTheRoleForm < Publishers::JobListing::Vacancy
     }
   end
 
+  def next_step
+    :include_additional_documents
+  end
+
   private
 
   def organisation_type

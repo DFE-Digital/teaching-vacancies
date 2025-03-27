@@ -7,4 +7,8 @@ class Publishers::JobListing::VisaSponsorshipForm < Publishers::JobListing::Vaca
     %i[visa_sponsorship_available]
   end
   attribute :visa_sponsorship_available, :boolean
+
+  def next_step
+    :contact_details
+  end
 end

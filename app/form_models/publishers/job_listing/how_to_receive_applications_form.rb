@@ -5,4 +5,8 @@ class Publishers::JobListing::HowToReceiveApplicationsForm < Publishers::JobList
     %i[receive_applications]
   end
   attr_accessor(*fields)
+
+  def next_step
+    :application_link
+  end
 end

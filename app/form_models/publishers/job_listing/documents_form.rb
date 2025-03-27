@@ -12,6 +12,10 @@ class Publishers::JobListing::DocumentsForm < Publishers::JobListing::VacancyFor
     { completed_steps: params[:completed_steps] }
   end
 
+  def next_step
+    :exit
+  end
+
   private
 
   def document_presence

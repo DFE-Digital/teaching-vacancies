@@ -12,6 +12,10 @@ class Publishers::JobListing::KeyStagesForm < Publishers::JobListing::VacancyFor
   end
   attr_accessor(*fields)
 
+  def next_step
+    :subjects
+  end
+
   private
 
   def key_stages_in_phase

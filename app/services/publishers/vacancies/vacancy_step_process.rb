@@ -91,6 +91,14 @@ class Publishers::Vacancies::VacancyStepProcess < DfE::Wizard::Base
     super.merge(step_object_class.extra_params(@vacancy, step_params))
   end
 
+  def default_path_prefix
+    :organisation_job_build
+  end
+
+  # def default_path_arguments
+  #   { job_id: @vacancy.id, id: current_step_name }
+  # end
+
   private
 
   def completed_steps

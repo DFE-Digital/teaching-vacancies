@@ -15,7 +15,8 @@ class Publishers::VacancyFormSequence < FormSequence
     # Due to subjects being an optional step (no validations) it needs to be handled differently
     return :subjects if next_incomplete_step_subjects?
 
-    validate_all_steps.filter_map { |step, form| step if form.invalid? }.first
+    # validate_all_steps.filter_map { |step, form| step if form.invalid? }.first
+    validate_all_steps.detect { |_step, form| form.invalid? }.first
   end
 
   private

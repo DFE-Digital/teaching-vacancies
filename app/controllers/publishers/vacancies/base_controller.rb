@@ -57,6 +57,7 @@ class Publishers::Vacancies::BaseController < Publishers::BaseController
       end
     else
       redirect_to organisation_job_build_path(vacancy.id, next_invalid_step)
+      # redirect_to step_process.next_step_path
     end
   end
 

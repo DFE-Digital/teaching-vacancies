@@ -38,6 +38,10 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
     super.except(:salary_types)
   end
 
+  def next_step
+    :important_dates
+  end
+
   private
 
   def salary_presence

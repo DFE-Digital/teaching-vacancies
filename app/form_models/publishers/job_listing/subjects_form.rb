@@ -5,8 +5,12 @@ class Publishers::JobListing::SubjectsForm < Publishers::JobListing::VacancyForm
     end
 
     def permitted_params
-      [ subjects: [] ]
+      [subjects: []]
     end
   end
   attr_accessor(*fields)
+
+  def next_step
+    :contract_information
+  end
 end

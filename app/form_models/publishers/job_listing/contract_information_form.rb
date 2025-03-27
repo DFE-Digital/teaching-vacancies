@@ -20,12 +20,16 @@ class Publishers::JobListing::ContractInformationForm < Publishers::JobListing::
     end
 
     def permitted_params
-      [:working_patterns_details, :is_job_share, :contract_type, :fixed_term_contract_duration, :is_parental_leave_cover, working_patterns: []]
+      [:working_patterns_details, :is_job_share, :contract_type, :fixed_term_contract_duration, :is_parental_leave_cover, { working_patterns: [] }]
     end
   end
 
   def params_to_save
     { working_patterns:, working_patterns_details:, is_job_share:, contract_type:, fixed_term_contract_duration:, is_parental_leave_cover: }
+  end
+
+  def next_step
+    :pay_package
   end
 
   private

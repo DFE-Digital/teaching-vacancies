@@ -79,4 +79,8 @@ class Publishers::JobListing::ImportantDatesForm < Publishers::JobListing::Vacan
       else date_from_multiparameter_hash(value)
       end
   end
+
+  def next_step
+    :start_date
+  end
 end

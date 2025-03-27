@@ -23,4 +23,8 @@ class Publishers::JobListing::JobTitleForm < Publishers::JobListing::VacancyForm
 
     errors.add(:job_title, I18n.t("job_title_errors.job_title.invalid_characters"))
   end
+
+  def next_step
+    :job_role
+  end
 end

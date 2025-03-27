@@ -53,6 +53,10 @@ class Publishers::JobListing::ContactDetailsForm < Publishers::JobListing::Vacan
     }
   end
 
+  def next_step
+    :about_the_role
+  end
+
   private
 
   def other_contact_email_presence

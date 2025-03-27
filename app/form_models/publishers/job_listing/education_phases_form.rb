@@ -11,4 +11,8 @@ class Publishers::JobListing::EducationPhasesForm < Publishers::JobListing::Vaca
     end
   end
   attr_accessor(*fields)
+
+  def next_step
+    :key_stages
+  end
 end

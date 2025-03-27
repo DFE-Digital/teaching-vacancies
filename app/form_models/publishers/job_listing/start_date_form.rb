@@ -40,4 +40,8 @@ class Publishers::JobListing::StartDateForm < Publishers::JobListing::VacancyFor
   def expires_at
     vacancy.expires_at
   end
+
+  def next_step
+    :applying_for_the_job
+  end
 end

@@ -7,4 +7,8 @@ class Publishers::JobListing::IncludeAdditionalDocumentsForm < Publishers::JobLi
     %i[include_additional_documents]
   end
   attribute :include_additional_documents, :boolean
+
+  def next_step
+    :documents
+  end
 end

@@ -31,4 +31,8 @@ class Publishers::JobListing::ApplyingForTheJobForm < Publishers::JobListing::Va
       }
     end
   end
+
+  def next_step
+    :how_to_receive_applications
+  end
 end

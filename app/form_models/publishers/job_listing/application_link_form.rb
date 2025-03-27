@@ -5,4 +5,8 @@ class Publishers::JobListing::ApplicationLinkForm < Publishers::JobListing::Vaca
     %i[application_link]
   end
   attr_accessor(*fields)
+
+  def next_step
+    :application_form
+  end
 end
