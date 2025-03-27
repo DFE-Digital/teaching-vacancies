@@ -1,7 +1,6 @@
 class AggregateVacancyReferrerStatsJob < ApplicationJob
-  queue_as :default
+  queue_as :low
 
-  # Run every hour
   def perform
     VacancyAnalyticsService.aggregate_and_save_stats
   end
