@@ -9,11 +9,6 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.before(:each) do
-    mock_redis = MockRedis.new
-    allow(Redis).to receive(:current).and_return(mock_redis)
-  end
-
   config.shared_context_metadata_behavior = :apply_to_host_groups
   config.filter_run_when_matching :focus
   config.example_status_persistence_file_path = "tmp/examples.txt"

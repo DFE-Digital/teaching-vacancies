@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AggregateVacancyReferrerStatsJob, type: :job do
+RSpec.describe AggregateVacancyReferrerStatsJob do
   describe "#perform" do
     it "calls VacancyAnalyticsService.aggregate_and_save_stats" do
       expect(VacancyAnalyticsService).to receive(:aggregate_and_save_stats)
