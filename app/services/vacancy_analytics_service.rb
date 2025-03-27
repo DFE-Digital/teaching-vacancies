@@ -14,8 +14,7 @@ class VacancyAnalyticsService
   end
 
   def self.aggregate_and_save_stats
-    today = Date.current.to_s
-    keys_pattern = "#{REDIS_KEY_PREFIX}:#{today}:*"
+    keys_pattern = "#{REDIS_KEY_PREFIX}:#{Date.current}:*"
 
     Redis.current.scan_each(match: keys_pattern).each_slice(100) do |keys_batch|
       stats_to_update = []

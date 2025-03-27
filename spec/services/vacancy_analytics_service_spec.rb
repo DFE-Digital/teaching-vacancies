@@ -40,11 +40,9 @@ RSpec.describe VacancyAnalyticsService do
   end
 
   describe ".aggregate_and_save_stats" do
-    let(:key) { "vacancy_referrer_stats:#{today}:#{vacancy_id}:#{normalized_referrer}" }
-    
+    let(:key) { "vacancy_referrer_stats:#{Date.current}:#{vacancy_id}:#{normalized_referrer}" }
+
     before do
-      # Fake key format: "vacancy_referrer_stats:2025-03-26:<id>:<referrer>"
-      today = Date.current.to_s
       Redis.current.set(key, 5)
     end
 
