@@ -26,6 +26,16 @@ RSpec.describe VacancyAnalyticsService do
         described_class.track_visit(nil, referrer_url)
       }.not_to(change { Redis.current.keys("vacancy_referrer_stats:*").count })
     end
+
+    it "skips keys with zero counts" do
+      Redis.current.set(redis_key, 0)
+    
+      expect {
+        described_class.aggregate_and_save_stats
+      }.not_to change(VacancyAnalytics, :count)
+    
+      expect(Redis.current.get(key)).to eq("0") # key is not deleted
+    end
   end
 
   describe ".normalize_referrer" do
