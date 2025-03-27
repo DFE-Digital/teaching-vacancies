@@ -4,11 +4,8 @@ class VacancyAnalyticsService
   def self.track_visit(vacancy_id, referrer_url)
     return if vacancy_id.blank?
 
-    # Normalize the referrer URL (remove query params, etc.)
-    normalized_referrer = normalize_referrer(referrer_url)
-
     # Generate a Redis key for today's visits for this vacancy and referrer
-    redis_key = "#{REDIS_KEY_PREFIX}:#{vacancy_id}:#{normalized_referrer}"
+    redis_key = "#{REDIS_KEY_PREFIX}:#{vacancy_id}:#{normalize_referrer(referrer_url)}"
     # Increment the counter in Redis
     Redis.current.incr(redis_key)
   end
@@ -38,7 +35,6 @@ class VacancyAnalyticsService
 
   def self.update_stats_in_database(stats_batch)
     stats_batch.each do |stat|
-      # Use upsert to avoid race conditions and reduce DB operations
       VacancyAnalytics.upsert(
         {
           vacancy_id: stat[:vacancy_id],
@@ -56,7 +52,6 @@ class VacancyAnalyticsService
 
     begin
       uri = URI.parse(url)
-      # Just keep the host (domain) part of the referrer
       uri.host.presence || "unknown"
     rescue URI::InvalidURIError
       "invalid"

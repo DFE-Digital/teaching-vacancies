@@ -7,7 +7,6 @@ RSpec.describe VacancyAnalyticsService do
   let(:redis_key) { "vacancy_referrer_stats:#{vacancy.id}:#{normalized_referrer}" }
 
   before do
-    # Use fresh Redis DB (or clear key)
     mock_redis = MockRedis.new
     allow(Redis).to receive(:current).and_return(mock_redis)
     # Manually stub scan_each to return all keys at once, mock_redis doesn't seem to be able to do this as standard
@@ -51,6 +50,8 @@ RSpec.describe VacancyAnalyticsService do
       Redis.current.set(key, 5)
       Redis.current.set(second_key, 3)
 
+      # Add enough Redis keys to ensure that `aggregate_and_save_stats` processes multiple batches.
+      # Tests that keys beyond the first `each_slice(100)` batch are still correctly handled (and satisfies code coverage standards).
       99.times do |i|
         another_key = "vacancy_referrer_stats:#{Date.current}:#{vacancy.id}:ref#{i}.com"
         Redis.current.set(another_key, 1)
@@ -60,6 +61,7 @@ RSpec.describe VacancyAnalyticsService do
         described_class.aggregate_and_save_stats
       }.to change(VacancyAnalytics, :count).by(101)
 
+      # test that we delete keys after aggregating and saving stats.
       expect(Redis.current.exists?(key)).to be(false)
       expect(Redis.current.exists?(second_key)).to be(false)
 
