@@ -10,7 +10,8 @@ RSpec.describe VacancyAnalyticsService do
     # Use fresh Redis DB (or clear key)
     mock_redis = MockRedis.new
     allow(Redis).to receive(:current).and_return(mock_redis)
-
+    # Manually stub scan_each to return all keys at once, mock_redis doesn't seem to be able to do this as standard
+    allow(mock_redis).to receive(:scan_each) { mock_redis.keys.each }
     Redis.current.del(redis_key)
   end
 
@@ -50,9 +51,14 @@ RSpec.describe VacancyAnalyticsService do
       Redis.current.set(key, 5)
       Redis.current.set(second_key, 3)
 
+      99.times do |i|
+        another_key = "vacancy_referrer_stats:#{Date.current}:#{vacancy.id}:ref#{i}.com"
+        Redis.current.set(another_key, 1)
+      end
+
       expect {
         described_class.aggregate_and_save_stats
-      }.to change(VacancyAnalytics, :count).by(2)
+      }.to change(VacancyAnalytics, :count).by(101)
 
       expect(Redis.current.exists?(key)).to be(false)
       expect(Redis.current.exists?(second_key)).to be(false)
