@@ -25,6 +25,7 @@ RSpec.describe "Sidekiq configuration" do
       SetOrganisationSlugsJob
       SetOrganisationSlugsOfBatchJob
       ImportFromVacancySourceJob
+      TrackVacancyViewJob
     ]
   end
 
