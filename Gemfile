@@ -128,6 +128,7 @@ group :test do
   gem "fastimage"
   gem "mock_redis"
   gem "rack_session_access"
+  gem "redis-client"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
