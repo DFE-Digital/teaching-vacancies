@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_14_152244) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_25_153836) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -725,6 +725,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_14_152244) do
     t.index ["status"], name: "index_vacancies_on_status"
   end
 
+  create_table "vacancy_analytics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vacancy_id", null: false
+    t.string "referrer_url", null: false
+    t.date "date", null: false
+    t.integer "visit_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_vacancy_analytics_on_date"
+    t.index ["vacancy_id", "referrer_url", "date"], name: "index_vacancy_referrer_stats_on_vacancy_referrer_and_date", unique: true
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.uuid "item_id", null: false
@@ -784,4 +795,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_14_152244) do
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publisher_ats_api_clients"
   add_foreign_key "vacancies", "publishers"
+  add_foreign_key "vacancy_analytics", "vacancies"
 end
