@@ -90,7 +90,6 @@ class Vacancy < ApplicationRecord
 
   delegate :name, to: :organisation, prefix: true, allow_nil: true
 
-  scope :active, -> { where(status: %i[published draft]) }
   scope :applicable, -> { where("expires_at >= ?", Time.current) }
   scope :awaiting_feedback, -> { expired.where(listed_elsewhere: nil, hired_status: nil) }
   scope :expired, -> { published.where("expires_at < ?", Time.current) }

@@ -8,6 +8,8 @@ RSpec.describe "Copying a vacancy" do
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
+  after { logout }
+
   RSpec.shared_examples "publishing a copied vacancy" do |options|
     before { visit organisation_jobs_with_type_path(type: options[:type]) }
 

@@ -64,7 +64,7 @@ RSpec.describe Vacancy do
 
     before do
       Publishers::JobApplicationReceivedNotifier.with(vacancy: subject, job_application: job_application)
-                                                    .deliver(subject.publisher)
+                                                .deliver(subject.publisher)
       expect(Noticed::Notification.count).to eq 1
       subject.destroy
     end
@@ -187,16 +187,6 @@ RSpec.describe Vacancy do
   context "scopes" do
     let(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
     let(:expires_later_today) { create(:vacancy, status: :published, expires_at: 1.hour.from_now) }
-
-    describe "#active" do
-      it "retrieves active vacancies that have a status of :draft or :published" do
-        draft = create_list(:vacancy, 2, :draft)
-        published = create_list(:vacancy, 5, :published)
-        create_list(:vacancy, 4, :trashed)
-
-        expect(Vacancy.active.count).to eq(draft.count + published.count)
-      end
-    end
 
     describe "#applicable" do
       it "finds current vacancies" do
