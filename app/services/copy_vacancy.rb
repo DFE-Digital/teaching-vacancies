@@ -12,10 +12,10 @@ class CopyVacancy
 
   private
 
-  def setup_new_vacancy klass
-    attributes = @vacancy.dup.attributes.symbolize_keys.except(:id, :type, :slug, :status, :created_at, :updated_at).keys.index_with { |attribute|
+  def setup_new_vacancy(klass)
+    attributes = @vacancy.dup.attributes.symbolize_keys.except(:id, :type, :slug, :status, :created_at, :updated_at).keys.index_with do |attribute|
       @vacancy.public_send(attribute)
-    }
+    end
     @new_vacancy = klass.new(attributes)
     copy_application_form if @vacancy.application_form.attachments&.any?
 

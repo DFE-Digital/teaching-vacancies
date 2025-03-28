@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Publishers can add additional documents to a vacancy" do
   let(:publisher) { create(:publisher) }
+  let(:published) { Vacancy.order(:created_at).last }
   let(:primary_school) { create(:school, name: "Primary school", phase: "primary") }
   let(:organisation) { primary_school }
 
@@ -10,8 +11,6 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
   before { login_publisher(publisher: publisher, organisation: organisation) }
 
   after { logout }
-
-  let(:published) { Vacancy.order(:created_at).last}
 
   scenario "can add an additional documents to a vacancy" do
     allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))

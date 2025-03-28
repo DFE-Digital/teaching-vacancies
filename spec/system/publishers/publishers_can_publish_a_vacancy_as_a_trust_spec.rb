@@ -8,7 +8,7 @@ RSpec.describe "Creating a vacancy" do
   let(:school3) { create(:school, :closed, name: "Closed school") }
   let(:vacancy) { build(:vacancy, :central_office, :ect_suitable, job_roles: ["teacher"], organisations: [school_group], phases: %w[secondary], key_stages: %w[ks3]) }
   let(:created_vacancy) { Vacancy.last }
-  let(:published) { Vacancy.order(:created_at).last}
+  let(:published) { Vacancy.order(:created_at).last }
 
   before do
     login_publisher(publisher: publisher, organisation: school_group)

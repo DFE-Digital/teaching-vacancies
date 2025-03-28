@@ -51,7 +51,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   def convert_to_draft
     draft = CopyVacancy.new(vacancy).call
-    vacancy.destroy
+    vacancy.destroy!
     redirect_to organisation_job_path(draft.id)
   end
 

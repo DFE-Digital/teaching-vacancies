@@ -18,7 +18,7 @@ RSpec.describe "Creating a vacancy" do
 
   context "non-faith school" do
     let(:school) { create(:school, :not_applicable, name: "Salisbury School") }
-    let(:published) { Vacancy.order(:created_at).last}
+    let(:published) { Vacancy.order(:created_at).last }
 
     it "follows the flow" do
       visit organisation_jobs_with_type_path
@@ -216,7 +216,7 @@ RSpec.describe "Creating a vacancy" do
     end
 
     describe "#publish" do
-      let(:published) { Vacancy.order(:created_at).last}
+      let(:published) { Vacancy.order(:created_at).last }
 
       scenario "cannot be published unless the details are valid" do
         yesterday_date = Time.zone.yesterday
@@ -294,7 +294,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: format_date(vacancy.publish_on)))
 
-        click_on 'make changes to the job listing'
+        click_on "make changes to the job listing"
         # visit organisation_job_path(vacancy.id)
 
         has_scheduled_vacancy_review_heading?(vacancy)
@@ -310,7 +310,7 @@ RSpec.describe "Creating a vacancy" do
         expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: format_date(vacancy.publish_on)))
 
         # visit organisation_job_path(vacancy.id)
-        click_on 'make changes to the job listing'
+        click_on "make changes to the job listing"
 
         has_scheduled_vacancy_review_heading?(vacancy)
 

@@ -187,16 +187,6 @@ RSpec.describe Vacancy do
     let(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
     let(:expires_later_today) { create(:vacancy, status: :published, expires_at: 1.hour.from_now) }
 
-    xdescribe "#active" do
-      it "retrieves active vacancies that have a status of :draft or :published" do
-        draft = create_list(:draft_vacancy, 2)
-        published = create_list(:vacancy, 5, :published)
-        create_list(:vacancy, 4, :trashed)
-
-        expect(Vacancy.active.count).to eq(draft.count + published.count)
-      end
-    end
-
     describe "#applicable" do
       it "finds current vacancies" do
         expired_earlier_today.send :set_slug

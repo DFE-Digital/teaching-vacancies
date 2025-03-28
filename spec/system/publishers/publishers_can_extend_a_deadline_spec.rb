@@ -1,7 +1,7 @@
 require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
-RSpec.xdescribe "Publishers can extend a deadline" do
+RSpec.describe "Publishers can extend a deadline" do
   let(:organisation) { create(:school) }
   let(:publisher) { create(:publisher) }
   let(:expires_at) { vacancy.expires_at + 2.months }

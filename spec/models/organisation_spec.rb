@@ -56,6 +56,7 @@ RSpec.describe Organisation do
 
     context "when the organisation is a local authority" do
       let!(:local_authority) { create(:local_authority, local_authority_code: "111", schools: [school3]) }
+      let(:result) { Vacancy.in_organisation_ids(local_authority.all_organisation_ids) }
       let(:school1) { create(:school, urn: "123") }
       let(:school2) { create(:school, urn: "654") }
       let(:school3) { create(:school) }
@@ -67,8 +68,6 @@ RSpec.describe Organisation do
       let(:local_authorities_extra_schools) { { 111 => [123] } }
 
       before { allow(Rails.configuration).to receive(:local_authorities_extra_schools).and_return(local_authorities_extra_schools) }
-
-      let(:result) { Vacancy.in_organisation_ids(local_authority.all_organisation_ids) }
 
       it "returns all vacancies from the schools inside and outside of the local authority" do
         expect(result).to include(vacancy1, vacancy3)
