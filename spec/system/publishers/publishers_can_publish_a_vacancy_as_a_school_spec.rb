@@ -265,6 +265,8 @@ RSpec.describe "Creating a vacancy" do
 
         before { login_publisher(publisher: publisher_that_publishes_vacancy, organisation: school) }
 
+        after { logout }
+
         scenario "the publisher and organisation_publisher are reset" do
           visit organisation_job_path(vacancy.id)
 
@@ -284,10 +286,12 @@ RSpec.describe "Creating a vacancy" do
 
         visit organisation_job_path(vacancy.id)
         click_on I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft")
+        #  wait for page to load
+        find(".govuk-panel.govuk-panel--confirmation")
 
         expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: format_date(vacancy.publish_on)))
 
-        visit organisation_job_path(vacancy.id)
+        click_on "make changes to the job listing"
 
         has_scheduled_vacancy_review_heading?(vacancy)
         expect(page).to have_content(format_date(vacancy.publish_on).to_s)
@@ -301,7 +305,7 @@ RSpec.describe "Creating a vacancy" do
 
         expect(page).to have_content(I18n.t("publishers.vacancies.summary.date_posted", date: format_date(vacancy.publish_on)))
 
-        visit organisation_job_path(vacancy.id)
+        click_on "make changes to the job listing"
 
         has_scheduled_vacancy_review_heading?(vacancy)
 
