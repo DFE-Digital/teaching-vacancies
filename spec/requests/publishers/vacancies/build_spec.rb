@@ -127,7 +127,7 @@ RSpec.describe "Job applications build" do
       context "when clicking save and finish later and there are invalid steps" do
         let(:further_details_provided) { nil }
         let(:further_details) { nil }
-        let(:vacancy) { create(:vacancy, :draft, organisations: [school_one], further_details_provided: nil, further_details: nil) }
+        let(:vacancy) { create(:draft_vacancy, organisations: [school_one], further_details_provided: nil, further_details: nil) }
         let(:params) { { publishers_job_listing_contact_details_form: { contact_email: "test@example.com", contact_number_provided: "true", contact_number: "07789123123" }, save_and_finish_later: "true" } }
 
         before { patch(organisation_job_build_path(vacancy.id, :contact_details, params: params)) }
@@ -138,7 +138,7 @@ RSpec.describe "Job applications build" do
       end
 
       context "when all steps are valid" do
-        let(:vacancy) { create(:vacancy, :draft, include_additional_documents: nil, organisations: [school_one]) }
+        let(:vacancy) { create(:draft_vacancy, include_additional_documents: nil, organisations: [school_one]) }
         let(:params) { { publishers_job_listing_include_additional_documents_form: { include_additional_documents: "false" } } }
 
         before { patch(organisation_job_build_path(vacancy.id, :include_additional_documents, params: params)) }
@@ -149,7 +149,7 @@ RSpec.describe "Job applications build" do
       end
 
       context "when there are invalid steps" do
-        let(:vacancy) { create(:vacancy, :draft, further_details_provided: nil, further_details: nil, organisations: [school_one]) }
+        let(:vacancy) { create(:draft_vacancy, further_details_provided: nil, further_details: nil, organisations: [school_one]) }
         let(:params) { { publishers_job_listing_contact_details_form: { contact_email: "test@example.com", contact_number_provided: "true", contact_number: "07789123123" } } }
 
         before { patch(organisation_job_build_path(vacancy.id, :contact_details, params: params)) }

@@ -151,8 +151,7 @@ RSpec.describe Vacancy do
       end
 
       it 'checks if #published == "draft" (yields published? == false)' do
-        subject.status = "draft"
-        expect(subject.listed?).to be_falsey
+        expect(build(:draft_vacancy).listed?).to be_falsey
       end
 
       describe "#publish_on" do
@@ -187,16 +186,6 @@ RSpec.describe Vacancy do
   context "scopes" do
     let(:expired_earlier_today) { create(:vacancy, expires_at: 5.hour.ago) }
     let(:expires_later_today) { create(:vacancy, status: :published, expires_at: 1.hour.from_now) }
-
-    describe "#active" do
-      it "retrieves active vacancies that have a status of :draft or :published" do
-        draft = create_list(:vacancy, 2, :draft)
-        published = create_list(:vacancy, 5, :published)
-        create_list(:vacancy, 4, :trashed)
-
-        expect(Vacancy.active.count).to eq(draft.count + published.count)
-      end
-    end
 
     describe "#applicable" do
       it "finds current vacancies" do
@@ -238,7 +227,7 @@ RSpec.describe Vacancy do
     describe "#expired_yesterday" do
       it "retrieves published and unpublished vacancies that have an expires_at of yesterday" do
         create(:vacancy, :published, :expired_yesterday)
-        create(:vacancy, :draft, :expired_yesterday)
+        create(:draft_vacancy, :expired_yesterday)
         create(:vacancy, :published, :expires_tomorrow)
 
         expect(Vacancy.expired_yesterday.count).to eq(2)
@@ -336,7 +325,7 @@ RSpec.describe Vacancy do
     end
 
     context "when the vacancy is not published" do
-      subject { create(:vacancy, :draft) }
+      subject { create(:draft_vacancy) }
 
       it "returns false" do
         expect(subject.can_receive_job_applications?).to be false
@@ -525,13 +514,7 @@ RSpec.describe Vacancy do
       end
 
       context "when draft" do
-        let(:status) { :draft }
-
-        it { is_expected.to be_valid }
-      end
-
-      context "when scheduled" do
-        let(:status) { :draft }
+        subject { build_stubbed(:draft_vacancy, enable_job_applications: true) }
 
         it { is_expected.to be_valid }
       end
@@ -693,20 +676,6 @@ RSpec.describe Vacancy do
       it "returns the distance to given location" do
         expect(subject.distance_in_miles_to(test_coordinates).floor).to eq 161
       end
-    end
-  end
-
-  describe "#draft!" do
-    subject { create(:vacancy, :future_publish) }
-
-    before { subject.draft! }
-
-    it "converts the job to a draft" do
-      expect(subject.status).to eq("draft")
-    end
-
-    it "resets the publish_on date" do
-      expect(subject.publish_on).to eq(nil)
     end
   end
 

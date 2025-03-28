@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Copying a vacancy" do
+RSpec.describe "Copying a vacancy", :js do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school, safeguarding_information: nil) }
 
@@ -8,10 +8,12 @@ RSpec.describe "Copying a vacancy" do
 
   before { login_publisher(publisher: publisher, organisation: school) }
 
+  after { logout }
+
   RSpec.shared_examples "publishing a copied vacancy" do |options|
     before { visit organisation_jobs_with_type_path(type: options[:type]) }
 
-    scenario "a job can be successfully copied and published" do
+    scenario "a job can be successfully copied and published", :js do
       click_on original_vacancy.job_title
       click_on I18n.t("publishers.vacancies.show.heading_component.action.copy")
 

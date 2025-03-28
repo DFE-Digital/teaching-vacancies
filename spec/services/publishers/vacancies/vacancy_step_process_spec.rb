@@ -5,12 +5,12 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
   let(:current_step) { :job_role }
 
-  let(:vacancy) { build_stubbed(:vacancy, :draft, job_roles: ["teacher"]) }
+  let(:vacancy) { build_stubbed(:draft_vacancy, job_roles: ["teacher"]) }
   let(:organisation) { build(:school) }
 
   describe "#step_groups" do
     let(:all_possible_step_groups) { %i[job_details important_dates application_process about_the_role review] }
-    let(:vacancy) { create(:vacancy, :draft, job_roles: ["teacher"], organisations: [organisation]) }
+    let(:vacancy) { create(:draft_vacancy, job_roles: ["teacher"], organisations: [organisation]) }
 
     it "has the expected step groups" do
       expect(subject.step_groups.keys).to eq(all_possible_step_groups)

@@ -68,9 +68,12 @@ class Organisation < ApplicationRecord
     through: 7,
   }
 
-  def all_vacancies
-    ids = school? ? [id] : [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
-    Vacancy.in_organisation_ids(ids)
+  # def all_vacancies
+  #   ids = school? ? [id] : [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
+  #   Vacancy.in_organisation_ids(ids)
+  # end
+  def all_organisation_ids
+    school? ? [id] : [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
   end
 
   def name

@@ -94,10 +94,8 @@ RSpec.describe Resettable do
   context "when changing enable job applications" do
     subject(:update_job_applications) { vacancy.update(enable_job_applications: true) }
 
-    let(:vacancy) { build(:vacancy, receive_applications: "website", enable_job_applications: false) }
+    let(:vacancy) { build(:draft_vacancy, receive_applications: "website", enable_job_applications: false) }
     let(:previous_receive_applications) { vacancy.receive_applications }
-
-    before { vacancy.update(status: :draft) }
 
     it "resets receive application" do
       expect { update_job_applications }
@@ -152,7 +150,7 @@ RSpec.describe Resettable do
   context "when changing enable job applications" do
     subject(:update_enable_job_applications) { vacancy.update(enable_job_applications: false) }
 
-    let(:vacancy) { build(:vacancy, :draft, personal_statement_guidance: "test") }
+    let(:vacancy) { build(:draft_vacancy, personal_statement_guidance: "test") }
     let(:previous_personal_statement_guidance) { vacancy.personal_statement_guidance }
 
     it "resets the personal statement guidance" do

@@ -31,6 +31,6 @@ class Publishers::Vacancies::ExtendDeadlineController < Publishers::Vacancies::B
   end
 
   def vacancy
-    @vacancy ||= current_organisation.all_vacancies.published.listed.find(params[:job_id])
+    @vacancy ||= Vacancy.in_organisation_ids(current_organisation.all_organisation_ids).published.listed.find(params[:job_id])
   end
 end

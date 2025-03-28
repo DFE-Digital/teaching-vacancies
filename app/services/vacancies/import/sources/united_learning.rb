@@ -28,7 +28,7 @@ class Vacancies::Import::Sources::UnitedLearning
       next if school.blank?
       next if vacancy_listed_at_excluded_school_type?([school])
 
-      v = Vacancy.find_or_initialize_by(
+      v = RealVacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: item["VacancyID"],
       )

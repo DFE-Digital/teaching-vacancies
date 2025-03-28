@@ -130,6 +130,7 @@
   - google_index_removed
   - expired_vacancy_feedback_email_sent_at
   - publisher_ats_api_client_id
+  - type
   :qualifications:
   - finished_studying_details_ciphertext
   :feedbacks:

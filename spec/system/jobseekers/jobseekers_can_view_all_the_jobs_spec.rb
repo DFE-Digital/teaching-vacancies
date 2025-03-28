@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Jobseekers can view all the jobs" do
   let!(:school) { create(:school) }
   let!(:published_jobs) { create_list(:vacancy, 5, :past_publish, expires_at: 2.years.from_now, organisations: [school]) }
-  let!(:draft_jobs) { create_list(:vacancy, 2, :draft) }
+  let!(:draft_jobs) { create_list(:draft_vacancy, 2) }
 
   it "jobseekers can visit the home page, perform an empty search and view jobs" do
     visit root_path

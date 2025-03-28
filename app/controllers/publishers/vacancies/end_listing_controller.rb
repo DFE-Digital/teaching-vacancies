@@ -32,6 +32,6 @@ class Publishers::Vacancies::EndListingController < Publishers::Vacancies::BaseC
   end
 
   def vacancy
-    @vacancy ||= current_organisation.all_vacancies.live.find(params[:job_id])
+    @vacancy ||= Vacancy.in_organisation_ids(current_organisation.all_organisation_ids).live.find(params[:job_id])
   end
 end
