@@ -57,7 +57,7 @@ RSpec.describe Jobseekers::AlertMailer do
 
   before do
     # Stub the uid so that we can test links more easily
-    allow_any_instance_of(ApplicationMailer).to receive(:uid).and_return("a_unique_identifier")
+    allow_any_instance_of(described_class).to receive(:uid).and_return("a_unique_identifier")
     subscription.create_alert_run
   end
 

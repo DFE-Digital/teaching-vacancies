@@ -11,6 +11,8 @@ RSpec.describe "Publishers can view a job application" do
     create(:training_and_cpd, job_application: job_application)
   end
 
+  after { logout }
+
   context "when the job application status is withdrawn" do
     let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
 
