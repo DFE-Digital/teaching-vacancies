@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Copying a vacancy", :js do
+RSpec.describe "Copying a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school, safeguarding_information: nil) }
 

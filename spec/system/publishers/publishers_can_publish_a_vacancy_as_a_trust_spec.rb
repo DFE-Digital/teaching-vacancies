@@ -8,7 +8,6 @@ RSpec.describe "Creating a vacancy" do
   let(:school3) { create(:school, :closed, name: "Closed school") }
   let(:vacancy) { build(:vacancy, :central_office, :ect_suitable, job_roles: ["teacher"], organisations: [school_group], phases: %w[secondary], key_stages: %w[ks3]) }
   let(:created_vacancy) { Vacancy.last }
-  let(:published) { Vacancy.order(:created_at).last }
 
   before do
     login_publisher(publisher: publisher, organisation: school_group)
@@ -177,6 +176,6 @@ RSpec.describe "Creating a vacancy" do
     verify_all_vacancy_details(created_vacancy)
 
     click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-    expect(current_path).to eq(organisation_job_summary_path(published.id))
+    expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
   end
 end
