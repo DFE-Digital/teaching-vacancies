@@ -64,7 +64,7 @@ RSpec.describe Vacancy do
 
     before do
       Publishers::JobApplicationReceivedNotifier.with(vacancy: subject, job_application: job_application)
-                                                    .deliver(subject.publisher)
+                                                .deliver(subject.publisher)
       expect(Noticed::Notification.count).to eq 1
       subject.destroy
     end
@@ -683,6 +683,20 @@ RSpec.describe Vacancy do
       it "returns the distance to given location" do
         expect(subject.distance_in_miles_to(test_coordinates).floor).to eq 161
       end
+    end
+  end
+
+  describe "#draft!" do
+    subject { create(:vacancy, :future_publish) }
+
+    before { subject.draft! }
+
+    it "converts the job to a draft" do
+      expect(subject.status).to eq("draft")
+    end
+
+    it "resets the publish_on date" do
+      expect(subject.publish_on).to eq(nil)
     end
   end
 
