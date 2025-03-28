@@ -17,8 +17,8 @@ class AmazonSesMailer < ActionMailer::Base
   def send_email(to:, subject:)
     @to = to
     mail(to: to, subject: subject, delivery_method_options: {
-      user_name: Rails.application.credentials.dig(:smtp, :user_name),
-      password: Rails.application.credentials.dig(:smtp, :password),
+      user_name: ENV.fetch("SMTP_USERNAME", nil),
+      password: ENV.fetch("SMTP_PASSWORD", nil),
       address: "email-smtp.eu-west-2.amazonaws.com",
     }) do |format|
       format.text
