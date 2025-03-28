@@ -1,4 +1,7 @@
 class Jobseekers::AlertMailer < Jobseekers::BaseMailer
+  rescue_from Notifications::Client::BadRequestError, with: :handle_invalid_email_exception
+  INVALID_EMAIL_REGEXP = %r{ValidationError: email_address}
+
   after_action :jobseeker
 
   self.delivery_job = AlertMailerJob
@@ -29,6 +32,12 @@ class Jobseekers::AlertMailer < Jobseekers::BaseMailer
   private
 
   attr_reader :subscription_id
+
+  def handle_invalid_email_exception(exception)
+    return subscription.destroy! if exception.message.match?(INVALID_EMAIL_REGEXP)
+
+    raise exception
+  end
 
   def dfe_analytics_custom_data
     { subscription_identifier: subscription.id, subscription_frequency: subscription.frequency }
