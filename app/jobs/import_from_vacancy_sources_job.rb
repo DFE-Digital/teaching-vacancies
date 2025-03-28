@@ -1,11 +1,9 @@
 class ImportFromVacancySourcesJob < ApplicationJob
   SOURCES = [
-    Vacancies::Import::Sources::Ark,
     Vacancies::Import::Sources::Broadbean,
     Vacancies::Import::Sources::Every,
     Vacancies::Import::Sources::Fusion,
     Vacancies::Import::Sources::MyNewTerm,
-    Vacancies::Import::Sources::UnitedLearning,
     Vacancies::Import::Sources::VacancyPoster,
     Vacancies::Import::Sources::Ventrus,
   ].freeze
