@@ -1,4 +1,12 @@
 #
+# SET DATE CRON JOBS
+#
+send_peak_times_email_reminder:
+  cron: '0 3 14 5 *' # "At 03:00 on 14 of May."
+  class: 'SendPeakTimesEmailReminderJob'
+  queue: default
+
+#
 # MONTHLY CRON JOBS
 #
 clear_emergency_login_keys:

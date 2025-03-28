@@ -22,6 +22,16 @@ RSpec.describe "Govuk One Login authentication response" do
         end
       end
 
+      context "with a peak times unsubscribe url location to redirect to in devise session" do
+        let(:devise_stored_location) { edit_jobseekers_account_email_preferences_path }
+
+        it "redirects the jobseeker to the email preferences page" do
+          get auth_govuk_one_login_callback_path
+
+          expect(response).to redirect_to(devise_stored_location)
+        end
+      end
+
       context "with the job alerts subscriptions page to redirect to in devise session" do
         let(:devise_stored_location) { jobseekers_subscriptions_path }
 
