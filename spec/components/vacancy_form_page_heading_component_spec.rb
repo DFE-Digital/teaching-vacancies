@@ -11,9 +11,11 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
   let(:steps) { %i[job_location job_role review] }
 
   let(:vacancy_step_process) do
-    instance_double(Publishers::Vacancies::VacancyStepProcess, current_step: current_step,
-                                                               vacancy: vacancy,
-                                                               organisation: organisation)
+    instance_double(Publishers::Vacancies::VacancyStepProcess,
+                    # current_step: current_step,
+                    current_step_name: current_step,
+                    vacancy: vacancy,
+                    organisation: organisation)
   end
 
   subject { described_class.new(vacancy, vacancy_step_process, back_path: back_path, fieldset: false) }
@@ -46,7 +48,7 @@ RSpec.describe VacancyFormPageHeadingComponent, type: :component do
 
   describe "#heading" do
     it "returns edit job title" do
-      expect(page).to have_content(I18n.t("publishers.vacancies.steps.#{vacancy_step_process.current_step}"))
+      expect(page).to have_content(I18n.t("publishers.vacancies.steps.#{vacancy_step_process.current_step_name}"))
     end
   end
 end

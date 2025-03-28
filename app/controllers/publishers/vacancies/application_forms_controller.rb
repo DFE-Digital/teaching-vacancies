@@ -22,7 +22,7 @@ class Publishers::Vacancies::ApplicationFormsController < Publishers::Vacancies:
   end
 
   def form
-    @form ||= Publishers::JobListing::ApplicationFormForm.new(application_form_params, vacancy, current_publisher)
+    @form ||= Publishers::JobListing::ApplicationFormForm.new(application_form_params, vacancy)
   end
 
   def application_form_params

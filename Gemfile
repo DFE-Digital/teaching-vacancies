@@ -26,6 +26,7 @@ gem "aws-sdk-s3", require: false
 gem "breasal"
 gem "devise"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.4"
+gem "dfe-wizard", require: "dfe/wizard", github: "DFE-Digital/dfe-wizard"
 gem "factory_bot_rails"
 gem "faker"
 gem "friendly_id"

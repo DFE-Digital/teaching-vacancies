@@ -20,12 +20,12 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
   describe "#steps" do
     context "job_details steps" do
       it "has the required steps" do
-        expect(subject.steps).to include(:job_role, :job_title, :contract_information, :pay_package)
+        expect(subject.step_names).to include(:job_role, :job_title, :contract_information, :pay_package)
       end
 
       context "when the organisation is a school" do
         it "has the expected steps" do
-          expect(subject.steps).to_not include(:job_location)
+          expect(subject.step_names).to_not include(:job_location)
         end
       end
 
@@ -33,13 +33,13 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         let(:organisation) { build_stubbed(:school_group) }
 
         it "has the expected steps" do
-          expect(subject.steps).to include(:job_location)
+          expect(subject.step_names).to include(:job_location)
         end
       end
 
       context "when the vacancy allows phases to be set" do
         it "has the expected steps" do
-          expect(subject.steps).to include(:education_phases)
+          expect(subject.step_names).to include(:education_phases)
         end
       end
 
@@ -47,7 +47,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         before { allow(vacancy).to receive(:allow_phase_to_be_set?).and_return(false) }
 
         it "has the expected steps" do
-          expect(subject.steps).not_to include(:education_phases)
+          expect(subject.step_names).not_to include(:education_phases)
         end
       end
 
@@ -55,13 +55,13 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         before { allow(vacancy).to receive(:allow_key_stages?).and_return(true) }
 
         it "has the expected steps" do
-          expect(subject.steps).to include(:key_stages)
+          expect(subject.step_names).to include(:key_stages)
         end
       end
 
       context "when the vacancy does not allow key stages" do
         it "has the expected steps" do
-          expect(subject.steps).not_to include(:key_stages)
+          expect(subject.step_names).not_to include(:key_stages)
         end
       end
 
@@ -69,31 +69,31 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         before { allow(vacancy).to receive(:allow_subjects?).and_return(true) }
 
         it "has the expected steps" do
-          expect(subject.steps).to include(:subjects)
+          expect(subject.step_names).to include(:subjects)
         end
       end
 
       context "when the vacancy does not allow subjects" do
         it "has the expected steps" do
-          expect(subject.steps).not_to include(:subjects)
+          expect(subject.step_names).not_to include(:subjects)
         end
       end
     end
 
     context "important_dates_steps" do
       it "has the required steps" do
-        expect(subject.steps).to include(:important_dates, :start_date)
+        expect(subject.step_names).to include(:important_dates, :start_date)
       end
     end
 
     context "application_process_steps" do
       it "has the required steps" do
-        expect(subject.steps).to include(:school_visits, :contact_details)
+        expect(subject.step_names).to include(:school_visits, :contact_details)
       end
 
       context "when the organisation is a school" do
         it "has the expected steps" do
-          expect(subject.steps).to include(:applying_for_the_job)
+          expect(subject.step_names).to include(:applying_for_the_job)
         end
       end
 
@@ -101,7 +101,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         let(:organisation) { build_stubbed(:trust) }
 
         it "has the expected steps" do
-          expect(subject.steps).to include(:applying_for_the_job)
+          expect(subject.step_names).to include(:applying_for_the_job)
         end
       end
 
@@ -111,7 +111,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         let(:organisation) { build_stubbed(:local_authority) }
 
         it "has the expected steps" do
-          expect(subject.steps).to include(:how_to_receive_applications)
+          expect(subject.step_names).to include(:how_to_receive_applications)
         end
       end
 
@@ -122,7 +122,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           before { allow(vacancy).to receive(:enable_job_applications).and_return(true) }
 
           it "has the expected steps" do
-            expect(subject.steps).not_to include(:applying_for_the_job, :how_to_receive_applications)
+            expect(subject.step_names).not_to include(:applying_for_the_job, :how_to_receive_applications)
           end
         end
 
@@ -130,8 +130,8 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           before { allow(vacancy).to receive(:enable_job_applications).and_return(false) }
 
           it "has the expected steps" do
-            expect(subject.steps).not_to include(:applying_for_the_job)
-            expect(subject.steps).to include(:how_to_receive_applications)
+            expect(subject.step_names).not_to include(:applying_for_the_job)
+            expect(subject.step_names).to include(:how_to_receive_applications)
           end
         end
       end
@@ -140,8 +140,8 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         before { allow(vacancy).to receive(:enable_job_applications).and_return(true) }
 
         it "has the expected steps" do
-          expect(subject.steps).not_to include(:how_to_receive_applications)
-          expect(subject.steps).not_to include(:application_link, :application_form)
+          expect(subject.step_names).not_to include(:how_to_receive_applications)
+          expect(subject.step_names).not_to include(:application_link, :application_form)
         end
       end
 
@@ -149,14 +149,14 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         before { allow(vacancy).to receive(:enable_job_applications).and_return(false) }
 
         it "has the expected steps" do
-          expect(subject.steps).to include(:how_to_receive_applications)
+          expect(subject.step_names).to include(:how_to_receive_applications)
         end
 
         context "when applications are received by email" do
           before { allow(vacancy).to receive(:receive_applications).and_return("email") }
 
           it "has the expected steps" do
-            expect(subject.steps).to include(:application_form)
+            expect(subject.step_names).to include(:application_form)
           end
         end
 
@@ -164,7 +164,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
           before { allow(vacancy).to receive(:receive_applications).and_return("website") }
 
           it "has the expected steps" do
-            expect(subject.steps).to include(:application_link)
+            expect(subject.step_names).to include(:application_link)
           end
         end
       end
@@ -172,14 +172,14 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
 
     context "about_the_role_steps" do
       it "has the required steps" do
-        expect(subject.steps).to include(:about_the_role, :include_additional_documents)
+        expect(subject.step_names).to include(:about_the_role, :include_additional_documents)
       end
 
       context "when include_additional_documents is true" do
         before { allow(vacancy).to receive(:include_additional_documents).and_return(true) }
 
         it "has the expected steps" do
-          expect(subject.steps).to include(:documents)
+          expect(subject.step_names).to include(:documents)
         end
       end
 
@@ -187,7 +187,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
         before { allow(vacancy).to receive(:include_additional_documents).and_return(false) }
 
         it "has the expected steps" do
-          expect(subject.steps).not_to include(:documents)
+          expect(subject.step_names).not_to include(:documents)
         end
       end
     end

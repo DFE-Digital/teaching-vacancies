@@ -6,7 +6,7 @@ class Publishers::VacancyFormSequence < FormSequence
     super(
       model: @vacancy,
       organisation: organisation,
-      step_names: @step_process.steps,
+      step_names: @step_process.step_names,
       form_prefix: "publishers/job_listing",
     )
   end
@@ -27,7 +27,7 @@ class Publishers::VacancyFormSequence < FormSequence
   end
 
   def dependent_steps # rubocop:disable Metrics/MethodLength
-    case @step_process.current_step
+    case @step_process.current_step_name
     when :job_location
       %i[education_phases key_stages]
     when :job_role

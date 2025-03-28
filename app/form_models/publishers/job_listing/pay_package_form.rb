@@ -19,16 +19,23 @@ class Publishers::JobListing::PayPackageForm < Publishers::JobListing::VacancyFo
 
   FIELDS = %i[actual_salary salary pay_scale benefits_details salary_types hourly_rate].freeze
 
-  def self.fields
-    FIELDS + %i[benefits]
+  class << self
+    def fields
+      FIELDS + %i[benefits]
+    end
+
+    def permitted_params
+      [:actual_salary, :benefits, :benefits_details, :salary, :pay_scale, :hourly_rate, { salary_types: [] }]
+    end
   end
+
   attr_accessor(*FIELDS)
 
   attribute :benefits, :boolean
 
   def params_to_save
     SALARIES.each { |salary, salary_type| params[salary] = nil unless params[:salary_types]&.include? salary_type }
-    params.except(:salary_types)
+    super.except(:salary_types)
   end
 
   private

@@ -10,6 +10,14 @@ GIT
       request_store_rails (~> 2)
 
 GIT
+  remote: https://github.com/DFE-Digital/dfe-wizard.git
+  revision: 6b2f76e4e3f9f1ac14e67066e27fc50964618b3e
+  specs:
+    dfe-wizard (0.1.1)
+      activemodel
+      activesupport
+
+GIT
   remote: https://github.com/ruby/net-pop.git
   revision: e8d0afe2773b9eb6a23c39e9e437f6fc0fc7c733
   specs:
@@ -853,6 +861,7 @@ DEPENDENCIES
   debug (>= 1.0.0)
   devise
   dfe-analytics!
+  dfe-wizard!
   dotenv-rails
   factory_bot_rails
   faker

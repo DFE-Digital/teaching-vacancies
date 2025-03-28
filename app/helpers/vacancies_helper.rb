@@ -25,7 +25,7 @@ module VacanciesHelper
   end
 
   def page_title_prefix(step_process, form_object)
-    page_heading = t("publishers.vacancies.steps.#{step_process.current_step}")
+    page_heading = t("publishers.vacancies.steps.#{step_process.current_step_name}")
     create_or_edit = step_process.vacancy.published? ? "edit" : "create"
     section_number = step_process.current_step_group_number
 

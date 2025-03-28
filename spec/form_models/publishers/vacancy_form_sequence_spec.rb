@@ -11,7 +11,7 @@ RSpec.describe Publishers::VacancyFormSequence do
 
   let(:vacancy) { create(:vacancy, :draft, :no_tv_applications, school_visits: nil, key_stages: %w[ks3], phases: %w[secondary], organisations: [organisation]) }
   let(:organisation) { create(:school) }
-  let(:step_process) { double(:step_process, steps: all_steps, current_step: current_step) }
+  let(:step_process) { double(:step_process, step_names: all_steps, current_step_name: current_step) }
   let(:current_step) { :review }
   let(:all_steps) do
     %i[
