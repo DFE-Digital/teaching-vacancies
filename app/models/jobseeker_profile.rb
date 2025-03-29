@@ -44,10 +44,13 @@ class JobseekerProfile < ApplicationRecord
       profile.qualified_teacher_status_year = nil
       profile.qts_age_range_and_subject = nil
     end
-    unless profile.has_teacher_reference_number == "yes"
-      profile.teacher_reference_number = nil
+
+    if profile.is_statutory_induction_complete
+      profile.statutory_induction_complete_details = nil
     end
   end
+
+  self.ignored_columns += %i[has_teacher_reference_number]
 
   def self.copy_attributes(record, previous_application)
     record.assign_attributes(

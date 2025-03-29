@@ -49,24 +49,6 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
 
     expect(page).not_to have_css("h2", text: "There is a problem")
 
-    expect(job_application.reload.qts_age_range_and_subject).to eq("Adding up for little ones")
-  end
-
-  it "creates a jobseeker profile if the jobseeker does not have one" do
-    choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
-
-    fill_in "Year QTS was awarded", with: "2022"
-    fill_in "Please provide more detail (optional field)", with: "It was hard work but I made it"
-
-    choose("Yes, I have completed my induction period")
-    choose "Yes", name: "jobseekers_job_application_professional_status_form[has_teacher_reference_number]"
-    fill_in "What is your teacher reference number (TRN)?", with: "1234567"
-
-    click_on "Save and continue"
-
-    expect(page).to have_current_path(jobseekers_job_application_apply_path(job_application))
-
-    jobseeker.reload
-    expect(jobseeker.jobseeker_profile).to have_attributes(teacher_reference_number: "1234567", has_teacher_reference_number: "yes")
+    expect(job_application.reload).to have_attributes(qts_age_range_and_subject: "Adding up for little ones", teacher_reference_number: "1234567")
   end
 end
