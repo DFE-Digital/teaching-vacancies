@@ -17,6 +17,14 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Refresh Packages
+      run: sudo apt-get update
+      shell: bash
+
+    - name: Install ImageMagick
+      run: sudo apt-get install imagemagick
+      shell: bash
+
     - name: Set up Ruby
       if: ${{ inputs.skip-ruby == 'false' }}
       uses: ruby/setup-ruby@v1
