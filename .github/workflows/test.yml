@@ -39,6 +39,10 @@ jobs:
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
 
+      - name: Refresh Packages
+        run: sudo apt-get update
+        shell: bash
+
       - name: Install ImageMagick
         run: sudo apt-get install imagemagick
         shell: bash
