@@ -20,6 +20,7 @@ class AmazonSesMailer < ActionMailer::Base
       user_name: ENV.fetch("SMTP_USERNAME", nil),
       password: ENV.fetch("SMTP_PASSWORD", nil),
       address: "email-smtp.eu-west-2.amazonaws.com",
+      port: 587
     }) do |format|
       format.text
       # format.html
