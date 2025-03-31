@@ -5,7 +5,7 @@ class VacancyAnalyticsService
     return if vacancy_id.blank?
 
     # Generate a Redis key for today's visits for this vacancy and referrer
-    redis_key = "#{REDIS_KEY_PREFIX}:#{vacancy_id}:#{normalize_referrer(referrer_url)}"
+    redis_key = "#{REDIS_KEY_PREFIX}:#{Date.current}:#{vacancy_id}:#{normalize_referrer(referrer_url)}"
     # Increment the counter in Redis
     Redis.current.incr(redis_key)
   end
