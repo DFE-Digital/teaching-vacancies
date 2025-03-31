@@ -68,7 +68,7 @@ RSpec.describe Jobseekers::AlertMailer do
     let(:error) { Notifications::Client::BadRequestError.new(http_response) }
 
     before do
-      allow_any_instance_of(described_class).to receive(:view_mail).and_raise(error)
+      allow_any_instance_of(described_class).to receive(:mail).and_raise(error)
     end
 
     context "when Notifications::Client::BadRequestError is about invalid email" do
