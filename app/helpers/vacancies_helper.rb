@@ -110,7 +110,7 @@ module VacanciesHelper
   # there from a search results page (take them back to search results) or somewhere else (take
   # them to the appropriate landing page, or if all else fails, the "all jobs" page)
   def vacancy_breadcrumbs(vacancy)
-    referrer = URI(request.referrer || "")
+    referrer = request_referrer
     referred_from_jobs_path = referrer.host == request.host && referrer.path == jobs_path
 
     parent_breadcrumb = if (organisation_slug = referrer_organisation_slug(referrer))
@@ -189,6 +189,12 @@ module VacanciesHelper
   end
 
   private
+
+  def request_referrer
+    URI(request.referrer.presence || "")
+  rescue URI::InvalidURIError
+    URI("")
+  end
 
   def referrer_organisation_slug(referrer)
     organisation_slug = referrer.path.gsub("/organisations/", "")
