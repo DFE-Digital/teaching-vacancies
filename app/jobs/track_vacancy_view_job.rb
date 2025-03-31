@@ -1,5 +1,5 @@
 class TrackVacancyViewJob < ApplicationJob
-  queue_as :analytics
+  queue_as :low
 
   def perform(vacancy_id:, referrer_url:)
     VacancyAnalyticsService.track_visit(vacancy_id, referrer_url)
