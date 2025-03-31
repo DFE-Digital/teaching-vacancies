@@ -4,7 +4,7 @@ RSpec.describe VacancyAnalyticsService do
   let(:vacancy) { create(:vacancy) }
   let(:referrer_url) { "https://example.com/some/path?utm=source" }
   let(:normalized_referrer) { "example.com" }
-  let(:redis_key) { "vacancy_referrer_stats:#{vacancy.id}:#{normalized_referrer}" }
+  let(:redis_key) { "vacancy_referrer_stats:#{Date.current}:#{vacancy.id}:#{normalized_referrer}" }
 
   before do
     mock_redis = MockRedis.new
