@@ -123,7 +123,7 @@ withdraw_stale_drafts:
   queue: low
 
 queue_daily_alerts:
-  cron: '55 * * * *' # "At 15:00."
+  cron: '0,15,30,45 * * * *' # "At 15:00."
   class: 'SendDailyAlertEmailJob'
   queue: default
 
