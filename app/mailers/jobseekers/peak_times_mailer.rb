@@ -3,12 +3,9 @@ class Jobseekers::PeakTimesMailer < Jobseekers::BaseMailer
 
   def reminder(jobseeker_id)
     @jobseeker_id = jobseeker_id
-    @template = template
-    @to = jobseeker.email
 
-    view_mail(@template,
-              to: @to,
-              subject: I18n.t("jobseekers.peak_times_mailer.reminder.subject", first_name: first_name))
+    send_email(to: jobseeker.email,
+               subject: I18n.t("jobseekers.peak_times_mailer.reminder.subject", first_name: first_name))
   end
 
   private

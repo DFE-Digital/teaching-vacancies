@@ -4,17 +4,13 @@ class Jobseekers::SubscriptionMailer < Jobseekers::BaseMailer
   def confirmation(subscription_id)
     @subscription_id = subscription_id
 
-    @to = subscription.email
-
-    send_email(to: @to, subject: I18n.t("jobseekers.subscription_mailer.confirmation.subject"))
+    send_email(to: subscription.email, subject: I18n.t("jobseekers.subscription_mailer.confirmation.subject"))
   end
 
   def update(subscription_id)
     @subscription_id = subscription_id
 
-    @to = subscription.email
-
-    send_email(to: @to, subject: I18n.t("jobseekers.subscription_mailer.update.subject"))
+    send_email(to: subscription.email, subject: I18n.t("jobseekers.subscription_mailer.update.subject"))
   end
 
   private
