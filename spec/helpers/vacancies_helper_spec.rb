@@ -133,7 +133,8 @@ RSpec.describe VacanciesHelper do
   end
 
   describe "#vacancy_breadcrumbs" do
-    subject { vacancy_breadcrumbs(vacancy).to_a }
+    subject(:breadcrumbs) { vacancy_breadcrumbs(vacancy).to_a }
+
     let(:vacancy) { build_stubbed(:vacancy, job_roles: ["teacher"], job_title: "A Job") }
     let(:request) { double("request", host: "example.com", referrer: referrer) }
     let(:referrer) { "http://www.example.com/foo" }
@@ -145,12 +146,12 @@ RSpec.describe VacanciesHelper do
     end
 
     it "has the homepage as its first breadcrumb" do
-      expect(subject[0].last).to eq(root_path)
+      expect(breadcrumbs[0].last).to eq(root_path)
     end
 
     context "when coming from a landing page" do
       it "has the landing page as its second breadcrumb" do
-        expect(subject[1]).to eq(["Landing Page", landing_page_path("landing")])
+        expect(breadcrumbs[1]).to eq(["Landing Page", landing_page_path("landing")])
       end
 
       context "when coming from an organisation landing page" do
@@ -165,7 +166,31 @@ RSpec.describe VacanciesHelper do
         end
 
         it "has the organisation landing page as its second breadcrumb" do
-          expect(subject[1]).to eq(["Organisation Landing Page", organisation_landing_page_path(organisation_slug)])
+          expect(breadcrumbs[1]).to eq(["Organisation Landing Page", organisation_landing_page_path(organisation_slug)])
+        end
+      end
+
+      context "when there is no referrer" do
+        let(:request) { double("request", host: "example.com", referrer: nil) }
+
+        it "has the homepage as its first breadcrumb" do
+          expect(breadcrumbs[0].last).to eq(root_path)
+        end
+
+        it "has the landing page as its second breadcrumb" do
+          expect(breadcrumbs[1]).to eq(["Landing Page", landing_page_path("landing")])
+        end
+      end
+
+      context "when the referrer is not a valid URI" do
+        let(:request) { double("request", host: "example.com", referrer: "\"") }
+
+        it "has the homepage as its first breadcrumb" do
+          expect(breadcrumbs[0].last).to eq(root_path)
+        end
+
+        it "has the landing page as its second breadcrumb" do
+          expect(breadcrumbs[1]).to eq(["Landing Page", landing_page_path("landing")])
         end
       end
     end
@@ -174,7 +199,7 @@ RSpec.describe VacanciesHelper do
       let(:referrer) { jobs_url(foo: "bar", host: "example.com") }
 
       it "has the search as its second breadcrumb" do
-        expect(subject[1]).to eq([t("breadcrumbs.jobs"), referrer])
+        expect(breadcrumbs[1]).to eq([t("breadcrumbs.jobs"), referrer])
       end
     end
 
@@ -182,7 +207,31 @@ RSpec.describe VacanciesHelper do
       let(:landing_page) { nil }
 
       it "has the expected parent breadcrumb" do
-        expect(subject[1]).to eq([t("breadcrumbs.jobs"), jobs_path])
+        expect(breadcrumbs[1]).to eq([t("breadcrumbs.jobs"), jobs_path])
+      end
+
+      context "when there is no referrer" do
+        let(:request) { double("request", host: "example.com", referrer: nil) }
+
+        it "has the homepage as its first breadcrumb" do
+          expect(breadcrumbs[0].last).to eq(root_path)
+        end
+
+        it "has the expected parent breadcrumb" do
+          expect(breadcrumbs[1]).to eq([t("breadcrumbs.jobs"), jobs_path])
+        end
+      end
+
+      context "when the referrer is not a valid URI" do
+        let(:request) { double("request", host: "example.com", referrer: "\"") }
+
+        it "has the homepage as its first breadcrumb" do
+          expect(breadcrumbs[0].last).to eq(root_path)
+        end
+
+        it "has the expected parent breadcrumb" do
+          expect(breadcrumbs[1]).to eq([t("breadcrumbs.jobs"), jobs_path])
+        end
       end
     end
   end
