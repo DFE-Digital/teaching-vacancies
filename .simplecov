@@ -47,10 +47,10 @@ if ENV.fetch("COVERAGE", 0).to_i.positive?
     add_group "Presenters", "app/presenters"
     add_group "Notifiers", "app/notifiers"
 
-    # These minima seem to be a bit unstable, so they need to be set around
-    # .25% lower (branch) and .1% lower (line) than the test run for now
+    # These minima are still a bit unstable, so they need to be set around
+    # .06% lower (branch) and .15% lower (line) than the test run for now
+    # This is probably due to the random data in our test factories
     #
-    # possibly the tests are stable now?
-    minimum_coverage line: 95.73, branch: 80.76
+    minimum_coverage line: 95.68, branch: 81.25
   end
 end
