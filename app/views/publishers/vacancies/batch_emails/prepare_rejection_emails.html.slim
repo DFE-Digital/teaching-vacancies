@@ -34,4 +34,4 @@ h3 = t(".to")
   = govuk_details(summary_text: t(".email_preview")) do
     = render "shared/rejection_email", content: f.object.content,
       contact_email: f.object.contact_email,
-      name: t(".candidate_name"), logo_path: image_tag(vacancy.organisation.logo) if f.object.include_school_logo
+      name: t(".candidate_name"), logo_path: f.object.include_school_logo.present? ? image_tag(vacancy.organisation.logo) : nil
