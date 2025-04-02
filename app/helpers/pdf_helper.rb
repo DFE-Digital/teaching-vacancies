@@ -71,7 +71,7 @@ module PdfHelper
     # :nocov:
     professional_status = [
       [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.qualified_teacher_status"), pdf_job_application_qualified_teacher_status_info(job_application)],
-      [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review"), job_application_jobseeker_profile_info(job_application)],
+      [I18n.t("helpers.label.jobseekers_job_application_personal_details_form.teacher_reference_number_review"), job_application_trn(job_application)],
       [I18n.t("helpers.legend.jobseekers_job_application_professional_status_form.is_statutory_induction_complete"), job_application.is_statutory_induction_complete? ? "Yes" : "No"],
     ]
     # :nocov:

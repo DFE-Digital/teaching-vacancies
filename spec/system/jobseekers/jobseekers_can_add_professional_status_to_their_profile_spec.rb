@@ -79,7 +79,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
   describe "editing professional status" do
     let!(:profile) do
       create(:jobseeker_profile, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", teacher_reference_number: "7777777",
-                                 is_statutory_induction_complete: true, has_teacher_reference_number: "yes")
+                                 is_statutory_induction_complete: true)
     end
 
     before { visit jobseekers_profile_path }
@@ -92,7 +92,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         expect(find("#jobseekers-profiles-qualified-teacher-status-form-qualified-teacher-status-yes-field", visible: false)).to be_checked
       end
       within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
-        expect(find("#jobseekers-profiles-qualified-teacher-status-form-has-teacher-reference-number-yes-field", visible: false)).to be_checked
+        expect(find("#jobseekers-profiles-qualified-teacher-status-form-has-teacher-reference-number-true-field", visible: false)).to be_checked
       end
       expect(find("#jobseekers-profiles-qualified-teacher-status-form-qualified-teacher-status-year-field", visible: false).value).to eq("2020")
       within(find("fieldset", text: "Have you completed your induction period?")) do

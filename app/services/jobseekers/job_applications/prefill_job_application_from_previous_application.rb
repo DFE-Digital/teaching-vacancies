@@ -53,11 +53,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
        school_ethos
        non_catholic_religion_details]
       .filter_map { |step| form_fields_from_step(step) if relevant_steps.include?(step) }
-      .flatten - jobseeker_profile_fields
-  end
-
-  def jobseeker_profile_fields
-    %i[has_teacher_reference_number teacher_reference_number]
+      .flatten
   end
 
   def copy_qualifications
