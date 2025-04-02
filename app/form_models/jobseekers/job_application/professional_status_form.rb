@@ -16,7 +16,6 @@ module Jobseekers
 
       attr_accessor(*FIELDS)
 
-      attribute :has_teacher_reference_number, :boolean
 
       class << self
         def storable_fields
@@ -24,16 +23,11 @@ module Jobseekers
         end
 
         def unstorable_fields
-          %i[has_teacher_reference_number professional_status_section_completed]
+          %i[professional_status_section_completed]
         end
 
         def load_form(model)
           super.merge(completed_attrs(model, :professional_status))
-               .merge(has_teacher_reference_number: if model.teacher_reference_number.present?
-                                                      "true"
-                                                    else
-                                                      (model.teacher_reference_number.nil? ? nil : "false")
-                                                    end)
         end
       end
 
@@ -70,22 +64,13 @@ module Jobseekers
 
         with_options if: -> { qualified_teacher_status == "yes" } do
           validates :qualified_teacher_status_year, numericality: { less_than_or_equal_to: proc { Time.current.year } }
-          validates :has_teacher_reference_number, inclusion: { in: [true] }
-        end
-
-        with_options if: -> { qualified_teacher_status.in?(%w[no on_track]) } do
-          validates :has_teacher_reference_number, inclusion: { in: [true, false] }
         end
       end
 
       # Teacher reference number:
-      # Its presence is required when the "has_teacher_reference_number" is "yes".
       # Its format is validated only when the number is provided.
-      # Having a qualified teacher status 'yes' will enforce the "has_teacher_reference_number" to be 'yes' what will force
-      # the "teacher_reference_number" to be present and formatted correctly.
-      # Codewise "has_teacher_reference_number" seems to be a redundant field as it can be inferred from the presence
-      # of the "teacher_reference_number".
-      validates :teacher_reference_number, presence: true, if: -> { has_teacher_reference_number }
+      # Having a qualified teacher status 'yes' will force the "teacher_reference_number" to be present and formatted correctly.
+      validates :teacher_reference_number, presence: true
       validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true
 
       completed_attribute(:professional_status)
