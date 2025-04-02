@@ -8,7 +8,7 @@ RSpec.describe SendDailyAlertEmailJob do
 
     context "with vacancies" do
       before do
-        create(:vacancy, :published_slugged)
+        create(:vacancy, :published_slugged, publish_on: Date.yesterday)
       end
 
       let(:subscription) { create(:daily_subscription) }
