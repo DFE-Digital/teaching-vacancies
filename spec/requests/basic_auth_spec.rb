@@ -1,43 +1,41 @@
 require "rails_helper"
 
-RSpec.describe "HTTP Basic Auth exclusions", type: :request do
+RSpec.describe "HTTP Basic Auth exclusions" do
+  let!(:api_client) { create(:publisher_ats_api_client) }
+
   before do
     stub_const("ENV", ENV.to_hash.merge("HTTP_BASIC_PASSWORD" => "secret", "HTTP_BASIC_USER" => "user"))
-
-    Rails.application.routes.draw do
-      get "/check" => "application#check"
-      get "/ats-api/v1/jobs" => "application#check" # simple action for testing
-      get "/ats-api-docs" => "application#check"
-      get "/protected" => "application#check"
-    end
   end
 
-  context "GET /check" do
+  context "when making a GET request to /check" do
     it "does not require basic auth" do
       get "/check"
       expect(response).to have_http_status(:ok)
     end
   end
 
-  context "GET /ats-api on review app host" do
+  context "when making a GET request to /ats-api on review app host" do
     it "does not require basic auth" do
       host! "teaching-vacancies-review-pr-1234.test.teacherservices.cloud"
-      get "/ats-api/v1/jobs"
+      get "/ats-api/v1/vacancies", headers: {
+        "X-Api-Key" => api_client.api_key,
+        "Accept" => "application/json",
+      }
       expect(response).to have_http_status(:ok)
     end
   end
 
-  context "GET /protected without auth" do
+  context "when making a GET request to homepage without auth" do
     it "requires basic auth" do
-      get "/protected"
+      get "/"
       expect(response).to have_http_status(:unauthorized)
     end
   end
 
-  context "GET /protected with valid credentials" do
+  context "when making a GET request to homepage with valid credentials" do
     it "allows access" do
-      get "/protected", headers: {
-        "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials("user", "secret")
+      get "/", headers: {
+        "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials("user", "secret"),
       }
       expect(response).to have_http_status(:ok)
     end
