@@ -3,7 +3,7 @@ class EmailTemplate < ApplicationRecord
 
   enum :template_type, { rejection: 0 }
 
-  validates :name, :from, :subject, presence: true
+  validates :name, :from, :subject, :template_type, presence: true
 
   has_rich_text :content
 end
