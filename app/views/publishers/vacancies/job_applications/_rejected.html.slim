@@ -1,4 +1,4 @@
-= render "candidates", form: form, vacancy: vacancy, candidates: candidates - (emails.map { |e| e.job_applications }.flatten),
+= render "candidates", form: form, vacancy: vacancy, candidates: candidates - emails.map(&:job_applications).flatten,
   heading: "Not being considered", tab: "non_considering",
   extras: [{ text: t(".reject"), name: "reject", warning: true }]
 
