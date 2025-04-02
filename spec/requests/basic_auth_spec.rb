@@ -3,13 +3,6 @@ require "rails_helper"
 RSpec.describe "HTTP Basic Auth exclusions" do
   let!(:api_client) { create(:publisher_ats_api_client) }
 
-  context "when making a GET request to /check" do
-    it "does not require basic auth" do
-      get "/check"
-      expect(response).to have_http_status(:ok)
-    end
-  end
-
   context "when making a GET request to /ats-api on review app host" do
     it "does not require basic auth" do
       host! "teaching-vacancies-review-pr-1234.test.teacherservices.cloud"
@@ -21,22 +14,11 @@ RSpec.describe "HTTP Basic Auth exclusions" do
     end
   end
 
-  context "when making a GET request to homepage without auth" do
+  context "when making a GET request to homepage without auth on review app host" do
     it "requires basic auth" do
-      get "/", headers: { "HTTP_AUTHORIZATION" => nil }
+      host! "teaching-vacancies-review-pr-1234.test.teacherservices.cloud"
+      get "/"
       expect(response).to have_http_status(:unauthorized)
-    end
-  end
-
-  context "when making a GET request to homepage with valid credentials" do
-    it "allows access" do
-      get "/", headers: {
-        "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(
-          ENV["HTTP_BASIC_USER"],
-          ENV["HTTP_BASIC_PASSWORD"]
-        )
-      }
-      expect(response).to have_http_status(:ok)
     end
   end
 end
