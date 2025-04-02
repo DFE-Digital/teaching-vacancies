@@ -68,9 +68,6 @@ en:
           on_track: I'm on track to receive my QTS
           non_teacher: I'm not looking for a teaching job
           "yes": "Yes"
-        has_teacher_reference_number_options:
-          "true": "Yes"
-          "false": "No"
         teacher_reference_number: What is your teacher reference number (TRN)?
         is_statutory_induction_complete_options:
           "false": "No, I have not completed my induction period"
