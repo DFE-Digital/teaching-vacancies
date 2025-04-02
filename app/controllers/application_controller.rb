@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
                                if: lambda {
                                  ENV["HTTP_BASIC_PASSWORD"].present? &&
                                    request.path != "/check" &&
-                                   !(request.host.include?("test.teacherservices.cloud") && request.path.start_with?("/ats-api", "/ats-api-docs"))
+                                   !(request.host.include?("test.teacherservices.cloud") && request.path.start_with?("/ats-api"))
                                }
 
   add_flash_types :success, :warning
