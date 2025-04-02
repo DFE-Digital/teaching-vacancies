@@ -7,6 +7,10 @@ RSpec.describe "job_preferences:remove_flexible_working_pattern" do
     Rake::Task.define_task(:environment)
   end
 
+  after do
+    task.reenable
+  end
+
   let(:task) { Rake::Task["job_preferences:remove_flexible_working_pattern"] }
   let(:profile) { create(:jobseeker_profile) }
 
