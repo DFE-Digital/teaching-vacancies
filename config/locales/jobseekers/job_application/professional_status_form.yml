@@ -26,8 +26,6 @@ en:
             teacher_reference_number:
               invalid: Enter a teacher reference number (TRN) that is 7 digits long
               blank: Enter a teacher reference number (TRN) that is 7 digits long
-            has_teacher_reference_number:
-              inclusion: Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.
             is_statutory_induction_complete:
               inclusion: Select yes if you have completed your statutory induction year
             professional_status_section_completed:
@@ -39,7 +37,7 @@ en:
         has_teacher_reference_number: Do you have a teacher reference number (TRN)?
         is_statutory_induction_complete: Have you completed your induction period?
       jobseekers_job_application_professional_status_form:
-        has_teacher_reference_number: "Do you have a teacher reference number (TRN)?"
+        teacher_reference_number: What is your teacher reference number (TRN)?
         is_statutory_induction_complete: Have you completed your induction period?
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
         statutory_induction_complete_details: Additional induction details
@@ -55,16 +53,13 @@ en:
         is_statutory_induction_complete_options:
           "false": "No, I have not completed my induction period"
           "true": "Yes, I have completed my induction period"
-        has_teacher_reference_number_options:
-          "true": "Yes"
-          "false": "No"
         qualified_teacher_status_year: Year QTS was awarded
         qts_age_range_and_subject: Age range and subject you trained to teach
         teacher_reference_number: What is your teacher reference number (TRN)?
         is_statutory_induction_complete: Have you completed your induction period?
         statutory_induction_complete_details: Provide more detail, for example, if you have started but not completed your induction, or you are %{link} (optional)
         statutory_induction_complete_details_hint_text: exempt from completing an induction
-        teacher_reference_number_hint: Schools will only be able to see your TRN if you apply for a role. You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
+        teacher_reference_number_hint: You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
         trn_link_text: find your TRN
       jobseekers_job_application_professional_status_form:
         qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>
@@ -82,7 +77,7 @@ en:
           "true": "Yes, I have completed my induction period"
         qualified_teacher_status_year: Year QTS was awarded
         qts_age_range_and_subject: Age range and subject you trained to teach
-        hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}.
+        hint: You're unlikely to get a teaching job in England unless you have QTS. Find out %{link}. If you answer yes to this question, we’ll ask you to provide your teacher reference number (TRN).
         link_text: how to get QTS
         professional_status_section_completed_options:
           false: No, I'll come back to it later

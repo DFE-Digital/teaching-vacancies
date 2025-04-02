@@ -7,10 +7,7 @@
     = f.govuk_text_area :qualified_teacher_status_details
   = f.govuk_radio_button :qualified_teacher_status, "on_track"
 
-= f.govuk_radio_buttons_fieldset :has_teacher_reference_number, hint: -> { tag.p(t("helpers.label.jobseekers_profiles_qualified_teacher_status_form.teacher_reference_number_hint", link: govuk_link_to(t("helpers.label.jobseekers_profiles_qualified_teacher_status_form.trn_link_text"), "https://find-a-lost-trn.education.gov.uk/start", target: "_blank")).html_safe) } do
-  = f.govuk_radio_button :has_teacher_reference_number, "true", link_errors: true
-    = f.govuk_text_field :teacher_reference_number
-  = f.govuk_radio_button :has_teacher_reference_number, "false"
+= f.govuk_text_field :teacher_reference_number, class: "govuk-input--width-10"
 
 = f.govuk_radio_buttons_fieldset :is_statutory_induction_complete do
   = f.govuk_radio_button :is_statutory_induction_complete, "true", link_errors: true
