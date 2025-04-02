@@ -14,8 +14,6 @@ en:
             teacher_reference_number:
               invalid: Enter a teacher reference number (TRN) that is 7 digits long
               blank: Enter a teacher reference number (TRN) that is 7 digits long
-            has_teacher_reference_number:
-              inclusion: Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.
         jobseekers/job_application/professional_status_form:
           attributes:
             qualified_teacher_status:
@@ -34,7 +32,6 @@ en:
     legend:
       jobseekers_profiles_qualified_teacher_status_form:
         qualified_teacher_status: Do you have qualified teacher status (QTS)?
-        has_teacher_reference_number: Do you have a teacher reference number (TRN)?
         is_statutory_induction_complete: Have you completed your induction period?
       jobseekers_job_application_professional_status_form:
         teacher_reference_number: What is your teacher reference number (TRN)?
