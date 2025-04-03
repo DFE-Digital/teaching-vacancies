@@ -19,21 +19,9 @@ module Jobseekers
                   qualified_teacher_status_details].freeze
 
       class << self
-        def storable_fields
+        def fields
           FIELDS + [:is_statutory_induction_complete]
         end
-
-        def fields
-          storable_fields
-        end
-
-        def load_form_from_model(profile)
-          new(attributes)
-        end
-      end
-
-      def params_to_save
-        attributes.symbolize_keys.slice(*self.class.storable_fields)
       end
 
       attribute :is_statutory_induction_complete, :boolean

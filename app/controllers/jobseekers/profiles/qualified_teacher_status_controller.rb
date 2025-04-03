@@ -2,7 +2,7 @@ module Jobseekers
   module Profiles
     class QualifiedTeacherStatusController < Jobseekers::ProfilesController
       def edit
-        @form = QualifiedTeacherStatusForm.load_form_from_model(profile)
+        @form = QualifiedTeacherStatusForm.new(profile.slice(*form_class.fields))
       end
 
       def update
