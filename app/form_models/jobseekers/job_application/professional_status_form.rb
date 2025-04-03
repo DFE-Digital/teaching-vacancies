@@ -16,7 +16,6 @@ module Jobseekers
 
       attr_accessor(*FIELDS)
 
-
       class << self
         def storable_fields
           FIELDS + [:is_statutory_induction_complete]

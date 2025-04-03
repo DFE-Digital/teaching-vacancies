@@ -10,7 +10,6 @@ module Jobseekers
       validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true, if: -> { %w[no on_track].include?(qualified_teacher_status) }
       validates :is_statutory_induction_complete, inclusion: { in: [true, false] }, if: -> { qualified_teacher_status == "yes" }
 
-
       FIELDS = %i[qualified_teacher_status
                   qualified_teacher_status_year
                   teacher_reference_number
