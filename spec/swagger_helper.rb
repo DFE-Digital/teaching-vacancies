@@ -172,15 +172,15 @@ RSpec.configure do |config|
                     items: {
                       type: :string,
                       enum: Vacancy.job_roles.keys,
-                      description: "Valid job role, e.g. 'teacher', 'senior_leader', etc.",
+                      description: "A job role identifier representing a specific responsibility or position.",
                     },
-                    description: "An array of one or more job roles associated with the vacancy.",
+                    description: "An array of one or more roles that best represent the nature and level of responsibility of the vacancy.",
                   },
                   contract_type: {
                     type: :string,
                     enum: Vacancy.contract_types.keys,
                     example: "permanent",
-                    description: "The type of contract, e.g. 'permanent', 'fixed_term'.",
+                    description: "Specifies the employment contract associated with the vacancy.",
                   },
                   working_patterns: {
                     type: :array,
@@ -188,7 +188,7 @@ RSpec.configure do |config|
                     items: {
                       type: :string,
                       enum: Vacancy::WORKING_PATTERNS,
-                      description: "Valid working pattern, e.g. 'full_time', 'part_time', etc.",
+                      description: "Indicates the expected working hours or schedule for the role.",
                     },
                     example: %w[full_time],
                     description: "An array of one or more working patterns for the vacancy.",
@@ -199,10 +199,10 @@ RSpec.configure do |config|
                     items: {
                       type: :string,
                       enum: Vacancy.phases.keys,
-                      description: "Valid phase, e.g. 'primary', 'secondary', etc.",
+                      description: "Indicates the stage of education the vacancy relates to.",
                     },
                     example: %w[secondary],
-                    description: "One or more phases of education that the vacancy covers.",
+                    description: "An array of one or more phases of education that the vacancy relates to.",
                   },
                   salary: {
                     type: :string,
@@ -222,7 +222,7 @@ RSpec.configure do |config|
                   },
                   starts_on: {
                     type: :string,
-                    example: "Easter",
+                    example: "12th May",
                     description: "The start date (or approximate start timeframe) of the job.",
                   },
                   visa_sponsorship_available: {
@@ -246,10 +246,10 @@ RSpec.configure do |config|
                     items: {
                       type: :string,
                       enum: Vacancy.key_stages.keys,
-                      description: "Valid key stage, e.g. 'ks1', 'ks2', etc.",
+                      description: "Indicates the key stage that the role is relevant to.",
                     },
                     example: %w[ks1 ks2],
-                    description: "One or more key stages relevant to the vacancy.",
+                    description: "One or more key stages that the vacancy relates to.",
                   },
                   subjects: {
                     type: :array,
@@ -257,10 +257,10 @@ RSpec.configure do |config|
                     items: {
                       type: :string,
                       enum: SUBJECT_OPTIONS.map(&:first), # List of available subjects in the service (from subjects.yml)
-                      description: "Valid subject for the job, e.g. 'Biology', 'English', etc.",
+                      description: "Describes the subject or area of learning the role focuses on.",
                     },
                     example: %w[Mathematics Science],
-                    description: "An array of subjects relevant to the vacancy.",
+                    description: "One or more subject areas that the vacancy involves.",
                   },
                 },
               },
@@ -393,9 +393,9 @@ RSpec.configure do |config|
                 items: {
                   type: :string,
                   enum: Vacancy.job_roles.keys,
-                  description: "Valid job role, e.g. 'teacher', 'senior_leader', etc.",
+                  description: "A job role identifier representing a specific responsibility or position.",
                 },
-                description: "An array of one or more job roles associated with the vacancy.",
+                description: "An array of one or more roles that best represent the nature and level of responsibility of the vacancy.",
               },
               ect_suitable: {
                 type: :boolean,
@@ -408,15 +408,16 @@ RSpec.configure do |config|
                 items: {
                   type: :string,
                   enum: Vacancy::WORKING_PATTERNS,
-                  description: "Valid working pattern, e.g. 'full_time', 'part_time', etc.",
+                  description: "Indicates the expected working hours or schedule for the role.",
                 },
+                example: %w[full_time],
                 description: "An array of one or more working patterns for the vacancy.",
               },
               contract_type: {
                 type: :string,
                 enum: Vacancy.contract_types.keys,
                 example: "permanent",
-                description: "The type of contract, e.g. 'permanent', 'fixed_term'.",
+                description: "Specifies the employment contract associated with the vacancy.",
               },
               phases: {
                 type: :array,
@@ -424,9 +425,10 @@ RSpec.configure do |config|
                 items: {
                   type: :string,
                   enum: Vacancy.phases.keys,
-                  description: "Valid phase, e.g. 'primary', 'secondary', etc.",
+                  description: "Indicates the stage of education the vacancy relates to.",
                 },
-                description: "One or more phases of education that the vacancy covers.",
+                example: %w[secondary],
+                description: "An array of one or more phases of education that the vacancy relates to.",
               },
               key_stages: {
                 type: :array,
@@ -434,9 +436,10 @@ RSpec.configure do |config|
                 items: {
                   type: :string,
                   enum: Vacancy.key_stages.keys,
-                  description: "Valid key stage, e.g. 'ks1', 'ks2', etc.",
+                  description: "Indicates the key stage that the role is relevant to.",
                 },
-                description: "One or more key stages relevant to the vacancy.",
+                example: %w[ks1 ks2],
+                description: "An array of one or more key stages that the vacancy relates to.",
               },
               subjects: {
                 type: :array,
@@ -444,9 +447,9 @@ RSpec.configure do |config|
                 items: {
                   type: :string,
                   enum: SUBJECT_OPTIONS.map(&:first), # List of available subjects in the service (from subjects.yml)
-                  description: "Valid subject for the job, e.g. 'Biology', 'English', etc.",
+                  description: "Describes the subject or area of learning the role focuses on.",
                 },
-                description: "An array of subjects relevant to the vacancy.",
+                description: "An array of ne or more subject areas that the vacancy involves.",
               },
             },
           },
