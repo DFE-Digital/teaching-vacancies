@@ -29,11 +29,7 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         within "ul.govuk-list.govuk-error-summary__list" do
           expect(page).to have_link("Enter the year your QTS was awarded", href: "#jobseekers-profiles-qualified-teacher-status-form-qualified-teacher-status-year-field-error")
           expect(page).to have_link("Enter a teacher reference number (TRN) that is 7 digits long", href: "#jobseekers-profiles-qualified-teacher-status-form-teacher-reference-number-field-error")
-          expect(page).to have_link("Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.", href: "#jobseekers-profiles-qualified-teacher-status-form-has-teacher-reference-number-field-error")
           expect(page).to have_link("Select yes if you have completed your statutory induction year", href: "#jobseekers-profiles-qualified-teacher-status-form-is-statutory-induction-complete-field-error")
-        end
-        within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
-          choose "Yes"
         end
         fill_in "Year QTS was awarded", with: "2032"
         fill_in "What is your teacher reference number (TRN)?", with: "ABC"
@@ -64,13 +60,6 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         end
         choose("jobseekers_profiles_qualified_teacher_status_form[qualified_teacher_status]", option: "no")
         click_on "Save and continue"
-        within "ul.govuk-list.govuk-error-summary__list" do
-          expect(page).to have_link("Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.", href: "#jobseekers-profiles-qualified-teacher-status-form-has-teacher-reference-number-field-error")
-        end
-        within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
-          choose "No"
-        end
-        click_on "Save and continue"
         expect_page_to_have_professional_status_information(qts: "no", year: nil, trn: nil, statutory_induction_complete: nil)
       end
     end
@@ -90,9 +79,6 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
 
       within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
         expect(find("#jobseekers-profiles-qualified-teacher-status-form-qualified-teacher-status-yes-field", visible: false)).to be_checked
-      end
-      within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
-        expect(find("#jobseekers-profiles-qualified-teacher-status-form-has-teacher-reference-number-true-field", visible: false)).to be_checked
       end
       expect(find("#jobseekers-profiles-qualified-teacher-status-form-qualified-teacher-status-year-field", visible: false).value).to eq("2020")
       within(find("fieldset", text: "Have you completed your induction period?")) do
@@ -115,13 +101,9 @@ RSpec.describe "Jobseekers can add professional status to their profile" do
         choose "No"
       end
 
-      within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
-        choose "No"
-      end
-
       click_on "Save and continue"
 
-      expect_page_to_have_professional_status_information(qts: "no", year: nil, trn: "", statutory_induction_complete: nil)
+      expect_page_to_have_professional_status_information(qts: "no", year: nil, trn: "1234567", statutory_induction_complete: nil)
     end
   end
 

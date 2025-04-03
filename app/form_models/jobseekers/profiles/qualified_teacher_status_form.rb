@@ -24,6 +24,10 @@ module Jobseekers
         end
       end
 
+      def params_to_save
+        attributes.symbolize_keys.slice(*self.class.fields)
+      end
+
       attribute :is_statutory_induction_complete, :boolean
 
       FIELDS.each do |field|
