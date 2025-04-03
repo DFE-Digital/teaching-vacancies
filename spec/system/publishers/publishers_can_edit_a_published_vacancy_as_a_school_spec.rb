@@ -1,4 +1,10 @@
 require "rails_helper"
+
+# slow test (15.8 seconds). Not very cohesive
+# seems to do lots of sections - but does it do all of them?
+#
+# has_published_vacancy_review_heading? does several asserts and is used in many tests
+#
 RSpec.describe "Publishers can edit a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }
@@ -7,6 +13,7 @@ RSpec.describe "Publishers can edit a vacancy" do
 
   after { logout }
 
+  # not sure what is so interesting about this vacancy?
   context "when editing a published vacancy" do
     let(:vacancy) do
       VacancyPresenter.new(
@@ -21,12 +28,14 @@ RSpec.describe "Publishers can edit a vacancy" do
       )
     end
 
+    # view spec
     scenario "shows all vacancy information" do
       visit organisation_job_path(vacancy.id)
 
       verify_all_vacancy_details(vacancy)
     end
 
+    # view spec
     scenario "takes you to the show page" do
       visit organisation_job_path(vacancy.id)
 
@@ -35,6 +44,7 @@ RSpec.describe "Publishers can edit a vacancy" do
       expect(page).to have_css(".tabs-component", count: 2)
     end
 
+    # negative test w/o a positive version?
     scenario "create a job sidebar is not present" do
       visit organisation_job_path(vacancy.id)
 
@@ -148,6 +158,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         click_on I18n.t("buttons.save_and_continue")
       end
 
+      # very convoluted error test
       scenario "can not be edited when validation fails" do
         visit organisation_job_path(vacancy.id)
 
@@ -174,6 +185,7 @@ RSpec.describe "Publishers can edit a vacancy" do
         expect(page).to have_content(expiry_date.to_formatted_s)
       end
 
+      # lots of these tests seem to check update_google_index - surely only needs to be done once?
       scenario "adds a job to update the Google index in the queue" do
         expect_any_instance_of(Publishers::Vacancies::BaseController)
           .to receive(:update_google_index).with(vacancy)
@@ -187,6 +199,8 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       context "when the job post has already been published" do
         context "when the publication date is in the past" do
+          # clearly this test shows the opposite - it does allow editing!
+          # so maybe 1 copy of this pair can be removed
           scenario "renders the publication date as text and does not allow editing" do
             vacancy = create(:vacancy, :published, organisations: [school], slug: "test-slug", publish_on: 1.day.ago)
             visit organisation_job_path(vacancy.id)

@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# reviewed and looks ok. Unsure about local authority test though
+# runtime 7 seconds
 RSpec.describe "Publishers can filter vacancies in their dashboard" do
   let(:publisher) { create(:publisher) }
   let(:trust) { create(:trust, schools: [school1, school2]) }

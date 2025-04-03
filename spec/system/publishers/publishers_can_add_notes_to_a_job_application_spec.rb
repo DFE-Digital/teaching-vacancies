@@ -1,6 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "Publishers can add notes to a job application", js: true do
+# reviewed - seems ok
+RSpec.describe "Publishers can add notes to a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
   let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
