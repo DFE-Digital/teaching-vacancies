@@ -180,7 +180,7 @@ RSpec.configure do |config|
                     type: :string,
                     enum: Vacancy.contract_types.keys,
                     example: "permanent",
-                    description: "Specifies the employment contract associated with the vacancy.",
+                    description: "Specifies the type of employment contract associated with the vacancy.",
                   },
                   working_patterns: {
                     type: :array,
@@ -249,7 +249,7 @@ RSpec.configure do |config|
                       description: "Indicates the key stage that the role is relevant to.",
                     },
                     example: %w[ks1 ks2],
-                    description: "One or more key stages that the vacancy relates to.",
+                    description: "An array of one or more key stages that the vacancy relates to.",
                   },
                   subjects: {
                     type: :array,
@@ -260,7 +260,7 @@ RSpec.configure do |config|
                       description: "Describes the subject or area of learning the role focuses on.",
                     },
                     example: %w[Mathematics Science],
-                    description: "One or more subject areas that the vacancy involves.",
+                    description: "An array of one or more subject areas that the vacancy involves.",
                   },
                 },
               },
@@ -417,7 +417,7 @@ RSpec.configure do |config|
                 type: :string,
                 enum: Vacancy.contract_types.keys,
                 example: "permanent",
-                description: "Specifies the employment contract associated with the vacancy.",
+                description: "Specifies the type of employment contract associated with the vacancy.",
               },
               phases: {
                 type: :array,
@@ -449,7 +449,7 @@ RSpec.configure do |config|
                   enum: SUBJECT_OPTIONS.map(&:first), # List of available subjects in the service (from subjects.yml)
                   description: "Describes the subject or area of learning the role focuses on.",
                 },
-                description: "An array of ne or more subject areas that the vacancy involves.",
+                description: "An array of one or more subject areas that the vacancy involves.",
               },
             },
           },
