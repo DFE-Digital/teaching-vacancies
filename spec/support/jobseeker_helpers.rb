@@ -103,7 +103,6 @@ module JobseekerHelpers
   def fill_in_professional_status
     choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
     fill_in "Year QTS was awarded", with: Time.current.year
-    choose "Yes", name: "jobseekers_job_application_professional_status_form[has_teacher_reference_number]"
     fill_in "What is your teacher reference number (TRN)?", with: "1234567"
     choose "Yes", name: "jobseekers_job_application_professional_status_form[is_statutory_induction_complete]"
 

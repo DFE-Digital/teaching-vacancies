@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_14_152244) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_02_154655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -308,7 +308,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_14_152244) do
     t.boolean "active", default: false, null: false
     t.boolean "requested_hidden_profile"
     t.text "teacher_reference_number_ciphertext"
-    t.string "has_teacher_reference_number"
     t.string "statutory_induction_complete_details"
     t.string "qts_age_range_and_subject"
     t.text "qualified_teacher_status_details"

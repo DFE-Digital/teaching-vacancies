@@ -22,19 +22,12 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       it { is_expected.not_to validate_presence_of(:qualified_teacher_status) }
       it { is_expected.not_to validate_presence_of(:qualified_teacher_status_year) }
       it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
-      it { is_expected.not_to validate_presence_of(:has_teacher_reference_number) }
       it { is_expected.not_to validate_presence_of(:statutory_induction_complete_details) }
       it { is_expected.not_to validate_presence_of(:qts_age_range_and_subject) }
       it { is_expected.not_to validate_presence_of(:qualified_teacher_status_details) }
 
       include_examples "validates teacher reference number format"
       include_examples "allows teacher reference number to be blank"
-
-      context "when has_teacher_reference_number is 'yes'" do
-        let(:attributes) { super().merge(has_teacher_reference_number: "yes") }
-
-        it { is_expected.to validate_presence_of(:teacher_reference_number) }
-      end
     end
 
     context "when the professional status section is completed" do
@@ -47,34 +40,7 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
 
         it { is_expected.to validate_numericality_of(:qualified_teacher_status_year).is_less_than_or_equal_to(Time.current.year) }
 
-        it { is_expected.to validate_inclusion_of(:has_teacher_reference_number).in_array([true]) }
-
-        it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
-
-        context "when has_teacher_reference_number is 'no'" do
-          let(:attributes) { super().merge(has_teacher_reference_number: "false") }
-
-          it "contains an error for the has_teacher_reference_number field" do
-            expect(form).not_to be_valid
-            expect(form.errors[:has_teacher_reference_number])
-              .to eq(["Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN."])
-          end
-
-          it "does not contain any errors for the teacher reference number field" do
-            form.valid?
-            expect(form.errors[:teacher_reference_number]).to be_empty
-          end
-
-          it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
-        end
-
-        context "when has_teacher_reference_number is 'yes'" do
-          let(:attributes) { super().merge(has_teacher_reference_number: "yes") }
-
-          it { is_expected.to validate_presence_of(:teacher_reference_number) }
-
-          include_examples "validates teacher reference number format"
-        end
+        it { is_expected.to validate_presence_of(:teacher_reference_number) }
       end
 
       %w[no on_track].each do |status|
@@ -96,7 +62,6 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       {
         qualified_teacher_status: "yes",
         qualified_teacher_status_year: "2020",
-        has_teacher_reference_number: "yes",
         teacher_reference_number: "1234567",
       }
     end

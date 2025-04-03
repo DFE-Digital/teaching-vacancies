@@ -50,8 +50,6 @@ class JobseekerProfile < ApplicationRecord
     end
   end
 
-  self.ignored_columns += %i[has_teacher_reference_number]
-
   def self.copy_attributes(record, previous_application)
     record.assign_attributes(
       employments: previous_application.employments.map(&:duplicate),
