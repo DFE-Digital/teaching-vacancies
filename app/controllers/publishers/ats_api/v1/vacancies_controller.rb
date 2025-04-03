@@ -20,13 +20,13 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def create
-    result = Publishers::AtsApi::CreateVacancyService.call(permitted_vacancy_params)
+    result = Publishers::AtsApi::CreateVacancyService.call(vacancy_params)
 
     render result.slice(:json, :status)
   end
 
   def update
-    result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, permitted_vacancy_params)
+    result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, vacancy_params)
 
     if result[:status] == :ok
       render :show
@@ -89,9 +89,12 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
                     :trust_uid,
                     { school_urns: [] },
                   ])
-          .merge(publisher_ats_api_client_id: client.id)
   end
   # rubocop:enable Metrics/MethodLength
+
+  def vacancy_params
+    permitted_vacancy_params.merge(publisher_ats_api_client_id: client.id)
+  end
 
   def vacancies
     Vacancy
@@ -113,10 +116,8 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
            content_type: "application/json"
   end
 
-  # This 'raw_params' turns out to be the simplest way to use the schema validators
-  # using the rails vacancy_permitted_params didn't cause any validation errors
   def validate_create_payload
-    raw_params = params.permit!.to_h.except(:controller, :action, "_json")
+    raw_params = { vacancy: permitted_vacancy_params.to_h }
     create_validator = JsonSwaggerValidator.new("/ats-api/v1/vacancies", "post")
     unless create_validator.valid?(raw_params)
       render json: { errors: create_validator.errors(raw_params) }, status: :bad_request
@@ -124,7 +125,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def validate_update_payload
-    raw_params = params.permit!.to_h.except(:controller, :id, :action, "_json")
+    raw_params = { vacancy: permitted_vacancy_params.to_h }
     validator = JsonSwaggerValidator.new("/ats-api/v1/vacancies/{id}", "put")
     unless validator.valid?(raw_params)
       render json: { errors: validator.errors(raw_params) }, status: :bad_request
