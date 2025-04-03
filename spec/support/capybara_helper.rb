@@ -15,4 +15,15 @@ module CapybaraHelper
   def strip_tags(text)
     ActionView::Base.full_sanitizer.sanitize(text)
   end
+
+  # based on this article from 2018:
+  # from https://medium.com/eighty-twenty/testing-the-trix-editor-with-capybara-and-minitest-158f895ad15f
+  def fill_in_trix_editor(id, with:)
+    # find(:xpath, "//trix-editor[@input='#{id}']").click.set(with)
+    find("trix-editor##{id}").click.set(with)
+  end
+
+  # def find_trix_editor(id)
+  #   find(:xpath, "//*[@id='#{id}']", visible: false)
+  # end
 end

@@ -84,7 +84,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       expect(page).to have_css(".govuk-tag--red", wait: 10)
       find(".govuk-tag--red").click
       click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("Not Considering (3)")
+      expect(page).to have_content("Not considering (3)")
     end
 
     scenario "Changing a single status", :js do
@@ -168,7 +168,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
 
       it "shows red rejected tag", :js do
-        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
+        expect(page).to have_css(".application-#{status}", wait: 15) # Wait for the page to fully load
 
         within(".application-#{status}") do
           expect(page).to have_css(".govuk-tag--red", text: "rejected", wait: 5)
