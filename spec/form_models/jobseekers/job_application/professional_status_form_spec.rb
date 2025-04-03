@@ -40,7 +40,7 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
 
         it { is_expected.to validate_numericality_of(:qualified_teacher_status_year).is_less_than_or_equal_to(Time.current.year) }
 
-        it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
+        it { is_expected.to validate_presence_of(:teacher_reference_number) }
       end
 
       %w[no on_track].each do |status|

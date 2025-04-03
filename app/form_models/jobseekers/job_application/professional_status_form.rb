@@ -63,13 +63,13 @@ module Jobseekers
 
         with_options if: -> { qualified_teacher_status == "yes" } do
           validates :qualified_teacher_status_year, numericality: { less_than_or_equal_to: proc { Time.current.year } }
+          validates :teacher_reference_number, presence: true
         end
       end
 
       # Teacher reference number:
       # Its format is validated only when the number is provided.
       # Having a qualified teacher status 'yes' will force the "teacher_reference_number" to be present and formatted correctly.
-      validates :teacher_reference_number, presence: true
       validates_format_of :teacher_reference_number, with: /\A\d{7}\z/, allow_blank: true
 
       completed_attribute(:professional_status)
