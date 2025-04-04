@@ -44,6 +44,9 @@ RAILS_ENV=test bundle exec rails parallel:create
 log 'Run `rails db:prepare`'
 bundle exec rails db:prepare
 
+log 'Create swagger.yaml'
+bundle exec rake rswag:specs:swaggerize
+
 echo
 echo -e "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓"
 echo -e "┃ 🏫$(tput bold) Welcome to Teaching Vacancies! $(tput sgr0)                   ┃"

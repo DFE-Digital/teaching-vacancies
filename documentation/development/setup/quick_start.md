@@ -5,9 +5,20 @@ to provide a seamless onboarding experience for developers and other team member
 
 You will need the following software installed on your system:
 - [Git](https://github.com/git-guides/install-git)
+
+Optional:
 - [Docker Desktop](https://www.docker.com/get-started)
   - You will need to start Docker before the process will work.
 - [Visual Studio Code](https://code.visualstudio.com)
+
+For non-visual studio code setups, there is a docker-compose.yml file in .devcontainers.
+This can be used to just start the DB (needed as the postgres database has postgis extensions)
+and redis (needed to run tests)
+
+Note that the postgres db runs on the default port 5432, so any local postgres service on your development
+machine has to be shutdown in order to run the service (or the tests)
+
+docker-compose -f .devcontainer/docker-compose.yml start db redis
 
 To get the application running:
 - Clone the repository to a folder of your choice
@@ -23,6 +34,14 @@ bar, using the VS Code "Run task" option, or the Rails convention `bin/dev` scri
 - The Rails application running on http://localhost:3000
 - An asset build task each for Javascript and CSS
 - Sidekiq for processing background jobs
+
+Currently the application is tied to port 3000 - no other port will work 
+
+The service uses the parallel_tests gem, so the tests can be run by using 
+CI=1 rake parallel:spec
+
+without the CI=1, some tests will spawn a browser, which the prject does by default to aid 
+debugging browser-based tests (with the JS flag set true)
 
 <details>
   <summary>Optional: Advanced custom setup (for developers)</summary>

@@ -41,16 +41,11 @@ RSpec.describe Vacancy do
     let(:vacancy) { create(:vacancy) }
     subject(:remove_google_index) { vacancy.remove_google_index }
 
-    before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(enabled) }
-
-    context "when disable expensive jobs enabled is enabled" do
-      let(:enabled) { true }
-
+    context "when disable expensive jobs enabled is enabled", :disable_expensive_jobs do
       it { expect { remove_google_index }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob) }
     end
 
     context "when disable expensive jobs enabled is disabled" do
-      let(:enabled) { false }
       let(:url) { Rails.application.routes.url_helpers.job_url(vacancy) }
 
       it { expect { remove_google_index }.to have_enqueued_job(RemoveGoogleIndexQueueJob).with(url) }

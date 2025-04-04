@@ -2,12 +2,12 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   skip_before_action :verify_authenticity_token # API requests don't need CRSF protection.
 
   before_action :authenticate_client!
-  before_action :validate_payload, only: %i[create update]
+  before_action :validate_create_payload, only: %i[create]
+  before_action :validate_update_payload, only: %i[update]
   before_action :set_vacancy, only: %i[show update destroy]
 
   rescue_from StandardError, with: :render_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
-  rescue_from ActionController::ParameterMissing, with: :render_bad_request
   rescue_from Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError, with: :render_unprocessable_entity
 
   def index
@@ -20,13 +20,13 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def create
-    result = Publishers::AtsApi::CreateVacancyService.call(permitted_vacancy_params)
+    result = Publishers::AtsApi::CreateVacancyService.call(vacancy_params)
 
     render result.slice(:json, :status)
   end
 
   def update
-    result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, permitted_vacancy_params)
+    result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, vacancy_params)
 
     if result[:status] == :ok
       render :show
@@ -42,13 +42,11 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   private
 
-  # :nocov:
   def set_vacancy
     @vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
 
     raise ActiveRecord::RecordNotFound if @vacancy.trashed?
   end
-  # :nocov:
 
   def required_vacancy_keys
     %i[
@@ -91,9 +89,12 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
                     :trust_uid,
                     { school_urns: [] },
                   ])
-          .merge(publisher_ats_api_client_id: client.id)
   end
   # rubocop:enable Metrics/MethodLength
+
+  def vacancy_params
+    permitted_vacancy_params.merge(publisher_ats_api_client_id: client.id)
+  end
 
   def vacancies
     Vacancy
@@ -115,9 +116,20 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
            content_type: "application/json"
   end
 
-  def validate_payload
-    missing_keys = required_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
-    raise ActionController::ParameterMissing, missing_keys.join(", ") if missing_keys.any?
+  def validate_create_payload
+    raw_params = { vacancy: permitted_vacancy_params.to_h }
+    create_validator = JsonSwaggerValidator.new("/ats-api/v1/vacancies", "post")
+    unless create_validator.valid?(raw_params)
+      render json: { errors: create_validator.errors(raw_params) }, status: :bad_request
+    end
+  end
+
+  def validate_update_payload
+    raw_params = { vacancy: permitted_vacancy_params.to_h }
+    validator = JsonSwaggerValidator.new("/ats-api/v1/vacancies/{id}", "put")
+    unless validator.valid?(raw_params)
+      render json: { errors: validator.errors(raw_params) }, status: :bad_request
+    end
   end
 
   def render_server_error(exception)
