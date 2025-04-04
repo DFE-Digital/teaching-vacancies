@@ -8,14 +8,18 @@ div
       - if params["back_to_#{action_name}"]
         = f.hidden_field "back_to_#{action_name}", value: "true"
 
-      = tag.div(class: "moj-multi-file-upload", data: { upload: upload_organisation_job_documents_path(vacancy.id), delete: remove_organisation_job_documents_path(vacancy.id) }) do
+      h2 = vacancy_form_page_heading(vacancy, step_process, back_path: back_path)
+
+      p.govuk-body = t(".make_sure")
+
+      = tag.div(class: "app-multi-file-upload", data: { upload: upload_organisation_job_documents_path(vacancy.id), delete: remove_organisation_job_documents_path(vacancy.id) }) do
         .moj-multi-file__uploaded-files
           h2 class="govuk-heading-m" = "Files added"
           .govuk-summary-list class="moj-multi-file-upload__list"
 
         .moj-multi-file-upload__upload
           = f.govuk_file_field :supporting_documents,
-            label: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" },
+            label: -> { "" },
             class: "moj-multi-file-upload__input",
             accept: ".doc, .docx, .pdf"
 

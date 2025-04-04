@@ -6,8 +6,11 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   skip_before_action :verify_authenticity_token,
                      only: %i[upload_file delete_uploaded_file]
 
-  def index; end
+  def index
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
+  end
 
+  # TODO: think this action can be deleted (don't forget the route)
   def new
     @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
   end

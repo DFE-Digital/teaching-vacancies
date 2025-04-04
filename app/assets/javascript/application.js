@@ -73,7 +73,7 @@ window.$ = $;
 mojFrontend.initAll();
 
 if (typeof mojFrontend.MultiFileUpload !== 'undefined') {
-  const uploadSelectors = document.querySelectorAll('.moj-multi-file-upload');
+  const uploadSelectors = document.querySelectorAll('.app-multi-file-upload');
   uploadSelectors.forEach((container) => {
     // eslint-disable-next-line no-new
     new mojFrontend.MultiFileUpload({
