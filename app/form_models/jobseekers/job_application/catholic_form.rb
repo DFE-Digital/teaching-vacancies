@@ -20,7 +20,9 @@ module Jobseekers
         end
       end
 
-      attr_accessor(*FIELDS, :baptism_date)
+      attr_accessor(*FIELDS)
+
+      attr_reader(:baptism_date)
 
       validates :religious_reference_type,
                 inclusion: { in: ::JobApplication::RELIGIOUS_REFERENCE_TYPES.keys.map(&:to_s), nil: false },
