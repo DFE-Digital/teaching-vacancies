@@ -15,6 +15,9 @@ For non-visual studio code setups, there is a docker-compose.yml file in .devcon
 This can be used to just start the DB (needed as the postgres database has postgis extensions)
 and redis (needed to run tests)
 
+Note that the postgres db runs on the default port 5432, so any local postgres service on your development
+machine has to be shutdown in order to run the service (or the tests)
+
 docker-compose -f .devcontainer/docker-compose.yml start db redis
 
 To get the application running:
@@ -33,6 +36,12 @@ bar, using the VS Code "Run task" option, or the Rails convention `bin/dev` scri
 - Sidekiq for processing background jobs
 
 Currently the application is tied to port 3000 - no other port will work 
+
+The service uses the parallel_tests gem, so the tests can be run by using 
+CI=1 rake parallel:spec
+
+without the CI=1, some tests will spawn a browser, which the prject does by default to aid 
+debugging browser-based tests (with the JS flag set true)
 
 <details>
   <summary>Optional: Advanced custom setup (for developers)</summary>
