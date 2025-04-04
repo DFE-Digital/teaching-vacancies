@@ -62,7 +62,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
     scenario "Changing multiple statuses at once", :js do
       # Wait for page to fully load
-      find("#tab_all-6")
+      find_by_id("tab_all-6")
 
       within(".application-reviewed") do
         expect(page).to have_css(".govuk-checkboxes__item", wait: 5)
