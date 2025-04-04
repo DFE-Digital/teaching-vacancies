@@ -1,6 +1,8 @@
 module Jobseekers
   module JobApplication
     class CatholicForm < ReligiousInformationForm
+      include DateAttributeAssignment
+
       FIELDS = %i[baptism_certificate
                   baptism_address].freeze
 
@@ -18,15 +20,24 @@ module Jobseekers
         end
       end
 
-      attr_accessor(*FIELDS)
-
-      attribute :baptism_date, :date
+      attr_accessor(*FIELDS, :baptism_date)
 
       validates :religious_reference_type,
                 inclusion: { in: ::JobApplication::RELIGIOUS_REFERENCE_TYPES.keys.map(&:to_s), nil: false },
                 if: -> { catholic_section_completed && following_religion }
 
       completed_attribute(:catholic)
+
+      validates :baptism_address,
+                presence: true, if: -> { section_completed && following_religion && religious_reference_type == "baptism_date" }
+
+      validates :baptism_date, presence: true, date: { on_or_before: :today }, if: -> { section_completed && following_religion && religious_reference_type == "baptism_date" }
+
+      validates :baptism_certificate, form_file: DOCUMENT_VALIDATION_OPTIONS, presence: true, if: -> { section_completed && following_religion && religious_reference_type == "baptism_certificate" }
+
+      def baptism_date=(value)
+        @baptism_date = date_from_multiparameter_hash(value)
+      end
 
       def section_completed
         catholic_section_completed

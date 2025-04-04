@@ -1,3 +1,5 @@
+# due to the govuk design pattern of allowing users to input invalid
+# dates, this is much nicer than having to catch MultiParameterAssignmentError everywhere
 module DateAttributeAssignment
   private
 
