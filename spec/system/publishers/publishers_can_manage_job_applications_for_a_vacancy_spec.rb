@@ -62,7 +62,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
 
     scenario "Changing multiple statuses at once", :js do
       # Wait for page to fully load
-      expect(page).to have_css(".application-reviewed", wait: 10)
+      find_by_id("tab_all-6")
 
       within(".application-reviewed") do
         expect(page).to have_css(".govuk-checkboxes__item", wait: 5)
@@ -103,21 +103,17 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       expect(page).to have_content("New (3)")
     end
 
-    describe "submitted application", :js do
+    describe "submitted application" do
       let(:status) { "submitted" }
 
       it "shows applicant name that links to application" do
-        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
-
-        within(".application-#{status}") do
+        within(first(".application-#{status}")) do
           expect(page).to have_link("#{job_application_submitted.first_name} #{job_application_submitted.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_submitted.id))
         end
       end
 
-      it "shows blue submitted tag", :js do
-        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
-
-        within(".application-#{status}") do
+      it "shows blue submitted tag" do
+        within(first(".application-#{status}")) do
           expect(page).to have_css(".govuk-tag--blue", text: "unread")
         end
       end
