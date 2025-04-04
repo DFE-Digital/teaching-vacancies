@@ -21,8 +21,18 @@ RSpec.configure do |config|
 
           <img src="/teaching_vacancies_api_diagram.jpg" alt="diagram" width="960" height="540">
 
-          The **Teaching Vacancies ATS API** enables you to manage job listings on behalf of schools or trusts
-          through your own Applicant Tracking System (ATS) or HR software.
+          The Teaching Vacancies application tracking system (ATS) API enables you to manage job listings on behalf of schools or trusts through your own ATS or HR software.
+
+          This guidance explains the main features of the API, the data needed for each job listing, and how to set up an integration.
+
+          We'll also cover the request parameters, response formats and potential errors for each endpoint, so you can easily integrate Teaching Vacancies into your ATS workflow.
+
+          ### How it works
+
+          1. Schools post job applications to the ATS platform.
+          2. ATS servers make requests to API endpoints.
+          3. Teaching Vacancies get job listings and display them on the service.
+          4. People looking for school jobs can search for and get alerts for job listings and can click through the ATS website to learn more.
 
           By calling this API, you can:
 
@@ -42,7 +52,7 @@ RSpec.configure do |config|
 
           This ensures that only approved clients can create, update, or remove job listings.
           If you ever need a new or replacement key, let us know, and we’ll assist you with the process.
-          You can reach us at [teachingvacancies.ats@education.gov.uk](mailto:teachingvacancies.ats@education.gov.uk).
+          You can email us at [teachingvacancies.ats@education.gov.uk](mailto:teachingvacancies.ats@education.gov.uk).
 
           **Base URL**: `/ats-api/v1`
 
