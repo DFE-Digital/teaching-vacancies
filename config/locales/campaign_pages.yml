@@ -42,6 +42,8 @@ en:
       banner_title: "%{name}, find the right %{subject} teacher job for you"
     psychologybespoke:
       banner_title: "%{name}, find the right %{subject} teacher job for you"
+    artanddesignbespoke:
+      banner_title: "%{name}, find the right %{subject} teacher job for you"
     parttimebespoke+PRIMARY:
       banner_title: "%{name}, find your part-time teaching job"
     parttimebespoke+SECONDARY:

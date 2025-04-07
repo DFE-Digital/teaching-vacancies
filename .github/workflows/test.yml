@@ -39,10 +39,6 @@ jobs:
       - name: Prepare application environment
         uses: ./.github/actions/prepare-app-env
 
-      - name: Install ImageMagick
-        run: sudo apt-get install imagemagick
-        shell: bash
-
       - name: Set up test database
         run: bundle exec rake db:create db:schema:load parallel:create parallel:load_schema
 

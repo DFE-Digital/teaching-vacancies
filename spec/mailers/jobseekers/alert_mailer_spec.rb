@@ -57,8 +57,37 @@ RSpec.describe Jobseekers::AlertMailer do
 
   before do
     # Stub the uid so that we can test links more easily
-    allow_any_instance_of(ApplicationMailer).to receive(:uid).and_return("a_unique_identifier")
+    allow_any_instance_of(described_class).to receive(:uid).and_return("a_unique_identifier")
     subscription.create_alert_run
+  end
+
+  describe "exception handling" do
+    # exception message found here
+    # https://docs.notifications.service.gov.uk/ruby.html#send-a-file-by-email-response
+    let(:http_response) { double(code: 400, body: message) } # rubocop:disable RSpec/VerifiedDoubles
+    let(:error) { Notifications::Client::BadRequestError.new(http_response) }
+
+    before do
+      allow_any_instance_of(described_class).to receive(:view_mail).and_raise(error)
+    end
+
+    context "when Notifications::Client::BadRequestError is about invalid email" do
+      let(:message) { "ValidationError: email_address Not a valid email address" }
+
+      it "destroys the subscription" do
+        expect { mail.deliver_now }.not_to raise_error
+        expect(Subscription.find_by(id: subscription.id)).to be_nil
+      end
+    end
+
+    context "when Notifications::Client::BadRequestError is not about invalid email" do
+      let(:message) { "BadRequestError: Can't send to this recipient using a team-only API key" }
+
+      it "does raise error" do
+        expect { mail.deliver_now }.to raise_error(Notifications::Client::BadRequestError)
+        expect(Subscription.find_by(id: subscription.id)).to eq(subscription)
+      end
+    end
   end
 
   context "when frequency is daily" do

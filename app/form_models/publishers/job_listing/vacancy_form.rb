@@ -1,5 +1,6 @@
 class Publishers::JobListing::VacancyForm < BaseForm
-  attr_accessor :params, :vacancy, :completed_steps, :current_organisation
+  # so that these can be passed through the 'params' hash
+  attr_writer :completed_steps, :current_organisation
 
   def initialize(params = {}, vacancy = nil, current_publisher = nil)
     @params = params
@@ -18,4 +19,8 @@ class Publishers::JobListing::VacancyForm < BaseForm
       model.slice(*fields)
     end
   end
+
+  private
+
+  attr_reader :params, :vacancy
 end

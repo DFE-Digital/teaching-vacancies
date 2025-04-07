@@ -13,12 +13,10 @@ ATS/job posting services.
 An original pilot took the approach of pulling each integration vacancies from ATS XML feeds and APIs.
 
 Different integrations were built for the following ATS/job posting services:
-- Ark
 - Broadbean
 - Every
 - Fusion
 - My New Term
-- United Learning
 - Vacancy Poster
 - Ventrus
 

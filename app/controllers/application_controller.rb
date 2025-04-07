@@ -4,7 +4,11 @@ class ApplicationController < ActionController::Base
 
   http_basic_authenticate_with name: ENV.fetch("HTTP_BASIC_USER", ""),
                                password: ENV.fetch("HTTP_BASIC_PASSWORD", ""),
-                               if: -> { ENV["HTTP_BASIC_PASSWORD"].present? && request.path != "/check" }
+                               if: lambda {
+                                 ENV["HTTP_BASIC_PASSWORD"].present? &&
+                                   request.path != "/check" &&
+                                   !(request.host.include?("test.teacherservices.cloud") && request.path.start_with?("/ats-api"))
+                               }
 
   add_flash_types :success, :warning
 

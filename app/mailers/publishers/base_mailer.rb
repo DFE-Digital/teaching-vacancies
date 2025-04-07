@@ -1,4 +1,4 @@
-class Publishers::BaseMailer < ApplicationMailer
+class Publishers::BaseMailer < GovukNotifyMailer
   private
 
   def dfe_analytics_email_event

@@ -148,6 +148,13 @@ shared:
     subjects:
       - Psychology
     radius: 15
+  artanddesignbespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    subjects:
+      - Art and design
+    radius: 15
   parttimebespoke+PRIMARY:
     banner_image: "campaigns/primary_part_time.jpg"
     teaching_job_roles:

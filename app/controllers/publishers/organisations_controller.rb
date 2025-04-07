@@ -13,13 +13,19 @@ class Publishers::OrganisationsController < Publishers::BaseController
 
   private
 
+  # :nocov:
   def organisation
-    @organisation ||= if current_organisation.friendly_id == (params[:id] || params[:organisation_id])
+    id = params[:id] || params[:organisation_id]
+    @organisation ||= if id&.in?([current_organisation.friendly_id, current_organisation.id])
                         current_organisation
-                      else
-                        current_organisation.schools.friendly.find(params[:id] || params[:organisation_id])
+                      elsif current_organisation.is_a?(SchoolGroup)
+                        current_organisation.schools.friendly.find(id)
                       end
+    raise ActiveRecord::RecordNotFound unless @organisation
+
+    @organisation
   end
+  # :nocov:
 
   def organisation_params
     params.require(:publishers_organisation_form).permit(:description, :email, :safeguarding_information, :url_override)

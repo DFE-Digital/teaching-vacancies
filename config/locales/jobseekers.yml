@@ -25,7 +25,7 @@ en:
         email_preferences:
           heading: Opt out of emails
           description: "As well as emails about your account and applications, we may send you emails about:"
-          website_updates: wesbite updates
+          website_updates: website updates
           tips_to_find_a_job: tips to find your next role
           choose_to_only: You can choose to only receive emails about your account and applications, and opt out of any other email communication.
           link: Opt out of additional email communication

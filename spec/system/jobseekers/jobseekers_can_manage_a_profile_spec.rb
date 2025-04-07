@@ -293,10 +293,12 @@ RSpec.describe "Jobseekers can manage their profile" do
           end
 
           it "asks user to account for any gaps in employment" do
+            add_jobseeker_profile_employment
+            click_link "Return to profile"
             add_jobseeker_profile_employment_with_a_gap
             click_link "Return to profile"
 
-            expect(page).to have_content "You have a gap in your work history (about 1 year)"
+            expect(page).to have_content "You have a gap in your work history (almost 1 year)"
             expect(page).to have_content "Add another job or add a reason for this gap"
             click_link "add a reason for this gap"
 
@@ -333,7 +335,7 @@ RSpec.describe "Jobseekers can manage their profile" do
             click_on I18n.t("buttons.confirm_destroy")
 
             expect(page).not_to have_content("I was ill")
-            expect(page).to have_content "You have a gap in your work history (about 1 year)"
+            expect(page).to have_content "You have a gap in your work history (almost 1 year)"
             expect(page).to have_content "Add another job or add a reason for this gap"
           end
         end
@@ -1012,8 +1014,8 @@ RSpec.describe "Jobseekers can manage their profile" do
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.job_title"), with: "Number 9"
     fill_in "jobseekers_profile_employment_form[started_on(1i)]", with: "1991"
     fill_in "jobseekers_profile_employment_form[started_on(2i)]", with: "09"
-    fill_in "jobseekers_profile_employment_form[ended_on(1i)]", with: (Date.today - 1.year).year
-    fill_in "jobseekers_profile_employment_form[ended_on(2i)]", with: (Date.today - 1.year).month
+    fill_in "jobseekers_profile_employment_form[ended_on(1i)]", with: "2019"
+    fill_in "jobseekers_profile_employment_form[ended_on(2i)]", with: "07"
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.main_duties"), with: "Goals and that"
     fill_in I18n.t("helpers.label.jobseekers_profile_employment_form.reason_for_leaving"), with: "I hate it there"
 
