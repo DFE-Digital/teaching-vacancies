@@ -104,18 +104,18 @@ The final step of posting a job on Teaching Vacancies offers you a chance to pre
 
 We highly recommend looking at your job advert with an objective eye and asking yourself the following questions.
 
- #### How does it look on a mobile?
+#### How does it look on a mobile?
  
   The majority of candidates search for jobs on smartphones, so look at the preview link on a small screen to ensure it flows as you’d like it to and it’s pleasing to the eye.
  
- #### Is there any duplicate information? 
+#### Is there any duplicate information? 
  
  Some schools post job ads including salaries or working patterns within the job description, despite these already being summarised at the top of the job advert template. Remove anything that’s already included elsewhere.
 
- #### Does it comply with employment legislation? 
+#### Does it comply with employment legislation? 
 
 While you’re perfectly within your rights to ask that candidates meet certain criteria, it’s illegal to refer to age, gender, and various other personal characteristics. This also applies to phrases such as 'recent graduate' or 'highly experienced', so focus more on what you want candidates to be able to do, rather than how long they’ve been doing it.
 
- #### Has it been edited and reviewed?
+#### Has it been edited and reviewed?
 
 Finally, edit and review your text thoroughly. When editing, do not rely on your computer's spell checker, and make use of online tools that help you write in a simpler, clearer and more persuasive way. If you can, ask a colleague to check the job advert for you before publishing. 
