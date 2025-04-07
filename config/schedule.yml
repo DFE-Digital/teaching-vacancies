@@ -151,7 +151,7 @@ refresh_organisations_gias_data_hash:
   queue: low
 
 index_newly_live_vacancies:
-  cron: '30 01 * * *' # "At 01:30."
+  cron: '01 00 * * *' # "At 00:01."
   class: 'IndexNewlyLiveVacanciesJob'
   queue: low
 
