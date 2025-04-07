@@ -47,11 +47,11 @@
       - when "catholic"
         - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(job_application, :catholic),
           html_attributes: { id: :religious_information },
-          status: review_section_tag(job_application, [Jobseekers::JobApplication::CatholicForm]))
+          status: review_section_tag(job_application, :catholic))
       - when "other_religion"
         - task_list.with_item(title: t("jobseekers.job_applications.build.catholic.step_title"), href: jobseekers_job_application_build_path(job_application, :non_catholic),
           html_attributes: { id: :religious_information },
-          status: review_section_tag(job_application, [Jobseekers::JobApplication::NonCatholicForm]))
+          status: review_section_tag(job_application, :non_catholic))
 
     - task_list.with_item(title: t("jobseekers.job_applications.build.references.heading"), href: jobseekers_job_application_build_path(job_application, :references),
       html_attributes: { id: :references },
