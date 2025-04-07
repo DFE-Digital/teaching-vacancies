@@ -144,9 +144,10 @@ en:
     new_features:
       reminder:
         content: You can now receive and manage job applications for all roles on Teaching Vacancies, including education support roles.
+        find_a_job_service_info: When you publish jobs on Teaching Vacancies, they can also be found on the %{link}.
         how_applications_work_link: How applications work on Teaching Vacancies
         page_title: A reminder about applications
-
+        link_text: GOV.UK Find a job service
     notifications:
       index:
         heading: Notifications
