@@ -10,7 +10,10 @@ RSpec.describe "Jobseekers can manage their job applications" do
   let(:vacancy4) { create(:vacancy, job_title: "Teacher of RE & PSHE", organisations: [organisation]) }
 
   context "when logged in" do
-    before { login_as(jobseeker, scope: :jobseeker) }
+    before do
+      travel_to Time.zone.local(2025, 3, 2, 12, 31, 23)
+      login_as(jobseeker, scope: :jobseeker)
+    end
 
     after { logout }
 
@@ -33,6 +36,10 @@ RSpec.describe "Jobseekers can manage their job applications" do
 
           within ".card-component:nth-child(2)" do
             expect(page).to have_css(".card-component__header", text: submitted_job_application.vacancy.job_title)
+            within ".card-component__body" do
+              dt = find("dt", text: "Submitted")
+              expect(dt.sibling("dd").text).to eq("1 March 2025 at 12:31pm")
+            end
             expect(page).to have_css(".card-component__actions", text: "submitted")
           end
 
