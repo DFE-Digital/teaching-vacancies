@@ -19,8 +19,6 @@ RSpec.configure do |config|
 
           ## Introduction
 
-          <img src="/teaching_vacancies_api_diagram.jpg" alt="diagram" width="960" height="540">
-
           The Teaching Vacancies application tracking system (ATS) API enables you to manage job listings on behalf of schools or trusts through your own ATS or HR software.
 
           This guidance explains the main features of the API, the data needed for each job listing, and how to set up an integration.
