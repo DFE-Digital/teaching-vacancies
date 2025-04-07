@@ -150,6 +150,11 @@ refresh_organisations_gias_data_hash:
   class: 'RefreshOrganisationsGiasDataHashJob'
   queue: low
 
+index_newly_live_vacancies:
+  cron: '30 01 * * *' # "At 01:30."
+  class: 'IndexNewlyLiveVacanciesJob'
+  queue: low
+
 # Internal querying & parsing of Find a Job export data depends on this running time.
 # Be careful if changing this time as you will need to adapt the code.
 export_vacancies_published_and_updated_to_dwp_find_a_job_service:
