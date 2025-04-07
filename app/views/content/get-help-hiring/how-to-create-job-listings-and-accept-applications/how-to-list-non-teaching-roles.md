@@ -11,7 +11,7 @@ You can use Teaching Vacancies to recruit for all roles in your school or trust.
 
 This includes roles such as a finance director, office support staff, site management and more.
 
-The job listing process is almost exactly the same for teaching and non-teaching roles.
+The job listing process is almost exactly the same for teaching and non-teaching roles. When you advertise a role on Teaching Vacancies, it can also be found on the GOV.UK [Find a job service](https://www.gov.uk/find-a-job).
 
 ## Listing a non-teaching role
   1. Select ‘create a job listing’ and choose whether your role is in teaching and leadership, teaching support, or non-teaching support.
