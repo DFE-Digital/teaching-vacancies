@@ -29,7 +29,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, permitted_vacancy_params)
 
     if result[:status] == :ok
-      update_google_index(@vacancy) if @vacancy.listed?
+      UpdateGoogleIndexQueueJob.perform_later(job_url(@vacancy)) if (@vacancy.listed? && !DisableExpensiveJobs.enabled?)
       render :show
     else
       render result.slice(:json, :status)
@@ -43,12 +43,6 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   private
-
-  def update_google_index(vacancy)
-    return if DisableExpensiveJobs.enabled?
-
-    UpdateGoogleIndexQueueJob.perform_later(job_url(vacancy))
-  end
 
   # :nocov:
   def set_vacancy
