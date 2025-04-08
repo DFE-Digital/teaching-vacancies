@@ -29,7 +29,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, permitted_vacancy_params)
 
     if result[:status] == :ok
-      update_google_index(job) if @vacancy.listed?
+      update_google_index(@vacancy) if @vacancy.listed?
       render :show
     else
       render result.slice(:json, :status)
