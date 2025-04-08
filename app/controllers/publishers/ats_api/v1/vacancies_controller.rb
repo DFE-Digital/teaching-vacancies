@@ -38,17 +38,11 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   def destroy
     @vacancy.trash!
-    remove_google_index(@vacancy)
+    # google index is removed by .trash!
     head :no_content
   end
 
   private
-
-  def remove_google_index(vacancy)
-    return if DisableExpensiveJobs.enabled?
-
-    RemoveGoogleIndexQueueJob.perform_later(job_url(vacancy))
-  end
 
   def update_google_index(vacancy)
     return if DisableExpensiveJobs.enabled?
