@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json-schema"
+
 # Uses the swagger file to load the JSON schema for an API endpoint,
 # thus helping to enforce input schema validation on API clients
 class JsonSwaggerValidator
