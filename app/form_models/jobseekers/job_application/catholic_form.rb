@@ -30,10 +30,10 @@ module Jobseekers
 
       completed_attribute(:catholic)
 
-      validates :baptism_address,
-                presence: true, if: -> { section_completed && following_religion && religious_reference_type == "baptism_date" }
-
-      validates :baptism_date, presence: true, date: { on_or_before: :today }, if: -> { section_completed && following_religion && religious_reference_type == "baptism_date" }
+      with_options if: -> { section_completed && following_religion && religious_reference_type == "baptism_date" } do
+        validates :baptism_address, presence: true
+        validates :baptism_date, presence: true, date: { on_or_before: :today }
+      end
 
       validates :baptism_certificate, form_file: DOCUMENT_VALIDATION_OPTIONS, presence: true, if: -> { section_completed && following_religion && religious_reference_type == "baptism_certificate" }
 
