@@ -56,7 +56,7 @@ RSpec.describe VacancyAnalyticsService do
       Redis.current.set(key, 5)
       Redis.current.set(second_key, 3)
       Redis.current.set(third_key, 1)
-    
+
       allow(Redis.current).to receive(:scan_each).and_return([key, second_key, third_key])
 
       # test that we create one new vacancy_analytics, we are updating the existing one.
@@ -79,6 +79,18 @@ RSpec.describe VacancyAnalyticsService do
       expect {
         described_class.aggregate_and_save_stats
       }.not_to change(VacancyAnalytics, :count)
+    end
+  end
+
+  describe ".update_stats_in_database" do
+    it "merges referrer counts correctly" do
+      existing = create(:vacancy_analytics, vacancy: vacancy, referrer_counts: { "google.com" => 2 })
+
+      described_class.update_stats_in_database({
+        vacancy.id => { "google.com" => 3 },
+      })
+
+      expect(existing.reload.referrer_counts["google.com"]).to eq(5)
     end
   end
 end
