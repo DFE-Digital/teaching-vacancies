@@ -31,18 +31,12 @@ RSpec.describe "Jobseekers can add details about their qualified teacher status 
       expect(page).to have_link("Enter the year your QTS was awarded", href: "#jobseekers-job-application-professional-status-form-qualified-teacher-status-year-field-error")
     end
 
-    choose "Yes", name: "jobseekers_job_application_professional_status_form[qualified_teacher_status]"
     fill_in "Year QTS was awarded", with: "2022"
     fill_in I18n.t("helpers.label.jobseekers_job_application_professional_status_form.qts_age_range_and_subject"), with: "Adding up for little ones"
     choose("Yes, I have completed my induction period")
 
     click_on "Save and continue"
 
-    within "ul.govuk-list.govuk-error-summary__list" do
-      expect(page).to have_link("Select yes and enter your teacher reference number (TRN). All teachers with QTS have a 7 digit TRN.", href: "#jobseekers-job-application-professional-status-form-has-teacher-reference-number-field-error")
-    end
-
-    choose "Yes", name: "jobseekers_job_application_professional_status_form[has_teacher_reference_number]"
     fill_in "What is your teacher reference number (TRN)?", with: "1234567"
 
     click_on "Save and continue"

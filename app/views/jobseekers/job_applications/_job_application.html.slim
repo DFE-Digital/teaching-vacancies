@@ -10,7 +10,7 @@
     - when "draft"
       = tag.div(card.labelled_item(t(".last_edited"), format_time_to_datetime_at(job_application.updated_at)))
     - when "submitted", "reviewed", "unsuccessful"
-      = tag.div(card.labelled_item(t(".submitted"), format_time_to_datetime_at(job_application.updated_at)))
+      = tag.div(card.labelled_item(t(".submitted"), format_time_to_datetime_at(job_application.submitted_at)))
     - when "shortlisted"
       = tag.div(card.labelled_item(t(".shortlisted"), format_time_to_datetime_at(job_application.shortlisted_at)))
     - when "withdrawn"
