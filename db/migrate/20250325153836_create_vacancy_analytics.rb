@@ -7,8 +7,8 @@ class CreateVacancyAnalytics < ActiveRecord::Migration[7.2]
       t.jsonb :referrer_counts, null: false, default: {}
 
       t.timestamps
-
-      add_index :vacancy_analytics, :referrer_counts, using: :gin, algorithm: :concurrently
     end
+
+    add_index :vacancy_analytics, :referrer_counts, using: :gin, algorithm: :concurrently
   end
 end

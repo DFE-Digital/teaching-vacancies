@@ -160,3 +160,10 @@
   - gias_data_hash
   - slug
   - searchable_content
+  :vacancy_analytics:
+  - id
+  - vacancy_id
+  - referrer_counts
+  - created_at
+  - updated_at
+

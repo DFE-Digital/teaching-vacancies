@@ -4,7 +4,7 @@ RSpec.describe VacancyAnalyticsService do
   let(:vacancy) { create(:vacancy) }
   let(:referrer_url) { "https://example.com/some/path?utm=source" }
   let(:normalized_referrer) { "example.com" }
-  let(:redis_key) { "vacancy_referrer_stats:#{Date.current}:#{vacancy.id}:#{normalized_referrer}" }
+  let(:redis_key) { "vacancy_referrer_stats:#{vacancy.id}:#{normalized_referrer}" }
 
   before do
     mock_redis = MockRedis.new
@@ -43,38 +43,29 @@ RSpec.describe VacancyAnalyticsService do
   end
 
   describe ".aggregate_and_save_stats" do
-    let(:key) { "vacancy_referrer_stats:#{Date.current}:#{vacancy.id}:#{normalized_referrer}" }
-    let(:second_key) { "vacancy_referrer_stats:#{Date.current}:#{vacancy.id}:another.com" }
+    let(:key) { "vacancy_referrer_stats:#{vacancy.id}:#{normalized_referrer}" }
+    let(:second_key) { "vacancy_referrer_stats:#{vacancy.id}:another.com" }
+    let(:third_key) { "vacancy_referrer_stats:#{another_vacancy.id}:#{normalized_referrer}" }
+    let(:another_vacancy) { create(:vacancy) }
 
     it "upserts the correct stat into the database and deletes the Redis key" do
       Redis.current.set(key, 5)
       Redis.current.set(second_key, 3)
-
-      # Add enough Redis keys to ensure that `aggregate_and_save_stats` processes multiple batches.
-      # Tests that keys beyond the first `each_slice(100)` batch are still correctly handled (and satisfies code coverage standards).
-      99.times do |i|
-        another_key = "vacancy_referrer_stats:#{Date.current}:#{vacancy.id}:ref#{i}.com"
-        Redis.current.set(another_key, 1)
-      end
+      Redis.current.set(third_key, 1)
 
       expect {
         described_class.aggregate_and_save_stats
-      }.to change(VacancyAnalytics, :count).by(101)
+      }.to change(VacancyAnalytics, :count).by(2)
 
       # test that we delete keys after aggregating and saving stats.
       expect(Redis.current.exists?(key)).to be(false)
       expect(Redis.current.exists?(second_key)).to be(false)
 
-      first_referrer_vacancy_analytics = VacancyAnalytics.find_by(referrer_url: normalized_referrer)
-      second_referrer_vacancy_analytics = VacancyAnalytics.find_by(referrer_url: "another.com")
+      vacancy_analytics_1 = VacancyAnalytics.find_by(vacancy_id: vacancy.id)
+      vacancy_analytics_2 = VacancyAnalytics.find_by(vacancy_id: another_vacancy.id)
 
-      expect(first_referrer_vacancy_analytics.vacancy_id).to eq(vacancy.id)
-      expect(first_referrer_vacancy_analytics.date).to eq(Date.current)
-      expect(first_referrer_vacancy_analytics.visit_count).to eq(5)
-
-      expect(second_referrer_vacancy_analytics.vacancy_id).to eq(vacancy.id)
-      expect(second_referrer_vacancy_analytics.date).to eq(Date.current)
-      expect(second_referrer_vacancy_analytics.visit_count).to eq(3)
+      expect(vacancy_analytics_1.referrer_counts).to eq({ "example.com" => 5, "another.com" => 3 })
+      expect(vacancy_analytics_2.referrer_counts).to eq({ "example.com" => 1 })
     end
 
     it "skips keys with zero counts" do
