@@ -49,7 +49,7 @@ RSpec.describe VacancyAnalyticsService do
     let(:another_vacancy) { create(:vacancy) }
 
     before do
-      create(:vacancy_analytics, vacancy: another_vacancy, referrer_counts: { "example.com" => 2 } )
+      create(:vacancy_analytics, vacancy: another_vacancy, referrer_counts: { "example.com" => 2 })
     end
 
     it "upserts the correct stat into the database and deletes the Redis key" do
@@ -58,7 +58,7 @@ RSpec.describe VacancyAnalyticsService do
       Redis.current.set(third_key, 1)
 
       # test that we create one new vacancy_analytics, we are updating the existing one.
-      expect {described_class.aggregate_and_save_stats}.to change(VacancyAnalytics, :count).by(1)
+      expect { described_class.aggregate_and_save_stats }.to change(VacancyAnalytics, :count).by(1)
 
       # test that we delete keys after aggregating and saving stats.
       expect(Redis.current.exists?(key)).to be(false)

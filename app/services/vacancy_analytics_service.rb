@@ -13,21 +13,19 @@ class VacancyAnalyticsService
   def self.aggregate_and_save_stats
     keys_pattern = "#{REDIS_KEY_PREFIX}:*"
 
-    Redis.current.scan_each(match: keys_pattern).each_slice(100) do |keys_batch|
+    Redis.current.scan_each(match: keys_pattern) do |key|
       # Creates hash that, when accessed with a missing key, assigns a new nested hash as the value. This nested hash defaults to 0 for any missing keys.
       updates_by_vacancy = Hash.new { |h, k| h[k] = Hash.new(0) }
       keys_to_delete = []
 
-      keys_batch.each do |key|
-        count = Redis.current.get(key).to_i
-        next if count.zero?
+      count = Redis.current.get(key).to_i
+      next if count.zero?
 
-        # Parse key to extract vacancy_id and referrer
-        _, vacancy_id, referrer = key.split(":", 3)
+      # Parse key to extract vacancy_id and referrer
+      _, vacancy_id, referrer = key.split(":", 3)
 
-        updates_by_vacancy[vacancy_id][referrer] += count
-        keys_to_delete << key
-      end
+      updates_by_vacancy[vacancy_id][referrer] += count
+      keys_to_delete << key
 
       update_stats_in_database(updates_by_vacancy) if updates_by_vacancy.any?
       Redis.current.del(*keys_to_delete)
