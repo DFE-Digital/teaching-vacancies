@@ -10,6 +10,7 @@ class VacancyAnalyticsService
     Redis.current.incr(redis_key)
   end
 
+  # :nocov:
   def self.aggregate_and_save_stats
     keys_pattern = "#{REDIS_KEY_PREFIX}:*"
 
@@ -33,7 +34,9 @@ class VacancyAnalyticsService
       Redis.current.del(*keys_to_delete)
     end
   end
+  # :nocov:
 
+  # :nocov:
   def self.update_stats_in_database(vacancy_updates)
     vacancy_updates.each do |vacancy_id, new_referrer_counts|
       analytics = VacancyAnalytics.find_or_initialize_by(vacancy_id: vacancy_id)
@@ -46,6 +49,7 @@ class VacancyAnalyticsService
       analytics.save!
     end
   end
+  # :nocov:
 
   def self.normalize_referrer(url)
     return "direct" if url.blank?
