@@ -56,7 +56,6 @@ en:
         is_statutory_induction_complete: Have you completed your induction period?
         statutory_induction_complete_details: Provide more detail, for example, if you have started but not completed your induction, or you are %{link} (optional)
         statutory_induction_complete_details_hint_text: exempt from completing an induction
-        teacher_reference_number_hint: You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
         trn_link_text: find your TRN
       jobseekers_job_application_professional_status_form:
         qualified_teacher_status_details_html: Please provide more detail (optional<span class='govuk-visually-hidden'> field</span>)</span>
@@ -79,5 +78,6 @@ en:
     hint:
       jobseekers_job_application_professional_status_form:
         is_statutory_induction_complete: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs)
+        teacher_reference_number: You can %{link} if you do not know it (for example, if you're a trainee teacher) or have forgotten it. Your TRN is 7 digits long.
       jobseekers_profiles_qualified_teacher_status_form:
         is_statutory_induction_complete: Early career teachers (ECTs) have to complete a 2 year induction period. This used to be 1 year for newly qualified teachers (NQTs)
