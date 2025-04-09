@@ -1,6 +1,6 @@
 class CreateVacancyAnalytics < ActiveRecord::Migration[7.2]
   disable_ddl_transaction!
-  
+
   def change
     create_table :vacancy_analytics, id: :uuid do |t|
       t.references :vacancy, null: false, foreign_key: true, type: :uuid, index: { unique: true }
