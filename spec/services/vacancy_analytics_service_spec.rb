@@ -56,6 +56,8 @@ RSpec.describe VacancyAnalyticsService do
       Redis.current.set(key, 5)
       Redis.current.set(second_key, 3)
       Redis.current.set(third_key, 1)
+    
+      allow(Redis.current).to receive(:scan_each).and_return([key, second_key, third_key])
 
       # test that we create one new vacancy_analytics, we are updating the existing one.
       expect { described_class.aggregate_and_save_stats }.to change(VacancyAnalytics, :count).by(1)
