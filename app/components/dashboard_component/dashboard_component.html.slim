@@ -108,6 +108,7 @@
                   dl
                     dt = "#{t('jobs.manage.expired.expired_on')}:"
                     dd = format_time_to_datetime_at(vacancy.expires_at)
+                  = govuk_link_to("Give feedback about this role", new_organisation_job_expired_feedback_path(job_id: vacancy.id))
                 - when "draft"
                   dl
                     dt = "#{t('jobs.manage.draft.time_created')}:"
