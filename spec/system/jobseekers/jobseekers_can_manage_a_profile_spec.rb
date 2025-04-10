@@ -188,9 +188,6 @@ RSpec.describe "Jobseekers can manage their profile" do
         within(find("fieldset", text: "Do you have qualified teacher status (QTS)?")) do
           choose "Yes"
         end
-        within(find("fieldset", text: "Do you have a teacher reference number (TRN)?")) do
-          choose "Yes"
-        end
         fill_in "jobseekers_profiles_qualified_teacher_status_form[qualified_teacher_status_year]", with: "2019"
         fill_in "What is your teacher reference number (TRN)?", with: "1234567"
         fill_in "Age range and subject you trained to teach", with: subject_ages

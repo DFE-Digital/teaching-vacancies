@@ -118,7 +118,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
           it "produces the correct errors" do
             validates_step_complete
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.baptism_certificate.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_certificate.blank"))
           end
 
           context "with an uploaded baptism cerificate" do
@@ -155,8 +155,8 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
           it "produces the correct errors" do
             validates_step_complete
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.baptism_address.blank"))
-            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/religious_information_form.attributes.baptism_date.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_address.blank"))
+            expect(page).to have_content(I18n.t("activemodel.errors.models.jobseekers/job_application/catholic_form.attributes.baptism_date.blank"))
           end
 
           it "allows jobseekers to specify a baptism address and date" do
