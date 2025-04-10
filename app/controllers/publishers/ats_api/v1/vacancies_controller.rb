@@ -31,6 +31,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
     result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, vacancy_params)
 
     if result[:status] == :ok
+      UpdateGoogleIndexQueueJob.perform_later(job_url(@vacancy)) if @vacancy.listed? && !DisableExpensiveJobs.enabled?
       render :show
     else
       render result.slice(:json, :status)
@@ -39,6 +40,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   def destroy
     @vacancy.trash!
+    # google index is removed by .trash!
     head :no_content
   end
 

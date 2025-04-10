@@ -752,6 +752,16 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             )
           end
         end
+
+        context "when DisableExpensiveJobs is disabled", document: false do
+          before { allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false) }
+
+          it "enqueues UpdateGoogleIndexQueueJob with the correct job URL" do |example|
+            expect(UpdateGoogleIndexQueueJob).to receive(:perform_later)
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+          end
+        end
       end
 
       response(400, "Missing or invalid fields in the request body.") do
