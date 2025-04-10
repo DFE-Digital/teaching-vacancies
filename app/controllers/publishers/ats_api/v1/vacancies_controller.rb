@@ -9,6 +9,8 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   rescue_from StandardError, with: :render_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   rescue_from Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError, with: :render_unprocessable_entity
+  # If there is an issue with the parameter parsing we return a controlled 400 error with a messagge rather than a default 500 error.
+  rescue_from ActionController::ParameterMissing, with: :render_bad_request
 
   def index
     @pagy, @vacancies = pagy(vacancies, items: 100)
@@ -66,7 +68,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   # rubocop:disable Metrics/MethodLength
   def permitted_vacancy_params
-    params.fetch(:vacancy)
+    params.fetch(:vacancy, {})
           .permit(:job_title,
                   :job_advert,
                   :external_advert_url,
@@ -116,19 +118,29 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
            content_type: "application/json"
   end
 
+  # To ensure that the Json Swagger validator will raise the appropriate error when the params are not wrapped in a
+  # 'vacancy' key, we will only wrap the attributes within the 'vacancy' key if it was provided like that.
+  # If not, we will pass an empty hash to the validator, that will complain that the 'vacancy' key is missing while using
+  # the same error code and format as the other Json Swagger validator errors.
+  def payload_for_validation
+    if params.key?(:vacancy)
+      { vacancy: permitted_vacancy_params.to_h }
+    else
+      {}
+    end
+  end
+
   def validate_create_payload
-    raw_params = { vacancy: permitted_vacancy_params.to_h }
-    create_validator = JsonSwaggerValidator.new("/ats-api/v1/vacancies", "post")
-    unless create_validator.valid?(raw_params)
-      render json: { errors: create_validator.errors(raw_params) }, status: :bad_request
+    validator = JsonSwaggerValidator.new("/ats-api/v1/vacancies", "post")
+    unless validator.valid?(payload_for_validation)
+      render json: { errors: validator.errors(payload_for_validation) }, status: :bad_request
     end
   end
 
   def validate_update_payload
-    raw_params = { vacancy: permitted_vacancy_params.to_h }
     validator = JsonSwaggerValidator.new("/ats-api/v1/vacancies/{id}", "put")
-    unless validator.valid?(raw_params)
-      render json: { errors: validator.errors(raw_params) }, status: :bad_request
+    unless validator.valid?(payload_for_validation)
+      render json: { errors: validator.errors(payload_for_validation) }, status: :bad_request
     end
   end
 

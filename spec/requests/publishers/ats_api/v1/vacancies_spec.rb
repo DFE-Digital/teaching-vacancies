@@ -297,8 +297,53 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                                 "The property '#/vacancy' did not contain a required property of 'external_reference'")
         end
 
-        context "when the request is empty", document: false do
-          let(:vacancy) { "" }
+        context "when the request has a completely empty body", document: false do
+          let(:vacancy) { nil }
+          let(:empty_params) do
+            ActionController::Parameters.new({ "controller" => "publishers/ats_api/v1/vacancies", "action" => "create" })
+          end
+
+          # Explicitly override the standard parameter processing to stub "vacancy" key not being present
+          before do
+            allow_any_instance_of(Publishers::AtsApi::V1::VacanciesController).to receive(:params) # rubocop:disable RSpec/AnyInstance
+              .and_return(empty_params)
+          end
+
+          it "lists the missing vacancy parameter" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to contain_exactly("The property '#/' did not contain a required property of 'vacancy'")
+          end
+        end
+
+        context "when the request contains params outside the vacancy param" do
+          let(:vacancy) { nil }
+          let(:wrong_params) do
+            ActionController::Parameters.new({ "controller" => "publishers/ats_api/v1/vacancies",
+                                               "action" => "create",
+                                               "expires_at" => source.expires_at,
+                                               "job_advert" => source.job_advert })
+          end
+
+          # Explicitly override the standard parameter processing to stub "vacancy" key not being present
+          before do
+            allow_any_instance_of(Publishers::AtsApi::V1::VacanciesController).to receive(:params) # rubocop:disable RSpec/AnyInstance
+              .and_return(wrong_params)
+          end
+
+          it "lists the missing vacancy parameter" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to contain_exactly("The property '#/' did not contain a required property of 'vacancy'")
+          end
+        end
+
+        context "when the request contains only the main vacancy parameter but no params within it", document: false do
+          let(:vacancy) { { vacancy: {} } }
 
           it "lists all the missing parameters" do |example|
             submit_request(example.metadata)
