@@ -62,7 +62,7 @@ This is a chance to demonstrate what makes your school different from the rest, 
 
 ## What should be included in a teacher job description?
 
-While the information above is essential to get right, it’s the job description section where you need to spend the majority of your time and effort.
+While the information above is essential to get right, it’s the job description section where you need to spend most of your time and effort.
 
 ### Job description length
 
