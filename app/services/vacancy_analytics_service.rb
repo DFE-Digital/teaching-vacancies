@@ -4,7 +4,7 @@ class VacancyAnalyticsService
   def self.track_visit(vacancy_id, referrer_url)
     return if vacancy_id.blank?
 
-    # Generate a Redis key for today's visits for this vacancy and referrer
+    # Generate a Redis key for this vacancy and referrer
     redis_key = "#{REDIS_KEY_PREFIX}:#{vacancy_id}:#{normalize_referrer(referrer_url)}"
     # Increment the counter in Redis
     Redis.current.incr(redis_key)
