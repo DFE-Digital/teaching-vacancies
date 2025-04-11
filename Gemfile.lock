@@ -872,6 +872,7 @@ DEPENDENCIES
   ipaddr
   jbuilder
   jsbundling-rails
+  json-schema
   jwt
   kramdown
   launchy (~> 3.1)

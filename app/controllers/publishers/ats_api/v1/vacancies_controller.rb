@@ -2,13 +2,15 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   skip_before_action :verify_authenticity_token # API requests don't need CRSF protection.
 
   before_action :authenticate_client!
-  before_action :validate_payload, only: %i[create update]
+  before_action :validate_create_payload, only: %i[create]
+  before_action :validate_update_payload, only: %i[update]
   before_action :set_vacancy, only: %i[show update destroy]
 
   rescue_from StandardError, with: :render_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
-  rescue_from ActionController::ParameterMissing, with: :render_bad_request
   rescue_from Publishers::AtsApi::OrganisationFetcher::InvalidOrganisationError, with: :render_unprocessable_entity
+  # If there is an issue with the parameter parsing we return a controlled 400 error with a messagge rather than a default 500 error.
+  rescue_from ActionController::ParameterMissing, with: :render_bad_request
 
   def index
     @pagy, @vacancies = pagy(vacancies, items: 100)
@@ -20,13 +22,13 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   end
 
   def create
-    result = Publishers::AtsApi::CreateVacancyService.call(permitted_vacancy_params)
+    result = Publishers::AtsApi::CreateVacancyService.call(vacancy_params)
 
     render result.slice(:json, :status)
   end
 
   def update
-    result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, permitted_vacancy_params)
+    result = Publishers::AtsApi::UpdateVacancyService.call(@vacancy, vacancy_params)
 
     if result[:status] == :ok
       UpdateGoogleIndexQueueJob.perform_later(job_url(@vacancy)) if @vacancy.listed? && !DisableExpensiveJobs.enabled?
@@ -44,13 +46,11 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   private
 
-  # :nocov:
   def set_vacancy
     @vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
 
     raise ActiveRecord::RecordNotFound if @vacancy.trashed?
   end
-  # :nocov:
 
   def required_vacancy_keys
     %i[
@@ -70,7 +70,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
 
   # rubocop:disable Metrics/MethodLength
   def permitted_vacancy_params
-    params.fetch(:vacancy)
+    params.fetch(:vacancy, {})
           .permit(:job_title,
                   :job_advert,
                   :external_advert_url,
@@ -93,9 +93,12 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
                     :trust_uid,
                     { school_urns: [] },
                   ])
-          .merge(publisher_ats_api_client_id: client.id)
   end
   # rubocop:enable Metrics/MethodLength
+
+  def vacancy_params
+    permitted_vacancy_params.merge(publisher_ats_api_client_id: client.id)
+  end
 
   def vacancies
     Vacancy
@@ -117,9 +120,30 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
            content_type: "application/json"
   end
 
-  def validate_payload
-    missing_keys = required_vacancy_keys - params.fetch(:vacancy, {}).keys.map(&:to_sym)
-    raise ActionController::ParameterMissing, missing_keys.join(", ") if missing_keys.any?
+  # To ensure that the Json Swagger validator will raise the appropriate error when the params are not wrapped in a
+  # 'vacancy' key, we will only wrap the attributes within the 'vacancy' key if it was provided like that.
+  # If not, we will pass an empty hash to the validator, that will complain that the 'vacancy' key is missing while using
+  # the same error code and format as the other Json Swagger validator errors.
+  def payload_for_validation
+    if params.key?(:vacancy)
+      { vacancy: permitted_vacancy_params.to_h }
+    else
+      {}
+    end
+  end
+
+  def validate_create_payload
+    validator = JsonSwaggerValidator.new("/ats-api/v1/vacancies", "post")
+    unless validator.valid?(payload_for_validation)
+      render json: { errors: validator.errors(payload_for_validation) }, status: :bad_request
+    end
+  end
+
+  def validate_update_payload
+    validator = JsonSwaggerValidator.new("/ats-api/v1/vacancies/{id}", "put")
+    unless validator.valid?(payload_for_validation)
+      render json: { errors: validator.errors(payload_for_validation) }, status: :bad_request
+    end
   end
 
   def render_server_error(exception)

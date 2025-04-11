@@ -118,12 +118,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         let(:schools) { [school1] }
         let(:organisation_ids) do
           {
-            school_urns: schools.map { |school| school.urn.to_i },
+            school_urns: schools.map(&:urn),
           }
         end
         let(:vacancy_params) do
           {
-            publisher_ats_api_client_id: client.id,
             external_advert_url: "https://www.example.com/ats-site/advertid",
             expires_at: "2026-01-01",
             job_title: "Teacher of Geography",
@@ -216,7 +215,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             let(:organisation_ids) do
               {
                 trust_uid: school_group.uid,
-                school_urns: schools.map { |school| school.urn.to_i },
+                school_urns: schools.map(&:urn),
               }
             end
 
@@ -272,13 +271,14 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         let(:school) { create(:school) }
         let(:source) { build(:vacancy, :external) }
-        let(:school_urns) { [school].map { |school| school.urn.to_i } }
+        let(:school_urns) { [school].map(&:urn) }
         let(:vacancy) do
           {
             vacancy: {
+              expires_at: source.expires_at,
               job_advert: source.job_advert,
               salary: source.salary,
-              school_urns: school_urns,
+              schools: { school_urns: school_urns },
               job_roles: source.job_roles,
               working_patterns: source.working_patterns,
               contract_type: source.contract_type,
@@ -290,20 +290,105 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         it "list the missing parameters" do |example|
           submit_request(example.metadata)
           assert_response_matches_metadata(example.metadata)
-          expect(response.parsed_body).to eq(
-            { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, external_reference, schools"] },
-          )
+          expect(response.parsed_body.keys).to eq(%w[errors])
+          expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+            .to contain_exactly("The property '#/vacancy' did not contain a required property of 'external_advert_url'",
+                                "The property '#/vacancy' did not contain a required property of 'job_title'",
+                                "The property '#/vacancy' did not contain a required property of 'external_reference'")
         end
 
-        context "when the request is empty", document: false do
-          let(:vacancy) { "" }
+        context "when the request has a completely empty body", document: false do
+          let(:vacancy) { nil }
+          let(:empty_params) do
+            ActionController::Parameters.new({ "controller" => "publishers/ats_api/v1/vacancies", "action" => "create" })
+          end
 
-          it "list all the missing parameters" do |example|
+          # Explicitly override the standard parameter processing to stub "vacancy" key not being present
+          before do
+            allow_any_instance_of(Publishers::AtsApi::V1::VacanciesController).to receive(:params) # rubocop:disable RSpec/AnyInstance
+              .and_return(empty_params)
+          end
+
+          it "lists the missing vacancy parameter" do |example|
             submit_request(example.metadata)
             assert_response_matches_metadata(example.metadata)
-            expect(response.parsed_body).to eq(
-              { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, job_advert, salary, external_reference, job_roles, working_patterns, contract_type, phases, schools"] },
-            )
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to contain_exactly("The property '#/' did not contain a required property of 'vacancy'")
+          end
+        end
+
+        context "when the request contains params outside the vacancy param" do
+          let(:vacancy) { nil }
+          let(:wrong_params) do
+            ActionController::Parameters.new({ "controller" => "publishers/ats_api/v1/vacancies",
+                                               "action" => "create",
+                                               "expires_at" => source.expires_at,
+                                               "job_advert" => source.job_advert })
+          end
+
+          # Explicitly override the standard parameter processing to stub "vacancy" key not being present
+          before do
+            allow_any_instance_of(Publishers::AtsApi::V1::VacanciesController).to receive(:params) # rubocop:disable RSpec/AnyInstance
+              .and_return(wrong_params)
+          end
+
+          it "lists the missing vacancy parameter" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to contain_exactly("The property '#/' did not contain a required property of 'vacancy'")
+          end
+        end
+
+        context "when the request contains only the main vacancy parameter but no params within it", document: false do
+          let(:vacancy) { { vacancy: {} } }
+
+          it "lists all the missing parameters" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to contain_exactly("The property '#/vacancy' did not contain a required property of 'external_advert_url'",
+                                  "The property '#/vacancy' did not contain a required property of 'expires_at'",
+                                  "The property '#/vacancy' did not contain a required property of 'job_title'",
+                                  "The property '#/vacancy' did not contain a required property of 'job_advert'",
+                                  "The property '#/vacancy' did not contain a required property of 'salary'",
+                                  "The property '#/vacancy' did not contain a required property of 'external_reference'",
+                                  "The property '#/vacancy' did not contain a required property of 'job_roles'",
+                                  "The property '#/vacancy' did not contain a required property of 'working_patterns'",
+                                  "The property '#/vacancy' did not contain a required property of 'contract_type'",
+                                  "The property '#/vacancy' did not contain a required property of 'phases'",
+                                  "The property '#/vacancy' did not contain a required property of 'schools'")
+          end
+        end
+
+        context "when the request is malformed", document: false do
+          let(:vacancy) do
+            {
+              vacancy: {
+                external_advert_url: source.external_advert_url,
+                expires_at: source.expires_at,
+                job_title: source.job_title,
+                job_advert: source.job_advert,
+                external_reference: source.external_reference,
+                salary: source.salary,
+                schools: { school_urns: school_urns },
+                job_roles: source.job_roles,
+                working_patterns: source.working_patterns,
+                contract_type: source.contract_type,
+                phases: ["any old phase"],
+              },
+            }
+          end
+
+          it "describes the error" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to eq(["The property '#/vacancy/phases/0' value \"any old phase\" did not match one of the following values: nursery, primary, secondary, sixth_form_or_college, through"])
           end
         end
       end
@@ -340,7 +425,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
               contract_type: source.contract_type,
               phases: source.phases,
               schools: {
-                school_urns: [school.urn.to_i],
+                school_urns: [school.urn],
               },
             },
           }
@@ -358,13 +443,13 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         let(:school) { create(:school) }
         let(:source) { build(:vacancy, :external) }
-        let(:school_urns) { [school].map { |school| school.urn.to_i } }
+        let(:school_urns) { [school].map(&:urn) }
         let(:vacancy) do
           {
             vacancy: {
               external_advert_url: source.external_advert_url,
               expires_at: source.expires_at,
-              job_title: nil,
+              job_title: "",
               job_advert: source.job_advert,
               salary: "",
               visa_sponsorship_available: source.visa_sponsorship_available,
@@ -388,27 +473,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             { "errors" => ["job_title: can't be blank", "salary: Enter full-time salary"] },
           )
         end
-
-        context "when the schools info is missing", document: false do
-          let(:vacancy) do
-            super().deep_merge(vacancy: {
-              job_title: "Teacher of Maths",
-              salary: "£30,000 to £40,000",
-              schools: {
-                school_urns: [],
-                trust_uid: nil,
-              },
-            })
-          end
-
-          it "list the missing parameters" do |example|
-            submit_request(example.metadata)
-            assert_response_matches_metadata(example.metadata)
-            expect(response.parsed_body).to eq(
-              { "errors" => ["No valid organisations found"] },
-            )
-          end
-        end
       end
 
       response(500, "A server-side issue occurred while creating the vacancy.") do
@@ -416,7 +480,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         let(:school) { create(:school) }
         let(:source) { build(:vacancy, :external) }
-        let(:school_urns) { [school].map { |school| school.urn.to_i } }
+        let(:school_urns) { [school].map(&:urn) }
         let(:vacancy) do
           {
             vacancy: {
@@ -709,7 +773,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             vacancy: {
               job_advert: source.job_advert,
               salary: source.salary,
-              school_urns: [12_345],
+              schools: { school_urns: %w[12345] },
               job_title: source.job_title,
               job_roles: source.job_roles,
               working_patterns: source.working_patterns,
@@ -722,20 +786,118 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
         it "list all the missing parameters" do |example|
           submit_request(example.metadata)
           assert_response_matches_metadata(example.metadata)
-          expect(response.parsed_body).to eq(
-            { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, external_reference, schools"] },
-          )
+          expect(response.parsed_body.keys).to eq(%w[errors])
+          expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+            .to contain_exactly("The property '#/vacancy' did not contain a required property of 'external_advert_url'",
+                                "The property '#/vacancy' did not contain a required property of 'expires_at'",
+                                "The property '#/vacancy' did not contain a required property of 'external_reference'")
         end
 
-        context "when the request is empty", document: false do
-          let(:vacancy) { "" }
+        context "when the request has a completely empty body", document: false do
+          let(:vacancy) { nil }
+          let(:empty_params) do
+            ActionController::Parameters.new({ "controller" => "publishers/ats_api/v1/vacancies",
+                                               "action" => "update",
+                                               "id" => id })
+          end
+
+          # Explicitly override the standard parameter processing to stub "vacancy" key not being present
+          before do
+            allow_any_instance_of(Publishers::AtsApi::V1::VacanciesController).to receive(:params) # rubocop:disable RSpec/AnyInstance
+              .and_return(empty_params)
+          end
+
+          it "lists the missing vacancy parameter" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to contain_exactly("The property '#/' did not contain a required property of 'vacancy'")
+          end
+        end
+
+        context "when the request contains only the main vacancy parameter but no params within it", document: false do
+          let(:vacancy) { { vacancy: {} } }
 
           it "list all the missing parameters" do |example|
             submit_request(example.metadata)
             assert_response_matches_metadata(example.metadata)
-            expect(response.parsed_body).to eq(
-              { "errors" => ["param is missing or the value is empty: external_advert_url, expires_at, job_title, job_advert, salary, external_reference, job_roles, working_patterns, contract_type, phases, schools"] },
-            )
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to contain_exactly("The property '#/vacancy' did not contain a required property of 'external_advert_url'",
+                                  "The property '#/vacancy' did not contain a required property of 'expires_at'",
+                                  "The property '#/vacancy' did not contain a required property of 'job_title'",
+                                  "The property '#/vacancy' did not contain a required property of 'job_advert'",
+                                  "The property '#/vacancy' did not contain a required property of 'salary'",
+                                  "The property '#/vacancy' did not contain a required property of 'external_reference'",
+                                  "The property '#/vacancy' did not contain a required property of 'job_roles'",
+                                  "The property '#/vacancy' did not contain a required property of 'working_patterns'",
+                                  "The property '#/vacancy' did not contain a required property of 'contract_type'",
+                                  "The property '#/vacancy' did not contain a required property of 'phases'",
+                                  "The property '#/vacancy' did not contain a required property of 'schools'")
+          end
+        end
+
+        context "when the request contains params outside the vacancy param" do
+          let(:vacancy) { nil }
+          let(:wrong_params) do
+            ActionController::Parameters.new({ "controller" => "publishers/ats_api/v1/vacancies",
+                                               "action" => "create",
+                                               "expires_at" => source.expires_at,
+                                               "job_advert" => source.job_advert })
+          end
+
+          # Explicitly override the standard parameter processing to stub "vacancy" key not being present
+          before do
+            allow_any_instance_of(Publishers::AtsApi::V1::VacanciesController).to receive(:params) # rubocop:disable RSpec/AnyInstance
+              .and_return(wrong_params)
+          end
+
+          it "lists the missing vacancy parameter" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to contain_exactly("The property '#/' did not contain a required property of 'vacancy'")
+          end
+        end
+
+        context "when the request contains enum values non defined in the schema", document: false do
+          let(:vacancy_params) do
+            {
+              external_advert_url: "https://www.example.com/ats-site/advertid",
+              expires_at: source.expires_at.strftime("%Y-%m-%d"),
+              job_title: "Teacher of Geography",
+              job_advert: "We're looking for a dedicated Teacher of Geography",
+              salary: "£12,345 to £67,890",
+              visa_sponsorship_available: true,
+              is_job_share: false,
+              external_reference: "REF1234HYZ",
+              ect_suitable: true,
+              job_roles: %w[teacher],
+              working_patterns: %w[wrong_time],
+              contract_type: "permanent",
+              publish_on: source.publish_on,
+              benefits_details: "Extra benefits",
+              starts_on: "2026-10-12",
+              key_stages: %w[wrong_ks],
+              subjects: %w[Geography],
+              phases: %w[wrong_phase],
+              schools: {
+                trust_uid: original_vacancy.organisation.trust.uid,
+              },
+            }
+          end
+          let(:vacancy) { { vacancy: vacancy_params } }
+
+          it "describes the error" do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+            expect(response.parsed_body.keys).to eq(%w[errors])
+            expect(response.parsed_body.fetch("errors").map { |x| /(.+) in schema/.match(x)[1] })
+              .to contain_exactly("The property '#/vacancy/key_stages/0' value \"wrong_ks\" did not match one of the following values: early_years, ks1, ks2, ks3, ks4, ks5",
+                                  "The property '#/vacancy/working_patterns/0' value \"wrong_time\" did not match one of the following values: full_time, part_time",
+                                  "The property '#/vacancy/phases/0' value \"wrong_phase\" did not match one of the following values: nursery, primary, secondary, sixth_form_or_college, through")
           end
         end
       end
@@ -824,11 +986,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             vacancy: {
               external_advert_url: "https://www.example.com/ats-site/advertid",
               expires_at: "2022-01-01",
-              job_title: nil,
+              job_title: "",
               job_advert: "We're looking for a dedicated Teacher of Geography",
               salary: "£12,345 to £67,890",
               visa_sponsorship_available: true,
-              external_reference: nil,
+              external_reference: "",
               is_job_share: true,
               job_roles: %w[teacher],
               working_patterns: %w[full_time],
@@ -847,27 +1009,6 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           expect(response.parsed_body).to eq(
             { "errors" => ["job_title: can't be blank", "external_reference: Enter an external reference", "expires_at: must be a future date", "expires_at: must be later than the publish date"] },
           )
-        end
-
-        context "when the schools info is missing", document: false do
-          let(:vacancy) do
-            super().deep_merge(vacancy: {
-              job_title: "Teacher of Maths",
-              salary: "£30,000 to £40,000",
-              schools: {
-                school_urns: [],
-                trust_uid: nil,
-              },
-            })
-          end
-
-          it "lists the missing parameters" do |example|
-            submit_request(example.metadata)
-            assert_response_matches_metadata(example.metadata)
-            expect(response.parsed_body).to eq(
-              { "errors" => ["No valid organisations found"] },
-            )
-          end
         end
       end
 
