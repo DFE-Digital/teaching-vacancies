@@ -60,9 +60,9 @@ The [vacancies request spec file](/spec/requests/publishers/ats_api/v1/vacancies
 
 The spec file is used to test the API endpoints behaviour in the CI [tests run](/.github/workflows/test.yml) and to generate the API documentation assets in the CI [build and deploy](/.github/workflows/build_and_deploy.yml).
 
-The following command runs the integration tests and generates/updates the documentation:
+The following command generates the 'swagger.yml' file which is used to generate the documentation, and also to validate incoming requests against the schema:
 
-`RAILS_ENV=test bundle exec rake rswag:specs:swaggerize`
+`bundle exec rake rswag:specs:swaggerize`
 
 ## End-to-End Testing
 
