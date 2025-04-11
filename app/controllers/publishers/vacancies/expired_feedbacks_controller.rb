@@ -26,6 +26,15 @@ class Publishers::Vacancies::ExpiredFeedbacksController < Publishers::Vacancies:
   end
 
   def vacancy
-    @vacancy ||= Vacancy.find_signed(params[:job_id])
+    return @vacancy if defined?(@vacancy)
+
+    signed_vacancy = Vacancy.find_signed(params[:job_id])
+
+    if signed_vacancy
+      @vacancy = signed_vacancy
+    else
+      authenticate_scope!
+      @vacancy = Vacancy.find(params[:job_id])
+    end
   end
 end
