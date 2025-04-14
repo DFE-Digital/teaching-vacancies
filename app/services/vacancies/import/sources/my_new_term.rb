@@ -135,7 +135,7 @@ class Vacancies::Import::Sources::MyNewTerm
       else
         Array.wrap(role.gsub("deputy_headteacher_principal", "deputy_headteacher")
                        .gsub("assistant_headteacher_principal", "assistant_headteacher")
-                       .gsub("headteacher_principal", "headteacher")
+                       .gsub(/headteacher_principal|executive_headteacher/, "headteacher")
                        .gsub(/head_of_year_or_phase|head_of_year/, "head_of_year_or_phase")
                        .gsub(/learning_support|other_support|science_technician/, "other_support")
                        .gsub(/\s+/, ""))
