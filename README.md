@@ -81,5 +81,6 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 * [Rails View components](/documentation/service/technical/components.md)
 * [File uploads virus scan: Google Drive API](/documentation/service/technical/google-drive-api.md)
 * [Bot mitigation](/documentation/service/technical/bot-mitigation.md)
+* [Tracking vacancy views](documentation/service/technical/tracking-vacancy-views.md)
 
 
