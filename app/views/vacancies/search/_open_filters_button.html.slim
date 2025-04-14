@@ -1,3 +1,11 @@
 .panel-component.js-action data-controller="panel" data-content-id="filters-component" data-close-container="filters-component__heading"
-  a.panel-component__toggle.govuk-link class="govuk-link--no-visited-state govuk-!-font-size-24 govuk-!-font-weight-bold" href="#" data-panel-target="toggle" data-action="panel#toggleVisibility"
-    = t("buttons.filters_toggle_panel", count: form.total_filters)
+  a.panel-component__toggle.govuk-link class="govuk-button govuk-button--secondary govuk-!-font-size-24 govuk-!-font-weight-bold" href="#" data-panel-target="toggle" data-action="panel#toggleVisibility"
+    = t("buttons.filters_toggle_panel")
+
+.filters-list
+  h4="Filters applied"
+  ul
+    - form.filters.flatten.each do |filter|
+      / li.govuk-tag.govuk-tag--grey.icon.icon--right.icon--cross
+      li
+        = RemoveFilterLinks.new.filter_link(filter, key, )

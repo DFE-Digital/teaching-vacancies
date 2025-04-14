@@ -60,6 +60,21 @@ class Jobseekers::SearchForm
     }.delete_if { |k, v| v.blank? || (k.eql?(:radius) && @location.blank?) }
   end
 
+  def filters
+    [
+      @visa_sponsorship_availability,
+      @teaching_job_roles,
+      @support_job_roles,
+      @ect_statuses,
+      @subjects,
+      @phases,
+      @quick_apply,
+      @working_patterns,
+      @organisation_types,
+      @school_types,
+    ].compact
+  end
+
   private
 
   def strip_trailing_whitespaces_from_params(params)
@@ -132,7 +147,18 @@ class Jobseekers::SearchForm
   end
 
   def set_total_filters
-    @total_filters = [@visa_sponsorship_availability&.count, @teaching_job_roles&.count, @support_job_roles&.count, @ect_statuses&.count, @subjects&.count, @phases&.count, @quick_apply&.count, @working_patterns&.count, @organisation_types&.count, @school_types&.count].compact.sum
+    @total_filters = [
+      @visa_sponsorship_availability&.count,
+      @teaching_job_roles&.count,
+      @support_job_roles&.count,
+      @ect_statuses&.count,
+      @subjects&.count,
+      @phases&.count,
+      @quick_apply&.count,
+      @working_patterns&.count,
+      @organisation_types&.count,
+      @school_types&.count,
+    ].compact.sum
   end
 
   def set_radius(radius_param)
