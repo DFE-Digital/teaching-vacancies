@@ -63,6 +63,8 @@ class DashboardComponent < ApplicationComponent
   end
 
   def selected_scope
+    return "recently_awaiting_feedback" if @selected_type == "awaiting_feedback"
+
     @selected_type == "published" ? "live" : selected_type
   end
 
