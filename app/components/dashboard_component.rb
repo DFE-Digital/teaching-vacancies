@@ -63,9 +63,11 @@ class DashboardComponent < ApplicationComponent
   end
 
   def selected_scope
-    return "awaiting_feedback_recently_expired" if @selected_type == "awaiting_feedback"
-
-    @selected_type == "published" ? "live" : selected_type
+    case @selected_type
+    when "awaiting_feedback" then "awaiting_feedback_recently_expired"
+    when "published" then "live"
+    else selected_type
+    end
   end
 
   def set_organisation_options
