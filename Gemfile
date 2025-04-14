@@ -127,7 +127,9 @@ group :test do
   gem "capybara"
   gem "climate_control"
   gem "fastimage"
+  gem "mock_redis"
   gem "rack_session_access"
+  gem "redis-client"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
