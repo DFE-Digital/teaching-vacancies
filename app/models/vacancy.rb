@@ -92,7 +92,7 @@ class Vacancy < ApplicationRecord
 
   scope :applicable, -> { where("expires_at >= ?", Time.current) }
   scope :awaiting_feedback, -> { expired.where(listed_elsewhere: nil, hired_status: nil) }
-  scope :recently_awaiting_feedback, -> { awaiting_feedback.where("expires_at >= ?", 2.months.ago) }
+  scope :awaiting_feedback_recently_expired, -> { awaiting_feedback.where("expires_at >= ?", 2.months.ago) }
   scope :expired, -> { published.where("expires_at < ?", Time.current) }
   scope :expired_yesterday, -> { where("DATE(expires_at) = ?", 1.day.ago.to_date) }
   scope :expires_within_data_access_period, -> { where("expires_at >= ?", Time.current - DATA_ACCESS_PERIOD_FOR_PUBLISHERS) }
