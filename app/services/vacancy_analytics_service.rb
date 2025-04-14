@@ -36,7 +36,8 @@ class VacancyAnalyticsService
 
   def self.update_stats_in_database(vacancy_updates)
     vacancy_updates.each do |vacancy_id, new_referrer_counts|
-      analytics = VacancyAnalytics.find_or_initialize_by(vacancy_id: vacancy_id)
+    VacancyAnalytics.transaction do
+      analytics = VacancyAnalytics.where(vacancy_id: vacancy_id).lock(true).first_or_initialize
 
       merged_counts = analytics.referrer_counts.merge(new_referrer_counts) do |_, old_count, new_count|
         old_count.to_i + new_count.to_i
@@ -44,6 +45,7 @@ class VacancyAnalyticsService
 
       analytics.referrer_counts = merged_counts
       analytics.save!
+    end
     end
   end
 
