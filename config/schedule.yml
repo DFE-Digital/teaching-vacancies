@@ -171,6 +171,6 @@ import_from_vacancy_sources:
   queue: default
 
 aggregate_vacancy_referrer_stats:
-  cron: "15 * * * *"
+  cron: "*/15 * * * *" # Every 15 minutes
   class: AggregateVacancyReferrerStatsJob
   queue: low
