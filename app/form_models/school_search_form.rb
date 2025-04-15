@@ -38,7 +38,7 @@ class SchoolSearchForm
       education_phase
       key_stage
       special_school
-      job_avaibility
+      job_availability
       organisation_types
       school_types
     ]

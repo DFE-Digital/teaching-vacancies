@@ -43,6 +43,45 @@ RSpec.describe Jobseekers::SearchForm, type: :model do
     end
   end
 
+  RSpec.shared_examples "a set filter for jobseeker" do |field|
+    let(:expected) { ["field_#{field}"] }
+    let(field) { expected }
+    let(:params) do
+      {
+        field => expected,
+      }
+    end
+
+    it { is_expected.to eq({ field => expected }) }
+  end
+
+  describe "#filters" do
+    subject { described_class.new(params).filters }
+
+    let(:params) { {} }
+
+    context "when no filters set" do
+      it { is_expected.to eq({}) }
+    end
+
+    %i[
+      visa_sponsorship_availability
+      teaching_job_roles
+      support_job_roles
+      phases
+      subjects
+      ect_statuses
+      organisation_types
+      school_types
+      working_patterns
+      quick_apply
+    ].each do |field|
+      context "when #{field} filters set" do
+        it_behaves_like "a set filter for jobseeker", field
+      end
+    end
+  end
+
   describe "#strip_trailing_whitespaces_from_params" do
     context "when user input contains trailing whitespace" do
       let(:keyword) { " teacher " }
