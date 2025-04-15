@@ -17,6 +17,22 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @selected_type = params[:type] || :published
     @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
+
+    selected_scope = @selected_type == "published" ? "live" : @selected_type
+
+    vacancies =
+      if @publisher_preference.organisations.any?
+        Vacancy.in_organisation_ids(@publisher_preference.organisations.map(&:id))
+      elsif current_organisation.local_authority?
+        Vacancy.in_organisation_ids(@publisher_preference.schools.map(&:id))
+      else
+        current_organisation.all_vacancies
+      end
+
+    # vacancies = vacancies.includes(:job_applications) if include_job_applications?
+    @vacancies = vacancies.send(selected_scope)
+                          .order(@sort.by => @sort.order)
+                          .reject { |vacancy| vacancy.job_title.blank? }
   end
 
   # We don't save anything here - just redirect to the show page
