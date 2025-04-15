@@ -58,6 +58,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
   end
 
   def confirm
+    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
     return render :index unless confirmation_form.valid?
 
     if uploading_more_documents?
