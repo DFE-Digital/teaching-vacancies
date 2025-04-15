@@ -184,38 +184,4 @@ RSpec.describe "Documents" do
       expect(vacancy.reload.supporting_documents).to be_empty
     end
   end
-
-  describe "#confirm" do
-    let(:request) do
-      post confirm_organisation_job_documents_path(vacancy.id), params: {
-        publishers_job_listing_documents_confirmation_form: { upload_additional_document: upload_additional_document },
-      }
-    end
-
-    context "when upload_additional_document is false" do
-      let(:upload_additional_document) { "false" }
-
-      context "when upload_additional_document is false" do
-        it "redirects to the next step" do
-          expect(request).to redirect_to(organisation_job_path(vacancy.id))
-        end
-      end
-    end
-
-    context "when upload_additional_document is true" do
-      let(:upload_additional_document) { "true" }
-
-      it "redirects to the new documents form" do
-        expect(request).to redirect_to(new_organisation_job_document_path(vacancy.id))
-      end
-    end
-
-    context "when upload_additional_document is not set" do
-      let(:upload_additional_document) { nil }
-
-      it "renders the documents index page" do
-        expect(request).to render_template(:index)
-      end
-    end
-  end
 end

@@ -34,6 +34,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     redirect_to after_document_delete_path, flash: { success: t("jobs.file_delete_success_message", filename: document.filename) }
   end
 
+  # These 2 methods support that MoJ multi-document upload component
   def upload_file
     @document = params.require(:documents)
 
@@ -57,17 +58,6 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
     respond_to(&:json)
   end
 
-  def confirm
-    @documents_form = Publishers::JobListing::DocumentsForm.new(documents_form_params, vacancy)
-    return render :index unless confirmation_form.valid?
-
-    if uploading_more_documents?
-      redirect_to new_organisation_job_document_path(vacancy.id)
-    else
-      redirect_to_next_step
-    end
-  end
-
   private
 
   def step
@@ -80,17 +70,17 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
       .merge(completed_steps: completed_steps)
   end
 
-  def confirmation_form
-    @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params, vacancy)
-  end
+  # def confirmation_form
+  #   @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params, vacancy)
+  # end
 
-  def confirmation_form_params
-    (params[:publishers_job_listing_documents_confirmation_form] || params)&.permit(:upload_additional_document)
-  end
-
-  def uploading_more_documents?
-    confirmation_form_params[:upload_additional_document] == "true"
-  end
+  # def confirmation_form_params
+  #   (params[:publishers_job_listing_documents_confirmation_form] || params)&.permit(:upload_additional_document)
+  # end
+  #
+  # def uploading_more_documents?
+  #   confirmation_form_params[:upload_additional_document] == "true"
+  # end
 
   def after_document_delete_path
     if vacancy.supporting_documents.none?
