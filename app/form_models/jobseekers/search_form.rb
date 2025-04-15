@@ -19,6 +19,7 @@ class Jobseekers::SearchForm
               :school_types,
               :sort,
               :subjects,
+              :subject_options,
               :teaching_job_roles,
               :teaching_job_role_options,
               :support_job_roles,
@@ -38,6 +39,18 @@ class Jobseekers::SearchForm
     set_radius(params[:radius])
     set_facet_options
     set_total_filters
+    @filters_list = %i[
+      visa_sponsorship_availability
+      teaching_job_roles
+      support_job_roles
+      phases
+      subjects
+      ect_statuses
+      organisation_types
+      school_types
+      working_patterns
+      quick_apply
+    ]
   end
 
   def to_hash
@@ -61,18 +74,7 @@ class Jobseekers::SearchForm
   end
 
   def filters
-    [
-      @visa_sponsorship_availability,
-      @teaching_job_roles,
-      @support_job_roles,
-      @ect_statuses,
-      @subjects,
-      @phases,
-      @quick_apply,
-      @working_patterns,
-      @organisation_types,
-      @school_types,
-    ].compact
+    to_hash.delete_if { |k, _| !@filters_list.include?(k) }
   end
 
   private
@@ -126,6 +128,7 @@ class Jobseekers::SearchForm
     end
     set_organisation_type_options
     @school_type_options = %w[faith_school special_school].map { |school_type| [school_type, I18n.t("organisations.filters.#{school_type}")] }
+    @subject_options = SUBJECT_OPTIONS
   end
 
   def set_filter_variables(params)
@@ -172,14 +175,16 @@ class Jobseekers::SearchForm
     ]
   end
 
-  QuickApplyOptions = Struct.new(:value, :text, :hint, keyword_init: true)
+  QuickApplyOptions = Struct.new(:value, :text, :hint, :first, :last, keyword_init: true)
   private_constant :QuickApplyOptions
 
   def set_quick_apply_options
     @quick_apply_options = [
       QuickApplyOptions.new(
         value: "quick_apply",
+        first: "quick_apply",
         text: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply"),
+        last: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply"),
         hint: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply_hint"),
       ),
     ]

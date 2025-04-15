@@ -21,7 +21,7 @@
 
   .govuk-grid-row
     .govuk-grid-column-one-third-at-desktop class="govuk-!-margin-bottom-3"
-      = render "vacancies/search/open_filters_button", form: @form
+      = render "vacancies/search/open_filters_button", form: @form, vacancies_search: @vacancies_search
       = render "vacancies/search/filters", f: f, form: @form, vacancies_search: @vacancies_search, hidden_filters: @landing_page&.hidden_filters || []
 
       / When the user refines their search, this helps us figure out if they've changed the
