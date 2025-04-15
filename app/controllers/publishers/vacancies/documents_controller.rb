@@ -1,8 +1,6 @@
 require "google/apis/drive_v3"
 
 class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseController
-  helper_method :confirmation_form
-
   skip_before_action :verify_authenticity_token,
                      only: %i[upload_file delete_uploaded_file]
 
@@ -69,18 +67,6 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
       .permit(supporting_documents: [])
       .merge(completed_steps: completed_steps)
   end
-
-  # def confirmation_form
-  #   @confirmation_form ||= Publishers::JobListing::DocumentsConfirmationForm.new(confirmation_form_params, vacancy)
-  # end
-
-  # def confirmation_form_params
-  #   (params[:publishers_job_listing_documents_confirmation_form] || params)&.permit(:upload_additional_document)
-  # end
-  #
-  # def uploading_more_documents?
-  #   confirmation_form_params[:upload_additional_document] == "true"
-  # end
 
   def after_document_delete_path
     if vacancy.supporting_documents.none?
