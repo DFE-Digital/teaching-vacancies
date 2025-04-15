@@ -39,18 +39,7 @@ class Jobseekers::SearchForm
     set_radius(params[:radius])
     set_facet_options
     set_total_filters
-    @filters_list = %i[
-      visa_sponsorship_availability
-      teaching_job_roles
-      support_job_roles
-      phases
-      subjects
-      ect_statuses
-      organisation_types
-      school_types
-      working_patterns
-      quick_apply
-    ]
+    @filters_list = %i[visa_sponsorship_availability teaching_job_roles support_job_roles phases subjects ect_statuses organisation_types school_types working_patterns quick_apply]
   end
 
   def to_hash
@@ -74,7 +63,7 @@ class Jobseekers::SearchForm
   end
 
   def filters
-    to_hash.delete_if { |k, _| !@filters_list.include?(k) }
+    to_hash.delete_if { |k, _| @filters_list.exclude?(k) }
   end
 
   private
@@ -175,15 +164,15 @@ class Jobseekers::SearchForm
     ]
   end
 
-  QuickApplyOptions = Struct.new(:value, :text, :hint, :first, :last, keyword_init: true)
+  # rubocop:disable Lint/StructNewOverride
+  QuickApplyOptions = Struct.new(:hint, :first, :last, keyword_init: true)
+  # rubocop:enable Lint/StructNewOverride
   private_constant :QuickApplyOptions
 
   def set_quick_apply_options
     @quick_apply_options = [
       QuickApplyOptions.new(
-        value: "quick_apply",
         first: "quick_apply",
-        text: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply"),
         last: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply"),
         hint: I18n.t("helpers.label.publishers_job_listing_applying_for_the_job_form.quick_apply_hint"),
       ),
