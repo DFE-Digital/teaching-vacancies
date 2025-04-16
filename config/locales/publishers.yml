@@ -664,6 +664,7 @@ en:
             publish: Publish job listing
             scheduled_complete_draft: Schedule job listing
             view: View
+            give_feedback: Give feedback about this role
           inset_text:
             complete_draft: This job listing is complete and needs to be published.
             closed: This job listing was published on %{publish_date}. It closed on %{expiry_time}.

@@ -69,6 +69,8 @@ module VacancyFormsHelper
       govuk_link_to(t("publishers.vacancies.show.heading_component.action.convert_to_draft"), organisation_job_convert_to_draft_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     when "schedule_complete_draft"
       govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+    when "give_feedback"
+      govuk_link_to(t("publishers.vacancies.show.heading_component.action.give_feedback"), new_organisation_job_expired_feedback_path(job_id: vacancy.id))
     end
   end
 
