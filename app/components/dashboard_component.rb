@@ -2,8 +2,8 @@ class DashboardComponent < ApplicationComponent
   include DatesHelper
   include VacanciesHelper
 
-  def initialize(organisation:, sort:, selected_type:, publisher_preference:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+  def initialize(organisation:, sort:, selected_type:, publisher_preference:, vacancies:, count:)
+    super(classes: [], html_attributes: {})
     @organisation = organisation
     @sort = sort
     @publisher_preference = publisher_preference
@@ -11,7 +11,8 @@ class DashboardComponent < ApplicationComponent
     @selected_type = @vacancy_types.include?(selected_type) ? selected_type : "published"
 
     set_organisation_options if @organisation.school_group?
-    set_vacancies
+    @vacancies = vacancies
+    @count = count
   end
 
   def grid_column_class
@@ -41,22 +42,6 @@ class DashboardComponent < ApplicationComponent
   private
 
   attr_reader :publisher_preference, :organisation, :selected_type, :sort, :vacancies
-
-  def set_vacancies
-    @vacancies =
-      if publisher_preference.organisations.any?
-        Vacancy.in_organisation_ids(publisher_preference.organisations.map(&:id))
-      elsif organisation.local_authority?
-        Vacancy.in_organisation_ids(publisher_preference.schools.map(&:id))
-      else
-        organisation.all_vacancies
-      end
-
-    @vacancies = @vacancies.includes(:job_applications) if include_job_applications?
-    @vacancies = @vacancies.send(selected_scope)
-                           .order(sort.by => sort.order)
-                           .reject { |vacancy| vacancy.job_title.blank? }
-  end
 
   def include_job_applications?
     @selected_type.in?(%w[published expired])

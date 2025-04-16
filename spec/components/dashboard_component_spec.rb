@@ -8,13 +8,14 @@ RSpec.describe DashboardComponent, type: :component do
 
   subject do
     described_class.new(
-      organisation: organisation, sort: sort, selected_type: selected_type, publisher_preference: publisher_preference,
+      organisation: organisation, sort: sort, selected_type: selected_type,
+      publisher_preference: publisher_preference, vacancies: vacancies
     )
   end
 
   context "when organisation has no active vacancies" do
     let(:organisation) { create(:school, name: "A school with no published or draft jobs") }
-    let!(:vacancy) { create(:vacancy, :trashed, organisations: [organisation]) }
+    let(:vacancies) { [] }
 
     before { render_inline(subject) }
 
@@ -25,10 +26,13 @@ RSpec.describe DashboardComponent, type: :component do
 
   context "when organisation has active vacancies" do
     context "when job applications have been received" do
+      let(:job_title) { Faker::Job.title }
       context "when organisation is a school" do
         let(:organisation) { create(:school, name: "A school with jobs") }
-        let(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
-        let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+        let(:vacancies) { create_list(:vacancy, 1, :published, job_title: job_title,
+                                      job_applications: build_list(:job_application, 1, :status_submitted),
+                                      organisations: [organisation]) }
+        # let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
 
         let!(:inline_component) { render_inline(subject) }
 
@@ -41,12 +45,12 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         it "renders the vacancy job title in the table" do
-          expect(inline_component.css(".govuk-summary-list").to_html).to include(vacancy.job_title)
+          expect(inline_component.css(".govuk-summary-list").to_html).to include(job_title)
         end
 
         it "renders the link to view applicants" do
           expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
-          expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
+          expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancies.first.id))
         end
 
         context "when withdrawn applications have also been received" do
@@ -54,7 +58,7 @@ RSpec.describe DashboardComponent, type: :component do
 
           it "does not affect the count" do
             expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
-            expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
+            expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancies.first.id))
           end
         end
 
@@ -68,6 +72,7 @@ RSpec.describe DashboardComponent, type: :component do
 
         context "when there are no jobs within the selected vacancy type" do
           let(:selected_type) { "draft" }
+          let(:vacancies) { [] }
 
           it "uses the correct 'no jobs' text ('no filters')" do
             expect(page).to have_content(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
@@ -79,8 +84,11 @@ RSpec.describe DashboardComponent, type: :component do
         let(:organisation) { create(:trust, schools: [open_school, closed_school]) }
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
-        let!(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
-        let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+        # let!(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
+        # let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+        let(:vacancies) { create_list(:vacancy, 1, :published, job_title: job_title,
+                                      job_applications: build_list(:job_application, 1, :status_submitted),
+                                      organisations: [organisation]) }
 
         let!(:inline_component) { render_inline(subject) }
 
@@ -89,7 +97,7 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         it "renders the vacancy job title in the table" do
-          expect(inline_component.css(".govuk-summary-list").to_html).to include(vacancy.job_title)
+          expect(inline_component.css(".govuk-summary-list").to_html).to include(job_title)
         end
 
         it "renders the trust's name in the table" do
@@ -100,7 +108,7 @@ RSpec.describe DashboardComponent, type: :component do
 
         it "renders the link to view applicants" do
           expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 1))
-          expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
+          expect(page).to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancies.first.id))
         end
 
         it "renders the filters sidebar" do
@@ -127,8 +135,11 @@ RSpec.describe DashboardComponent, type: :component do
         let(:open_school) { create(:school, name: "Open school") }
         let(:closed_school) { create(:school, :closed, name: "Closed school") }
         let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation, schools: [open_school]) }
-        let!(:vacancy) { create(:vacancy, :published, organisations: [open_school]) }
-        let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+        # let!(:vacancy) { create(:vacancy, :published, organisations: [open_school]) }
+        # let!(:job_application) { create(:job_application, :status_submitted, vacancy: vacancy) }
+        let(:vacancies) { create_list(:vacancy, 1, :published, job_title: job_title,
+                                      job_applications: build_list(:job_application, 1, :status_submitted),
+                                      organisations: [open_school]) }
 
         let!(:inline_component) { render_inline(subject) }
 
@@ -137,7 +148,7 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         it "renders the vacancy job title in the table" do
-          expect(inline_component.css(".govuk-summary-list").to_html).to include(vacancy.job_title)
+          expect(inline_component.css(".govuk-summary-list").to_html).to include(job_title)
         end
 
         it "renders the link to view applicants" do
@@ -147,7 +158,7 @@ RSpec.describe DashboardComponent, type: :component do
         it "renders the local authority's name in the table" do
           expect(
             inline_component.css(".govuk-summary-list__key").to_html,
-          ).to include(vacancy.organisation_name)
+          ).to include(open_school.name)
         end
 
         it "renders the filters sidebar" do
@@ -170,6 +181,7 @@ RSpec.describe DashboardComponent, type: :component do
 
         context "when there are no jobs within the selected vacancy type" do
           let(:selected_type) { "draft" }
+          let(:vacancies) { [] }
 
           it "uses the correct 'no jobs' text ('no filters')" do
             expect(page).to have_content(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
@@ -180,13 +192,13 @@ RSpec.describe DashboardComponent, type: :component do
 
     context "when job applications have not been received" do
       let(:organisation) { create(:school, name: "A school with jobs") }
-      let!(:vacancy) { create(:vacancy, :published, organisations: [organisation]) }
+      let(:vacancies) { create_list(:vacancy, 1, :published, organisations: [organisation]) }
 
       before { render_inline(subject) }
 
       it "renders plain text of 0 applicants" do
         expect(page).to have_content(I18n.t("jobs.manage.view_applicants", count: 0))
-        expect(page).not_to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancy.id))
+        expect(page).not_to have_link(href: Rails.application.routes.url_helpers.organisation_job_job_applications_path(vacancies.first.id))
       end
     end
   end
@@ -195,12 +207,13 @@ RSpec.describe DashboardComponent, type: :component do
     let(:organisation) { create(:trust, schools: [school_oxford, school_cambridge]) }
     let(:school_oxford) { create(:school, name: "Oxford") }
     let(:school_cambridge) { create(:school, name: "Cambridge") }
-    let!(:vacancy_cambridge) { create(:vacancy, :published, organisations: [school_cambridge], job_title: "Scientist") }
+    let(:vacancy_cambridge) { create(:vacancy, :published, organisations: [school_cambridge], job_title: "Scientist") }
 
     before { publisher_preference.update organisations: [school_oxford] }
 
     context "when a relevant job exists" do
-      let!(:vacancy_oxford) { create(:vacancy, :published, organisations: [school_oxford], job_title: "Mathematician") }
+      let(:vacancies) { [vacancy_oxford] }
+      let(:vacancy_oxford) { create(:vacancy, :published, organisations: [school_oxford], job_title: "Mathematician") }
 
       let!(:inline_component) { render_inline(subject) }
 
@@ -215,6 +228,7 @@ RSpec.describe DashboardComponent, type: :component do
 
     context "when there are no jobs within the selected filters" do
       let!(:inline_component) { render_inline(subject) }
+      let(:vacancies) { [] }
 
       it "uses the correct no jobs text ('with filters')" do
         expect(page).to have_content(I18n.t("jobs.manage.published.no_jobs.with_filters"))
