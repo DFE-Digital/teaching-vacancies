@@ -26,13 +26,14 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
       elsif current_organisation.local_authority?
         Vacancy.in_organisation_ids(@publisher_preference.schools.map(&:id))
       else
-        current_organisation.all_vacancies
+        Vacancy.in_organisation_ids(current_organisation.all_organisation_ids)
       end
 
-    # vacancies = vacancies.includes(:job_applications) if include_job_applications?
-    @vacancies = vacancies.send(selected_scope)
+    vacancies = vacancies.send(selected_scope)
                           .order(@sort.by => @sort.order)
-                          .reject { |vacancy| vacancy.job_title.blank? }
+                          .where.not(job_title: nil)
+    @pagy, @vacancies = pagy(vacancies)
+    @count = vacancies.count
   end
 
   # We don't save anything here - just redirect to the show page

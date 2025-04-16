@@ -2,7 +2,7 @@ class DashboardComponent < ApplicationComponent
   include DatesHelper
   include VacanciesHelper
 
-  def initialize(organisation:, sort:, selected_type:, publisher_preference:, vacancies:)
+  def initialize(organisation:, sort:, selected_type:, publisher_preference:, vacancies:, count:)
     super(classes: [], html_attributes: {})
     @organisation = organisation
     @sort = sort
@@ -12,6 +12,7 @@ class DashboardComponent < ApplicationComponent
 
     set_organisation_options if @organisation.school_group?
     @vacancies = vacancies
+    @count = count
   end
 
   def grid_column_class
