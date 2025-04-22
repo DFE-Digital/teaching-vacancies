@@ -90,10 +90,7 @@ en:
     send_message: Send message
     set_preferences: Set your preferences
     shortlist: Shortlist
-    filters_toggle_panel:
-      zero: Open filters
-      one: Open filters (%{count} applied)
-      other: Open filters (%{count} applied)
+    filters_toggle_panel: Show filter
     sign_in: Sign in
     setup_alerts: Set up alerts
     sign_in_to_download: Sign in to download application form
