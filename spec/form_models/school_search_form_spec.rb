@@ -24,6 +24,55 @@ RSpec.describe SchoolSearchForm, type: :model do
   let(:organisation_types) { [] }
   let(:school_types) { [] }
 
+  RSpec.shared_examples "a set filter" do |field|
+    let(:expected) { ["field_#{field}"] }
+    let(field) { expected }
+
+    it { is_expected.to eq({ field => expected }) }
+  end
+
+  describe "#filters" do
+    subject { school_search_form.filters }
+
+    context "when no filters set" do
+      it { is_expected.to eq({}) }
+    end
+
+    %i[
+      education_phase
+      key_stage
+      special_school
+      organisation_types
+      school_types
+    ].each do |field|
+      context "when #{field} filters set" do
+        it_behaves_like "a set filter", field
+      end
+    end
+
+    context "when job_availability filter set" do
+      let(:job_availability) { %w[true] }
+
+      it { is_expected.to eq({ job_availability: %w[true] }) }
+    end
+  end
+
+  describe "#filters_list" do
+    subject { school_search_form.filters_list }
+
+    it { is_expected.to contain_exactly(:education_phase, :key_stage, :special_school, :job_availability, :organisation_types, :school_types) }
+  end
+
+  describe "#special_school_options" do
+    subject { school_search_form.special_school_options }
+
+    let(:expected_options) do
+      [["1", I18n.t("organisations.filters.special_school")]]
+    end
+
+    it { is_expected.to match_array(expected_options) }
+  end
+
   describe "#job_availability_options" do
     subject { school_search_form.job_availability_options }
 
