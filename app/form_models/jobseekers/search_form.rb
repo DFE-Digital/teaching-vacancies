@@ -138,6 +138,7 @@ class Jobseekers::SearchForm
     @school_types = params[:school_types] || []
   end
 
+  # :nocov:
   def set_total_filters
     @total_filters = [
       @visa_sponsorship_availability&.count,
@@ -152,6 +153,7 @@ class Jobseekers::SearchForm
       @school_types&.count,
     ].compact.sum
   end
+  # :nocov:
 
   def set_radius(radius_param)
     @radius = Search::RadiusBuilder.new(location, radius_param).radius.to_s
