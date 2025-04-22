@@ -166,9 +166,7 @@ class Jobseekers::SearchForm
     ]
   end
 
-  # rubocop:disable Lint/StructNewOverride
-  QuickApplyOptions = Struct.new(:hint, :first, :last, keyword_init: true)
-  # rubocop:enable Lint/StructNewOverride
+  QuickApplyOptions = Data.define(:hint, :first, :last)
   private_constant :QuickApplyOptions
 
   def set_quick_apply_options
