@@ -14,7 +14,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def index
-    @selected_type = params[:type] || :published
+    @selected_type = (params[:type] || :live).to_sym
     @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
   end

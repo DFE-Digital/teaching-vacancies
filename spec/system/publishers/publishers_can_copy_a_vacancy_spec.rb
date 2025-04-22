@@ -48,7 +48,7 @@ RSpec.describe "Copying a vacancy" do
     end
   end
 
-  include_examples "publishing a copied vacancy", type: "published"
+  include_examples "publishing a copied vacancy", type: :live
 
   scenario "a job can be copied from the dashboard" do
     visit organisation_jobs_with_type_path

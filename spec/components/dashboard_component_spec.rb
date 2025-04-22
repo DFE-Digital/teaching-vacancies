@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe DashboardComponent, type: :component do
   let(:publisher) { create(:publisher) }
   let(:sort) { Publishers::VacancySort.new(organisation, selected_type).update(sort_by: "job_title") }
-  let(:selected_type) { "published" }
+  let(:selected_type) { :live }
   let(:publisher_preference) { create(:publisher_preference, publisher: publisher, organisation: organisation) }
 
   subject do
@@ -67,7 +67,7 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         context "when there are no jobs within the selected vacancy type" do
-          let(:selected_type) { "draft" }
+          let(:selected_type) { :draft }
 
           it "uses the correct 'no jobs' text ('no filters')" do
             expect(page).to have_content(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
@@ -169,7 +169,7 @@ RSpec.describe DashboardComponent, type: :component do
         end
 
         context "when there are no jobs within the selected vacancy type" do
-          let(:selected_type) { "draft" }
+          let(:selected_type) { :draft }
 
           it "uses the correct 'no jobs' text ('no filters')" do
             expect(page).to have_content(I18n.t("jobs.manage.draft.no_jobs.no_filters"))
@@ -217,7 +217,7 @@ RSpec.describe DashboardComponent, type: :component do
       let!(:inline_component) { render_inline(subject) }
 
       it "uses the correct no jobs text ('with filters')" do
-        expect(page).to have_content(I18n.t("jobs.manage.published.no_jobs.with_filters"))
+        expect(page).to have_content(I18n.t("jobs.manage.live.no_jobs.with_filters"))
       end
     end
   end

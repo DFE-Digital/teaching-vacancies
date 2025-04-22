@@ -2,13 +2,13 @@ class DashboardComponent < ApplicationComponent
   include DatesHelper
   include VacanciesHelper
 
-  def initialize(organisation:, sort:, selected_type:, publisher_preference:, classes: [], html_attributes: {})
-    super(classes: classes, html_attributes: html_attributes)
+  def initialize(organisation:, sort:, selected_type:, publisher_preference:)
+    super(classes: [], html_attributes: {})
     @organisation = organisation
     @sort = sort
     @publisher_preference = publisher_preference
-    @vacancy_types = %w[published expired pending draft awaiting_feedback]
-    @selected_type = @vacancy_types.include?(selected_type) ? selected_type : "published"
+    @vacancy_types = %i[live expired pending draft awaiting_feedback]
+    @selected_type = selected_type
 
     set_organisation_options if @organisation.school_group?
     set_vacancies
@@ -53,33 +53,25 @@ class DashboardComponent < ApplicationComponent
       end
 
     @vacancies = @vacancies.includes(:job_applications) if include_job_applications?
-    @vacancies = @vacancies.send(selected_scope)
+    @vacancies = @vacancies.send(@selected_type)
                            .order(sort.by => sort.order)
                            .reject { |vacancy| vacancy.job_title.blank? }
   end
 
   def include_job_applications?
-    @selected_type.in?(%w[published expired])
-  end
-
-  def selected_scope
-    case @selected_type
-    when "awaiting_feedback" then "awaiting_feedback_recently_expired"
-    when "published" then "live"
-    else selected_type
-    end
+    @selected_type.in?(%i[live expired])
   end
 
   def set_organisation_options
     schools = organisation.local_authority? ? publisher_preference.schools : organisation.schools
     @organisation_options = schools.not_closed.order(:name).map do |school|
-      count = school.vacancies.send(selected_scope).count
+      count = school.vacancies.send(@selected_type).count
       Option.new(id: school.id, name: school.name, label: "#{school.name} (#{count})")
     end
 
     return if organisation.local_authority?
 
-    count = organisation.vacancies.send(selected_scope).count
+    count = organisation.vacancies.send(@selected_type).count
     @organisation_options.unshift(
       Option.new(id: organisation.id, name: "Head office", label: "Head office (#{count})"),
     )

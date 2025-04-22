@@ -21,7 +21,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
     context "when viewing active jobs tab" do
       scenario "it shows all published vacancies" do
-        visit organisation_jobs_with_type_path(:published)
+        visit organisation_jobs_with_type_path(:live)
 
         expect(page).to_not have_css(".filters-component__remove-tags__tag")
 
@@ -33,7 +33,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
 
       context "when applying filters" do
         scenario "it shows filtered published vacancies" do
-          visit organisation_jobs_with_type_path(:published)
+          visit organisation_jobs_with_type_path(:live)
 
           check "Happy Rainbows School (1)"
           click_on I18n.t("buttons.apply_filters")
@@ -50,7 +50,7 @@ RSpec.describe "Publishers can filter vacancies in their dashboard" do
       context "when clearing all filters" do
         before do
           PublisherPreference.create(publisher: publisher, organisation: trust, organisations: [school1])
-          visit organisation_jobs_with_type_path(:published)
+          visit organisation_jobs_with_type_path(:live)
           click_on I18n.t("shared.filter_group.clear_all_filters")
         end
 

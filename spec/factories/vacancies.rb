@@ -143,6 +143,10 @@ FactoryBot.define do
       status { :published }
     end
 
+    trait :live do
+      status { :published }
+    end
+
     trait :published_slugged do
       status { :published }
       sequence(:slug) { |n| "slug-#{n}" }

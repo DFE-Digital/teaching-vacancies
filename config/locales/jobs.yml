@@ -24,6 +24,9 @@ en:
       pending:
         tab_heading: Scheduled jobs
         with_count: Scheduled jobs (%{count})
+      live:
+        tab_heading: Active jobs
+        with_count: Active jobs (%{count})
       published:
         tab_heading: Active jobs
         with_count: Active jobs (%{count})
@@ -370,7 +373,7 @@ en:
         no_jobs:
           no_filters: You currently have no scheduled jobs.
           with_filters: There are no scheduled jobs for the schools you have selected.
-      published:
+      live:
         no_jobs:
           no_filters: You currently have no active jobs.
           with_filters: There are no active jobs for the schools you have selected.
