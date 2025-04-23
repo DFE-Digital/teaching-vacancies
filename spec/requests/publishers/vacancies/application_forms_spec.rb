@@ -12,6 +12,8 @@ RSpec.describe "Documents" do
     sign_in(publisher, scope: :publisher)
   end
 
+  after { sign_out(publisher) }
+
   describe "POST #create" do
     let(:vacancy) { create(:vacancy, enable_job_applications: false, receive_applications: "email", organisations: [organisation]) }
     let(:valid_file) { fixture_file_upload("blank_job_spec.pdf", "application/pdf") }

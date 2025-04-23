@@ -8,6 +8,8 @@ RSpec.describe "Saved jobs" do
     context "when a jobseeker is signed in" do
       before { sign_in(jobseeker, scope: :jobseeker) }
 
+      after { sign_out(jobseeker) }
+
       it "saves a job" do
         expect { get new_jobseekers_saved_job_path(vacancy.id) }.to change { SavedJob.count }.by(1)
       end
@@ -30,6 +32,8 @@ RSpec.describe "Saved jobs" do
     let!(:saved_job) { create(:saved_job, jobseeker: jobseeker, vacancy: vacancy) }
 
     before { sign_in(jobseeker, scope: :jobseeker) }
+
+    after { sign_out(jobseeker) }
 
     context "when `redirect_to_dashboard` param is true" do
       it "redirects to `jobseekers_saved_jobs_path`" do

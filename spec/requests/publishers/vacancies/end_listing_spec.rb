@@ -11,6 +11,8 @@ RSpec.describe "End job listing early" do
     sign_in(publisher, scope: :publisher)
   end
 
+  after { sign_out(publisher) }
+
   describe "GET #show" do
     context "when the vacancy does not belong to the current organisation" do
       let(:vacancy) { create(:vacancy, :published, organisations: [build(:school)]) }

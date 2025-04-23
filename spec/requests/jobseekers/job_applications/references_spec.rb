@@ -10,6 +10,8 @@ RSpec.describe "Job applications references" do
     sign_in(jobseeker, scope: :jobseeker)
   end
 
+  after { sign_out(jobseeker) }
+
   describe "GET #new" do
     context "when the job application status is not draft" do
       let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }

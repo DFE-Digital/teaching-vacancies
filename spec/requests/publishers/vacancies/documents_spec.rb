@@ -13,6 +13,8 @@ RSpec.describe "Documents" do
     sign_in(publisher, scope: :publisher)
   end
 
+  after { sign_out(publisher) }
+
   describe "POST #create" do
     before do
       allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))

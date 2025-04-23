@@ -19,6 +19,8 @@ RSpec.describe "Updating an organisation logo" do
     allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
   end
 
+  after { sign_out(publisher) }
+
   describe "PATCH #update" do
     subject { patch publishers_organisation_logo_path(organisation), params: params }
 

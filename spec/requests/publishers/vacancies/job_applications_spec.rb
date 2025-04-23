@@ -11,6 +11,8 @@ RSpec.describe "Job applications" do
     sign_in(publisher, scope: :publisher)
   end
 
+  after { sign_out(publisher) }
+
   describe "GET #reject" do
     context "when the job application status is not draft or withdrawn" do
       it "renders the reject page" do
