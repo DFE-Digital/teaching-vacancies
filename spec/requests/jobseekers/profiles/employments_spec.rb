@@ -29,6 +29,8 @@ RSpec.describe "Jobseeker profile employments" do
 
   before { sign_in(jobseeker, scope: :jobseeker) }
 
+  after { sign_out(jobseeker) }
+
   describe "GET #new" do
     it "renders the new page" do
       expect(get(new_jobseekers_profile_work_history_path)).to render_template(:new)

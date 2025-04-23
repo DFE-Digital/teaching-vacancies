@@ -8,6 +8,8 @@ RSpec.describe "Accessing an organisation profile" do
     allow_any_instance_of(ApplicationController).to receive(:current_organisation).and_return(organisation) # rubocop:disable RSpec/AnyInstance
   end
 
+  after { sign_out(publisher) }
+
   describe "GET #show" do
     context "when the publisher current organisation is a school" do
       let(:organisation) { create(:school) }

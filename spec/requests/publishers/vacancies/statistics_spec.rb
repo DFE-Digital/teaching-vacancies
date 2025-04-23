@@ -12,6 +12,8 @@ RSpec.describe "Job listing statistics" do
     sign_in(publisher, scope: :publisher)
   end
 
+  after { sign_out(publisher) }
+
   describe "GET #show" do
     context "when csv format is requested" do
       it "returns a csv" do

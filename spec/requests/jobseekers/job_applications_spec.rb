@@ -84,12 +84,14 @@ RSpec.describe "Job applications" do
     end
   end
 
-  describe "POST #create" do
-    let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
+  context "when signed in" do
 
     before { sign_in(jobseeker, scope: :jobseeker) }
 
     after { sign_out(jobseeker) }
+
+  describe "POST #create" do
+    let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
 
     context "when the job is not live" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
@@ -128,10 +130,6 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #new_quick_apply" do
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     context "when a job application for the job already exists" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -182,10 +180,6 @@ RSpec.describe "Job applications" do
   end
 
   describe "POST #quick_apply" do
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     context "when a job application for the job already exists" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -249,10 +243,6 @@ RSpec.describe "Job applications" do
       }
     end
 
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     context "when the job is not listed" do
       let(:vacancy) { create(:vacancy, :expired, organisations: [build(:school)]) }
 
@@ -308,10 +298,6 @@ RSpec.describe "Job applications" do
   describe "GET #show" do
     let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
 
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     context "when the application is not a draft" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -330,10 +316,6 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #confirm_destroy" do
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     context "when the application is a draft" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -354,10 +336,6 @@ RSpec.describe "Job applications" do
   describe "GET #review" do
     let!(:jobseeker_profile) { create(:jobseeker_profile, jobseeker: jobseeker) }
 
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     context "when the application is not a draft" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -376,10 +354,6 @@ RSpec.describe "Job applications" do
   end
 
   describe "DELETE #destroy" do
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     context "when the application is a draft" do
       let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -403,10 +377,6 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #confirm_withdraw" do
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     context "when the application is submitted" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
@@ -426,10 +396,6 @@ RSpec.describe "Job applications" do
   end
 
   describe "GET #about_your_application" do
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     let!(:job_application) { create(:job_application, jobseeker: jobseeker, vacancy: vacancy) }
 
     context "without a profile" do
@@ -496,10 +462,6 @@ RSpec.describe "Job applications" do
         origin: origin }
     end
 
-    before { sign_in(jobseeker, scope: :jobseeker) }
-
-    after { sign_out(jobseeker) }
-
     context "when the application is submitted" do
       let!(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
       let(:button) { I18n.t("buttons.withdraw_application") }
@@ -532,4 +494,5 @@ RSpec.describe "Job applications" do
       end
     end
   end
+    end
 end

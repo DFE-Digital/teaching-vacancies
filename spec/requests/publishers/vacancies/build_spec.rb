@@ -14,6 +14,8 @@ RSpec.describe "Job applications build" do
     allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(trust)
   end
 
+  after { sign_out(publisher) }
+
   describe "PATCH #update" do
     context "when the vacancy has been published" do
       context "when dependent steps have been made invalid" do

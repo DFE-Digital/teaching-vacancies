@@ -10,6 +10,8 @@ RSpec.describe "Accessign the service data jobseeker profiles" do
       sign_in(support_user, scope: :support_user)
     end
 
+    after { sign_out(support_user) }
+
     it "can access the service data jobseeker profiles list" do
       get support_users_service_data_jobseeker_profiles_path
 
@@ -53,6 +55,8 @@ RSpec.describe "Accessign the service data jobseeker profiles" do
       sign_in(publisher, scope: :publisher)
     end
 
+    after { sign_out(publisher) }
+
     it "cannot access the service data jobseeker profiles list" do
       get support_users_service_data_jobseeker_profiles_path
 
@@ -66,6 +70,8 @@ RSpec.describe "Accessign the service data jobseeker profiles" do
     before do
       sign_in(jobseeker, scope: :jobseeker)
     end
+
+    after { sign_out(jobseeker) }
 
     it "cannot access the service data jobseeker profiles list" do
       get support_users_service_data_jobseeker_profiles_path
