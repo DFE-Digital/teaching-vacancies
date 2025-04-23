@@ -12,7 +12,7 @@ module StatusTagHelper
   private
 
   def complete
-    govuk_tag(text: t("shared.status_tags.complete"), colour: "green")
+    { text: t("shared.status_tags.complete") }
   end
 
   def incomplete
