@@ -27,8 +27,8 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
-
-      fill_in_include_additional_documents_form_fields(false)
+      new_vacancy.include_additional_documents = false
+      fill_in_include_additional_documents_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
@@ -85,8 +85,14 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
-
       fill_in_include_additional_documents_form_fields(false)
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))
+
+      new_vacancy.publish_on = Date.current
+      new_vacancy.expires_at = 30.days.from_now
+      fill_in_important_dates_form_fields(new_vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :important_dates))

@@ -63,8 +63,6 @@ module VacancyFormsHelper
       open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.preview"), organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     when "delete"
       govuk_link_to(t("publishers.vacancies.show.heading_component.action.delete"), organisation_job_confirm_destroy_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    when "complete"
-      govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_show: "true"), class: "govuk-!-margin-bottom-0")
     when "convert_to_draft"
       govuk_link_to(t("publishers.vacancies.show.heading_component.action.convert_to_draft"), organisation_job_convert_to_draft_path(vacancy.id), class: "govuk-!-margin-bottom-0")
     when "schedule_complete_draft"
@@ -73,6 +71,26 @@ module VacancyFormsHelper
       govuk_link_to(t("publishers.vacancies.show.heading_component.action.give_feedback"), new_organisation_job_expired_feedback_path(job_id: vacancy.id))
     end
   end
+
+  def vacancy_complete_action_link(vacancy, next_invalid_step)
+    govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_show: "true"), class: "govuk-!-margin-bottom-0")
+  end
+
+  def vacancy_copy_action_link(vacancy)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post)
+  end
+
+  def vacancy_delete_action_link(vacancy)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.delete"), organisation_job_confirm_destroy_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  end
+
+  # def vacancy_schedule_complete_draft_link(vacancy)
+  #   govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  # end
+  #
+  # def vacancy_publish_link(vacancy)
+  #   govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  # end
 
   private
 

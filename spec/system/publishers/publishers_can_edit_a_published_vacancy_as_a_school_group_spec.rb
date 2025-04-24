@@ -15,25 +15,25 @@ RSpec.describe "Editing a published vacancy" do
     scenario "can edit job location" do
       visit organisation_job_path(vacancy.id)
 
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.organisations)
 
       change_job_locations(vacancy, [school1])
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.reload.organisations)
 
       change_job_locations(vacancy, [school2])
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.reload.organisations)
 
       change_job_locations(vacancy, [school1, school2])
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.reload.organisations)
 
       change_job_locations(vacancy, [school_group])
       click_on I18n.t("buttons.save_and_continue")
@@ -45,7 +45,7 @@ RSpec.describe "Editing a published vacancy" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.reload.organisations)
     end
   end
 end

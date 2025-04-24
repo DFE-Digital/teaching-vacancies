@@ -133,6 +133,24 @@ FactoryBot.define do
 
     trait :draft do
       status { :draft }
+      completed_steps do
+        %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package start_date
+           applying_for_the_job school_visits contact_details about_the_role include_additional_documents]
+      end
+    end
+
+    trait :without_contract_details do
+      status { :draft }
+      completed_steps do
+        %w[job_location job_role]
+      end
+    end
+
+    trait :with_contract_details do
+      status { :draft }
+      completed_steps do
+        %w[job_location job_role job_title education_phases key_stages subjects contract_information pay_package start_date]
+      end
     end
 
     trait :trashed do

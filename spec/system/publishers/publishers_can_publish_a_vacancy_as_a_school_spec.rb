@@ -193,7 +193,7 @@ RSpec.describe "Creating a vacancy" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
-      fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
+      fill_in_include_additional_documents_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))

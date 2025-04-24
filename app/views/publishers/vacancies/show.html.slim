@@ -1,15 +1,50 @@
-- content_for :page_title_prefix, publishers_show_page_title_prefix(vacancy)
+- content_for :page_title_prefix, publishers_show_page_title_prefix(@vacancy)
 
-- if vacancy.legacy? && flash.none?
-  - if vacancy.legacy_draft?
+- if @vacancy.legacy? && flash.none?
+  - if @vacancy.legacy_draft?
     = govuk_notification_banner(title_text: t("banners.important")) do |banner|
       - banner.with_heading(text: t("publishers.job_listing_process_changed_draft_banner.heading_html", contact_support_link: govuk_link_to("contact support", new_support_request_path), create_new_link: govuk_link_to("Create a new job listing", organisation_jobs_path, method: "post")))
   - else
     = govuk_notification_banner(title_text: t("banners.important")) do |banner|
       - banner.with_heading(text: t("publishers.job_listing_process_changed_published_banner.heading_html", contact_support_link: govuk_link_to("Contact support", new_support_request_path)))
 
-= render "review_banner"
+- if @vacancy.draft?
+  = render "publishers/vacancies/review_breadcrumbs", vacancy: @vacancy
 
-.govuk-grid-row
-  .govuk-grid-column-full
-    = render "sections"
+  - if @next_invalid_step.nil?
+    = render "publishers/vacancies/review_banners/complete_draft", vacancy: @vacancy
+  - else
+    = render "publishers/vacancies/review_banners/incomplete_draft", vacancy: @vacancy, next_invalid_step: @next_invalid_step
+
+  = govuk_task_list do |task_list|
+    - status = vacancy_draft_status(@organisation, @vacancy, :job_details)
+    - task_list.with_item(title: t(".task_list.sections.job_details.title"),
+      hint: t(".task_list.sections.job_details.hint"),
+      href: organisation_job_wizard_path(@vacancy.id, section_to_first_step(:job_details, @step_process)),
+      html_attributes: { id: :job_details },
+      status: govuk_tag(text: t(".task_list.status_tags.#{status.fetch(:status)}"), colour: status.fetch(:colour)))
+
+    - %i[job_details about_the_role important_dates application_process].each_cons(2) do |prev_section, section|
+      - prev_status = vacancy_draft_status(@organisation, @vacancy, prev_section)
+      - status = vacancy_draft_status(@organisation, @vacancy, section)
+      - if status.present?
+        - task_list.with_item(title: t(".task_list.sections.#{section}.title"),
+          hint: t(".task_list.sections.#{section}.hint"),
+          href: organisation_job_wizard_path(@vacancy.id, section_to_first_step(section, @step_process)),
+          html_attributes: { id: section },
+          status: govuk_tag(text: t(".task_list.status_tags.#{status.fetch(:status)}"), colour: status.fetch(:colour)))
+      - elsif prev_status.present? && prev_status.fetch(:status) == :completed
+        - task_list.with_item(title: t(".task_list.sections.#{section}.title"),
+          hint: t(".task_list.sections.#{section}.hint"),
+          href: organisation_job_wizard_path(@vacancy.id, section_to_first_step(section, @step_process)),
+          html_attributes: { id: section },
+          status: govuk_tag(text: t(".task_list.status_tags.not_started"), colour: "yellow"))
+      - else
+        - task_list.with_item(title: t(".task_list.sections.#{section}.title"),
+          hint: t(".task_list.sections.#{section}.hint"),
+          html_attributes: { id: section },
+          status: t(".task_list.status_tags.cannot_start_yet"))
+- else
+  = render "review_banner", vacancy: @vacancy
+
+  = render "sections"

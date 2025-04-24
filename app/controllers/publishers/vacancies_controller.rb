@@ -11,6 +11,9 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
   def show
     @vacancy = VacancyPresenter.new(vacancy)
+    @next_invalid_step = next_invalid_step
+    @organisation = current_organisation
+    @step_process = step_process
   end
 
   # This helps prevent parameters other than these specified arriving as a method on Vacancy
@@ -50,7 +53,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
       vacancy.update!(phases: [current_organisation.phase])
     end
 
-    redirect_to organisation_job_build_path(vacancy.id, :job_location)
+    redirect_to organisation_job_build_path(vacancy.id, Wicked::FIRST_STEP)
   end
 
   def review

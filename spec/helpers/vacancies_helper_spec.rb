@@ -500,24 +500,6 @@ RSpec.describe VacanciesHelper do
       end
     end
 
-    context "when the action is complete" do
-      let(:action) { "complete" }
-      let(:link) { helper.govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_show: "true"), class: "govuk-!-margin-bottom-0") }
-
-      before do
-        # Helper uses next_invalid_step which is a helper method defined in Publishers::Vacancies::BaseController. This helper
-        # is not available in the context of the test, so I did the below. TODO: Other solutions involve moving these helpers out into
-        # a separate module and including that in the controller, but this was the quickest fix for now.
-        VacanciesHelper.instance_eval do
-          define_method(:next_invalid_step) { :working_patterns }
-        end
-      end
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
-    end
-
     context "when the action is convert_to_draft" do
       let(:action) { "convert_to_draft" }
       let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.convert_to_draft"), organisation_job_convert_to_draft_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
@@ -525,6 +507,16 @@ RSpec.describe VacanciesHelper do
       it "returns the correct link" do
         expect(subject).to eq(link)
       end
+    end
+  end
+
+  describe "#vacancy_complete_action_link" do
+    subject { helper.vacancy_complete_action_link(vacancy, :working_patterns) }
+    let(:link) { helper.govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, :working_patterns, back_to_show: "true"), class: "govuk-!-margin-bottom-0") }
+    let(:vacancy) { create(:vacancy) }
+
+    it "returns the correct link" do
+      expect(subject).to eq(link)
     end
   end
 end
