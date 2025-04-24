@@ -7,8 +7,6 @@ namespace :job_preferences do
     puts "#{job_prefs.count} JobPreferences to update"
 
     job_prefs.find_each do |pref|
-      next unless pref.roles.include?("other_teaching_support")
-
       new_roles = pref.roles.map { |role|
         role == "other_teaching_support" ? "other_support" : role
       }.uniq
