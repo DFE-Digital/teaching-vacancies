@@ -44,7 +44,7 @@ RSpec.describe "Feedback supportal section" do
       comment: "Some other feedback text",
       occupation: "Student",
       rating: "highly_satisfied",
-      email: "faketestingemail12786@gmail.com",
+      email: Faker::Internet.email(domain: "contoso.com"),
       user_participation_response: "interested",
       origin_path: "/jobs",
     )
@@ -57,7 +57,7 @@ RSpec.describe "Feedback supportal section" do
       comment: "Highly satisfactory",
       occupation: "Student",
       rating: "highly_satisfied",
-      email: "goodnews1200997@gmail.com",
+      email: Faker::Internet.email(domain: "contoso.com"),
       user_participation_response: "interested",
       origin_path: "/jobs",
       created_at: "2022-03-16 10:00",
