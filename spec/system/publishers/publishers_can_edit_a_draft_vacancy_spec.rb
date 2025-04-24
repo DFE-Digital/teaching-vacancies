@@ -25,8 +25,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
     scenario "can edit a draft" do
       click_review_page_change_link(section: "job_details", row: "job_role")
 
-      vacancy.job_roles = ["teaching_assistant"]
-      fill_in_job_role_form_fields(vacancy)
+      fill_in_job_role_form_fields("teaching_assistant")
 
       click_on I18n.t("buttons.save_and_continue")
 
