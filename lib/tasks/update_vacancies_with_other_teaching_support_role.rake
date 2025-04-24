@@ -1,5 +1,5 @@
 namespace :vacancy do
-  desc "Update job roles from legacy value 10 to new value 16"
+  desc "Update job roles from legacy value 10 (previously 'other_teaching_support') to new value 16 ('other_support')"
   task update_job_roles: :environment do
     vacancies = Vacancy.where("job_roles @> ARRAY[?]::integer[]", [10])
     puts "#{vacancies.count} vacancies with job roles including other_teaching_support"
