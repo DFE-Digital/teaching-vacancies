@@ -2,7 +2,7 @@
 
 You must have a GitHub account and access to the Teaching Vacancies repository to be able to make any changes to the code base.
 
-The [onboarding](/documentation/team/onboarding.md) document explains the process by which new team members can get the access they require on GitHub.
+The [onboarding](/documentation/team/developer_onboarding.md) document explains the process by which new team members can get the access they require on GitHub.
 
 ## Markdown files
 

@@ -4,6 +4,12 @@
 
 Any developer of the current team can sign in the [Teaching vacancies AWS console](https://teaching-vacancies.signin.aws.amazon.com/console) and add the new developer in [IAM](https://console.aws.amazon.com/iam/home?region=eu-west-2#/users) (copy permissions from existing user).
 
+## Service Seeds
+
+This will provide access to the review environments and QA as a jobseeker.
+
+Add the new member to the [seeds file user list](/db/seeds.rb).
+
 ## DfE Sign-in
 
 ### Hiring staff user in test environment:
@@ -34,33 +40,6 @@ Plus
 * [Teacher Services Infrastructure](https://github.com/orgs/DFE-Digital/teams/teacher-services-infrastructure) who provide the DevOps function across Teacher Services
 
 One of TV developers needs to add the new developer to [teaching-vacancies-developers](https://github.com/orgs/DFE-Digital/teams/teaching-vacancies-developers) as `maintainer` role.
-
-### Github Codespaces access for content team members
-
-We provide content team members a cloud development environment through [Github Codespaces](https://docs.github.com/en/codespaces).
-The codespaces are built using our [Devcontainer setup](/documentation/development/tooling/devcontainer.md)
-
-Onboarding a new team member to TV project codespaces:
-
-1. Ensure the team member has a Github user and is a member of [DFE-Digital organisation](https://github.com/orgs/DFE-Digital/teams).
-
-2. The team member must have individual write access (not only by a team membership) in the [project access settings](https://github.com/DFE-Digital/teaching-vacancies/settings/access).
-
-3. Request codespace access for the team member through the [DFE Service Portal](https://dfe.service-now.com.mcas.ms/serviceportal?id=sc_cat_item&sys_id=0aacf3a81ba52110b192ec69b04bcb14) under `GitHub (dfe-digital) -> Other`.
-
-
-    **Request content template**
-    > Add a new user to organisation-owned Codespaces for Teaching Vacancies service.
-    >
-    > A new Teaching Vacancies content team member needs access to the DFE Digital-paid codespaces.
-    >
-    > Our project: https://github.com/DFE-Digital/teaching-vacancies
-    >
-    > The user: @user_github_handle
-    >
-    > Thank you.
-
-4. Once the ticket gets actioned, the user should be able to create codespaces from the `Code -> Codespaces` green button in our Github project landing page.
 
 ## DFE Azure Platform Identity
 
