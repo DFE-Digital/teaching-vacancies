@@ -61,7 +61,7 @@
       - if vacancies.none?
         = empty_section do
           = no_jobs_text
-      - elsif @selected_type == "awaiting_feedback"
+      - elsif @selected_type == :awaiting_feedback
         = render "publishers/vacancies/vacancies_awaiting_feedback", organisation: @organisation, vacancies: @vacancies
       - else
         = govuk_summary_list do |summary_list|
@@ -79,7 +79,7 @@
 
               - row.with_value do
                 - case @selected_type
-                - when "published"
+                - when :live
                   div class="govuk-!-margin-bottom-1"
                     - if vacancy.enable_job_applications
                       - if vacancy.job_applications.where(status: %w[submitted reviewed shortlisted unsuccessful]).count.positive?
@@ -89,14 +89,14 @@
                   dl
                     dt = "#{t('jobs.manage.closing_date')}:"
                     dd = format_time_to_datetime_at(vacancy.expires_at)
-                - when "pending"
+                - when :pending
                   dl
                     dt = "#{t('jobs.publication_date')}:"
                     dd = vacancy.publish_on.to_formatted_s
                   dl
                     dt = "#{t('jobs.manage.closing_date')}:"
                     dd = format_time_to_datetime_at(vacancy.expires_at)
-                - when "expired"
+                - when :expired
                   - if vacancy.enable_job_applications
                     - if !vacancy_expired_over_a_year_ago?(vacancy) && vacancy.job_applications.where.not(status: %w[draft withdrawn]).any?
                       = view_applicants(vacancy)
@@ -109,7 +109,7 @@
                     dt = "#{t('jobs.manage.expired.expired_on')}:"
                     dd = format_time_to_datetime_at(vacancy.expires_at)
                   = govuk_link_to(t("publishers.vacancies.show.heading_component.action.give_feedback"), new_organisation_job_expired_feedback_path(job_id: vacancy.id))
-                - when "draft"
+                - when :draft
                   dl
                     dt = "#{t('jobs.manage.draft.time_created')}:"
                     dd = format_date(vacancy.created_at.to_date)

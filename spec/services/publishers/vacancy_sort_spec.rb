@@ -4,7 +4,7 @@ RSpec.describe Publishers::VacancySort do
   subject { described_class.new(organisation, vacancy_type) }
 
   let(:organisation) { build_stubbed(:school) }
-  let(:vacancy_type) { "published" }
+  let(:vacancy_type) { :live }
 
   describe "#initialize" do
     it "sets the column and order of the first sort option by default" do
@@ -13,20 +13,10 @@ RSpec.describe Publishers::VacancySort do
     end
   end
 
-  describe "#options" do
-    context "when vacancy_type is not valid" do
-      let(:vacancy_type) { "any_old_type" }
-
-      it "defaults to published sort options" do
-        expect(subject.map(&:by)).to eq %w[expires_at job_title]
-      end
-    end
-  end
-
   describe "#update" do
     context "when the sort column is valid" do
       let(:sort_by) { "publish_on" }
-      let(:vacancy_type) { "pending" }
+      let(:vacancy_type) { :pending }
 
       it "updates the sort column" do
         expect(subject.update(sort_by: sort_by).sort_by).to eq "publish_on"

@@ -1,21 +1,19 @@
 class Publishers::VacancySort < RecordSort
-  VALID_VACANCY_TYPES = %w[published pending draft expired awaiting_feedback].freeze
-
   def initialize(organisation, vacancy_type)
     @organisation = organisation
-    @vacancy_type = VALID_VACANCY_TYPES.include?(vacancy_type) ? vacancy_type : "published"
+    @vacancy_type = vacancy_type
     super
   end
 
   def options
     case @vacancy_type
-    when "published"
+    when :live
       [soonest_closing_date_option, job_title_option]
-    when "pending"
+    when :pending
       [soonest_publication_date_option, soonest_closing_date_option, job_title_option]
-    when "draft"
+    when :draft
       [most_recent_draft_date_option, most_recent_update_option, job_title_option]
-    when "expired", "awaiting_feedback"
+    when :expired, :awaiting_feedback
       [most_recent_end_date_option, job_title_option]
     end
   end

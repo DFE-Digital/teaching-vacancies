@@ -528,7 +528,7 @@ en:
         job_applications_link_text: Preview the application form
         skip_link: Skip to %{heading}
         title:
-          published: Active jobs - %{organisation_name}
+          live: Active jobs - %{organisation_name}
           expired: Closed jobs - %{organisation_name}
           pending: Scheduled jobs - %{organisation_name}
           draft: Draft jobs - %{organisation_name}

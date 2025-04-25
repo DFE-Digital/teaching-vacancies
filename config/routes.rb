@@ -359,8 +359,8 @@ Rails.application.routes.draw do
   end
 
   scope "/organisation", as: "organisation" do
-    scope constraints: { type: /(published|draft|pending|expired|awaiting_feedback)/ } do
-      get "jobs(/:type)", to: "publishers/vacancies#index", defaults: { type: :published }, as: :jobs_with_type
+    scope constraints: { type: /(live|draft|pending|expired|awaiting_feedback)/ } do
+      get "jobs(/:type)", to: "publishers/vacancies#index", defaults: { type: :live }, as: :jobs_with_type
     end
     get "/jobs/start", to: "publishers/vacancies#start"
 
