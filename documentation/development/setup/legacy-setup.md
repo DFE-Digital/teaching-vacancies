@@ -8,7 +8,7 @@
 
 Welcome! :tada: :fireworks: :tiger:
 
-By now you should be [onboarded](/documentation/team/onboarding.md).
+By now you should be [onboarded](/documentation/team/developer_onboarding.md).
 
 The first thing to do is to install the required development tools. If you are on a Mac, this [script](https://github.com/thoughtbot/laptop) will install Homebrew, Git, asdf-vm, Ruby, Bundler, Node.js, npm, Yarn, Postgres, Redis and other useful utilities.
 
