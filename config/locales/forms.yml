@@ -421,11 +421,11 @@ en:
         institution: School, college, or other organisation
       jobseekers_training_and_cpd_form:
         name: Name of course or training
-        provider: Training provider
+        provider: Training provider (optional)
         grade: Grade (optional)
         year_awarded: Date completed
         year_completed_hint: For example, 1998
-        course_length: Course length
+        course_length: Course length (optional)
       jobseekers_sign_in_form:
         email: Email address
         password: Password
