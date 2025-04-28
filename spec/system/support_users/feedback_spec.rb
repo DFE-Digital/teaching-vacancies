@@ -20,13 +20,13 @@ RSpec.shared_examples "has a satisfaction rating table" do |data_testid, number_
       end
     end
   end
-
-  def testid_for(time)
-    [time.to_date.beginning_of_month, time.to_date.end_of_month].map(&:to_s).join(" -> ")
-  end
 end
 
 RSpec.describe "Feedback supportal section" do
+  def testid_for(time)
+    [time.to_date.beginning_of_month, time.to_date.end_of_month].map(&:to_s).join(" -> ")
+  end
+
   let!(:job_alert_feedback) do
     create(
       :feedback,
@@ -265,7 +265,7 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Job alert unsubscribe - reason given' table" do
       before { click_on "Job alert unsubscribe" }
-      include_examples "has a satisfaction rating table", "job-alert-unsubscribe-reason", 4
+      it_behaves_like "has a satisfaction rating table", "job-alert-unsubscribe-reason", 4
 
       it "allows user to download data" do
         click_link "Download unsubscribe reports"
@@ -278,7 +278,7 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Satisfaction rating - jobseekers' table" do
       before { click_on "Jobseeker" }
-      include_examples "has a satisfaction rating table", "satisfaction-rating-jobseekers", 5
+      it_behaves_like "has a satisfaction rating table", "satisfaction-rating-jobseekers", 5
 
       it "allows user to download data" do
         click_link "Download jobseeker_account reports"
@@ -291,7 +291,7 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Satisfaction rating - hiring staff' table" do
       before { click_on "Hiring staff" }
-      include_examples "has a satisfaction rating table", "satisfaction-rating-hiring-staff", 5
+      it_behaves_like "has a satisfaction rating table", "satisfaction-rating-hiring-staff", 5
 
       it "allows user to download data" do
         click_link "Download vacancy_publisher reports"
@@ -304,7 +304,7 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Satisfaction rating - job alerts' table" do
       before { click_on "Job alert relevance" }
-      include_examples "has a satisfaction rating table", "satisfaction-rating-job-alerts", 2
+      it_behaves_like "has a satisfaction rating table", "satisfaction-rating-job-alerts", 2
 
       it "allows user to download data" do
         click_link "Download job_alert reports"
@@ -317,7 +317,7 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Satisfaction rating - job application' table" do
       before { click_on "Job applications" }
-      include_examples "has a satisfaction rating table", "satisfaction-rating-job-application", 5
+      it_behaves_like "has a satisfaction rating table", "satisfaction-rating-job-application", 5
 
       it "allows user to download data" do
         click_link "Download application reports"
@@ -330,7 +330,7 @@ RSpec.describe "Feedback supportal section" do
 
     context "'Close account reason' table" do
       before { click_on "Close account reason" }
-      include_examples "has a satisfaction rating table", "close-account-reason", 4
+      it_behaves_like "has a satisfaction rating table", "close-account-reason", 4
     end
   end
 

@@ -22,31 +22,31 @@ RSpec.describe ScheduledMaintenanceBannerComponent, type: :component do
     context "when the maintenance date is not present" do
       let(:date) { nil }
 
-      include_examples "does not render"
+      it_behaves_like "does not render"
     end
 
     context "when the maintenance start time is not present" do
       let(:start_time) { nil }
 
-      include_examples "does not render"
+      it_behaves_like "does not render"
     end
 
     context "when the maintenance end time is not present" do
       let(:end_time) { nil }
 
-      include_examples "does not render"
+      it_behaves_like "does not render"
     end
 
     context "when app_role is unknown" do
       let(:app_role) { "unknown" }
 
-      include_examples "does not render"
+      it_behaves_like "does not render"
     end
 
     context "when app_role is anything else" do
       let(:app_role) { "wow" }
 
-      include_examples "does not render"
+      it_behaves_like "does not render"
     end
 
     context "when app_role is production" do

@@ -74,13 +74,13 @@ RSpec.describe Jobseeker do
     context "when no user email is provided" do
       let(:email) { "" }
 
-      include_examples "invalid input"
+      it_behaves_like "invalid input"
     end
 
     context "when no govuk_one_login_id is provided" do
       let(:govuk_one_login_id) { "" }
 
-      include_examples "invalid input"
+      it_behaves_like "invalid input"
     end
 
     context "when an email and govuk_on_login_id is provided" do

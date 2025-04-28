@@ -48,7 +48,7 @@ RSpec.describe "Copying a vacancy" do
     end
   end
 
-  include_examples "publishing a copied vacancy", type: :live
+  it_behaves_like "publishing a copied vacancy", type: :live
 
   scenario "a job can be copied from the dashboard" do
     visit organisation_jobs_with_type_path
@@ -132,6 +132,6 @@ RSpec.describe "Copying a vacancy" do
   context "when the original job has expired" do
     let!(:original_vacancy) { create(:vacancy, :expired, organisations: [school]) }
 
-    include_examples "publishing a copied vacancy", type: "expired"
+    it_behaves_like "publishing a copied vacancy", type: "expired"
   end
 end

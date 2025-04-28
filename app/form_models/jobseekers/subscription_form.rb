@@ -46,7 +46,7 @@ class Jobseekers::SubscriptionForm < BaseForm
     @campaign = params[:campaign].presence || false
     @user_name = params[:user_name]
 
-    set_radius((params[:radius] || search_criteria[:radius]))
+    set_radius(params[:radius] || search_criteria[:radius])
     set_facet_options
   end
 
