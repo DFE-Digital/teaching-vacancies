@@ -20,13 +20,13 @@ RSpec.shared_examples "has a satisfaction rating table" do |data_testid, number_
       end
     end
   end
-
-  def testid_for(time)
-    [time.to_date.beginning_of_month, time.to_date.end_of_month].map(&:to_s).join(" -> ")
-  end
 end
 
 RSpec.describe "Feedback supportal section" do
+  def testid_for(time)
+    [time.to_date.beginning_of_month, time.to_date.end_of_month].map(&:to_s).join(" -> ")
+  end
+
   let!(:job_alert_feedback) do
     create(
       :feedback,
