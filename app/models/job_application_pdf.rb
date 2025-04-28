@@ -1,0 +1,344 @@
+# rubocop:disable Metric/ClassLength
+class JobApplicationPdf
+  include JobApplicationsHelper
+  include QualificationsHelper
+
+  Table = Data.define(:rows) do
+    def to_a
+      deconstruct.first
+    end
+  end
+
+  def initialize(job_application)
+    @job_application = job_application
+    @vacancy = job_application.vacancy
+  end
+
+  def header_text
+    I18n.t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
+  end
+
+  def applicant_name
+    job_application.name
+  end
+
+  def footer_text
+    "#{job_application.name} | #{vacancy.organisation_name}"
+  end
+
+  def personal_details
+    return @personal_details if @personal_details.present?
+
+    scope = "helpers.label.jobseekers_job_application_personal_details_form"
+    ni_review = job_application.national_insurance_number.presence || I18n.t("jobseekers.job_applications.not_defined")
+
+    @personal_details = Table[basic_personal_details].tap do
+      it.rows << [I18n.t("national_insurance_number_review", scope:), ni_review] if job_application.national_insurance_number?
+
+      it.rows << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
+    end
+  end
+
+  def personal_statement
+    return job_application.personal_statement if job_application.personal_statement.present?
+
+    I18n.t("jobseekers.job_applications.review.personal_statement.blank")
+  end
+
+  def professional_status
+    return @professional_status if @professional_status.present?
+
+    scope = "helpers.legend.jobseekers_job_application_professional_status_form"
+    label_scope = "helpers.label.jobseekers_job_application_personal_details_form"
+
+    basic_professional_status = [
+      [I18n.t("qualified_teacher_status", scope:), qualified_teacher_status_info(job_application)],
+      [I18n.t("teacher_reference_number_review", scope: label_scope), job_application_trn(job_application)],
+      [I18n.t("is_statutory_induction_complete", scope:), yes_no(job_application.is_statutory_induction_complete?)],
+    ]
+
+    @professional_status = Table[basic_professional_status].tap do
+      if job_application.statutory_induction_complete_details.present?
+        it.rows << [I18n.t("statutory_induction_complete_details", scope:), job_application.statutory_induction_complete_details]
+      end
+    end
+  end
+
+  def qualifications
+    return no_data_available(I18n.t("jobseekers.job_applications.show.qualifications.none")) if job_application.qualifications.none?
+
+    qualifications_sort_and_group(job_application.qualifications).each_value.map do |group|
+      [qualifications_group_name(group), qualifications_group_data(group)]
+    end
+  end
+
+  def training_and_cpds
+    return no_data_available(I18n.t("jobseekers.job_applications.show.training_and_cpds.none")) if job_application.training_and_cpds.none?
+
+    make_nested_section do
+      job_application.training_and_cpds.map do |training|
+        Table[
+          [
+            ["Name", training.name],
+            (["Grade", training.grade] if training.grade),
+            ["Provider", training.provider],
+            ["Awarded Year", training.year_awarded],
+          ].compact
+        ]
+      end
+    end
+  end
+
+  def professional_body_memberships
+    return no_data_available(I18n.t("jobseekers.job_applications.show.professional_body_memberships.none")) if job_application.professional_body_memberships.none?
+
+    scope = "helpers.label.jobseekers_professional_body_membership_form.exam_taken_options"
+    make_nested_section do
+      job_application.professional_body_memberships.map do |membership|
+        Table[
+          [
+            ["Name of professional body:", membership.name],
+            ["Membership type or level:", membership.membership_type],
+            ["Membership or registration number:", membership.membership_number],
+            ["Date obtained:", membership.year_membership_obtained],
+            ["Exam taken for this membership:", I18n.t(membership.exam_taken, scope:)],
+          ].reject { |row| row[1].blank? }
+        ]
+      end
+    end
+  end
+
+  def employment_history
+    return no_data_available(I18n.t("jobseekers.job_applications.review.employment_history.none")) if job_application.employments.none?
+
+    make_nested_section do
+      job_application
+        .employments
+        .sort_by { |r| r[:started_on] }
+        .reverse
+        .flat_map
+        .with_index { |employment, idx| employment_data(employment, idx) }
+    end
+  end
+
+  def references
+    return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.references.none?
+
+    make_nested_section do
+      job_application.references.sort_by(&:created_at).map do |reference|
+        reference_data = [
+          ["Name:", reference.name],
+          ["Job Title:", reference.job_title],
+          ["Organisation:", reference.organisation],
+          ["Relationship:", reference.relationship],
+          ["Email:", reference.email],
+        ]
+
+        reference_data << ["Phone Number:", reference.phone_number] if reference.phone_number.present?
+        reference_data << ["Current or most recent employer:", I18n.t("helpers.label.jobseekers_job_application_details_reference_form.is_most_recent_employer_options.#{reference.is_most_recent_employer}")] unless reference.is_most_recent_employer.nil?
+
+        Table[reference_data]
+      end
+    end
+  end
+
+  def ask_for_support
+    @ask_for_support ||= Table[
+      [
+        [
+          I18n.t("helpers.legend.jobseekers_job_application_ask_for_support_form.is_support_needed"),
+          yes_details_no(
+            job_application.is_support_needed?,
+            job_application.support_needed_details,
+          ),
+        ],
+      ]
+    ]
+  end
+
+  def declarations
+    return @declarations if @declarations.present?
+
+    safeguarding_issues_info = yes_details_no(
+      job_application.has_safeguarding_issue?,
+      job_application.safeguarding_issue_details,
+    )
+
+    close_relationships_info = yes_details_no(
+      job_application.has_close_relationships?,
+      job_application.close_relationships_details,
+    )
+    scope = "helpers.legend.jobseekers_job_application_declarations_form"
+
+    @declarations = Table[
+      [
+        [I18n.t("has_safeguarding_issue", scope:), safeguarding_issues_info],
+        [I18n.t("has_close_relationships", scope:, organisation: vacancy.organisation_name), close_relationships_info],
+      ]
+    ]
+  end
+
+  private
+
+  attr_reader :job_application, :vacancy
+
+  def yes_no(bool)
+    return "Yes" if bool
+
+    "No"
+  end
+
+  def yes_details_no(bool, details)
+    return "Yes\nDetails: #{details}" if bool
+
+    "No"
+  end
+
+  def no_data_available(text)
+    # make an empty nested section data structure rendered by `JobApplicationPdfGenerator.render_nested_section`
+    [[text, nil]]
+  end
+
+  def make_nested_section
+    # make a nested section data structure rendered by `JobApplicationPdfGenerator.render_nested_section`
+    [[nil, yield]]
+  end
+
+  def month_year(date)
+    date.to_fs(:month_year)
+  end
+
+  def end_date(date, latest_employment_record: false)
+    return "present" if latest_employment_record
+
+    month_year(date)
+  end
+
+  def basic_personal_details
+    scope = "helpers.label.jobseekers_job_application_personal_details_form"
+    declaration_scope = "helpers.legend.jobseekers_job_application_declarations_form"
+    address_scope = "helpers.legend.jobseekers_job_application_personal_details_form"
+
+    your_address = [
+      job_application.street_address,
+      job_application.city,
+      job_application.postcode,
+      job_application.country,
+    ].compact.join(", ")
+
+    [
+      [I18n.t("first_name", scope:), job_application.first_name],
+      [I18n.t("last_name", scope:), job_application.last_name],
+      [I18n.t("your_address", scope: address_scope), your_address],
+      [I18n.t("phone_number", scope:), job_application.phone_number],
+      [I18n.t("email_address", scope:), job_application.email],
+      [I18n.t("has_right_to_work_in_uk", scope: declaration_scope), visa_sponsorship_needed_answer(job_application)],
+      [I18n.t("working_patterns", scope:), readable_working_patterns(job_application)],
+    ]
+  end
+
+  def qualifications_group_name(group)
+    return group.first.name if qualifications_group_category_other?(group)
+
+    I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{group.first[:category]}")
+  end
+
+  def qualifications_group_data(group)
+    group.flat_map do |qualification|
+      if qualification.secondary?
+        secondary_qualification_data(qualification)
+      else
+        general_qualification_data(qualification)
+      end
+    end
+  end
+
+  def secondary_qualification_data(qualification)
+    qualification.qualification_results.map do |result|
+      Table[
+        [
+          ["Secondary Qualification"],
+          ["Subject:", result.subject],
+          ["Grade:", result.grade],
+          (["Awarding Body:", result.awarding_body] if result.awarding_body.present?),
+          ["Date completed:", qualification.award_date],
+        ].compact
+      ]
+    end
+  end
+
+  def general_qualification_data(qualification)
+    Table[
+      [
+        ["Qualification Name:", qualification.name],
+        ["Institution:", qualification.institution],
+        ["Grade:", qualification.grade],
+        ["Date completed:", qualification.award_date],
+        ["Awarding body:", qualification.awarding_body],
+      ].reject { |row| row[1].blank? }
+    ]
+  end
+
+  def employment_data(employment, index)
+    return [employment_break(employment, index.zero?)] if employment.break?
+
+    gap = job_application.unexplained_employment_gaps[employment]
+    if gap.present?
+      [employment_unexplained_gap(gap, index.zero?), employment_entry(employment)]
+    else
+      [employment_entry(employment)]
+    end
+  end
+
+  def employment_entry(employment)
+    employment_data = [
+      ["Employment"],
+      ["Job Title:", employment.job_title],
+      ["School or other:", employment.organisation],
+      ["Main duties:", employment.main_duties],
+    ]
+
+    employment_data << ["Subjects:", employment.subjects] if employment.subjects.present?
+    employment_data << ["Employment currently held:", yes_no(employment.is_current_role?)]
+    employment_data << ["Reason for leaving:", employment.reason_for_leaving]
+    employment_data << ["End date:", employment.is_current_role? ? "present" : end_date(employment.ended_on)]
+    employment_data << ["Start date:", month_year(employment.started_on)]
+
+    Table[employment_data]
+  end
+
+  def employment_break(employment, latest_employment_record)
+    Table[
+      [
+        ["Employment Break"],
+        ["Reason:", employment.reason_for_break],
+        ["End date:", end_date(employment.ended_on, latest_employment_record:)],
+        ["Start date:", month_year(employment.started_on)],
+      ]
+    ]
+  end
+
+  def employment_unexplained_gap(gap, latest_employment_record)
+    Table[
+      [
+        ["Unexplained Employment Gap"],
+        ["End date:", end_date(gap[:ended_on], latest_employment_record:)],
+        ["Start date:", month_year(gap[:started_on])],
+      ]
+    ]
+  end
+
+  def qualified_teacher_status_info(job_application)
+    case job_application.qualified_teacher_status
+    when "yes"
+      "Yes, awarded in #{job_application.qualified_teacher_status_year} #{job_application.qts_age_range_and_subject}"
+    when "no"
+      "No. #{job_application.qualified_teacher_status_details}"
+    when "on_track"
+      "I'm on track to receive my QTS"
+    else
+      "Status not provided"
+    end
+  end
+end
+# rubocop:enable Metric/ClassLength
