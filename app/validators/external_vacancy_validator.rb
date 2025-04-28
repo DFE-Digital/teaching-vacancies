@@ -31,7 +31,7 @@ class ExternalVacancyValidator < ActiveModel::Validator
       record.errors.add(:expires_at, "must be a future date")
     end
 
-    if record.publish_on && record.expires_at <= (record.publish_on)
+    if record.publish_on && record.expires_at <= record.publish_on
       record.errors.add(:expires_at, "must be later than the publish date")
     end
   end

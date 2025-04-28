@@ -22,8 +22,8 @@ json.links do
   json.self  api_jobs_url(page: @pagy.page, format: :json)
   json.first api_jobs_url(page: 1, format: :json)
   json.last  api_jobs_url(page: @pagy.last, format: :json)
-  json.prev((api_jobs_url(page: @pagy.prev, format: :json) if @pagy.prev))
-  json.next((api_jobs_url(page: @pagy.next, format: :json) if @pagy.next))
+  json.prev(api_jobs_url(page: @pagy.prev, format: :json) if @pagy.prev)
+  json.next(api_jobs_url(page: @pagy.next, format: :json) if @pagy.next)
 end
 
 json.meta do

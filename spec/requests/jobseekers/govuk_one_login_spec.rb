@@ -101,7 +101,7 @@ RSpec.describe "Govuk One Login authentication response" do
     end
 
     context "when the OneLogin user does not match a TV jobseeker" do
-      include_examples "post sign-in redirections"
+      it_behaves_like "post sign-in redirections"
 
       it "creates a new jobseeker and signs them in" do
         expect { get auth_govuk_one_login_callback_path }.to change(Jobseeker, :count).by(1)
@@ -128,7 +128,7 @@ RSpec.describe "Govuk One Login authentication response" do
 
       let!(:jobseeker) { create(:jobseeker, email: govuk_one_login_user.email) }
 
-      include_examples "post sign-in redirections"
+      it_behaves_like "post sign-in redirections"
 
       it "signs in the user as the existing jobseeker" do
         expect { get auth_govuk_one_login_callback_path }.not_to change(Jobseeker, :count)

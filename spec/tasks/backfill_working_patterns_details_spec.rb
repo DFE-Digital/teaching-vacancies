@@ -43,7 +43,7 @@ RSpec.describe "vacancies:backfill_working_patterns_details" do
       context "when the working_patterns_details field already has a value" do
         let(:working_patterns_details) { "Full time 40 hours" }
 
-        include_examples "does not backfill working_patterns_details field"
+        it_behaves_like "does not backfill working_patterns_details field"
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe "vacancies:backfill_working_patterns_details" do
       let(:full_time_details) { "" }
       let(:part_time_details) { "" }
 
-      include_examples "does not backfill working_patterns_details field"
+      it_behaves_like "does not backfill working_patterns_details field"
     end
 
     context "with only full_time_details" do
@@ -84,7 +84,7 @@ RSpec.describe "vacancies:backfill_working_patterns_details" do
       let(:full_time_details) { "36 hours" }
       let(:part_time_details) { "20 hours" }
 
-      include_examples "does not backfill working_patterns_details field"
+      it_behaves_like "does not backfill working_patterns_details field"
     end
 
     context "without full_time_details and part_time_details" do
@@ -92,7 +92,7 @@ RSpec.describe "vacancies:backfill_working_patterns_details" do
       let(:full_time_details) { "" }
       let(:part_time_details) { "" }
 
-      include_examples "does not backfill working_patterns_details field"
+      it_behaves_like "does not backfill working_patterns_details field"
     end
 
     context "with only full_time_details" do
@@ -100,7 +100,7 @@ RSpec.describe "vacancies:backfill_working_patterns_details" do
       let(:full_time_details) { "36 hours" }
       let(:part_time_details) { "" }
 
-      include_examples "does not backfill working_patterns_details field"
+      it_behaves_like "does not backfill working_patterns_details field"
     end
 
     context "with only part_time_details" do
@@ -108,7 +108,7 @@ RSpec.describe "vacancies:backfill_working_patterns_details" do
       let(:full_time_details) { "" }
       let(:part_time_details) { "20 hours" }
 
-      include_examples "does not backfill working_patterns_details field"
+      it_behaves_like "does not backfill working_patterns_details field"
     end
   end
 end
