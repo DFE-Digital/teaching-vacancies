@@ -23,8 +23,6 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :start_date))
-      # new_vacancy.start_date_type = "specific_date"
-      # new_vacancy.starts_on = 35.days.from_now
       fill_in_start_date_form_fields
       click_on I18n.t("buttons.save_and_continue")
 
@@ -78,8 +76,6 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :start_date))
-      # new_vacancy.start_date_type = "specific_date"
-      # new_vacancy.starts_on = 35.days.from_now
       fill_in_start_date_form_fields
       click_on I18n.t("buttons.save_and_continue")
 
