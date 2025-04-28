@@ -19,6 +19,16 @@ RSpec.describe SendDailyAlertEmailJob do
         perform_enqueued_jobs { job }
       end
 
+      context "when subscription does not have an email address" do
+        before do
+          subscription.update!(email: nil)
+        end
+        
+        it "does not send an email" do
+          expect(Jobseekers::AlertMailer).to_not receive(:alert).with(subscription.id, Vacancy.pluck(:id)) { mail }
+        end
+      end
+
       context "when a run exists" do
         before do
           create(:alert_run, subscription: subscription, run_on: Date.current)

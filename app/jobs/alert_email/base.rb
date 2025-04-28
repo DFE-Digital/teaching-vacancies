@@ -12,7 +12,7 @@ class AlertEmail::Base < ApplicationJob
 
     subscriptions.find_each.reject { |sub| already_run_ids.include?(sub.id) }.each do |subscription|
       vacancies = subscription.vacancies_matching(default_scope).first(MAXIMUM_RESULTS_PER_RUN)
-
+      next if subscription.reload.email.blank?
       Jobseekers::AlertMailer.alert(subscription.id, vacancies.pluck(:id)).deliver_later if vacancies.any?
     end
     Sentry.capture_message("#{self.class.name} run successfully", level: :info)
