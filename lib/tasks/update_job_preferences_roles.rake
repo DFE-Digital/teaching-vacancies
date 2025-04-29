@@ -11,7 +11,8 @@ namespace :job_preferences do
         role == "other_teaching_support" ? "other_support" : role
       }.uniq
 
-      pref.update!(roles: new_roles)
+      pref.assign_attributes(roles: new_roles)
+      pref.save!(touch: false)
       puts "Updated JobPreferences id: #{pref.id}"
       updated_count += 1
     end
