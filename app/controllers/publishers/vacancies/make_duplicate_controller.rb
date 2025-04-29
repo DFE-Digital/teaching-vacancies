@@ -5,7 +5,7 @@ module Publishers
     class MakeDuplicateController < BaseController
       private
 
-      def copy_vacancy vacancy
+      def copy_vacancy(vacancy)
         CopyVacancy.new(vacancy).call.tap do |new_vacancy|
           if new_vacancy.include_additional_documents
             new_vacancy.supporting_documents.each do |document|
@@ -22,4 +22,3 @@ module Publishers
     end
   end
 end
-
