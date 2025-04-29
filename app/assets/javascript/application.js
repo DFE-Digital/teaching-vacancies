@@ -5,10 +5,10 @@ import 'core-js/modules/es.weak-set';
 import '@stimulus/polyfills';
 import * as govukFrontend from 'govuk-frontend';
 import $ from 'jquery';
-import * as mojFrontend from '@ministryofjustice/frontend';
 
 import { Application } from '@hotwired/stimulus';
 import Rails from 'rails-ujs';
+import { initMojFrontEnd } from './init-moj-front-end';
 
 // view components
 import CookiesBannerController from './components/cookiesBanner/enhance';
@@ -70,4 +70,4 @@ application.register('utils', UtilsController);
 Rails.start();
 govukFrontend.initAll();
 window.$ = $;
-mojFrontend.initAll();
+initMojFrontEnd();
