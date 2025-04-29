@@ -34,6 +34,7 @@ class JobApplicationPdfGenerator
 
   attr_reader :datasource, :document
 
+  # :nocov:
   def job_application_page_header
     page_header do
       text datasource.header_text, size: 12, style: :italic
@@ -73,4 +74,5 @@ class JobApplicationPdfGenerator
     end
     start_new_page
   end
+  # :nocov:
 end

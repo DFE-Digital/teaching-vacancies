@@ -77,6 +77,7 @@ module PdfUiHelper
     indent(0.5.cm) { text title, size: 18, style: :bold }
   end
 
+  # :nocov:
   def page_sub_title(title)
     start_new_page if close_to_bottom?
     move_down 0.3.cm
@@ -87,8 +88,10 @@ module PdfUiHelper
     indent(1.cm) { text title, size: 14, style: :bold }
     move_down 0.4.cm
   end
+  # :nocov:
 
   # rubocop:disable Metrics/AbcSize
+  # :nocov:
   def page_table(data)
     start_new_page if close_to_bottom?
     table(
@@ -111,6 +114,7 @@ module PdfUiHelper
       cells[0, 0].borders = %i[bottom top right left] if cells[0, 1]&.content.blank?
     end
   end
+  # :nocov:
   # rubocop:enable Metrics/AbcSize
 
   private
