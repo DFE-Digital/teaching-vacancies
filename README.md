@@ -1,5 +1,7 @@
 [![View performance data on Skylight](https://badges.skylight.io/status/xsMWeSG9ned8.svg?token=eaPo1dGrntf1PGO-yjiIJhUhPcJz8wLC0SqenY-PDbc)](https://www.skylight.io/app/applications/xsMWeSG9ned8)
 
+DO NOT MERGE: Review App created as a testing environment for MyNewTerm to build their Publisher ATS API Client against.
+
 # Teaching Vacancies
 
 > Teaching Vacancies is a free job-listing service from the Department for Education. Teachers can
