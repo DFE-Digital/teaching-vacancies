@@ -1,4 +1,5 @@
-class Publishers::Vacancies::RelistController < Publishers::Vacancies::MakeDuplicateController
+class Publishers::Vacancies::RelistController < Publishers::Vacancies::BaseController
+  include Publishers::VacancyCopy
   def create
     @vacancy = copy_vacancy(vacancy)
 
