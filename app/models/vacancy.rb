@@ -63,7 +63,8 @@ class Vacancy < ApplicationRecord
   enum :hired_status, { hired_tvs: 0, hired_other_free: 1, hired_paid: 2, hired_no_listing: 3, not_filled_ongoing: 4, not_filled_not_looking: 5, hired_dont_know: 6 }
   enum :listed_elsewhere, { listed_paid: 0, listed_free: 1, listed_mix: 2, not_listed: 3, listed_dont_know: 4 }
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
-  enum :status, { published: 0, draft: 1, trashed: 2, removed_from_external_system: 3 }
+  # trashed: 2 and removed_from_external_system: 3 removed in discard_soft_deletes 29/4/25
+  enum :status, { published: 0, draft: 1 }
   enum :receive_applications, { email: 0, website: 1 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
