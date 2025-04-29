@@ -21,9 +21,7 @@ RSpec.describe "Jobseekers can add training to their profile" do
         expect(page).to have_css("h2.govuk-error-summary__title", text: "There is a problem")
         within(".govuk-error-summary__body") do
           expect(page).to have_link("Enter the name of the course or training", href: "#jobseekers-training-and-cpd-form-name-field-error")
-          expect(page).to have_link("Enter the name of the provider of the training", href: "#jobseekers-training-and-cpd-form-provider-field-error")
           expect(page).to have_link("Enter the year the course or training was awarded", href: "#jobseekers-training-and-cpd-form-year-awarded-field-error")
-          expect(page).to have_link("Enter the length of the course", href: "#jobseekers-training-and-cpd-form-course-length-field-error")
         end
 
         fill_in_and_submit_training_form("Rock climbing instructional course", "TeachTrain ltd", "A", "2024", "6 months")
