@@ -10,7 +10,7 @@ RSpec.describe DashboardComponent, type: :component do
     described_class.new(
       organisation: organisation, sort: sort, selected_type: selected_type,
       publisher_preference: publisher_preference, vacancies: vacancies,
-      count: vacancies.count, vacancy_types: %i[live draft pending expired awaiting_feedback]
+      vacancy_types: %i[live draft pending expired awaiting_feedback]
     )
   end
 

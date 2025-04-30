@@ -52,7 +52,7 @@ class ImportFromVacancySourceJob < ApplicationJob
     Vacancy.live
            .where(external_source: @source_name)
            .where.not(external_reference: @external_references)
-           .update_all(status: :removed_from_external_system, updated_at: Time.zone.now)
+           .update_all(discarded_at: Time.current)
   end
 
   def create_failed_imported_vacancy(vacancy)
