@@ -163,6 +163,7 @@ RSpec.configure do |config|
   config.include VacancyHelpers
   config.include ViewComponent::TestHelpers, type: :component
   config.include WithEnv
+  config.include PageObjects::Pages::Application
 end
 
 VCR.configure do |config|

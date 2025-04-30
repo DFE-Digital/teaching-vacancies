@@ -7,52 +7,52 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
 
   let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
 
-  before { login_publisher(publisher: publisher, organisation: organisation) }
+  before do
+    login_publisher(publisher: publisher, organisation: organisation)
+    publisher_vacancy_page.load(vacancy_id: vacancy.id)
+  end
 
   after { logout }
 
   scenario "can add an additional documents to a vacancy" do
     allow(Publishers::DocumentVirusCheck).to receive(:new).and_return(double(safe?: true))
 
-    visit organisation_jobs_with_type_path
-    click_on "Draft jobs"
-    click_on vacancy.job_title
-    click_review_page_change_link(section: "about_the_role", row: "include_additional_documents")
-    expect(current_path).to eq(organisation_job_build_path(vacancy.id, :include_additional_documents))
+    expect(publisher_vacancy_page).to be_displayed
+
+    publisher_vacancy_page.change_additional_documents_link.click
+    expect(publisher_include_additional_documents_page).to be_displayed
 
     # Publisher can add a first additional document
-    answer_include_additional_documents(true)
-    expect(current_path).to eq(new_organisation_job_document_path(vacancy.id))
+    publisher_include_additional_documents_page.include_documents_yes.click
+    click_on I18n.t("buttons.save_and_continue")
+    expect(publisher_add_document_page).to be_displayed
 
     add_document
-    expect(current_path).to eq(organisation_job_documents_path(vacancy.id))
+    expect(publisher_vacancy_documents_page).to be_displayed
 
     # Having a first additional document, cannot submit an empty form for a second additional document
-    answer_include_additional_documents(true)
-    expect(current_path).to eq(new_organisation_job_document_path(vacancy.id))
+    publisher_vacancy_documents_page.add_another_document_yes_radio.click
+    click_on I18n.t("buttons.save_and_continue")
+    expect(publisher_add_document_page).to be_displayed
 
     click_on I18n.t("buttons.save_and_continue")
-    expect(current_path).to eq(organisation_job_documents_path(vacancy.id))
+    expect(publisher_vacancy_documents_page).to be_displayed
     expect(page).to have_content("There is a problem")
+    expect(publisher_vacancy_documents_page.errors.map(&:text)).to eq(["Select an additional document"])
 
     # Can continue after attaching a document
     add_document
-    expect(current_path).to eq(organisation_job_documents_path(vacancy.id))
+    expect(publisher_vacancy_documents_page).to be_displayed
 
     # Once decided not to include additional documents, can continue to the next step
-    answer_include_additional_documents(false)
+    publisher_vacancy_documents_page.add_another_document_no_radio.click
+    click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_review_path(vacancy.id))
     expect(page).to have_content(vacancy.job_roles.first.humanize)
 
     # Can publish the job listing
     click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
     expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
-  end
-
-  def answer_include_additional_documents(include_additional_documents)
-    vacancy.include_additional_documents = include_additional_documents
-    fill_in_include_additional_documents_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
   end
 
   def add_document
