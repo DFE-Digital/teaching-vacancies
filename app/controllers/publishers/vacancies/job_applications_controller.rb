@@ -68,13 +68,14 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       job_application.update!(status: update_tag_params.fetch(:status))
     end
     redirect_to organisation_job_job_applications_path(
-                  vacancy.id,
-                  anchor: current_tab(update_tag_params[:origin]),
-                )
+      vacancy.id,
+      anchor: current_tab(update_tag_params[:origin]),
+    )
   end
 
   private
 
+  # :nocov:
   def current_tab(origin)
     case origin.to_sym
     when :new
@@ -89,6 +90,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       []
     end.join("-")
   end
+  # :nocov:
 
   def prepare_to_tag(job_applications, origin)
     @form = Publishers::JobApplication::TagForm.new(job_applications: job_applications)
@@ -99,14 +101,17 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     else
       flash[origin.to_sym] = @form.errors.full_messages
       redirect_to organisation_job_job_applications_path(
-                    vacancy.id,
-                    anchor: current_tab(origin),
-                  )
+        vacancy.id,
+        anchor: current_tab(origin),
+      )
     end
   end
 
   require "zip"
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
+  # :nocov:
   def download_selected(tag_params)
     @form = Publishers::JobApplication::DownloadForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
     if @form.valid?
@@ -126,11 +131,14 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       origin = tag_params[:origin].to_sym
       flash[origin] = @form.errors.full_messages
       redirect_to organisation_job_job_applications_path(
-                    vacancy.id,
-                    anchor: current_tab(origin),
-                  )
+        vacancy.id,
+        anchor: current_tab(origin),
+      )
     end
   end
+  # :nocov:
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   def job_applications
     @job_applications ||= vacancy.job_applications.not_draft

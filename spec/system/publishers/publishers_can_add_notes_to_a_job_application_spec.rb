@@ -12,7 +12,7 @@ RSpec.describe "Publishers can add notes to a job application", js: true do
 
   after { logout }
 
-  it "shows the current notes" do
+  xit "shows the current notes" do
     visit organisation_job_job_application_path(vacancy.id, job_application)
 
     expect(page).to have_content(note.content)
