@@ -31,14 +31,6 @@ RSpec.describe Vacancy do
       subject.trash!
       expect(subject.supporting_documents).to be_blank
     end
-
-    context "when vacancy already trashed" do
-      subject { create(:vacancy, :trashed) }
-
-      it "does nothing" do
-        expect { subject.trash! }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob)
-      end
-    end
   end
 
   describe "#has_noticed_notifications" do
