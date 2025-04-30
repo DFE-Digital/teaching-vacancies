@@ -145,6 +145,9 @@ class Vacancy < ApplicationRecord
   EQUAL_OPPORTUNITIES_PUBLICATION_THRESHOLD = 5
   EXPIRY_TIME_OPTIONS = %w[8:00 9:00 12:00 15:00 23:59].freeze
 
+  # temporary while we install migration
+  self.ignored_columns += [:type]
+
   # Class method added to help with the mapping of array_enums for paper_trail, which stores the changes
   # as an array of integers in the version.
   def self.array_enums
