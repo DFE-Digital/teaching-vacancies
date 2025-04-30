@@ -631,7 +631,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         before do
           allow(Sentry).to receive(:capture_exception)
-          allow(Vacancy).to receive(:find_by!).and_raise(exception)
+          allow(Vacancy).to receive(:kept).and_raise(exception)
         end
 
         run_test! do |response|
@@ -1041,7 +1041,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         before do
           allow(Sentry).to receive(:capture_exception)
-          allow(Vacancy).to receive(:find_by!).and_raise(exception)
+          allow(Vacancy).to receive(:kept).and_raise(exception)
         end
 
         run_test! do |response|
@@ -1060,7 +1060,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
       response(204, "Indicates the vacancy was removed from the system.") do
         it "removes the vaancy" do |example|
-          expect { submit_request(example.metadata) }.to change(Vacancy.live.where(publisher_ats_api_client: client), :count).from(1).to(0)
+          expect { submit_request(example.metadata) }.to change(Vacancy.kept.live.where(publisher_ats_api_client: client), :count).from(1).to(0)
           assert_response_matches_metadata(example.metadata)
           expect(response.parsed_body).to be_empty
         end
@@ -1093,7 +1093,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
         before do
           allow(Sentry).to receive(:capture_exception)
-          allow(Vacancy).to receive(:find_by!).and_raise(exception)
+          allow(Vacancy).to receive(:kept).and_raise(exception)
         end
 
         run_test! do |response|
