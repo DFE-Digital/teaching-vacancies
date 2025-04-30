@@ -334,8 +334,10 @@ en:
       return_to_results: Return to results
       filters_applied: Filters applied
     status_tags:
-      complete: Complete
+      complete: Completed
       incomplete: Incomplete
+      in_progress: In progress
+      not_started: Not started
       imported: Imported
 
   stats:

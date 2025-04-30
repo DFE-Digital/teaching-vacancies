@@ -201,10 +201,6 @@ module VacanciesHelper
     end
   end
 
-  def section_to_first_step(section, step_process)
-    step_process.step_groups.fetch(section).first
-  end
-
   private
 
   def request_referrer

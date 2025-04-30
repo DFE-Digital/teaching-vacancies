@@ -66,4 +66,8 @@ class StepProcess
   def last_step?
     current_step == steps.last
   end
+
+  def first_step_for_group(section)
+    step_groups.fetch(section).first
+  end
 end

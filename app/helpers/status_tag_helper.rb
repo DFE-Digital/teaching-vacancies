@@ -15,9 +15,20 @@ module StatusTagHelper
     active_steps = step_process.step_groups[section]
     completed_steps = vacancy.completed_steps.map(&:to_sym).intersection(active_steps)
     if active_steps - completed_steps == []
-      { status: :completed, colour: "blue" }
+      :completed
     elsif completed_steps.any?
-      { status: :in_progress, colour: "green" }
+      :in_progress
+    end
+  end
+
+  def section_status_to_tag(status)
+    case status
+    when :completed
+      complete
+    when :in_progress
+      in_progress
+    else
+      not_started
     end
   end
 
@@ -29,6 +40,14 @@ module StatusTagHelper
 
   def incomplete
     govuk_tag(text: t("shared.status_tags.incomplete"), colour: "yellow")
+  end
+
+  def in_progress
+    govuk_tag(text: t("shared.status_tags.in_progress"), colour: "green")
+  end
+
+  def not_started
+    govuk_tag(text: t("shared.status_tags.not_started"), colour: "yellow")
   end
 
   def imported

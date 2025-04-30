@@ -20,9 +20,9 @@
     - status = vacancy_draft_status(@organisation, @vacancy, :job_details)
     - task_list.with_item(title: t(".task_list.sections.job_details.title"),
       hint: t(".task_list.sections.job_details.hint"),
-      href: organisation_job_wizard_path(@vacancy.id, section_to_first_step(:job_details, @step_process)),
+      href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(:job_details)),
       html_attributes: { id: :job_details },
-      status: govuk_tag(text: t(".task_list.status_tags.#{status.fetch(:status)}"), colour: status.fetch(:colour)))
+      status: section_status_to_tag(status))
 
     - %i[job_details about_the_role important_dates application_process].each_cons(2) do |prev_section, section|
       - prev_status = vacancy_draft_status(@organisation, @vacancy, prev_section)
@@ -30,15 +30,15 @@
       - if status.present?
         - task_list.with_item(title: t(".task_list.sections.#{section}.title"),
           hint: t(".task_list.sections.#{section}.hint"),
-          href: organisation_job_wizard_path(@vacancy.id, section_to_first_step(section, @step_process)),
+          href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(section)),
           html_attributes: { id: section },
-          status: govuk_tag(text: t(".task_list.status_tags.#{status.fetch(:status)}"), colour: status.fetch(:colour)))
-      - elsif prev_status.present? && prev_status.fetch(:status) == :completed
+          status: section_status_to_tag(status))
+      - elsif prev_status.present? && prev_status == :completed
         - task_list.with_item(title: t(".task_list.sections.#{section}.title"),
           hint: t(".task_list.sections.#{section}.hint"),
-          href: organisation_job_wizard_path(@vacancy.id, section_to_first_step(section, @step_process)),
+          href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(section)),
           html_attributes: { id: section },
-          status: govuk_tag(text: t(".task_list.status_tags.not_started"), colour: "yellow"))
+          status: section_status_to_tag(:not_started))
       - else
         - task_list.with_item(title: t(".task_list.sections.#{section}.title"),
           hint: t(".task_list.sections.#{section}.hint"),

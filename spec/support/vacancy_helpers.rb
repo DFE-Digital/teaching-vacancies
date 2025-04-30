@@ -411,7 +411,7 @@ module VacancyHelpers
     click_on I18n.t("buttons.save_and_continue")
 
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :include_additional_documents), ignore_query: true)
-    fill_in_include_additional_documents_form_fields(vacancy)
+    fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
     click_on I18n.t("buttons.save_and_continue")
 
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :school_visits), ignore_query: true)
