@@ -166,7 +166,7 @@ RSpec.describe "Creating a vacancy" do
         let(:publisher_that_publishes_vacancy) { create(:publisher, organisations: [school]) }
         let(:school) { create(:school) }
         let(:trust) { create(:trust, schools: [school]) }
-        let(:vacancy) { create(:vacancy, :draft, organisations: [school], publisher: publisher_that_created_vacancy, publisher_organisation: trust) }
+        let(:vacancy) { create(:draft_vacancy, organisations: [school], publisher: publisher_that_created_vacancy, publisher_organisation: trust) }
 
         before { login_publisher(publisher: publisher_that_publishes_vacancy, organisation: school) }
 
@@ -185,7 +185,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "can be published at a later date" do
-        vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
         visit organisation_job_path(vacancy.id)
         click_on I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft")
@@ -201,7 +201,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "can be converted to a draft" do
-        vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
         visit organisation_job_path(vacancy.id)
         click_on I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft")
@@ -218,7 +218,7 @@ RSpec.describe "Creating a vacancy" do
       end
 
       scenario "a published vacancy cannot be republished" do
-        vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
+        vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
         visit organisation_job_path(vacancy.id)
 
@@ -227,10 +227,10 @@ RSpec.describe "Creating a vacancy" do
 
       context "adds a job to update the Google index in the queue" do
         scenario "if the vacancy is published immediately" do
-          vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Date.current, key_stages: %w[ks3], phases: %w[secondary])
+          vacancy = create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Date.current, key_stages: %w[ks3], phases: %w[secondary])
 
           expect_any_instance_of(Publishers::Vacancies::BaseController)
-            .to receive(:update_google_index).with(vacancy)
+            .to receive(:update_google_index).with(Vacancy.find(vacancy.id))
 
           visit organisation_job_path(vacancy.id)
           click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
@@ -256,7 +256,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_visits_to_review(vacancy)
         expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-        expect(created_vacancy.reload.religion_type.to_sym).to eq(:catholic)
+        expect(Vacancy.find(created_vacancy.id).religion_type.to_sym).to eq(:catholic)
       end
 
       scenario "Church of England" do
@@ -265,7 +265,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_visits_to_review(vacancy)
         expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-        expect(created_vacancy.reload.religion_type.to_sym).to eq(:other_religion)
+        expect(Vacancy.find(created_vacancy.id).religion_type.to_sym).to eq(:other_religion)
       end
 
       scenario "No religion questions" do
@@ -274,7 +274,7 @@ RSpec.describe "Creating a vacancy" do
 
         fill_from_visits_to_review(vacancy)
         expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-        expect(created_vacancy.reload.religion_type.to_sym).to eq(:no_religion)
+        expect(Vacancy.find(created_vacancy.id).religion_type.to_sym).to eq(:no_religion)
       end
     end
 
@@ -286,7 +286,7 @@ RSpec.describe "Creating a vacancy" do
 
       it "doesnt ask religion questions" do
         expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :how_to_receive_applications))
-        expect(created_vacancy.reload).to have_attributes(enable_job_applications: false, religion_type: nil)
+        expect(Vacancy.find(created_vacancy.id)).to have_attributes(enable_job_applications: false, religion_type: nil)
       end
     end
   end

@@ -38,7 +38,7 @@ RSpec.describe Vacancies::Import::Sources::Broadbean do
     end
 
     it "yields vacancies with correct attributes" do
-      expect { |b| subject.each(&b) }.to yield_with_args(an_instance_of(Vacancy))
+      expect { |b| subject.each(&b) }.to yield_with_args(an_instance_of(PublishedVacancy))
     end
 
     it "yield a newly built vacancy the correct vacancy information" do

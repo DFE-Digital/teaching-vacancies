@@ -27,6 +27,10 @@ RSpec.describe Vacancy do
       expect { subject.trash! }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob)
     end
 
+    it "doesnt remove google index when expensive jobs are disabled", :disable_expensive_jobs do
+      expect { subject.trash! }.not_to have_enqueued_job(RemoveGoogleIndexQueueJob)
+    end
+
     it "removes attachements" do
       subject.trash!
       expect(subject.supporting_documents).to be_blank

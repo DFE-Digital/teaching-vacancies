@@ -16,7 +16,7 @@ FactoryBot.define do
     "#{job_titles.sample} #{n}"
   end
 
-  factory :vacancy do
+  factory :vacancy, class: "PublishedVacancy" do
     salaries = [
       "Main pay range 1 to Upper pay range 3, £23,719 to £39,406 per year (full time equivalent)",
       "£6,084 to £6,084 per year (full time equivalent)",
@@ -132,28 +132,6 @@ FactoryBot.define do
       salary { Faker::Lorem.characters(number: 257) }
     end
 
-    trait :draft do
-      status { :draft }
-      completed_steps do
-        %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package start_date
-           applying_for_the_job school_visits contact_details about_the_role include_additional_documents]
-      end
-    end
-
-    trait :without_contract_details do
-      status { :draft }
-      completed_steps do
-        %w[job_location job_role]
-      end
-    end
-
-    trait :with_contract_details do
-      status { :draft }
-      completed_steps do
-        %w[job_location job_role job_title education_phases key_stages subjects contract_information pay_package start_date]
-      end
-    end
-
     trait :trashed do
       discarded_at { Time.zone.now }
     end
@@ -249,6 +227,27 @@ FactoryBot.define do
       actual_salary { nil }
       school_offer { nil }
       flexi_working { nil }
+    end
+
+    factory :draft_vacancy do
+      status { :draft }
+
+      completed_steps do
+        %w[job_location job_role education_phases job_title key_stages subjects contract_type working_patterns pay_package start_date
+           applying_for_the_job school_visits contact_details about_the_role include_additional_documents]
+      end
+
+      trait :with_contract_details do
+        completed_steps do
+          %w[job_location job_role job_title education_phases key_stages subjects contract_information pay_package start_date]
+        end
+      end
+
+      trait :without_contract_details do
+        completed_steps do
+          %w[job_location job_role]
+        end
+      end
     end
   end
 end
