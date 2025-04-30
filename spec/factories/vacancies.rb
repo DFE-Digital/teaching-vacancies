@@ -154,7 +154,7 @@ FactoryBot.define do
     end
 
     trait :trashed do
-      status { :trashed }
+      discarded_at { Time.zone.now }
     end
 
     trait :published do
