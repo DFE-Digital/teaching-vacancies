@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  helper_method :employments, :form, :job_applications, :qualification_form_param_key
+  helper_method :employments, :form, :job_applications, :qualification_form_param_key, :job_application_by_status
 
   def reject
     raise ActionController::RoutingError, "Cannot reject a draft or withdrawn application" if
@@ -53,32 +53,55 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def tag
-    tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
+    tag_params = params.require(:publishers_job_application_tag_form).permit(:origin, job_applications: [])
     if params["download_selected"] == "true"
       download_selected(tag_params)
     else
-      prepare_to_tag(tag_params.fetch(:job_applications).compact_blank)
+      prepare_to_tag(tag_params.fetch(:job_applications).compact_blank, tag_params[:origin])
     end
   end
 
   def update_tag
-    update_tag_params = params.require(:publishers_job_application_status_form).permit(:status, job_applications: [])
+    update_tag_params = params.require(:publishers_job_application_status_form).permit(:origin, :status, job_applications: [])
 
     JobApplication.find(update_tag_params.fetch(:job_applications)).each do |job_application|
       job_application.update!(status: update_tag_params.fetch(:status))
     end
-    redirect_to organisation_job_job_applications_path(vacancy.id)
+    redirect_to organisation_job_job_applications_path(
+                  vacancy.id,
+                  anchor: current_tab(update_tag_params[:origin]),
+                )
   end
 
   private
 
-  def prepare_to_tag(job_applications)
+  def current_tab(origin)
+    case origin.to_sym
+    when :new
+      [:new, job_application_by_status[:new].count]
+    when :unsuccessful
+      ["not-considering", job_application_by_status[:unsuccessful].count]
+    when :shortlisted
+      [:shortlisted, job_application_by_status[:shortlisted].count]
+    when :interviewing
+      [:interviewing, job_application_by_status[:interviewing].count]
+    else
+      []
+    end.join("-")
+  end
+
+  def prepare_to_tag(job_applications, origin)
     @form = Publishers::JobApplication::TagForm.new(job_applications: job_applications)
     if @form.valid?
       @job_applications = vacancy.job_applications.where(id: @form.job_applications)
+      @origin = origin
       render "tag"
     else
-      render "index"
+      flash[origin.to_sym] = @form.errors.full_messages
+      redirect_to organisation_job_job_applications_path(
+                    vacancy.id,
+                    anchor: current_tab(origin),
+                  )
     end
   end
 
@@ -100,12 +123,21 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
                 filename: "applications_#{vacancy.job_title}.zip",
                 type: "application/zip")
     else
-      render "index"
+      origin = tag_params[:origin].to_sym
+      flash[origin] = @form.errors.full_messages
+      redirect_to organisation_job_job_applications_path(
+                    vacancy.id,
+                    anchor: current_tab(origin),
+                  )
     end
   end
 
   def job_applications
     @job_applications ||= vacancy.job_applications.not_draft
+  end
+
+  def job_application_by_status
+    @job_application_by_status ||= job_applications.group_by_status
   end
 
   def job_applications_sorted_by_virtual_attribute

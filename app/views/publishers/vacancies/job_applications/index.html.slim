@@ -5,35 +5,30 @@
 .govuk-grid-row
   .govuk-grid-column-full
     - if vacancy.within_data_access_period?
-      - applications = job_applications.group_by(&:status)
-      - new_ones = applications.fetch("submitted", []) + applications.fetch("reviewed", [])
-      - rejected = applications.fetch("unsuccessful", [])
-      - shortlisted = applications.fetch("shortlisted", [])
-      - interviewing = applications.fetch("interviewing", [])
       = govuk_tabs do |tabs|
-        - tabs.with_tab(label: "All (#{job_applications.size})") do
+        - tabs.with_tab(label: "All (#{job_application_by_status[:all].count})") do
           - if job_applications.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: job_applications, heading: "All Applications", multi_select: "all"
+            = render "candidates", form: @form, vacancy: vacancy, candidates: job_applications, heading: "All Applications", multi_select: "all", origin: :all
           - else
             = render EmptySectionComponent.new title: t(".no_applicants")
-        - tabs.with_tab(label: "New (#{new_ones.size})")
-          - if new_ones.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: new_ones, heading: "New Applications", multi_select: "new"
+        - tabs.with_tab(label: "New (#{job_application_by_status[:new].count})")
+          - if job_application_by_status[:new].exists?
+            = render "candidates", form: @form, vacancy: vacancy, candidates: job_application_by_status[:new], heading: "New Applications", multi_select: "new", origin: :new
           - else
             = render EmptySectionComponent.new title: t(".no_new")
-        - tabs.with_tab(label: "Not Considering (#{rejected.size})")
-          - if rejected.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: rejected, heading: "Not being considered", multi_select: "rej"
+        - tabs.with_tab(label: "Not Considering (#{job_application_by_status[:unsuccessful].count})")
+          - if job_application_by_status[:unsuccessful].exists?
+            = render "candidates", form: @form, vacancy: vacancy, candidates: job_application_by_status[:unsuccessful], heading: "Not being considered", multi_select: "rej", origin: :unsuccessful
           - else
             = render EmptySectionComponent.new title: t(".no_rejected")
-        - tabs.with_tab(label: "Shortlisted (#{shortlisted.size})")
-          - if shortlisted.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: shortlisted, heading: "Shortlisted Applications", multi_select: "short"
+        - tabs.with_tab(label: "Shortlisted (#{job_application_by_status[:shortlisted].count})")
+          - if job_application_by_status[:shortlisted].exists?
+            = render "candidates", form: @form, vacancy: vacancy, candidates: job_application_by_status[:shortlisted], heading: "Shortlisted Applications", multi_select: "short", origin: :shortlisted
           - else
             = render EmptySectionComponent.new title: t(".no_shortlisted")
-        - tabs.with_tab(label: "Interviewing (#{interviewing.size})")
-          - if interviewing.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: interviewing, heading: "Interviewing Applications", multi_select: "inter"
+        - tabs.with_tab(label: "Interviewing (#{job_application_by_status[:interviewing].count})")
+          - if job_application_by_status[:interviewing].exists?
+            = render "candidates", form: @form, vacancy: vacancy, candidates: job_application_by_status[:interviewing], heading: "Interviewing Applications", multi_select: "inter", origin: :interviewing
           - else
             = render EmptySectionComponent.new title: t(".no_interviewing")
     - else
