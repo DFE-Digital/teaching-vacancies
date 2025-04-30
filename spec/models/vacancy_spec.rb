@@ -783,13 +783,13 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#draft!" do
+  describe "draft!" do
     subject { create(:vacancy, :future_publish) }
 
     before { subject.draft! }
 
     it "converts the job to a draft" do
-      expect(subject.status).to eq("draft")
+      expect(subject.type).to eq("DraftVacancy")
     end
 
     it "resets the publish_on date" do

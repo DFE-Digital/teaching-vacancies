@@ -14,7 +14,6 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
     end
     let(:vacancy_published_old) do
       create(:vacancy,
-             :published,
              publish_on: 2.days.ago,
              created_at: 2.days.ago,
              updated_at: 2.days.ago,
@@ -22,7 +21,6 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
     end
     let(:vacancy_published) do
       create(:vacancy,
-             :published,
              id: "ff7af59b-558b-4c55-9941-fe1942d84984",
              publish_on: 1.hour.ago,
              updated_at: 2.weeks.ago,
@@ -40,7 +38,6 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
     end
     let(:vacancy_updated) do
       create(:vacancy,
-             :published,
              id: "0ee558c1-3587-4f7a-a0c2-d40a2289c7fe",
              publish_on: 2.days.ago,
              updated_at: 1.hour.ago,
@@ -58,7 +55,6 @@ RSpec.describe Vacancies::Export::DwpFindAJob::PublishedAndUpdated do
     end
     let(:vacancy_to_be_reposted) do
       create(:vacancy,
-             :published,
              id: "51d379eb-78f8-47ab-be8e-307887d4c807",
              publish_on: 62.days.ago,
              updated_at: 62.days.ago,
