@@ -5,7 +5,6 @@ RSpec.describe JobPreferences::JobScope do
 
   let!(:vacancy1) do
     create(:vacancy,
-           :published,
            job_roles: ["teacher"],
            phases: %w[primary secondary],
            key_stages: nil,
@@ -15,7 +14,6 @@ RSpec.describe JobPreferences::JobScope do
 
   let!(:vacancy2) do
     create(:vacancy,
-           :published,
            job_roles: ["teaching_assistant"],
            phases: %w[primary secondary],
            key_stages: %w[ks1],
@@ -25,7 +23,6 @@ RSpec.describe JobPreferences::JobScope do
 
   let!(:vacancy3) do
     create(:vacancy,
-           :published,
            job_roles: ["headteacher"],
            phases: %w[primary],
            key_stages: %w[ks2],
@@ -35,7 +32,6 @@ RSpec.describe JobPreferences::JobScope do
 
   let!(:vacancy4) do
     create(:vacancy,
-           :published,
            job_roles: ["head_of_year_or_phase"],
            phases: %w[secondary],
            key_stages: %w[ks1 ks2],
