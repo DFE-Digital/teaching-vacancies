@@ -24,6 +24,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("job_location_errors.organisation_ids.blank"))
+    end
 
     fill_in_job_location_form_fields(vacancy)
     click_on I18n.t("buttons.continue")
@@ -31,6 +34,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("job_title_errors.job_title.blank"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
     fill_in_job_title_form_fields(vacancy)
@@ -39,6 +45,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("job_roles_errors.job_roles.blank"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
 
     fill_in_job_role_form_fields(vacancy)
@@ -47,6 +56,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("education_phases_errors.phases.blank"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
 
     fill_in_education_phases_form_fields(vacancy)
@@ -55,6 +67,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("key_stages_errors.key_stages.blank"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :key_stages))
 
     fill_in_key_stages_form_fields(vacancy)
@@ -67,6 +82,11 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("contract_information_errors.contract_type.inclusion"))
+      expect(page).to have_content(I18n.t("contract_information_errors.working_patterns.inclusion"))
+      expect(page).to have_content(I18n.t("contract_information_errors.is_job_share.inclusion"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contract_information))
 
     fill_in_contract_information_form_fields(vacancy)
@@ -75,6 +95,10 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("pay_package_errors.salary_types.invalid"))
+      expect(page).to have_content(I18n.t("pay_package_errors.benefits.inclusion"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
     expect_correct_pay_package_options(vacancy)
@@ -85,6 +109,11 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("important_dates_errors.publish_on_day.inclusion"))
+      expect(page).to have_content(I18n.t("important_dates_errors.expires_at.blank"))
+      expect(page).to have_content(I18n.t("important_dates_errors.expiry_time.inclusion"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
 
     fill_in_important_dates_form_fields(vacancy)
@@ -102,6 +131,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("how_to_receive_applications_errors.receive_applications.inclusion"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :how_to_receive_applications))
 
     fill_in_how_to_receive_applications_form_fields(vacancy)
@@ -110,6 +142,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("application_link_errors.application_link.blank"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :application_link))
 
     fill_in_application_link_form_fields(vacancy)
@@ -119,6 +154,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("school_visits_errors.school_visits.inclusion"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
 
     fill_in_school_visits_form_fields(vacancy)
@@ -127,6 +165,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("visa_sponsorship_available_errors.visa_sponsorship_available.inclusion"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
 
     fill_in_visa_sponsorship_form_fields(vacancy)
@@ -135,6 +176,11 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("contact_details_errors.contact_email.blank"))
+      expect(page).to have_content(I18n.t("contact_details_errors.contact_number_provided.inclusion"))
+    end
+    
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contact_details))
 
     fill_in_contact_details_form_fields(vacancy)
@@ -143,6 +189,13 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("about_the_role_errors.ect_status.inclusion"))
+      expect(page).to have_content(I18n.t("about_the_role_errors.skills_and_experience.blank"))
+      expect(page).to have_content(I18n.t("about_the_role_errors.further_details_provided.inclusion"))
+      expect(page).to have_content(I18n.t("about_the_role_errors.school_offer.blank", organisation: "schools"))
+      expect(page).to have_content(I18n.t("about_the_role_errors.flexi_working_details_provided.inclusion"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
 
     fill_in_about_the_role_form_fields(vacancy)
@@ -151,6 +204,9 @@ RSpec.describe "Creating a vacancy" do
 
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
+    within(".govuk-error-summary") do
+      expect(page).to have_content(I18n.t("include_additional_documents_errors.include_additional_documents.inclusion"))
+    end
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
 
     fill_in_include_additional_documents_form_fields(vacancy)
