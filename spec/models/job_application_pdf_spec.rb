@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe JobApplicationPdf do
-  let(:vacancy) { build(:vacancy, :at_one_school, :published) }
+  let(:vacancy) { build(:vacancy, :at_one_school) }
   let(:job_application) { build(:job_application, :status_submitted, vacancy: vacancy) }
   let(:datasource) { described_class.new(job_application) }
 

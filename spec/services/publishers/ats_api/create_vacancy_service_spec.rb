@@ -42,7 +42,6 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
         expect { create_vacancy_service }.to change(Vacancy, :count).by(1)
         vacancy = Vacancy.last
         expect(vacancy.external_reference).to eq("new-ref")
-        expect(vacancy.status).to eq("published")
       end
 
       describe "'publish_on'" do

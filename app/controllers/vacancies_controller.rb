@@ -19,7 +19,7 @@ class VacanciesController < ApplicationController
       session.delete(:newly_created_user)
     end
 
-    vacancy = Vacancy.listed.friendly.find(params[:id])
+    vacancy = PublishedVacancy.listed.friendly.find(params[:id])
     TrackVacancyViewJob.perform_later(vacancy_id: vacancy.id, referrer_url: request.referer)
     @saved_job = current_jobseeker&.saved_jobs&.find_by(vacancy: vacancy)
     @job_application = current_jobseeker&.job_applications&.find_by(vacancy: vacancy)

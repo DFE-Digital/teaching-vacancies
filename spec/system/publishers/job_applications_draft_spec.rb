@@ -5,7 +5,7 @@ RSpec.describe "Draft job applications for publishers" do
     let(:publisher) { create(:publisher, :with_organisation) }
 
     let(:vacancy) do
-      create(:vacancy, :published, publisher: publisher, organisations: publisher.organisations)
+      create(:vacancy, publisher: publisher, organisations: publisher.organisations)
     end
 
     let!(:job_application) do

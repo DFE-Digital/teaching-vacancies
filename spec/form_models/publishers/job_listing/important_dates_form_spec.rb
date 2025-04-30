@@ -62,7 +62,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       end
 
       context "when vacancy is published and publish_on is in the future" do
-        let(:vacancy) { build_stubbed(:vacancy, :published, publish_on: Date.current + 1.day) }
+        let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
           expect(subject).to be_invalid
@@ -92,7 +92,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       end
 
       context "when vacancy is published and publish_on is in the future" do
-        let(:vacancy) { build_stubbed(:vacancy, :published, publish_on: Date.current + 1.day) }
+        let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
           expect(subject).to be_invalid
@@ -122,7 +122,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       end
 
       context "when vacancy is published and publish_on is in the future" do
-        let(:vacancy) { build_stubbed(:vacancy, :published, publish_on: Date.current + 1.day) }
+        let(:vacancy) { build_stubbed(:vacancy, publish_on: Date.current + 1.day) }
 
         it "is invalid" do
           expect(subject).to be_invalid
@@ -144,7 +144,7 @@ RSpec.describe Publishers::JobListing::ImportantDatesForm, type: :model do
       let(:publish_on) { 1.year.ago }
 
       context "when vacancy is published" do
-        let(:vacancy) { build_stubbed(:vacancy, :published) }
+        let(:vacancy) { build_stubbed(:vacancy) }
 
         it "is valid" do
           expect(subject).to be_valid

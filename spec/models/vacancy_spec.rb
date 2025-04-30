@@ -517,7 +517,7 @@ RSpec.describe Vacancy do
         invalid_school = School.new(email: "invalid")
         expect(invalid_school).not_to be_valid
 
-        expect(Vacancy.new(organisations: [invalid_school], publisher: publisher, status: "draft")).to be_valid
+        expect(DraftVacancy.new(organisations: [invalid_school], publisher: publisher)).to be_valid
       end
     end
   end
@@ -670,13 +670,13 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "#draft!" do
+  describe "draft!" do
     subject { create(:vacancy, :future_publish) }
 
     before { subject.draft! }
 
     it "converts the job to a draft" do
-      expect(subject.status).to eq("draft")
+      expect(subject.type).to eq("DraftVacancy")
     end
 
     it "resets the publish_on date" do

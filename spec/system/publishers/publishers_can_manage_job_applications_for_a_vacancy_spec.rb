@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Publishers can manage job applications for a vacancy" do
   let(:organisation) { create(:school, name: "A school with a vacancy") }
-  let!(:vacancy) { create(:vacancy, vacancy_trait, expires_at: expired_at, organisations: [organisation], job_applications: job_applications) }
+  # let!(:vacancy) { create(:vacancy, vacancy_trait, expires_at: expired_at, organisations: [organisation], job_applications: job_applications) }
   let(:publisher) { create(:publisher) }
 
   before do
@@ -12,8 +12,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
   after { logout }
 
   context "when a vacancy has expired and it has applications" do
-    let(:vacancy_trait) { :expired }
-    let(:expired_at) { 2.weeks.ago }
+    let!(:vacancy) { create(:vacancy, :expired, expires_at: 2.weeks.ago, organisations: [organisation], job_applications: job_applications) }
 
     let(:job_applications) do
       [build(:job_application, :status_submitted, last_name: "Alan"),
@@ -173,9 +172,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
   end
 
   context "when a vacancy is active and it has no applications" do
-    let(:vacancy_trait) { :published }
-    let(:job_applications) { [] }
-    let(:expired_at) { 1.month.from_now }
+    let(:vacancy) { create(:vacancy, expires_at: 1.month.from_now, organisations: [organisation], job_applications: []) }
 
     before { visit organisation_job_job_applications_path(vacancy.id) }
 
@@ -199,9 +196,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
   end
 
   context "when a vacancy has expired more than 1 year ago and it has applications" do
-    let(:vacancy_trait) { :expired }
-    let(:expired_at) { 1.year.ago }
-    let(:job_applications) { build_list(:job_application, 1, :status_submitted) }
+    let(:vacancy) { create(:vacancy, :expired, expires_at: 1.year.ago, organisations: [organisation], job_applications: build_list(:job_application, 1, :status_submitted)) }
 
     before { visit organisation_job_job_applications_path(vacancy.id) }
 

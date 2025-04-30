@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Submitted job applications for jobseekers" do
   context "when an application is in submitted status" do
-    let(:vacancy) { create(:vacancy, :at_one_school, :published) }
+    let(:vacancy) { create(:vacancy, :at_one_school) }
 
     let(:jobseeker) { create(:jobseeker) }
     let!(:job_application) do
