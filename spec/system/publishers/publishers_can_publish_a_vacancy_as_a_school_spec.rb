@@ -31,6 +31,9 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("job_title_errors.job_title.blank"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
       fill_in_job_title_form_fields(vacancy)
@@ -39,6 +42,9 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("job_roles_errors.job_roles.blank"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
 
       fill_in_job_role_form_fields(vacancy)
@@ -47,6 +53,9 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("education_phases_errors.phases.blank"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
 
       fill_in_education_phases_form_fields(vacancy)
@@ -55,6 +64,9 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("key_stages_errors.key_stages.blank"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :key_stages))
 
       fill_in_key_stages_form_fields(vacancy)
@@ -67,6 +79,11 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("contract_information_errors.contract_type.inclusion"))
+        expect(page).to have_content(I18n.t("contract_information_errors.working_patterns.inclusion"))
+        expect(page).to have_content(I18n.t("contract_information_errors.is_job_share.inclusion"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contract_information))
 
       fill_in_contract_information_form_fields(vacancy)
@@ -77,6 +94,10 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("pay_package_errors.salary_types.invalid"))
+        expect(page).to have_content(I18n.t("pay_package_errors.benefits.inclusion"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
       fill_in_pay_package_form_fields(vacancy)
@@ -85,7 +106,21 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("important_dates_errors.publish_on_day.inclusion"))
+        expect(page).to have_content(I18n.t("important_dates_errors.expires_at.blank"))
+        expect(page).to have_content(I18n.t("important_dates_errors.expiry_time.inclusion"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
+
+      fill_in_with_expiry_date_before_publish_date(vacancy)
+
+      click_on I18n.t("buttons.save_and_continue")
+
+      expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("important_dates_errors.expires_at.after"))
+      end
 
       fill_in_important_dates_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
@@ -93,13 +128,15 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("start_date_errors.start_date_type.inclusion"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :start_date))
 
       fill_in_start_date_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
-      # No religious options when not a faith school
       expect(all(".govuk-radios__item").count).to eq(2)
       fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
       click_on I18n.t("buttons.save_and_continue")
@@ -107,6 +144,9 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("school_visits_errors.school_visits.inclusion"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
 
       fill_in_school_visits_form_fields(vacancy)
@@ -115,6 +155,9 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("visa_sponsorship_available_errors.visa_sponsorship_available.inclusion"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
 
       fill_in_visa_sponsorship_form_fields(vacancy)
@@ -123,6 +166,10 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("contact_details_errors.contact_email.blank"))
+        expect(page).to have_content(I18n.t("contact_details_errors.contact_number_provided.inclusion"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contact_details))
 
       fill_in_contact_details_form_fields(vacancy)
@@ -131,6 +178,13 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("about_the_role_errors.ect_status.inclusion"))
+        expect(page).to have_content(I18n.t("about_the_role_errors.skills_and_experience.blank"))
+        expect(page).to have_content(I18n.t("about_the_role_errors.further_details_provided.inclusion"))
+        expect(page).to have_content(I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"))
+        expect(page).to have_content(I18n.t("about_the_role_errors.flexi_working_details_provided.inclusion"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
 
       fill_in_about_the_role_form_fields(vacancy)
@@ -139,6 +193,9 @@ RSpec.describe "Creating a vacancy" do
 
       click_on I18n.t("buttons.save_and_continue")
       expect(page).to have_content("There is a problem")
+      within(".govuk-error-summary") do
+        expect(page).to have_content(I18n.t("include_additional_documents_errors.include_additional_documents.inclusion"))
+      end
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
 
       fill_in_include_additional_documents_form_fields(vacancy)
@@ -215,47 +272,6 @@ RSpec.describe "Creating a vacancy" do
     end
 
     describe "#publish" do
-      scenario "cannot be published unless the details are valid" do
-        yesterday_date = Time.zone.yesterday
-        vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], key_stages: %w[ks3], publish_on: Time.zone.today, phases: %w[secondary])
-        vacancy.update! expires_at: yesterday_date
-
-        visit organisation_job_path(vacancy.id)
-        visit organisation_job_build_path(vacancy.id, :important_dates)
-
-        expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 2, total: 4))
-        within("h1.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
-        end
-
-        expect(find_field("publishers_job_listing_important_dates_form[expires_at(3i)]").value).to eq(yesterday_date.day.to_s)
-        expect(find_field("publishers_job_listing_important_dates_form[expires_at(2i)]").value).to eq(yesterday_date.month.to_s)
-        expect(find_field("publishers_job_listing_important_dates_form[expires_at(1i)]").value).to eq(yesterday_date.year.to_s)
-
-        click_on I18n.t("buttons.save_and_continue")
-
-        within(".govuk-error-summary") do
-          expect(page).to have_content("There is a problem")
-        end
-
-        within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_at"))) do
-          expect(page).to have_content(I18n.t("important_dates_errors.expires_at.after"))
-        end
-
-        expiry_date = Date.current + 1.week
-
-        fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: expiry_date.day
-        fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: expiry_date.month
-        fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: expiry_date.year
-        choose "8am", name: "publishers_job_listing_important_dates_form[expiry_time]"
-
-        click_on I18n.t("buttons.save_and_continue")
-
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-        expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
-      end
-
       context "when publishing a vacancy" do
         let(:publisher_that_created_vacancy) { create(:publisher, organisations: [trust]) }
         let(:publisher_that_publishes_vacancy) { create(:publisher, organisations: [school]) }
@@ -314,20 +330,21 @@ RSpec.describe "Creating a vacancy" do
         has_incomplete_draft_vacancy_review_heading?(vacancy)
       end
 
-      scenario "a published vacancy cannot be republished" do
+      scenario "a draft vacancy with a publish_on date can not be set to publish more than once, but publish date can be edited" do
         vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [school], publish_on: Time.zone.tomorrow, phases: %w[secondary], key_stages: %w[ks3])
 
         visit organisation_job_path(vacancy.id)
-
         expect(page).to_not have_content(I18n.t("publishers.vacancies.show.heading_component.action.publish"))
+        expect(page).to have_content "Change Publish date"
       end
 
-      scenario "a published vacancy cannot be edited" do
+      scenario "a published vacancy cannot be edited or republished" do
         vacancy = create(:vacancy, :published, organisations: [school])
 
         visit organisation_job_path(vacancy.id)
         expect(page.current_path).to eq(organisation_job_path(vacancy.id))
         has_published_vacancy_review_heading?(vacancy)
+        expect(page).to_not have_content(I18n.t("publishers.vacancies.show.heading_component.action.publish"))
       end
 
       context "adds a job to update the Google index in the queue" do
@@ -414,5 +431,15 @@ RSpec.describe "Creating a vacancy" do
 
     fill_in_include_additional_documents_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
+  end
+
+  def fill_in_with_expiry_date_before_publish_date(vacancy)
+    fill_in "publishers_job_listing_important_dates_form[publish_on(3i)]", with: vacancy.publish_on.day
+    fill_in "publishers_job_listing_important_dates_form[publish_on(2i)]", with: vacancy.publish_on.month
+    fill_in "publishers_job_listing_important_dates_form[publish_on(1i)]", with: vacancy.publish_on.year
+
+    fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: Time.zone.yesterday.day
+    fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: Time.zone.yesterday.month
+    fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: Time.zone.yesterday.year
   end
 end
