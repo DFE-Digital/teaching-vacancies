@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PublishVacancy do
   let(:organisation) { create(:school) }
   let(:user) { create(:publisher) }
-  let(:vacancy) { create(:vacancy, :draft, publisher: nil) }
+  let(:vacancy) { create(:draft_vacancy, publisher: nil) }
 
   describe "#call" do
     it "updates the vacancy's status to published" do

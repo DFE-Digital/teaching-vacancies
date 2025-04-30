@@ -5,7 +5,7 @@ RSpec.describe "Publishers can add additional documents to a vacancy" do
   let(:primary_school) { create(:school, name: "Primary school", phase: "primary") }
   let(:organisation) { primary_school }
 
-  let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
+  let!(:vacancy) { create(:draft_vacancy, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
 
   before do
     login_publisher(publisher: publisher, organisation: organisation)

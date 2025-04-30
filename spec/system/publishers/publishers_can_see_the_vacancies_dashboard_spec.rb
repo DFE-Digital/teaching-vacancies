@@ -21,7 +21,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
 
   context "viewing the lists of jobs on the school page" do
     let!(:published_vacancy) { create(:vacancy, :published, organisations: [school]) }
-    let!(:draft_vacancy) { create(:vacancy, :draft, organisations: [school]) }
+    let!(:draft_vacancy) { create(:draft_vacancy, organisations: [school]) }
     let!(:pending_vacancy) { create(:vacancy, :future_publish, organisations: [school]) }
     let!(:expired_vacancy) do
       create(:vacancy, :expired, organisations: [school])
@@ -92,7 +92,7 @@ RSpec.describe "Publishers can see the vacancies dashboard" do
     end
 
     context "when a draft vacancy has been updated" do
-      let!(:draft_vacancy) { create(:vacancy, :draft, organisations: [school], created_at: 3.days.ago, updated_at: 1.day.ago) }
+      let!(:draft_vacancy) { create(:draft_vacancy, organisations: [school], created_at: 3.days.ago, updated_at: 1.day.ago) }
 
       scenario "shows the last updated at" do
         visit organisation_jobs_with_type_path
