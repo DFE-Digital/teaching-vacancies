@@ -58,7 +58,7 @@ RSpec.describe "Job applications" do
   describe "GET #index" do
     context "when the vacancy does not belong to the current organisation" do
       let(:other_organisation) { create(:school) }
-      let(:vacancy) { create(:vacancy, :published) }
+      let(:vacancy) { create(:vacancy) }
 
       before do
         allow_any_instance_of(ApplicationController)

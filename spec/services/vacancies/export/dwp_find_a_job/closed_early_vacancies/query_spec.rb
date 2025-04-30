@@ -19,7 +19,7 @@ RSpec.describe Vacancies::Export::DwpFindAJob::ClosedEarlyVacancies::Query do
     let(:early_ended_internal_before_date_vacancy) { create(:vacancy, expires_at: "2024-04-30T10:00:00", updated_at: "2024-04-30T10:00:01", created_at: 1.week.ago) }
     let(:expired_not_early_ended_internal_vacancy) { create(:vacancy, expires_at: "2024-05-2T10:00:00", created_at: 1.week.ago, updated_at: 6.days.ago) }
     let(:early_ended_external_vacancy) do
-      build(:vacancy, :published, :external, publish_on: "2024-05-01", expires_at: "2024-05-2T10:00:00", updated_at: "2024-05-2T10:00:00", organisations: [school], created_at: 1.week.ago).tap do |v|
+      build(:vacancy, :external, publish_on: "2024-05-01", expires_at: "2024-05-2T10:00:00", updated_at: "2024-05-2T10:00:00", organisations: [school], created_at: 1.week.ago).tap do |v|
         v.save(validate: false)
       end
     end
