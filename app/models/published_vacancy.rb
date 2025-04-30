@@ -25,6 +25,18 @@ class PublishedVacancy < Vacancy
     remove_google_index
   end
 
+  def draft?
+    false
+  end
+
+  def expired?
+    expires_at.past?
+  end
+
+  def published?
+    true
+  end
+
   private
 
   def remove_google_index

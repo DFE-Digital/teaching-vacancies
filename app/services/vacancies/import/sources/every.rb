@@ -19,13 +19,12 @@ class Vacancies::Import::Sources::Every
       next if schools.blank?
       next if vacancy_listed_at_excluded_school_type?(schools)
 
+      # An external vacancy is by definition always published
       v = PublishedVacancy.find_or_initialize_by(
         external_source: SOURCE_NAME,
         external_reference: result["reference"],
       )
 
-      # An external vacancy is by definition always published
-      v.status = :published
       # Consider publish_on date to be the first time we saw this vacancy come through
       # (i.e. today, unless it already has a publish on date set)
       v.publish_on ||= Date.today

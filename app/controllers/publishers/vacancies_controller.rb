@@ -31,10 +31,13 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
 
-    vacancies = Vacancy
-                  .kept
+    scope = if @selected_type == :draft
+              DraftVacancy.kept
+            else
+              PublishedVacancy.kept.public_send(VACANCY_TYPES.fetch(@selected_type))
+            end
+    vacancies = scope
                   .in_organisation_ids(current_publisher.accessible_organisations(current_organisation).map(&:id))
-                  .public_send(VACANCY_TYPES.fetch(@selected_type))
                   .order(@sort.by => @sort.order)
                   .where.not(job_title: nil)
 
@@ -50,7 +53,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def create
-    vacancy = Vacancy.create!(publisher: current_publisher, publisher_organisation: current_organisation, organisations: [current_organisation], status: "draft")
+    vacancy = DraftVacancy.create!(publisher: current_publisher, publisher_organisation: current_organisation, organisations: [current_organisation])
 
     if current_organisation.school? && current_organisation.phase.in?(Vacancy::SCHOOL_PHASES_MATCHING_VACANCY_PHASES)
       vacancy.update!(phases: [current_organisation.phase])
@@ -75,7 +78,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   end
 
   def convert_to_draft
-    vacancy.draft!
+    vacancy.update!(type: "DraftVacancy")
     redirect_to organisation_job_path(vacancy.id)
   end
 
@@ -99,7 +102,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def show_application_feature_reminder_page?
     return false if session[:visited_application_feature_reminder_page] || session[:visited_new_features_page]
 
-    Vacancy.non_draft.where(
+    Vacancy.kept.where(
       publisher_id: current_publisher.id,
       enable_job_applications: true,
       created_at: Publishers::NewFeaturesController::NEW_FEATURES_PAGE_UPDATED_AT..,

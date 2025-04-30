@@ -5,8 +5,8 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
   let(:publisher) { build_stubbed(:publisher, organisations: [organisation]) }
 
   let(:vacancy) do
-    build_stubbed(:vacancy, :published, publisher: publisher, organisations: [organisation],
-                                        job_applications: [build_stubbed(:job_application, :submitted)])
+    build_stubbed(:vacancy, publisher: publisher, organisations: [organisation],
+                            job_applications: [build_stubbed(:job_application, :submitted)])
   end
   let(:job_application) { vacancy.job_applications.first }
 
@@ -134,7 +134,7 @@ RSpec.describe "publishers/vacancies/job_applications/index" do
   end
 
   context "when a vacancy is active and it has no applications" do
-    let(:vacancy) { build_stubbed(:vacancy, :published, expires_at: 1.month.from_now, organisations: [organisation], job_applications: []) }
+    let(:vacancy) { build_stubbed(:vacancy, expires_at: 1.month.from_now, organisations: [organisation], job_applications: []) }
 
     describe "the summary section" do
       it "shows breadcrumb with link to active jobs in dashboard" do

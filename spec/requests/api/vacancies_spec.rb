@@ -133,7 +133,7 @@ RSpec.describe "Api::Vacancies" do
     end
 
     it "never redirects to latest url" do
-      vacancy = create(:vacancy, :published)
+      vacancy = create(:vacancy)
       vacancy.job_title = "A new job title"
       vacancy.refresh_slug
       vacancy.save

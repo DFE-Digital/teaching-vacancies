@@ -20,7 +20,7 @@ RSpec.describe "Job applications build" do
     context "when the vacancy has been published" do
       context "when dependent steps have been made invalid" do
         context "when changing the job location" do
-          let(:vacancy) { create(:vacancy, :published, phases: ["nursery"], organisations: [school_one]) }
+          let(:vacancy) { create(:vacancy, phases: ["nursery"], organisations: [school_one]) }
 
           before do
             allow(vacancy).to receive(:allow_key_stages?).and_return(true)
@@ -58,7 +58,7 @@ RSpec.describe "Job applications build" do
           before { patch(organisation_job_build_path(vacancy.id, :job_role, params)) }
 
           context "when the new job_role can be ect_suitable" do
-            let(:vacancy) { create(:vacancy, :published, job_roles: ["headteacher"], organisations: [school_one]) }
+            let(:vacancy) { create(:vacancy, job_roles: ["headteacher"], organisations: [school_one]) }
             let(:params) { { publishers_job_listing_job_role_form: { job_roles: ["teacher"] } } }
 
             it "redirects to the about_the_role step" do
@@ -67,7 +67,7 @@ RSpec.describe "Job applications build" do
           end
 
           context "when the the education_phase and the new job_role allows key_stages to be set" do
-            let(:vacancy) { create(:vacancy, :published, phases: %w[primary], job_roles: ["sendco"], organisations: [school_one]) }
+            let(:vacancy) { create(:vacancy, phases: %w[primary], job_roles: ["sendco"], organisations: [school_one]) }
             let(:params) { { publishers_job_listing_job_role_form: { job_roles: ["teacher"] } } }
 
             it "redirects to the key_stages step" do
@@ -77,7 +77,7 @@ RSpec.describe "Job applications build" do
         end
 
         context "when changing the education_phase" do
-          let(:vacancy) { create(:vacancy, :published, phases: ["nursery"], organisations: [school_without_phase]) }
+          let(:vacancy) { create(:vacancy, phases: ["nursery"], organisations: [school_without_phase]) }
 
           before { patch(organisation_job_build_path(vacancy.id, :education_phases, params)) }
 
@@ -94,7 +94,7 @@ RSpec.describe "Job applications build" do
           before { patch(organisation_job_build_path(vacancy.id, :how_to_receive_applications, params)) }
 
           context "when changing to uploaded_form" do
-            let(:vacancy) { create(:vacancy, :published, enable_job_applications: false, receive_applications: "website", organisations: [school_one]) }
+            let(:vacancy) { create(:vacancy, enable_job_applications: false, receive_applications: "website", organisations: [school_one]) }
             let(:params) { { publishers_job_listing_how_to_receive_applications_form: { receive_applications: "uploaded_form" } } }
 
             it "redirects to the application_form step" do
@@ -103,7 +103,7 @@ RSpec.describe "Job applications build" do
           end
 
           context "when changing to website" do
-            let(:vacancy) { create(:vacancy, :published, enable_job_applications: false, receive_applications: "email", organisations: [school_one]) }
+            let(:vacancy) { create(:vacancy, enable_job_applications: false, receive_applications: "email", organisations: [school_one]) }
             let(:params) { { publishers_job_listing_how_to_receive_applications_form: { receive_applications: "website" } } }
 
             it "redirects to the application_link step" do
@@ -115,7 +115,7 @@ RSpec.describe "Job applications build" do
         context "when changing include_additional_documents to true" do
           before { patch(organisation_job_build_path(vacancy.id, :include_additional_documents, params)) }
 
-          let(:vacancy) { create(:vacancy, :published, include_additional_documents: false, organisations: [school_one]) }
+          let(:vacancy) { create(:vacancy, include_additional_documents: false, organisations: [school_one]) }
           let(:params) { { publishers_job_listing_include_additional_documents_form: { include_additional_documents: true } } }
 
           it "redirects to the documents step" do
