@@ -278,7 +278,7 @@ RSpec.describe Vacancy do
         old_expired_and_awaiting_feedback = create(:vacancy, :expired, expires_at: 3.months.ago)
         recent_expired_and_not_awaiting_feedback = create(:vacancy, :expired, expires_at: 1.month.ago, listed_elsewhere: :listed_paid)
 
-        results = Vacancy.awaiting_feedback
+        results = Vacancy.awaiting_feedback_recently_expired
 
         expect(results).to include(recent_expired_and_awaiting_feedback)
         expect(results).not_to include(old_expired_and_awaiting_feedback)

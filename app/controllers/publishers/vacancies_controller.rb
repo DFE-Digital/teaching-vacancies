@@ -13,10 +13,29 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @vacancy = VacancyPresenter.new(vacancy)
   end
 
+  # This helps prevent parameters other than these specified arriving as a method on Vacancy
+  VACANCY_TYPES =
+    {
+      live: :live,
+      draft: :draft,
+      pending: :pending,
+      expired: :expired,
+      awaiting_feedback: :awaiting_feedback_recently_expired,
+    }.freeze
+
   def index
     @selected_type = (params[:type] || :live).to_sym
     @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
+
+    vacancies = Vacancy.in_organisation_ids(current_publisher.accessible_organisations(current_organisation).map(&:id))
+
+    vacancies = vacancies.public_send(VACANCY_TYPES.fetch(@selected_type))
+                          .order(@sort.by => @sort.order)
+                          .where.not(job_title: nil)
+    @pagy, @vacancies = pagy(vacancies)
+    @count = vacancies.count
+    @vacancy_types = VACANCY_TYPES.keys
   end
 
   # We don't save anything here - just redirect to the show page
