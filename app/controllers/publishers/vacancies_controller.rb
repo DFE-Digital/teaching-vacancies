@@ -30,9 +30,11 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
 
     vacancies = Vacancy.in_organisation_ids(current_publisher.accessible_organisations(current_organisation).map(&:id))
 
-    @vacancies = vacancies.public_send(VACANCY_TYPES.fetch(@selected_type))
+    vacancies = vacancies.public_send(VACANCY_TYPES.fetch(@selected_type))
                           .order(@sort.by => @sort.order)
                           .where.not(job_title: nil)
+    @pagy, @vacancies = pagy(vacancies)
+    @count = vacancies.count
     @vacancy_types = VACANCY_TYPES.keys
   end
 
