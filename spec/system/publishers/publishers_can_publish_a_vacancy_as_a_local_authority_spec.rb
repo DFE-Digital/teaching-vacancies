@@ -180,7 +180,7 @@ RSpec.describe "Creating a vacancy" do
       expect(page).to have_content(I18n.t("contact_details_errors.contact_email.blank"))
       expect(page).to have_content(I18n.t("contact_details_errors.contact_number_provided.inclusion"))
     end
-    
+
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contact_details))
 
     fill_in_contact_details_form_fields(vacancy)
