@@ -46,7 +46,7 @@ class JobApplicationPdfGenerator
   def render_table_section(section_name)
     page_section do
       page_title(section_name.to_s.titleize)
-      page_table(datasource.public_send(section_name).to_a)
+      page_table(datasource.public_send(section_name))
     end
   end
 
@@ -58,7 +58,7 @@ class JobApplicationPdfGenerator
         next if group.blank?
 
         group.each do
-          page_table(it.to_a)
+          page_table(it)
           move_down 1.cm
         end
       end

@@ -63,7 +63,7 @@ RSpec.describe JobApplicationPdf do
     end
 
     it { is_expected.to be_a(JobApplicationPdf::Table) }
-    it { expect(personal_details.to_a).to match_array(basic_table_data) }
+    it { expect(personal_details).to match_array(basic_table_data) }
 
     context "when working pattern details present" do
       let(:details) { "some details" }
@@ -71,7 +71,7 @@ RSpec.describe JobApplicationPdf do
 
       before { job_application.working_pattern_details = details }
 
-      it { expect(personal_details.to_a).to include(expected_row) }
+      it { expect(personal_details).to include(expected_row) }
     end
 
     context "when ni number present" do
@@ -80,7 +80,7 @@ RSpec.describe JobApplicationPdf do
 
       before { job_application.national_insurance_number = ni_number }
 
-      it { expect(personal_details.to_a).to include(expected_row) }
+      it { expect(personal_details).to include(expected_row) }
     end
   end
 
@@ -116,7 +116,7 @@ RSpec.describe JobApplicationPdf do
     end
 
     it { is_expected.to be_a(JobApplicationPdf::Table) }
-    it { expect(professional_status.to_a).to match_array(basic_professional_status_data) }
+    it { expect(professional_status).to match_array(basic_professional_status_data) }
 
     context "when statutory induction complete details present" do
       let(:details) { "Details about induction completion" }
@@ -127,7 +127,7 @@ RSpec.describe JobApplicationPdf do
         job_application.statutory_induction_complete_details = details
       end
 
-      it { expect(professional_status.to_a).to include(expected_row) }
+      it { expect(professional_status).to include(expected_row) }
     end
 
     context "when qualified teacher status is yes" do
@@ -138,7 +138,7 @@ RSpec.describe JobApplicationPdf do
 
       it "includes the proper status info" do
         expected_row = [I18n.t("qualified_teacher_status", scope:), "Yes, awarded in 2020 "]
-        expect(professional_status.to_a).to include(expected_row)
+        expect(professional_status).to include(expected_row)
       end
     end
 
@@ -152,7 +152,7 @@ RSpec.describe JobApplicationPdf do
 
       it "includes the proper status info" do
         expected_row = [I18n.t("qualified_teacher_status", scope:), "No. #{details}"]
-        expect(professional_status.to_a).to include(expected_row)
+        expect(professional_status).to include(expected_row)
       end
     end
 
@@ -163,7 +163,7 @@ RSpec.describe JobApplicationPdf do
 
       it "includes the proper status info" do
         expected_row = [I18n.t("qualified_teacher_status", scope:), "I'm on track to receive my QTS"]
-        expect(professional_status.to_a).to include(expected_row)
+        expect(professional_status).to include(expected_row)
       end
     end
   end
@@ -196,8 +196,8 @@ RSpec.describe JobApplicationPdf do
       before { qualification.qualification_results = [result] }
 
       it "formats secondary qualifications correctly" do
-        expect(qualifications.first.last.first.to_a.first).to include("Secondary Qualification")
-        expect(qualifications.first.last.first.to_a).to include(["Subject:", result.subject])
+        expect(qualifications.first.last.first.first).to include("Secondary Qualification")
+        expect(qualifications.first.last.first).to include(["Subject:", result.subject])
       end
     end
 
@@ -208,8 +208,8 @@ RSpec.describe JobApplicationPdf do
       before { qualification.qualification_results = [result] }
 
       it "formats secondary qualifications correctly" do
-        expect(qualifications.first.last.first.to_a.first).to include("Undergraduate degree")
-        expect(qualifications.first.last.first.to_a).to include(["Institution:", qualification.institution])
+        expect(qualifications.first.last.first.first).to include("Undergraduate degree")
+        expect(qualifications.first.last.first).to include(["Institution:", qualification.institution])
       end
     end
   end
@@ -231,8 +231,8 @@ RSpec.describe JobApplicationPdf do
       let(:training) { build(:training_and_cpd, name: "First Aid", provider: "Red Cross") }
 
       it "returns training data" do
-        expect(training_and_cpds.first.last.first.to_a).to include(["Name", "First Aid"])
-        expect(training_and_cpds.first.last.first.to_a).to include(["Provider", "Red Cross"])
+        expect(training_and_cpds.first.last.first).to include(["Name", "First Aid"])
+        expect(training_and_cpds.first.last.first).to include(["Provider", "Red Cross"])
       end
     end
 
@@ -240,7 +240,7 @@ RSpec.describe JobApplicationPdf do
       let(:training) { build(:training_and_cpd, name: "Advanced Course", grade: "Distinction") }
 
       it "includes grade information" do
-        expect(training_and_cpds.first.last.first.to_a).to include(%w[Grade Distinction])
+        expect(training_and_cpds.first.last.first).to include(%w[Grade Distinction])
       end
     end
   end
@@ -262,7 +262,7 @@ RSpec.describe JobApplicationPdf do
       let(:membership) { build(:professional_body_membership, name: "Royal Society of Chemistry") }
 
       it "returns membership data" do
-        expect(professional_body_memberships.first.last.first.to_a).to include(["Name of professional body:", "Royal Society of Chemistry"])
+        expect(professional_body_memberships.first.last.first).to include(["Name of professional body:", "Royal Society of Chemistry"])
       end
     end
   end
@@ -271,7 +271,7 @@ RSpec.describe JobApplicationPdf do
     subject(:employment_history) { datasource.employment_history }
 
     let(:employment) { nil }
-    let(:employment_data) { employment_history.first.last.first.to_a }
+    let(:employment_data) { employment_history.first.last.first }
 
     before { job_application.employments = [employment].compact }
 
@@ -310,7 +310,7 @@ RSpec.describe JobApplicationPdf do
       end
 
       it "includes the unexplained gap" do
-        first_table = employment_history.first.last.first.to_a
+        first_table = employment_history.first.last.first
         expect(first_table).to include(["Unexplained Employment Gap"])
         expect(employment_data).to include(["End date:", "present"])
       end
@@ -334,8 +334,8 @@ RSpec.describe JobApplicationPdf do
       let(:reference) { build(:reference) }
 
       it "returns reference data" do
-        expect(references.first.last.first.to_a).to include(["Name:", reference.name])
-        expect(references.first.last.first.to_a).to include(["Organisation:", reference.organisation])
+        expect(references.first.last.first).to include(["Name:", reference.name])
+        expect(references.first.last.first).to include(["Organisation:", reference.organisation])
       end
     end
 
@@ -343,7 +343,7 @@ RSpec.describe JobApplicationPdf do
       let(:reference) { build(:reference, phone_number: "01234567890") }
 
       it "includes phone number" do
-        expect(references.first.last.first.to_a).to include(["Phone Number:", "01234567890"])
+        expect(references.first.last.first).to include(["Phone Number:", "01234567890"])
       end
     end
 
@@ -351,7 +351,7 @@ RSpec.describe JobApplicationPdf do
       let(:reference) { build(:reference, is_most_recent_employer: true) }
 
       it "includes most recent employer information" do
-        expect(references.first.last.first.to_a).to include(["Current or most recent employer:", "Yes"])
+        expect(references.first.last.first).to include(["Current or most recent employer:", "Yes"])
       end
     end
   end
@@ -369,7 +369,7 @@ RSpec.describe JobApplicationPdf do
           I18n.t("helpers.legend.jobseekers_job_application_ask_for_support_form.is_support_needed"),
           "No",
         ]
-        expect(ask_for_support.to_a).to include(expected_row)
+        expect(ask_for_support).to include(expected_row)
       end
     end
 
@@ -386,7 +386,7 @@ RSpec.describe JobApplicationPdf do
           I18n.t("helpers.legend.jobseekers_job_application_ask_for_support_form.is_support_needed"),
           "Yes\nDetails: #{details}",
         ]
-        expect(ask_for_support.to_a).to include(expected_row)
+        expect(ask_for_support).to include(expected_row)
       end
     end
   end
@@ -408,7 +408,7 @@ RSpec.describe JobApplicationPdf do
           [I18n.t("has_safeguarding_issue", scope:), "No"],
           [I18n.t("has_close_relationships", scope:, organisation: vacancy.organisation_name), "No"],
         ]
-        expect(declarations.to_a).to eq(expected_data)
+        expect(declarations).to eq(expected_data)
       end
     end
 
@@ -423,7 +423,7 @@ RSpec.describe JobApplicationPdf do
       it "shows 'Yes' with details for safeguarding issues" do
         scope = "helpers.legend.jobseekers_job_application_declarations_form"
         expected_row = [I18n.t("has_safeguarding_issue", scope:), "Yes\nDetails: #{details}"]
-        expect(declarations.to_a).to include(expected_row)
+        expect(declarations).to include(expected_row)
       end
     end
 
@@ -438,7 +438,7 @@ RSpec.describe JobApplicationPdf do
       it "shows 'Yes' with details for close relationships" do
         scope = "helpers.legend.jobseekers_job_application_declarations_form"
         expected_row = [I18n.t("has_close_relationships", scope:, organisation: vacancy.organisation_name), "Yes\nDetails: #{details}"]
-        expect(declarations.to_a).to include(expected_row)
+        expect(declarations).to include(expected_row)
       end
     end
   end
