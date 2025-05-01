@@ -33,6 +33,25 @@ class SchoolSearchForm
     attrs
   end
 
+  def filters_list
+    %i[
+      education_phase
+      key_stage
+      special_school
+      job_availability
+      organisation_types
+      school_types
+    ]
+  end
+
+  def filters
+    to_h.delete_if { |k, _| filters_list.exclude?(k) }
+  end
+
+  def special_school_options
+    [["1", I18n.t("organisations.filters.special_school")]]
+  end
+
   def education_phase_options
     School::READABLE_PHASE_MAPPINGS.values.uniq.compact.map { |i| [i, I18n.t(i, scope: "organisations.search.results.phases")] }
   end
@@ -52,7 +71,7 @@ class SchoolSearchForm
     ]
   end
 
-  def school_types_options
+  def school_type_options
     %w[faith_school special_school].map { |school_type| [school_type, I18n.t("organisations.filters.#{school_type}")] }
   end
 
