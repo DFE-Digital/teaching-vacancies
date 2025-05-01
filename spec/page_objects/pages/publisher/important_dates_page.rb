@@ -19,6 +19,8 @@ module PageObjects
 
           click_on I18n.t("buttons.save_and_continue")
         end
+
+        element :change_publish_day_field, "#publishers_job_listing_important_dates_form_publish_on_3i"
       end
     end
   end

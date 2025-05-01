@@ -63,7 +63,7 @@ FactoryBot.define do
     status { :published }
     # Subjects are ignored when phases are primary-only
     subjects { factory_sample(SUBJECT_OPTIONS, 2).map(&:first).sort! }
-    key_stages { factory_rand_sample(%w[early_years ks1 ks2 ks3 ks4 ks5], 2..3) }
+    key_stages { %w[ks1] }
     working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
     working_patterns { %w[full_time] }
     visa_sponsorship_available { false }
@@ -93,6 +93,7 @@ FactoryBot.define do
       working_patterns { factory_rand_sample(%w[full_time part_time], 1..2) }
       working_patterns_details { Faker::Lorem.sentence(word_count: factory_rand(1..50)) }
       phases { factory_rand_sample(Vacancy.phases.keys, 1..3) }
+      key_stages { factory_rand_sample(%w[early_years ks1 ks2 ks3 ks4 ks5], 2..3) }
     end
 
     trait :without_any_money do

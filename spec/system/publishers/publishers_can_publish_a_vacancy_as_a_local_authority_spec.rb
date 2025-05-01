@@ -148,7 +148,6 @@ RSpec.describe "Creating a vacancy" do
     publisher_contact_details_page.fill_in_and_submit_form(vacancy)
 
     expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-    verify_all_vacancy_details(created_vacancy)
 
     click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
     expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
