@@ -3,10 +3,10 @@
 .govuk-grid-row
   .govuk-grid-column-two-thirds
     - if vacancy.listed?
-      = render "publishers/vacancies/review_banners/published"
+      = render "publishers/vacancies/review_banners/published", vacancy: vacancy
 
-    - elsif vacancy.draft? && all_steps_valid?
-      = render "publishers/vacancies/review_banners/complete_draft"
+    - elsif vacancy.draft? && all_steps_valid
+      = render "publishers/vacancies/review_banners/complete_draft", vacancy: vacancy
 
     - elsif vacancy.draft?
       = render "publishers/vacancies/review_banners/incomplete_draft"
@@ -15,9 +15,9 @@
       = render "publishers/vacancies/review_banners/closed"
 
     - elsif vacancy.pending?
-      = render "publishers/vacancies/review_banners/scheduled"
+      = render "publishers/vacancies/review_banners/scheduled", vacancy: vacancy
 
 - if vacancy.published?
   .govuk-grid-row
     .govuk-grid-column-full
-      = render "publishers/vacancies/tabs"
+      = render "publishers/vacancies/tabs", vacancy: vacancy, current_organisation: current_organisation

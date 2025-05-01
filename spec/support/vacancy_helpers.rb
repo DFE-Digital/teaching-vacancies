@@ -187,66 +187,6 @@ module VacancyHelpers
     fill_in "publishers_job_listing_copy_vacancy_form[starts_on(1i)]", with: vacancy.starts_on.year if vacancy.starts_on
   end
 
-  def verify_all_vacancy_details(vacancy)
-    vacancy.reload
-    vacancy = VacancyPresenter.new(vacancy) unless vacancy.is_a?(VacancyPresenter)
-
-    verify_job_locations(vacancy.organisations)
-
-    expect(page).to have_content(vacancy.readable_job_roles)
-    expect(page).to have_content(vacancy.job_title)
-    expect(page).to have_content(vacancy.readable_key_stages) if vacancy.key_stages.present?
-    expect(page).to have_content(vacancy.readable_subjects) if vacancy.subjects.any?
-    expect(page).to have_content(vacancy.contract_type_with_duration)
-
-    vacancy.working_patterns.each do |working_pattern|
-      expect(page).to have_content(/#{working_pattern.humanize}/i)
-    end
-    expect(page).to have_content(vacancy.working_patterns_details) if vacancy.working_patterns_details.present?
-
-    expect(page).to have_content(vacancy.salary) if vacancy.salary_types.include?("full_time")
-    expect(page).to have_content(vacancy.actual_salary) if vacancy.salary_types.include?("part_time")
-    expect(page).to have_content(vacancy.pay_scale) if vacancy.salary_types.include?("pay_scale")
-
-    expect(page).to have_content(strip_tags(vacancy.benefits_details)) if vacancy.benefits?
-
-    expect(page).to have_content(vacancy.publish_on.to_formatted_s.strip)
-    expect(page).to have_content(vacancy.expires_at.to_date.to_formatted_s.strip)
-    if vacancy.start_date_type == "specific_date"
-      expect(page).to have_content(vacancy.starts_on.to_formatted_s.strip)
-    elsif vacancy.start_date_type == "asap"
-      expect(page).to have_content("As soon as possible")
-    end
-
-    unless vacancy.enable_job_applications?
-      expect(page.html).to include(I18n.t("helpers.label.publishers_job_listing_how_to_receive_applications_form.receive_applications_options.#{vacancy.receive_applications}"))
-      expect(page).to have_content(vacancy.application_link) if vacancy.receive_applications == "website"
-      expect(page).to have_content(vacancy.application_email) if vacancy.receive_applications == "email"
-    end
-
-    expect(page).to have_content(I18n.t("jobs.school_visits"))
-    expect(page).to have_content(vacancy.contact_email)
-    expect(page).to have_content(vacancy.contact_number)
-
-    expect(page).to have_content(strip_tags(vacancy.readable_ect_status)) if vacancy.ect_status.present?
-    expect(page).to have_content(vacancy.skills_and_experience)
-    expect(page).to have_content(vacancy.school_offer)
-    expect(page).to have_content(vacancy.flexi_working)
-
-    if vacancy.organisation&.safeguarding_information.present?
-      expect(page).to have_content(vacancy.organisation.safeguarding_information)
-    elsif vacancy.safeguarding_information_provided
-      expect(page).to have_content(vacancy.safeguarding_information)
-    end
-
-    expect(page).to have_content(vacancy.further_details) if vacancy.further_details_provided
-    expect(page).to have_content(I18n.t("jobs.include_additional_documents"))
-
-    return unless vacancy.include_additional_documents?
-
-    expect(page).to have_content(I18n.t("jobs.additional_documents"))
-  end
-
   def verify_vacancy_show_page_details(vacancy)
     vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
@@ -306,29 +246,6 @@ module VacancyHelpers
     end
   end
 
-  def has_published_vacancy_review_heading?(vacancy)
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.status_tag.published"))
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.published", publish_date: format_date(vacancy.publish_on), expiry_time: format_time_to_datetime_at(vacancy.expires_at)))
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.view"))
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.close_early"))
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.extend_closing_date"))
-  end
-
-  def has_complete_draft_vacancy_review_heading?(vacancy)
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.status_tag.draft"))
-    if vacancy.publish_on.future?
-      expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.scheduled_complete_draft"))
-      expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"))
-    else
-      expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.complete_draft"))
-      expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.publish"))
-    end
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.preview"))
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
-    expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.delete"))
-  end
-
   def has_incomplete_draft_vacancy_review_heading?(vacancy)
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.status_tag.draft"))
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.incomplete_draft", publish_date: format_date(vacancy.publish_on), expiry_time: format_time_to_datetime_at(vacancy.expires_at)))
@@ -344,16 +261,6 @@ module VacancyHelpers
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.delete"))
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.convert_to_draft"))
-  end
-
-  def verify_job_locations(organisations)
-    organisations.each do |organisation|
-      if organisation.school?
-        expect(page).to have_content("#{organisation.name}, #{full_address(organisation)}")
-      else
-        expect(page).to have_content("#{I18n.t('organisations.job_location_heading.central_office')}, #{full_address(organisation)}")
-      end
-    end
   end
 
   def expect_correct_pay_package_options(vacancy)
