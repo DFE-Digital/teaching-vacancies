@@ -1,6 +1,8 @@
 = f.govuk_text_field :institution, label: { size: "s" }, aria: { required: true }, width: "three-quarters"
 
-= f.govuk_number_field :year, label: { size: "s" }, aria: { required: true }, width: 4
+.govuk-grid-row
+  .govuk-grid-column-one-half
+    = f.govuk_number_field :year, label: { size: "s" }, aria: { required: true }, width: 4
 
 = f.govuk_fieldset legend: { text: t("helpers.legend.jobseekers_qualifications_shared_legends.subjects") }, class: "subjects-and-grades", data: { controller: "manage-qualifications" } do
   - f.object.qualification_results.each_with_index do |result, idx|

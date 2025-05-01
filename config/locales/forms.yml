@@ -359,6 +359,7 @@ en:
         grade: Grade
         subject: Subject
         year: Year awarded
+        month: Month awarded
       jobseekers_job_application_details_reference_form:
         email: Email address
         job_title: Job title

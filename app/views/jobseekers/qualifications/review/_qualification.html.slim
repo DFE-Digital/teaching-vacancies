@@ -17,4 +17,7 @@ p.govuk-caption-m
       = qualification[:institution]
   - if qualification.display_attributes.include?("year")
     span class="govuk-!-display-inline-block"
-      = ", #{qualification[:year]}"
+      - if qualification.display_attributes.include?("month") && qualification[:month].present?
+        = ", #{qualification.award_date}"
+      - else
+        = ", #{qualification[:year]}"
