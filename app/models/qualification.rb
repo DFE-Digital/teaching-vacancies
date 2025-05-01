@@ -25,6 +25,7 @@ class Qualification < ApplicationRecord
       qualification_results: qualification_results.map(&:duplicate),
       subject:,
       year:,
+      month:,
     )
   end
 
@@ -43,14 +44,15 @@ class Qualification < ApplicationRecord
     else
       self.grade = ""
       self.year = nil
+      self.month = nil
     end
   end
 
   def display_attributes
     if secondary?
-      %w[institution year]
+      %w[institution award_date]
     elsif finished_studying?
-      %w[subject institution grade year awarding_body]
+      %w[subject institution grade award_date awarding_body]
     else
       %w[subject institution awarding_body]
     end
@@ -58,6 +60,10 @@ class Qualification < ApplicationRecord
 
   def secondary?
     category.in?(SECONDARY_QUALIFICATIONS)
+  end
+
+  def award_date
+    [Date::MONTHNAMES[month.to_i], year].join(" ").strip
   end
 
   private
