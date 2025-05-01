@@ -4,14 +4,16 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   helper_method :employments, :form, :job_applications, :qualification_form_param_key
 
+  before_action :set_job_application, only: %i[reject shortlist show download_pdf update_status]
+
   def reject
     raise ActionController::RoutingError, "Cannot reject a draft or withdrawn application" if
-      job_application.draft? || job_application.withdrawn?
+      @job_application.draft? || @job_application.withdrawn?
   end
 
   def shortlist
     raise ActionController::RoutingError, "Cannot shortlist a draft or withdrawn application" if
-      job_application.draft? || job_application.withdrawn?
+      @job_application.draft? || @job_application.withdrawn?
   end
 
   def index
@@ -19,33 +21,36 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def show
-    redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, job_application) if job_application.withdrawn?
+    redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, @job_application) if @job_application.withdrawn?
 
     @notes_form = Publishers::JobApplication::NotesForm.new
 
-    raise ActionController::RoutingError, "Cannot view a draft application" if job_application.draft?
+    raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
 
-    job_application.reviewed! if job_application.submitted?
+    @job_application.reviewed! if @job_application.submitted?
   end
 
+  # quite tricky to test PDF download itself
+  # :nocov:
   def download_pdf
-    pdf = JobApplicationPdfGenerator.new(job_application, vacancy).generate
+    pdf = JobApplicationPdfGenerator.new(@job_application, vacancy).generate
 
     send_data(
       pdf.render,
-      filename: "job_application_#{job_application.id}.pdf",
+      filename: "job_application_#{@job_application.id}.pdf",
       type: "application/pdf",
       disposition: "inline",
     )
   end
+  # :nocov:
 
   def update_status
     raise ActionController::RoutingError, "Cannot shortlist or reject a draft or withdrawn application" if
-      job_application.draft? || job_application.withdrawn?
+      @job_application.draft? || @job_application.withdrawn?
 
-    job_application.update(form_params.merge(status: status))
-    Jobseekers::JobApplicationMailer.send(:"application_#{status}", job_application).deliver_later
-    redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: job_application.name)
+    @job_application.update(form_params.merge(status: status))
+    Jobseekers::JobApplicationMailer.send(:"application_#{status}", @job_application).deliver_later
+    redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: @job_application.name)
   end
 
   def tag_single

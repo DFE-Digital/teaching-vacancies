@@ -2,12 +2,13 @@ require "rails_helper"
 
 RSpec.describe "vacancies/show" do
   before do
-    assign :vacancy, VacancyPresenter.new(create(:vacancy, hourly_rate: hourly_rate, salary: salary))
+    assign :vacancy, VacancyPresenter.new(vacancy)
     render
   end
 
   describe "job posting metadata" do
     let(:json_ld) { JSON.parse(rendered.html.css("script.jobref").inner_text, symbolize_names: true) }
+    let(:vacancy) { create(:vacancy, hourly_rate: hourly_rate, salary: salary) }
 
     context "with hourly rate" do
       let(:hourly_rate) { 25 }

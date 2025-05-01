@@ -1,4 +1,4 @@
-= render "publishers/vacancies/vacancy_review_sections/job_details", vacancy: vacancy
+= render "publishers/vacancies/vacancy_review_sections/job_details", vacancy: vacancy, current_organisation: current_organisation
 
 - if section_begun?(vacancy, :about_the_role, step_process)
   = render "publishers/vacancies/vacancy_review_sections/about_the_role", vacancy: vacancy
@@ -7,4 +7,4 @@
   = render "publishers/vacancies/vacancy_review_sections/important_dates", vacancy: vacancy
 
 - if section_begun?(vacancy, :application_process, step_process)
-  = render "publishers/vacancies/vacancy_review_sections/application_process", vacancy: vacancy
+  = render "publishers/vacancies/vacancy_review_sections/application_process", vacancy: vacancy, current_organisation: current_organisation
