@@ -192,7 +192,7 @@ en:
           step_title: Equal opportunities
           title: Equal opportunities — Application
         catholic:
-          step_title: Religious Information
+          step_title: Religious information
           title: Religious information — Application
           heading: Religious information
           is_a_catholic_school: "%{name} is a Catholic school."
@@ -578,7 +578,7 @@ en:
         personal_statement:
           heading: Personal statement
         religious_information:
-          heading: Religious Information
+          heading: Religious information
         professional_status:
           heading: Professional status
           statutory_induction_complete: Have you completed your induction period?
