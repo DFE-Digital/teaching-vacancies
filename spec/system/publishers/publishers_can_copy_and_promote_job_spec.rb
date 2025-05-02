@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# could be made smaller - just checks 1 specific item in the publish/schedule
+# flow. Is this functionality tested elsewhere?
 RSpec.describe "Publishers can copy and promote job" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }

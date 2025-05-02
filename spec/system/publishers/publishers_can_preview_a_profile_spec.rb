@@ -1,9 +1,13 @@
 require "rails_helper"
 
+# Runtime 13 seconds
+# very little interaction, mostly tests of display behaviour (view test?)
 RSpec.describe "Publishers can preview an organisation or school profile" do
   let(:publisher) { create(:publisher, organisations: [organisation]) }
 
   before do
+    # just for the 'has a map' case - geopoints should maybe not be mocked
+    # as they are hard to do do convincingly
     Organisation.subclasses.each do |klass|
       allow_any_instance_of(klass).to receive(:geopoint?).and_return(true)
     end

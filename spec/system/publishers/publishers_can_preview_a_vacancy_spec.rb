@@ -1,5 +1,7 @@
 require "rails_helper"
 
+# pure display test, no interactions
+# runtime 3.3 seconds
 RSpec.describe "Publishers can preview a vacancy" do
   let(:publisher) { create(:publisher) }
   let(:school) { create(:school) }

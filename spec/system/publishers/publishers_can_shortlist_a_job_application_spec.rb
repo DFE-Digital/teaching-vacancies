@@ -1,5 +1,6 @@
 require "rails_helper"
 
+#  duplicate of ATS functionality tests
 RSpec.describe "Publishers can shortlist a job application" do
   let(:publisher) { create(:publisher) }
   let(:organisation) { create(:school) }
