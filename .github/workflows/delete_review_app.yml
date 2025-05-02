@@ -14,7 +14,10 @@ on:
         description: 'Pull Request number to delete (EG: 1234 for review-pr-1234)'
         required: true
 
-concurrency: workflow-Build-and-deploy-${{ github.event.pull_request.number }}
+# Wait until the Build And Deploy for the same PR is finished before starting this workflow.
+# If triggered by a manual workflow dispatch with a PR number, builds the corresponding 'ref' to match the Build and Deploy concurrency group for that PR.
+# For a closed or unlabeled PR, the 'ref' is available and matches the Build and deploy one.
+concurrency: workflow-Build-and-deploy-${{ github.event_name == 'workflow_dispatch' && format('refs/pull/{0}/merge', github.event.inputs.pr_number) || github.ref }}
 
 permissions:
   id-token: write
