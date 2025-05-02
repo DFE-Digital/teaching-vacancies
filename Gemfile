@@ -134,6 +134,7 @@ group :test do
   gem "shoulda-matchers"
   gem "simplecov", require: false
   gem "simplecov-lcov", require: false
+  gem "site_prism"
   gem "uri-query_params"
   gem "vcr"
   gem "webmock"

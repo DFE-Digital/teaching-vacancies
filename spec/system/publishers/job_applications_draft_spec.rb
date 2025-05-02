@@ -20,9 +20,7 @@ RSpec.describe "Draft job applications for publishers" do
 
     describe "on the 'manage jobs' page", :js do
       before do
-        visit organisation_jobs_with_type_path
-        click_on vacancy.job_title
-        click_on "Applications"
+        visit organisation_job_job_applications_path(vacancy.id)
         expect(page.find(".govuk-table__body")).to have_css(".govuk-table__row", count: 1)
       end
 
@@ -37,9 +35,7 @@ RSpec.describe "Draft job applications for publishers" do
 
     describe "on the application page", :js do
       before do
-        visit organisation_jobs_with_type_path
-        click_on vacancy.job_title
-        click_on "Applications"
+        visit organisation_job_job_applications_path(vacancy.id)
         click_on job_application.name
       end
 
