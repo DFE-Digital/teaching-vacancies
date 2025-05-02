@@ -107,6 +107,7 @@ group :development, :test do
   gem "database_consistency", require: false
   gem "debug", ">= 1.0.0", require: false
   gem "dotenv-rails"
+  gem 'guard-rspec', require: false
   gem "launchy", "~> 3.1"
   gem "parallel_tests"
   gem "pdf-inspector", require: "pdf/inspector"
