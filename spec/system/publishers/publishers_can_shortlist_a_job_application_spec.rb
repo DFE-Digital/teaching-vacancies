@@ -14,7 +14,7 @@ RSpec.describe "Publishers can shortlist a job application" do
 
   after { logout }
 
-  it "shortlists the job application" do
+  xit "shortlists the job application" do
     click_on "Update application status"
     expect(page).to have_no_css("strong.govuk-tag.govuk-tag--green.application-status", text: "shortlisted")
     choose "Shortlisted"

@@ -91,6 +91,17 @@ class JobApplication < ApplicationRecord
 
   has_one_attached :baptism_certificate, service: :amazon_s3_documents
 
+  def self.group_by_status(scope = all)
+    result = statuses.each_with_object({}) do |(status_name, status_idx), hsh|
+      hsh[status_name.to_sym] = scope.where(status: status_idx)
+    end
+
+    result[:all] = scope
+    result[:new] = scope.where(status: %i[submitted reviewed])
+
+    result
+  end
+
   def name
     "#{first_name} #{last_name}"
   end
