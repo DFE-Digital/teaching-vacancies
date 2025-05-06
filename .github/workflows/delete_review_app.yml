@@ -29,7 +29,14 @@ env:
 jobs:
   delete-review-app:
     # Check if PR was closed with deploy label OR workflow was manually triggered OR deploy label was removed
-    if: (github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy')) || github.event_name == 'workflow_dispatch' || (github.event.action == 'unlabeled' && github.event.label.name == 'deploy')
+    # Define conditions for triggering the job
+    # 1. PR is closed and has the 'deploy' label
+    # 2. Workflow is manually triggered
+    # 3. 'deploy' label is removed from the PR
+    if: >
+      (github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy')) ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.action == 'unlabeled' && github.event.label.name == 'deploy')
     name: Delete review app
     runs-on: ubuntu-latest
     environment: review
