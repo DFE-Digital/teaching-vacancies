@@ -49,12 +49,12 @@ class Qualification < ApplicationRecord
   end
 
   def display_attributes
-    if secondary?
-      %w[institution award_date]
-    elsif finished_studying?
-      %w[subject institution grade award_date awarding_body]
-    else
-      %w[subject institution awarding_body]
+    @display_attributes ||= Enumerator.new do |y|
+      display_attributes_list.each do
+        next if public_send(it).blank?
+
+        y << it
+      end
     end
   end
 
@@ -67,6 +67,15 @@ class Qualification < ApplicationRecord
   end
 
   private
+
+  def display_attributes_list
+    return %w[institution award_date] if secondary?
+
+    %w[subject institution].tap do
+      it.push(*%w[grade award_date]) if finished_studying?
+      it << "awarding_body"
+    end
+  end
 
   def mark_emptied_qualification_results_for_destruction
     # The "classic" Rails way of removing associated nested records is setting `_destroy` on the attributes in a form.

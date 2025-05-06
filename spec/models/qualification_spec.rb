@@ -124,13 +124,13 @@ RSpec.describe Qualification do
     end
 
     context "when qualification is not secondary and finished_studying is true" do
-      let(:qualification) { build_stubbed(:qualification, category: "undergraduate", finished_studying: true) }
+      let(:qualification) { build_stubbed(:qualification, category: "undergraduate", finished_studying: true, awarding_body: "uni") }
 
       it { is_expected.to match_array(%w[subject institution grade award_date awarding_body]) }
     end
 
     context "when qualification is not secondary and finished_studying is false" do
-      let(:qualification) { build_stubbed(:qualification, category: "undergraduate", finished_studying: false) }
+      let(:qualification) { build_stubbed(:qualification, category: "undergraduate", finished_studying: false, awarding_body: "uni") }
 
       it { is_expected.to match_array(%w[subject institution awarding_body]) }
     end

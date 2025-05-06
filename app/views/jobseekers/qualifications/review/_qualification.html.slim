@@ -1,10 +1,6 @@
 p class="govuk-!-margin-bottom-1"
-  - if qualification.display_attributes.include?("subject")
-    span class="govuk-!-display-inline-block"
-      = qualification[:subject]
-  - if qualification.display_attributes.include?("type")
-    span class="govuk-!-display-inline-block govuk-!-margin-left-1"
-      = qualification[:type]
+  span class="govuk-!-display-inline-block"
+    = qualification[:subject]
   - if qualification.display_attributes.include?("grade")
     span class="govuk-!-display-inline-block govuk-!-margin-left-1"
       = "(#{qualification[:grade]})"
@@ -12,12 +8,8 @@ p class="govuk-!-margin-bottom-1"
     span class="govuk-!-display-inline-block govuk-!-margin-left-1"
       = "(#{t('helpers.label.jobseekers_qualifications_shared_labels.finished_studying_options.false').downcase} #{qualification.finished_studying_details&.downcase})"
 p.govuk-caption-m
-  - if qualification.display_attributes.include?("institution")
+  span class="govuk-!-display-inline-block"
+    = qualification[:institution]
+  - if qualification.display_attributes.include?("award_date")
     span class="govuk-!-display-inline-block"
-      = qualification[:institution]
-  - if qualification.display_attributes.include?("year")
-    span class="govuk-!-display-inline-block"
-      - if qualification.display_attributes.include?("month") && qualification[:month].present?
-        = ", #{qualification.award_date}"
-      - else
-        = ", #{qualification[:year]}"
+      = ", #{qualification.award_date}"
