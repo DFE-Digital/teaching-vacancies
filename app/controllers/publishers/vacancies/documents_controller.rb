@@ -20,7 +20,7 @@ class Publishers::Vacancies::DocumentsController < Publishers::Vacancies::BaseCo
 
   def destroy
     document = vacancy.supporting_documents.find(params[:id])
-    document.purge
+    document.purge_later
     send_dfe_analytics_event(:supporting_document_deleted, document.filename, document.byte_size, document.content_type)
 
     redirect_to after_document_delete_path, flash: { success: t("jobs.file_delete_success_message", filename: document.filename) }
