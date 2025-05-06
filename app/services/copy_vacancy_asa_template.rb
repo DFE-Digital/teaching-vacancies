@@ -1,4 +1,4 @@
-class CopyVacancy
+class CopyVacancyAsaTemplate
   # don't call this code directly - it needs to send analytics events
   # via a controller
   class << self

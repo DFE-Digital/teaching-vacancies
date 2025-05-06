@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe CopyVacancy do
+RSpec.describe CopyVacancyAsaTemplate do
   describe "#call" do
     let(:school) { create(:school) }
 

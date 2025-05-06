@@ -6,7 +6,7 @@ module Publishers
     # a vacancy is duplicated (effectively treating the original as a template)
 
     def copy_vacancy(vacancy)
-      CopyVacancy.call(vacancy).tap do |new_vacancy|
+      CopyVacancyAsaTemplate.call(vacancy).tap do |new_vacancy|
         if new_vacancy.include_additional_documents
           new_vacancy.supporting_documents.attachments.each do |document|
             send_dfe_analytics_event(:supporting_document_created, new_vacancy.id, document.blob)
