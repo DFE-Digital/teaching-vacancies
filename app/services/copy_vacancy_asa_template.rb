@@ -23,7 +23,7 @@ class CopyVacancyAsaTemplate
       new_vacancy.completed_steps = current_steps(vacancy)
       new_vacancy.organisations = vacancy.organisations
       new_vacancy.send(:set_slug)
-      new_vacancy.save(validate: false)
+      new_vacancy.save!(validate: false)
       new_vacancy
     end
 
