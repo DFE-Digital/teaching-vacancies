@@ -36,7 +36,7 @@ en:
 
       publishers_job_application_references_contact_applicant_form:
         contact_applicants_options:
-          false: You will need to reach out to the candidate directly to infiorm them you will be collecting references.
+          false: You will need to reach out to the candidate directly to inform them you will be collecting references.
 
     label:
       publishers_job_application_status_form:

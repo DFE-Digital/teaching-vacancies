@@ -393,6 +393,7 @@ Rails.application.routes.draw do
 
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
+        resources :references, only: %i[show], controller: "publishers/vacancies/job_applications/references"
         get :download_pdf
         get :withdrawn
         get :tag, on: :collection
@@ -407,6 +408,14 @@ Rails.application.routes.draw do
           get :ask_references_email
           post :references_contact_reply
         end
+      end
+    end
+  end
+
+  resources :references, only: %i[] do
+    resources :build, only: %i[show update], controller: "referees/build_references" do
+      collection do
+        get :completed
       end
     end
   end

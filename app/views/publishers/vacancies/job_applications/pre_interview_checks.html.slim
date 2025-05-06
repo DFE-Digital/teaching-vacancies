@@ -11,12 +11,12 @@
 = govuk_table do |table|
   - table.with_head do |head|
     - head.with_row do |row|
-      - row.with_cell(text: "References")
-      - row.with_cell(text: "Last action")
-      - row.with_cell(text: "Status")
+      - row.with_cell(text: t(".references"))
+      - row.with_cell(text: t(".last_action"))
+      - row.with_cell(text: t(".status"))
   - table.with_body do |body|
-    - @references.each do |_reference|
+    - @references.each do |reference|
       - body.with_row do |row|
-        - row.with_cell(text: "Ref name")
-        - row.with_cell(text: "action")
-        - row.with_cell(text: "status")
+        - row.with_cell(text: govuk_link_to(reference.referee.name, organisation_job_job_application_reference_path(vacancy.id, job_application.id, reference)))
+        - row.with_cell(text: t(".sent_at", sent_at: reference.updated_at.to_date.to_formatted_s))
+        - row.with_cell(text: govuk_tag(text: t(".pending_status"), colour: "blue"))

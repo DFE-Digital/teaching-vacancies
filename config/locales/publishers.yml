@@ -604,6 +604,29 @@ en:
             heading: Notes
         pre_interview_checks:
           page_title: Pre Interview Checks
+          sent_at: Request sent %{sent_at}
+          pending_status: Pending
+          references: References
+          last_action: Last action
+          status: Status
+        references:
+          show:
+            page_title: Reference
+            pending_status: Pending
+            once_the_reference_is_received: >-
+              Once the reference is received you will be able to view it on this page.
+              If you do not receive the reference within 1 week, you will be able to send a reminder.
+            more_urgent: >-
+              If the request is more urgent, you should reach out to the referee directly.
+              If you have sent and received your own reference form for this referee, you can manually mark it as received.
+            referee_details:
+              heading: Referee details
+              name: Name
+              job_title: Name
+              organisation: Organisation
+              relationship: Relationship to applicant
+              email: Email address
+              phone: Phone number
         tag:
           page_title: Update application status
           what_application_status_single: What application status do you want to assign to %{name}?

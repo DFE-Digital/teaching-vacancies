@@ -9,7 +9,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
 
   after { logout }
 
-  it "allows jobseekers to add references" do
+  it "allows jobseekers to add references", :js do
     visit jobseekers_job_application_build_path(job_application, :referees)
 
     expect(page).to have_content("No referees specified")
