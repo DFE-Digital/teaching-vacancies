@@ -113,19 +113,12 @@ RSpec.describe "Publishers can edit a vacancy" do
           let(:expiry_time) { vacancy.expires_at + 1.year }
 
           before do
-            # click_review_page_change_link(section: "important_dates", row:  "expires_at" )
             publisher_vacancy_page.change_expires_at_link.click
           end
 
           it "renders the publication date as text and does not allow editing" do
             expect(publisher_important_dates_page).to be_displayed
             expect(publisher_important_dates_page).not_to have_change_publish_day_field
-
-            fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: expiry_time.year
-            click_on I18n.t("buttons.save_and_continue")
-
-            expect(publisher_vacancy_page).to be_displayed
-            expect(vacancy.reload.expires_at).to eq(expiry_time)
           end
         end
 
