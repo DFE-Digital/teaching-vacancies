@@ -49,7 +49,6 @@ RSpec.describe "Publishers can edit a vacancy" do
 
     describe "#pay_package" do
       before do
-        # click_review_page_change_link(section: "job_details", row: "salary")
         publisher_vacancy_page.change_salary_link.click
       end
 
@@ -86,7 +85,6 @@ RSpec.describe "Publishers can edit a vacancy" do
 
       describe "expires_at" do
         before do
-          # click_review_page_change_link(section: "important_dates", row: "expires_at")
           publisher_vacancy_page.change_expires_at_link.click
         end
 
@@ -136,7 +134,6 @@ RSpec.describe "Publishers can edit a vacancy" do
           let(:publish_on) { Date.current + 1.week }
 
           before do
-            # click_review_page_change_link(section: "important_dates", row:  "publish_on" )
             publisher_vacancy_page.change_publish_on_link.click
           end
 
