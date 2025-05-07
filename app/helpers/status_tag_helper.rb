@@ -9,6 +9,29 @@ module StatusTagHelper
     end
   end
 
+  def vacancy_draft_status(organisation, vacancy, section)
+    step_process = Publishers::Vacancies::VacancyStepProcess.new(:review, organisation: organisation, vacancy: vacancy)
+
+    active_steps = step_process.step_groups[section]
+    completed_steps = vacancy.completed_steps.map(&:to_sym).intersection(active_steps)
+    if active_steps - completed_steps == []
+      :completed
+    elsif completed_steps.any?
+      :in_progress
+    end
+  end
+
+  def section_status_to_tag(status)
+    case status
+    when :completed
+      complete
+    when :in_progress
+      in_progress
+    else
+      not_started
+    end
+  end
+
   private
 
   def complete
@@ -17,6 +40,14 @@ module StatusTagHelper
 
   def incomplete
     govuk_tag(text: t("shared.status_tags.incomplete"), colour: "yellow")
+  end
+
+  def in_progress
+    govuk_tag(text: t("shared.status_tags.in_progress"), colour: "green")
+  end
+
+  def not_started
+    govuk_tag(text: t("shared.status_tags.not_started"), colour: "yellow")
   end
 
   def imported

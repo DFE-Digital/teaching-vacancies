@@ -44,7 +44,7 @@ RSpec.describe "Creating a vacancy" do
         expect(page).to have_content(I18n.t("publishers.vacancies.steps.job_location"))
       end
 
-      fill_in_job_location_form_fields(vacancy)
+      fill_in_job_location_form_fields(vacancy.organisations)
       click_on I18n.t("buttons.continue")
 
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
@@ -62,7 +62,7 @@ RSpec.describe "Creating a vacancy" do
 
     expect(page).to have_content("There is a problem")
 
-    fill_in_job_location_form_fields(vacancy)
+    fill_in_job_location_form_fields(vacancy.organisations)
     click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 

@@ -27,7 +27,6 @@ RSpec.describe "Copying a vacancy" do
       click_on I18n.t("buttons.save_and_continue")
 
       expect(current_path).to eq(organisation_job_build_path(new_vacancy.id, :include_additional_documents))
-
       fill_in_include_additional_documents_form_fields(false)
       click_on I18n.t("buttons.save_and_continue")
 

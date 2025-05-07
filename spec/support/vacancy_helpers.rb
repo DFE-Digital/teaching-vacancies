@@ -1,12 +1,16 @@
 module VacancyHelpers
-  def change_job_locations(vacancy, organisations)
-    vacancy.organisations = organisations
+  def change_job_locations(_vacancy, organisations)
     click_review_page_change_link(section: "job_details", row: "job_location")
-    fill_in_job_location_form_fields(vacancy)
+    fill_in_job_location_form_fields(organisations)
   end
 
-  def fill_in_job_location_form_fields(vacancy)
-    vacancy.organisations.each do |organisation|
+  def fill_in_job_location_form_fields(organisations)
+    within ".govuk-checkboxes" do
+      all("label").each do |label|
+        uncheck(label.text)
+      end
+    end
+    organisations.each do |organisation|
       check(organisation.school? ? organisation.name : I18n.t("organisations.job_location_heading.central_office"))
     end
   end
@@ -187,7 +191,7 @@ module VacancyHelpers
     vacancy.reload
     vacancy = VacancyPresenter.new(vacancy) unless vacancy.is_a?(VacancyPresenter)
 
-    verify_job_locations(vacancy)
+    verify_job_locations(vacancy.organisations)
 
     expect(page).to have_content(vacancy.readable_job_roles)
     expect(page).to have_content(vacancy.job_title)
@@ -342,8 +346,8 @@ module VacancyHelpers
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.convert_to_draft"))
   end
 
-  def verify_job_locations(vacancy)
-    vacancy.organisations.each do |organisation|
+  def verify_job_locations(organisations)
+    organisations.each do |organisation|
       if organisation.school?
         expect(page).to have_content("#{organisation.name}, #{full_address(organisation)}")
       else

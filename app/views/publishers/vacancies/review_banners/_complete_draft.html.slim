@@ -5,8 +5,9 @@ h1.govuk-heading-l class="govuk-!-display-inline"
   = vacancy_review_form_heading_inset_text(vacancy, "complete_draft")
   .govuk-button-group class="govuk-!-margin-top-4"
     - if vacancy.publish_on.future?
-      - %w[schedule_complete_draft preview copy delete].each do |action|
-        = vacancy_review_form_heading_action_link(vacancy, action)
+      = vacancy_schedule_complete_draft_action_link(vacancy)
     - else
-      - %w[publish preview copy delete].each do |action|
-          = vacancy_review_form_heading_action_link(vacancy, action)
+      = vacancy_publish_action_link(vacancy)
+    = vacancy_preview_action_link(vacancy)
+    = vacancy_copy_action_link(vacancy)
+    = vacancy_delete_action_link(vacancy)
