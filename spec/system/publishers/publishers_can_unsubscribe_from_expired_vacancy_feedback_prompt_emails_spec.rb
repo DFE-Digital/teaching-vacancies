@@ -16,7 +16,7 @@ RSpec.describe "Publishers can unsubscribe from expired vacancy feedback prompt 
   context "when a publisher receives an expired vacancy feedback prompt email" do
     let(:link_to_unsubscribe) { last_email.body.to_s[/\[Unsubscribe from these emails\]\((.*)\)/, 1] }
 
-    scenario "they can unsubscribe from these emails" do
+    scenario "they can unsubscribe from these emails and future emails won't be sent" do
       visit link_to_unsubscribe
 
       expect(current_url).to eq(confirm_unsubscribe_publishers_account_url(publisher_id: publisher.signed_id))
@@ -25,6 +25,14 @@ RSpec.describe "Publishers can unsubscribe from expired vacancy feedback prompt 
         click_button I18n.t("buttons.confirm_unsubscribe")
         publisher.reload
       }.to(change { publisher.unsubscribed_from_expired_vacancy_prompt_at })
+
+      ActionMailer::Base.deliveries.clear
+
+      perform_enqueued_jobs do
+        SendExpiredVacancyFeedbackPromptJob.new.perform
+      end
+
+      expect(ActionMailer::Base.deliveries).to be_empty
     end
   end
 end
