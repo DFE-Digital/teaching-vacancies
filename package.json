@@ -12,8 +12,9 @@
   ],
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "moment": "^2.30.1",
     "@ministryofjustice/frontend": "^3.7.0",
+    "@rails/actiontext": "^7.2.201",
+    "@rails/activestorage": "^7.2.201",
     "@sentry/browser": "9.15.0",
     "@stimulus/polyfills": "^2.0.0",
     "accessible-autocomplete": "^3.0.1",
@@ -28,8 +29,10 @@
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.markercluster": "^1.5.3",
     "lodash": "^4.17.21",
+    "moment": "^2.30.1",
     "rails-ujs": "^5.2.8",
-    "tough-cookie": "^5.1.2"
+    "tough-cookie": "^5.1.2",
+    "trix": "^2.1.13"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",

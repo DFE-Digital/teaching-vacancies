@@ -2,16 +2,20 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  helper_method :employments, :form, :job_applications, :qualification_form_param_key
+  helper_method :employments, :job_applications, :qualification_form_param_key
 
   def reject
     raise ActionController::RoutingError, "Cannot reject a draft or withdrawn application" if
       job_application.draft? || job_application.withdrawn?
+
+    @form = Publishers::JobApplication::UpdateStatusForm.new
   end
 
   def shortlist
     raise ActionController::RoutingError, "Cannot shortlist a draft or withdrawn application" if
       job_application.draft? || job_application.withdrawn?
+
+    @form = Publishers::JobApplication::UpdateStatusForm.new
   end
 
   def index
@@ -54,10 +58,13 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   def tag
     tag_params = params.require(:publishers_job_application_tag_form).permit(job_applications: [])
+    job_applications = tag_params.fetch(:job_applications).compact_blank
     if params["download_selected"] == "true"
       download_selected(tag_params)
+    elsif params["reject"] == "true"
+      prepare_to_reject(job_applications)
     else
-      prepare_to_tag(tag_params.fetch(:job_applications).compact_blank)
+      prepare_to_tag(job_applications)
     end
   end
 
@@ -77,6 +84,21 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     if @form.valid?
       @job_applications = vacancy.job_applications.where(id: @form.job_applications)
       render "tag"
+    else
+      render "index"
+    end
+  end
+
+  def prepare_to_reject(job_applications)
+    @form = Publishers::JobApplication::RejectionEmailsForm.new(job_applications: job_applications)
+    if @form.valid?
+      job_applications = vacancy.job_applications.where(id: @form.job_applications)
+      batch = vacancy.batch_emails.build(batch_type: :not_sent)
+      job_applications.each do |job_application|
+        batch.job_applications << job_application
+      end
+      batch.save!
+      redirect_to select_rejection_template_organisation_job_batch_email_path(vacancy.id, batch)
     else
       render "index"
     end
@@ -112,10 +134,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     # When we 'order' by a virtual attribute we have to do the sorting after all scopes.
     # last_name is a virtual attribute as it is an encrypted column.
     job_applications.sort_by(&sort.by.to_sym)
-  end
-
-  def form
-    @form ||= Publishers::JobApplication::UpdateStatusForm.new
   end
 
   def form_params
