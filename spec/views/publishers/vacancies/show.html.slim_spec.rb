@@ -8,13 +8,14 @@ RSpec.describe "publishers/vacancies/show" do
     assign :vacancy, vacancy_presenter
     assign :current_organisation, school
     assign :step_process, Publishers::Vacancies::VacancyStepProcess.new(:review, vacancy: vacancy, organisation: school)
-    assign :all_steps_valid, true
+    assign :next_invalid_step, next_invalid_step
     render
   end
 
   describe "show" do
     context "when published" do
       let(:vacancy) { create(:vacancy, :with_supporting_documents, phases: %w[secondary], organisations: [school], key_stages: %w[ks5]) }
+      let(:next_invalid_step) { nil }
 
       it "doesn't have publish buttons" do
         expect(rendered).to have_no_content("Publish job listing")
@@ -84,23 +85,56 @@ RSpec.describe "publishers/vacancies/show" do
     end
 
     context "when draft" do
-      let(:vacancy) { create(:vacancy, :draft, phases: %w[secondary], organisations: [school]) }
+      let(:job_details) { rendered.html.css("#job_details") }
+      let(:about_the_role) { rendered.html.css("#about_the_role") }
+      let(:important_dates) { rendered.html.css("#important_dates") }
+      let(:application_process) { rendered.html.css("#application_process") }
 
-      it "has publish buttons" do
-        expect(rendered).to have_content("Publish job listing")
+      context "with a minimal vacancy" do
+        let(:vacancy) { create(:vacancy, :without_contract_details) }
+        let(:next_invalid_step) { :job_role }
+
+        it "show first section as in-progress, and the rest as not startable" do
+          expect(job_details).to have_content "In progress"
+          expect(about_the_role).to have_content "Cannot start yet"
+          expect(important_dates).to have_content "Cannot start yet"
+          expect(application_process).to have_content "Cannot start yet"
+        end
       end
 
-      it "indicates that you're reviewing a draft" do
-        expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.status_tag.draft"))
-        expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.complete_draft"))
-        expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.publish"))
-        expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.preview"))
-        expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
-        expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.delete"))
+      context "with just a complete first section" do
+        let(:vacancy) { create(:vacancy, :with_contract_details) }
+        let(:next_invalid_step) { :working_patterns }
+
+        it "show first section as complete" do
+          expect(job_details).to have_content "Completed"
+          expect(about_the_role).to have_content "Not started"
+          expect(important_dates).to have_content "Cannot start yet"
+          expect(application_process).to have_content "Cannot start yet"
+        end
+      end
+
+      context "with a plain draft" do
+        let(:vacancy) { create(:vacancy, :draft, phases: %w[secondary], organisations: [school]) }
+        let(:next_invalid_step) { nil }
+
+        it "has publish buttons" do
+          expect(rendered).to have_content("Publish job listing")
+        end
+
+        it "indicates that you're reviewing a draft" do
+          expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.status_tag.draft"))
+          expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.complete_draft"))
+          expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.publish"))
+          expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.preview"))
+          expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.copy"))
+          expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.delete"))
+        end
       end
 
       context "with a complete future published draft" do
         let(:vacancy) { create(:vacancy, :draft, phases: %w[secondary], publish_on: Date.current + 6.months, organisations: [school]) }
+        let(:next_invalid_step) { nil }
 
         it "displays schedule information" do
           expect(rendered).to have_content(I18n.t("publishers.vacancies.show.heading_component.inset_text.scheduled_complete_draft"))
@@ -110,49 +144,3 @@ RSpec.describe "publishers/vacancies/show" do
     end
   end
 end
-
-RSpec.describe "publishers/vacancies/show" do
-  before do
-    assign :vacancy, VacancyPresenter.new(vacancy)
-    assign :next_invalid_step, next_invalid_step
-    assign :step_process, Publishers::Vacancies::VacancyStepProcess.new(
-      :review,
-      vacancy: vacancy,
-      organisation: school,
-      )
-    assign :organisation, school
-    render
-  end
-
-  let(:school) { build(:school) }
-
-  let(:job_details) { rendered.html.css("#job_details") }
-  let(:about_the_role) { rendered.html.css("#about_the_role") }
-  let(:important_dates) { rendered.html.css("#important_dates") }
-  let(:application_process) { rendered.html.css("#application_process") }
-
-  context "with a minimal vacancy" do
-    let(:vacancy) { create(:vacancy, :without_contract_details) }
-    let(:next_invalid_step) { :job_role }
-
-    it "show first section as in-progress, and the rest as not startable" do
-      expect(job_details).to have_content "In progress"
-      expect(about_the_role).to have_content "Cannot start yet"
-      expect(important_dates).to have_content "Cannot start yet"
-      expect(application_process).to have_content "Cannot start yet"
-    end
-  end
-
-  context "with just a complete first section" do
-    let(:vacancy) { create(:vacancy, :with_contract_details) }
-    let(:next_invalid_step) { :working_patterns }
-
-    it "show first section as complete" do
-      expect(job_details).to have_content "Completed"
-      expect(about_the_role).to have_content "Not started"
-      expect(important_dates).to have_content "Cannot start yet"
-      expect(application_process).to have_content "Cannot start yet"
-    end
-  end
-end
-
