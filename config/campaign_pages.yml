@@ -61,6 +61,20 @@ shared:
     subjects:
       - Physical education
     radius: 15
+  primarybespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    phases:
+      - primary
+    radius: 15
+  secondarybespoke:
+    banner_image: "campaigns/subjects.jpg"
+    teaching_job_roles:
+      - teacher
+    phases:
+      - secondary
+    radius: 15
   physicsbespoke:
     banner_image: "campaigns/subjects.jpg"
     teaching_job_roles:
