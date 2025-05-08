@@ -67,6 +67,15 @@ class Jobseeker < ApplicationRecord
     end
   end
 
+  # Unlinks the Jobseeker from GovUK OneLogin by removing the OneLogin id.
+  #
+  # This method is not currently called anywhere in the codebase, but is made available for developers to use in the
+  # console to resolve support requests.
+  #
+  def unlink_from_govuk_one_login!
+    update!(govuk_one_login_id: nil) if govuk_one_login_id.present?
+  end
+
   # Updates the Jobseeker's email address with the one provided by GovUK OneLogin.
   def update_email_from_govuk_one_login!(new_email)
     return false if new_email.blank? || new_email == email
