@@ -73,7 +73,7 @@ class Jobseeker < ApplicationRecord
 
     # Find any Jobseeker with the new email address that was created before OneLogin was introduced.
     if (legacy_user = self.class.find_by(email: new_email, govuk_one_login_id: nil))
-      return false if saved_data?
+      return false if saved_data_preventing_transfer? # Do not update email or transfer account if the current user has any saved data.
 
       Jobseekers::AccountTransfer.new(self, legacy_user.email).call
     end
@@ -100,8 +100,7 @@ class Jobseeker < ApplicationRecord
     )
   end
 
-  # Criteria used for determining if a Jobseeker has enough saved data to be considered for automatic account transfer.
-  def saved_data?
+  def saved_data_preventing_transfer?
     job_applications.any? || jobseeker_profile&.qualifications&.any? || jobseeker_profile&.employments&.any?
   end
 end
