@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_02_154655) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_30_141711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -552,6 +552,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_02_154655) do
     t.text "finished_studying_details_ciphertext"
     t.uuid "jobseeker_profile_id"
     t.string "awarding_body"
+    t.integer "month"
     t.index ["job_application_id"], name: "index_qualifications_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_qualifications_on_jobseeker_profile_id"
   end

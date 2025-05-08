@@ -359,6 +359,7 @@ en:
         grade: Grade
         subject: Subject
         year: Year awarded
+        month: Month awarded
       jobseekers_job_application_details_reference_form:
         email: Email address
         job_title: Job title
@@ -406,16 +407,17 @@ en:
         <<: *jobseekers_qualifications_shared_labels
         institution: Awarding body
         qualifications: Qualifications
-        year: Year qualification was awarded
+        award_date: Year qualification was awarded
       jobseekers_qualifications_other_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: School, college, university or other organisation
         name: Qualification or course name
-        year: Year qualification was awarded
+        award_date: Year qualification was awarded
         awarding_body: Awarding body (optional)
       jobseekers_qualifications_secondary_common_form:
         <<: *jobseekers_qualifications_shared_labels
         institution: School, college, or other organisation
+        award_date: Year qualification was awarded
       jobseekers_training_and_cpd_form:
         name: Name of course or training
         provider: Training provider (optional)
