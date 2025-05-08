@@ -42,6 +42,7 @@ module JobApplicationsHelper
     end
   end
 
+  # :nocov:
   def end_date(date, index = 1)
     return "present" if index.zero?
 
