@@ -250,7 +250,7 @@ RSpec.configure do |config|
                   },
                   key_stages: {
                     type: :array,
-                    minItems: 1,
+                    minItems: 0,
                     items: {
                       type: :string,
                       enum: Vacancy.key_stages.keys,
@@ -440,7 +440,7 @@ RSpec.configure do |config|
               },
               key_stages: {
                 type: :array,
-                minItems: 1,
+                minItems: 0,
                 items: {
                   type: :string,
                   enum: Vacancy.key_stages.keys,

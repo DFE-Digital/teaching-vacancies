@@ -174,7 +174,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           )
         end
 
-        context "when subjects is an empty array", document: false do
+        context "when subjects and key_stages are empty arrays", document: false do
           let(:vacancy_params) do
             {
               external_advert_url: "https://www.example.com/ats-site/advertid",
@@ -195,7 +195,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
                 school_urns: [school1.urn],
               },
               subjects: [],
-              key_stages: %w[ks1 ks2],
+              key_stages: [],
               starts_on: "Next September",
             }
           end
