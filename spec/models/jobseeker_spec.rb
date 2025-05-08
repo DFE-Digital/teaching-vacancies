@@ -123,6 +123,18 @@ RSpec.describe Jobseeker do
     end
   end
 
+  describe "unlink_from_govuk_one_login!" do
+    it "unlinks the jobseeker from GovUK OneLogin by removing the OneLogin id" do
+      jobseeker = create(:jobseeker)
+      expect { jobseeker.unlink_from_govuk_one_login! }.to change { jobseeker.reload.govuk_one_login_id }.to(nil)
+    end
+
+    it "does not unlink the jobseeker if they do not have a OneLogin id" do
+      jobseeker = create(:jobseeker, govuk_one_login_id: nil)
+      expect { jobseeker.unlink_from_govuk_one_login! }.not_to change { jobseeker.reload.govuk_one_login_id }.from(nil)
+    end
+  end
+
   describe "update_email_from_govuk_one_login!" do
     let!(:jobseeker) { create(:jobseeker) }
 
