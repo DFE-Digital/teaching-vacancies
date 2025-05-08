@@ -9,6 +9,42 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
   after { logout }
 
+  context "with a single school" do
+    before { visit organisation_job_path(vacancy.id) }
+
+    context "with an incomplete draft" do
+      let(:vacancy) { create(:vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary]) }
+
+      it "can edit a draft" do
+        within "#job_details" do
+          find("a").click
+        end
+        click_on I18n.t("buttons.save_and_continue")
+
+        fill_in_job_role_form_fields("teaching_assistant")
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :key_stages))
+        fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
+        click_on I18n.t("buttons.save_and_continue")
+
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+
+        expect(current_path).to eq(organisation_job_review_path(vacancy.id))
+        expect(page).to have_content(vacancy.reload.job_roles.first.humanize)
+      end
+    end
+  end
+
   context "with a school group" do
     let(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
     let(:another_primary_school) { create(:school, name: "Another primary school", phase: "primary") }
