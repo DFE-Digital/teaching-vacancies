@@ -4,7 +4,7 @@ require "pdf/inspector"
 RSpec.describe JobApplicationPdfGenerator do
   let(:vacancy) { build(:vacancy, :published, :at_one_school) }
   let(:job_application) { build(:job_application, :status_submitted, vacancy: vacancy) }
-  let(:generator) { described_class.new(job_application, vacancy) }
+  let(:generator) { described_class.new(job_application) }
 
   describe "#generate" do
     subject(:document) { generator.generate }

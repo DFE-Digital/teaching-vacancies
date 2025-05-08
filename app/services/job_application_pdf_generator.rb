@@ -2,8 +2,8 @@ class JobApplicationPdfGenerator
   include Prawn::View
   include PdfUiHelper
 
-  def initialize(job_application, vacancy)
-    @datasource = JobApplicationPdf.new(job_application, vacancy)
+  def initialize(job_application)
+    @datasource = JobApplicationPdf.new(job_application)
     @document = Prawn::Document.new(page_size: "A4", margin: 1.cm)
   end
 
