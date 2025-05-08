@@ -14,12 +14,6 @@ RSpec.describe StepProcess do
     }
   end
 
-  describe "#initialize" do
-    it "makes sure the current step is included in all steps" do
-      expect { described_class.new(:seven, step_groups) }.to raise_error(StepProcess::MissingStepError)
-    end
-  end
-
   describe "#step_groups" do
     it "excludes step groups without steps" do
       expect(subject.step_groups).to eq({

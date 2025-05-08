@@ -306,6 +306,7 @@ shared:
     - name
     - subject
     - year
+    - month
     - job_application_id
     - jobseeker_profile_id
     - awarding_body

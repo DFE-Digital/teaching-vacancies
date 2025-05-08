@@ -129,7 +129,7 @@ module PdfHelper
       ["Qualification Name:", qualification.name],
       ["Institution:", qualification.institution],
       ["Grade:", qualification.grade],
-      ["Date completed:", qualification.year],
+      ["Date completed:", qualification.award_date],
       ["Awarding body:", qualification.awarding_body],
     ].reject { |row| row[1].blank? }
 

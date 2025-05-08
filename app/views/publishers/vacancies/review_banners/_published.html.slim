@@ -4,5 +4,7 @@ h1.govuk-heading-l class="govuk-!-display-inline"
 = govuk_inset_text do
   = vacancy_review_form_heading_inset_text(vacancy, "published")
   .govuk-button-group class="govuk-!-margin-top-4"
-    - %w[view copy close_early extend_closing_date].each do |action|
-      = vacancy_review_form_heading_action_link(vacancy, action)
+    = vacancy_view_action_link(vacancy)
+    = vacancy_copy_action_link(vacancy)
+    = vacancy_close_early_action_link(vacancy)
+    = vacancy_extend_closing_date_action_link(vacancy)

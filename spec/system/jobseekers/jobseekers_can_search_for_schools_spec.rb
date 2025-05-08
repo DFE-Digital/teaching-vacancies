@@ -43,8 +43,9 @@ RSpec.describe "Searching on the schools page" do
     end
 
     it "allows jobseeker to clear a filter" do
-      click_link I18n.t("organisations.filters.special_school")
-
+      within("#filters-component") do
+        click_link I18n.t("organisations.filters.special_school")
+      end
       expect_page_to_show_schools([special_school1, secondary_school])
       expect_page_not_to_show_schools([primary_school])
 

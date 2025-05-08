@@ -2,7 +2,7 @@ name: Delete review app
 
 on:
   pull_request:
-    types: [closed]
+    types: [closed, unlabeled]
     paths-ignore:
       - 'bigquery/**'
       - 'documentation/**'
@@ -14,7 +14,10 @@ on:
         description: 'Pull Request number to delete (EG: 1234 for review-pr-1234)'
         required: true
 
-concurrency: workflow-Build-and-deploy-${{ github.event.pull_request.number }}
+# Wait until the Build And Deploy for the same PR is finished before starting this workflow.
+# If triggered by a manual workflow dispatch with a PR number, builds the corresponding 'ref' to match the Build and Deploy concurrency group for that PR.
+# For a closed or unlabeled PR, the 'ref' is available and matches the Build and deploy one.
+concurrency: workflow-Build-and-deploy-${{ (github.event_name == 'workflow_dispatch' && format('refs/pull/{0}/merge', github.event.inputs.pr_number)) || github.ref }}
 
 permissions:
   id-token: write
@@ -25,7 +28,15 @@ env:
 
 jobs:
   delete-review-app:
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name == 'workflow_dispatch'
+    # Check if PR was closed with deploy label OR workflow was manually triggered OR deploy label was removed
+    # Define conditions for triggering the job
+    # 1. PR is closed and has the 'deploy' label
+    # 2. Workflow is manually triggered
+    # 3. 'deploy' label is removed from the PR
+    if: >
+      (github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy')) ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.action == 'unlabeled' && github.event.label.name == 'deploy')
     name: Delete review app
     runs-on: ubuntu-latest
     environment: review

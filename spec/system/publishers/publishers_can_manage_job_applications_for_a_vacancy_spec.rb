@@ -88,6 +88,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     end
 
     scenario "Changing a single status", :js do
+      expect(page).to have_button(I18n.t("publishers.vacancies.job_applications.candidates.update_application_status"), wait: 10)
       within(".application-unsuccessful") do
         find(".govuk-checkboxes__input", visible: false).set(true)
       end
@@ -183,7 +184,7 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
     describe "the summary section" do
       it "shows breadcrumb with link to active jobs in dashboard" do
         within(".govuk-breadcrumbs") do
-          expect(page).to have_link(I18n.t("jobs.dashboard.published.tab_heading"), href: organisation_jobs_with_type_path(:published))
+          expect(page).to have_link(I18n.t("jobs.dashboard.published.tab_heading"), href: organisation_jobs_with_type_path(:live))
         end
       end
 

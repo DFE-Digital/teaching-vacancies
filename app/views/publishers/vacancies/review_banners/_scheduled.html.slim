@@ -4,5 +4,7 @@ h1.govuk-heading-l class="govuk-!-display-inline"
 = govuk_inset_text do
   = vacancy_review_form_heading_inset_text(vacancy, "scheduled")
   .govuk-button-group class="govuk-!-margin-top-4"
-    - %w[preview copy delete convert_to_draft].each do |action|
-      = vacancy_review_form_heading_action_link(vacancy, action)
+    = vacancy_preview_action_link(vacancy)
+    = vacancy_copy_action_link(vacancy)
+    = vacancy_delete_action_link(vacancy)
+    = vacancy_convert_to_draft_action_link(vacancy)

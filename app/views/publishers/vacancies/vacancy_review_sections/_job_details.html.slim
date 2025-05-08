@@ -1,5 +1,5 @@
 h2 class="govuk-heading-m govuk-!-margin-bottom-4"
-    = t("publishers.vacancies.build.job_details.step_title")
+  = t("publishers.vacancies.build.job_details.step_title")
 
 = govuk_summary_list(html_attributes: { id: "job_details" }) do |summary_list|
   - summary_list.with_row(html_attributes: { id: "job_location" }) do |row|
@@ -86,6 +86,27 @@ h2 class="govuk-heading-m govuk-!-margin-bottom-4"
         - row.with_action text: t("buttons.change"),
                     href: organisation_job_build_path(vacancy.id, :contract_information, "back_to_#{action_name}": "true"),
                     visually_hidden_text: t("jobs.working_patterns")
+
+    - unless vacancy.start_date_type.nil?
+      - summary_list.with_row(html_attributes: { id: "start_date" }) do |row|
+        - row.with_key
+          = t("jobs.starts_on")
+        - row.with_value
+          - case vacancy.start_date_type
+          - when "specific_date"
+            = format_date(vacancy.starts_on)
+          - when "date_range"
+            = "#{format_date(vacancy.earliest_start_date)} to #{format_date(vacancy.latest_start_date)}"
+          - when "other"
+            = vacancy.other_start_date_details
+          - when "asap"
+            = t("helpers.legend.publishers_job_listing_start_date_form.asap")
+          - else
+            = t("jobs.not_defined")
+        - unless vacancy.legacy_draft?
+          - row.with_action text: t("buttons.change"),
+            href: organisation_job_build_path(vacancy.id, :start_date, "back_to_#{action_name}": "true"),
+            visually_hidden_text: t("jobs.starts_on")
 
   - if vacancy.salary_types.any?
     - summary_list.with_row(html_attributes: { id: "salary" }) do |row|

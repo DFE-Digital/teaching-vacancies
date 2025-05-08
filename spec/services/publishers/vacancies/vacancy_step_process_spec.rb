@@ -9,7 +9,7 @@ RSpec.describe Publishers::Vacancies::VacancyStepProcess do
   let(:organisation) { build(:school) }
 
   describe "#step_groups" do
-    let(:all_possible_step_groups) { %i[job_details important_dates application_process about_the_role review] }
+    let(:all_possible_step_groups) { %i[job_details about_the_role important_dates application_process review] }
     let(:vacancy) { create(:vacancy, :draft, job_roles: ["teacher"], organisations: [organisation]) }
 
     it "has the expected step groups" do

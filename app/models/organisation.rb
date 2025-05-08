@@ -69,8 +69,7 @@ class Organisation < ApplicationRecord
   }
 
   def all_vacancies
-    ids = school? ? [id] : [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
-    Vacancy.in_organisation_ids(ids)
+    Vacancy.in_organisation_ids(all_organisation_ids)
   end
 
   def name

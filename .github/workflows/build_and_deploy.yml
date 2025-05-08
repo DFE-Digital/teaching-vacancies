@@ -20,7 +20,7 @@ on:
       - synchronize
       - reopened
 
-concurrency: workflow-Build-and-deploy-${{ github.event.pull_request.number }}
+concurrency: workflow-Build-and-deploy-${{ github.ref }}
 permissions:
   id-token: write
   packages: write

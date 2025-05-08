@@ -432,99 +432,13 @@ RSpec.describe VacanciesHelper do
     end
   end
 
-  describe "#vacancy_review_form_heading_action_link" do
-    subject { helper.vacancy_review_form_heading_action_link(vacancy, action) }
-
+  describe "#vacancy_complete_action_link" do
+    subject { helper.vacancy_complete_action_link(vacancy, :working_patterns) }
+    let(:link) { helper.govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, :working_patterns, back_to_show: "true"), class: "govuk-!-margin-bottom-0") }
     let(:vacancy) { create(:vacancy) }
 
-    context "when the action is view" do
-      let(:action) { "view" }
-      let(:link) { helper.open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.view"), job_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
-    end
-
-    context "when the action is copy" do
-      let(:action) { "copy" }
-      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post) }
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
-    end
-
-    context "when the action is close_early" do
-      let(:action) { "close_early" }
-      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.close_early"), organisation_job_end_listing_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
-    end
-
-    context "when the action is extend_closing_date" do
-      let(:action) { "extend_closing_date" }
-      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.extend_closing_date"), organisation_job_extend_deadline_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
-    end
-
-    context "when the action is publish" do
-      let(:action) { "publish" }
-      let(:link) { helper.govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
-    end
-
-    context "when the action is preview" do
-      let(:action) { "preview" }
-      let(:link) { helper.open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.preview"), organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
-    end
-
-    context "when the action is delete" do
-      let(:action) { "delete" }
-      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.delete"), organisation_job_confirm_destroy_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
-    end
-
-    context "when the action is complete" do
-      let(:action) { "complete" }
-      let(:link) { helper.govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_show: "true"), class: "govuk-!-margin-bottom-0") }
-
-      before do
-        # Helper uses next_invalid_step which is a helper method defined in Publishers::Vacancies::BaseController. This helper
-        # is not available in the context of the test, so I did the below. TODO: Other solutions involve moving these helpers out into
-        # a separate module and including that in the controller, but this was the quickest fix for now.
-        VacanciesHelper.instance_eval do
-          define_method(:next_invalid_step) { :working_patterns }
-        end
-      end
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
-    end
-
-    context "when the action is convert_to_draft" do
-      let(:action) { "convert_to_draft" }
-      let(:link) { helper.govuk_link_to(t("publishers.vacancies.show.heading_component.action.convert_to_draft"), organisation_job_convert_to_draft_path(vacancy.id), class: "govuk-!-margin-bottom-0") }
-
-      it "returns the correct link" do
-        expect(subject).to eq(link)
-      end
+    it "returns the correct link" do
+      expect(subject).to eq(link)
     end
   end
 end

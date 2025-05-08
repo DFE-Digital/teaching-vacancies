@@ -1,3 +1,15 @@
 .panel-component.js-action data-controller="panel" data-content-id="filters-component" data-close-container="filters-component__heading"
-  a.panel-component__toggle.govuk-link class="govuk-link--no-visited-state govuk-!-font-size-24 govuk-!-font-weight-bold" href="#" data-panel-target="toggle" data-action="panel#toggleVisibility"
-    = t("buttons.filters_toggle_panel", count: form.total_filters)
+  a.panel-component__toggle.govuk-link class="govuk-button govuk-button--secondary govuk-!-font-size-24 govuk-!-font-weight-bold" href="#" data-panel-target="toggle" data-action="panel#toggleVisibility"
+    = t("buttons.filters_toggle_panel")
+
+  .filters-list.panel-component__toggle
+    h4 = t("shared.filter_group.filters_applied")
+    = render FiltersComponent::RemoveFilterLinks.new do |component|
+      - form.filters.each do |key, selected|
+        - legend = nil
+        - options = form.public_send(:"#{key.to_s.singularize}_options")
+        - selected_method = :last
+        - selected_method = :first if %i[subjects organisation_types].include?(key)
+        - value_method = :first
+        - remove_filter_link = { url_helper: :jobs_path, params: vacancies_search.remove_filter_params }
+        - component.with_group(legend:, key:, selected:, options:, value_method:, selected_method:, remove_filter_link:)

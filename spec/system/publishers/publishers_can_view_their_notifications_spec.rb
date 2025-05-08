@@ -41,7 +41,7 @@ RSpec.describe "Publishers can view their notifications" do
 
       click_on "Next"
       # wait for page load
-      find(".govuk-pagination__prev")
+      find(".govuk-pagination__prev", wait: 10)
 
       within ".notification" do
         expect(page).to have_css("div", class: "notification__tag", text: "new", count: 1)

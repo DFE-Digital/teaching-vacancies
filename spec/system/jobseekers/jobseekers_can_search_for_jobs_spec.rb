@@ -52,7 +52,11 @@ RSpec.shared_examples "a successful search" do
     end
 
     context "when removing a filter" do
-      before { click_on "Remove this filter Teacher" }
+      before do
+        within("#filters-component") do
+          click_on "Remove this filter Teacher"
+        end
+      end
 
       it "removes the filter" do
         expect(page).to_not have_css("a", text: "Remove this filter Teacher")
@@ -302,7 +306,9 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         click_on I18n.t("buttons.search")
 
-        click_link "Remove this filter Teacher"
+        within("#filters-component") do
+          click_link "Remove this filter Teacher"
+        end
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([job1])
@@ -374,7 +380,9 @@ RSpec.describe "Jobseekers can search for jobs on the jobs index page" do
 
         click_on I18n.t("buttons.search")
 
-        click_link "Remove this filter Teacher"
+        within("#filters-component") do
+          click_link "Remove this filter Teacher"
+        end
         click_on I18n.t("buttons.search")
 
         expect_page_to_show_jobs([faith_job])

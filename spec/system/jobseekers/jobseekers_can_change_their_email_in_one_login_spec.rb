@@ -6,9 +6,10 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
   let!(:one_login_jobseeker) { create(:jobseeker, email: original_email) }
 
   context "when the new email address does not match any TV account" do
-    scenario "gets signed in with their updated email in teaching vacancies" do
-      sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email)
+    before { sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email) }
+    after { logout }
 
+    scenario "gets signed in with their updated email in teaching vacancies" do
       expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
       expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
       expect(page).to have_link(text: I18n.t("nav.sign_out"))
@@ -21,9 +22,10 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
     let!(:pre_one_login_job_application) { create(:job_application, jobseeker: pre_one_login_jobseeker) }
 
     context "when the GovUK One Login user was a fresh account with no job applications" do
-      scenario "merges both accounts migrating the old account data into the new one" do
-        sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email)
+      before { sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email) }
+      after { logout }
 
+      scenario "merges both accounts migrating the old account data into the new one" do
         expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
         expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
 
@@ -38,9 +40,10 @@ RSpec.describe "Jobseekers can schange their email in GovUK One Login" do
     context "when the GovUK One Login user had already submitted an application" do
       let!(:job_application) { create(:job_application, jobseeker: one_login_jobseeker) }
 
-      scenario "gets signed in wile keeping their original email in teaching vacancies" do
-        sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email)
+      before { sign_in_jobseeker_govuk_one_login(one_login_jobseeker, navigate: true, email: updated_email) }
+      after { logout }
 
+      scenario "gets signed in wile keeping their original email in teaching vacancies" do
         expect(page).to have_current_path(jobseekers_job_applications_path, ignore_query: true)
         expect(page).to have_css("h1", text: I18n.t("jobseekers.job_applications.index.page_title"))
 

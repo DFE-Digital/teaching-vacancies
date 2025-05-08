@@ -15,4 +15,12 @@ class SchoolGroup < Organisation
   def faith_school?
     false
   end
+
+  def all_organisations
+    [self] + schools + schools_outside_local_authority
+  end
+
+  def all_organisation_ids
+    [id] + schools.pluck(:id) + schools_outside_local_authority.pluck(:id)
+  end
 end

@@ -194,6 +194,8 @@ module VacanciesHelper
       :expired
     elsif vacancy.pending?
       :pending
+    elsif vacancy.published?
+      :live
     else
       vacancy.status.to_sym
     end

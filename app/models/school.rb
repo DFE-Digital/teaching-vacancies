@@ -70,4 +70,12 @@ class School < Organisation
   def part_of_a_trust?
     trust.present?
   end
+
+  def all_organisations
+    [self]
+  end
+
+  def all_organisation_ids
+    [id]
+  end
 end

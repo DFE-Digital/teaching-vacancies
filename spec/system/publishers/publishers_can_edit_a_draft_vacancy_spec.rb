@@ -10,41 +10,51 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   after { logout }
 
   context "with a single school" do
-    let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
+    before { visit organisation_job_path(vacancy.id) }
 
-    before do
-      visit organisation_jobs_with_type_path
-      click_on "Draft jobs"
-      click_on vacancy.job_title
+    context "with a complete draft" do
+      let(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: [:teacher], organisations: [primary_school], phases: %w[primary]) }
+
+      it "indicates that you're reviewing a draft" do
+        has_complete_draft_vacancy_review_heading?(vacancy)
+      end
     end
 
-    scenario "indicates that you're reviewing a draft" do
-      has_complete_draft_vacancy_review_heading?(vacancy)
-    end
+    context "with an incomplete draft", :js do
+      let(:vacancy) { create(:vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary]) }
 
-    scenario "can edit a draft" do
-      click_review_page_change_link(section: "job_details", row: "job_role")
+      it "can edit a draft" do
+        within "#job_details" do
+          find("a").click
+        end
+        click_on I18n.t("buttons.save_and_continue")
 
-      vacancy.job_roles = ["teaching_assistant"]
-      fill_in_job_role_form_fields(vacancy)
+        fill_in_job_role_form_fields("teaching_assistant")
+        click_on I18n.t("buttons.save_and_continue")
 
-      click_on I18n.t("buttons.save_and_continue")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :key_stages))
+        fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
+        click_on I18n.t("buttons.save_and_continue")
 
-      expect(current_path).to eq(organisation_job_review_path(vacancy.id))
-      expect(page).to have_content(vacancy.job_roles.first.humanize)
-    end
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
+        click_on I18n.t("buttons.save_and_continue")
 
-    scenario "going back to the review page after clicking change link" do
-      click_review_page_change_link(section: "job_details", row: "job_role")
-
-      click_on I18n.t("buttons.back")
-
-      expect(current_path).to eq(organisation_job_path(vacancy.id))
+        expect(current_path).to eq(organisation_job_review_path(vacancy.id))
+        expect(page).to have_content(vacancy.reload.job_roles.first.humanize)
+      end
     end
   end
 
   context "with a school group" do
-    let!(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
+    let(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"], organisations: [primary_school], phases: %w[primary], key_stages: %w[ks1]) }
     let(:another_primary_school) { create(:school, name: "Another primary school", phase: "primary") }
     let(:trust) { create(:trust, schools: [primary_school, another_primary_school]) }
     let(:organisation) { trust }
@@ -53,28 +63,31 @@ RSpec.describe "Publishers can edit a draft vacancy" do
 
     context "when editing the job location" do
       scenario "successfully updating the job location" do
-        expect(page).to have_content(full_address(primary_school))
-        displays_all_vacancy_organisations?(vacancy)
+        within "#job_details" do
+          find("a").click
+        end
 
-        change_job_locations(vacancy, [another_primary_school])
-        click_on I18n.t("buttons.save_and_continue")
+        fill_in_job_location_form_fields([another_primary_school])
+        click_on I18n.t("buttons.save_and_finish_later")
 
-        expect(current_path).to eq(organisation_job_review_path(vacancy.id))
-        verify_job_locations(vacancy)
-
-        change_job_locations(vacancy, [primary_school, another_primary_school])
-        click_on I18n.t("buttons.save_and_continue")
-
-        expect(current_path).to eq(organisation_job_review_path(vacancy.id))
-        verify_job_locations(vacancy)
+        within "#job_details" do
+          find("a").click
+        end
+        fill_in_job_location_form_fields([primary_school, another_primary_school])
+        click_on I18n.t("buttons.save_and_finish_later")
       end
 
       context "when the new job location is the trust's central office" do
-        scenario "the education phase has to be set" do
-          change_job_locations(vacancy, [trust])
+        it "prompts for the education phase to be set" do
+          within "#job_details" do
+            find("a").click
+          end
+          fill_in_job_location_form_fields([trust])
+          click_on I18n.t("buttons.save_and_continue")
+          click_on I18n.t("buttons.save_and_continue")
           click_on I18n.t("buttons.save_and_continue")
 
-          expect(current_path).to eq(organisation_job_build_path(vacancy.id, :education_phases))
+          expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :education_phases))
         end
       end
 
@@ -84,11 +97,16 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         let(:another_not_applicable_school) { create(:school, name: "Another not school", phase: "not_applicable") }
 
         scenario "the education phase has to be set" do
-          change_job_locations(vacancy, [not_applicable_school, another_not_applicable_school])
-          displays_all_vacancy_organisations?(vacancy)
+          within "#job_details" do
+            find("a").click
+          end
+          fill_in_job_location_form_fields([not_applicable_school, another_not_applicable_school])
+          displays_all_vacancy_organisations?([not_applicable_school, another_not_applicable_school])
+          click_on I18n.t("buttons.save_and_continue")
+          click_on I18n.t("buttons.save_and_continue")
           click_on I18n.t("buttons.save_and_continue")
 
-          expect(current_path).to eq(organisation_job_build_path(vacancy.id, :education_phases))
+          expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :education_phases))
         end
       end
 
@@ -97,19 +115,24 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         let(:trust) { create(:trust, schools: [primary_school, secondary_school]) }
 
         scenario "key_stages has to be set again" do
-          change_job_locations(vacancy, [secondary_school])
+          within "#job_details" do
+            find("a").click
+          end
+          fill_in_job_location_form_fields([secondary_school])
           click_on I18n.t("buttons.save_and_continue")
 
           click_on I18n.t("buttons.save_and_continue")
+          click_on I18n.t("buttons.save_and_continue")
+          click_on I18n.t("buttons.save_and_continue")
 
-          expect(current_path).to eq(organisation_job_build_path(vacancy.id, :key_stages))
+          expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :key_stages))
           expect(page).to have_content(I18n.t("key_stages_errors.key_stages.inclusion"))
         end
       end
     end
 
-    def displays_all_vacancy_organisations?(vacancy)
-      vacancy.organisations.each { |organisation| expect(page).to have_content(organisation.name) }
+    def displays_all_vacancy_organisations?(organisations)
+      organisations.each { |organisation| expect(page).to have_content(organisation.name) }
     end
   end
 end

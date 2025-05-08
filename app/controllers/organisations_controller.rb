@@ -12,7 +12,7 @@ class OrganisationsController < ApplicationController
 
   private
 
-  helper_method def search_form
+  def search_form
     @search_form ||= SchoolSearchForm.new(params)
   end
 

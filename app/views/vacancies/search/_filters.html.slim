@@ -77,8 +77,8 @@ ruby:
       key: :quick_apply,
       selected: form.quick_apply,
       options: form.quick_apply_options,
-      value_method: :value,
-      selected_method: :text,
+      value_method: :first,
+      selected_method: :last,
     },
   ]
 
@@ -108,4 +108,4 @@ ruby:
     - filters_component.with_group key: "organisation_types", component: f.govuk_collection_check_boxes(:organisation_types, form.organisation_type_options, :first, :first, :last, small: true, legend: { text: t("jobs.filters.organisation_type") }, hint: nil)
     - filters_component.with_group key: "school_types", component: f.govuk_collection_check_boxes(:school_types, f.object.school_type_options, :first, :last, small: true, legend: { text: t("jobs.filters.school_type") }, hint: nil)
     - filters_component.with_group key: "working_patterns", component: f.govuk_collection_check_boxes(:working_patterns, form.working_pattern_options, :first, :last, small: true, legend: { text: t("jobs.filters.working_patterns") }, hint: nil)
-    - filters_component.with_group key: "quick_apply", component: f.govuk_collection_check_boxes(:quick_apply, form.quick_apply_options, :value, :text, :hint, small: true, legend: { text: t("jobs.filters.quick_apply") }, hint: nil)
+    - filters_component.with_group key: "quick_apply", component: f.govuk_collection_check_boxes(:quick_apply, form.quick_apply_options, :first, :last, :hint, small: true, legend: { text: t("jobs.filters.quick_apply") }, hint: nil)

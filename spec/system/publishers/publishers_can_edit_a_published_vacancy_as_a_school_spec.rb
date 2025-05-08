@@ -300,10 +300,9 @@ RSpec.describe "Publishers can edit a vacancy" do
         visit organisation_job_path(vacancy.id)
 
         click_review_page_change_link(section: "application_process", row: "contact_email")
-        vacancy.contact_email = "new-test@example.net"
 
         choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_email_options.other")
-        fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: vacancy.contact_email
+        fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: Faker::Internet.email(domain: "contoso.com")
         click_on I18n.t("buttons.save_and_continue")
 
         expect(current_path).to eq(organisation_job_path(vacancy.id))
@@ -317,10 +316,9 @@ RSpec.describe "Publishers can edit a vacancy" do
 
         visit organisation_job_path(vacancy.id)
         click_review_page_change_link(section: "application_process", row: "contact_email")
-        vacancy.contact_email = "new-test@example.net"
 
         choose I18n.t("helpers.label.publishers_job_listing_contact_details_form.contact_email_options.other")
-        fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: vacancy.contact_email
+        fill_in "publishers_job_listing_contact_details_form[other_contact_email]", with: Faker::Internet.email(domain: "contoso.com")
         click_on I18n.t("buttons.save_and_continue")
       end
     end
