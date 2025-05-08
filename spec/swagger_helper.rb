@@ -261,7 +261,7 @@ RSpec.configure do |config|
                   },
                   subjects: {
                     type: :array,
-                    minItems: 1,
+                    minItems: 0,
                     items: {
                       type: :string,
                       enum: SUBJECT_OPTIONS.map(&:first), # List of available subjects in the service (from subjects.yml)
@@ -451,7 +451,7 @@ RSpec.configure do |config|
               },
               subjects: {
                 type: :array,
-                minItems: 1,
+                minItems: 0,
                 items: {
                   type: :string,
                   enum: SUBJECT_OPTIONS.map(&:first), # List of available subjects in the service (from subjects.yml)

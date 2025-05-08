@@ -174,6 +174,43 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
           )
         end
 
+        context "when subjects is an empty array", document: false do
+          let(:vacancy_params) do
+            {
+              external_advert_url: "https://www.example.com/ats-site/advertid",
+              expires_at: "2026-01-01",
+              job_title: "Headteacher",
+              job_advert: "An exciting opportunity for a headteacher",
+              salary: "£70,000 to £90,000",
+              visa_sponsorship_available: false,
+              external_reference: "HEAD123",
+              ect_suitable: false,
+              job_roles: %w[headteacher],
+              is_job_share: false,
+              working_patterns: %w[full_time],
+              contract_type: "permanent",
+              phases: %w[primary],
+              publish_on: (Time.zone.today + 1).strftime("%Y-%m-%d"),
+              schools: {
+                school_urns: [school1.urn],
+              },
+              subjects: [],
+              key_stages: %w[ks1 ks2],
+              starts_on: "Next September",
+            }
+          end
+          let(:vacancy) { { vacancy: vacancy_params } }
+        
+          it "creates the vacancy with empty subjects" do |example|
+            expect { submit_request(example.metadata) }.to change(Vacancy, :count).by(1)
+            assert_response_matches_metadata(example.metadata)
+        
+            created_vacancy = Vacancy.last
+            expect(created_vacancy.subjects).to eq([])
+            expect(created_vacancy.job_roles).to eq(%w[headteacher])
+          end
+        end
+
         describe "organisation linking", document: false do
           let(:created_vacancy) { Vacancy.last }
 
