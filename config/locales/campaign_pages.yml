@@ -19,9 +19,9 @@ en:
     pebespoke:
       banner_title: "%{name}, find the right %{subject} teacher job for you"
     primarybespoke:
-      banner_title: "%{name}, find the right %{phase} teacher job for you"
+      banner_title: "%{name}, find the right primary teacher job for you"
     secondarybespoke:
-      banner_title: "%{name}, find the right %{phase} teacher job for you"
+      banner_title: "%{name}, find the right secondary teacher job for you"
     physicsbespoke:
       banner_title: "%{name}, find the right %{subject} teacher job for you"
     historybespoke:
