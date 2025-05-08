@@ -298,6 +298,8 @@ class Vacancy < ApplicationRecord
 
   # soft delete so that all the stats etc are kept even after the vacancy no longer exists
   def trash!
+    return if discarded?
+
     supporting_documents.purge_later
     discard!
     remove_google_index
