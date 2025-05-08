@@ -50,4 +50,20 @@ RSpec.describe "Jobseekers can view the bespoke campaign landing page" do
     expect(page).to have_css(".sort-container")
     expect(page).to have_select("Sort by", selected: "Newest job")
   end
+
+  context "when visiting the bespoke primary campaign page" do
+    it "shows correct banner" do
+      visit campaign_landing_page_path(email_name: "John", email_jobrole: "Teacher", email_subject: "Mathematics", utm_content: "primarybespoke")
+
+      expect(page).to have_css("h1", text: "John, find the right primary teacher job for you")
+    end
+  end
+
+  context "when visiting the bespoke secondary campaign page" do
+    it "shows correct banner" do
+      visit campaign_landing_page_path(email_name: "John", email_jobrole: "Teacher", email_subject: "Mathematics", utm_content: "secondarybespoke")
+
+      expect(page).to have_css("h1", text: "John, find the right secondary teacher job for you")
+    end
+  end
 end
