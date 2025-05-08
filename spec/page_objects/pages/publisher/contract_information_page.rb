@@ -4,14 +4,14 @@ module PageObjects
       class ContractInformationPage < CommonPage
         set_url "/organisation/jobs/{vacancy_id}/build/contract_information"
 
-        def fill_in_and_submit_form(vacancy, contract_type = "fixed_term")
+        def fill_in_and_submit_form(vacancy, contract_type = "fixed_term", contract_length: "1 month")
           if contract_type == "fixed_term"
             choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.fixed_term")
             # Choose "Yes" for parental leave coverage
             within "#publishers-job-listing-contract-information-form-contract-type-fixed-term-conditional" do
               choose "Yes"
             end
-            fill_in "Length of contract", with: "1 month"
+            fill_in "Length of contract", with: contract_length
           else
             choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.#{contract_type}")
           end

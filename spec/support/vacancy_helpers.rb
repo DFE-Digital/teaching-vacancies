@@ -42,29 +42,6 @@ module VacancyHelpers
     end
   end
 
-  def fill_in_contract_information_form_fields(contract_type: "fixed_term", contract_length: "1 month")
-    if contract_type == "fixed_term"
-      choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.fixed_term")
-      # Choose "Yes" for parental leave coverage
-      within "#publishers-job-listing-contract-information-form-contract-type-fixed-term-conditional" do
-        choose "Yes"
-      end
-      fill_in "Length of contract", with: contract_length
-    else
-      choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.#{contract_type}")
-    end
-
-    vacancy.working_patterns.each do |working_pattern|
-      check Vacancy.human_attribute_name(working_pattern.to_s), name: "publishers_job_listing_contract_information_form[working_patterns][]"
-    end
-
-    # Choose "Yes" or "No" for job share option
-    job_share_label = "publishers-job-listing-contract-information-form-is-job-share-#{vacancy.is_job_share}-field"
-    find("label[for=#{job_share_label}]").click
-
-    fill_in "publishers_job_listing_contract_information_form[working_patterns_details]", with: vacancy.working_patterns_details
-  end
-
   def fill_in_pay_package_form_fields(vacancy)
     if vacancy.contract_type == "casual"
       check I18n.t("helpers.label.publishers_job_listing_pay_package_form.salary_types_options.hourly_rate")
@@ -165,28 +142,6 @@ module VacancyHelpers
     choose I18n.t("helpers.label.publishers_job_listing_include_additional_documents_form.include_additional_documents_options.#{include_additional_documents}")
   end
 
-  def fill_in_copy_vacancy_form_fields(vacancy)
-    choose I18n.t("helpers.label.publishers_job_listing_copy_vacancy_form.publish_on_day_options.another_day")
-
-    fill_in "publishers_job_listing_copy_vacancy_form[job_title]", with: vacancy.job_title
-
-    fill_in "publishers_job_listing_copy_vacancy_form[expires_at(3i)]", with: vacancy.expires_at&.day
-    fill_in "publishers_job_listing_copy_vacancy_form[expires_at(2i)]", with: vacancy.expires_at&.strftime("%m")
-    fill_in "publishers_job_listing_copy_vacancy_form[expires_at(1i)]", with: vacancy.expires_at&.year
-
-    choose "9am", name: "publishers_job_listing_copy_vacancy_form[expiry_time]"
-
-    fill_in "publishers_job_listing_copy_vacancy_form[publish_on(3i)]", with: vacancy.publish_on&.day
-    fill_in "publishers_job_listing_copy_vacancy_form[publish_on(2i)]", with: vacancy.publish_on&.strftime("%m")
-    fill_in "publishers_job_listing_copy_vacancy_form[publish_on(1i)]", with: vacancy.publish_on&.year
-
-    choose I18n.t("helpers.legend.publishers_job_listing_important_dates_form.start_date_specific")
-
-    fill_in "publishers_job_listing_copy_vacancy_form[starts_on(3i)]", with: vacancy.starts_on.day if vacancy.starts_on
-    fill_in "publishers_job_listing_copy_vacancy_form[starts_on(2i)]", with: vacancy.starts_on.strftime("%m") if vacancy.starts_on
-    fill_in "publishers_job_listing_copy_vacancy_form[starts_on(1i)]", with: vacancy.starts_on.year if vacancy.starts_on
-  end
-
   def verify_vacancy_show_page_details(vacancy)
     vacancy = VacancyPresenter.new(vacancy)
     expect(page).to have_content(vacancy.job_title)
@@ -233,10 +188,6 @@ module VacancyHelpers
       expect(page).to have_content(I18n.t("jobs.apply_via_website"))
       expect(page).to have_link(I18n.t("jobs.apply"), href: vacancy.application_link)
     end
-  end
-
-  def expect_schema_property_to_match_value(key, value)
-    expect(page).to have_selector("meta[itemprop='#{key}'][content='#{value}']")
   end
 
   def create_published_vacancy(*, **)
@@ -302,7 +253,7 @@ module VacancyHelpers
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :contract_information), ignore_query: true)
 
-    fill_in_contract_information_form_fields
+    publisher_contract_information_page.fill_in_and_submit_form(vacancy)
     click_on I18n.t("buttons.save_and_continue")
 
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :start_date), ignore_query: true)
