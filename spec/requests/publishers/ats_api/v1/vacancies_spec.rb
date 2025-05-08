@@ -200,11 +200,11 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
             }
           end
           let(:vacancy) { { vacancy: vacancy_params } }
-        
+
           it "creates the vacancy with empty subjects" do |example|
             expect { submit_request(example.metadata) }.to change(Vacancy, :count).by(1)
             assert_response_matches_metadata(example.metadata)
-        
+
             created_vacancy = Vacancy.last
             expect(created_vacancy.subjects).to eq([])
             expect(created_vacancy.job_roles).to eq(%w[headteacher])
