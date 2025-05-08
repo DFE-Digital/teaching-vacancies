@@ -42,14 +42,14 @@ module VacancyHelpers
     end
   end
 
-  def fill_in_contract_information_form_fields(contract_type = "fixed_term")
+  def fill_in_contract_information_form_fields(contract_type: "fixed_term", contract_length: "1 month")
     if contract_type == "fixed_term"
       choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.fixed_term")
       # Choose "Yes" for parental leave coverage
       within "#publishers-job-listing-contract-information-form-contract-type-fixed-term-conditional" do
         choose "Yes"
       end
-      fill_in "Length of contract", with: "1 month"
+      fill_in "Length of contract", with: contract_length
     else
       choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.#{contract_type}")
     end
@@ -97,7 +97,7 @@ module VacancyHelpers
     fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: vacancy.expires_at.month
     fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: vacancy.expires_at.year
 
-    choose "3pm", name: "publishers_job_listing_important_dates_form[expiry_time]"
+    choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
   end
 
   def fill_in_start_date_form_fields(starts_on = 35.days.from_now)
