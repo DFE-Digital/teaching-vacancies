@@ -20,7 +20,7 @@ h1 class="govuk-heading-l" role="heading" aria-level="1"
       .custom-banner
         .govuk-grid-row
           .govuk-grid-column-one-third-at-desktop
-            h1.govuk-heading-l class="govuk-!-margin-bottom-4" = @campaign_page.banner_title(@jobseeker_name, @subject, @phase)
+            h1.govuk-heading-l class="govuk-!-margin-bottom-4" = @campaign_page.banner_title(@jobseeker_name, @subject)
             = render "vacancies/search/fields_and_button", f: f, form: @form, show_keyword: false
 
           .govuk-grid-column-two-thirds-at-desktop

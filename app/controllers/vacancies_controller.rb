@@ -34,11 +34,6 @@ class VacanciesController < ApplicationController
     @form ||= Jobseekers::SearchForm.new(campaign_params.merge(landing_page: @campaign_page))
     @jobseeker_name = params[:email_name] || "Jobseeker"
     @subject = params[:email_subject] || ""
-    @phase = if params[:utm_content] == "primarybespoke"
-               "primary"
-             elsif params[:utm_content] == "secondarybespoke"
-               "secondary"
-             end
 
     @vacancies_search = Search::VacancySearch.new(@form.to_hash, sort: @form.sort)
     @pagy, @vacancies = pagy(@vacancies_search.vacancies, count: @vacancies_search.total_count)

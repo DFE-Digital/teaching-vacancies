@@ -1,5 +1,5 @@
 class CampaignPage
-  attr_reader :utm_content_code, :criteria, :banner_image, :hidden_filters
+  attr_reader :utm_content_code, :criteria, :banner_image, :hidden_filters, :phase
 
   # Language subjects need to be uppercase.
   LANGUAGE_SUBJECTS = %w[English Spanish German French].freeze
@@ -22,9 +22,14 @@ class CampaignPage
     @banner_image = Rails.application.config.campaign_pages[utm_content_code.to_sym][:banner_image]
     @criteria = criteria
     @hidden_filters = criteria[:hidden_filters] || []
+    @phase = if utm_content_code == "primarybespoke"
+               "primary"
+             elsif utm_content_code == "secondarybespoke"
+               "secondary"
+             end
   end
 
-  def banner_title(name, subject = nil, phase = nil)
+  def banner_title(name, subject = nil)
     subject = subject&.downcase unless LANGUAGE_SUBJECTS.include?(subject)
     title = I18n.t("campaign_pages.#{utm_content_code}.banner_title", name: name, subject: subject, phase: phase)
     title.squeeze(" ").strip
