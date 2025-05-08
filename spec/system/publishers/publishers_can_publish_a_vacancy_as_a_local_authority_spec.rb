@@ -25,7 +25,7 @@ RSpec.describe "Creating a vacancy" do
     click_on I18n.t("buttons.continue")
     expect(page).to have_content("There is a problem")
 
-    fill_in_job_location_form_fields(vacancy)
+    fill_in_job_location_form_fields(vacancy.organisations)
     click_on I18n.t("buttons.continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
@@ -33,7 +33,7 @@ RSpec.describe "Creating a vacancy" do
     expect(page).to have_content("There is a problem")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
-    fill_in_job_title_form_fields(vacancy)
+    fill_in_job_title_form_fields(vacancy.job_title)
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
 
@@ -41,7 +41,7 @@ RSpec.describe "Creating a vacancy" do
     expect(page).to have_content("There is a problem")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
 
-    fill_in_job_role_form_fields(vacancy)
+    fill_in_job_role_form_fields(vacancy.job_roles.first)
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
 
@@ -57,11 +57,11 @@ RSpec.describe "Creating a vacancy" do
     expect(page).to have_content("There is a problem")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :key_stages))
 
-    fill_in_key_stages_form_fields(vacancy)
+    fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :subjects))
 
-    fill_in_subjects_form_fields(vacancy)
+    fill_in_subjects_form_fields(vacancy.subjects)
     click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contract_information))
 
@@ -69,10 +69,14 @@ RSpec.describe "Creating a vacancy" do
     expect(page).to have_content("There is a problem")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contract_information))
 
-    fill_in_contract_information_form_fields(vacancy)
+    fill_in_contract_information_form_fields
     click_on I18n.t("buttons.save_and_continue")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
 
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :start_date))
+    fill_in_start_date_form_fields(vacancy.starts_on)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
@@ -81,18 +85,43 @@ RSpec.describe "Creating a vacancy" do
 
     fill_in_pay_package_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
 
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
+    fill_in_about_the_role_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
+    fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
+    fill_in_school_visits_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
+    click_on I18n.t("buttons.save_and_continue")
+    expect(page).to have_content("There is a problem")
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
+    fill_in_visa_sponsorship_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_content("There is a problem")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
 
     fill_in_important_dates_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :start_date))
 
-    fill_in_start_date_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
 
     fill_in_applying_for_the_job_disable_job_applications
@@ -115,22 +144,6 @@ RSpec.describe "Creating a vacancy" do
     fill_in_application_link_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
 
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
-
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_content("There is a problem")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
-
-    fill_in_school_visits_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
-
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_content("There is a problem")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
-
-    fill_in_visa_sponsorship_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contact_details))
 
     click_on I18n.t("buttons.save_and_continue")
@@ -138,22 +151,6 @@ RSpec.describe "Creating a vacancy" do
     expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contact_details))
 
     fill_in_contact_details_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
-
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_content("There is a problem")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
-
-    fill_in_about_the_role_form_fields(vacancy)
-    click_on I18n.t("buttons.save_and_continue")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
-
-    click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_content("There is a problem")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
-
-    fill_in_include_additional_documents_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
 
     expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))

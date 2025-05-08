@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_02_154655) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_30_141711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -552,6 +552,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_02_154655) do
     t.text "finished_studying_details_ciphertext"
     t.uuid "jobseeker_profile_id"
     t.string "awarding_body"
+    t.integer "month"
     t.index ["job_application_id"], name: "index_qualifications_on_job_application_id"
     t.index ["jobseeker_profile_id"], name: "index_qualifications_on_jobseeker_profile_id"
   end
@@ -724,6 +725,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_02_154655) do
     t.index ["status"], name: "index_vacancies_on_status"
   end
 
+  create_table "vacancy_analytics", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vacancy_id", null: false
+    t.jsonb "referrer_counts", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["referrer_counts"], name: "index_vacancy_analytics_on_referrer_counts", using: :gin
+    t.index ["vacancy_id"], name: "index_vacancy_analytics_on_vacancy_id", unique: true
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
     t.uuid "item_id", null: false
@@ -783,4 +793,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_02_154655) do
   add_foreign_key "vacancies", "organisations", column: "publisher_organisation_id"
   add_foreign_key "vacancies", "publisher_ats_api_clients"
   add_foreign_key "vacancies", "publishers"
+  add_foreign_key "vacancy_analytics", "vacancies"
 end

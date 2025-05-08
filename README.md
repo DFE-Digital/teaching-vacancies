@@ -15,12 +15,13 @@ Vacancies service, a Ruby on Rails application with PostgreSQL and Redis backing
 Welcome to the team! 🐯
 
 You should have been added to our Github team ahead of time, if not, remind your delivery manager or
-tech lead to do that and also [complete the other onboarding steps](documentation/team/onboarding.md)!
+tech lead to do that and also [complete the other onboarding steps](documentation/team/developer_onboarding.md)!
 
 ## Project documentation
 
 ### Team
-* [Onboarding](/documentation/team/onboarding.md)
+* [Onboarding developers](/documentation/team/developer_onboarding.md)
+* [Onboarding other team members](/documentation/team/non_dev_onboarding.md)
 * [Continuous delivery](/documentation/team/continuous-delivery.md)
 * [Business Analyst activities](/documentation/team/business-analyst-activities.md)
 
@@ -83,5 +84,6 @@ tech lead to do that and also [complete the other onboarding steps](documentatio
 * [Rails View components](/documentation/service/technical/components.md)
 * [File uploads virus scan: Google Drive API](/documentation/service/technical/google-drive-api.md)
 * [Bot mitigation](/documentation/service/technical/bot-mitigation.md)
+* [Tracking vacancy views](documentation/service/technical/tracking-vacancy-views.md)
 
 

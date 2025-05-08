@@ -24,4 +24,15 @@ class Publisher < ApplicationRecord
   def papertrail_display_name
     "#{given_name} #{family_name}"
   end
+
+  def accessible_organisations(current_organisation)
+    publisher_preference = publisher_preferences.find_by(organisation: current_organisation)
+    if publisher_preference.organisations.any?
+      publisher_preference.organisations
+    elsif current_organisation.local_authority?
+      publisher_preference.schools
+    else
+      current_organisation.all_organisations
+    end
+  end
 end

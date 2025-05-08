@@ -26,7 +26,7 @@ RSpec.describe "Publishers can extend a deadline" do
   after { logout }
 
   context "when the vacancy has not expired" do
-    let(:vacancy_type) { :published }
+    let(:vacancy_type) { :live }
     let(:extend_expires_at) { I18n.t("publishers.vacancies.show.heading_component.action.extend_closing_date") }
 
     it "can be extended" do
@@ -41,7 +41,7 @@ RSpec.describe "Publishers can extend a deadline" do
 
       click_on I18n.t("buttons.extend_closing_date")
 
-      expect(current_path).to eq(organisation_jobs_with_type_path(:published))
+      expect(current_path).to eq(organisation_jobs_with_type_path(:live))
 
       expect(vacancy.reload).to have_attributes(extension_reason: "other_extension_reason", other_extension_reason_details: extension_reason, expires_at: expires_at)
     end

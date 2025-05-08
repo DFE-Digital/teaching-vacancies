@@ -380,17 +380,6 @@ en:
           after: Deadline passed
           before: Application deadline
       build:
-        multiple_schools_advice_banner:
-          heading: Sign-in as your trust or local authority to advertise a job across multiple schools or at a trust or local authority level
-          link_text: Find out how to request organisational access
-        about_the_role:
-          step_title: About the role
-        application_link:
-          step_title: Link to website
-        application_form:
-          step_title: Receiving applications
-        application_process:
-          step_title: Application process
         applying_for_the_job:
           accepting_job_applications_link_text: why you should use Teaching Vacancies for applications
           banner:
@@ -408,6 +397,17 @@ en:
           preview_online_application_form: Preview Teaching Vacancies' application form
           preview_religious_application_form: Preview Teaching Vacancies' application form with questions about religion
           preview_catholic_application_form: Preview application form for Catholic schools
+        multiple_schools_advice_banner:
+          heading: Sign-in as your trust or local authority to advertise a job across multiple schools or at a trust or local authority level
+          link_text: Find out how to request organisational access
+        about_the_role:
+          step_title: About the role
+        application_link:
+          step_title: Link to website
+        application_form:
+          step_title: Receiving applications
+        application_process:
+          step_title: Application process
         contact_details:
           step_title: Contact details
         documents:
@@ -528,7 +528,7 @@ en:
         job_applications_link_text: Preview the application form
         skip_link: Skip to %{heading}
         title:
-          published: Active jobs - %{organisation_name}
+          live: Active jobs - %{organisation_name}
           expired: Closed jobs - %{organisation_name}
           pending: Scheduled jobs - %{organisation_name}
           draft: Draft jobs - %{organisation_name}
@@ -646,6 +646,25 @@ en:
         info_about_role: Information about the role
         listing_details: Listing details
       show:
+        task_list:
+          sections:
+            job_details:
+              title: Contract details
+              hint: Job location, job type, contract type, salary and start date
+            about_the_role:
+              title: Information about the role
+              hint: Role details, visa sponsorship, contact details and additional documents
+            important_dates:
+              title: Listing details
+              hint: When to publish the job listing and closing date for applications
+            application_process:
+              title: Application process
+              hint: Application form options
+          status_tags:
+            cannot_start_yet: Cannot start yet
+            not_started: Not started
+            in_progress: In progress
+            completed: Completed
         copied:
           success: Job listing copied
         draft:
@@ -664,6 +683,7 @@ en:
             publish: Publish job listing
             scheduled_complete_draft: Schedule job listing
             view: View
+            give_feedback: Give feedback about this role
           inset_text:
             complete_draft: This job listing is complete and needs to be published.
             closed: This job listing was published on %{publish_date}. It closed on %{expiry_time}.

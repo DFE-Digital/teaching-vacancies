@@ -3,9 +3,9 @@
     h2.govuk-heading-m = t("organisations.show.summary.heading")
     - if organisation.school? && school_is_part_of_a_trust?(organisation)
       .govuk-body-m
+        - link_path = preview ? publishers_organisation_preview_path(organisation.trust) : organisation_path(organisation.trust)
         = t("publishers.organisations.preview.summary.heading.caption_with_link_html",
-            link: govuk_link_to(t("publishers.organisations.preview.summary.heading.link_text", organisation_name: organisation.trust.name),
-                    (preview ? publishers_organisation_preview_path(organisation.trust) : organisation_path(organisation.trust))))
+            link: govuk_link_to(t("publishers.organisations.preview.summary.heading.link_text", organisation_name: organisation.trust.name), link_path))
 
     = govuk_summary_list(html_attributes: { id: "profile_summary" }) do |summary_list|
       - summary_list.with_row do |row|

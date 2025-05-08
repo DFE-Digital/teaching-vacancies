@@ -194,16 +194,6 @@ RSpec.describe Vacancy do
       end
     end
 
-    describe "#awaiting_feedback" do
-      it "gets all vacancies awaiting feedback" do
-        expired_and_awaiting = create_list(:vacancy, 2, :expired)
-        create_list(:vacancy, 3, :expired, listed_elsewhere: :listed_paid, hired_status: :hired_tvs)
-        create_list(:vacancy, 3, :published_slugged)
-
-        expect(Vacancy.awaiting_feedback.count).to eq(expired_and_awaiting.count)
-      end
-    end
-
     describe "#expired" do
       it "retrieves published vacancies that have a past expires_at" do
         create_list(:vacancy, 5, :published)
@@ -279,6 +269,20 @@ RSpec.describe Vacancy do
         expect(Vacancy.published_on_count(1.day.ago)).to eq(published_yesterday.count)
         expect(Vacancy.published_on_count(2.days.ago)).to eq(published_the_other_day.count)
         expect(Vacancy.published_on_count(1.month.ago)).to eq(published_some_other_day.count)
+      end
+    end
+
+    describe "#awaiting_feedback_recently_expired" do
+      it "includes only vacancies that expired within the last 2 months and are awaiting feedback" do
+        recent_expired_and_awaiting_feedback = create(:vacancy, :expired, expires_at: 1.month.ago)
+        old_expired_and_awaiting_feedback = create(:vacancy, :expired, expires_at: 3.months.ago)
+        recent_expired_and_not_awaiting_feedback = create(:vacancy, :expired, expires_at: 1.month.ago, listed_elsewhere: :listed_paid)
+
+        results = Vacancy.awaiting_feedback_recently_expired
+
+        expect(results).to include(recent_expired_and_awaiting_feedback)
+        expect(results).not_to include(old_expired_and_awaiting_feedback)
+        expect(results).not_to include(recent_expired_and_not_awaiting_feedback)
       end
     end
   end

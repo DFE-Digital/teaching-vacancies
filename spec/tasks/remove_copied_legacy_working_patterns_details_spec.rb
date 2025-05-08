@@ -28,7 +28,7 @@ RSpec.describe "vacancies:remove_copied_legacy_working_patterns_details" do
       let(:full_time_details) { "Full time details" }
       let(:part_time_details) { "Part time details" }
 
-      include_examples "removes legacy working patterns details"
+      it_behaves_like "removes legacy working patterns details"
     end
 
     context "without full_time_details and part_time_details" do
@@ -36,7 +36,7 @@ RSpec.describe "vacancies:remove_copied_legacy_working_patterns_details" do
       let(:full_time_details) { "" }
       let(:part_time_details) { "" }
 
-      include_examples "does not remove legacy working patterns details"
+      it_behaves_like "does not remove legacy working patterns details"
     end
 
     context "with only full_time_details" do
@@ -44,7 +44,7 @@ RSpec.describe "vacancies:remove_copied_legacy_working_patterns_details" do
       let(:full_time_details) { "Full time details" }
       let(:part_time_details) { "" }
 
-      include_examples "removes legacy working patterns details"
+      it_behaves_like "removes legacy working patterns details"
     end
 
     context "with only part_time_details" do
@@ -52,7 +52,7 @@ RSpec.describe "vacancies:remove_copied_legacy_working_patterns_details" do
       let(:full_time_details) { "" }
       let(:part_time_details) { "Part time details" }
 
-      include_examples "removes legacy working patterns details"
+      it_behaves_like "removes legacy working patterns details"
     end
   end
 
@@ -64,7 +64,7 @@ RSpec.describe "vacancies:remove_copied_legacy_working_patterns_details" do
       let(:full_time_details) { "Full time details" }
       let(:part_time_details) { "Part time details" }
 
-      include_examples "does not remove legacy working patterns details"
+      it_behaves_like "does not remove legacy working patterns details"
     end
 
     context "without full_time_details and part_time_details" do
@@ -72,7 +72,7 @@ RSpec.describe "vacancies:remove_copied_legacy_working_patterns_details" do
       let(:full_time_details) { "" }
       let(:part_time_details) { "" }
 
-      include_examples "does not remove legacy working patterns details"
+      it_behaves_like "does not remove legacy working patterns details"
     end
 
     context "with only full_time_details" do
@@ -80,7 +80,7 @@ RSpec.describe "vacancies:remove_copied_legacy_working_patterns_details" do
       let(:full_time_details) { "Full time details" }
       let(:part_time_details) { "" }
 
-      include_examples "does not remove legacy working patterns details"
+      it_behaves_like "does not remove legacy working patterns details"
     end
 
     context "with only part_time_details" do
@@ -88,7 +88,7 @@ RSpec.describe "vacancies:remove_copied_legacy_working_patterns_details" do
       let(:full_time_details) { "" }
       let(:part_time_details) { "Part time details" }
 
-      include_examples "does not remove legacy working patterns details"
+      it_behaves_like "does not remove legacy working patterns details"
     end
   end
 end

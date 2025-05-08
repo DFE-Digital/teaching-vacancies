@@ -15,25 +15,25 @@ RSpec.describe "Editing a published vacancy" do
     scenario "can edit job location" do
       visit organisation_job_path(vacancy.id)
 
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.organisations)
 
       change_job_locations(vacancy, [school1])
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.reload.organisations)
 
       change_job_locations(vacancy, [school2])
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.reload.organisations)
 
       change_job_locations(vacancy, [school1, school2])
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.reload.organisations)
 
       change_job_locations(vacancy, [school_group])
       click_on I18n.t("buttons.save_and_continue")
@@ -41,11 +41,11 @@ RSpec.describe "Editing a published vacancy" do
       fill_in_education_phases_form_fields(vacancy)
       click_on I18n.t("buttons.save_and_continue")
 
-      fill_in_key_stages_form_fields(vacancy)
+      fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
       click_on I18n.t("buttons.save_and_continue")
 
       expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-      verify_job_locations(vacancy)
+      verify_job_locations(vacancy.reload.organisations)
     end
   end
 end

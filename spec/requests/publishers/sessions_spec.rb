@@ -59,6 +59,8 @@ RSpec.describe "Redirect to correct authentication method" do
       get organisation_jobs_with_type_path
     end
 
+    after { sign_out(publisher) }
+
     it "redirects to complete your profile reminder" do
       follow_redirect!
       expect(response.body).to include("Complete your school profile")

@@ -26,8 +26,8 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
       it { is_expected.not_to validate_presence_of(:qts_age_range_and_subject) }
       it { is_expected.not_to validate_presence_of(:qualified_teacher_status_details) }
 
-      include_examples "validates teacher reference number format"
-      include_examples "allows teacher reference number to be blank"
+      it_behaves_like "validates teacher reference number format"
+      it_behaves_like "allows teacher reference number to be blank"
     end
 
     context "when the professional status section is completed" do
@@ -50,8 +50,8 @@ RSpec.describe Jobseekers::JobApplication::ProfessionalStatusForm, type: :model 
           it { is_expected.not_to validate_numericality_of(:qualified_teacher_status_year).is_less_than_or_equal_to(Time.current.year) }
           it { is_expected.not_to validate_presence_of(:teacher_reference_number) }
 
-          include_examples "validates teacher reference number format"
-          include_examples "allows teacher reference number to be blank"
+          it_behaves_like "validates teacher reference number format"
+          it_behaves_like "allows teacher reference number to be blank"
         end
       end
     end

@@ -188,6 +188,19 @@ module VacanciesHelper
     end
   end
 
+  # only used in publisher dashboard for classification into buckets
+  def vacancy_publication_status(vacancy)
+    if vacancy.expired?
+      :expired
+    elsif vacancy.pending?
+      :pending
+    elsif vacancy.published?
+      :live
+    else
+      vacancy.status.to_sym
+    end
+  end
+
   private
 
   def request_referrer

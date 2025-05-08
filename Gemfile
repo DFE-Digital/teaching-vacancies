@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.4.2"
+ruby "3.4.3"
 
 RAILS_VERSION = "~> 7.2".freeze
 gem "actionmailer", RAILS_VERSION
@@ -34,8 +34,8 @@ gem "geocoder"
 gem "google-apis-drive_v3"
 gem "google-apis-indexing_v3"
 gem "google-cloud-bigquery"
-gem "govuk-components", "~> 5.9.0"
-gem "govuk_design_system_formbuilder", "~> 5.9.0"
+gem "govuk-components", "~> 5.10.0"
+gem "govuk_design_system_formbuilder", "~> 5.10.0"
 gem "high_voltage"
 gem "httparty"
 gem "ipaddr"
@@ -107,6 +107,7 @@ group :development, :test do
   gem "database_consistency", require: false
   gem "debug", ">= 1.0.0", require: false
   gem "dotenv-rails"
+  gem "guard-rspec", require: false
   gem "launchy", "~> 3.1"
   gem "parallel_tests"
   gem "pdf-inspector", require: "pdf/inspector"
@@ -127,11 +128,14 @@ group :test do
   gem "capybara"
   gem "climate_control"
   gem "fastimage"
+  gem "mock_redis"
   gem "rack_session_access"
+  gem "redis-client"
   gem "selenium-webdriver"
   gem "shoulda-matchers"
   gem "simplecov", require: false
   gem "simplecov-lcov", require: false
+  gem "site_prism"
   gem "uri-query_params"
   gem "vcr"
   gem "webmock"

@@ -4,6 +4,25 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Guard Tests",
+      "type": "shell",
+      "command": "bundle exec guard --no-bundler-warning",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false
+      },
+      "options": {
+        "statusbar": {
+          "label" : "$(beaker) $(eye) Guard tests",
+          "color": "#f4d838",
+          "tooltip": "Start Guard process to monitor and run tests on changes"
+        }
+      },
+      "group": "test",
+    },
+    {
       "label": "Rails",
       "type": "shell",
       "command": "./bin/rails server -b 0.0.0.0",

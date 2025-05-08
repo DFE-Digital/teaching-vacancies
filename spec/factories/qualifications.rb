@@ -26,6 +26,7 @@ FactoryBot.define do
     name { other? ? Faker::Educator.degree : "" }
     subject { undergraduate? || postgraduate? || other? ? Faker::Educator.subject : "" }
     year { finished_studying == false ? nil : factory_rand(1970..2020) }
+    month { finished_studying == false ? nil : factory_rand(1..12) }
 
     job_application
   end

@@ -1,18 +1,22 @@
 module VacancyHelpers
-  def change_job_locations(vacancy, organisations)
-    vacancy.organisations = organisations
+  def change_job_locations(_vacancy, organisations)
     click_review_page_change_link(section: "job_details", row: "job_location")
-    fill_in_job_location_form_fields(vacancy)
+    fill_in_job_location_form_fields(organisations)
   end
 
-  def fill_in_job_location_form_fields(vacancy)
-    vacancy.organisations.each do |organisation|
+  def fill_in_job_location_form_fields(organisations)
+    within ".govuk-checkboxes" do
+      all("label").each do |label|
+        uncheck(label.text)
+      end
+    end
+    organisations.each do |organisation|
       check(organisation.school? ? organisation.name : I18n.t("organisations.job_location_heading.central_office"))
     end
   end
 
-  def fill_in_job_role_form_fields(vacancy)
-    checkbox_label = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{vacancy.job_roles.first}")
+  def fill_in_job_role_form_fields(job_role)
+    checkbox_label = I18n.t("helpers.label.publishers_job_listing_job_role_form.job_role_options.#{job_role}")
     find("label", text: checkbox_label, visible: true).click
   end
 
@@ -20,26 +24,26 @@ module VacancyHelpers
     check I18n.t("helpers.label.publishers_job_listing_education_phases_form.phases_options.#{vacancy.phases.first}")
   end
 
-  def fill_in_job_title_form_fields(vacancy)
-    fill_in "publishers_job_listing_job_title_form[job_title]", with: vacancy.job_title
+  def fill_in_job_title_form_fields(job_title)
+    fill_in "publishers_job_listing_job_title_form[job_title]", with: job_title
   end
 
-  def fill_in_key_stages_form_fields(vacancy)
-    vacancy.key_stages_for_phases.each do |key_stage|
+  def fill_in_key_stages_form_fields(key_stages)
+    key_stages.each do |key_stage|
       check I18n.t("helpers.label.publishers_job_listing_key_stages_form.key_stages_options.#{key_stage}")
     end
   end
 
-  def fill_in_subjects_form_fields(vacancy)
-    vacancy.subjects&.each do |subject|
+  def fill_in_subjects_form_fields(subjects)
+    subjects&.each do |subject|
       check subject,
             name: "publishers_job_listing_subjects_form[subjects][]",
             visible: false
     end
   end
 
-  def fill_in_contract_information_form_fields(vacancy)
-    if vacancy.contract_type == "fixed_term"
+  def fill_in_contract_information_form_fields(contract_type = "fixed_term")
+    if contract_type == "fixed_term"
       choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.fixed_term")
       # Choose "Yes" for parental leave coverage
       within "#publishers-job-listing-contract-information-form-contract-type-fixed-term-conditional" do
@@ -47,7 +51,7 @@ module VacancyHelpers
       end
       fill_in "Length of contract", with: "1 month"
     else
-      choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.#{vacancy.contract_type}")
+      choose I18n.t("helpers.label.publishers_job_listing_contract_information_form.contract_type_options.#{contract_type}")
     end
 
     vacancy.working_patterns.each do |working_pattern|
@@ -96,12 +100,12 @@ module VacancyHelpers
     choose "3pm", name: "publishers_job_listing_important_dates_form[expiry_time]"
   end
 
-  def fill_in_start_date_form_fields(vacancy)
+  def fill_in_start_date_form_fields(starts_on = 35.days.from_now)
     choose I18n.t("helpers.legend.publishers_job_listing_start_date_form.start_date_specific")
 
-    fill_in "publishers_job_listing_start_date_form[starts_on(3i)]", with: vacancy.starts_on.day
-    fill_in "publishers_job_listing_start_date_form[starts_on(2i)]", with: vacancy.starts_on.month
-    fill_in "publishers_job_listing_start_date_form[starts_on(1i)]", with: vacancy.starts_on.year
+    fill_in "publishers_job_listing_start_date_form[starts_on(3i)]", with: starts_on.day
+    fill_in "publishers_job_listing_start_date_form[starts_on(2i)]", with: starts_on.month
+    fill_in "publishers_job_listing_start_date_form[starts_on(1i)]", with: starts_on.year
   end
 
   def fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
@@ -157,8 +161,8 @@ module VacancyHelpers
     end
   end
 
-  def fill_in_include_additional_documents_form_fields(vacancy)
-    choose I18n.t("helpers.label.publishers_job_listing_include_additional_documents_form.include_additional_documents_options.#{vacancy.include_additional_documents}")
+  def fill_in_include_additional_documents_form_fields(include_additional_documents)
+    choose I18n.t("helpers.label.publishers_job_listing_include_additional_documents_form.include_additional_documents_options.#{include_additional_documents}")
   end
 
   def fill_in_copy_vacancy_form_fields(vacancy)
@@ -187,7 +191,7 @@ module VacancyHelpers
     vacancy.reload
     vacancy = VacancyPresenter.new(vacancy) unless vacancy.is_a?(VacancyPresenter)
 
-    verify_job_locations(vacancy)
+    verify_job_locations(vacancy.organisations)
 
     expect(page).to have_content(vacancy.readable_job_roles)
     expect(page).to have_content(vacancy.job_title)
@@ -342,8 +346,8 @@ module VacancyHelpers
     expect(page).to have_content(I18n.t("publishers.vacancies.show.heading_component.action.convert_to_draft"))
   end
 
-  def verify_job_locations(vacancy)
-    vacancy.organisations.each do |organisation|
+  def verify_job_locations(organisations)
+    organisations.each do |organisation|
       if organisation.school?
         expect(page).to have_content("#{organisation.name}, #{full_address(organisation)}")
       else
@@ -370,37 +374,58 @@ module VacancyHelpers
     end
   end
 
-  def fill_in_forms_until_start_date(vacancy)
+  def fill_in_forms_until_applying_for(vacancy)
     click_on I18n.t("buttons.create_job")
     expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :job_title), ignore_query: true)
 
-    fill_in_job_title_form_fields(vacancy)
+    fill_in_job_title_form_fields(vacancy.job_title)
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :job_role), ignore_query: true)
 
-    fill_in_job_role_form_fields(vacancy)
+    fill_in_job_role_form_fields(vacancy.job_roles.first)
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :key_stages), ignore_query: true)
 
-    fill_in_key_stages_form_fields(vacancy)
+    fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :subjects), ignore_query: true)
 
-    fill_in_subjects_form_fields(vacancy)
+    fill_in_subjects_form_fields(vacancy.subjects)
     click_on I18n.t("buttons.save_and_continue")
     expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :contract_information), ignore_query: true)
 
-    fill_in_contract_information_form_fields(vacancy)
+    fill_in_contract_information_form_fields
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :pay_package), ignore_query: true)
 
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :start_date), ignore_query: true)
+    fill_in_start_date_form_fields(vacancy.starts_on)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :pay_package), ignore_query: true)
     fill_in_pay_package_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :important_dates), ignore_query: true)
 
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :about_the_role), ignore_query: true)
+    fill_in_about_the_role_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :include_additional_documents), ignore_query: true)
+    fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :school_visits), ignore_query: true)
+    fill_in_school_visits_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :visa_sponsorship), ignore_query: true)
+    fill_in_visa_sponsorship_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :important_dates), ignore_query: true)
     fill_in_important_dates_form_fields(vacancy)
     click_on I18n.t("buttons.save_and_continue")
-    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :start_date), ignore_query: true)
+
+    expect(page).to have_current_path(organisation_job_build_path(created_vacancy.id, :applying_for_the_job), ignore_query: true)
   end
 end

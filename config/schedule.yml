@@ -169,3 +169,8 @@ import_from_vacancy_sources:
   cron: '55 6-21 * * *' # "Every hour between 06:55 and 21:55."
   class: 'ImportFromVacancySourcesJob'
   queue: default
+
+aggregate_vacancy_referrer_stats:
+  cron: "*/15 * * * *" # Every 15 minutes
+  class: AggregateVacancyReferrerStatsJob
+  queue: low

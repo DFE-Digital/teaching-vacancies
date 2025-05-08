@@ -1,6 +1,6 @@
 # Authentication
 
-Hiring staff authenticate via the [DfE Sign-in](https://services.signin.education.gov.uk/) system. When [onboarded](/documentation/team/onboarding.md) you are associated with more than one organisation.
+Hiring staff authenticate via the [DfE Sign-in](https://services.signin.education.gov.uk/) system. When [onboarded](/documentation/team/developer_onboarding.md) you are associated with more than one organisation.
 
 Different environments talk to different DfE Sign-in environments:
 

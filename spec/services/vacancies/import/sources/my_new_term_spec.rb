@@ -179,7 +179,7 @@ RSpec.describe Vacancies::Import::Sources::MyNewTerm do
       end
     end
 
-    %w[headteacher_principal headteacher].each do |role|
+    %w[headteacher_principal executive_headteacher headteacher].each do |role|
       context "when the source role is '#{role}'" do
         let(:source_roles) { [role] }
 

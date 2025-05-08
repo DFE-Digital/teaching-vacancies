@@ -12,6 +12,8 @@ RSpec.describe "Publisher notifications" do
     sign_in(publisher, scope: :publisher)
   end
 
+  after { sign_out(publisher) }
+
   describe "GET #index" do
     it "renders the index page" do
       expect(get(publishers_notifications_path)).to render_template(:index)

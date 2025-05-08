@@ -6,8 +6,6 @@ class StepProcess
   def initialize(current_step, step_groups = {})
     @current_step = current_step.to_sym
     @step_groups = step_groups.compact_blank
-
-    raise MissingStepError, "Current step `#{current_step}` missing from steps (#{steps.join(', ')})" unless current_step.in?(steps)
   end
 
   # Returns the keys of all individual steps in order
@@ -67,5 +65,9 @@ class StepProcess
   # Returns whether the current step is the last step in the entire process
   def last_step?
     current_step == steps.last
+  end
+
+  def first_step_for_group(section)
+    step_groups.fetch(section).first
   end
 end

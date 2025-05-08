@@ -77,6 +77,9 @@ class Subscription < ApplicationRecord
     self.class.encryptor(serializer: :json_allow_marshal).encrypt_and_sign(token_values)
   end
 
+  # Why unsubscribing/soft deleting instead of destroying?
+  # Subscriptions may have associated Feedback records, and we want to keep these for reporting purposes.
+  # https://github.com/DFE-Digital/teaching-vacancies/pull/2300
   def unsubscribe
     update(email: nil, active: false, unsubscribed_at: Time.current)
   end

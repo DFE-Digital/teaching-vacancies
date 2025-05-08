@@ -40,7 +40,7 @@
       - else
         li = govuk_link_to t(".view_listing"), job_path(@vacancy.id)
       li = govuk_link_to t(".make_changes"), organisation_job_path(@vacancy.id)
-      li = govuk_link_to t(".manage_jobs"), organisation_jobs_with_type_path(:published)
+      li = govuk_link_to t(".manage_jobs"), organisation_jobs_with_type_path(:live)
 
     .divider-bottom
 

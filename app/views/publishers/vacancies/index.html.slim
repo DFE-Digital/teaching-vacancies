@@ -6,4 +6,8 @@
 = dashboard(organisation: current_organisation,
             sort: @sort,
             selected_type: @selected_type,
-            publisher_preference: @publisher_preference)
+            publisher_preference: @publisher_preference,
+            vacancies: @vacancies, count: @count,
+            vacancy_types: @vacancy_types)
+
+= govuk_pagination(pagy: @pagy)

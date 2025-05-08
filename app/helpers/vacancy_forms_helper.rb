@@ -45,31 +45,52 @@ module VacancyFormsHelper
     end
   end
 
-  def vacancy_review_form_heading_action_link(vacancy, action) # rubocop:disable Metrics/AbcSize,  Metrics/MethodLength
-    case action
-    when "view"
-      open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.view"), job_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    when "copy"
-      govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post)
-    when "close_early"
-      govuk_link_to(t("publishers.vacancies.show.heading_component.action.close_early"), organisation_job_end_listing_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    when "extend_closing_date"
-      govuk_link_to(t("publishers.vacancies.show.heading_component.action.extend_closing_date"), organisation_job_extend_deadline_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    when "relist"
-      govuk_link_to(t("publishers.vacancies.show.heading_component.action.relist"), organisation_job_relist_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post)
-    when "publish"
-      govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    when "preview"
-      open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.preview"), organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    when "delete"
-      govuk_link_to(t("publishers.vacancies.show.heading_component.action.delete"), organisation_job_confirm_destroy_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    when "complete"
-      govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_show: "true"), class: "govuk-!-margin-bottom-0")
-    when "convert_to_draft"
-      govuk_link_to(t("publishers.vacancies.show.heading_component.action.convert_to_draft"), organisation_job_convert_to_draft_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    when "schedule_complete_draft"
-      govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
-    end
+  def vacancy_convert_to_draft_action_link(vacancy)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.convert_to_draft"), organisation_job_convert_to_draft_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  end
+
+  def vacancy_close_early_action_link(vacancy)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.close_early"), organisation_job_end_listing_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  end
+
+  def vacancy_extend_closing_date_action_link(vacancy)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.extend_closing_date"), organisation_job_extend_deadline_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  end
+
+  def vacancy_publish_action_link(vacancy)
+    govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.publish"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  end
+
+  def vacancy_preview_action_link(vacancy)
+    open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.preview"), organisation_job_preview_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  end
+
+  def vacancy_schedule_complete_draft_action_link(vacancy)
+    govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.scheduled_complete_draft"), organisation_job_publish_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  end
+
+  def vacancy_view_action_link(vacancy)
+    open_in_new_tab_link_to(t("publishers.vacancies.show.heading_component.action.view"), job_path(vacancy.id), class: "govuk-!-margin-bottom-0")
+  end
+
+  def vacancy_relist_action_link(vacancy)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.relist"), organisation_job_relist_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post)
+  end
+
+  def vacancy_give_feedback_action_link(vacancy)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.give_feedback"), new_organisation_job_expired_feedback_path(job_id: vacancy.id))
+  end
+
+  def vacancy_complete_action_link(vacancy, next_invalid_step)
+    govuk_button_link_to(t("publishers.vacancies.show.heading_component.action.complete"), organisation_job_build_path(vacancy.id, next_invalid_step, back_to_show: "true"), class: "govuk-!-margin-bottom-0")
+  end
+
+  def vacancy_copy_action_link(vacancy)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.copy"), organisation_job_copy_path(vacancy.id), class: "govuk-!-margin-bottom-0", method: :post)
+  end
+
+  def vacancy_delete_action_link(vacancy)
+    govuk_link_to(t("publishers.vacancies.show.heading_component.action.delete"), organisation_job_confirm_destroy_path(vacancy.id), class: "govuk-!-margin-bottom-0")
   end
 
   private

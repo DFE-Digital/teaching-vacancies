@@ -7,10 +7,11 @@ RSpec.describe "Extend deadline" do
   let(:publish_on) { 1.month.ago }
 
   before do
-    allow(DisableExpensiveJobs).to receive(:enabled?).and_return(false)
     allow_any_instance_of(Publishers::BaseController).to receive(:current_organisation).and_return(organisation)
     sign_in(publisher, scope: :publisher)
   end
+
+  after { sign_out(publisher) }
 
   describe "GET #show" do
     context "when the vacancy does not belong to the current organisation" do
@@ -95,7 +96,7 @@ RSpec.describe "Extend deadline" do
             .to change { vacancy.reload.expires_at }.from(1.month.from_now).to(expires_at.change({ hour: 9, minute: 0 }))
             .and have_enqueued_job(UpdateGoogleIndexQueueJob)
 
-        expect(response).to redirect_to(organisation_jobs_with_type_path(:published))
+        expect(response).to redirect_to(organisation_jobs_with_type_path(:live))
       end
     end
   end

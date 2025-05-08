@@ -47,7 +47,7 @@ Teaching Vacancies application environments are hosted in the following clusters
 | Production      | s189-teacher-services-cloud-production | tv-production        |
 
 
-During [onboarding](/documentation/team/onboarding.md) you will have been granted access to selected Azure resources and roles.
+During [onboarding](/documentation/team/developer_onboarding.md) you will have been granted access to selected Azure resources and roles.
 
 By default, you will have access to TV Kubernetes namespaces/envs/apps hosted in the `s189-teacher-services-cloud-test` cluster.
 

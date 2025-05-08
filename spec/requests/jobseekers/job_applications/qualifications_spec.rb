@@ -10,6 +10,8 @@ RSpec.describe "Job applications qualifications" do
     sign_in(jobseeker, scope: :jobseeker)
   end
 
+  after { sign_out(jobseeker) }
+
   describe "GET #select_category" do
     context "when the job application status is not draft" do
       let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
@@ -188,7 +190,8 @@ RSpec.describe "Job applications qualifications" do
                                finished_studying_details: "Taking my time",
                                grade: "1",
                                subject: "Haunting",
-                               year: 1990)
+                               year: 1990,
+                               month: 6)
       end
       let(:original_finished_studying) { "true" }
       let(:params) do
@@ -213,6 +216,7 @@ RSpec.describe "Job applications qualifications" do
             expect { patch jobseekers_job_application_qualification_path(job_application, qualification), params: params }
               .to change { qualification.reload.grade }.from("1").to("")
               .and change { qualification.reload.year }.from(1990).to(nil)
+              .and change { qualification.reload.month }.from(6).to(nil)
           end
         end
 
