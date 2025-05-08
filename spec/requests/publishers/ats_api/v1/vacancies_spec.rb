@@ -207,6 +207,7 @@ RSpec.describe "ats-api/v1/vacancies", openapi_spec: "v1/swagger.yaml" do
 
             created_vacancy = Vacancy.last
             expect(created_vacancy.subjects).to eq([])
+            expect(created_vacancy.key_stages).to eq([])
             expect(created_vacancy.job_roles).to eq(%w[headteacher])
           end
         end
