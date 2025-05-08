@@ -42,6 +42,12 @@ module JobApplicationsHelper
     end
   end
 
+  def end_date(date, index = 1)
+    return "present" if index.zero?
+
+    date.to_fs(:month_year)
+  end
+
   def job_application_trn(job_application)
     job_application.teacher_reference_number.presence || "None"
   end
