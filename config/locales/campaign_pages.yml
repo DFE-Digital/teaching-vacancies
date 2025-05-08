@@ -18,6 +18,10 @@ en:
       banner_title: "%{name}, find the right %{subject} teacher job for you"
     pebespoke:
       banner_title: "%{name}, find the right %{subject} teacher job for you"
+    primarybespoke:
+      banner_title: "%{name}, find the right %{phase} teacher job for you"
+    secondarybespoke:
+      banner_title: "%{name}, find the right %{phase} teacher job for you"
     physicsbespoke:
       banner_title: "%{name}, find the right %{subject} teacher job for you"
     historybespoke:

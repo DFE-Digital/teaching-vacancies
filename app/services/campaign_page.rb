@@ -24,9 +24,9 @@ class CampaignPage
     @hidden_filters = criteria[:hidden_filters] || []
   end
 
-  def banner_title(name, subject = nil)
+  def banner_title(name, subject = nil, phase = nil)
     subject = subject&.downcase unless LANGUAGE_SUBJECTS.include?(subject)
-    title = I18n.t("campaign_pages.#{utm_content_code}.banner_title", name: name, subject: subject)
+    title = I18n.t("campaign_pages.#{utm_content_code}.banner_title", name: name, subject: subject, phase: phase)
     title.squeeze(" ").strip
   end
 end
