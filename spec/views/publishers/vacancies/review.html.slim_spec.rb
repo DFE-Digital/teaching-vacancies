@@ -3,15 +3,15 @@ require "rails_helper"
 RSpec.describe "publishers/vacancies/review" do
   let(:school) { build(:school) }
   let(:vacancy) { create(:vacancy, publish_on: publish_date) }
-  let(:presenter) { VacancyPresenter.new(vacancy) }
+  let(:vacancy_presenter) { VacancyPresenter.new(vacancy) }
   let(:step_process) { Publishers::Vacancies::VacancyStepProcess.new(:review, vacancy: vacancy, organisation: school) }
 
   before do
-    p = presenter
+    vp = vacancy_presenter
     s = school
     sp = step_process
 
-    view.define_singleton_method(:vacancy) { p }
+    view.define_singleton_method(:vacancy) { vp }
     view.define_singleton_method(:current_organisation) { s }
     view.define_singleton_method(:step_process) { sp }
 
