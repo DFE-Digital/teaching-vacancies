@@ -74,7 +74,7 @@ class JobseekerProfile < ApplicationRecord
   def replace_qualifications!(new_qualifications)
     transaction do
       qualifications.destroy_all
-      update!(qualifications: new_qualifications)
+      duplicate_and_save(new_qualifications)
     end
   end
 
@@ -83,17 +83,21 @@ class JobseekerProfile < ApplicationRecord
   def replace_employments!(new_employments)
     transaction do
       employments.destroy_all
-      new_employments.map(&:duplicate).each do |employment|
-        employment.assign_attributes(jobseeker_profile: self)
-        employment.save!(validate: false)
-      end
+      duplicate_and_save(new_employments)
     end
   end
 
   def replace_training_and_cpds!(new_training_and_cpds)
     transaction do
       training_and_cpds.destroy_all
-      update!(training_and_cpds: new_training_and_cpds)
+      duplicate_and_save(new_training_and_cpds)
+    end
+  end
+
+  def replace_memberships!(new_records)
+    transaction do
+      professional_body_memberships.destroy_all
+      duplicate_and_save(new_records)
     end
   end
 
@@ -128,5 +132,14 @@ class JobseekerProfile < ApplicationRecord
 
   def unexplained_employment_gaps
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
+  end
+
+  private
+
+  def duplicate_and_save(records)
+    records.map(&:duplicate).each do |record|
+      record.assign_attributes(jobseeker_profile: self)
+      record.save!(validate: false)
+    end
   end
 end

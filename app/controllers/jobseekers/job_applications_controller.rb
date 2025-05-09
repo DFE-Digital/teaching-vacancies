@@ -78,7 +78,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
 
     if review_form.valid? && all_steps_valid?
-      update_jobseeker_profile!(job_application, review_form)
+      update_jobseeker_profile!(job_application) if review_form.update_profile
       job_application.submit!
       redirect_to jobseekers_job_application_post_submit_path job_application
     else
@@ -131,15 +131,14 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     Jobseekers::JobApplications::QuickApply.new(current_jobseeker, vacancy).job_application
   end
 
-  def update_jobseeker_profile!(job_application, form)
+  def update_jobseeker_profile!(job_application)
     profile = job_application.jobseeker.jobseeker_profile
     return unless profile.present?
 
-    if form.update_profile
-      profile.replace_qualifications!(job_application.qualifications.map(&:duplicate))
-      profile.replace_employments!(job_application.employments)
-      profile.replace_training_and_cpds!(job_application.training_and_cpds.map(&:duplicate))
-    end
+    profile.replace_qualifications!(job_application.qualifications)
+    profile.replace_employments!(job_application.employments)
+    profile.replace_training_and_cpds!(job_application.training_and_cpds)
+    profile.replace_memberships!(job_application.professional_body_memberships)
   end
 
   def all_steps_valid?
