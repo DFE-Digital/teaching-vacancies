@@ -9,8 +9,6 @@ module PageObjects
 
       {
         publisher_application: "Publisher::JobApplicationPage",
-        publisher_ats_ask_references_email: "Publisher::Ats::AskReferencesEmailPage",
-        publisher_ats_collect_references: "Publisher::Ats::CollectReferencesPage",
         publisher_applications_awaiting_feedback: "Publisher::JobApplicationsAwaitingFeedbackPage",
         publisher_vacancy: "Publisher::VacancyPage",
         publisher_ats_applications: "Publisher::Ats::JobApplicationsPage",
