@@ -1,0 +1,10 @@
+class Publishers::JobApplication::ReferencesContactApplicantForm
+  include ActiveModel::Model
+  include ActiveModel::Validations
+  include ActiveModel::Attributes
+
+  attr_accessor :job_applications
+
+  attribute :contact_applicants, :boolean
+  validates :contact_applicants, inclusion: { in: [true, false], allow_nil: false }
+end
