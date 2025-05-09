@@ -13,60 +13,6 @@ RSpec.describe "Job applications" do
 
   after { sign_out(publisher) }
 
-  describe "GET #reject" do
-    context "when the job application status is not draft or withdrawn" do
-      it "renders the reject page" do
-        expect(get(organisation_job_job_application_reject_path(vacancy.id, job_application.id)))
-          .to render_template(:reject)
-      end
-    end
-
-    context "when the job application status is draft" do
-      let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy) }
-
-      it "raises an error" do
-        expect { get(organisation_job_job_application_reject_path(vacancy.id, job_application.id)) }
-          .to raise_error(ActionController::RoutingError, /Cannot reject/)
-      end
-    end
-
-    context "when the job application status is withdrawn" do
-      let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
-
-      it "raises an error" do
-        expect { get(organisation_job_job_application_reject_path(vacancy.id, job_application.id)) }
-          .to raise_error(ActionController::RoutingError, /Cannot reject/)
-      end
-    end
-  end
-
-  describe "GET #shortlist" do
-    context "when the job application status is not draft or withdrawn" do
-      it "renders the show page" do
-        expect(get(organisation_job_job_application_shortlist_path(vacancy.id, job_application.id)))
-          .to render_template(:shortlist)
-      end
-    end
-
-    context "when the job application status is draft" do
-      let(:job_application) { create(:job_application, :status_draft, vacancy: vacancy) }
-
-      it "raises an error" do
-        expect { get(organisation_job_job_application_shortlist_path(vacancy.id, job_application.id)) }
-          .to raise_error(ActionController::RoutingError, /Cannot shortlist/)
-      end
-    end
-
-    context "when the job application status is withdrawn" do
-      let(:job_application) { create(:job_application, :status_withdrawn, vacancy: vacancy) }
-
-      it "raises an error" do
-        expect { get(organisation_job_job_application_shortlist_path(vacancy.id, job_application.id)) }
-          .to raise_error(ActionController::RoutingError, /Cannot shortlist/)
-      end
-    end
-  end
-
   describe "GET #show" do
     context "when the job application status is not draft or withdrawn" do
       it "renders the show page" do
