@@ -31,7 +31,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
     )
   end
 
-  def copy_associations associations
+  def copy_associations(associations)
     associations.map(&:duplicate).each do |new_record|
       new_record.assign_attributes(job_application: new_job_application)
       new_record.save(validate: false)

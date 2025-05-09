@@ -1,4 +1,6 @@
-class Employment < AssociatedRecord
+class Employment < ApplicationRecord
+  include AssociatedRecord
+
   has_encrypted :organisation, :job_title, :main_duties
 
   # This class represents 2 concerns - 'job' and 'break' (from employment)
