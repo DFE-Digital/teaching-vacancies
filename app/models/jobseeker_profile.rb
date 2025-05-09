@@ -137,9 +137,9 @@ class JobseekerProfile < ApplicationRecord
   private
 
   def duplicate_and_save(records)
-    records.map(&:duplicate).each do |employment|
-      employment.assign_attributes(jobseeker_profile: self)
-      employment.save!(validate: false)
+    records.map(&:duplicate).each do |record|
+      record.assign_attributes(jobseeker_profile: self)
+      record.save!(validate: false)
     end
   end
 end

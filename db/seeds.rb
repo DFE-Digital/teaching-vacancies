@@ -106,10 +106,7 @@ location_preference_names = weydon_trust_schools.map(&:postcode)
 Jobseeker.first(weydon_trust_schools.count).each do |jobseeker|
   Jobseeker.transaction do
     FactoryBot.create(:jobseeker_profile, :with_personal_details,
-                      qualifications: FactoryBot.build_list(:qualification, 1,
-                                                            job_application: FactoryBot.build(:job_application,
-                                                                                              vacancy: FactoryBot.build(:vacancy,
-                                                                                                                        organisations: weydon_trust_schools))),
+                      qualifications: FactoryBot.build_list(:qualification, 1, job_application: nil),
                       employments: FactoryBot.build_list(:employment, 1, :jobseeker_profile_employment),
                       jobseeker: jobseeker) do |jobseeker_profile|
       FactoryBot.create(:job_preferences, jobseeker_profile: jobseeker_profile) do |job_preferences|
