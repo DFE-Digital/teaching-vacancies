@@ -1,4 +1,4 @@
-name: Delete review app
+name: Delete Review App
 
 on:
   pull_request:
@@ -14,10 +14,7 @@ on:
         description: 'Pull Request number to delete (EG: 1234 for review-pr-1234)'
         required: true
 
-# Wait until the Build And Deploy for the same PR is finished before starting this workflow.
-# If triggered by a manual workflow dispatch with a PR number, builds the corresponding 'ref' to match the Build and Deploy concurrency group for that PR.
-# For a closed or unlabeled PR, the 'ref' is available and matches the Build and deploy one.
-concurrency: workflow-Build-and-deploy-${{ (github.event_name == 'workflow_dispatch' && format('refs/pull/{0}/merge', github.event.inputs.pr_number)) || github.ref }}
+concurrency: workflow-Build-and-deploy-${{ github.event.pull_request.number }}
 
 permissions:
   id-token: write
@@ -28,18 +25,20 @@ env:
 
 jobs:
   delete-review-app:
-    # Check if PR was closed with deploy label OR workflow was manually triggered OR deploy label was removed
-    # Define conditions for triggering the job
-    # 1. PR is closed and has the 'deploy' label
-    # 2. Workflow is manually triggered
-    # 3. 'deploy' label is removed from the PR
-    if: >
-      (github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy')) ||
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.action == 'unlabeled' && github.event.label.name == 'deploy')
+    if: contains(github.event.pull_request.labels.*.name, 'deploy') || github.event_name == 'workflow_dispatch'
     name: Delete review app
     runs-on: ubuntu-latest
+    concurrency: delete-review-app-${{ github.event.pull_request.number || github.event.inputs.pr_number }}
+    if: >
+      github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy') ||
+      (github.event.action == 'unlabeled' && github.event.label.name == 'deploy') || (github.event_name ==
+      'workflow_dispatch')
+
     environment: review
+
+    permissions:
+      pull-requests: write
+      id-token: write
 
     steps:
     - name: Set environment variables
@@ -70,52 +69,17 @@ jobs:
     - uses: actions/checkout@v4
       name: Checkout Code
 
-    - uses: google-github-actions/auth@v2
+    - name: Delete Review App
+      uses: DFE-Digital/github-actions/delete-review-app@master
       with:
-        project_id: teacher-vacancy-service
-        workload_identity_provider: projects/689616473831/locations/global/workloadIdentityPools/teaching-vacancies/providers/teaching-vacancies
-
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-
-    - name: Download fetch_config.rb
-      shell: bash
-      run: |
-        echo "::group:: Download fetch_config.rb script"
-        curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb
-        chmod +x bin/fetch_config.rb
-        echo "::endgroup::"
-
-    - name: Validate secrets
-      shell: bash
-      run: |
-        gem install aws-sdk-ssm --no-document
-        bin/fetch_config.rb -s aws-ssm-parameter-path:/teaching-vacancies/dev/app -d quiet \
-          && echo Data in /teaching-vacancies/dev looks valid
-
-    - name: Terraform pin version
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: 1.5.1
-
-    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
-      with:
+        pr-number: ${{ env.PR_NUMBER }}
+        resource-group-name: s189t01-tv-rv-rg
+        storage-account-name: s189t01tvtfstatervsa
+        tf-state-file: review-pr-${{ env.PR_NUMBER }}_kubernetes.tfstate
         azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-
-    - name: Terraform destroy (on PR closed)
-      run: |
-        make review ci terraform-app-destroy pr_id=${{env.PR_NUMBER}}
-
-    - name: Delete Terraform Statefile
-      run: ./bin/delete-state-file ${{env.PR_NUMBER}}
-
-    - name: Post sticky pull request comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      with:
-        message: |
-          Review app <${{ env.LINK_TO_APP }}> was successfully deleted
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        container-name: terraform-state
 
     - name: Send failure message to twd_tv_dev channel
       if: failure()
