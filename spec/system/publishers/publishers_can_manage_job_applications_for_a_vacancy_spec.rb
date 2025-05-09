@@ -120,20 +120,18 @@ RSpec.describe "Publishers can manage job applications for a vacancy" do
       end
     end
 
-    describe "reviewed application" do
+    describe "reviewed application", :js do
       let(:status) { "reviewed" }
 
-      it "shows applicant name that links to application", :js do
-        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
+      before { find(".application-#{status}") } # Wait for the page to fully load }
 
+      it "shows applicant name that links to application" do
         within(".application-#{status}") do
           expect(page).to have_link("#{job_application_reviewed.first_name} #{job_application_reviewed.last_name}", href: organisation_job_job_application_path(vacancy.id, job_application_reviewed.id))
         end
       end
 
-      it "shows purple reviewed tag", :js do
-        expect(page).to have_css(".application-#{status}", wait: 10) # Wait for the page to fully load
-
+      it "shows purple reviewed tag" do
         within(".application-#{status}") do
           expect(page).to have_css(".govuk-tag--purple", text: "reviewed")
         end

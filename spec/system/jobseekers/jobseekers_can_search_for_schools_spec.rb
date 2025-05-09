@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe "Searching on the schools page" do
-  let(:secondary_school) { create(:school, name: "Oxford") }
+  let(:secondary_school) { create(:school, name: "Oxford", phase: "secondary") }
   let(:primary_school) { create(:school, name: "St Peters", phase: "primary") }
-  let(:special_school1) { create(:school, name: "Community special school", detailed_school_type: "Community special school") }
+  let(:special_school1) { create(:school, name: "Community special school", phase: "secondary", detailed_school_type: "Community special school") }
 
   before do
     [secondary_school, primary_school, special_school1].each do |school|
@@ -20,8 +20,6 @@ RSpec.describe "Searching on the schools page" do
       click_on I18n.t("buttons.search")
 
       expect(page.find("#location-field").value).to eq("my house")
-      expect(page.find("#location-field").value).to eq("my house")
-      expect(page.find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
       expect(page.find("#radius-field").value).to eq(Search::RadiusBuilder::DEFAULT_RADIUS_FOR_POINT_SEARCHES.to_s)
     end
   end

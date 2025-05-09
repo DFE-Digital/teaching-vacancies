@@ -17,7 +17,7 @@
     = render "publishers/vacancies/review_banners/incomplete_draft", vacancy: @vacancy, next_invalid_step: @next_invalid_step
 
   = govuk_task_list do |task_list|
-    - status = vacancy_draft_status(@organisation, @vacancy, :job_details)
+    - status = vacancy_draft_status(@current_organisation, @vacancy, :job_details)
     - task_list.with_item(title: t(".task_list.sections.job_details.title"),
       hint: t(".task_list.sections.job_details.hint"),
       href: organisation_job_wizard_path(@vacancy.id, @step_process.first_step_for_group(:job_details)),
@@ -25,8 +25,8 @@
       status: section_status_to_tag(status))
 
     - %i[job_details about_the_role important_dates application_process].each_cons(2) do |prev_section, section|
-      - prev_status = vacancy_draft_status(@organisation, @vacancy, prev_section)
-      - status = vacancy_draft_status(@organisation, @vacancy, section)
+      - prev_status = vacancy_draft_status(@current_organisation, @vacancy, prev_section)
+      - status = vacancy_draft_status(@current_organisation, @vacancy, section)
       - if status.present?
         - task_list.with_item(title: t(".task_list.sections.#{section}.title"),
           hint: t(".task_list.sections.#{section}.hint"),
@@ -45,6 +45,6 @@
           html_attributes: { id: section },
           status: t(".task_list.status_tags.cannot_start_yet"))
 - else
-  = render "review_banner", vacancy: @vacancy
+  = render "review_banner", vacancy: @vacancy, current_organisation: @current_organisation
 
-  = render "sections"
+  = render "sections", vacancy: @vacancy, current_organisation: @current_organisation, step_process: @step_process

@@ -5,11 +5,11 @@
     span.govuk-caption-l
       = t("jobseekers.job_applications.caption", job_title: vacancy.job_title, organisation: vacancy.organisation_name)
 
-    h2.govuk-heading-m = job_application.name
+    h2.govuk-heading-m = @job_application.name
 
     h1.govuk-heading-xl class="govuk-!-margin-top-5 govuk-!-margin-bottom-5" = t(".heading")
 
-    = form_for form, url: organisation_job_job_application_update_status_path(vacancy.id, job_application.id) do |f|
+    = form_for form, url: organisation_job_job_application_update_status_path(vacancy.id, @job_application.id) do |f|
       = f.govuk_text_area :rejection_reasons, label: { size: "s" }, rows: 10
 
       = govuk_warning_text(text: t(".alert"))
