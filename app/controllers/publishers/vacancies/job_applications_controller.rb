@@ -29,7 +29,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def download_pdf
-    pdf = JobApplicationPdfGenerator.new(job_application, vacancy).generate
+    pdf = JobApplicationPdfGenerator.new(job_application).generate
 
     send_data(
       pdf.render,
@@ -93,7 +93,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       stringio = Zip::OutputStream.write_buffer do |zio|
         downloads.each do |job_application|
           zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
-          zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
+          zio.write JobApplicationPdfGenerator.new(job_application).generate.render
         end
       end
       send_data(stringio.string,
