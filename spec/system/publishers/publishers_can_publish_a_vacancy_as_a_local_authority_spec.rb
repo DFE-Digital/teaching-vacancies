@@ -27,17 +27,11 @@ RSpec.describe "Creating a vacancy" do
     expect(publisher_job_location_page.errors.map(&:text)).to contain_exactly(I18n.t("job_location_errors.organisation_ids.blank"))
     publisher_job_location_page.fill_in_and_submit_form(vacancy)
 
-<<<<<<< HEAD
-    fill_in_job_location_form_fields(vacancy.organisations)
-    click_on I18n.t("buttons.continue")
-    expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
-=======
     expect(publisher_job_title_page).to be_displayed
     submit_empty_form
     expect(publisher_job_title_page).to be_displayed
     expect(publisher_job_title_page.errors.map(&:text)).to contain_exactly(I18n.t("job_title_errors.job_title.blank"))
     publisher_job_title_page.fill_in_and_submit_form(vacancy.job_title)
->>>>>>> a5f048f6f (Refactor tests)
 
     expect(publisher_job_role_page).to be_displayed
     submit_empty_form
