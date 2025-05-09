@@ -9,10 +9,10 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
 
   def call
     copy_personal_info
-    copy_qualifications
-    copy_employments
-    copy_training_and_cpds
-    copy_professional_body_memberships
+    copy_associations(jobseeker_profile.qualifications)
+    copy_associations(jobseeker_profile.employments)
+    copy_associations(jobseeker_profile.training_and_cpds)
+    copy_associations(jobseeker_profile.professional_body_memberships)
     set_status_of_each_step
     new_job_application.save
     new_job_application
@@ -31,36 +31,10 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
     )
   end
 
-  def copy_qualifications
-    jobseeker_profile.qualifications.each do |qualification|
-      new_qualification = qualification.dup
-      new_qualification.update(job_application: new_job_application)
-
-      qualification.qualification_results.each do |result|
-        new_result = result.dup
-        new_result.update(qualification: new_qualification)
-      end
-    end
-  end
-
-  def copy_employments
-    jobseeker_profile.employments.each do |employment|
-      new_employment = employment.dup
-      new_employment.update(job_application: new_job_application)
-    end
-  end
-
-  def copy_training_and_cpds
-    jobseeker_profile.training_and_cpds.each do |training|
-      new_training = training.dup
-      new_training.update(job_application: new_job_application)
-    end
-  end
-
-  def copy_professional_body_memberships
-    jobseeker_profile.professional_body_memberships.each do |professional_body_membership|
-      new_professional_body_membership = professional_body_membership.dup
-      new_professional_body_membership.update(job_application: new_job_application)
+  def copy_associations associations
+    associations.map(&:duplicate).each do |new_record|
+      new_record.assign_attributes(job_application: new_job_application)
+      new_record.save(validate: false)
     end
   end
 

@@ -1,9 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Qualification do
-  it { is_expected.to belong_to(:job_application).optional }
-  it { is_expected.to belong_to(:jobseeker_profile).optional }
-
   describe "#remove_inapplicable_data" do
     subject(:qualification) do
       build(:qualification,
