@@ -92,7 +92,9 @@ RSpec.describe "Publisher authentication" do
           sign_in_publisher(navigate: true)
           visit new_support_user_session_path
 
+          # rubocop:disable Capybara/NegationMatcherAfterVisit
           expect(page).to have_no_current_path(support_user_root_path, ignore_query: true)
+          # rubocop:enable Capybara/NegationMatcherAfterVisit
         end
       end
     end
