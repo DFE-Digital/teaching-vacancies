@@ -45,11 +45,61 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   def update_tag
     update_tag_params = params.require(:publishers_job_application_status_form).permit(:status, job_applications: [])
 
-    JobApplication.find(update_tag_params.fetch(:job_applications)).each do |job_application|
-      job_application.update!(status: update_tag_params.fetch(:status))
+    applications = update_tag_params.fetch(:job_applications)
+    new_status = update_tag_params.fetch(:status).to_sym
+
+    JobApplication.find(applications).each do |job_application|
+      job_application.update!(status: new_status)
     end
-    redirect_to organisation_job_job_applications_path(vacancy.id)
+    if new_status == :interviewing
+      redirect_to collect_references_organisation_job_job_applications_path(vacancy.id, job_applications: applications)
+    else
+      redirect_to organisation_job_job_applications_path(vacancy.id)
+    end
   end
+
+  def collect_references
+    job_applications = vacancy.job_applications.find(params[:job_applications])
+    @form = Publishers::JobApplication::CollectReferencesForm.new(job_applications: job_applications)
+  end
+
+  def references_and_declarations
+    form_params = params.require(:publishers_job_application_collect_references_form).permit(:collect_references_and_declarations, job_applications: [])
+    applications = vacancy.job_applications.find(form_params.fetch(:job_applications))
+    @form = Publishers::JobApplication::CollectReferencesForm.new(form_params.merge(job_applications: applications))
+    if @form.valid?
+      if @form.collect_references_and_declarations
+        redirect_to ask_references_email_organisation_job_job_applications_path(vacancy.id, job_applications: applications.map(&:id))
+      else
+        redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)
+      end
+    else
+      render :collect_references
+    end
+  end
+
+  def ask_references_email
+    job_applications = vacancy.job_applications.find(params[:job_applications])
+    @form = Publishers::JobApplication::ReferencesContactApplicantForm.new(job_applications: job_applications)
+  end
+
+  def references_contact_reply
+    form_params = params.require(:publishers_job_application_references_contact_applicant_form).permit(:contact_applicants, job_applications: [])
+    applications = vacancy.job_applications.find(form_params.fetch(:job_applications))
+    @form = Publishers::JobApplication::ReferencesContactApplicantForm.new(form_params.merge(job_applications: applications))
+    if @form.valid?
+      redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)
+    else
+      render :ask_references_email
+    end
+  end
+
+  #  temp - this code doesn't (yet) do anything so doesn't need coverage...
+  # :nocov:
+  def pre_interview_checks
+    @references = ["a ref"]
+  end
+  # :nocov:
 
   def withdrawn; end
 
