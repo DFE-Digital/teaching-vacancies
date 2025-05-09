@@ -34,7 +34,7 @@
             = render EmptySectionComponent.new title: t(".no_shortlisted")
         - tabs.with_tab(label: "Interviewing (#{interviewing.size})", id: "interviewing")
           - if interviewing.any?
-            = render "candidates", form: @form, vacancy: vacancy, candidates: interviewing, heading: "Interviewing Applications", multi_select: "inter"
+            = render "interviewing", form: @form, vacancy: vacancy, candidates: interviewing, heading: "Interviewing Applications", multi_select: "inter"
           - else
             = render EmptySectionComponent.new title: t(".no_interviewing")
     - else
