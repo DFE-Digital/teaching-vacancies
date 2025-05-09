@@ -335,7 +335,7 @@ class Vacancy < ApplicationRecord
 
   def no_duplicate_vacancy
     if find_duplicate_vacancy
-      errors.add(:base, "A vacancy with the same job title, expiry date, and organisation already exists.")
+      errors.add(:base, "A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
     end
   end
 
@@ -347,11 +347,16 @@ class Vacancy < ApplicationRecord
   end
 
   def find_duplicate_vacancy
+    binding.pry
     Vacancy.joins(:organisations)
       .where(
         job_title: job_title,
         expires_at: expires_at,
         organisations: { id: organisation_ids },
+        contract_type: contract_type,
+        working_patterns: working_patterns,
+        phases: phases,
+        salary: salary,
       ).where.not(id: id).distinct.first
   end
 
