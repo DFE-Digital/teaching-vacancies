@@ -28,24 +28,24 @@ FactoryBot.define do
     end
 
     trait :with_qualifications do
-      qualifications { [build(:qualification, jobseeker_profile: instance)] }
+      qualifications { [build(:qualification, job_application: nil, jobseeker_profile: instance)] }
     end
 
     trait :with_employment_history do
-      employments { [build(:employment, jobseeker_profile: instance)] }
+      employments { [build(:employment, job_application: nil, jobseeker_profile: instance)] }
     end
 
     trait :with_training do
-      training_and_cpds { [build(:training_and_cpd, jobseeker_profile: instance)] }
+      training_and_cpds { [build(:training_and_cpd, job_application: nil,  jobseeker_profile: instance)] }
     end
 
     trait :completed do
       personal_details { build(:personal_details, jobseeker_profile: instance) }
       job_preferences { build(:job_preferences, jobseeker_profile: instance) }
-      qualifications { [build(:qualification, jobseeker_profile: instance)] }
-      employments { [build(:employment, jobseeker_profile: instance)] }
-      training_and_cpds { [build(:training_and_cpd, jobseeker_profile: instance)] }
-      professional_body_memberships { [build(:professional_body_membership, jobseeker_profile: instance)] }
+      qualifications { [build(:qualification, job_application: nil, jobseeker_profile: instance)] }
+      employments { [build(:employment, job_application: nil, jobseeker_profile: instance)] }
+      training_and_cpds { [build(:training_and_cpd, job_application: nil, jobseeker_profile: instance)] }
+      professional_body_memberships { [build(:professional_body_membership, job_application: nil, jobseeker_profile: instance)] }
     end
   end
 end
