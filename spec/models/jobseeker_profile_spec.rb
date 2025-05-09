@@ -77,9 +77,9 @@ RSpec.describe JobseekerProfile, type: :model do
   end
 
   describe "#replace_qualifications!" do
-    let!(:old_qualification) { profile.qualifications.first }
+    let!(:old_qualification) { build(:qualification, job_application_id: nil) }
     let(:new_qualifications) { create_list(:qualification, 2) }
-    let(:profile) { create(:jobseeker_profile, qualifications: build_list(:qualification, 1, job_application: nil)) }
+    let(:profile) { create(:jobseeker_profile, qualifications: [old_qualification]) }
 
     it "replaces the qualifications" do
       profile.replace_qualifications!(new_qualifications)
