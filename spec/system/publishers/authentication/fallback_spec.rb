@@ -2,7 +2,7 @@ require "rails_helper"
 require "dfe/analytics/rspec/matchers"
 
 RSpec.describe "Publishers can sign in with fallback email authentication" do
-  before { allow(AuthenticationFallback).to receive(:enabled?) { true } }
+  before { allow(AuthenticationFallback).to receive(:enabled?).and_return(true) }
 
   it "can reach email authentication page" do
     visit root_path
@@ -12,7 +12,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     expect(page).to have_content(I18n.t("publishers.login_keys.new.notice"))
   end
 
-  context "publisher flow" do
+  context "with publisher flow" do
     let(:school) { create(:school, :with_image, name: "Some school") }
     let(:other_school) { create(:school, :with_image, name: "Some other school") }
     let(:trust) { create(:trust) }
@@ -26,10 +26,12 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
     let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
 
     before do
+      # rubocop:disable Rspec/AnyInstance
       allow_any_instance_of(Publishers::LoginKeysController)
         .to receive(:generate_login_key)
         .with(publisher: publisher)
         .and_return(login_key)
+      # rubocop:enable Rspec/AnyInstance
       allow(Publishers::AuthenticationFallbackMailer).to receive(:sign_in_fallback)
         .with(login_key_id: login_key.id, publisher: publisher)
         .and_return(message_delivery)
@@ -61,7 +63,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           visit publishers_login_key_path(login_key)
 
           expect(page).to have_content("Choose your organisation")
-          expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
+          expect(page).to have_no_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
           expect(page).to have_content(other_school.name)
           expect(page).to have_content(trust.name)
           expect(page).to have_content(local_authority.name)
@@ -82,7 +84,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
           # Login link no longer works
           visit publishers_login_key_path(login_key)
           expect(page).to have_content("used")
-          expect(page).not_to have_content("Choose your organisation")
+          expect(page).to have_no_content("Choose your organisation")
         end
       end
 
@@ -94,13 +96,13 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
         travel 5.hours do
           visit publishers_login_key_path(login_key)
           expect(page).to have_content("expired")
-          expect(page).not_to have_content("Choose your organisation")
+          expect(page).to have_no_content("Choose your organisation")
         end
       end
     end
 
     context "when a publisher has only one organisation" do
-      context "organisation is a School" do
+      context "and organisation is a School" do
         let(:organisations) { [school] }
 
         it "can sign in", :dfe_analytics do
@@ -119,14 +121,14 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             visit publishers_login_key_path(login_key)
 
             expect(page).to have_content("Choose your organisation")
-            expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
+            expect(page).to have_no_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
             expect(page).to have_content(school.name)
 
             choose school.name
             click_button I18n.t("buttons.sign_in")
 
             expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
-            expect(page).not_to have_content("Choose your organisation")
+            expect(page).to have_no_content("Choose your organisation")
             expect(page).to have_content(school.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
@@ -154,7 +156,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             visit publishers_login_key_path(login_key)
 
             expect(page).to have_content("Choose your organisation")
-            expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
+            expect(page).to have_no_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
             expect(page).to have_content(trust.name)
 
             choose trust.name
@@ -162,7 +164,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
             expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
 
-            expect(page).not_to have_content("Choose your organisation")
+            expect(page).to have_no_content("Choose your organisation")
             expect(page).to have_content(trust.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
@@ -192,7 +194,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
             visit publishers_login_key_path(login_key)
 
             expect(page).to have_content("Choose your organisation")
-            expect(page).not_to have_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
+            expect(page).to have_no_content(I18n.t("publishers.temp_login.choose_organisation.denial.title"))
             expect(page).to have_content(local_authority.name)
 
             choose local_authority.name
@@ -200,7 +202,7 @@ RSpec.describe "Publishers can sign in with fallback email authentication" do
 
             expect(:successful_publisher_sign_in_attempt).to have_been_enqueued_as_analytics_event(with_data: { sign_in_type: "email" }) # rubocop:disable RSpec/ExpectActual
 
-            expect(page).not_to have_content("Choose your organisation")
+            expect(page).to have_no_content("Choose your organisation")
             expect(page).to have_content(local_authority.name)
             expect { login_key.reload }.to raise_error ActiveRecord::RecordNotFound
           end
