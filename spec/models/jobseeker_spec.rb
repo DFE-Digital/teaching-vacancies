@@ -114,6 +114,14 @@ RSpec.describe Jobseeker do
       end
     end
 
+    context "when the jobseeker has a different govuk_one_login_id but the provided email matches" do
+      let!(:jobseeker) { create(:jobseeker, govuk_one_login_id: "id") }
+
+      it "returns no user" do
+        expect(described_class.find_from_govuk_one_login(id: "different_id", email: jobseeker.email)).to be_nil
+      end
+    end
+
     it "returns no user if neither the govuk_one_login_id or email match" do
       expect(described_class.find_from_govuk_one_login(id: "random", email: "random@contoso.com")).to be_nil
     end
