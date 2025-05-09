@@ -36,7 +36,7 @@ FactoryBot.define do
     end
 
     trait :with_training do
-      training_and_cpds { [build(:training_and_cpd, job_application: nil,  jobseeker_profile: instance)] }
+      training_and_cpds { [build(:training_and_cpd, job_application: nil, jobseeker_profile: instance)] }
     end
 
     trait :completed do

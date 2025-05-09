@@ -1,2 +1,3 @@
-class ProfessionalBodyMembership < AssociatedRecord
+class ProfessionalBodyMembership < ApplicationRecord
+  include AssociatedRecord
 end
