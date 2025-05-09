@@ -7,10 +7,12 @@ RSpec.describe "publishers/vacancies/review" do
   let(:step_process) { Publishers::Vacancies::VacancyStepProcess.new(:review, vacancy: vacancy, organisation: school) }
 
   before do
+    # capture values into local variables so they are accessible when the view later calls the methods we define
     vp = vacancy_presenter
     s = school
     sp = step_process
 
+    # view references the below as methods, not instance variables, so need to define the methods on the view
     view.define_singleton_method(:vacancy) { vp }
     view.define_singleton_method(:current_organisation) { s }
     view.define_singleton_method(:step_process) { sp }
