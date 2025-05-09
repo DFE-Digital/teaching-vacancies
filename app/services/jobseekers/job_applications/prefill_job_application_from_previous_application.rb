@@ -9,7 +9,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
 
   def call
     copy_personal_info
-    copy_qualifications
+    copy_associations(recent_job_application.qualifications)
     copy_associations(recent_job_application.employments)
     copy_associations(recent_job_application.training_and_cpds)
     copy_associations(recent_job_application.professional_body_memberships)
@@ -54,18 +54,6 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
        non_catholic_religion_details]
       .filter_map { |step| form_fields_from_step(step) if relevant_steps.include?(step) }
       .flatten
-  end
-
-  def copy_qualifications
-    recent_job_application.qualifications.each do |qualification|
-      new_qualification = qualification.duplicate
-      new_qualification.update(job_application: new_job_application)
-
-      qualification.qualification_results.each do |result|
-        new_result = result.dup
-        new_result.update(qualification: new_qualification)
-      end
-    end
   end
 
   def copy_associations(associations)

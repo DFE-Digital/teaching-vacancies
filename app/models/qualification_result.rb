@@ -5,11 +5,6 @@ class QualificationResult < ApplicationRecord
   validates :grade, presence: true
 
   def duplicate
-    # self.class.new(
-    #   grade:,
-    #   subject:,
-    #   awarding_body:,
-    # )
     # dup does a shallow copy, but although it "doesn't copy associations" according to the
     # docs, it *does* copy parent associations so we remove these
     dup.tap do |record|
