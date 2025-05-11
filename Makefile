@@ -106,10 +106,10 @@ push-local-image: build-local-image ## make push-local-image # Requires active D
 		$(eval tag=$(LOCAL_TAG))
 
 .PHONY: plan-local-image
-plan-local-image: push-local-image terraform-app-plan## make passcode=MyPasscode <env> plan-local-image # Requires active Docker Hub session (`docker login`)
+plan-local-image: push-local-image terraform-plan## make passcode=MyPasscode <env> plan-local-image # Requires active Docker Hub session (`docker login`)
 
 .PHONY: deploy-local-image
-deploy-local-image: push-local-image terraform-app-plan## make passcode=MyPasscode <env> deploy-local-image # Requires active Docker Hub session (`docker login`)
+deploy-local-image: push-local-image terraform-plan## make passcode=MyPasscode <env> deploy-local-image # Requires active Docker Hub session (`docker login`)
 
 ##@ Plan or apply changes to, review, staging or production. Requires Terraform CLI
 
@@ -122,8 +122,8 @@ ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
 	$(eval export SKIP_AZURE_LOGIN=true)
 
-.PHONY: terraform-app-init
-terraform-app-init: set-azure-account
+.PHONY: terraform-init
+terraform-init: set-azure-account
 	rm -rf terraform/app/vendor/modules/aks
 	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/app/vendor/modules/aks
 
@@ -135,15 +135,15 @@ terraform-app-init: set-azure-account
 	$(eval export TF_VAR_service_short=${SERVICE_SHORT})
 
 
-.PHONY: terraform-app-plan
-terraform-app-plan: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-app-plan
+.PHONY: terraform-plan
+terraform-plan: terraform-init check-terraform-variables ## make passcode=MyPasscode tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 <env> terraform-plan
 		terraform -chdir=terraform/app plan -var-file ../workspace-variables/$(var_file).tfvars.json
 
-.PHONY: terraform-app-apply
-terraform-app-apply: terraform-app-init check-terraform-variables ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
+.PHONY: terraform-apply
+terraform-apply: terraform-init check-terraform-variables ## make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-apply
 		terraform -chdir=terraform/app apply -input=false -var-file ../workspace-variables/$(var_file).tfvars.json -auto-approve
 
-terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
+terraform-destroy: terraform-init ## make qa destroy passcode=MyPasscode
 	terraform -chdir=terraform/app destroy -var-file ../workspace-variables/${var_file}.tfvars.json ${AUTO_APPROVE}
 
 ##@ terraform/common code. Requires privileged IAM account to run

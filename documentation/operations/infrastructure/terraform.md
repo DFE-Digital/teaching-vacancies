@@ -13,22 +13,22 @@ aws-vault exec Deployments -- [make invocation from below]
 
 Production
 ```
-make CONFIRM_PRODUCTION=true tag=47fd1475376bbfa16a773693133569b794408995 production terraform-app-plan
+make CONFIRM_PRODUCTION=true tag=47fd1475376bbfa16a773693133569b794408995 production terraform-plan
 ```
 
 QA
 ```
-make tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 qa terraform-app-plan
+make tag=dev-08406f04dd9eadb7df6fcda5213be880d7df37ed-20201022090714 qa terraform-plan
 ```
 
 Review app
 ```
-make pr_id=2086 tag=review-pr-2086-e4c2c4afd991161f88808c907b4c66a30e5f3ef4-20201002203641 review terraform-app-plan
+make pr_id=2086 tag=review-pr-2086-e4c2c4afd991161f88808c907b4c66a30e5f3ef4-20201002203641 review terraform-plan
 ```
 
 Staging
 ```
-make tag=47fd1475376bbfa16a773693133569b794408995 staging terraform-app-plan
+make tag=47fd1475376bbfa16a773693133569b794408995 staging terraform-plan
 ```
 
 To run the commands below, you will first need to assume the `Administrator` role with [aws-vault](/documentation/operations/infrastructure/aws-roles-and-cli-tools.md)
@@ -41,11 +41,11 @@ make terraform-common-plan
 ## Cleaning up after review apps that failed to destroy on PR close
 
 Occasionally, some issue will prevent a review app and its associated worker and services from
-getting destroyed. To clean up manually, use the `terraform-app-destroy` make target and set the
+getting destroyed. To clean up manually, use the `terraform-destroy` make target and set the
 `pr_id` variable to the PR ID from Github:
 
 ```
-make pr_id=1234 review terraform-app-destroy
+make pr_id=1234 review terraform-destroy
 ```
 
 ## Planning out to a file, and using `terraform show`

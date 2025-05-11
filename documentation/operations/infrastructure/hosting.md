@@ -224,7 +224,7 @@ kubectl scale --replicas=4 deployment teaching-vacancies-production-worker -n tv
 ```
 - Run:
   ```shell
-  make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-app-apply
+  make passcode=MyPasscode tag=47fd1475376bbfa16a773693133569b794408995 <env> terraform-apply
   ```
 - If you want to have a deployment triggered by a push to a branch, add a trigger to [build_and_deploy.yml](../.github/workflows/build_and_deploy.yml)
 ```

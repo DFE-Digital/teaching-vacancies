@@ -65,4 +65,4 @@ jobs:
     - name: Deploy to environment
       if: ${{ github.event.inputs.environment }} != "production"
       run: |
-        make ${{ github.event.inputs.environment }} ci terraform-app-database-replace CONFIRM_REPLACE=yes
+        make ${{ github.event.inputs.environment }} ci terraform-database-replace CONFIRM_REPLACE=yes

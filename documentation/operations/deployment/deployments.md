@@ -74,7 +74,7 @@ Refresh the cached `ghcr.io/dfe-digital/teaching-vacancies:main` image on Github
 
 ### Default tag
 
-If no docker image tag is specified, the makefile defaults to using the `main` tag - as specified in the makfile's `terraform-app-init:` target
+If no docker image tag is specified, the makefile defaults to using the `main` tag - as specified in the makfile's `terraform-init:` target
 
 ### Deploy a specific tag to an environment - GitHub Actions
 
