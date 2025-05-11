@@ -146,6 +146,8 @@ terraform-app-apply: terraform-app-init check-terraform-variables ## make passco
 terraform-app-destroy: terraform-app-init ## make qa destroy passcode=MyPasscode
 	terraform -chdir=terraform/app destroy -var-file ../workspace-variables/${var_file}.tfvars.json ${AUTO_APPROVE}
 
+terraform-destroy: terraform-app-destroy ## Alias for terraform-app-destroy to support the delete-review-app action
+
 ##@ terraform/common code. Requires privileged IAM account to run
 
 .PHONY: terraform-common-init
