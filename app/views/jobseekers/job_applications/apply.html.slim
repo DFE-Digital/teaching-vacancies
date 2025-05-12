@@ -54,8 +54,8 @@
           status: review_section_tag(job_application, :non_catholic))
 
     - task_list.with_item(title: t("jobseekers.job_applications.build.referees.heading"), href: jobseekers_job_application_build_path(job_application, :referees),
-      html_attributes: { id: :references },
-      status: review_section_tag(job_application, :references))
+      html_attributes: { id: :referees },
+      status: review_section_tag(job_application, :referees))
 
     - if jobseeker_signed_in?
       - task_list.with_item(title: t("jobseekers.job_applications.build.equal_opportunities.heading"), href: jobseekers_job_application_build_path(job_application, :equal_opportunities),
