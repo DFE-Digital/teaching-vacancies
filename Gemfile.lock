@@ -108,7 +108,7 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     aes_key_wrap (1.1.0)
     afm (0.2.2)
-    amazing_print (1.7.2)
+    amazing_print (1.8.0)
     array_enum (1.6.0)
       activemodel
     ast (2.4.3)
@@ -248,7 +248,7 @@ GEM
       mutex_m
       representable (~> 3.0)
       retriable (>= 2.0, < 4.a)
-    google-apis-drive_v3 (0.64.0)
+    google-apis-drive_v3 (0.65.0)
       google-apis-core (>= 0.15.0, < 2.a)
     google-apis-indexing_v3 (0.18.0)
       google-apis-core (>= 0.15.0, < 2.a)
@@ -394,7 +394,7 @@ GEM
     nenv (0.3.0)
     net-http (0.6.0)
       uri
-    net-imap (0.5.7)
+    net-imap (0.5.8)
       date
       net-protocol
     net-protocol (0.2.2)
@@ -431,7 +431,7 @@ GEM
     omniauth_openid_connect (0.8.0)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 2.2)
-    online_migrations (0.27.0)
+    online_migrations (0.27.1)
       activerecord (>= 7.1)
     openid_connect (2.3.0)
       activemodel
@@ -457,7 +457,7 @@ GEM
       globalid
       paper_trail (>= 3.0.0)
     parallel (1.27.0)
-    parallel_tests (5.1.0)
+    parallel_tests (5.2.0)
       parallel
     parser (3.3.8.0)
       ast (~> 2.4.1)
@@ -642,7 +642,7 @@ GEM
     rswag-ui (2.16.0)
       actionpack (>= 5.2, < 8.1)
       railties (>= 5.2, < 8.1)
-    rubocop (1.75.4)
+    rubocop (1.75.5)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -662,8 +662,8 @@ GEM
     rubocop-factory_bot (2.27.1)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
-    rubocop-govuk (5.1.6)
-      rubocop (= 1.75.4)
+    rubocop-govuk (5.1.7)
+      rubocop (= 1.75.5)
       rubocop-ast (= 1.44.1)
       rubocop-capybara (= 2.22.1)
       rubocop-rails (= 2.31.0)
@@ -803,7 +803,7 @@ GEM
     uri (1.0.3)
     uri-query_params (0.8.2)
     useragent (0.16.11)
-    valid_email2 (7.0.12)
+    valid_email2 (7.0.13)
       activemodel (>= 6.0)
       mail (~> 2.5)
     validate_url (1.0.15)
