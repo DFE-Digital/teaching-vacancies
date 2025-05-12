@@ -1,9 +1,6 @@
 class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
-  attr_reader :jobseeker, :vacancy, :new_job_application
-
-  def initialize(jobseeker, vacancy, new_job_application)
+  def initialize(jobseeker, new_job_application)
     @jobseeker = jobseeker
-    @vacancy = vacancy
     @new_job_application = new_job_application
   end
 
@@ -18,6 +15,10 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
     new_job_application
   end
 
+  private
+
+  attr_reader :jobseeker, :new_job_application
+
   def copy_personal_info
     new_job_application.assign_attributes(
       first_name: jobseeker_profile.personal_details&.first_name,
@@ -25,6 +26,8 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile
       phone_number: jobseeker_profile.personal_details&.phone_number,
       qualified_teacher_status_year: jobseeker_profile.qualified_teacher_status_year || "",
       qualified_teacher_status: jobseeker_profile.qualified_teacher_status || "",
+      qts_age_range_and_subject: jobseeker_profile.qts_age_range_and_subject,
+      teacher_reference_number: jobseeker_profile.teacher_reference_number,
       has_right_to_work_in_uk: jobseeker_profile.personal_details&.has_right_to_work_in_uk?,
       working_patterns: jobseeker_profile.job_preferences&.working_patterns,
       working_pattern_details: jobseeker_profile.job_preferences&.working_pattern_details,

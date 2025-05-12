@@ -1,9 +1,6 @@
 class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
-  attr_reader :jobseeker, :vacancy, :new_job_application
-
-  def initialize(jobseeker, vacancy, new_job_application)
+  def initialize(jobseeker, new_job_application)
     @jobseeker = jobseeker
-    @vacancy = vacancy
     @new_job_application = new_job_application
   end
 
@@ -22,6 +19,8 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   PLAIN_STEPS = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].freeze
 
   private
+
+  attr_reader :jobseeker, :new_job_application
 
   def copy_personal_info
     attributes = attributes_to_copy

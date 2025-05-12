@@ -17,7 +17,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
       end
 
       it "prefills the new job application from the previous job application" do
-        expect(Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication).to receive(:new).with(jobseeker, vacancy, new_job_application).and_return(prefill_service)
+        expect(Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication).to receive(:new).with(jobseeker, new_job_application).and_return(prefill_service)
         expect(prefill_service).to receive(:call)
 
         subject.job_application
@@ -38,7 +38,7 @@ RSpec.describe Jobseekers::JobApplications::QuickApply do
     end
 
     it "prefills the new job application from the jobseeker profile" do
-      expect(Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile).to receive(:new).with(jobseeker, vacancy, new_job_application).and_return(prefill_service)
+      expect(Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile).to receive(:new).with(jobseeker, new_job_application).and_return(prefill_service)
       expect(prefill_service).to receive(:call)
 
       subject.job_application

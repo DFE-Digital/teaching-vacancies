@@ -5,7 +5,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
   let(:new_vacancy) { create(:vacancy) }
   let(:new_job_application) { jobseeker.job_applications.create(vacancy: new_vacancy) }
 
-  subject { described_class.new(jobseeker, new_vacancy, new_job_application).call }
+  subject { described_class.new(jobseeker, new_job_application).call }
 
   describe "#job_application" do
     context "when jobseeker has a recent job application" do

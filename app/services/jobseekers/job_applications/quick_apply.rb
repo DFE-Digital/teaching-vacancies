@@ -1,6 +1,4 @@
 class Jobseekers::JobApplications::QuickApply
-  attr_reader :jobseeker, :vacancy
-
   def initialize(jobseeker, vacancy)
     @jobseeker = jobseeker
     @vacancy = vacancy
@@ -10,13 +8,15 @@ class Jobseekers::JobApplications::QuickApply
     return new_job_application unless previously_submitted_application? || jobseeker_profile
 
     if previously_submitted_application?
-      return Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication.new(jobseeker, vacancy, new_job_application).call
+      return Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication.new(jobseeker, new_job_application).call
     end
 
-    Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile.new(jobseeker, vacancy, new_job_application).call
+    Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerProfile.new(jobseeker, new_job_application).call
   end
 
   private
+
+  attr_reader :jobseeker, :vacancy
 
   def new_job_application
     @new_job_application ||= jobseeker.job_applications.create(vacancy: vacancy)
