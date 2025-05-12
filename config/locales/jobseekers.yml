@@ -256,7 +256,7 @@ en:
           no_qualifications: No qualifications specified
           step_title: Education and qualifications
           title: Education and qualifications — Application
-        references:
+        referees:
           description: You must include your current or most recent employer as a referee. If you did not work with children in this role, you must also provide a referee from your last job where you worked with children.
           heading: References
           no_references: No referees specified
@@ -473,7 +473,7 @@ en:
           heading: Add a qualification
           title: Add a qualification — Application
         subjects_and_grades: Subjects and grades
-      references:
+      referees:
         destroy:
           success: Your referee was deleted
         edit:

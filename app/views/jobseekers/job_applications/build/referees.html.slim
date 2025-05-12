@@ -8,35 +8,35 @@
 
     p.govuk-body = t(".description")
 
-    - if job_application.references.any?
-      - job_application.references.each do |reference|
-        = render DetailComponent.new title: reference.name do |detail|
+    - if job_application.referees.any?
+      - job_application.referees.each do |referee|
+        = render DetailComponent.new title: referee.name do |detail|
           - detail.with_body do
             = govuk_summary_list classes: "govuk-!-margin-bottom-0" do |summary_list|
               - attributes = %w[job_title organisation relationship email phone_number]
               - attributes.each do |attribute|
-                - if reference[attribute].present?
+                - if referee[attribute].present?
                   - summary_list.with_row do |row|
-                    - row.with_key text: t("jobseekers.job_applications.references.#{attribute}")
-                    - row.with_value text: reference[attribute]
+                    - row.with_key text: t("jobseekers.job_applications.referees.#{attribute}")
+                    - row.with_value text: referee[attribute]
 
-              - unless reference["is_most_recent_employer"].nil?
+              - unless referee["is_most_recent_employer"].nil?
                 - summary_list.with_row do |row|
-                  - row.with_key text: t("jobseekers.job_applications.references.is_most_recent_employer")
-                  - row.with_value text: t("helpers.label.jobseekers_job_application_details_reference_form.is_most_recent_employer_options.#{reference['is_most_recent_employer']}")
+                  - row.with_key text: t("jobseekers.job_applications.referees.is_most_recent_employer")
+                  - row.with_value text: t("helpers.label.jobseekers_job_application_details_referee_form.is_most_recent_employer_options.#{referee['is_most_recent_employer']}")
 
-          - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, reference), class: "govuk-link--no-visited-state"
-          - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, reference), method: :delete
+          - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, referee), class: "govuk-link--no-visited-state"
+          - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, referee), method: :delete
 
       = govuk_button_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_reference_path(job_application)
     - else
       = render EmptySectionComponent.new title: t(".no_references") do
         = govuk_button_link_to t("buttons.add_reference"), new_jobseekers_job_application_reference_path(job_application), class: "govuk-!-margin-bottom-0"
 
-    = form_for @form, url: jobseekers_job_application_build_path(job_application, :references), method: :patch do |f|
+    = form_for @form, url: jobseekers_job_application_build_path(job_application, :referees), method: :patch do |f|
       = f.govuk_error_summary
 
-      = f.govuk_collection_radio_buttons :references_section_completed, %w[true false], :to_s
+      = f.govuk_collection_radio_buttons :referees_section_completed, %w[true false], :to_s
 
       = f.govuk_submit job_application_build_submit_button_text do
         = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"

@@ -88,7 +88,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             end
 
             it "has the correct content" do
-              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
+              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
 
               expect(page).to have_content(referee_name)
               expect(page).to have_content(referee_address)
@@ -130,7 +130,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             end
 
             it "allows the certificate to be uploaded" do
-              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
+              expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
               complete_from_references_page
               expect(page).to have_content("blank_baptism_cert.pdf")
             end
@@ -165,7 +165,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
             fill_in "Month", with: 3
             fill_in "Year", with: 2007
             click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
+            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
             complete_from_references_page
 
             expect(page).to have_content("07 March 2007")
@@ -180,7 +180,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
           it "allows jobseeker to not specify a religious referee" do
             click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
+            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
           end
         end
       end
@@ -222,7 +222,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
           it "completes the religious journey" do
             click_on I18n.t("buttons.save_and_continue")
-            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
+            expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
             complete_from_references_page
             submit_application_from_review
             expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
@@ -255,7 +255,7 @@ RSpec.describe "Jobseekers can complete a religious job application" do
 
               it "completes the journey" do
                 click_on I18n.t("buttons.save_and_continue")
-                expect(page).to have_content(I18n.t("jobseekers.job_applications.build.references.heading"))
+                expect(page).to have_content(I18n.t("jobseekers.job_applications.build.referees.heading"))
                 complete_from_references_page
                 submit_application_from_review
                 expect(page).to have_content(I18n.t("jobseekers.job_applications.post_submit.panel.title"))
@@ -340,14 +340,14 @@ RSpec.describe "Jobseekers can complete a religious job application" do
   end
 
   def complete_from_references_page
-    click_on(I18n.t("jobseekers.job_applications.build.references.heading"))
+    click_on(I18n.t("jobseekers.job_applications.build.referees.heading"))
     click_on I18n.t("buttons.add_reference")
-    fill_in_reference
+    fill_in_referee
     click_on I18n.t("buttons.save_reference")
     click_on I18n.t("buttons.add_another_reference")
-    fill_in_reference
+    fill_in_referee
     click_on I18n.t("buttons.save_reference")
-    choose I18n.t("helpers.label.jobseekers_job_application_references_form.references_section_completed_options.true")
+    choose I18n.t("helpers.label.jobseekers_job_application_referees_form.referees_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
 
     click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))

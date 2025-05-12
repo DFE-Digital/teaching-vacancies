@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -13,7 +13,7 @@
     h2.govuk-heading-m = t(".work_with_children_heading")
     p.govuk-body = t(".work_with_children_guidance")
 
-    = form_for form, url: jobseekers_job_application_reference_path(job_application, reference), method: :patch do |f|
+    = form_for @form, url: jobseekers_job_application_reference_path(job_application, referee), method: :patch do |f|
       = f.govuk_error_summary
 
       = render "fields", f: f
