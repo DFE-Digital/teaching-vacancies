@@ -1,0 +1,241 @@
+en:
+  activemodel:
+    errors:
+      models:
+        referees/can_give_reference_form:
+          attributes:
+            can_give_reference:
+              inclusion: Select yes if you can give the candidate a reference
+        referees/can_share_reference_form:
+          attributes:
+            is_reference_sharable:
+              inclusion: Select yes if the reference is sharable with the candidate upon request
+        referees/employment_reference_form:
+          attributes:
+            how_do_you_know_the_candidate:
+              blank: Describe your relationship to the candidate
+            reason_for_leaving:
+              blank: Enter the reason for leaving
+            would_reemploy_current_reason:
+              blank: Enter the reason why you would re-employ the candidate in their current role
+            would_reemploy_any_reason:
+              blank: Enter the reason why you would re-employ the candidate
+            employment_start_date:
+              blank: Enter the candidate's employment start date
+              before: Employment start date cannot be in the future
+            currently_employed:
+              inclusion: Select yes if the candidate is currently employed in your organisation
+            would_reemploy_current:
+              inclusion: Select yes if you would re-employ the candidate in their current role
+            would_reemploy_any:
+              inclusion: Select yes if you would re-employ the candidate in any role
+        referees/how_would_you_rate_form:
+          attributes:
+            punctuality:
+              blank: Rate the candidate's punctuality and timekeeping
+            working_relationships:
+              blank: Rate the candidate's working relationships
+            customer_care:
+              blank: Rate the candidate's customer care skills
+            adapt_to_change:
+              blank: Rate the candidates's capability of adapting to change
+            deal_with_conflict:
+              blank: Rate the candidate's ability to deal with conflicts
+            prioritise_workload:
+              blank: Rate the candidate's ability to prioritise and manage their own workload
+            team_working:
+              blank: Rate the candidate's team working skills
+            communication:
+              blank: Rate the candidate's communication skills
+            problem_solving:
+              blank: Rate the candidate's problem solving skills
+            general_attitude:
+              blank: Rate the candidate's general attitude
+            technical_competence:
+              blank: Rate the candidate's technical competence (if relevant)
+            leadership:
+              blank: Rate the candidate's leadership skills (if relevant)
+        referees/referee_details_form:
+          attributes:
+            name:
+              blank: Enter your name
+            job_title:
+              blank: Enter your job title
+            phone_number:
+              blank: Enter your phone number
+            email:
+              blank: Enter your email address
+              invalid: Enter a valid email address in the correct format, like name@example.com
+            organisation:
+              blank: Enter the name of your organisation
+            complete_and_accurate:
+              accepted: Confirm that this form is correct to the best of my knowledge
+
+  helpers:
+    hint:
+      referees_employment_reference_form:
+        employment_start_date: For example, 27 3 2007
+    label:
+      referees_can_give_reference_form:
+        can_give_reference_options:
+          true: Yes, I can give them a reference
+          false: No, I am unable to give them a reference
+      referees_can_share_reference_form:
+        is_reference_sharable_options:
+          true: Yes, if they request it
+          false: No, it should be treated as confidential
+
+      referees_referee_details_form:
+        name: Name
+        job_title: Job title
+        phone_number: Phone number
+        email: Email address
+        organisation: Organisation name
+        complete_and_accurate_options:
+          "1": I confirm the answers given in this form have been provided in good faith and are correct to the best of my knowledge and belief.
+
+      referees_employment_reference_form:
+        how_do_you_know_the_candidate: How long have you known the candidate and in what capacity?
+        currently_employed_options:
+          true: "Yes"
+          false: "No"
+        would_reemploy_current_options:
+          true: "Yes"
+          false: "No"
+        would_reemploy_any_options:
+          true: "Yes"
+          false: "No"
+        reason_for_leaving: Reason for leaving/considering leaving your employment
+        would_reemploy_current_reason: Please give reasons for you answer
+        would_reemploy_any_reason: Please give reasons for you answer
+
+      referees_reference_information_form:
+        under_investigation_options:
+          true: "Yes"
+          false: "No"
+        warnings_options:
+          true: "Yes"
+          false: "No"
+        allegations_options:
+          true: "Yes"
+          false: "No"
+        not_fit_to_practice_options:
+          true: "Yes"
+          false: "No"
+        able_to_undertake_role_options:
+          true: "Yes"
+          false: "No"
+
+      referees_how_would_you_rate_form:
+        punctuality_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        working_relationships_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        customer_care_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        adapt_to_change_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        deal_with_conflict_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        prioritise_workload_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        team_working_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        communication_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        problem_solving_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        general_attitude_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        technical_competence_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+        leadership_options:
+          outstanding: Outstanding
+          good: Good
+          satisfactory: Satisfactory
+          poor: Poor
+          na: N/A
+    legend:
+      referees_can_give_reference_form:
+        can_give_reference: Can you give a reference for Jane Smith?
+
+      referees_can_share_reference_form:
+        is_reference_sharable: Can your reference be shared with Jane Smith?
+
+      referees_employment_reference_form:
+        employment_start_date: Applicants employment start date
+        currently_employed: Is the applicant currently employed at this organisation?
+        would_reemploy_current: Would you re-employ the applicant in the same job as they currently hold or held?
+        would_reemploy_any: Would you re-employ the applicant in any role within your organisation?
+
+      referees_reference_information_form:
+        under_investigation: >-
+          Is the applicant currently under investigation for any matter (incl. conduct, capability, or performance) under any of your employment policies?
+        warnings: Are there any warnings on the applicant’s record (Disciplinary, Performance, or Absence related) that have not been disposed of?
+        allegations: >-
+          Are you aware of any allegations or concerns that have been raised (whether formal or informal) about the applicant that relate to any
+          safeguarding issues/ or the applicant’s behaviour towards adults at risk and/or children?
+        not_fit_to_practice: >-
+          If the individual is employed in a position where they are subject to a fit and proper persons check,
+          have they been investigated for, or been found not fit to practice?
+        able_to_undertake_role: >-
+          To the best of your knowledge and with reference to the attached job description and person specification,
+          are you satisfied that the applicant has the ability and is suitable to undertake this role?
+
+      referees_how_would_you_rate_form:
+        punctuality: Punctuality/timekeeping
+        working_relationships: Ability to build effective working relationships
+        customer_care: Customer care skills
+        adapt_to_change: Ability to adapt to change
+        deal_with_conflict: Ability to deal with conflict
+        prioritise_workload: Ability to manage and prioritise own workload
+        team_working: Team working skills
+        communication: Communication skills
+        problem_solving: Problem solving/decision making skills
+        general_attitude: General attitude
+        technical_competence: Technical/clinical competence (for clinical/professional posts only)
+        leadership: Leadership (if appropriate)

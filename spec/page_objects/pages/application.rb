@@ -15,6 +15,9 @@ module PageObjects
         publisher_vacancy: "Publisher::VacancyPage",
         publisher_ats_applications: "Publisher::Ats::JobApplicationsPage",
         publisher_ats_interviewing: "Publisher::Ats::InterviewingApplicationsPage",
+        publisher_ats_pre_interview_checks: "Publisher::Ats::PreInterviewChecksPage",
+        publisher_ats_reference_request: "Publisher::Ats::ReferenceRequestPage",
+        publisher_ats_satisfactory_reference: "Publisher::Ats::SatisfactoryReferencePage",
         publisher_include_additional_documents: "Publisher::IncludeAdditionalDocumentsPage",
         publisher_job_title: "Publisher::JobTitlePage",
         publisher_pay_package: "Publisher::PayPackagePage",
@@ -36,6 +39,11 @@ module PageObjects
         publisher_applying_for_the_job: "Publisher::ApplyingForTheJobPage",
         publisher_how_to_receive_applications: "Publisher::HowToReceiveApplicationsPage",
         publisher_application_link: "Publisher::ApplicationLinkPage",
+        referee_can_give_reference: "Publisher::Ats::Referee::CanGiveReferencePage",
+        referee_employment_reference: "Publisher::Ats::Referee::EmploymentReferencePage",
+        referee_reference_information: "Publisher::Ats::Referee::ReferenceInformationPage",
+        referee_how_would_you_rate: "Publisher::Ats::Referee::HowWouldYouRatePage",
+        referee_referee_details: "Publisher::Ats::Referee::RefereeDetailsPage",
       }.each do |page_name, page_class|
         full_page_class = "PageObjects::Pages::#{page_class}"
 
