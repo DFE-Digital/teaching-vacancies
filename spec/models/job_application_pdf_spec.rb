@@ -318,7 +318,7 @@ RSpec.describe JobApplicationPdf do
   end
 
   describe "#references" do
-    subject(:references) { datasource.references }
+    subject(:referees) { datasource.referees }
 
     let(:referee) { nil }
 
@@ -326,7 +326,7 @@ RSpec.describe JobApplicationPdf do
 
     context "when no references present" do
       it "returns no data available message" do
-        expect(references).to eq([[I18n.t("jobseekers.job_applications.show.employment_history.none"), nil]])
+        expect(referees).to eq([[I18n.t("jobseekers.job_applications.show.employment_history.none"), nil]])
       end
     end
 
@@ -334,8 +334,8 @@ RSpec.describe JobApplicationPdf do
       let(:referee) { build(:referee) }
 
       it "returns reference data" do
-        expect(references.first.last.first).to include(["Name:", referee.name])
-        expect(references.first.last.first).to include(["Organisation:", referee.organisation])
+        expect(referees.first.last.first).to include(["Name:", referee.name])
+        expect(referees.first.last.first).to include(["Organisation:", referee.organisation])
       end
     end
 
@@ -343,7 +343,7 @@ RSpec.describe JobApplicationPdf do
       let(:referee) { build(:referee, phone_number: "01234567890") }
 
       it "includes phone number" do
-        expect(references.first.last.first).to include(["Phone Number:", "01234567890"])
+        expect(referees.first.last.first).to include(["Phone Number:", "01234567890"])
       end
     end
 
@@ -351,7 +351,7 @@ RSpec.describe JobApplicationPdf do
       let(:referee) { build(:referee, is_most_recent_employer: true) }
 
       it "includes most recent employer information" do
-        expect(references.first.last.first).to include(["Current or most recent employer:", "Yes"])
+        expect(referees.first.last.first).to include(["Current or most recent employer:", "Yes"])
       end
     end
   end

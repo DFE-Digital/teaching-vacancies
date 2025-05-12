@@ -17,14 +17,14 @@ RSpec.describe "Job applications references" do
       let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
-        get new_jobseekers_job_application_reference_path(job_application)
+        get new_jobseekers_job_application_referee_path(job_application)
 
         expect(response).to have_http_status(:not_found)
       end
     end
 
     it "renders the new page" do
-      expect(get(new_jobseekers_job_application_reference_path(job_application)))
+      expect(get(new_jobseekers_job_application_referee_path(job_application)))
         .to render_template(:new)
     end
   end
@@ -34,14 +34,14 @@ RSpec.describe "Job applications references" do
       let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
-        get edit_jobseekers_job_application_reference_path(job_application, referee)
+        get edit_jobseekers_job_application_referee_path(job_application, referee)
 
         expect(response).to have_http_status(:not_found)
       end
     end
 
     it "renders the edit page" do
-      expect(get(edit_jobseekers_job_application_reference_path(job_application, referee)))
+      expect(get(edit_jobseekers_job_application_referee_path(job_application, referee)))
         .to render_template(:edit)
     end
   end
@@ -54,7 +54,7 @@ RSpec.describe "Job applications references" do
       before { allow_any_instance_of(Jobseekers::JobApplication::Details::RefereeForm).to receive(:valid?).and_return(true) }
 
       it "creates the reference and redirects to the references build step" do
-        expect { post jobseekers_job_application_references_path(job_application), params: params }
+        expect { post jobseekers_job_application_referees_path(job_application), params: params }
           .to change(Referee, :count).by(1)
 
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :referees))
@@ -64,7 +64,7 @@ RSpec.describe "Job applications references" do
         let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "returns not_found" do
-          post jobseekers_job_application_references_path(job_application), params: params
+          post jobseekers_job_application_referees_path(job_application), params: params
 
           expect(response).to have_http_status(:not_found)
         end
@@ -73,7 +73,7 @@ RSpec.describe "Job applications references" do
 
     context "when the form is invalid" do
       it "does not create the reference and renders the new page" do
-        expect { post jobseekers_job_application_references_path(job_application), params: params }
+        expect { post jobseekers_job_application_referees_path(job_application), params: params }
           .to(not_change { Referee.count })
 
         expect(response).to render_template(:new)
@@ -90,7 +90,7 @@ RSpec.describe "Job applications references" do
       before { allow_any_instance_of(Jobseekers::JobApplication::Details::RefereeForm).to receive(:valid?).and_return(true) }
 
       it "updates the reference and redirects to the references build step" do
-        expect { patch jobseekers_job_application_reference_path(job_application, referee), params: params }
+        expect { patch jobseekers_job_application_referee_path(job_application, referee), params: params }
           .to change { referee.reload.name }.from("Testing Bloggs").to("Reference Bloggs")
 
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :referees))
@@ -100,7 +100,7 @@ RSpec.describe "Job applications references" do
         let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
         it "returns not_found" do
-          patch jobseekers_job_application_reference_path(job_application, referee), params: params
+          patch jobseekers_job_application_referee_path(job_application, referee), params: params
 
           expect(response).to have_http_status(:not_found)
         end
@@ -109,7 +109,7 @@ RSpec.describe "Job applications references" do
 
     context "when the form is invalid" do
       it "does not update the reference and renders the edit page" do
-        expect { patch jobseekers_job_application_reference_path(job_application, referee), params: params }
+        expect { patch jobseekers_job_application_referee_path(job_application, referee), params: params }
           .to(not_change { referee.reload.name })
 
         expect(response).to render_template(:edit)
@@ -124,14 +124,14 @@ RSpec.describe "Job applications references" do
       let(:job_application) { create(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
 
       it "returns not_found" do
-        delete jobseekers_job_application_reference_path(job_application, referee)
+        delete jobseekers_job_application_referee_path(job_application, referee)
 
         expect(response).to have_http_status(:not_found)
       end
     end
 
     it "destroys the reference and redirects to the references build step" do
-      expect { delete jobseekers_job_application_reference_path(job_application, referee) }
+      expect { delete jobseekers_job_application_referee_path(job_application, referee) }
         .to change(Referee, :count).by(-1)
 
       expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :referees))

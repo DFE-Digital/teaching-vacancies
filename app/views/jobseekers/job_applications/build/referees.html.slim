@@ -25,13 +25,13 @@
                   - row.with_key text: t("jobseekers.job_applications.referees.is_most_recent_employer")
                   - row.with_value text: t("helpers.label.jobseekers_job_application_details_referee_form.is_most_recent_employer_options.#{referee['is_most_recent_employer']}")
 
-          - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_reference_path(job_application, referee), class: "govuk-link--no-visited-state"
-          - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_reference_path(job_application, referee), method: :delete
+          - detail.with_action govuk_link_to t("buttons.change"), edit_jobseekers_job_application_referee_path(job_application, referee), class: "govuk-link--no-visited-state"
+          - detail.with_action govuk_link_to t("buttons.delete"), jobseekers_job_application_referee_path(job_application, referee), method: :delete
 
-      = govuk_button_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_reference_path(job_application)
+      = govuk_button_link_to t("buttons.add_another_reference"), new_jobseekers_job_application_referee_path(job_application)
     - else
       = render EmptySectionComponent.new title: t(".no_references") do
-        = govuk_button_link_to t("buttons.add_reference"), new_jobseekers_job_application_reference_path(job_application), class: "govuk-!-margin-bottom-0"
+        = govuk_button_link_to t("buttons.add_reference"), new_jobseekers_job_application_referee_path(job_application), class: "govuk-!-margin-bottom-0"
 
     = form_for @form, url: jobseekers_job_application_build_path(job_application, :referees), method: :patch do |f|
       = f.govuk_error_summary

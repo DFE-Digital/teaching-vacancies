@@ -592,7 +592,7 @@ en:
           none: The candidate has not included any training or CPD.
         professional_body_memberships:
           heading: Professional body memberships
-        references:
+        referees:
           email: Email address
           heading: References
           job_title: Job title
