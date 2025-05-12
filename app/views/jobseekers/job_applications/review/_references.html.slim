@@ -1,37 +1,37 @@
-- r.with_section :references
-  - if job_application.references.none?
+- r.with_section :referees
+  - if job_application.referees.none?
     - if jobseeker_signed_in?
       p.govuk-body = t("jobseekers.job_applications.review.employment_history.none")
     - elsif publisher_signed_in?
       p.govuk-body = t("jobseekers.job_applications.show.employment_history.none")
   - else
-    - job_application.references.sort_by(&:created_at).each do |reference|
-      = govuk_summary_list html_attributes: { id: reference.name } do |summary_list|
+    - job_application.referees.sort_by(&:created_at).each do |referee|
+      = govuk_summary_list html_attributes: { id: referee.name } do |summary_list|
         - summary_list.with_row do |row|
-          - row.with_key text: reference.name
+          - row.with_key text: referee.name
 
         - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.job_title")
-          - row.with_value text: reference.job_title
+          - row.with_key text: t("helpers.label.jobseekers_job_application_details_referee_form.job_title")
+          - row.with_value text: referee.job_title
 
         - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.organisation")
-          - row.with_value text: reference.organisation
+          - row.with_key text: t("helpers.label.jobseekers_job_application_details_referee_form.organisation")
+          - row.with_value text: referee.organisation
 
         - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.relationship")
-          - row.with_value text: reference.relationship
+          - row.with_key text: t("helpers.label.jobseekers_job_application_details_referee_form.relationship")
+          - row.with_value text: referee.relationship
 
         - summary_list.with_row do |row|
-          - row.with_key text: t("helpers.label.jobseekers_job_application_details_reference_form.email")
-          - row.with_value text: reference.email
+          - row.with_key text: t("helpers.label.jobseekers_job_application_details_referee_form.email")
+          - row.with_value text: referee.email
 
-        - if reference.phone_number?
+        - if referee.phone_number?
           - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.legend.jobseekers_job_application_details_reference_form.phone_number")
-            - row.with_value text: reference.phone_number
+            - row.with_key text: t("helpers.legend.jobseekers_job_application_details_referee_form.phone_number")
+            - row.with_value text: referee.phone_number
 
-        - unless reference.is_most_recent_employer.nil?
+        - unless referee.is_most_recent_employer.nil?
           - summary_list.with_row do |row|
-            - row.with_key text: t("helpers.legend.jobseekers_job_application_details_reference_form.is_most_recent_employer")
-            - row.with_value text: t("helpers.label.jobseekers_job_application_details_reference_form.is_most_recent_employer_options.#{reference.is_most_recent_employer}")
+            - row.with_key text: t("helpers.legend.jobseekers_job_application_details_referee_form.is_most_recent_employer")
+            - row.with_value text: t("helpers.label.jobseekers_job_application_details_referee_form.is_most_recent_employer_options.#{referee.is_most_recent_employer}")

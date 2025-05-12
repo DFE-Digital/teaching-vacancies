@@ -39,9 +39,9 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
 
           it "copies completed steps except for declarations and equal opportunities and employment_history and also adds them to imported steps" do
             expect(subject.completed_steps)
-              .to eq(%w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
+              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
             expect(subject.imported_steps)
-              .to eq(%w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
+              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships professional_status])
           end
 
           it "add employment_history to the in progress steps " do
@@ -53,9 +53,9 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
         context "when the application is from after we added gap validation for employment history section" do
           it "copies completed steps except for declarations and equal opportunities and also adds them to imported steps" do
             expect(subject.completed_steps)
-              .to eq(%w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
+              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
             expect(subject.imported_steps)
-              .to eq(%w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
+              .to eq(%w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships employment_history professional_status])
           end
 
           it "sets in progress steps as empty" do
@@ -126,8 +126,8 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApp
       it "copies references from the recent job application" do
         attributes_to_copy = %i[name job_title organisation relationship email phone_number]
 
-        expect(subject.references.map { |reference| reference.slice(*attributes_to_copy) })
-          .to eq(recent_job_application.references.map { |reference| reference.slice(*attributes_to_copy) })
+        expect(subject.referees.map { |referee| referee.slice(*attributes_to_copy) })
+          .to eq(recent_job_application.referees.map { |referee| referee.slice(*attributes_to_copy) })
       end
 
       it "copies training and cpds from the recent job application" do

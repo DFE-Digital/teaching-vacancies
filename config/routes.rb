@@ -96,7 +96,7 @@ Rails.application.routes.draw do
           post :submit_category
         end
       end
-      resources :references, only: %i[new create edit update destroy], controller: "job_applications/references"
+      resources :referees, only: %i[new create edit update destroy], controller: "job_applications/referees"
       resources :training_and_cpds, only: %i[new create edit update destroy], controller: "job_applications/training_and_cpds"
       resources :professional_body_memberships, only: %i[new create edit update destroy], controller: "job_applications/professional_body_memberships"
       get :apply
@@ -398,6 +398,15 @@ Rails.application.routes.draw do
         get :tag, on: :collection
         get :tag_single, on: :member
         post :update_tag, on: :collection
+        member do
+          get :pre_interview_checks
+        end
+        collection do
+          get :collect_references
+          post :references_and_declarations
+          get :ask_references_email
+          post :references_contact_reply
+        end
       end
     end
   end

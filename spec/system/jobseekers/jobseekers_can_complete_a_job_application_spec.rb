@@ -81,17 +81,17 @@ RSpec.describe "Jobseekers can complete a job application" do
     fill_in_personal_statement
     click_on I18n.t("buttons.save_and_continue")
 
-    click_on(I18n.t("jobseekers.job_applications.build.references.heading"))
+    click_on(I18n.t("jobseekers.job_applications.build.referees.heading"))
 
     click_on I18n.t("buttons.add_reference")
     click_on I18n.t("buttons.save_reference")
     expect(page).to have_content("There is a problem")
-    fill_in_reference
+    fill_in_referee
     click_on I18n.t("buttons.save_reference")
     click_on I18n.t("buttons.add_another_reference")
-    fill_in_reference
+    fill_in_referee
     click_on I18n.t("buttons.save_reference")
-    choose I18n.t("helpers.label.jobseekers_job_application_references_form.references_section_completed_options.true")
+    choose I18n.t("helpers.label.jobseekers_job_application_referees_form.referees_section_completed_options.true")
     click_on I18n.t("buttons.save_and_continue")
 
     click_on(I18n.t("jobseekers.job_applications.build.equal_opportunities.heading"))

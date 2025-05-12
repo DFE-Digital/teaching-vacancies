@@ -109,7 +109,7 @@ module JobseekerHelpers
     choose I18n.t("helpers.label.jobseekers_job_application_professional_status_form.professional_status_section_completed_options.true")
   end
 
-  def fill_in_reference
+  def fill_in_referee
     fill_in "Name", with: "Jim Referee"
     fill_in "Job title", with: "Important job"
     fill_in "Organisation", with: "Important organisation"

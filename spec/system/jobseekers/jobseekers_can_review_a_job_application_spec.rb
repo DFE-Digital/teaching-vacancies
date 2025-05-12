@@ -60,14 +60,14 @@ RSpec.describe "Jobseekers can review a job application" do
       expect(page).to have_content(job_application.personal_statement)
     end
 
-    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.references.heading") do
-      job_application.references.each do |reference|
-        expect(page).to have_content(reference.name)
-        expect(page).to have_content(reference.job_title)
-        expect(page).to have_content(reference.organisation)
-        expect(page).to have_content(reference.relationship)
-        expect(page).to have_content(reference.email)
-        expect(page).to have_content(reference.phone_number)
+    within ".review-component__section", text: I18n.t("jobseekers.job_applications.build.referees.heading") do
+      job_application.referees.each do |referee|
+        expect(page).to have_content(referee.name)
+        expect(page).to have_content(referee.job_title)
+        expect(page).to have_content(referee.organisation)
+        expect(page).to have_content(referee.relationship)
+        expect(page).to have_content(referee.email)
+        expect(page).to have_content(referee.phone_number)
       end
     end
 
