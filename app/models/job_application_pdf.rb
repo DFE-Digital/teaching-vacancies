@@ -1,4 +1,4 @@
-# rubocop:disable Metric/ClassLength
+# rubocop:disable Metrics/ClassLength
 class JobApplicationPdf
   include JobApplicationsHelper
   include QualificationsHelper
@@ -90,7 +90,7 @@ class JobApplicationPdf
             (["Grade", training.grade] if training.grade),
             ["Provider", training.provider],
             ["Awarded Year", training.year_awarded],
-          ].compact
+          ].compact,
         ]
       end
     end
@@ -110,7 +110,7 @@ class JobApplicationPdf
             ["Membership or registration number:", membership.membership_number],
             ["Date obtained:", membership.year_membership_obtained],
             ["Exam taken for this membership:", I18n.t(membership.exam_taken, scope:)],
-          ].reject { |row| row[1].blank? }
+          ].reject { |row| row[1].blank? },
         ]
       end
     end
@@ -162,7 +162,7 @@ class JobApplicationPdf
             job_application.support_needed_details,
           ),
         ],
-      ]
+      ],
     ]
   end
 
@@ -185,7 +185,7 @@ class JobApplicationPdf
       [
         [I18n.t("has_safeguarding_issue", scope:), safeguarding_issues_info],
         [I18n.t("has_close_relationships", scope:, organisation: vacancy.organisation_name), close_relationships_info],
-      ]
+      ],
     ]
   end
   # :nocov:
@@ -277,7 +277,7 @@ class JobApplicationPdf
           ["Grade:", result.grade],
           (["Awarding Body:", result.awarding_body] if result.awarding_body.present?),
           ["Date completed:", qualification.award_date],
-        ].compact
+        ].compact,
       ]
     end
   end
@@ -291,7 +291,7 @@ class JobApplicationPdf
         ["Grade:", qualification.grade],
         ["Date completed:", qualification.award_date],
         ["Awarding body:", qualification.awarding_body],
-      ].reject { |row| row[1].blank? }
+      ].reject { |row| row[1].blank? },
     ]
   end
 
@@ -332,7 +332,7 @@ class JobApplicationPdf
         ["Reason:", employment.reason_for_break],
         ["End date:", end_date(employment.ended_on, latest_employment_record:)],
         ["Start date:", month_year(employment.started_on)],
-      ]
+      ],
     ]
   end
 
@@ -342,7 +342,7 @@ class JobApplicationPdf
         ["Unexplained Employment Gap"],
         ["End date:", end_date(gap[:ended_on], latest_employment_record:)],
         ["Start date:", month_year(gap[:started_on])],
-      ]
+      ],
     ]
   end
 
@@ -361,4 +361,4 @@ class JobApplicationPdf
   end
   # :nocov:
 end
-# rubocop:enable Metric/ClassLength
+# rubocop:enable Metrics/ClassLength
