@@ -122,7 +122,7 @@ class JobApplicationPdf
   end
 
   # :nocov:
-  def references
+  def referees
     return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.referees.none?
 
     make_nested_section do

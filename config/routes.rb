@@ -96,7 +96,7 @@ Rails.application.routes.draw do
           post :submit_category
         end
       end
-      resources :references, only: %i[new create edit update destroy], controller: "job_applications/referees"
+      resources :referees, only: %i[new create edit update destroy], controller: "job_applications/referees"
       resources :training_and_cpds, only: %i[new create edit update destroy], controller: "job_applications/training_and_cpds"
       resources :professional_body_memberships, only: %i[new create edit update destroy], controller: "job_applications/professional_body_memberships"
       get :apply

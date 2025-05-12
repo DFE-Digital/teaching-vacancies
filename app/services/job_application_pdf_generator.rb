@@ -19,7 +19,7 @@ class JobApplicationPdfGenerator
     render_nested_section(:professional_body_memberships)
     render_nested_section(:employment_history)
     render_page(:personal_statement)
-    render_nested_section(:references)
+    render_nested_section(:referees)
     render_table_section(:ask_for_support)
     render_table_section(:declarations)
 
@@ -34,7 +34,6 @@ class JobApplicationPdfGenerator
 
   attr_reader :datasource, :document
 
-  # :nocov:
   def job_application_page_header
     page_header do
       text datasource.header_text, size: 12, style: :italic
@@ -52,7 +51,7 @@ class JobApplicationPdfGenerator
 
   def render_nested_section(section_name)
     page_section do
-      page_title(section_name.to_s.titleize)
+      page_title(I18n.t("jobseekers.job_applications.show.#{section_name}.heading"))
       datasource.public_send(section_name).each do |sub_title, group|
         page_sub_title(sub_title) if sub_title.present?
         next if group.blank?
@@ -68,11 +67,10 @@ class JobApplicationPdfGenerator
   def render_page(page_name)
     start_new_page
     page_section do
-      page_title(page_name.to_s.titleize)
+      page_title(I18n.t("jobseekers.job_applications.show.#{page_name}.heading"))
       move_down 0.3.cm
       text datasource.public_send(page_name), size: 12, leading: 4
     end
     start_new_page
   end
-  # :nocov:
 end
