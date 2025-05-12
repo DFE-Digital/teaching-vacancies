@@ -398,6 +398,12 @@ Rails.application.routes.draw do
         get :tag, on: :collection
         get :tag_single, on: :member
         post :update_tag, on: :collection
+        member do
+          get :pre_interview_checks
+        end
+      end
+      resources :job_application_batches, only: %i[] do
+        resources :references_and_declarations, only: %i[show update], controller: "publishers/vacancies/references_and_declarations"
       end
     end
   end

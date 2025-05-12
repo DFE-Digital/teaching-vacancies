@@ -14,17 +14,7 @@
       - table.with_body do |body|
         - candidates.each_with_index do |application, index|
           - body.with_row(html_attributes: { class: "application-#{application.status}" }) do |row|
-            - if application.withdrawn?
-              - row.with_cell(text: "")
-              - row.with_cell(text: tag.span(application.name))
-            - else
-              / sadly govuk_check_box doesn't seem to support govuk-checkboxes--small natively, but wrapping in a div seems to work
-              - row.with_cell(text: tag.div(f.govuk_check_box(:job_applications, application.id, link_errors: index.zero?, label: { hidden: true, text: "Select #{application.name}" }),
-                                            class: "govuk-checkboxes--small"))
-              - row.with_cell(text: govuk_link_to(application.name, organisation_job_job_application_path(vacancy.id, application)))
-
-            - row.with_cell(text: application.email_address)
-            - row.with_cell(text: publisher_job_application_status_tag(application.status))
+            = render "#{application.status}_row", row: row, application: application, index: index, vacancy: vacancy, f: f
 
   .govuk-button-group
     = f.govuk_submit t(".download_selected"), name: "download_selected", value: "true"

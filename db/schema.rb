@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_30_141711) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_03_075718) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -58,6 +58,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_30_141711) do
     t.integer "status", default: 0
     t.index ["run_on"], name: "index_alert_runs_on_run_on"
     t.index ["subscription_id"], name: "index_alert_runs_on_subscription_id"
+  end
+
+  create_table "batchable_job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_application_batch_id", null: false
+    t.uuid "job_application_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_batch_id"], name: "index_batchable_job_applications_on_job_application_batch_id"
+    t.index ["job_application_id"], name: "index_batchable_job_applications_on_job_application_id"
   end
 
   create_table "emergency_login_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -188,6 +197,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_30_141711) do
     t.index ["sluggable_id", "sluggable_type"], name: "index_friendly_id_slugs_sluggable_id_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "job_application_batches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vacancy_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vacancy_id"], name: "index_job_application_batches_on_vacancy_id"
   end
 
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -750,6 +766,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_30_141711) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alert_runs", "subscriptions"
+  add_foreign_key "batchable_job_applications", "job_application_batches"
+  add_foreign_key "batchable_job_applications", "job_applications"
   add_foreign_key "employments", "job_applications"
   add_foreign_key "employments", "jobseeker_profiles"
   add_foreign_key "equal_opportunities_reports", "vacancies"
@@ -758,6 +776,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_30_141711) do
   add_foreign_key "feedbacks", "publishers"
   add_foreign_key "feedbacks", "subscriptions"
   add_foreign_key "feedbacks", "vacancies"
+  add_foreign_key "job_application_batches", "vacancies"
   add_foreign_key "job_applications", "jobseekers"
   add_foreign_key "job_applications", "vacancies"
   add_foreign_key "job_preferences", "jobseeker_profiles"

@@ -1,5 +1,43 @@
 en:
+  activemodel:
+    errors:
+      models:
+        publishers/job_application/collect_references_form:
+          attributes:
+            collect_references_and_declarations:
+              inclusion: Select yes if you would like to collect references and declarations through the service
+        publishers/job_application/references_contact_applicant_form:
+          attributes:
+            contact_applicants:
+              inclusion: Select yes if you would like the service to email applicants that you are collecting references.
   helpers:
+    hint:
+      publishers_job_application_status_form:
+        status_options:
+          submitted: Applications that have not been reviewed
+          unsuccessful: Applications that you arw not taking forward to interview. You can create an email to send to the applicant to let them know
+          reviewed: Applications that have been reviewed
+          shortlisted: Applications that have been shortlisted
+          interviewing: >-
+            Applications that you plan to interview. You can create an email to send to the applicant to let them know,
+            alternatively you can reach out to the applicant. You will also be able to trigger pre-interview checks
+            through the Teaching Vacancies service.
+
+      publishers_job_application_collect_references_form:
+        collect_references_and_declarations_options:
+          true: >-
+            Both the candidate and their referees will receive an email with instructions
+            to complete the necessary documentation. If you do not receive a response, you can send
+            a reminder through the service one week later. If you still do not receive a response or
+            if the matter is urgent, contact the applicant directly.
+          false: >-
+            You will still have access to the pre-interview checklist. This will allow you to manually
+            mark the candidate's pre-interview checks as complete.
+
+      publishers_job_application_references_contact_applicant_form:
+        contact_applicants_options:
+          false: You will need to reach out to the candidate directly to infiorm them you will be collecting references.
+
     label:
       publishers_job_application_status_form:
         status_options:
@@ -8,3 +46,23 @@ en:
           reviewed_html: Reviewed <span class="govuk-tag govuk-tag--purple">Reviewed</span>
           shortlisted_html: Shortlisted <span class="govuk-tag govuk-tag--green">Shortlisted</span>
           interviewing_html: Interviewing <span class="govuk-tag govuk-tag--turquoise">Interviewing</span>
+
+      publishers_job_application_collect_references_form:
+        collect_references_and_declarations_options:
+          true: "Yes"
+          false: "No"
+
+      publishers_job_application_references_contact_applicant_form:
+        contact_applicants_options:
+          true: "Yes"
+          false: "No"
+
+    legend:
+      publishers_job_application_collect_references_form:
+        collect_references_and_declarations: >-
+          Would you like to collect references and declarations through the Teaching Vacancies service?
+
+      publishers_job_application_references_contact_applicant_form:
+        contact_applicants: >-
+          The applicant needs to be notified when you are collecting references.
+          Would you like Teaching Vacancies to contact the applicant?
