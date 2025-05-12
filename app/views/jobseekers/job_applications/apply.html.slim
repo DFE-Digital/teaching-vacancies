@@ -53,7 +53,7 @@
           html_attributes: { id: :religious_information },
           status: review_section_tag(job_application, :non_catholic))
 
-    - task_list.with_item(title: t("jobseekers.job_applications.build.references.heading"), href: jobseekers_job_application_build_path(job_application, :references),
+    - task_list.with_item(title: t("jobseekers.job_applications.build.referees.heading"), href: jobseekers_job_application_build_path(job_application, :referees),
       html_attributes: { id: :references },
       status: review_section_tag(job_application, :references))
 

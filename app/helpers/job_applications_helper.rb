@@ -226,18 +226,18 @@ module JobApplicationsHelper
             ended_on: Faker::Date.in_date_period(year: 2018),
           ),
         ],
-      references:
+      referees:
         [
-          Reference.new(name: "Laura Davison",
-                        organisation: "Townington Secondary School",
-                        relationship: "Line manager",
-                        email: "l.davison@english.townington.ac.uk",
-                        job_title: %w[Headteacher Teacher].sample),
-          Reference.new(name: "John Thompson",
-                        organisation: "Sheffield Secondary School",
-                        relationship: "Line manager",
-                        email: "john.thompson@english.sheffield.ac.uk",
-                        job_title: %w[Headteacher Teacher].sample),
+          Referee.new(name: "Laura Davison",
+                      organisation: "Townington Secondary School",
+                      relationship: "Line manager",
+                      email: "l.davison@english.townington.ac.uk",
+                      job_title: %w[Headteacher Teacher].sample),
+          Referee.new(name: "John Thompson",
+                      organisation: "Sheffield Secondary School",
+                      relationship: "Line manager",
+                      email: "john.thompson@english.sheffield.ac.uk",
+                      job_title: %w[Headteacher Teacher].sample),
         ],
       qualifications:
         [

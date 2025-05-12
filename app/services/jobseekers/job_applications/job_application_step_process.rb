@@ -10,7 +10,7 @@ class Jobseekers::JobApplications::JobApplicationStepProcess
                          personal_statement: %i[personal_statement] }.freeze
 
   POST_RELIGION_STEPS = {
-    references: %i[references],
+    referees: %i[referees],
     equal_opportunities: %i[equal_opportunities],
     ask_for_support: %i[ask_for_support],
     declarations: %i[declarations],

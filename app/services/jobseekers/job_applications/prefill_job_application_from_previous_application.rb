@@ -11,7 +11,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     copy_personal_info
     copy_qualifications
     copy_employments
-    copy_references
+    copy_referees
     copy_training_and_cpds
     copy_professional_body_memberships
     set_status_of_each_step
@@ -19,7 +19,7 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     new_job_application
   end
 
-  PLAIN_STEPS = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].freeze
+  PLAIN_STEPS = %w[personal_details personal_statement referees ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].freeze
 
   private
 
@@ -82,10 +82,10 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
     end
   end
 
-  def copy_references
-    recent_job_application.references.each do |reference|
-      new_reference = reference.dup
-      new_reference.update(job_application: new_job_application)
+  def copy_referees
+    recent_job_application.referees.each do |referee|
+      new_referee = referee.dup
+      new_referee.update(job_application: new_job_application)
     end
   end
 
