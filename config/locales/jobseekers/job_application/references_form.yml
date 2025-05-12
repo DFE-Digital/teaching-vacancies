@@ -2,19 +2,19 @@ en:
   activemodel:
     errors:
       models:
-        jobseekers/job_application/references_form:
+        jobseekers/job_application/referees_form:
           attributes:
-            references_section_completed:
+            referees_section_completed:
               inclusion: Select yes if you have completed this section
-            references:
+            referees:
               too_short: You must provide a minimum of %{count} references
               must_include_most_recent_employer: At least one reference must be marked as the most recent employer.
   helpers:
     legend:
-      jobseekers_job_application_references_form:
-        references_section_completed: Have you completed this section?
+      jobseekers_job_application_referees_form:
+        referees_section_completed: Have you completed this section?
     label:
-      jobseekers_job_application_references_form:
-        references_section_completed_options:
+      jobseekers_job_application_referees_form:
+        referees_section_completed_options:
           false: No, I'll come back to it later
           true: Yes, I've completed this section

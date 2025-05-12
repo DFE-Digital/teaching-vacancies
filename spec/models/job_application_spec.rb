@@ -4,7 +4,7 @@ RSpec.describe JobApplication do
   it { is_expected.to belong_to(:jobseeker) }
   it { is_expected.to belong_to(:vacancy) }
   it { is_expected.to have_many(:employments) }
-  it { is_expected.to have_many(:references) }
+  it { is_expected.to have_many(:referees) }
 
   describe "#has_noticed_notifications" do
     subject { create(:job_application) }

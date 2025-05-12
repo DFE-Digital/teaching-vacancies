@@ -26,7 +26,6 @@ class JobApplicationPdf
     "#{job_application.name} | #{vacancy.organisation_name}"
   end
 
-  # :nocov:
   def personal_details
     return @personal_details if @personal_details.present?
 
@@ -39,7 +38,6 @@ class JobApplicationPdf
       it << [I18n.t("working_pattern_details", scope:), job_application.working_pattern_details] if job_application.working_pattern_details.present?
     end
   end
-  # :nocov:
 
   def personal_statement
     return job_application.personal_statement if job_application.personal_statement.present?
@@ -47,7 +45,6 @@ class JobApplicationPdf
     I18n.t("jobseekers.job_applications.review.personal_statement.blank")
   end
 
-  # :nocov:
   def professional_status
     return @professional_status if @professional_status.present?
 
@@ -66,9 +63,7 @@ class JobApplicationPdf
       end
     end
   end
-  # :nocov:
 
-  # :nocov:
   def qualifications
     return no_data_available(I18n.t("jobseekers.job_applications.show.qualifications.none")) if job_application.qualifications.none?
 
@@ -76,9 +71,7 @@ class JobApplicationPdf
       [qualifications_group_name(group), qualifications_group_data(group)]
     end
   end
-  # :nocov:
 
-  # :nocov:
   def training_and_cpds
     return no_data_available(I18n.t("jobseekers.job_applications.show.training_and_cpds.none")) if job_application.training_and_cpds.none?
 
@@ -95,7 +88,6 @@ class JobApplicationPdf
       end
     end
   end
-  # :nocov:
 
   def professional_body_memberships
     return no_data_available(I18n.t("jobseekers.job_applications.show.professional_body_memberships.none")) if job_application.professional_body_memberships.none?
@@ -131,20 +123,20 @@ class JobApplicationPdf
 
   # :nocov:
   def references
-    return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.references.none?
+    return no_data_available(I18n.t("jobseekers.job_applications.show.employment_history.none")) if job_application.referees.none?
 
     make_nested_section do
-      job_application.references.sort_by(&:created_at).map do |reference|
+      job_application.referees.sort_by(&:created_at).map do |referee|
         reference_data = [
-          ["Name:", reference.name],
-          ["Job Title:", reference.job_title],
-          ["Organisation:", reference.organisation],
-          ["Relationship:", reference.relationship],
-          ["Email:", reference.email],
+          ["Name:", referee.name],
+          ["Job Title:", referee.job_title],
+          ["Organisation:", referee.organisation],
+          ["Relationship:", referee.relationship],
+          ["Email:", referee.email],
         ]
 
-        reference_data << ["Phone Number:", reference.phone_number] if reference.phone_number.present?
-        reference_data << ["Current or most recent employer:", I18n.t("helpers.label.jobseekers_job_application_details_reference_form.is_most_recent_employer_options.#{reference.is_most_recent_employer}")] unless reference.is_most_recent_employer.nil?
+        reference_data << ["Phone Number:", referee.phone_number] if referee.phone_number.present?
+        reference_data << ["Current or most recent employer:", I18n.t("helpers.label.jobseekers_job_application_details_referee_form.is_most_recent_employer_options.#{referee.is_most_recent_employer}")] unless referee.is_most_recent_employer.nil?
 
         Table[reference_data]
       end
@@ -166,7 +158,6 @@ class JobApplicationPdf
     ]
   end
 
-  # :nocov:
   def declarations
     return @declarations if @declarations.present?
 
@@ -188,7 +179,6 @@ class JobApplicationPdf
       ],
     ]
   end
-  # :nocov:
 
   private
 
@@ -249,13 +239,11 @@ class JobApplicationPdf
     ]
   end
 
-  # :nocov:
   def qualifications_group_name(group)
     return group.first.name if qualifications_group_category_other?(group)
 
     I18n.t("helpers.label.jobseekers_qualifications_category_form.category_options.#{group.first[:category]}")
   end
-  # :nocov:
 
   def qualifications_group_data(group)
     group.flat_map do |qualification|
@@ -267,7 +255,6 @@ class JobApplicationPdf
     end
   end
 
-  # :nocov:
   def secondary_qualification_data(qualification)
     qualification.qualification_results.map do |result|
       Table[
@@ -281,7 +268,6 @@ class JobApplicationPdf
       ]
     end
   end
-  # :nocov:
 
   def general_qualification_data(qualification)
     Table[
@@ -306,7 +292,6 @@ class JobApplicationPdf
     end
   end
 
-  # :nocov:
   def employment_entry(employment)
     employment_data = [
       ["Employment"],
@@ -323,7 +308,6 @@ class JobApplicationPdf
 
     Table[employment_data]
   end
-  # :nocov:
 
   def employment_break(employment, latest_employment_record)
     Table[
@@ -346,7 +330,6 @@ class JobApplicationPdf
     ]
   end
 
-  # :nocov:
   def qualified_teacher_status_info(job_application)
     case job_application.qualified_teacher_status
     when "yes"
@@ -359,6 +342,5 @@ class JobApplicationPdf
       "Status not provided"
     end
   end
-  # :nocov:
 end
 # rubocop:enable Metrics/ClassLength

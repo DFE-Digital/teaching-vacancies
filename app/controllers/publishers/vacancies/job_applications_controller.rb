@@ -73,7 +73,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     @form = Publishers::JobApplication::DownloadForm.new(job_applications: tag_params.fetch(:job_applications).compact_blank)
     if @form.valid?
       downloads = JobApplication
-                    .includes([:qualifications, :employments, :training_and_cpds, :references, { jobseeker: :jobseeker_profile }, { vacancy: %i[organisations publisher_organisation] }])
+                    .includes([:qualifications, :employments, :training_and_cpds, :referees, { jobseeker: :jobseeker_profile }, { vacancy: %i[organisations publisher_organisation] }])
                     .where(vacancy: vacancy.id, id: @form.job_applications)
       stringio = Zip::OutputStream.write_buffer do |zio|
         downloads.each do |job_application|

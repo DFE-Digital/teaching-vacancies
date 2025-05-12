@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :reference do
+  factory :referee do
     name { Faker::Name.name }
     job_title { factory_sample(%w[Headteacher Teacher]) }
     organisation { Faker::Educator.secondary_school }

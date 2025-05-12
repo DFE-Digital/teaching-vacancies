@@ -487,7 +487,7 @@ en:
             incomplete: Complete the questions about your professional status
           qualifications:
             incomplete: Complete your qualifications
-          references:
+          referees:
             incomplete: Complete your references
           school_ethos:
             incomplete: Complete the question about how you meet the schools ethos and aims
@@ -552,7 +552,7 @@ en:
               blank: Enter a school, college, university or other organisation
             name:
               blank: Enter a qualification or course name
-        jobseekers/job_application/details/reference_form:
+        jobseekers/job_application/details/referee_form:
           attributes:
             email:
               blank: Enter your referee's email address
