@@ -1,0 +1,114 @@
+require "rails_helper"
+
+RSpec.describe "Publishers can select a job application for interview" do
+  let(:publisher) { create(:publisher) }
+  let(:organisation) { create(:school) }
+  let(:vacancy) { create(:vacancy, :expired, organisations: [organisation]) }
+  let(:jobseeker) { create(:jobseeker) }
+  let(:job_application) do
+    create(:job_application, :status_submitted,
+           referees: [
+             build(:referee, is_most_recent_employer: true),
+             build(:referee, is_most_recent_employer: false),
+           ],
+           vacancy: vacancy, jobseeker: jobseeker)
+  end
+
+  describe "referee flow" do
+    let(:referee) { job_application.referees.first }
+    let(:reference_request) { create(:reference_request, referee: referee) }
+
+    before do
+      create(:job_reference, referee: referee)
+      referee_can_give_reference_page.load(reference_id: reference_request.id, token: reference_request.token)
+    end
+
+    context "without an answer" do
+      before do
+        click_on I18n.t("buttons.continue")
+      end
+
+      it "displays an error" do
+        expect(referee_can_give_reference_page.errors.map(&:text)).to eq(["Select yes if you can give the candidate a reference"])
+      end
+    end
+
+    scenario "the referee is unable to give a reference" do
+      choose I18n.t("helpers.label.referees_can_give_reference_form.can_give_reference_options.false")
+      click_on I18n.t("buttons.continue")
+      expect(page).to have_current_path(no_reference_reference_build_index_path(reference_request.id))
+      expect(referee.job_reference.reload).to be_complete
+    end
+
+    context "when giving a reference" do
+      before do
+        choose I18n.t("helpers.label.referees_can_give_reference_form.can_give_reference_options.true")
+        click_on I18n.t("buttons.continue")
+      end
+
+      #  have to use JS driver for send_keys support
+      it "displays the fit_and_proper page followed by the employment_reference page", :js do
+        choose I18n.t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.false")
+        click_on I18n.t("buttons.continue")
+        # click through fit-and-proper-person blurb
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_employment_reference_page).to be_displayed
+        referee_employment_reference_page.currently_employed_yes.click
+        referee_employment_reference_page.reemploy_current_yes.click
+        referee_employment_reference_page.reemploy_any_yes.click
+
+        fill_in "referees_employment_reference_form[how_do_you_know_the_candidate]", with: Faker::Lorem.paragraph
+        fill_in "referees_employment_reference_form[reason_for_leaving]", with: Faker::Lorem.paragraph
+        fill_in "referees_employment_reference_form[would_reemploy_current_reason]", with: Faker::Lorem.paragraph
+        fill_in "referees_employment_reference_form[would_reemploy_any_reason]", with: Faker::Lorem.paragraph
+
+        referee_employment_reference_page.employment_start_day.send_keys "2"
+        referee_employment_reference_page.employment_start_month.send_keys "1"
+        referee_employment_reference_page.employment_start_year.send_keys "2007"
+
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_reference_information_page).to be_displayed
+        referee_reference_information_page.under_investigation_yes.click
+        referee_reference_information_page.warnings_yes.click
+        referee_reference_information_page.allegations_yes.click
+        referee_reference_information_page.not_fit_to_practice_yes.click
+        referee_reference_information_page.able_to_undertake_role_yes.click
+
+        click_on I18n.t("buttons.continue")
+        expect(referee_how_would_you_rate_page).to be_displayed
+
+        tick_all_outstanding(referee_how_would_you_rate_page)
+        click_on I18n.t("buttons.continue")
+
+        expect(referee_referee_details_page).to be_displayed
+        fill_in "referees_referee_details_form[name]", with: Faker::Lorem.word
+        fill_in "referees_referee_details_form[job_title]", with: Faker::Lorem.word
+        fill_in "referees_referee_details_form[phone_number]", with: Faker::Lorem.word
+        fill_in "referees_referee_details_form[email]", with: Faker::Internet.email(domain: TEST_EMAIL_DOMAIN)
+        fill_in "referees_referee_details_form[organisation]", with: Faker::Lorem.word
+
+        referee_referee_details_page.complete_and_accurate_checkbox.click
+        # last click to go to the confirmation page
+        click_on I18n.t("buttons.continue")
+        expect(referee.job_reference.reload).to be_complete
+      end
+    end
+  end
+
+  def tick_all_outstanding(page)
+    page.outstanding_punctuality.click
+    page.outstanding_working_relationships.click
+    page.outstanding_customer_care.click
+    page.outstanding_adapt_to_change.click
+    page.outstanding_deal_with_conflict.click
+    page.outstanding_prioritise_workload.click
+    page.outstanding_team_working.click
+    page.outstanding_communication.click
+    page.outstanding_problem_solving.click
+    page.outstanding_general_attitude.click
+    page.outstanding_technical_competence.click
+    page.outstanding_leadership.click
+  end
+end
