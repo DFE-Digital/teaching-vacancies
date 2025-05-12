@@ -5,24 +5,24 @@ class Jobseekers::JobApplications::RefereesController < Jobseekers::BaseControll
     @form = Jobseekers::JobApplication::Details::RefereeForm.new
   end
 
+  def edit
+    @form = Jobseekers::JobApplication::Details::RefereeForm.new(referee.slice(:name, :job_title, :organisation, :relationship, :email, :phone_number, :is_most_recent_employer))
+  end
+
   def create
     @form = Jobseekers::JobApplication::Details::RefereeForm.new(referee_params)
     if @form.valid?
-      job_application.referees.create(referee_params)
+      job_application.referees.create!(referee_params)
       redirect_to back_path
     else
       render :new
     end
   end
 
-  def edit
-    @form = Jobseekers::JobApplication::Details::RefereeForm.new(referee.slice(:name, :job_title, :organisation, :relationship, :email, :phone_number, :is_most_recent_employer))
-  end
-
   def update
     @form = Jobseekers::JobApplication::Details::RefereeForm.new(referee_params)
     if @form.valid?
-      referee.update(referee_params)
+      referee.update!(referee_params)
       redirect_to back_path
     else
       render :edit
@@ -30,7 +30,7 @@ class Jobseekers::JobApplications::RefereesController < Jobseekers::BaseControll
   end
 
   def destroy
-    referee.destroy
+    referee.destroy!
     redirect_to back_path, success: t(".success")
   end
 

@@ -1,4 +1,4 @@
-# rubocop:disable Metric/ClassLength
+# rubocop:disable Metrics/ClassLength
 class JobApplicationPdf
   include JobApplicationsHelper
   include QualificationsHelper
@@ -343,4 +343,4 @@ class JobApplicationPdf
     end
   end
 end
-# rubocop:enable Metric/ClassLength
+# rubocop:enable Metrics/ClassLength

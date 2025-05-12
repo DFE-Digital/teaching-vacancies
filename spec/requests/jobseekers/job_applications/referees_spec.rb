@@ -55,7 +55,7 @@ RSpec.describe "Job applications references" do
 
       it "creates the reference and redirects to the references build step" do
         expect { post jobseekers_job_application_references_path(job_application), params: params }
-          .to change { Referee.count }.by(1)
+          .to change(Referee, :count).by(1)
 
         expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :referees))
       end
@@ -132,7 +132,7 @@ RSpec.describe "Job applications references" do
 
     it "destroys the reference and redirects to the references build step" do
       expect { delete jobseekers_job_application_reference_path(job_application, referee) }
-        .to change { Referee.count }.by(-1)
+        .to change(Referee, :count).by(-1)
 
       expect(response).to redirect_to(jobseekers_job_application_build_path(job_application, :referees))
     end
