@@ -31,6 +31,8 @@ shared:
   - publisher_invite_to_apply
   - publisher_job_application_data_expiry
   - publisher_prompt_for_feedback
+  - publisher_collect_references
+  - publisher_inform_applicant_about_references
   - publisher_sign_in_fallback
   - publisher_vacancy_relisted
   - search_performed
