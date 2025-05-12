@@ -1,0 +1,77 @@
+# frozen_string_literal: true
+
+module Referees
+  class BuildReferencesController < ApplicationController
+    include Wicked::Wizard
+
+    before_action :set_reference, only: %i[show update]
+
+    FORMS = {
+      can_give: Referees::CanGiveReferenceForm,
+      can_share: Referees::CanShareReferenceForm,
+      fit_and_proper_persons: Referees::FitAndProperPersonsForm,
+      employment_reference: Referees::EmploymentReferenceForm,
+      reference_information: Referees::ReferenceInformationForm,
+      how_would_you_rate: Referees::HowWouldYouRateForm,
+      referee_details: Referees::RefereeDetailsForm,
+    }.freeze
+
+    steps(*FORMS.keys)
+    def show
+      if step != Wicked::FINISH_STEP
+        if @reference.can_give_reference?
+          @form = FORMS.fetch(step).new(token: token)
+        else
+          jump_to Wicked::FINISH_STEP
+        end
+      end
+      render_wizard(nil, {}, token: token)
+    end
+
+    def update
+      @form = form_class.new(params.require(form_key)
+                                   .permit(*(form_class.fields + [:token])))
+      if @form.valid?
+        @reference.update!(@form.params_to_save)
+        @reference_request.update!(status: :received) if step == steps.last
+
+        redirect_to next_wizard_path(token: token)
+      else
+        render step
+      end
+    end
+
+    def completed; end
+    def no_reference; end
+
+    private
+
+    def form_class
+      FORMS.fetch(step)
+    end
+
+    def form_key
+      form_class.to_s.underscore.tr("/", "_")
+    end
+
+    def token
+      params[:token] || params.require(form_key).permit(:token).fetch(:token)
+    end
+
+    def set_reference
+      # expire token after 12 weeks
+      @reference_request = ReferenceRequest.where(token: token)
+                                           .where(created_at: 12.weeks.ago..)
+                                           .find(params[:reference_id])
+      @reference = @reference_request.referee.job_reference
+    end
+
+    def finish_wizard_path
+      if @reference.can_give_reference?
+        completed_reference_build_index_path(@reference_request.id)
+      else
+        no_reference_reference_build_index_path(@reference_request.id)
+      end
+    end
+  end
+end

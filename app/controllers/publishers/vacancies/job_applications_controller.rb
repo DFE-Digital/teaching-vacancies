@@ -2,7 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  before_action :set_job_application, only: %i[show download_pdf pre_interview_checks]
+  before_action :set_job_application, only: %i[show download_pdf pre_interview_checks collect_references]
 
   before_action :set_job_applications, only: %i[index tag_single tag]
 
@@ -65,14 +65,18 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     end
   end
 
-  #  temp - this code doesn't (yet) do anything so doesn't need coverage...
-  # :nocov:
-  def pre_interview_checks
-    @references = ["a ref"]
+  def collect_references
+    batch = JobApplicationBatch.create!(vacancy: vacancy)
+    batch.batchable_job_applications.create!(job_application: @job_application)
+
+    redirect_to organisation_job_job_application_batch_references_and_declaration_path(vacancy.id, batch.id, Wicked::FIRST_STEP)
   end
-  # :nocov:
 
   def withdrawn; end
+
+  def pre_interview_checks
+    @reference_requests = @job_application.referees.filter_map(&:reference_request)
+  end
 
   private
 

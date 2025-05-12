@@ -1,0 +1,76 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = @reference_request.referee.name
+    h1.govuk-heading-l = @reference_request.referee.job_application.name
+
+    .govuk-body
+      - if @reference_request.sent?
+        - if @reference_request.referee.job_reference.complete?
+          = govuk_tag(text: t(".received_status"), colour: "purple")
+        - else
+          = govuk_tag(text: t(".pending_status"), colour: "blue")
+      - else
+        = govuk_tag(text: t(".created_status"), colour: "grey")
+
+    .govuk-body = t(".once_the_reference_is_received")
+
+    .govuk-body = t(".more_urgent")
+
+    = govuk_button_link_to t(".mark_as_received"), mark_as_received_organisation_job_job_application_reference_request_path(vacancy.id, @job_application.id, @reference_request.id), class: "govuk-button--secondary"
+
+    .h2.govuk-heading-m = t(".referee_details.heading")
+
+    = govuk_summary_list do |summary_list|
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.name"))
+        - row.with_value(text: @reference_request.referee.name)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.job_title"))
+        - row.with_value(text: @reference_request.referee.job_title)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.organisation"))
+        - row.with_value(text: @reference_request.referee.organisation)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.relationship"))
+        - row.with_value(text: @reference_request.referee.relationship)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.email"))
+        - row.with_value(text: @reference_request.referee.email)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.phone"))
+        - row.with_value(text: @reference_request.referee.phone_number)
+
+    - if @reference_request.sent?
+      - if @reference_request.referee.job_reference.complete?
+        = render "reference", reference: @reference_request.referee.job_reference
+    - else
+      .govuk-body
+        = govuk_link_to t(".collect_reference"), collect_references_organisation_job_job_application_path(vacancy.id, @job_application.id)
+
+  .govuk-grid-column-one-third
+    span.govuk-caption-l = t(".communication_history")
+    .moj-timeline
+      - @reference_request.versions.reverse_each do |version|
+        .moj-timeline__item
+          .moj-timeline__header
+            h2.moj-timeline__title
+              - if version.changeset.key? "status"
+                - case version.changeset["status"].last
+                  - when "created"
+                    = t(".reference_created")
+                  - when "received"
+                    = t(".reference_received")
+                  - when "requested"
+                    = t(".reference_requested")
+              - elsif version.changeset.key? "marked_as_complete"
+                = t(".marked_as_complete")
+          .moj-timeline__byline
+            - if version.actor.present?
+              = t(".by", name: version.actor.papertrail_display_name)
+            - else
+              = t(".by_tvs")
+          .moj-timeline__date
+            time datetime=version.created_at
+              = version.created_at.to_formatted_s

@@ -1,0 +1,85 @@
+en:
+  referees:
+    build_references:
+      can_give:
+        page_title: Give a reference for Jane Smith
+      can_share:
+        page_title: Give a reference for Jane Smith
+      completed:
+        page_title: Reference completed
+        reference_completed: Reference completed
+        what_happens_next: What happens next
+        paragraph_1:  Thank you for completing the reference, your reference will be sent to the school to review.
+        paragraph_2:  The school may contact you directly should they have any a questions.
+      no_reference:
+        page_title: Cannot give reference
+        no_reference: Thank you for your response
+      fit_and_proper_persons:
+        page_title: Professional and character reference enquiry for %{name}
+        heading: Regulation 19 – Fit and proper person requirements
+        caption: Part 1 of 5
+        reg_19: >-
+          The post applied for is subject to Regulation 19(3)(a) of the Health and Social Care Act (Regulated Activities) Regulations 2014
+          which requires us to ensure all “Persons employed” by our organisation (including agency, bank staff and volunteers) must:
+        bullets:
+          - be of good character
+          - have the qualifications, competence, skills, and experience which are necessary for the work to be performed by them, and
+          - be able by reason of their health, after reasonable adjustments are made, of properly performing tasks which are intrinsic to the work for which they are employed.
+        legal_requirements: >-
+          In order to fulfil our legal requirements, we need to make available to CQC:
+        legal_bullets:
+          - satisfactory evidence of conduct in previous employment concerned with the provision of services relating to health or social care or children or vulnerable adults;
+          - satisfactory verification as to reasons why employment ended, if candidate was employed in a position where their duties involved work with children or vulnerable adults.
+        essential: >-
+          It is therefore essential to require a reference from a previous employer, and the employee cannot be expected to find work of this type unless his or her employer
+          provides a full and frank reference to a prospective employer.
+        completing: >-
+          It is therefore essential to require a reference from a previous employer, and the employee cannot be expected to find work of this type unless his or her employer
+          provides a full and frank reference to a prospective employer.
+        gdpr_heading: UKGDPR/Data Protection Act 2018
+        gdpr_1: >-
+          This form contains personal data as defined by UKGDPR/DPA 2018. It may include special category data (Article 9) and/ criminal offence data (Article 10)
+          which has been requested for the purposes of recruitment and safeguarding adults at risk and/or children. As we are the organisation requesting this data,
+          we will protect any information disclosed within the form in line with data protection requirements and ensure it is not passed to anyone who is not authorised to see the information.
+        gdpr_2: >-
+          The content of the reference may be discussed with the applicant; in addition, the applicant may request and be granted access to the reference.
+        gdpr_3: >-
+          However, if this reference is marked as confidential, the UKGDPR/DPA 2018 creates an exemption from:
+        gdpr_bullets:
+          - the right to be informed (privacy information)
+          - the right to make a subject access request.
+        gdpr_4: >-
+          Therefore, if this reference is marked as confidential, and the applicant/former employee makes a subject request BOTH the company who issued it
+          and the company who received it – would be exempt from having to provide a copy to the applicant/former employee.
+        gdpr_5: >-
+          If this reference is marked confidential, it can only be disclosed to whom it is addressed and will not be released to a third party.
+        gdpr_6: >-
+          To ensure that a recruitment process remains open, transparent, and fair to all applicants we request that you only consider using this
+          confidential exemption on a case-by-case basis and justify and document reasons below for relying on the confidential exemption
+          (For example, the employee was subject to investigation for safeguarding related conduct concerns but left before investigation completed).
+        gdpr_7: >-
+          Referees also need to be aware that a confidential reference could be subject to disclosure in an employment tribunal or county court claim.
+
+      employment_reference:
+        page_title: Professional and character reference enquiry for %{name}
+        caption: Part 2 of 5
+        heading: Professional and character reference enquiry for %{name}
+        candidate_details: Candidate details
+        full_name: Full name
+        current_role: Current role
+        organisation: Organisation
+
+      reference_information:
+        page_title: Give a reference for Jane Smith
+        heading: Reference Information
+        caption: Part 3 of 5
+
+      how_would_you_rate:
+        page_title: How would you rate Jane Smith?
+        heading: Reference enquiry for Jane Smith
+        caption: Part 4 of 5
+
+      referee_details:
+        page_title: Referee Details
+        heading: Reference enquiry for Jane Smith
+        caption: Part 5 of 5
