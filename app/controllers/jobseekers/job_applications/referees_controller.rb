@@ -1,8 +1,13 @@
-class Jobseekers::JobApplications::ReferencesController < Jobseekers::BaseController
-  helper_method :back_path, :form, :job_application, :referee
+class Jobseekers::JobApplications::RefereesController < Jobseekers::BaseController
+  helper_method :back_path, :job_application, :referee
+
+  def new
+    @form = Jobseekers::JobApplication::Details::RefereeForm.new
+  end
 
   def create
-    if form.valid?
+    @form = Jobseekers::JobApplication::Details::RefereeForm.new(referee_params)
+    if @form.valid?
       job_application.referees.create(referee_params)
       redirect_to back_path
     else
@@ -10,8 +15,13 @@ class Jobseekers::JobApplications::ReferencesController < Jobseekers::BaseContro
     end
   end
 
+  def edit
+    @form = Jobseekers::JobApplication::Details::RefereeForm.new(referee.slice(:name, :job_title, :organisation, :relationship, :email, :phone_number, :is_most_recent_employer))
+  end
+
   def update
-    if form.valid?
+    @form = Jobseekers::JobApplication::Details::RefereeForm.new(referee_params)
+    if @form.valid?
       referee.update(referee_params)
       redirect_to back_path
     else
@@ -28,21 +38,6 @@ class Jobseekers::JobApplications::ReferencesController < Jobseekers::BaseContro
 
   def back_path
     @back_path ||= jobseekers_job_application_build_path(job_application, :referees)
-  end
-
-  def form
-    @form ||= Jobseekers::JobApplication::Details::RefereeForm.new(form_attributes)
-  end
-
-  def form_attributes
-    case action_name
-    when "new"
-      {}
-    when "edit"
-      referee.slice(:name, :job_title, :organisation, :relationship, :email, :phone_number, :is_most_recent_employer)
-    when "create", "update"
-      referee_params
-    end
   end
 
   def job_application

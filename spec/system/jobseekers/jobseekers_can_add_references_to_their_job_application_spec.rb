@@ -35,7 +35,7 @@ RSpec.describe "Jobseekers can add references to their job application" do
       click_on I18n.t("buttons.delete")
 
       expect(current_path).to eq(jobseekers_job_application_build_path(job_application, :referees))
-      expect(page).to have_content(I18n.t("jobseekers.job_applications.references.destroy.success"))
+      expect(page).to have_content(I18n.t("jobseekers.job_applications.referees.destroy.success"))
       expect(page).not_to have_content("John")
     end
 
