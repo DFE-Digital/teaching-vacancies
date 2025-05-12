@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module AssociatedRecord
+module ApplicationAndProfileAssociatedRecord
   extend ActiveSupport::Concern
 
   included do

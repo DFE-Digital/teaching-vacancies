@@ -1,5 +1,5 @@
 namespace :db do
-  desc "Update working_patterns to replace 'job_share' with 'part_time' and set is_job_share to true"
+  desc "Remove doubly-linked associations created by not blanking job_profile_id or job_application_id when copying"
   task remove_double_linkings: :environment do
     JobApplication.includes(:training_and_cpds, :employments, :professional_body_memberships, :qualifications).find_each do |ja|
       JobApplication.transaction do

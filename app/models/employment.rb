@@ -1,5 +1,5 @@
 class Employment < ApplicationRecord
-  include AssociatedRecord
+  include ApplicationAndProfileAssociatedRecord
 
   has_encrypted :organisation, :job_title, :main_duties
 

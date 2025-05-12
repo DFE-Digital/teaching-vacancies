@@ -1,3 +1,3 @@
 class TrainingAndCpd < ApplicationRecord
-  include AssociatedRecord
+  include ApplicationAndProfileAssociatedRecord
 end

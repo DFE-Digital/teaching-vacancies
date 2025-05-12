@@ -1,5 +1,5 @@
 class Qualification < ApplicationRecord
-  include AssociatedRecord
+  include ApplicationAndProfileAssociatedRecord
   include ActionView::Helpers::SanitizeHelper
 
   has_many :qualification_results, dependent: :delete_all, autosave: true
