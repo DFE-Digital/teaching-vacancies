@@ -1,8 +1,6 @@
 class Qualification < ApplicationRecord
+  include ApplicationAndProfileAssociatedRecord
   include ActionView::Helpers::SanitizeHelper
-
-  belongs_to :job_application, optional: true
-  belongs_to :jobseeker_profile, optional: true
 
   has_many :qualification_results, dependent: :delete_all, autosave: true
   accepts_nested_attributes_for :qualification_results
@@ -15,18 +13,9 @@ class Qualification < ApplicationRecord
   before_validation :remove_inapplicable_data, :mark_emptied_qualification_results_for_destruction
 
   def duplicate
-    self.class.new(
-      category:,
-      finished_studying_details:,
-      finished_studying:,
-      grade:,
-      institution:,
-      name:,
-      qualification_results: qualification_results.map(&:duplicate),
-      subject:,
-      year:,
-      month:,
-    )
+    super.tap do |qualification|
+      qualification.assign_attributes(qualification_results: qualification_results.map(&:duplicate))
+    end
   end
 
   def name

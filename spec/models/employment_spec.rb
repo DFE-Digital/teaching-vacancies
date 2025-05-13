@@ -1,11 +1,9 @@
 require "rails_helper"
 
 RSpec.describe Employment do
-  let(:employment) { described_class.new(params) }
+  let(:employment) { described_class.new(params.merge(job_application: build(:job_application))) }
   let(:params) { {} }
 
-  it { is_expected.to belong_to(:job_application).optional }
-  it { is_expected.to belong_to(:jobseeker_profile).optional }
   it { is_expected.to validate_presence_of(:organisation) }
   it { is_expected.to validate_presence_of(:job_title) }
   it { is_expected.to validate_presence_of(:main_duties) }

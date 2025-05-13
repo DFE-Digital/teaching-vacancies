@@ -6,7 +6,7 @@ RSpec.describe Jobseekers::JobApplications::PrefillJobApplicationFromJobseekerPr
   let!(:jobseeker_profile) { create(:jobseeker_profile, :completed, jobseeker: jobseeker) }
   let(:new_job_application) { jobseeker.job_applications.create(vacancy: new_vacancy) }
 
-  subject { described_class.new(jobseeker, new_vacancy, new_job_application).call }
+  subject { described_class.new(jobseeker, new_job_application).call }
 
   it "creates a new draft job application for the new vacancy" do
     expect { subject }.to change { jobseeker.job_applications.draft.count }.by(1)

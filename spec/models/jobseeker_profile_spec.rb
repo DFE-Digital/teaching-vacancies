@@ -72,14 +72,19 @@ RSpec.describe JobseekerProfile, type: :model do
     end
   end
 
+  def qualification_attributes(qualification)
+    qualification.attributes.symbolize_keys.except(:created_at, :updated_at, :id, :finished_studying_details_ciphertext, :job_application_id, :jobseeker_profile_id)
+  end
+
   describe "#replace_qualifications!" do
-    let(:old_qualification) { create(:qualification) }
+    let!(:old_qualification) { build(:qualification, job_application_id: nil) }
     let(:new_qualifications) { create_list(:qualification, 2) }
     let(:profile) { create(:jobseeker_profile, qualifications: [old_qualification]) }
 
     it "replaces the qualifications" do
       profile.replace_qualifications!(new_qualifications)
-      expect(profile.reload.qualifications).to match_array(new_qualifications)
+      expect(profile.reload.qualifications.map { |q| qualification_attributes(q) })
+        .to match_array(new_qualifications.map { |q| qualification_attributes(q) })
     end
 
     it "deletes the original profile qualifications" do
@@ -115,7 +120,7 @@ RSpec.describe JobseekerProfile, type: :model do
   end
 
   describe "#replace_employments!" do
-    let(:old_employment) { build(:employment) }
+    let(:old_employment) { build(:employment, job_application: nil) }
     let(:new_employments) { build_list(:employment, 2) }
     let!(:profile) { create(:jobseeker_profile, employments: [old_employment]) }
     let(:excluded_attrs) { %i[job_application_id jobseeker_profile_id created_at id updated_at] }

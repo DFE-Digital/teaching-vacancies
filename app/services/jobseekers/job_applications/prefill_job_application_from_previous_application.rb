@@ -1,19 +1,16 @@
 class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
-  attr_reader :jobseeker, :vacancy, :new_job_application
-
-  def initialize(jobseeker, vacancy, new_job_application)
+  def initialize(jobseeker, new_job_application)
     @jobseeker = jobseeker
-    @vacancy = vacancy
     @new_job_application = new_job_application
   end
 
   def call
     copy_personal_info
-    copy_qualifications
-    copy_employments
-    copy_references
-    copy_training_and_cpds
-    copy_professional_body_memberships
+    copy_associations(recent_job_application.qualifications)
+    copy_associations(recent_job_application.employments)
+    copy_associations(recent_job_application.training_and_cpds)
+    copy_associations(recent_job_application.professional_body_memberships)
+    copy_associations(recent_job_application.references)
     set_status_of_each_step
     new_job_application.save
     new_job_application
@@ -22,6 +19,8 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
   PLAIN_STEPS = %w[personal_details personal_statement references ask_for_support qualifications training_and_cpds professional_body_memberships following_religion religion_details].freeze
 
   private
+
+  attr_reader :jobseeker, :new_job_application
 
   def copy_personal_info
     attributes = attributes_to_copy
@@ -56,43 +55,10 @@ class Jobseekers::JobApplications::PrefillJobApplicationFromPreviousApplication
       .flatten
   end
 
-  def copy_qualifications
-    recent_job_application.qualifications.each do |qualification|
-      new_qualification = qualification.dup
-      new_qualification.update(job_application: new_job_application)
-
-      qualification.qualification_results.each do |result|
-        new_result = result.dup
-        new_result.update(qualification: new_qualification)
-      end
-    end
-  end
-
-  def copy_professional_body_memberships
-    recent_job_application.professional_body_memberships.each do |professional_body_membership|
-      new_professional_body_membership = professional_body_membership.dup
-      new_professional_body_membership.update(job_application: new_job_application)
-    end
-  end
-
-  def copy_employments
-    recent_job_application.employments.map(&:duplicate).each do |new_employment|
-      new_employment.assign_attributes(job_application: new_job_application)
-      new_employment.save(validate: false)
-    end
-  end
-
-  def copy_references
-    recent_job_application.references.each do |reference|
-      new_reference = reference.dup
-      new_reference.update(job_application: new_job_application)
-    end
-  end
-
-  def copy_training_and_cpds
-    recent_job_application.training_and_cpds.each do |training|
-      new_training = training.dup
-      new_training.update(job_application: new_job_application)
+  def copy_associations(associations)
+    associations.map(&:duplicate).each do |new_record|
+      new_record.assign_attributes(job_application: new_job_application)
+      new_record.save(validate: false)
     end
   end
 

@@ -1,6 +1,6 @@
 class Employment < ApplicationRecord
-  belongs_to :job_application, optional: true
-  belongs_to :jobseeker_profile, optional: true
+  include ApplicationAndProfileAssociatedRecord
+
   has_encrypted :organisation, :job_title, :main_duties
 
   # This class represents 2 concerns - 'job' and 'break' (from employment)
@@ -13,12 +13,4 @@ class Employment < ApplicationRecord
 
   validates :ended_on, date: { before: :today, on_or_after: :started_on }, unless: -> { is_current_role? }, if: -> { job? }
   validates :ended_on, absence: true, if: -> { job? && is_current_role? }
-
-  def duplicate
-    # dup does a shallow copy, but although it "doesn't copy associations" according to the
-    # docs, it *does* copy parent associations so we remove these
-    dup.tap do |employment|
-      employment.assign_attributes(job_application: nil, jobseeker_profile: nil)
-    end
-  end
 end

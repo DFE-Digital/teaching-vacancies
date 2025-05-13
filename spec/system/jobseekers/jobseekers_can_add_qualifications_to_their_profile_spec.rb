@@ -72,6 +72,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         create(:qualification,
                category: "undergraduate",
                institution: "Life University",
+               job_application: nil,
                jobseeker_profile_id: profile.id)
       end
 
@@ -100,6 +101,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
         create(:qualification,
                category: "a_level",
                institution: "John Mason School",
+               job_application: nil,
                jobseeker_profile_id: profile.id)
       end
 
@@ -120,6 +122,7 @@ RSpec.describe "Jobseekers can add qualifications to their profile" do
       create(:qualification,
              category: "gcse",
              results_count: 1,
+             job_application: nil,
              jobseeker_profile_id: profile.id)
 
       visit review_jobseekers_profile_qualifications_path
