@@ -20,7 +20,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
       end
     end
 
-    context "with an incomplete draft", :js do
+    context "with an incomplete draft" do
       let(:vacancy) { create(:vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary]) }
 
       it "can edit a draft" do
@@ -28,6 +28,7 @@ RSpec.describe "Publishers can edit a draft vacancy" do
           find("a").click
         end
         click_on I18n.t("buttons.save_and_continue")
+        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :job_role))
 
         fill_in_job_role_form_fields("teaching_assistant")
         click_on I18n.t("buttons.save_and_continue")

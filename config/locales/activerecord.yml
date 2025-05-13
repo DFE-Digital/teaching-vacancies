@@ -251,6 +251,9 @@ en:
   school_visits_errors: &school_visits_errors
     school_visits:
       inclusion: Select yes if school visits are offered
+  visa_sponsorship_available_errors: &visa_sponsorship_available_errors
+    visa_sponsorship_available:
+      inclusion: Select yes if you can offer a visa sponsorship
   contact_details_errors: &contact_details_errors
     contact_email:
       blank: Enter an email address
@@ -398,6 +401,9 @@ en:
         publishers/job_listing/school_visits_form:
           attributes:
             <<: *school_visits_errors
+        publishers/job_listing/visa_sponsorship_form:
+          attributes:
+            <<: *visa_sponsorship_available_errors
         publishers/job_listing/contact_details_form:
           attributes:
             <<: *contact_details_errors
@@ -659,3 +665,4 @@ en:
             <<: *documents_errors
             <<: *documents_confirmation_errors
             <<: *external_errors
+            <<: *visa_sponsorship_available_errors
