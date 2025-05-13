@@ -13,6 +13,6 @@
         p class="govuk-!-margin-bottom-0" = tag.div("#{res.subject} (#{res.grade})", class: "govuk-body govuk-!-margin-bottom-0")
     - if qualification.finished_studying == false
       p class="govuk-!-margin-top-0" = tag.div(qualification.finished_studying_details.presence, class: "govuk-body")
-    p.govuk-hint = qualification.year
+    p.govuk-hint = qualification.award_date
     - class_name = "govuk-!-margin-bottom-3"
     hr.govuk-section-break.govuk-section-break--s.govuk-section-break--visible[class=class_name]

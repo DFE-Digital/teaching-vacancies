@@ -2,17 +2,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   include Jobseekers::QualificationFormConcerns
   include DatesHelper
 
-  helper_method :employments, :form, :job_applications, :qualification_form_param_key
-
-  def reject
-    raise ActionController::RoutingError, "Cannot reject a draft or withdrawn application" if
-      job_application.draft? || job_application.withdrawn?
-  end
-
-  def shortlist
-    raise ActionController::RoutingError, "Cannot shortlist a draft or withdrawn application" if
-      job_application.draft? || job_application.withdrawn?
-  end
+  helper_method :job_applications
 
   def index
     @form = Publishers::JobApplication::TagForm.new
@@ -29,7 +19,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
   end
 
   def download_pdf
-    pdf = JobApplicationPdfGenerator.new(job_application, vacancy).generate
+    pdf = JobApplicationPdfGenerator.new(job_application).generate
 
     send_data(
       pdf.render,
@@ -37,15 +27,6 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       type: "application/pdf",
       disposition: "inline",
     )
-  end
-
-  def update_status
-    raise ActionController::RoutingError, "Cannot shortlist or reject a draft or withdrawn application" if
-      job_application.draft? || job_application.withdrawn?
-
-    job_application.update(form_params.merge(status: status))
-    Jobseekers::JobApplicationMailer.send(:"application_#{status}", job_application).deliver_later
-    redirect_to organisation_job_job_applications_path(vacancy.id), success: t(".#{status}", name: job_application.name)
   end
 
   def tag_single
@@ -70,6 +51,8 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     redirect_to organisation_job_job_applications_path(vacancy.id)
   end
 
+  def withdrawn; end
+
   private
 
   def prepare_to_tag(job_applications)
@@ -93,7 +76,7 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
       stringio = Zip::OutputStream.write_buffer do |zio|
         downloads.each do |job_application|
           zio.put_next_entry "#{job_application.first_name}_#{job_application.last_name}.pdf"
-          zio.write JobApplicationPdfGenerator.new(job_application, vacancy).generate.render
+          zio.write JobApplicationPdfGenerator.new(job_application).generate.render
         end
       end
       send_data(stringio.string,
@@ -112,23 +95,5 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     # When we 'order' by a virtual attribute we have to do the sorting after all scopes.
     # last_name is a virtual attribute as it is an encrypted column.
     job_applications.sort_by(&sort.by.to_sym)
-  end
-
-  def form
-    @form ||= Publishers::JobApplication::UpdateStatusForm.new
-  end
-
-  def form_params
-    params.require(:publishers_job_application_update_status_form).permit(:further_instructions, :rejection_reasons)
-  end
-
-  def employments
-    @employments ||= job_application.employments.order(:started_on)
-  end
-
-  def status
-    return "shortlisted" if form_params.key?("further_instructions")
-
-    "unsuccessful" if form_params.key?("rejection_reasons")
   end
 end

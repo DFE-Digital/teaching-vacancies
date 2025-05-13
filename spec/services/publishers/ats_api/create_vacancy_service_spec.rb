@@ -370,13 +370,17 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
       end
     end
 
-    context "when a vacancy with the same job_title, expired_at, and organisations exists" do
+    context "when a vacancy with the same information already exists for the organisation" do
       let!(:existing_vacancy) do
         create(
           :vacancy,
           job_title: job_title,
           expires_at: params[:expires_at],
           organisations: [school],
+          salary: params[:salary],
+          contract_type: params[:contract_type],
+          working_patterns: params[:working_patterns],
+          phases: params[:phases],
         )
       end
 
@@ -385,7 +389,7 @@ RSpec.describe Publishers::AtsApi::CreateVacancyService do
           {
             status: :conflict,
             json: {
-              errors: ["A vacancy with the same job title, expiry date, and organisation already exists."],
+              errors: ["A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation."],
               meta: { link: Rails.application.routes.url_helpers.vacancy_url(existing_vacancy.id) },
             },
           },
