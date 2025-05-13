@@ -12,6 +12,10 @@ FactoryBot.define do
     job_application
   end
 
+  trait :break do
+    employment_type { :break }
+  end
+
   trait :jobseeker_profile_employment do
     job_application { nil }
 

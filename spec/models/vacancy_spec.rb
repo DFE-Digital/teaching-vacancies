@@ -743,69 +743,172 @@ RSpec.describe Vacancy do
     end
   end
 
-  describe "duplicate and conflict validations" do
-    subject(:vacancy) { build(:vacancy, :external, attributes) }
+  describe "#find_conflicting_vacancy" do
+    let(:school) { create(:school) }
+    let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
+    let(:vacancy) do
+      build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+    end
 
+    it "returns nil when no conflicting vacancy exists" do
+      expect(vacancy.find_conflicting_vacancy).to be_nil
+    end
+
+    context "when there is a vacancy with the same ATS client ID and external reference" do
+      let!(:conflicting_vacancy) do
+        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+      end
+
+      it "returns the conflicting vacancy" do
+        expect(vacancy.find_conflicting_vacancy).to eq(conflicting_vacancy)
+      end
+    end
+
+    context "when there is a vacancy with the same ATS client ID but different external reference" do
+      before do
+        create(:vacancy, :external, external_reference: "REF456", publisher_ats_api_client:, organisations: [school])
+      end
+
+      it "returns nil" do
+        expect(vacancy.find_conflicting_vacancy).to be_nil
+      end
+    end
+
+    context "when there is a vacancy with the same external reference but different ATS client ID" do
+      before do
+        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client: nil, organisations: [school])
+      end
+
+      it "returns nil" do
+        expect(vacancy.find_conflicting_vacancy).to be_nil
+      end
+    end
+
+    context "when there is a vacancy with the same information" do
+      let!(:conflicting_vacancy) do
+        create(:vacancy,
+               organisations: [school],
+               job_title: vacancy.job_title,
+               expires_at: vacancy.expires_at,
+               working_patterns: vacancy.working_patterns,
+               contract_type: vacancy.contract_type,
+               phases: vacancy.phases,
+               salary: vacancy.salary)
+      end
+
+      it "returns the conflicting vacancy" do
+        expect(vacancy.find_conflicting_vacancy).to eq(conflicting_vacancy)
+      end
+    end
+
+    context "when there are two conflicting vacancies one with the same reference and one with the same information" do
+      let!(:conflicting_vacancy_with_same_reference) do
+        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+      end
+
+      before do
+        create(:vacancy,
+               organisations: [school],
+               job_title: vacancy.job_title,
+               expires_at: vacancy.expires_at,
+               working_patterns: vacancy.working_patterns,
+               contract_type: vacancy.contract_type,
+               phases: vacancy.phases,
+               salary: vacancy.salary)
+      end
+
+      it "returns the conflicting vacancy with the same reference" do
+        expect(vacancy.find_conflicting_vacancy).to eq(conflicting_vacancy_with_same_reference)
+      end
+    end
+  end
+
+  describe "conflict validation" do
     let(:school) { create(:school) }
     let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
 
-    let(:attributes) do
-      {
-        job_title: "Math Teacher",
-        expires_at: "2045-01-01",
-        organisations: [school],
-        publisher_ats_api_client: publisher_ats_api_client,
-        external_reference: "REF123",
-        job_advert: "A job advert",
-        external_advert_url: "https://example.com",
-        phases: %w[primary],
-      }
+    subject(:new_vacancy) do
+      build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
     end
 
-    describe "conflict validation" do
-      let(:conflict_attributes) do
-        {
-          publisher_ats_api_client: publisher_ats_api_client,
-          external_reference: "REF123",
-        }
+    context "when there a vacancy with the same ATS client ID but with different external reference" do
+      before do
+        create(:vacancy, :external, external_reference: "REF456", publisher_ats_api_client:, organisations: [school])
       end
 
-      it "is invalid when a vacancy with same ATS client ID and external reference exists" do
-        create(:vacancy, :external, conflict_attributes)
+      it "the new vacancy is valid" do
+        expect(new_vacancy).to be_valid
+      end
+    end
 
-        expect(vacancy).not_to be_valid
-        expect(vacancy.errors[:external_reference])
+    context "when there a vacancy with the same ATS client ID and external reference" do
+      before do
+        create(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+      end
+
+      it "the new vacancy is invalid" do
+        expect(new_vacancy).not_to be_valid
+        expect(new_vacancy.errors[:external_reference])
           .to include("A vacancy with the provided ATS client ID and external reference already exists.")
       end
+    end
+  end
 
-      it "stores the conflicting vacancy" do
-        conflicted_vacancy = create(:vacancy, :external, conflict_attributes)
+  describe "duplicate validation" do
+    let(:school) { create(:school) }
+    let(:publisher_ats_api_client) { create(:publisher_ats_api_client) }
 
-        expect(vacancy.find_conflicting_vacancy).to eq(conflicted_vacancy)
+    subject(:new_vacancy) do
+      build(:vacancy, :external, external_reference: "REF123", publisher_ats_api_client:, organisations: [school])
+    end
+
+    context "when there is a vacancy with some shared info but not all required fields to be considered duplicated" do
+      before do
+        create(:vacancy,
+               organisations: [school],
+               job_title: new_vacancy.job_title,
+               expires_at: new_vacancy.expires_at,
+               working_patterns: new_vacancy.working_patterns)
+      end
+
+      it "the new vacancy is valid" do
+        expect(new_vacancy).to be_valid
       end
     end
 
-    describe "duplicate validation" do
-      let(:duplicate_attributes) do
-        {
-          job_title: "Math Teacher",
-          expires_at: "2045-01-01",
-          organisations: [school],
-        }
+    context "when there is an existing vacancy sharing all required fields to be considered duplicated" do
+      before do
+        create(:vacancy,
+               organisations: [school],
+               job_title: new_vacancy.job_title,
+               expires_at: new_vacancy.expires_at,
+               working_patterns: new_vacancy.working_patterns,
+               contract_type: new_vacancy.contract_type,
+               phases: new_vacancy.phases,
+               salary: new_vacancy.salary)
       end
 
-      it "is invalid when a vacancy with same job_title, expires_at and organisations exists" do
-        create(:vacancy, :external, duplicate_attributes)
+      it "the new vacancy is invalid" do
+        expect(new_vacancy).not_to be_valid
+        expect(new_vacancy.errors[:base])
+          .to include("A vacancy with the same job title, expiry date, contract type, working_patterns, phases and salary already exists for this organisation.")
+      end
+    end
 
-        expect(vacancy).not_to be_valid
-        expect(vacancy.errors[:base])
-          .to include("A vacancy with the same job title, expiry date, and organisation already exists.")
+    context "when there is an existing vacancy sharing all required fields to be considered duplicated but belongs to a different organisation" do
+      before do
+        create(:vacancy,
+               organisations: [create(:school)],
+               job_title: new_vacancy.job_title,
+               expires_at: new_vacancy.expires_at,
+               working_patterns: new_vacancy.working_patterns,
+               contract_type: new_vacancy.contract_type,
+               phases: new_vacancy.phases,
+               salary: new_vacancy.salary)
       end
 
-      it "stores the conflicting vacancy" do
-        duplicate_vacancy = create(:vacancy, :external, duplicate_attributes)
-
-        expect(vacancy.find_conflicting_vacancy).to eq(duplicate_vacancy)
+      it "the new vacancy is valid" do
+        expect(new_vacancy).to be_valid
       end
     end
   end

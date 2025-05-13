@@ -394,10 +394,7 @@ Rails.application.routes.draw do
       resources :job_applications, only: %i[index show], controller: "publishers/vacancies/job_applications" do
         resources :notes, only: %i[create destroy], controller: "publishers/vacancies/job_applications/notes"
         get :download_pdf
-        get :shortlist
-        get :reject
         get :withdrawn
-        post :update_status
         get :tag, on: :collection
         get :tag_single, on: :member
         post :update_tag, on: :collection
