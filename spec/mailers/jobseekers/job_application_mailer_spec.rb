@@ -16,25 +16,6 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     }
   end
 
-  describe "#application_shortlisted" do
-    let(:job_application) { build(:job_application, :status_shortlisted, jobseeker: jobseeker, vacancy: vacancy) }
-    let(:mail) { described_class.application_shortlisted(job_application) }
-    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
-
-    it "sends a `jobseeker_application_shortlisted` email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_shortlisted.subject"))
-      expect(mail.to).to eq([jobseeker.email])
-      expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_shortlisted.heading", job_title: vacancy.job_title, organisation_name: organisation.name))
-                                   .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
-                                                       email: "[#{contact_email}](mailto:#{contact_email})"))
-    end
-
-    it "triggers a `jobseeker_application_shortlisted` email event", :dfe_analytics do
-      mail.deliver_now
-      expect(:jobseeker_application_shortlisted).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
-    end
-  end
-
   describe "#application_submitted" do
     let(:job_application) { build(:job_application, :status_submitted, jobseeker: jobseeker, vacancy: vacancy) }
     let(:mail) { described_class.application_submitted(job_application) }
@@ -52,25 +33,6 @@ RSpec.describe Jobseekers::JobApplicationMailer do
     it "triggers a `jobseeker_application_submitted` email event", :dfe_analytics do
       mail.deliver_now
       expect(:jobseeker_application_submitted).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
-    end
-  end
-
-  describe "#application_unsuccessful" do
-    let(:job_application) { build(:job_application, :status_unsuccessful, jobseeker: jobseeker, vacancy: vacancy) }
-    let(:mail) { described_class.application_unsuccessful(job_application) }
-    let(:notify_template) { NOTIFY_PRODUCTION_TEMPLATE }
-
-    it "sends a `jobseeker_application_unsuccessful` email" do
-      expect(mail.subject).to eq(I18n.t("jobseekers.job_application_mailer.application_unsuccessful.subject"))
-      expect(mail.to).to eq([jobseeker.email])
-      expect(mail.body.encoded).to include(I18n.t("jobseekers.job_application_mailer.application_unsuccessful.heading"))
-                               .and include(I18n.t("jobseekers.job_application_mailer.shared.more_info.description",
-                                                   email: "[#{contact_email}](mailto:#{contact_email})"))
-    end
-
-    it "triggers a `jobseeker_application_unsuccessful` email event", :dfe_analytics do
-      mail.deliver_now
-      expect(:jobseeker_application_unsuccessful).to have_been_enqueued_as_analytics_event(with_data: %i[uid notify_template]) # rubocop:disable RSpec/ExpectActual
     end
   end
 

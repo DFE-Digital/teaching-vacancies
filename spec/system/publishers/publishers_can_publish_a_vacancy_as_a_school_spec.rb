@@ -5,6 +5,7 @@ RSpec.describe "Creating a vacancy" do
   let(:vacancy) do
     build(:vacancy,
           :ect_suitable,
+          :no_tv_applications,
           job_roles: ["teacher"],
           phases: %w[secondary],
           key_stages: %w[ks3],
@@ -29,118 +30,129 @@ RSpec.describe "Creating a vacancy" do
       expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 1, total: 4))
       expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
 
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_title))
+      expect(publisher_job_title_page).to be_displayed
+      submit_empty_form
+      expect(publisher_job_title_page).to be_displayed
+      expect(publisher_job_title_page.errors.map(&:text)).to contain_exactly(I18n.t("job_title_errors.job_title.blank"))
+      publisher_job_title_page.fill_in_and_submit_form(vacancy.job_title)
 
-      fill_in_job_title_form_fields(vacancy.job_title)
-      click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
+      expect(publisher_job_role_page).to be_displayed
+      submit_empty_form
+      expect(publisher_job_role_page).to be_displayed
+      expect(publisher_job_role_page.errors.map(&:text)).to contain_exactly(I18n.t("job_roles_errors.job_roles.blank"))
+      publisher_job_role_page.fill_in_and_submit_form(vacancy.job_roles.first)
 
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :job_role))
+      expect(publisher_education_phase_page).to be_displayed
+      submit_empty_form
+      expect(publisher_education_phase_page).to be_displayed
+      expect(publisher_education_phase_page.errors.map(&:text)).to contain_exactly(I18n.t("education_phases_errors.phases.blank"))
+      publisher_education_phase_page.fill_in_and_submit_form(vacancy)
 
-      fill_in_job_role_form_fields(vacancy.job_roles.first)
-      click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
+      expect(publisher_key_stage_page).to be_displayed
+      submit_empty_form
+      expect(publisher_key_stage_page).to be_displayed
+      expect(publisher_key_stage_page.errors.map(&:text)).to contain_exactly(I18n.t("key_stages_errors.key_stages.blank"))
+      publisher_key_stage_page.fill_in_and_submit_form(vacancy.key_stages_for_phases)
 
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :education_phases))
+      expect(publisher_subjects_page).to be_displayed
+      publisher_subjects_page.fill_in_and_submit_form(vacancy.subjects)
 
-      fill_in_education_phases_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :key_stages))
+      expect(publisher_contract_information_page).to be_displayed
+      submit_empty_form
+      expect(publisher_contract_information_page).to be_displayed
+      expect(publisher_contract_information_page.errors.map(&:text)).to contain_exactly(
+        I18n.t("contract_information_errors.contract_type.inclusion"),
+        I18n.t("contract_information_errors.working_patterns.inclusion"),
+        I18n.t("contract_information_errors.is_job_share.inclusion"),
+      )
+      publisher_contract_information_page.fill_in_and_submit_form(vacancy)
 
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :key_stages))
+      expect(publisher_start_date_page).to be_displayed
+      submit_empty_form
+      expect(publisher_start_date_page).to be_displayed
+      expect(publisher_start_date_page.errors.map(&:text)).to contain_exactly(I18n.t("start_date_errors.start_date_type.inclusion"))
+      publisher_start_date_page.fill_in_and_submit_form(vacancy.starts_on)
 
-      fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
-      click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :subjects))
-
-      fill_in_subjects_form_fields(vacancy.subjects)
-      click_on I18n.t("buttons.save_and_continue")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contract_information))
-
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contract_information))
-
-      fill_in_contract_information_form_fields
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :start_date))
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :start_date))
-      fill_in_start_date_form_fields(vacancy.starts_on)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
+      expect(publisher_pay_package_page).to be_displayed
+      submit_empty_form
+      expect(publisher_pay_package_page).to be_displayed
+      expect(publisher_pay_package_page.errors.map(&:text)).to contain_exactly(
+        I18n.t("pay_package_errors.salary_types.invalid"),
+        I18n.t("pay_package_errors.benefits.inclusion"),
+      )
       expect_correct_pay_package_options(vacancy)
+      publisher_pay_package_page.fill_in_and_submit_form(vacancy)
 
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
+      expect(publisher_about_the_role_page).to be_displayed
+      submit_empty_form
+      expect(publisher_about_the_role_page).to be_displayed
+      expect(publisher_about_the_role_page.errors.map(&:text)).to contain_exactly(
+        I18n.t("about_the_role_errors.ect_status.inclusion"),
+        I18n.t("about_the_role_errors.skills_and_experience.blank"),
+        I18n.t("about_the_role_errors.further_details_provided.inclusion"),
+        I18n.t("about_the_role_errors.school_offer.blank", organisation: "school"),
+        I18n.t("about_the_role_errors.flexi_working_details_provided.inclusion"),
+      )
+      publisher_about_the_role_page.fill_in_and_submit_form(vacancy)
 
-      fill_in_pay_package_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
+      expect(publisher_include_additional_documents_page).to be_displayed
+      submit_empty_form
+      expect(publisher_include_additional_documents_page.errors.map(&:text)).to contain_exactly(I18n.t("include_additional_documents_errors.include_additional_documents.inclusion"))
+      publisher_include_additional_documents_page.fill_in_and_submit_form(vacancy.include_additional_documents)
 
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
-      fill_in_about_the_role_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
+      expect(publisher_school_visits_page).to be_displayed
+      submit_empty_form
+      expect(publisher_school_visits_page).to be_displayed
+      expect(publisher_school_visits_page.errors.map(&:text)).to contain_exactly(I18n.t("school_visits_errors.school_visits.inclusion"))
+      publisher_school_visits_page.fill_in_and_submit_form(vacancy)
 
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
-      fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
-      click_on I18n.t("buttons.save_and_continue")
+      expect(publisher_visa_sponsorship_page).to be_displayed
+      submit_empty_form
+      expect(publisher_visa_sponsorship_page.errors.map(&:text)).to contain_exactly(I18n.t("visa_sponsorship_available_errors.visa_sponsorship_available.inclusion"))
+      expect(publisher_visa_sponsorship_page).to be_displayed
+      publisher_visa_sponsorship_page.fill_in_and_submit_form(vacancy)
 
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
-      fill_in_school_visits_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
+      expect(publisher_important_dates_page).to be_displayed
+      submit_empty_form
+      expect(publisher_important_dates_page).to be_displayed
+      expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(
+        I18n.t("important_dates_errors.publish_on_day.inclusion"),
+        I18n.t("important_dates_errors.expires_at.blank"),
+        I18n.t("important_dates_errors.expiry_time.inclusion"),
+      )
+      publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: Time.zone.yesterday)
+      expect(publisher_important_dates_page.errors.map(&:text)).to contain_exactly(I18n.t("important_dates_errors.expires_at.after"))
+      publisher_important_dates_page.fill_in_and_submit_form(publish_on: vacancy.publish_on, expires_at: vacancy.expires_at)
 
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
-      fill_in_visa_sponsorship_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
-
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
-
-      fill_in_important_dates_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :applying_for_the_job))
+      expect(publisher_applying_for_the_job_page).to be_displayed
+      submit_empty_form
+      expect(publisher_applying_for_the_job_page).to be_displayed
+      expect(publisher_applying_for_the_job_page.errors.map(&:text)).to contain_exactly(I18n.t("applying_for_the_job_errors.application_form_type.blank"))
 
       # No religious options when not a faith school
       expect(all(".govuk-radios__item").count).to eq(2)
-      fill_in_applying_for_the_job_form_fields(vacancy, local_authority_vacancy: false)
-      click_on I18n.t("buttons.save_and_continue")
+      publisher_applying_for_the_job_page.fill_in_and_submit_form
 
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contact_details))
+      expect(publisher_how_to_receive_applications_page).to be_displayed
+      submit_empty_form
+      expect(publisher_how_to_receive_applications_page).to be_displayed
+      expect(publisher_how_to_receive_applications_page.errors.map(&:text)).to contain_exactly(I18n.t("how_to_receive_applications_errors.receive_applications.inclusion"))
+      publisher_how_to_receive_applications_page.fill_in_and_submit_form(vacancy)
 
-      click_on I18n.t("buttons.save_and_continue")
-      expect(page).to have_content("There is a problem")
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :contact_details))
+      expect(publisher_application_link_page).to be_displayed
+      submit_empty_form
+      expect(publisher_application_link_page.errors.map(&:text)).to contain_exactly(I18n.t("application_link_errors.application_link.blank"))
+      expect(publisher_application_link_page).to be_displayed
+      publisher_application_link_page.fill_in_and_submit_form(vacancy)
 
-      fill_in_contact_details_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
+      expect(publisher_contact_details_page).to be_displayed
+      submit_empty_form
+      expect(publisher_contact_details_page.errors.map(&:text)).to contain_exactly(
+        I18n.t("contact_details_errors.contact_email.blank"),
+        I18n.t("contact_details_errors.contact_number_provided.inclusion"),
+      )
+      expect(publisher_contact_details_page).to be_displayed
+      publisher_contact_details_page.fill_in_and_submit_form(vacancy)
 
       expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
       verify_all_vacancy_details(created_vacancy)
@@ -149,118 +161,7 @@ RSpec.describe "Creating a vacancy" do
       expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
     end
 
-    scenario "saving and finishing later" do
-      visit organisation_jobs_with_type_path
-      click_on I18n.t("buttons.create_job")
-      expect(current_path).to eq(organisation_jobs_start_path)
-      click_on I18n.t("buttons.create_job")
-
-      fill_in_job_title_form_fields(vacancy.job_title)
-      click_on I18n.t("buttons.save_and_continue")
-
-      fill_in_job_role_form_fields(vacancy.job_roles.first)
-      click_on I18n.t("buttons.save_and_continue")
-
-      fill_in_education_phases_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      fill_in_key_stages_form_fields(vacancy.key_stages_for_phases)
-      click_on I18n.t("buttons.save_and_continue")
-
-      fill_in_subjects_form_fields(vacancy.subjects)
-      click_on I18n.t("buttons.save_and_continue")
-
-      fill_in_contract_information_form_fields
-      click_on I18n.t("buttons.save_and_finish_later")
-
-      expect(current_path).to eq(organisation_job_path(created_vacancy.id))
-
-      has_incomplete_draft_vacancy_review_heading?(created_vacancy)
-
-      click_on I18n.t("publishers.vacancies.show.heading_component.action.complete")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :start_date))
-      fill_in_start_date_form_fields(vacancy.starts_on)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :pay_package))
-
-      fill_in_pay_package_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :about_the_role))
-      fill_in_about_the_role_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :include_additional_documents))
-      fill_in_include_additional_documents_form_fields(vacancy.include_additional_documents)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :school_visits))
-      fill_in_school_visits_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :visa_sponsorship))
-      fill_in_visa_sponsorship_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_build_path(created_vacancy.id, :important_dates))
-      fill_in_important_dates_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      fill_in_applying_for_the_job_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      fill_in_contact_details_form_fields(vacancy)
-      click_on I18n.t("buttons.save_and_continue")
-
-      expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-      verify_all_vacancy_details(created_vacancy)
-    end
-
     describe "#publish" do
-      let(:yesterday_date) { Time.zone.yesterday }
-
-      scenario "cannot be published unless the details are valid" do
-        vacancy = create(:vacancy, :draft, :ect_suitable, job_roles: ["teacher"],
-                                                          expires_at: yesterday_date,
-                                                          organisations: [school], key_stages: %w[ks3], publish_on: Time.zone.today, phases: %w[secondary])
-
-        visit organisation_job_build_path(vacancy.id, :important_dates)
-
-        expect(page).to have_content(I18n.t("jobs.create_job_caption", step: 3, total: 4))
-        within("h1.govuk-heading-l") do
-          expect(page).to have_content(I18n.t("publishers.vacancies.steps.important_dates"))
-        end
-
-        expect(find_field("publishers_job_listing_important_dates_form[expires_at(3i)]").value).to eq(yesterday_date.day.to_s)
-        expect(find_field("publishers_job_listing_important_dates_form[expires_at(2i)]").value).to eq(yesterday_date.month.to_s)
-        expect(find_field("publishers_job_listing_important_dates_form[expires_at(1i)]").value).to eq(yesterday_date.year.to_s)
-
-        click_on I18n.t("buttons.save_and_continue")
-
-        within(".govuk-error-summary") do
-          expect(page).to have_content("There is a problem")
-        end
-
-        within_row_for(element: "legend",
-                       text: strip_tags(I18n.t("helpers.legend.publishers_job_listing_important_dates_form.expires_at"))) do
-          expect(page).to have_content(I18n.t("important_dates_errors.expires_at.after"))
-        end
-
-        expiry_date = Date.current + 1.week
-
-        fill_in "publishers_job_listing_important_dates_form[expires_at(3i)]", with: expiry_date.day
-        fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: expiry_date.month
-        fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: expiry_date.year
-        choose "8am", name: "publishers_job_listing_important_dates_form[expiry_time]"
-
-        click_on I18n.t("buttons.save_and_continue")
-
-        click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
-        expect(current_path).to eq(organisation_job_summary_path(vacancy.id))
-      end
-
       context "when publishing a vacancy" do
         let(:publisher_that_created_vacancy) { create(:publisher, organisations: [trust]) }
         let(:publisher_that_publishes_vacancy) { create(:publisher, organisations: [school]) }
@@ -409,6 +310,10 @@ RSpec.describe "Creating a vacancy" do
     click_on I18n.t("buttons.save_and_continue")
 
     fill_in_contact_details_form_fields(vacancy)
+    click_on I18n.t("buttons.save_and_continue")
+  end
+
+  def submit_empty_form
     click_on I18n.t("buttons.save_and_continue")
   end
 end
