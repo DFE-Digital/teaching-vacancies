@@ -60,8 +60,9 @@ class Jobseeker < ApplicationRecord
       create!(email: email.downcase, govuk_one_login_id: id)
     end
 
-    # Either find the Jobseeker by their GovUK OneLogin id or uses the OneLogin email address to find possible Jobseekers
-    # created before introducing OneLogin and still non-linked with a OneLogin account.
+    # Either find the Jobseeker by their GovUK OneLogin id or uses the OneLogin email address to find:
+    # - Jobseekers created before introducing OneLogin and still non-linked with a OneLogin account.
+    # - Jobseekers that deleted their GovUK OneLogin account, created a new one with the same email but different id.
     def find_from_govuk_one_login(id:, email:)
       find_by(govuk_one_login_id: id) || find_by(email: email)
     end

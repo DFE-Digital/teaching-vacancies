@@ -39,13 +39,19 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
     email = govuk_one_login_user.email
     jobseeker = Jobseeker.find_from_govuk_one_login(id:, email:)
 
-    if jobseeker.nil? # Completely new user
+    # Completely new user
+    if jobseeker.nil?
       session[:newly_created_user] = { value: "true", path: "/", expires: 1.hour.from_now }
       jobseeker = Jobseeker.create_from_govuk_one_login(id:, email:)
-    elsif jobseeker.govuk_one_login_id.nil? # User exists but is their first time signing-in with OneLogin
+    # User exists but is their first time signing-in with OneLogin
+    elsif jobseeker.govuk_one_login_id.nil?
       session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
       jobseeker.update!(govuk_one_login_id: id)
-    elsif jobseeker.email != email # User changed their email in OneLogin after having already signed in with us
+    # User deleted their OneLogin account and created a new one using the same email
+    elsif jobseeker.govuk_one_login_id != id
+      jobseeker.update!(govuk_one_login_id: id)
+    # User changed their email in OneLogin after having already signed in with us
+    elsif jobseeker.email != email
       jobseeker.update_email_from_govuk_one_login!(email)
     end
 
