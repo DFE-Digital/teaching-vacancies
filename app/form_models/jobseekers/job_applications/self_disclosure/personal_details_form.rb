@@ -1,4 +1,4 @@
-class Jobseekers::Declarations::PersonalDetailsForm
+class Jobseekers::JobApplications::SelfDisclosure::PersonalDetailsForm
   include ActiveModel::Model
   include ActiveModel::Attributes
   include ActiveModel::Validations

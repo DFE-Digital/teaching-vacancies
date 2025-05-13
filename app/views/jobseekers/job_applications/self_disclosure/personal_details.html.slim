@@ -7,7 +7,7 @@
     = t(".description.html")
     h2.govuk-heading-m = t(".personal_details")
 
-  = form_with(model: @form, url: jobseekers_job_application_declaration_path(job_application), method: :patch) do |f|
+  = form_with(model: @form, url: jobseekers_job_application_self_disclosure_path(job_application), method: :patch) do |f|
     = f.govuk_error_summary
 
     = f.govuk_text_field :name, label: { size: "s" }, width: "one-half", aria: { required: true }
