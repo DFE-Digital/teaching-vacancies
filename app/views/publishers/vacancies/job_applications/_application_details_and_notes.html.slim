@@ -1,5 +1,5 @@
 = job_application_review(job_application, allow_edit: local_assigns[:allow_edit]) do |r|
-  - render "jobseekers/job_applications/job_application_review_sections", r: r
+  - render "jobseekers/job_applications/job_application_review_sections", r: r, job_application: job_application, vacancy: vacancy
   - r.with_above do
 
     .with_anchor-link-list class="govuk-!-display-none-print"

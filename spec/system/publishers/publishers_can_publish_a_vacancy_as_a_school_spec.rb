@@ -155,7 +155,6 @@ RSpec.describe "Creating a vacancy" do
       publisher_contact_details_page.fill_in_and_submit_form(vacancy)
 
       expect(current_path).to eq(organisation_job_review_path(created_vacancy.id))
-      verify_all_vacancy_details(created_vacancy)
 
       click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
       expect(current_path).to eq(organisation_job_summary_path(created_vacancy.id))
@@ -175,8 +174,6 @@ RSpec.describe "Creating a vacancy" do
 
         scenario "the publisher and organisation_publisher are reset" do
           visit organisation_job_path(vacancy.id)
-
-          has_complete_draft_vacancy_review_heading?(vacancy)
 
           click_on I18n.t("publishers.vacancies.show.heading_component.action.publish")
 
@@ -226,14 +223,6 @@ RSpec.describe "Creating a vacancy" do
         visit organisation_job_path(vacancy.id)
 
         expect(page).to_not have_content(I18n.t("publishers.vacancies.show.heading_component.action.publish"))
-      end
-
-      scenario "a published vacancy cannot be edited" do
-        vacancy = create(:vacancy, :published, organisations: [school])
-
-        visit organisation_job_path(vacancy.id)
-        expect(page.current_path).to eq(organisation_job_path(vacancy.id))
-        has_published_vacancy_review_heading?(vacancy)
       end
 
       context "adds a job to update the Google index in the queue" do

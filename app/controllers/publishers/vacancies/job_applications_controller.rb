@@ -4,26 +4,28 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
 
   helper_method :job_applications
 
+  before_action :set_job_application, only: %i[show download_pdf]
+
   def index
     @form = Publishers::JobApplication::TagForm.new
   end
 
   def show
-    redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, job_application) if job_application.withdrawn?
+    redirect_to organisation_job_job_application_withdrawn_path(vacancy.id, @job_application) if @job_application.withdrawn?
 
     @notes_form = Publishers::JobApplication::NotesForm.new
 
-    raise ActionController::RoutingError, "Cannot view a draft application" if job_application.draft?
+    raise ActionController::RoutingError, "Cannot view a draft application" if @job_application.draft?
 
-    job_application.reviewed! if job_application.submitted?
+    @job_application.reviewed! if @job_application.submitted?
   end
 
   def download_pdf
-    pdf = JobApplicationPdfGenerator.new(job_application).generate
+    pdf = JobApplicationPdfGenerator.new(@job_application).generate
 
     send_data(
       pdf.render,
-      filename: "job_application_#{job_application.id}.pdf",
+      filename: "job_application_#{@job_application.id}.pdf",
       type: "application/pdf",
       disposition: "inline",
     )
