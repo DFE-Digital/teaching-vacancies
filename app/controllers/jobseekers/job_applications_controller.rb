@@ -31,8 +31,9 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def pre_submit
-    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
-    if @form.valid? && all_steps_valid?
+    all_steps = job_application.is_a?(UploadedJobApplication) ? UploadedJobApplication::ALL_STEPS : step_process.steps.excluding(:review).map(&:to_s)
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: all_steps)
+    if @form.valid? && all_steps_valid?(job_application.type)
       redirect_to jobseekers_job_application_review_path(@job_application)
     else
       render :apply
@@ -65,6 +66,20 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
   end
 
+  def apply
+    if job_application.is_a?(UploadedJobApplication)
+      @form = Jobseekers::JobApplication::PreSubmitForm.new(
+        completed_steps: job_application.completed_steps,
+        all_steps: ["personal_details", "upload_form"],
+      )
+    else
+      @form = Jobseekers::JobApplication::PreSubmitForm.new(
+        completed_steps: job_application.completed_steps,
+        all_steps: step_process.steps.excluding(:review).map(&:to_s),
+      )
+    end
+  end
+
   def quick_apply
     raise ActionController::RoutingError, "Cannot quick apply if there's no profile or non-draft applications" unless quick_apply?
 
@@ -76,8 +91,8 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def submit
     raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.listed?
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
-
-    if review_form.valid? && all_steps_valid?
+    binding.pry
+    if review_form.valid? && all_steps_valid?(job_application.type)
       update_jobseeker_profile!(job_application) if review_form.update_profile
       job_application.submit!
       redirect_to jobseekers_job_application_post_submit_path job_application
@@ -141,14 +156,23 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
     profile.replace_memberships!(job_application.professional_body_memberships)
   end
 
-  def all_steps_valid?
+  def all_steps_valid?(job_application_type = nil)
+    binding.pry
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
-    step_process.steps.excluding(:review).all? { |step| step_valid?(step) }
+    if job_application_type == "UploadedJobApplication"
+      UploadedJobApplication::ALL_STEPS.all? { |step| step_valid?(step, job_application_type) }
+    else
+      step_process.steps.excluding(:review).all? { |step| step_valid?(step) }
+    end
   end
 
-  def step_valid?(step)
-    form_class = "jobseekers/job_application/#{step}_form".camelize.constantize
+  def step_valid?(step, job_application_type = nil)
+    form_class = if job_application_type == "UploadedJobApplication"
+                   "jobseekers/uploaded_job_application/#{step}_form".camelize.constantize
+                 else
+                   "jobseekers/job_application/#{step}_form".camelize.constantize
+                 end
 
     attributes = form_class.load_form(job_application)
 
@@ -191,7 +215,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def raise_unless_vacancy_enable_job_applications
-    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.enable_job_applications?
+    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.enable_job_applications? || vacancy.receive_applications == "uploaded_form"
   end
 
   def review_form
@@ -214,8 +238,9 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def review_form_params
+    all_steps = job_application.is_a?(UploadedJobApplication) ? UploadedJobApplication::ALL_STEPS : step_process.steps.excluding(:review).map(&:to_s)
     params.require(:jobseekers_job_application_review_form).permit(:confirm_data_accurate, :confirm_data_usage, update_profile: [])
-          .merge(completed_steps: job_application.completed_steps, all_steps: step_process.steps.excluding(:review).map(&:to_s))
+          .merge(completed_steps: job_application.completed_steps, all_steps: all_steps)
   end
 
   def withdraw_form_params
