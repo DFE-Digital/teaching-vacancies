@@ -39,11 +39,27 @@ RSpec.describe CampaignSearchParamsMerger do
       end
     end
 
-    context "when ECT status is present in URL params" do
-      let(:url_params) { { email_ECT: "true" } }
+    describe "ECT status" do
+      context "when ECT status is not present in URL params" do
+        it "includes ect_statuses from campaign criteria" do
+          expect(merger.merged_params[:ect_statuses]).to eq(%w[ect_suitable])
+        end
+      end
 
-      it "maps email_ECT to ect_statuses" do
-        expect(merger.merged_params[:ect_statuses]).to eq(%w[ect_suitable])
+      context "when ECT status is present in URL params" do
+        let(:url_params) { { email_ECT: "true" } }
+
+        it "maps email_ECT to ect_statuses" do
+          expect(merger.merged_params[:ect_statuses]).to eq(%w[ect_suitable])
+        end
+      end
+
+      context "when ECT status is present in URL params and contradicts the campaign default criteria" do
+        let(:url_params) { { email_ECT: "false" } }
+
+        it "the URL param takes precedence" do
+          expect(merger.merged_params[:ect_statuses]).to eq(%w[ect_unsuitable])
+        end
       end
     end
 

@@ -58,7 +58,9 @@ class CampaignSearchParamsMerger
 
   def extract_ect_status(params)
     ect_value = params.delete(:email_ECT)
-    params[:ect_statuses] = if ect_value.present? && ActiveModel::Type::Boolean.new.cast(ect_value)
+    return if ect_value.blank?
+
+    params[:ect_statuses] = if ActiveModel::Type::Boolean.new.cast(ect_value)
                               %w[ect_suitable]
                             else
                               %w[ect_unsuitable]

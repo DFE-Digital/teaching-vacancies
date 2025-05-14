@@ -29,7 +29,8 @@ shared:
     radius: 15
   ectrolesbespoke:
     banner_image: "campaigns/ect_teacher.jpg"
-    ect_suitable: true
+    ect_statuses:
+      - ect_suitable
     teaching_job_roles:
       - teacher
     radius: 15
@@ -216,4 +217,6 @@ test:
     subjects:
       - Physics
       - Science
+    ect_statuses:
+      - ect_suitable
     radius: 15
