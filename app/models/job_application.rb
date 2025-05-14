@@ -19,6 +19,7 @@ class JobApplication < ApplicationRecord
     equal_opportunities: 6,
     ask_for_support: 7,
     declarations: 8,
+    upload_application_form: 13,
   }
 
   array_enum imported_steps: {
