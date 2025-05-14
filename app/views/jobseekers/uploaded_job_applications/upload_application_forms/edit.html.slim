@@ -1,0 +1,23 @@
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t("jobseekers.job_applications.apply.heading"))
+
+= render "jobseekers/job_applications/banner", vacancy: vacancy, back_path: jobseekers_job_application_apply_path(job_application)
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    = form_for @form, url: jobseekers_uploaded_job_application_upload_application_form_path(job_application.id), method: :patch do |f|
+      = f.govuk_error_summary
+
+      = f.govuk_file_field :application_form,
+        label: { text: "Upload application form", tag: "h1", size: "l" },
+        hint: { text: t("helpers.hint.publishers_job_listing_documents_form.documents") },
+        accept: ".doc, .docx, .pdf",
+        multiple: false,
+        include_hidden: false,
+        enctype: "multipart/form-data"
+
+      = f.govuk_collection_radio_buttons :upload_application_form_section_completed, %w[true false], :to_s
+
+      = f.govuk_submit t("buttons.save_and_continue") do
+        = govuk_link_to t("buttons.cancel_and_return_to_account"), jobseekers_job_applications_path, class: "govuk-link--no-visited-state"
+        span.govuk-caption-m
+          = t("jobseekers.job_applications.cancel_caption")

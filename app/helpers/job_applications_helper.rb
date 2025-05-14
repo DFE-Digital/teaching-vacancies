@@ -98,6 +98,10 @@ module JobApplicationsHelper
     JOB_APPLICATION_STATUS_TAG_COLOURS[status]
   end
 
+  def job_application_link(job_application)
+    job_application.draft? ? jobseekers_job_application_apply_path(job_application) : jobseekers_job_application_path(job_application)
+  end
+
   def job_application_build_submit_button_text
     if redirect_to_review?
       t("buttons.save")

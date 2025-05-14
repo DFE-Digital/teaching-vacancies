@@ -226,6 +226,8 @@ en:
           heading: Personal details
           step_title: Personal details
           title: Personal details — Application
+        upload_application_form:
+          heading: Upload application form
         personal_statement:
           additional_instructions: Additional instructions
           banner_title: Job listing and supporting documents

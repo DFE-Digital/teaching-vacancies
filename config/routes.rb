@@ -84,6 +84,11 @@ Rails.application.routes.draw do
       get :consume, on: :member
     end
 
+    resources :uploaded_job_applications, only: [] do
+      resource :personal_details, only: [:edit, :update], module: :uploaded_job_applications
+      resource :upload_application_form, only: [:edit, :update], module: :uploaded_job_applications
+    end
+
     resources :job_applications, only: %i[index show destroy] do
       resources :build, only: %i[show update], controller: "job_applications/build"
       resources :employments, only: %i[new create edit update destroy], controller: "job_applications/employments"
@@ -112,6 +117,7 @@ Rails.application.routes.draw do
 
     scope as: :job, path: ":job_id" do
       resource :job_application, only: %i[new create]
+      resource :uploaded_job_application, only: %i[create], controller: "uploaded_job_applications"
     end
 
     resource :profile, only: %i[show] do
