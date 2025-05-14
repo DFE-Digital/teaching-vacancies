@@ -112,6 +112,7 @@ en:
         title: Review your application — Application
       applying_for_the_job_heading: Applying for the job
       applying_for_the_job_paragraph: Please complete the online application.
+      requires_application_form_download: This job requires you to download an application form, you will be able to upload the application once complete.
       no_cvs: CVs are not accepted.
       banner_links:
         apply: Apply for this job
@@ -351,6 +352,9 @@ en:
       feedbacks:
         create:
           success: Thank you for your feedback
+      further_details:
+        heading: Further information about the job
+        dbs_check_info: The candidate will be required to undergo a full enhanced DBS check and must be eligible to work in the UK.
       heading: Application
       job_application:
         closing_date: Closing date
