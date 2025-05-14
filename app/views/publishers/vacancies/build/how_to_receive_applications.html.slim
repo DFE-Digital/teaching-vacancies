@@ -6,7 +6,7 @@
       = f.govuk_error_summary
 
       = f.govuk_radio_buttons_fieldset :receive_applications, legend: { text: vacancy_form_page_heading(vacancy, step_process, back_path: back_path), tag: "h1", size: "l" } do
-        = f.govuk_radio_button :receive_applications, :email, link_errors: true
+        = f.govuk_radio_button :receive_applications, :uploaded_form, link_errors: true
         = f.govuk_radio_button :receive_applications, :website
 
       = render "publishers/vacancies/vacancy_form_partials/submit", f: f
