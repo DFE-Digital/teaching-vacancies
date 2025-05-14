@@ -1,67 +1,90 @@
 class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseController
   include Wicked::Wizard
 
-  steps :personal_details, :barred_list, :conduct, :confirmation, :completed
-
-  before_action :form
+  before_action :redirect_when_not_available
+  before_action :form, except: :completed
 
   helper_method :job_application
 
+  FORMS = {
+    personal_details: Jobseekers::JobApplications::SelfDisclosure::PersonalDetailsForm,
+    barred_list: Jobseekers::JobApplications::SelfDisclosure::BarredListForm,
+    conduct: Jobseekers::JobApplications::SelfDisclosure::ConductForm,
+    confirmation: Jobseekers::JobApplications::SelfDisclosure::ConfirmationForm,
+  }.freeze
+
+  steps(*FORMS.keys)
+
   def show
+    form.load_model_data
     render_wizard
   end
 
   def update
-    successful, @form = Jobseekers::JobApplications::UpdateSelfDisclosureForm.call(form, job_application)
-    if successful
+    result, @form = Jobseekers::JobApplications::UpdateSelfDisclosureForm.call(form, step, FORMS.keys)
+    case result
+    when :wizard
       redirect_to jobseekers_job_application_self_disclosure_path(job_application, next_step)
+    when :done
+      redirect_to completed_jobseekers_job_application_self_disclosure_index_path(job_application)
     else
       render_wizard
     end
   end
 
+  def completed; end
+
   private
 
-  def form_path
-    @form_path ||= ["jobseekers", "job_applications", "self_disclosure", "#{step}_form"]
+  def form
+    @form ||= form_class.new(form_params).tap { it.model = self_disclosure }
   end
 
   def form_class
-    form_path.join("/").camelize.constantize
-  end
-
-  def form_attributes
-    form_class.new.attributes.keys
+    @form_class ||= FORMS.fetch(step)
   end
 
   def form_params_key
-    @form_params_key ||= form_path.join("_").to_sym
+    @form_params_key ||= form_class.name.underscore.tr("/", "_")
   end
 
   def form_params
-    return {} if params[form_params_key].blank?
-
     params
-      .require(form_params_key)
-      .tap { it.merge!(date_of_birth: parse_dob) if step == :personal_details }
-      .permit(*form_attributes)
+      .fetch(form_params_key, {})
+      .tap { flatten_enumerable_value(it) }
+      .tap { parse_dob(it) }
+      .permit(*form_class.new.attributes)
   end
 
-  def form
-    @form ||= form_class.new(form_params)
+  def flatten_enumerable_value(hsh)
+    hsh.each do |k, v|
+      hsh[k] = v.first if v.is_a?(Enumerable)
+    end
+  end
+
+  def parse_dob(hsh)
+    return if step != :personal_details
+
+    year = hsh.delete("date_of_birth(1i)")
+    month = hsh.delete("date_of_birth(2i)")
+    day = hsh.delete("date_of_birth(3i)")
+    return nil unless year.present? && month.present? && day.present?
+
+    hsh["date_of_birth"] = [year, month, day].join("-")
+    hsh
   end
 
   def job_application
     @job_application ||= current_jobseeker.job_applications.find(params[:job_application_id])
   end
 
-  def parse_dob
-    year = params[form_params_key].delete("date_of_birth(1i)")
-    month = params[form_params_key].delete("date_of_birth(2i)")
-    day = params[form_params_key].delete("date_of_birth(3i)")
+  def self_disclosure
+    SelfDisclosure.find_or_create_by(job_application: job_application)
+  end
 
-    return nil unless year.present? && month.present? && day.present?
+  def redirect_when_not_available
+    return if job_application.self_disclosure_available?
 
-    [year, month, day].join("-")
+    redirect_to jobseekers_job_applications_path
   end
 end

@@ -7,22 +7,33 @@ class Jobseekers::JobApplications::UpdateSelfDisclosureForm
     service.result
   end
 
-  attr_reader :form, :model
-
-  def initialize(form, self_disclosure)
+  def initialize(form, current_step, steps)
     @form = form
-    @model = self_disclosure
+    @current_step = current_step
+    @steps = steps
+    @form.model.assign_attributes(form.attributes)
+  end
+
+  def outcome
+    return :done if valid? && last_step?
+    return :wizard if valid?
+
+    :error
   end
 
   def result
-    [valid?, form]
+    [outcome, @form]
   end
 
   def valid?
-    @valid ||= form.valid?
+    @valid ||= @form.valid?(@current_step)
+  end
+
+  def last_step?
+    @steps.last == @current_step
   end
 
   def update!
-    # model.update!(form.attributes)
+    @form.save!(context: @current_step)
   end
 end

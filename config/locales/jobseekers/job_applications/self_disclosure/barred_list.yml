@@ -1,15 +1,4 @@
 en:
-  activemodel:
-    errors:
-      models:
-        jobseekers/job_applications/self_disclosure/barred_list_form:
-          attributes:
-            is_barred:
-              inclusion: Select no if you have not been included on the list of people barred from/listed as unsuitable to engage in regulated activity/work with children
-            has_been_referred:
-              inclusion: Select no if you have not been referred to the Disclosure and Baring Service
-
-
   jobseekers:
     job_applications:
       self_disclosure:

@@ -1,29 +1,4 @@
 en:
-  activemodel:
-    errors:
-      models:
-        jobseekers/job_applications/self_disclosure/personal_details_form:
-          attributes:
-            city:
-              blank: Enter your town or city
-            date_of_birth:
-              blank: Enter your date of birth
-              invalid: Enter a valid date, for example, 27 3 2007
-            name:
-              blank: Enter your name
-            phone_number:
-              blank: Enter your phone number
-              invalid: Enter a phone number in the correct format
-            postcode:
-              blank: Enter your postcode
-            address_line_1:
-              blank: Enter your building and street
-            has_unspent_convictions:
-              inclusion: Select no if you have no unspent conditional cautions or convictions in the UK or overseas
-            has_spent_convictions:
-              inclusion: Select no if you have no spent conditional cautions or convictions in the UK or overseas
-
-
   jobseekers:
     job_applications:
       self_disclosure:

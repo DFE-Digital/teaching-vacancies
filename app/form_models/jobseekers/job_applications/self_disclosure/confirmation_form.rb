@@ -1,11 +1,9 @@
-class Jobseekers::JobApplications::SelfDisclosure::ConfirmationForm
-  include ActiveModel::Model
-  include ActiveModel::Attributes
-  include ActiveModel::Validations
-
-  attribute :agreements
-  attribute :signature, :string
-
-  validates :agreements, presence: true
-  validates :signature, presence: true
+module Jobseekers::JobApplications::SelfDisclosure
+  class ConfirmationForm < BaseForm
+    attribute :agreed_for_processing, :boolean
+    attribute :agreed_for_criminal_record, :boolean
+    attribute :agreed_for_organisation_update, :boolean
+    attribute :agreed_for_information_sharing, :boolean
+    attribute :signature, :string
+  end
 end

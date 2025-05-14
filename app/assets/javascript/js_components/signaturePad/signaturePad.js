@@ -15,8 +15,19 @@ export default class extends Controller {
     this.canvasTarget.addEventListener('touchmove', (e) => { this.draw(e); });
     this.canvasTarget.addEventListener('touchend', () => { this.stopDrawing(); });
 
-    const event = new Event('click');
-    this.clear(event);
+    // const event = new Event('click');
+    // this.clear(event);
+    if (this.hasSignature()) {
+      const signature = new Image();
+      signature.src = this.signatureFieldTarget.value;
+      this.ctx.drawImage(signature, 0, 0);
+    }
+  }
+
+  hasSignature() {
+    const input = this.signatureFieldTarget.value;
+    const token = 'data';
+    return typeof input === 'string' && input.startsWith(token);
   }
 
   // Canvas actions
@@ -58,11 +69,12 @@ export default class extends Controller {
     this.ctx.clearRect(0, 0, this.canvasTarget.width, this.canvasTarget.height);
     this.ctx.fillStyle = 'white';
     this.ctx.fillRect(0, 0, this.canvasTarget.width, this.canvasTarget.height);
+    this.signatureFieldTarget.setAttribute('value', '');
   }
 
   save(event) {
     event.preventDefault();
-    const sigUrl = this.canvasTarget.toDataURL();
+    const sigUrl = this.canvasTarget.toDataURL('image/png', 0.5);
     this.signatureFieldTarget.setAttribute('value', sigUrl);
   }
 }

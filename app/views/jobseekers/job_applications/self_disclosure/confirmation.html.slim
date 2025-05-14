@@ -13,30 +13,17 @@
   = form_with(model: @form, url: jobseekers_job_application_self_disclosure_path(job_application), method: :patch) do |f|
     = f.govuk_error_summary
 
-    = f.govuk_check_boxes_fieldset nil, class: "govuk-checkboxes--small" do
-      = f.govuk_check_box :agreements,
-        :agreement_for_processing,
-        label: { text: t(".agreement_for_processing") }
+    = f.govuk_check_box :agreed_for_processing, :true, label: { text: t(".agreed_for_processing") }
+    = f.govuk_check_box :agreed_for_criminal_record, :true, label: { text: t(".agreed_for_criminal_record") }
+    = f.govuk_check_box :agreed_for_organisation_update, :true, label: { text: t(".agreed_for_organisation_update") }
+    = f.govuk_check_box :agreed_for_information_sharing, :true, label: { text: t(".agreed_for_information_sharing") }
 
-      = f.govuk_check_box :agreements,
-        :agreement_for_criminal_record,
-        label: { text: t(".agreement_for_criminal_record") }
-
-      = f.govuk_check_box :agreements,
-        :agreement_for_organisation_update,
-        label: { text: t(".agreement_for_organisation_update") }
-
-      = f.govuk_check_box :agreements,
-        :agreement_for_information_sharing,
-        label: { text: t(".agreement_for_information_sharing") }
-
-    = f.govuk_fieldset legend: { text: t(".signature"), class: "govuk-heading-l" } do
+    = f.govuk_fieldset legend: { text: t(".signature"), class: "govuk-heading-l" }, data: { controller: "signature-pad" } do
       p.govuk-hint = t(".provide_signature")
-      div{data-controller="signature-pad"}
-        canvas#signature-pad.signature-box{width=400 height=200 data-signature-pad-target="canvas"}
-        br
-        button.govuk-button.govuk-button--secondary.govuk-button-spacing{data-action="click->signature-pad#clear"} Clear
-        button.govuk-button.govuk-button--secondary.govuk-button-spacing{data-action="click->signature-pad#save"} Save signature
-        = f.hidden_field :signature, "data-signature-pad-target" => "signatureField"
+      canvas#signature-pad.signature-box{width=400 height=200 data-signature-pad-target="canvas"}
+      br
+      button.govuk-button.govuk-button--secondary.govuk-button-spacing{data-action="click->signature-pad#clear"} Clear
+      button.govuk-button.govuk-button--secondary.govuk-button-spacing{data-action="click->signature-pad#save"} Save signature
+      = f.hidden_field :signature, "data-signature-pad-target" => "signatureField"
 
     = f.govuk_submit t("buttons.save_and_continue")

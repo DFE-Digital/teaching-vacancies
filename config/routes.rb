@@ -108,7 +108,9 @@ Rails.application.routes.draw do
       get :post_submit
       post :withdraw
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
-      resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure"
+      resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure" do
+        get :completed, on: :collection, to: "job_applications/self_disclosure#completed"
+      end
     end
 
     scope as: :job, path: ":job_id" do
