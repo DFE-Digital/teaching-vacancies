@@ -65,7 +65,7 @@ class Vacancy < ApplicationRecord
   enum :start_date_type, { specific_date: 0, date_range: 1, other: 2, undefined: 3, asap: 4 }
   # trashed: 2 and removed_from_external_system: 3 removed in discard_soft_deletes 29/4/25
   enum :status, { published: 0, draft: 1 }
-  enum :receive_applications, { email: 0, website: 1 }
+  enum :receive_applications, { email: 0, website: 1, uploaded_form: 2 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
   enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
