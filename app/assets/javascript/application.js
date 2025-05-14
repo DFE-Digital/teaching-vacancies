@@ -29,6 +29,7 @@ import PanelController from './js_components/panel/panel';
 import ShowHiddenContentController from './js_components/showHiddenContent/showHiddenContent';
 import TrackedLinkController from './js_components/trackedLink/trackedLink';
 import UtilsController from './js_components/utils';
+import SignaturePadController from './js_components/signaturePad/signaturePad';
 
 import './clarity_cookies';
 
@@ -66,6 +67,7 @@ application.register('editor-preview', EditorPreviewController);
 application.register('show-hidden-content', ShowHiddenContentController);
 application.register('tracked-link', TrackedLinkController);
 application.register('utils', UtilsController);
+application.register('signature-pad', SignaturePadController);
 
 Rails.start();
 govukFrontend.initAll();

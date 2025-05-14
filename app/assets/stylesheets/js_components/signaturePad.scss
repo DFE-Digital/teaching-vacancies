@@ -1,0 +1,13 @@
+.signature-box {
+    display: block;
+    width: 400px;
+    height: 200px;
+    border: 2px solid #0b0c0c; /* GOV.UK black border */
+    background-color: white;
+    cursor: crosshair;
+    touch-action: none; /* Prevent scrolling while signing */
+}
+
+.govuk-button-spacing {
+    margin-right: 20px; /* Adjust the value as needed */
+}
