@@ -67,8 +67,7 @@ class Vacancy < ApplicationRecord
   enum :status, { published: 0, draft: 1 }
 
   validates :status, presence: true
-
-  enum :receive_applications, { email: 0, website: 1 }
+  enum :receive_applications, { email: 0, website: 1, uploaded_form: 2 }
   enum :extension_reason, { no_applications: 0, didnt_find_right_candidate: 1, other_extension_reason: 2 }
 
   enum :religion_type, { no_religion: 0, other_religion: 1, catholic: 2 }
