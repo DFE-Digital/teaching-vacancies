@@ -1,7 +1,7 @@
 class Jobseekers::JobApplications::SelfDisclosureController < Jobseekers::BaseController
   include Wicked::Wizard
 
-  steps :personal_details, :barred_list, :conduct, :confirmation
+  steps :personal_details, :barred_list, :conduct, :confirmation, :completed
 
   before_action :form
 

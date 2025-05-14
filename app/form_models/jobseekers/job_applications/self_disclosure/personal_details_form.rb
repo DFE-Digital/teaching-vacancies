@@ -18,7 +18,6 @@ class Jobseekers::JobApplications::SelfDisclosure::PersonalDetailsForm
   validates :name, presence: true
   validates :address_line_1, presence: true
   validates :city, presence: true
-  validates :county, presence: true
   validates :postcode, presence: true
   validates :phone_number, presence: true
   validates :date_of_birth, presence: true

@@ -6,8 +6,6 @@ en:
           attributes:
             city:
               blank: Enter your town or city
-            county:
-              blank: Enter your county
             date_of_birth:
               blank: Enter your date of birth
               invalid: Enter a valid date, for example, 27 3 2007
@@ -24,7 +22,8 @@ en:
               inclusion: Select no if you have no unspent conditional cautions or convictions in the UK or overseas
             has_spent_convictions:
               inclusion: Select no if you have no spent conditional cautions or convictions in the UK or overseas
-  
+
+
   jobseekers:
     job_applications:
       self_disclosure:
@@ -41,6 +40,7 @@ en:
             heading: Criminal record declaration
             description: The role is exempt from the Rehabilitation of Offenders Act 1974 in England, Scotland and Wales or the Rehabilitation of Offenders (Northern Ireland) Order 1978. You are therefore required to declare all unspent convictions and conditional cautions and all spent convictions and adult cautions that are not protected (i.e. eligible to be filtered).
           date_of_birth_hint: For example, 27 3 2007
+
   helpers:
     legend:
       jobseekers_job_applications_self_disclosure_personal_details_form:
