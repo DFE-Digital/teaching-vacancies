@@ -10,24 +10,16 @@ RSpec.describe "Publishers can see the Candidate profiles interstitial page" do
 
     after { logout }
 
-    scenario "they will see the interstitial page" do
+    scenario "they will see the interstitial page only once" do
       visit organisation_jobs_with_type_path
 
       check I18n.t("terms_and_conditions.label")
       click_on I18n.t("buttons.accept_and_continue")
 
       expect(page).to have_content("You can now view candidate profiles and invite them to apply to jobs")
-    end
-  end
 
-  context "the user has logged in for the second time" do
-    let(:publisher) { create(:publisher, acknowledged_candidate_profiles_interstitial: true, accepted_terms_at: Time.current) }
+      visit "/"
 
-    before { login_publisher(publisher: publisher, organisation: school) }
-
-    after { logout }
-
-    scenario "they will NOT see the interstitial page" do
       visit organisation_jobs_with_type_path
 
       expect(page).to_not have_content("You can now view candidate profiles and invite them to apply to jobs")
