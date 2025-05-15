@@ -1,4 +1,4 @@
-- content_for :page_title_prefix, job_application_page_title_prefix(form, t(".title"))
+- content_for :page_title_prefix, job_application_page_title_prefix(@form, t(".title"))
 
 .govuk-grid-row
   .govuk-grid-column-two-thirds
@@ -13,10 +13,10 @@
     h2.govuk-heading-m = t(".work_with_children_heading")
     p.govuk-body = t(".work_with_children_guidance")
 
-    = form_for form, url: jobseekers_job_application_references_path(job_application), method: :post do |f|
+    = form_for @form, url: jobseekers_job_application_referees_path(job_application), method: :post do |f|
       = f.govuk_error_summary
 
       = render "fields", f: f
 
       = f.govuk_submit t("buttons.save_reference")
-      = govuk_button_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :references), class: "govuk-button--secondary govuk-!-margin-left-3"
+      = govuk_button_link_to t("buttons.cancel"), jobseekers_job_application_build_path(job_application, :referees), class: "govuk-button--secondary govuk-!-margin-left-3"

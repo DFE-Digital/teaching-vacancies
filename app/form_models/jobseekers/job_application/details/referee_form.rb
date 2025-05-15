@@ -1,4 +1,4 @@
-class Jobseekers::JobApplication::Details::ReferenceForm
+class Jobseekers::JobApplication::Details::RefereeForm
   include ActiveModel::Model
 
   attr_accessor :name, :job_title, :organisation, :relationship, :email, :phone_number, :is_most_recent_employer

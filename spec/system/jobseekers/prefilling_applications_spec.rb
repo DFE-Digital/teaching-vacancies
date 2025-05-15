@@ -17,7 +17,7 @@ RSpec.describe "Jobseekers can prefill applications" do
     let(:current_job_application) { JobApplication.order(:created_at).last }
 
     context "and when the jobseeker also has a previous application" do
-      let(:reference) { create(:reference, job_title: "Reference4Testing") }
+      let(:referee) { create(:referee, job_title: "Reference4Testing") }
       let(:employment1) { create(:employment) }
       let(:employment2) { create(:employment) }
       let(:qualification1) { create(:qualification) }
@@ -26,7 +26,7 @@ RSpec.describe "Jobseekers can prefill applications" do
       let(:professional_body_membership) { build(:professional_body_membership) }
       let!(:previous_application) do
         create(:job_application, :status_submitted, create_details: true, jobseeker:, qualified_teacher_status: "yes", qualified_teacher_status_year: "2020", created_at: 1.year.ago,
-                                                    references: [reference], employments: [employment1, employment2], qualifications: [qualification1, qualification2],
+                                                    referees: [referee], employments: [employment1, employment2], qualifications: [qualification1, qualification2],
                                                     professional_body_memberships: [professional_body_membership])
       end
 
@@ -69,9 +69,9 @@ RSpec.describe "Jobseekers can prefill applications" do
         end
         # references
         click_on "References"
-        expect(page).to have_content(reference.job_title)
-        expect(page).to have_content(reference.organisation)
-        expect(page).to have_content(reference.relationship)
+        expect(page).to have_content(referee.job_title)
+        expect(page).to have_content(referee.organisation)
+        expect(page).to have_content(referee.relationship)
         click_on "Back"
         # work history
         click_on "Work history"
