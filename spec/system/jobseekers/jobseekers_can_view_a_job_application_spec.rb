@@ -27,7 +27,7 @@ RSpec.describe "Jobseekers can view a job application" do
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.professional_body_memberships.heading"), href: "#professional_body_memberships")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.employment_history.heading"), href: "#employment_history")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_statement.heading"), href: "#personal_statement")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.referees.heading"), href: "#references")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.referees.heading"), href: "#referees")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.ask_for_support.heading"), href: "#ask_for_support")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.declarations.heading"), href: "#declarations")
       end
@@ -66,7 +66,7 @@ RSpec.describe "Jobseekers can view a job application" do
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.professional_body_memberships.heading"), href: "#professional_body_memberships")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.employment_history.heading"), href: "#employment_history")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.personal_statement.heading"), href: "#personal_statement")
-        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.referees.heading"), href: "#references")
+        expect(page).to have_link(I18n.t("jobseekers.job_applications.show.referees.heading"), href: "#referees")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.ask_for_support.heading"), href: "#ask_for_support")
         expect(page).to have_link(I18n.t("jobseekers.job_applications.show.declarations.heading"), href: "#declarations")
       end
