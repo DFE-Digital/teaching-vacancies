@@ -8,6 +8,8 @@ class Vacancy < ApplicationRecord
   include DatabaseIndexable
   include Resettable
 
+  include Discard::Model
+
   friendly_id :slug_candidates, use: %w[slugged history]
 
   # TODO: Update with job listing updates
@@ -294,13 +296,12 @@ class Vacancy < ApplicationRecord
     find_conflict_vacancy || find_duplicate_vacancy
   end
 
+  # soft delete so that all the stats etc are kept even after the vacancy no longer exists
   def trash!
-    return if trashed?
+    return if discarded?
 
     supporting_documents.purge_later
-    # rubocop:disable Rails/SkipsModelValidations
-    update_attribute(:status, :trashed)
-    # rubocop:enable Rails/SkipsModelValidations
+    discard!
     remove_google_index
   end
 
