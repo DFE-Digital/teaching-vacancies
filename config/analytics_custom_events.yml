@@ -12,6 +12,8 @@ shared:
   - jobseeker_application_shortlisted
   - jobseeker_application_submitted
   - jobseeker_application_unsuccessful
+  - jobseeker_changed_govuk_one_login_email
+  - jobseeker_changed_govuk_one_login_id
   - jobseeker_failed_govuk_one_login_sign_in
   - jobseeker_inactive_account
   - jobseeker_job_listing_ended_early

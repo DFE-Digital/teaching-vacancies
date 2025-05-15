@@ -47,34 +47,51 @@ class Jobseeker < ApplicationRecord
     save!
   end
 
+  #
+  # GovUK OneLogin methods
+  #
+  # Specific methods to deal with GovUK OneLogin integration.
+  #
+  class << self
+    # Creates a new Jobseeker from the GovUK OneLogin id and email address.
+    def create_from_govuk_one_login(id:, email:)
+      return unless email.present? && id.present?
+
+      create!(email: email.downcase, govuk_one_login_id: id)
+    end
+
+    # Either find the Jobseeker by their GovUK OneLogin id or uses the OneLogin email address to find:
+    # - Jobseekers created before introducing OneLogin and still non-linked with a OneLogin account.
+    # - Jobseekers that deleted their GovUK OneLogin account, created a new one with the same email but different id.
+    def find_from_govuk_one_login(id:, email:)
+      find_by(govuk_one_login_id: id) || find_by(email: email)
+    end
+  end
+
+  # Unlinks the Jobseeker from GovUK OneLogin by removing the OneLogin id.
+  #
+  # This method is not currently called anywhere in the codebase, but is made available for developers to use in the
+  # console to resolve support requests.
+  #
+  def unlink_from_govuk_one_login!
+    update!(govuk_one_login_id: nil) if govuk_one_login_id.present?
+  end
+
+  # Updates the Jobseeker's email address with the one provided by GovUK OneLogin.
   def update_email_from_govuk_one_login!(new_email)
     return false if new_email.blank? || new_email == email
 
     # Find any Jobseeker with the new email address that was created before OneLogin was introduced.
     if (legacy_user = self.class.find_by(email: new_email, govuk_one_login_id: nil))
-      return false if saved_data?
+      return false if saved_data_preventing_transfer? # Do not update email or transfer account if the current user has any saved data.
 
       Jobseekers::AccountTransfer.new(self, legacy_user.email).call
     end
     update!(email: new_email)
   end
-
-  # Criteria used for determining if a Jobseeker has enough saved data to be considered for automatic account transfer.
-  def saved_data?
-    job_applications.any? || jobseeker_profile&.qualifications&.any? || jobseeker_profile&.employments&.any?
-  end
-
-  def self.create_from_govuk_one_login(id:, email:)
-    return unless email.present? && id.present?
-
-    create!(email: email.downcase, govuk_one_login_id: id)
-  end
-
-  # Either find the Jobseeker by their GovUK OneLogin id or uses the OneLogin email address to find possible Jobseekers
-  # created before introducingq OneLogin and still non-linked with a OneLogin account.
-  def self.find_from_govuk_one_login(id:, email:)
-    find_by(govuk_one_login_id: id) || find_by(email: email)
-  end
+  #
+  # End of GovUK OneLogin methods
+  #
 
   OPT_OUT_TO_UNSUBSCRIBE_REASON = {
     too_many_emails: :not_relevant,
@@ -91,5 +108,9 @@ class Jobseeker < ApplicationRecord
       unsubscribe_reason: OPT_OUT_TO_UNSUBSCRIBE_REASON.fetch(email_opt_out_reason.to_sym),
       job_found_unsubscribe_reason_comment: email_opt_out_comment,
     )
+  end
+
+  def saved_data_preventing_transfer?
+    job_applications.any? || jobseeker_profile&.qualifications&.any? || jobseeker_profile&.employments&.any?
   end
 end

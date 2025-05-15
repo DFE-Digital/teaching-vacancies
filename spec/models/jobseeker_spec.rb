@@ -114,6 +114,14 @@ RSpec.describe Jobseeker do
       end
     end
 
+    context "when the jobseeker has a different govuk_one_login_id but the provided email matches" do
+      let!(:jobseeker) { create(:jobseeker, govuk_one_login_id: "id") }
+
+      it "finds the jobseeker by their email" do
+        expect(described_class.find_from_govuk_one_login(id: nil, email: jobseeker.email)).to eq(jobseeker)
+      end
+    end
+
     it "returns no user if neither the govuk_one_login_id or email match" do
       expect(described_class.find_from_govuk_one_login(id: "random", email: "random@contoso.com")).to be_nil
     end
@@ -123,26 +131,15 @@ RSpec.describe Jobseeker do
     end
   end
 
-  describe "#saved_data?" do
-    let!(:jobseeker) { create(:jobseeker) }
-
-    it "returns false for a fresh jobseeker with no recorded applications, qualifications or employment history" do
-      expect(jobseeker).not_to be_saved_data
+  describe "unlink_from_govuk_one_login!" do
+    it "unlinks the jobseeker from GovUK OneLogin by removing the OneLogin id" do
+      jobseeker = create(:jobseeker)
+      expect { jobseeker.unlink_from_govuk_one_login! }.to change { jobseeker.reload.govuk_one_login_id }.to(nil)
     end
 
-    it "returns true for a jobseeker with a job application" do
-      create(:job_application, jobseeker: jobseeker)
-      expect(jobseeker).to be_saved_data
-    end
-
-    it "returns true for a jobseeker with qualifications" do
-      create(:jobseeker_profile, :with_qualifications, jobseeker: jobseeker)
-      expect(jobseeker).to be_saved_data
-    end
-
-    it "returns true for a jobseeker with employment history" do
-      create(:jobseeker_profile, :with_employment_history, jobseeker: jobseeker)
-      expect(jobseeker).to be_saved_data
+    it "does not unlink the jobseeker if they do not have a OneLogin id" do
+      jobseeker = create(:jobseeker, govuk_one_login_id: nil)
+      expect { jobseeker.unlink_from_govuk_one_login! }.not_to change { jobseeker.reload.govuk_one_login_id }.from(nil)
     end
   end
 
@@ -184,6 +181,27 @@ RSpec.describe Jobseeker do
       let(:qualifications) { profile.qualifications }
       let(:employments) { profile.employments }
 
+      RSpec.shared_examples "new jobseeker account already saved data" do
+        it "returns 'false'" do
+          expect(jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email)).to be(false)
+        end
+
+        it "doesn't transfer the legacy jobseeker's data to the current jobseeker" do
+          expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
+            .to(not_change { jobseeker.reload.jobseeker_profile })
+        end
+
+        it "doesn't update the jobseeker email" do
+          expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
+            .not_to(change(jobseeker, :email))
+        end
+
+        it "doesn't delete the legacy jobseeker" do
+          expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
+            .not_to(change(described_class, :count))
+        end
+      end
+
       context "when the current jobseeker had no saved data" do
         it "transfers the legacy jobseeker's data to the current jobseeker" do
           expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
@@ -205,27 +223,22 @@ RSpec.describe Jobseeker do
         end
       end
 
-      context "when the current jobseeker had recorded data data" do
+      context "when the current jobseeker already recorded a job appplication" do
         before { create(:job_application, jobseeker: jobseeker) }
 
-        it "returns 'false'" do
-          expect(jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email)).to be(false)
-        end
+        it_behaves_like "new jobseeker account already saved data"
+      end
 
-        it "doesn't transfer the legacy jobseeker's data to the current jobseeker" do
-          expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
-            .to(not_change { jobseeker.reload.jobseeker_profile })
-        end
+      context "when the current jobseeker already recorded qualifications" do
+        before { create(:jobseeker_profile, :with_qualifications, jobseeker: jobseeker) }
 
-        it "doesn't update the jobseeker email" do
-          expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
-            .not_to(change(jobseeker, :email))
-        end
+        it_behaves_like "new jobseeker account already saved data"
+      end
 
-        it "doesn't delete the legacy jobseeker" do
-          expect { jobseeker.update_email_from_govuk_one_login!(legacy_jobseeker.email) }
-            .not_to(change(described_class, :count))
-        end
+      context "when the current jobseeker already recorded employment history" do
+        before { create(:jobseeker_profile, :with_employment_history, jobseeker: jobseeker) }
+
+        it_behaves_like "new jobseeker account already saved data"
       end
     end
   end

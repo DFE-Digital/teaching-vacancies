@@ -34,23 +34,34 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
 
   private
 
+  # rubocop:disable Metrics/AbcSize
   def match_jobseeker_from_govuk_one_login(govuk_one_login_user)
-    id = govuk_one_login_user.id
-    email = govuk_one_login_user.email
-    jobseeker = Jobseeker.find_from_govuk_one_login(id:, email:)
+    jobseeker = Jobseeker.find_from_govuk_one_login(id: govuk_one_login_user.id, email: govuk_one_login_user.email)
 
-    if jobseeker.nil? # Completely new user
+    # Completely new user
+    if jobseeker.nil?
       session[:newly_created_user] = { value: "true", path: "/", expires: 1.hour.from_now }
-      jobseeker = Jobseeker.create_from_govuk_one_login(id:, email:)
-    elsif jobseeker.govuk_one_login_id.nil? # User exists but is their first time signing-in with OneLogin
+      jobseeker = Jobseeker.create_from_govuk_one_login(id: govuk_one_login_user.id, email: govuk_one_login_user.email)
+    # User exists but is their first time signing-in with OneLogin
+    elsif jobseeker.govuk_one_login_id.nil?
       session[:user_exists_first_log_in] = { value: "true", path: "/", expires: 1.hour.from_now }
-      jobseeker.update!(govuk_one_login_id: id)
-    elsif jobseeker.email != email # User changed their email in OneLogin after having already signed in with us
-      jobseeker.update_email_from_govuk_one_login!(email)
+      jobseeker.update!(govuk_one_login_id: govuk_one_login_user.id)
+    # User deleted their OneLogin account and created a new one using the same email
+    elsif jobseeker.govuk_one_login_id != govuk_one_login_user.id
+      previous_id = jobseeker.govuk_one_login_id
+      jobseeker.update!(govuk_one_login_id: govuk_one_login_user.id)
+      trigger_jobseeker_changed_govuk_one_login_id_event(jobseeker, previous_id)
+    # User changed their email in OneLogin after having already signed in with us
+    elsif jobseeker.email != govuk_one_login_user.email
+      previous_email = jobseeker.email
+      if jobseeker.update_email_from_govuk_one_login!(govuk_one_login_user.email)
+        trigger_jobseeker_changed_govuk_one_login_email_event(jobseeker, previous_email)
+      end
     end
 
     jobseeker
   end
+  # rubocop:enable Metrics/AbcSize
 
   def error_redirect
     flash[:alert] = I18n.t("jobseekers.govuk_one_login_callbacks.openid_connect.error")
@@ -83,4 +94,38 @@ class Jobseekers::GovukOneLoginCallbacksController < Devise::OmniauthCallbacksCo
       stored_location.include?("/jobseekers/subscriptions") || # Signed-in from a job alert email link.
       stored_location.include?("/jobseekers/account/email_preferences/edit") # Signed-in from a peak times email.
   end
+
+  # :nocov:
+  def trigger_jobseeker_changed_govuk_one_login_id_event(jobseeker, previous_id)
+    event = DfE::Analytics::Event.new
+      .with_type(:jobseeker_changed_govuk_one_login_id)
+      .with_request_details(request)
+      .with_response_details(response)
+      .with_user(jobseeker)
+      .with_data(
+        hidden_data: { email_identifier: jobseeker&.email,
+                       govuk_one_login_id: jobseeker&.govuk_one_login_id,
+                       previous_govuk_one_login_id: previous_id },
+      )
+
+    DfE::Analytics::SendEvents.do([event])
+  end
+  # :nocov:
+
+  # :nocov:
+  def trigger_jobseeker_changed_govuk_one_login_email_event(jobseeker, previous_email)
+    event = DfE::Analytics::Event.new
+      .with_type(:jobseeker_changed_govuk_one_login_email)
+      .with_request_details(request)
+      .with_response_details(response)
+      .with_user(jobseeker)
+      .with_data(
+        hidden_data: { email_identifier: jobseeker&.email,
+                       govuk_one_login_id: jobseeker&.govuk_one_login_id,
+                       previous_email_identifier: previous_email },
+      )
+
+    DfE::Analytics::SendEvents.do([event])
+  end
+  # :nocov:
 end
