@@ -10,9 +10,18 @@ RSpec.describe "HTTP Basic Auth exclusions" do
     allow(ENV).to receive(:[]).with("HTTP_BASIC_PASSWORD").and_return("pass")
   end
 
-  context "when making a GET request to /ats-api on review app host" do
-    it "does not require basic auth" do
+  context "when making a GET request to /ats-api" do
+    it "does not require basic auth on review app host" do
       host! "teaching-vacancies-review-pr-1234.test.teacherservices.cloud"
+      get "/ats-api/v1/vacancies", headers: {
+        "X-Api-Key" => api_client.api_key,
+        "Accept" => "application/json",
+      }
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "does not require basic auth on staging host" do
+      host! "staging.teaching-vacancies.service.gov.uk"
       get "/ats-api/v1/vacancies", headers: {
         "X-Api-Key" => api_client.api_key,
         "Accept" => "application/json",
