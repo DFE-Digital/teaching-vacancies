@@ -80,6 +80,7 @@ class JobApplication < ApplicationRecord
   has_many :professional_body_memberships, dependent: :destroy
 
   has_many :feedbacks, dependent: :destroy, inverse_of: :job_application
+  has_one :self_disclosure, dependent: :destroy
 
   has_noticed_notifications
 
@@ -122,6 +123,12 @@ class JobApplication < ApplicationRecord
 
   def unexplained_employment_gaps
     @unexplained_employment_gaps ||= Jobseekers::JobApplications::EmploymentGapFinder.new(self).significant_gaps
+  end
+
+  def self_disclosure_available?
+    # TODO: return true when the job_application.self_disclosure has been triggered
+    #                   and job_application.self_disclosure not yet completed
+    true
   end
 
   private

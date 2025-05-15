@@ -108,6 +108,9 @@ Rails.application.routes.draw do
       get :post_submit
       post :withdraw
       resource :feedback, only: %i[create], controller: "job_applications/feedbacks"
+      resources :self_disclosure, only: %i[show update], controller: "job_applications/self_disclosure" do
+        get :completed, on: :collection, to: "job_applications/self_disclosure#completed"
+      end
     end
 
     scope as: :job, path: ":job_id" do
@@ -398,6 +401,15 @@ Rails.application.routes.draw do
         get :tag, on: :collection
         get :tag_single, on: :member
         post :update_tag, on: :collection
+        member do
+          get :pre_interview_checks
+        end
+        collection do
+          get :collect_references
+          post :references_and_declarations
+          get :ask_references_email
+          post :references_contact_reply
+        end
       end
     end
   end

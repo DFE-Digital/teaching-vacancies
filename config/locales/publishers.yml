@@ -534,10 +534,13 @@ en:
           draft: Draft jobs - %{organisation_name}
           awaiting_feedback: Jobs awaiting feedbank - %{organisation_name}
       job_applications:
+        interviewing_status:
+          pre_interview_checks: Pre-interview checks
         header:
           status_heading: Applicant status
           tabs:
             application: Application
+            pre_interview_checks: Pre-interview checks
             notes: Notes
         index:
           deadline:
@@ -568,6 +571,12 @@ en:
           application_status: Application status
           update_application_status: Update application status
           download_selected: Download selected
+        interviewing:
+          name: Name
+          contact_details: Contact details
+          application_status: Application status
+          update_application_status: Update application status
+          download_selected: Download selected
         notes:
           create:
             success: A note has been added
@@ -593,11 +602,17 @@ en:
           page_title: Application
           notes:
             heading: Notes
+        pre_interview_checks:
+          page_title: Pre Interview Checks
         tag:
           page_title: Update application status
           what_application_status_single: What application status do you want to assign to %{name}?
           what_application_status_multiple: What application status do you want to assign to these applicants?
           applicants: Applicants
+        collect_references:
+          page_title: Collect references and declarations
+        ask_references_email:
+          page_title: Contact applicant for references
         update_status:
           unsuccessful: "%{name} has been sent an email telling them their application has not been successful"
           shortlisted: "%{name} has been sent an email telling them that they have been shortlisted"
