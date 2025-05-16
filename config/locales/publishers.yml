@@ -631,6 +631,7 @@ en:
               email: Email address
               phone: Phone number
             can_give_ref: Can you give a reference for %{name}?
+            how_would_you_rate: How would you rate %{name}?
             can_share_ref: Can your reference be shared with %{name}?
             yes_share: Yes, if they request it
             no_share: No
