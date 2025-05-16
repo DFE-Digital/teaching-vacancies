@@ -88,20 +88,24 @@ class Publishers::Vacancies::JobApplicationsController < Publishers::Vacancies::
     applications = vacancy.job_applications.find(form_params.fetch(:job_applications))
     @form = Publishers::JobApplication::ReferencesContactApplicantForm.new(form_params.merge(job_applications: applications))
     if @form.valid?
+      applications.each do |job_application|
+        Publishers::CollectReferencesMailer.inform_applicant_about_references(job_application).deliver_later if @form.contact_applicants
+        job_application.referees.each do |referee|
+          reference = referee.create_job_reference!(token: SecureRandom.uuid)
+          Publishers::CollectReferencesMailer.collect_references(reference).deliver_later
+        end
+      end
       redirect_to organisation_job_job_applications_path(vacancy.id, anchor: :interviewing)
     else
       render :ask_references_email
     end
   end
 
-  #  temp - this code doesn't (yet) do anything so doesn't need coverage...
-  # :nocov:
-  def pre_interview_checks
-    @references = ["a ref"]
-  end
-  # :nocov:
-
   def withdrawn; end
+
+  def pre_interview_checks
+    @references = job_application.referees.map(&:job_reference)
+  end
 
   private
 

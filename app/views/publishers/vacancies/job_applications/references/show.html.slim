@@ -1,0 +1,97 @@
+- content_for :page_title_prefix, t(".page_title")
+
+.govuk-grid-row
+  .govuk-grid-column-two-thirds
+    span.govuk-caption-l = @reference.referee.name
+    h1.govuk-heading-l = @reference.referee.job_application.name
+
+    .govuk-body
+      - if @reference.complete?
+        = govuk_tag(text: t(".received_status"), colour: "purple")
+      - else
+        = govuk_tag(text: t(".pending_status"), colour: "blue")
+
+    .govuk-body = t(".once_the_reference_is_received")
+
+    .govuk-body = t(".more_urgent")
+
+    .h2.govuk-heading-m = t(".referee_details.heading")
+
+    = govuk_summary_list do |summary_list|
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.name"))
+        - row.with_value(text: @reference.referee.name)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.job_title"))
+        - row.with_value(text: @reference.referee.job_title)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.organisation"))
+        - row.with_value(text: @reference.referee.organisation)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.relationship"))
+        - row.with_value(text: @reference.referee.relationship)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.email"))
+        - row.with_value(text: @reference.referee.email)
+      = summary_list.with_row do |row|
+        - row.with_key(text: t(".referee_details.phone"))
+        - row.with_value(text: @reference.referee.phone_number)
+
+    - if @reference.complete?
+      .govuk-heading-m
+        = t(".can_give_ref", name: @reference.referee.job_application.name)
+      .govuk-body
+        = t("helpers.label.referees_can_give_reference_form.can_give_reference_options.#{@reference.can_give_reference?}")
+
+      - if @reference.can_give_reference?
+        .govuk-heading-m
+          = t(".can_share_ref", name: @reference.referee.job_application.name)
+        .govuk-body
+          = t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.#{@reference.is_reference_sharable?}")
+        .govuk-heading-m
+          = t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate")
+        .govuk-body
+          = @reference.how_do_you_know_the_candidate
+        .govuk-heading-m
+          = t("helpers.legend.referees_employment_reference_form.employment_start_date")
+        .govuk-body
+          = @reference.employment_start_date.to_formatted_s
+        .govuk-heading-m
+          = t("helpers.legend.referees_employment_reference_form.currently_employed")
+        .govuk-body
+          = t("helpers.label.referees_employment_reference_form.currently_employed_options.#{@reference.currently_employed?}")
+        .govuk-heading-m
+          = t("helpers.legend.referees_employment_reference_form.would_reemploy_current")
+        .govuk-body
+          = t("helpers.label.referees_employment_reference_form.would_reemploy_current_options.#{@reference.would_reemploy_current?}")
+        .govuk-body
+          = @reference.would_reemploy_current_reason
+        .govuk-heading-m
+          = t("helpers.legend.referees_employment_reference_form.would_reemploy_any")
+        .govuk-body
+          = t("helpers.label.referees_employment_reference_form.would_reemploy_any_options.#{@reference.would_reemploy_any?}")
+        .govuk-body
+          = @reference.would_reemploy_any_reason
+        .govuk-heading-m
+          = t("helpers.legend.referees_employment_reference_form.currently_employed")
+        .govuk-body
+          = t("helpers.label.referees_employment_reference_form.currently_employed_options.#{@reference.currently_employed?}")
+
+        - JobReference::REFERENCE_INFO_FIELDS.each do |field|
+          .govuk-heading-m
+            = t("helpers.legend.referees_reference_information_form.#{field}")
+          .govuk-body
+            = t("helpers.label.referees_reference_information_form.#{field}_options.#{@reference.public_send(field)}")
+
+        .govuk-heading-l
+          = t(".how_would_you_rate", name: @reference.referee.job_application.name)
+
+        - JobReference::RATINGS_FIELDS.each do |field|
+          .govuk-heading-m
+            = t("helpers.legend.referees_how_would_you_rate_form.#{field}")
+          .govuk-body
+            = t("helpers.label.referees_how_would_you_rate_form.#{field}_options.#{@reference.public_send(field)}")
+
+
+  .govuk-grid-column-one-third
+    / todo - fill out communication history with applicant (in reverse timeline)
