@@ -5,7 +5,7 @@
 .govuk-grid-row class="govuk-!-margin-top-4"
   .govuk-grid-column-two-thirds
     .govuk-button-group class="govuk-!-display-none-print"
-      = govuk_button_link_to t("buttons.download_pdf_application"), organisation_job_job_application_download_pdf_path(@vacancy.id, @job_application.id)
+      = govuk_button_link_to t("buttons.download_pdf_application"), job_application.is_a?(UploadedJobApplication) ? organisation_job_job_application_download_application_form_path(@vacancy.id, @job_application.id) : organisation_job_job_application_download_pdf_path(@vacancy.id, @job_application.id)
       = govuk_button_link_to t("buttons.update_application_status"), tag_single_organisation_job_job_application_path(@vacancy.id, @job_application.id), class: "govuk-button--secondary"
 
 = render "application_details_and_notes", allow_edit: false, job_application: @job_application, vacancy: @vacancy

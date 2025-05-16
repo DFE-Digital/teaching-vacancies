@@ -3,7 +3,7 @@
 = job_application_review(@job_applicationm, show_sidebar: false) do |r|
   - r.with_header do
     = render "jobseekers/job_applications/banner"
-  - binding.pry
+
   - r.with_above do
     - unless vacancy.listed?
       = govuk_notification_banner title_text: t("banners.important") do
