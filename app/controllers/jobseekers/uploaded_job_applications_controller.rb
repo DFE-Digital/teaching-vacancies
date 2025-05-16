@@ -9,12 +9,6 @@ class Jobseekers::UploadedJobApplicationsController < Jobseekers::JobApplication
     redirect_to apply_jobseekers_uploaded_job_application_path(new_job_application)
   end
 
-  def apply
-    binding.pry
-    #  apply_jobseekers_uploaded_job_application GET    /jobseekers/uploaded_job_applications/:id/apply(.:format)                                                    jobseekers/uploaded_job_applications#apply
-    # jobseekers_uploaded_job_applications POST   /jobseekers/uploaded_job_applications(.:format)                                                              jobseekers/uploaded_job_applications#create
-  end
-
   private
 
   def vacancy
