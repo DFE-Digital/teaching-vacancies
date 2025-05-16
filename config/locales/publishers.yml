@@ -604,8 +604,10 @@ en:
             heading: Notes
         pre_interview_checks:
           page_title: Pre Interview Checks
-          sent_at: Request sent %{sent_at}
+          sent_at: Request sent %{date}
+          received_at: Received %{date}
           pending_status: Pending
+          received_status: Received
           references: References
           last_action: Last action
           status: Status
@@ -613,6 +615,7 @@ en:
           show:
             page_title: Reference
             pending_status: Pending
+            received_status: Received
             once_the_reference_is_received: >-
               Once the reference is received you will be able to view it on this page.
               If you do not receive the reference within 1 week, you will be able to send a reminder.
@@ -627,6 +630,11 @@ en:
               relationship: Relationship to applicant
               email: Email address
               phone: Phone number
+            can_give_ref: Can you give a reference for %{name}?
+            can_share_ref: Can your reference be shared with %{name}?
+            yes_share: Yes, if they request it
+            no_share: No
+            how_long: How long have you known the candidate and in what capacity?
         tag:
           page_title: Update application status
           what_application_status_single: What application status do you want to assign to %{name}?

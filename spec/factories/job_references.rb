@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :job_reference do
     complete { true }
+    can_give_reference { true }
     token { SecureRandom.uuid }
     name { "name" }
     job_title { "job_title" }
@@ -8,7 +9,7 @@ FactoryBot.define do
     email { Faker::Internet.email(domain: TEST_EMAIL_DOMAIN) }
     organisation { "my school" }
 
-    how_do_you_know_the_candidate { "well" }
+    how_do_you_know_the_candidate { Faker::Lorem.paragraph }
     reason_for_leaving { "no reason" }
     would_reemploy_current_reason { "wonderful" }
     would_reemploy_any_reason { "fantastic" }
@@ -16,5 +17,6 @@ FactoryBot.define do
     currently_employed { true }
     would_reemploy_current { true }
     would_reemploy_any { true }
+    employment_start_date { Faker::Date.between(from: Date.new(2012, 1, 1), to: Date.new(2022, 1, 1)) }
   end
 end

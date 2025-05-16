@@ -18,5 +18,9 @@
     - @references.each do |reference|
       - body.with_row do |row|
         - row.with_cell(text: govuk_link_to(reference.referee.name, organisation_job_job_application_reference_path(vacancy.id, job_application.id, reference)))
-        - row.with_cell(text: t(".sent_at", sent_at: reference.updated_at.to_date.to_formatted_s))
-        - row.with_cell(text: govuk_tag(text: t(".pending_status"), colour: "blue"))
+        - if reference.complete?
+          - row.with_cell(text: t(".received_at", date: reference.updated_at.to_date.to_formatted_s))
+          - row.with_cell(text: govuk_tag(text: t(".received_status"), colour: "purple"))
+        - else
+          - row.with_cell(text: t(".sent_at", date: reference.updated_at.to_date.to_formatted_s))
+          - row.with_cell(text: govuk_tag(text: t(".pending_status"), colour: "blue"))

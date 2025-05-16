@@ -54,14 +54,14 @@ RSpec.describe "Publishers can select a job application for interview" do
         expect(publisher_ats_applications_page).to be_displayed
         publisher_ats_interviewing_page.pre_interview_check_links.first.click
         expect(publisher_ats_pre_interview_checks_page).to be_displayed
-        sleep 3
         perform_enqueued_jobs
-        job_application.referees.map(&:job_reference).each do |ref|
-          ref.update!(attributes_for(:job_reference))
-        end
+        job_application.referees.first.job_reference.update!(attributes_for(:job_reference).merge(updated_at: Date.tomorrow))
+        click_on "Pre-interview checks"
+        # page.reload
+        sleep 3
         publisher_ats_pre_interview_checks_page.reference_links.first.click
         expect(publisher_ats_reference_page).to be_displayed
-        sleep 24
+        sleep 10
       end
 
       scenario "choose no for contact applicant" do

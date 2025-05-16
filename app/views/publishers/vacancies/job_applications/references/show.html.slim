@@ -5,7 +5,11 @@
     span.govuk-caption-l = @reference.referee.name
     h1.govuk-heading-l = @reference.referee.job_application.name
 
-    .govuk-body = govuk_tag(text: t(".pending_status"), colour: "blue")
+    .govuk-body
+      - if @reference.complete?
+        = govuk_tag(text: t(".received_status"), colour: "purple")
+      - else
+        = govuk_tag(text: t(".pending_status"), colour: "blue")
 
     .govuk-body = t(".once_the_reference_is_received")
 
@@ -33,5 +37,27 @@
         - row.with_key(text: t(".referee_details.phone"))
         - row.with_value(text: @reference.referee.phone_number)
 
+    - if @reference.complete?
+      .govuk-body.govuk-heading-l
+        = t(".can_give_ref", name: @reference.referee.job_application.name)
+      .govuk-body
+        = t("helpers.label.referees_can_give_reference_form.can_give_reference_options.#{@reference.can_give_reference?}")
+      .govuk-body.govuk-heading-l
+        = t(".can_share_ref", name: @reference.referee.job_application.name)
+      .govuk-body
+        = t("helpers.label.referees_can_share_reference_form.is_reference_sharable_options.#{@reference.is_reference_sharable?}")
+      .govuk-body.govuk-heading-l
+        = t("helpers.label.referees_employment_reference_form.how_do_you_know_the_candidate")
+      .govuk-body
+        = @reference.how_do_you_know_the_candidate
+      .govuk-body.govuk-heading-l
+        = t("helpers.legend.referees_employment_reference_form.employment_start_date")
+      .govuk-body
+        = @reference.employment_start_date.to_formatted_s
+      .govuk-body.govuk-heading-l
+        = t("helpers.legend.referees_employment_reference_form.currently_employed")
+      .govuk-body
+        = t("helpers.label.referees_employment_reference_form.currently_employed_options.#{@reference.currently_employed?}")
+
   .govuk-grid-column-one-third
-    / todo - fill out communication history with applicant
+    / todo - fill out communication history with applicant (in reverse timeline)
