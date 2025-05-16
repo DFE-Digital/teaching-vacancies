@@ -25,6 +25,14 @@
 
       - if employments.any?
         - employments.reverse_each do |employment|
+          - if (gap = job_application.unexplained_employment_gaps[employment]).present?
+            = govuk_inset_text classes: "govuk-inset-text--red", id: "gap-#{gap[:started_on].strftime('%Y%m%d')}-#{gap[:ended_on].strftime('%Y%m%d')}" do
+              p.govuk-body.text-red class="govuk-!-margin-bottom-0" = t(".gap_with_duration", from: gap[:started_on].to_formatted_s(:month_year), to: gap[:ended_on].to_formatted_s(:month_year), duration: distance_of_time_in_words(gap[:started_on], gap[:ended_on]))
+              p.govuk-body
+                = govuk_link_to t(employments.job.none? ? "buttons.add_job" : "buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application)
+                = " or "
+                = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_job_application_break_path(job_application, started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
+
           - if employment.job?
             = render "employment_summary_card", employment: employment
           - elsif employment.break?
@@ -38,14 +46,6 @@
               = govuk_link_to jobseekers_job_application_break_confirm_destroy_path(job_application, employment)
                 = t("buttons.delete")
                 span.govuk-visually-hidden = " #{t('.break')} #{employment.started_on} to #{employment.ended_on}"
-
-          - if (gap = job_application.unexplained_employment_gaps[employment]).present?
-            = govuk_inset_text classes: "govuk-inset-text--red", id: "gap-#{gap[:started_on].strftime('%Y%m%d')}-#{gap[:ended_on].strftime('%Y%m%d')}" do
-              p.govuk-body.text-red class="govuk-!-margin-bottom-0" = t(".gap_with_duration", from: gap[:started_on].to_formatted_s(:month_year), to: gap[:ended_on].to_formatted_s(:month_year), duration: distance_of_time_in_words(gap[:started_on], gap[:ended_on]))
-              p.govuk-body
-                = govuk_link_to t(employments.job.none? ? "buttons.add_job" : "buttons.add_another_job"), new_jobseekers_job_application_employment_path(job_application)
-                = " or "
-                = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_job_application_break_path(job_application, started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
 
       = f.govuk_collection_radio_buttons :employment_history_section_completed, %w[true false], :to_s
 
