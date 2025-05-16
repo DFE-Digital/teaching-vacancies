@@ -12,26 +12,26 @@ The API clients will be able to do these operations:
 
 ## Onboarding new clients
 
-To onboard new clients to the API, the technical process is as follows:
+To onboard new clients to the API, we will first give them access to **build and test their API client against our Staging environment**.
 
-1. Set-up a dedicated review APP environment for the client integration.
-2. On the review app environment, visit the `/support-users/publisher_ats_api_clients` endpoint and add a
-new api client for the new integration. This will generate an **API token for the client**.
+The technical process is as follows:
+
+1. Add add a new API client for the new integration on the Staging [support users ATS API clients dashboard](https://staging.teaching-vacancies.service.gov.uk/support-users/publisher_ats_api_clients).
+
+   For clarity use the name of the ATS we're integrating with (eg: My New Term).
+
+   This will generate an **API token for the client**.
+
 3. Go back to the client contact email and provide them with:
 
-    - A **link to the ATS API docs** in their integration review app.
+    - The **Staging API endpoint URL**: `https://staging.teaching-vacancies.service.gov.uk/ats-api/v1`
 
-      EG: `https://teaching-vacancies-review-pr-7534.test.teacherservices.cloud/ats-api-docs/index.html`
+    - Their staging **client API token**
 
-    - The **HTTP credentials** for the review app.
+    - A [link to the Staging ATS API docs](https://staging.teaching-vacancies.service.gov.uk/ats-api-docs/index.html).
 
-    - The **base URL for their testing API**.
+    - The **HTTP credentials** for the Staging environment.
 
-      EG: `https://teaching-vacancies-review-pr-7534.test.teacherservices.cloud/ats-api/v1`
-
-    - The **API key** for their client.
-
-The clients can build and test their client against the review app environment.
 
 Once both parts are happy with the testing, we can move the integration to production.
 
