@@ -91,7 +91,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def submit
     raise ActionController::RoutingError, "Cannot submit application for non-listed job" unless vacancy.listed?
     raise ActionController::RoutingError, "Cannot submit non-draft application" unless job_application.draft?
-    binding.pry
+
     if review_form.valid? && all_steps_valid?(job_application.type)
       update_jobseeker_profile!(job_application) if review_form.update_profile
       job_application.submit!
@@ -157,7 +157,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def all_steps_valid?(job_application_type = nil)
-    binding.pry
     # Check that all steps are valid, in case we have changed the validations since the step was completed.
     # NB: Only validates top-level step forms. Does not validate individual qualifications, employments, or references.
     if job_application_type == "UploadedJobApplication"
@@ -215,7 +214,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def raise_unless_vacancy_enable_job_applications
-    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.enable_job_applications? || vacancy.receive_applications == "uploaded_form"
+    raise ActionController::RoutingError, "Cannot apply for this vacancy" unless vacancy.enable_job_applications? || vacancy.has_uploaded_form?
   end
 
   def review_form

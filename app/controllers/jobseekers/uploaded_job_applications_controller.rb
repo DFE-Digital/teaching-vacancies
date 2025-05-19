@@ -6,7 +6,7 @@ class Jobseekers::UploadedJobApplicationsController < Jobseekers::JobApplication
 
   def create
     new_job_application = current_jobseeker.uploaded_job_applications.create(vacancy:)
-    redirect_to apply_jobseekers_uploaded_job_application_path(new_job_application)
+    redirect_to jobseekers_job_application_apply_path(new_job_application)
   end
 
   private
