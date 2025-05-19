@@ -321,6 +321,16 @@ class Vacancy < ApplicationRecord
 
   private
 
+  def new_application_path
+    receive_applications == "uploaded_form" ?
+      Rails.application.routes.url_helpers.jobseekers_job_uploaded_job_application_path(self) :
+      Rails.application.routes.url_helpers.new_jobseekers_job_job_application_path(id)
+  end
+
+  def has_uploaded_form?
+    receive_applications == "uploaded_form"
+  end
+
   def calculate_distance(search_coordinates, geolocation)
     Geocoder::Calculations.distance_between(search_coordinates, [geolocation.latitude, geolocation.longitude])
   end

@@ -16,7 +16,7 @@
             icon: "green-tick"
       - else
         = banner_button text: t("jobseekers.job_applications.banner_links.apply"),
-          href: new_jobseekers_job_job_application_path(vacancy.id),
+          href: vacancy.new_application_path,
           icon: "apply"
 
   .govuk-grid-column-one-third
