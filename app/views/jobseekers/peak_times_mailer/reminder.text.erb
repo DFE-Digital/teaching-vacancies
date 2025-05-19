@@ -1,4 +1,4 @@
-<%= t(".hello", first_name:) %>
+<%= first_name.present? ? t(".hello", first_name:) : t(".nameless_hello") %>
 
 <%= t(".line_1") %>
 
