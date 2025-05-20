@@ -97,7 +97,8 @@ section#job-details class="govuk-!-margin-bottom-5"
     - if vacancy.has_uploaded_form?
       p.govuk-body = t("jobseekers.job_applications.requires_application_form_download")
       p.govuk-body = t("jobseekers.job_applications.no_cvs")
-      = govuk_button_to t("jobseekers.job_applications.apply.apply"), jobseekers_job_uploaded_job_application_path(vacancy.id)
+      / = govuk_button_to t("jobseekers.job_applications.apply.apply"), jobseekers_job_uploaded_job_application_path(vacancy.id)
+      = govuk_button_link_to t("jobseekers.job_applications.apply.apply"), vacancy.new_application_path
 
     - elsif vacancy.enable_job_applications?
       p.govuk-body = t("jobseekers.job_applications.applying_for_the_job_paragraph")
