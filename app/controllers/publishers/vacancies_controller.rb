@@ -12,7 +12,7 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
   def show
     @vacancy = VacancyPresenter.new(vacancy)
     @next_invalid_step = next_invalid_step
-    @organisation = current_organisation
+    @current_organisation = current_organisation
     @step_process = step_process
   end
 

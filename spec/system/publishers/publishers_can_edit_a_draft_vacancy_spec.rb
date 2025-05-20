@@ -12,14 +12,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
   context "with a single school" do
     before { visit organisation_job_path(vacancy.id) }
 
-    context "with a complete draft" do
-      let(:vacancy) { create(:vacancy, :draft, :ect_suitable, job_roles: [:teacher], organisations: [primary_school], phases: %w[primary]) }
-
-      it "indicates that you're reviewing a draft" do
-        has_complete_draft_vacancy_review_heading?(vacancy)
-      end
-    end
-
     context "with an incomplete draft" do
       let(:vacancy) { create(:vacancy, :with_contract_details, :ect_suitable, job_roles: [], organisations: [primary_school], phases: %w[primary]) }
 
@@ -28,7 +20,6 @@ RSpec.describe "Publishers can edit a draft vacancy" do
           find("a").click
         end
         click_on I18n.t("buttons.save_and_continue")
-        expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :job_role))
 
         fill_in_job_role_form_fields("teaching_assistant")
         click_on I18n.t("buttons.save_and_continue")
@@ -74,21 +65,30 @@ RSpec.describe "Publishers can edit a draft vacancy" do
         within "#job_details" do
           find("a").click
         end
+        fill_in_job_location_form_fields([another_primary_school])
+        click_on I18n.t("buttons.save_and_finish_later")
+
+        expect(vacancy.reload.organisations).to contain_exactly(another_primary_school)
+
+        within "#job_details" do
+          find("a").click
+        end
         fill_in_job_location_form_fields([primary_school, another_primary_school])
         click_on I18n.t("buttons.save_and_finish_later")
+
+        expect(vacancy.reload.organisations).to contain_exactly(primary_school, another_primary_school)
       end
 
       context "when the new job location is the trust's central office" do
-        it "prompts for the education phase to be set" do
+        scenario "the education phase has to be set" do
           within "#job_details" do
             find("a").click
           end
           fill_in_job_location_form_fields([trust])
-          click_on I18n.t("buttons.save_and_continue")
-          click_on I18n.t("buttons.save_and_continue")
-          click_on I18n.t("buttons.save_and_continue")
+          click_on I18n.t("buttons.save_and_finish_later")
+          click_on "Complete job listing"
 
-          expect(current_path).to eq(organisation_job_wizard_path(vacancy.id, :education_phases))
+          expect(current_path).to eq(organisation_job_build_path(vacancy.id, :education_phases))
         end
       end
 

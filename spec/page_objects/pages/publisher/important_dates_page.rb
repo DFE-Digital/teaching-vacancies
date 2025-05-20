@@ -15,10 +15,12 @@ module PageObjects
           fill_in "publishers_job_listing_important_dates_form[expires_at(2i)]", with: expires_at.month
           fill_in "publishers_job_listing_important_dates_form[expires_at(1i)]", with: expires_at.year
 
-          choose "3pm", name: "publishers_job_listing_important_dates_form[expiry_time]"
+          choose "9am", name: "publishers_job_listing_important_dates_form[expiry_time]"
 
           click_on I18n.t("buttons.save_and_continue")
         end
+
+        element :change_publish_day_field, "#publishers_job_listing_important_dates_form_publish_on_3i"
       end
     end
   end
