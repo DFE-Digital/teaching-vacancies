@@ -1,4 +1,12 @@
 - employments.sort_by { |e| e.is_current_role? ? Float::INFINITY : e.started_on }.reverse_each do |employment|
+  - gap = employment.jobseeker_profile.unexplained_employment_gaps[employment]
+  - if gap.present?
+    = govuk_inset_text classes: "govuk-inset-text--blue" do
+      p.govuk-body class="govuk-!-margin-bottom-0" = t("jobseekers.employments.gap_with_duration", duration: distance_of_time_in_words(gap[:started_on], gap[:ended_on]))
+      p.govuk-body
+        = govuk_link_to t(employments.job.none? ? "buttons.add_job" : "buttons.add_another_job"), new_jobseekers_profile_work_history_path
+        = " or "
+        = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_profile_break_path(started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
   - if employment.job?
     = render DetailComponent.new(title: employment.job_title) do |detail_component|
       - detail_component.with_body do
@@ -39,12 +47,3 @@
       = govuk_link_to jobseekers_profile_break_confirm_destroy_path(employment)
         = t("buttons.delete")
         span.govuk-visually-hidden = " #{t('jobseekers.employments.break')} #{employment.started_on} to #{employment.ended_on}"
-
-  - gap = employment.jobseeker_profile.unexplained_employment_gaps[employment]
-  - if gap.present?
-    = govuk_inset_text classes: "govuk-inset-text--blue" do
-      p.govuk-body class="govuk-!-margin-bottom-0" = t("jobseekers.employments.gap_with_duration", duration: distance_of_time_in_words(gap[:started_on], gap[:ended_on]))
-      p.govuk-body
-        = govuk_link_to t(employments.job.none? ? "buttons.add_job" : "buttons.add_another_job"), new_jobseekers_profile_work_history_path
-        = " or "
-        = govuk_link_to t("buttons.add_reason_for_break"), new_jobseekers_profile_break_path(started_on: gap[:started_on], ended_on: gap[:ended_on] || Date.current)
