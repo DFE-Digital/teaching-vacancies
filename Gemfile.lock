@@ -193,6 +193,8 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.6.2)
+    discard (1.4.0)
+      activerecord (>= 4.2, < 9.0)
     docile (1.4.1)
     dotenv (3.1.8)
     dotenv-rails (3.1.8)
@@ -890,6 +892,7 @@ DEPENDENCIES
   debug (>= 1.0.0)
   devise
   dfe-analytics!
+  discard (~> 1.4)
   dotenv-rails
   factory_bot_rails
   faker
