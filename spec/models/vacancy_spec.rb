@@ -13,9 +13,9 @@ RSpec.describe Vacancy do
   describe "#trash!" do
     subject { create(:vacancy) }
 
-    it "updates status" do
+    it "discards the record" do
       subject.trash!
-      expect(subject).to be_trashed
+      expect(subject).to be_discarded
     end
 
     it "removes google index" do
@@ -201,11 +201,6 @@ RSpec.describe Vacancy do
         expired.send :set_slug
         expired.save(validate: false)
 
-        trashed_expired = build(:vacancy, expires_at: Time.current - 1.hour)
-        trashed_expired.send :set_slug
-        trashed_expired.save(validate: false)
-        trashed_expired.trashed!
-
         expect(Vacancy.expired.count).to eq(1)
       end
     end
@@ -233,7 +228,6 @@ RSpec.describe Vacancy do
       it "retrieves vacancies that have a status of :published and a past publish_on date" do
         published = create_list(:vacancy, 5, :published)
         create_list(:vacancy, 3, :future_publish)
-        create_list(:vacancy, 4, :trashed)
 
         expect(Vacancy.listed.count).to eq(published.count)
       end

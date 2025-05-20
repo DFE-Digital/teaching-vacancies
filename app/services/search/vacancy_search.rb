@@ -11,8 +11,8 @@ class Search::VacancySearch
     @radius = search_criteria[:radius]
     @organisation_slug = search_criteria[:organisation_slug]
     @sort = sort || Search::VacancySort.new(keyword: keyword, location: location)
-    @original_scope = scope.where(scope.where_values_hash)
-    @scope = scope
+    @original_scope = scope.kept.where(scope.where_values_hash)
+    @scope = scope.kept
   end
 
   def active_criteria

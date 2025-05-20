@@ -31,13 +31,16 @@ class Publishers::VacanciesController < Publishers::Vacancies::BaseController
     @publisher_preference = PublisherPreference.find_or_create_by(publisher: current_publisher, organisation: current_organisation)
     @sort = Publishers::VacancySort.new(current_organisation, @selected_type).update(sort_by: params[:sort_by])
 
-    vacancies = Vacancy.in_organisation_ids(current_publisher.accessible_organisations(current_organisation).map(&:id))
+    vacancies = Vacancy
+                  .kept
+                  .in_organisation_ids(current_publisher.accessible_organisations(current_organisation).map(&:id))
+                  .public_send(VACANCY_TYPES.fetch(@selected_type))
+                  .order(@sort.by => @sort.order)
+                  .where.not(job_title: nil)
 
-    vacancies = vacancies.public_send(VACANCY_TYPES.fetch(@selected_type))
-                          .order(@sort.by => @sort.order)
-                          .where.not(job_title: nil)
     @pagy, @vacancies = pagy(vacancies)
     @count = vacancies.count
+
     @vacancy_types = VACANCY_TYPES.keys
   end
 

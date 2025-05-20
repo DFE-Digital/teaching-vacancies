@@ -47,9 +47,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   private
 
   def set_vacancy
-    @vacancy = Vacancy.find_by!(publisher_ats_api_client: client, id: params[:id])
-
-    raise ActiveRecord::RecordNotFound if @vacancy.trashed?
+    @vacancy = Vacancy.kept.published.find_by!(publisher_ats_api_client: client, id: params[:id])
   end
 
   def required_vacancy_keys
@@ -103,6 +101,7 @@ class Publishers::AtsApi::V1::VacanciesController < Api::ApplicationController
   def vacancies
     Vacancy
       .includes(:organisations)
+      .kept
       .order(publish_on: :desc)
       .where(publisher_ats_api_client: client)
       .where.not(status: Vacancy.statuses[:trashed])

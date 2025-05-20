@@ -114,6 +114,7 @@ RSpec.describe ImportFromVacancySourceJob do
           "contact_number_provided" => true,
           "contract_type" => "permanent",
           "created_at" => nil,
+          "discarded_at" => nil,
           "earliest_start_date" => nil,
           "ect_status" => "ect_suitable",
           "enable_job_applications" => true,
@@ -206,13 +207,13 @@ RSpec.describe ImportFromVacancySourceJob do
     end
 
     context "when a live vacancy no longer comes through" do
-      let!(:vacancy) { create(:vacancy, :published, :external, phases: %w[secondary], organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
+      before { create(:vacancy, :published, :external, phases: %w[secondary], organisations: [school], external_source: "fake_source", external_reference: "123", updated_at: 1.hour.ago) }
+
       let(:vacancies_from_source) { [] }
 
-      it "sets the vacancy to have the correct status" do
+      it "discards the vacancy" do
         expect { import_from_vacancy_source_job }
-          .to change { vacancy.reload.status }.from("published").to("removed_from_external_system")
-          .and(change { vacancy.reload.updated_at })
+          .to change { Vacancy.kept.count }.by(-1)
       end
     end
   end
