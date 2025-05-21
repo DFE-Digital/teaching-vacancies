@@ -125,8 +125,14 @@ RSpec.describe "Jobseekers can complete a job application" do
     it "allows jobseekers to complete an application and go to review page" do
       visit job_path(vacancy)
       all("button", text: "Apply for this job").last.click
+      click_button "Review application"
       click_link(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
       validates_step_complete
+      choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.false")
+      click_on I18n.t("buttons.save_and_continue")
+      expect(page).not_to have_content("There is a problem")
+      expect(page).to have_selector('#personal_details .govuk-task-list__status .govuk-tag', text: 'Incomplete')
+      click_link(I18n.t("jobseekers.job_applications.build.personal_details.heading"))
       choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.true")
       click_on I18n.t("buttons.save_and_continue")
       within(".govuk-error-summary__body") do
@@ -146,7 +152,12 @@ RSpec.describe "Jobseekers can complete a job application" do
 
       click_link "Upload application form"
       validates_step_complete
-      choose I18n.t("helpers.label.jobseekers_job_application_personal_details_form.personal_details_section_completed_options.true")
+      choose I18n.t("helpers.label.jobseekers_uploaded_job_application_upload_application_form_form.upload_application_form_section_completed_options.false")
+      click_on I18n.t("buttons.save_and_continue")
+      expect(page).not_to have_content("There is a problem")
+      expect(page).to have_selector('#upload_application_form .govuk-task-list__status .govuk-tag', text: 'Incomplete')
+      click_link "Upload application form"
+      choose I18n.t("helpers.label.jobseekers_uploaded_job_application_upload_application_form_form.upload_application_form_section_completed_options.true")
       click_on I18n.t("buttons.save_and_continue")
       within(".govuk-error-summary__body") do
         expect(page).to have_link("Select the completed job application form")

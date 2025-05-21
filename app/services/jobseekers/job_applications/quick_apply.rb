@@ -22,7 +22,7 @@ class Jobseekers::JobApplications::QuickApply
     @new_job_application = if @vacancy.has_uploaded_form?
       jobseeker.uploaded_job_applications.create(vacancy: vacancy)
     else
-      jobseeker.job_applications.create(vacancy: vacancy)
+      jobseeker.native_job_applications.create(vacancy: vacancy)
     end
   end
 
