@@ -11,7 +11,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def new
     send_dfe_analytics_event
-
     if session[:newly_created_user]
       @newly_created_user = true
       session.delete(:newly_created_user)
@@ -26,8 +25,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def create
-    new_job_application = current_jobseeker.job_applications.create(vacancy:)
-    redirect_to jobseekers_job_application_apply_path(new_job_application)
+    new_job_application = if vacancy.has_uploaded_form?
+      current_jobseeker.uploaded_job_applications.create!(vacancy:)
+    else
+      current_jobseeker.native_job_applications.create!(vacancy:)
+    end
+
+    redirect_to jobseekers_job_application_apply_path(new_job_application.id)
   end
 
   def pre_submit
