@@ -174,15 +174,44 @@ RSpec.describe "Govuk One Login authentication response" do
         end
       end
 
+      context "when the jobseeker got their account deleted and re-created in OneLogin" do
+        let(:original_one_login_id) { "urn:fdc:gov.uk:2022:FctZjnU4Sif2oyJZola3OkN0e3Jeku1cIMN38rFlmN3" }
+        let(:new_one_login_id) { "urn:fdc:gov.uk:2022:VtcZjnU4Sif2oyJZola3OkN0e3Jeku1cIMN38rFlhU4" }
+        let!(:jobseeker) do
+          create(:jobseeker, email: govuk_one_login_user.email, govuk_one_login_id: original_one_login_id)
+        end
+
+        before do
+          allow(govuk_one_login_user).to receive(:id).and_return(new_one_login_id)
+        end
+
+        it "updates the jobseeker's OneLogin ID in the existing teaching vacancies jobseeker", :dfe_analytics do
+          expect { get auth_govuk_one_login_callback_path }
+            .to change { jobseeker.reload.govuk_one_login_id }.from(original_one_login_id).to(new_one_login_id)
+          expect(:jobseeker_changed_govuk_one_login_id).to have_been_enqueued_as_analytics_event # Rubocop:disable RSpec/ExpectActual
+        end
+
+        context "with no explicitly allowed url location to redirect to in devise session" do
+          let(:devise_stored_location) { jobseeker_root_path }
+
+          it "redirects the jobseeker to their applications page" do
+            get auth_govuk_one_login_callback_path
+
+            expect(response).to redirect_to(jobseekers_job_applications_path)
+          end
+        end
+      end
+
       context "when the jobseeker has updated their email in OneLogin" do
         let!(:jobseeker) do
           create(:jobseeker, email: "original_email@contoso.com", govuk_one_login_id: govuk_one_login_user.id)
         end
 
         context "when the updated email does not match any other jobseeker in teaching vacancies" do
-          it "updates the new email in the existing teaching vacancies jobseeker" do
+          it "updates the new email in the existing teaching vacancies jobseeker", :dfe_analytics do
             expect { get auth_govuk_one_login_callback_path }
               .to change { jobseeker.reload.email }.from("original_email@contoso.com").to(govuk_one_login_user.email)
+            expect(:jobseeker_changed_govuk_one_login_email).to have_been_enqueued_as_analytics_event # Rubocop:disable RSpec/ExpectActual
           end
 
           it "redirects the jobseeker to their applications page" do
