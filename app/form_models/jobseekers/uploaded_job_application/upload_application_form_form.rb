@@ -6,7 +6,7 @@ module Jobseekers
       include Jobseekers::JobApplication::CompletedFormAttribute
 
       validates :application_form, form_file: DOCUMENT_VALIDATION_OPTIONS
-      validate :application_form_presence
+      validate :application_form_presence, if: -> { upload_application_form_section_completed }
 
       completed_attribute(:upload_application_form)
 

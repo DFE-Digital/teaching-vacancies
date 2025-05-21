@@ -13,16 +13,18 @@ class Jobseekers::UploadedJobApplications::PersonalDetailsController < Jobseeker
   
     if @form.valid?
       storable_fields = form_params.to_h.symbolize_keys.slice(*Jobseekers::UploadedJobApplication::PersonalDetailsForm.storable_fields)
-  
-      @job_application.update!(
-        storable_fields.merge(
-          completed_steps: (@job_application.completed_steps + ["personal_details"]).uniq,
-        ),
-      )
-  
+      @job_application.update!(update_params(storable_fields))  
       redirect_to jobseekers_job_application_apply_path(@job_application)
     else
       render :edit
+    end
+  end
+
+  def update_params(storable_fields)
+    if form_params["personal_details_section_completed"] == "false"
+      storable_fields.merge(completed_steps: job_application.completed_steps - ["personal_details"])
+    else
+      storable_fields.merge(completed_steps: (@job_application.completed_steps + ["personal_details"]).uniq)
     end
   end
 
