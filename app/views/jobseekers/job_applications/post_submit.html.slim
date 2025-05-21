@@ -6,7 +6,7 @@ h2.govuk-heading-l class="govuk-!-margin-top-5"
   = t(".next_step.heading")
 
 p.govuk-body = t(".next_step.shortlisted", organisation: vacancy.organisation_name)
-- unless job_application.is_a?(UploadedJobApplication)
+- unless @job_application.is_a?(UploadedJobApplication)
   p.govuk-body = t(".next_step.profile_update")
 
 .govuk-button-group

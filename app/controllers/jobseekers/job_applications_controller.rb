@@ -45,7 +45,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   end
 
   def pre_submit
-    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: step_process.validatable_steps)
+    @form = Jobseekers::JobApplication::PreSubmitForm.new(completed_steps: job_application.completed_steps, all_steps: all_steps)
     if @form.valid? && all_steps_valid?
       redirect_to jobseekers_job_application_review_path(@job_application)
     else
@@ -146,9 +146,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def step_valid?(step)
     form_class = step_process.form_class_for(step)
-
     attributes = form_class.load_form(job_application)
-
     form = form_class.new(attributes)
 
     form.valid?.tap do
@@ -233,4 +231,13 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
   def quick_apply?
     previous_application? || profile.present?
   end
+<<<<<<< HEAD
 end
+=======
+
+  def all_steps
+    Jobseekers::JobApplications::JobApplicationHandler.new(job_application, step_process).all_steps
+  end
+end
+# rubocop:enable Metrics/ClassLength
+>>>>>>> 175df9a00 (Refactor job applications controller)
