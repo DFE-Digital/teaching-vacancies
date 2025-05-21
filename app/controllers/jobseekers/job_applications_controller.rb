@@ -11,7 +11,6 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
 
   def new
     send_dfe_analytics_event
-
     if session[:newly_created_user]
       @newly_created_user = true
       session.delete(:newly_created_user)
@@ -41,7 +40,7 @@ class Jobseekers::JobApplicationsController < Jobseekers::JobApplications::BaseC
       redirect_to jobseekers_job_application_apply_path(new_job_application), notice: t("jobseekers.job_applications.new.import_from_previous_application")
     else
       new_job_application = vacancy.create_job_application_for(current_jobseeker)
-      redirect_to jobseekers_job_application_apply_path(new_job_application)
+      redirect_to jobseekers_job_application_apply_path(new_job_application.id)
     end
   end
 
